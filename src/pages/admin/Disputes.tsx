@@ -23,6 +23,7 @@ import {
 import { disputeApi, type DisputeTicket, type TicketMessage } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 
 const statusLabels: Record<string, { label: string; className: string }> = {
   open: { label: '待处理', className: 'bg-red-100 text-red-700' },
@@ -384,68 +385,6 @@ function DetailModal({
               <p className="text-gray-700">{detail.description}</p>
             </div>
 
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Clock size={18} />
-                工单处理流程
-              </h3>
-              <div className="space-y-0">
-                {(() => {
-                  const steps = [
-                    { key: 'submitted', label: '提交工单', time: new Date(detail.created_at).toLocaleString('zh-CN') },
-                    { key: 'assigned', label: '指派调解员', time: detail.mediator_name ? new Date(detail.created_at).getTime() + 86400000 : null },
-                    { key: 'mediating', label: '调解沟通', time: detail.status === 'mediating' || detail.status === 'resolved' || detail.status === 'closed' ? new Date(detail.created_at).getTime() + 259200000 : null },
-                    { key: 'resolved', label: detail.status === 'closed' ? '关闭' : '处理完成', time: detail.status === 'resolved' || detail.status === 'closed' ? new Date(detail.created_at).getTime() + 432000000 : null },
-                  ]
-                  const statusOrder: Record<string, number> = { open: 1, processing: 2, mediating: 3, resolved: 4, closed: 4 }
-                  const currentOrder = statusOrder[detail.status] || 1
-                  const stepOrder: Record<string, number> = { submitted: 1, assigned: 2, mediating: 3, resolved: 4 }
-                  return steps.map((step, idx) => {
-                    const stepIdx = stepOrder[step.key]
-                    const isCompleted = currentOrder > stepIdx
-                    const isCurrent = currentOrder === stepIdx
-                    return (
-                      <div key={step.key} className="flex gap-4">
-                        <div className="flex flex-col items-center">
-                          <div className={cn(
-                            'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
-                            isCompleted ? 'bg-green-100' : isCurrent ? 'bg-blue-100' : 'bg-gray-100'
-                          )}>
-                            {isCompleted ? (
-                              <CheckCircle size={16} className="text-green-600" />
-                            ) : isCurrent ? (
-                              <CircleDot size={16} className="text-blue-600 animate-pulse" />
-                            ) : (
-                              <div className="w-2 h-2 rounded-full bg-gray-300" />
-                            )}
-                          </div>
-                          {idx < steps.length - 1 && (
-                            <div className={cn(
-                              'w-0.5 h-8',
-                              isCompleted ? 'bg-green-200' : 'bg-gray-200'
-                            )} />
-                          )}
-                        </div>
-                        <div className="pb-6">
-                          <p className={cn(
-                            'font-medium text-sm',
-                            isCompleted ? 'text-green-700' : isCurrent ? 'text-blue-700' : 'text-gray-400'
-                          )}>
-                            {step.label}
-                          </p>
-                          {step.time && (
-                            <p className="text-xs text-gray-500 mt-0.5">
-                              {typeof step.time === 'number' ? new Date(step.time).toLocaleString('zh-CN') : step.time}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })
-                })()}
-              </div>
-            </div>
-
             {detail.resolution && (
               <div className="p-4 bg-green-50 rounded-lg border border-green-200">
                 <p className="text-sm text-gray-500 mb-2">处理结果</p>
@@ -574,7 +513,7 @@ export default function Disputes() {
 
   if (user?.role !== 'admin') {
     return (
-      <>
+      <Layout>
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <AlertCircle size={48} className="text-gray-400 mx-auto mb-4" />
@@ -582,14 +521,14 @@ export default function Disputes() {
             <p className="text-gray-500">该页面仅平台管理员可访问</p>
           </div>
         </div>
-      </>
+      </Layout>
     )
   }
 
   const statusCounts = stats?.statusStats || []
 
   return (
-    <>
+    <Layout>
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
@@ -836,6 +775,6 @@ export default function Disputes() {
           onSuccess={handleSuccess}
         />
       )}
-    </>
+    </Layout>
   )
 }

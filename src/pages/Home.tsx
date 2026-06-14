@@ -13,15 +13,10 @@ import {
   Tag,
   X,
   Play,
-  ShieldAlert,
-  FileCheck,
-  TrendingUp,
-  Video,
-  AlertTriangle,
-  ClipboardList,
 } from 'lucide-react'
 import { projectApi, type Project } from '@/services/api'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 import ProjectCover from '@/components/ProjectCover'
 
 const industries = ['餐饮', '零售', '教育', '医疗', '服务', '娱乐', '科技', '家居']
@@ -46,18 +41,12 @@ function InvestmentBadge({ min, max }: { min: number; max: number }) {
 function ProjectCard({ project }: { project: Project }) {
   const navigate = useNavigate()
 
-  const lifecycleMap: Record<string, { label: string; color: string }> = {
-    lead: { label: '线索', color: 'bg-gray-100 text-gray-600' },
-    signed: { label: '已签约', color: 'bg-blue-100 text-blue-600' },
-    opened: { label: '已开店', color: 'bg-green-100 text-green-600' },
-    operating: { label: '经营中', color: 'bg-emerald-100 text-emerald-600' },
-    closed: { label: '已关闭', color: 'bg-red-100 text-red-600' },
-  }
-  const lifecycle = lifecycleMap[(project as any).lifecycle_status] || lifecycleMap.lead
-
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group">
-      <div className="relative h-40 overflow-hidden" onClick={() => navigate(`/projects/${project.id}`)}>
+    <div
+      onClick={() => navigate(`/projects/${project.id}`)}
+      className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
+    >
+      <div className="relative h-40 overflow-hidden">
         <ProjectCover
           name={project.name}
           brand={project.brand_name}
@@ -75,34 +64,19 @@ function ProjectCard({ project }: { project: Project }) {
             免加盟费
           </div>
         )}
-        <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
-          {project.video_url ? (
-            <button
-              onClick={(e) => { e.stopPropagation(); navigate(`/projects/${project.id}?tab=video`) }}
-              className="flex items-center gap-1 px-2 py-1 bg-black/60 text-white text-xs rounded-full hover:bg-black/80 transition-colors"
-            >
-              <Video size={12} />
-              视频介绍
-            </button>
-          ) : (
-            <div className="flex items-center gap-1 px-2 py-1 bg-black/40 text-white/60 text-xs rounded-full">
-              <Video size={12} />
-              暂无视频
-            </div>
-          )}
-        </div>
+        {project.video_url && (
+          <div className="absolute bottom-3 left-3 flex items-center gap-1 px-2 py-1 bg-black/60 text-white text-xs rounded-full">
+            <Play size={12} fill="currentColor" />
+            视频
+          </div>
+        )}
       </div>
       <div className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <Building2 size={14} className="text-gray-400" />
-            <span className="text-sm text-gray-500">{project.brand_name}</span>
-          </div>
-          <span className={cn('px-2 py-0.5 text-xs rounded-full', lifecycle.color)}>
-            {lifecycle.label}
-          </span>
+        <div className="flex items-center gap-2 mb-2">
+          <Building2 size={14} className="text-gray-400" />
+          <span className="text-sm text-gray-500">{project.brand_name}</span>
         </div>
-        <h3 className="font-semibold text-gray-900 mb-2 truncate" onClick={() => navigate(`/projects/${project.id}`)}>{project.name}</h3>
+        <h3 className="font-semibold text-gray-900 mb-2 truncate">{project.name}</h3>
         <div className="flex items-center gap-2 mb-3">
           <InvestmentBadge min={project.investment_min} max={project.investment_max} />
           <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
@@ -110,7 +84,7 @@ function ProjectCard({ project }: { project: Project }) {
             {project.industry}
           </span>
         </div>
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+        <div className="flex items-center justify-between text-sm text-gray-500">
           <span className="flex items-center gap-1">
             <MapPin size={14} />
             {project.province} {project.city}
@@ -120,36 +94,12 @@ function ProjectCard({ project }: { project: Project }) {
             {project.view_count}
           </span>
         </div>
-        <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
-          <button
-            onClick={(e) => { e.stopPropagation(); navigate(`/map?province=${project.province}`) }}
-            className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs text-green-600 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
-          >
-            <MapPin size={12} />
-            本地商机
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); navigate(`/risk-reports?projectId=${project.id}`) }}
-            className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs text-orange-600 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors"
-          >
-            <AlertTriangle size={12} />
-            风险报告
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); navigate(`/my-franchises?projectId=${project.id}`) }}
-            className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
-          >
-            <ClipboardList size={12} />
-            加盟状态
-          </button>
-        </div>
       </div>
     </div>
   )
 }
 
 export default function Home() {
-  const navigate = useNavigate()
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
@@ -201,71 +151,13 @@ export default function Home() {
     setFreeJoiningOnly(false)
     setKeyword('')
     setPage(1)
-    setShowFilters(true)
   }
 
   const hasActiveFilters = selectedIndustry || selectedInvestment || selectedProvince || freeJoiningOnly || keyword
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <button
-          onClick={() => navigate('/map')}
-          className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow text-left group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-              <MapPin size={20} className="text-green-600" />
-            </div>
-            <div>
-              <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">商机地图</p>
-              <p className="text-xs text-gray-500">本地化商机分布</p>
-            </div>
-          </div>
-        </button>
-        <button
-          onClick={() => navigate('/my-franchises')}
-          className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow text-left group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <FileCheck size={20} className="text-blue-600" />
-            </div>
-            <div>
-              <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">我的加盟</p>
-              <p className="text-xs text-gray-500">加盟生命周期状态</p>
-            </div>
-          </div>
-        </button>
-        <button
-          onClick={() => navigate('/risk-reports')}
-          className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow text-left group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              <ShieldAlert size={20} className="text-orange-600" />
-            </div>
-            <div>
-              <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">风险评估</p>
-              <p className="text-xs text-gray-500">智能风险报告</p>
-            </div>
-          </div>
-        </button>
-        <button
-          onClick={() => navigate('/disputes')}
-          className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow text-left group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-              <TrendingUp size={20} className="text-purple-600" />
-            </div>
-            <div>
-              <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">纠纷工单</p>
-              <p className="text-xs text-gray-500">纠纷调解处理</p>
-            </div>
-          </div>
-        </button>
-      </div>
+    <Layout>
+      <div className="space-y-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
           <div className="flex items-center gap-4">
             <div className="flex-1 relative">
@@ -517,5 +409,6 @@ export default function Home() {
           </div>
         )}
       </div>
+    </Layout>
   )
 }

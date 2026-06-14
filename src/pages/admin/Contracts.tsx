@@ -19,6 +19,7 @@ import {
 import { contractApi, type ContractTemplate } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 
 const statusLabels: Record<string, { label: string; className: string }> = {
   active: { label: '启用', className: 'bg-green-100 text-green-700' },
@@ -254,57 +255,6 @@ function ViewModal({
               {contract.content}
             </pre>
           </div>
-
-          <div className="mt-6">
-            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <FileText size={18} />
-              合同履约记录
-            </h3>
-            <div className="bg-white border border-gray-100 rounded-lg overflow-hidden">
-              <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-100">
-                  <tr>
-                    <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">
-                      履约阶段
-                    </th>
-                    <th className="text-center px-4 py-3 text-xs font-medium text-gray-500 uppercase">
-                      状态
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">
-                      完成时间
-                    </th>
-                    <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">
-                      备注
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {[
-                    { stage: '签约完成', status: '已完成', time: '2025-01-15', note: '双方已签署正式合同' },
-                    { stage: '首批货品交付', status: '已完成', time: '2025-02-20', note: '首批物料已验收通过' },
-                    { stage: '门店装修验收', status: '进行中', time: '-', note: '装修施工中，预计3月底完成' },
-                    { stage: '正式开业', status: '待完成', time: '-', note: '待装修验收后安排开业' },
-                  ].map((record, idx) => (
-                    <tr key={idx} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-gray-900 font-medium">{record.stage}</td>
-                      <td className="px-4 py-3 text-center">
-                        <span className={cn(
-                          'inline-flex items-center px-2 py-1 text-xs font-medium rounded-full',
-                          record.status === '已完成' ? 'bg-green-100 text-green-700' :
-                          record.status === '进行中' ? 'bg-blue-100 text-blue-700' :
-                          'bg-gray-100 text-gray-500'
-                        )}>
-                          {record.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">{record.time}</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">{record.note}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
 
         <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-100">
@@ -426,7 +376,7 @@ export default function Contracts() {
 
   if (user?.role !== 'admin') {
     return (
-      <>
+      <Layout>
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <AlertCircle size={48} className="text-gray-400 mx-auto mb-4" />
@@ -434,12 +384,12 @@ export default function Contracts() {
             <p className="text-gray-500">该页面仅平台管理员可访问</p>
           </div>
         </div>
-      </>
+      </Layout>
     )
   }
 
   return (
-    <>
+    <Layout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -665,6 +615,6 @@ export default function Contracts() {
           onSuccess={handleSuccess}
         />
       )}
-    </>
+    </Layout>
   )
 }

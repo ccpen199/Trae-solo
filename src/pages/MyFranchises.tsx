@@ -21,6 +21,7 @@ import {
 import { franchiseeApi, type Franchisee } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 
 const stageConfig: Record<string, { label: string; color: string; bgColor: string; icon: any; description: string }> = {
   lead: {
@@ -282,7 +283,7 @@ export default function MyFranchises() {
 
   if (error) {
     return (
-      <>
+      <Layout>
         <div className="flex flex-col items-center justify-center py-20">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <AlertTriangle size={32} className="text-red-500" />
@@ -296,12 +297,12 @@ export default function MyFranchises() {
             重新加载
           </button>
         </div>
-      </>
+      </Layout>
     )
   }
 
   return (
-    <>
+    <Layout>
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <StatCard
@@ -470,6 +471,6 @@ export default function MyFranchises() {
           </div>
         )}
       </div>
-    </>
+    </Layout>
   )
 }

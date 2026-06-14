@@ -22,6 +22,7 @@ import {
 import { riskApi, type RiskAssessment } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 
 const riskLevelConfig: Record<string, { label: string; color: string; bgColor: string; borderColor: string; description: string }> = {
   low: {
@@ -201,7 +202,7 @@ export default function RiskReport() {
 
   if (loading) {
     return (
-      <>
+      <Layout>
         <div className="space-y-6">
           <div className="h-8 bg-gray-200 rounded w-32 animate-pulse" />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -251,13 +252,13 @@ export default function RiskReport() {
             </div>
           </div>
         </div>
-      </>
+      </Layout>
     )
   }
 
   if (error || !report) {
     return (
-      <>
+      <Layout>
         <div className="flex flex-col items-center justify-center py-20">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <AlertTriangle size={32} className="text-red-500" />
@@ -271,14 +272,14 @@ export default function RiskReport() {
             返回项目列表
           </button>
         </div>
-      </>
+      </Layout>
     )
   }
 
   const riskConfig = riskLevelConfig[report.risk_level] || riskLevelConfig.medium
 
   return (
-    <>
+    <Layout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <button
@@ -495,6 +496,6 @@ export default function RiskReport() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   )
 }

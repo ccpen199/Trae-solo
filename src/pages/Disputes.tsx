@@ -22,6 +22,7 @@ import {
 import { disputeApi, type DisputeTicket, type TicketMessage } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 
 const statusLabels: Record<string, { label: string; className: string }> = {
   open: { label: '待处理', className: 'bg-red-100 text-red-700' },
@@ -443,7 +444,7 @@ export default function Disputes() {
 
   if (!user) {
     return (
-      <>
+      <Layout>
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <AlertCircle size={48} className="text-gray-400 mx-auto mb-4" />
@@ -451,12 +452,12 @@ export default function Disputes() {
             <p className="text-gray-500">登录后可查看您的纠纷工单</p>
           </div>
         </div>
-      </>
+      </Layout>
     )
   }
 
   return (
-    <>
+    <Layout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -674,6 +675,6 @@ export default function Disputes() {
           onClose={() => setSelectedTicket(null)}
         />
       )}
-    </>
+    </Layout>
   )
 }

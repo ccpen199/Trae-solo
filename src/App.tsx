@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom";
 import { useAuthStore, type User } from "@/store/authStore";
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
@@ -18,12 +18,37 @@ import AdminDisputes from "@/pages/admin/Disputes";
 import AdminPerformance from "@/pages/admin/Performance";
 import { Loader2 } from "lucide-react";
 
+function AuthLoader() {
+  const [loading, setLoading] = useState(true);
+  const user = useAuthStore(state => state.user);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 size={40} className="animate-spin text-blue-600" />
+          <p className="text-gray-500">正在加载...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return <Outlet />;
+}
+
 function RequireAuth({
   children,
   allowedRoles,
+  withLayout = false,
 }: {
   children: React.ReactNode
   allowedRoles?: string[]
+  withLayout?: boolean
 }) {
   const user = useAuthStore(state => state.user) as User | null;
   const location = useLocation();
@@ -42,7 +67,7 @@ function RequireAuth({
     }
   }
 
-  return <Layout>{children}</Layout>;
+  return withLayout ? <Layout>{children}</Layout> : <>{children}</>;
 }
 
 function AutoRedirect() {
@@ -62,125 +87,98 @@ function AutoRedirect() {
 }
 
 export default function App() {
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    const unsub = useAuthStore.persist.onFinishHydration(() => {
-      setHydrated(true);
-    });
-    if (useAuthStore.persist.hasHydrated()) {
-      setHydrated(true);
-    }
-    return () => unsub();
-  }, []);
-
-  if (!hydrated) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Loader2 size={40} className="animate-spin text-blue-600" />
-          <p className="text-gray-500">正在加载...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
         
-        <Route path="/" element={
-          <RequireAuth allowedRoles={['entrepreneur']}>
+        <Route element={<AuthLoader />}>
+          <Route path="/" element={
             <Home />
-          </RequireAuth>
-        } />
-        
-        <Route path="/projects" element={
-          <RequireAuth allowedRoles={['entrepreneur']}>
+          } />
+          
+          <Route path="/projects" element={
             <Home />
-          </RequireAuth>
-        } />
-        
-        <Route path="/projects/:id" element={
-          <RequireAuth allowedRoles={['entrepreneur', 'brand', 'admin']}>
+          } />
+          
+          <Route path="/projects/:id" element={
             <ProjectDetail />
-          </RequireAuth>
-        } />
-        
-        <Route path="/map" element={
-          <RequireAuth allowedRoles={['entrepreneur']}>
-            <MapView />
-          </RequireAuth>
-        } />
-        
-        <Route path="/my-franchises" element={
-          <RequireAuth allowedRoles={['entrepreneur']}>
-            <MyFranchises />
-          </RequireAuth>
-        } />
-        
-        <Route path="/risk-reports" element={
-          <RequireAuth allowedRoles={['entrepreneur']}>
-            <RiskReport />
-          </RequireAuth>
-        } />
-        
-        <Route path="/risk-reports/:id" element={
-          <RequireAuth allowedRoles={['entrepreneur', 'admin']}>
-            <RiskReport />
-          </RequireAuth>
-        } />
-        
-        <Route path="/disputes" element={
-          <RequireAuth allowedRoles={['entrepreneur', 'brand', 'admin']}>
-            <Disputes />
-          </RequireAuth>
-        } />
-        
-        <Route path="/brand/dashboard" element={
-          <RequireAuth allowedRoles={['brand']}>
-            <BrandDashboard />
-          </RequireAuth>
-        } />
-        
-        <Route path="/brand/projects" element={
-          <RequireAuth allowedRoles={['brand']}>
-            <BrandProjects />
-          </RequireAuth>
-        } />
-        
-        <Route path="/brand/franchisees" element={
-          <RequireAuth allowedRoles={['brand']}>
-            <BrandFranchisees />
-          </RequireAuth>
-        } />
-        
-        <Route path="/admin/review" element={
-          <RequireAuth allowedRoles={['admin']}>
-            <AdminProjectReview />
-          </RequireAuth>
-        } />
-        
-        <Route path="/admin/contracts" element={
-          <RequireAuth allowedRoles={['admin']}>
-            <AdminContracts />
-          </RequireAuth>
-        } />
-        
-        <Route path="/admin/disputes" element={
-          <RequireAuth allowedRoles={['admin']}>
-            <AdminDisputes />
-          </RequireAuth>
-        } />
-        
-        <Route path="/admin/performance" element={
-          <RequireAuth allowedRoles={['admin']}>
-            <AdminPerformance />
-          </RequireAuth>
-        } />
-        
-        <Route path="*" element={<AutoRedirect />} />
+          } />
+          
+          <Route path="/map" element={
+            <RequireAuth allowedRoles={['entrepreneur']}>
+              <MapView />
+            </RequireAuth>
+          } />
+          
+          <Route path="/my-franchises" element={
+            <RequireAuth allowedRoles={['entrepreneur']}>
+              <MyFranchises />
+            </RequireAuth>
+          } />
+          
+          <Route path="/risk-reports" element={
+            <RequireAuth allowedRoles={['entrepreneur']}>
+              <RiskReport />
+            </RequireAuth>
+          } />
+          
+          <Route path="/risk-reports/:id" element={
+            <RequireAuth allowedRoles={['entrepreneur', 'admin']}>
+              <RiskReport />
+            </RequireAuth>
+          } />
+          
+          <Route path="/disputes" element={
+            <RequireAuth allowedRoles={['entrepreneur', 'brand', 'admin']}>
+              <Disputes />
+            </RequireAuth>
+          } />
+          
+          <Route path="/brand/dashboard" element={
+            <RequireAuth allowedRoles={['brand']} withLayout>
+              <BrandDashboard />
+            </RequireAuth>
+          } />
+          
+          <Route path="/brand/projects" element={
+            <RequireAuth allowedRoles={['brand']} withLayout>
+              <BrandProjects />
+            </RequireAuth>
+          } />
+          
+          <Route path="/brand/franchisees" element={
+            <RequireAuth allowedRoles={['brand']} withLayout>
+              <BrandFranchisees />
+            </RequireAuth>
+          } />
+          
+          <Route path="/admin/review" element={
+            <RequireAuth allowedRoles={['admin']}>
+              <AdminProjectReview />
+            </RequireAuth>
+          } />
+          
+          <Route path="/admin/contracts" element={
+            <RequireAuth allowedRoles={['admin']}>
+              <AdminContracts />
+            </RequireAuth>
+          } />
+          
+          <Route path="/admin/disputes" element={
+            <RequireAuth allowedRoles={['admin']}>
+              <AdminDisputes />
+            </RequireAuth>
+          } />
+          
+          <Route path="/admin/performance" element={
+            <RequireAuth allowedRoles={['admin']}>
+              <AdminPerformance />
+            </RequireAuth>
+          } />
+          
+          <Route path="*" element={<AutoRedirect />} />
+        </Route>
       </Routes>
     </Router>
   );

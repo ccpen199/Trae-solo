@@ -1,146 +1,102 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuthStore, type User } from '@/store/authStore'
 import { cn } from '@/lib/utils'
-import { Loader2, AlertCircle, CheckCircle2, ShieldCheck, Building2, UserCog } from 'lucide-react'
-
-const DEMO_ACCOUNTS: Record<string, { phone: string; password: string; label: string; icon: React.ElementType; desc: string }> = {
-  entrepreneur: { phone: '13900000001', password: 'ent123', label: '创业者', icon: Building2, desc: '张先生 · 项目筛选·商机地图·风险评估' },
-  brand: { phone: '13800000001', password: 'brand123', label: '品牌方', icon: ShieldCheck, desc: '喜茶加盟部 · 招商看板·加盟商管理' },
-  admin: { phone: '13800000000', password: 'admin123', label: '管理员', icon: UserCog, desc: '平台管理员 · 项目审核·合同·履约·纠纷' },
-}
+import { Loader2, AlertCircle } from 'lucide-react'
 
 export default function Login() {
-  const loginFn = useAuthStore(state => state.login)
+  const navigate = useNavigate()
+  const login = useAuthStore(state => state.login)
   const currentUser = useAuthStore(state => state.user)
-  const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('13900000001')
+  const [password, setPassword] = useState('ent123')
+  const [role, setRole] = useState<'entrepreneur' | 'brand' | 'admin'>('entrepreneur')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginStep, setLoginStep] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   useEffect(() => {
-    if (currentUser && loginStep !== 'submitting') {
-      doRedirect(currentUser)
+    if (currentUser) {
+      redirectByRole(currentUser)
     }
   }, [currentUser])
 
-  const doRedirect = (user: User) => {
-    const targets: Record<string, string> = {
-      admin: '/admin/review',
-      brand: '/brand/dashboard',
-      entrepreneur: '/',
+  const redirectByRole = (user: User) => {
+    if (user.role === 'admin') {
+      navigate('/admin/review', { replace: true })
+    } else if (user.role === 'brand') {
+      navigate('/brand/dashboard', { replace: true })
+    } else {
+      navigate('/', { replace: true })
     }
-    const target = targets[user.role] || '/'
-    window.location.href = target
   }
 
-  const handleLogin = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault()
-    if (!phone || !password) {
-      setError('请输入手机号和密码')
-      return
-    }
-
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
     setError('')
     setLoading(true)
     setLoginStep('submitting')
 
     try {
-      const result = await loginFn(phone, password)
-
-      if (result && result.success) {
+      const result = await login(phone, password)
+      
+      if (result.success) {
         setLoginStep('success')
-        doRedirect(result.data)
+        setTimeout(() => {
+          redirectByRole(result.data)
+        }, 500)
       } else {
         setLoginStep('error')
-        setError(result?.error || '手机号或密码错误，请检查后重试')
+        setError(result.error || '手机号或密码错误，请检查后重试')
       }
-    } catch (err: any) {
+    } catch (e: any) {
       setLoginStep('error')
-      setError('网络连接失败，请检查网络后重试')
+      setError('网络连接失败，请稍后重试')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleQuickLogin = async (role: string) => {
-    const account = DEMO_ACCOUNTS[role]
-    if (!account) return
-
-    setPhone(account.phone)
-    setPassword(account.password)
-    setError('')
-    setLoading(true)
-    setLoginStep('submitting')
-
-    try {
-      const result = await loginFn(account.phone, account.password)
-
-      if (result && result.success) {
-        setLoginStep('success')
-        doRedirect(result.data)
-      } else {
-        setLoginStep('error')
-        setError(result?.error || '登录失败，请重试')
-      }
-    } catch (err: any) {
-      setLoginStep('error')
-      setError('网络连接失败，请检查网络后重试')
-    } finally {
-      setLoading(false)
+  const quickLogin = (user: string) => {
+    const accounts: Record<string, { phone: string; password: string }> = {
+      admin: { phone: '13800000000', password: 'admin123' },
+      brand: { phone: '13800000001', password: 'brand123' },
+      entrepreneur: { phone: '13900000001', password: 'ent123' },
     }
+    setPhone(accounts[user].phone)
+    setPassword(accounts[user].password)
+    setRole(user as any)
+    setError('')
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <ShieldCheck size={32} className="text-white" />
-          </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">盟信通</h1>
           <p className="text-gray-500">加盟招商双向撮合平台</p>
         </div>
 
-        <div className="mb-6">
-          <p className="text-sm font-medium text-gray-700 mb-3">选择身份一键登录</p>
-          <div className="space-y-3">
-            {Object.entries(DEMO_ACCOUNTS).map(([key, account]) => {
-              const Icon = account.icon
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => handleQuickLogin(key)}
-                  disabled={loading}
-                  className={cn(
-                    'w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left',
-                    loading && loginStep === 'submitting'
-                      ? 'border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed'
-                      : 'border-gray-200 hover:border-blue-500 hover:bg-blue-50 active:scale-[0.98]'
-                  )}
-                >
-                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Icon size={24} className="text-blue-600" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900">{account.label}</p>
-                    <p className="text-xs text-gray-500 truncate">{account.desc}</p>
-                  </div>
-                  <div className="text-xs text-gray-400 flex-shrink-0">{account.phone}</div>
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white text-gray-400">或手动输入</span>
-          </div>
+        <div className="flex gap-2 mb-6">
+          {[
+            { key: 'entrepreneur', label: '创业者' },
+            { key: 'brand', label: '品牌方' },
+            { key: 'admin', label: '管理员' },
+          ].map(r => (
+            <button
+              key={r.key}
+              type="button"
+              onClick={() => { setRole(r.key as any); quickLogin(r.key) }}
+              className={cn(
+                'flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all',
+                role === r.key
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              )}
+            >
+              {r.label}
+            </button>
+          ))}
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
@@ -152,6 +108,7 @@ export default function Login() {
               onChange={e => setPhone(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
               placeholder="请输入手机号"
+              required
             />
           </div>
 
@@ -163,6 +120,7 @@ export default function Login() {
               onChange={e => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
               placeholder="请输入密码"
+              required
             />
           </div>
 
@@ -171,54 +129,52 @@ export default function Login() {
               <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-medium">{error}</p>
-                <p className="text-red-500 text-xs mt-1">请检查账号密码，或使用上方一键登录</p>
+                <p className="text-red-500 text-xs mt-1">请检查账号密码，或使用下方快捷登录</p>
               </div>
             </div>
           )}
 
           {loginStep === 'success' && (
             <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
-              <CheckCircle2 size={18} className="flex-shrink-0" />
+              <div className="w-4 h-4 rounded-full bg-green-500 animate-pulse"></div>
               <span>登录成功，正在跳转至工作台...</span>
-            </div>
-          )}
-
-          {loginStep === 'submitting' && (
-            <div className="bg-blue-50 border border-blue-200 text-blue-600 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
-              <Loader2 size={18} className="animate-spin flex-shrink-0" />
-              <span>正在验证身份，请稍候...</span>
             </div>
           )}
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || loginStep === 'success'}
             className={cn(
               'w-full font-medium py-3 rounded-lg transition-all flex items-center justify-center gap-2',
-              loading
+              loginStep === 'success'
+                ? 'bg-green-600 text-white'
+                : loading
                 ? 'bg-blue-400 text-white cursor-not-allowed'
-                : 'bg-blue-600 hover:bg-blue-700 text-white active:scale-[0.98]'
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
             )}
           >
             {loading && <Loader2 size={18} className="animate-spin" />}
-            {loginStep === 'submitting' ? '正在登录...' : '登 录'}
+            {loginStep === 'submitting' && '正在验证身份...'}
+            {loginStep === 'success' && '登录成功 ✓'}
+            {loginStep === 'idle' && '登 录'}
+            {loginStep === 'error' && '重新登录'}
           </button>
         </form>
 
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <p className="text-xs font-medium text-gray-700 mb-2">演示账号（点击上方角色卡片一键登录）：</p>
+          <p className="text-xs font-medium text-gray-700 mb-2">演示账号（点击上方角色按钮自动填充）：</p>
           <div className="text-xs text-gray-600 space-y-1.5">
             <div className="flex justify-between">
               <span className="text-gray-500">创业者（张先生）：</span>
-              <span className="font-mono">13900000001 / ent123</span>
+              <span className="font-mono">entrepreneur / ent123</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">品牌方（喜茶）：</span>
-              <span className="font-mono">13800000001 / brand123</span>
+              <span className="font-mono">brand / brand123</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">平台管理员：</span>
-              <span className="font-mono">13800000000 / admin123</span>
+              <span className="font-mono">admin / admin123</span>
             </div>
           </div>
         </div>

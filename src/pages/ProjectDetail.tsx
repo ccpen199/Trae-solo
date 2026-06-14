@@ -25,6 +25,7 @@ import {
 import { projectApi, riskApi, type Project } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 import ProjectCover from '@/components/ProjectCover'
 
 function StatCard({ icon: Icon, label, value, color }: { icon: any; label: string; value: string; color: string }) {
@@ -112,7 +113,7 @@ export default function ProjectDetail() {
 
   if (loading) {
     return (
-      <>
+      <Layout>
         <div className="space-y-6">
           <div className="h-8 bg-gray-200 rounded w-32 animate-pulse" />
           <div className="bg-white rounded-xl overflow-hidden animate-pulse">
@@ -128,13 +129,13 @@ export default function ProjectDetail() {
             </div>
           </div>
         </div>
-      </>
+      </Layout>
     )
   }
 
   if (error || !project) {
     return (
-      <>
+      <Layout>
         <div className="flex flex-col items-center justify-center py-20">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <AlertTriangle size={32} className="text-red-500" />
@@ -148,12 +149,12 @@ export default function ProjectDetail() {
             返回项目列表
           </button>
         </div>
-      </>
+      </Layout>
     )
   }
 
   return (
-    <>
+    <Layout>
       <div className="space-y-6">
         <button
           onClick={() => navigate('/')}
@@ -425,6 +426,6 @@ export default function ProjectDetail() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   )
 }

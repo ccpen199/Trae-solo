@@ -21,6 +21,7 @@ import {
 import { projectApi, type Project } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 import ProjectCover from '@/components/ProjectCover'
 
 const statusLabels: Record<string, { label: string; className: string }> = {
@@ -99,25 +100,9 @@ function ProjectCard({
             {project.industry}
           </span>
         </div>
-        <div className="flex items-center gap-1 text-sm text-gray-500 mb-3">
+        <div className="flex items-center gap-1 text-sm text-gray-500 mb-4">
           <MapPin size={14} />
           {project.province} {project.city}
-        </div>
-        <div className="flex flex-wrap gap-2 mb-4">
-          <span className={cn(
-            'inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full',
-            project.status !== 'pending' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
-          )}>
-            <FileText size={12} />
-            尽调: {project.status !== 'pending' ? '已提交' : '未提交'}
-          </span>
-          <span className={cn(
-            'inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full',
-            project.status === 'approved' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
-          )}>
-            <TrendingUp size={12} />
-            盈利验证: {project.status === 'approved' ? '已完成' : '未完成'}
-          </span>
         </div>
         <button
           onClick={() => onView(project)}
@@ -395,7 +380,7 @@ export default function ProjectReview() {
 
   if (user?.role !== 'admin') {
     return (
-      <>
+      <Layout>
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <AlertCircle size={48} className="text-gray-400 mx-auto mb-4" />
@@ -403,59 +388,12 @@ export default function ProjectReview() {
             <p className="text-gray-500">该页面仅平台管理员可访问</p>
           </div>
         </div>
-      </>
+      </Layout>
     )
   }
 
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <Clock size={24} className="text-yellow-600" />
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-gray-900">{projects.filter(p => p.status === 'pending').length}</p>
-              <p className="text-sm text-gray-500">待审核项目</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <FileText size={24} className="text-blue-600" />
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-gray-900">{projects.filter(p => p.status !== 'pending').length}</p>
-              <p className="text-sm text-gray-500">已提交尽调报告</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <TrendingUp size={24} className="text-green-600" />
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-gray-900">{projects.filter(p => p.status === 'approved').length}</p>
-              <p className="text-sm text-gray-500">已完成盈利验证</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-              <ShieldCheck size={24} className="text-purple-600" />
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-gray-900">{projects.filter(p => p.mengxintong_certified === 1).length}</p>
-              <p className="text-sm text-gray-500">盟信通已绑定</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <Layout>
       <div className="space-y-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
           <div className="flex items-center gap-4">
@@ -588,6 +526,6 @@ export default function ProjectReview() {
           onSuccess={handleReviewSuccess}
         />
       )}
-    </>
+    </Layout>
   )
 }

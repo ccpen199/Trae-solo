@@ -24,6 +24,7 @@ import {
 import { franchiseeApi, type Franchisee } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 
 interface PerformanceData {
   id: number
@@ -261,60 +262,6 @@ function DetailModal({
               </div>
             )}
           </div>
-
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <FileText size={18} />
-              合同履约记录
-            </h3>
-            <div className="bg-white border border-gray-100 rounded-lg overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50 border-b border-gray-100">
-                    <tr>
-                      <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">
-                        履约阶段
-                      </th>
-                      <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">
-                        应完成日期
-                      </th>
-                      <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">
-                        实际完成日期
-                      </th>
-                      <th className="text-center px-4 py-3 text-xs font-medium text-gray-500 uppercase">
-                        状态
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {[
-                      { stage: '品牌授权', due: '2025-01-10', actual: '2025-01-08', status: '按时完成' },
-                      { stage: '首批物料交付', due: '2025-02-15', actual: '2025-02-20', status: '延期' },
-                      { stage: '门店装修', due: '2025-03-30', actual: '-', status: '待完成' },
-                      { stage: '人员培训', due: '2025-04-15', actual: '-', status: '待完成' },
-                      { stage: '正式开业', due: '2025-05-01', actual: '-', status: '待完成' },
-                    ].map((record, idx) => (
-                      <tr key={idx} className="hover:bg-gray-50">
-                        <td className="px-4 py-3 text-gray-900 font-medium">{record.stage}</td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{record.due}</td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{record.actual}</td>
-                        <td className="px-4 py-3 text-center">
-                          <span className={cn(
-                            'inline-flex items-center px-2 py-1 text-xs font-medium rounded-full',
-                            record.status === '按时完成' ? 'bg-green-100 text-green-700' :
-                            record.status === '延期' ? 'bg-orange-100 text-orange-700' :
-                            'bg-gray-100 text-gray-500'
-                          )}>
-                            {record.status}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-100">
@@ -380,7 +327,7 @@ export default function Performance() {
 
   if (user?.role !== 'admin') {
     return (
-      <>
+      <Layout>
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <AlertCircle size={48} className="text-gray-400 mx-auto mb-4" />
@@ -388,12 +335,12 @@ export default function Performance() {
             <p className="text-gray-500">该页面仅平台管理员可访问</p>
           </div>
         </div>
-      </>
+      </Layout>
     )
   }
 
   return (
-    <>
+    <Layout>
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -631,6 +578,6 @@ export default function Performance() {
           onClose={() => setSelectedFranchisee(null)}
         />
       )}
-    </>
+    </Layout>
   )
 }

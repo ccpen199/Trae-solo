@@ -14,6 +14,7 @@ import {
 import { projectApi, type Project } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { cn } from '@/lib/utils'
+import Layout from '@/components/Layout'
 
 const provinces = ['北京', '上海', '广东', '江苏', '浙江', '四川', '湖北', '山东', '河南', '福建', '湖南', '安徽', '河北', '辽宁', '陕西']
 const industries = ['餐饮', '零售', '教育', '医疗', '服务', '娱乐', '科技', '家居']
@@ -283,7 +284,7 @@ export default function MapView() {
   const hasActiveFilters = selectedProvince || selectedIndustry || keyword
 
   return (
-    <>
+    <Layout>
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <StatCard
@@ -535,6 +536,6 @@ export default function MapView() {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   )
 }
