@@ -40,9 +40,10 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: '再生资源产业互联网交易平台 API 服务正常运行中', timestamp: new Date().toISOString() });
 });
 
-const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || '127.0.0.1';
+const PORT = process.env.PORT || 59211;
 
-app.listen(PORT, () => {
-  console.log(`服务器运行在端口 ${PORT}`);
-  console.log(`健康检查: http://localhost:${PORT}/api/health`);
+app.listen(PORT, HOST, () => {
+  console.log(`服务器运行在 http://${HOST}:${PORT}`);
+  console.log(`健康检查: http://${HOST}:${PORT}/api/health`);
 });
