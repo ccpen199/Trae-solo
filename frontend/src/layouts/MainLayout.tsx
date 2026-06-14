@@ -179,6 +179,9 @@ export default function MainLayout() {
 
       setAuth(newToken, newUser);
       setCurrentUser(newUser);
+
+      await new Promise(r => setTimeout(r, 50));
+
       message.success(`已切换到「${roleConfig[role]?.name || role}」角色`);
       navigate('/dashboard');
     } catch (e: any) {

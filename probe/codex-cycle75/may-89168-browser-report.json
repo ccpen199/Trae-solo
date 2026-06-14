@@ -1,0 +1,4146 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T15:24:44.406Z",
+  "order": "may-89168",
+  "roundIndex": 75,
+  "captureId": "may-89168-cycle75",
+  "url": "http://127.0.0.1:49168/",
+  "initialUrl": "http://127.0.0.1:49168/",
+  "finalUrl": "http://127.0.0.1:49168/dashboard",
+  "status": 200,
+  "title": "企业招聘与内训一体化数字工作台",
+  "initialTitle": "企业招聘与内训一体化数字工作台",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-cycle75/may-89168-cycle75-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-03-操作-切换角色.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-04-操作-全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-05-二层操作-全部-重-置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-06-导航-我的简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-07-操作-切换角色.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-08-导航-岗位广场.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-09-操作-切换角色.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-10-操作-重-置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-11-导航-岗位管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-12-操作-切换角色.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49168/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49168/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49168/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49168/login",
+        "feedback": [
+          "密码错误",
+          "登录失败",
+          "错误"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49168/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49168/login",
+        "feedback": [
+          "登录失败"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49168/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49168/login",
+        "feedback": [
+          "登录失败"
+        ]
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:切换角色",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:全部:重 置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:我的简历",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:切换角色",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:岗位广场",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:切换角色",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:重 置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:岗位管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:切换角色",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:重 置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:人才库",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:切换角色",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:智能匹配",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "全部"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线欢迎回来，系统管理员！2026年06月12日 星期五用户数4岗位数0课程数0申请数0热门岗位全部 暂无数据消息通知全部暂无新消息",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1048,
+          "scrollWidth": 1504,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49168/dashboard",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-01-首屏.png",
+          "elementCount": 244,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "全部"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "全部"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线欢迎回来，系统管理员！2026年06月12日 星期五用户数4岗位数0课程数0申请数0热门岗位全部 暂无数据消息通知全部暂无新消息",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1048,
+          "scrollWidth": 1536,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49168/dashboard",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-02-导航-工作台.png",
+          "elementCount": 244,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "全部"
+          ]
+        }
+      },
+      {
+        "label": "操作:切换角色",
+        "url": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "全部"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线欢迎回来，系统管理员！2026年06月12日 星期五用户数4岗位数0课程数0申请数0热门岗位全部 暂无数据消息通知全部暂无新消息",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1048,
+          "scrollWidth": 1568,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-03-操作-切换角色",
+          "label": "操作:切换角色",
+          "finalUrl": "http://127.0.0.1:49168/dashboard",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-03-操作-切换角色.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-03-操作-切换角色.png",
+          "elementCount": 246,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "全部"
+          ]
+        }
+      },
+      {
+        "label": "操作:全部",
+        "url": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "重 置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、部门、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "最低薪资",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线岗位广场K重 置暂无岗位",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1048,
+          "scrollWidth": 1600,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-04-操作-全部",
+          "label": "操作:全部",
+          "finalUrl": "http://127.0.0.1:49168/jobs",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-04-操作-全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-04-操作-全部.png",
+          "elementCount": 247,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索岗位、部门、描述...",
+            "工作地点",
+            "Increase Value",
+            "Decrease Value",
+            "最低薪资",
+            "重 置"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:全部->重 置",
+        "url": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "重 置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、部门、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "最低薪资",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线岗位广场K重 置暂无岗位",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1048,
+          "scrollWidth": 1632,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-05-二层操作-全部-重-置",
+          "label": "二层操作:全部->重 置",
+          "finalUrl": "http://127.0.0.1:49168/jobs",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-05-二层操作-全部-重-置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-05-二层操作-全部-重-置.png",
+          "elementCount": 249,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索岗位、部门、描述...",
+            "工作地点",
+            "Increase Value",
+            "Decrease Value",
+            "最低薪资",
+            "重 置"
+          ]
+        }
+      },
+      {
+        "label": "导航:我的简历",
+        "url": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索姓名、技能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "求职者",
+              "工作经验",
+              "学历",
+              "技能标签",
+              "更新时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "求职者 工作经验 学历 技能标签 更新时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线人才简历库求职者工作经验学历技能标签更新时间操作暂无数据",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1048,
+          "scrollWidth": 1664,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-06-导航-我的简历",
+          "label": "导航:我的简历",
+          "finalUrl": "http://127.0.0.1:49168/resumes",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-06-导航-我的简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-06-导航-我的简历.png",
+          "elementCount": 192,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索姓名、技能..."
+          ]
+        }
+      },
+      {
+        "label": "操作:切换角色",
+        "url": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索姓名、技能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "求职者",
+              "工作经验",
+              "学历",
+              "技能标签",
+              "更新时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "求职者 工作经验 学历 技能标签 更新时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线人才简历库求职者工作经验学历技能标签更新时间操作暂无数据",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1048,
+          "scrollWidth": 1696,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-07-操作-切换角色",
+          "label": "操作:切换角色",
+          "finalUrl": "http://127.0.0.1:49168/resumes",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-07-操作-切换角色.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-07-操作-切换角色.png",
+          "elementCount": 194,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索姓名、技能..."
+          ]
+        }
+      },
+      {
+        "label": "导航:岗位广场",
+        "url": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "重 置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、部门、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "最低薪资",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线岗位广场K重 置暂无岗位",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1048,
+          "scrollWidth": 1728,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-08-导航-岗位广场",
+          "label": "导航:岗位广场",
+          "finalUrl": "http://127.0.0.1:49168/jobs",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-08-导航-岗位广场.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-08-导航-岗位广场.png",
+          "elementCount": 247,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索岗位、部门、描述...",
+            "工作地点",
+            "Increase Value",
+            "Decrease Value",
+            "最低薪资",
+            "重 置"
+          ]
+        }
+      },
+      {
+        "label": "操作:切换角色",
+        "url": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "重 置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、部门、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "最低薪资",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线岗位广场K重 置暂无岗位",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1048,
+          "scrollWidth": 1760,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-09-操作-切换角色",
+          "label": "操作:切换角色",
+          "finalUrl": "http://127.0.0.1:49168/jobs",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-09-操作-切换角色.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-09-操作-切换角色.png",
+          "elementCount": 249,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索岗位、部门、描述...",
+            "工作地点",
+            "Increase Value",
+            "Decrease Value",
+            "最低薪资",
+            "重 置"
+          ]
+        }
+      },
+      {
+        "label": "操作:重 置",
+        "url": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "重 置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、部门、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "最低薪资",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线岗位广场K重 置暂无岗位",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1048,
+          "scrollWidth": 1792,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-10-操作-重-置",
+          "label": "操作:重 置",
+          "finalUrl": "http://127.0.0.1:49168/jobs",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-10-操作-重-置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-10-操作-重-置.png",
+          "elementCount": 249,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索岗位、部门、描述...",
+            "工作地点",
+            "Increase Value",
+            "Decrease Value",
+            "最低薪资",
+            "重 置"
+          ]
+        }
+      },
+      {
+        "label": "导航:岗位管理",
+        "url": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "重 置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、部门、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "最低薪资",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线岗位广场K重 置暂无岗位",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1048,
+          "scrollWidth": 1824,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-11-导航-岗位管理",
+          "label": "导航:岗位管理",
+          "finalUrl": "http://127.0.0.1:49168/jobs",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-11-导航-岗位管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-11-导航-岗位管理.png",
+          "elementCount": 247,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索岗位、部门、描述...",
+            "工作地点",
+            "Increase Value",
+            "Decrease Value",
+            "最低薪资",
+            "重 置"
+          ]
+        }
+      },
+      {
+        "label": "操作:切换角色",
+        "url": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "重 置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、部门、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "最低薪资",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线岗位广场K重 置暂无岗位",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1048,
+          "scrollWidth": 1856,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-12-操作-切换角色",
+          "label": "操作:切换角色",
+          "finalUrl": "http://127.0.0.1:49168/jobs",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-12-操作-切换角色.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-12-操作-切换角色.png",
+          "elementCount": 249,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索岗位、部门、描述...",
+            "工作地点",
+            "Increase Value",
+            "Decrease Value",
+            "最低薪资",
+            "重 置"
+          ]
+        }
+      },
+      {
+        "label": "操作:重 置",
+        "url": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "重 置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、部门、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "最低薪资",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线岗位广场K重 置暂无岗位",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1048,
+          "scrollWidth": 1888,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-13-操作-重-置",
+          "label": "操作:重 置",
+          "finalUrl": "http://127.0.0.1:49168/jobs",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-13-操作-重-置.json",
+          "screenshotPath": "",
+          "elementCount": 249,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索岗位、部门、描述...",
+            "工作地点",
+            "Increase Value",
+            "Decrease Value",
+            "最低薪资",
+            "重 置"
+          ]
+        }
+      },
+      {
+        "label": "导航:人才库",
+        "url": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索姓名、技能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "求职者",
+              "工作经验",
+              "学历",
+              "技能标签",
+              "更新时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "求职者 工作经验 学历 技能标签 更新时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线人才简历库求职者工作经验学历技能标签更新时间操作暂无数据",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1048,
+          "scrollWidth": 1920,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-14-导航-人才库",
+          "label": "导航:人才库",
+          "finalUrl": "http://127.0.0.1:49168/resumes",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-14-导航-人才库.json",
+          "screenshotPath": "",
+          "elementCount": 192,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索姓名、技能..."
+          ]
+        }
+      },
+      {
+        "label": "操作:切换角色",
+        "url": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索姓名、技能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "求职者",
+              "工作经验",
+              "学历",
+              "技能标签",
+              "更新时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "求职者 工作经验 学历 技能标签 更新时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线人才简历库求职者工作经验学历技能标签更新时间操作暂无数据",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1048,
+          "scrollWidth": 1952,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-15-操作-切换角色",
+          "label": "操作:切换角色",
+          "finalUrl": "http://127.0.0.1:49168/resumes",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-15-操作-切换角色.json",
+          "screenshotPath": "",
+          "elementCount": 194,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "搜索姓名、技能..."
+          ]
+        }
+      },
+      {
+        "label": "导航:智能匹配",
+        "url": "http://127.0.0.1:49168/matching",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "我的简历",
+          "file-text",
+          "岗位广场",
+          "account-book",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "bulb",
+          "职场社区",
+          "team",
+          "内容审核",
+          "audit",
+          "直聊系统",
+          "message",
+          "客户线索池",
+          "contacts",
+          "电子名片",
+          "idcard",
+          "精准推送",
+          "rocket",
+          "网校课程",
+          "book"
+        ],
+        "buttons": [
+          "切换角色",
+          "意图识别",
+          "刷新推荐"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入需求分析意图...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏢 招聘内训工作台工作台我的简历岗位广场岗位管理人才库智能匹配职场社区内容审核直聊系统客户线索池电子名片精准推送网校课程发布课程我的学习我的证书用户管理操作审计日志RBAC权限边界🛡️系统管理员@admin切换角色系统管理员在线 多维智能匹配中心意图识别智能推荐结果刷新推荐 岗位推荐（求职者） 人才推荐（HR）暂无匹配的候选人 匹配概览推荐总数0高精度匹配0平均匹配度0%平均置信度0%技能分布图谱",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1048,
+          "scrollWidth": 1984,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-cycle75-structure-16-导航-智能匹配",
+          "label": "导航:智能匹配",
+          "finalUrl": "http://127.0.0.1:49168/matching",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-16-导航-智能匹配.json",
+          "screenshotPath": "",
+          "elementCount": 268,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+            "工作台",
+            "我的简历",
+            "岗位广场",
+            "岗位管理",
+            "人才库",
+            "智能匹配",
+            "职场社区",
+            "内容审核",
+            "直聊系统",
+            "客户线索池",
+            "电子名片",
+            "精准推送",
+            "网校课程",
+            "发布课程",
+            "我的学习",
+            "我的证书",
+            "用户管理",
+            "操作审计日志",
+            "RBAC权限边界",
+            "切换角色",
+            "输入需求分析意图...",
+            "意图识别",
+            "刷新推荐",
+            "人才推荐（HR）"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。",
+      "接口 /api/auth/login 返回 HTTP 401，对应业务模块无法完成数据读取。",
+      "接口 /api/matching/resumes/recommend/demo 返回 HTTP 404，对应业务模块无法完成数据读取。",
+      "首屏、工作台、切换角色入口、我的简历、人才库 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。",
+      "多个核心页面同时空列表且接口失败，当前系统没有形成“页面操作 - API - SQLite 数据”的闭环。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。",
+      "补齐 /api/auth/login 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/matching/resumes/recommend/demo 后端接口、SQLite 数据和前端错误处理。",
+      "为 首屏、工作台、切换角色入口、我的简历、人才库 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。",
+      "优先打通版本、策略、发布、监控和回滚的核心接口与 SQLite 落库链路。"
+    ],
+    "emptyPages": [
+      "首屏",
+      "工作台",
+      "切换角色入口",
+      "我的简历",
+      "人才库"
+    ],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/login",
+      "/api/matching/resumes/recommend/demo"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "切换角色",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "全部->重 置",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "我的简历",
+        "label": "切换角色",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "岗位广场",
+        "label": "切换角色",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "岗位广场",
+        "label": "重 置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "岗位管理",
+        "label": "切换角色",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "岗位管理",
+        "label": "重 置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "人才库",
+        "label": "切换角色",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-01-首屏.png",
+        "elementCount": 244,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-02-导航-工作台.png",
+        "elementCount": 244,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-03-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-03-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-03-操作-切换角色.png",
+        "elementCount": 246,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-04-操作-全部",
+        "label": "操作:全部",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-04-操作-全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-04-操作-全部.png",
+        "elementCount": 247,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-05-二层操作-全部-重-置",
+        "label": "二层操作:全部->重 置",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-05-二层操作-全部-重-置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-05-二层操作-全部-重-置.png",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-06-导航-我的简历",
+        "label": "导航:我的简历",
+        "finalUrl": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-06-导航-我的简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-06-导航-我的简历.png",
+        "elementCount": 192,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索姓名、技能..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-07-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-07-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-07-操作-切换角色.png",
+        "elementCount": 194,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索姓名、技能..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-08-导航-岗位广场",
+        "label": "导航:岗位广场",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-08-导航-岗位广场.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-08-导航-岗位广场.png",
+        "elementCount": 247,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-09-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-09-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-09-操作-切换角色.png",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-10-操作-重-置",
+        "label": "操作:重 置",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-10-操作-重-置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-10-操作-重-置.png",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-11-导航-岗位管理",
+        "label": "导航:岗位管理",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-11-导航-岗位管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-11-导航-岗位管理.png",
+        "elementCount": 247,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-12-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-12-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-12-操作-切换角色.png",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-13-操作-重-置",
+        "label": "操作:重 置",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-13-操作-重-置.json",
+        "screenshotPath": "",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-14-导航-人才库",
+        "label": "导航:人才库",
+        "finalUrl": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-14-导航-人才库.json",
+        "screenshotPath": "",
+        "elementCount": 192,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索姓名、技能..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-15-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-15-操作-切换角色.json",
+        "screenshotPath": "",
+        "elementCount": 194,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索姓名、技能..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-16-导航-智能匹配",
+        "label": "导航:智能匹配",
+        "finalUrl": "http://127.0.0.1:49168/matching",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-16-导航-智能匹配.json",
+        "screenshotPath": "",
+        "elementCount": 268,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "输入需求分析意图...",
+          "意图识别",
+          "刷新推荐",
+          "人才推荐（HR）"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49168/dashboard",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 16,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-01-首屏.png",
+        "elementCount": 244,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-02-导航-工作台.png",
+        "elementCount": 244,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-03-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/dashboard",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-03-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-03-操作-切换角色.png",
+        "elementCount": 246,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-04-操作-全部",
+        "label": "操作:全部",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-04-操作-全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-04-操作-全部.png",
+        "elementCount": 247,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-05-二层操作-全部-重-置",
+        "label": "二层操作:全部->重 置",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-05-二层操作-全部-重-置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-05-二层操作-全部-重-置.png",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-06-导航-我的简历",
+        "label": "导航:我的简历",
+        "finalUrl": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-06-导航-我的简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-06-导航-我的简历.png",
+        "elementCount": 192,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索姓名、技能..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-07-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-07-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-07-操作-切换角色.png",
+        "elementCount": 194,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索姓名、技能..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-08-导航-岗位广场",
+        "label": "导航:岗位广场",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-08-导航-岗位广场.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-08-导航-岗位广场.png",
+        "elementCount": 247,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-09-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-09-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-09-操作-切换角色.png",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-10-操作-重-置",
+        "label": "操作:重 置",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-10-操作-重-置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-10-操作-重-置.png",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-11-导航-岗位管理",
+        "label": "导航:岗位管理",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-11-导航-岗位管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-11-导航-岗位管理.png",
+        "elementCount": 247,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-12-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-12-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-12-操作-切换角色.png",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-13-操作-重-置",
+        "label": "操作:重 置",
+        "finalUrl": "http://127.0.0.1:49168/jobs",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-13-操作-重-置.json",
+        "screenshotPath": "",
+        "elementCount": 249,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索岗位、部门、描述...",
+          "工作地点",
+          "Increase Value",
+          "Decrease Value",
+          "最低薪资",
+          "重 置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-14-导航-人才库",
+        "label": "导航:人才库",
+        "finalUrl": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-14-导航-人才库.json",
+        "screenshotPath": "",
+        "elementCount": 192,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索姓名、技能..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-15-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:49168/resumes",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-15-操作-切换角色.json",
+        "screenshotPath": "",
+        "elementCount": 194,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "搜索姓名、技能..."
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-cycle75-structure-16-导航-智能匹配",
+        "label": "导航:智能匹配",
+        "finalUrl": "http://127.0.0.1:49168/matching",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-cycle75/may-89168-cycle75-structure-16-导航-智能匹配.json",
+        "screenshotPath": "",
+        "elementCount": 268,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 我的简历 岗位广场 岗位管理 人才库 智能匹配 职场社区 内容审核 直聊系统 客户线索池 电子名片 精准推送 网校课程 发布课程 我的学习 我的证书 用户管理 操作审计日志 RBAC权限边界",
+          "工作台",
+          "我的简历",
+          "岗位广场",
+          "岗位管理",
+          "人才库",
+          "智能匹配",
+          "职场社区",
+          "内容审核",
+          "直聊系统",
+          "客户线索池",
+          "电子名片",
+          "精准推送",
+          "网校课程",
+          "发布课程",
+          "我的学习",
+          "我的证书",
+          "用户管理",
+          "操作审计日志",
+          "RBAC权限边界",
+          "切换角色",
+          "输入需求分析意图...",
+          "意图识别",
+          "刷新推荐",
+          "人才推荐（HR）"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2016,
+    "height": 1048,
+    "scrollWidth": 1984,
+    "scrollHeight": 1048
+  },
+  "initialBodyTextPreview": "🏢 企业招聘与内训工作台\n智能匹配 · 职场社区 · 在线学习\n🎯 一键登录（点击即自动填充并提交）\n admin系统管理员 · 全部权限\n hr01HR招聘专员 · 招聘、线索、聊天\n trainer01培训管理员 · 课程、学习、证书\n seeker01个人求职者 · 简历、岗位、社区\n🔑 所有测试账号密码统一为：123456\n账号登录\n新用户注册\n用户名 / 邮箱\n密码\n登 录 进 入 工 作 台\n遇到问题？请点击上方「一键登录」卡片中的账号直接体验\n© 2026 企业招聘与内训一体化数字工作台 · 端口 前端 49168 / 后端 59168",
+  "bodyTextPreview": "正在加载 系统管理员工作台...\n系统管理员",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/roles/available"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/chat/unread/count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/stats/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/community/topics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/notifications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/roles/available"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/chat/unread/count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/stats/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/community/topics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/notifications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/jobs?keyword=&location=&industry=&experienceLevel="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/roles/available"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/chat/unread/count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/stats/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/community/topics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/notifications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/resumes?keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/jobs?keyword=&location=&industry=&experienceLevel="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/resumes?keyword="
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49168/api/matching/resumes/recommend/demo"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/matching/skill-graph"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/auth/roles/available"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/chat/unread/count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/stats/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/community/topics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49168/api/notifications"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49168/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49168/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49168/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49168/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49168/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Duplicated key '/jobs' used in Menu by path [/jobs]",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Duplicated key '/resumes' used in Menu by path [/resumes]",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Duplicated key '/jobs' used in Menu by path [/jobs]",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Duplicated key '/resumes' used in Menu by path [/resumes]",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: InputNumber] `addonAfter` is deprecated. Please use `Space.Compact` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Duplicated key '/jobs' used in Menu by path [/jobs]",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Duplicated key '/resumes' used in Menu by path [/resumes]",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: InputNumber] `addonAfter` is deprecated. Please use `Space.Compact` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49168/api/matching/resumes/recommend/demo",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /jobs \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s /resumes \n    at div\n    at InheritableContextProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:31072:23)\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32241:43\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34161:29\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:34268:45\n    at div\n    at aside\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:32789:16\n    at div\n    at http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:66247:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49168/src/layouts/MainLayout.tsx:187:37)\n    at ProtectedRoute (http://127.0.0.1:49168/src/App.tsx:56:27)\n    at RenderedRoute (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4122:5)\n    at Routes (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4592:5)\n    at App\n    at Router (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:4535:15)\n    at BrowserRouter (http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155:5273:5)\n    at div\n    at App (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:20924:16)\n    at LocaleProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:3733:13)\n    at MotionWrapper (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6267:32)\n    at ProviderChildren (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6375:5)\n    at ConfigProvider (http://127.0.0.1:49168/node_modules/.vite/deps/antd.js?v=02886155:6666:27)",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Duplicated key '/jobs' used in Menu by path [/jobs]",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Duplicated key '/resumes' used in Menu by path [/resumes]",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49168/api/matching/resumes/recommend/demo"
+    }
+  ]
+}
