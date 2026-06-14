@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -16,6 +16,8 @@ import {
   AlertTriangle,
   CheckCircle2,
   Loader2,
+  XCircle,
+  Info,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import type { UserRole } from '@/types';
@@ -59,7 +61,7 @@ const roleTabs: RoleTab[] = [
   {
     key: 'ADMIN',
     label: '运营管理员',
-    subLabel: 'ADMIN',
+    subLabel: 'ADMIN / OPS',
     icon: UserCog,
     phone: defaultUser.ADMIN.phone,
     code: '888888',
@@ -71,28 +73,89 @@ const roleTabs: RoleTab[] = [
 
 const VALID_CODES = ['888888', '666666', '123456'];
 
-function validatePhone(phone: string): { valid: boolean; message: string } {
+type ValidationError = {
+  type: 'phone_format' | 'phone_not_match' | 'phone_wrong_role' | 'code_empty' | 'code_length' | 'code_wrong';
+  field: 'phone' | 'code' | 'general';
+  message: string;
+  suggestion?: string;
+};
+
+function cleanPhone(phone: string): string {
+  return phone.replace(/[\s\-]/g, '');
+}
+
+function validatePhoneFormat(phone: string): { valid: boolean; message: string } {
   if (!phone.trim()) return { valid: false, message: '请输入手机号' };
-  const clean = phone.replace(/\s/g, '');
-  if (!/^1[3-9]\d{9}$/.test(clean) && !/^0\d{2,3}-?\d{7,8}$/.test(clean)) {
+  const clean = cleanPhone(phone);
+  const isMobile = /^1[3-9]\d{9}$/.test(clean);
+  const isLandline = /^0\d{10,11}$/.test(clean);
+  if (!isMobile && !isLandline) {
     return { valid: false, message: '手机号格式不正确' };
   }
   return { valid: true, message: '' };
 }
 
-function validateCode(code: string): { valid: boolean; message: string } {
+function validateCodeFormat(code: string): { valid: boolean; message: string } {
   if (!code.trim()) return { valid: false, message: '请输入验证码' };
   if (code.length !== 6) return { valid: false, message: '验证码为6位数字' };
-  if (!VALID_CODES.includes(code)) return { valid: false, message: '验证码错误，演示验证码：888888' };
   return { valid: true, message: '' };
 }
 
 function matchRoleByPhone(phone: string): UserRole | null {
-  const clean = phone.replace(/\s/g, '');
+  const clean = cleanPhone(phone);
   for (const tab of roleTabs) {
-    if (tab.phone.replace(/\s/g, '') === clean) return tab.key;
+    if (cleanPhone(tab.phone) === clean) return tab.key;
   }
   return null;
+}
+
+function getValidationResult(
+  phone: string,
+  code: string,
+  activeRole: UserRole,
+): { pass: boolean; errors: ValidationError[]; matchedRole: UserRole | null } {
+  const errors: ValidationError[] = [];
+  const phoneFormatCheck = validatePhoneFormat(phone);
+  const codeFormatCheck = validateCodeFormat(code);
+
+  if (!phoneFormatCheck.valid) {
+    errors.push({ type: 'phone_format', field: 'phone', message: phoneFormatCheck.message });
+  }
+
+  if (!codeFormatCheck.valid) {
+    errors.push({ type: 'code_length', field: 'code', message: codeFormatCheck.message });
+  }
+
+  if (codeFormatCheck.valid && !VALID_CODES.includes(code)) {
+    errors.push({
+      type: 'code_wrong',
+      field: 'code',
+      message: '验证码错误',
+      suggestion: '演示环境验证码固定为 888888',
+    });
+  }
+
+  let matchedRole: UserRole | null = null;
+  if (phoneFormatCheck.valid) {
+    matchedRole = matchRoleByPhone(phone);
+    if (!matchedRole) {
+      errors.push({
+        type: 'phone_not_match',
+        field: 'phone',
+        message: '该账号未在系统中注册',
+        suggestion: '请使用演示账号：货主 13800000001 / 司机 13800000002 / 管理员 021-88880000',
+      });
+    } else if (matchedRole !== activeRole) {
+      errors.push({
+        type: 'phone_wrong_role',
+        field: 'general',
+        message: `该手机号为「${roleTabs.find((t) => t.key === matchedRole)?.label}」账号，与当前选择的「${roleTabs.find((t) => t.key === activeRole)?.label}」不匹配`,
+        suggestion: `系统将自动切换到正确角色后登录`,
+      });
+    }
+  }
+
+  return { pass: errors.length === 0 || (errors.length === 1 && errors[0].type === 'phone_wrong_role'), errors, matchedRole };
 }
 
 export default function LoginPage() {
@@ -101,9 +164,10 @@ export default function LoginPage() {
   const [code, setCode] = useState<string>('');
   const [countdown, setCountdown] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [errors, setErrors] = useState<{ phone?: string; code?: string; general?: string }>({});
+  const [errors, setErrors] = useState<ValidationError[]>([]);
   const [successMsg, setSuccessMsg] = useState<string>('');
   const [codeSent, setCodeSent] = useState<boolean>(false);
+  const [validationState, setValidationState] = useState<'idle' | 'checking' | 'success' | 'fail'>('idle');
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -112,7 +176,7 @@ export default function LoginPage() {
   const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
 
   const currentTab = roleTabs.find((t) => t.key === activeRole)!;
-  const from = (location.state as any)?.from || { pathname: currentTab.defaultRoute };
+  const from = (location.state as any)?.from;
 
   useEffect(() => {
     const el = tabRefs.current[activeRole];
@@ -129,8 +193,9 @@ export default function LoginPage() {
     const tab = roleTabs.find((t) => t.key === activeRole);
     if (tab) {
       setPhone(tab.phone);
-      setErrors({});
+      setErrors([]);
       setSuccessMsg('');
+      setValidationState('idle');
     }
   }, [activeRole]);
 
@@ -140,83 +205,114 @@ export default function LoginPage() {
     return () => clearTimeout(t);
   }, [countdown]);
 
+  const fieldErrors = (field: 'phone' | 'code') => errors.filter((e) => e.field === field);
+  const generalErrors = () => errors.filter((e) => e.field === 'general');
+
   const handleSendCode = () => {
-    const phoneCheck = validatePhone(phone);
-    if (!phoneCheck.valid) {
-      setErrors({ phone: phoneCheck.message });
+    const check = validatePhoneFormat(phone);
+    if (!check.valid) {
+      setErrors([{ type: 'phone_format', field: 'phone', message: check.message }]);
+      setValidationState('fail');
       return;
     }
-    setErrors({});
+    const matched = matchRoleByPhone(phone);
+    if (!matched) {
+      setErrors([
+        {
+          type: 'phone_not_match',
+          field: 'phone',
+          message: '该账号未在系统中注册',
+          suggestion: '请使用演示账号：货主 13800000001 / 司机 13800000002 / 管理员 021-88880000',
+        },
+      ]);
+      setValidationState('fail');
+      return;
+    }
+    if (matched !== activeRole) {
+      setErrors([
+        {
+          type: 'phone_wrong_role',
+          field: 'phone',
+          message: `该手机号属于「${roleTabs.find((t) => t.key === matched)?.label}」`,
+          suggestion: `请切换到对应角色 Tab，或直接登录将自动切换`,
+        },
+      ]);
+      setValidationState('fail');
+      return;
+    }
+
+    setErrors([]);
     setCountdown(60);
     setCode('888888');
     setCodeSent(true);
-    setSuccessMsg('验证码已发送，演示验证码：888888');
+    setValidationState('success');
+    setSuccessMsg(`验证码已发送至 ${phone}，演示验证码：888888`);
     setTimeout(() => setSuccessMsg(''), 3000);
   };
 
+  const doLogin = useCallback((role: UserRole) => {
+    setLoading(true);
+    setErrors([]);
+    setValidationState('success');
+    setSuccessMsg('身份验证通过，正在进入系统...');
+
+    const tab = roleTabs.find((t) => t.key === role)!;
+    const targetPath = tab.defaultRoute;
+
+    setTimeout(() => {
+      login(role, tab.phone);
+      setLoading(false);
+      navigate(targetPath, { replace: true });
+    }, 800);
+  }, [login, navigate]);
+
   const handleLogin = () => {
-    setErrors({});
+    setErrors([]);
     setSuccessMsg('');
+    setValidationState('checking');
 
-    const phoneCheck = validatePhone(phone);
-    const codeCheck = validateCode(code);
+    const result = getValidationResult(phone, code, activeRole);
 
-    if (!phoneCheck.valid || !codeCheck.valid) {
-      setErrors({
-        phone: phoneCheck.valid ? undefined : phoneCheck.message,
-        code: codeCheck.valid ? undefined : codeCheck.message,
-      });
+    if (result.errors.length > 0) {
+      setErrors(result.errors);
+      if (result.errors[0].type === 'phone_wrong_role' && result.matchedRole) {
+        setValidationState('checking');
+        setSuccessMsg(result.errors[0].message + '，正在自动切换角色...');
+        const targetRole = result.matchedRole;
+        setActiveRole(targetRole);
+        setTimeout(() => {
+          doLogin(targetRole);
+        }, 1000);
+        return;
+      }
+      setValidationState('fail');
       return;
     }
 
-    const matchedRole = matchRoleByPhone(phone);
-    if (matchedRole && matchedRole !== activeRole) {
-      setErrors({
-        general: `该手机号为${roleTabs.find(t => t.key === matchedRole)?.label}账号，正在切换...`,
-      });
-      setActiveRole(matchedRole);
-      setTimeout(() => {
-        doLogin(matchedRole);
-      }, 800);
+    if (!result.matchedRole) {
+      setValidationState('fail');
       return;
     }
 
     doLogin(activeRole);
   };
 
-  const doLogin = (role: UserRole) => {
-    setLoading(true);
-    setErrors({});
-    setSuccessMsg('身份验证通过，正在进入系统...');
-
-    const tab = roleTabs.find((t) => t.key === role)!;
-    setTimeout(() => {
-      login(role, tab.phone);
-      setLoading(false);
-      navigate(from.pathname || tab.defaultRoute, { replace: true });
-    }, 900);
-  };
-
   const handleQuickLogin = (role: UserRole) => {
     setActiveRole(role);
-    setErrors({});
-    setSuccessMsg(`正在以${roleTabs.find(t => t.key === role)?.label}身份快速登录...`);
+    setErrors([]);
+    setValidationState('success');
+    const tab = roleTabs.find((t) => t.key === role)!;
+    setSuccessMsg(`正在以「${tab.label}」身份快速登录...`);
     setLoading(true);
 
-    const tab = roleTabs.find((t) => t.key === role)!;
     setTimeout(() => {
       login(role, tab.phone);
       setLoading(false);
       navigate(tab.defaultRoute, { replace: true });
-    }, 700);
+    }, 600);
   };
 
-  const getColorClass = (type: 'bg' | 'text' | 'border', shade: string = '500') => {
-    const colorMap: Record<string, string> = {
-      orange: `bg-orange-${shade}`,
-      cyan: `bg-signal-cyan`,
-      green: `bg-signal-green`,
-    };
+  const getColorClass = (type: 'bg' | 'text' | 'border') => {
     if (type === 'bg') {
       return currentTab.color === 'orange' ? 'bg-orange-500' :
              currentTab.color === 'cyan' ? 'bg-cyan-500' : 'bg-emerald-500';
@@ -230,6 +326,13 @@ export default function LoginPage() {
              currentTab.color === 'cyan' ? 'border-cyan-500' : 'border-emerald-500';
     }
     return '';
+  };
+
+  const getStatusIcon = () => {
+    if (validationState === 'checking') return <Loader2 size={14} className="animate-spin text-signal-cyan" />;
+    if (validationState === 'success') return <CheckCircle2 size={14} className="text-signal-green" />;
+    if (validationState === 'fail') return <XCircle size={14} className="text-signal-red" />;
+    return <span className="status-dot bg-signal-green animate-pulse-fast" />;
   };
 
   return (
@@ -363,7 +466,7 @@ export default function LoginPage() {
       </div>
 
       {/* 登录卡片区域 */}
-      <div className="flex-1 flex items-center justify-center px-6 py-10 relative">
+      <div className="flex-1 flex items-center justify-center px-6 py-10 relative overflow-y-auto">
         <div className="absolute inset-0 data-grid opacity-20" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -373,14 +476,22 @@ export default function LoginPage() {
 
             <div className="mb-7">
               <div className="flex items-center gap-2 mb-2">
-                <span className="status-dot bg-signal-green animate-pulse-fast" />
-                <span className="text-[10px] font-mono text-slate-500 tracking-widest">SYSTEM ONLINE · NODE-07</span>
+                {getStatusIcon()}
+                <span className="text-[10px] font-mono text-slate-500 tracking-widest">
+                  {validationState === 'checking'
+                    ? 'AUTHENTICATING...'
+                    : validationState === 'fail'
+                      ? 'VALIDATION FAILED'
+                      : validationState === 'success'
+                        ? 'VERIFICATION PASSED'
+                        : 'SYSTEM ONLINE · AUTH TERMINAL'}
+                </span>
               </div>
               <h2 className="font-display font-bold text-2xl text-white tracking-wide mb-1">
                 账号登录
               </h2>
               <p className="text-xs text-slate-400 font-mono">
-                AUTHENTICATION TERMINAL · 身份验证终端
+                请选择角色并输入对应账号信息
               </p>
             </div>
 
@@ -431,17 +542,45 @@ export default function LoginPage() {
               </div>
 
               <div className={`mt-3 px-3 py-2 bg-ink-950/40 border-l-2 rounded-r-sm ${getColorClass('border')}`}>
-                <p className="text-[11px] text-slate-400 font-medium">{currentTab.desc}</p>
+                <div className="flex items-start gap-2">
+                  <Info size={13} className={`mt-0.5 shrink-0 ${getColorClass('text')}`} />
+                  <div>
+                    <p className="text-[11px] text-slate-400 font-medium">{currentTab.desc}</p>
+                    <p className="text-[10px] text-slate-500 mt-0.5 font-mono">
+                      演示账号：<span className={getColorClass('text')}>{currentTab.phone}</span>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* 全局提示 */}
-            {errors.general && (
-              <div className="mb-4 flex items-start gap-2 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-sm">
-                <AlertTriangle size={14} className="text-signal-yellow shrink-0 mt-0.5" />
-                <p className="text-[11px] text-yellow-300 leading-relaxed">{errors.general}</p>
+            {/* 全局错误 */}
+            {generalErrors().map((err, idx) => (
+              <div
+                key={idx}
+                className={`mb-4 flex items-start gap-2 p-3 rounded-sm ${
+                  err.type === 'phone_wrong_role'
+                    ? 'bg-yellow-500/10 border border-yellow-500/30'
+                    : 'bg-red-500/10 border border-red-500/30'
+                }`}
+              >
+                <AlertTriangle
+                  size={14}
+                  className={`shrink-0 mt-0.5 ${err.type === 'phone_wrong_role' ? 'text-signal-yellow' : 'text-signal-red'}`}
+                />
+                <div className="space-y-1">
+                  <p className={`text-[11px] leading-relaxed ${err.type === 'phone_wrong_role' ? 'text-yellow-300' : 'text-red-300'}`}>
+                    {err.message}
+                  </p>
+                  {err.suggestion && (
+                    <p className="text-[10px] text-slate-400">
+                      💡 {err.suggestion}
+                    </p>
+                  )}
+                </div>
               </div>
-            )}
+            ))}
+
             {successMsg && (
               <div className="mb-4 flex items-start gap-2 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-sm">
                 <CheckCircle2 size={14} className="text-signal-green shrink-0 mt-0.5" />
@@ -454,39 +593,73 @@ export default function LoginPage() {
               {/* 手机号 */}
               <div>
                 <label className="text-[11px] font-mono text-slate-500 mb-1.5 block tracking-wide">
-                  手机号 / PHONE NUMBER
+                  账号 / ACCOUNT
                 </label>
                 <div className="relative">
-                  <Phone size={16} className={`absolute left-3 top-1/2 -translate-y-1/2 ${errors.phone ? 'text-signal-red' : 'text-slate-500'}`} />
+                  <Phone
+                    size={16}
+                    className={`absolute left-3 top-1/2 -translate-y-1/2 ${
+                      fieldErrors('phone').length > 0 ? 'text-signal-red' : 'text-slate-500'
+                    }`}
+                  />
                   <input
-                    type="tel"
+                    type="text"
                     value={phone}
                     onChange={(e) => {
                       setPhone(e.target.value);
-                      if (errors.phone) setErrors({ ...errors, phone: undefined });
+                      if (fieldErrors('phone').length > 0) {
+                        setErrors((prev) => prev.filter((e) => e.field !== 'phone'));
+                      }
                     }}
                     onBlur={() => {
-                      const check = validatePhone(phone);
-                      if (!check.valid) setErrors({ ...errors, phone: check.message });
+                      const check = validatePhoneFormat(phone);
+                      const matched = matchRoleByPhone(phone);
+                      const newErrors: ValidationError[] = [];
+                      if (!check.valid) {
+                        newErrors.push({ type: 'phone_format', field: 'phone', message: check.message });
+                      } else if (!matched) {
+                        newErrors.push({
+                          type: 'phone_not_match',
+                          field: 'phone',
+                          message: '该账号未注册',
+                          suggestion: '请使用演示账号',
+                        });
+                      } else if (matched !== activeRole) {
+                        newErrors.push({
+                          type: 'phone_wrong_role',
+                          field: 'phone',
+                          message: `该账号属于「${roleTabs.find((t) => t.key === matched)?.label}」`,
+                        });
+                      }
+                      setErrors((prev) => [
+                        ...prev.filter((e) => e.field !== 'phone'),
+                        ...newErrors,
+                      ]);
                     }}
                     className={`input-industrial pl-10 py-2.5 font-mono ${
-                      errors.phone ? 'border-signal-red/60 focus:border-signal-red focus:shadow-red-500/10' : ''
+                      fieldErrors('phone').length > 0
+                        ? 'border-signal-red/60 focus:border-signal-red focus:shadow-red-500/10'
+                        : codeSent && matchRoleByPhone(phone) === activeRole
+                          ? 'border-signal-green/60'
+                          : ''
                     }`}
                     placeholder="请输入手机号"
                   />
+                  {codeSent && matchRoleByPhone(phone) === activeRole && (
+                    <CheckCircle2 size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-signal-green" />
+                  )}
                 </div>
-                {errors.phone && (
-                  <p className="mt-1.5 text-[11px] text-signal-red flex items-center gap-1">
-                    <AlertTriangle size={12} />
-                    {errors.phone}
-                  </p>
-                )}
-                {!errors.phone && codeSent && (
-                  <p className="mt-1.5 text-[11px] text-signal-green flex items-center gap-1">
-                    <CheckCircle2 size={12} />
-                    账号匹配成功：{currentTab.label}账号
-                  </p>
-                )}
+                {fieldErrors('phone').map((err, idx) => (
+                  <div key={idx} className="mt-1.5 space-y-0.5">
+                    <p className="text-[11px] text-signal-red flex items-center gap-1">
+                      <XCircle size={12} />
+                      {err.message}
+                    </p>
+                    {err.suggestion && (
+                      <p className="text-[10px] text-slate-500 pl-4">{err.suggestion}</p>
+                    )}
+                  </div>
+                ))}
               </div>
 
               {/* 验证码 */}
@@ -496,20 +669,48 @@ export default function LoginPage() {
                 </label>
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <Lock size={16} className={`absolute left-3 top-1/2 -translate-y-1/2 ${errors.code ? 'text-signal-red' : 'text-slate-500'}`} />
+                    <Lock
+                      size={16}
+                      className={`absolute left-3 top-1/2 -translate-y-1/2 ${
+                        fieldErrors('code').length > 0 ? 'text-signal-red' : 'text-slate-500'
+                      }`}
+                    />
                     <input
                       type="text"
                       value={code}
                       onChange={(e) => {
                         setCode(e.target.value.replace(/\D/g, ''));
-                        if (errors.code) setErrors({ ...errors, code: undefined });
+                        if (fieldErrors('code').length > 0) {
+                          setErrors((prev) => prev.filter((e) => e.field !== 'code'));
+                        }
+                      }}
+                      onBlur={() => {
+                        const check = validateCodeFormat(code);
+                        const newErrors: ValidationError[] = [];
+                        if (!check.valid) {
+                          newErrors.push({ type: 'code_length', field: 'code', message: check.message });
+                        } else if (!VALID_CODES.includes(code)) {
+                          newErrors.push({
+                            type: 'code_wrong',
+                            field: 'code',
+                            message: '验证码错误',
+                            suggestion: '演示验证码：888888',
+                          });
+                        }
+                        setErrors((prev) => [
+                          ...prev.filter((e) => e.field !== 'code'),
+                          ...newErrors,
+                        ]);
                       }}
                       className={`input-industrial pl-10 py-2.5 font-mono tracking-widest ${
-                        errors.code ? 'border-signal-red/60' : ''
+                        fieldErrors('code').length > 0 ? 'border-signal-red/60' : ''
                       }`}
-                      placeholder="6位验证码"
+                      placeholder="6位数字"
                       maxLength={6}
                     />
+                    {code.length === 6 && VALID_CODES.includes(code) && (
+                      <CheckCircle2 size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-signal-green" />
+                    )}
                   </div>
                   <button
                     onClick={handleSendCode}
@@ -527,30 +728,64 @@ export default function LoginPage() {
                     {countdown > 0 ? `${countdown}s 重发` : '获取验证码'}
                   </button>
                 </div>
-                {errors.code && (
-                  <p className="mt-1.5 text-[11px] text-signal-red flex items-center gap-1">
-                    <AlertTriangle size={12} />
-                    {errors.code}
-                  </p>
-                )}
+                {fieldErrors('code').map((err, idx) => (
+                  <div key={idx} className="mt-1.5 space-y-0.5">
+                    <p className="text-[11px] text-signal-red flex items-center gap-1">
+                      <XCircle size={12} />
+                      {err.message}
+                    </p>
+                    {err.suggestion && (
+                      <p className="text-[10px] text-slate-500 pl-4">💡 {err.suggestion}</p>
+                    )}
+                  </div>
+                ))}
               </div>
 
-              {/* 演示提示 */}
-              <div className="flex items-start gap-2 p-3 bg-signal-cyan/5 border border-signal-cyan/20 rounded-sm">
-                <Shield size={14} className="text-signal-cyan shrink-0 mt-0.5" />
-                <div className="text-[11px] text-slate-400 leading-relaxed space-y-0.5">
-                  <div>
-                    <span className="text-signal-cyan font-mono">演示模式</span>
-                    {' · '}
-                    当前角色预设账号：
-                    <span className={`font-mono ${getColorClass('text')}`}> {currentTab.phone}</span>
-                  </div>
-                  <div>
-                    演示验证码：
-                    <span className="text-orange-500 font-mono"> 888888</span>
-                    {' · '}
-                    点击「获取验证码」自动填充
-                  </div>
+              {/* 演示提示卡片 */}
+              <div className="p-3 bg-ink-950/60 border border-ink-700/50 rounded-sm space-y-2">
+                <div className="flex items-center gap-2">
+                  <Shield size={13} className="text-signal-cyan" />
+                  <span className="text-[11px] font-mono text-signal-cyan tracking-wide">
+                    DEMO MODE · 演示账号对照表
+                  </span>
+                </div>
+                <div className="space-y-1.5">
+                  {roleTabs.map((tab) => {
+                    const Icon = tab.icon;
+                    const active = activeRole === tab.key;
+                    return (
+                      <div
+                        key={tab.key}
+                        className={`flex items-center justify-between px-2 py-1.5 rounded-sm ${
+                          active
+                            ? tab.color === 'orange'
+                              ? 'bg-orange-500/10'
+                              : tab.color === 'cyan'
+                                ? 'bg-cyan-500/10'
+                                : 'bg-emerald-500/10'
+                            : 'bg-transparent'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Icon
+                            size={13}
+                            className={
+                              tab.color === 'orange'
+                                ? 'text-orange-500'
+                                : tab.color === 'cyan'
+                                  ? 'text-cyan-400'
+                                  : 'text-emerald-400'
+                            }
+                          />
+                          <span className="text-[11px] text-slate-300">{tab.label}</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-slate-400">{tab.phone}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="text-[10px] text-slate-500">
+                  验证码统一为：<span className="text-orange-500 font-mono">888888</span>
                 </div>
               </div>
 
@@ -581,14 +816,16 @@ export default function LoginPage() {
             {/* 分割线 */}
             <div className="flex items-center gap-3 my-6">
               <div className="divider-dashed flex-1" />
-              <span className="text-[10px] font-mono text-slate-600 tracking-widest">QUICK ACCESS · 演示一键登录</span>
+              <span className="text-[10px] font-mono text-slate-600 tracking-widest">
+                QUICK ACCESS · 一键登录
+              </span>
               <div className="divider-dashed flex-1" />
             </div>
 
             {/* 演示账号一键登录 */}
             <div className="space-y-2">
               <div className="text-[11px] font-mono text-slate-500 text-center tracking-wide mb-3">
-                无需输入，点击直达对应工作台
+                无需输入，点击下方按钮直接进入对应工作台
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {roleTabs.map((tab) => {
@@ -607,7 +844,7 @@ export default function LoginPage() {
                       className={`group relative flex flex-col items-center gap-1.5 p-3 rounded-sm border transition-all duration-200 ${
                         isActive
                           ? colorClasses[tab.color as keyof typeof colorClasses]
-                          : 'border-ink-700/60 bg-ink-950/40 text-slate-500 hover:border-white/30 hover:text-white'
+                          : 'border-ink-700/60 bg-ink-950/40 text-slate-500 hover:border-white/30 hover:text-white hover:bg-white/[0.03]'
                       } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       <Icon size={18} className="transition-colors" />
@@ -615,7 +852,7 @@ export default function LoginPage() {
                         {tab.label}
                       </span>
                       <span className="text-[8px] font-mono opacity-70 tracking-wider">
-                        {tab.subLabel}
+                        {tab.subLabel.split(' ')[0]}
                       </span>
                       {isActive && (
                         <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-signal-green animate-pulse-fast" />

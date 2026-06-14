@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { useOrderStore } from '@/store/orderStore';
 import { useDispatchStore } from '@/store/dispatchStore';
 import { useAuthStore } from '@/store/authStore';
@@ -55,24 +55,32 @@ export function ProtectedRoute({
   children: ReactNode;
   allowedRoles: UserRole[];
 }) {
-  const user = useAuthStore((s) => s.user);
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const restoreSession = useAuthStore((s) => s.restoreSession);
   const location = useLocation();
+  const restoreSession = useAuthStore((s) => s.restoreSession);
   const [checking, setChecking] = useState(true);
+  const sessionChecked = useRef(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (sessionChecked.current) return;
+
+    const state = useAuthStore.getState();
+    if (state.isAuthenticated && state.user) {
+      sessionChecked.current = true;
       setChecking(false);
       return;
     }
+
     const restored = restoreSession();
+    sessionChecked.current = true;
+
     if (!restored) {
       setChecking(false);
     } else {
-      setChecking(false);
+      setTimeout(() => {
+        setChecking(false);
+      }, 50);
     }
-  }, [isAuthenticated, restoreSession]);
+  }, [restoreSession]);
 
   if (checking) {
     return (
@@ -84,6 +92,10 @@ export function ProtectedRoute({
       </div>
     );
   }
+
+  const latestState = useAuthStore.getState();
+  const isAuthenticated = latestState.isAuthenticated;
+  const user = latestState.user;
 
   if (!isAuthenticated || !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
