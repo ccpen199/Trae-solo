@@ -4,11 +4,12 @@ import { useAppStore } from '@/store/useAppStore';
 import { workers } from '@/data/workers';
 import { orders } from '@/data/orders';
 import { skillCategories, faultTypes } from '@/data/faults';
+import type { SkillCert } from '@/types';
 import {
   User, Award, Camera, MapPin, Clock, Star, FileCheck,
   Upload, Check, AlertCircle, ScanFace, Navigation, Image,
-  Wrench, ChevronRight, Zap, Snowflake, Droplets, Lock,
-  Tv, Flame, Bug,
+  Wrench, ChevronRight, ChevronDown, Zap, Snowflake, Droplets, Lock,
+  Tv, Flame, Bug, Eye, Clock3, Shield, UserCheck,
 } from 'lucide-react';
 import * as Icons from 'lucide-react';
 
@@ -119,62 +120,207 @@ function SkillRadar({ skills }: { skills: { name: string; value: number; status:
   );
 }
 
+function getStatusInfo(status: string) {
+  const map: Record<string, { label: string; color: string; bgColor: string; icon: React.ElementType }> = {
+    verified: { label: '已认证', color: 'text-green-600', bgColor: 'bg-green-100', icon: Check },
+    under_review: { label: '人工复核中', color: 'text-blue-600', bgColor: 'bg-blue-100', icon: UserCheck },
+    ocr_recognized: { label: 'OCR已识别', color: 'text-purple-600', bgColor: 'bg-purple-100', icon: ScanFace },
+    pending: { label: '待提交', color: 'text-amber-600', bgColor: 'bg-amber-100', icon: Clock },
+    expired: { label: '已过期', color: 'text-red-600', bgColor: 'bg-red-100', icon: AlertCircle },
+  };
+  return map[status] || map.pending;
+}
+
+function SkillCertCard({ skill }: { skill: SkillCert }) {
+  const [expanded, setExpanded] = useState(false);
+  const statusInfo = getStatusInfo(skill.status);
+  const StatusIcon = statusInfo.icon;
+  const cat = skillCategories.find(c => c.id === skill.categoryId);
+  const Icon = cat ? getIcon(cat.icon) : Wrench;
+
+  const certSteps = [
+    { key: 'upload', label: '证件上传', done: !!skill.uploadedAt, time: skill.uploadedAt, icon: Upload },
+    { key: 'ocr', label: 'OCR识别', done: !!skill.ocrResult, time: skill.uploadedAt, icon: ScanFace },
+    { key: 'review', label: '人工复核', done: skill.status === 'verified' || skill.status === 'under_review', time: skill.reviewedAt, icon: UserCheck },
+    { key: 'cert', label: '认证通过', done: skill.status === 'verified', time: skill.reviewedAt, icon: Shield },
+  ];
+
+  return (
+    <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+      <div
+        className="p-4 flex items-center gap-3 cursor-pointer hover:bg-slate-50 transition-colors"
+        onClick={() => setExpanded(!expanded)}
+      >
+        <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${statusInfo.bgColor} ${statusInfo.color}`}>
+          <Icon className="w-5 h-5" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <p className="font-semibold text-slate-800 truncate">{skill.categoryName}</p>
+            <StatusIcon className={`w-4 h-4 ${statusInfo.color} flex-shrink-0`} />
+          </div>
+          <p className="text-xs text-slate-500 truncate mt-0.5">{skill.certName}</p>
+        </div>
+        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${statusInfo.bgColor} ${statusInfo.color}`}>
+          {statusInfo.label}
+        </span>
+        <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+      </div>
+
+      {expanded && (
+        <div className="border-t border-slate-100 p-4 bg-slate-50/50 space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-3 bg-white rounded-lg border border-slate-100">
+              <p className="text-xs text-slate-500">证件编号</p>
+              <p className="text-sm font-medium text-slate-700 mt-1 font-mono">{skill.certNo}</p>
+            </div>
+            <div className="p-3 bg-white rounded-lg border border-slate-100">
+              <p className="text-xs text-slate-500">有效期至</p>
+              <p className="text-sm font-medium text-slate-700 mt-1">{skill.expiryDate}</p>
+            </div>
+            <div className="p-3 bg-white rounded-lg border border-slate-100">
+              <p className="text-xs text-slate-500">发证日期</p>
+              <p className="text-sm font-medium text-slate-700 mt-1">{skill.issueDate}</p>
+            </div>
+            <div className="p-3 bg-white rounded-lg border border-slate-100">
+              <p className="text-xs text-slate-500">上传时间</p>
+              <p className="text-sm font-medium text-slate-700 mt-1">{skill.uploadedAt || '—'}</p>
+            </div>
+          </div>
+
+          <div className="p-4 bg-white rounded-lg border border-slate-100">
+            <p className="text-sm font-semibold text-slate-800 mb-3">认证流程</p>
+            <div className="relative pl-2">
+              {certSteps.map((step, idx) => {
+                const StepIcon = step.icon;
+                return (
+                  <div key={step.key} className="flex items-start gap-3 pb-4 last:pb-0 relative">
+                    {idx < certSteps.length - 1 && (
+                      <div className={`absolute left-[13px] top-6 w-0.5 h-full ${
+                        step.done ? 'bg-green-300' : 'bg-slate-200'
+                      }`} style={{ height: 'calc(100% - 24px)' }} />
+                    )}
+                    <div className={`relative z-10 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      step.done
+                        ? 'bg-green-500 text-white'
+                        : 'bg-slate-200 text-slate-400'
+                    }`}>
+                      <StepIcon className="w-3 h-3" />
+                    </div>
+                    <div className="flex-1 pt-0.5">
+                      <div className="flex items-center justify-between">
+                        <p className={`text-sm font-medium ${step.done ? 'text-slate-700' : 'text-slate-400'}`}>
+                          {step.label}
+                        </p>
+                        {step.time && step.done && (
+                          <span className="text-xs text-slate-400">{step.time}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {skill.ocrResult && (
+            <div className="p-4 bg-purple-50 rounded-lg border border-purple-100">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-sm font-semibold text-purple-800 flex items-center gap-2">
+                  <ScanFace className="w-4 h-4" />
+                  OCR识别结果
+                </p>
+                <span className="text-xs bg-purple-200 text-purple-700 px-2 py-0.5 rounded-full font-medium">
+                  置信度 {(skill.ocrResult.confidence * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div><span className="text-purple-600">持证人：</span><span className="text-purple-800">{skill.ocrResult.name}</span></div>
+                <div><span className="text-purple-600">发证机关：</span><span className="text-purple-800">{skill.ocrResult.issueOrg}</span></div>
+              </div>
+            </div>
+          )}
+
+          {skill.reviewer && skill.reviewNote && (
+            <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
+              <p className="text-sm font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                <UserCheck className="w-4 h-4" />
+                复核记录
+              </p>
+              <div className="text-xs text-blue-700 space-y-1">
+                <p>复核人：<span className="font-medium">{skill.reviewer}</span></p>
+                <p>复核意见：{skill.reviewNote}</p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function SkillMapSection() {
   const { currentWorkerId } = useAppStore();
   const worker = workers.find(w => w.id === currentWorkerId) || workers[0];
 
   const radarData = skillCategories.map(cat => {
     const skill = worker.skills.find(s => s.categoryId === cat.id);
-    return {
-      name: cat.name,
-      value: skill ? (skill.status === 'verified' ? 90 + Math.floor(Math.random() * 10) : 50) : 0,
-      status: skill?.status || 'none',
-    };
+    let value = 0;
+    if (skill) {
+      if (skill.status === 'verified') value = 90 + Math.floor(Math.random() * 10);
+      else if (skill.status === 'under_review') value = 75;
+      else if (skill.status === 'ocr_recognized') value = 60;
+      else value = 40;
+    }
+    return { name: cat.name, value, status: skill?.status || 'none' };
   });
+
+  const stats = {
+    verified: worker.skills.filter(s => s.status === 'verified').length,
+    reviewing: worker.skills.filter(s => s.status === 'under_review' || s.status === 'ocr_recognized').length,
+    total: skillCategories.length,
+  };
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-6">
-        <h3 className="font-semibold text-slate-800 mb-1">我的技能图谱</h3>
-        <p className="text-sm text-slate-500 mb-4">技能越丰富，可接订单越多</p>
+      <div className="grid grid-cols-3 gap-4">
+        <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl p-4 text-white shadow-md">
+          <p className="text-green-100 text-xs">已认证技能</p>
+          <p className="text-3xl font-bold mt-1">{stats.verified}<span className="text-base font-normal text-green-200"> / {stats.total}</span></p>
+        </div>
+        <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-4 text-white shadow-md">
+          <p className="text-blue-100 text-xs">审核中</p>
+          <p className="text-3xl font-bold mt-1">{stats.reviewing}</p>
+        </div>
+        <div className="bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl p-4 text-white shadow-md">
+          <p className="text-amber-100 text-xs">综合评分</p>
+          <p className="text-3xl font-bold mt-1">{worker.rating}</p>
+        </div>
+      </div>
 
+      <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-6">
+        <h3 className="font-semibold text-slate-800 mb-1">技能能力雷达</h3>
+        <p className="text-sm text-slate-500 mb-4">技能覆盖越全面，匹配订单越多</p>
         <div className="flex items-center justify-center">
           <SkillRadar skills={radarData} />
         </div>
+      </div>
 
-        <div className="grid grid-cols-2 gap-3 mt-6">
-          {worker.skills.map(skill => {
-            const cat = skillCategories.find(c => c.id === skill.categoryId);
-            const Icon = cat ? getIcon(cat.icon) : Wrench;
-            return (
-              <div
-                key={skill.categoryId}
-                className="p-3 rounded-lg border border-slate-200 flex items-center gap-3"
-              >
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  skill.status === 'verified' ? 'bg-green-100 text-green-600' :
-                  skill.status === 'pending' ? 'bg-amber-100 text-amber-600' :
-                  'bg-red-100 text-red-600'
-                }`}>
-                  <Icon className="w-5 h-5" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <p className="text-sm font-medium text-slate-800 truncate">{skill.categoryName}</p>
-                    {skill.status === 'verified' && <Check className="w-3.5 h-3.5 text-green-500" />}
-                  </div>
-                  <p className="text-xs text-slate-400 truncate">{skill.certName}</p>
-                </div>
-                <span className={`text-xs px-2 py-0.5 rounded-full ${
-                  skill.status === 'verified' ? 'bg-green-100 text-green-600' :
-                  skill.status === 'pending' ? 'bg-amber-100 text-amber-600' :
-                  'bg-red-100 text-red-600'
-                }`}>
-                  {skill.status === 'verified' ? '已认证' : skill.status === 'pending' ? '审核中' : '已过期'}
-                </span>
-              </div>
-            );
-          })}
+      <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="font-semibold text-slate-800">资质证书列表</h3>
+            <p className="text-xs text-slate-500 mt-0.5">点击卡片查看完整认证链路</p>
+          </div>
+          <button className="text-xs text-orange-600 font-medium hover:text-orange-700 flex items-center gap-1">
+            <Upload className="w-3.5 h-3.5" />
+            添加证书
+          </button>
+        </div>
+        <div className="space-y-3">
+          {worker.skills.map(skill => (
+            <SkillCertCard key={skill.categoryId} skill={skill} />
+          ))}
         </div>
       </div>
     </div>

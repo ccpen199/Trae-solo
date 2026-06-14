@@ -1,16 +1,60 @@
-import type { Worker, SkillCert } from '@/types';
+import type { Worker, SkillCert, SkillCertStatus } from '@/types';
 
-const createSkills = (categories: { id: string; name: string }[], status: 'verified' | 'pending' | 'expired' = 'verified'): SkillCert[] =>
-  categories.map((c, idx) => ({
-    categoryId: c.id,
-    categoryName: c.name,
-    certName: `${c.name}资格证`,
-    certNo: `CN${(2020 + idx).toString().padStart(4, '0')}${Math.floor(Math.random() * 100000).toString().padStart(6, '0')}`,
-    issueDate: '2022-03-15',
-    expiryDate: '2027-03-14',
-    status,
-    confidence: 0.96,
-  }));
+interface SkillConfig {
+  id: string;
+  name: string;
+  status: SkillCertStatus;
+  certName: string;
+  certNo: string;
+  issueDate: string;
+  expiryDate: string;
+  uploadedAt?: string;
+  reviewedAt?: string;
+  reviewer?: string;
+  reviewNote?: string;
+  confidence?: number;
+}
+
+const createSkill = (config: SkillConfig): SkillCert => ({
+  categoryId: config.id,
+  categoryName: config.name,
+  certName: config.certName,
+  certNo: config.certNo,
+  issueDate: config.issueDate,
+  expiryDate: config.expiryDate,
+  status: config.status,
+  uploadedAt: config.uploadedAt,
+  reviewedAt: config.reviewedAt,
+  reviewer: config.reviewer,
+  reviewNote: config.reviewNote,
+  ocrResult: config.confidence ? {
+    name: '张师傅',
+    certType: config.certName,
+    certNo: config.certNo,
+    issueOrg: '上海市应急管理局',
+    issueDate: config.issueDate,
+    expiryDate: config.expiryDate,
+    confidence: config.confidence,
+  } : undefined,
+});
+
+const createSkills = (categories: { id: string; name: string }[], status: SkillCertStatus = 'verified'): SkillCert[] =>
+  categories.map((c, idx) =>
+    createSkill({
+      id: c.id,
+      name: c.name,
+      status,
+      certName: `${c.name}资格证`,
+      certNo: `CN${(2020 + idx).toString().padStart(4, '0')}${Math.floor(Math.random() * 100000).toString().padStart(6, '0')}`,
+      issueDate: '2022-03-15',
+      expiryDate: '2027-03-14',
+      uploadedAt: status === 'verified' ? '2024-01-10 14:30:00' : undefined,
+      reviewedAt: status === 'verified' ? '2024-01-11 09:15:00' : undefined,
+      reviewer: status === 'verified' ? '王主管' : undefined,
+      reviewNote: status === 'verified' ? '证件有效，准予认证' : undefined,
+      confidence: status === 'verified' ? 0.95 : undefined,
+    })
+  );
 
 export const workers: Worker[] = [
   {
@@ -18,11 +62,47 @@ export const workers: Worker[] = [
     name: '张师傅',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=zhang',
     phone: '138****1234',
-    skills: createSkills([
-      { id: 'aircon', name: '空调维修' },
-      { id: 'electric', name: '电工' },
-      { id: 'appliance', name: '家电维修' },
-    ]),
+    skills: [
+      createSkill({
+        id: 'aircon',
+        name: '空调维修',
+        status: 'verified',
+        certName: '空调安装维修资质证',
+        certNo: 'CN202200123456',
+        issueDate: '2022-03-15',
+        expiryDate: '2028-03-14',
+        uploadedAt: '2024-01-10 14:30:00',
+        reviewedAt: '2024-01-11 09:15:00',
+        reviewer: '王主管',
+        reviewNote: '证件有效，资质齐全，准予通过',
+        confidence: 0.96,
+      }),
+      createSkill({
+        id: 'electric',
+        name: '电工',
+        status: 'verified',
+        certName: '低压电工作业操作证',
+        certNo: 'T310115198512031234',
+        issueDate: '2021-06-20',
+        expiryDate: '2027-06-19',
+        uploadedAt: '2024-01-10 15:00:00',
+        reviewedAt: '2024-01-11 10:30:00',
+        reviewer: '李主管',
+        reviewNote: '特种作业操作证真实有效',
+        confidence: 0.98,
+      }),
+      createSkill({
+        id: 'appliance',
+        name: '家电维修',
+        status: 'under_review',
+        certName: '家用电器维修职业资格证',
+        certNo: 'ZJ202300876543',
+        issueDate: '2023-08-10',
+        expiryDate: '2028-08-09',
+        uploadedAt: '2024-06-13 16:20:00',
+        confidence: 0.92,
+      }),
+    ],
     rating: 4.9,
     orderCount: 523,
     location: { lat: 31.2304, lng: 121.4737 },
@@ -36,11 +116,47 @@ export const workers: Worker[] = [
     name: '李师傅',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=li',
     phone: '139****5678',
-    skills: createSkills([
-      { id: 'plumbing', name: '水管疏通' },
-      { id: 'renovation', name: '水电改造' },
-      { id: 'water_heater', name: '热水器' },
-    ]),
+    skills: [
+      createSkill({
+        id: 'plumbing',
+        name: '水管疏通',
+        status: 'verified',
+        certName: '管道工职业资格证',
+        certNo: 'CN202100234567',
+        issueDate: '2021-09-01',
+        expiryDate: '2026-08-31',
+        uploadedAt: '2024-02-15 10:20:00',
+        reviewedAt: '2024-02-16 14:00:00',
+        reviewer: '张主管',
+        reviewNote: '资质有效，准予认证',
+        confidence: 0.94,
+      }),
+      createSkill({
+        id: 'renovation',
+        name: '水电改造',
+        status: 'verified',
+        certName: '水电安装工程资质证',
+        certNo: 'CN202000876543',
+        issueDate: '2020-11-20',
+        expiryDate: '2025-11-19',
+        uploadedAt: '2024-02-15 10:45:00',
+        reviewedAt: '2024-02-16 15:30:00',
+        reviewer: '王主管',
+        reviewNote: '资深水电工，资质齐全',
+        confidence: 0.97,
+      }),
+      createSkill({
+        id: 'water_heater',
+        name: '热水器',
+        status: 'ocr_recognized',
+        certName: '热水器安装维修资质证',
+        certNo: 'CN202300112233',
+        issueDate: '2023-12-01',
+        expiryDate: '2028-11-30',
+        uploadedAt: '2024-06-14 09:30:00',
+        confidence: 0.89,
+      }),
+    ],
     rating: 4.8,
     orderCount: 412,
     location: { lat: 31.2354, lng: 121.4797 },

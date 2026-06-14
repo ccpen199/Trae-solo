@@ -4,7 +4,7 @@ export interface SkillCategory {
   icon: string;
 }
 
-export type SkillCertStatus = 'verified' | 'pending' | 'expired';
+export type SkillCertStatus = 'verified' | 'pending' | 'expired' | 'ocr_recognized' | 'under_review';
 
 export interface SkillCert {
   categoryId: string;
@@ -16,6 +16,10 @@ export interface SkillCert {
   status: SkillCertStatus;
   ocrResult?: OCRCertData;
   imageUrl?: string;
+  reviewNote?: string;
+  reviewer?: string;
+  reviewedAt?: string;
+  uploadedAt?: string;
 }
 
 export interface OCRCertData {
@@ -151,7 +155,10 @@ export interface EscrowRecord {
   amount: number;
   status: EscrowStatus;
   frozenAt: string;
+  acceptanceAt: string | null;
+  expectedReleaseAt: string | null;
   releaseAt: string | null;
+  releaseBasis: string | null;
   homeownerName: string;
   workerName: string;
   faultTypeName: string;

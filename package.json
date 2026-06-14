@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "client:dev": "vite",
+    "server:dev": "node api/server.js",
+    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -20,7 +22,8 @@
     "framer-motion": "^11.3.0",
     "react-router-dom": "^7.3.0",
     "tailwind-merge": "^3.0.2",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "concurrently": "^9.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

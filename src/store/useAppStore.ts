@@ -132,7 +132,10 @@ export const useAppStore = create<AppState>((set, get) => ({
       amount: order.quote.totalAmount,
       status: 'frozen',
       frozenAt: new Date().toISOString().replace('T', ' ').slice(0, 19),
+      acceptanceAt: null,
+      expectedReleaseAt: null,
       releaseAt: null,
+      releaseBasis: null,
       homeownerName: order.homeownerName,
       workerName: order.workerName || '',
       faultTypeName: order.faultTypeName,
@@ -162,9 +165,21 @@ export const useAppStore = create<AppState>((set, get) => ({
       o.id === orderId ? { ...o, status: 'reviewed' as const, review } : o
     );
 
+    const now = new Date();
+    const acceptanceTime = now.toISOString().replace('T', ' ').slice(0, 19);
+    const expectedRelease = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString().replace('T', ' ').slice(0, 19);
+    const releaseBasis = `业主${order.homeownerName}于${acceptanceTime}确认验收，T+1释放`;
+
     const updatedEscrow = escrowRecords.map(e =>
       e.orderId === orderId
-        ? { ...e, status: 'released' as const, releaseAt: new Date().toISOString().replace('T', ' ').slice(0, 19) }
+        ? {
+            ...e,
+            status: 'released' as const,
+            acceptanceAt: acceptanceTime,
+            expectedReleaseAt: expectedRelease,
+            releaseAt: acceptanceTime,
+            releaseBasis,
+          }
         : e
     );
 

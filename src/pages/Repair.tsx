@@ -4,9 +4,12 @@ import { useAppStore } from '@/store/useAppStore';
 import { faultTypes, findFaultTypeById } from '@/data/faults';
 import { getWorkersBySkillCategory } from '@/data/workers';
 import { getPartsByCategory, getLaborRateByCity } from '@/data/parts';
-import { ChevronRight, Star, MapPin, Shield, Clock, Check, Award, FileText, Upload, X } from 'lucide-react';
+import {
+  ChevronRight, Star, MapPin, Shield, Clock, Check, Award,
+  FileText, Upload, X, Info, ChevronDown, Building, Zap,
+} from 'lucide-react';
 import * as Icons from 'lucide-react';
-import type { FaultType } from '@/types';
+import type { FaultType, PartItem } from '@/types';
 
 function getIcon(name: string) {
   const iconMap: Record<string, React.ElementType> = {
@@ -53,6 +56,9 @@ export default function RepairPage() {
   const [selectedWorker, setSelectedWorker] = useState<string | null>(null);
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('上海市浦东新区陆家嘴花园一期');
+  const [selectedCity] = useState('上海');
+  const [selectedLaborTier, setSelectedLaborTier] = useState(0);
+  const [showAllParts, setShowAllParts] = useState(false);
 
   const matchedWorkers = selectedFault
     ? getWorkersBySkillCategory(selectedFault.skillCategoryId)
@@ -60,12 +66,19 @@ export default function RepairPage() {
         .sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0))
     : [];
 
-  const cityRate = getLaborRateByCity('上海');
-  const faultParts = selectedFault ? getPartsByCategory(selectedFault.skillCategoryId).slice(0, 4) : [];
+  const cityRate = getLaborRateByCity(selectedCity);
+  const allFaultParts = selectedFault ? getPartsByCategory(selectedFault.skillCategoryId) : [];
+  const displayParts = showAllParts ? allFaultParts : allFaultParts.slice(0, 6);
+
+  const [selectedParts, setSelectedParts] = useState<Record<string, number>>({});
 
   const handleFaultSelect = (fault: FaultType) => {
     setSelectedFault(fault);
     setSelectedFaultType(fault.id);
+    const defaultParts = getPartsByCategory(fault.skillCategoryId).slice(0, 3);
+    const defaults: Record<string, number> = {};
+    defaultParts.forEach(p => { defaults[p.id] = 1; });
+    setSelectedParts(defaults);
     setStep('worker');
   };
 
@@ -74,15 +87,32 @@ export default function RepairPage() {
     setStep('quote');
   };
 
+  const updatePartQuantity = (partId: string, delta: number) => {
+    setSelectedParts(prev => {
+      const current = prev[partId] || 0;
+      const next = Math.max(0, current + delta);
+      return { ...prev, [partId]: next };
+    });
+  };
+
   const calculateTotal = () => {
-    const partsTotal = faultParts.reduce((sum, p) => sum + p.price * 1, 0);
-    const laborTotal = (cityRate?.baseRate || 80) * 1.5;
+    const partsList = allFaultParts
+      .filter(p => selectedParts[p.id] && selectedParts[p.id] > 0)
+      .map(p => ({ ...p, quantity: selectedParts[p.id] }));
+    const partsTotal = partsList.reduce((sum, p) => sum + p.price * p.quantity, 0);
+    const baseHours = 1.5;
+    const tierMultiplier = cityRate?.tierRates[selectedLaborTier]?.multiplier || 1;
+    const laborRate = (cityRate?.baseRate || 80) * tierMultiplier;
+    const laborTotal = laborRate * baseHours;
     const platformFee = Math.round((partsTotal + laborTotal) * 0.05);
     return {
-      parts: faultParts.map(p => ({ partId: p.id, name: p.name, price: p.price, quantity: 1 })),
+      parts: partsList,
       partsTotal,
-      laborHours: 1.5,
-      laborRate: cityRate?.baseRate || 80,
+      laborHours: baseHours,
+      laborRate,
+      baseRate: cityRate?.baseRate || 80,
+      tierMultiplier,
+      tierName: cityRate?.tierRates[selectedLaborTier]?.tier || '基础工时',
       laborTotal,
       platformFee,
       total: partsTotal + laborTotal + platformFee,
@@ -299,11 +329,7 @@ export default function RepairPage() {
                           {worker.skills.slice(0, 3).map(skill => (
                             <span
                               key={skill.categoryId}
-                              className={`text-xs px-2 py-0.5 rounded-md ${
-                                skill.status === 'verified'
-                                  ? 'bg-green-50 text-green-600 border border-green-200'
-                                  : 'bg-slate-50 text-slate-500 border border-slate-200'
-                              }`}
+                              className="text-xs px-2 py-0.5 rounded-md bg-green-50 text-green-600 border border-green-200"
                             >
                               <Check className="w-3 h-3 inline mr-1 -mt-0.5" />
                               {skill.categoryName}
@@ -355,57 +381,187 @@ export default function RepairPage() {
 
                 <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-5">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-slate-800">标准化配件费用</h3>
-                    <span className="text-xs text-slate-400">平台统一价</span>
+                    <div>
+                      <h3 className="font-semibold text-slate-800">标准配件库明细</h3>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        平台统一采购，明码标价，支持现场核对
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">
+                      <Building className="w-3.5 h-3.5" />
+                      <span>标准配件库</span>
+                    </div>
                   </div>
+
                   <div className="space-y-2">
-                    {faultParts.map(part => (
-                      <div key={part.id} className="flex items-center justify-between py-2 border-b border-slate-100 last:border-0">
-                        <div>
-                          <p className="text-sm text-slate-700">{part.name}</p>
-                          <p className="text-xs text-slate-400">x1</p>
+                    {displayParts.map(part => {
+                      const qty = selectedParts[part.id] || 0;
+                      const isSelected = qty > 0;
+                      return (
+                        <div
+                          key={part.id}
+                          className={`flex items-center justify-between py-3 px-3 rounded-lg border transition-all ${
+                            isSelected
+                              ? 'bg-orange-50 border-orange-200'
+                              : 'border-transparent hover:bg-slate-50'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
+                              isSelected ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-400'
+                            }`}>
+                              <Zap className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-slate-700">{part.name}</p>
+                              <p className="text-xs text-slate-400">
+                                单价 ¥{part.price}/{part.unit} · 质保90天
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            {isSelected && (
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => updatePartQuantity(part.id, -1)}
+                                  className="w-6 h-6 rounded-full bg-white border border-slate-300 flex items-center justify-center text-slate-600 hover:bg-slate-50"
+                                >
+                                  -
+                                </button>
+                                <span className="text-sm font-medium text-slate-700 w-6 text-center">
+                                  {qty}
+                                </span>
+                                <button
+                                  onClick={() => updatePartQuantity(part.id, 1)}
+                                  className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center hover:bg-orange-600"
+                                >
+                                  +
+                                </button>
+                              </div>
+                            )}
+                            {!isSelected && (
+                              <button
+                                onClick={() => updatePartQuantity(part.id, 1)}
+                                className="text-xs px-3 py-1 border border-slate-300 rounded-full text-slate-600 hover:border-orange-400 hover:text-orange-500 transition-colors"
+                              >
+                                添加
+                              </button>
+                            )}
+                            {isSelected && (
+                              <span className="text-sm font-semibold text-orange-600 w-16 text-right">
+                                ¥{qty * part.price}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        <span className="text-sm font-medium text-slate-700">¥{part.price}</span>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
-                  <div className="flex items-center justify-between pt-3 mt-2 border-t border-dashed border-slate-200">
-                    <span className="text-sm text-slate-600">配件小计</span>
+
+                  {allFaultParts.length > 6 && (
+                    <button
+                      onClick={() => setShowAllParts(!showAllParts)}
+                      className="w-full mt-3 py-2 text-sm text-slate-500 hover:text-orange-500 flex items-center justify-center gap-1"
+                    >
+                      {showAllParts ? '收起' : `展开全部 ${allFaultParts.length} 种配件`}
+                      <ChevronDown className={`w-4 h-4 transition-transform ${showAllParts ? 'rotate-180' : ''}`} />
+                    </button>
+                  )}
+
+                  <div className="flex items-center justify-between pt-4 mt-3 border-t border-dashed border-slate-200">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-sm text-slate-600">配件小计</span>
+                      <Info className="w-4 h-4 text-slate-400" />
+                    </div>
                     <span className="font-semibold text-slate-800">¥{quoteData.partsTotal}</span>
                   </div>
                 </div>
 
                 <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-5">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-slate-800">工时费用</h3>
-                    <div className="flex items-center gap-1 text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-md">
-                      <Award className="w-3 h-3" />
-                      <span>上海基准 ¥{cityRate?.baseRate || 80}/小时</span>
+                    <div>
+                      <h3 className="font-semibold text-slate-800">工时费用明细</h3>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        城市基准工时费公示 + 阶梯计价
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2.5 py-1 rounded-md">
+                      <Award className="w-3.5 h-3.5" />
+                      <span>{selectedCity} 基准 ¥{cityRate?.baseRate || 80}/小时</span>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between py-2">
+
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-xs font-medium text-slate-500">选择工时档位</p>
+                      <p className="text-xs text-slate-400">根据故障复杂程度由师傅选择</p>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2">
+                      {cityRate?.tierRates.map((tier, idx) => {
+                        const rate = (cityRate.baseRate * tier.multiplier).toFixed(0);
+                        const isActive = selectedLaborTier === idx;
+                        return (
+                          <button
+                            key={tier.tier}
+                            onClick={() => setSelectedLaborTier(idx)}
+                            className={`p-3 rounded-lg border-2 text-center transition-all ${
+                              isActive
+                                ? 'border-orange-500 bg-orange-50'
+                                : 'border-slate-200 hover:border-slate-300'
+                            }`}
+                          >
+                            <p className={`text-sm font-semibold ${isActive ? 'text-orange-600' : 'text-slate-700'}`}>
+                              {tier.tier}
+                            </p>
+                            <p className={`text-xs mt-1 ${isActive ? 'text-orange-500' : 'text-slate-400'}`}>
+                              ×{tier.multiplier}
+                            </p>
+                            <p className={`text-sm font-bold mt-1 ${isActive ? 'text-orange-600' : 'text-slate-600'}`}>
+                              ¥{rate}/h
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-50 rounded-lg p-4 space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-500">城市基准工时费</span>
+                      <span className="text-slate-600">¥{quoteData.baseRate} / 小时</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-500">工时档位</span>
+                      <span className="text-slate-600">{quoteData.tierName}（×{quoteData.tierMultiplier}）</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-500">实际工时单价</span>
+                      <span className="font-medium text-orange-600">¥{quoteData.laborRate.toFixed(0)} / 小时</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-500">预计工时</span>
+                      <span className="text-slate-600">{quoteData.laborHours} 小时</span>
+                    </div>
+                    <div className="h-px bg-slate-200 my-2" />
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-slate-700">工时费合计</span>
+                      <span className="font-semibold text-slate-800">¥{quoteData.laborTotal.toFixed(0)}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                    <div className="flex items-start gap-2">
+                      <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-sm text-slate-700">基础工时</p>
-                        <p className="text-xs text-slate-400">1.5 小时 × ¥{cityRate?.baseRate || 80}</p>
+                        <p className="text-xs font-medium text-blue-700">计价公式说明</p>
+                        <p className="text-xs text-blue-600 mt-0.5">
+                          工时费 = 城市基准工时费 × 档位倍率 × 工时数
+                        </p>
+                        <p className="text-xs text-blue-600 mt-0.5">
+                          即：¥{quoteData.baseRate} × {quoteData.tierMultiplier} × {quoteData.laborHours}h = ¥{quoteData.laborTotal.toFixed(0)}
+                        </p>
                       </div>
-                      <span className="text-sm font-medium text-slate-700">¥{quoteData.laborTotal.toFixed(0)}</span>
                     </div>
-                  </div>
-                  <div className="grid grid-cols-4 gap-2 mt-3">
-                    {cityRate?.tierRates.map(tier => (
-                      <div
-                        key={tier.tier}
-                        className={`text-center p-2 rounded-lg border ${
-                          tier.tier === '基础工时'
-                            ? 'border-orange-300 bg-orange-50 text-orange-600'
-                            : 'border-slate-200 text-slate-500'
-                        }`}
-                      >
-                        <p className="text-xs font-medium">{tier.tier}</p>
-                        <p className="text-xs mt-0.5">×{tier.multiplier}</p>
-                      </div>
-                    ))}
                   </div>
                 </div>
 
@@ -414,10 +570,19 @@ export default function RepairPage() {
                     <Shield className="w-5 h-5 text-blue-600" />
                     <h4 className="font-semibold text-blue-900">平台服务保障</h4>
                   </div>
-                  <ul className="text-xs text-blue-700 space-y-1">
-                    <li>• 资金担保：验收确认后 T+1 释放给师傅</li>
-                    <li>• 质保 30 天：维修后同一问题免费复修</li>
-                    <li>• 差价双倍返还：发现乱收费，差额双倍返还</li>
+                  <ul className="text-xs text-blue-700 space-y-1.5">
+                    <li className="flex items-start gap-2">
+                      <Check className="w-3.5 h-3.5 text-blue-500 flex-shrink-0 mt-0.5" />
+                      <span>资金担保：验收确认后 T+1 释放给师傅，不满意可申诉</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-3.5 h-3.5 text-blue-500 flex-shrink-0 mt-0.5" />
+                      <span>质保 30 天：维修后同一问题免费复修，配件质保 90 天</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="w-3.5 h-3.5 text-blue-500 flex-shrink-0 mt-0.5" />
+                      <span>差价双倍返还：发现乱收费，差额双倍返还</span>
+                    </li>
                   </ul>
                 </div>
 
@@ -455,27 +620,31 @@ export default function RepairPage() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">预计上门</span>
-                  <span className="text-slate-700 font-medium">30 分钟内</span>
+                  <span className="text-slate-500">服务城市</span>
+                  <span className="text-slate-700 font-medium">{selectedCity}</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-500">基准工时费</span>
+                  <span className="text-slate-700 font-medium">¥{cityRate?.baseRate || 80}/h</span>
                 </div>
               </div>
 
-              <div className="border-t border-slate-100 my-4 pt-4">
+              <div className="border-t border-slate-100 my-4 pt-4 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-slate-500">配件费</span>
                   <span className="text-sm text-slate-700">¥{quoteData.partsTotal}</span>
                 </div>
-                <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center justify-between">
                   <span className="text-sm text-slate-500">工时费</span>
                   <span className="text-sm text-slate-700">¥{quoteData.laborTotal.toFixed(0)}</span>
                 </div>
-                <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center justify-between">
                   <span className="text-sm text-slate-500">平台服务费</span>
                   <span className="text-sm text-slate-700">¥{quoteData.platformFee}</span>
                 </div>
               </div>
 
-              <div className="flex items-baseline justify-between">
+              <div className="flex items-baseline justify-between pt-3 border-t border-slate-200">
                 <span className="text-slate-600 font-medium">合计</span>
                 <div className="text-right">
                   <span className="text-2xl font-bold text-orange-500">¥{quoteData.total}</span>
@@ -492,6 +661,24 @@ export default function RepairPage() {
                 新用户首单立减 <span className="font-bold">¥20</span>，
                 分享好友再得 ¥30 优惠券
               </p>
+            </div>
+
+            <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-4">
+              <h4 className="text-sm font-semibold text-slate-700 mb-2.5">报价透明承诺</h4>
+              <ul className="text-xs text-slate-500 space-y-2">
+                <li className="flex items-start gap-2">
+                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span>配件价格公开透明，与平台标准库一致</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span>工时费按城市基准×档位，有据可查</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
+                  <span>师傅不得私自加价，发现可投诉</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
