@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Noto Sans SC', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: #E2E8F0;
+  background-color: #050A14;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body, html, #root {
+  height: 100%;
+  margin: 0;
+  background-color: #050A14;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B1220;
+}
+::-webkit-scrollbar-thumb {
+  background: #243049;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F97316;
+}
+
+@layer components {
+  .industrial-card {
+    @apply relative bg-ink-900/90 backdrop-blur-sm rounded-sm border border-ink-600/60;
+    box-shadow: 0 0 0 1px rgba(100,116,139,0.15) inset, 0 4px 24px -8px rgba(0,0,0,0.5);
+  }
+  .industrial-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(249,115,22,0.3), transparent 40%, transparent 60%, rgba(100,116,139,0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white transition-all duration-200;
+    background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px rgba(249,115,22,0.4);
+  }
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed;
+    filter: grayscale(0.5);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-slate-300 bg-white/5 border border-ink-600 hover:bg-white/10 hover:text-white hover:border-slate-500 transition-all duration-200;
+  }
+
+  .corner-brackets {
+    position: relative;
+  }
+  .corner-brackets::before,
+  .corner-brackets::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: #F97316;
+  }
+  .corner-brackets::before {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+  }
+  .corner-brackets::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+  }
+
+  .hex-tag {
+    @apply inline-flex items-center px-2.5 py-1 text-xs font-mono;
+    background: rgba(249,115,22,0.1);
+    color: #FB923C;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  }
+
+  .stat-panel {
+    @apply relative p-5 industrial-card;
+    background-image: linear-gradient(180deg, rgba(249,115,22,0.04) 0%, transparent 100%);
+  }
+
+  .gauge-ring {
+    background: conic-gradient(var(--gauge-color, #F97316) calc(var(--gauge-progress, 0) * 1%), #1A2238 calc(var(--gauge-progress, 0) * 1%));
+    mask: radial-gradient(circle, transparent 58%, black 60%);
+    -webkit-mask: radial-gradient(circle, transparent 58%, black 60%);
+  }
+
+  .data-grid {
+    background-image: linear-gradient(rgba(100,116,139,0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(100,116,139,0.1) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .status-dot {
+    @apply inline-block w-2 h-2 rounded-full;
+  }
+
+  .tab-active {
+    @apply text-orange-500 border-b-2 border-orange-500;
+  }
+
+  .divider-dashed {
+    background-image: linear-gradient(to right, rgba(100,116,139,0.4) 50%, transparent 50%);
+    background-size: 8px 1px;
+    background-repeat: repeat-x;
+    height: 1px;
+  }
+
+  .input-industrial {
+    @apply w-full bg-ink-950/60 border border-ink-600/70 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 outline-none transition-colors;
+  }
+  .input-industrial:focus {
+    @apply border-orange-500/60;
+    box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
+  }
+}
+
+.leaflet-container {
+  background: #0F172A;
+  outline: none;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.leaflet-tile-pane {
+  filter: invert(0.92) hue-rotate(190deg) saturate(0.35) brightness(0.8);
+}
+.leaflet-control-attribution {
+  background: rgba(15,23,42,0.85) !important;
+  color: #64748B !important;
+  font-size: 10px !important;
+}
+.leaflet-popup-content-wrapper {
+  background: #0F172A;
+  color: #E2E8F0;
+  border: 1px solid rgba(249,115,22,0.4);
+  border-radius: 2px;
+}
+.leaflet-popup-tip {
+  background: #0F172A;
+}
