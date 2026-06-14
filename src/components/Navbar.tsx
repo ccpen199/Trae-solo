@@ -12,12 +12,16 @@ import {
   LogOut,
   Settings,
   Bell,
+  GraduationCap,
+  ShieldCheck,
+  BadgeCheck,
+  FileCheck2,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { cn } from '@/lib/utils';
 import type { UserRole, Student, Company, Admin } from '../../shared/types';
 
-type User = Student | Company | Admin;
+type UserType = Student | Company | Admin;
 
 interface NavItem {
   label: string;
@@ -28,19 +32,21 @@ interface NavItem {
 const studentNavItems: NavItem[] = [
   { label: '岗位大厅', path: '/', icon: Briefcase },
   { label: '智能匹配', path: '/match', icon: Sparkles },
-  { label: '消息', path: '/messages', icon: MessageSquare },
-  { label: '我的', path: '/student/profile', icon: User },
+  { label: '消息中心', path: '/messages', icon: MessageSquare },
+  { label: '学生中心', path: '/student/profile', icon: User },
 ];
 
 const companyNavItems: NavItem[] = [
   { label: '岗位大厅', path: '/', icon: Briefcase },
   { label: '我的岗位', path: '/company/jobs', icon: Building2 },
   { label: '候选人', path: '/company/candidates', icon: Users },
-  { label: '消息', path: '/messages', icon: MessageSquare },
+  { label: '消息中心', path: '/messages', icon: MessageSquare },
 ];
 
 const adminNavItems: NavItem[] = [
-  { label: '监管看板', path: '/admin', icon: LayoutDashboard },
+  { label: '监管总览', path: '/admin/dashboard', icon: LayoutDashboard },
+  { label: '院校监控', path: '/admin/schools', icon: Building2 },
+  { label: '投诉处理', path: '/admin/complaints', icon: FileCheck2 },
 ];
 
 function getNavItems(role: UserRole | null): NavItem[] {
@@ -56,7 +62,34 @@ function getNavItems(role: UserRole | null): NavItem[] {
   }
 }
 
-function getUserName(user: User | null, role: UserRole | null): string {
+function getRoleLabel(role: UserRole | null): string {
+  switch (role) {
+    case 'student': return '学生';
+    case 'company': return '企业';
+    case 'admin': return '教育局监管';
+    default: return '';
+  }
+}
+
+function getRoleBadgeClass(role: UserRole | null): string {
+  switch (role) {
+    case 'student': return 'bg-primary-100 text-primary-700 border-primary-200';
+    case 'company': return 'bg-accent-100 text-accent-700 border-accent-200';
+    case 'admin': return 'bg-success-100 text-success-700 border-success-200';
+    default: return '';
+  }
+}
+
+function getRoleIcon(role: UserRole | null) {
+  switch (role) {
+    case 'student': return GraduationCap;
+    case 'company': return Building2;
+    case 'admin': return ShieldCheck;
+    default: return User;
+  }
+}
+
+function getUserName(user: UserType | null, role: UserRole | null): string {
   if (!user || !role) return '';
   if (role === 'student') return (user as Student).name;
   if (role === 'company') return (user as Company).name;
@@ -64,11 +97,19 @@ function getUserName(user: User | null, role: UserRole | null): string {
   return '';
 }
 
-function getUserAvatar(user: User | null, role: UserRole | null): string | undefined {
+function getUserAvatar(user: UserType | null, role: UserRole | null): string | undefined {
   if (!user || !role) return undefined;
   if (role === 'student') return (user as Student).avatar;
   if (role === 'company') return (user as Company).avatar;
   return undefined;
+}
+
+function getUserSubInfo(user: UserType | null, role: UserRole | null): string {
+  if (!user || !role) return '';
+  if (role === 'student') return (user as Student).school || '';
+  if (role === 'company') return (user as Company).contactName || '企业账号';
+  if (role === 'admin') return '教育局管理员';
+  return '';
 }
 
 export default function Navbar() {
@@ -80,6 +121,8 @@ export default function Navbar() {
   const navItems = getNavItems(userRole);
   const userName = getUserName(user, userRole);
   const userAvatar = getUserAvatar(user, userRole);
+  const userSubInfo = getUserSubInfo(user, userRole);
+  const RoleIcon = getRoleIcon(userRole);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -97,20 +140,44 @@ export default function Navbar() {
     navigate('/login');
   };
 
+  const getProfilePath = () => {
+    switch (userRole) {
+      case 'student': return '/student/profile';
+      case 'company': return '/company/profile';
+      case 'admin': return '/admin/dashboard';
+      default: return '/login';
+    }
+  };
+
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <Link to="/" className="flex items-center space-x-2.5">
+              <div className="w-9 h-9 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-sm shadow-primary-500/20">
                 <Briefcase className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">实习兼职平台</span>
+              <div className="flex flex-col">
+                <span className="text-lg font-bold text-gray-900 leading-tight">校职通</span>
+                <span className="text-[10px] text-gray-400 leading-tight">高校兼职用工撮合平台</span>
+              </div>
             </Link>
 
+            {user && userRole && (
+              <div className="ml-6 pl-6 border-l border-gray-100 hidden md:flex items-center space-x-2">
+                <div className={cn(
+                  'inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full border text-xs font-medium',
+                  getRoleBadgeClass(userRole)
+                )}>
+                  <RoleIcon className="w-3.5 h-3.5" />
+                  <span>{getRoleLabel(userRole)}端</span>
+                </div>
+              </div>
+            )}
+
             {user && navItems.length > 0 && (
-              <div className="hidden md:flex ml-10 space-x-1">
+              <div className="hidden md:flex ml-8 space-x-1">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive =
@@ -122,10 +189,10 @@ export default function Navbar() {
                       key={item.path}
                       to={item.path}
                       className={cn(
-                        'flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors',
+                        'flex items-center px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200',
                         isActive
-                          ? 'text-blue-600 bg-blue-50'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                          ? 'text-primary-600 bg-primary-50'
+                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                       )}
                     >
                       <Icon className="w-4 h-4 mr-2" />
@@ -137,72 +204,98 @@ export default function Navbar() {
             )}
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             {user ? (
               <>
-                <button className="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
+                <button className="relative p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-full transition-colors">
                   <Bell className="w-5 h-5" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 transition-colors"
+                    className="flex items-center space-x-2.5 p-1 pr-3 rounded-full hover:bg-gray-50 transition-colors"
                   >
                     {userAvatar ? (
                       <img
                         src={userAvatar}
                         alt={userName}
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-8 h-8 rounded-full object-cover ring-2 ring-gray-100"
                       />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-sm font-medium ring-2 ring-gray-100">
                         {userName.charAt(0)}
                       </div>
                     )}
+                    <div className="text-left hidden sm:block">
+                      <p className="text-sm font-medium text-gray-800 leading-tight">{userName}</p>
+                      <p className="text-xs text-gray-400 leading-tight">{userSubInfo}</p>
+                    </div>
                     <ChevronDown
                       className={cn(
-                        'w-4 h-4 text-gray-500 transition-transform',
+                        'w-4 h-4 text-gray-400 transition-transform',
                         dropdownOpen && 'rotate-180'
                       )}
                     />
                   </button>
 
                   {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                      <div className="px-4 py-3 border-b border-gray-100">
-                        <p className="text-sm font-medium text-gray-900">{userName}</p>
-                        <p className="text-xs text-gray-500 capitalize">{userRole}</p>
+                    <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 py-2 z-50 animate-fade-in-up">
+                      <div className="px-4 py-4 border-b border-gray-50">
+                        <div className="flex items-center space-x-3">
+                          {userAvatar ? (
+                            <img
+                              src={userAvatar}
+                              alt={userName}
+                              className="w-12 h-12 rounded-xl object-cover"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-base font-medium">
+                              {userName.charAt(0)}
+                            </div>
+                          )}
+                          <div>
+                            <p className="font-semibold text-gray-900">{userName}</p>
+                            <p className="text-xs text-gray-500 mt-0.5">{userSubInfo}</p>
+                            <div className="mt-1.5">
+                              <span className={cn(
+                                'inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[10px] font-medium border',
+                                getRoleBadgeClass(userRole)
+                              )}>
+                                <RoleIcon className="w-3 h-3" />
+                                <span>{getRoleLabel(userRole)}</span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
-                      <Link
-                        to={
-                          userRole === 'student'
-                            ? '/student/profile'
-                            : userRole === 'company'
-                            ? '/company/profile'
-                            : '/admin/settings'
-                        }
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <User className="w-4 h-4 mr-3" />
-                        个人中心
-                      </Link>
+                      <div className="py-1">
+                        <Link
+                          to={getProfilePath()}
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50"
+                        >
+                          <User className="w-4 h-4 mr-3 text-gray-400" />
+                          个人中心
+                        </Link>
+                        <button
+                          onClick={() => {
+                            setDropdownOpen(false);
+                            navigate('/settings');
+                          }}
+                          className="flex items-center w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 text-left"
+                        >
+                          <Settings className="w-4 h-4 mr-3 text-gray-400" />
+                          账号设置
+                        </button>
+                      </div>
 
-                      <button
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <Settings className="w-4 h-4 mr-3" />
-                        设置
-                      </button>
-
-                      <div className="border-t border-gray-100 mt-1 pt-1">
+                      <div className="border-t border-gray-50 mt-1 pt-1">
                         <button
                           onClick={handleLogout}
-                          className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                          className="flex items-center w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
                         >
                           <LogOut className="w-4 h-4 mr-3" />
                           退出登录
@@ -216,15 +309,15 @@ export default function Navbar() {
               <div className="flex items-center space-x-3">
                 <Link
                   to="/login"
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   登录
                 </Link>
                 <Link
-                  to="/register"
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+                  to="/login"
+                  className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg hover:from-primary-600 hover:to-primary-700 transition-all shadow-sm shadow-primary-500/20"
                 >
-                  注册
+                  注册账号
                 </Link>
               </div>
             )}
