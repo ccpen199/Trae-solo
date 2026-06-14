@@ -1,0 +1,19 @@
+{
+  "name": "service-job-platform",
+  "version": "1.0.0",
+  "description": "都市服务业青年专属求职平台",
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently -n backend,frontend -c blue,green \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run build && npm run preview",
+    "stop:backend": "./scripts/stop-backend.sh",
+    "stop:frontend": "./scripts/stop-frontend.sh",
+    "check:ports": "./scripts/check-ports.sh"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

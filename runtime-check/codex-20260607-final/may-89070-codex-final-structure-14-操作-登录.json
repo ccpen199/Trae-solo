@@ -1,0 +1,1747 @@
+{
+  "meta": {
+    "title": "都市服务业求职平台 - 专注餐饮零售物流行业",
+    "url": "http://127.0.0.1:49070/login",
+    "timestamp": "2026-06-07T16:43:30.654Z",
+    "viewport": {
+      "width": 1920,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1920,
+      "scrollHeight": 1698
+    }
+  },
+  "text": {
+    "bodyPreview": "🏙️ 服务业求职平台首页找工作企业管理后台登录注册🔐 登录用户名 *密码 *登录还没有账号？立即注册测试账号：管理员：admin / admin123企业：company1 / 123456求职者：seeker1 / 123456© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin ",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(win",
+        "visible": false,
+        "childCount": 7,
+        "children": [
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "link",
+            "id": "",
+            "className": "",
+            "selectorHint": "link",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "title",
+            "id": "",
+            "className": "",
+            "selectorHint": "title",
+            "text": "都市服务业求职平台 - 专注餐饮零售物流行业",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin ",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin ",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "",
+                "selectorHint": "div",
+                "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin ",
+                "visible": true,
+                "childCount": 3,
+                "children": [
+                  {
+                    "tag": "header",
+                    "id": "",
+                    "className": "header",
+                    "selectorHint": "header.header",
+                    "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container",
+                        "selectorHint": "div.container",
+                        "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "main",
+                    "id": "",
+                    "className": "main",
+                    "selectorHint": "main.main",
+                    "text": "🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container",
+                        "selectorHint": "div.container",
+                        "text": "🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "footer",
+                    "id": "",
+                    "className": "footer",
+                    "selectorHint": "footer.footer",
+                    "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container",
+                        "selectorHint": "div.container",
+                        "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求职者：seeker1 / 123456 © 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1698
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(window); window.$RefreshReg$ = () => {}; window.$RefreshSig$ = () => (type) => type; 都市服务业求职平台 - 专注餐饮零售",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 7,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "data:,",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "都市服务业求职平台 - 专注餐饮零售物流行业",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求职者：seeker1 / 123456 © 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1698
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求职者：seeker1 / 123456 © 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1698
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求职者：seeker1 / 123456 © 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1698
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "header",
+      "id": "",
+      "className": "header",
+      "selectorHint": "header.header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 70
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 360,
+        "y": 16,
+        "width": 1200,
+        "height": 38
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "div",
+      "id": "",
+      "className": "logo",
+      "selectorHint": "div.logo",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 380,
+        "y": 16,
+        "width": 197,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "nav",
+      "id": "",
+      "className": "nav",
+      "selectorHint": "nav.nav",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 找工作 企业 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 1155,
+        "y": 18,
+        "width": 385,
+        "height": 35
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "a",
+      "id": "",
+      "className": "active",
+      "selectorHint": "a.active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1155,
+        "y": 22,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "找工作",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1211,
+        "y": 22,
+        "width": 48,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业",
+      "href": "/companies",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1283,
+        "y": 22,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1339,
+        "y": 22,
+        "width": 64,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1427,
+        "y": 22,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.901688"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-outline btn-sm",
+      "selectorHint": "a.btn.btn-outline.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1483,
+        "y": 18,
+        "width": 57,
+        "height": 35
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "main",
+      "id": "",
+      "className": "main",
+      "selectorHint": "main.main",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求职者：seeker1 / 123456",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 70,
+        "width": 1920,
+        "height": 1460
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求职者：seeker1 / 123456",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 360,
+        "y": 102,
+        "width": 1200,
+        "height": 561
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "div",
+      "id": "",
+      "className": "form-container",
+      "selectorHint": "div.form-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🔐 登录 用户名 * 密码 * 登录 还没有账号？立即注册 测试账号： 管理员：admin / admin123 企业：company1 / 123456 求职者：seeker1 / 123456",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 660,
+        "y": 102,
+        "width": 600,
+        "height": 561
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🔐 登录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 692,
+        "y": 134,
+        "width": 536,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "form",
+      "id": "",
+      "className": "",
+      "selectorHint": "form",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "用户名 * 密码 * 登录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 692,
+        "y": 197,
+        "width": 536,
+        "height": 224
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "div",
+      "id": "",
+      "className": "form-group",
+      "selectorHint": "div.form-group",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "用户名 *",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 692,
+        "y": 197,
+        "width": 536,
+        "height": 73
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "用户名 *",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 692,
+        "y": 197,
+        "width": 536,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "span",
+      "id": "",
+      "className": "required",
+      "selectorHint": "span.required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "*",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 744,
+        "y": 200,
+        "width": 7,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入用户名",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 692,
+        "y": 230,
+        "width": 536,
+        "height": 39
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "div",
+      "id": "",
+      "className": "form-group",
+      "selectorHint": "div.form-group",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "密码 *",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 692,
+        "y": 289,
+        "width": 536,
+        "height": 73
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "密码 *",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 692,
+        "y": 289,
+        "width": 536,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "span",
+      "id": "",
+      "className": "required",
+      "selectorHint": "span.required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "*",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 728,
+        "y": 292,
+        "width": 7,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "",
+      "type": "password",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入密码",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 692,
+        "y": 322,
+        "width": 536,
+        "height": 39
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "button",
+      "id": "",
+      "className": "btn btn-primary",
+      "selectorHint": "button.btn.btn-primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 692,
+        "y": 381,
+        "width": 536,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "还没有账号？立即注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 692,
+        "y": 445,
+        "width": 536,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "立即注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 976,
+        "y": 448,
+        "width": 64,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "div",
+      "id": "",
+      "className": "alert alert-warning",
+      "selectorHint": "div.alert.alert-warning",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "测试账号： 管理员：admin / admin123 企业：company1 / 123456 求职者：seeker1 / 123456",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 692,
+        "y": 495,
+        "width": 536,
+        "height": 121
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "测试账号：",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 709,
+        "y": 514,
+        "width": 68,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "br",
+      "id": "",
+      "className": "",
+      "selectorHint": "br",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 777,
+        "y": 514,
+        "width": 0,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "br",
+      "id": "",
+      "className": "",
+      "selectorHint": "br",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 874,
+        "y": 535,
+        "width": 0,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "br",
+      "id": "",
+      "className": "",
+      "selectorHint": "br",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 873,
+        "y": 557,
+        "width": 0,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "footer",
+      "id": "",
+      "className": "footer",
+      "selectorHint": "footer.footer",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 1578,
+        "width": 1920,
+        "height": 119
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 360,
+        "y": 1610,
+        "width": 1200,
+        "height": 55
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 380,
+        "y": 1610,
+        "width": 1160,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 380,
+        "y": 1644,
+        "width": 1160,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "a",
+      "id": "",
+      "className": "active",
+      "selectorHint": "a.active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1155,
+        "y": 22,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "找工作",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1211,
+        "y": 22,
+        "width": 48,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业",
+      "href": "/companies",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1283,
+        "y": 22,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1339,
+        "y": 22,
+        "width": 64,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1427,
+        "y": 22,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.901688"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-outline btn-sm",
+      "selectorHint": "a.btn.btn-outline.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1483,
+        "y": 18,
+        "width": 57,
+        "height": 35
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入用户名",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 692,
+        "y": 230,
+        "width": 536,
+        "height": 39
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "",
+      "type": "password",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入密码",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 692,
+        "y": 322,
+        "width": 536,
+        "height": 39
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "button",
+      "id": "",
+      "className": "btn btn-primary",
+      "selectorHint": "button.btn.btn-primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 692,
+        "y": 381,
+        "width": 536,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "立即注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 976,
+        "y": 448,
+        "width": 64,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}

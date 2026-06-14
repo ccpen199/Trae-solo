@@ -1,0 +1,3052 @@
+{
+  "meta": {
+    "title": "都市服务业求职平台 - 专注餐饮零售物流行业",
+    "url": "http://127.0.0.1:49070/jobs/1",
+    "timestamp": "2026-06-07T16:43:18.246Z",
+    "viewport": {
+      "width": 1728,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1728,
+      "scrollHeight": 1698
+    }
+  },
+  "text": {
+    "bodyPreview": "🏙️ 服务业求职平台首页找工作企业管理后台登录注册职位详情奶茶店店员餐饮⏰ 当日¥4500-6500/月0📍 实际工作地址北京市朝阳区朝阳北路101号朝阳大悦城B1层01号坐标: 116.5111, 39.9321📋 职位要求18-35岁，初中以上学历，身体健康🎁 福利待遇五险一金，包吃，月度奖金，年假🏢 企业信息企业名称：喜茶(北京朝阳大悦城店)联系人：张经理联系电话：13800138001企业地址：北京市朝阳区朝阳北路101号朝阳大悦城B1层01号查看企业详情 →⭐ 员工评价 (3)张伟★★★★★面试体验很好，HR很专业，把薪资福利都讲得很清楚，工作环境也不错，已经入职一周了，目前很满意！2024-01-18 10:00:00王芳★★★★☆茶饮师的工作节奏很快，但福利待遇不错，员工折扣买奶茶很划算，年终奖也挺丰厚的，就是需要站一整天有点累。2024-01-12 09:15:00李明★★★★★在喜茶工作了2年，店长人很好，同事相处融洽，五险一金按时缴纳，节假日有三倍工资，就是高峰期比较忙，整体很满意！2024-01-10 14:30:00🛡️ 企业信用数据信用等级A级信用评分⭐ 4.7👥 员工离职率15.0%🛡️ 社保缴纳率92.0%* 数据对接社保局官方接口，每月更新© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(win",
+        "visible": false,
+        "childCount": 7,
+        "children": [
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "link",
+            "id": "",
+            "className": "",
+            "selectorHint": "link",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "title",
+            "id": "",
+            "className": "",
+            "selectorHint": "title",
+            "text": "都市服务业求职平台 - 专注餐饮零售物流行业",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "",
+                "selectorHint": "div",
+                "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市",
+                "visible": true,
+                "childCount": 3,
+                "children": [
+                  {
+                    "tag": "header",
+                    "id": "",
+                    "className": "header",
+                    "selectorHint": "header.header",
+                    "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container",
+                        "selectorHint": "div.container",
+                        "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "main",
+                    "id": "",
+                    "className": "main",
+                    "selectorHint": "main.main",
+                    "text": "职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.51",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container",
+                        "selectorHint": "div.container",
+                        "text": "职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.51",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "footer",
+                    "id": "",
+                    "className": "footer",
+                    "selectorHint": "footer.footer",
+                    "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container",
+                        "selectorHint": "div.container",
+                        "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": -77,
+        "width": 1728,
+        "height": 1698
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(window); window.$RefreshReg$ = () => {}; window.$RefreshSig$ = () => (type) => type; 都市服务业求职平台 - 专注餐饮零售",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 7,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "data:,",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "都市服务业求职平台 - 专注餐饮零售物流行业",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": -77,
+        "width": 1728,
+        "height": 1698
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": -77,
+        "width": 1728,
+        "height": 1698
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册 职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": -77,
+        "width": 1728,
+        "height": 1698
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "header",
+      "id": "",
+      "className": "header",
+      "selectorHint": "header.header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": -77,
+        "width": 1728,
+        "height": 70
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台 首页 找工作 企业 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 264,
+        "y": -61,
+        "width": 1200,
+        "height": 38
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "div",
+      "id": "",
+      "className": "logo",
+      "selectorHint": "div.logo",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏙️ 服务业求职平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 284,
+        "y": -61,
+        "width": 197,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "nav",
+      "id": "",
+      "className": "nav",
+      "selectorHint": "nav.nav",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 找工作 企业 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 1059,
+        "y": -59,
+        "width": 385,
+        "height": 35
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1059,
+        "y": -55,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "a",
+      "id": "",
+      "className": "active",
+      "selectorHint": "a.active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "找工作",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1115,
+        "y": -55,
+        "width": 48,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业",
+      "href": "/companies",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1187,
+        "y": -55,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1243,
+        "y": -55,
+        "width": 64,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1331,
+        "y": -55,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-outline btn-sm",
+      "selectorHint": "a.btn.btn-outline.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1387,
+        "y": -59,
+        "width": 57,
+        "height": 35
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "main",
+      "id": "",
+      "className": "main",
+      "selectorHint": "main.main",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企业信息 企业名称：喜茶(北京朝阳大悦城店) 联系人：张经理 联系电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": -7,
+        "width": 1728,
+        "height": 1460
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企业信息 企业名称：喜茶(北京朝阳大悦城店) 联系人：张经理 联系电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 264,
+        "y": 25,
+        "width": 1200,
+        "height": 1184
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "div",
+      "id": "",
+      "className": "detail-page",
+      "selectorHint": "div.detail-page",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0 📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企业信息 企业名称：喜茶(北京朝阳大悦城店) 联系人：张经理 联系电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 284,
+        "y": 25,
+        "width": 1160,
+        "height": 1184
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "div",
+      "id": "",
+      "className": "detail-header",
+      "selectorHint": "div.detail-header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "职位详情 奶茶店店员 餐饮 ⏰ 当日 ¥4500-6500/月 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 316,
+        "y": 57,
+        "width": 1096,
+        "height": 138
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "职位详情",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 57,
+        "width": 1096,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "h1",
+      "id": "",
+      "className": "",
+      "selectorHint": "h1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "奶茶店店员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 87,
+        "width": 1096,
+        "height": 46
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "餐饮 ⏰ 当日 ¥4500-6500/月 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 316,
+        "y": 141,
+        "width": 1096,
+        "height": 28
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "span",
+      "id": "",
+      "className": "tag industry",
+      "selectorHint": "span.tag.industry",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "餐饮",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 142,
+        "width": 45,
+        "height": 27
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "span",
+      "id": "",
+      "className": "tag arrival",
+      "selectorHint": "span.tag.arrival",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "⏰ 当日",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 377,
+        "y": 142,
+        "width": 64,
+        "height": 27
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "span",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "span.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥4500-6500/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 457,
+        "y": 141,
+        "width": 132,
+        "height": 28
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "div",
+      "id": "",
+      "className": "detail-content",
+      "selectorHint": "div.detail-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企业信息 企业名称：喜茶(北京朝阳大悦城店) 联系人：张经理 联系电话：13800138001 企业地址：北京市朝阳区朝阳北路101号朝",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 316,
+        "y": 220,
+        "width": 1096,
+        "height": 958
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321 📋 职位要求 18-35岁，初中以上学历，身体健康 🎁 福利待遇 五险一金，包吃，月度奖金，年假 🏢 企业信息 企业名称：喜茶(北京朝阳大悦城店) 联系人：张经理 联系电话：13800138001 企业地址：北京市朝阳区朝阳北路101号朝",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 316,
+        "y": 220,
+        "width": 709,
+        "height": 958
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "div",
+      "id": "",
+      "className": "detail-section",
+      "selectorHint": "div.detail-section",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "📍 实际工作地址 北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 坐标: 116.5111, 39.9321",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 316,
+        "y": 220,
+        "width": 709,
+        "height": 94
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "📍 实际工作地址",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 220,
+        "width": 709,
+        "height": 28
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市朝阳区朝阳北路101号朝阳大悦城B1层01号",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 260,
+        "width": 709,
+        "height": 27
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "坐标: 116.5111, 39.9321",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 292,
+        "width": 709,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "div",
+      "id": "",
+      "className": "detail-section",
+      "selectorHint": "div.detail-section",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "📋 职位要求 18-35岁，初中以上学历，身体健康",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 316,
+        "y": 338,
+        "width": 709,
+        "height": 67
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "📋 职位要求",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 338,
+        "width": 709,
+        "height": 28
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18-35岁，初中以上学历，身体健康",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 379,
+        "width": 709,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "div",
+      "id": "",
+      "className": "detail-section",
+      "selectorHint": "div.detail-section",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🎁 福利待遇 五险一金，包吃，月度奖金，年假",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 316,
+        "y": 428,
+        "width": 709,
+        "height": 67
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🎁 福利待遇",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 428,
+        "width": 709,
+        "height": 28
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金，包吃，月度奖金，年假",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 469,
+        "width": 709,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "div",
+      "id": "",
+      "className": "detail-section",
+      "selectorHint": "div.detail-section",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏢 企业信息 企业名称：喜茶(北京朝阳大悦城店) 联系人：张经理 联系电话：13800138001 企业地址：北京市朝阳区朝阳北路101号朝阳大悦城B1层01号 查看企业详情 →",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 316,
+        "y": 519,
+        "width": 709,
+        "height": 180
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🏢 企业信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 519,
+        "width": 709,
+        "height": 28
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业名称：喜茶(北京朝阳大悦城店)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 316,
+        "y": 560,
+        "width": 709,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业名称：",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 563,
+        "width": 80,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "联系人：张经理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 316,
+        "y": 585,
+        "width": 709,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "联系人：",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 588,
+        "width": 64,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "联系电话：13800138001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 316,
+        "y": 611,
+        "width": 709,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "联系电话：",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 614,
+        "width": 80,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业地址：北京市朝阳区朝阳北路101号朝阳大悦城B1层01号",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 316,
+        "y": 637,
+        "width": 709,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业地址：",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 640,
+        "width": 80,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "button",
+      "id": "",
+      "className": "btn btn-secondary btn-sm",
+      "selectorHint": "button.btn.btn-secondary.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "查看企业详情 →",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 670,
+        "width": 125,
+        "height": 29
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "detail-section",
+      "selectorHint": "div.detail-section",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "⭐ 员工评价 (3) 张伟 ★★★★★ 面试体验很好，HR很专业，把薪资福利都讲得很清楚，工作环境也不错，已经入职一周了，目前很满意！ 2024-01-18 10:00:00 王芳 ★★★★☆ 茶饮师的工作节奏很快，但福利待遇不错，员工折扣买奶茶很划算，年终奖也挺丰厚的，就是需要站一整天有点累。 2024-01-12 09:15:00 李明 ★★★★★ 在喜",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 316,
+        "y": 723,
+        "width": 709,
+        "height": 431
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "⭐ 员工评价 (3)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 723,
+        "width": 709,
+        "height": 28
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "div",
+      "id": "",
+      "className": "review-item",
+      "selectorHint": "div.review-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "张伟 ★★★★★ 面试体验很好，HR很专业，把薪资福利都讲得很清楚，工作环境也不错，已经入职一周了，目前很满意！ 2024-01-18 10:00:00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 316,
+        "y": 764,
+        "width": 709,
+        "height": 115
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "review-header",
+      "selectorHint": "div.review-header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "张伟 ★★★★★",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 332,
+        "y": 780,
+        "width": 677,
+        "height": 26
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "span",
+      "id": "",
+      "className": "review-author",
+      "selectorHint": "span.review-author",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "张伟",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 780,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "span",
+      "id": "",
+      "className": "review-rating",
+      "selectorHint": "span.review-rating",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "★★★★★",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 930,
+        "y": 780,
+        "width": 80,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "面试体验很好，HR很专业，把薪资福利都讲得很清楚，工作环境也不错，已经入职一周了，目前很满意！",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 813,
+        "width": 677,
+        "height": 23
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2024-01-18 10:00:00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 841,
+        "width": 677,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "div",
+      "id": "",
+      "className": "review-item",
+      "selectorHint": "div.review-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "王芳 ★★★★☆ 茶饮师的工作节奏很快，但福利待遇不错，员工折扣买奶茶很划算，年终奖也挺丰厚的，就是需要站一整天有点累。 2024-01-12 09:15:00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 316,
+        "y": 879,
+        "width": 709,
+        "height": 138
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "div",
+      "id": "",
+      "className": "review-header",
+      "selectorHint": "div.review-header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "王芳 ★★★★☆",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 332,
+        "y": 895,
+        "width": 677,
+        "height": 26
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "span",
+      "id": "",
+      "className": "review-author",
+      "selectorHint": "span.review-author",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "王芳",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 895,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "span",
+      "id": "",
+      "className": "review-rating",
+      "selectorHint": "span.review-rating",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "★★★★☆",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 930,
+        "y": 895,
+        "width": 80,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "茶饮师的工作节奏很快，但福利待遇不错，员工折扣买奶茶很划算，年终奖也挺丰厚的，就是需要站一整天有点累。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 928,
+        "width": 677,
+        "height": 46
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2024-01-12 09:15:00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 979,
+        "width": 677,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "div",
+      "id": "",
+      "className": "review-item",
+      "selectorHint": "div.review-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "李明 ★★★★★ 在喜茶工作了2年，店长人很好，同事相处融洽，五险一金按时缴纳，节假日有三倍工资，就是高峰期比较忙，整体很满意！ 2024-01-10 14:30:00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 316,
+        "y": 1017,
+        "width": 709,
+        "height": 137
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "review-header",
+      "selectorHint": "div.review-header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "李明 ★★★★★",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 332,
+        "y": 1033,
+        "width": 677,
+        "height": 26
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "span",
+      "id": "",
+      "className": "review-author",
+      "selectorHint": "span.review-author",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "李明",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 1033,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "span",
+      "id": "",
+      "className": "review-rating",
+      "selectorHint": "span.review-rating",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "★★★★★",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 930,
+        "y": 1033,
+        "width": 80,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "在喜茶工作了2年，店长人很好，同事相处融洽，五险一金按时缴纳，节假日有三倍工资，就是高峰期比较忙，整体很满意！",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 1066,
+        "width": 677,
+        "height": 46
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2024-01-10 14:30:00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 332,
+        "y": 1117,
+        "width": 677,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🛡️ 企业信用数据 信用等级 A级 信用评分 ⭐ 4.7 👥 员工离职率 15.0% 🛡️ 社保缴纳率 92.0% * 数据对接社保局官方接口，每月更新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1057,
+        "y": 220,
+        "width": 355,
+        "height": 958
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "div",
+      "id": "",
+      "className": "credit-card",
+      "selectorHint": "div.credit-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🛡️ 企业信用数据 信用等级 A级 信用评分 ⭐ 4.7 👥 员工离职率 15.0% 🛡️ 社保缴纳率 92.0% * 数据对接社保局官方接口，每月更新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 1057,
+        "y": 220,
+        "width": 355,
+        "height": 266
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "h4",
+      "id": "",
+      "className": "",
+      "selectorHint": "h4",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🛡️ 企业信用数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1077,
+        "y": 239,
+        "width": 316,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "div",
+      "id": "",
+      "className": "credit-item",
+      "selectorHint": "div.credit-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "信用等级 A级",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1077,
+        "y": 277,
+        "width": 316,
+        "height": 39
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "信用等级",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1077,
+        "y": 283,
+        "width": 64,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "A级",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1365,
+        "y": 283,
+        "width": 27,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": "",
+      "className": "credit-item",
+      "selectorHint": "div.credit-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "信用评分 ⭐ 4.7",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1077,
+        "y": 316,
+        "width": 316,
+        "height": 39
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "信用评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1077,
+        "y": 323,
+        "width": 64,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "⭐ 4.7",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1345,
+        "y": 323,
+        "width": 48,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "div",
+      "id": "",
+      "className": "credit-item",
+      "selectorHint": "div.credit-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "👥 员工离职率 15.0%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1077,
+        "y": 356,
+        "width": 316,
+        "height": 39
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "👥 员工离职率",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1077,
+        "y": 362,
+        "width": 104,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "15.0%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1344,
+        "y": 362,
+        "width": 49,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "div",
+      "id": "",
+      "className": "credit-item",
+      "selectorHint": "div.credit-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🛡️ 社保缴纳率 92.0%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1077,
+        "y": 395,
+        "width": 316,
+        "height": 39
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🛡️ 社保缴纳率",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1077,
+        "y": 402,
+        "width": 104,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "strong",
+      "id": "",
+      "className": "",
+      "selectorHint": "strong",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "92.0%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1341,
+        "y": 402,
+        "width": 52,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "* 数据对接社保局官方接口，每月更新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1077,
+        "y": 447,
+        "width": 316,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "footer",
+      "id": "",
+      "className": "footer",
+      "selectorHint": "footer.footer",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 1501,
+        "width": 1728,
+        "height": 119
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业 信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 264,
+        "y": 1533,
+        "width": 1200,
+        "height": 55
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "© 2024 都市服务业青年专属求职平台 | 聚焦餐饮、零售、物流行业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 284,
+        "y": 1533,
+        "width": 1160,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "信用体系 · 语音搜索 · AR导航 · AI舆情监控 · 电话录音存档",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 284,
+        "y": 1567,
+        "width": 1160,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1059,
+        "y": -55,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "a",
+      "id": "",
+      "className": "active",
+      "selectorHint": "a.active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "找工作",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1115,
+        "y": -55,
+        "width": 48,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业",
+      "href": "/companies",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1187,
+        "y": -55,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1243,
+        "y": -55,
+        "width": 64,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1331,
+        "y": -55,
+        "width": 32,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-outline btn-sm",
+      "selectorHint": "a.btn.btn-outline.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1387,
+        "y": -59,
+        "width": 57,
+        "height": 35
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "button",
+      "id": "",
+      "className": "btn btn-secondary btn-sm",
+      "selectorHint": "button.btn.btn-secondary.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "查看企业详情 →",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 316,
+        "y": 670,
+        "width": 125,
+        "height": 29
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}
