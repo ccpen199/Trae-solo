@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -18,6 +18,8 @@ import {
   Loader2,
   XCircle,
   Info,
+  RotateCcw,
+  Terminal,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import type { UserRole } from '@/types';
@@ -29,7 +31,6 @@ interface RoleTab {
   subLabel: string;
   icon: LucideIcon;
   phone: string;
-  code: string;
   defaultRoute: string;
   desc: string;
   color: string;
@@ -42,7 +43,6 @@ const roleTabs: RoleTab[] = [
     subLabel: 'SHIPPER',
     icon: Boxes,
     phone: defaultUser.SHIPPER.phone,
-    code: '888888',
     defaultRoute: '/shipper/dashboard',
     desc: '发布货源 · 追踪订单 · 保险服务',
     color: 'orange',
@@ -53,7 +53,6 @@ const roleTabs: RoleTab[] = [
     subLabel: 'DRIVER',
     icon: Truck,
     phone: defaultUser.DRIVER.phone,
-    code: '888888',
     defaultRoute: '/driver/dashboard',
     desc: '订单大厅 · 接单配送 · 收入统计',
     color: 'cyan',
@@ -64,7 +63,6 @@ const roleTabs: RoleTab[] = [
     subLabel: 'ADMIN / OPS',
     icon: UserCog,
     phone: defaultUser.ADMIN.phone,
-    code: '888888',
     defaultRoute: '/admin/overview',
     desc: '智能调度 · 运力监控 · 全局管理',
     color: 'green',
@@ -74,7 +72,7 @@ const roleTabs: RoleTab[] = [
 const VALID_CODES = ['888888', '666666', '123456'];
 
 type ValidationError = {
-  type: 'phone_format' | 'phone_not_match' | 'phone_wrong_role' | 'code_empty' | 'code_length' | 'code_wrong';
+  type: 'phone_format' | 'phone_not_match' | 'phone_wrong_role' | 'code_empty' | 'code_length' | 'code_wrong' | 'store_fail' | 'navigate_fail' | 'auto-switch';
   field: 'phone' | 'code' | 'general';
   message: string;
   suggestion?: string;
@@ -85,12 +83,12 @@ function cleanPhone(phone: string): string {
 }
 
 function validatePhoneFormat(phone: string): { valid: boolean; message: string } {
-  if (!phone.trim()) return { valid: false, message: '请输入手机号' };
+  if (!phone.trim()) return { valid: false, message: '请输入账号' };
   const clean = cleanPhone(phone);
   const isMobile = /^1[3-9]\d{9}$/.test(clean);
   const isLandline = /^0\d{10,11}$/.test(clean);
   if (!isMobile && !isLandline) {
-    return { valid: false, message: '手机号格式不正确' };
+    return { valid: false, message: '账号格式不正确' };
   }
   return { valid: true, message: '' };
 }
@@ -109,55 +107,6 @@ function matchRoleByPhone(phone: string): UserRole | null {
   return null;
 }
 
-function getValidationResult(
-  phone: string,
-  code: string,
-  activeRole: UserRole,
-): { pass: boolean; errors: ValidationError[]; matchedRole: UserRole | null } {
-  const errors: ValidationError[] = [];
-  const phoneFormatCheck = validatePhoneFormat(phone);
-  const codeFormatCheck = validateCodeFormat(code);
-
-  if (!phoneFormatCheck.valid) {
-    errors.push({ type: 'phone_format', field: 'phone', message: phoneFormatCheck.message });
-  }
-
-  if (!codeFormatCheck.valid) {
-    errors.push({ type: 'code_length', field: 'code', message: codeFormatCheck.message });
-  }
-
-  if (codeFormatCheck.valid && !VALID_CODES.includes(code)) {
-    errors.push({
-      type: 'code_wrong',
-      field: 'code',
-      message: '验证码错误',
-      suggestion: '演示环境验证码固定为 888888',
-    });
-  }
-
-  let matchedRole: UserRole | null = null;
-  if (phoneFormatCheck.valid) {
-    matchedRole = matchRoleByPhone(phone);
-    if (!matchedRole) {
-      errors.push({
-        type: 'phone_not_match',
-        field: 'phone',
-        message: '该账号未在系统中注册',
-        suggestion: '请使用演示账号：货主 13800000001 / 司机 13800000002 / 管理员 021-88880000',
-      });
-    } else if (matchedRole !== activeRole) {
-      errors.push({
-        type: 'phone_wrong_role',
-        field: 'general',
-        message: `该手机号为「${roleTabs.find((t) => t.key === matchedRole)?.label}」账号，与当前选择的「${roleTabs.find((t) => t.key === activeRole)?.label}」不匹配`,
-        suggestion: `系统将自动切换到正确角色后登录`,
-      });
-    }
-  }
-
-  return { pass: errors.length === 0 || (errors.length === 1 && errors[0].type === 'phone_wrong_role'), errors, matchedRole };
-}
-
 export default function LoginPage() {
   const [activeRole, setActiveRole] = useState<UserRole>('SHIPPER');
   const [phone, setPhone] = useState<string>(defaultUser.SHIPPER.phone);
@@ -167,9 +116,8 @@ export default function LoginPage() {
   const [errors, setErrors] = useState<ValidationError[]>([]);
   const [successMsg, setSuccessMsg] = useState<string>('');
   const [codeSent, setCodeSent] = useState<boolean>(false);
-  const [validationState, setValidationState] = useState<'idle' | 'checking' | 'success' | 'fail'>('idle');
-  const [navigateFailed, setNavigateFailed] = useState<boolean>(false);
-  const [navigateTarget, setNavigateTarget] = useState<string>('');
+  const [loginStep, setLoginStep] = useState<string>('idle');
+  const [, forceUpdate] = useState(0);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -178,7 +126,7 @@ export default function LoginPage() {
   const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
 
   const currentTab = roleTabs.find((t) => t.key === activeRole)!;
-  const from = (location.state as any)?.from;
+  const authState = useAuthStore.getState();
 
   useEffect(() => {
     const el = tabRefs.current[activeRole];
@@ -197,7 +145,7 @@ export default function LoginPage() {
       setPhone(tab.phone);
       setErrors([]);
       setSuccessMsg('');
-      setValidationState('idle');
+      setLoginStep('idle');
     }
   }, [activeRole]);
 
@@ -210,36 +158,178 @@ export default function LoginPage() {
   const fieldErrors = (field: 'phone' | 'code') => errors.filter((e) => e.field === field);
   const generalErrors = () => errors.filter((e) => e.field === 'general');
 
+  const performLogin = (targetRole: UserRole) => {
+    setLoading(true);
+    setErrors([]);
+    const tab = roleTabs.find((t) => t.key === targetRole)!;
+    const targetPath = tab.defaultRoute;
+
+    console.log(`[Login] Step 1: 开始登录流程，角色=${targetRole}, 目标路径=${targetPath}`);
+    setLoginStep('step1');
+    setSuccessMsg('① 正在验证账号信息...');
+    forceUpdate((n) => n + 1);
+
+    setTimeout(() => {
+      console.log('[Login] Step 2: 调用 store.login() 写入认证状态');
+      setLoginStep('step2');
+      setSuccessMsg('② 认证状态写入中...');
+      forceUpdate((n) => n + 1);
+
+      login(targetRole, tab.phone);
+
+      setTimeout(() => {
+        const state = useAuthStore.getState();
+        console.log('[Login] Step 3: 检查 store 状态', state);
+        setLoginStep('step3');
+        forceUpdate((n) => n + 1);
+
+        if (!state.isAuthenticated || !state.user) {
+          setLoading(false);
+          setLoginStep('fail');
+          setErrors([{
+            type: 'store_fail',
+            field: 'general',
+            message: '认证状态写入失败',
+            suggestion: 'store 未正确更新，请点击下方「重置状态」按钮后重试',
+          }]);
+          console.error('[Login] Store 状态写入失败', state);
+          return;
+        }
+
+        if (state.user.role !== targetRole) {
+          setLoading(false);
+          setLoginStep('fail');
+          setErrors([{
+            type: 'phone_wrong_role',
+            field: 'general',
+            message: `角色不匹配：store 中角色为 ${state.user.role}，期望 ${targetRole}`,
+            suggestion: '请切换到正确的角色 Tab 后重试',
+          }]);
+          console.error('[Login] 角色不匹配', state.user.role, targetRole);
+          return;
+        }
+
+        setSuccessMsg(`③ 认证成功，即将跳转到 ${targetPath} ...`);
+        setLoginStep('step4');
+        forceUpdate((n) => n + 1);
+        console.log(`[Login] Step 4: 准备跳转到 ${targetPath}`);
+
+        setTimeout(() => {
+          console.log(`[Login] Step 5: 执行硬跳转 window.location.href = ${targetPath}`);
+          setLoginStep('step5');
+          setSuccessMsg(`④ 正在跳转... ${targetPath}`);
+          forceUpdate((n) => n + 1);
+
+          window.location.href = targetPath;
+
+          setTimeout(() => {
+            const stillHere = window.location.pathname !== targetPath;
+            if (stillHere) {
+              setLoading(false);
+              setLoginStep('fail');
+              setErrors([{
+                type: 'navigate_fail',
+                field: 'general',
+                message: `跳转失败：浏览器仍停留在 ${window.location.pathname}`,
+                suggestion: '请尝试点击下方「强制跳转」按钮，或手动在地址栏输入目标路径',
+              }]);
+              console.error('[Login] 跳转失败，仍在登录页');
+            }
+          }, 3000);
+        }, 500);
+      }, 300);
+    }, 400);
+  };
+
+  const handleLogin = () => {
+    setErrors([]);
+    setSuccessMsg('');
+    setLoginStep('checking');
+
+    const phoneCheck = validatePhoneFormat(phone);
+    const codeCheck = validateCodeFormat(code);
+
+    if (!phoneCheck.valid || !codeCheck.valid) {
+      setLoginStep('fail');
+      setErrors([
+        ...(!phoneCheck.valid ? [{ type: 'phone_format' as const, field: 'phone' as const, message: phoneCheck.message }] : []),
+        ...(!codeCheck.valid ? [{ type: 'code_length' as const, field: 'code' as const, message: codeCheck.message }] : []),
+      ]);
+      return;
+    }
+
+    if (!VALID_CODES.includes(code)) {
+      setLoginStep('fail');
+      setErrors([{
+        type: 'code_wrong',
+        field: 'code',
+        message: '验证码错误',
+        suggestion: '演示环境验证码固定为 888888',
+      }]);
+      return;
+    }
+
+    const matchedRole = matchRoleByPhone(phone);
+    if (!matchedRole) {
+      setLoginStep('fail');
+      setErrors([{
+        type: 'phone_not_match',
+        field: 'phone',
+        message: '该账号未在系统中注册',
+        suggestion: `请使用演示账号：货主 ${defaultUser.SHIPPER.phone} / 司机 ${defaultUser.DRIVER.phone} / 管理员 ${defaultUser.ADMIN.phone}`,
+      }]);
+      return;
+    }
+
+    if (matchedRole !== activeRole) {
+      setLoginStep('auto-switch');
+      setSuccessMsg(`检测到该账号属于「${roleTabs.find((t) => t.key === matchedRole)?.label}」，正在自动切换...`);
+      setActiveRole(matchedRole);
+      forceUpdate((n) => n + 1);
+
+      setTimeout(() => {
+        performLogin(matchedRole);
+      }, 800);
+      return;
+    }
+
+    performLogin(activeRole);
+  };
+
+  const handleQuickLogin = (role: UserRole) => {
+    setActiveRole(role);
+    setErrors([]);
+    const tab = roleTabs.find((t) => t.key === role)!;
+    setSuccessMsg(`正在以「${tab.label}」身份快速登录...`);
+    forceUpdate((n) => n + 1);
+
+    setTimeout(() => {
+      performLogin(role);
+    }, 300);
+  };
+
   const handleSendCode = () => {
     const check = validatePhoneFormat(phone);
     if (!check.valid) {
       setErrors([{ type: 'phone_format', field: 'phone', message: check.message }]);
-      setValidationState('fail');
       return;
     }
     const matched = matchRoleByPhone(phone);
     if (!matched) {
-      setErrors([
-        {
-          type: 'phone_not_match',
-          field: 'phone',
-          message: '该账号未在系统中注册',
-          suggestion: '请使用演示账号：货主 13800000001 / 司机 13800000002 / 管理员 021-88880000',
-        },
-      ]);
-      setValidationState('fail');
+      setErrors([{
+        type: 'phone_not_match',
+        field: 'phone',
+        message: '该账号未注册',
+        suggestion: '请使用演示账号',
+      }]);
       return;
     }
     if (matched !== activeRole) {
-      setErrors([
-        {
-          type: 'phone_wrong_role',
-          field: 'phone',
-          message: `该手机号属于「${roleTabs.find((t) => t.key === matched)?.label}」`,
-          suggestion: `请切换到对应角色 Tab，或直接登录将自动切换`,
-        },
-      ]);
-      setValidationState('fail');
+      setErrors([{
+        type: 'phone_wrong_role',
+        field: 'phone',
+        message: `该账号属于「${roleTabs.find((t) => t.key === matched)?.label}」`,
+      }]);
       return;
     }
 
@@ -247,159 +337,22 @@ export default function LoginPage() {
     setCountdown(60);
     setCode('888888');
     setCodeSent(true);
-    setValidationState('success');
-    setSuccessMsg(`验证码已发送至 ${phone}，演示验证码：888888`);
+    setSuccessMsg('验证码已发送：888888');
     setTimeout(() => setSuccessMsg(''), 3000);
   };
 
-  const doLogin = useCallback((role: UserRole) => {
-    setLoading(true);
-    setErrors([]);
-    setValidationState('success');
-    setNavigateFailed(false);
-    setSuccessMsg('身份验证通过，正在进入系统...');
-
-    const tab = roleTabs.find((t) => t.key === role)!;
-    const targetPath = tab.defaultRoute;
-    setNavigateTarget(targetPath);
-
-    setTimeout(() => {
-      login(role, tab.phone);
-      
-      const state = useAuthStore.getState();
-      
-      if (!state.isAuthenticated || !state.user) {
-        setLoading(false);
-        setValidationState('fail');
-        setErrors([{
-          type: 'phone_not_match',
-          field: 'general',
-          message: '登录状态写入失败',
-          suggestion: '请尝试刷新页面或使用一键登录按钮',
-        }]);
-        return;
-      }
-
-      if (state.user.role !== role) {
-        setLoading(false);
-        setValidationState('fail');
-        setErrors([{
-          type: 'phone_wrong_role',
-          field: 'general',
-          message: `角色不匹配：当前用户角色为 ${state.user.role}，期望 ${role}`,
-          suggestion: '请使用对应角色的账号登录',
-        }]);
-        return;
-      }
-
-      setSuccessMsg(`登录成功，正在跳转到 ${targetPath} ...`);
-      navigate(targetPath, { replace: true });
-
-      setTimeout(() => {
-        const stillOnLogin = window.location.pathname === '/login' || window.location.pathname === '/';
-        if (stillOnLogin) {
-          setLoading(false);
-          setNavigateFailed(true);
-          setValidationState('fail');
-          setErrors([{
-            type: 'phone_not_match',
-            field: 'general',
-            message: `跳转失败：已成功登录为「${tab.label}」，但路由拦截未放行到 ${targetPath}`,
-            suggestion: '请检查浏览器地址栏是否已变更，或点击下方一键登录按钮重试',
-          }]);
-          console.error('[Login] Navigate failed:', {
-            expectedPath: targetPath,
-            currentPath: window.location.pathname,
-            authState: state,
-            targetRole: role,
-          });
-        }
-      }, 2000);
-    }, 800);
-  }, [login, navigate]);
-
-  const handleLogin = () => {
+  const handleResetState = () => {
+    localStorage.removeItem('tc_auth_state');
     setErrors([]);
     setSuccessMsg('');
-    setNavigateFailed(false);
-    setValidationState('checking');
-
-    const result = getValidationResult(phone, code, activeRole);
-
-    if (result.errors.length > 0) {
-      setErrors(result.errors);
-      if (result.errors[0].type === 'phone_wrong_role' && result.matchedRole) {
-        setValidationState('checking');
-        setSuccessMsg(result.errors[0].message + '，正在自动切换角色...');
-        const targetRole = result.matchedRole;
-        setActiveRole(targetRole);
-        setTimeout(() => {
-          doLogin(targetRole);
-        }, 1000);
-        return;
-      }
-      setValidationState('fail');
-      return;
-    }
-
-    if (!result.matchedRole) {
-      setValidationState('fail');
-      return;
-    }
-
-    doLogin(activeRole);
+    setLoginStep('idle');
+    setLoading(false);
+    window.location.reload();
   };
 
-  const handleQuickLogin = (role: UserRole) => {
-    setActiveRole(role);
-    setErrors([]);
-    setNavigateFailed(false);
-    setValidationState('success');
-    const tab = roleTabs.find((t) => t.key === role)!;
-    const targetPath = tab.defaultRoute;
-    setNavigateTarget(targetPath);
-    setSuccessMsg(`正在以「${tab.label}」身份快速登录...`);
-    setLoading(true);
-
-    setTimeout(() => {
-      login(role, tab.phone);
-      
-      const state = useAuthStore.getState();
-      if (!state.isAuthenticated || !state.user) {
-        setLoading(false);
-        setValidationState('fail');
-        setErrors([{
-          type: 'phone_not_match',
-          field: 'general',
-          message: '一键登录失败：状态未正确写入',
-          suggestion: '请尝试刷新页面后重试',
-        }]);
-        return;
-      }
-
-      setSuccessMsg(`登录成功，正在跳转到 ${targetPath} ...`);
-      navigate(targetPath, { replace: true });
-
-      setTimeout(() => {
-        const stillOnLogin = window.location.pathname === '/login' || window.location.pathname === '/';
-        if (stillOnLogin) {
-          setLoading(false);
-          setNavigateFailed(true);
-          setValidationState('fail');
-          setErrors([{
-            type: 'phone_not_match',
-            field: 'general',
-            message: `跳转失败：已成功登录为「${tab.label}」，但路由未跳转到 ${targetPath}`,
-            suggestion: '请手动检查地址栏，或刷新页面后重试',
-          }]);
-          console.error('[QuickLogin] Navigate failed:', {
-            expectedPath: targetPath,
-            currentPath: window.location.pathname,
-            authState: state,
-          });
-        }
-      }, 2000);
-    }, 600);
+  const handleForceNavigate = () => {
+    const tab = roleTabs.find((t) => t.key === activeRole)!;
+    window.location.href = tab.defaultRoute;
   };
 
   const getColorClass = (type: 'bg' | 'text' | 'border') => {
@@ -418,12 +371,34 @@ export default function LoginPage() {
     return '';
   };
 
+  const getStatusText = () => {
+    switch (loginStep) {
+      case 'idle': return 'SYSTEM ONLINE · AUTH TERMINAL';
+      case 'checking': return 'VALIDATING CREDENTIALS...';
+      case 'step1': return 'STEP 1/5 · 验证账号信息';
+      case 'step2': return 'STEP 2/5 · 写入认证状态';
+      case 'step3': return 'STEP 3/5 · 校验 Store 状态';
+      case 'step4': return 'STEP 4/5 · 准备跳转';
+      case 'step5': return 'STEP 5/5 · 执行跳转';
+      case 'auto-switch': return 'AUTO SWITCHING ROLE...';
+      case 'fail': return 'LOGIN FAILED · 点击查看诊断';
+      default: return 'PROCESSING...';
+    }
+  };
+
   const getStatusIcon = () => {
-    if (validationState === 'checking') return <Loader2 size={14} className="animate-spin text-signal-cyan" />;
-    if (validationState === 'success') return <CheckCircle2 size={14} className="text-signal-green" />;
-    if (validationState === 'fail') return <XCircle size={14} className="text-signal-red" />;
+    if (loginStep === 'fail') return <XCircle size={14} className="text-signal-red" />;
+    if (loginStep !== 'idle') return <Loader2 size={14} className="animate-spin text-signal-cyan" />;
     return <span className="status-dot bg-signal-green animate-pulse-fast" />;
   };
+
+  const stepInfo = [
+    { step: 'step1', label: '验证账号', desc: '校验手机号格式与角色匹配' },
+    { step: 'step2', label: '写入状态', desc: '更新 store 与 localStorage' },
+    { step: 'step3', label: '校验状态', desc: '确认 store 写入正确' },
+    { step: 'step4', label: '准备跳转', desc: '跳转到目标工作台' },
+    { step: 'step5', label: '执行跳转', desc: 'window.location.href 硬跳转' },
+  ];
 
   return (
     <div className="min-h-screen w-full flex bg-ink-950 overflow-hidden">
@@ -556,25 +531,19 @@ export default function LoginPage() {
       </div>
 
       {/* 登录卡片区域 */}
-      <div className="flex-1 flex items-center justify-center px-6 py-10 relative overflow-y-auto">
+      <div className="flex-1 flex items-center justify-center px-6 py-6 relative overflow-y-auto">
         <div className="absolute inset-0 data-grid opacity-20" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="relative w-full max-w-md">
-          <div className="industrial-card p-8 xl:p-9 backdrop-blur-xl bg-ink-900/70">
+        <div className="relative w-full max-w-xl">
+          <div className="industrial-card p-6 xl:p-7 backdrop-blur-xl bg-ink-900/70">
             <div className="corner-brackets absolute inset-0 pointer-events-none" />
 
-            <div className="mb-7">
+            <div className="mb-5">
               <div className="flex items-center gap-2 mb-2">
                 {getStatusIcon()}
                 <span className="text-[10px] font-mono text-slate-500 tracking-widest">
-                  {validationState === 'checking'
-                    ? 'AUTHENTICATING...'
-                    : validationState === 'fail'
-                      ? 'VALIDATION FAILED'
-                      : validationState === 'success'
-                        ? 'VERIFICATION PASSED'
-                        : 'SYSTEM ONLINE · AUTH TERMINAL'}
+                  {getStatusText()}
                 </span>
               </div>
               <h2 className="font-display font-bold text-2xl text-white tracking-wide mb-1">
@@ -585,8 +554,91 @@ export default function LoginPage() {
               </p>
             </div>
 
+            {/* 实时状态监控面板 - 始终可见 */}
+            <div className="mb-5 p-3 bg-ink-950/80 border border-ink-700/60 rounded-sm">
+              <div className="flex items-center gap-2 mb-2.5">
+                <Terminal size={13} className="text-signal-cyan" />
+                <span className="text-[10px] font-mono text-signal-cyan tracking-wide">
+                  REAL-TIME AUTH MONITOR · 实时状态监控
+                </span>
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-[10px] font-mono mb-3">
+                {stepInfo.map((s) => {
+                  const currentStepNum = loginStep === 'step1' ? 1 :
+                                        loginStep === 'step2' ? 2 :
+                                        loginStep === 'step3' ? 3 :
+                                        loginStep === 'step4' ? 4 :
+                                        loginStep === 'step5' ? 5 : 0;
+                  const thisStepNum = parseInt(s.step.replace('step', ''));
+                  const isDone = currentStepNum > thisStepNum;
+                  const isActive = currentStepNum === thisStepNum;
+                  return (
+                    <div
+                      key={s.step}
+                      className={`p-2 rounded-sm text-center ${
+                        isActive
+                          ? 'bg-orange-500/20 border border-orange-500/40 text-orange-400'
+                          : isDone
+                            ? 'bg-signal-green/10 border border-signal-green/30 text-signal-green'
+                            : 'bg-ink-900/50 border border-ink-700/40 text-slate-500'
+                      }`}
+                    >
+                      <div className="text-xs font-bold">{s.label}</div>
+                      <div className="text-[9px] mt-0.5 opacity-70">{s.desc}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[10px] font-mono">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Store 认证状态</span>
+                  <span className={authState.isAuthenticated ? 'text-signal-green' : 'text-signal-red'}>
+                    {authState.isAuthenticated ? '已认证 ✓' : '未认证 ✗'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Store 当前用户</span>
+                  <span className="text-slate-300">{authState.user?.name ?? '-'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Store 用户角色</span>
+                  <span className="text-signal-cyan">{authState.user?.role ?? '-'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">当前选择角色</span>
+                  <span className={getColorClass('text')}>{activeRole}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">LocalStorage</span>
+                  <span className={localStorage.getItem('tc_auth_state') ? 'text-signal-green' : 'text-signal-red'}>
+                    {localStorage.getItem('tc_auth_state') ? '存在 ✓' : '不存在 ✗'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">当前地址</span>
+                  <span className="text-slate-400">{window.location.pathname}</span>
+                </div>
+              </div>
+              <div className="flex gap-2 mt-3 pt-3 border-t border-ink-700/40">
+                <button
+                  onClick={handleResetState}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-[10px] font-semibold text-slate-400 border border-ink-600 hover:border-ink-500 hover:text-white rounded-sm transition-all"
+                >
+                  <RotateCcw size={11} />
+                  重置认证状态
+                </button>
+                <button
+                  onClick={handleForceNavigate}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-[10px] font-semibold text-white bg-gradient-to-br from-orange-500 to-orange-600 hover:shadow-[0_0_12px_rgba(249,115,22,0.4)] rounded-sm transition-all"
+                >
+                  <ArrowRight size={11} />
+                  强制跳转 {currentTab.defaultRoute}
+                </button>
+              </div>
+            </div>
+
             {/* 角色 Tab 切换 */}
-            <div className="relative mb-6">
+            <div className="relative mb-5">
               <div className="flex bg-ink-950/50 rounded-sm border border-ink-700/50 p-1 relative">
                 <div
                   className="absolute top-1 bottom-1 rounded-sm transition-all duration-300 ease-out"
@@ -649,7 +701,7 @@ export default function LoginPage() {
               <div
                 key={idx}
                 className={`mb-4 flex items-start gap-2 p-3 rounded-sm ${
-                  err.type === 'phone_wrong_role'
+                  err.type === 'phone_wrong_role' || err.type === 'auto-switch'
                     ? 'bg-yellow-500/10 border border-yellow-500/30'
                     : 'bg-red-500/10 border border-red-500/30'
                 }`}
@@ -678,73 +730,8 @@ export default function LoginPage() {
               </div>
             )}
 
-            {navigateFailed && (
-              <div className="mb-4 p-3 bg-signal-red/10 border border-signal-red/40 rounded-sm space-y-3">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle size={14} className="text-signal-red shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-[11px] text-signal-red font-semibold">路由跳转拦截检测</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5">登录状态已成功写入，但路由守卫未放行。以下是实时诊断信息：</p>
-                  </div>
-                </div>
-                <div className="font-mono text-[10px] space-y-1.5 p-2.5 bg-ink-950/60 border border-ink-700/50 rounded-sm">
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">认证状态</span>
-                    <span className={useAuthStore.getState().isAuthenticated ? 'text-signal-green' : 'text-signal-red'}>
-                      {useAuthStore.getState().isAuthenticated ? '已认证 ✓' : '未认证 ✗'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">当前用户</span>
-                    <span className="text-slate-300">
-                      {useAuthStore.getState().user?.name ?? '-'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">用户角色</span>
-                    <span className="text-signal-cyan">
-                      {useAuthStore.getState().user?.role ?? '-'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">目标路径</span>
-                    <span className="text-orange-500">{navigateTarget}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">当前地址</span>
-                    <span className="text-slate-400">{window.location.pathname}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">LocalStorage</span>
-                    <span className={localStorage.getItem('tc_auth_state') ? 'text-signal-green' : 'text-signal-red'}>
-                      {localStorage.getItem('tc_auth_state') ? '存在 ✓' : '不存在 ✗'}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      window.location.href = navigateTarget;
-                    }}
-                    className="flex-1 py-2 text-xs font-semibold text-white bg-gradient-to-br from-orange-500 to-orange-600 hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] rounded-sm transition-all"
-                  >
-                    ⚡ 强制跳转 {navigateTarget}
-                  </button>
-                  <button
-                    onClick={() => {
-                      localStorage.removeItem('tc_auth_state');
-                      window.location.reload();
-                    }}
-                    className="px-4 py-2 text-xs font-semibold text-slate-400 border border-ink-600 hover:border-ink-500 hover:text-white rounded-sm transition-all"
-                  >
-                    重置状态
-                  </button>
-                </div>
-              </div>
-            )}
-
             {/* 表单 */}
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {/* 手机号 */}
               <div>
                 <label className="text-[11px] font-mono text-slate-500 mb-1.5 block tracking-wide">
@@ -766,31 +753,6 @@ export default function LoginPage() {
                         setErrors((prev) => prev.filter((e) => e.field !== 'phone'));
                       }
                     }}
-                    onBlur={() => {
-                      const check = validatePhoneFormat(phone);
-                      const matched = matchRoleByPhone(phone);
-                      const newErrors: ValidationError[] = [];
-                      if (!check.valid) {
-                        newErrors.push({ type: 'phone_format', field: 'phone', message: check.message });
-                      } else if (!matched) {
-                        newErrors.push({
-                          type: 'phone_not_match',
-                          field: 'phone',
-                          message: '该账号未注册',
-                          suggestion: '请使用演示账号',
-                        });
-                      } else if (matched !== activeRole) {
-                        newErrors.push({
-                          type: 'phone_wrong_role',
-                          field: 'phone',
-                          message: `该账号属于「${roleTabs.find((t) => t.key === matched)?.label}」`,
-                        });
-                      }
-                      setErrors((prev) => [
-                        ...prev.filter((e) => e.field !== 'phone'),
-                        ...newErrors,
-                      ]);
-                    }}
                     className={`input-industrial pl-10 py-2.5 font-mono ${
                       fieldErrors('phone').length > 0
                         ? 'border-signal-red/60 focus:border-signal-red focus:shadow-red-500/10'
@@ -798,7 +760,7 @@ export default function LoginPage() {
                           ? 'border-signal-green/60'
                           : ''
                     }`}
-                    placeholder="请输入手机号"
+                    placeholder="请输入账号"
                   />
                   {codeSent && matchRoleByPhone(phone) === activeRole && (
                     <CheckCircle2 size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-signal-green" />
@@ -838,24 +800,6 @@ export default function LoginPage() {
                         if (fieldErrors('code').length > 0) {
                           setErrors((prev) => prev.filter((e) => e.field !== 'code'));
                         }
-                      }}
-                      onBlur={() => {
-                        const check = validateCodeFormat(code);
-                        const newErrors: ValidationError[] = [];
-                        if (!check.valid) {
-                          newErrors.push({ type: 'code_length', field: 'code', message: check.message });
-                        } else if (!VALID_CODES.includes(code)) {
-                          newErrors.push({
-                            type: 'code_wrong',
-                            field: 'code',
-                            message: '验证码错误',
-                            suggestion: '演示验证码：888888',
-                          });
-                        }
-                        setErrors((prev) => [
-                          ...prev.filter((e) => e.field !== 'code'),
-                          ...newErrors,
-                        ]);
                       }}
                       className={`input-industrial pl-10 py-2.5 font-mono tracking-widest ${
                         fieldErrors('code').length > 0 ? 'border-signal-red/60' : ''
@@ -964,12 +908,12 @@ export default function LoginPage() {
                 ) : (
                   <ArrowRight size={16} />
                 )}
-                <span>{loading ? '正在验证身份...' : '进入系统'}</span>
+                <span>{loading ? '登录进行中...' : '进入系统'}</span>
               </button>
             </div>
 
             {/* 分割线 */}
-            <div className="flex items-center gap-3 my-6">
+            <div className="flex items-center gap-3 my-5">
               <div className="divider-dashed flex-1" />
               <span className="text-[10px] font-mono text-slate-600 tracking-widest">
                 QUICK ACCESS · 一键登录
@@ -1020,7 +964,7 @@ export default function LoginPage() {
           </div>
 
           {/* 底部版权 */}
-          <div className="mt-6 text-center space-y-1">
+          <div className="mt-5 text-center space-y-1">
             <p className="text-[10px] font-mono text-slate-600 tracking-wider">
               © 2026 运联·智调 TRANSPORT INTELLIGENCE PLATFORM
             </p>
