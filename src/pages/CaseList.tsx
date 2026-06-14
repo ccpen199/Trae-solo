@@ -56,15 +56,26 @@ function extractRoomCount(houseType?: string, layout?: string): number | null {
   const text = (houseType || layout || '') as string;
   if (!text) return null;
 
-  const digitMatch = text.match(/(\d+)\s*[室居室房]/);
+  const digitMatch = text.match(/(\d+)\s*室/);
   if (digitMatch) {
     const num = parseInt(digitMatch[1], 10);
     if (num >= 1 && num <= 10) return num;
   }
 
-  const chineseMatch = text.match(/([一两二三四五六七八九十])\s*[室居室房]/);
+  const chineseMatch = text.match(/([一两二三四五六七八九十])\s*室/);
   if (chineseMatch) {
     return chineseNumMap[chineseMatch[1]] || null;
+  }
+
+  const digitRoomMatch = text.match(/(\d+)\s*居/);
+  if (digitRoomMatch) {
+    const num = parseInt(digitRoomMatch[1], 10);
+    if (num >= 1 && num <= 10) return num;
+  }
+
+  const chineseRoomMatch = text.match(/([一两二三四五六七八九十])\s*居/);
+  if (chineseRoomMatch) {
+    return chineseNumMap[chineseRoomMatch[1]] || null;
   }
 
   return null;
@@ -135,7 +146,7 @@ export default function CaseList() {
             return cHouseType.includes(ht) || cLayout.includes(ht);
           }
           const roomCountFromHt = extractRoomCount(ht);
-          const roomCountFromCase = extractRoomCount(cHouseType, cLayout) || c.rooms || c.bedrooms || 0;
+          const roomCountFromCase = extractRoomCount(cHouseType, cLayout) ?? c.bedrooms ?? c.rooms ?? 0;
           if (roomCountFromHt) {
             if (ht === '四室') {
               return roomCountFromCase >= 4;
@@ -153,7 +164,7 @@ export default function CaseList() {
 
     if (filters.rooms.length > 0) {
       result = result.filter((c) => {
-        const roomCount = extractRoomCount(c.houseType, c.layout) || c.rooms || c.bedrooms || 0;
+        const roomCount = extractRoomCount(c.houseType, c.layout) ?? c.bedrooms ?? c.rooms ?? 0;
         if (filters.rooms.includes(5)) {
           return roomCount >= 5;
         }
@@ -210,6 +221,73 @@ export default function CaseList() {
     setSearchKeyword('');
     setCurrentPage(1);
   };
+
+  const getActiveFilters = () => {
+    const activeFilters: Array<{ key: string; label: string; value: string | number }> = [];
+
+    filters.cities.forEach((city) => {
+      activeFilters.push({ key: `city-${city}`, label: '城市', value: city });
+    });
+
+    filters.houseTypes.forEach((ht) => {
+      const htLabel = houseTypes.find((h) => h.value === ht)?.label || ht;
+      activeFilters.push({ key: `housetype-${ht}`, label: '户型', value: htLabel });
+    });
+
+    filters.rooms.forEach((room) => {
+      activeFilters.push({ key: `room-${room}`, label: '居室', value: `${room}室` });
+    });
+
+    filters.styles.forEach((style) => {
+      activeFilters.push({ key: `style-${style}`, label: '风格', value: style });
+    });
+
+    if (filters.minArea > 0 || filters.maxArea < 300) {
+      activeFilters.push({
+        key: 'area',
+        label: '面积',
+        value: `${filters.minArea}-${filters.maxArea}㎡`,
+      });
+    }
+
+    if (filters.minBudget > 0 || filters.maxBudget < 1000000) {
+      activeFilters.push({
+        key: 'budget',
+        label: '预算',
+        value: `${formatBudget(filters.minBudget)}-${formatBudget(filters.maxBudget)}`,
+      });
+    }
+
+    return activeFilters;
+  };
+
+  const removeFilter = (key: string) => {
+    const [type, value] = key.split('-');
+    setCurrentPage(1);
+
+    switch (type) {
+      case 'city':
+        setFilters((f) => ({ ...f, cities: f.cities.filter((c) => c !== value) }));
+        break;
+      case 'housetype':
+        setFilters((f) => ({ ...f, houseTypes: f.houseTypes.filter((ht) => ht !== value) }));
+        break;
+      case 'room':
+        setFilters((f) => ({ ...f, rooms: f.rooms.filter((r) => r !== Number(value)) }));
+        break;
+      case 'style':
+        setFilters((f) => ({ ...f, styles: f.styles.filter((s) => s !== value) }));
+        break;
+      case 'area':
+        setFilters((f) => ({ ...f, minArea: 0, maxArea: 300 }));
+        break;
+      case 'budget':
+        setFilters((f) => ({ ...f, minBudget: 0, maxBudget: 1000000 }));
+        break;
+    }
+  };
+
+  const activeFilters = getActiveFilters();
 
   const formatBudget = (budget: number) => {
     if (budget >= 10000) {
@@ -564,6 +642,39 @@ export default function CaseList() {
                   )}
                 </div>
 
+                {activeFilters.length > 0 && (
+                  <div className="w-full flex flex-wrap items-center gap-3 pt-3 border-t border-gray-100 dark:border-gray-700">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                      <Filter className="w-4 h-4 text-primary" />
+                      当前筛选：
+                    </span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1">
+                      {activeFilters.map((filter) => (
+                        <span
+                          key={filter.key}
+                          className="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium"
+                        >
+                          <span className="text-primary/70">{filter.label}：</span>
+                          {filter.value}
+                          <button
+                            onClick={() => removeFilter(filter.key)}
+                            className="ml-1 p-0.5 rounded-full hover:bg-primary/20 transition-colors"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    <button
+                      onClick={resetFilters}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-gray-500 hover:text-primary border border-gray-200 dark:border-gray-600 rounded-lg hover:border-primary transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                      清除全部筛选
+                    </button>
+                  </div>
+                )}
+
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <button
@@ -715,19 +826,88 @@ export default function CaseList() {
                 <Pagination />
               </>
             ) : (
-              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 py-20 text-center">
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 py-16 text-center">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 dark:bg-slate-700 flex items-center justify-center">
                   <Search className="w-10 h-10 text-gray-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">暂无符合条件的案例</h3>
-                <p className="text-gray-500 dark:text-gray-400 mb-6">试试调整筛选条件或清除筛选</p>
-                <button
-                  onClick={resetFilters}
-                  className="btn-primary inline-flex items-center gap-2"
-                >
-                  <X className="w-4 h-4" />
-                  清除所有筛选
-                </button>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">未找到匹配案例</h3>
+                <p className="text-gray-500 dark:text-gray-400 mb-6">请调整筛选条件或尝试以下推荐</p>
+
+                <div className="flex flex-wrap justify-center gap-2 mb-8">
+                  {filters.rooms.length > 0 && (
+                    <button
+                      onClick={() => setFilters((f) => ({ ...f, rooms: [] }))}
+                      className="inline-flex items-center gap-1 px-4 py-2 bg-orange-50 text-orange-600 rounded-full text-sm font-medium hover:bg-orange-100 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                      清除居室筛选
+                    </button>
+                  )}
+                  {filters.houseTypes.length > 0 && (
+                    <button
+                      onClick={() => setFilters((f) => ({ ...f, houseTypes: [] }))}
+                      className="inline-flex items-center gap-1 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                      清除户型筛选
+                    </button>
+                  )}
+                  {filters.cities.length > 0 && (
+                    <button
+                      onClick={() => setFilters((f) => ({ ...f, cities: [] }))}
+                      className="inline-flex items-center gap-1 px-4 py-2 bg-teal-50 text-teal-600 rounded-full text-sm font-medium hover:bg-teal-100 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                      清除城市筛选
+                    </button>
+                  )}
+                  {filters.styles.length > 0 && (
+                    <button
+                      onClick={() => setFilters((f) => ({ ...f, styles: [] }))}
+                      className="inline-flex items-center gap-1 px-4 py-2 bg-purple-50 text-purple-600 rounded-full text-sm font-medium hover:bg-purple-100 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                      清除风格筛选
+                    </button>
+                  )}
+                  <button
+                    onClick={resetFilters}
+                    className="inline-flex items-center gap-1 px-4 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                    查看全部案例
+                  </button>
+                </div>
+
+                <div className="max-w-md mx-auto">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">热门推荐</p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    <button
+                      onClick={() => setFilters((f) => ({ ...defaultFilters, rooms: [3] }))}
+                      className="px-3 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-primary/10 hover:text-primary transition-colors"
+                    >
+                      3室热门
+                    </button>
+                    <button
+                      onClick={() => setFilters((f) => ({ ...defaultFilters, styles: ['现代简约'] }))}
+                      className="px-3 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-primary/10 hover:text-primary transition-colors"
+                    >
+                      现代简约
+                    </button>
+                    <button
+                      onClick={() => setFilters((f) => ({ ...defaultFilters, houseTypes: ['LOFT'] }))}
+                      className="px-3 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-primary/10 hover:text-primary transition-colors"
+                    >
+                      LOFT
+                    </button>
+                    <button
+                      onClick={() => setFilters((f) => ({ ...defaultFilters, cities: ['北京'] }))}
+                      className="px-3 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-primary/10 hover:text-primary transition-colors"
+                    >
+                      北京案例
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </main>

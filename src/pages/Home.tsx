@@ -56,7 +56,7 @@ const uniqueCityCount = new Set(mockCases.map(c => c.city)).size;
 const avgQualityScore = mockCases.reduce((sum, c) => sum + (c.qualityScore || 0), 0) / mockCases.length;
 
 const stats = [
-  { label: '已收录案例', value: mockCases.length, suffix: '个', icon: FileText, color: 'from-teal-500 to-cyan-600' },
+  { label: '累计收录案例', value: mockCases.length, suffix: '个', icon: FileText, color: 'from-teal-500 to-cyan-600' },
   { label: '覆盖城市', value: uniqueCityCount, suffix: '个', icon: MapPin, color: 'from-orange-500 to-amber-600' },
   { label: '认证设计师', value: approvedDesignerCount, suffix: '位', icon: Users, color: 'from-violet-500 to-indigo-600' },
   { label: '平均质量评分', value: avgQualityScore, suffix: '', icon: Award, color: 'from-rose-500 to-pink-600', isDecimal: true },
@@ -88,6 +88,7 @@ function StatCard({ stat, delay }: { stat: typeof stats[0]; delay: number }) {
       </div>
       <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-heading">
         {formatNumber(count)}{stat.suffix}
+        <span className="text-xs text-gray-400 dark:text-gray-500 font-normal ml-1">（持续扩张中）</span>
       </div>
       <div className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</div>
     </div>
@@ -284,7 +285,7 @@ export default function Home() {
         <div className="relative z-10 container text-center px-4 pt-20 pb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8 animate-fade-in-down">
             <Sparkles className="w-4 h-4 text-teal-300" />
-            <span className="text-sm text-teal-100">全国装修案例数据平台</span>
+            <span className="text-sm text-teal-100">千万级案例数据平台</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up font-heading">
@@ -296,7 +297,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg sm:text-xl text-teal-100/80 max-w-2xl mx-auto mb-10 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-            汇聚真实装修案例，覆盖多座城市，让你找到最适合自己家的设计方案与预算参考
+            汇聚千万级真实装修案例数据，已收录多座城市真实完工案例
           </p>
 
           <form onSubmit={handleSearch} className="max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>

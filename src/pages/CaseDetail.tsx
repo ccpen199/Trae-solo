@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   Home,
   MapPin,
@@ -32,6 +32,12 @@ import {
   X,
   ChevronLeft,
   ExternalLink,
+  Paintbrush,
+  Wrench,
+  PenTool,
+  HardHat,
+  Award,
+  GripVertical,
 } from 'lucide-react';
 import { mockCases, mockDesigners, mockMaterials } from '@/mock/data';
 import type { Case, CaseMaterial, AcceptancePhoto, Designer, Material } from '@shared/types';
@@ -39,7 +45,7 @@ import { cn } from '@/lib/utils';
 
 type ElectricTab = 'strong' | 'weak' | 'water';
 type AcceptanceTab = 'concealed' | 'mud-wood' | 'paint';
-type NavSection = 'floorplan' | 'electric' | 'photos' | 'materials' | 'data';
+type NavSection = 'floorplan' | 'electric' | 'photos' | 'materials' | 'data' | 'evidence';
 
 const navItems: Array<{ id: NavSection; label: string; icon: typeof Home }> = [
   { id: 'floorplan', label: '户型图', icon: LayoutDashboard },
@@ -47,6 +53,7 @@ const navItems: Array<{ id: NavSection; label: string; icon: typeof Home }> = [
   { id: 'photos', label: '验收照片', icon: Camera },
   { id: 'materials', label: '建材清单', icon: Boxes },
   { id: 'data', label: '施工数据', icon: FileText },
+  { id: 'evidence', label: '证据链', icon: GripVertical },
 ];
 
 const electricTabs: Array<{ id: ElectricTab; label: string; icon: typeof Cable }> = [
@@ -63,6 +70,7 @@ const acceptanceTabs: Array<{ id: AcceptanceTab; label: string }> = [
 
 export default function CaseDetail() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [caseData, setCaseData] = useState<Case | null>(null);
   const [designer, setDesigner] = useState<Designer | null>(null);
   const [activeSection, setActiveSection] = useState<NavSection>('floorplan');
@@ -262,11 +270,17 @@ export default function CaseDetail() {
               </nav>
 
               <div className="space-y-2">
-                <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-medium rounded-xl shadow-md transition-all">
+                <button
+                  onClick={() => navigate(`/cases/${id}/3d`)}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-medium rounded-xl shadow-md transition-all"
+                >
                   <Box className="w-5 h-5" />
                   3D 预览
                 </button>
-                <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white border border-gray-200 hover:border-primary-300 hover:text-primary-600 text-gray-700 font-medium rounded-xl shadow-sm transition-all">
+                <button
+                  onClick={() => navigate(`/pdf-delivery/${id}`)}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white border border-gray-200 hover:border-primary-300 hover:text-primary-600 text-gray-700 font-medium rounded-xl shadow-sm transition-all"
+                >
                   <Download className="w-5 h-5" />
                   生成 PDF
                 </button>
@@ -493,6 +507,142 @@ export default function CaseDetail() {
                       })}
                     </tbody>
                   </table>
+                </div>
+              </section>
+            )}
+
+            {/* 证据链时间线 */}
+            {activeSection === 'evidence' && (
+              <section className="bg-white rounded-xl border border-gray-200 shadow-sm animate-fade-in">
+                <div className="px-5 py-4 border-b border-gray-100">
+                  <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <GripVertical className="w-5 h-5 text-primary-600" />
+                    施工证据链时间线
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1">按施工流程串联各阶段关键证据，确保施工质量可追溯</p>
+                </div>
+                <div className="p-5">
+                  <div className="relative">
+                    <div className="absolute left-5 top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary-200 via-primary-300 to-primary-400" />
+                    {[
+                      {
+                        name: '设计方案',
+                        icon: PenTool,
+                        status: 'done',
+                        desc: '户型设计与3D方案确认',
+                        color: 'from-violet-500 to-indigo-600',
+                        evidences: [
+                          { label: '户型图SVG', action: () => setActiveSection('floorplan'), icon: LayoutDashboard },
+                          { label: '3D预览入口', action: () => navigate(`/cases/${id}/3d`), icon: Box },
+                        ],
+                      },
+                      {
+                        name: '水电交底',
+                        icon: Wrench,
+                        status: 'done',
+                        desc: '水电点位定位与技术交底',
+                        color: 'from-blue-500 to-cyan-600',
+                        evidences: [
+                          { label: '水电点位图', action: () => setActiveSection('electric'), icon: Cable },
+                          { label: '隐蔽工程照片', action: () => { setActiveSection('photos'); setAcceptanceTab('concealed'); }, icon: Camera },
+                        ],
+                      },
+                      {
+                        name: '泥木施工',
+                        icon: HardHat,
+                        status: 'done',
+                        desc: '瓦工铺贴与木工制作',
+                        color: 'from-orange-500 to-amber-600',
+                        evidences: [
+                          { label: '泥木阶段验收照片', action: () => { setActiveSection('photos'); setAcceptanceTab('mud-wood'); }, icon: Camera },
+                          { label: '对应建材', action: () => setActiveSection('materials'), icon: Boxes },
+                        ],
+                      },
+                      {
+                        name: '油漆工程',
+                        icon: Paintbrush,
+                        status: 'current',
+                        desc: '墙面处理与乳胶漆施工',
+                        color: 'from-pink-500 to-rose-600',
+                        evidences: [
+                          { label: '油漆阶段照片', action: () => { setActiveSection('photos'); setAcceptanceTab('paint'); }, icon: Camera },
+                          { label: '乳胶漆品牌', action: () => setActiveSection('materials'), icon: Boxes },
+                        ],
+                      },
+                      {
+                        name: '竣工验收',
+                        icon: Award,
+                        status: 'pending',
+                        desc: '整体验收与质量评分',
+                        color: 'from-emerald-500 to-teal-600',
+                        evidences: [
+                          { label: '各阶段验收记录', action: () => setActiveSection('data'), icon: ClipboardList },
+                          { label: '质量评分', action: () => setActiveSection('data'), icon: Star },
+                        ],
+                      },
+                    ].map((stage, idx) => {
+                      const Icon = stage.icon;
+                      return (
+                        <div key={idx} className="relative flex gap-4 pb-8 last:pb-0">
+                          <div
+                            className={cn(
+                              'relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-md',
+                              stage.status === 'done' && `bg-gradient-to-br ${stage.color}`,
+                              stage.status === 'current' && 'bg-gradient-to-br from-accent-500 to-amber-500 ring-4 ring-accent-100',
+                              stage.status === 'pending' && 'bg-gray-300'
+                            )}
+                          >
+                            {stage.status === 'done' ? (
+                              <CheckCircle className="w-5 h-5 text-white" />
+                            ) : stage.status === 'current' ? (
+                              <Clock className="w-5 h-5 text-white" />
+                            ) : (
+                              <Icon className="w-5 h-5 text-white" />
+                            )}
+                          </div>
+                          <div className="flex-1 pt-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="font-semibold text-gray-900 text-base">{stage.name}</span>
+                              {stage.status === 'done' && (
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs rounded-full font-medium">
+                                  <CheckCircle className="w-3 h-3" />
+                                  已完成
+                                </span>
+                              )}
+                              {stage.status === 'current' && (
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent-100 text-accent-700 text-xs rounded-full font-medium">
+                                  <Clock className="w-3 h-3" />
+                                  进行中
+                                </span>
+                              )}
+                              {stage.status === 'pending' && (
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded-full font-medium">
+                                  待开始
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-sm text-gray-500 mt-1 mb-3">{stage.desc}</p>
+                            <div className="flex flex-wrap gap-2">
+                              {stage.evidences.map((evidence, eIdx) => {
+                                const EvIcon = evidence.icon;
+                                return (
+                                  <button
+                                    key={eIdx}
+                                    onClick={evidence.action}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-primary-300 text-gray-700 hover:text-primary-600 text-xs font-medium rounded-lg transition-all"
+                                  >
+                                    <EvIcon className="w-3.5 h-3.5" />
+                                    {evidence.label}
+                                    <ExternalLink className="w-3 h-3 opacity-50" />
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </section>
             )}

@@ -194,6 +194,7 @@ export default function FloorplanMatch() {
   const [matching, setMatching] = useState(false);
   const [matched, setMatched] = useState(false);
   const [matchError, setMatchError] = useState<string | null>(null);
+  const [hasPartialMatch, setHasPartialMatch] = useState(false);
 
   const [formData, setFormData] = useState({
     area: '100',
@@ -216,10 +217,17 @@ export default function FloorplanMatch() {
     setSelectedIds([]);
     setShowCompare(false);
     setMatchError(null);
+    setHasPartialMatch(false);
     const timer = setTimeout(() => {
       try {
         setMatching(false);
         setMatched(true);
+        const tempResults = mockCases
+          .map((c) => computeMatch(formData, c))
+          .sort((a, b) => b.similarity - a.similarity)
+          .slice(0, 6);
+        const perfectMatch = tempResults.some((r) => r.similarity >= 85 && r.layoutSimilarity >= 85);
+        setHasPartialMatch(!perfectMatch);
       } catch (e) {
         setMatching(false);
         setMatchError('匹配过程出现异常，请稍后重试');
@@ -472,8 +480,20 @@ export default function FloorplanMatch() {
                 </div>
               )}
 
-              {matched ? (
+              {matching ? (
+                <div className="flex flex-col items-center justify-center h-96 text-center">
+                  <div className="w-16 h-16 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin mb-4" />
+                  <p className="text-lg font-medium text-gray-900 mb-2">AI 智能匹配中...</p>
+                  <p className="text-sm text-gray-500">AI正在分析户型结构，为您匹配最相似的装修案例...</p>
+                </div>
+              ) : matched ? (
                 <div className="space-y-4">
+                  {hasPartialMatch && (
+                    <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-600 flex items-center gap-2">
+                      <X className="w-4 h-4 text-gray-400" />
+                      未找到完全匹配的案例，为您推荐以下高相似度方案
+                    </div>
+                  )}
                   {matchedCases.map((mc) => (
                     <div
                       key={mc.id}
