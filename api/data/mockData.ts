@@ -576,6 +576,7 @@ export const mockSummaryReviews: SummaryReview[] = [
     generatedSummary:
       '监管方面，支付条例正式落地明确行业规范。市场方面，跨境支付和B端支付成为增长引擎，预计2025年市场规模25万亿元。支付机构正从通道费模式向SaaS服务转型。',
     status: 'pending',
+    version: 1,
     createdAt: '2025-06-08T10:00:00Z',
   },
   {
@@ -587,6 +588,7 @@ export const mockSummaryReviews: SummaryReview[] = [
     generatedSummary:
       '传统安防增速放缓，AI技术带来新增长。海康威视等龙头推出大模型智能产品，多场景应用加速落地。2025年AI安防市场预计约850亿元，同比增长35%，头部企业优势凸显。',
     status: 'pending',
+    version: 1,
     createdAt: '2025-06-09T14:30:00Z',
   },
   {
@@ -597,6 +599,7 @@ export const mockSummaryReviews: SummaryReview[] = [
     generatedSummary: '',
     reviewerComment: '摘要已审核，表述准确，核心观点突出。',
     status: 'approved',
+    version: 1,
     createdAt: '2025-06-03T09:20:00Z',
   },
 ];
