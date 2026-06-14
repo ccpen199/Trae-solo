@@ -1,47 +1,75 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Layout from "@/components/Layout";
-import Home from "@/pages/Home";
-import SocialInsuranceIndex from "@/pages/social-insurance/Index";
-import InsuranceDetail from "@/pages/social-insurance/Detail";
-import Certificate from "@/pages/social-insurance/Certificate";
-import EmploymentIndex from "@/pages/employment/Index";
-import JobDetail from "@/pages/employment/JobDetail";
-import Interview from "@/pages/employment/Interview";
-import TalentIndex from "@/pages/talent/Index";
-import Declare from "@/pages/talent/Declare";
-import Progress from "@/pages/talent/Progress";
-import Review from "@/pages/talent/Review";
-import LaborIndex from "@/pages/labor/Index";
-import Contract from "@/pages/labor/Contract";
-import Report from "@/pages/labor/Report";
-import Track from "@/pages/labor/Track";
-import Dashboard from "@/pages/admin/Dashboard";
-import Logs from "@/pages/admin/Logs";
-import Policy from "@/pages/admin/Policy";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import MainLayout from '@/components/MainLayout';
+import Home from '@/pages/Home';
+import Insurance from '@/pages/Insurance';
+import Payment from '@/pages/Payment';
+import Family from '@/pages/Family';
+import Benefit from '@/pages/Benefit';
+import Calculator from '@/pages/Calculator';
+import Policy from '@/pages/Policy';
+import WarningList from '@/pages/admin/WarningList';
+import AuditRules from '@/pages/admin/AuditRules';
+import DataShare from '@/pages/admin/DataShare';
+
+type UserType = 'resident' | 'flexible' | 'admin_tax' | 'admin_ops' | null;
+
+const isAdmin = (): boolean => {
+  const userStr = localStorage.getItem('user');
+  if (userStr) {
+    try {
+      const user = JSON.parse(userStr);
+      return user.userType === 'admin_tax' || user.userType === 'admin_ops';
+    } catch {
+      return false;
+    }
+  }
+  return import.meta.env.DEV;
+};
+
+const AdminRoute = ({ children }: { children: React.ReactNode }) => {
+  if (!isAdmin()) {
+    return <Navigate to="/" replace />;
+  }
+  return <>{children}</>;
+};
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/social-insurance" element={<SocialInsuranceIndex />} />
-          <Route path="/social-insurance/detail/:type" element={<InsuranceDetail />} />
-          <Route path="/social-insurance/certificate" element={<Certificate />} />
-          <Route path="/employment" element={<EmploymentIndex />} />
-          <Route path="/employment/job/:id" element={<JobDetail />} />
-          <Route path="/employment/interview/:id" element={<Interview />} />
-          <Route path="/talent" element={<TalentIndex />} />
-          <Route path="/talent/declare" element={<Declare />} />
-          <Route path="/talent/progress/:id" element={<Progress />} />
-          <Route path="/talent/review/:id" element={<Review />} />
-          <Route path="/labor" element={<LaborIndex />} />
-          <Route path="/labor/contract" element={<Contract />} />
-          <Route path="/labor/report" element={<Report />} />
-          <Route path="/labor/track/:id" element={<Track />} />
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/logs" element={<Logs />} />
-          <Route path="/admin/policy" element={<Policy />} />
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="insurance" element={<Insurance />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="family" element={<Family />} />
+          <Route path="benefit" element={<Benefit />} />
+          <Route path="calculator" element={<Calculator />} />
+          <Route path="policy" element={<Policy />} />
+          <Route path="admin" element={<Navigate to="/admin/warning" replace />} />
+          <Route
+            path="admin/warning"
+            element={
+              <AdminRoute>
+                <WarningList />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="admin/audit"
+            element={
+              <AdminRoute>
+                <AuditRules />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="admin/datashare"
+            element={
+              <AdminRoute>
+                <DataShare />
+              </AdminRoute>
+            }
+          />
         </Route>
       </Routes>
     </Router>

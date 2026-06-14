@@ -1,0 +1,11 @@
+import Database from 'better-sqlite3';
+const db = new Database('./data/app.sqlite');
+const users = db.prepare('SELECT id, id_card, name, password_hash, user_type FROM users').all();
+console.log('Users in DB:');
+console.log(JSON.stringify(users, null, 2));
+const schema = db.prepare('PRAGMA table_info(users)').all();
+console.log('\nTable schema:');
+console.log(schema.map(c => c.name + ' ' + c.type));
+const migrations = db.prepare('SELECT version, name, executed_at FROM schema_migrations').all();
+console.log('\nMigrations:');
+console.log(migrations);

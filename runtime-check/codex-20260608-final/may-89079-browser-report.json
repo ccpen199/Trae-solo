@@ -1,0 +1,3382 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T00:12:32.108Z",
+  "order": "may-89079",
+  "roundIndex": 7,
+  "captureId": "may-89079-codex-20260608-final",
+  "url": "http://127.0.0.1:49079/",
+  "initialUrl": "http://127.0.0.1:49079/",
+  "finalUrl": "http://127.0.0.1:49079/",
+  "status": 200,
+  "title": "湖南省社保费税务征缴一体化服务平台",
+  "initialTitle": "湖南省社保费税务征缴一体化服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-03-操作-查看更多.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-05-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-07-导航-家庭共济账户.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-08-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-10-操作-调整额度.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-12-导航-待遇发放中心.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetReason": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "purchase",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49079/insurance"
+    },
+    {
+      "action": "target-already-visible",
+      "label": "购买/提交相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "购买/提交相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49079/insurance"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49079/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看更多:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:生成缴费订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:家庭共济账户",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:关 闭",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:调整额度",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:调整额度:取 消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:待遇发放中心",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:政策计算器",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:管理中心",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 3
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49079/",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "首页",
+          "欢迎回来，张三"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "立即处理",
+          "查看全部",
+          "立即缴费",
+          "管理参保",
+          "查看更多"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享首页管理员欢迎回来，张三430101199001011234实名认证已通过湖南省参保险种2个累计缴费月数NaN月个人账户总额¥32,000.00待缴费订单5笔您有 2 条异常预警待处理立即处理待缴费订单（三端追踪）查看全部 👴城乡居民养老保险2026年度 · 第300档¥500待支付三端状态（支付后自动同步）订单创建税务开票财政入库医保入账创建时间: 2026-06-07 14:31:14立即缴费👴城乡居民养老保险2026年度 · 第300档¥500待支付三端状态（支付后自动同步）订单创建税务开票财政入库医保入账创建时间: 2026-06-07 14:31:07立即缴费👴城乡居民养老保险2026年度 · 第300档¥500待支付三端状态（支付后自动同步）订单创建税务开票财政入库医保入账创建时间: 2026-06-07 14:30:26立即缴费最近缴费订单（三端追踪）查看全部 👴 城乡居民养老保险2026年度 · 第200档ORD202606010003-¥2,400已支付三端进度:4/4 步税务财政医保支付时间: 2026-06-01 14:20:00🏥 城乡居民医疗保险2026年度 · 第320档ORD202601010002-¥3,840已支付三端进度:4/4 步税务财政医保支付时间: 2026-01-10 09:35:00👴 城乡居民养老保险2026年度 · 第200档ORD202601010001-¥2,400已支付三端进度:4/4 步税务财政医保支付时间: 2026-01-10 09:30:00我的参保状态管理参保 👴城乡居民养老保险已参保缴费档次第200档已缴月数/180月0%个人账户¥24,000🏥城乡居民医疗保险已参保缴费档次第320档已缴月数/180月0%个人账户¥8,000服务入口参保查询参保状态、缴费记录、待遇信息缴费中心多渠道缴费、订单查询、票据下载家庭共济亲属绑定、额度共享、使用记录待遇发放养老金、医保待遇、发放明细政策计算器养老金预估、缴费档次测算政策公告最新政策、办事指南、常见问题政策公告查看更多 最新关于2025年度城乡居民医疗保险缴费标准调整的通知2025-01-15政策湖南省灵活就业人员社保补贴政策解读2025-01-10指南家庭共济账户使用指南及常见问题解答2025-01-05政策养老金计算方法及退休待遇发放说明2024-12-28 财政入库: 已入库",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2138,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49079/",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-01-首屏.png",
+          "elementCount": 754,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "立即处理",
+            "查看全部",
+            "立即缴费",
+            "管理参保",
+            "查看更多",
+            "关于2025年度城乡居民医疗保险缴费标准调整的通知",
+            "湖南省灵活就业人员社保补贴政策解读",
+            "家庭共济账户使用指南及常见问题解答",
+            "养老金计算方法及退休待遇发放说明"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49079/",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "首页",
+          "欢迎回来，张三"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "立即处理",
+          "查看全部",
+          "立即缴费",
+          "管理参保",
+          "查看更多"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享首页管理员欢迎回来，张三430101199001011234实名认证已通过湖南省参保险种2个累计缴费月数NaN月个人账户总额¥32,000.00待缴费订单5笔您有 2 条异常预警待处理立即处理待缴费订单（三端追踪）查看全部 👴城乡居民养老保险2026年度 · 第300档¥500待支付三端状态（支付后自动同步）订单创建税务开票财政入库医保入账创建时间: 2026-06-07 14:31:14立即缴费👴城乡居民养老保险2026年度 · 第300档¥500待支付三端状态（支付后自动同步）订单创建税务开票财政入库医保入账创建时间: 2026-06-07 14:31:07立即缴费👴城乡居民养老保险2026年度 · 第300档¥500待支付三端状态（支付后自动同步）订单创建税务开票财政入库医保入账创建时间: 2026-06-07 14:30:26立即缴费最近缴费订单（三端追踪）查看全部 👴 城乡居民养老保险2026年度 · 第200档ORD202606010003-¥2,400已支付三端进度:4/4 步税务财政医保支付时间: 2026-06-01 14:20:00🏥 城乡居民医疗保险2026年度 · 第320档ORD202601010002-¥3,840已支付三端进度:4/4 步税务财政医保支付时间: 2026-01-10 09:35:00👴 城乡居民养老保险2026年度 · 第200档ORD202601010001-¥2,400已支付三端进度:4/4 步税务财政医保支付时间: 2026-01-10 09:30:00我的参保状态管理参保 👴城乡居民养老保险已参保缴费档次第200档已缴月数/180月0%个人账户¥24,000🏥城乡居民医疗保险已参保缴费档次第320档已缴月数/180月0%个人账户¥8,000服务入口参保查询参保状态、缴费记录、待遇信息缴费中心多渠道缴费、订单查询、票据下载家庭共济亲属绑定、额度共享、使用记录待遇发放养老金、医保待遇、发放明细政策计算器养老金预估、缴费档次测算政策公告最新政策、办事指南、常见问题政策公告查看更多 最新关于2025年度城乡居民医疗保险缴费标准调整的通知2025-01-15政策湖南省灵活就业人员社保补贴政策解读2025-01-10指南家庭共济账户使用指南及常见问题解答2025-01-05政策养老金计算方法及退休待遇发放说明2024-12-28 财政入库: 已入库",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2138,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49079/",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-02-导航-首页.png",
+          "elementCount": 754,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "立即处理",
+            "查看全部",
+            "立即缴费",
+            "管理参保",
+            "查看更多",
+            "关于2025年度城乡居民医疗保险缴费标准调整的通知",
+            "湖南省灵活就业人员社保补贴政策解读",
+            "家庭共济账户使用指南及常见问题解答",
+            "养老金计算方法及退休待遇发放说明"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看更多",
+        "url": "http://127.0.0.1:49079/policy",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "社保服务平台",
+          "政策公告"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "查看详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索政策关键词",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享社保服务平台管理员政策公告汇总社保费征缴、待遇发放、家庭共济和三端协同相关政策，支持按分类和关键词快速检索。最新公告5条政策分类5类服务指南3项2026年度居民医保集中缴费已开始参保人可在缴费中心创建订单，支付后可在首页查看税务开票、财政入库、医保入账状态。公告列表全部分类缴费通知关于2026年度城乡居民医疗保险集中缴费工作的通知明确集中缴费时间、线上缴费渠道、财政补助标准和特殊人群资助流程。2026-06-01查看详情 政策解读湖南省灵活就业人员社会保险补贴政策解读面向灵活就业参保人说明补贴对象、申请材料、审核路径和到账周期。2026-05-20查看详情 办事指南家庭共济账户绑定与医保个账使用指南覆盖亲属绑定、额度授权、医院药店使用记录查询和解绑流程。2026-05-12查看详情 待遇测算城乡居民养老保险缴费档次及待遇测算说明说明缴费档次、政府补贴、个人账户累计和养老金试算口径。2026-04-28查看详情 业务规则社保费税务征缴三端协同状态查询规则解释支付、税务开票、财政入库和医保入账各状态的更新时间与异常处理。2026-04-18查看详情 办理流程完成实名登录并核验个人参保身份。在缴费中心选择年度、险种、缴费档次和支付方式。支付成功后等待税务开票、财政入库、医保入账自动同步。在首页、订单列表或待遇页面查看后续状态和明细。常用指南居民医保缴费选择年度、缴费档次和支付渠道后生成订单。养老待遇测算录入年龄、缴费年限和档次，查看预计待遇。家庭共济授权绑定亲属后设置授权额度，支持使用记录追踪。",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1611,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-03-操作-查看更多",
+          "label": "操作:查看更多",
+          "finalUrl": "http://127.0.0.1:49079/policy",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-03-操作-查看更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-03-操作-查看更多.png",
+          "elementCount": 316,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "搜索政策关键词",
+            "查看详情"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看更多->查看详情",
+        "url": "http://127.0.0.1:49079/policy",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "社保服务平台",
+          "政策公告"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "查看详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索政策关键词",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享社保服务平台管理员政策公告汇总社保费征缴、待遇发放、家庭共济和三端协同相关政策，支持按分类和关键词快速检索。最新公告5条政策分类5类服务指南3项2026年度居民医保集中缴费已开始参保人可在缴费中心创建订单，支付后可在首页查看税务开票、财政入库、医保入账状态。公告列表全部分类缴费通知关于2026年度城乡居民医疗保险集中缴费工作的通知明确集中缴费时间、线上缴费渠道、财政补助标准和特殊人群资助流程。2026-06-01查看详情 政策解读湖南省灵活就业人员社会保险补贴政策解读面向灵活就业参保人说明补贴对象、申请材料、审核路径和到账周期。2026-05-20查看详情 办事指南家庭共济账户绑定与医保个账使用指南覆盖亲属绑定、额度授权、医院药店使用记录查询和解绑流程。2026-05-12查看详情 待遇测算城乡居民养老保险缴费档次及待遇测算说明说明缴费档次、政府补贴、个人账户累计和养老金试算口径。2026-04-28查看详情 业务规则社保费税务征缴三端协同状态查询规则解释支付、税务开票、财政入库和医保入账各状态的更新时间与异常处理。2026-04-18查看详情 办理流程完成实名登录并核验个人参保身份。在缴费中心选择年度、险种、缴费档次和支付方式。支付成功后等待税务开票、财政入库、医保入账自动同步。在首页、订单列表或待遇页面查看后续状态和明细。常用指南居民医保缴费选择年度、缴费档次和支付渠道后生成订单。养老待遇测算录入年龄、缴费年限和档次，查看预计待遇。家庭共济授权绑定亲属后设置授权额度，支持使用记录追踪。",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1611,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情",
+          "label": "二层操作:查看更多->查看详情",
+          "finalUrl": "http://127.0.0.1:49079/policy",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情.png",
+          "elementCount": 316,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "搜索政策关键词",
+            "查看详情"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49079/payment",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "社保服务平台",
+          "缴费中心"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "使用共济",
+          "生成缴费订单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享社保服务平台管理员缴费中心选择险种和缴费档次，多渠道完成社保缴费，全链路追踪三端状态我要缴费订单列表选择缴费信息缴费说明请选择正确的险种和缴费档次，缴费成功后将自动同步至税务、财政和医保部门。选择险种👴5城乡居民养老保险已参保7笔订单🏥城乡居民医疗保险已参保1笔订单💼灵活就业养老保险未参保🩺灵活就业医疗保险未参保缴费年度2026年度缴费档次第1档最低档，适合低收入人群¥200政府补贴 ¥40第2档基础档¥300政府补贴 ¥50第3档标准档¥500政府补贴 ¥60第4档中高档¥1000政府补贴 ¥80第5档高档，享受最高补贴¥2000政府补贴 ¥100家庭共济账户可用您有 1 位亲属的共济账户可使用，是否使用家庭共济额度支付？使用共济应缴金额¥200险种城乡居民养老保险缴费年度2026年度缴费档次第1档政府补贴+ ¥40合计应缴¥200生成缴费订单",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-05-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49079/payment",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-05-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-05-操作-查看全部.png",
+          "elementCount": 291,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "我要缴费",
+            "pension",
+            "medical",
+            "flexible_pension",
+            "flexible_medical",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "使用共济",
+            "生成缴费订单"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->生成缴费订单",
+        "url": "http://127.0.0.1:49079/payment",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "社保服务平台",
+          "缴费中心"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "使用共济",
+          "生成缴费订单",
+          "Close",
+          "取 消",
+          "确认生成"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享社保服务平台管理员缴费中心选择险种和缴费档次，多渠道完成社保缴费，全链路追踪三端状态我要缴费订单列表选择缴费信息缴费说明请选择正确的险种和缴费档次，缴费成功后将自动同步至税务、财政和医保部门。选择险种👴5城乡居民养老保险已参保7笔订单🏥城乡居民医疗保险已参保1笔订单💼灵活就业养老保险未参保🩺灵活就业医疗保险未参保缴费年度2026年度缴费档次第1档最低档，适合低收入人群¥200政府补贴 ¥40第2档基础档¥300政府补贴 ¥50第3档标准档¥500政府补贴 ¥60第4档中高档¥1000政府补贴 ¥80第5档高档，享受最高补贴¥2000政府补贴 ¥100家庭共济账户可用您有 1 位亲属的共济账户可使用，是否使用家庭共济额度支付？使用共济应缴金额¥200险种城乡居民养老保险缴费年度2026年度缴费档次第1档政府补贴+ ¥40合计应缴¥200生成缴费订单 确认生成订单险种城乡居民养老保险缴费年度2026年度缴费档次第1档应缴金额¥200取 消确认生成",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单",
+          "label": "二层操作:查看全部->生成缴费订单",
+          "finalUrl": "http://127.0.0.1:49079/payment",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单.png",
+          "elementCount": 328,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "我要缴费",
+            "pension",
+            "medical",
+            "flexible_pension",
+            "flexible_medical",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "使用共济",
+            "生成缴费订单",
+            "确认生成订单 险种 城乡居民养老保险 缴费年度 2026年度 缴费档次 第1档 应缴金额 ¥200 取 消 确认生成",
+            "Close",
+            "取 消",
+            "确认生成"
+          ]
+        }
+      },
+      {
+        "label": "导航:家庭共济账户",
+        "url": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "家庭共济账户"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "详情",
+          "调整额度",
+          "解绑"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享家庭共济账户管理员家庭共济账户绑定家庭成员，共享社保账户额度，经公安核验后可用于缴费支付亲属关系核验流程说明关于家庭共济家庭共济账户允许参保人员将其个人账户结余资金，用于支付配偶、父母、子女等直系亲属的社会保险费用。绑定需经公安部门人口库核验亲属关系。1提交申请填写亲属信息2公安核验人口库比对3开通共济设置授权额度4生效使用可用于支付✓ 支持的亲属关系• 父母（60周岁以上优先）• 子女（未满18周岁优先）• 配偶（法定婚姻关系）• 兄弟姐妹（特殊情况）✓ 共济使用范围• 城乡居民医疗保险缴费• 城乡居民养老保险缴费• 灵活就业人员社保缴费• 住院费用个人负担部分共济成员数1/ 已生效 1累计授权额度¥5,000累计已用额度¥1,200当前可用额度¥3,800共济成员 (1)使用记录 (1)👴张父父母 · 430101195001014321已生效授权额度¥5,000可用额度¥3,80024%已用 ¥1,20024%账户正常，可用于支付可支付 ¥380暂无支付记录详情调整额度解绑",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-07-导航-家庭共济账户",
+          "label": "导航:家庭共济账户",
+          "finalUrl": "http://127.0.0.1:49079/family",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-07-导航-家庭共济账户.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-07-导航-家庭共济账户.png",
+          "elementCount": 271,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "共济成员 (1)",
+            "详情",
+            "调整额度",
+            "解绑"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "家庭共济账户"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "详情",
+          "调整额度",
+          "解绑",
+          "Close",
+          "关 闭"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享家庭共济账户管理员家庭共济账户绑定家庭成员，共享社保账户额度，经公安核验后可用于缴费支付亲属关系核验流程说明关于家庭共济家庭共济账户允许参保人员将其个人账户结余资金，用于支付配偶、父母、子女等直系亲属的社会保险费用。绑定需经公安部门人口库核验亲属关系。1提交申请填写亲属信息2公安核验人口库比对3开通共济设置授权额度4生效使用可用于支付✓ 支持的亲属关系• 父母（60周岁以上优先）• 子女（未满18周岁优先）• 配偶（法定婚姻关系）• 兄弟姐妹（特殊情况）✓ 共济使用范围• 城乡居民医疗保险缴费• 城乡居民养老保险缴费• 灵活就业人员社保缴费• 住院费用个人负担部分共济成员数1/ 已生效 1累计授权额度¥5,000累计已用额度¥1,200当前可用额度¥3,800共济成员 (1)使用记录 (1)👴张父父母 · 430101195001014321已生效授权额度¥5,000可用额度¥3,80024%已用 ¥1,20024%账户正常，可用于支付可支付 ¥380暂无支付记录详情调整额度解绑 共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无关联订单共济使用记录暂无使用记录关 闭",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-08-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49079/family",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-08-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-08-操作-详情.png",
+          "elementCount": 368,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "共济成员 (1)",
+            "详情",
+            "调整额度",
+            "解绑",
+            "共济账户详情 张 张父 父母 · 430101195001014321 已生效 年度授权额度 ¥5,000 累计已用 ¥1,200 当前可用 ¥3,800 关联支付订单 暂无关联订单 共济使用记录 暂无使用记录 关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->关 闭",
+        "url": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "家庭共济账户"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "详情",
+          "调整额度",
+          "解绑"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享家庭共济账户管理员家庭共济账户绑定家庭成员，共享社保账户额度，经公安核验后可用于缴费支付亲属关系核验流程说明关于家庭共济家庭共济账户允许参保人员将其个人账户结余资金，用于支付配偶、父母、子女等直系亲属的社会保险费用。绑定需经公安部门人口库核验亲属关系。1提交申请填写亲属信息2公安核验人口库比对3开通共济设置授权额度4生效使用可用于支付✓ 支持的亲属关系• 父母（60周岁以上优先）• 子女（未满18周岁优先）• 配偶（法定婚姻关系）• 兄弟姐妹（特殊情况）✓ 共济使用范围• 城乡居民医疗保险缴费• 城乡居民养老保险缴费• 灵活就业人员社保缴费• 住院费用个人负担部分共济成员数1/ 已生效 1累计授权额度¥5,000累计已用额度¥1,200当前可用额度¥3,800共济成员 (1)使用记录 (1)👴张父父母 · 430101195001014321已生效授权额度¥5,000可用额度¥3,80024%已用 ¥1,20024%账户正常，可用于支付可支付 ¥380暂无支付记录详情调整额度解绑 共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无关联订单共济使用记录暂无使用记录关 闭",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭",
+          "label": "二层操作:详情->关 闭",
+          "finalUrl": "http://127.0.0.1:49079/family",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭.png",
+          "elementCount": 369,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "共济成员 (1)",
+            "详情",
+            "调整额度",
+            "解绑",
+            "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:调整额度",
+        "url": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "家庭共济账户"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "详情",
+          "调整额度",
+          "解绑",
+          "Close",
+          "取 消",
+          "确认调整"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享家庭共济账户管理员家庭共济账户绑定家庭成员，共享社保账户额度，经公安核验后可用于缴费支付亲属关系核验流程说明关于家庭共济家庭共济账户允许参保人员将其个人账户结余资金，用于支付配偶、父母、子女等直系亲属的社会保险费用。绑定需经公安部门人口库核验亲属关系。1提交申请填写亲属信息2公安核验人口库比对3开通共济设置授权额度4生效使用可用于支付✓ 支持的亲属关系• 父母（60周岁以上优先）• 子女（未满18周岁优先）• 配偶（法定婚姻关系）• 兄弟姐妹（特殊情况）✓ 共济使用范围• 城乡居民医疗保险缴费• 城乡居民养老保险缴费• 灵活就业人员社保缴费• 住院费用个人负担部分共济成员数1/ 已生效 1累计授权额度¥5,000累计已用额度¥1,200当前可用额度¥3,800共济成员 (1)使用记录 (1)👴张父父母 · 430101195001014321已生效授权额度¥5,000可用额度¥3,80024%已用 ¥1,20024%账户正常，可用于支付可支付 ¥380暂无支付记录详情调整额度解绑 共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无关联订单共济使用记录暂无使用记录关 闭调整授权额度张张父父母 · 当前可用额度: ¥3,800新的年度授权额度（元）¥注意调整后的额度将从下一个缴费周期开始生效，已使用的额度不受影响。取 消确认调整",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-10-操作-调整额度",
+          "label": "操作:调整额度",
+          "finalUrl": "http://127.0.0.1:49079/family",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-10-操作-调整额度.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-10-操作-调整额度.png",
+          "elementCount": 426,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "共济成员 (1)",
+            "详情",
+            "调整额度",
+            "解绑",
+            "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+            "Close",
+            "关 闭",
+            "调整授权额度 张 张父 父母 · 当前可用额度: ¥3,800 新的年度授权额度（元） ¥ 注意 调整后的额度将从下一个缴费周期开始生效，已使用的额度不受影响。 取 消 确认调整",
+            "Increase Value",
+            "Decrease Value",
+            "5000",
+            "取 消",
+            "确认调整"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:调整额度->取 消",
+        "url": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "家庭共济账户"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "详情",
+          "调整额度",
+          "解绑"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享家庭共济账户管理员家庭共济账户绑定家庭成员，共享社保账户额度，经公安核验后可用于缴费支付亲属关系核验流程说明关于家庭共济家庭共济账户允许参保人员将其个人账户结余资金，用于支付配偶、父母、子女等直系亲属的社会保险费用。绑定需经公安部门人口库核验亲属关系。1提交申请填写亲属信息2公安核验人口库比对3开通共济设置授权额度4生效使用可用于支付✓ 支持的亲属关系• 父母（60周岁以上优先）• 子女（未满18周岁优先）• 配偶（法定婚姻关系）• 兄弟姐妹（特殊情况）✓ 共济使用范围• 城乡居民医疗保险缴费• 城乡居民养老保险缴费• 灵活就业人员社保缴费• 住院费用个人负担部分共济成员数1/ 已生效 1累计授权额度¥5,000累计已用额度¥1,200当前可用额度¥3,800共济成员 (1)使用记录 (1)👴张父父母 · 430101195001014321已生效授权额度¥5,000可用额度¥3,80024%已用 ¥1,20024%账户正常，可用于支付可支付 ¥380暂无支付记录详情调整额度解绑 共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无关联订单共济使用记录暂无使用记录关 闭调整授权额度张张父父母 · 当前可用额度: ¥3,800新的年度授权额度（元）¥注意调整后的额度将从下一个缴费周期开始生效，已使用的额度不受影响。取 消确认调整",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消",
+          "label": "二层操作:调整额度->取 消",
+          "finalUrl": "http://127.0.0.1:49079/family",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消.png",
+          "elementCount": 427,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "共济成员 (1)",
+            "详情",
+            "调整额度",
+            "解绑",
+            "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+            "Close",
+            "关 闭",
+            "调整授权额度张张父父母 · 当前可用额度: ¥3,800新的年度授权额度（元）¥注意调整后的额度将从下一个缴费周期开始生效，已使用的额度不受影响。取 消确认调整",
+            "Increase Value",
+            "Decrease Value",
+            "5000",
+            "取 消",
+            "确认调整"
+          ]
+        }
+      },
+      {
+        "label": "导航:待遇发放中心",
+        "url": "http://127.0.0.1:49079/benefit",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "待遇发放中心"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "发放月份",
+              "发放金额(元)",
+              "发放银行",
+              "银行账户",
+              "状态",
+              "到账时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "发放月份 发放金额(元) 发放银行 银行账户 状态 到账时间 2026-06 ¥3,200 中国工商银行 6222021234567890123 已发放 2026-06-15 10:00:00 2026-05 ¥3,100 中国工商银行 6222021234567890123 已发放 2026-05-15 10:00:00 2026-04 ¥2,980 中国工商银行 6222021234567890123 已发放 2026-04-15 10:00:00 2026-03 ¥3,050 中国工商银行 6222021234567890123 已发放 2026-03-15 10:00:00 2026-"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享待遇发放中心管理员待遇发放中心 养老金发放 医保账户累计发放总额18,100.00元本月发放3,200.00元月均发放3,016.67元月度发放记录发放月份发放金额(元)发放银行银行账户状态到账时间2026-06¥3,200中国工商银行6222021234567890123已发放2026-06-15 10:00:002026-05¥3,100中国工商银行6222021234567890123已发放2026-05-15 10:00:002026-04¥2,980中国工商银行6222021234567890123已发放2026-04-15 10:00:002026-03¥3,050中国工商银行6222021234567890123已发放2026-03-15 10:00:002026-02¥2,920中国工商银行6222021234567890123已发放2026-02-15 10:00:002026-01¥2,850中国工商银行6222021234567890123已发放2026-01-15 10:00:001",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-12-导航-待遇发放中心",
+          "label": "导航:待遇发放中心",
+          "finalUrl": "http://127.0.0.1:49079/benefit",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-12-导航-待遇发放中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-12-导航-待遇发放中心.png",
+          "elementCount": 230,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "养老金发放",
+            "累计发放总额 18,100.00元 本月发放 3,200.00元 月均发放 3,016.67元 月度发放记录 发放月份 发放金额(元) 发放银行 银行账户 状态 到账时间 2026-06 ¥3,200 中国工商银行 6222021234567890123 已发放 2026-06-15 10:00:00 2026-05 ¥3,100 中国工商银行 622202",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:政策计算器",
+        "url": "http://127.0.0.1:49079/calculator",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "政策计算器"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "重置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入当前年龄",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享政策计算器管理员政策计算器重置测算说明本计算器根据湖南省城乡居民养老保险政策进行测算，实际领取金额以社保部门核定为准。养老金测算缴费年限：25年152025303540缴费档次2000元/年预计退休年龄60岁当前年龄岁政府补贴：200元/年预计领取年龄：60岁距退休还有：20年预估月养老金¥5,783.8（60岁后每月预计领取基础养老金1,467.25元个人账户养老金4,316.55元累计缴费金额50,000元累计政府补贴5,000元不同缴费年限养老金对比* 按当前缴费档次 2000元/年 测算",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-13-导航-政策计算器",
+          "label": "导航:政策计算器",
+          "finalUrl": "http://127.0.0.1:49079/calculator",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-13-导航-政策计算器.json",
+          "screenshotPath": "",
+          "elementCount": 247,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "重置",
+            "Increase Value",
+            "Decrease Value",
+            "40"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置",
+        "url": "http://127.0.0.1:49079/calculator",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "政策计算器"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "重置"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入当前年龄",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享政策计算器管理员政策计算器重置测算说明本计算器根据湖南省城乡居民养老保险政策进行测算，实际领取金额以社保部门核定为准。养老金测算缴费年限：25年152025303540缴费档次2000元/年预计退休年龄60岁当前年龄岁政府补贴：200元/年预计领取年龄：60岁距退休还有：20年预估月养老金¥5,783.8（60岁后每月预计领取基础养老金1,467.25元个人账户养老金4,316.55元累计缴费金额50,000元累计政府补贴5,000元不同缴费年限养老金对比* 按当前缴费档次 2000元/年 测算",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-14-操作-重置",
+          "label": "操作:重置",
+          "finalUrl": "http://127.0.0.1:49079/calculator",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-14-操作-重置.json",
+          "screenshotPath": "",
+          "elementCount": 249,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "重置",
+            "Increase Value",
+            "Decrease Value",
+            "40"
+          ]
+        }
+      },
+      {
+        "label": "导航:管理中心",
+        "url": "http://127.0.0.1:49079/admin/warning",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "管理中心",
+          "异常预警管理"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "刷新",
+          "重 置",
+          "查询",
+          "批量处理",
+          "高级筛选",
+          "导出数据",
+          "详情",
+          "处理"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "用户信息",
+              "预警类型",
+              "风险等级",
+              "断缴时长",
+              "状态",
+              "预警描述",
+              "触发时间",
+              "操作"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "用户信息 预警类型 风险等级 断缴时长 状态 预警描述 触发时间 操作 未知用户 无身份证信息 疑似欺诈 低风险 - 待处理 缴费记录与收入数据比对存在异常，需进一步核实 2026-06-03 08:00:00 详情 处理 未知用户 无身份证信息 金额异常 中风险 - 处理中 2026年6月缴费金额较上年度月均增长超过50%，疑似异常 2026-06-02 08:00:00 详情 处理 未知用户 无身份证信息 断缴预警 高风险 3个月 待处理 灵活就业人员养老保险已断缴5个月，超过预警阈值3个月 2026-06-01 08:00:00 详情 处理"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享管理中心管理员异常预警管理刷新待处理预警2处理中1已解决0断缴预警1高风险预警133%断缴超3个月预警处理流程1系统检测缴费数据比对 发现断缴超3个月2预警生成自动创建预警记录 标记风险等级3人工干预电话/短信通知用户 督促及时补缴4补缴完成用户完成缴费 预警自动解除预警列表断缴专项处理预警类型请选择风险等级请选择处理状态请选择时间范围重 置查询共 3 条记录全选 (0/3)批量处理高级筛选导出数据用户信息预警类型风险等级断缴时长状态预警描述触发时间操作未知用户无身份证信息疑似欺诈低风险-待处理缴费记录与收入数据比对存在异常，需进一步核实2026-06-03 08:00:00详情处理未知用户无身份证信息金额异常中风险-处理中2026年6月缴费金额较上年度月均增长超过50%，疑似异常2026-06-02 08:00:00详情处理未知用户无身份证信息断缴预警高风险3个月待处理灵活就业人员养老保险已断缴5个月，超过预警阈值3个月2026-06-01 08:00:00详情处理共 3 条110 条/页",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1600,
+          "scrollWidth": 1952,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-15-导航-管理中心",
+          "label": "导航:管理中心",
+          "finalUrl": "http://127.0.0.1:49079/admin/warning",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-15-导航-管理中心.json",
+          "screenshotPath": "",
+          "elementCount": 537,
+          "interactiveCount": 38,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "刷新",
+            "预警列表",
+            "开始日期",
+            "结束日期",
+            "重 置",
+            "查询",
+            "on",
+            "批量处理",
+            "高级筛选",
+            "导出数据",
+            "详情",
+            "处理",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49079/admin/warning",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "headings": [
+          "管理中心",
+          "异常预警管理"
+        ],
+        "navLabels": [
+          "社保服务平台",
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "home",
+          "家庭共济账户",
+          "team",
+          "待遇发放中心",
+          "money-collect",
+          "政策计算器",
+          "calculator",
+          "管理中心",
+          "warning",
+          "稽核规则",
+          "file-text",
+          "数据共享",
+          "share-alt"
+        ],
+        "buttons": [
+          "刷新",
+          "重 置",
+          "查询",
+          "批量处理",
+          "高级筛选",
+          "导出数据",
+          "详情",
+          "处理",
+          "Close",
+          "关 闭",
+          "去处理"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "用户信息",
+              "预警类型",
+              "风险等级",
+              "断缴时长",
+              "状态",
+              "预警描述",
+              "触发时间",
+              "操作"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "用户信息 预警类型 风险等级 断缴时长 状态 预警描述 触发时间 操作 未知用户 无身份证信息 疑似欺诈 低风险 - 待处理 缴费记录与收入数据比对存在异常，需进一步核实 2026-06-03 08:00:00 详情 处理 未知用户 无身份证信息 金额异常 中风险 - 处理中 2026年6月缴费金额较上年度月均增长超过50%，疑似异常 2026-06-02 08:00:00 详情 处理 未知用户 无身份证信息 断缴预警 高风险 3个月 待处理 灵活就业人员养老保险已断缴5个月，超过预警阈值3个月 2026-06-01 08:00:00 详情 处理"
+          },
+          {
+            "headers": [
+              "预警编号",
+              "预警类型",
+              "风险等级",
+              "当前状态",
+              "预警描述",
+              "触发时间",
+              "处理时间",
+              "处理备注"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "预警编号 3 预警类型 疑似欺诈 风险等级 低风险 当前状态 待处理 预警描述 缴费记录与收入数据比对存在异常，需进一步核实 触发时间 2026-06-03 08:00:00 处理时间 - 处理备注 暂无处理备注"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社保服务平台首页家庭共济账户待遇发放中心政策计算器管理中心稽核规则数据共享管理中心管理员异常预警管理刷新待处理预警2处理中1已解决0断缴预警1高风险预警133%断缴超3个月预警处理流程1系统检测缴费数据比对 发现断缴超3个月2预警生成自动创建预警记录 标记风险等级3人工干预电话/短信通知用户 督促及时补缴4补缴完成用户完成缴费 预警自动解除预警列表断缴专项处理预警类型请选择风险等级请选择处理状态请选择时间范围重 置查询共 3 条记录全选 (0/3)批量处理高级筛选导出数据用户信息预警类型风险等级断缴时长状态预警描述触发时间操作未知用户无身份证信息疑似欺诈低风险-待处理缴费记录与收入数据比对存在异常，需进一步核实2026-06-03 08:00:00详情处理未知用户无身份证信息金额异常中风险-处理中2026年6月缴费金额较上年度月均增长超过50%，疑似异常2026-06-02 08:00:00详情处理未知用户无身份证信息断缴预警高风险3个月待处理灵活就业人员养老保险已断缴5个月，超过预警阈值3个月2026-06-01 08:00:00详情处理共 3 条110 条/页 预警详情与处理记录预警编号3预警类型疑似欺诈风险等级低风险当前状态待处理预警描述缴费记录与收入数据比对存在异常，需进一步核实触发时间2026-06-03 08:00:00处理时间-处理备注暂无处理备注处理记录追踪暂无处理记录关 闭去处理",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1600,
+          "scrollWidth": 1984,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89079-codex-20260608-final-structure-16-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49079/admin/warning",
+          "title": "湖南省社保费税务征缴一体化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-16-操作-详情.json",
+          "screenshotPath": "",
+          "elementCount": 636,
+          "interactiveCount": 43,
+          "interactiveLabels": [
+            "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+            "首页",
+            "家庭共济账户",
+            "待遇发放中心",
+            "政策计算器",
+            "管理中心",
+            "稽核规则",
+            "数据共享",
+            "刷新",
+            "预警列表",
+            "开始日期",
+            "结束日期",
+            "重 置",
+            "查询",
+            "on",
+            "批量处理",
+            "高级筛选",
+            "导出数据",
+            "详情",
+            "处理",
+            "1",
+            "页码",
+            "预警详情与处理记录 预警编号 3 预警类型 疑似欺诈 风险等级 低风险 当前状态 待处理 预警描述 缴费记录与收入数据比对存在异常，需进一步核实 触发时间 2026-06-03 08:00:00 处理时间 - 处理备注 暂无处理备注 处理记录追踪 暂无处理记录 关 闭 去处理",
+            "Close",
+            "关 闭",
+            "去处理"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看更多->查看详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部->生成缴费订单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "家庭共济账户",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "家庭共济账户",
+        "label": "详情->关 闭",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "家庭共济账户",
+        "label": "调整额度",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "家庭共济账户",
+        "label": "调整额度->取 消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "政策计算器",
+        "label": "重置",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "管理中心",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49079/",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-01-首屏.png",
+        "elementCount": 754,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "立即处理",
+          "查看全部",
+          "立即缴费",
+          "管理参保",
+          "查看更多",
+          "关于2025年度城乡居民医疗保险缴费标准调整的通知",
+          "湖南省灵活就业人员社保补贴政策解读",
+          "家庭共济账户使用指南及常见问题解答",
+          "养老金计算方法及退休待遇发放说明"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49079/",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-02-导航-首页.png",
+        "elementCount": 754,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "立即处理",
+          "查看全部",
+          "立即缴费",
+          "管理参保",
+          "查看更多",
+          "关于2025年度城乡居民医疗保险缴费标准调整的通知",
+          "湖南省灵活就业人员社保补贴政策解读",
+          "家庭共济账户使用指南及常见问题解答",
+          "养老金计算方法及退休待遇发放说明"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-03-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49079/policy",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-03-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-03-操作-查看更多.png",
+        "elementCount": 316,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "搜索政策关键词",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情",
+        "label": "二层操作:查看更多->查看详情",
+        "finalUrl": "http://127.0.0.1:49079/policy",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情.png",
+        "elementCount": 316,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "搜索政策关键词",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-05-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49079/payment",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-05-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-05-操作-查看全部.png",
+        "elementCount": 291,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "我要缴费",
+          "pension",
+          "medical",
+          "flexible_pension",
+          "flexible_medical",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "使用共济",
+          "生成缴费订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单",
+        "label": "二层操作:查看全部->生成缴费订单",
+        "finalUrl": "http://127.0.0.1:49079/payment",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单.png",
+        "elementCount": 328,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "我要缴费",
+          "pension",
+          "medical",
+          "flexible_pension",
+          "flexible_medical",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "使用共济",
+          "生成缴费订单",
+          "确认生成订单 险种 城乡居民养老保险 缴费年度 2026年度 缴费档次 第1档 应缴金额 ¥200 取 消 确认生成",
+          "Close",
+          "取 消",
+          "确认生成"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-07-导航-家庭共济账户",
+        "label": "导航:家庭共济账户",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-07-导航-家庭共济账户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-07-导航-家庭共济账户.png",
+        "elementCount": 271,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-08-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-08-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-08-操作-详情.png",
+        "elementCount": 368,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑",
+          "共济账户详情 张 张父 父母 · 430101195001014321 已生效 年度授权额度 ¥5,000 累计已用 ¥1,200 当前可用 ¥3,800 关联支付订单 暂无关联订单 共济使用记录 暂无使用记录 关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭.png",
+        "elementCount": 369,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑",
+          "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-10-操作-调整额度",
+        "label": "操作:调整额度",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-10-操作-调整额度.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-10-操作-调整额度.png",
+        "elementCount": 426,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑",
+          "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+          "Close",
+          "关 闭",
+          "调整授权额度 张 张父 父母 · 当前可用额度: ¥3,800 新的年度授权额度（元） ¥ 注意 调整后的额度将从下一个缴费周期开始生效，已使用的额度不受影响。 取 消 确认调整",
+          "Increase Value",
+          "Decrease Value",
+          "5000",
+          "取 消",
+          "确认调整"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消",
+        "label": "二层操作:调整额度->取 消",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消.png",
+        "elementCount": 427,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑",
+          "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+          "Close",
+          "关 闭",
+          "调整授权额度张张父父母 · 当前可用额度: ¥3,800新的年度授权额度（元）¥注意调整后的额度将从下一个缴费周期开始生效，已使用的额度不受影响。取 消确认调整",
+          "Increase Value",
+          "Decrease Value",
+          "5000",
+          "取 消",
+          "确认调整"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-12-导航-待遇发放中心",
+        "label": "导航:待遇发放中心",
+        "finalUrl": "http://127.0.0.1:49079/benefit",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-12-导航-待遇发放中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-12-导航-待遇发放中心.png",
+        "elementCount": 230,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "养老金发放",
+          "累计发放总额 18,100.00元 本月发放 3,200.00元 月均发放 3,016.67元 月度发放记录 发放月份 发放金额(元) 发放银行 银行账户 状态 到账时间 2026-06 ¥3,200 中国工商银行 6222021234567890123 已发放 2026-06-15 10:00:00 2026-05 ¥3,100 中国工商银行 622202",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-13-导航-政策计算器",
+        "label": "导航:政策计算器",
+        "finalUrl": "http://127.0.0.1:49079/calculator",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-13-导航-政策计算器.json",
+        "screenshotPath": "",
+        "elementCount": 247,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "重置",
+          "Increase Value",
+          "Decrease Value",
+          "40"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-14-操作-重置",
+        "label": "操作:重置",
+        "finalUrl": "http://127.0.0.1:49079/calculator",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-14-操作-重置.json",
+        "screenshotPath": "",
+        "elementCount": 249,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "重置",
+          "Increase Value",
+          "Decrease Value",
+          "40"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-15-导航-管理中心",
+        "label": "导航:管理中心",
+        "finalUrl": "http://127.0.0.1:49079/admin/warning",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-15-导航-管理中心.json",
+        "screenshotPath": "",
+        "elementCount": 537,
+        "interactiveCount": 38,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "刷新",
+          "预警列表",
+          "开始日期",
+          "结束日期",
+          "重 置",
+          "查询",
+          "on",
+          "批量处理",
+          "高级筛选",
+          "导出数据",
+          "详情",
+          "处理",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-16-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49079/admin/warning",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-16-操作-详情.json",
+        "screenshotPath": "",
+        "elementCount": 636,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "刷新",
+          "预警列表",
+          "开始日期",
+          "结束日期",
+          "重 置",
+          "查询",
+          "on",
+          "批量处理",
+          "高级筛选",
+          "导出数据",
+          "详情",
+          "处理",
+          "1",
+          "页码",
+          "预警详情与处理记录 预警编号 3 预警类型 疑似欺诈 风险等级 低风险 当前状态 待处理 预警描述 缴费记录与收入数据比对存在异常，需进一步核实 触发时间 2026-06-03 08:00:00 处理时间 - 处理备注 暂无处理备注 处理记录追踪 暂无处理记录 关 闭 去处理",
+          "Close",
+          "关 闭",
+          "去处理"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49079/",
+    "representativeScreenshotLabel": "首页"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 16,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49079/",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-01-首屏.png",
+        "elementCount": 754,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "立即处理",
+          "查看全部",
+          "立即缴费",
+          "管理参保",
+          "查看更多",
+          "关于2025年度城乡居民医疗保险缴费标准调整的通知",
+          "湖南省灵活就业人员社保补贴政策解读",
+          "家庭共济账户使用指南及常见问题解答",
+          "养老金计算方法及退休待遇发放说明"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49079/",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-02-导航-首页.png",
+        "elementCount": 754,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "立即处理",
+          "查看全部",
+          "立即缴费",
+          "管理参保",
+          "查看更多",
+          "关于2025年度城乡居民医疗保险缴费标准调整的通知",
+          "湖南省灵活就业人员社保补贴政策解读",
+          "家庭共济账户使用指南及常见问题解答",
+          "养老金计算方法及退休待遇发放说明"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-03-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49079/policy",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-03-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-03-操作-查看更多.png",
+        "elementCount": 316,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "搜索政策关键词",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情",
+        "label": "二层操作:查看更多->查看详情",
+        "finalUrl": "http://127.0.0.1:49079/policy",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-04-二层操作-查看更多-查看详情.png",
+        "elementCount": 316,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "搜索政策关键词",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-05-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49079/payment",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-05-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-05-操作-查看全部.png",
+        "elementCount": 291,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "我要缴费",
+          "pension",
+          "medical",
+          "flexible_pension",
+          "flexible_medical",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "使用共济",
+          "生成缴费订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单",
+        "label": "二层操作:查看全部->生成缴费订单",
+        "finalUrl": "http://127.0.0.1:49079/payment",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-06-二层操作-查看全部-生成缴费订单.png",
+        "elementCount": 328,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "我要缴费",
+          "pension",
+          "medical",
+          "flexible_pension",
+          "flexible_medical",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "使用共济",
+          "生成缴费订单",
+          "确认生成订单 险种 城乡居民养老保险 缴费年度 2026年度 缴费档次 第1档 应缴金额 ¥200 取 消 确认生成",
+          "Close",
+          "取 消",
+          "确认生成"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-07-导航-家庭共济账户",
+        "label": "导航:家庭共济账户",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-07-导航-家庭共济账户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-07-导航-家庭共济账户.png",
+        "elementCount": 271,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-08-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-08-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-08-操作-详情.png",
+        "elementCount": 368,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑",
+          "共济账户详情 张 张父 父母 · 430101195001014321 已生效 年度授权额度 ¥5,000 累计已用 ¥1,200 当前可用 ¥3,800 关联支付订单 暂无关联订单 共济使用记录 暂无使用记录 关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-09-二层操作-详情-关-闭.png",
+        "elementCount": 369,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑",
+          "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-10-操作-调整额度",
+        "label": "操作:调整额度",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-10-操作-调整额度.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-10-操作-调整额度.png",
+        "elementCount": 426,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑",
+          "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+          "Close",
+          "关 闭",
+          "调整授权额度 张 张父 父母 · 当前可用额度: ¥3,800 新的年度授权额度（元） ¥ 注意 调整后的额度将从下一个缴费周期开始生效，已使用的额度不受影响。 取 消 确认调整",
+          "Increase Value",
+          "Decrease Value",
+          "5000",
+          "取 消",
+          "确认调整"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消",
+        "label": "二层操作:调整额度->取 消",
+        "finalUrl": "http://127.0.0.1:49079/family",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-11-二层操作-调整额度-取-消.png",
+        "elementCount": 427,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "共济成员 (1)",
+          "详情",
+          "调整额度",
+          "解绑",
+          "共济账户详情张张父父母 · 430101195001014321已生效年度授权额度¥5,000累计已用¥1,200当前可用¥3,800关联支付订单暂无数据暂无关联订单共济使用记录暂无数据暂无使用记录关 闭",
+          "Close",
+          "关 闭",
+          "调整授权额度张张父父母 · 当前可用额度: ¥3,800新的年度授权额度（元）¥注意调整后的额度将从下一个缴费周期开始生效，已使用的额度不受影响。取 消确认调整",
+          "Increase Value",
+          "Decrease Value",
+          "5000",
+          "取 消",
+          "确认调整"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-12-导航-待遇发放中心",
+        "label": "导航:待遇发放中心",
+        "finalUrl": "http://127.0.0.1:49079/benefit",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-12-导航-待遇发放中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-12-导航-待遇发放中心.png",
+        "elementCount": 230,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "养老金发放",
+          "累计发放总额 18,100.00元 本月发放 3,200.00元 月均发放 3,016.67元 月度发放记录 发放月份 发放金额(元) 发放银行 银行账户 状态 到账时间 2026-06 ¥3,200 中国工商银行 6222021234567890123 已发放 2026-06-15 10:00:00 2026-05 ¥3,100 中国工商银行 622202",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-13-导航-政策计算器",
+        "label": "导航:政策计算器",
+        "finalUrl": "http://127.0.0.1:49079/calculator",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-13-导航-政策计算器.json",
+        "screenshotPath": "",
+        "elementCount": 247,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "重置",
+          "Increase Value",
+          "Decrease Value",
+          "40"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-14-操作-重置",
+        "label": "操作:重置",
+        "finalUrl": "http://127.0.0.1:49079/calculator",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-14-操作-重置.json",
+        "screenshotPath": "",
+        "elementCount": 249,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "重置",
+          "Increase Value",
+          "Decrease Value",
+          "40"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-15-导航-管理中心",
+        "label": "导航:管理中心",
+        "finalUrl": "http://127.0.0.1:49079/admin/warning",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-15-导航-管理中心.json",
+        "screenshotPath": "",
+        "elementCount": 537,
+        "interactiveCount": 38,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "刷新",
+          "预警列表",
+          "开始日期",
+          "结束日期",
+          "重 置",
+          "查询",
+          "on",
+          "批量处理",
+          "高级筛选",
+          "导出数据",
+          "详情",
+          "处理",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89079-codex-20260608-final-structure-16-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49079/admin/warning",
+        "title": "湖南省社保费税务征缴一体化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89079/runtime-check/codex-20260608-final/may-89079-codex-20260608-final-structure-16-操作-详情.json",
+        "screenshotPath": "",
+        "elementCount": 636,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "首页 家庭共济账户 待遇发放中心 政策计算器 管理中心 稽核规则 数据共享",
+          "首页",
+          "家庭共济账户",
+          "待遇发放中心",
+          "政策计算器",
+          "管理中心",
+          "稽核规则",
+          "数据共享",
+          "刷新",
+          "预警列表",
+          "开始日期",
+          "结束日期",
+          "重 置",
+          "查询",
+          "on",
+          "批量处理",
+          "高级筛选",
+          "导出数据",
+          "详情",
+          "处理",
+          "1",
+          "页码",
+          "预警详情与处理记录 预警编号 3 预警类型 疑似欺诈 风险等级 低风险 当前状态 待处理 预警描述 缴费记录与收入数据比对存在异常，需进一步核实 触发时间 2026-06-03 08:00:00 处理时间 - 处理备注 暂无处理备注 处理记录追踪 暂无处理记录 关 闭 去处理",
+          "Close",
+          "关 闭",
+          "去处理"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2016,
+    "height": 1600,
+    "scrollWidth": 1984,
+    "scrollHeight": 2122
+  },
+  "initialBodyTextPreview": "社保服务平台\n首页\n家庭共济账户\n待遇发放中心\n政策计算器\n管理中心\n稽核规则\n数据共享\n首页\n管理员\n欢迎回来，张三\n\n430101199001011234\n\n实名认证已通过\n湖南省\n参保险种\n2个\n累计缴费月数\nNaN月\n个人账户总额\n¥32,000.00\n待缴费订单\n5笔\n您有 2 条异常预警待处理\n立即处理\n待缴费订单（三端追踪）\n查看全部\n👴\n城乡居民养老保险\n2026年度 · 第300档\n¥500\n待支付\n三端状态（支付后自动同步）\n订单创建\n税务开票\n财政入库\n医保入账\n创建时间: 2026-06-07 14:31:14\n立即缴费\n👴\n城乡居民养老保险\n2026年度 · 第300档\n¥500\n待支付\n三端状态（支付后自动同步）\n订单创建\n税务开票\n财政入库\n医保入账\n创建时间: 2026-06-07 14:31:07\n立即缴费\n👴\n城乡居民养老保险\n2026年度 · 第300档\n¥500\n待支付\n三端状态（支付后自动同步）\n订单创建\n税务开票\n财政入库\n医保入账\n创建时间: 2026-06-07 14:30:26\n立即缴费\n最近缴费订单（三端追踪）\n查看全部\n👴 城乡居民养老保险\n2026年度 · 第200档\nORD202606010003\n-¥2,400\n已支付\n三端进度:\n4/4 步\n税务\n财政\n医保\n支付时间: 2026-06-01 14:20:00\n🏥 城乡居民医疗保险\n2026年度 · 第320档\nORD202601010002\n-¥3,840\n已支付\n三端进度:\n4/4 步\n税务\n财政\n医保\n支付时间: 2026-01-10 09:35:00\n👴 城乡居民养老保险\n2026年度 · 第200档\nORD202601010001\n-¥2,400\n已支付\n三端进度:\n4/4 步\n税务\n财政\n医保\n支付时间: 2026-01-10 09:30:00\n我的参保状态\n管理参保\n👴\n城乡居民养老保险\n已参保\n缴费档次\n第200档\n已缴月数\n/180月\n0%\n个人账户\n¥24,000\n🏥\n城乡居民医疗保险\n已参保\n缴费档次\n第320档\n已缴月数\n/180月\n0%\n个人账户\n¥8,000\n服务入口\n参保查询\n参保状态、缴费记录、待遇信息\n缴费中心\n多渠道缴费、订单查询、票据下载\n家庭共济\n亲属绑定、额度共享、使用记录\n待遇发放\n养老金、医保待遇、发放明细\n政策计算器\n养老金预估、缴费档次测算\n政策公告\n最新政策、办事指南、常见问题\n政策公告\n查看更多\n最新\n关于2025年度城乡居民医疗保险缴费标准调整的通知\n2025-01-15\n政策\n湖南省灵活就业人员社保补贴政策解读\n2025-01-10\n指南\n家庭共济账户使用指南及常见问题解答\n2025-01-05\n政策\n养老金计算方法及退休待遇发放说明\n2024-12-28",
+  "bodyTextPreview": "社保服务平台\n首页\n家庭共济账户\n待遇发放中心\n政策计算器\n管理中心\n稽核规则\n数据共享\n首页\n管理员\n欢迎回来，张三\n\n430101199001011234\n\n实名认证已通过\n湖南省\n参保险种\n2个\n累计缴费月数\nNaN月\n个人账户总额\n¥32,000.00\n待缴费订单\n5笔\n您有 2 条异常预警待处理\n立即处理\n待缴费订单（三端追踪）\n查看全部\n👴\n城乡居民养老保险\n2026年度 · 第300档\n¥500\n待支付\n三端状态（支付后自动同步）\n订单创建\n税务开票\n财政入库\n医保入账\n创建时间: 2026-06-07 14:31:14\n立即缴费\n👴\n城乡居民养老保险\n2026年度 · 第300档\n¥500\n待支付\n三端状态（支付后自动同步）\n订单创建\n税务开票\n财政入库\n医保入账\n创建时间: 2026-06-07 14:31:07\n立即缴费\n👴\n城乡居民养老保险\n2026年度 · 第300档\n¥500\n待支付\n三端状态（支付后自动同步）\n订单创建\n税务开票\n财政入库\n医保入账\n创建时间: 2026-06-07 14:30:26\n立即缴费\n最近缴费订单（三端追踪）\n查看全部\n👴 城乡居民养老保险\n2026年度 · 第200档\nORD202606010003\n-¥2,400\n已支付\n三端进度:\n4/4 步\n税务\n财政\n医保\n支付时间: 2026-06-01 14:20:00\n🏥 城乡居民医疗保险\n2026年度 · 第320档\nORD202601010002\n-¥3,840\n已支付\n三端进度:\n4/4 步\n税务\n财政\n医保\n支付时间: 2026-01-10 09:35:00\n👴 城乡居民养老保险\n2026年度 · 第200档\nORD202601010001\n-¥2,400\n已支付\n三端进度:\n4/4 步\n税务\n财政\n医保\n支付时间: 2026-01-10 09:30:00\n我的参保状态\n管理参保\n👴\n城乡居民养老保险\n已参保\n缴费档次\n第200档\n已缴月数\n/180月\n0%\n个人账户\n¥24,000\n🏥\n城乡居民医疗保险\n已参保\n缴费档次\n第320档\n已缴月数\n/180月\n0%\n个人账户\n¥8,000\n服务入口\n参保查询\n参保状态、缴费记录、待遇信息\n缴费中心\n多渠道缴费、订单查询、票据下载\n家庭共济\n亲属绑定、额度共享、使用记录\n待遇发放\n养老金、医保待遇、发放明细\n政策计算器\n养老金预估、缴费档次测算\n政策公告\n最新政策、办事指南、常见问题\n政策公告\n查看更多\n最新\n关于2025年度城乡居民医疗保险缴费标准调整的通知\n2025-01-15\n政策\n湖南省灵活就业人员社保补贴政策解读\n2025-01-10\n指南\n家庭共济账户使用指南及常见问题解答\n2025-01-05\n政策\n养老金计算方法及退休待遇发放说明\n2024-12-28",
+  "apiBase": "http://127.0.0.1:59079/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/family/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/family/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/family/usage-records"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/family/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/family/usage-records"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/family/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/benefit/pension"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/benefit/medical"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/benefit/pension"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/benefit/medical"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/benefit/pension-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/benefit/medical-balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/benefit/pension-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/benefit/medical-balance"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/calculator/pension-estimate"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/calculator/pension-estimate"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/insurance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/payment/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49079/api/admin/warnings"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/auth/profile",
+      "path": "/api/auth/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"idCard\":\"430101199001011234\",\"name\":\"张三\",\"phone\":\"13800138001\",\"userType\":\"resident\",\"status\":\"active\",\"createdAt\":\"2026-06-07 14:09:37\"},\"message\":\"获取用户信息成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/insurance",
+      "path": "/api/insurance",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"userId\":1,\"insuranceType\":\"pension\",\"status\":\"insured\",\"payGrade\":200,\"totalMonths\":120,\"governmentSubsidy\":3600,\"personalAccount\":24000,\"insuredAt\":\"2026-06-07 14:09:37\"},{\"id\":2,\"userId\":1,\"insuranceType\":\"medical\",\"status\":\"insured\",\"payGrade\":320,\"totalMonths\":120,\"governmentSubsidy\":2400,\"personalAccount\":8000,\"insuredAt\":\"2026-06-07 14:09:37\"}],\"total\":2,\"page\":1,\"pageSize\":10,\"totalPages\":1},\"message\":\"获取参保信息列表成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/payment/orders",
+      "path": "/api/payment/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":8,\"orderNo\":\"ORD2026060717808426746957567\",\"userId\":1,\"insuranceType\":\"pension\",\"payYear\":2026,\"payGrade\":300,\"amount\":500,\"channel\":\"alipay\",\"status\":\"pending\",\"taxInvoiceStatus\":\"pending\",\"financeStatus\":\"pending\",\"medicalCreditStatus\":\"pending\",\"paidAt\":null,\"createdAt\":\"2026-06-07 14:31:14\"},{\"id\":7,\"orderNo\":\"ORD2026060717808426675617056\",\"userId\":1,\"insuranceType\":\"pension\",\"payYear\":2026,\"payGrade\":300,\"amount\":500,\"channel\":\"alipay\",\"status\":\"pending"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/admin/warnings",
+      "path": "/api/admin/warnings",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":3,\"userId\":2,\"warningType\":\"suspected_fraud\",\"severity\":\"low\",\"description\":\"缴费记录与收入数据比对存在异常，需进一步核实\",\"status\":\"pending\",\"handlerId\":null,\"handledAt\":null,\"handleNote\":null,\"triggeredAt\":\"2026-06-03 08:00:00\"},{\"id\":2,\"userId\":1,\"warningType\":\"abnormal_amount\",\"severity\":\"medium\",\"description\":\"2026年6月缴费金额较上年度月均增长超过50%，疑似异常\",\"status\":\"processing\",\"handlerId\":null,\"handledAt\":null,\"handleNote\":null,\"triggeredAt\":\"2026-06-02 08:00:00\"},{\"id\":1,\"userId\":2,\"warni"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/family/members",
+      "path": "/api/family/members",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"userId\":1,\"relativeIdCard\":\"430101195001014321\",\"relativeName\":\"张父\",\"relationship\":\"parent\",\"authAmount\":5000,\"usedAmount\":1200,\"status\":\"active\",\"verifiedAt\":\"2025-12-01 10:00:00\",\"createdAt\":\"2026-06-07 14:09:37\"}],\"total\":1,\"page\":1,\"pageSize\":10,\"totalPages\":1},\"message\":\"获取家庭成员列表成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/family/usage-records",
+      "path": "/api/family/usage-records",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"memberName\":\"张父\",\"amount\":1200,\"usageType\":\"门诊费用\",\"hospital\":\"湖南省人民医院\",\"date\":\"2025-12-01 10:00:00\"}],\"message\":\"获取共济使用记录成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/benefit/pension",
+      "path": "/api/benefit/pension",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":6,\"userId\":1,\"payMonth\":\"2026-06\",\"amount\":3200,\"bankName\":\"中国工商银行\",\"bankAccount\":\"6222021234567890123\",\"status\":\"paid\",\"paidAt\":\"2026-06-15 10:00:00\"},{\"id\":5,\"userId\":1,\"payMonth\":\"2026-05\",\"amount\":3100,\"bankName\":\"中国工商银行\",\"bankAccount\":\"6222021234567890123\",\"status\":\"paid\",\"paidAt\":\"2026-05-15 10:00:00\"},{\"id\":4,\"userId\":1,\"payMonth\":\"2026-04\",\"amount\":2980,\"bankName\":\"中国工商银行\",\"bankAccount\":\"6222021234567890123\",\"status\":\"paid\",\"paidAt\":\"2026-04-15 10:0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/benefit/medical",
+      "path": "/api/benefit/medical",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":2000,\"insuranceType\":\"medical\",\"payMonth\":\"2026-06\",\"amount\":12.8,\"status\":\"credited\",\"creditedAt\":\"2026-06-12T11:09:37.000Z\"}],\"total\":1,\"page\":1,\"pageSize\":10,\"totalPages\":1},\"message\":\"获取医保个人账户划拨列表成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/benefit/pension-stats",
+      "path": "/api/benefit/pension-stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"totalAmount\":18100,\"currentMonthAmount\":3200,\"averageAmount\":3016.67},\"message\":\"获取养老金统计成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/benefit/medical-balance",
+      "path": "/api/benefit/medical-balance",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"balance\":8000,\"lastUpdate\":\"2026-06-08T00:12:25.634Z\"},\"message\":\"获取医保个人账户余额成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"idCard\":\"430101199001011234\",\"name\":\"张三\",\"phone\":\"13800138001\",\"userType\":\"resident\",\"status\":\"active\",\"createdAt\":\"2026-06-07 14:09:37\"},\"message\":\"获取用户信息成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"idCard\":\"430101199001011234\",\"name\":\"张三\",\"phone\":\"13800138001\",\"userType\":\"resident\",\"status\":\"active\",\"createdAt\":\"2026-06-07 14:09:37\"},\"message\":\"获取用户信息成功\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59079/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"idCard\":\"430101199001011234\",\"name\":\"张三\",\"phone\":\"13800138001\",\"userType\":\"resident\",\"status\":\"active\",\"createdAt\":\"2026-06-07 14:09:37\"},\"message\":\"获取用户信息成功\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=88e1e242",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/antd.js?v=88e1e242",
+        "lineNumber": 947,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=88e1e242",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=88e1e242",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/antd.js?v=88e1e242",
+        "lineNumber": 947,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/antd.js?v=88e1e242",
+        "lineNumber": 947,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=88e1e242",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/antd.js?v=88e1e242",
+        "lineNumber": 947,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: InputNumber] `addonAfter` is deprecated. Please use `Space.Compact` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/antd.js?v=88e1e242",
+        "lineNumber": 947,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49079/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49079/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=88e1e242",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

@@ -22,12 +22,15 @@
     "noFallthroughCasesInSwitch": false,
     "noUncheckedSideEffectImports": false,
     "forceConsistentCasingInFileNames": false,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
+      "@/*": ["src/*"],
+      "@shared/*": ["shared/*"]
+    },
+    "types": [
+      "node",
+      "express"
+    ]
   },
   "include": [
     "src",
