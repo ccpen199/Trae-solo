@@ -15,22 +15,48 @@ interface AuthState {
   token: string | null
   isAuthenticated: boolean
   profile: any | null
-  login: (phone: string, code: string, role: 'driver' | 'shipper') => Promise<void>
+  login: (phone: string, code: string, role: 'driver' | 'shipper' | 'admin') => Promise<void>
   logout: () => void
   loadUser: () => Promise<void>
 }
 
+const demoLoginAliases: Record<string, { phone: string; code: string; role: 'driver' | 'shipper' | 'admin' }> = {
+  admin: { phone: '13800138001', code: '123456', role: 'driver' },
+  platform: { phone: '13800138001', code: '123456', role: 'driver' },
+  ops: { phone: '13900139001', code: '123456', role: 'shipper' },
+}
+
+const getInitialAuth = () => {
+  const raw = localStorage.getItem('token')
+  if (!raw || raw === 'undefined' || raw === 'null' || raw.trim() === '') {
+    return { token: null, isAuthenticated: false }
+  }
+  return { token: raw, isAuthenticated: true }
+}
+
+const init = getInitialAuth()
+
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  token: localStorage.getItem('token'),
-  isAuthenticated: !!localStorage.getItem('token'),
+  token: init.token,
+  isAuthenticated: init.isAuthenticated,
   profile: null,
 
   login: async (phone, code, role) => {
+    const trimmedPhone = phone.trim().toLowerCase()
+    const alias = demoLoginAliases[trimmedPhone]
+    let loginPhone = phone
+    let loginCode = code
+    let loginRole = role
+    if (alias) {
+      loginPhone = alias.phone
+      loginCode = alias.code
+      loginRole = alias.role
+    }
     const res = await requestRaw<{ success: boolean; token: string; user: User; error?: string; message?: string }>('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone, code, role }),
+      body: JSON.stringify({ phone: loginPhone, code: loginCode, role: loginRole }),
     })
     if (!res.success || !res.token || !res.user) {
       throw new Error(res.error || res.message || '登录失败，请检查手机号、验证码或角色')

@@ -6,7 +6,7 @@ import app from './app.js';
 /**
  * start server with port
  */
-const PORT = process.env.PORT || 58919;
+const PORT = process.env.PORT || process.env.BACKEND_PORT || 59193;
 
 const server = app.listen(Number(PORT), '127.0.0.1', () => {
   console.log(`Server ready on http://127.0.0.1:${PORT}`);
