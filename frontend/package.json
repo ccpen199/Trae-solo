@@ -1,17 +1,14 @@
 {
-  "name": "may-89203",
+  "name": "may-89203-frontend",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "client:dev": "cd frontend && vite --host 127.0.0.1 --port 49203 --strictPort",
-    "server:dev": "cd api && node server.js",
-    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
-    "install:all": "npm install && cd frontend && npm install && cd ../api && npm install",
-    "build": "cd frontend && tsc -b && vite build",
-    "lint": "cd frontend && eslint .",
-    "preview": "cd frontend && vite preview --host 127.0.0.1 --port 49203",
-    "check": "cd frontend && tsc -b --noEmit"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "check": "tsc -b --noEmit"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -20,8 +17,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.3.0",
     "tailwind-merge": "^3.0.2",
-    "zustand": "^5.0.3",
-    "concurrently": "^9.2.0"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

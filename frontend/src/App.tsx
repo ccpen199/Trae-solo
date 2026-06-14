@@ -17,6 +17,7 @@ export default function App() {
           <Route path="/inspiration" element={<Inspiration />} />
           <Route path="/design" element={<Design />} />
           <Route path="/construction" element={<Construction />} />
+          <Route path="/construction/detail" element={<Construction />} />
           <Route path="/materials" element={<Materials />} />
           <Route path="/inspection" element={<Inspection />} />
           <Route path="/blockchain" element={<Blockchain />} />

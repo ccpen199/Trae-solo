@@ -137,7 +137,7 @@ export default function Home() {
                 key={label}
                 onClick={() => {
                   if (label.includes('筛选')) navigate('/inspiration')
-                  else if (label === '施工详情') navigate('/construction')
+                  else if (label === '施工详情') navigate('/construction/detail')
                   else navigate('/blockchain')
                 }}
                 className="btn-secondary text-sm"
@@ -232,7 +232,7 @@ export default function Home() {
         <div className="lg:col-span-3 card p-5">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="font-semibold text-surface-900 dark:text-white">项目进度概览</h3>
-            <Link to="/construction" className="text-sm text-brand-600 hover:text-brand-700 dark:text-brand-400 flex items-center gap-1">
+            <Link to="/construction/detail" className="text-sm text-brand-600 hover:text-brand-700 dark:text-brand-400 flex items-center gap-1">
               查看详情 <ChevronRight size={14} />
             </Link>
           </div>

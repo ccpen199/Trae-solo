@@ -2,9 +2,31 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from "vite-tsconfig-paths";
 import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
-import dotenv from 'dotenv';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
-dotenv.config();
+try {
+  const envPath = resolve(process.cwd(), '..', '.env');
+  const env = readFileSync(envPath, 'utf8');
+  for (const line of env.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
+    const [key, ...rest] = trimmed.split('=');
+    if (!process.env[key]) process.env[key] = rest.join('=');
+  }
+} catch {
+  try {
+    const env = readFileSync('.env', 'utf8');
+    for (const line of env.split(/\r?\n/)) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
+      const [key, ...rest] = trimmed.split('=');
+      if (!process.env[key]) process.env[key] = rest.join('=');
+    }
+  } catch {
+    // .env is optional for local starts.
+  }
+}
 
 const FRONTEND_HOST = process.env.FRONTEND_HOST || process.env.HOST || '127.0.0.1';
 const FRONTEND_PORT = Number(process.env.FRONTEND_PORT || process.env.APP_PORT || 49203);
