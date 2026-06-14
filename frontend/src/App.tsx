@@ -2,64 +2,60 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
 import Login from './pages/Login';
-import CourierWorkbench from './pages/CourierWorkbench';
-import CourierPackages from './pages/CourierPackages';
-import Performance from './pages/Performance';
-import BranchManager from './pages/BranchManager';
-import BranchTasks from './pages/BranchTasks';
-import BranchSettlements from './pages/BranchSettlements';
-import BranchAlerts from './pages/BranchAlerts';
-import LockerStations from './pages/LockerStations';
-import CustomerGroups from './pages/CustomerGroups';
-import ShopOrders from './pages/ShopOrders';
-import AdminPanel from './pages/AdminPanel';
-import AdminBranches from './pages/AdminBranches';
-import AdminSettlements from './pages/AdminSettlements';
-import AdminAlerts from './pages/AdminAlerts';
-import AdminAuditLogs from './pages/AdminAuditLogs';
-import { ReactNode } from 'react';
+import Register from './pages/Register';
+import TaskHall from './pages/TaskHall';
+import TaskDetail from './pages/TaskDetail';
+import PublishTask from './pages/PublishTask';
+import TalentPool from './pages/TalentPool';
+import ProviderDetail from './pages/ProviderDetail';
+import Workspace from './pages/Workspace';
+import Admin from './pages/Admin';
 
-function PrivateRoute({ children, roles }: { children: ReactNode; roles?: string[] }) {
+function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-gray-400">加载中...</div>;
-  if (!user) return <Navigate to="/login" replace />;
-  if (roles && !roles.includes(user.role)) return <Navigate to="/" replace />;
-  return <>{children}</>;
+  if (loading) return <div className="flex items-center justify-center h-screen">加载中...</div>;
+  return user ? <>{children}</> : <Navigate to="/login" />;
 }
 
-function HomeRedirect() {
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
-  const map: Record<string, string> = { admin: '/admin', platform: '/branch', ops: '/courier' };
-  return <Navigate to={map[user.role] || '/login'} replace />;
+function AdminRoute({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+  if (loading) return <div className="flex items-center justify-center h-screen">加载中...</div>;
+  if (!user) return <Navigate to="/login" />;
+  if (user.role !== 'admin') return <Navigate to="/" />;
+  return <>{children}</>;
 }
 
 export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<HomeRedirect />} />
-      <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
-        <Route path="/courier" element={<PrivateRoute roles={['ops']}><CourierWorkbench /></PrivateRoute>} />
-        <Route path="/courier/packages" element={<PrivateRoute roles={['ops']}><CourierPackages /></PrivateRoute>} />
-        <Route path="/courier/performance" element={<PrivateRoute roles={['ops']}><Performance userId="me" /></PrivateRoute>} />
-        <Route path="/branch" element={<PrivateRoute roles={['platform']}><BranchManager /></PrivateRoute>} />
-        <Route path="/branch/tasks" element={<PrivateRoute roles={['platform']}><BranchTasks /></PrivateRoute>} />
-        <Route path="/branch/locker-stations" element={<PrivateRoute roles={['platform']}><LockerStations /></PrivateRoute>} />
-        <Route path="/branch/settlements" element={<PrivateRoute roles={['platform']}><BranchSettlements /></PrivateRoute>} />
-        <Route path="/branch/customer-groups" element={<PrivateRoute roles={['platform']}><CustomerGroups /></PrivateRoute>} />
-        <Route path="/branch/shop-orders" element={<PrivateRoute roles={['platform']}><ShopOrders /></PrivateRoute>} />
-        <Route path="/branch/alerts" element={<PrivateRoute roles={['platform']}><BranchAlerts /></PrivateRoute>} />
-        <Route path="/admin" element={<PrivateRoute roles={['admin']}><AdminPanel /></PrivateRoute>} />
-        <Route path="/admin/branches" element={<PrivateRoute roles={['admin']}><AdminBranches /></PrivateRoute>} />
-        <Route path="/admin/locker-stations" element={<PrivateRoute roles={['admin']}><LockerStations /></PrivateRoute>} />
-        <Route path="/admin/settlements" element={<PrivateRoute roles={['admin']}><AdminSettlements /></PrivateRoute>} />
-        <Route path="/admin/performance" element={<PrivateRoute roles={['admin']}><Performance /></PrivateRoute>} />
-        <Route path="/admin/customer-groups" element={<PrivateRoute roles={['admin']}><CustomerGroups /></PrivateRoute>} />
-        <Route path="/admin/shop-orders" element={<PrivateRoute roles={['admin']}><ShopOrders /></PrivateRoute>} />
-        <Route path="/admin/alerts" element={<PrivateRoute roles={['admin']}><AdminAlerts /></PrivateRoute>} />
-        <Route path="/admin/audit-logs" element={<PrivateRoute roles={['admin']}><AdminAuditLogs /></PrivateRoute>} />
-      </Route>
+      <Route path="/register" element={<Register />} />
+      <Route
+        path="/*"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Navigate to="/tasks" />} />
+                <Route path="/tasks" element={<TaskHall />} />
+                <Route path="/tasks/:id" element={<TaskDetail />} />
+                <Route path="/publish" element={<PublishTask />} />
+                <Route path="/talents" element={<TalentPool />} />
+                <Route path="/providers/:id" element={<ProviderDetail />} />
+                <Route path="/workspace" element={<Workspace />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <AdminRoute>
+                      <Admin />
+                    </AdminRoute>
+                  }
+                />
+              </Routes>
+            </Layout>
+          </PrivateRoute>
+        }
+      />
     </Routes>
   );
 }

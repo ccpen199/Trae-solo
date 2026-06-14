@@ -4,7 +4,6 @@ import { config } from './config';
 import { getDb, initTables } from './database';
 import { loggerMiddleware } from './middleware/logger';
 import routes from './routes';
-import './utils/seed';
 
 const app = express();
 
@@ -31,6 +30,11 @@ function start() {
   const db = getDb();
   initTables();
   console.log('数据库表初始化完成');
+
+  const userCount = (db.prepare('SELECT COUNT(*) as count FROM users').get() as any).count;
+  if (userCount === 0) {
+    console.log('检测到空数据库，请运行 npm run seed 初始化种子数据');
+  }
 
   app.listen(config.port, config.host, () => {
     console.log(`快递末端作业平台服务已启动: http://${config.host}:${config.port}`);

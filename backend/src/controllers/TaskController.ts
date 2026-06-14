@@ -9,14 +9,7 @@ export class TaskController {
     const { branch_id, courier_id, type, status, page, pageSize } = req.query;
     const filter: any = {};
     if (branch_id) filter.branch_id = Number(branch_id);
-    if (courier_id) {
-      if (courier_id === 'me') {
-        const user = (req as any).user;
-        if (user) filter.courier_id = user.userId;
-      } else {
-        filter.courier_id = Number(courier_id);
-      }
-    }
+    if (courier_id) filter.courier_id = Number(courier_id);
     if (type) filter.type = String(type);
     if (status) filter.status = String(status);
     const result = taskService.list(filter, Number(page) || 1, Number(pageSize) || 20);

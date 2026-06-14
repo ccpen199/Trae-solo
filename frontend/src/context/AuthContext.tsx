@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import api from '../services/api';
-import { User, LoginResult } from '../types';
+import { User, EmployerProfile, ProviderProfile, LoginResult } from '../types';
 
 interface AuthContextType {
   user: User | null;
+  provider: ProviderProfile | null;
+  employer: EmployerProfile | null;
   loading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (phone: string, password: string) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }
@@ -14,6 +16,8 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [provider, setProvider] = useState<ProviderProfile | null>(null);
+  const [employer, setEmployer] = useState<EmployerProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
   const refreshUser = async () => {
@@ -23,11 +27,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
     try {
-      const res = await api.get<any, { data: User }>('/auth/me');
-      setUser(res.data);
+      const res = await api.get<any, { data: LoginResult }>('/auth/me');
+      setUser(res.data.user);
+      setProvider(res.data.provider || null);
+      setEmployer(res.data.employer || null);
     } catch {
       localStorage.removeItem('token');
       setUser(null);
+      setProvider(null);
+      setEmployer(null);
     } finally {
       setLoading(false);
     }
@@ -37,19 +45,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refreshUser();
   }, []);
 
-  const login = async (username: string, password: string) => {
-    const res = await api.post<any, { data: LoginResult }>('/auth/login', { username, password });
+  const login = async (phone: string, password: string) => {
+    const res = await api.post<any, { data: LoginResult }>('/auth/login', { phone, password });
     localStorage.setItem('token', res.data.token);
     setUser(res.data.user);
+    setProvider(res.data.provider || null);
+    setEmployer(res.data.employer || null);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
+    setProvider(null);
+    setEmployer(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, refreshUser }}>
+    <AuthContext.Provider value={{ user, provider, employer, loading, login, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );

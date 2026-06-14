@@ -104,30 +104,6 @@ export interface AuditLog {
   created_at: string;
 }
 
-export interface LockerStation {
-  id: number; name: string; code: string; type: string; address: string;
-  total_slots: number; used_slots: number; branch_id: number; status: string; created_at: string;
-}
-
-export interface CustomerGroup {
-  id: number; name: string; type: string; customer_count: number;
-  total_orders: number; avg_fee: number; branch_id: number; tags: string; created_at: string;
-}
-
-export interface PerformanceRecord {
-  id: number; user_id: number; period: string; total_tasks: number;
-  completed_tasks: number; failed_tasks: number; on_time_rate: number;
-  customer_score: number; total_fee: number; bonus: number; deduction: number;
-  branch_id: number; created_at: string;
-}
-
-export interface ShopOrder {
-  id: number; order_no: string; customer_name: string; customer_phone: string;
-  product_name: string; quantity: number; amount: number; status: string;
-  tracking_no: string | null; branch_id: number; courier_id: number | null;
-  source: string; created_at: string; updated_at: string;
-}
-
 export const ROLE_MAP: Record<string, string> = {
   admin: '系统管理员',
   platform: '网点管理员',
@@ -169,11 +145,6 @@ export const ALERT_LEVEL_MAP: Record<string, string> = {
   warning: '警告',
   critical: '严重',
 };
-
-export const STATION_TYPE_MAP: Record<string, string> = { locker: '智能柜', station: '驿站', cabinet: '柜机' };
-export const CUSTOMER_TYPE_MAP: Record<string, string> = { vip: 'VIP客户', normal: '普通客户', enterprise: '企业客户' };
-export const SHOP_ORDER_STATUS_MAP: Record<string, string> = { pending: '待处理', processing: '处理中', shipped: '已发货', completed: '已完成', cancelled: '已取消' };
-export const SHOP_SOURCE_MAP: Record<string, string> = { wechat: '微信', douyin: '抖音', taobao: '淘宝', other: '其他' };
 
 export interface ApiResponse<T = any> {
   code: number;
