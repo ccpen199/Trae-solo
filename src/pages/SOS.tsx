@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import type { Alert, WorkOrder } from "@/types"
 import { useAppStore } from "@/store"
 import { formatTime, formatDuration, getSeverityClass, getAlertTypeLabel } from "@/utils/format"
@@ -28,7 +28,7 @@ const deadlineRemain = (createdAt: string) => {
   const rem = new Date(createdAt).getTime() + 30 * 60000 - Date.now()
   if (rem <= 0) return { text: "已超时", color: "text-red-400" }
   const pct = 1 - rem / (30 * 60000)
-  return { text: `剩余${Math.floor(rem / 60000)}分`, color: pct > 0.83 ? "text-red-400" : pct > 0.5 ? "text-orange-400" : "text-guardian-green" }
+  return { text: `剩余${Math.floor(rem / 60000)}分${Math.floor((rem % 60000) / 1000)}秒`, color: pct > 0.83 ? "text-red-400" : pct > 0.5 ? "text-orange-400" : "text-guardian-green" }
 }
 
 export default function SOS() {
@@ -40,20 +40,16 @@ export default function SOS() {
   const [workOrders, setWorkOrders] = useState<Record<string, WorkOrder>>({})
   const [woNote, setWoNote] = useState("")
   const [tick, setTick] = useState(0)
-  const autoCreated = useRef(new Set<string>())
 
   useEffect(() => { fetchAlerts(); fetchDevices() }, [])
   useEffect(() => { const id = setInterval(() => setTick(t => t + 1), 1000); return () => clearInterval(id) }, [])
-  useEffect(() => {
-    alerts.filter(a => isCritical(a) && !autoCreated.current.has(a.id)).forEach(a => {
-      autoCreated.current.add(a.id)
-      createWorkOrder(a.id, "系统自动分派")
-      setWorkOrders(prev => ({ ...prev, [a.id]: { id: `WO-${a.id.slice(0, 8)}`, alertId: a.id, assignee: "系统自动分派", status: "open", notes: [], createdAt: a.timestamp } }))
-    })
-  }, [alerts])
 
   const filtered = alerts.filter(a => (typeFilter === "all" || a.type === typeFilter) && (statusFilter === "all" || a.status === statusFilter))
-  const stats = { pending: filtered.filter(a => a.status === "pending").length, acknowledged: filtered.filter(a => a.status === "acknowledged").length, resolved: filtered.filter(a => a.status === "resolved").length }
+  const stats = {
+    pending: filtered.filter(a => a.status === "pending").length,
+    acknowledged: filtered.filter(a => a.status === "acknowledged").length,
+    resolved: filtered.filter(a => a.status === "resolved").length,
+  }
   const devName = (id: string) => devices.find(d => d.id === id)?.name ?? "未知设备"
   const devOf = (id: string) => devices.find(d => d.id === id)
   const isCritical = (a: Alert) => a.severity === "critical" || a.type === "sos"
@@ -63,22 +59,6 @@ export default function SOS() {
   const lineColor = (s: string) => s === "responded" ? "bg-guardian-green" : s === "notified" ? "bg-guardian-blue" : "bg-gray-600"
   const needsEscalation = (n: { status: string; notifiedAt?: string; role: string }) =>
     n.status !== "responded" && !!n.notifiedAt && (Date.now() - new Date(n.notifiedAt).getTime()) / 60000 >= 5 && n.role === "guardian"
-
-  const chainLine = (chain: Alert["notificationChain"]) =>
-    chain.map(n => {
-      const r = ROLE_LABELS[n.role] || n.role
-      const s = n.status === "responded" ? `已响应(${respDur(n.notifiedAt, n.respondedAt) ?? "?"})` : n.status === "notified" ? `已通知(等待${elapsed(n.notifiedAt) ?? "?"})` : "待通知"
-      return `${r}·${s}`
-    }).join(" → ")
-
-  const reviewOf = (aid: string, aStatus: string) => {
-    if (aStatus === "resolved" || aStatus === "closed") return { label: "复查:已通过", color: "text-guardian-green" }
-    const wo = workOrders[aid]
-    if (!wo) return { label: "复查:未完成", color: "text-orange-400" }
-    if (wo.notes.some(n => n.content === "复查通过")) return { label: "复查:已通过", color: "text-guardian-green" }
-    if (wo.notes.some(n => n.content === "复查待定")) return { label: "复查:待定", color: "text-yellow-400" }
-    return { label: "复查:未完成", color: "text-orange-400" }
-  }
 
   const handleCreateWO = async () => {
     if (!selected || !assignee.trim()) return
@@ -93,6 +73,7 @@ export default function SOS() {
   }
 
   void tick
+
   const sevLabel = (s: string) => s === "critical" ? "紧急" : s === "high" ? "高" : s === "medium" ? "中" : "低"
   const statusLabel = (s: string) => s === "pending" ? "待处理" : s === "acknowledged" ? "已响应" : "已解决"
 
@@ -126,45 +107,32 @@ export default function SOS() {
         <div className="flex-1 relative pl-8">
           <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-guardian-dark-600" />
           <div className="space-y-3">
-            {filtered.map((alert, i) => {
-              const rv = reviewOf(alert.id, alert.status)
-              const dl = deadlineRemain(alert.timestamp)
-              const wo = workOrders[alert.id]
-              const esc = alert.notificationChain.find(n => needsEscalation(n))
-              return (
-                <div key={alert.id} onClick={() => setSelected(alert)}
-                  className={`relative animate-slide-in-right cursor-pointer rounded-xl p-4 transition-all ${selected?.id === alert.id ? "bg-guardian-dark-700 ring-1 ring-guardian-blue/40" : "bg-guardian-dark-800 hover:bg-guardian-dark-700"} ${isCritical(alert) ? "border-l-4 border-l-guardian-red shadow-sm shadow-red-500/10" : "border-l-4 border-l-transparent"}`}
-                  style={{ animationDelay: `${i * 50}ms` }}>
-                  <div className="absolute -left-[22px] top-5 w-3 h-3 rounded-full bg-guardian-dark-800 ring-2 ring-guardian-dark-600" />
-                  {isCritical(alert) && <span className="absolute -left-[24px] top-4 w-4 h-4 rounded-full bg-guardian-red animate-ping-slow opacity-40" />}
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`px-2 py-0.5 rounded text-xs font-semibold ${getSeverityClass(alert.severity)}`}>{sevLabel(alert.severity)}</span>
-                      <span className="text-sm font-medium text-guardian-blue">{getAlertTypeLabel(alert.type)}</span>
-                      <span className="text-sm text-gray-400">{devName(alert.deviceId)}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 shrink-0">{statusDot(alert.status)}<span className="text-xs text-gray-500">{statusLabel(alert.status)}</span></div>
+            {filtered.map((alert, i) => (
+              <div key={alert.id} onClick={() => setSelected(alert)}
+                className={`relative animate-slide-in-right cursor-pointer rounded-xl p-4 transition-all ${selected?.id === alert.id ? "bg-guardian-dark-700 ring-1 ring-guardian-blue/40" : "bg-guardian-dark-800 hover:bg-guardian-dark-700"} ${isCritical(alert) ? "border-l-4 border-l-guardian-red shadow-sm shadow-red-500/10" : "border-l-4 border-l-transparent"}`}
+                style={{ animationDelay: `${i * 50}ms` }}>
+                <div className="absolute -left-[22px] top-5 w-3 h-3 rounded-full bg-guardian-dark-800 ring-2 ring-guardian-dark-600" />
+                {isCritical(alert) && <span className="absolute -left-[24px] top-4 w-4 h-4 rounded-full bg-guardian-red animate-ping-slow opacity-40" />}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${getSeverityClass(alert.severity)}`}>{sevLabel(alert.severity)}</span>
+                    <span className="text-sm font-medium text-guardian-blue">{getAlertTypeLabel(alert.type)}</span>
+                    <span className="text-sm text-gray-400">{devName(alert.deviceId)}</span>
                   </div>
-                  <p className="mt-2 text-sm text-gray-300 line-clamp-2">{alert.description}</p>
-                  <div className="mt-1.5 text-[11px] text-gray-400 leading-relaxed">{chainLine(alert.notificationChain)}</div>
-                  {esc && <div className="mt-1 flex items-center gap-1 text-[11px] text-yellow-400"><AlertTriangle className="w-3 h-3" />{ROLE_LABELS[esc.role]}未响应,已升级至亲属</div>}
-                  <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px]">
-                    {wo ? <span className="text-gray-300">工单:{wo.id} · {wo.assignee} · {WO_STEPS[WO_STEP_MAP[wo.status] ?? 0]}</span> : <span className="text-gray-600">未创建工单</span>}
-                    <span className={dl.color}>时限:{dl.text}</span>
-                    <span className={rv.color}>{rv.label}</span>
-                  </div>
-                  <div className="mt-2 flex items-center justify-between">
-                    <span className="text-xs text-gray-500">{formatTime(alert.timestamp)}</span>
-                    {alert.status === "pending" && (
-                      <div className="flex gap-2">
-                        <button onClick={e => { e.stopPropagation(); acknowledgeAlert(alert.id) }} className="px-2.5 py-1 rounded text-xs bg-guardian-blue/20 text-guardian-blue hover:bg-guardian-blue/30 transition-colors">响应</button>
-                        <button onClick={e => { e.stopPropagation(); resolveAlert(alert.id) }} className="px-2.5 py-1 rounded text-xs bg-guardian-green/20 text-guardian-green hover:bg-guardian-green/30 transition-colors">解决</button>
-                      </div>
-                    )}
-                  </div>
+                  <div className="flex items-center gap-1.5 shrink-0">{statusDot(alert.status)}<span className="text-xs text-gray-500">{statusLabel(alert.status)}</span></div>
                 </div>
-              )
-            })}
+                <p className="mt-2 text-sm text-gray-300 line-clamp-2">{alert.description}</p>
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="text-xs text-gray-500">{formatTime(alert.timestamp)}</span>
+                  {alert.status === "pending" && (
+                    <div className="flex gap-2">
+                      <button onClick={e => { e.stopPropagation(); acknowledgeAlert(alert.id) }} className="px-2.5 py-1 rounded text-xs bg-guardian-blue/20 text-guardian-blue hover:bg-guardian-blue/30 transition-colors">响应</button>
+                      <button onClick={e => { e.stopPropagation(); resolveAlert(alert.id) }} className="px-2.5 py-1 rounded text-xs bg-guardian-green/20 text-guardian-green hover:bg-guardian-green/30 transition-colors">解决</button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
             {filtered.length === 0 && <div className="text-center py-12 text-gray-500">暂无告警记录</div>}
           </div>
         </div>
@@ -228,26 +196,6 @@ export default function SOS() {
               </div>
             </div>
 
-            <div className="card space-y-2">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2"><ShieldAlert className="w-4 h-4 text-guardian-red" />升级闭环</h3>
-              {selected.notificationChain.map((node, i) => {
-                const nc = node.status === "responded" ? "text-guardian-green" : node.status === "notified" ? "text-guardian-blue" : "text-gray-500"
-                const nb = node.status === "responded" ? "border-guardian-green/30 bg-green-500/5" : node.status === "notified" ? "border-guardian-blue/30 bg-blue-500/5" : "border-gray-600/30 bg-gray-500/5"
-                const st = node.status === "responded" ? `已响应 · ${respDur(node.notifiedAt, node.respondedAt) ?? "?"}` : node.status === "notified" ? `已通知 · 等待${elapsed(node.notifiedAt) ?? ""}` : "待通知"
-                return <div key={i}>
-                  <div className={`flex items-center gap-3 px-3 py-2 rounded-lg border ${nb}`}>
-                    <span className={`text-xs font-bold ${nc}`}>L{i + 1}</span>
-                    <div className="flex-1 min-w-0"><div className="text-sm text-white font-medium">{ROLE_LABELS[node.role]}({node.name})</div><div className={`text-xs ${nc}`}>{st}</div></div>
-                    {node.status === "responded" ? <CheckCircle2 className="w-4 h-4 text-guardian-green" /> : <Clock className="w-4 h-4 text-gray-500" />}
-                  </div>
-                  {i < selected.notificationChain.length - 1 && <div className="flex justify-center py-0.5"><span className="text-gray-600 text-[10px]">▼</span></div>}
-                </div>
-              })}
-              {selected.notificationChain.every(n => n.status === "responded")
-                ? <div className="text-xs text-guardian-green font-medium text-center">闭环完成 ✓</div>
-                : <div className="text-xs text-orange-400 text-center">闭环未完成 - {(() => { const p = selected.notificationChain.find(n => n.status !== "responded"); return p ? `${ROLE_LABELS[p.role]}未响应` : "未知" })()}</div>}
-            </div>
-
             <div className="card space-y-3">
               <h3 className="text-sm font-bold text-white flex items-center gap-2"><FileText className="w-4 h-4 text-guardian-blue" />工单信息</h3>
               {workOrders[selected.id] ? (() => {
@@ -295,21 +243,6 @@ export default function SOS() {
                 </div>
               )}
             </div>
-
-            {(() => {
-              const rv = reviewOf(selected.id, selected.status)
-              const wo = workOrders[selected.id]
-              const isRes = selected.status === "resolved" || selected.status === "closed"
-              return <div className="card space-y-3">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2"><CheckSquare className="w-4 h-4 text-guardian-green" />复查结论</h3>
-                {isRes
-                  ? <div className={`text-sm ${rv.color}`}>复查通过 · 复查人:系统 · 复查时间:{new Date().toLocaleDateString("zh-CN")}</div>
-                  : selected.status === "acknowledged"
-                    ? <div className={`text-sm ${rv.color}`}>复查待定 · 等待最终确认</div>
-                    : <div className={`text-sm ${rv.color}`}>未复查</div>}
-                {wo && <button onClick={() => pushNote("复查通过")} className="w-full px-2 py-1.5 rounded-lg bg-guardian-green/10 text-guardian-green text-xs hover:bg-guardian-green/20 flex items-center justify-center gap-1"><CheckSquare className="w-3.5 h-3.5" />添加复查</button>}
-              </div>
-            })()}
           </div>
         ) : (
           <div className="w-[380px] shrink-0 flex items-center justify-center rounded-xl bg-guardian-dark-800 border border-guardian-dark-500 text-gray-500 text-sm">选择告警查看详情</div>
