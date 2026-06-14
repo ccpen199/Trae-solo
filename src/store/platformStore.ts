@@ -13,8 +13,15 @@ export interface InspirationCase {
   contractorScore: number
   contractorCompletedCases: number
   contractorOnTimeRate: number
+  contractorSatisfaction: number
+  contractorQualityPass: number
+  contractorAfterSale: number
   tags: string[]
   completedDate: string
+  caseRelatedCases: string[]
+  projectManager: string
+  projectDuration: string
+  actualBudget: string
 }
 
 export interface DesignVersion {
@@ -116,12 +123,12 @@ export const usePlatformStore = create<PlatformState>((set) => ({
 }))
 
 export const mockCases: InspirationCase[] = [
-  { id: '1', title: '现代简约三居室', style: '现代简约', layout: '三室两厅', budget: '15-20万', area: '120㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern+minimalist+living+room+interior+design+bright+clean&image_size=landscape_16_9', rating: 4.8, contractor: '匠心装饰', contractorScore: 4.7, contractorCompletedCases: 56, contractorOnTimeRate: 92, tags: ['极简', '收纳', '开放式'], completedDate: '2026-03-15' },
-  { id: '2', title: '北欧风两居小户型', style: '北欧', layout: '两室一厅', budget: '10-15万', area: '85㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=scandinavian+nordic+bedroom+cozy+wood+white&image_size=landscape_16_9', rating: 4.6, contractor: '宜家装饰', contractorScore: 4.5, contractorCompletedCases: 38, contractorOnTimeRate: 88, tags: ['温馨', '原木', '明亮'], completedDate: '2026-04-02' },
-  { id: '3', title: '新中式四居室', style: '新中式', layout: '四室两厅', budget: '20-30万', area: '160㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chinese+traditional+modern+living+room+elegant+wood&image_size=landscape_16_9', rating: 4.9, contractor: '东方雅居', contractorScore: 4.8, contractorCompletedCases: 42, contractorOnTimeRate: 95, tags: ['意境', '实木', '对称'], completedDate: '2026-02-20' },
-  { id: '4', title: '轻奢风三居室', style: '轻奢', layout: '三室两厅', budget: '20-30万', area: '135㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=luxury+modern+dining+room+gold+marble+elegant&image_size=landscape_16_9', rating: 4.7, contractor: '鼎盛装饰', contractorScore: 4.6, contractorCompletedCases: 31, contractorOnTimeRate: 90, tags: ['金属', '大理石', '品质'], completedDate: '2026-05-10' },
-  { id: '5', title: '日式原木两居', style: '日式', layout: '两室一厅', budget: '10-15万', area: '90㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=japanese+zen+interior+wood+bamboo+minimal&image_size=landscape_16_9', rating: 4.5, contractor: '和风空间', contractorScore: 4.4, contractorCompletedCases: 27, contractorOnTimeRate: 85, tags: ['侘寂', '原木', '留白'], completedDate: '2026-04-28' },
-  { id: '6', title: '工业风LOFT', style: '工业风', layout: 'LOFT', budget: '15-20万', area: '110㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=industrial+loft+interior+brick+metal+concrete&image_size=landscape_16_9', rating: 4.4, contractor: '铁艺空间', contractorScore: 4.3, contractorCompletedCases: 19, contractorOnTimeRate: 82, tags: ['砖墙', '金属', '开放'], completedDate: '2026-05-20' },
+  { id: '1', title: '现代简约三居室', style: '现代简约', layout: '三室两厅', budget: '15-20万', area: '120㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern+minimalist+living+room+interior+design+bright+clean&image_size=landscape_16_9', rating: 4.8, contractor: '匠心装饰', contractorScore: 4.7, contractorCompletedCases: 56, contractorOnTimeRate: 92, contractorSatisfaction: 95, contractorQualityPass: 98, contractorAfterSale: 93, tags: ['极简', '收纳', '开放式'], completedDate: '2026-03-15', caseRelatedCases: ['轻奢风三居室', '北欧风两居小户型'], projectManager: '李工', projectDuration: '68天', actualBudget: '18.6万' },
+  { id: '2', title: '北欧风两居小户型', style: '北欧', layout: '两室一厅', budget: '10-15万', area: '85㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=scandinavian+nordic+bedroom+cozy+wood+white&image_size=landscape_16_9', rating: 4.6, contractor: '宜家装饰', contractorScore: 4.5, contractorCompletedCases: 38, contractorOnTimeRate: 88, contractorSatisfaction: 92, contractorQualityPass: 94, contractorAfterSale: 90, tags: ['温馨', '原木', '明亮'], completedDate: '2026-04-02', caseRelatedCases: ['日式原木两居', '现代简约三居室'], projectManager: '王工', projectDuration: '55天', actualBudget: '13.2万' },
+  { id: '3', title: '新中式四居室', style: '新中式', layout: '四室两厅', budget: '20-30万', area: '160㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chinese+traditional+modern+living+room+elegant+wood&image_size=landscape_16_9', rating: 4.9, contractor: '东方雅居', contractorScore: 4.8, contractorCompletedCases: 42, contractorOnTimeRate: 95, contractorSatisfaction: 98, contractorQualityPass: 99, contractorAfterSale: 97, tags: ['意境', '实木', '对称'], completedDate: '2026-02-20', caseRelatedCases: ['现代简约三居室', '轻奢风三居室'], projectManager: '张工', projectDuration: '85天', actualBudget: '26.8万' },
+  { id: '4', title: '轻奢风三居室', style: '轻奢', layout: '三室两厅', budget: '20-30万', area: '135㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=luxury+modern+dining+room+gold+marble+elegant&image_size=landscape_16_9', rating: 4.7, contractor: '鼎盛装饰', contractorScore: 4.6, contractorCompletedCases: 31, contractorOnTimeRate: 90, contractorSatisfaction: 93, contractorQualityPass: 96, contractorAfterSale: 91, tags: ['金属', '大理石', '品质'], completedDate: '2026-05-10', caseRelatedCases: ['新中式四居室', '现代简约三居室'], projectManager: '刘工', projectDuration: '78天', actualBudget: '24.5万' },
+  { id: '5', title: '日式原木两居', style: '日式', layout: '两室一厅', budget: '10-15万', area: '90㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=japanese+zen+interior+wood+bamboo+minimal&image_size=landscape_16_9', rating: 4.5, contractor: '和风空间', contractorScore: 4.4, contractorCompletedCases: 27, contractorOnTimeRate: 85, contractorSatisfaction: 90, contractorQualityPass: 93, contractorAfterSale: 88, tags: ['侘寂', '原木', '留白'], completedDate: '2026-04-28', caseRelatedCases: ['北欧风两居小户型', '工业风LOFT'], projectManager: '陈工', projectDuration: '60天', actualBudget: '13.8万' },
+  { id: '6', title: '工业风LOFT', style: '工业风', layout: 'LOFT', budget: '15-20万', area: '110㎡', imageUrl: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=industrial+loft+interior+brick+metal+concrete&image_size=landscape_16_9', rating: 4.4, contractor: '铁艺空间', contractorScore: 4.3, contractorCompletedCases: 19, contractorOnTimeRate: 82, contractorSatisfaction: 88, contractorQualityPass: 90, contractorAfterSale: 86, tags: ['砖墙', '金属', '开放'], completedDate: '2026-05-20', caseRelatedCases: ['日式原木两居', '现代简约三居室'], projectManager: '赵工', projectDuration: '72天', actualBudget: '17.3万' },
 ]
 
 export const mockDesignVersions: DesignVersion[] = [
