@@ -37,8 +37,22 @@ export const trafficApi = {
     severity?: string;
   }): Promise<TrafficEvent[]> =>
     client.get<TrafficEvent[]>("/traffic/events", params),
-  getBusPredictions: (): Promise<BusPrediction[]> =>
-    client.get<BusPrediction[]>("/traffic/bus/predictions"),
+  getOverview: (): Promise<any> =>
+    client.get<any>("/traffic/overview"),
+  getAccidents: (params?: {
+    severity?: string;
+    district?: string;
+    status?: string;
+  }): Promise<any[]> =>
+    client.get<any[]>("/traffic/accidents", params),
+  getMetroDelays: (params?: { status?: string }): Promise<any[]> =>
+    client.get<any[]>("/traffic/metro/delays", params),
+  getBusAbnormal: (): Promise<any[]> =>
+    client.get<any[]>("/traffic/bus/abnormal"),
+  getBusPredictions: (params?: { favorite?: boolean }): Promise<BusPrediction[]> =>
+    client.get<BusPrediction[]>("/traffic/bus/predictions", params),
+  searchBusRoutes: (keyword?: string): Promise<any[]> =>
+    client.get<any[]>("/traffic/bus/routes", { keyword }),
   reportEvent: (data: Partial<TrafficEvent>): Promise<TrafficEvent> =>
     client.post<TrafficEvent>("/traffic/events", data),
 };

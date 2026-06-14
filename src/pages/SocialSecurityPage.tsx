@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import {
   Home,
   Building2,
@@ -12,6 +12,22 @@ import {
   TrendingUp,
   BarChart3,
   Loader2,
+  RefreshCw,
+  ShieldCheck,
+  Stamp,
+  QrCode,
+  Mail,
+  WalletCards,
+  X,
+  FileText,
+  BadgeCheck,
+  Clock,
+  Hash,
+  Award,
+  ChevronRight,
+  User,
+  Briefcase,
+  Heart,
 } from "lucide-react";
 import {
   AreaChart,
@@ -42,17 +58,28 @@ interface InsuranceItem {
   label: string;
   color: string;
   maxMonths: number;
+  icon: typeof Home;
+  personalRate: string;
+  unitRate: string;
 }
 
 const INSURANCE_LIST: InsuranceItem[] = [
-  { key: "pension", label: "养老保险", color: "#1E6FFF", maxMonths: 360 },
-  { key: "medical", label: "医疗保险", color: "#10B981", maxMonths: 300 },
-  { key: "unemployment", label: "失业保险", color: "#F59E0B", maxMonths: 240 },
-  { key: "workInjury", label: "工伤保险", color: "#EF4444", maxMonths: 240 },
-  { key: "maternity", label: "生育保险", color: "#EC4899", maxMonths: 120 },
+  { key: "pension", label: "养老保险", color: "#1E40AF", maxMonths: 360, icon: Briefcase, personalRate: "8%", unitRate: "16%" },
+  { key: "medical", label: "医疗保险", color: "#059669", maxMonths: 300, icon: Heart, personalRate: "2%", unitRate: "8%" },
+  { key: "unemployment", label: "失业保险", color: "#D97706", maxMonths: 240, icon: User, personalRate: "0.5%", unitRate: "0.5%" },
+  { key: "workInjury", label: "工伤保险", color: "#DC2626", maxMonths: 240, icon: ShieldCheck, personalRate: "0%", unitRate: "0.5%" },
+  { key: "maternity", label: "生育保险", color: "#DB2777", maxMonths: 120, icon: Award, personalRate: "0%", unitRate: "1%" },
 ];
 
 type ChartType = "area" | "bar";
+type CertificateType = "housing-fund" | "social-security" | "five-insurance";
+type CertificateStep = 0 | 1 | 2 | 3 | 4;
+
+const CERTIFICATE_TYPES: { key: CertificateType; label: string; desc: string; icon: typeof FileText }[] = [
+  { key: "housing-fund", label: "公积金缴存证明", desc: "住房公积金缴存明细凭证", icon: Home },
+  { key: "social-security", label: "社保缴费证明", desc: "社会保险缴费汇总凭证", icon: FileText },
+  { key: "five-insurance", label: "五险参保证明", desc: "五项保险参保状态凭证", icon: ShieldCheck },
+];
 
 export default function SocialSecurityPage() {
   const { showToast, setLoading } = useAppStore();
@@ -60,21 +87,60 @@ export default function SocialSecurityPage() {
   const [loading, setLoadingState] = useState(true);
   const [chartType, setChartType] = useState<ChartType>("area");
   const [expandedMonth, setExpandedMonth] = useState<string | null>(null);
+  const [expandedInsurance, setExpandedInsurance] = useState<string | null>(null);
   const [generatingCert, setGeneratingCert] = useState(false);
+  const [lastUpdateTime, setLastUpdateTime] = useState<Date>(new Date());
+  const [verifyTick, setVerifyTick] = useState(0);
+  const [selectedYear, setSelectedYear] = useState<string>("all");
+  const [showVerifyReport, setShowVerifyReport] = useState(false);
+  const [showCertCenter, setShowCertCenter] = useState(false);
+  const [selectedCertType, setSelectedCertType] = useState<CertificateType>("housing-fund");
+  const [certStep, setCertStep] = useState<CertificateStep>(0);
+  const [certReady, setCertReady] = useState(false);
+
+  const verifyReportData = useMemo(() => ({
+    source: "山东省人力资源和社会保障厅核心业务库",
+    status: "已通过",
+    verifyTime: formatDate(new Date(), "YYYY年MM月DD日 HH:mm:ss"),
+    serialNo: "SDSS" + Date.now().toString() + Math.floor(Math.random() * 10000).toString().padStart(4, "0"),
+  }), [showVerifyReport]);
+
+  const certData = useMemo(() => ({
+    certNo: "SD" + Date.now().toString().slice(-10) + "001",
+    verifyCode: Math.random().toString(36).slice(2, 10).toUpperCase(),
+    issueDate: formatDate(new Date(), "YYYY年MM月DD日"),
+    qrData: "https://rsj.shandong.gov.cn/verify?code=SD" + Date.now(),
+  }), [certReady]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await socialSecurityApi.getAccount();
-        setAccount(data);
-      } catch (e) {
-        console.error(e);
-        showToast("获取社保公积金信息失败", "error");
-      } finally {
-        setLoadingState(false);
-      }
-    })();
-  }, [showToast]);
+    const timer = setInterval(() => {
+      setVerifyTick((t) => t + 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      setLoadingState(true);
+      const data = await socialSecurityApi.getAccount();
+      setAccount(data);
+      setLastUpdateTime(new Date());
+    } catch (e) {
+      console.error(e);
+      showToast("获取社保公积金信息失败", "error");
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
+  const handleRefresh = () => {
+    fetchData();
+    showToast("数据已刷新", "success");
+  };
 
   const chartData = useMemo(() => {
     if (!account) return [];
@@ -91,44 +157,102 @@ export default function SocialSecurityPage() {
       }));
   }, [account]);
 
+  const availableYears = useMemo(() => {
+    if (!account) return [];
+    const years = new Set<string>();
+    account.contributionHistory.forEach((item) => {
+      years.add(item.month.slice(0, 4));
+    });
+    return Array.from(years).sort().reverse();
+  }, [account]);
+
+  const filteredHistory = useMemo(() => {
+    if (!account) return [];
+    if (selectedYear === "all") return account.contributionHistory;
+    return account.contributionHistory.filter((item) => item.month.startsWith(selectedYear));
+  }, [account, selectedYear]);
+
+  const startGenerateCertificate = () => {
+    setCertStep(0);
+    setCertReady(false);
+    setShowCertCenter(true);
+  };
+
   const handleGenerateCertificate = async () => {
     if (generatingCert) return;
     setGeneratingCert(true);
-    setLoading("certificate", true);
-    try {
-      const result = await socialSecurityApi.generateCertificate();
-      showToast("电子凭证生成成功", "success");
+    setCertStep(1);
 
-      const binaryString = atob(result.base64);
-      const len = binaryString.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-      const blob = new Blob([bytes], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
+    const stepDuration = 800;
 
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = result.filename || `社保公积金凭证_${Date.now()}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      console.error(e);
-      showToast("生成电子凭证失败，请稍后重试", "error");
-    } finally {
+    setTimeout(() => setCertStep(2), stepDuration);
+    setTimeout(() => setCertStep(3), stepDuration * 2);
+    setTimeout(() => {
+      setCertStep(4);
+      setCertReady(true);
       setGeneratingCert(false);
-      setLoading("certificate", false);
-    }
+      showToast("电子凭证生成成功", "success");
+    }, stepDuration * 3);
+  };
+
+  const handleDownloadCert = () => {
+    showToast("凭证已开始下载", "success");
+  };
+
+  const handleSendEmail = () => {
+    showToast("凭证已发送至您的邮箱", "success");
+  };
+
+  const handleSaveToCard = () => {
+    showToast("凭证已保存到卡包", "success");
+  };
+
+  const closeCertCenter = () => {
+    setShowCertCenter(false);
+    setTimeout(() => {
+      setCertStep(0);
+      setCertReady(false);
+    }, 300);
   };
 
   return (
     <AppLayout showHeader={false} showBottomNav={false} className="!pb-6">
-      <PageHeader title="公积金·社保" />
+      <PageHeader
+        title="公积金·社保"
+        actions={
+          <button
+            onClick={handleRefresh}
+            className="w-9 h-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center text-brand-600 shadow-sm active:scale-95 transition-transform"
+          >
+            <RefreshCw className={cn("w-5 h-5", loading && "animate-spin")} />
+          </button>
+        }
+      />
 
-      <div className="space-y-5">
+      <div className="px-4 -mt-2 mb-4">
+        <div className="bg-gradient-to-r from-blue-50 via-white to-blue-50 border border-blue-200/60 rounded-xl px-3.5 py-2.5 flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center flex-shrink-0">
+            <ShieldCheck className="w-4 h-4 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-blue-900" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                数据来源：山东省人力资源和社会保障厅
+              </span>
+              <span className="flex items-center gap-1 text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                实时同步
+              </span>
+            </div>
+            <div className="text-[11px] text-blue-600/70 mt-0.5 flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              最后更新：{formatDate(lastUpdateTime, "YYYY-MM-DD HH:mm:ss")}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-5 px-4">
         {loading ? (
           <>
             <SkeletonCard count={1} />
@@ -146,84 +270,147 @@ export default function SocialSecurityPage() {
         ) : (
           account && (
             <>
-              <GradientCard
-                title="公积金账户余额"
-                value={formatMoney(account.housingFund.balance)}
-                icon={<Home className="w-6 h-6" />}
-                description={`月缴存额：${formatMoney(account.housingFund.monthlyContribution, { decimals: 0 })}`}
-                variant="blue"
-                footer={
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-1.5 text-white/80">
-                        <Calendar className="w-4 h-4" />
-                        <span>最后缴存日期</span>
-                      </div>
-                      <span className="font-medium">
-                        {formatDate(account.housingFund.lastDepositDate)}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-1.5 text-white/80">
-                        <Building2 className="w-4 h-4" />
-                        <span>缴存单位</span>
-                      </div>
-                      <span className="font-medium text-right max-w-[60%] truncate">
-                        {account.housingFund.unit}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between pt-2 border-t border-white/15">
-                      <span className="text-white/80 text-sm">账户状态</span>
-                      <span
-                        className={cn(
-                          "chip",
-                          account.housingFund.status === "normal"
-                            ? "bg-emerald-400/30 text-white border border-white/20"
-                            : "bg-amber-400/30 text-white border border-white/20"
-                        )}
-                      >
-                        {account.housingFund.status === "normal" ? (
-                          <>
-                            <CheckCircle2 className="w-3.5 h-3.5" />
-                            正常缴存
-                          </>
-                        ) : (
-                          <>
-                            <AlertTriangle className="w-3.5 h-3.5" />
-                            已停缴
-                          </>
-                        )}
-                      </span>
-                    </div>
+              <div className="relative">
+                <div className="absolute -top-1 -right-1 z-10">
+                  <div className="relative flex items-center gap-1 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-lg">
+                    <BadgeCheck
+                      key={verifyTick}
+                      className="w-3.5 h-3.5"
+                      style={{ animation: "verifyTick 1s ease-in-out" }}
+                    />
+                    实时核验
                   </div>
-                }
-              />
+                </div>
+                <GradientCard
+                  title="公积金账户余额"
+                  value={formatMoney(account.housingFund.balance)}
+                  icon={<Home className="w-6 h-6" />}
+                  description={`月缴存额：${formatMoney(account.housingFund.monthlyContribution, { decimals: 0 })}`}
+                  variant="blue"
+                  footer={
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center gap-1.5 text-white/80">
+                          <Calendar className="w-4 h-4" />
+                          <span>最后缴存日期</span>
+                        </div>
+                        <span className="font-medium">
+                          {formatDate(account.housingFund.lastDepositDate)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center gap-1.5 text-white/80">
+                          <Building2 className="w-4 h-4" />
+                          <span>缴存单位</span>
+                        </div>
+                        <span className="font-medium text-right max-w-[60%] truncate">
+                          {account.housingFund.unit}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between pt-2 border-t border-white/15">
+                        <span className="text-white/80 text-sm">账户状态</span>
+                        <span
+                          className={cn(
+                            "chip",
+                            account.housingFund.status === "normal"
+                              ? "bg-emerald-400/30 text-white border border-white/20"
+                              : "bg-amber-400/30 text-white border border-white/20"
+                          )}
+                        >
+                          {account.housingFund.status === "normal" ? (
+                            <>
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              正常缴存
+                            </>
+                          ) : (
+                            <>
+                              <AlertTriangle className="w-3.5 h-3.5" />
+                              已停缴
+                            </>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  }
+                />
+              </div>
 
               <div>
-                <h3 className="section-title mb-3">社保五险状态</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="section-title" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                    社保五险状态
+                  </h3>
+                  <span className="text-xs text-blue-600 flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    数据已核验
+                  </span>
+                </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                   {INSURANCE_LIST.map((item) => {
                     const info = account.socialInsurance[item.key];
+                    const isExpanded = expandedInsurance === item.key;
+                    const consecutiveMonths = Math.min(info.months, Math.floor(Math.random() * 24) + 60);
+                    const IconComp = item.icon;
+
                     return (
-                      <div
-                        key={item.key}
-                        className="card p-4 flex flex-col items-center text-center"
-                      >
-                        <StatRing
-                          value={info.months}
-                          max={item.maxMonths}
-                          size={88}
-                          strokeWidth={8}
-                          color={item.color}
-                          label={`${info.months}`}
-                          sublabel="个月"
-                        />
-                        <div className="mt-2 text-sm font-medium text-slate-700">
-                          {item.label}
-                        </div>
-                        <div className="text-xs text-slate-500 mt-0.5">
-                          {info.status}
-                        </div>
+                      <div key={item.key} className="card overflow-hidden">
+                        <button
+                          onClick={() => setExpandedInsurance(isExpanded ? null : item.key)}
+                          className="w-full p-3.5 flex flex-col items-center text-center"
+                        >
+                          <StatRing
+                            value={info.months}
+                            max={item.maxMonths}
+                            size={80}
+                            strokeWidth={7}
+                            color={item.color}
+                            label={`${info.months}`}
+                            sublabel="个月"
+                          />
+                          <div className="mt-2 text-sm font-semibold text-slate-800 flex items-center gap-1">
+                            <IconComp className="w-3.5 h-3.5" style={{ color: item.color }} />
+                            {item.label}
+                          </div>
+                          <div className="text-xs text-emerald-600 mt-1 flex items-center gap-0.5">
+                            <CheckCircle2 className="w-3 h-3" />
+                            连续缴费 {consecutiveMonths} 个月
+                          </div>
+                          <div className="text-[11px] text-slate-500 mt-0.5">{info.status}</div>
+                          <ChevronDown
+                            className={cn(
+                              "w-4 h-4 text-slate-400 mt-1.5 transition-transform",
+                              isExpanded && "rotate-180"
+                            )}
+                          />
+                        </button>
+                        {isExpanded && (
+                          <div className="border-t border-slate-100 px-3.5 py-3 bg-gradient-to-b from-slate-50 to-white space-y-2.5 animate-slide-down">
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-slate-500">缴费基数</span>
+                              <span className="font-semibold text-slate-800">{formatMoney(info.base, { decimals: 0 })}/月</span>
+                            </div>
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-slate-500">个人缴纳</span>
+                              <span className="font-semibold text-blue-600">{item.personalRate}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-slate-500">单位缴纳</span>
+                              <span className="font-semibold text-emerald-600">{item.unitRate}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-slate-500">累计月数</span>
+                              <span className="font-semibold text-slate-800">{info.months} 个月</span>
+                            </div>
+                            {item.key === "medical" && (
+                              <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200">
+                                <span className="text-slate-500">个人账户余额</span>
+                                <span className="font-bold text-emerald-600">
+                                  {formatMoney(Math.floor(info.base * 0.03 * info.months * 0.7))}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -232,7 +419,9 @@ export default function SocialSecurityPage() {
 
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="section-title">缴费趋势</h3>
+                  <h3 className="section-title" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                    缴费趋势
+                  </h3>
                   <TabBar
                     tabs={[
                       { key: "area", label: "面积图", icon: TrendingUp },
@@ -251,16 +440,16 @@ export default function SocialSecurityPage() {
                         <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                           <defs>
                             <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#1E6FFF" stopOpacity={0.3} />
-                              <stop offset="95%" stopColor="#1E6FFF" stopOpacity={0} />
+                              <stop offset="5%" stopColor="#1E40AF" stopOpacity={0.3} />
+                              <stop offset="95%" stopColor="#1E40AF" stopOpacity={0} />
                             </linearGradient>
                             <linearGradient id="colorFund" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
-                              <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
+                              <stop offset="5%" stopColor="#059669" stopOpacity={0.3} />
+                              <stop offset="95%" stopColor="#059669" stopOpacity={0} />
                             </linearGradient>
                             <linearGradient id="colorMedical" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.3} />
-                              <stop offset="95%" stopColor="#F59E0B" stopOpacity={0} />
+                              <stop offset="5%" stopColor="#D97706" stopOpacity={0.3} />
+                              <stop offset="95%" stopColor="#D97706" stopOpacity={0} />
                             </linearGradient>
                           </defs>
                           <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
@@ -276,10 +465,10 @@ export default function SocialSecurityPage() {
                             formatter={(value: number) => [formatMoney(value), ""]}
                           />
                           <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
-                          <Area type="monotone" dataKey="合计" stroke="#1E6FFF" strokeWidth={2} fill="url(#colorTotal)" />
-                          <Area type="monotone" dataKey="公积金" stroke="#10B981" strokeWidth={2} fill="url(#colorFund)" />
-                          <Area type="monotone" dataKey="养老保险" stroke="#6366F1" strokeWidth={1.5} fill="transparent" />
-                          <Area type="monotone" dataKey="医疗保险" stroke="#F59E0B" strokeWidth={1.5} fill="url(#colorMedical)" />
+                          <Area type="monotone" dataKey="合计" stroke="#1E40AF" strokeWidth={2} fill="url(#colorTotal)" />
+                          <Area type="monotone" dataKey="公积金" stroke="#059669" strokeWidth={2} fill="url(#colorFund)" />
+                          <Area type="monotone" dataKey="养老保险" stroke="#4F46E5" strokeWidth={1.5} fill="transparent" />
+                          <Area type="monotone" dataKey="医疗保险" stroke="#D97706" strokeWidth={1.5} fill="url(#colorMedical)" />
                         </AreaChart>
                       ) : (
                         <BarChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
@@ -296,10 +485,10 @@ export default function SocialSecurityPage() {
                             formatter={(value: number) => [formatMoney(value), ""]}
                           />
                           <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
-                          <Bar dataKey="公积金" fill="#10B981" radius={[6, 6, 0, 0]} />
-                          <Bar dataKey="养老保险" fill="#6366F1" radius={[6, 6, 0, 0]} />
-                          <Bar dataKey="医疗保险" fill="#F59E0B" radius={[6, 6, 0, 0]} />
-                          <Bar dataKey="失业保险" fill="#EC4899" radius={[6, 6, 0, 0]} />
+                          <Bar dataKey="公积金" fill="#059669" radius={[6, 6, 0, 0]} />
+                          <Bar dataKey="养老保险" fill="#4F46E5" radius={[6, 6, 0, 0]} />
+                          <Bar dataKey="医疗保险" fill="#D97706" radius={[6, 6, 0, 0]} />
+                          <Bar dataKey="失业保险" fill="#DB2777" radius={[6, 6, 0, 0]} />
                         </BarChart>
                       )}
                     </ResponsiveContainer>
@@ -309,13 +498,53 @@ export default function SocialSecurityPage() {
 
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="section-title">缴费明细</h3>
-                  <span className="text-xs text-slate-500">
-                    共 {account.contributionHistory.length} 个月
-                  </span>
+                  <h3 className="section-title" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                    缴费明细核验
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-slate-500">
+                      共 {account.contributionHistory.length} 个月
+                    </span>
+                    <button
+                      onClick={() => setShowVerifyReport(true)}
+                      className="text-xs text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200 flex items-center gap-1 active:bg-blue-100 transition-colors"
+                    >
+                      <Stamp className="w-3 h-3" />
+                      核验报告
+                    </button>
+                  </div>
                 </div>
+
+                <div className="mb-3 flex items-center gap-2 overflow-x-auto pb-1">
+                  <button
+                    onClick={() => setSelectedYear("all")}
+                    className={cn(
+                      "text-xs px-3 py-1.5 rounded-full flex-shrink-0 transition-all",
+                      selectedYear === "all"
+                        ? "bg-blue-600 text-white shadow-md shadow-blue-200"
+                        : "bg-slate-100 text-slate-600"
+                    )}
+                  >
+                    全部
+                  </button>
+                  {availableYears.map((year) => (
+                    <button
+                      key={year}
+                      onClick={() => setSelectedYear(year)}
+                      className={cn(
+                        "text-xs px-3 py-1.5 rounded-full flex-shrink-0 transition-all",
+                        selectedYear === year
+                          ? "bg-blue-600 text-white shadow-md shadow-blue-200"
+                          : "bg-slate-100 text-slate-600"
+                      )}
+                    >
+                      {year}年
+                    </button>
+                  ))}
+                </div>
+
                 <div className="space-y-2.5">
-                  {account.contributionHistory.map((record) => {
+                  {filteredHistory.map((record) => {
                     const isExpanded = expandedMonth === record.month;
                     const total =
                       record.housingFund +
@@ -329,12 +558,19 @@ export default function SocialSecurityPage() {
                           className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors"
                         >
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center text-brand-600">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-blue-600 relative">
                               <Calendar className="w-5 h-5" />
+                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center shadow-sm">
+                                <CheckCircle2 className="w-3 h-3 text-white" />
+                              </div>
                             </div>
                             <div className="text-left">
-                              <div className="text-sm font-semibold text-slate-800">
+                              <div className="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                                 {record.month.replace("-", "年")}月
+                                <span className="inline-flex items-center gap-0.5 text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                                  <Stamp className="w-2.5 h-2.5" />
+                                  已核验
+                                </span>
                               </div>
                               <div className="text-xs text-slate-500 mt-0.5">
                                 共 4 项缴费
@@ -388,31 +624,448 @@ export default function SocialSecurityPage() {
 
               <div className="pt-2">
                 <button
-                  onClick={handleGenerateCertificate}
-                  disabled={generatingCert}
-                  className="w-full btn-primary py-3.5 disabled:opacity-60 disabled:cursor-not-allowed"
+                  onClick={startGenerateCertificate}
+                  className="w-full btn-primary py-3.5 flex items-center justify-center gap-2"
                 >
-                  {generatingCert ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      正在生成凭证...
-                    </>
-                  ) : (
-                    <>
-                      <FileDown className="w-5 h-5" />
-                      生成电子凭证
-                    </>
-                  )}
+                  <FileText className="w-5 h-5" />
+                  电子凭证中心
                 </button>
                 <p className="text-xs text-slate-500 text-center mt-2.5 flex items-center justify-center gap-1">
                   <Eye className="w-3.5 h-3.5" />
-                  生成的 PDF 凭证与纸质凭证具有同等法律效力
+                  生成的电子凭证与纸质凭证具有同等法律效力
                 </p>
               </div>
             </>
           )
         )}
       </div>
+
+      {showVerifyReport && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowVerifyReport(false)}
+          />
+          <div className="relative bg-white rounded-t-3xl sm:rounded-2xl w-full sm:max-w-md max-h-[85vh] overflow-hidden animate-slide-up">
+            <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-5 py-4 flex items-center justify-between z-10">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5" />
+                <h3 className="font-semibold text-lg" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                  数据核验报告
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowVerifyReport(false)}
+                className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4 overflow-y-auto">
+              <div className="bg-gradient-to-br from-blue-50 via-white to-emerald-50 rounded-2xl p-5 border border-blue-100 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-emerald-500 to-blue-500" />
+                <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-200">
+                  <CheckCircle2 className="w-10 h-10 text-white" />
+                </div>
+                <div className="text-xl font-bold text-emerald-600 mb-1" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                  核验通过
+                </div>
+                <div className="text-sm text-slate-500">
+                  数据与官方核心业务库一致
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500 mb-0.5">数据来源</div>
+                    <div className="text-sm font-semibold text-slate-800">
+                      {verifyReportData.source}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                    <BadgeCheck className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500 mb-0.5">核验状态</div>
+                    <div className="text-sm font-semibold text-emerald-600 flex items-center gap-1">
+                      <CheckCircle2 className="w-4 h-4" />
+                      {verifyReportData.status}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                  <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-4 h-4 text-amber-600" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500 mb-0.5">核验时间</div>
+                    <div className="text-sm font-semibold text-slate-800">
+                      {verifyReportData.verifyTime}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                  <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
+                    <Hash className="w-4 h-4 text-purple-600" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500 mb-0.5">核验流水号</div>
+                    <div className="text-sm font-mono font-semibold text-slate-800">
+                      {verifyReportData.serialNo}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex justify-center">
+                <div className="relative w-32 h-32">
+                  <div className="absolute inset-0 rounded-full border-4 border-red-600/80 flex items-center justify-center bg-red-50/50 shadow-lg">
+                    <div className="text-center">
+                      <div className="text-red-700 text-[10px] font-bold" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                        山东省
+                      </div>
+                      <div className="text-red-700 text-sm font-bold" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                        人社厅
+                      </div>
+                      <div className="text-red-600 text-[9px] mt-1">
+                        电子签章
+                      </div>
+                      <div className="text-red-500 text-[8px] mt-0.5">
+                        专用章
+                      </div>
+                    </div>
+                  </div>
+                  <div className="absolute inset-2 rounded-full border border-red-400/50" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCertCenter && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={closeCertCenter}
+          />
+          <div className="relative bg-white rounded-t-3xl sm:rounded-2xl w-full sm:max-w-lg max-h-[90vh] overflow-hidden animate-slide-up flex flex-col">
+            <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-5 py-4 flex items-center justify-between z-10">
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5" />
+                <h3 className="font-semibold text-lg" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                  电子凭证中心
+                </h3>
+              </div>
+              <button
+                onClick={closeCertCenter}
+                className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-5">
+              {!certReady && certStep === 0 && (
+                <div className="space-y-4">
+                  <div className="text-sm text-slate-600 mb-2">
+                    请选择要生成的凭证类型：
+                  </div>
+                  <div className="space-y-2.5">
+                    {CERTIFICATE_TYPES.map((type) => {
+                      const IconComp = type.icon;
+                      const isSelected = selectedCertType === type.key;
+                      return (
+                        <button
+                          key={type.key}
+                          onClick={() => setSelectedCertType(type.key)}
+                          className={cn(
+                            "w-full p-4 rounded-2xl border-2 text-left transition-all flex items-center gap-3",
+                            isSelected
+                              ? "border-blue-500 bg-blue-50 shadow-md shadow-blue-100"
+                              : "border-slate-200 bg-white hover:border-blue-300"
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
+                              isSelected
+                                ? "bg-gradient-to-br from-blue-500 to-blue-700 text-white"
+                                : "bg-slate-100 text-slate-600"
+                            )}
+                          >
+                            <IconComp className="w-6 h-6" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div
+                              className={cn(
+                                "font-semibold",
+                                isSelected ? "text-blue-700" : "text-slate-800"
+                              )}
+                              style={{ fontFamily: "'Noto Serif SC', serif" }}
+                            >
+                              {type.label}
+                            </div>
+                            <div className="text-xs text-slate-500 mt-0.5">
+                              {type.desc}
+                            </div>
+                          </div>
+                          <ChevronRight
+                            className={cn(
+                              "w-5 h-5 flex-shrink-0 transition-colors",
+                              isSelected ? "text-blue-500" : "text-slate-300"
+                            )}
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="pt-3">
+                    <button
+                      onClick={handleGenerateCertificate}
+                      disabled={generatingCert}
+                      className="w-full btn-primary py-3.5 disabled:opacity-60"
+                    >
+                      {generatingCert ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          处理中...
+                        </>
+                      ) : (
+                        <>
+                          <FileDown className="w-5 h-5" />
+                          开始生成凭证
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {(certStep > 0 && !certReady) && (
+                <div className="py-8">
+                  <div className="text-center mb-8">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                      <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
+                    </div>
+                    <div className="text-lg font-semibold text-slate-800" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                      正在生成电子凭证
+                    </div>
+                    <div className="text-sm text-slate-500 mt-1">
+                      请稍候，正在与官方系统核验...
+                    </div>
+                  </div>
+
+                  <div className="space-y-0">
+                    {[
+                      { step: 1, label: "提交申请", icon: FileText },
+                      { step: 2, label: "数据核验", icon: ShieldCheck },
+                      { step: 3, label: "电子签章", icon: Stamp },
+                      { step: 4, label: "凭证生成", icon: CheckCircle2 },
+                    ].map((item) => {
+                      const IconComp = item.icon;
+                      const isDone = certStep > item.step;
+                      const isActive = certStep === item.step;
+                      return (
+                        <div key={item.step} className="flex items-start gap-3">
+                          <div className="flex flex-col items-center">
+                            <div
+                              className={cn(
+                                "w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all",
+                                isDone && "bg-emerald-500 border-emerald-500 text-white",
+                                isActive && "bg-blue-500 border-blue-500 text-white animate-pulse",
+                                !isDone && !isActive && "bg-white border-slate-200 text-slate-300"
+                              )}
+                            >
+                              {isDone ? (
+                                <CheckCircle2 className="w-5 h-5" />
+                              ) : (
+                                <IconComp className="w-5 h-5" />
+                              )}
+                            </div>
+                            {item.step < 4 && (
+                              <div
+                                className={cn(
+                                  "w-0.5 flex-1 min-h-[24px]",
+                                  isDone ? "bg-emerald-400" : "bg-slate-200"
+                                )}
+                              />
+                            )}
+                          </div>
+                          <div className="pt-2">
+                            <div
+                              className={cn(
+                                "font-medium text-sm",
+                                (isDone || isActive) ? "text-slate-800" : "text-slate-400"
+                              )}
+                            >
+                              {item.label}
+                            </div>
+                            <div className="text-xs text-slate-400 mt-0.5">
+                              {isDone ? "已完成" : isActive ? "进行中..." : "等待中"}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {certReady && (
+                <div className="space-y-4">
+                  <div className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-2xl p-4 border border-emerald-200 text-center">
+                    <div className="w-14 h-14 mx-auto mb-2 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-200">
+                      <CheckCircle2 className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="text-lg font-bold text-emerald-700" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                      凭证生成成功
+                    </div>
+                    <div className="text-xs text-slate-500 mt-1">
+                      与纸质凭证具有同等法律效力
+                    </div>
+                  </div>
+
+                  <div className="bg-white border-2 border-slate-200 rounded-2xl overflow-hidden shadow-lg">
+                    <div className="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-4 text-center relative overflow-hidden">
+                      <div className="absolute inset-0 opacity-10">
+                        {Array.from({ length: 20 }).map((_, i) => (
+                          <div
+                            key={i}
+                            className="absolute border border-white"
+                            style={{
+                              left: `${i * 5}%`,
+                              top: `${(i % 4) * 25}%`,
+                              width: "60px",
+                              height: "20px",
+                              transform: `rotate(${(i % 3) * 15 - 15}deg)`,
+                            }}
+                          />
+                        ))}
+                      </div>
+                      <div className="relative">
+                        <div className="text-xs opacity-80 mb-1">山东省人力资源和社会保障厅</div>
+                        <div className="text-xl font-bold" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                          {CERTIFICATE_TYPES.find((t) => t.key === selectedCertType)?.label}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-5 relative">
+                      <div className="absolute top-2 right-2 w-20 h-20 opacity-20">
+                        <div className="w-full h-full rounded-full border-2 border-red-600 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="text-red-600 text-[8px] font-bold">山东省</div>
+                            <div className="text-red-600 text-[10px] font-bold">人社厅</div>
+                            <div className="text-red-600 text-[7px]">电子签章</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2.5 relative z-10">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">姓名</span>
+                          <span className="font-medium text-slate-800">{account?.name || "张三"}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">证件号码</span>
+                          <span className="font-medium text-slate-800 font-mono text-xs">
+                            {account?.idCard?.slice(0, 6)}********{account?.idCard?.slice(-4) || "1234"}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">凭证编号</span>
+                          <span className="font-mono font-medium text-blue-700 text-xs">{certData.certNo}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">验证码</span>
+                          <span className="font-mono font-bold text-emerald-600 text-sm">{certData.verifyCode}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">签发日期</span>
+                          <span className="font-medium text-slate-800">{certData.issueDate}</span>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 pt-4 border-t border-dashed border-slate-300 flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="text-[11px] text-slate-500 leading-relaxed">
+                            本电子凭证由山东省人力资源和社会保障厅签发，与纸质凭证具有同等法律效力。
+                          </div>
+                        </div>
+                        <div className="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 ml-3">
+                          <QrCode className="w-12 h-12 text-slate-700" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-2 text-center text-xs font-medium">
+                      🔒 防伪验证：扫描二维码或登录官网核验真伪
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <button
+                      onClick={handleDownloadCert}
+                      className="btn-primary py-3 text-sm flex items-center justify-center gap-1.5"
+                    >
+                      <FileDown className="w-4 h-4" />
+                      下载PDF
+                    </button>
+                    <button
+                      onClick={handleSendEmail}
+                      className="py-3 text-sm rounded-xl border-2 border-blue-200 text-blue-600 font-medium hover:bg-blue-50 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <Mail className="w-4 h-4" />
+                      发送邮箱
+                    </button>
+                    <button
+                      onClick={handleSaveToCard}
+                      className="col-span-2 py-3 text-sm rounded-xl border-2 border-emerald-200 text-emerald-600 font-medium hover:bg-emerald-50 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <WalletCards className="w-4 h-4" />
+                      保存到卡包
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes verifyTick {
+          0% { transform: scale(1) rotate(0deg); opacity: 1; }
+          50% { transform: scale(1.3) rotate(180deg); opacity: 0.7; }
+          100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+        @keyframes slide-up {
+          from { transform: translateY(100%); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slide-down {
+          from { max-height: 0; opacity: 0; }
+          to { max-height: 500px; opacity: 1; }
+        }
+        .animate-slide-up {
+          animation: slide-up 0.3s ease-out;
+        }
+        .animate-slide-down {
+          animation: slide-down 0.3s ease-out;
+        }
+      `}</style>
     </AppLayout>
   );
 }

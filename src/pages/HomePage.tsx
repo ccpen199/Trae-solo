@@ -1,381 +1,1274 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import {
   MapPin,
-  Sun,
   Cloud,
+  Sun,
   CloudRain,
-  Wind,
+  ShieldCheck,
   AlertTriangle,
-  ChevronRight,
-  Home,
-  Shield,
-  FileText,
-  Building2,
-  Briefcase,
-  Car,
+  Train,
   Bus,
-  Stethoscope,
-  Lightbulb,
-  Users,
-  MessageSquare,
-  BookOpen,
-  GraduationCap,
-  HeartHandshake,
+  Building2,
   Wallet,
-  AlertCircle,
+  FileCheck,
+  Receipt,
+  Search,
+  X,
+  Zap,
+  Droplets,
+  Flame,
+  Thermometer,
+  Wifi,
+  CreditCard,
+  FileText,
+  HardDrive,
+  Download,
+  CheckCircle,
+  Users,
+  Building,
+  HandCoins,
+  Activity,
+  BadgeCheck,
+  Landmark,
+  Car,
+  Home as HomeIcon,
+  Stethoscope,
+  Star,
+  ChevronRight,
+  Sparkles,
+  QrCode,
+  Eye,
+  Radio,
+  RefreshCw,
+  Filter,
 } from "lucide-react";
 import AppLayout from "@/components/layout/AppLayout";
-import GradientCard from "@/components/ui/GradientCard";
-import SkeletonCard from "@/components/ui/SkeletonCard";
+import { useLocation } from "@/hooks/useLocation";
+import { useOfflineCache } from "@/hooks/useOfflineCache";
+import { useAppStore } from "@/store/useAppStore";
 import {
   weatherApi,
   trafficApi,
   servicesApi,
-  policiesApi,
   socialSecurityApi,
+  paymentApi,
+  communityApi,
+  poiApi,
+  policiesApi,
   userApi,
 } from "@/api";
-import { useLocation } from "@/hooks/useLocation";
-import { useAppStore } from "@/store/useAppStore";
+import { formatMoney, formatDate, haversineDistance } from "@/utils/format";
+import { cn } from "@/lib/utils";
 import type {
   WeatherInfo,
   TrafficEvent,
+  BusPrediction,
   ServiceEntry,
-  PolicyDocument,
   SocialSecurityAccount,
+  PaymentAccount,
+  CommunityPost,
+  PointOfInterest,
+  PolicyDocument,
   UserProfile,
+  PoiType,
+  OpinionDashboard,
 } from "../../shared/types";
-import { formatDate, formatMoney } from "@/utils/format";
-import { cn } from "@/lib/utils";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  "🏠": Home,
-  "📋": Shield,
-  "💊": Stethoscope,
-  "🪪": Building2,
-  "🛂": Briefcase,
-  "🚌": Bus,
-  "🚇": Car,
-  "🚓": AlertTriangle,
-  "🅿️": Wallet,
-  "🛣️": Car,
-  "💡": Lightbulb,
-  "☀️": Sun,
-  "🏥": Stethoscope,
-  "📦": Briefcase,
-  "🏘️": Users,
-  "🎉": HeartHandshake,
-  "💬": MessageSquare,
-  "📮": MessageSquare,
-  "📖": BookOpen,
-  "🎓": GraduationCap,
-  "💼": Briefcase,
-  "💰": Wallet,
+interface RankedService extends ServiceEntry {
+  distance: number;
+  rankScore: number;
+}
+
+const SERVICE_DEPT_MAP: Record<string, string> = {
+  "社保查询": "省人社厅",
+  "公积金查询": "市住房公积金中心",
+  "医保电子凭证": "市医保局",
+  "身份证办理": "市公安局",
+  "护照办理": "出入境管理局",
+  "实时公交": "公交集团",
+  "地铁出行": "青岛地铁",
+  "交通违法处理": "交警支队",
+  "停车缴费": "市南区缴费",
+  "路况信息": "交通委",
+  "水电燃气缴费": "市南区缴费",
+  "天气预报": "市气象局",
+  "医院挂号": "市卫健委",
+  "快递查询": "邮政管理局",
+  "社区办事": "市南区民政局",
+  "社区活动": "市南区文旅局",
+  "社区论坛": "青青岛社区",
+  "投诉建议": "12345热线",
+  "政策查询": "市政府办公厅",
+  "人才政策": "市人社局",
+  "创业扶持": "市人社局",
+  "惠民补贴": "市民政局",
 };
+
+const POI_SOURCE_MAP: Record<string, string> = {
+  scenic: "市文旅局",
+  restaurant: "市监局",
+  medical: "市卫健委",
+};
+
+const PAYMENT_CATEGORIES: Array<{
+  key: PaymentAccount["category"];
+  label: string;
+  icon: typeof Zap;
+  bgColor: string;
+  district: string;
+}> = [
+  { key: "electric", label: "电力", icon: Zap, bgColor: "bg-amber-500", district: "市南区" },
+  { key: "water", label: "水务", icon: Droplets, bgColor: "bg-sky-500", district: "市南区" },
+  { key: "gas", label: "燃气", icon: Flame, bgColor: "bg-rose-500", district: "李沧区" },
+  { key: "heating", label: "供暖", icon: Thermometer, bgColor: "bg-orange-500", district: "市北区" },
+  { key: "broadband", label: "宽带", icon: Wifi, bgColor: "bg-indigo-500", district: "崂山区" },
+];
+
+const SERVICE_ICONS: Record<string, typeof Building2> = {
+  "公积金查询": Wallet,
+  "社保查询": ShieldCheck,
+  "医保电子凭证": FileCheck,
+  "水电燃气缴费": Receipt,
+  "供暖费缴纳": Thermometer,
+  "交通出行": Train,
+  "违章查询": Car,
+  "不动产登记": HomeIcon,
+  "医院预约挂号": Stethoscope,
+};
+
+const SENTIMENT_COLORS: Record<string, string> = {
+  positive: "#10b981",
+  neutral: "#64748b",
+  negative: "#ef4444",
+};
+
+function getTimeAgo(timestamp: string): string {
+  const diff = Date.now() - new Date(timestamp).getTime();
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 1) return "刚刚";
+  if (minutes < 60) return `${minutes}分钟前`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}小时前`;
+  return `${Math.floor(hours / 24)}天前`;
+}
 
 function getWeatherIcon(condition: string) {
   if (condition.includes("雨")) return CloudRain;
-  if (condition.includes("云")) return Cloud;
-  return Sun;
+  if (condition.includes("晴")) return Sun;
+  return Cloud;
 }
 
-function getGreeting() {
-  const hour = new Date().getHours();
-  if (hour < 6) return "凌晨好";
-  if (hour < 9) return "早上好";
-  if (hour < 12) return "上午好";
-  if (hour < 14) return "中午好";
-  if (hour < 18) return "下午好";
-  if (hour < 22) return "晚上好";
-  return "深夜好";
+function getAqiColor(aqi: number): string {
+  if (aqi <= 50) return "bg-emerald-500";
+  if (aqi <= 100) return "bg-yellow-500";
+  if (aqi <= 150) return "bg-orange-500";
+  return "bg-red-500";
 }
 
-function getAqiBadge(aqi: number) {
-  if (aqi <= 50) return { text: "优", className: "bg-emerald-100 text-emerald-700" };
-  if (aqi <= 100) return { text: "良", className: "bg-lime-100 text-lime-700" };
-  if (aqi <= 150) return { text: "轻度污染", className: "bg-amber-100 text-amber-700" };
-  if (aqi <= 200) return { text: "中度污染", className: "bg-orange-100 text-orange-700" };
-  return { text: "重度污染", className: "bg-red-100 text-red-700" };
-}
-
-function getSeverityStyle(severity: TrafficEvent["severity"]) {
-  switch (severity) {
-    case "danger":
-      return "bg-red-50 text-red-700 border-red-200";
-    case "warning":
-      return "bg-amber-50 text-amber-700 border-amber-200";
+function getSentimentColor(sentiment: string): string {
+  switch (sentiment) {
+    case "positive":
+      return "bg-emerald-500";
+    case "negative":
+      return "bg-red-500";
     default:
-      return "bg-blue-50 text-blue-700 border-blue-200";
+      return "bg-slate-400";
   }
+}
+
+function getOpinionLevelColor(level: number): string {
+  if (level >= 4) return "bg-red-100 text-red-700 border-red-200";
+  if (level >= 3) return "bg-orange-100 text-orange-700 border-orange-200";
+  return "bg-slate-100 text-slate-700 border-slate-200";
+}
+
+function getOpinionLevelLabel(level: number): string {
+  if (level >= 5) return "极高";
+  if (level >= 4) return "较高";
+  if (level >= 3) return "中等";
+  if (level >= 2) return "较低";
+  return "很低";
 }
 
 export default function HomePage() {
   const navigate = useNavigate();
   const { location } = useLocation();
-  const { user, setUser } = useAppStore();
+  const { isCached, addPolicy } = useOfflineCache();
+  const { user, setUser, showToast } = useAppStore();
 
   const [weather, setWeather] = useState<WeatherInfo | null>(null);
-  const [events, setEvents] = useState<TrafficEvent[]>([]);
-  const [services, setServices] = useState<
-    (ServiceEntry & { distance?: number; rankScore?: number })[]
-  >([]);
-  const [policies, setPolicies] = useState<PolicyDocument[]>([]);
+  const [trafficEvents, setTrafficEvents] = useState<TrafficEvent[]>([]);
+  const [busPredictions, setBusPredictions] = useState<BusPrediction[]>([]);
+  const [rankedServices, setRankedServices] = useState<RankedService[]>([]);
   const [socialSecurity, setSocialSecurity] = useState<SocialSecurityAccount | null>(null);
+  const [paymentAccounts, setPaymentAccounts] = useState<PaymentAccount[]>([]);
+  const [communityPosts, setCommunityPosts] = useState<CommunityPost[]>([]);
+  const [opinionDashboard, setOpinionDashboard] = useState<OpinionDashboard | null>(null);
+  const [scenicPois, setScenicPois] = useState<PointOfInterest[]>([]);
+  const [restaurantPois, setRestaurantPois] = useState<PointOfInterest[]>([]);
+  const [medicalPois, setMedicalPois] = useState<PointOfInterest[]>([]);
+  const [policies, setPolicies] = useState<PolicyDocument[]>([]);
   const [profile, setProfile] = useState<UserProfile | null>(user);
   const [loading, setLoading] = useState(true);
+  const [contentVisible, setContentVisible] = useState(false);
+
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [showSearchHint, setShowSearchHint] = useState(false);
+  const [searchSuggestions, setSearchSuggestions] = useState<PaymentAccount[]>([]);
+  const [activePaymentTab, setActivePaymentTab] = useState<PaymentAccount["category"] | null>(null);
+  const [paymentInputValues, setPaymentInputValues] = useState<Record<string, string>>({});
+
+  const [offlineMode, setOfflineMode] = useState(false);
+  const [activePoiTab, setActivePoiTab] = useState<PoiType>("scenic");
 
   useEffect(() => {
-    (async () => {
+    const fetchAllData = async () => {
+      setLoading(true);
       try {
-        const [weatherData, eventsData, servicesData, policiesData, ssData, profileData] =
-          await Promise.all([
-            weatherApi.getCurrent(location),
-            trafficApi.getEvents(),
-            servicesApi.rank({ lat: location.lat, lng: location.lng }),
-            policiesApi.getList({ pageSize: 3 }),
-            socialSecurityApi.getAccount(),
-            userApi.getProfile(),
-          ]);
-        setWeather(weatherData);
-        setEvents(eventsData);
-        setServices(servicesData.slice(0, 9));
-        setPolicies(policiesData.slice(0, 3));
-        setSocialSecurity(ssData);
-        setProfile(profileData);
-        setUser(profileData);
-      } catch (e) {
-        console.error(e);
+        const [
+          weatherRes,
+          eventsRes,
+          busRes,
+          servicesRes,
+          ssRes,
+          paymentRes,
+          postsRes,
+          dashboardRes,
+          scenicRes,
+          restaurantRes,
+          medicalRes,
+          policiesRes,
+          profileRes,
+        ] = await Promise.all([
+          weatherApi.getCurrent({ lat: location.lat, lng: location.lng }),
+          trafficApi.getEvents(),
+          trafficApi.getBusPredictions(),
+          servicesApi.rank({ lat: location.lat, lng: location.lng, district: location.district }),
+          socialSecurityApi.getAccount(),
+          paymentApi.searchAccounts(""),
+          communityApi.getPosts({ pageSize: 3 }),
+          communityApi.getDashboard(),
+          poiApi.getList({ type: "scenic", radius: 5000, lat: location.lat, lng: location.lng }),
+          poiApi.getList({ type: "restaurant", radius: 5000, lat: location.lat, lng: location.lng }),
+          poiApi.getList({ type: "medical", radius: 5000, lat: location.lat, lng: location.lng }),
+          policiesApi.getList({ pageSize: 5 }),
+          userApi.getProfile().catch(() => null),
+        ]);
+
+        setWeather(weatherRes);
+        setTrafficEvents(eventsRes);
+        setBusPredictions(busRes);
+        setRankedServices(servicesRes.slice(0, 9));
+        setSocialSecurity(ssRes);
+        setPaymentAccounts(paymentRes);
+        setCommunityPosts(postsRes);
+        setOpinionDashboard(dashboardRes);
+        setScenicPois(scenicRes);
+        setRestaurantPois(restaurantRes);
+        setMedicalPois(medicalRes);
+        setPolicies(policiesRes);
+        if (profileRes) {
+          setProfile(profileRes);
+          setUser(profileRes);
+        }
+      } catch (err) {
+        console.error("加载首页数据失败:", err);
       } finally {
         setLoading(false);
+        setTimeout(() => setContentVisible(true), 50);
       }
-    })();
-  }, [location.lat, location.lng, setUser]);
+    };
 
-  const userName = profile?.name || "张三";
+    fetchAllData();
+  }, [location.lat, location.lng, location.district, setUser]);
+
+  const groupedEvents = useMemo(() => {
+    const accidents = trafficEvents.filter((e) => e.type === "accident");
+    const metroDelays = trafficEvents.filter((e) => e.type === "metro_delay");
+    return { accidents, metroDelays };
+  }, [trafficEvents]);
+
+  const mostSevereAccident = useMemo(() => {
+    const sorted = [...groupedEvents.accidents].sort((a, b) => {
+      const severityOrder = { danger: 0, warning: 1, info: 2 };
+      return severityOrder[a.severity] - severityOrder[b.severity];
+    });
+    return sorted[0] || null;
+  }, [groupedEvents.accidents]);
+
+  const metroDelayLines = useMemo(() => {
+    return groupedEvents.metroDelays.map((e) => {
+      const match = e.title.match(/地铁(\d+号线)/);
+      return match ? match[1] : e.title;
+    });
+  }, [groupedEvents.metroDelays]);
+
+  const favoriteBusPrediction = useMemo(() => {
+    return busPredictions[0] || null;
+  }, [busPredictions]);
+
+  const nextBusMinutes = useMemo(() => {
+    if (!favoriteBusPrediction || favoriteBusPrediction.predictions.length === 0) return null;
+    return favoriteBusPrediction.predictions[0].minutes;
+  }, [favoriteBusPrediction]);
+
+  const totalUnpaidAmount = useMemo(
+    () =>
+      paymentAccounts
+        .filter((a) => a.status === "unpaid" || a.status === "overdue")
+        .reduce((sum, a) => sum + a.amountDue, 0),
+    [paymentAccounts]
+  );
+
+  const totalUnpaidCount = useMemo(
+    () => paymentAccounts.filter((a) => a.status === "unpaid" || a.status === "overdue").length,
+    [paymentAccounts]
+  );
+
+  const sentimentData = useMemo(() => {
+    if (!opinionDashboard) return [];
+    return [
+      { name: "正面", value: opinionDashboard.positiveCount, color: SENTIMENT_COLORS.positive },
+      { name: "中性", value: opinionDashboard.neutralCount, color: SENTIMENT_COLORS.neutral },
+      { name: "负面", value: opinionDashboard.negativeCount, color: SENTIMENT_COLORS.negative },
+    ];
+  }, [opinionDashboard]);
+
+  const overallOpinionLevel = useMemo(() => {
+    if (!opinionDashboard) return 1;
+    const ratio = opinionDashboard.negativeCount / opinionDashboard.totalPosts;
+    if (ratio > 0.35) return 5;
+    if (ratio > 0.25) return 4;
+    if (ratio > 0.15) return 3;
+    if (ratio > 0.08) return 2;
+    return 1;
+  }, [opinionDashboard]);
+
+  const currentPoiList = useMemo(() => {
+    switch (activePoiTab) {
+      case "scenic":
+        return scenicPois;
+      case "restaurant":
+        return restaurantPois;
+      case "medical":
+        return medicalPois;
+      default:
+        return scenicPois;
+    }
+  }, [activePoiTab, scenicPois, restaurantPois, medicalPois]);
+
+  const filteredPolicies = useMemo(() => {
+    if (offlineMode) {
+      return policies.filter((p) => isCached(p.id));
+    }
+    return policies;
+  }, [policies, offlineMode, isCached]);
+
+  const cachedCount = useMemo(
+    () => policies.filter((p) => isCached(p.id)).length,
+    [policies, isCached]
+  );
+
+  const handleSearchChange = useCallback(
+    async (value: string) => {
+      setSearchKeyword(value);
+      if (value.trim().length > 0) {
+        try {
+          const results = await paymentApi.searchAccounts(value);
+          setSearchSuggestions(results.slice(0, 5));
+          setShowSearchHint(true);
+        } catch {
+          setSearchSuggestions([]);
+        }
+      } else {
+        setSearchSuggestions([]);
+        setShowSearchHint(false);
+      }
+    },
+    []
+  );
+
+  const handleQuickFill = useCallback((account: PaymentAccount) => {
+    setSearchKeyword(account.accountName);
+    setPaymentInputValues((prev) => ({
+      ...prev,
+      [account.category]: account.accountNumber,
+    }));
+    setShowSearchHint(false);
+  }, []);
+
+  const handleDownloadPolicy = useCallback(
+    (policy: PolicyDocument) => {
+      if (!isCached(policy.id)) {
+        addPolicy(policy);
+        showToast(`已缓存「${policy.title}」`, "success");
+      }
+    },
+    [isCached, addPolicy, showToast]
+  );
+
+  const handlePaymentTabClick = (category: PaymentAccount["category"]) => {
+    setActivePaymentTab((prev) => (prev === category ? null : category));
+  };
+
+  const getGreeting = (): string => {
+    const hour = new Date().getHours();
+    if (hour < 6) return "凌晨好";
+    if (hour < 12) return "上午好";
+    if (hour < 14) return "中午好";
+    if (hour < 18) return "下午好";
+    return "晚上好";
+  };
+
+  const WeatherIcon = weather ? getWeatherIcon(weather.condition) : Sun;
+
+  const getServiceDept = (name: string): string => {
+    return SERVICE_DEPT_MAP[name] || "市政府";
+  };
+
+  const calculatePoiDistance = (poi: PointOfInterest): number => {
+    return haversineDistance(
+      { lat: location.lat, lng: location.lng },
+      { lat: poi.lat, lng: poi.lng }
+    );
+  };
+
+  if (loading) {
+    return (
+      <AppLayout showHeader={false}>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <p className="text-slate-500">正在加载青岛市民生服务数据...</p>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  const staggerStyle = (index: number) => ({
+    animationDelay: `${index * 80 + 100}ms`,
+    opacity: contentVisible ? 1 : 0,
+    transform: contentVisible ? "translateY(0)" : "translateY(16px)",
+    transition: `opacity 0.5s ease-out ${index * 80 + 100}ms, transform 0.5s ease-out ${index * 80 + 100}ms`,
+  });
 
   return (
     <AppLayout showHeader={false}>
-      <div className="relative -mx-4 md:-mx-6 lg:-mx-8">
-        <div className="absolute inset-x-0 top-0 h-[340px] bg-gradient-to-br from-brand-500 via-brand-600 to-brand-800" />
-        <div className="absolute -top-20 -right-16 w-72 h-72 rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute top-32 -left-20 w-56 h-56 rounded-full bg-accent-400/20 blur-3xl" />
+      <div className="space-y-5 pb-6">
+        {/* 区块1：LBS定位Header + 天气 */}
+        <div
+          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white p-5 shadow-xl"
+          style={staggerStyle(0)}
+        >
+          <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-24 translate-x-24 blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-40 h-40 bg-blue-400/20 rounded-full translate-y-20 -translate-x-16 blur-2xl" />
 
-        <div className="relative px-4 md:px-6 lg:px-8 pt-6 md:pt-8 pb-8 text-white">
-          <div className="flex items-center gap-2 mb-1 text-white/80 text-sm">
-            <MapPin className="w-4 h-4" />
-            <span>{location.district || "市南区"} · {location.address || "青岛市人民政府"}</span>
-          </div>
-
-          <h1 className="text-2xl md:text-3xl font-serif font-bold tracking-tight mb-5">
-            {getGreeting()}，{userName}
-          </h1>
-
-          {weather ? (
-            <div className="flex items-center justify-between bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/15">
-              <div className="flex items-center gap-4">
-                {(() => {
-                  const WeatherIcon = getWeatherIcon(weather.condition);
-                  return <WeatherIcon className="w-12 h-12 text-yellow-200" />;
-                })()}
-                <div>
-                  <div className="text-3xl md:text-4xl font-bold tracking-tight">
-                    {weather.temperature}°
+          <div className="relative z-10">
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="relative">
+                    <MapPin className="w-5 h-5 text-blue-200" />
+                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75" />
+                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full" />
                   </div>
-                  <div className="text-white/80 text-sm mt-0.5">{weather.condition}</div>
-                </div>
-              </div>
-              <div className="text-right space-y-1.5">
-                <div className="flex items-center justify-end gap-1.5">
-                  <span
-                    className={cn(
-                      "chip",
-                      getAqiBadge(weather.aqi).className.replace("bg-", "bg-white/20 text-white").replace("text-", "text-white")
-                    )}
-                  >
-                    AQI {weather.aqi} {getAqiBadge(weather.aqi).text}
+                  <span className="text-sm text-blue-100 font-medium">
+                    青岛市 · {location.district || "市南区"} · {location.address || "香港中路11号"}
+                  </span>
+                  <span className="flex items-center gap-1 text-xs bg-emerald-500/90 px-2 py-0.5 rounded-full">
+                    <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                    已定位
                   </span>
                 </div>
-                <div className="flex items-center justify-end gap-1 text-white/70 text-xs">
-                  <Wind className="w-3.5 h-3.5" />
-                  <span>{weather.wind}</span>
-                  <span className="mx-1">·</span>
-                  <span>湿度 {weather.humidity}%</span>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-2xl font-bold tracking-tight">
+                    {getGreeting()}，{profile?.name || "张三"}
+                  </h1>
+                  <span className="inline-flex items-center gap-1 bg-white/15 backdrop-blur px-2.5 py-1 rounded-full text-xs border border-white/20">
+                    <BadgeCheck className="w-3.5 h-3.5 text-yellow-300" />
+                    实名认证
+                  </span>
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="h-24 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/15 animate-pulse-soft" />
-          )}
-        </div>
-      </div>
 
-      <div className="relative -mt-2">
-        {events.length > 0 && (
-          <div className="mb-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl overflow-hidden">
-            <div className="flex items-stretch">
-              <div className="flex-shrink-0 flex items-center gap-1.5 px-4 bg-amber-100/60 text-amber-700 border-r border-amber-200">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                <span className="text-xs font-semibold whitespace-nowrap">紧急通知</span>
-              </div>
-              <div className="flex-1 overflow-hidden py-3">
-                <div className="flex gap-12 animate-[marquee_35s_linear_infinite] hover:[animation-play-state:paused] whitespace-nowrap">
-                  {[...events, ...events].map((event, i) => (
-                    <div key={`${event.id}-${i}`} className="flex items-center gap-2 inline-flex">
-                      <span
-                        className={cn(
-                          "chip border",
-                          getSeverityStyle(event.severity)
-                        )}
-                      >
-                        {event.severity === "danger" ? "紧急" : event.severity === "warning" ? "预警" : "提示"}
-                      </span>
-                      <span className="text-sm text-slate-700">{event.title}</span>
-                    </div>
-                  ))}
+            <div className="flex items-center justify-between mb-5 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <WeatherIcon className="w-10 h-10 text-yellow-300" />
+                </div>
+                <div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-5xl font-bold tracking-tighter">{weather?.temperature ?? "--"}</span>
+                    <span className="text-xl text-blue-200">°C</span>
+                  </div>
+                  <p className="text-sm text-blue-100 mt-1">{weather?.condition ?? "晴"} · {weather?.city ?? "青岛"}</p>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-          <GradientCard
-            title="公积金余额"
-            value={loading ? "—" : formatMoney(socialSecurity?.housingFund.balance || 0)}
-            unit={loading ? "" : "元"}
-            icon={<Home className="w-5 h-5" />}
-            description={
-              loading
-                ? "加载中..."
-                : `月缴 ¥${socialSecurity?.housingFund.monthlyContribution || 0} · 单位 ${socialSecurity?.housingFund.unit?.slice(0, 8) || "-"}...`
-            }
-            variant="blue"
-            onClick={() => navigate("/social-security")}
-            footer={
-              <div className="flex items-center justify-between text-white/80 text-xs">
-                <span>最后缴存：{socialSecurity?.housingFund.lastDepositDate || "-"}</span>
-                <span className="flex items-center gap-0.5">
-                  查看详情 <ChevronRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            }
-          />
-          <GradientCard
-            title="社保状态"
-            value="正常缴费"
-            icon={<Shield className="w-5 h-5" />}
-            description={loading ? "加载中..." : "五险均处于正常缴费状态"}
-            variant="teal"
-            onClick={() => navigate("/social-security")}
-            footer={
-              <div className="flex items-center justify-between text-white/80 text-xs">
-                <span>累计缴费 {socialSecurity?.socialInsurance.pension.months || 0} 个月</span>
-                <span className="flex items-center gap-0.5">
-                  查看详情 <ChevronRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            }
-          />
-        </div>
-
-        <div className="mb-5">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="section-title">智慧服务</h3>
-            <button
-              onClick={() => {}}
-              className="text-xs text-brand-600 font-medium flex items-center gap-0.5 hover:text-brand-700"
-            >
-              全部服务 <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {loading ? (
-            <div className="grid grid-cols-3 gap-3">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className="card p-3 flex flex-col items-center gap-2">
-                  <div className="skeleton w-12 h-12 rounded-xl" />
-                  <div className="skeleton h-3 w-12" />
+              <div className="text-right space-y-2">
+                <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${weather ? getAqiColor(weather.aqi) : "bg-slate-500"}`}>
+                  <Activity className="w-3 h-3" />
+                  AQI {weather?.aqi ?? "--"} {weather?.aqiLevel ?? "良"}
                 </div>
-              ))}
+                <p className="text-xs text-blue-200">湿度 {weather?.humidity ?? "--"}% · {weather?.wind ?? "--"}</p>
+              </div>
             </div>
-          ) : (
-            <div className="grid grid-cols-3 gap-3">
-              {services.map((service, index) => {
-                const Icon = iconMap[service.icon] || FileText;
+
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { name: "山东省人社厅", icon: Landmark },
+                { name: "青岛交警", icon: ShieldCheck },
+                { name: "各区缴费系统", icon: CreditCard },
+              ].map((dept) => {
+                const Icon = dept.icon;
                 return (
-                  <button
-                    key={service.id}
-                    onClick={() => service.path && navigate(service.path)}
-                    className="card p-3 md:p-4 flex flex-col items-center gap-2 group animate-fade-in-up"
-                    style={{ animationDelay: `${index * 60}ms`, opacity: 0 }}
+                  <div
+                    key={dept.name}
+                    className="flex items-center gap-2 bg-white/8 backdrop-blur rounded-lg px-3 py-2.5 border border-white/10 hover:bg-white/15 transition-all"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center text-brand-600 group-hover:from-brand-500 group-hover:to-brand-600 group-hover:text-white transition-all duration-300">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-xs md:text-sm font-medium text-slate-700 text-center leading-tight">
-                      {service.name}
-                    </span>
-                  </button>
+                    <Icon className="w-4 h-4 text-emerald-300 flex-shrink-0" />
+                    <span className="text-xs text-blue-50 truncate flex-1">{dept.name}</span>
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  </div>
                 );
               })}
             </div>
-          )}
+          </div>
         </div>
 
-        <div>
+        {/* 区块2：交通三栏状态卡 - 横向滚动 */}
+        <div style={staggerStyle(1)}>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="section-title">政策公告</h3>
+            <h2 className="font-serif text-lg font-semibold text-slate-800 tracking-tight flex items-center gap-2">
+              <Radio className="w-5 h-5 text-blue-600" />
+              交通态势感知
+            </h2>
             <button
-              onClick={() => {}}
-              className="text-xs text-brand-600 font-medium flex items-center gap-0.5 hover:text-brand-700"
+              onClick={() => navigate("/traffic")}
+              className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-0.5"
             >
-              更多 <ChevronRight className="w-3.5 h-3.5" />
+              查看全部
+              <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
+          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+            {/* 事故快报卡 */}
+            <div
+              onClick={() => navigate("/traffic?tab=accidents")}
+              className="flex-shrink-0 w-[220px] group cursor-pointer rounded-xl bg-white border border-red-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+            >
+              <div className="bg-gradient-to-r from-red-50 to-rose-50 px-4 py-3 border-b border-red-100">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center shadow-sm">
+                      <AlertTriangle className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-800 text-sm">事故快报</h3>
+                      <p className="text-[11px] text-slate-500">今日 {groupedEvents.accidents.length} 起</p>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center justify-center min-w-[28px] h-7 px-2 bg-red-500 text-white text-xs font-bold rounded-full shadow-sm">
+                    {groupedEvents.accidents.length}
+                  </span>
+                </div>
+              </div>
+              <div className="p-3">
+                {mostSevereAccident ? (
+                  <div className="space-y-1.5">
+                    <p className="text-xs text-slate-700 font-medium line-clamp-2 group-hover:text-red-600 transition-colors">
+                      {mostSevereAccident.title}
+                    </p>
+                    <p className="text-[11px] text-slate-400">{getTimeAgo(mostSevereAccident.timestamp)}</p>
+                    <div className="flex items-center gap-1 pt-1">
+                      <span className="text-[11px] text-slate-500">来源：</span>
+                      <span className="text-[11px] text-slate-600">{mostSevereAccident.source}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-3">
+                    <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-1" />
+                    <p className="text-xs text-slate-400">今日无事故</p>
+                  </div>
+                )}
+              </div>
+            </div>
 
-          {loading ? (
-            <SkeletonCard variant="list" count={3} />
-          ) : (
-            <div className="space-y-2.5">
-              {policies.map((policy) => (
-                <div
-                  key={policy.id}
-                  className="card p-4 cursor-pointer hover:bg-slate-50"
-                  onClick={() => {}}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-amber-50 to-orange-50 flex items-center justify-center text-amber-600">
-                      <FileText className="w-5 h-5" />
+            {/* 地铁延误卡 */}
+            <div
+              onClick={() => navigate("/traffic?tab=metro")}
+              className="flex-shrink-0 w-[220px] group cursor-pointer rounded-xl bg-white border border-orange-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+            >
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 px-4 py-3 border-b border-orange-100">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center shadow-sm">
+                      <Train className="w-4 h-4 text-white" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-slate-800 leading-snug line-clamp-1 mb-1">
-                        {policy.title}
-                      </h4>
-                      <div className="flex items-center gap-2 text-xs text-slate-500">
-                        <span className="flex items-center gap-1">
-                          <Building2 className="w-3 h-3" />
-                          <span className="truncate max-w-[160px]">{policy.department}</span>
+                    <div>
+                      <h3 className="font-semibold text-slate-800 text-sm">地铁延误</h3>
+                      <p className="text-[11px] text-slate-500">
+                        {groupedEvents.metroDelays.length > 0 ? `${groupedEvents.metroDelays.length} 条线路` : "运行正常"}
+                      </p>
+                    </div>
+                  </div>
+                  <span className={`inline-flex items-center justify-center min-w-[28px] h-7 px-2 text-white text-xs font-bold rounded-full shadow-sm ${groupedEvents.metroDelays.length > 0 ? "bg-orange-500" : "bg-emerald-500"}`}>
+                    {groupedEvents.metroDelays.length}
+                  </span>
+                </div>
+              </div>
+              <div className="p-3">
+                {groupedEvents.metroDelays.length > 0 ? (
+                  <div className="space-y-2">
+                    {metroDelayLines.slice(0, 2).map((line, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-orange-100 text-orange-700">
+                          {line}
                         </span>
-                        <span>·</span>
-                        <span>{formatDate(policy.publishedAt)}</span>
                       </div>
+                    ))}
+                    <p className="text-[11px] text-slate-400 pt-1">
+                      {getTimeAgo(groupedEvents.metroDelays[0]?.timestamp || "")}发生
+                    </p>
+                  </div>
+                ) : (
+                  <div className="text-center py-3">
+                    <CheckCircle className="w-6 h-6 text-emerald-400 mx-auto mb-1" />
+                    <p className="text-xs text-slate-400">全线正常运行</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* 公交预测卡 */}
+            <div
+              onClick={() => navigate("/traffic?tab=bus")}
+              className="flex-shrink-0 w-[220px] group cursor-pointer rounded-xl bg-white border border-blue-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+            >
+              <div className="bg-gradient-to-r from-blue-50 to-sky-50 px-4 py-3 border-b border-blue-100">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-sm">
+                      <Bus className="w-4 h-4 text-white" />
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="font-semibold text-slate-800 text-sm">公交预测</h3>
+                      <p className="text-[11px] text-slate-500">
+                        {favoriteBusPrediction ? favoriteBusPrediction.routeName : "暂无数据"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    {nextBusMinutes !== null ? (
+                      <span className="text-xl font-bold text-blue-600">
+                        {nextBusMinutes}
+                        <span className="text-xs font-normal text-slate-500 ml-0.5">分钟</span>
+                      </span>
+                    ) : (
+                      <span className="text-xs text-slate-400">--</span>
+                    )}
                   </div>
                 </div>
-              ))}
+              </div>
+              <div className="p-3">
+                {favoriteBusPrediction ? (
+                  <div className="space-y-1.5">
+                    <p className="text-xs text-slate-600">
+                      <span className="text-slate-400">下一班：</span>
+                      {favoriteBusPrediction.predictions[0]?.plateNumber || "--"}
+                    </p>
+                    <p className="text-xs text-slate-600">
+                      <span className="text-slate-400">站点：</span>
+                      {favoriteBusPrediction.stopName}
+                    </p>
+                    <div className="flex items-center gap-1 pt-1">
+                      <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                      <span className="text-[11px] text-slate-500">已收藏线路</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-3">
+                    <Bus className="w-6 h-6 text-slate-300 mx-auto mb-1" />
+                    <p className="text-xs text-slate-400">暂无收藏线路</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 区块3：公积金社保政务闭环入口 */}
+        <div className="grid grid-cols-2 gap-3" style={staggerStyle(2)}>
+          {/* 公积金 */}
+          <div
+            onClick={() => navigate("/social-security?tab=housing")}
+            className="relative overflow-hidden rounded-2xl p-4 text-white shadow-xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 cursor-pointer active:scale-[0.98] transition-transform"
+          >
+            <div className="absolute -right-8 -top-8 w-28 h-28 rounded-full bg-white/10" />
+            <div className="absolute -right-12 top-4 w-24 h-24 rounded-full bg-white/5" />
+            
+            <div className="absolute top-3 right-3">
+              <span className="inline-flex items-center gap-1 bg-white/20 backdrop-blur px-2 py-0.5 rounded-full text-[10px] border border-white/20">
+                <QrCode className="w-3 h-3" />
+                电子凭证
+              </span>
+            </div>
+
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-9 h-9 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center">
+                  <Wallet className="w-5 h-5" />
+                </div>
+                <span className="text-white/80 text-sm font-medium">住房公积金</span>
+              </div>
+              <div className="flex items-baseline gap-1 mb-1">
+                <span className="text-2xl font-bold tracking-tight">
+                  {formatMoney(socialSecurity?.housingFund.balance || 0, { symbol: "¥" })}
+                </span>
+              </div>
+              <p className="text-white/60 text-[11px] mb-3">
+                月缴 {formatMoney(socialSecurity?.housingFund.monthlyContribution || 0, { symbol: "" })}
+              </p>
+              
+              <div className="flex items-center justify-between pt-2.5 border-t border-white/15">
+                <span className="inline-flex items-center gap-1 text-[11px] text-white/70">
+                  <ShieldCheck className="w-3 h-3" />
+                  明细核验
+                </span>
+                <span className="text-[10px] text-white/50">
+                  数据来源：山东省人社厅
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 社保 */}
+          <div
+            onClick={() => navigate("/social-security?tab=social")}
+            className="relative overflow-hidden rounded-2xl p-4 text-white shadow-xl bg-gradient-to-br from-teal-500 via-teal-600 to-cyan-700 cursor-pointer active:scale-[0.98] transition-transform"
+          >
+            <div className="absolute -right-8 -top-8 w-28 h-28 rounded-full bg-white/10" />
+            <div className="absolute -right-12 top-4 w-24 h-24 rounded-full bg-white/5" />
+            
+            <div className="absolute top-3 right-3">
+              <span className="inline-flex items-center gap-1 bg-white/20 backdrop-blur px-2 py-0.5 rounded-full text-[10px] border border-white/20">
+                <QrCode className="w-3 h-3" />
+                电子凭证
+              </span>
+            </div>
+
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-9 h-9 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <span className="text-white/80 text-sm font-medium">社会保险</span>
+              </div>
+              <div className="flex items-baseline gap-1 mb-1">
+                <span className="text-2xl font-bold tracking-tight">
+                  {socialSecurity?.socialInsurance.pension.months || 0}
+                  <span className="text-sm font-normal text-white/70 ml-1">个月</span>
+                </span>
+              </div>
+              <p className="text-white/60 text-[11px] mb-3">
+                养老/医疗/失业/工伤/生育 五险
+              </p>
+              
+              <div className="flex items-center justify-between pt-2.5 border-t border-white/15">
+                <span className="inline-flex items-center gap-1 text-[11px] text-white/70">
+                  <Eye className="w-3 h-3" />
+                  明细核验
+                </span>
+                <span className="text-[10px] text-white/50">
+                  实时同步
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 区块4：LBS智能排序服务区 */}
+        <div style={staggerStyle(3)}>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-serif text-lg font-semibold text-slate-800 tracking-tight flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-500" />
+              便民服务矩阵
+            </h2>
+            <div className="flex items-center gap-1.5">
+              <RefreshCw className="w-3.5 h-3.5 text-blue-500" />
+              <span className="text-[11px] text-slate-500">
+                已为您按{location.district || "市南区"}位置智能排序
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2.5">
+            {rankedServices.map((service) => {
+              const Icon = SERVICE_ICONS[service.name] || Building2;
+              const dept = getServiceDept(service.name);
+              return (
+                <div
+                  key={service.id}
+                  onClick={() => navigate(service.path)}
+                  className="group relative bg-white rounded-xl border border-slate-100 p-3 cursor-pointer hover:shadow-md hover:border-blue-200 hover:-translate-y-0.5 transition-all duration-300"
+                >
+                  <div className="absolute top-2 right-2">
+                    <span className="text-[10px] text-slate-400 group-hover:text-blue-500 transition-colors">
+                      距您 {service.distance.toFixed(1)}km
+                    </span>
+                  </div>
+                  
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center mb-2 group-hover:from-blue-100 group-hover:to-indigo-100 transition-colors">
+                    <Icon className="w-5 h-5 text-blue-600" />
+                  </div>
+                  
+                  <h3 className="text-sm font-medium text-slate-800 mb-1 truncate pr-8">
+                    {service.name}
+                  </h3>
+                  
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] bg-slate-50 text-slate-500 border border-slate-100">
+                      <Building className="w-2.5 h-2.5" />
+                      {dept}
+                    </span>
+                    <span className="text-[10px] text-amber-500 flex items-center gap-0.5">
+                      <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+                      {service.score.toFixed(1)}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 区块5：便民缴费快速入口 */}
+        <div style={staggerStyle(4)}>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-serif text-lg font-semibold text-slate-800 tracking-tight flex items-center gap-2">
+              <Receipt className="w-5 h-5 text-green-600" />
+              便民缴费
+            </h2>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px] text-slate-500">
+                市南/市北/崂山等各区缴费系统直连
+              </span>
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
+            </div>
+          </div>
+
+          {totalUnpaidCount > 0 && (
+            <div
+              onClick={() => navigate("/payment")}
+              className="mb-3 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-3 cursor-pointer hover:shadow-md transition-shadow"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center">
+                    <HandCoins className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-slate-800">
+                      {totalUnpaidCount} 项账单待缴费
+                    </p>
+                    <p className="text-xs text-amber-600 font-semibold">
+                      合计 {formatMoney(totalUnpaidAmount)}
+                    </p>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-slate-400" />
+              </div>
             </div>
           )}
+
+          <div className="bg-white rounded-xl border border-slate-100 p-3">
+            {/* 搜索框 */}
+            <div className="relative mb-3">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                value={searchKeyword}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                onFocus={() => searchKeyword && setShowSearchHint(true)}
+                placeholder="搜索户号、姓名或缴费项目..."
+                className="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              />
+              {searchKeyword && (
+                <button
+                  onClick={() => {
+                    setSearchKeyword("");
+                    setShowSearchHint(false);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2"
+                >
+                  <X className="w-3.5 h-3.5 text-slate-400 hover:text-slate-600" />
+                </button>
+              )}
+
+              {showSearchHint && searchSuggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-10 overflow-hidden">
+                  {searchSuggestions.map((account) => (
+                    <div
+                      key={account.id}
+                      onClick={() => handleQuickFill(account)}
+                      className="px-3 py-2 hover:bg-blue-50 cursor-pointer flex items-center justify-between border-b border-slate-50 last:border-b-0"
+                    >
+                      <div>
+                        <p className="text-sm text-slate-800 font-medium">{account.accountName}</p>
+                        <p className="text-xs text-slate-500">{account.categoryName} · {account.accountNumber}</p>
+                      </div>
+                      <span className="text-xs text-amber-600 font-medium">
+                        {formatMoney(account.amountDue)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 5个缴费类型入口 */}
+            <div className="grid grid-cols-5 gap-2">
+              {PAYMENT_CATEGORIES.map((cat) => {
+                const Icon = cat.icon;
+                const isActive = activePaymentTab === cat.key;
+                const account = paymentAccounts.find((a) => a.category === cat.key);
+                return (
+                  <div key={cat.key} className="text-center">
+                    <button
+                      onClick={() => handlePaymentTabClick(cat.key)}
+                      className={cn(
+                        "w-full flex flex-col items-center gap-1.5 p-2.5 rounded-xl transition-all duration-300",
+                        isActive
+                          ? "bg-blue-50 ring-2 ring-blue-500/30"
+                          : "hover:bg-slate-50"
+                      )}
+                    >
+                      <div className={cn(
+                        "w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-sm",
+                        cat.bgColor
+                      )}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <span className="text-xs text-slate-700 font-medium">{cat.label}</span>
+                      {account && account.amountDue > 0 && (
+                        <span className="text-[10px] text-amber-600 font-medium">
+                          {formatMoney(account.amountDue, { symbol: "" })}
+                        </span>
+                      )}
+                    </button>
+                    
+                    {isActive && (
+                      <div className="mt-2 p-2 bg-slate-50 rounded-lg">
+                        <input
+                          type="text"
+                          value={paymentInputValues[cat.key] || ""}
+                          onChange={(e) =>
+                            setPaymentInputValues((prev) => ({
+                              ...prev,
+                              [cat.key]: e.target.value,
+                            }))
+                          }
+                          placeholder="请输入户号"
+                          className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        />
+                        <p className="mt-1 text-[10px] text-slate-400 text-left">
+                          {cat.district}缴费系统
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 区块6：社区舆情概览卡片 */}
+        <div style={staggerStyle(5)}>
+          <div
+            onClick={() => navigate("/community")}
+            className="bg-white rounded-xl border border-slate-100 p-4 cursor-pointer hover:shadow-md transition-shadow"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-serif text-lg font-semibold text-slate-800 tracking-tight flex items-center gap-2">
+                <Users className="w-5 h-5 text-purple-600" />
+                青青岛社区舆情
+              </h2>
+              <div className="flex items-center gap-2">
+                <span className={cn(
+                  "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border",
+                  getOpinionLevelColor(overallOpinionLevel)
+                )}>
+                  舆情等级 {overallOpinionLevel}级 · {getOpinionLevelLabel(overallOpinionLevel)}
+                </span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              {/* 左侧：情感分布饼图 */}
+              <div className="w-28 h-28 flex-shrink-0">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={sentimentData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={25}
+                      outerRadius={45}
+                      paddingAngle={2}
+                      dataKey="value"
+                    >
+                      {sentimentData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="flex justify-center gap-2 -mt-1">
+                  <span className="flex items-center gap-1 text-[10px] text-slate-500">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    正面
+                  </span>
+                  <span className="flex items-center gap-1 text-[10px] text-slate-500">
+                    <span className="w-2 h-2 rounded-full bg-slate-400" />
+                    中性
+                  </span>
+                  <span className="flex items-center gap-1 text-[10px] text-slate-500">
+                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    负面
+                  </span>
+                </div>
+              </div>
+
+              {/* 右侧：今日热帖Top3 */}
+              <div className="flex-1 space-y-2">
+                <p className="text-xs text-slate-500 mb-1">今日热帖 Top3</p>
+                {communityPosts.slice(0, 3).map((post) => (
+                  <div key={post.id} className="flex items-start gap-2 group">
+                    <span className={cn(
+                      "flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1.5",
+                      getSentimentColor(post.sentiment)
+                    )} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-slate-700 truncate group-hover:text-blue-600 transition-colors font-medium">
+                        {post.title}
+                      </p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-[10px] text-slate-400">
+                          {post.board}
+                        </span>
+                        <span className="text-[10px] text-slate-400">
+                          {post.viewCount} 阅读
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 区块7：本地生活POI图谱概览 */}
+        <div style={staggerStyle(6)}>
+          <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+            <div className="px-4 pt-3 pb-2">
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="font-serif text-lg font-semibold text-slate-800 tracking-tight flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-green-600" />
+                  城市服务图谱
+                </h2>
+                <button
+                  onClick={() => navigate("/poi")}
+                  className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-0.5"
+                >
+                  更多
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Tab 切换 */}
+              <div className="flex gap-1 bg-slate-50 rounded-lg p-1">
+                {(["scenic", "restaurant", "medical"] as PoiType[]).map((type) => {
+                  const labels: Record<PoiType, string> = {
+                    scenic: "景区",
+                    restaurant: "餐饮",
+                    medical: "医疗",
+                  };
+                  const icons: Record<PoiType, typeof MapPin> = {
+                    scenic: MapPin,
+                    restaurant: Building,
+                    medical: Stethoscope,
+                  };
+                  const Icon = icons[type];
+                  const isActive = activePoiTab === type;
+                  const count = type === "scenic" ? scenicPois.length : type === "restaurant" ? restaurantPois.length : medicalPois.length;
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => setActivePoiTab(type)}
+                      className={cn(
+                        "flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md text-xs font-medium transition-all",
+                        isActive
+                          ? "bg-white text-blue-600 shadow-sm"
+                          : "text-slate-500 hover:text-slate-700"
+                      )}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      {labels[type]}
+                      <span className={cn(
+                        "px-1.5 py-0.5 rounded-full text-[10px]",
+                        isActive ? "bg-blue-50 text-blue-600" : "bg-slate-100 text-slate-400"
+                      )}>
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* POI 列表 */}
+            <div className="px-4 pb-4 pt-2 space-y-2.5">
+              {currentPoiList.slice(0, 3).map((poi, idx) => {
+                const distance = calculatePoiDistance(poi);
+                const sourceDept = POI_SOURCE_MAP[poi.type];
+                return (
+                  <div
+                    key={poi.id}
+                    onClick={() => navigate(`/poi/${poi.id}`)}
+                    className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors group"
+                  >
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-50 to-green-100 flex items-center justify-center">
+                      <span className="text-sm font-bold text-emerald-600">{idx + 1}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-sm font-medium text-slate-800 truncate group-hover:text-blue-600 transition-colors">
+                          {poi.name}
+                        </h4>
+                        <span className="flex-shrink-0 text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-100">
+                          {poi.level || poi.rating}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                          <Building className="w-3 h-3" />
+                          {sourceDept}
+                        </span>
+                        <span className="text-[11px] text-blue-600 font-medium flex items-center gap-0.5">
+                          <MapPin className="w-3 h-3" />
+                          {distance.toFixed(1)}km
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 区块8：政策公告 + 离线缓存 */}
+        <div style={staggerStyle(7)}>
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <h2 className="font-serif text-lg font-semibold text-slate-800 tracking-tight flex items-center gap-2">
+                <FileText className="w-5 h-5 text-blue-600" />
+                政策公告
+              </h2>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-blue-50 text-blue-600 border border-blue-100">
+                <HardDrive className="w-3 h-3" />
+                {cachedCount} 篇已缓存
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] text-slate-500">离线模式</span>
+              <button
+                onClick={() => setOfflineMode(!offlineMode)}
+                className={cn(
+                  "relative w-10 h-5 rounded-full transition-colors duration-300",
+                  offlineMode ? "bg-blue-600" : "bg-slate-300"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300",
+                    offlineMode ? "translate-x-5" : "translate-x-0.5"
+                  )}
+                />
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-slate-100 divide-y divide-slate-50">
+            {filteredPolicies.length > 0 ? (
+              filteredPolicies.slice(0, 4).map((policy) => {
+                const cached = isCached(policy.id);
+                return (
+                  <div
+                    key={policy.id}
+                    className="p-3 hover:bg-slate-50 cursor-pointer transition-colors group"
+                    onClick={() => navigate(`/policies/${policy.id}`)}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-slate-800 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                          {policy.title}
+                        </h4>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <span className="text-[11px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
+                            {policy.department}
+                          </span>
+                          <span className="text-[11px] text-slate-400">
+                            {formatDate(policy.publishedAt)}
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDownloadPolicy(policy);
+                        }}
+                        className={cn(
+                          "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
+                          cached
+                            ? "text-emerald-500 bg-emerald-50"
+                            : "text-slate-400 hover:text-blue-500 hover:bg-blue-50"
+                        )}
+                      >
+                        {cached ? (
+                          <HardDrive className="w-4 h-4" />
+                        ) : (
+                          <Download className="w-4 h-4" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="p-6 text-center">
+                <Filter className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-sm text-slate-400">
+                  {offlineMode ? "暂无已缓存的政策" : "暂无政策公告"}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <button
+            onClick={() => navigate("/policies")}
+            className="w-full mt-2 text-center py-2 text-xs text-slate-500 hover:text-blue-600 transition-colors"
+          >
+            查看全部政策 →
+          </button>
         </div>
       </div>
-
-      <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-      `}</style>
     </AppLayout>
   );
 }

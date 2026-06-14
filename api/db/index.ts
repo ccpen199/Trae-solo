@@ -132,16 +132,16 @@ export function getUserById(id: string): UserProfile | null {
 
 export function listPaymentAccounts(): PaymentAccount[] {
   const d = getDb()
-  const rows = d.prepare('SELECT * FROM payment_accounts ORDER BY dueDate ASC').all() as any[]
+  const rows = d.prepare('SELECT * FROM payment_accounts ORDER BY due_date ASC').all() as any[]
   return rows.map((row) => ({
     id: row.id,
     category: row.category as any,
-    categoryName: row.categoryName,
+    categoryName: row.category_name,
     district: row.district,
-    accountNumber: row.accountNumber,
-    accountName: row.accountName,
-    amountDue: row.amountDue,
-    dueDate: row.dueDate,
+    accountNumber: row.account_number,
+    accountName: row.account_name,
+    amountDue: row.amount_due,
+    dueDate: row.due_date,
     status: row.status as any,
   }))
 }
@@ -149,7 +149,7 @@ export function listPaymentAccounts(): PaymentAccount[] {
 export function insertPaymentAccount(acc: PaymentAccount): void {
   const d = getDb()
   d.prepare(`
-    INSERT INTO payment_accounts (id, category, categoryName, district, accountNumber, accountName, amountDue, dueDate, status)
+    INSERT INTO payment_accounts (id, category, category_name, district, account_number, account_name, amount_due, due_date, status)
     VALUES (@id, @category, @categoryName, @district, @accountNumber, @accountName, @amountDue, @dueDate, @status)
   `).run(acc as any)
 }
@@ -157,48 +157,48 @@ export function insertPaymentAccount(acc: PaymentAccount): void {
 export function listPaymentRecords(accountId?: string): PaymentRecord[] {
   const d = getDb()
   const rows = accountId
-    ? d.prepare('SELECT * FROM payment_records WHERE accountId = ? ORDER BY createdAt DESC').all(accountId) as any[]
-    : d.prepare('SELECT * FROM payment_records ORDER BY createdAt DESC').all() as any[]
+    ? d.prepare('SELECT * FROM payment_records WHERE account_id = ? ORDER BY created_at DESC').all(accountId) as any[]
+    : d.prepare('SELECT * FROM payment_records ORDER BY created_at DESC').all() as any[]
   return rows.map((row) => ({
     id: row.id,
-    accountId: row.accountId,
+    accountId: row.account_id,
     amount: row.amount,
     status: row.status as any,
-    orderNo: row.orderNo,
-    paidAt: row.paidAt,
-    createdAt: row.createdAt,
+    orderNo: row.order_no,
+    paidAt: row.paid_at,
+    createdAt: row.created_at,
   }))
 }
 
 export function insertPaymentRecord(record: PaymentRecord): void {
   const d = getDb()
   d.prepare(`
-    INSERT INTO payment_records (id, accountId, amount, status, orderNo, paidAt, createdAt)
+    INSERT INTO payment_records (id, account_id, amount, status, order_no, paid_at, created_at)
     VALUES (@id, @accountId, @amount, @status, @orderNo, @paidAt, @createdAt)
   `).run(record as any)
 }
 
 export function updatePaymentRecordStatus(id: string, status: 'pending' | 'success' | 'failed', paidAt?: string): void {
   const d = getDb()
-  d.prepare('UPDATE payment_records SET status = ?, paidAt = COALESCE(?, paidAt) WHERE id = ?').run(status, paidAt ?? null, id)
+  d.prepare('UPDATE payment_records SET status = ?, paid_at = COALESCE(?, paid_at) WHERE id = ?').run(status, paidAt ?? null, id)
 }
 
 export function listFavorites(): Favorite[] {
   const d = getDb()
-  const rows = d.prepare('SELECT * FROM favorites ORDER BY createdAt DESC').all() as any[]
+  const rows = d.prepare('SELECT * FROM favorites ORDER BY created_at DESC').all() as any[]
   return rows.map((row) => ({
     id: row.id,
-    targetType: row.targetType as any,
-    targetId: row.targetId,
-    targetData: row.targetData,
-    createdAt: row.createdAt,
+    targetType: row.target_type as any,
+    targetId: row.target_id,
+    targetData: row.target_data,
+    createdAt: row.created_at,
   }))
 }
 
 export function insertFavorite(fav: Favorite): void {
   const d = getDb()
   d.prepare(`
-    INSERT OR IGNORE INTO favorites (id, targetType, targetId, targetData, createdAt)
+    INSERT OR IGNORE INTO favorites (id, target_type, target_id, target_data, created_at)
     VALUES (@id, @targetType, @targetId, @targetData, @createdAt)
   `).run(fav as any)
 }
