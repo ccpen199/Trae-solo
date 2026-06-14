@@ -16,6 +16,8 @@ import type {
   UserProfile,
   UserLocation,
   Favorite,
+  CertificateResponse,
+  PaymentAccountWithMatch,
 } from "../../shared/types";
 
 export const socialSecurityApi = {
@@ -25,10 +27,21 @@ export const socialSecurityApi = {
     client.get<SocialSecurityAccount["contributionHistory"]>(
       "/social-security/370202199001011234/history"
     ),
-  generateCertificate: (): Promise<{ base64: string; filename: string }> =>
-    client.post<{ base64: string; filename: string }>(
+  generateCertificate: (): Promise<CertificateResponse> =>
+    client.post<CertificateResponse>(
       "/social-security/370202199001011234/certificate"
     ),
+};
+
+export const paymentApi = {
+  searchAccounts: (keyword?: string): Promise<PaymentAccountWithMatch[]> =>
+    client.get<PaymentAccountWithMatch[]>("/payment/accounts", { keyword }),
+  getAccounts: (category?: PaymentCategory): Promise<PaymentAccount[]> =>
+    client.get<PaymentAccount[]>("/payment/accounts", { category }),
+  getRecords: (accountId?: string): Promise<PaymentRecord[]> =>
+    client.get<PaymentRecord[]>("/payment/records", { accountId }),
+  pay: (accountId: string, amount: number): Promise<PaymentRecord> =>
+    client.post<PaymentRecord>("/payment/pay", { accountId, amount }),
 };
 
 export const trafficApi = {

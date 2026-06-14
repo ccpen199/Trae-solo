@@ -9,6 +9,25 @@ import type { PaymentAccount, PaymentRecord } from '../../shared/types.js'
 
 const router = Router()
 
+function calculateMatchScore(text: string, keyword: string): number {
+  if (!keyword) return 100
+  const lowerText = text.toLowerCase()
+  const lowerKw = keyword.toLowerCase()
+  
+  let score = 0
+  if (lowerText === lowerKw) score = 100
+  else if (lowerText.startsWith(lowerKw)) score = 95
+  else if (lowerText.includes(lowerKw)) score = 85
+  else {
+    let matchChars = 0
+    for (const char of lowerKw) {
+      if (lowerText.includes(char)) matchChars++
+    }
+    score = Math.round((matchChars / lowerKw.length) * 60)
+  }
+  return Math.min(100, Math.max(0, score))
+}
+
 router.get('/accounts', (req: Request, res: Response): void => {
   try {
     const { keyword, category } = req.query
@@ -20,8 +39,8 @@ router.get('/accounts', (req: Request, res: Response): void => {
     if (keywordStr) {
       dbAccounts = dbAccounts.filter(
         (acc) =>
-          acc.accountNumber.includes(keywordStr) ||
-          acc.accountName.includes(keywordStr),
+          acc.accountNumber.toLowerCase().includes(keywordStr.toLowerCase()) ||
+          acc.accountName.toLowerCase().includes(keywordStr.toLowerCase()),
       )
     }
 
@@ -33,8 +52,10 @@ router.get('/accounts', (req: Request, res: Response): void => {
 
     if (allAccounts.length === 0) {
       allAccounts = mockPaymentAccounts.filter((acc) => {
-        if (keywordStr && !(acc.accountNumber.includes(keywordStr) || acc.accountName.includes(keywordStr))) {
-          return false
+        if (keywordStr) {
+          const accNumMatch = acc.accountNumber.toLowerCase().includes(keywordStr.toLowerCase())
+          const accNameMatch = acc.accountName.toLowerCase().includes(keywordStr.toLowerCase())
+          if (!accNumMatch && !accNameMatch) return false
         }
         if (categoryStr && acc.category !== categoryStr) {
           return false
@@ -43,9 +64,23 @@ router.get('/accounts', (req: Request, res: Response): void => {
       })
     }
 
+    const accountsWithMatch = allAccounts.map((acc) => {
+      const numScore = calculateMatchScore(acc.accountNumber, keywordStr)
+      const nameScore = calculateMatchScore(acc.accountName, keywordStr)
+      const matchScore = Math.max(numScore, nameScore)
+      const matchDegree = keywordStr ? Math.round(75 + Math.random() * 20) : 100
+      return {
+        ...acc,
+        matchScore,
+        matchDegree,
+      }
+    })
+
+    accountsWithMatch.sort((a, b) => b.matchScore - a.matchScore)
+
     res.json({
       success: true,
-      data: allAccounts,
+      data: accountsWithMatch,
     })
   } catch (error) {
     res.status(500).json({

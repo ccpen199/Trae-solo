@@ -141,6 +141,32 @@ export interface PaymentRecord {
 
 export type Sentiment = "positive" | "neutral" | "negative";
 
+export interface CertificateResponse {
+  base64: string;
+  filename: string;
+  certNo: string;
+  verifyCode: string;
+  issueDate: string;
+  qrData: string;
+  pdfData: string;
+}
+
+export interface KeywordWeight {
+  word: string;
+  weight: number;
+}
+
+export interface NlpAnalysis {
+  sentimentConfidence: number;
+  sentimentLabel: string;
+  keywords: KeywordWeight[];
+  opinionBasis: string;
+  engine: string;
+  annotatedAt: string;
+}
+
+export type DisposalStatus = "pending" | "processing" | "replied" | "closed";
+
 export interface CommunityPost {
   id: string;
   title: string;
@@ -155,6 +181,14 @@ export interface CommunityPost {
   opinionLevel: 1 | 2 | 3 | 4 | 5;
   keywords: string[];
   publishedAt: string;
+  nlpAnalysis?: NlpAnalysis;
+  disposalStatus?: DisposalStatus;
+  transferredTo?: string;
+}
+
+export interface PaymentAccountWithMatch extends PaymentAccount {
+  matchScore: number;
+  matchDegree: number;
 }
 
 export interface OpinionDashboard {
@@ -194,6 +228,7 @@ export interface PolicyDocument {
   publishedAt: string;
   effectiveFrom: string;
   cached: boolean;
+  isCaching?: boolean;
 }
 
 export interface UserLocation {
@@ -221,6 +256,9 @@ export interface ServiceEntry {
   path: string;
   category: "government" | "traffic" | "life" | "community" | "policy";
   score: number;
+  lat: number;
+  lng: number;
+  district: string;
 }
 
 export interface UserProfile {

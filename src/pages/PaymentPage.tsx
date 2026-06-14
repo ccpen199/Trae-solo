@@ -39,6 +39,7 @@ import type {
   PaymentAccount,
   PaymentRecord,
   PaymentStatus,
+  PaymentAccountWithMatch,
 } from "../../shared/types";
 import { cn } from "@/lib/utils";
 import { formatMoney, formatDate, formatDateTime } from "@/utils/format";
@@ -59,6 +60,26 @@ interface ExtendedPaymentAccount extends PaymentAccount {
 interface SearchHistoryItem {
   keyword: string;
   timestamp: number;
+}
+
+interface AccountHistoryItem {
+  accountNumber: string;
+  accountName: string;
+  category: PaymentCategory;
+  timestamp: number;
+}
+
+interface PaymentSuccessData {
+  showReceipt: boolean;
+  receiptData: {
+    orderNo: string;
+    amount: number;
+    paidAt: string;
+    accountName: string;
+    accountNumber: string;
+    category: string;
+    serialNo: string;
+  } | null;
 }
 
 interface SavedAccount {
@@ -220,6 +241,32 @@ function extendAccount(account: PaymentAccount): ExtendedPaymentAccount {
   };
 }
 
+function highlightMatch(text: string, keyword: string): React.ReactNode {
+  if (!keyword.trim()) return text;
+  
+  const lowerText = text.toLowerCase();
+  const lowerKw = keyword.toLowerCase();
+  const index = lowerText.indexOf(lowerKw);
+  
+  if (index === -1) return text;
+  
+  const before = text.slice(0, index);
+  const match = text.slice(index, index + keyword.length);
+  const after = text.slice(index + keyword.length);
+  
+  return (
+    <>
+      {before}
+      <span className="font-bold text-brand-600 bg-brand-50 px-0.5 rounded">{match}</span>
+      {after}
+    </>
+  );
+}
+
+function getMatchDegree(score: number): number {
+  return Math.min(98, Math.max(75, score));
+}
+
 const initialSavedAccounts: SavedAccount[] = [
   {
     id: "saved-001",
@@ -348,6 +395,9 @@ function CategorySearchCard({
   searchResults,
   onSelectResult,
   searchLoading,
+  accountHistory,
+  onSelectHistory,
+  showAccountHistory,
 }: {
   category: PaymentCategory;
   config: (typeof categoryConfig)[PaymentCategory];
@@ -363,11 +413,15 @@ function CategorySearchCard({
   searchResults: ExtendedPaymentAccount[];
   onSelectResult: (acc: ExtendedPaymentAccount) => void;
   searchLoading: boolean;
+  accountHistory: AccountHistoryItem[];
+  onSelectHistory: (item: AccountHistoryItem) => void;
+  showAccountHistory: boolean;
 }) {
   const Icon = config.icon;
   const district = recentAccounts[0]?.district || "市南区";
   const sourceSystem =
     districtSourceMap[district]?.[category] || "青岛市缴费系统";
+  const systemOnline = true;
 
   return (
     <div
@@ -393,22 +447,32 @@ function CategorySearchCard({
             <Icon size={22} />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-semibold text-slate-800">{config.label}</div>
-            <div className="flex items-center gap-1 mt-0.5">
-              <Building2 size={12} className="text-slate-400 flex-shrink-0" />
-              <span className="text-xs text-slate-500 truncate">
-                {sourceSystem}
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="font-semibold text-slate-800">{config.label}</span>
+              <span
+                className={cn(
+                  "chip text-[10px] flex-shrink-0",
+                  districtColors[district] || "bg-slate-100 text-slate-600"
+                )}
+              >
+                {district}
               </span>
             </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 flex-1 min-w-0">
+                <Building2 size={12} className="text-slate-400 flex-shrink-0" />
+                <span className="text-xs text-slate-500 truncate">
+                  {sourceSystem}
+                </span>
+              </div>
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <span className={`w-2 h-2 rounded-full ${systemOnline ? "bg-emerald-500 animate-pulse" : "bg-slate-300"}`} />
+                <span className="text-[10px] text-slate-500">
+                  缴费系统状态：{systemOnline ? "在线" : "离线"}
+                </span>
+              </div>
+            </div>
           </div>
-          <span
-            className={cn(
-              "chip text-xs flex-shrink-0",
-              districtColors[district] || "bg-slate-100 text-slate-600"
-            )}
-          >
-            {district}
-          </span>
         </div>
 
         <div className="relative" onClick={(e) => e.stopPropagation()}>
@@ -439,33 +503,91 @@ function CategorySearchCard({
 
           {showDropdown && searchResults.length > 0 && (
             <div className="absolute z-20 left-0 right-0 top-full mt-1 bg-white border border-slate-100 rounded-xl shadow-lg overflow-hidden animate-slide-down">
-              {searchResults.slice(0, 4).map((account) => (
+              {searchResults.slice(0, 4).map((account) => {
+                const accWithMatch = account as unknown as PaymentAccountWithMatch;
+                const matchDegree = getMatchDegree(accWithMatch.matchDegree || 85);
+                return (
+                  <button
+                    key={account.id}
+                    onClick={() => onSelectResult(account)}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-b-0 text-left"
+                  >
+                    <div
+                      className={cn(
+                        "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
+                        config.bgLight
+                      )}
+                    >
+                      <Icon size={16} className={config.textColor} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-slate-800 flex items-center gap-2">
+                        <span className="truncate font-mono">
+                          {highlightMatch(maskAccountNumber(account.accountNumber), searchValue)}
+                        </span>
+                        <span className="text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full flex-shrink-0">
+                          匹配度：{matchDegree}%
+                        </span>
+                        {account.status === "unpaid" && account.amountDue > 0 && (
+                          <span className="text-xs text-red-500 flex-shrink-0">
+                            待缴
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs text-slate-500 truncate mt-0.5 flex items-center gap-1.5">
+                        <span>{highlightMatch(account.accountName, searchValue)}</span>
+                        <span>·</span>
+                        <span className="inline-flex items-center gap-1">
+                          <span
+                            className={cn(
+                              "text-[10px] px-1 py-0.5 rounded",
+                              districtColors[account.district] || "bg-slate-100 text-slate-600"
+                            )}
+                          >
+                            {account.district}
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <ChevronRight
+                      size={14}
+                      className="text-slate-300 flex-shrink-0"
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {showAccountHistory && accountHistory.length > 0 && !showDropdown && (
+            <div className="absolute z-20 left-0 right-0 top-full mt-1 bg-white border border-slate-100 rounded-xl shadow-lg overflow-hidden animate-slide-down">
+              <div className="px-3 py-2 border-b border-slate-50 flex items-center justify-between">
+                <span className="text-xs text-slate-500 flex items-center gap-1">
+                  <History size={12} />
+                  历史户号
+                </span>
+                <span className="text-[10px] text-slate-400">最近3条</span>
+              </div>
+              {accountHistory.slice(0, 3).map((item, idx) => (
                 <button
-                  key={account.id}
-                  onClick={() => onSelectResult(account)}
+                  key={`${item.accountNumber}-${idx}`}
+                  onClick={() => onSelectHistory(item)}
                   className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-b-0 text-left"
                 >
                   <div
                     className={cn(
                       "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
-                      config.bgLight
+                      categoryConfig[item.category].bgLight
                     )}
                   >
                     <Icon size={16} className={config.textColor} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-slate-800 flex items-center gap-2">
-                      <span className="truncate">
-                        {maskAccountNumber(account.accountNumber)}
-                      </span>
-                      {account.status === "unpaid" && account.amountDue > 0 && (
-                        <span className="text-xs text-red-500 flex-shrink-0">
-                          待缴
-                        </span>
-                      )}
+                    <div className="text-sm font-medium text-slate-800 truncate font-mono">
+                      {maskAccountNumber(item.accountNumber)}
                     </div>
                     <div className="text-xs text-slate-500 truncate mt-0.5">
-                      {account.accountName} · {account.district}
+                      {item.accountName}
                     </div>
                   </div>
                   <ChevronRight
@@ -573,6 +695,16 @@ export default function PaymentPage() {
     type: "success",
     message: "",
   });
+  const [accountHistory, setAccountHistory] = useState<AccountHistoryItem[]>([
+    { accountNumber: "QD202010012345", accountName: "张三", category: "water", timestamp: Date.now() - 86400000 },
+    { accountNumber: "3702020010012345", accountName: "张三", category: "electric", timestamp: Date.now() - 172800000 },
+    { accountNumber: "QD-GAS-88123456", accountName: "张三", category: "gas", timestamp: Date.now() - 259200000 },
+  ]);
+  const [activeHistoryCategory, setActiveHistoryCategory] = useState<PaymentCategory | null>(null);
+  const [paymentSuccessData, setPaymentSuccessData] = useState<PaymentSuccessData>({
+    showReceipt: false,
+    receiptData: null,
+  });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const categories = Object.entries(categoryConfig) as [
@@ -599,10 +731,39 @@ export default function PaymentPage() {
 
   const handleSearchFocus = (category: PaymentCategory) => {
     setActiveSearchCategory(category);
+    setActiveHistoryCategory(category);
     const keyword = categorySearchValues[category];
     if (keyword.trim()) {
       performSearch(keyword, category);
     }
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setActiveHistoryCategory(null);
+    }, 200);
+  };
+
+  const handleSelectHistory = (item: AccountHistoryItem) => {
+    setCategorySearchValues((prev) => ({
+      ...prev,
+      [item.category]: item.accountNumber,
+    }));
+    setActiveHistoryCategory(null);
+    performSearch(item.accountNumber, item.category);
+  };
+
+  const addToAccountHistory = (account: { accountNumber: string; accountName: string; category: PaymentCategory }) => {
+    setAccountHistory((prev) => {
+      const filtered = prev.filter(
+        (h) => !(h.accountNumber === account.accountNumber && h.category === account.category)
+      );
+      const newItem: AccountHistoryItem = {
+        ...account,
+        timestamp: Date.now(),
+      };
+      return [newItem, ...filtered].slice(0, 10);
+    });
   };
 
   const performSearch = useCallback(async (keyword: string, category?: PaymentCategory) => {
@@ -679,6 +840,12 @@ export default function PaymentPage() {
     }));
     setSearchResults([]);
     setActiveSearchCategory(null);
+    setActiveHistoryCategory(null);
+    addToAccountHistory({
+      accountNumber: account.accountNumber,
+      accountName: account.accountName,
+      category: account.category,
+    });
     setPaymentStep("confirm");
     fetchRecords(account.id);
   };
@@ -704,6 +871,14 @@ export default function PaymentPage() {
       ...prev,
       [saved.category]: saved.accountNumber,
     }));
+    setSearchResults([]);
+    setActiveSearchCategory(null);
+    setActiveHistoryCategory(null);
+    addToAccountHistory({
+      accountNumber: saved.accountNumber,
+      accountName: saved.accountName,
+      category: saved.category,
+    });
     setPaymentStep("confirm");
     fetchRecords(saved.id);
   };
@@ -741,6 +916,19 @@ export default function PaymentPage() {
         ...selectedAccount,
         status: "paid",
       });
+      const serialNo = `PAY-SD-${Date.now()}${Math.floor(Math.random() * 10000).toString().padStart(4, "0")}`;
+      setPaymentSuccessData({
+        showReceipt: true,
+        receiptData: {
+          orderNo: record.orderNo,
+          amount: selectedAccount.amountDue,
+          paidAt: record.paidAt || new Date().toISOString(),
+          accountName: selectedAccount.accountName,
+          accountNumber: selectedAccount.accountNumber,
+          category: selectedAccount.categoryName,
+          serialNo,
+        },
+      });
       setPaymentStep("success");
       fetchRecords(selectedAccount.id);
     } catch (error) {
@@ -749,6 +937,10 @@ export default function PaymentPage() {
     } finally {
       setPayLoading(false);
     }
+  };
+
+  const handleViewPaymentCert = () => {
+    showToast("success", "缴费凭证功能即将开放");
   };
 
   const handleBackToSearch = () => {
@@ -869,6 +1061,9 @@ export default function PaymentPage() {
                           )}
                           onSelectResult={handleSelectResult}
                           searchLoading={searchLoading}
+                          accountHistory={accountHistory.filter((h) => h.category === key)}
+                          onSelectHistory={handleSelectHistory}
+                          showAccountHistory={activeHistoryCategory === key && !categorySearchValues[key].trim()}
                         />
                       );
                     })}
@@ -1176,96 +1371,161 @@ export default function PaymentPage() {
               </div>
             )}
 
-            {paymentStep === "success" && selectedAccount && successRecord && (
+            {paymentStep === "success" && selectedAccount && successRecord && paymentSuccessData.receiptData && (
               <div className="animate-fade-in-up pt-4">
                 <div className="text-center mb-6">
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-green-50 flex items-center justify-center">
-                    <CheckCircle2 size={48} className="text-green-500" />
+                  <div className="relative w-20 h-20 mx-auto mb-4">
+                    <div className="absolute inset-0 rounded-full bg-green-100 animate-ping opacity-30" />
+                    <div className="relative w-20 h-20 rounded-full bg-green-50 flex items-center justify-center">
+                      <CheckCircle2 size={48} className="text-green-500" />
+                    </div>
                   </div>
                   <h2 className="text-xl font-bold text-slate-800 mb-1">
                     缴费成功
                   </h2>
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-slate-500 mb-2">
                     {selectedAccount.categoryName}已支付
                   </p>
+                  <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-600 text-xs px-2.5 py-1 rounded-full">
+                    <Clock size={12} />
+                    预计1分钟内到账
+                  </div>
                 </div>
 
-                <div className="card p-5 mb-4">
-                  <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-100">
-                    <div>
-                      <div className="text-sm text-slate-500 mb-1">支付金额</div>
-                      <div className="text-3xl font-bold text-brand-600 tabular-nums">
-                        {formatMoney(selectedAccount.amountDue)}
+                {paymentSuccessData.showReceipt && (
+                  <div className="card p-5 mb-4 overflow-hidden relative">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 via-brand-500 to-blue-500" />
+                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-dashed border-slate-200">
+                      <div>
+                        <div className="text-sm text-slate-500 mb-1">支付金额</div>
+                        <div className="text-3xl font-bold text-brand-600 tabular-nums">
+                          {formatMoney(selectedAccount.amountDue)}
+                        </div>
+                      </div>
+                      <div
+                        className={cn(
+                          "w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br text-white",
+                          categoryConfig[selectedAccount.category].gradient
+                        )}
+                      >
+                        {(() => {
+                          const Icon =
+                            categoryConfig[selectedAccount.category].icon;
+                          return <Icon size={24} />;
+                        })()}
                       </div>
                     </div>
-                    <div
-                      className={cn(
-                        "w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br text-white",
-                        categoryConfig[selectedAccount.category].gradient
-                      )}
-                    >
-                      {(() => {
-                        const Icon =
-                          categoryConfig[selectedAccount.category].icon;
-                        return <Icon size={24} />;
-                      })()}
+
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">缴费流水号</span>
+                        <span className="text-sm font-medium font-mono text-slate-700 tabular-nums">
+                          {paymentSuccessData.receiptData.serialNo}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">订单号</span>
+                        <span className="text-sm text-slate-700 tabular-nums">
+                          {successRecord.orderNo}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">缴费项目</span>
+                        <span className="text-sm text-slate-700">
+                          {paymentSuccessData.receiptData.category}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">户名</span>
+                        <span className="text-sm text-slate-700">
+                          {paymentSuccessData.receiptData.accountName}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">户号</span>
+                        <span className="text-sm text-slate-700 tabular-nums">
+                          {maskAccountNumber(paymentSuccessData.receiptData.accountNumber)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">缴费时间</span>
+                        <span className="text-sm text-slate-700">
+                          {formatDateTime(paymentSuccessData.receiptData.paidAt)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">预计到账</span>
+                        <span className="text-sm text-emerald-600 font-medium flex items-center gap-1">
+                          <CheckCircle2 size={14} />
+                          1分钟内到账
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500">所属区县</span>
+                        <span className={cn(
+                          "text-xs px-2 py-0.5 rounded-full",
+                          districtColors[selectedAccount.district] || "bg-slate-100 text-slate-600"
+                        )}>
+                          {selectedAccount.district}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-dashed border-slate-200">
+                      <div className="text-xs text-slate-500 mb-3 flex items-center gap-1">
+                        <Receipt size={12} />
+                        电子收据预览
+                      </div>
+                      <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl p-4 border border-slate-200">
+                        <div className="text-center mb-3">
+                          <div className="text-xs text-slate-500">青岛市财政局电子收据</div>
+                          <div className="text-lg font-bold text-slate-800 mt-1" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                            缴费凭证
+                          </div>
+                        </div>
+                        <div className="text-xs space-y-1.5">
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">收据编号</span>
+                            <span className="font-mono text-slate-700">{paymentSuccessData.receiptData.serialNo}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">校验码</span>
+                            <span className="font-mono text-slate-700">{Math.random().toString(36).slice(2, 10).toUpperCase()}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">开具时间</span>
+                            <span className="text-slate-700">{formatDateTime(new Date())}</span>
+                          </div>
+                        </div>
+                        <div className="mt-3 pt-3 border-t border-slate-200 flex justify-end">
+                          <div className="text-right">
+                            <div className="text-red-600 text-[10px] font-bold">青岛市</div>
+                            <div className="text-red-600 text-xs font-bold">财政电子章</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                )}
 
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">缴费流水号</span>
-                      <span className="text-sm font-medium text-slate-700 tabular-nums">
-                        {successRecord.orderNo}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">户名</span>
-                      <span className="text-sm text-slate-700">
-                        {selectedAccount.accountName}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">户号</span>
-                      <span className="text-sm text-slate-700 tabular-nums">
-                        {maskAccountNumber(selectedAccount.accountNumber)}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">缴费时间</span>
-                      <span className="text-sm text-slate-700">
-                        {successRecord.paidAt
-                          ? formatDateTime(successRecord.paidAt)
-                          : ""}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">预计到账</span>
-                      <span className="text-sm text-green-600 font-medium">
-                        实时到账
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-500">数据来源</span>
-                      <span className="text-xs text-slate-500">
-                        {selectedAccount.sourceSystem}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 mb-5">
-                  <button className="card p-4 flex flex-col items-center gap-2 hover:bg-slate-50 transition-colors">
+                <div className="grid grid-cols-3 gap-3 mb-5">
+                  <button onClick={handleViewPaymentCert} className="card p-4 flex flex-col items-center gap-2 hover:bg-slate-50 transition-colors">
                     <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                      <Receipt size={20} className="text-blue-500" />
+                      <FileText size={20} className="text-blue-500" />
                     </div>
-                    <span className="text-sm text-slate-700">电子收据</span>
+                    <span className="text-xs text-slate-700">缴费凭证</span>
                   </button>
                   <button className="card p-4 flex flex-col items-center gap-2 hover:bg-slate-50 transition-colors">
                     <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
-                      <FileText size={20} className="text-emerald-500" />
+                      <Receipt size={20} className="text-emerald-500" />
                     </div>
-                    <span className="text-sm text-slate-700">申请发票</span>
+                    <span className="text-xs text-slate-700">电子收据</span>
+                  </button>
+                  <button className="card p-4 flex flex-col items-center gap-2 hover:bg-slate-50 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
+                      <FileText size={20} className="text-purple-500" />
+                    </div>
+                    <span className="text-xs text-slate-700">申请发票</span>
                   </button>
                 </div>
 

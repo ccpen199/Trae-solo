@@ -222,6 +222,7 @@ export default function HomePage() {
 
   const [offlineMode, setOfflineMode] = useState(false);
   const [activePoiTab, setActivePoiTab] = useState<PoiType>("scenic");
+  const [cachingIds, setCachingIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -268,7 +269,11 @@ export default function HomePage() {
         setScenicPois(scenicRes);
         setRestaurantPois(restaurantRes);
         setMedicalPois(medicalRes);
-        setPolicies(policiesRes);
+        const syncedPolicies = policiesRes.map((p) => ({
+          ...p,
+          cached: isCached(p.id),
+        }));
+        setPolicies(syncedPolicies);
         if (profileRes) {
           setProfile(profileRes);
           setUser(profileRes);
@@ -359,17 +364,20 @@ export default function HomePage() {
     }
   }, [activePoiTab, scenicPois, restaurantPois, medicalPois]);
 
-  const filteredPolicies = useMemo(() => {
-    if (offlineMode) {
-      return policies.filter((p) => isCached(p.id));
-    }
-    return policies;
-  }, [policies, offlineMode, isCached]);
-
   const cachedCount = useMemo(
     () => policies.filter((p) => isCached(p.id)).length,
     [policies, isCached]
   );
+
+  const filteredPolicies = useMemo(() => {
+    if (offlineMode) {
+      if (cachedCount === 0) {
+        return [];
+      }
+      return policies.filter((p) => isCached(p.id));
+    }
+    return policies;
+  }, [policies, offlineMode, isCached, cachedCount]);
 
   const handleSearchChange = useCallback(
     async (value: string) => {
@@ -400,13 +408,30 @@ export default function HomePage() {
   }, []);
 
   const handleDownloadPolicy = useCallback(
-    (policy: PolicyDocument) => {
-      if (!isCached(policy.id)) {
+    async (policy: PolicyDocument) => {
+      if (!isCached(policy.id) && !cachingIds.has(policy.id)) {
+        setCachingIds((prev) => new Set(prev).add(policy.id));
+        setPolicies((prev) =>
+          prev.map((p) =>
+            p.id === policy.id ? { ...p, isCaching: true } : p
+          )
+        );
+        await new Promise((resolve) => setTimeout(resolve, 600));
         addPolicy(policy);
+        setPolicies((prev) =>
+          prev.map((p) =>
+            p.id === policy.id ? { ...p, cached: true, isCaching: false } : p
+          )
+        );
+        setCachingIds((prev) => {
+          const next = new Set(prev);
+          next.delete(policy.id);
+          return next;
+        });
         showToast(`已缓存「${policy.title}」`, "success");
       }
     },
-    [isCached, addPolicy, showToast]
+    [isCached, addPolicy, showToast, cachingIds]
   );
 
   const handlePaymentTabClick = (category: PaymentAccount["category"]) => {
@@ -1206,9 +1231,18 @@ export default function HomePage() {
           </div>
 
           <div className="bg-white rounded-xl border border-slate-100 divide-y divide-slate-50">
-            {filteredPolicies.length > 0 ? (
+            {offlineMode && cachedCount === 0 ? (
+              <div className="p-6 text-center">
+                <HardDrive className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-sm text-slate-500 mb-1">暂无已缓存的政策</p>
+                <p className="text-xs text-slate-400">
+                  请先关闭离线模式，点击政策右侧的下载按钮进行缓存
+                </p>
+              </div>
+            ) : filteredPolicies.length > 0 ? (
               filteredPolicies.slice(0, 4).map((policy) => {
                 const cached = isCached(policy.id);
+                const isCaching = policy.isCaching;
                 return (
                   <div
                     key={policy.id}
@@ -1227,6 +1261,12 @@ export default function HomePage() {
                           <span className="text-[11px] text-slate-400">
                             {formatDate(policy.publishedAt)}
                           </span>
+                          {isCaching && (
+                            <span className="text-[11px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
+                              缓存中
+                            </span>
+                          )}
                         </div>
                       </div>
                       <button
@@ -1234,14 +1274,19 @@ export default function HomePage() {
                           e.stopPropagation();
                           handleDownloadPolicy(policy);
                         }}
+                        disabled={isCaching}
                         className={cn(
                           "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
-                          cached
+                          isCaching
+                            ? "text-blue-500 bg-blue-50"
+                            : cached
                             ? "text-emerald-500 bg-emerald-50"
                             : "text-slate-400 hover:text-blue-500 hover:bg-blue-50"
                         )}
                       >
-                        {cached ? (
+                        {isCaching ? (
+                          <RefreshCw className="w-4 h-4 animate-spin" />
+                        ) : cached ? (
                           <HardDrive className="w-4 h-4" />
                         ) : (
                           <Download className="w-4 h-4" />
@@ -1255,7 +1300,7 @@ export default function HomePage() {
               <div className="p-6 text-center">
                 <Filter className="w-8 h-8 text-slate-300 mx-auto mb-2" />
                 <p className="text-sm text-slate-400">
-                  {offlineMode ? "暂无已缓存的政策" : "暂无政策公告"}
+                  暂无政策公告
                 </p>
               </div>
             )}

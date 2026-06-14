@@ -9,6 +9,15 @@ import {
   TrendingUp,
   List,
   BarChart3,
+  ChevronDown,
+  ChevronUp,
+  Brain,
+  Clock,
+  ShieldAlert,
+  CheckCircle2,
+  Loader2,
+  Send,
+  XCircle,
 } from "lucide-react";
 import {
   PieChart,
@@ -27,7 +36,7 @@ import AppLayout from "@/components/AppLayout";
 import TabBar from "@/components/TabBar";
 import Empty from "@/components/Empty";
 import { communityApi } from "@/api";
-import type { CommunityPost, OpinionDashboard } from "../../shared/types";
+import type { CommunityPost, OpinionDashboard, DisposalStatus } from "../../shared/types";
 import {
   getSentimentConfig,
   getOpinionLevelConfig,
@@ -42,17 +51,35 @@ const COMMUNITY_TABS = [
   { key: "dashboard", label: "舆情看板", icon: <BarChart3 className="w-4 h-4" /> },
 ];
 
+const disposalStatusConfig: Record<DisposalStatus, { label: string; className: string; icon: typeof Clock }> = {
+  pending: { label: "待核实", className: "bg-amber-100 text-amber-700 border-amber-200", icon: Clock },
+  processing: { label: "处理中", className: "bg-blue-100 text-blue-700 border-blue-200", icon: Loader2 },
+  replied: { label: "已回复", className: "bg-emerald-100 text-emerald-700 border-emerald-200", icon: Send },
+  closed: { label: "已闭环", className: "bg-slate-100 text-slate-600 border-slate-200", icon: CheckCircle2 },
+};
+
 function PostCard({ post }: { post: CommunityPost }) {
   const [expanded, setExpanded] = useState(false);
+  const [showNlp, setShowNlp] = useState(false);
   const sentimentConfig = getSentimentConfig(post.sentiment);
   const levelConfig = getOpinionLevelConfig(post.opinionLevel);
   const barWidth = getSentimentBarWidth(post.sentimentScore);
+  const disposalStatus = post.disposalStatus || "pending";
+  const disposalConfig = disposalStatusConfig[disposalStatus];
+  const DisposalIcon = disposalConfig.icon;
+  const isHighRisk = post.opinionLevel >= 4;
 
   return (
     <div
-      className="bg-white rounded-2xl shadow-card overflow-hidden cursor-pointer hover:shadow-card-hover transition-all duration-300"
+      className="bg-white rounded-2xl shadow-card overflow-hidden cursor-pointer hover:shadow-card-hover transition-all duration-300 relative"
       onClick={() => setExpanded(!expanded)}
     >
+      {isHighRisk && post.transferredTo && (
+        <div className="absolute top-3 right-3 bg-red-500 text-white text-[10px] px-2 py-1 rounded-full font-medium flex items-center gap-1 z-10">
+          <ShieldAlert size={10} />
+          {post.transferredTo}
+        </div>
+      )}
       <div className="flex">
         <div
           className="w-1.5 flex-shrink-0"
@@ -60,8 +87,8 @@ function PostCard({ post }: { post: CommunityPost }) {
         />
         <div className="flex-1 p-4">
           <div className="flex items-start gap-3">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex-1 min-w-0 pr-12">
+              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                 <span
                   className="text-xs px-2 py-0.5 rounded-full border"
                   style={{
@@ -72,9 +99,21 @@ function PostCard({ post }: { post: CommunityPost }) {
                 >
                   {post.board}
                 </span>
-                <span className="text-xs text-slate-400">
-                  {formatDateTime(post.publishedAt)}
+                <span className={`text-xs px-2 py-0.5 rounded-full border flex items-center gap-1 ${disposalConfig.className}`}>
+                  <DisposalIcon size={10} />
+                  {disposalConfig.label}
                 </span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowNlp(!showNlp);
+                  }}
+                  className="text-xs px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200 flex items-center gap-1 hover:bg-purple-100 transition-colors"
+                >
+                  <Brain size={10} />
+                  NLP分析
+                  {showNlp ? <ChevronUp size={10} /> : <ChevronDown size={10} />}
+                </button>
               </div>
               <h3 className="text-base font-semibold text-slate-800 line-clamp-2 mb-2">
                 {post.title}
@@ -98,7 +137,7 @@ function PostCard({ post }: { post: CommunityPost }) {
               </div>
             </div>
             <div
-              className="flex-shrink-0 flex flex-col items-center gap-2"
+              className="flex-shrink-0 flex flex-col items-center gap-2 absolute right-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div
@@ -142,8 +181,64 @@ function PostCard({ post }: { post: CommunityPost }) {
             ))}
           </div>
 
+          {showNlp && post.nlpAnalysis && (
+            <div className="mt-4 pt-4 border-t border-dashed border-purple-200 animate-slide-down bg-purple-50/50 -mx-4 -mb-4 px-4 pb-4" onClick={(e) => e.stopPropagation()}>
+              <div className="text-xs font-medium text-purple-800 mb-3 flex items-center gap-1.5">
+                <Brain size={14} />
+                NLP智能分析结果
+              </div>
+
+              <div className="space-y-3">
+                <div className="bg-white rounded-xl p-3 border border-purple-100">
+                  <div className="text-xs text-slate-500 mb-1.5">情感分析置信度</div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-bold text-purple-600">
+                      {post.nlpAnalysis.sentimentConfidence}%
+                    </span>
+                    <span className="text-sm text-slate-600">
+                      {post.nlpAnalysis.sentimentLabel}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl p-3 border border-purple-100">
+                  <div className="text-xs text-slate-500 mb-2">关键词提取（权重）</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {post.nlpAnalysis.keywords.map((kw, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs px-2 py-1 rounded-lg bg-gradient-to-r from-purple-50 to-blue-50 text-purple-700 border border-purple-100 flex items-center gap-1"
+                      >
+                        <span className="font-medium">{kw.word}</span>
+                        <span className="text-[10px] text-purple-500 font-mono">{(kw.weight * 100).toFixed(0)}%</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl p-3 border border-purple-100">
+                  <div className="text-xs text-slate-500 mb-1.5">舆情等级判定依据</div>
+                  <div className="text-xs text-slate-700 leading-relaxed">
+                    {post.nlpAnalysis.opinionBasis}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+                  <span className="flex items-center gap-1">
+                    <Brain size={12} />
+                    分析引擎：{post.nlpAnalysis.engine}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Clock size={12} />
+                    标注时间：{formatDateTime(post.nlpAnalysis.annotatedAt)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
           {expanded && (
-            <div className="mt-4 pt-4 border-t border-slate-100 animate-slide-down">
+            <div className={`mt-4 pt-4 border-t border-slate-100 animate-slide-down ${showNlp ? 'mt-0' : ''}`}>
               <p className="text-sm text-slate-600 leading-relaxed">
                 {post.content}
               </p>

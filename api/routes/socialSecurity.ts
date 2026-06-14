@@ -53,6 +53,24 @@ router.get('/:idCard/history', (req: Request, res: Response): void => {
   }
 })
 
+function generateCertNo(): string {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  const random = Math.random().toString(36).slice(2, 9).toUpperCase()
+  return `SD-SB-${year}${month}${day}-${random}`
+}
+
+function generateVerifyCode(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+  let code = ''
+  for (let i = 0; i < 8; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  return code
+}
+
 router.post('/:idCard/certificate', (req: Request, res: Response): void => {
   try {
     const { idCard } = req.params
@@ -65,6 +83,12 @@ router.post('/:idCard/certificate', (req: Request, res: Response): void => {
       return
     }
 
+    const certNo = generateCertNo()
+    const verifyCode = generateVerifyCode()
+    const now = new Date()
+    const issueDate = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`
+    const qrData = `https://rsj.shandong.gov.cn/verify?certNo=${certNo}&verifyCode=${verifyCode}`
+
     const chunks: Buffer[] = []
     const doc = new PDFDocument()
 
@@ -76,13 +100,21 @@ router.post('/:idCard/certificate', (req: Request, res: Response): void => {
         success: true,
         data: {
           base64,
+          pdfData: base64,
           filename: `社保公积金凭证_${mockSocialSecurity.name}_${Date.now()}.pdf`,
+          certNo,
+          verifyCode,
+          issueDate,
+          qrData,
         },
       })
     })
 
     doc.fontSize(20).text('青岛市社保公积金电子凭证', { align: 'center' })
-    doc.moveDown(2)
+    doc.moveDown(0.5)
+    doc.fontSize(10).text(`凭证编号：${certNo}`, { align: 'center' })
+    doc.fontSize(10).text(`验证码：${verifyCode}`, { align: 'center' })
+    doc.moveDown(1.5)
     doc.fontSize(14).text(`姓名：${mockSocialSecurity.name}`)
     doc.text(`身份证号：${mockSocialSecurity.idCard}`)
     doc.text(`缴存单位：${mockSocialSecurity.housingFund.unit}`)
@@ -100,8 +132,9 @@ router.post('/:idCard/certificate', (req: Request, res: Response): void => {
     doc.text(`工伤保险：累计${mockSocialSecurity.socialInsurance.workInjury.months}个月，状态：${mockSocialSecurity.socialInsurance.workInjury.status}`)
     doc.text(`生育保险：累计${mockSocialSecurity.socialInsurance.maternity.months}个月，状态：${mockSocialSecurity.socialInsurance.maternity.status}`)
     doc.moveDown(2)
+    doc.fontSize(10).text(`签发日期：${issueDate}`, { align: 'right' })
     doc.fontSize(10).text(`生成时间：${new Date().toLocaleString('zh-CN')}`, { align: 'right' })
-    doc.text('本凭证由青岛市民服务平台自动生成，具有同等法律效力。', { align: 'right' })
+    doc.text('本凭证由山东省人力资源和社会保障厅签发，具有同等法律效力。', { align: 'right' })
 
     doc.end()
   } catch (error) {

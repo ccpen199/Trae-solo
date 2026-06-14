@@ -28,6 +28,8 @@ import {
   User,
   Briefcase,
   Heart,
+  Copy,
+  Check,
 } from "lucide-react";
 import {
   AreaChart,
@@ -49,7 +51,7 @@ import SkeletonCard from "@/components/ui/SkeletonCard";
 import TabBar from "@/components/ui/TabBar";
 import { socialSecurityApi } from "@/api";
 import { useAppStore } from "@/store/useAppStore";
-import type { SocialSecurityAccount } from "../../shared/types";
+import type { SocialSecurityAccount, CertificateResponse } from "../../shared/types";
 import { formatMoney, formatDate } from "@/utils/format";
 import { cn } from "@/lib/utils";
 
@@ -97,20 +99,41 @@ export default function SocialSecurityPage() {
   const [selectedCertType, setSelectedCertType] = useState<CertificateType>("housing-fund");
   const [certStep, setCertStep] = useState<CertificateStep>(0);
   const [certReady, setCertReady] = useState(false);
+  const [certResponse, setCertResponse] = useState<CertificateResponse | null>(null);
+  const [copiedCertNo, setCopiedCertNo] = useState(false);
 
   const verifyReportData = useMemo(() => ({
     source: "山东省人力资源和社会保障厅核心业务库",
     status: "已通过",
     verifyTime: formatDate(new Date(), "YYYY年MM月DD日 HH:mm:ss"),
-    serialNo: "SDSS" + Date.now().toString() + Math.floor(Math.random() * 10000).toString().padStart(4, "0"),
+    serialNo: "SD-HY-" + Date.now().toString() + Math.floor(Math.random() * 10000).toString().padStart(4, "0"),
+    verifyItem: "社保缴费明细核验",
+    verifyMethod: "官方数据库实时比对",
+    matchRate: "100%",
   }), [showVerifyReport]);
 
-  const certData = useMemo(() => ({
-    certNo: "SD" + Date.now().toString().slice(-10) + "001",
-    verifyCode: Math.random().toString(36).slice(2, 10).toUpperCase(),
-    issueDate: formatDate(new Date(), "YYYY年MM月DD日"),
-    qrData: "https://rsj.shandong.gov.cn/verify?code=SD" + Date.now(),
-  }), [certReady]);
+  const certData = useMemo(() => {
+    if (certResponse) {
+      return {
+        certNo: certResponse.certNo,
+        verifyCode: certResponse.verifyCode,
+        issueDate: certResponse.issueDate,
+        qrData: certResponse.qrData,
+        pdfData: certResponse.pdfData,
+        base64: certResponse.base64,
+        filename: certResponse.filename,
+      };
+    }
+    return {
+      certNo: "",
+      verifyCode: "",
+      issueDate: "",
+      qrData: "",
+      pdfData: "",
+      base64: "",
+      filename: "",
+    };
+  }, [certResponse]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -175,6 +198,7 @@ export default function SocialSecurityPage() {
   const startGenerateCertificate = () => {
     setCertStep(0);
     setCertReady(false);
+    setCertResponse(null);
     setShowCertCenter(true);
   };
 
@@ -187,16 +211,60 @@ export default function SocialSecurityPage() {
 
     setTimeout(() => setCertStep(2), stepDuration);
     setTimeout(() => setCertStep(3), stepDuration * 2);
-    setTimeout(() => {
-      setCertStep(4);
-      setCertReady(true);
+
+    try {
+      const response = await socialSecurityApi.generateCertificate();
+      setTimeout(() => {
+        setCertResponse(response);
+        setCertStep(4);
+        setCertReady(true);
+        setGeneratingCert(false);
+        showToast("电子凭证生成成功", "success");
+      }, stepDuration);
+    } catch (error) {
       setGeneratingCert(false);
-      showToast("电子凭证生成成功", "success");
-    }, stepDuration * 3);
+      setCertStep(0);
+      showToast("电子凭证生成失败，请重试", "error");
+    }
   };
 
   const handleDownloadCert = () => {
-    showToast("凭证已开始下载", "success");
+    if (!certData.pdfData || !certData.filename) {
+      showToast("PDF数据未就绪", "error");
+      return;
+    }
+    try {
+      const byteCharacters = atob(certData.pdfData);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = certData.filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast("凭证下载成功", "success");
+    } catch (error) {
+      showToast("下载失败，请重试", "error");
+    }
+  };
+
+  const handleCopyCertNo = async () => {
+    if (!certData.certNo) return;
+    try {
+      await navigator.clipboard.writeText(certData.certNo);
+      setCopiedCertNo(true);
+      showToast("凭证编号已复制", "success");
+      setTimeout(() => setCopiedCertNo(false), 2000);
+    } catch (error) {
+      showToast("复制失败，请手动复制", "error");
+    }
   };
 
   const handleSendEmail = () => {
@@ -725,27 +793,67 @@ export default function SocialSecurityPage() {
                     </div>
                   </div>
                 </div>
+
+                <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500 mb-0.5">核验事项</div>
+                    <div className="text-sm font-semibold text-slate-800">
+                      {verifyReportData.verifyItem}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                    <ShieldCheck className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500 mb-0.5">核验方式</div>
+                    <div className="text-sm font-semibold text-slate-800">
+                      {verifyReportData.verifyMethod}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl">
+                  <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-4 h-4 text-amber-600" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500 mb-0.5">数据匹配率</div>
+                    <div className="text-sm font-semibold text-emerald-600">
+                      {verifyReportData.matchRate}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex justify-center">
-                <div className="relative w-32 h-32">
-                  <div className="absolute inset-0 rounded-full border-4 border-red-600/80 flex items-center justify-center bg-red-50/50 shadow-lg">
-                    <div className="text-center">
-                      <div className="text-red-700 text-[10px] font-bold" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                <div className="relative w-36 h-36">
+                  <div className="absolute inset-0 rounded-full border-4 border-red-600/90 flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100/50 shadow-xl">
+                    <div className="text-center px-2">
+                      <div className="text-red-800 text-[11px] font-bold" style={{ fontFamily: "'Noto Serif SC', serif" }}>
                         山东省
                       </div>
-                      <div className="text-red-700 text-sm font-bold" style={{ fontFamily: "'Noto Serif SC', serif" }}>
-                        人社厅
+                      <div className="text-red-800 text-base font-bold" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                        人力资源
                       </div>
-                      <div className="text-red-600 text-[9px] mt-1">
-                        电子签章
+                      <div className="text-red-800 text-base font-bold" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                        和社会保障厅
                       </div>
-                      <div className="text-red-500 text-[8px] mt-0.5">
-                        专用章
+                      <div className="text-red-600 text-[10px] mt-1 font-medium">
+                        数据核验专用章
+                      </div>
+                      <div className="text-red-500 text-[8px] mt-0.5 font-mono">
+                        {formatDate(new Date(), "YYYY-MM-DD")}
                       </div>
                     </div>
                   </div>
-                  <div className="absolute inset-2 rounded-full border border-red-400/50" />
+                  <div className="absolute inset-2 rounded-full border-2 border-red-400/60" />
+                  <div className="absolute inset-4 rounded-full border border-red-300/40" />
                 </div>
               </div>
             </div>
@@ -986,11 +1094,20 @@ export default function SocialSecurityPage() {
                         </div>
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-slate-500">凭证编号</span>
-                          <span className="font-mono font-medium text-blue-700 text-xs">{certData.certNo}</span>
+                          <div className="flex items-center gap-1">
+                            <span className="font-mono font-medium text-blue-700 text-xs">{certData.certNo}</span>
+                            <button
+                              onClick={handleCopyCertNo}
+                              className="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors"
+                              title="复制凭证编号"
+                            >
+                              {copiedCertNo ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                            </button>
+                          </div>
                         </div>
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-slate-500">验证码</span>
-                          <span className="font-mono font-bold text-emerald-600 text-sm">{certData.verifyCode}</span>
+                          <span className="font-mono font-bold text-emerald-600 text-sm tracking-wider">{certData.verifyCode}</span>
                         </div>
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-slate-500">签发日期</span>
@@ -998,14 +1115,39 @@ export default function SocialSecurityPage() {
                         </div>
                       </div>
 
+                      {certData.pdfData && (
+                        <div className="mt-4 pt-4 border-t border-dashed border-slate-300">
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="text-xs text-slate-500 font-medium">PDF预览</span>
+                            <button
+                              onClick={handleDownloadCert}
+                              className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                            >
+                              <FileDown className="w-3 h-3" />
+                              下载
+                            </button>
+                          </div>
+                          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+                            <iframe
+                              src={`data:application/pdf;base64,${certData.pdfData}`}
+                              className="w-full h-40 rounded-lg bg-white"
+                              title="电子凭证PDF预览"
+                            />
+                          </div>
+                        </div>
+                      )}
+
                       <div className="mt-4 pt-4 border-t border-dashed border-slate-300 flex items-center justify-between">
                         <div className="flex-1">
                           <div className="text-[11px] text-slate-500 leading-relaxed">
                             本电子凭证由山东省人力资源和社会保障厅签发，与纸质凭证具有同等法律效力。
                           </div>
                         </div>
-                        <div className="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0 ml-3">
+                        <div className="relative w-16 h-16 bg-white rounded-lg flex items-center justify-center flex-shrink-0 ml-3 border-2 border-slate-200">
                           <QrCode className="w-12 h-12 text-slate-700" />
+                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 text-[8px] px-1.5 py-0.5 rounded-full whitespace-nowrap">
+                            扫码核验
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1015,13 +1157,26 @@ export default function SocialSecurityPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-3 gap-2.5">
+                    <button
+                      onClick={handleCopyCertNo}
+                      className="py-3 text-sm rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:bg-slate-50 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      {copiedCertNo ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                      {copiedCertNo ? "已复制" : "复制编号"}
+                    </button>
                     <button
                       onClick={handleDownloadCert}
                       className="btn-primary py-3 text-sm flex items-center justify-center gap-1.5"
                     >
                       <FileDown className="w-4 h-4" />
                       下载PDF
+                    </button>
+                    <button
+                      className="py-3 text-sm rounded-xl border-2 border-purple-200 text-purple-600 font-medium hover:bg-purple-50 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <QrCode className="w-4 h-4" />
+                      扫码核验
                     </button>
                     <button
                       onClick={handleSendEmail}
