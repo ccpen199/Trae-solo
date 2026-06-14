@@ -1,0 +1,1994 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T12:35:04.295Z",
+  "order": "may-89028",
+  "roundIndex": 5,
+  "captureId": "may-89028-codex-final-current",
+  "url": "http://127.0.0.1:49028/",
+  "initialUrl": "http://127.0.0.1:49028/",
+  "finalUrl": "http://127.0.0.1:49028/",
+  "status": 200,
+  "title": "家居服务众包协作平台",
+  "initialTitle": "家居服务众包协作平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-02-导航-数据看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-03-导航-认证审核.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-04-导航-纠纷仲裁.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-05-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-06-二层操作-详情-关-闭.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-07-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-08-导航-订单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-09-导航-师傅热力图.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-10-导航-知识图谱.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-11-操作-添加知识条目.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在购买/商品入口，优先复验交易链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49028/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49028/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:数据看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:认证审核",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:纠纷仲裁",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:关 闭",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:订单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:师傅热力图",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:知识图谱",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:添加知识条目",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:添加知识条目:添加知识条目",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "数据看板"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单编号",
+              "服务标题",
+              "业主",
+              "师傅",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "订单编号 服务标题 业主 师傅 状态 创建时间 HS-20260604-001 客厅空调不制冷检修 测试业主 测试师傅 服务中 2026-06-04 11:30:58 HS-20260604-002 厨房水槽下水漏水 测试业主 测试师傅 2026-06-04 11:30:58 HS-20260604-003 卧室插座频繁跳闸 测试业主 测试师傅 待指派 2026-06-04 11:30:58 HS-20260604-004 卧室空调深度清洗 测试业主 测试师傅 待验收 2026-06-04 11:30:58"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员数据看板总用户数3总订单数4认证师傅数1待处理纠纷1订单状态分布待验收1 单服务中1 单negotiated1 单待指派1 单快捷统计待处理订单1已完成订单1最近订单订单编号服务标题业主师傅状态创建时间HS-20260604-001客厅空调不制冷检修测试业主测试师傅服务中2026-06-04 11:30:58HS-20260604-002厨房水槽下水漏水测试业主测试师傅2026-06-04 11:30:58HS-20260604-003卧室插座频繁跳闸测试业主测试师傅待指派2026-06-04 11:30:58HS-20260604-004卧室空调深度清洗测试业主测试师傅待验收2026-06-04 11:30:58",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1154,
+          "scrollWidth": 1504,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49028/",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-01-首屏.png",
+          "elementCount": 238,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱"
+          ]
+        }
+      },
+      {
+        "label": "导航:数据看板",
+        "url": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "数据看板"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单编号",
+              "服务标题",
+              "业主",
+              "师傅",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "订单编号 服务标题 业主 师傅 状态 创建时间 HS-20260604-001 客厅空调不制冷检修 测试业主 测试师傅 服务中 2026-06-04 11:30:58 HS-20260604-002 厨房水槽下水漏水 测试业主 测试师傅 2026-06-04 11:30:58 HS-20260604-003 卧室插座频繁跳闸 测试业主 测试师傅 待指派 2026-06-04 11:30:58 HS-20260604-004 卧室空调深度清洗 测试业主 测试师傅 待验收 2026-06-04 11:30:58"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员数据看板总用户数3总订单数4认证师傅数1待处理纠纷1订单状态分布待验收1 单服务中1 单negotiated1 单待指派1 单快捷统计待处理订单1已完成订单1最近订单订单编号服务标题业主师傅状态创建时间HS-20260604-001客厅空调不制冷检修测试业主测试师傅服务中2026-06-04 11:30:58HS-20260604-002厨房水槽下水漏水测试业主测试师傅2026-06-04 11:30:58HS-20260604-003卧室插座频繁跳闸测试业主测试师傅待指派2026-06-04 11:30:58HS-20260604-004卧室空调深度清洗测试业主测试师傅待验收2026-06-04 11:30:58",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1154,
+          "scrollWidth": 1536,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-02-导航-数据看板",
+          "label": "导航:数据看板",
+          "finalUrl": "http://127.0.0.1:49028/",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-02-导航-数据看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-02-导航-数据看板.png",
+          "elementCount": 238,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱"
+          ]
+        }
+      },
+      {
+        "label": "导航:认证审核",
+        "url": "http://127.0.0.1:49028/verifications",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "认证审核"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "师傅姓名",
+              "手机号",
+              "真实姓名",
+              "身份证号",
+              "技能",
+              "状态",
+              "提交时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "师傅姓名 手机号 真实姓名 身份证号 技能 状态 提交时间 操作 测试师傅 13800138002 测试师傅 110101198801011234 [\"electrical\",\"plumbing\",\"air_conditioner\"] 已通过 2026-06-04 11:30:58"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员认证审核筛选状态师傅姓名手机号真实姓名身份证号技能状态提交时间操作测试师傅13800138002测试师傅110101198801011234[\"electrical\",\"plumbing\",\"air_conditioner\"]已通过2026-06-04 11:30:581",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1154,
+          "scrollWidth": 1568,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-03-导航-认证审核",
+          "label": "导航:认证审核",
+          "finalUrl": "http://127.0.0.1:49028/verifications",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-03-导航-认证审核.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-03-导航-认证审核.png",
+          "elementCount": 118,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:纠纷仲裁",
+        "url": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "纠纷仲裁"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [
+          "刷新",
+          "详情",
+          "处理"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纠纷单",
+              "订单与原因",
+              "投诉方",
+              "被投诉方",
+              "状态",
+              "提交时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "纠纷单 订单与原因 投诉方 被投诉方 状态 提交时间 操作 #1 客厅空调不制冷检修 维修进度争议 测试业主 测试师傅 待处理 2026-06-04 11:30:58 详情 处理"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员纠纷仲裁筛选状态刷新总纠纷1待处理1调查中0已处理0平台仲裁看板集中查看订单纠纷、投诉双方、证据材料和处理结论，支持管理员快速归档处理结果。纠纷单订单与原因投诉方被投诉方状态提交时间操作#1客厅空调不制冷检修维修进度争议测试业主测试师傅待处理2026-06-04 11:30:58详情处理1",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1154,
+          "scrollWidth": 1600,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-04-导航-纠纷仲裁",
+          "label": "导航:纠纷仲裁",
+          "finalUrl": "http://127.0.0.1:49028/disputes",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-04-导航-纠纷仲裁.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-04-导航-纠纷仲裁.png",
+          "elementCount": 176,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "刷新",
+            "详情",
+            "处理",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "纠纷仲裁"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [
+          "刷新",
+          "详情",
+          "处理",
+          "Close",
+          "关 闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纠纷单",
+              "订单与原因",
+              "投诉方",
+              "被投诉方",
+              "状态",
+              "提交时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "纠纷单 订单与原因 投诉方 被投诉方 状态 提交时间 操作 #1 客厅空调不制冷检修 维修进度争议 测试业主 测试师傅 待处理 2026-06-04 11:30:58 详情 处理"
+          },
+          {
+            "headers": [
+              "纠纷单号",
+              "当前状态",
+              "订单",
+              "提交时间",
+              "投诉方",
+              "被投诉方",
+              "纠纷原因",
+              "纠纷描述"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "纠纷单号 #1 当前状态 待处理 订单 客厅空调不制冷检修 提交时间 2026-06-04 11:30:58 投诉方 测试业主 被投诉方 测试师傅 纠纷原因 维修进度争议 纠纷描述 业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员纠纷仲裁筛选状态刷新总纠纷1待处理1调查中0已处理0平台仲裁看板集中查看订单纠纷、投诉双方、证据材料和处理结论，支持管理员快速归档处理结果。纠纷单订单与原因投诉方被投诉方状态提交时间操作#1客厅空调不制冷检修维修进度争议测试业主测试师傅待处理2026-06-04 11:30:58详情处理1 纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1154,
+          "scrollWidth": 1632,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-05-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49028/disputes",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-05-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-05-操作-详情.png",
+          "elementCount": 268,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "刷新",
+            "详情",
+            "处理",
+            "1",
+            "纠纷详情 纠纷单号 #1 当前状态 待处理 订单 客厅空调不制冷检修 提交时间 2026-06-04 11:30:58 投诉方 测试业主 被投诉方 测试师傅 纠纷原因 维修进度争议 纠纷描述 业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料 /demo/dispute-progress.jpg 纠纷创建：2026-06-04 11:30:",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->关 闭",
+        "url": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "纠纷仲裁"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [
+          "刷新",
+          "详情",
+          "处理"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纠纷单",
+              "订单与原因",
+              "投诉方",
+              "被投诉方",
+              "状态",
+              "提交时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "纠纷单 订单与原因 投诉方 被投诉方 状态 提交时间 操作 #1 客厅空调不制冷检修 维修进度争议 测试业主 测试师傅 待处理 2026-06-04 11:30:58 详情 处理"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员纠纷仲裁筛选状态刷新总纠纷1待处理1调查中0已处理0平台仲裁看板集中查看订单纠纷、投诉双方、证据材料和处理结论，支持管理员快速归档处理结果。纠纷单订单与原因投诉方被投诉方状态提交时间操作#1客厅空调不制冷检修维修进度争议测试业主测试师傅待处理2026-06-04 11:30:58详情处理1 纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1154,
+          "scrollWidth": 1664,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-06-二层操作-详情-关-闭",
+          "label": "二层操作:详情->关 闭",
+          "finalUrl": "http://127.0.0.1:49028/disputes",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-06-二层操作-详情-关-闭.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-06-二层操作-详情-关-闭.png",
+          "elementCount": 267,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "刷新",
+            "详情",
+            "处理",
+            "1",
+            "纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "纠纷仲裁"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [
+          "刷新",
+          "详情",
+          "处理"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纠纷单",
+              "订单与原因",
+              "投诉方",
+              "被投诉方",
+              "状态",
+              "提交时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "纠纷单 订单与原因 投诉方 被投诉方 状态 提交时间 操作 #1 客厅空调不制冷检修 维修进度争议 测试业主 测试师傅 待处理 2026-06-04 11:30:58 详情 处理"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员纠纷仲裁筛选状态刷新总纠纷1待处理1调查中0已处理0平台仲裁看板集中查看订单纠纷、投诉双方、证据材料和处理结论，支持管理员快速归档处理结果。纠纷单订单与原因投诉方被投诉方状态提交时间操作#1客厅空调不制冷检修维修进度争议测试业主测试师傅待处理2026-06-04 11:30:58详情处理1 纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1154,
+          "scrollWidth": 1696,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-07-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49028/disputes",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-07-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-07-操作-刷新.png",
+          "elementCount": 269,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "刷新",
+            "详情",
+            "处理",
+            "1",
+            "纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "导航:订单管理",
+        "url": "http://127.0.0.1:49028/orders",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单编号",
+              "服务标题",
+              "服务地址",
+              "业主",
+              "师傅",
+              "金额",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "订单编号 服务标题 服务地址 业主 师傅 金额 状态 创建时间 HS-20260604-001 客厅空调不制冷检修 air_conditioner 北京市朝阳区望京 SOHO T2 测试业主 测试师傅 ¥320 服务中 2026-06-04 11:30:58 HS-20260604-002 厨房水槽下水漏水 plumbing 北京市海淀区中关村软件园 A 座 测试业主 测试师傅 ¥220 待接单 2026-06-04 11:30:58 HS-20260604-003 卧室插座频繁跳闸 electrical 北京市丰台区丽泽商务区 18 号 测试业主 测试师傅 ¥260 待指派 2026-06-"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员订单管理筛选状态订单编号服务标题服务地址业主师傅金额状态创建时间HS-20260604-001客厅空调不制冷检修air_conditioner北京市朝阳区望京 SOHO T2测试业主测试师傅¥320服务中2026-06-04 11:30:58HS-20260604-002厨房水槽下水漏水plumbing北京市海淀区中关村软件园 A 座测试业主测试师傅¥220待接单2026-06-04 11:30:58HS-20260604-003卧室插座频繁跳闸electrical北京市丰台区丽泽商务区 18 号测试业主测试师傅¥260待指派2026-06-04 11:30:58HS-20260604-004卧室空调深度清洗air_conditioner北京市朝阳区三里屯太古里 8 号楼测试业主测试师傅¥180待验收2026-06-04 11:30:581",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1154,
+          "scrollWidth": 1728,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-08-导航-订单管理",
+          "label": "导航:订单管理",
+          "finalUrl": "http://127.0.0.1:49028/orders",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-08-导航-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-08-导航-订单管理.png",
+          "elementCount": 169,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "搜索订单",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:师傅热力图",
+        "url": "http://127.0.0.1:49028/master-density",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "区域师傅密度热力图"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员区域师傅密度热力图认证师傅总数1覆盖区域数1平均评分4.8/ 5.0各区域师傅数量分布区域分布占比区域详情列表朝阳区平均评分: 4.8 / 5.01 位师傅",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1154,
+          "scrollWidth": 1760,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-09-导航-师傅热力图",
+          "label": "导航:师傅热力图",
+          "finalUrl": "http://127.0.0.1:49028/master-density",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-09-导航-师傅热力图.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-09-导航-师傅热力图.png",
+          "elementCount": 187,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱"
+          ]
+        }
+      },
+      {
+        "label": "导航:知识图谱",
+        "url": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "故障知识图谱"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [
+          "添加知识条目"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "故障类型",
+              "症状",
+              "可能原因",
+              "解决方案",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加氟清洗滤网更换压缩机 2026-06-04 11:30:57 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-03 21:40:52 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员故障知识图谱添加知识条目6知识条目18故障原因18解决方案故障类型症状可能原因解决方案创建时间开关跳闸频繁跳闸,无法送电线路短路过载漏电排除短路分路供电检查绝缘2026-06-04 11:30:57水管漏水地面潮湿,水表异常转动管道老化接口松动水压过高更换管道紧固接口安装减压阀2026-06-04 11:30:57空调不制冷出风口无风/微风,制冷效果差冷媒不足滤网堵塞压缩机故障加氟清洗滤网更换压缩机2026-06-04 11:30:57开关跳闸频繁跳闸,无法送电线路短路过载漏电排除短路分路供电检查绝缘2026-06-03 21:40:52水管漏水地面潮湿,水表异常转动管道老化接口松动水压过高更换管道紧固接口安装减压阀2026-06-03 21:40:52空调不制冷出风口无风/微风,制冷效果差冷媒不足滤网堵塞压缩机故障加氟清洗滤网更换压缩机2026-06-03 21:40:521",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1154,
+          "scrollWidth": 1792,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-10-导航-知识图谱",
+          "label": "导航:知识图谱",
+          "finalUrl": "http://127.0.0.1:49028/knowledge",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-10-导航-知识图谱.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-10-导航-知识图谱.png",
+          "elementCount": 243,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "添加知识条目",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:添加知识条目",
+        "url": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "故障知识图谱"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [
+          "添加知识条目",
+          "Close",
+          "提 交",
+          "取 消"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：空调不制冷、水管漏水",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "简要描述故障现象",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "原因1\n原因2\n原因3",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "方案1\n方案2\n方案3",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "故障类型",
+              "症状",
+              "可能原因",
+              "解决方案",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加氟清洗滤网更换压缩机 2026-06-04 11:30:57 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-03 21:40:52 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员故障知识图谱添加知识条目6知识条目18故障原因18解决方案故障类型症状可能原因解决方案创建时间开关跳闸频繁跳闸,无法送电线路短路过载漏电排除短路分路供电检查绝缘2026-06-04 11:30:57水管漏水地面潮湿,水表异常转动管道老化接口松动水压过高更换管道紧固接口安装减压阀2026-06-04 11:30:57空调不制冷出风口无风/微风,制冷效果差冷媒不足滤网堵塞压缩机故障加氟清洗滤网更换压缩机2026-06-04 11:30:57开关跳闸频繁跳闸,无法送电线路短路过载漏电排除短路分路供电检查绝缘2026-06-03 21:40:52水管漏水地面潮湿,水表异常转动管道老化接口松动水压过高更换管道紧固接口安装减压阀2026-06-03 21:40:52空调不制冷出风口无风/微风,制冷效果差冷媒不足滤网堵塞压缩机故障加氟清洗滤网更换压缩机2026-06-03 21:40:521 添加知识条目故障类型故障症状可能原因（每行一个）解决方案（每行一个）提 交取 消",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1154,
+          "scrollWidth": 1824,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-11-操作-添加知识条目",
+          "label": "操作:添加知识条目",
+          "finalUrl": "http://127.0.0.1:49028/knowledge",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-11-操作-添加知识条目.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-11-操作-添加知识条目.png",
+          "elementCount": 306,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "添加知识条目",
+            "1",
+            "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+            "Close",
+            "如：空调不制冷、水管漏水",
+            "简要描述故障现象",
+            "原因1 原因2 原因3",
+            "方案1 方案2 方案3",
+            "提 交",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:添加知识条目->添加知识条目",
+        "url": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "故障知识图谱"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [
+          "添加知识条目",
+          "Close",
+          "提 交",
+          "取 消"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：空调不制冷、水管漏水",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "简要描述故障现象",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "原因1\n原因2\n原因3",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "方案1\n方案2\n方案3",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "故障类型",
+              "症状",
+              "可能原因",
+              "解决方案",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加氟清洗滤网更换压缩机 2026-06-04 11:30:57 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-03 21:40:52 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员故障知识图谱添加知识条目6知识条目18故障原因18解决方案故障类型症状可能原因解决方案创建时间开关跳闸频繁跳闸,无法送电线路短路过载漏电排除短路分路供电检查绝缘2026-06-04 11:30:57水管漏水地面潮湿,水表异常转动管道老化接口松动水压过高更换管道紧固接口安装减压阀2026-06-04 11:30:57空调不制冷出风口无风/微风,制冷效果差冷媒不足滤网堵塞压缩机故障加氟清洗滤网更换压缩机2026-06-04 11:30:57开关跳闸频繁跳闸,无法送电线路短路过载漏电排除短路分路供电检查绝缘2026-06-03 21:40:52水管漏水地面潮湿,水表异常转动管道老化接口松动水压过高更换管道紧固接口安装减压阀2026-06-03 21:40:52空调不制冷出风口无风/微风,制冷效果差冷媒不足滤网堵塞压缩机故障加氟清洗滤网更换压缩机2026-06-03 21:40:521 添加知识条目故障类型故障症状可能原因（每行一个）解决方案（每行一个）提 交取 消",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1154,
+          "scrollWidth": 1856,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目",
+          "label": "二层操作:添加知识条目->添加知识条目",
+          "finalUrl": "http://127.0.0.1:49028/knowledge",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目.png",
+          "elementCount": 306,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "添加知识条目",
+            "1",
+            "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+            "Close",
+            "如：空调不制冷、水管漏水",
+            "简要描述故障现象",
+            "原因1 原因2 原因3",
+            "方案1 方案2 方案3",
+            "提 交",
+            "取 消"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "纠纷仲裁",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "纠纷仲裁",
+        "label": "详情->关 闭",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "纠纷仲裁",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "知识图谱",
+        "label": "添加知识条目",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "知识图谱",
+        "label": "添加知识条目->添加知识条目",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-01-首屏.png",
+        "elementCount": 238,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-02-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-02-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-02-导航-数据看板.png",
+        "elementCount": 238,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-03-导航-认证审核",
+        "label": "导航:认证审核",
+        "finalUrl": "http://127.0.0.1:49028/verifications",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-03-导航-认证审核.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-03-导航-认证审核.png",
+        "elementCount": 118,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-04-导航-纠纷仲裁",
+        "label": "导航:纠纷仲裁",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-04-导航-纠纷仲裁.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-04-导航-纠纷仲裁.png",
+        "elementCount": 176,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-05-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-05-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-05-操作-详情.png",
+        "elementCount": 268,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1",
+          "纠纷详情 纠纷单号 #1 当前状态 待处理 订单 客厅空调不制冷检修 提交时间 2026-06-04 11:30:58 投诉方 测试业主 被投诉方 测试师傅 纠纷原因 维修进度争议 纠纷描述 业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料 /demo/dispute-progress.jpg 纠纷创建：2026-06-04 11:30:",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-06-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-06-二层操作-详情-关-闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-06-二层操作-详情-关-闭.png",
+        "elementCount": 267,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1",
+          "纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-07-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-07-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-07-操作-刷新.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1",
+          "纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-08-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49028/orders",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-08-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-08-导航-订单管理.png",
+        "elementCount": 169,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "搜索订单",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-09-导航-师傅热力图",
+        "label": "导航:师傅热力图",
+        "finalUrl": "http://127.0.0.1:49028/master-density",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-09-导航-师傅热力图.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-09-导航-师傅热力图.png",
+        "elementCount": 187,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-10-导航-知识图谱",
+        "label": "导航:知识图谱",
+        "finalUrl": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-10-导航-知识图谱.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-10-导航-知识图谱.png",
+        "elementCount": 243,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "添加知识条目",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-11-操作-添加知识条目",
+        "label": "操作:添加知识条目",
+        "finalUrl": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-11-操作-添加知识条目.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-11-操作-添加知识条目.png",
+        "elementCount": 306,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "添加知识条目",
+          "1",
+          "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+          "Close",
+          "如：空调不制冷、水管漏水",
+          "简要描述故障现象",
+          "原因1 原因2 原因3",
+          "方案1 方案2 方案3",
+          "提 交",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目",
+        "label": "二层操作:添加知识条目->添加知识条目",
+        "finalUrl": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目.png",
+        "elementCount": 306,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "添加知识条目",
+          "1",
+          "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+          "Close",
+          "如：空调不制冷、水管漏水",
+          "简要描述故障现象",
+          "原因1 原因2 原因3",
+          "方案1 方案2 方案3",
+          "提 交",
+          "取 消"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49028/",
+    "representativeScreenshotLabel": "数据看板"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 12,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-01-首屏.png",
+        "elementCount": 238,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-02-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-02-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-02-导航-数据看板.png",
+        "elementCount": 238,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-03-导航-认证审核",
+        "label": "导航:认证审核",
+        "finalUrl": "http://127.0.0.1:49028/verifications",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-03-导航-认证审核.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-03-导航-认证审核.png",
+        "elementCount": 118,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-04-导航-纠纷仲裁",
+        "label": "导航:纠纷仲裁",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-04-导航-纠纷仲裁.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-04-导航-纠纷仲裁.png",
+        "elementCount": 176,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-05-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-05-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-05-操作-详情.png",
+        "elementCount": 268,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1",
+          "纠纷详情 纠纷单号 #1 当前状态 待处理 订单 客厅空调不制冷检修 提交时间 2026-06-04 11:30:58 投诉方 测试业主 被投诉方 测试师傅 纠纷原因 维修进度争议 纠纷描述 业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料 /demo/dispute-progress.jpg 纠纷创建：2026-06-04 11:30:",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-06-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-06-二层操作-详情-关-闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-06-二层操作-详情-关-闭.png",
+        "elementCount": 267,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1",
+          "纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-07-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-07-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-07-操作-刷新.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1",
+          "纠纷详情纠纷单号#1当前状态待处理订单客厅空调不制冷检修提交时间2026-06-04 11:30:58投诉方测试业主被投诉方测试师傅纠纷原因维修进度争议纠纷描述业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。 证据材料/demo/dispute-progress.jpg纠纷创建：2026-06-04 11:30:58等待管理员处理关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-08-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49028/orders",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-08-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-08-导航-订单管理.png",
+        "elementCount": 169,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "搜索订单",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-09-导航-师傅热力图",
+        "label": "导航:师傅热力图",
+        "finalUrl": "http://127.0.0.1:49028/master-density",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-09-导航-师傅热力图.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-09-导航-师傅热力图.png",
+        "elementCount": 187,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-10-导航-知识图谱",
+        "label": "导航:知识图谱",
+        "finalUrl": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-10-导航-知识图谱.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-10-导航-知识图谱.png",
+        "elementCount": 243,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "添加知识条目",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-11-操作-添加知识条目",
+        "label": "操作:添加知识条目",
+        "finalUrl": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-11-操作-添加知识条目.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-11-操作-添加知识条目.png",
+        "elementCount": 306,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "添加知识条目",
+          "1",
+          "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+          "Close",
+          "如：空调不制冷、水管漏水",
+          "简要描述故障现象",
+          "原因1 原因2 原因3",
+          "方案1 方案2 方案3",
+          "提 交",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目",
+        "label": "二层操作:添加知识条目->添加知识条目",
+        "finalUrl": "http://127.0.0.1:49028/knowledge",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-final-current-20260604/may-89028-codex-final-current-structure-12-二层操作-添加知识条目-添加知识条目.png",
+        "elementCount": 306,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "添加知识条目",
+          "1",
+          "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+          "Close",
+          "如：空调不制冷、水管漏水",
+          "简要描述故障现象",
+          "原因1 原因2 原因3",
+          "方案1 方案2 方案3",
+          "提 交",
+          "取 消"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1888,
+    "height": 1154,
+    "scrollWidth": 1856,
+    "scrollHeight": 1154
+  },
+  "initialBodyTextPreview": "管理后台\n数据看板\n认证审核\n纠纷仲裁\n订单管理\n师傅热力图\n知识图谱\n家居服务众包平台 - 运营管理\n演示管理员\n数据看板\n总用户数\n3\n总订单数\n4\n认证师傅数\n1\n待处理纠纷\n1\n订单状态分布\n待验收\n1 单\n服务中\n1 单\nnegotiated\n1 单\n待指派\n1 单\n快捷统计\n待处理订单\n1\n已完成订单\n1\n最近订单\n订单编号\t服务标题\t业主\t师傅\t状态\t创建时间\nHS-20260604-001\t客厅空调不制冷检修\t测试业主\t测试师傅\t服务中\t2026-06-04 11:30:58\nHS-20260604-002\t厨房水槽下水漏水\t测试业主\t测试师傅\t\t2026-06-04 11:30:58\nHS-20260604-003\t卧室插座频繁跳闸\t测试业主\t测试师傅\t待指派\t2026-06-04 11:30:58\nHS-20260604-004\t卧室空调深度清洗\t测试业主\t测试师傅\t待验收\t2026-06-04 11:30:58",
+  "bodyTextPreview": "管理后台\n数据看板\n认证审核\n纠纷仲裁\n订单管理\n师傅热力图\n知识图谱\n家居服务众包平台 - 运营管理\n演示管理员\n数据看板\n总用户数\n3\n总订单数\n4\n认证师傅数\n1\n待处理纠纷\n1\n订单状态分布\n待验收\n1 单\n服务中\n1 单\nnegotiated\n1 单\n待指派\n1 单\n快捷统计\n待处理订单\n1\n已完成订单\n1\n最近订单\n订单编号\t服务标题\t业主\t师傅\t状态\t创建时间\nHS-20260604-001\t客厅空调不制冷检修\t测试业主\t测试师傅\t服务中\t2026-06-04 11:30:58\nHS-20260604-002\t厨房水槽下水漏水\t测试业主\t测试师傅\t\t2026-06-04 11:30:58\nHS-20260604-003\t卧室插座频繁跳闸\t测试业主\t测试师傅\t待指派\t2026-06-04 11:30:58\nHS-20260604-004\t卧室空调深度清洗\t测试业主\t测试师傅\t待验收\t2026-06-04 11:30:58",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/verifications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/verifications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/disputes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/disputes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/disputes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/master-density"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/master-density"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/knowledge-graph"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/knowledge-graph"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/dashboard"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49028/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49028/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a6559dc4",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/react-router-dom.js?v=a6559dc4",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/react-router-dom.js?v=a6559dc4",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49028/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49028/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a6559dc4",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/react-router-dom.js?v=a6559dc4",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/react-router-dom.js?v=a6559dc4",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

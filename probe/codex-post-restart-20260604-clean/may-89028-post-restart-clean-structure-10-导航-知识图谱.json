@@ -1,0 +1,7553 @@
+{
+  "meta": {
+    "title": "家居服务众包协作平台",
+    "url": "http://127.0.0.1:49028/knowledge",
+    "timestamp": "2026-06-04T12:44:25.631Z",
+    "viewport": {
+      "width": 1792,
+      "height": 1188
+    },
+    "document": {
+      "scrollWidth": 1792,
+      "scrollHeight": 1188
+    }
+  },
+  "text": {
+    "bodyPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。故障知识图谱添加知识条目6知识条目18故障原因18解决方案故障类型症状可能原因解决方案创建时间开关跳闸频繁跳闸,无法送电线路短路过载漏电排除短路分路供电检查绝缘2026-06-04 11:30:57水管漏水地面潮湿,水表异常转动管道老化接口松动水压过高更换管道紧固接口安装减压阀2026-06-04 11:30:57空调不制冷出风口无风/微风,制冷效果差冷媒不足滤网堵塞压缩机故障加氟清洗滤网更换压缩机2026-06-04 11:30:57开关跳闸频繁跳闸,无法送电线路短路过载漏电排除短路分路供电检查绝缘2026-06-03 21:40:52水管漏水地面潮湿,水表异常转动管道老化接口松动水压过高更换管道紧固接口安装减压阀2026-06-03 21:40:52空调不制冷出风口无风/微风,制冷效果差冷媒不足滤网堵塞压缩机故障加氟清洗滤网更换压缩机2026-06-03 21:40:521",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style",
+        "visible": false,
+        "childCount": 57,
+        "children": []
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-mgrif2",
+                "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-mgrif2",
+                "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "aside",
+                    "id": "",
+                    "className": "ant-layout-sider ant-layout-sider-dark css-dev-only-do-not-override-mgrif2",
+                    "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.css-dev-only-do-not-override-mgrif2",
+                    "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-layout-sider-children",
+                        "selectorHint": "div.ant-layout-sider-children",
+                        "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-layout css-dev-only-do-not-override-mgrif2",
+                    "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mgrif2",
+                    "text": "家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 ",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "header",
+                        "id": "",
+                        "className": "ant-layout-header css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "header.ant-layout-header.css-dev-only-do-not-override-mgrif2",
+                        "text": "家居服务众包平台 - 运营管理 演示管理员",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      },
+                      {
+                        "tag": "main",
+                        "id": "",
+                        "className": "ant-layout-content css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "main.ant-layout-content.css-dev-only-do-not-override-mgrif2",
+                        "text": "个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 6 知识条目 18 故障原因 ",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 6 知识条目 18 故障原因 18 解决方案 故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style: normal; line-height: 0; text-align: center; text-transform: none; vertical-align: -0.125em; text-r",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 57,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家居服务众包协作平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 6 知识条目 18 故障原因 18 解决方案 故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 6 知识条目 18 故障原因 18 解决方案 故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 6 知识条目 18 故障原因 18 解决方案 故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1188
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "aside",
+      "id": "",
+      "className": "ant-layout-sider ant-layout-sider-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout-sider-children",
+      "selectorHint": "div.ant-layout-sider-children",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 268
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 68,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-dashboard ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-dashboard.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "dashboard",
+      "title": "",
+      "placeholder": "",
+      "text": "dashboard",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 81,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 81,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 28,
+        "y": 82,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 68,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "认证审核",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 112,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-audit ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-audit.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "audit",
+      "title": "",
+      "placeholder": "",
+      "text": "audit",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 125,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 125,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 125,
+        "width": 12,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "认证审核",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 112,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "纠纷仲裁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 156,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-alert ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-alert.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "alert",
+      "title": "",
+      "placeholder": "",
+      "text": "alert",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 169,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 169,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 169,
+        "width": 12,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "纠纷仲裁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 156,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 200,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 213,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 213,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 213,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 200,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "师傅热力图",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 244,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bar-chart ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-bar-chart.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bar-chart",
+      "title": "",
+      "placeholder": "",
+      "text": "bar-chart",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 257,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 257,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 259,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "师傅热力图",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 244,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-active ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-active.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 288,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-bulb.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 301,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 301,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 301,
+        "width": 10,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 288,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 6 知识条目 18 故障原因 18 解决方案 故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 200,
+        "y": 0,
+        "width": 1592,
+        "height": 1188
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "header",
+      "id": "",
+      "className": "ant-layout-header css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "header.ant-layout-header.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家居服务众包平台 - 运营管理 演示管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 200,
+        "y": 0,
+        "width": 1592,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家居服务众包平台 - 运营管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 224,
+        "y": 0,
+        "width": 207,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small ant-dropdown-trigger",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "演示管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1658,
+        "y": 0,
+        "width": 110,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1658,
+        "y": 0,
+        "width": 32,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "span",
+      "id": "",
+      "className": "ant-avatar ant-avatar-circle ant-avatar-icon css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-avatar.ant-avatar-circle.ant-avatar-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1658,
+        "y": 17,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-user",
+      "selectorHint": "span.anticon.anticon-user",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "user",
+      "title": "",
+      "placeholder": "",
+      "text": "user",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1665,
+        "y": 24,
+        "width": 18,
+        "height": 18
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1665,
+        "y": 24,
+        "width": 18,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1666,
+        "y": 25,
+        "width": 15,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "演示管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1698,
+        "y": 0,
+        "width": 70,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "演示管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1698,
+        "y": 23,
+        "width": 70,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "main",
+      "id": "",
+      "className": "ant-layout-content css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "main.ant-layout-content.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 6 知识条目 18 故障原因 18 解决方案 故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 224,
+        "y": 88,
+        "width": 1544,
+        "height": 1076
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 248,
+        "y": 112,
+        "width": 1496,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障知识图谱 添加知识条目 6 知识条目 18 故障原因 18 解决方案 故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 248,
+        "y": 146,
+        "width": 1496,
+        "height": 735
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障知识图谱 添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 146,
+        "width": 1496,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "h3",
+      "id": "",
+      "className": "ant-typography css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "h3.ant-typography.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 248,
+        "y": 146,
+        "width": 144,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1606,
+        "y": 146,
+        "width": 138,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1622,
+        "y": 154,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-plus",
+      "selectorHint": "span.anticon.anticon-plus",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "plus",
+      "title": "",
+      "placeholder": "",
+      "text": "plus",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1622,
+        "y": 155,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1622,
+        "y": 155,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1628,
+        "y": 157,
+        "width": 1,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1623,
+        "y": 162,
+        "width": 11,
+        "height": 1
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1644,
+        "y": 152,
+        "width": 84,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-row.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "6 知识条目 18 故障原因 18 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 202,
+        "width": 1512,
+        "height": 150
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-8 css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-col-8.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "6 知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 202,
+        "width": 504,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "6 知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 248,
+        "y": 202,
+        "width": 488,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "6 知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 203,
+        "width": 486,
+        "height": 148
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "6 知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 273,
+        "y": 227,
+        "width": 438,
+        "height": 100
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb",
+      "selectorHint": "span.anticon.anticon-bulb",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 476,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 476,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 480,
+        "y": 227,
+        "width": 23,
+        "height": 32
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "6",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 267,
+        "width": 438,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 305,
+        "width": 438,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-8 css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-col-8.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18 故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 744,
+        "y": 202,
+        "width": 504,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18 故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 752,
+        "y": 202,
+        "width": 488,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18 故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 753,
+        "y": 203,
+        "width": 486,
+        "height": 148
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18 故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 777,
+        "y": 227,
+        "width": 438,
+        "height": 100
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-alert",
+      "selectorHint": "span.anticon.anticon-alert",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "alert",
+      "title": "",
+      "placeholder": "",
+      "text": "alert",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 980,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 980,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 983,
+        "y": 227,
+        "width": 27,
+        "height": 32
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 777,
+        "y": 267,
+        "width": 438,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 777,
+        "y": 305,
+        "width": 438,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-8 css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-col-8.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1248,
+        "y": 202,
+        "width": 504,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1256,
+        "y": 202,
+        "width": 488,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1257,
+        "y": 203,
+        "width": 486,
+        "height": 148
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1281,
+        "y": 227,
+        "width": 438,
+        "height": 100
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-tool",
+      "selectorHint": "span.anticon.anticon-tool",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "tool",
+      "title": "",
+      "placeholder": "",
+      "text": "tool",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1484,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1484,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1486,
+        "y": 229,
+        "width": 29,
+        "height": 29
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "18",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1281,
+        "y": 267,
+        "width": 438,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1281,
+        "y": 305,
+        "width": 438,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 248,
+        "y": 376,
+        "width": 1496,
+        "height": 505
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 377,
+        "width": 1494,
+        "height": 503
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-wrapper css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table-wrapper.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 455
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 439
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 439
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 391
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-container",
+      "selectorHint": "div.ant-table-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 391
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-content",
+      "selectorHint": "div.ant-table-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 391
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 391
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "colgroup",
+      "id": "",
+      "className": "",
+      "selectorHint": "colgroup",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 391
+      },
+      "style": {
+        "display": "table-column-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 150,
+        "height": 391
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 401,
+        "width": 319,
+        "height": 391
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 742,
+        "y": 401,
+        "width": 399,
+        "height": 391
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1140,
+        "y": 401,
+        "width": 399,
+        "height": 391
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1539,
+        "y": 401,
+        "width": 180,
+        "height": 391
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "thead",
+      "id": "",
+      "className": "ant-table-thead",
+      "selectorHint": "thead.ant-table-thead",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 55
+      },
+      "style": {
+        "display": "table-header-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "tr",
+      "id": "",
+      "className": "",
+      "selectorHint": "tr",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1446,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 111,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 150,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 112,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "症状",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 401,
+        "width": 319,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 113,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "可能原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 742,
+        "y": 401,
+        "width": 399,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 114,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1140,
+        "y": 401,
+        "width": 399,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 115,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "创建时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1539,
+        "y": 401,
+        "width": 180,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 116,
+      "tag": "tbody",
+      "id": "",
+      "className": "ant-table-tbody",
+      "selectorHint": "tbody.ant-table-tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57 水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57 空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加氟清洗滤网更换压缩机 2026-06-04 1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 273,
+        "y": 456,
+        "width": 1446,
+        "height": 336
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 117,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-row ant-table-row-level-0",
+      "selectorHint": "tr.ant-table-row.ant-table-row-level-0",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-04 11:30:57",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 456,
+        "width": 1446,
+        "height": 56
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 118,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 456,
+        "width": 150,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 119,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 289,
+        "y": 472,
+        "width": 78,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 120,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 472,
+        "width": 14,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 121,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb",
+      "selectorHint": "span.anticon.anticon-bulb",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 476,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 122,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 476,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 123,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 291,
+        "y": 476,
+        "width": 10,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 124,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 311,
+        "y": 472,
+        "width": 56,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 125,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 311,
+        "y": 474,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 126,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "频繁跳闸,无法送电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 456,
+        "width": 319,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 127,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "线路短路过载漏电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 742,
+        "y": 456,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 128,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "线路短路",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 473,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 129,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "过载",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 830,
+        "y": 473,
+        "width": 40,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 130,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "漏电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 878,
+        "y": 473,
+        "width": 40,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 131,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "排除短路分路供电检查绝缘",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1140,
+        "y": 456,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 132,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "排除短路",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1156,
+        "y": 473,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 133,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "分路供电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1228,
+        "y": 473,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 134,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "检查绝缘",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1300,
+        "y": 473,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 135,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-04 11:30:57",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1539,
+        "y": 456,
+        "width": 180,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 136,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-row ant-table-row-level-0",
+      "selectorHint": "tr.ant-table-row.ant-table-row-level-0",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-04 11:30:57",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 512,
+        "width": 1446,
+        "height": 56
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 137,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 512,
+        "width": 150,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 138,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 289,
+        "y": 528,
+        "width": 78,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 139,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 528,
+        "width": 14,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 140,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb",
+      "selectorHint": "span.anticon.anticon-bulb",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 532,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 141,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 532,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 142,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 291,
+        "y": 532,
+        "width": 10,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 143,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 311,
+        "y": 528,
+        "width": 56,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 144,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 311,
+        "y": 530,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 145,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "地面潮湿,水表异常转动",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 512,
+        "width": 319,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 146,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管道老化接口松动水压过高",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 742,
+        "y": 512,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 147,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管道老化",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 529,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 148,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "接口松动",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 830,
+        "y": 529,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 149,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水压过高",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 902,
+        "y": 529,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 150,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "更换管道紧固接口安装减压阀",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1140,
+        "y": 512,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 151,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "更换管道",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1156,
+        "y": 529,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 152,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "紧固接口",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1228,
+        "y": 529,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 153,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "安装减压阀",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1300,
+        "y": 529,
+        "width": 76,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 154,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-04 11:30:57",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1539,
+        "y": 512,
+        "width": 180,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 155,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-row ant-table-row-level-0",
+      "selectorHint": "tr.ant-table-row.ant-table-row-level-0",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加氟清洗滤网更换压缩机 2026-06-04 11:30:57",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 568,
+        "width": 1446,
+        "height": 56
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 156,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 568,
+        "width": 150,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 157,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 289,
+        "y": 584,
+        "width": 92,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 158,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 584,
+        "width": 14,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 159,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb",
+      "selectorHint": "span.anticon.anticon-bulb",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 588,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 160,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 588,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 161,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 291,
+        "y": 588,
+        "width": 10,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 162,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 311,
+        "y": 584,
+        "width": 70,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 163,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 311,
+        "y": 586,
+        "width": 70,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 164,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "出风口无风/微风,制冷效果差",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 568,
+        "width": 319,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 165,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "冷媒不足滤网堵塞压缩机故障",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 742,
+        "y": 568,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 166,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "冷媒不足",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 585,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 167,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "滤网堵塞",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 830,
+        "y": 585,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 168,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "压缩机故障",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 902,
+        "y": 585,
+        "width": 76,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 169,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "加氟清洗滤网更换压缩机",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1140,
+        "y": 568,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 170,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "加氟",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1156,
+        "y": 585,
+        "width": 40,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 171,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "清洗滤网",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1204,
+        "y": 585,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 172,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "更换压缩机",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1276,
+        "y": 585,
+        "width": 76,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 173,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-04 11:30:57",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1539,
+        "y": 568,
+        "width": 180,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 174,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-row ant-table-row-level-0",
+      "selectorHint": "tr.ant-table-row.ant-table-row-level-0",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸 频繁跳闸,无法送电 线路短路过载漏电 排除短路分路供电检查绝缘 2026-06-03 21:40:52",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 624,
+        "width": 1446,
+        "height": 56
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 175,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 624,
+        "width": 150,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 176,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 289,
+        "y": 640,
+        "width": 78,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 177,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 640,
+        "width": 14,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 178,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb",
+      "selectorHint": "span.anticon.anticon-bulb",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 644,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 179,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 644,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 180,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 291,
+        "y": 644,
+        "width": 10,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 181,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 311,
+        "y": 640,
+        "width": 56,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 182,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开关跳闸",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 311,
+        "y": 642,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 183,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "频繁跳闸,无法送电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 624,
+        "width": 319,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 184,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "线路短路过载漏电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 742,
+        "y": 624,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 185,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "线路短路",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 641,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 186,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "过载",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 830,
+        "y": 641,
+        "width": 40,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 187,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "漏电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 878,
+        "y": 641,
+        "width": 40,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 188,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "排除短路分路供电检查绝缘",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1140,
+        "y": 624,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 189,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "排除短路",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1156,
+        "y": 641,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 190,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "分路供电",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1228,
+        "y": 641,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 191,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "检查绝缘",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1300,
+        "y": 641,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 192,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-03 21:40:52",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1539,
+        "y": 624,
+        "width": 180,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 193,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-row ant-table-row-level-0",
+      "selectorHint": "tr.ant-table-row.ant-table-row-level-0",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水 地面潮湿,水表异常转动 管道老化接口松动水压过高 更换管道紧固接口安装减压阀 2026-06-03 21:40:52",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 680,
+        "width": 1446,
+        "height": 56
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 194,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 680,
+        "width": 150,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 195,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 289,
+        "y": 696,
+        "width": 78,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 196,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 696,
+        "width": 14,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 197,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb",
+      "selectorHint": "span.anticon.anticon-bulb",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 700,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 198,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 700,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 199,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 291,
+        "y": 700,
+        "width": 10,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 200,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 311,
+        "y": 696,
+        "width": 56,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 201,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水管漏水",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 311,
+        "y": 698,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 202,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "地面潮湿,水表异常转动",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 680,
+        "width": 319,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 203,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管道老化接口松动水压过高",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 742,
+        "y": 680,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 204,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管道老化",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 697,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 205,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "接口松动",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 830,
+        "y": 697,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 206,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "水压过高",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 902,
+        "y": 697,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 207,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "更换管道紧固接口安装减压阀",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1140,
+        "y": 680,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 208,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "更换管道",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1156,
+        "y": 697,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 209,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "紧固接口",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1228,
+        "y": 697,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 210,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "安装减压阀",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1300,
+        "y": 697,
+        "width": 76,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 211,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-03 21:40:52",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1539,
+        "y": 680,
+        "width": 180,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 212,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-row ant-table-row-level-0",
+      "selectorHint": "tr.ant-table-row.ant-table-row-level-0",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷 出风口无风/微风,制冷效果差 冷媒不足滤网堵塞压缩机故障 加氟清洗滤网更换压缩机 2026-06-03 21:40:52",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 736,
+        "width": 1446,
+        "height": 56
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 213,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 736,
+        "width": 150,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 214,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 289,
+        "y": 752,
+        "width": 92,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 215,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 752,
+        "width": 14,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 216,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb",
+      "selectorHint": "span.anticon.anticon-bulb",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 756,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 217,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 289,
+        "y": 756,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 218,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 291,
+        "y": 756,
+        "width": 10,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 219,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 311,
+        "y": 752,
+        "width": 70,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 220,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "空调不制冷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 311,
+        "y": 754,
+        "width": 70,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 221,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "出风口无风/微风,制冷效果差",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 736,
+        "width": 319,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 222,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "冷媒不足滤网堵塞压缩机故障",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 742,
+        "y": 736,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 223,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "冷媒不足",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 753,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 224,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "滤网堵塞",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 830,
+        "y": 753,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 225,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "压缩机故障",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 902,
+        "y": 753,
+        "width": 76,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 226,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "加氟清洗滤网更换压缩机",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1140,
+        "y": 736,
+        "width": 399,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 227,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "加氟",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1156,
+        "y": 753,
+        "width": 40,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 228,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "清洗滤网",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1204,
+        "y": 753,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 229,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "更换压缩机",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1276,
+        "y": 753,
+        "width": 76,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 230,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-03 21:40:52",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1539,
+        "y": 736,
+        "width": 180,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 231,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-pagination ant-pagination-end ant-table-pagination css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-pagination.ant-pagination-end.ant-table-pagination",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 273,
+        "y": 808,
+        "width": 1446,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 232,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-prev ant-pagination-disabled",
+      "selectorHint": "li.ant-pagination-prev.ant-pagination-disabled",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "上一页",
+      "placeholder": "",
+      "text": "上一页",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1607,
+        "y": 808,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 233,
+      "tag": "button",
+      "id": "",
+      "className": "ant-pagination-item-link",
+      "selectorHint": "button.ant-pagination-item-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1607,
+        "y": 808,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 234,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-left",
+      "selectorHint": "span.anticon.anticon-left",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "left",
+      "title": "",
+      "placeholder": "",
+      "text": "left",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1617,
+        "y": 817,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 235,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1617,
+        "y": 817,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 236,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1619,
+        "y": 818,
+        "width": 6,
+        "height": 10
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 237,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-item ant-pagination-item-1 ant-pagination-item-active",
+      "selectorHint": "li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "1",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1647,
+        "y": 808,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 238,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1648,
+        "y": 809,
+        "width": 30,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 239,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-next ant-pagination-disabled",
+      "selectorHint": "li.ant-pagination-next.ant-pagination-disabled",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "下一页",
+      "placeholder": "",
+      "text": "下一页",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1687,
+        "y": 808,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 240,
+      "tag": "button",
+      "id": "",
+      "className": "ant-pagination-item-link",
+      "selectorHint": "button.ant-pagination-item-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1687,
+        "y": 808,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 241,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-right",
+      "selectorHint": "span.anticon.anticon-right",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "right",
+      "title": "",
+      "placeholder": "",
+      "text": "right",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1697,
+        "y": 817,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 242,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1697,
+        "y": 817,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 243,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1700,
+        "y": 818,
+        "width": 6,
+        "height": 10
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 268
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 68,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "认证审核",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 112,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "纠纷仲裁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 156,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 200,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "师傅热力图",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 244,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-active ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-active.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 288,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1606,
+        "y": 146,
+        "width": 138,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "button",
+      "id": "",
+      "className": "ant-pagination-item-link",
+      "selectorHint": "button.ant-pagination-item-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1607,
+        "y": 808,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-item ant-pagination-item-1 ant-pagination-item-active",
+      "selectorHint": "li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "1",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1647,
+        "y": 808,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1648,
+        "y": 809,
+        "width": 30,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "button",
+      "id": "",
+      "className": "ant-pagination-item-link",
+      "selectorHint": "button.ant-pagination-item-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1687,
+        "y": 808,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}

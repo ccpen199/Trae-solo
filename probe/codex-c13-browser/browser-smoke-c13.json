@@ -1,0 +1,38 @@
+{
+  "order": "may-89028",
+  "frontend": "http://127.0.0.1:49028/",
+  "backend": "http://127.0.0.1:59028",
+  "status": 200,
+  "title": "家居服务众包协作平台",
+  "bodyLen": 473,
+  "responseErrors": [],
+  "requestFailures": [],
+  "apiChecks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "body": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:52:26.736Z\"}"
+    },
+    {
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "body": "{\"statistics\":{\"totalUsers\":3,\"totalOrders\":4,\"totalMasters\":1,\"pendingDisputes\":1},\"overview\":{\"totalUsers\":3,\"totalOrd"
+    },
+    {
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "body": "{\"products\":[{\"id\":1,\"order_no\":\"HS-20260604-001\",\"owner_id\":1,\"master_id\":2,\"service_type\":\"air_conditioner\",\"title\":\"客"
+    },
+    {
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "body": "{\"orders\":[{\"id\":1,\"order_no\":\"HS-20260604-001\",\"owner_id\":1,\"master_id\":2,\"service_type\":\"air_conditioner\",\"title\":\"客厅空"
+    }
+  ],
+  "ok": true,
+  "error": ""
+}

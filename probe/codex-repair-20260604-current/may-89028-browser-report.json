@@ -1,0 +1,169 @@
+{
+  "ok": false,
+  "generatedAt": "2026-06-04T11:11:23.281Z",
+  "order": "may-89028",
+  "roundIndex": 99,
+  "captureId": "may-89028-codex-repair",
+  "url": "http://127.0.0.1:49028/",
+  "initialUrl": "http://127.0.0.1:49028/",
+  "finalUrl": "chrome-error://chromewebdata/",
+  "status": null,
+  "title": "127.0.0.1",
+  "initialTitle": "127.0.0.1",
+  "navigationError": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:49028/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:49028/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-repair-20260604-current/may-89028-codex-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-repair-20260604-current/may-89028-codex-repair-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在内容列表，优先复验详情链路",
+  "targetKind": "detail",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在内容列表，优先复验详情链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在内容列表，优先复验详情链路",
+      "ok": true,
+      "finalUrl": "chrome-error://chromewebdata/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "chrome-error://chromewebdata/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "chrome-error://chromewebdata/",
+        "title": "127.0.0.1",
+        "headings": [
+          "无法访问此网站"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "重新加载",
+          "详情"
+        ],
+        "links": [
+          "检查代理服务器和防火墙"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "无法访问此网站 127.0.0.1 拒绝了我们的连接请求。 请试试以下办法： 检查网络连接 检查代理服务器和防火墙 ERR_CONNECTION_REFUSED 重新加载 详情 请检查您的互联网连接是否正常 请检查所有网线是否都已连好，然后重新启动您可能正在使用的任何路由器、调制解调器或其他网络设备。 在防火墙或防病毒设置部分设为允许 Chrome 访问网络。 如果它已在可访问网络的程序列表中，请尝试将它从该列表中移除，然后重新添加到其中。 如果您使用代理服务器… 依次前往“应用”>“系统设置”>“网络”，选择有效的网络，点击“详情…”按钮，然后取消选择所有已选的代理。 127.0.0.1 拒绝了我们的连接请求。",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-codex-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "chrome-error://chromewebdata/",
+          "title": "127.0.0.1",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-repair-20260604-current/may-89028-codex-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-repair-20260604-current/may-89028-codex-repair-structure-01-首屏.png",
+          "elementCount": 45,
+          "interactiveCount": 3,
+          "interactiveLabels": [
+            "检查代理服务器和防火墙",
+            "重新加载",
+            "详情"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "chrome-error://chromewebdata/",
+        "title": "127.0.0.1",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-repair-20260604-current/may-89028-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-repair-20260604-current/may-89028-codex-repair-structure-01-首屏.png",
+        "elementCount": 45,
+        "interactiveCount": 3,
+        "interactiveLabels": [
+          "检查代理服务器和防火墙",
+          "重新加载",
+          "详情"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "chrome-error://chromewebdata/",
+    "representativeScreenshotLabel": "无法访问此网站"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "chrome-error://chromewebdata/",
+        "title": "127.0.0.1",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-repair-20260604-current/may-89028-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-repair-20260604-current/may-89028-codex-repair-structure-01-首屏.png",
+        "elementCount": 45,
+        "interactiveCount": 3,
+        "interactiveLabels": [
+          "检查代理服务器和防火墙",
+          "重新加载",
+          "详情"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "无法访问此网站\n\n127.0.0.1 拒绝了我们的连接请求。\n\n请试试以下办法：\n\n检查网络连接\n检查代理服务器和防火墙\nERR_CONNECTION_REFUSED\n重新加载\n详情",
+  "bodyTextPreview": "无法访问此网站\n\n127.0.0.1 拒绝了我们的连接请求。\n\n请试试以下办法：\n\n检查网络连接\n检查代理服务器和防火墙\nERR_CONNECTION_REFUSED\n重新加载\n详情",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49028/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49028/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    }
+  ],
+  "responseErrors": []
+}

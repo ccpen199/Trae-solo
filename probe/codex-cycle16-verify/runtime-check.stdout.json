@@ -1,0 +1,820 @@
+{
+  "ok": false,
+  "generatedAt": "2026-06-04T12:33:55.097Z",
+  "order": "may-89028",
+  "roundIndex": 16,
+  "captureId": "may-89028-cycle16",
+  "url": "http://127.0.0.1:49028/",
+  "initialUrl": "http://127.0.0.1:49028/",
+  "finalUrl": "http://127.0.0.1:49028/",
+  "status": null,
+  "title": "家居服务众包协作平台",
+  "initialTitle": "家居服务众包协作平台",
+  "navigationError": "page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:49028/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-02-导航-数据看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-03-导航-认证审核.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-04-导航-纠纷仲裁.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；后台管理相关问题；购买/提交相关问题；发现/分类相关问题",
+  "targetReason": "个人中心/我的相关问题；后台管理相关问题；购买/提交相关问题；发现/分类相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49028/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49028/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:数据看板",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:数据看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:认证审核",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:认证审核",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:纠纷仲裁",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:纠纷仲裁",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "数据看板"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单编号",
+              "服务标题",
+              "业主",
+              "师傅",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "订单编号 服务标题 业主 师傅 状态 创建时间 HS-20260604-001 客厅空调不制冷检修 测试业主 测试师傅 服务中 2026-06-04 11:30:58 HS-20260604-002 厨房水槽下水漏水 测试业主 测试师傅 2026-06-04 11:30:58 HS-20260604-003 卧室插座频繁跳闸 测试业主 测试师傅 待指派 2026-06-04 11:30:58 HS-20260604-004 卧室空调深度清洗 测试业主 测试师傅 待验收 2026-06-04 11:30:58"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员数据看板总用户数3总订单数4认证师傅数1待处理纠纷1订单状态分布待验收1 单服务中1 单negotiated1 单待指派1 单快捷统计待处理订单1已完成订单1最近订单订单编号服务标题业主师傅状态创建时间HS-20260604-001客厅空调不制冷检修测试业主测试师傅服务中2026-06-04 11:30:58HS-20260604-002厨房水槽下水漏水测试业主测试师傅2026-06-04 11:30:58HS-20260604-003卧室插座频繁跳闸测试业主测试师傅待指派2026-06-04 11:30:58HS-20260604-004卧室空调深度清洗测试业主测试师傅待验收2026-06-04 11:30:58",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1154,
+          "scrollWidth": 1504,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-cycle16-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49028/",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-01-首屏.png",
+          "elementCount": 238,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱"
+          ]
+        }
+      },
+      {
+        "label": "导航:数据看板",
+        "url": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "数据看板"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单编号",
+              "服务标题",
+              "业主",
+              "师傅",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "订单编号 服务标题 业主 师傅 状态 创建时间 HS-20260604-001 客厅空调不制冷检修 测试业主 测试师傅 服务中 2026-06-04 11:30:58 HS-20260604-002 厨房水槽下水漏水 测试业主 测试师傅 2026-06-04 11:30:58 HS-20260604-003 卧室插座频繁跳闸 测试业主 测试师傅 待指派 2026-06-04 11:30:58 HS-20260604-004 卧室空调深度清洗 测试业主 测试师傅 待验收 2026-06-04 11:30:58"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员数据看板总用户数3总订单数4认证师傅数1待处理纠纷1订单状态分布待验收1 单服务中1 单negotiated1 单待指派1 单快捷统计待处理订单1已完成订单1最近订单订单编号服务标题业主师傅状态创建时间HS-20260604-001客厅空调不制冷检修测试业主测试师傅服务中2026-06-04 11:30:58HS-20260604-002厨房水槽下水漏水测试业主测试师傅2026-06-04 11:30:58HS-20260604-003卧室插座频繁跳闸测试业主测试师傅待指派2026-06-04 11:30:58HS-20260604-004卧室空调深度清洗测试业主测试师傅待验收2026-06-04 11:30:58",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1154,
+          "scrollWidth": 1536,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-cycle16-structure-02-导航-数据看板",
+          "label": "导航:数据看板",
+          "finalUrl": "http://127.0.0.1:49028/",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-02-导航-数据看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-02-导航-数据看板.png",
+          "elementCount": 238,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱"
+          ]
+        }
+      },
+      {
+        "label": "导航:认证审核",
+        "url": "http://127.0.0.1:49028/verifications",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "认证审核"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "师傅姓名",
+              "手机号",
+              "真实姓名",
+              "身份证号",
+              "技能",
+              "状态",
+              "提交时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "师傅姓名 手机号 真实姓名 身份证号 技能 状态 提交时间 操作 测试师傅 13800138002 测试师傅 110101198801011234 [\"electrical\",\"plumbing\",\"air_conditioner\"] 已通过 2026-06-04 11:30:58"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员认证审核筛选状态师傅姓名手机号真实姓名身份证号技能状态提交时间操作测试师傅13800138002测试师傅110101198801011234[\"electrical\",\"plumbing\",\"air_conditioner\"]已通过2026-06-04 11:30:581",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1154,
+          "scrollWidth": 1568,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-cycle16-structure-03-导航-认证审核",
+          "label": "导航:认证审核",
+          "finalUrl": "http://127.0.0.1:49028/verifications",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-03-导航-认证审核.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-03-导航-认证审核.png",
+          "elementCount": 118,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:纠纷仲裁",
+        "url": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "headings": [
+          "纠纷仲裁"
+        ],
+        "navLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "dashboard",
+          "认证审核",
+          "audit",
+          "纠纷仲裁",
+          "alert",
+          "订单管理",
+          "file-text",
+          "师傅热力图",
+          "bar-chart",
+          "知识图谱",
+          "bulb"
+        ],
+        "buttons": [
+          "刷新",
+          "详情",
+          "处理"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纠纷单",
+              "订单与原因",
+              "投诉方",
+              "被投诉方",
+              "状态",
+              "提交时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "纠纷单 订单与原因 投诉方 被投诉方 状态 提交时间 操作 #1 客厅空调不制冷检修 维修进度争议 测试业主 测试师傅 待处理 2026-06-04 11:30:58 详情 处理"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员纠纷仲裁筛选状态刷新总纠纷1待处理1调查中0已处理0平台仲裁看板集中查看订单纠纷、投诉双方、证据材料和处理结论，支持管理员快速归档处理结果。纠纷单订单与原因投诉方被投诉方状态提交时间操作#1客厅空调不制冷检修维修进度争议测试业主测试师傅待处理2026-06-04 11:30:58详情处理1",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1154,
+          "scrollWidth": 1600,
+          "scrollHeight": 1154,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89028-cycle16-structure-04-导航-纠纷仲裁",
+          "label": "导航:纠纷仲裁",
+          "finalUrl": "http://127.0.0.1:49028/disputes",
+          "title": "家居服务众包协作平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-04-导航-纠纷仲裁.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-04-导航-纠纷仲裁.png",
+          "elementCount": 176,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+            "数据看板",
+            "认证审核",
+            "纠纷仲裁",
+            "订单管理",
+            "师傅热力图",
+            "知识图谱",
+            "刷新",
+            "详情",
+            "处理",
+            "1"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-cycle16-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-01-首屏.png",
+        "elementCount": 238,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-cycle16-structure-02-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-02-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-02-导航-数据看板.png",
+        "elementCount": 238,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-cycle16-structure-03-导航-认证审核",
+        "label": "导航:认证审核",
+        "finalUrl": "http://127.0.0.1:49028/verifications",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-03-导航-认证审核.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-03-导航-认证审核.png",
+        "elementCount": 118,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-cycle16-structure-04-导航-纠纷仲裁",
+        "label": "导航:纠纷仲裁",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-04-导航-纠纷仲裁.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-04-导航-纠纷仲裁.png",
+        "elementCount": 176,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49028/",
+    "representativeScreenshotLabel": "数据看板"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 4,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-cycle16-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-01-首屏.png",
+        "elementCount": 238,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-cycle16-structure-02-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://127.0.0.1:49028/",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-02-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-02-导航-数据看板.png",
+        "elementCount": 238,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-cycle16-structure-03-导航-认证审核",
+        "label": "导航:认证审核",
+        "finalUrl": "http://127.0.0.1:49028/verifications",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-03-导航-认证审核.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-03-导航-认证审核.png",
+        "elementCount": 118,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89028-cycle16-structure-04-导航-纠纷仲裁",
+        "label": "导航:纠纷仲裁",
+        "finalUrl": "http://127.0.0.1:49028/disputes",
+        "title": "家居服务众包协作平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-04-导航-纠纷仲裁.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-cycle16-structure-04-导航-纠纷仲裁.png",
+        "elementCount": 176,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+          "数据看板",
+          "认证审核",
+          "纠纷仲裁",
+          "订单管理",
+          "师傅热力图",
+          "知识图谱",
+          "刷新",
+          "详情",
+          "处理",
+          "1"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1632,
+    "height": 1154,
+    "scrollWidth": 1600,
+    "scrollHeight": 1154
+  },
+  "initialBodyTextPreview": "管理后台\n数据看板\n认证审核\n纠纷仲裁\n订单管理\n师傅热力图\n知识图谱\n家居服务众包平台 - 运营管理\n演示管理员\n数据看板\n总用户数\n3\n总订单数\n4\n认证师傅数\n1\n待处理纠纷\n1\n订单状态分布\n待验收\n1 单\n服务中\n1 单\nnegotiated\n1 单\n待指派\n1 单\n快捷统计\n待处理订单\n1\n已完成订单\n1\n最近订单\n订单编号\t服务标题\t业主\t师傅\t状态\t创建时间\nHS-20260604-001\t客厅空调不制冷检修\t测试业主\t测试师傅\t服务中\t2026-06-04 11:30:58\nHS-20260604-002\t厨房水槽下水漏水\t测试业主\t测试师傅\t\t2026-06-04 11:30:58\nHS-20260604-003\t卧室插座频繁跳闸\t测试业主\t测试师傅\t待指派\t2026-06-04 11:30:58\nHS-20260604-004\t卧室空调深度清洗\t测试业主\t测试师傅\t待验收\t2026-06-04 11:30:58",
+  "bodyTextPreview": "管理后台\n数据看板\n认证审核\n纠纷仲裁\n订单管理\n师傅热力图\n知识图谱\n家居服务众包平台 - 运营管理\n演示管理员\n数据看板\n总用户数\n3\n总订单数\n4\n认证师傅数\n1\n待处理纠纷\n1\n订单状态分布\n待验收\n1 单\n服务中\n1 单\nnegotiated\n1 单\n待指派\n1 单\n快捷统计\n待处理订单\n1\n已完成订单\n1\n最近订单\n订单编号\t服务标题\t业主\t师傅\t状态\t创建时间\nHS-20260604-001\t客厅空调不制冷检修\t测试业主\t测试师傅\t服务中\t2026-06-04 11:30:58\nHS-20260604-002\t厨房水槽下水漏水\t测试业主\t测试师傅\t\t2026-06-04 11:30:58\nHS-20260604-003\t卧室插座频繁跳闸\t测试业主\t测试师傅\t待指派\t2026-06-04 11:30:58\nHS-20260604-004\t卧室空调深度清洗\t测试业主\t测试师傅\t待验收\t2026-06-04 11:30:58",
+  "apiBase": "http://127.0.0.1:59028",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/verifications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/verifications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/disputes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/disputes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49028/api/admin/dashboard"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:33:52.097Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"statistics\":{\"totalUsers\":3,\"totalOrders\":4,\"totalMasters\":1,\"pendingDisputes\":1},\"ordersByStatus\":[{\"status\":\"completed\",\"count\":1},{\"status\":\"in_progress\",\"count\":1},{\"status\":\"negotiated\",\"count\":1},{\"status\":\"pending\",\"count\":1}],\"recentOrders\":[{\"id\":1,\"order_no\":\"HS-20260604-001\",\"owner_id\":1,\"master_id\":2,\"service_type\":\"air_conditioner\",\"title\":\"客厅空调不制冷检修\",\"description\":\"空调运行 20 分钟仍无冷风，需要检测冷媒和滤网。\",\"fault_images\":\"[\\\"/demo/ac-issue.jpg\\\"]\",\"expected_time\":\"2026-06-04 15:00\",\"address\":\"北"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/admin/verifications",
+      "path": "/api/admin/verifications",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"user_id\":2,\"real_name\":\"测试师傅\",\"id_card\":\"110101198801011234\",\"face_photo\":\"/demo/master-face.jpg\",\"id_card_front\":\"/demo/id-front.jpg\",\"id_card_back\":\"/demo/id-back.jpg\",\"skill_certificates\":\"[\\\"电工证\\\",\\\"高空作业证\\\"]\",\"skills\":\"[\\\"electrical\\\",\\\"plumbing\\\",\\\"air_conditioner\\\"]\",\"status\":\"approved\",\"verified_at\":\"2026-06-04 11:30:58\",\"created_at\":\"2026-06-04 11:30:58\",\"updated_at\":\"2026-06-04 11:30:58\",\"name\":\"测试师傅\",\"phone\":\"13800138002\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/admin/disputes",
+      "path": "/api/admin/disputes",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"order_id\":1,\"complainant_id\":1,\"respondent_id\":2,\"reason\":\"维修进度争议\",\"description\":\"业主反馈预约时间后仍需补充材料，希望平台介入确认处理进度。\",\"evidence\":\"[\\\"/demo/dispute-progress.jpg\\\"]\",\"status\":\"pending\",\"result\":null,\"handled_by\":null,\"handled_at\":null,\"created_at\":\"2026-06-04 11:30:58\",\"order_title\":\"客厅空调不制冷检修\",\"complainant_name\":\"测试业主\",\"respondent_name\":\"测试师傅\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59028/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"接口不存在\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49028/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49028/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a6559dc4",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/react-router-dom.js?v=a6559dc4",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/react-router-dom.js?v=a6559dc4",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49028/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49028/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a6559dc4",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/react-router-dom.js?v=a6559dc4",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49028/node_modules/.vite/deps/react-router-dom.js?v=a6559dc4",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89028/probe/codex-cycle16-verify/may-89028-browser-report.json"
+}

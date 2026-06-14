@@ -1,0 +1,6243 @@
+{
+  "meta": {
+    "title": "家居服务众包协作平台",
+    "url": "http://127.0.0.1:49028/knowledge",
+    "timestamp": "2026-06-04T12:44:46.730Z",
+    "viewport": {
+      "width": 1824,
+      "height": 1188
+    },
+    "document": {
+      "scrollWidth": 1824,
+      "scrollHeight": 1188
+    }
+  },
+  "text": {
+    "bodyPreview": "管理后台数据看板认证审核纠纷仲裁订单管理师傅热力图知识图谱家居服务众包平台 - 运营管理演示管理员个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。故障知识图谱添加知识条目0知识条目0故障原因0解决方案故障类型症状可能原因解决方案创建时间暂无数据 添加知识条目故障类型故障症状可能原因（每行一个）解决方案（每行一个）提 交取 消",
+    "emptyTextCount": 1
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": ":where(.css-dev-only-do-not-override-mgrif2)[class^=\"ant-form\"],:where(.css-dev-",
+        "visible": false,
+        "childCount": 60,
+        "children": []
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现",
+        "visible": true,
+        "childCount": 3,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-mgrif2",
+                "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-mgrif2",
+                "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "aside",
+                    "id": "",
+                    "className": "ant-layout-sider ant-layout-sider-dark css-dev-only-do-not-override-mgrif2",
+                    "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.css-dev-only-do-not-override-mgrif2",
+                    "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-layout-sider-children",
+                        "selectorHint": "div.ant-layout-sider-children",
+                        "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-layout css-dev-only-do-not-override-mgrif2",
+                    "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mgrif2",
+                    "text": "家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 ",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "header",
+                        "id": "",
+                        "className": "ant-layout-header css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "header.ant-layout-header.css-dev-only-do-not-override-mgrif2",
+                        "text": "家居服务众包平台 - 运营管理 演示管理员",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      },
+                      {
+                        "tag": "main",
+                        "id": "",
+                        "className": "ant-layout-content css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "main.ant-layout-content.css-dev-only-do-not-override-mgrif2",
+                        "text": "个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 0 知识条目 0 故障原因 0",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "id": "",
+            "className": "",
+            "selectorHint": "div",
+            "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+            "visible": false,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-modal-root css-dev-only-do-not-override-mgrif2",
+                "selectorHint": "div.ant-modal-root.css-dev-only-do-not-override-mgrif2",
+                "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+                "visible": false,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-modal-mask",
+                    "selectorHint": "div.ant-modal-mask",
+                    "text": "",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-modal-wrap",
+                    "selectorHint": "div.ant-modal-wrap",
+                    "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-modal css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "div.ant-modal.css-dev-only-do-not-override-mgrif2",
+                        "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 0 知识条目 0 故障原因 0 解决方案 故障类型 症状 可能原因 解决方案 创建时间 暂无数据 添加知识条目 故",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1824,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ":where(.css-dev-only-do-not-override-mgrif2)[class^=\"ant-form\"],:where(.css-dev-only-do-not-override-mgrif2)[class*=\" ant-form\"]{font-family:-apple-system,BlinkMacSystemFont,'Segoe",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 60,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家居服务众包协作平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 0 知识条目 0 故障原因 0 解决方案 故障类型 症状 可能原因 解决方案 创建时间 暂无数据 添加知识条目 故",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1824,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 0 知识条目 0 故障原因 0 解决方案 故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1824,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱 家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 0 知识条目 0 故障原因 0 解决方案 故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1824,
+        "height": 1188
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "aside",
+      "id": "",
+      "className": "ant-layout-sider ant-layout-sider-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout-sider-children",
+      "selectorHint": "div.ant-layout-sider-children",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 268
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 68,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-dashboard ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-dashboard.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "dashboard",
+      "title": "",
+      "placeholder": "",
+      "text": "dashboard",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 81,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 81,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 28,
+        "y": 82,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 68,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "认证审核",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 112,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-audit ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-audit.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "audit",
+      "title": "",
+      "placeholder": "",
+      "text": "audit",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 125,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 125,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 125,
+        "width": 12,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "认证审核",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 112,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "纠纷仲裁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 156,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-alert ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-alert.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "alert",
+      "title": "",
+      "placeholder": "",
+      "text": "alert",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 169,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 169,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 169,
+        "width": 12,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "纠纷仲裁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 156,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 200,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 213,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 213,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 213,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 200,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "师傅热力图",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 244,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bar-chart ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-bar-chart.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bar-chart",
+      "title": "",
+      "placeholder": "",
+      "text": "bar-chart",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 257,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 257,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 259,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "师傅热力图",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 244,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 288,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-bulb.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 301,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 301,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 301,
+        "width": 10,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 288,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家居服务众包平台 - 运营管理 演示管理员 个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 0 知识条目 0 故障原因 0 解决方案 故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 200,
+        "y": 0,
+        "width": 1624,
+        "height": 1188
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "header",
+      "id": "",
+      "className": "ant-layout-header css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "header.ant-layout-header.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家居服务众包平台 - 运营管理 演示管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 200,
+        "y": 0,
+        "width": 1624,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家居服务众包平台 - 运营管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 224,
+        "y": 0,
+        "width": 207,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small ant-dropdown-trigger",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "演示管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1690,
+        "y": 0,
+        "width": 110,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1690,
+        "y": 0,
+        "width": 32,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "span",
+      "id": "",
+      "className": "ant-avatar ant-avatar-circle ant-avatar-icon css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-avatar.ant-avatar-circle.ant-avatar-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1690,
+        "y": 17,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-user",
+      "selectorHint": "span.anticon.anticon-user",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "user",
+      "title": "",
+      "placeholder": "",
+      "text": "user",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1697,
+        "y": 24,
+        "width": 18,
+        "height": 18
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1697,
+        "y": 24,
+        "width": 18,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1698,
+        "y": 25,
+        "width": 15,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "演示管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1730,
+        "y": 0,
+        "width": 70,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "演示管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1730,
+        "y": 23,
+        "width": 70,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "main",
+      "id": "",
+      "className": "ant-layout-content css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "main.ant-layout-content.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。 故障知识图谱 添加知识条目 0 知识条目 0 故障原因 0 解决方案 故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 224,
+        "y": 88,
+        "width": 1576,
+        "height": 1076
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心：演示管理员资料与账号状态；分类发现：服务知识图谱、师傅热力图、订单类型和纠纷分类统一查看。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 248,
+        "y": 112,
+        "width": 1528,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障知识图谱 添加知识条目 0 知识条目 0 故障原因 0 解决方案 故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 248,
+        "y": 146,
+        "width": 1528,
+        "height": 502
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障知识图谱 添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 146,
+        "width": 1528,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "h3",
+      "id": "",
+      "className": "ant-typography css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "h3.ant-typography.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 248,
+        "y": 146,
+        "width": 144,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1638,
+        "y": 146,
+        "width": 138,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 1639,
+        "y": 147,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "div",
+      "id": "",
+      "className": "ant-wave css-dev-only-do-not-override-mgrif2 wave-motion-appear wave-motion-appear-active wave-motion",
+      "selectorHint": "div.ant-wave.css-dev-only-do-not-override-mgrif2.wave-motion-appear",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1638,
+        "y": 146,
+        "width": 138,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.00596748"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1654,
+        "y": 154,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-plus",
+      "selectorHint": "span.anticon.anticon-plus",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "plus",
+      "title": "",
+      "placeholder": "",
+      "text": "plus",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1654,
+        "y": 155,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1654,
+        "y": 155,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1660,
+        "y": 157,
+        "width": 1,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1655,
+        "y": 162,
+        "width": 11,
+        "height": 1
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1676,
+        "y": 152,
+        "width": 84,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-row.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 知识条目 0 故障原因 0 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 202,
+        "width": 1544,
+        "height": 150
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-8 css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-col-8.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 202,
+        "width": 515,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 248,
+        "y": 202,
+        "width": 499,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 203,
+        "width": 497,
+        "height": 148
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 273,
+        "y": 227,
+        "width": 449,
+        "height": 100
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bulb",
+      "selectorHint": "span.anticon.anticon-bulb",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bulb",
+      "title": "",
+      "placeholder": "",
+      "text": "bulb",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 481,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 481,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 486,
+        "y": 227,
+        "width": 23,
+        "height": 32
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 267,
+        "width": 449,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 305,
+        "width": 449,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-8 css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-col-8.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 755,
+        "y": 202,
+        "width": 515,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 763,
+        "y": 202,
+        "width": 499,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 764,
+        "y": 203,
+        "width": 497,
+        "height": 148
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 788,
+        "y": 227,
+        "width": 449,
+        "height": 100
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-alert",
+      "selectorHint": "span.anticon.anticon-alert",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "alert",
+      "title": "",
+      "placeholder": "",
+      "text": "alert",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 996,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 996,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 999,
+        "y": 227,
+        "width": 27,
+        "height": 32
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 788,
+        "y": 267,
+        "width": 449,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 788,
+        "y": 305,
+        "width": 449,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-8 css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-col-8.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1269,
+        "y": 202,
+        "width": 515,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1277,
+        "y": 202,
+        "width": 499,
+        "height": 150
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1278,
+        "y": 203,
+        "width": 497,
+        "height": 148
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0 解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1302,
+        "y": 227,
+        "width": 449,
+        "height": 100
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-tool",
+      "selectorHint": "span.anticon.anticon-tool",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "tool",
+      "title": "",
+      "placeholder": "",
+      "text": "tool",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1511,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1511,
+        "y": 227,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1512,
+        "y": 229,
+        "width": 29,
+        "height": 29
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1302,
+        "y": 267,
+        "width": 449,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1302,
+        "y": 305,
+        "width": 449,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 248,
+        "y": 376,
+        "width": 1528,
+        "height": 272
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 377,
+        "width": 1526,
+        "height": 270
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-wrapper css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table-wrapper.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 222
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 222
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 222
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table ant-table-empty css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table.ant-table-empty.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 222
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-container",
+      "selectorHint": "div.ant-table-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 222
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-content",
+      "selectorHint": "div.ant-table-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 222
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间 暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 222
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "colgroup",
+      "id": "",
+      "className": "",
+      "selectorHint": "colgroup",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 222
+      },
+      "style": {
+        "display": "table-column-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 150,
+        "height": 222
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 401,
+        "width": 292,
+        "height": 222
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 715,
+        "y": 401,
+        "width": 428,
+        "height": 222
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1143,
+        "y": 401,
+        "width": 428,
+        "height": 222
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1571,
+        "y": 401,
+        "width": 180,
+        "height": 222
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 111,
+      "tag": "thead",
+      "id": "",
+      "className": "ant-table-thead",
+      "selectorHint": "thead.ant-table-thead",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 55
+      },
+      "style": {
+        "display": "table-header-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 112,
+      "tag": "tr",
+      "id": "",
+      "className": "",
+      "selectorHint": "tr",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 症状 可能原因 解决方案 创建时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 1478,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 113,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 401,
+        "width": 150,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 114,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "症状",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 423,
+        "y": 401,
+        "width": 292,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 115,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "可能原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 715,
+        "y": 401,
+        "width": 428,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 116,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "解决方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1143,
+        "y": 401,
+        "width": 428,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 117,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "创建时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1571,
+        "y": 401,
+        "width": 180,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 118,
+      "tag": "tbody",
+      "id": "",
+      "className": "ant-table-tbody",
+      "selectorHint": "tbody.ant-table-tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 456,
+        "width": 1478,
+        "height": 167
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 119,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-placeholder",
+      "selectorHint": "tr.ant-table-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 456,
+        "width": 1478,
+        "height": 167
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 120,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 456,
+        "width": 1478,
+        "height": 167
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 121,
+      "tag": "div",
+      "id": "",
+      "className": "css-dev-only-do-not-override-mgrif2 ant-empty ant-empty-normal",
+      "selectorHint": "div.css-dev-only-do-not-override-mgrif2.ant-empty.ant-empty-normal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 297,
+        "y": 504,
+        "width": 1430,
+        "height": 70
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 122,
+      "tag": "div",
+      "id": "",
+      "className": "ant-empty-image",
+      "selectorHint": "div.ant-empty-image",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 297,
+        "y": 504,
+        "width": 1430,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 123,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 980,
+        "y": 504,
+        "width": 64,
+        "height": 40
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 124,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 125,
+      "tag": "g",
+      "id": "",
+      "className": "",
+      "selectorHint": "g",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 981,
+        "y": 505,
+        "width": 62,
+        "height": 39
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 126,
+      "tag": "ellipse",
+      "id": "",
+      "className": "",
+      "selectorHint": "ellipse",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 981,
+        "y": 530,
+        "width": 62,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 127,
+      "tag": "g",
+      "id": "",
+      "className": "",
+      "selectorHint": "g",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 990,
+        "y": 505,
+        "width": 45,
+        "height": 34
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 128,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 990,
+        "y": 505,
+        "width": 45,
+        "height": 21
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 129,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 990,
+        "y": 517,
+        "width": 45,
+        "height": 21
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 130,
+      "tag": "div",
+      "id": "",
+      "className": "ant-empty-description",
+      "selectorHint": "div.ant-empty-description",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 297,
+        "y": 552,
+        "width": 1430,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 131,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 1188,
+        "width": 1824,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 132,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-root css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-modal-root.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 1188,
+        "width": 1824,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 133,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-mask",
+      "selectorHint": "div.ant-modal-mask",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1824,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 134,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-wrap",
+      "selectorHint": "div.ant-modal-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1824,
+        "height": 1188
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 135,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-modal.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "dialog",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 612,
+        "y": 100,
+        "width": 600,
+        "height": 584
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 136,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 612,
+        "y": 100,
+        "width": 600,
+        "height": 560
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 137,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-content",
+      "selectorHint": "div.ant-modal-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 612,
+        "y": 100,
+        "width": 600,
+        "height": 560
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 138,
+      "tag": "button",
+      "id": "",
+      "className": "ant-modal-close",
+      "selectorHint": "button.ant-modal-close",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "Close",
+      "title": "",
+      "placeholder": "",
+      "text": "Close",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1168,
+        "y": 112,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 139,
+      "tag": "span",
+      "id": "",
+      "className": "ant-modal-close-x",
+      "selectorHint": "span.ant-modal-close-x",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "关闭",
+      "title": "",
+      "placeholder": "",
+      "text": "关闭",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1168,
+        "y": 120,
+        "width": 32,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 140,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-close ant-modal-close-icon",
+      "selectorHint": "span.anticon.anticon-close.ant-modal-close-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "close",
+      "title": "",
+      "placeholder": "",
+      "text": "close",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1176,
+        "y": 120,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 141,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1176,
+        "y": 120,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 142,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1178,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 143,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-header",
+      "selectorHint": "div.ant-modal-header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 120,
+        "width": 552,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 144,
+      "tag": "div",
+      "id": ":r15:",
+      "className": "ant-modal-title",
+      "selectorHint": "div#:r15:.ant-modal-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 120,
+        "width": 552,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 145,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-body",
+      "selectorHint": "div.ant-modal-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 152,
+        "width": 552,
+        "height": 464
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 146,
+      "tag": "form",
+      "id": "",
+      "className": "ant-form ant-form-vertical css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "form.ant-form.ant-form-vertical.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 636,
+        "y": 152,
+        "width": 552,
+        "height": 464
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 147,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mgrif2 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mgrif2.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 152,
+        "width": 552,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 148,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 636,
+        "y": 152,
+        "width": 552,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 149,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 152,
+        "width": 552,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 150,
+      "tag": "label",
+      "id": "",
+      "className": "ant-form-item-required",
+      "selectorHint": "label.ant-form-item-required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "故障类型",
+      "placeholder": "",
+      "text": "故障类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 152,
+        "width": 81,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 151,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 182,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 152,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 182,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 153,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 182,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 154,
+      "tag": "input",
+      "id": "fault_type",
+      "className": "ant-input css-dev-only-do-not-override-mgrif2 ant-input-outlined",
+      "selectorHint": "input#fault_type.ant-input.css-dev-only-do-not-override-mgrif2.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "如：空调不制冷、水管漏水",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 182,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 155,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mgrif2 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mgrif2.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障症状",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 238,
+        "width": 552,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 156,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障症状",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 636,
+        "y": 238,
+        "width": 552,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 157,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "故障症状",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 238,
+        "width": 552,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 158,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "故障症状",
+      "placeholder": "",
+      "text": "故障症状",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 238,
+        "width": 70,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 159,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 268,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 160,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 268,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 161,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 268,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 162,
+      "tag": "input",
+      "id": "symptoms",
+      "className": "ant-input css-dev-only-do-not-override-mgrif2 ant-input-outlined",
+      "selectorHint": "input#symptoms.ant-input.css-dev-only-do-not-override-mgrif2.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "简要描述故障现象",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 268,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 163,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mgrif2 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mgrif2.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "可能原因（每行一个）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 324,
+        "width": 552,
+        "height": 106
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 164,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "可能原因（每行一个）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 636,
+        "y": 324,
+        "width": 552,
+        "height": 106
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 165,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "可能原因（每行一个）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 324,
+        "width": 552,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 166,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "可能原因（每行一个）",
+      "placeholder": "",
+      "text": "可能原因（每行一个）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 324,
+        "width": 154,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 167,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 354,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 168,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 354,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 169,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 354,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 170,
+      "tag": "textarea",
+      "id": "possible_causes",
+      "className": "ant-input css-dev-only-do-not-override-mgrif2 ant-input-outlined",
+      "selectorHint": "textarea#possible_causes.ant-input.css-dev-only-do-not-override-mgrif2.ant-input-outlined",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "原因1\n原因2\n原因3",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 354,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 171,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mgrif2 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mgrif2.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "解决方案（每行一个）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 454,
+        "width": 552,
+        "height": 106
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 172,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "解决方案（每行一个）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 636,
+        "y": 454,
+        "width": 552,
+        "height": 106
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 173,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "解决方案（每行一个）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 454,
+        "width": 552,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 174,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "解决方案（每行一个）",
+      "placeholder": "",
+      "text": "解决方案（每行一个）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 454,
+        "width": 154,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 175,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 484,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 176,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 484,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 177,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 484,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 178,
+      "tag": "textarea",
+      "id": "solutions",
+      "className": "ant-input css-dev-only-do-not-override-mgrif2 ant-input-outlined",
+      "selectorHint": "textarea#solutions.ant-input.css-dev-only-do-not-override-mgrif2.ant-input-outlined",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "方案1\n方案2\n方案3",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 484,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 179,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mgrif2 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mgrif2.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 180,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 181,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 182,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 183,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 184,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mgrif2 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mgrif2.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 136,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 185,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 186,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 187,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 652,
+        "y": 590,
+        "width": 32,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 188,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 708,
+        "y": 584,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 189,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 708,
+        "y": 584,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 190,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 724,
+        "y": 590,
+        "width": 32,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 191,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 612,
+        "y": 660,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板 认证审核 纠纷仲裁 订单管理 师傅热力图 知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 268
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "数据看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 68,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "认证审核",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 112,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "纠纷仲裁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 156,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 200,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "师傅热力图",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 244,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "知识图谱",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 288,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1638,
+        "y": 146,
+        "width": 138,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "添加知识条目 故障类型 故障症状 可能原因（每行一个） 解决方案（每行一个） 提 交 取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 612,
+        "y": 100,
+        "width": 600,
+        "height": 560
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "button",
+      "id": "",
+      "className": "ant-modal-close",
+      "selectorHint": "button.ant-modal-close",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "Close",
+      "title": "",
+      "placeholder": "",
+      "text": "Close",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1168,
+        "y": 112,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "input",
+      "id": "fault_type",
+      "className": "ant-input css-dev-only-do-not-override-mgrif2 ant-input-outlined",
+      "selectorHint": "input#fault_type.ant-input.css-dev-only-do-not-override-mgrif2.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "如：空调不制冷、水管漏水",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 182,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "input",
+      "id": "symptoms",
+      "className": "ant-input css-dev-only-do-not-override-mgrif2 ant-input-outlined",
+      "selectorHint": "input#symptoms.ant-input.css-dev-only-do-not-override-mgrif2.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "简要描述故障现象",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 268,
+        "width": 552,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "textarea",
+      "id": "possible_causes",
+      "className": "ant-input css-dev-only-do-not-override-mgrif2 ant-input-outlined",
+      "selectorHint": "textarea#possible_causes.ant-input.css-dev-only-do-not-override-mgrif2.ant-input-outlined",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "原因1\n原因2\n原因3",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 354,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "textarea",
+      "id": "solutions",
+      "className": "ant-input css-dev-only-do-not-override-mgrif2 ant-input-outlined",
+      "selectorHint": "textarea#solutions.ant-input.css-dev-only-do-not-override-mgrif2.ant-input-outlined",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "方案1\n方案2\n方案3",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 636,
+        "y": 484,
+        "width": 552,
+        "height": 76
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提 交",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 636,
+        "y": 584,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 708,
+        "y": 584,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 612,
+        "y": 660,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}
