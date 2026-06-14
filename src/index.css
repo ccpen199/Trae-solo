@@ -60,12 +60,3 @@ input, select, textarea, button {
 .animate-checkmark {
   animation: checkmark-draw 0.6s ease-out forwards;
 }
-
-.animate-border-dash ellipse {
-  animation: border-dash 8s linear infinite;
-}
-
-@keyframes border-dash {
-  0% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 100; }
-}
