@@ -1,0 +1,46 @@
+{
+  "order": "may-89077",
+  "frontendUrl": "http://127.0.0.1:49077/",
+  "backendUrl": "http://127.0.0.1:59077",
+  "checks": [
+    {
+      "name": "homepage business content",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "name": "jobs search stays on jobs page",
+      "ok": true,
+      "details": "http://127.0.0.1:49077/jobs"
+    },
+    {
+      "name": "jobs list visible after filter",
+      "ok": true,
+      "details": "job cards: 1"
+    },
+    {
+      "name": "job detail modal visible",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "name": "admin dashboard reachable after login",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "name": "no local request failures",
+      "ok": true,
+      "details": "[]"
+    },
+    {
+      "name": "no local http errors",
+      "ok": true,
+      "details": "[]"
+    }
+  ],
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "ok": true
+}

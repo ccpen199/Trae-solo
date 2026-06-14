@@ -1,0 +1,95 @@
+
+=== Line 68: function ToastProvider({ children }) { - START depth=0 ===
+=== Line 91: } - END depth=0 ===
+
+=== Line 93: function useToast() { - START depth=0 ===
+=== Line 95: } - END depth=0 ===
+
+=== Line 97: function useAsync(loader, fallback, deps = []) { - START depth=0 ===
+=== Line 120: } - END depth=0 ===
+
+=== Line 122: function ProtectedRoute({ children, requireAdmin = - START depth=0 ===
+=== Line 127: } - END depth=0 ===
+=== Line 131: } - END depth=0 ===
+=== Line 134: } - END depth=0 ===
+
+=== Line 147: function Shell() { - START depth=0 ===
+
+=== Line 224: function Home() { - START depth=4 ===
+
+=== Line 269: function Metric({ label, value, suffix }) { - START depth=4 ===
+
+=== Line 279: function Login() { - START depth=4 ===
+
+=== Line 399: function Profile() { - START depth=6 ===
+Line 601: depth=12 -             <div className="timeline-item done">
+Line 651: depth=12 -             <div className="bill-section">
+
+=== Line 667: function StatCard({ label, value, suffix, icon: Ic - START depth=8 ===
+
+=== Line 684: function Contracts() { - START depth=8 ===
+Line 751: depth=13 -                   const status = statusMap[row.status] || { 
+Line 801: depth=13 -               <div className="contract-section">
+Line 851: depth=13 -                 <h4>薪资调整</h4>
+
+=== Line 892: function Rights() { - START depth=8 ===
+Line 1001: depth=15 -                   value={formData.description} 
+Line 1051: depth=14 -               </tbody>
+Line 1101: depth=13 -           <h3>案件详情 - {selectedCase.case_no}</h3>
+Line 1151: depth=16 -                 <Upload size={16} />
+
+=== Line 1176: function Jobs() { - START depth=12 ===
+Line 1201: depth=12 -     }
+Line 1251: depth=16 -         <select value={education} onChange={(e) => setEducat
+Line 1301: depth=17 -                 </div>
+
+=== Line 1343: function Institutions() { - START depth=13 ===
+Line 1351: depth=13 -     [keyword, type]
+Line 1401: depth=17 -           <option value="">全部类型</option>
+Line 1451: depth=20 -               <div>
+Line 1501: depth=16 - 
+
+=== Line 1541: function Policies() { - START depth=15 ===
+Line 1551: depth=15 -   );
+Line 1601: depth=17 -         <Search size={20} />
+Line 1651: depth=20 -               </div>
+Line 1701: depth=21 -               </div>
+
+=== Line 1714: function Consult() { - START depth=17 ===
+Line 1751: depth=19 -       <section className="section-title">
+Line 1801: depth=23 -                 以上答复仅供参考，具体以政策文件和经办机构答复为准。
+Line 1851: depth=18 - }
+
+=== Line 1853: function Admin() { - START depth=18 ===
+Line 1901: depth=18 - 
+
+=== Line 1902: function AdminDashboard() { - START depth=18 ===
+Line 1951: depth=24 -             <ResponsiveContainer width="100%" height="100%">
+
+=== Line 1972: function AdminSupervise() { - START depth=19 ===
+Line 2001: depth=19 -   return (
+Line 2051: depth=27 -                     )}
+
+=== Line 2080: function AdminKnowledge() { - START depth=20 ===
+Line 2101: depth=26 -               <BarChart data={clusters || []} layout="vertic
+Line 2151: depth=26 -                     className="graph-node"
+
+=== Line 2187: function AdminCity() { - START depth=20 ===
+Line 2201: depth=21 -     <div className="stack">
+Line 2251: depth=29 -                   </td>
+
+=== Line 2262: function AdminSecurity() { - START depth=23 ===
+Line 2301: depth=29 -           <strong>{securityStatus?.passed || 42} 项</strong>
+Line 2351: depth=26 -       <div className="card">
+
+=== Line 2384: function AdminStatistics() { - START depth=24 ===
+Line 2401: depth=29 -             <ReLineChart data={data.dailyVisits || []}>
+
+=== Line 2449: function ListPage({ title, rows, columns }) { - START depth=26 ===
+Line 2451: depth=27 -     <div className="stack">
+
+=== Line 2464: function ListTable({ rows, columns }) { - START depth=26 ===
+
+=== Line 2484: function App() { - START depth=26 ===
+
+Final JSX depth: 26
