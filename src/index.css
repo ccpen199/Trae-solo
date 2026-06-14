@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gov-navy: #0A2E5C;
+  --gov-blue: #1A73E8;
+  --gov-gold: #D4A843;
+  --gov-green: #00A870;
+  --gov-red: #E34D59;
+  --gov-slate: #F0F4F8;
+  --gov-dark: #061B38;
+  --gov-light: #E8EFF8;
+  --gov-mid: #3B6DB5;
+
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3B6DB5 transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #3B6DB5;
+  border-radius: 3px;
+}
+
+@layer components {
+  .gov-card {
+    @apply bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  .gov-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .gov-badge-green {
+    @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
+  }
+
+  .gov-badge-red {
+    @apply bg-red-50 text-red-700 border border-red-200;
+  }
+
+  .gov-badge-yellow {
+    @apply bg-amber-50 text-amber-700 border border-amber-200;
+  }
+
+  .gov-badge-blue {
+    @apply bg-blue-50 text-blue-700 border border-blue-200;
+  }
+
+  .gov-btn-primary {
+    @apply bg-gov-navy text-white px-6 py-2.5 rounded-md font-medium hover:bg-gov-dark transition-colors duration-200 shadow-sm hover:shadow-md;
+  }
+
+  .gov-btn-secondary {
+    @apply bg-white text-gov-blue border border-gov-blue px-6 py-2.5 rounded-md font-medium hover:bg-blue-50 transition-colors duration-200;
+  }
+
+  .gov-btn-gold {
+    @apply bg-gov-gold text-white px-6 py-2.5 rounded-md font-medium hover:brightness-110 transition-all duration-200 shadow-sm;
+  }
+
+  .gov-section-title {
+    @apply text-lg font-semibold text-gov-navy font-serif relative pl-3 before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-gov-gold before:rounded-full;
+  }
+
+  .gov-stat-number {
+    @apply text-3xl font-bold font-mono tracking-tight;
+  }
+}
+
+@keyframes scan-line {
+  0%, 100% {
+    top: 20%;
+    opacity: 0.3;
+  }
+  50% {
+    top: 80%;
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
