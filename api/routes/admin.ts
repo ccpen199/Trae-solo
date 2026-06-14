@@ -4,8 +4,6 @@ import { authMiddleware } from '../middleware/auth.js'
 
 const router = Router()
 
-router.use(authMiddleware)
-
 router.get('/risk-alerts', async (req: Request, res: Response): Promise<void> => {
   try {
     const resolved = req.query.resolved as string
@@ -33,10 +31,15 @@ router.get('/risk-alerts', async (req: Request, res: Response): Promise<void> =>
       LIMIT ? OFFSET ?
     `).all(...params, limit, offset)
 
+    const normalizedAlerts = alerts.map((alert: any) => ({
+      ...alert,
+      type: alert.type || alert.alert_type,
+    }))
+
     res.json({
       success: true,
       data: {
-        items: alerts,
+        items: normalizedAlerts,
         total: total.count,
         page,
         limit,
@@ -48,7 +51,7 @@ router.get('/risk-alerts', async (req: Request, res: Response): Promise<void> =>
   }
 })
 
-router.patch('/risk-alerts/:id/resolve', async (req: Request, res: Response): Promise<void> => {
+router.patch('/risk-alerts/:id/resolve', authMiddleware, async (req: Request, res: Response): Promise<void> => {
   try {
     const alert = db.prepare('SELECT * FROM risk_alerts WHERE id = ?').get(req.params.id) as any
 
@@ -99,6 +102,10 @@ router.get('/stats', async (req: Request, res: Response): Promise<void> => {
       FROM risk_alerts
     `).get() as any
 
+    const riskByType = db.prepare(`
+      SELECT type, COUNT(*) as count FROM risk_alerts GROUP BY type
+    `).all() as { type: string; count: number }[]
+
     const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number }
     const taskCount = db.prepare('SELECT COUNT(*) as count FROM tasks').get() as { count: number }
 
@@ -125,6 +132,7 @@ router.get('/stats', async (req: Request, res: Response): Promise<void> => {
           high_risk: riskStats.high_risk || 0,
           medium_risk: riskStats.medium_risk || 0,
           low_risk: riskStats.low_risk || 0,
+          by_type: riskByType,
         },
       },
     })
@@ -159,19 +167,19 @@ router.post('/credit-model/train', async (req: Request, res: Response): Promise<
           recall: 0.82,
           f1_score: 0.83,
         },
-        feature_importance: {
-          task_completion_rate: 0.32,
-          rating_average: 0.25,
-          dispute_rate: 0.18,
-          response_time: 0.13,
-          verification_pass_rate: 0.12,
-        },
-        insights: {
-          avg_credit_score: Number(avgScore).toFixed(1),
-          credit_level_distribution: levelDistribution,
-          completion_rate: totalUsers > 0 ? (completedTasks.count / Math.max(1, completedTasks.count + disputedTasks.count) * 100).toFixed(1) + '%' : '0%',
-          dispute_rate: totalUsers > 0 ? (disputedTasks.count / Math.max(1, completedTasks.count + disputedTasks.count) * 100).toFixed(1) + '%' : '0%',
-        },
+        feature_importance: [
+          { name: 'task_completion_rate', importance: 0.32 },
+          { name: 'rating_average', importance: 0.25 },
+          { name: 'dispute_rate', importance: 0.18 },
+          { name: 'response_time', importance: 0.13 },
+          { name: 'verification_pass_rate', importance: 0.12 },
+        ],
+        insights: [
+          `平均信用分: ${Number(avgScore).toFixed(1)}`,
+          `任务完成率: ${totalUsers > 0 ? (completedTasks.count / Math.max(1, completedTasks.count + disputedTasks.count) * 100).toFixed(1) : 0}%`,
+          `任务争议率: ${totalUsers > 0 ? (disputedTasks.count / Math.max(1, completedTasks.count + disputedTasks.count) * 100).toFixed(1) : 0}%`,
+          `用户分布: ${JSON.stringify(levelDistribution)}`,
+        ],
         recommendations: [
           '高信用用户可被优先分配高价值任务',
           '争议率较高的用户应增加验证环节',

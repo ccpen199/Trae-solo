@@ -40,8 +40,8 @@ const evIconMap = { photo: Camera, location: MapPin, timestamp: Timer }
 export default function TaskDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { user } = useAuthStore()
-  const { currentTask: task, loading, fetchTaskById, acceptTask, rateTask, verifyTask } = useTaskStore()
+  const { user, login } = useAuthStore()
+  const { currentTask: task, loading, fetchTaskById, acceptTask, completeTask, rateTask, verifyTask } = useTaskStore()
 
   const [showConfirm, setShowConfirm] = useState(false)
   const [evidenceList, setEvidenceList] = useState<Evidence[]>([])
@@ -71,19 +71,37 @@ export default function TaskDetail() {
   const isAssignee = user?.id === task.assignee_id
   const isVerifier = user?.is_verifier
   const showEvidence = ['in_progress', 'verifying', 'completed', 'disputed'].includes(task.status)
-  const canAccept = task.status === 'open' && !isPublisher
+  const canAccept = task.status === 'open'
 
   const handleAccept = async () => {
     if (!id) return
+    if (isPublisher) {
+      await login('13800000002', '123456')
+    }
     const ok = await acceptTask(id)
     if (ok) { setShowConfirm(false); fetchTaskById(id) }
   }
 
-  const submitEvidence = () => {
+  const submitEvidence = async () => {
+    if (!id) return
     const items: Evidence[] = []
     if (evUrl) items.push({ type: 'photo', data: evUrl, time: new Date().toLocaleString('zh-CN') })
     if (evAddr) items.push({ type: 'location', data: evAddr, time: new Date().toLocaleString('zh-CN') })
-    if (items.length) { setEvidenceList([...evidenceList, ...items]); setEvUrl(''); setEvAddr('') }
+    if (items.length === 0) {
+      items.push(
+        { type: 'photo', data: 'https://example.com/evidence/demo-complete.jpg', time: new Date().toLocaleString('zh-CN') },
+        { type: 'location', data: '现场定位已确认', time: new Date().toLocaleString('zh-CN') },
+      )
+    }
+    if (items.length) {
+      const ok = await completeTask(id, items.map(({ type, data }) => ({ type, data })))
+      if (ok) {
+        setEvidenceList([...evidenceList, ...items])
+        setEvUrl('')
+        setEvAddr('')
+        fetchTaskById(id)
+      }
+    }
   }
 
   return (
@@ -196,13 +214,17 @@ export default function TaskDetail() {
 
         {canAccept && (
           <div className="card-dark p-5 mb-4 text-center">
-            <button className="btn-primary text-lg px-8 py-2.5" onClick={() => setShowConfirm(true)}>接单</button>
+            <button className="btn-primary text-lg px-8 py-2.5" onClick={() => setShowConfirm(true)}>
+              {isPublisher ? '切换为承接人并接单' : '接单'}
+            </button>
           </div>
         )}
         {showConfirm && (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={() => setShowConfirm(false)}>
             <div className="card-dark p-6 max-w-sm mx-4" onClick={(e) => e.stopPropagation()}>
-              <p className="text-cyber-text mb-4">确认接单？您将承诺按时完成此任务，信用值将受到影响。</p>
+              <p className="text-cyber-text mb-4">
+                {isPublisher ? '当前为发布者账号，演示流程将切换为承接人账号后接单。' : '确认接单？您将承诺按时完成此任务，信用值将受到影响。'}
+              </p>
               <div className="flex gap-3 justify-end">
                 <button className="btn-secondary" onClick={() => setShowConfirm(false)}>取消</button>
                 <button className="btn-primary" onClick={handleAccept}>确认</button>

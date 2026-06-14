@@ -1,0 +1,3219 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T11:33:41.758Z",
+  "order": "may-89170",
+  "roundIndex": 2,
+  "captureId": "may-89170-cycle8839",
+  "url": "http://127.0.0.1:49170/",
+  "initialUrl": "http://127.0.0.1:49170/",
+  "finalUrl": "http://127.0.0.1:49170/",
+  "status": 200,
+  "title": "互助链 - 去中心化互助任务协作系统",
+  "initialTitle": "互助链 - 去中心化互助任务协作系统",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-02-导航-任务广场.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-05-操作-筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-07-导航-发布任务-提交订单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-08-操作-技能支援.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-09-操作-实物交付.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-10-导航-个人中心.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-11-操作-兑换福利.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在购买/商品入口，优先复验交易链路；页面存在我的/账号入口，优先复验个人中心链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49170/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49170/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:任务广场",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:接单提交 打开任务详情后可接单并提交完成凭证",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:接单提交 打开任务详情后可接单并提交完成凭证:接单提交 打开任务详情后可接单并提交完成凭证",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:筛选:接单提交 打开任务详情后可接单并提交完成凭证",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:发布任务 / 提交订单",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:技能支援",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:实物交付",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:个人中心",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:兑换福利",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:兑换福利:兑换",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:交易记录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:后台管理 / 风控管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看已处理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看已处理:查看待处理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:开始训练",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "互助链",
+          "PS修图",
+          "帮取快递",
+          "数据录入"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索任务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链互助链去中心化互助任务协作平台 · 信任创造价值发布任务3任务总数128活跃用户2,460助利币流通后台管理风控预警、信用模型、交易监测接单提交打开任务详情后可接单并提交完成凭证发布任务填写悬赏、验收规则和地理围栏购买兑换福利兑换、曝光提升和交易记录搜索全部实物交付线上代办技能支援热度最新悬赏筛选急件本地远程高薪技术支援搬运辅导设计翻译代购PS修图待接单PS修图设计60 助利币2月2日18🔥李四gold帮取快递待接单快递搬运20 助利币12月31日15张三silver数据录入待接单数据Excel80 助利币1月16日8孙七bronze",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49170/",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-01-首屏.png",
+          "elementCount": 246,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "发布任务",
+            "后台管理 风控预警、信用模型、交易监测",
+            "接单提交 打开任务详情后可接单并提交完成凭证",
+            "发布任务 填写悬赏、验收规则和地理围栏",
+            "购买兑换 福利兑换、曝光提升和交易记录",
+            "搜索任务...",
+            "搜索",
+            "全部",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "热度",
+            "最新",
+            "悬赏",
+            "筛选",
+            "急件",
+            "本地",
+            "远程",
+            "高薪",
+            "技术支援",
+            "搬运",
+            "辅导",
+            "设计",
+            "翻译",
+            "代购"
+          ]
+        }
+      },
+      {
+        "label": "导航:任务广场",
+        "url": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "互助链",
+          "PS修图",
+          "帮取快递",
+          "数据录入"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索任务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链互助链去中心化互助任务协作平台 · 信任创造价值发布任务3任务总数128活跃用户2,460助利币流通后台管理风控预警、信用模型、交易监测接单提交打开任务详情后可接单并提交完成凭证发布任务填写悬赏、验收规则和地理围栏购买兑换福利兑换、曝光提升和交易记录搜索全部实物交付线上代办技能支援热度最新悬赏筛选急件本地远程高薪技术支援搬运辅导设计翻译代购PS修图待接单PS修图设计60 助利币2月2日18🔥李四gold帮取快递待接单快递搬运20 助利币12月31日15张三silver数据录入待接单数据Excel80 助利币1月16日8孙七bronze",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-02-导航-任务广场",
+          "label": "导航:任务广场",
+          "finalUrl": "http://127.0.0.1:49170/",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-02-导航-任务广场.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-02-导航-任务广场.png",
+          "elementCount": 246,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "发布任务",
+            "后台管理 风控预警、信用模型、交易监测",
+            "接单提交 打开任务详情后可接单并提交完成凭证",
+            "发布任务 填写悬赏、验收规则和地理围栏",
+            "购买兑换 福利兑换、曝光提升和交易记录",
+            "搜索任务...",
+            "搜索",
+            "全部",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "热度",
+            "最新",
+            "悬赏",
+            "筛选",
+            "急件",
+            "本地",
+            "远程",
+            "高薪",
+            "技术支援",
+            "搬运",
+            "辅导",
+            "设计",
+            "翻译",
+            "代购"
+          ]
+        }
+      },
+      {
+        "label": "操作:接单提交 打开任务详情后可接单并提交完成凭证",
+        "url": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "互助链",
+          "PS修图",
+          "帮取快递",
+          "数据录入"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索任务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链互助链去中心化互助任务协作平台 · 信任创造价值发布任务3任务总数128活跃用户2,460助利币流通后台管理风控预警、信用模型、交易监测接单提交打开任务详情后可接单并提交完成凭证发布任务填写悬赏、验收规则和地理围栏购买兑换福利兑换、曝光提升和交易记录搜索全部实物交付线上代办技能支援热度最新悬赏筛选急件本地远程高薪技术支援搬运辅导设计翻译代购PS修图待接单PS修图设计60 助利币2月2日18🔥李四gold帮取快递待接单快递搬运20 助利币12月31日15张三silver数据录入待接单数据Excel80 助利币1月16日8孙七bronze",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证",
+          "label": "操作:接单提交 打开任务详情后可接单并提交完成凭证",
+          "finalUrl": "http://127.0.0.1:49170/",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证.png",
+          "elementCount": 246,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "发布任务",
+            "后台管理 风控预警、信用模型、交易监测",
+            "接单提交 打开任务详情后可接单并提交完成凭证",
+            "发布任务 填写悬赏、验收规则和地理围栏",
+            "购买兑换 福利兑换、曝光提升和交易记录",
+            "搜索任务...",
+            "搜索",
+            "全部",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "热度",
+            "最新",
+            "悬赏",
+            "筛选",
+            "急件",
+            "本地",
+            "远程",
+            "高薪",
+            "技术支援",
+            "搬运",
+            "辅导",
+            "设计",
+            "翻译",
+            "代购"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:接单提交 打开任务详情后可接单并提交完成凭证->接单提交 打开任务详情后可接单并提交完成凭证",
+        "url": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "互助链",
+          "PS修图",
+          "帮取快递",
+          "数据录入"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索任务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链互助链去中心化互助任务协作平台 · 信任创造价值发布任务3任务总数128活跃用户2,460助利币流通后台管理风控预警、信用模型、交易监测接单提交打开任务详情后可接单并提交完成凭证发布任务填写悬赏、验收规则和地理围栏购买兑换福利兑换、曝光提升和交易记录搜索全部实物交付线上代办技能支援热度最新悬赏筛选急件本地远程高薪技术支援搬运辅导设计翻译代购PS修图待接单PS修图设计60 助利币2月2日18🔥李四gold帮取快递待接单快递搬运20 助利币12月31日15张三silver数据录入待接单数据Excel80 助利币1月16日8孙七bronze",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证",
+          "label": "二层操作:接单提交 打开任务详情后可接单并提交完成凭证->接单提交 打开任务详情后可接单并提交完成凭证",
+          "finalUrl": "http://127.0.0.1:49170/",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证.png",
+          "elementCount": 246,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "发布任务",
+            "后台管理 风控预警、信用模型、交易监测",
+            "接单提交 打开任务详情后可接单并提交完成凭证",
+            "发布任务 填写悬赏、验收规则和地理围栏",
+            "购买兑换 福利兑换、曝光提升和交易记录",
+            "搜索任务...",
+            "搜索",
+            "全部",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "热度",
+            "最新",
+            "悬赏",
+            "筛选",
+            "急件",
+            "本地",
+            "远程",
+            "高薪",
+            "技术支援",
+            "搬运",
+            "辅导",
+            "设计",
+            "翻译",
+            "代购"
+          ]
+        }
+      },
+      {
+        "label": "操作:筛选",
+        "url": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "互助链",
+          "PS修图",
+          "帮取快递",
+          "数据录入"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "全部城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "西安",
+          "全部技能"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索任务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链互助链去中心化互助任务协作平台 · 信任创造价值发布任务3任务总数128活跃用户2,460助利币流通后台管理风控预警、信用模型、交易监测接单提交打开任务详情后可接单并提交完成凭证发布任务填写悬赏、验收规则和地理围栏购买兑换福利兑换、曝光提升和交易记录搜索全部实物交付线上代办技能支援热度最新悬赏筛选 城市全部城市北京上海广州深圳杭州成都武汉西安 技能全部技能搬运设计翻译编程辅导维修代购家政急件本地远程高薪技术支援搬运辅导设计翻译代购PS修图待接单PS修图设计60 助利币2月2日18🔥李四gold帮取快递待接单快递搬运20 助利币12月31日15张三silver数据录入待接单数据Excel80 助利币1月16日8孙七bronze",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-05-操作-筛选",
+          "label": "操作:筛选",
+          "finalUrl": "http://127.0.0.1:49170/",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-05-操作-筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-05-操作-筛选.png",
+          "elementCount": 276,
+          "interactiveCount": 49,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "发布任务",
+            "后台管理 风控预警、信用模型、交易监测",
+            "接单提交 打开任务详情后可接单并提交完成凭证",
+            "发布任务 填写悬赏、验收规则和地理围栏",
+            "购买兑换 福利兑换、曝光提升和交易记录",
+            "搜索任务...",
+            "搜索",
+            "全部",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "热度",
+            "最新",
+            "悬赏",
+            "筛选",
+            "全部城市",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "成都",
+            "武汉",
+            "西安",
+            "全部技能"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:筛选->接单提交 打开任务详情后可接单并提交完成凭证",
+        "url": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "互助链",
+          "PS修图",
+          "帮取快递",
+          "数据录入"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "全部城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "西安",
+          "全部技能"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索任务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链互助链去中心化互助任务协作平台 · 信任创造价值发布任务3任务总数128活跃用户2,460助利币流通后台管理风控预警、信用模型、交易监测接单提交打开任务详情后可接单并提交完成凭证发布任务填写悬赏、验收规则和地理围栏购买兑换福利兑换、曝光提升和交易记录搜索全部实物交付线上代办技能支援热度最新悬赏筛选 城市全部城市北京上海广州深圳杭州成都武汉西安 技能全部技能搬运设计翻译编程辅导维修代购家政急件本地远程高薪技术支援搬运辅导设计翻译代购PS修图待接单PS修图设计60 助利币2月2日18🔥李四gold帮取快递待接单快递搬运20 助利币12月31日15张三silver数据录入待接单数据Excel80 助利币1月16日8孙七bronze",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证",
+          "label": "二层操作:筛选->接单提交 打开任务详情后可接单并提交完成凭证",
+          "finalUrl": "http://127.0.0.1:49170/",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证.png",
+          "elementCount": 276,
+          "interactiveCount": 49,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "发布任务",
+            "后台管理 风控预警、信用模型、交易监测",
+            "接单提交 打开任务详情后可接单并提交完成凭证",
+            "发布任务 填写悬赏、验收规则和地理围栏",
+            "购买兑换 福利兑换、曝光提升和交易记录",
+            "搜索任务...",
+            "搜索",
+            "全部",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "热度",
+            "最新",
+            "悬赏",
+            "筛选",
+            "全部城市",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "成都",
+            "武汉",
+            "西安",
+            "全部技能"
+          ]
+        }
+      },
+      {
+        "label": "导航:发布任务 / 提交订单",
+        "url": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入任务标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述任务内容...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链1基础信息2高级选项任务标题0/50任务描述0/500任务类型实物交付线上代办技能支援下一步",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-07-导航-发布任务-提交订单",
+          "label": "导航:发布任务 / 提交订单",
+          "finalUrl": "http://127.0.0.1:49170/publish",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-07-导航-发布任务-提交订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-07-导航-发布任务-提交订单.png",
+          "elementCount": 105,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "输入任务标题",
+            "详细描述任务内容...",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "下一步"
+          ]
+        }
+      },
+      {
+        "label": "操作:技能支援",
+        "url": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入任务标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述任务内容...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链1基础信息2高级选项任务标题0/50任务描述0/500任务类型实物交付线上代办技能支援下一步",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-08-操作-技能支援",
+          "label": "操作:技能支援",
+          "finalUrl": "http://127.0.0.1:49170/publish",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-08-操作-技能支援.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-08-操作-技能支援.png",
+          "elementCount": 105,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "输入任务标题",
+            "详细描述任务内容...",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "下一步"
+          ]
+        }
+      },
+      {
+        "label": "操作:实物交付",
+        "url": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "buttons": [
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "输入任务标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述任务内容...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理登录 / 注册互助链1基础信息2高级选项任务标题0/50任务描述0/500任务类型实物交付线上代办技能支援下一步",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-09-操作-实物交付",
+          "label": "操作:实物交付",
+          "finalUrl": "http://127.0.0.1:49170/publish",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-09-操作-实物交付.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-09-操作-实物交付.png",
+          "elementCount": 105,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "登录 / 注册",
+            "输入任务标题",
+            "详细描述任务内容...",
+            "实物交付",
+            "线上代办",
+            "技能支援",
+            "下一步"
+          ]
+        }
+      },
+      {
+        "label": "导航:个人中心",
+        "url": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "李四"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "李 李四 信用分 90 350",
+          "李",
+          "350",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "兑换福利",
+          "提升曝光",
+          "交易记录"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "信用值趋势",
+          "任务历史",
+          "验证记录"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理李李四信用分 90350退出登录互助链李李四13800000002lisi@example.com✦ 黄金验证员90信用分黄金信用等级 信用值趋势助利币钱包0 条记录350助利币兑换福利提升曝光交易记录2已发布1已完成0已验证 任务历史 验证记录",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1000,
+          "scrollWidth": 1792,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-10-导航-个人中心",
+          "label": "导航:个人中心",
+          "finalUrl": "http://127.0.0.1:49170/profile",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-10-导航-个人中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-10-导航-个人中心.png",
+          "elementCount": 150,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "退出登录",
+            "信用值趋势",
+            "兑换福利",
+            "提升曝光",
+            "交易记录",
+            "任务历史",
+            "验证记录"
+          ]
+        }
+      },
+      {
+        "label": "操作:兑换福利",
+        "url": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "李四",
+          "福利兑换"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "李 李四 信用分 90 350",
+          "李",
+          "350",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "信用值趋势",
+          "任务历史",
+          "验证记录"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理李李四信用分 90350退出登录互助链李李四13800000002lisi@example.com✦ 黄金验证员90信用分黄金信用等级 信用值趋势助利币钱包0 条记录350助利币兑换福利提升曝光交易记录2已发布1已完成0已验证 任务历史 验证记录 福利兑换全部曝光优惠券特权当前余额: 350 助利币任务曝光卡提升任务曝光权重10%50兑换高级曝光卡提升任务曝光权重30%120兑换超级曝光卡提升任务曝光权重50%200兑换咖啡优惠券连锁咖啡5元券30兑换运费券快递10元运费抵用券50兑换月度会员专属标识+优先推荐300兑换年度会员专属标识+首页推荐+客服特权3000余额不足验证员礼包解锁验证员权限+100助利币500余额不足",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1000,
+          "scrollWidth": 1824,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-11-操作-兑换福利",
+          "label": "操作:兑换福利",
+          "finalUrl": "http://127.0.0.1:49170/profile",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-11-操作-兑换福利.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-11-操作-兑换福利.png",
+          "elementCount": 261,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "退出登录",
+            "信用值趋势",
+            "兑换福利",
+            "提升曝光",
+            "交易记录",
+            "任务历史",
+            "验证记录",
+            "全部",
+            "曝光",
+            "优惠券",
+            "特权",
+            "兑换",
+            "余额不足"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:兑换福利->兑换",
+        "url": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "李四",
+          "福利兑换",
+          "确认兑换"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "李 李四 信用分 90 350",
+          "李",
+          "350",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足",
+          "取消",
+          "确认兑换"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "信用值趋势",
+          "任务历史",
+          "验证记录"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理李李四信用分 90350退出登录互助链李李四13800000002lisi@example.com✦ 黄金验证员90信用分黄金信用等级 信用值趋势助利币钱包0 条记录350助利币兑换福利提升曝光交易记录2已发布1已完成0已验证 任务历史 验证记录 福利兑换全部曝光优惠券特权当前余额: 350 助利币任务曝光卡提升任务曝光权重10%50兑换高级曝光卡提升任务曝光权重30%120兑换超级曝光卡提升任务曝光权重50%200兑换咖啡优惠券连锁咖啡5元券30兑换运费券快递10元运费抵用券50兑换月度会员专属标识+优先推荐300兑换年度会员专属标识+首页推荐+客服特权3000余额不足验证员礼包解锁验证员权限+100助利币500余额不足确认兑换确认消耗 50 助利币兑换 任务曝光卡？当前余额350扣减金额-50兑换后余额300取消确认兑换",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1000,
+          "scrollWidth": 1856,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换",
+          "label": "二层操作:兑换福利->兑换",
+          "finalUrl": "http://127.0.0.1:49170/profile",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换.png",
+          "elementCount": 283,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "退出登录",
+            "信用值趋势",
+            "兑换福利",
+            "提升曝光",
+            "交易记录",
+            "任务历史",
+            "验证记录",
+            "全部",
+            "曝光",
+            "优惠券",
+            "特权",
+            "兑换",
+            "余额不足",
+            "取消",
+            "确认兑换"
+          ]
+        }
+      },
+      {
+        "label": "操作:交易记录",
+        "url": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "李四",
+          "福利兑换",
+          "助利币流水"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "李 李四 信用分 90 350",
+          "李",
+          "350",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "信用值趋势",
+          "任务历史",
+          "验证记录"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理李李四信用分 90350退出登录互助链李李四13800000002lisi@example.com✦ 黄金验证员90信用分黄金信用等级 信用值趋势助利币钱包0 条记录350助利币兑换福利提升曝光交易记录2已发布1已完成0已验证 任务历史 验证记录 福利兑换全部曝光优惠券特权当前余额: 350 助利币任务曝光卡提升任务曝光权重10%50兑换高级曝光卡提升任务曝光权重30%120兑换超级曝光卡提升任务曝光权重50%200兑换咖啡优惠券连锁咖啡5元券30兑换运费券快递10元运费抵用券50兑换月度会员专属标识+优先推荐300兑换年度会员专属标识+首页推荐+客服特权3000余额不足验证员礼包解锁验证员权限+100助利币500余额不足 助利币流水收入: 0支出: 0净收入: 0暂无交易记录",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1000,
+          "scrollWidth": 1888,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-13-操作-交易记录",
+          "label": "操作:交易记录",
+          "finalUrl": "http://127.0.0.1:49170/profile",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-13-操作-交易记录.json",
+          "screenshotPath": "",
+          "elementCount": 282,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "退出登录",
+            "信用值趋势",
+            "兑换福利",
+            "提升曝光",
+            "交易记录",
+            "任务历史",
+            "验证记录",
+            "全部",
+            "曝光",
+            "优惠券",
+            "特权",
+            "兑换",
+            "余额不足"
+          ]
+        }
+      },
+      {
+        "label": "导航:后台管理 / 风控管理",
+        "url": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "后台管理中心",
+          "风险类型分布",
+          "风险告警",
+          "信用模型训练",
+          "数据概览"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "李 李四 信用分 90 350",
+          "李",
+          "350",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看已处理",
+          "开始训练"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理李李四信用分 90350退出登录互助链后台管理中心风控管理、用户任务统计与信用模型训练最后更新: 2026/6/12 14:33:2710任务总数0待处理风险5用户总数1330助利币流通 风险类型分布 风险告警待处理: 0查看已处理暂无待处理风险告警 信用模型训练调整模型参数以优化信用评估算法。系统将基于历史任务数据训练新的信用评分模型，用于评估用户可信度和任务风险等级。信用权重历史信用评分在模型中的权重占比0.50验证权重社区验证员评价在模型中的权重占比0.30历史衰减系数早期行为记录的衰减程度，数值越高越重视近期表现0.80 开始训练 数据概览 任务分类分布线上代办 信用等级分布 4",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1000,
+          "scrollWidth": 1920,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-14-导航-后台管理-风控管理",
+          "label": "导航:后台管理 / 风控管理",
+          "finalUrl": "http://127.0.0.1:49170/admin",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-14-导航-后台管理-风控管理.json",
+          "screenshotPath": "",
+          "elementCount": 268,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "退出登录",
+            "查看已处理",
+            "0.5",
+            "0.3",
+            "0.8",
+            "开始训练",
+            "bronze: 2diamond: 1gold: 1silver: 1"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看已处理",
+        "url": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "后台管理中心",
+          "风险类型分布",
+          "风险告警",
+          "信用模型训练",
+          "数据概览"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "李 李四 信用分 90 350",
+          "李",
+          "350",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看待处理",
+          "开始训练"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理李李四信用分 90350退出登录互助链后台管理中心风控管理、用户任务统计与信用模型训练最后更新: 2026/6/12 14:33:2910任务总数0待处理风险5用户总数1330助利币流通 风险类型分布 风险告警已处理: 0查看待处理暂无已处理风险告警 信用模型训练调整模型参数以优化信用评估算法。系统将基于历史任务数据训练新的信用评分模型，用于评估用户可信度和任务风险等级。信用权重历史信用评分在模型中的权重占比0.50验证权重社区验证员评价在模型中的权重占比0.30历史衰减系数早期行为记录的衰减程度，数值越高越重视近期表现0.80 开始训练 数据概览 任务分类分布线上代办 信用等级分布 4",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1000,
+          "scrollWidth": 1952,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-15-操作-查看已处理",
+          "label": "操作:查看已处理",
+          "finalUrl": "http://127.0.0.1:49170/admin",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-15-操作-查看已处理.json",
+          "screenshotPath": "",
+          "elementCount": 268,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "退出登录",
+            "查看待处理",
+            "0.5",
+            "0.3",
+            "0.8",
+            "开始训练",
+            "bronze: 2diamond: 1gold: 1silver: 1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看已处理->查看待处理",
+        "url": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "后台管理中心",
+          "风险类型分布",
+          "风险告警",
+          "信用模型训练",
+          "数据概览"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "李 李四 信用分 90 350",
+          "李",
+          "350",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看已处理",
+          "开始训练"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理李李四信用分 90350退出登录互助链后台管理中心风控管理、用户任务统计与信用模型训练最后更新: 2026/6/12 14:33:3010任务总数0待处理风险5用户总数1330助利币流通 风险类型分布 风险告警待处理: 0查看已处理暂无待处理风险告警 信用模型训练调整模型参数以优化信用评估算法。系统将基于历史任务数据训练新的信用评分模型，用于评估用户可信度和任务风险等级。信用权重历史信用评分在模型中的权重占比0.50验证权重社区验证员评价在模型中的权重占比0.30历史衰减系数早期行为记录的衰减程度，数值越高越重视近期表现0.80 开始训练 数据概览 任务分类分布线上代办 信用等级分布 4",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1000,
+          "scrollWidth": 1984,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-16-二层操作-查看已处理-查看待处理",
+          "label": "二层操作:查看已处理->查看待处理",
+          "finalUrl": "http://127.0.0.1:49170/admin",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-16-二层操作-查看已处理-查看待处理.json",
+          "screenshotPath": "",
+          "elementCount": 268,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "退出登录",
+            "查看已处理",
+            "0.5",
+            "0.3",
+            "0.8",
+            "开始训练",
+            "bronze: 2diamond: 1gold: 1silver: 1"
+          ]
+        }
+      },
+      {
+        "label": "操作:开始训练",
+        "url": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [
+          "后台管理中心",
+          "风险类型分布",
+          "风险告警",
+          "信用模型训练",
+          "数据概览"
+        ],
+        "navLabels": [
+          "互 互助链",
+          "互",
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "李 李四 信用分 90 350",
+          "李",
+          "350",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看已处理",
+          "开始训练",
+          "应用此模型"
+        ],
+        "links": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "互互助链任务广场发布任务 / 提交订单个人中心后台管理 / 风控管理李李四信用分 90350退出登录互助链后台管理中心风控管理、用户任务统计与信用模型训练最后更新: 2026/6/12 14:33:3210任务总数0待处理风险5用户总数1330助利币流通 风险类型分布 风险告警待处理: 0查看已处理暂无待处理风险告警 信用模型训练调整模型参数以优化信用评估算法。系统将基于历史任务数据训练新的信用评分模型，用于评估用户可信度和任务风险等级。信用权重历史信用评分在模型中的权重占比0.50验证权重社区验证员评价在模型中的权重占比0.30历史衰减系数早期行为记录的衰减程度，数值越高越重视近期表现0.80 开始训练训练完成 · v1781264012511模型已成功训练并可应用于生产环境准确率87.0%精确率85.0%召回率82.0%F1分数83.0% 特征重要性 业务影响评估准确率提升+12.0%误报率降低-15.3%预计节省人力2.5小时/天 模型洞察平均信用分: 73.0任务完成率: 66.7%任务争议率: 33.3%用户分布: {\"silver\":1,\"gold\":1,\"bronze\":2,\"diamond\":1} 优化建议高信用用户可被优先分配高价值任务争议率较高的用户应增加验证环节建议对bronze级别用户设置接单上限 应用此模型 数据概览 任务分类分布线上代办 信用等级分布 4",
+        "layout": {
+          "viewportWidth": 2016,
+          "viewportHeight": 1000,
+          "scrollWidth": 2016,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-cycle8839-structure-17-操作-开始训练",
+          "label": "操作:开始训练",
+          "finalUrl": "http://127.0.0.1:49170/admin",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-17-操作-开始训练.json",
+          "screenshotPath": "",
+          "elementCount": 410,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "任务广场",
+            "发布任务 / 提交订单",
+            "个人中心",
+            "后台管理 / 风控管理",
+            "退出登录",
+            "查看已处理",
+            "0.5",
+            "0.3",
+            "0.8",
+            "开始训练",
+            "应用此模型",
+            "bronze: 2diamond: 1gold: 1silver: 1"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "任务广场",
+        "label": "接单提交 打开任务详情后可接单并提交完成凭证",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "任务广场",
+        "label": "接单提交 打开任务详情后可接单并提交完成凭证->接单提交 打开任务详情后可接单并提交完成凭证",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "任务广场",
+        "label": "筛选",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "任务广场",
+        "label": "筛选->接单提交 打开任务详情后可接单并提交完成凭证",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "发布任务 / 提交订单",
+        "label": "技能支援",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "发布任务 / 提交订单",
+        "label": "实物交付",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "个人中心",
+        "label": "兑换福利",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "个人中心",
+        "label": "兑换福利->兑换",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "个人中心",
+        "label": "交易记录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "后台管理 / 风控管理",
+        "label": "查看已处理",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "后台管理 / 风控管理",
+        "label": "查看已处理->查看待处理",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "后台管理 / 风控管理",
+        "label": "开始训练",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-01-首屏.png",
+        "elementCount": 246,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-02-导航-任务广场",
+        "label": "导航:任务广场",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-02-导航-任务广场.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-02-导航-任务广场.png",
+        "elementCount": 246,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证",
+        "label": "操作:接单提交 打开任务详情后可接单并提交完成凭证",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证.png",
+        "elementCount": 246,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证",
+        "label": "二层操作:接单提交 打开任务详情后可接单并提交完成凭证->接单提交 打开任务详情后可接单并提交完成凭证",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证.png",
+        "elementCount": 246,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-05-操作-筛选",
+        "label": "操作:筛选",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-05-操作-筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-05-操作-筛选.png",
+        "elementCount": 276,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "全部城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "西安",
+          "全部技能"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证",
+        "label": "二层操作:筛选->接单提交 打开任务详情后可接单并提交完成凭证",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证.png",
+        "elementCount": 276,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "全部城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "西安",
+          "全部技能"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-07-导航-发布任务-提交订单",
+        "label": "导航:发布任务 / 提交订单",
+        "finalUrl": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-07-导航-发布任务-提交订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-07-导航-发布任务-提交订单.png",
+        "elementCount": 105,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "输入任务标题",
+          "详细描述任务内容...",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-08-操作-技能支援",
+        "label": "操作:技能支援",
+        "finalUrl": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-08-操作-技能支援.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-08-操作-技能支援.png",
+        "elementCount": 105,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "输入任务标题",
+          "详细描述任务内容...",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-09-操作-实物交付",
+        "label": "操作:实物交付",
+        "finalUrl": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-09-操作-实物交付.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-09-操作-实物交付.png",
+        "elementCount": 105,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "输入任务标题",
+          "详细描述任务内容...",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-10-导航-个人中心",
+        "label": "导航:个人中心",
+        "finalUrl": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-10-导航-个人中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-10-导航-个人中心.png",
+        "elementCount": 150,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "信用值趋势",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "任务历史",
+          "验证记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-11-操作-兑换福利",
+        "label": "操作:兑换福利",
+        "finalUrl": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-11-操作-兑换福利.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-11-操作-兑换福利.png",
+        "elementCount": 261,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "信用值趋势",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "任务历史",
+          "验证记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换",
+        "label": "二层操作:兑换福利->兑换",
+        "finalUrl": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换.png",
+        "elementCount": 283,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "信用值趋势",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "任务历史",
+          "验证记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足",
+          "取消",
+          "确认兑换"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-13-操作-交易记录",
+        "label": "操作:交易记录",
+        "finalUrl": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-13-操作-交易记录.json",
+        "screenshotPath": "",
+        "elementCount": 282,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "信用值趋势",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "任务历史",
+          "验证记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-14-导航-后台管理-风控管理",
+        "label": "导航:后台管理 / 风控管理",
+        "finalUrl": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-14-导航-后台管理-风控管理.json",
+        "screenshotPath": "",
+        "elementCount": 268,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "查看已处理",
+          "0.5",
+          "0.3",
+          "0.8",
+          "开始训练",
+          "bronze: 2diamond: 1gold: 1silver: 1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-15-操作-查看已处理",
+        "label": "操作:查看已处理",
+        "finalUrl": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-15-操作-查看已处理.json",
+        "screenshotPath": "",
+        "elementCount": 268,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "查看待处理",
+          "0.5",
+          "0.3",
+          "0.8",
+          "开始训练",
+          "bronze: 2diamond: 1gold: 1silver: 1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-16-二层操作-查看已处理-查看待处理",
+        "label": "二层操作:查看已处理->查看待处理",
+        "finalUrl": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-16-二层操作-查看已处理-查看待处理.json",
+        "screenshotPath": "",
+        "elementCount": 268,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "查看已处理",
+          "0.5",
+          "0.3",
+          "0.8",
+          "开始训练",
+          "bronze: 2diamond: 1gold: 1silver: 1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-17-操作-开始训练",
+        "label": "操作:开始训练",
+        "finalUrl": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-17-操作-开始训练.json",
+        "screenshotPath": "",
+        "elementCount": 410,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "查看已处理",
+          "0.5",
+          "0.3",
+          "0.8",
+          "开始训练",
+          "应用此模型",
+          "bronze: 2diamond: 1gold: 1silver: 1"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49170/",
+    "representativeScreenshotLabel": "互助链"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 17,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-01-首屏.png",
+        "elementCount": 246,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-02-导航-任务广场",
+        "label": "导航:任务广场",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-02-导航-任务广场.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-02-导航-任务广场.png",
+        "elementCount": 246,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证",
+        "label": "操作:接单提交 打开任务详情后可接单并提交完成凭证",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-03-操作-接单提交-打开任务详情后可接单并提交完成凭证.png",
+        "elementCount": 246,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证",
+        "label": "二层操作:接单提交 打开任务详情后可接单并提交完成凭证->接单提交 打开任务详情后可接单并提交完成凭证",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-04-二层操作-接单提交-打开任务详情后可接单并提交完成凭证-接单提交-打开任务详情后可接单并提交完成凭证.png",
+        "elementCount": 246,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "急件",
+          "本地",
+          "远程",
+          "高薪",
+          "技术支援",
+          "搬运",
+          "辅导",
+          "设计",
+          "翻译",
+          "代购"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-05-操作-筛选",
+        "label": "操作:筛选",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-05-操作-筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-05-操作-筛选.png",
+        "elementCount": 276,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "全部城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "西安",
+          "全部技能"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证",
+        "label": "二层操作:筛选->接单提交 打开任务详情后可接单并提交完成凭证",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-06-二层操作-筛选-接单提交-打开任务详情后可接单并提交完成凭证.png",
+        "elementCount": 276,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "发布任务",
+          "后台管理 风控预警、信用模型、交易监测",
+          "接单提交 打开任务详情后可接单并提交完成凭证",
+          "发布任务 填写悬赏、验收规则和地理围栏",
+          "购买兑换 福利兑换、曝光提升和交易记录",
+          "搜索任务...",
+          "搜索",
+          "全部",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "热度",
+          "最新",
+          "悬赏",
+          "筛选",
+          "全部城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "西安",
+          "全部技能"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-07-导航-发布任务-提交订单",
+        "label": "导航:发布任务 / 提交订单",
+        "finalUrl": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-07-导航-发布任务-提交订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-07-导航-发布任务-提交订单.png",
+        "elementCount": 105,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "输入任务标题",
+          "详细描述任务内容...",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-08-操作-技能支援",
+        "label": "操作:技能支援",
+        "finalUrl": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-08-操作-技能支援.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-08-操作-技能支援.png",
+        "elementCount": 105,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "输入任务标题",
+          "详细描述任务内容...",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-09-操作-实物交付",
+        "label": "操作:实物交付",
+        "finalUrl": "http://127.0.0.1:49170/publish",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-09-操作-实物交付.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-09-操作-实物交付.png",
+        "elementCount": 105,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "登录 / 注册",
+          "输入任务标题",
+          "详细描述任务内容...",
+          "实物交付",
+          "线上代办",
+          "技能支援",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-10-导航-个人中心",
+        "label": "导航:个人中心",
+        "finalUrl": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-10-导航-个人中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-10-导航-个人中心.png",
+        "elementCount": 150,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "信用值趋势",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "任务历史",
+          "验证记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-11-操作-兑换福利",
+        "label": "操作:兑换福利",
+        "finalUrl": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-11-操作-兑换福利.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-11-操作-兑换福利.png",
+        "elementCount": 261,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "信用值趋势",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "任务历史",
+          "验证记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换",
+        "label": "二层操作:兑换福利->兑换",
+        "finalUrl": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-12-二层操作-兑换福利-兑换.png",
+        "elementCount": 283,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "信用值趋势",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "任务历史",
+          "验证记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足",
+          "取消",
+          "确认兑换"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-13-操作-交易记录",
+        "label": "操作:交易记录",
+        "finalUrl": "http://127.0.0.1:49170/profile",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-13-操作-交易记录.json",
+        "screenshotPath": "",
+        "elementCount": 282,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "信用值趋势",
+          "兑换福利",
+          "提升曝光",
+          "交易记录",
+          "任务历史",
+          "验证记录",
+          "全部",
+          "曝光",
+          "优惠券",
+          "特权",
+          "兑换",
+          "余额不足"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-14-导航-后台管理-风控管理",
+        "label": "导航:后台管理 / 风控管理",
+        "finalUrl": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-14-导航-后台管理-风控管理.json",
+        "screenshotPath": "",
+        "elementCount": 268,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "查看已处理",
+          "0.5",
+          "0.3",
+          "0.8",
+          "开始训练",
+          "bronze: 2diamond: 1gold: 1silver: 1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-15-操作-查看已处理",
+        "label": "操作:查看已处理",
+        "finalUrl": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-15-操作-查看已处理.json",
+        "screenshotPath": "",
+        "elementCount": 268,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "查看待处理",
+          "0.5",
+          "0.3",
+          "0.8",
+          "开始训练",
+          "bronze: 2diamond: 1gold: 1silver: 1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-16-二层操作-查看已处理-查看待处理",
+        "label": "二层操作:查看已处理->查看待处理",
+        "finalUrl": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-16-二层操作-查看已处理-查看待处理.json",
+        "screenshotPath": "",
+        "elementCount": 268,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "查看已处理",
+          "0.5",
+          "0.3",
+          "0.8",
+          "开始训练",
+          "bronze: 2diamond: 1gold: 1silver: 1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-cycle8839-structure-17-操作-开始训练",
+        "label": "操作:开始训练",
+        "finalUrl": "http://127.0.0.1:49170/admin",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-cycle8839-structure-17-操作-开始训练.json",
+        "screenshotPath": "",
+        "elementCount": 410,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "任务广场",
+          "发布任务 / 提交订单",
+          "个人中心",
+          "后台管理 / 风控管理",
+          "退出登录",
+          "查看已处理",
+          "0.5",
+          "0.3",
+          "0.8",
+          "开始训练",
+          "应用此模型",
+          "bronze: 2diamond: 1gold: 1silver: 1"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2048,
+    "height": 1000,
+    "scrollWidth": 2016,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "互\n互助链\n任务广场\n发布任务 / 提交订单\n个人中心\n后台管理 / 风控管理\n李\n李四\n信用分 90\n350\n退出登录\n互助链\n\n去中心化互助任务协作平台 · 信任创造价值\n\n发布任务\n3\n任务总数\n128\n活跃用户\n2,460\n助利币流通\n后台管理\n风控预警、信用模型、交易监测\n接单提交\n打开任务详情后可接单并提交完成凭证\n发布任务\n填写悬赏、验收规则和地理围栏\n购买兑换\n福利兑换、曝光提升和交易记录\n搜索\n全部\n实物交付\n线上代办\n技能支援\n热度\n最新\n悬赏\n筛选\n急件\n本地\n远程\n高薪\n技术支援\n搬运\n辅导\n设计\n翻译\n代购\nPS修图\n待接单\nPS\n修图\n设计\n60 助利币\n2月2日\n18\n🔥\n李四\ngold\n帮取快递\n待接单\n快递\n搬运\n20 助利币\n12月31日\n15\n张三\nsilver\n数据录入\n待接单\n数据\nExcel\n80 助利币\n1月16日\n8\n孙七\nbronze",
+  "bodyTextPreview": "互\n互助链\n任务广场\n发布任务 / 提交订单\n个人中心\n后台管理 / 风控管理\n登录 / 注册\n互助链\n\n去中心化互助任务协作平台 · 信任创造价值\n\n发布任务\n3\n任务总数\n128\n活跃用户\n2,460\n助利币流通\n后台管理\n风控预警、信用模型、交易监测\n接单提交\n打开任务详情后可接单并提交完成凭证\n发布任务\n填写悬赏、验收规则和地理围栏\n购买兑换\n福利兑换、曝光提升和交易记录\n搜索\n全部\n实物交付\n线上代办\n技能支援\n热度\n最新\n悬赏\n筛选\n急件\n本地\n远程\n高薪\n技术支援\n搬运\n辅导\n设计\n翻译\n代购\nPS修图\n待接单\nPS\n修图\n设计\n60 助利币\n2月2日\n18\n🔥\n李四\ngold\n帮取快递\n待接单\n快递\n搬运\n20 助利币\n12月31日\n15\n张三\nsilver\n数据录入\n待接单\n数据\nExcel\n80 助利币\n1月16日\n8\n孙七\nbronze",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/tasks?page=1&limit=10&sort=hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/tasks?page=1&limit=10&sort=hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/risk-alerts?resolved=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/risk-alerts?resolved=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/tasks?page=1&limit=10&sort=hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/tasks?page=1&limit=10&sort=hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/user/coins"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/user/coins"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/risk-alerts?resolved=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/risk-alerts?resolved=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/risk-alerts?resolved=true"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/risk-alerts?resolved=false"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/admin/credit-model/train"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/tasks?page=1&limit=10&sort=hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49170/api/tasks?page=1&limit=10&sort=hot"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49170/node_modules/.vite/deps/chunk-NXESFFTV.js?v=71e81982",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49170/node_modules/.vite/deps/chunk-NXESFFTV.js?v=71e81982",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49170/node_modules/.vite/deps/chunk-NXESFFTV.js?v=71e81982",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-cycle8839/may-89170-browser-report.json"
+}

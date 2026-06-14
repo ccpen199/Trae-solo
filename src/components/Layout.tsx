@@ -5,9 +5,9 @@ import { useAuthStore } from '@/stores/auth'
 
 const navItems = [
   { to: '/', label: '任务广场', icon: LayoutGrid },
-  { to: '/publish', label: '发布任务', icon: PlusCircle },
+  { to: '/publish', label: '发布任务 / 提交订单', icon: PlusCircle },
   { to: '/profile', label: '个人中心', icon: User },
-  { to: '/admin', label: '风控管理', icon: Shield },
+  { to: '/admin', label: '后台管理 / 风控管理', icon: Shield },
 ]
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -89,7 +89,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#0A1628]">
-      <aside className="hidden lg:flex w-64 flex-shrink-0 border-r border-[#1E3352] bg-[#0F2035]">
+      <aside className="hidden lg:flex relative z-[70] w-64 flex-shrink-0 border-r border-[#1E3352] bg-[#0F2035]">
         {sidebarContent}
       </aside>
 

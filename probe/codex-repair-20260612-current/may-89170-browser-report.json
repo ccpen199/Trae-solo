@@ -1,0 +1,230 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T07:43:15.551Z",
+  "order": "may-89170",
+  "roundIndex": 1248,
+  "captureId": "may-89170-current",
+  "url": "http://127.0.0.1:49170/",
+  "initialUrl": "http://127.0.0.1:49170/",
+  "finalUrl": "http://127.0.0.1:49170/",
+  "status": 200,
+  "title": "互助链 - 去中心化互助任务协作系统",
+  "initialTitle": "互助链 - 去中心化互助任务协作系统",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-repair-20260612-current/may-89170-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-current/may-89170-current-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "后台管理相关问题；购买/提交相关问题",
+  "targetReason": "后台管理相关问题；购买/提交相关问题",
+  "targetKind": "admin",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49170/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49170/",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-current/may-89170-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-current/may-89170-current-structure-01-首屏.png",
+          "elementCount": 9,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-current/may-89170-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-current/may-89170-current-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49170/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-current/may-89170-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-current/may-89170-current-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59170",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59170/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59170/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"overview\":{\"total_users\":5,\"total_tasks\":10},\"task_distribution\":[{\"status\":\"cancelled\",\"count\":1},{\"status\":\"completed\",\"count\":2},{\"status\":\"disputed\",\"count\":1},{\"status\":\"in_progress\",\"count\":2},{\"status\":\"open\",\"count\":3},{\"status\":\"verifying\",\"count\":1}],\"category_distribution\":[{\"category\":\"online\",\"count\":2},{\"category\":\"physical\",\"count\":4},{\"category\":\"skill\",\"count\":4}],\"credit_distribution\":[{\"credit_level\":\"bronze\",\"count\":2},{\"credit_level\":\"diamond\",\"count"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59170/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"overview\":{\"total_users\":5,\"total_tasks\":10,\"unresolved_risks\":0},\"alerts\":[],\"quickActions\":[\"risk-review\",\"credit-model-train\",\"task-audit\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59170/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"benefit-exposure-1\",\"name\":\"任务曝光券\",\"price\":30,\"category\":\"exposure\"},{\"id\":\"benefit-coupon-1\",\"name\":\"服务优惠券\",\"price\":50,\"category\":\"coupon\"},{\"id\":\"benefit-priority-1\",\"name\":\"优先撮合权益\",\"price\":80,\"category\":\"privilege\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59170/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[],\"total\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59170/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[],\"total\":0}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89170/src/pages/Profile.tsx: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (583:8)\n\n  581 |             </div>\n  582 |           </div>\n> 583 |         </div>\n      |         ^\n  584 |       )}\n  585 |     </div>\n  586 |   )\n581|              </div>\n582|            </div>\n583|          </div>\n   |          ^\n584|        )}\n585|      </div>",
+      "location": {
+        "url": "http://127.0.0.1:49170/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49170/src/pages/Profile.tsx",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49170/src/pages/Profile.tsx",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49170/src/pages/Profile.tsx"
+    }
+  ]
+}

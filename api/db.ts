@@ -137,20 +137,36 @@ if (userCount.count === 0) {
     }
 
     const tasks = [
-      { id: uuidv4(), publisher_id: users[0].id, assignee_id: null, title: '帮取快递', description: '需要帮忙从菜鸟驿站取一个快递，大约3公斤', category: 'physical', tags: JSON.stringify(['快递', '搬运']), bounty_type: 'coins', bounty_amount: 20, deadline: '2024-12-31T18:00:00Z', geo_fence: JSON.stringify({ lat: 39.9042, lng: 116.4074, radius: 3000 }), verify_rules: JSON.stringify(['photo']), status: 'open', exposure_weight: 1.0, view_count: 15 },
-      { id: uuidv4(), publisher_id: users[1].id, assignee_id: users[2].id, title: '代写文档', description: '需要帮忙整理一份项目文档，大约2000字', category: 'online', tags: JSON.stringify(['文档', '写作']), bounty_type: 'coins', bounty_amount: 50, deadline: '2024-12-25T23:59:00Z', geo_fence: JSON.stringify({}), verify_rules: JSON.stringify(['timestamp']), status: 'in_progress', exposure_weight: 1.2, view_count: 30 },
-      { id: uuidv4(), publisher_id: users[2].id, assignee_id: users[0].id, title: '修电脑', description: '笔记本电脑开不了机，需要专业人士帮忙检修', category: 'skill', tags: JSON.stringify(['电脑', '维修']), bounty_type: 'cash', bounty_amount: 100, deadline: '2025-01-05T20:00:00Z', geo_fence: JSON.stringify({ lat: 31.2304, lng: 121.4737, radius: 5000 }), verify_rules: JSON.stringify(['photo', 'location']), status: 'verifying', exposure_weight: 1.5, view_count: 45 },
-      { id: uuidv4(), publisher_id: users[3].id, assignee_id: users[4].id, title: '遛狗服务', description: '周末需要人帮忙遛金毛犬两小时', category: 'physical', tags: JSON.stringify(['宠物', '遛狗']), bounty_type: 'coins', bounty_amount: 30, deadline: '2025-01-10T10:00:00Z', geo_fence: JSON.stringify({ lat: 39.9042, lng: 116.4074, radius: 2000 }), verify_rules: JSON.stringify(['photo', 'location']), status: 'completed', exposure_weight: 1.0, view_count: 22 },
-      { id: uuidv4(), publisher_id: users[4].id, assignee_id: null, title: '数据录入', description: '需要将纸质表格数据录入Excel，大约100条记录', category: 'online', tags: JSON.stringify(['数据', 'Excel']), bounty_type: 'coins', bounty_amount: 80, deadline: '2025-01-15T23:59:00Z', geo_fence: JSON.stringify({}), verify_rules: JSON.stringify(['timestamp']), status: 'open', exposure_weight: 0.8, view_count: 8 },
-      { id: uuidv4(), publisher_id: users[0].id, assignee_id: users[1].id, title: '翻译文档', description: '需要将一份英文技术文档翻译成中文，约5000词', category: 'skill', tags: JSON.stringify(['翻译', '英语']), bounty_type: 'cash', bounty_amount: 200, deadline: '2025-01-20T23:59:00Z', geo_fence: JSON.stringify({}), verify_rules: JSON.stringify(['timestamp']), status: 'completed', exposure_weight: 2.0, view_count: 60 },
-      { id: uuidv4(), publisher_id: users[3].id, assignee_id: users[2].id, title: '搬家帮手', description: '周末搬家需要两个人帮忙搬家具，约3小时', category: 'physical', tags: JSON.stringify(['搬家', '搬运']), bounty_type: 'cash', bounty_amount: 150, deadline: '2025-01-08T08:00:00Z', geo_fence: JSON.stringify({ lat: 31.2304, lng: 121.4737, radius: 10000 }), verify_rules: JSON.stringify(['photo', 'location', 'timestamp']), status: 'disputed', exposure_weight: 1.3, view_count: 35 },
+      { id: uuidv4(), publisher_id: users[0].id, assignee_id: null, title: '帮取快递', description: '需要帮忙从菜鸟驿站取一个快递，大约3公斤，搬运到我家', category: 'physical', tags: JSON.stringify(['快递', '搬运', '本地']), bounty_type: 'coins', bounty_amount: 20, deadline: '2024-12-31T18:00:00Z', geo_fence: JSON.stringify({ lat: 39.9042, lng: 116.4074, radius: 3000, address: '北京市朝阳区望京SOHO' }), verify_rules: JSON.stringify(['photo']), status: 'open', exposure_weight: 1.0, view_count: 15 },
+      { id: uuidv4(), publisher_id: users[1].id, assignee_id: users[2].id, title: '代写文档', description: '需要帮忙整理一份项目文档，大约2000字', category: 'online', tags: JSON.stringify(['文档', '写作', '远程']), bounty_type: 'coins', bounty_amount: 50, deadline: '2024-12-25T23:59:00Z', geo_fence: JSON.stringify({}), verify_rules: JSON.stringify(['timestamp']), status: 'in_progress', exposure_weight: 1.2, view_count: 30 },
+      { id: uuidv4(), publisher_id: users[2].id, assignee_id: users[0].id, title: '修电脑', description: '笔记本电脑开不了机，需要专业人士帮忙检修', category: 'skill', tags: JSON.stringify(['电脑', '维修', '技术支援']), bounty_type: 'cash', bounty_amount: 100, deadline: '2025-01-05T20:00:00Z', geo_fence: JSON.stringify({ lat: 31.2304, lng: 121.4737, radius: 5000, address: '上海市浦东新区陆家嘴' }), verify_rules: JSON.stringify(['photo', 'location']), status: 'verifying', exposure_weight: 1.5, view_count: 45 },
+      { id: uuidv4(), publisher_id: users[3].id, assignee_id: users[4].id, title: '遛狗服务', description: '周末需要人帮忙遛金毛犬两小时', category: 'physical', tags: JSON.stringify(['宠物', '遛狗', '本地']), bounty_type: 'coins', bounty_amount: 30, deadline: '2025-01-10T10:00:00Z', geo_fence: JSON.stringify({ lat: 39.9042, lng: 116.4074, radius: 2000, address: '北京市海淀区中关村' }), verify_rules: JSON.stringify(['photo', 'location']), status: 'completed', exposure_weight: 1.0, view_count: 22 },
+      { id: uuidv4(), publisher_id: users[4].id, assignee_id: null, title: '数据录入', description: '需要将纸质表格数据录入Excel，大约100条记录', category: 'online', tags: JSON.stringify(['数据', 'Excel', '远程']), bounty_type: 'coins', bounty_amount: 80, deadline: '2025-01-15T23:59:00Z', geo_fence: JSON.stringify({}), verify_rules: JSON.stringify(['timestamp']), status: 'open', exposure_weight: 0.8, view_count: 8 },
+      { id: uuidv4(), publisher_id: users[0].id, assignee_id: users[1].id, title: '翻译文档', description: '需要将一份英文技术文档翻译成中文，约5000词', category: 'skill', tags: JSON.stringify(['翻译', '英语', '设计']), bounty_type: 'cash', bounty_amount: 200, deadline: '2025-01-20T23:59:00Z', geo_fence: JSON.stringify({}), verify_rules: JSON.stringify(['timestamp']), status: 'completed', exposure_weight: 2.0, view_count: 60 },
+      { id: uuidv4(), publisher_id: users[3].id, assignee_id: users[2].id, title: '搬家帮手', description: '周末搬家需要两个人帮忙搬运家具，约3小时', category: 'physical', tags: JSON.stringify(['搬家', '搬运', '高薪']), bounty_type: 'cash', bounty_amount: 150, deadline: '2025-01-08T08:00:00Z', geo_fence: JSON.stringify({ lat: 31.2304, lng: 121.4737, radius: 10000, address: '上海市徐汇区漕河泾' }), verify_rules: JSON.stringify(['photo', 'location', 'timestamp']), status: 'disputed', exposure_weight: 1.3, view_count: 35 },
       { id: uuidv4(), publisher_id: users[1].id, assignee_id: null, title: 'PS修图', description: '需要修5张产品照片，要求精修', category: 'skill', tags: JSON.stringify(['PS', '修图', '设计']), bounty_type: 'coins', bounty_amount: 60, deadline: '2025-02-01T23:59:00Z', geo_fence: JSON.stringify({}), verify_rules: JSON.stringify(['photo']), status: 'open', exposure_weight: 1.1, view_count: 18 },
-      { id: uuidv4(), publisher_id: users[4].id, assignee_id: null, title: '代排队', description: '需要帮忙在网红店排队买奶茶，大约1小时', category: 'physical', tags: JSON.stringify(['排队', '代购']), bounty_type: 'coins', bounty_amount: 15, deadline: '2025-01-12T14:00:00Z', geo_fence: JSON.stringify({ lat: 22.5431, lng: 114.0579, radius: 3000 }), verify_rules: JSON.stringify(['photo', 'location']), status: 'cancelled', exposure_weight: 0.5, view_count: 5 },
+      { id: uuidv4(), publisher_id: users[4].id, assignee_id: null, title: '代排队', description: '需要帮忙在网红店排队买奶茶，大约1小时', category: 'physical', tags: JSON.stringify(['排队', '代购', '本地']), bounty_type: 'coins', bounty_amount: 15, deadline: '2025-01-12T14:00:00Z', geo_fence: JSON.stringify({ lat: 22.5431, lng: 114.0579, radius: 3000, address: '深圳市南山区科技园' }), verify_rules: JSON.stringify(['photo', 'location']), status: 'cancelled', exposure_weight: 0.5, view_count: 5 },
       { id: uuidv4(), publisher_id: users[2].id, assignee_id: users[3].id, title: '线上辅导', description: '需要高中数学辅导，每周两次每次1小时', category: 'skill', tags: JSON.stringify(['辅导', '数学', '教育']), bounty_type: 'coins', bounty_amount: 100, deadline: '2025-03-01T23:59:00Z', geo_fence: JSON.stringify({}), verify_rules: JSON.stringify(['timestamp']), status: 'in_progress', exposure_weight: 1.8, view_count: 42 },
     ]
 
     for (const task of tasks) {
       insertTask.run(task)
+    }
+
+    const riskAlerts = [
+      { id: uuidv4(), task_id: tasks[0].id, user_id: users[0].id, type: 'brush_order', risk_level: 'high', detail: '用户短时间内连续发布3个相似快递取件任务，疑似刷单行为', resolved: 0 },
+      { id: uuidv4(), task_id: tasks[6].id, user_id: users[3].id, type: 'fake_location', risk_level: 'medium', detail: '搬家任务定位与描述地址不符，GPS坐标在郊区但描述在市中心', resolved: 0 },
+      { id: uuidv4(), task_id: tasks[2].id, user_id: users[2].id, type: 'duplicate_submit', risk_level: 'low', detail: '同一任务提交了2份完全相同的完成照片证据', resolved: 0 },
+      { id: uuidv4(), task_id: null, user_id: users[4].id, type: 'brush_order', risk_level: 'medium', detail: '该用户频繁取消任务后重新发布，累计5次', resolved: 1 },
+    ]
+
+    const insertAlert = db.prepare(`
+      INSERT INTO risk_alerts (id, task_id, user_id, type, risk_level, detail, resolved)
+      VALUES (@id, @task_id, @user_id, @type, @risk_level, @detail, @resolved)
+    `)
+
+    for (const alert of riskAlerts) {
+      insertAlert.run(alert)
     }
   })
 

@@ -1,0 +1,188 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T07:23:20.112Z",
+  "order": "may-89170",
+  "roundIndex": 704,
+  "captureId": "may-89170-codex-704",
+  "url": "http://127.0.0.1:49170/",
+  "initialUrl": "http://127.0.0.1:49170/",
+  "finalUrl": "http://127.0.0.1:49170/",
+  "status": 200,
+  "title": "互助链 - 去中心化互助任务协作系统",
+  "initialTitle": "互助链 - 去中心化互助任务协作系统",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-codex-704-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-codex-704-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49170/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89170-codex-704-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49170/",
+          "title": "互助链 - 去中心化互助任务协作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-codex-704-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-codex-704-structure-01-首屏.png",
+          "elementCount": 9,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-codex-704-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-codex-704-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-codex-704-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49170/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89170-codex-704-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49170/",
+        "title": "互助链 - 去中心化互助任务协作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-codex-704-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-codex-704-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49170/src/pages/Profile.tsx",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49170/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89170/src/pages/Profile.tsx: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (583:8)\n\n  581 |             </div>\n  582 |           </div>\n> 583 |         </div>\n      |         ^\n  584 |       )}\n  585 |     </div>\n  586 |   )\n581|              </div>\n582|            </div>\n583|          </div>\n   |          ^\n584|        )}\n585|      </div>",
+      "location": {
+        "url": "http://127.0.0.1:49170/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49170/src/pages/Profile.tsx",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49170/src/pages/Profile.tsx"
+    }
+  ],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89170/probe/codex-repair-20260612-704/may-89170-browser-report.json"
+}

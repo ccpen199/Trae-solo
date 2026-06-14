@@ -14,24 +14,37 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     const category = req.query.category as string
     const status = req.query.status as string
     const keyword = req.query.keyword as string
+    const tag = req.query.tag as string
     const sort = req.query.sort as string
     const publisherId = req.query.publisher_id as string
     const assigneeId = req.query.assignee_id as string
+    const city = req.query.city as string
 
     let whereClauses: string[] = []
     let params: any[] = []
+
+    if (status) {
+      whereClauses.push('t.status = ?')
+      params.push(status)
+    } else {
+      whereClauses.push("t.status = 'open'")
+    }
 
     if (category) {
       whereClauses.push('t.category = ?')
       params.push(category)
     }
-    if (status) {
-      whereClauses.push('t.status = ?')
-      params.push(status)
-    }
     if (keyword) {
-      whereClauses.push('(t.title LIKE ? OR t.description LIKE ?)')
-      params.push(`%${keyword}%`, `%${keyword}%`)
+      whereClauses.push('(t.title LIKE ? OR t.description LIKE ? OR t.tags LIKE ?)')
+      params.push(`%${keyword}%`, `%${keyword}%`, `%${keyword}%`)
+    }
+    if (tag) {
+      whereClauses.push('(t.tags LIKE ? OR t.title LIKE ? OR t.description LIKE ?)')
+      params.push(`%${tag}%`, `%${tag}%`, `%${tag}%`)
+    }
+    if (city) {
+      whereClauses.push('(JSON_EXTRACT(t.geo_fence, \'$.address\') LIKE ? OR t.title LIKE ? OR t.description LIKE ?)')
+      params.push(`%${city}%`, `%${city}%`, `%${city}%`)
     }
     if (publisherId) {
       whereClauses.push('t.publisher_id = ?')

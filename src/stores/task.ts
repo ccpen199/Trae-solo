@@ -26,8 +26,10 @@ export interface Task {
 interface TaskFilters {
   category: string
   keyword: string
+  tag: string
   sort: string
   page: number
+  city: string
 }
 
 interface TaskState {
@@ -54,7 +56,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
   total: 0,
   page: 1,
   totalPages: 0,
-  filters: { category: '', keyword: '', sort: 'hot', page: 1 },
+  filters: { category: '', keyword: '', tag: '', sort: 'hot', page: 1, city: '' },
   loading: false,
 
   fetchTasks: async (newFilters) => {
@@ -66,7 +68,9 @@ export const useTaskStore = create<TaskState>((set, get) => ({
       params.set('limit', '10')
       if (filters.category) params.set('category', filters.category)
       if (filters.keyword) params.set('keyword', filters.keyword)
+      if (filters.tag) params.set('tag', filters.tag)
       if (filters.sort) params.set('sort', filters.sort)
+      if (filters.city) params.set('city', filters.city)
       const res = await fetch(`/api/tasks?${params}`)
       const json = await res.json()
       if (json.success) {
