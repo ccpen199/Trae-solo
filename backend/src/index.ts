@@ -9,6 +9,7 @@ import booksRouter from './routes/books.js';
 import notesRouter from './routes/notes.js';
 import sessionsRouter from './routes/sessions.js';
 import statsRouter from './routes/stats.js';
+import adminRouter from './routes/admin.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -77,6 +78,7 @@ app.use(`${API_PREFIX}/books`, booksRouter);
 app.use(`${API_PREFIX}/notes`, notesRouter);
 app.use(`${API_PREFIX}/sessions`, sessionsRouter);
 app.use(`${API_PREFIX}/stats`, statsRouter);
+app.use(`${API_PREFIX}/admin`, adminRouter);
 
 app.use((err: any, _req: any, res: any, _next: any) => {
   console.error('[ERROR]', err);

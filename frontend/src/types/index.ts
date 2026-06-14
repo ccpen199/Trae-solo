@@ -53,6 +53,10 @@ export interface ReadingSession {
   progressDelta?: number | null;
   savedAt?: Date | string | null;
   status?: 'active' | 'paused' | 'completed' | 'discarded';
+  pauseEvents?: { reason: string; at: string }[];
+  dwellDetections?: number;
+  lastPauseAt?: string | null;
+  snapshotCount?: number;
 }
 
 export interface Note {

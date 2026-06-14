@@ -8,6 +8,7 @@ import OCRNotes from '@/pages/OCRNotes';
 import KnowledgeGraph from '@/pages/KnowledgeGraph';
 import ReviewBoard from '@/pages/ReviewBoard';
 import ExportCenter from '@/pages/ExportCenter';
+import Admin from '@/pages/Admin';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/graph" element={<KnowledgeGraph />} />
           <Route path="/review" element={<ReviewBoard />} />
           <Route path="/export" element={<ExportCenter />} />
+          <Route path="/admin" element={<Admin />} />
         </Route>
       </Routes>
     </BrowserRouter>

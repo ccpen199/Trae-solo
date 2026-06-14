@@ -13,6 +13,7 @@ import {
   Sun,
   Moon,
   BookOpen,
+  ShieldCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -24,6 +25,7 @@ const NAV_ITEMS = [
   { path: '/graph', label: '知识图谱', icon: Share2 },
   { path: '/review', label: '复盘看板', icon: BarChart3 },
   { path: '/export', label: '数据导出', icon: Download },
+  { path: '/admin', label: '后台管理', icon: ShieldCheck },
 ];
 
 export default function Sidebar() {
