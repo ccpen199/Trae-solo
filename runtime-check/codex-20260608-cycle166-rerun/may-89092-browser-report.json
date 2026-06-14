@@ -1,0 +1,828 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T02:19:37.603Z",
+  "order": "may-89092",
+  "roundIndex": 166,
+  "captureId": "may-89092-codex-cycle166-rerun",
+  "url": "http://127.0.0.1:49092/",
+  "initialUrl": "http://127.0.0.1:49092/",
+  "finalUrl": "http://127.0.0.1:49092/login",
+  "status": 200,
+  "title": "may-89092",
+  "initialTitle": "may-89092",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89092/runtime-check/codex-20260608-cycle166-rerun/may-89092-codex-cycle166-rerun-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89092/runtime-check/codex-20260608-cycle166-rerun/may-89092-codex-cycle166-rerun-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "身份选择后进入错误页；登录注册相关问题；后台管理相关问题；搜索/筛选相关问题；详情/内容页相关问题",
+  "targetReason": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49092/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49092/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49092/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49092/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49092/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49092/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49092/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49092/login",
+        "feedback": []
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49092/login",
+        "title": "may-89092",
+        "headings": [
+          "知识产权全生命周期平台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登 录",
+          "个人发明人 专注于知识产权创造和保护",
+          "中小企业 企业知识产权全生命周期管理",
+          "律所 专业知识产权法律服务",
+          "代理机构 一站式知识产权代理服务"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "知识产权全生命周期平台Intellectual Property Lifecycle Management用户名密码登 录快速登录（密码均为 123456）：个人发明人专注于知识产权创造和保护中小企业企业知识产权全生命周期管理律所专业知识产权法律服务代理机构一站式知识产权代理服务",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89092-codex-cycle166-rerun-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49092/login",
+          "title": "may-89092",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89092/runtime-check/codex-20260608-cycle166-rerun/may-89092-codex-cycle166-rerun-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89092/runtime-check/codex-20260608-cycle166-rerun/may-89092-codex-cycle166-rerun-structure-01-首屏.png",
+          "elementCount": 35,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "请输入用户名",
+            "请输入密码",
+            "登 录",
+            "个人发明人 专注于知识产权创造和保护",
+            "中小企业 企业知识产权全生命周期管理",
+            "律所 专业知识产权法律服务",
+            "代理机构 一站式知识产权代理服务"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。",
+      "接口 /api/manager/dashboard/summary 返回 HTTP 403，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。",
+      "补齐 /api/manager/dashboard/summary 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/manager/dashboard/summary"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89092-codex-cycle166-rerun-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49092/login",
+        "title": "may-89092",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89092/runtime-check/codex-20260608-cycle166-rerun/may-89092-codex-cycle166-rerun-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89092/runtime-check/codex-20260608-cycle166-rerun/may-89092-codex-cycle166-rerun-structure-01-首屏.png",
+        "elementCount": 35,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "请输入用户名",
+          "请输入密码",
+          "登 录",
+          "个人发明人 专注于知识产权创造和保护",
+          "中小企业 企业知识产权全生命周期管理",
+          "律所 专业知识产权法律服务",
+          "代理机构 一站式知识产权代理服务"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49092/login",
+    "representativeScreenshotLabel": "知识产权全生命周期平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89092-codex-cycle166-rerun-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49092/login",
+        "title": "may-89092",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89092/runtime-check/codex-20260608-cycle166-rerun/may-89092-codex-cycle166-rerun-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89092/runtime-check/codex-20260608-cycle166-rerun/may-89092-codex-cycle166-rerun-structure-01-首屏.png",
+        "elementCount": 35,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "请输入用户名",
+          "请输入密码",
+          "登 录",
+          "个人发明人 专注于知识产权创造和保护",
+          "中小企业 企业知识产权全生命周期管理",
+          "律所 专业知识产权法律服务",
+          "代理机构 一站式知识产权代理服务"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "知识产权全生命周期平台\n\nIntellectual Property Lifecycle Management\n\n用户名\n密码\n登 录\n\n快速登录（密码均为 123456）：\n\n个人发明人\n专注于知识产权创造和保护\n中小企业\n企业知识产权全生命周期管理\n律所\n专业知识产权法律服务\n代理机构\n一站式知识产权代理服务",
+  "bodyTextPreview": "知识产权全生命周期平台\n\nIntellectual Property Lifecycle Management\n\n用户名\n密码\n登 录\n\n快速登录（密码均为 123456）：\n\n个人发明人\n专注于知识产权创造和保护\n中小企业\n企业知识产权全生命周期管理\n律所\n专业知识产权法律服务\n代理机构\n一站式知识产权代理服务",
+  "apiBase": "http://127.0.0.1:59092/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59092/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59092/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59092/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59092/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-08T02:19:16.806Z\",\"uptime\":63.910343208}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary",
+      "path": "/api/manager/dashboard/summary",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59092/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59092/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"inventor\",\"name\":\"张三发明人\",\"role\":\"inventor\",\"email\":\"inventor@example.com\",\"phone\":\"13800138001\",\"status\":\"active\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59092/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"inventor\",\"name\":\"张三发明人\",\"role\":\"inventor\",\"email\":\"inventor@example.com\",\"phone\":\"13800138001\",\"status\":\"active\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59092/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"keyword\":\"测试\",\"list\":[]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59092/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"stats\":{\"users\":4,\"trademarks\":15,\"patents\":15,\"copyrights\":12,\"cases\":5,\"notifications\":0},\"modules\":[\"工作台\",\"商标管理\",\"专利管理\",\"版权管理\",\"管家服务\",\"消息通知\"]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59092/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"stats\":{\"users\":4,\"trademarks\":15,\"patents\":15,\"copyrights\":12,\"cases\":5,\"notifications\":0},\"modules\":[\"工作台\",\"商标管理\",\"专利管理\",\"版权管理\",\"管家服务\",\"消息通知\"]}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/chunk-6GSFWH52.js?v=42ec09ce",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49092/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49092/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49092/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:59092/api/manager/dashboard/summary",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:59092/api/manager/dashboard/summary",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/chunk-6GSFWH52.js?v=42ec09ce",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49092/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:59092/api/manager/dashboard/summary",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:59092/api/manager/dashboard/summary",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/chunk-6GSFWH52.js?v=42ec09ce",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49092/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:59092/api/manager/dashboard/summary",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:59092/api/manager/dashboard/summary",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/chunk-6GSFWH52.js?v=42ec09ce",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49092/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/chunk-6GSFWH52.js?v=42ec09ce",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49092/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49092/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/chunk-6GSFWH52.js?v=42ec09ce",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49092/node_modules/.vite/deps/react-router-dom.js?v=42ec09ce",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49092/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49092/login",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49092/login",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49092/login",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    },
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:59092/api/manager/dashboard/summary"
+    }
+  ]
+}
