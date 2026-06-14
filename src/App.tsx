@@ -150,7 +150,7 @@ function LangSwitcher({ value, onChange }: { value: Language; onChange: (l: Lang
 
 function CurrencySwitcher({ value, onChange }: { value: Currency; onChange: (c: Currency) => void }) {
   const [open, setOpen] = useState(false);
-  const currs: Currency[] = ['CNY', 'HKD', 'TWD', 'JPY', 'KRW', 'USD', 'SGD'];
+  const currs: Currency[] = ['CNY', 'HKD', 'TWD', 'JPY', 'KRW', 'USD', 'SGD', 'THB', 'MYR'];
   return (
     <div className="relative">
       <button
@@ -188,6 +188,13 @@ export default function App() {
 }
 
 function AppRoutes() {
+  // #region debug-point H1H4:routes-init
+  (() => {
+    const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
+    const _dbg = (hypothesisId: string, msg: string, data: any = {}) => { try { fetch(_u, { method: 'POST', body: JSON.stringify({ sessionId: _s, runId: 'pre', hypothesisId, location: 'src/App.tsx:AppRoutes', msg: `[DEBUG] ${msg}`, data, ts: Date.now() }) }).catch(() => {}); } catch {} };
+    _dbg('H1', 'app_routes_mounting', { pathname: typeof window !== 'undefined' ? window.location.pathname : 'ssr' });
+  })();
+  // #endregion
   return (
     <Routes>
       <Route path="/" element={<AppLayout><Dashboard /></AppLayout>} />

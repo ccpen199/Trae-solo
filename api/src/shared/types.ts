@@ -1,5 +1,5 @@
 export type Language = 'zh' | 'en' | 'ja' | 'ko';
-export type Currency = 'CNY' | 'HKD' | 'TWD' | 'JPY' | 'KRW' | 'USD' | 'SGD';
+export type Currency = 'CNY' | 'HKD' | 'TWD' | 'JPY' | 'KRW' | 'USD' | 'SGD' | 'THB' | 'MYR';
 export type Region = 'mainland' | 'HKMT' | 'JP_KR' | 'SEA';
 export type TicketGrade = 'VIP' | 'A' | 'B' | 'C' | 'S';
 export type IssueType = 'FAKE_TICKET' | 'VERIFY_FAIL' | 'NO_TICKET_COMP' | 'PAYMENT_ANOMALY';

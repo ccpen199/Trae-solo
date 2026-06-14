@@ -1,6 +1,6 @@
 import type { Currency, Language, MultiLang, Region, TicketGrade, IssueType, IssueStatus, EventType, EventStatus, PaymentChannel } from '@/shared/types';
 
-export const FX: Record<Currency, number> = { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3 };
+export const FX: Record<Currency, number> = { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3, THB: 0.2, MYR: 1.53 };
 
 export const CURRENCY_META: Record<Currency, { sym: string; name: string; frac: number; rate: number; cls: string; region: string }> = {
   CNY: { sym: '¥', name: '人民币 (CNY)', frac: 0, rate: 1, cls: 'from-rose-500 to-red-600', region: '内地' },
@@ -10,6 +10,8 @@ export const CURRENCY_META: Record<Currency, { sym: string; name: string; frac: 
   KRW: { sym: '₩', name: '韩元 (KRW)', frac: 0, rate: 0.0054, cls: 'from-indigo-500 to-purple-600', region: '韩国' },
   USD: { sym: '$', name: '美元 (USD)', frac: 0, rate: 7.18, cls: 'from-emerald-500 to-teal-600', region: 'Global' },
   SGD: { sym: 'S$', name: '新加坡元 (SGD)', frac: 0, rate: 5.3, cls: 'from-amber-500 to-orange-600', region: '新加坡' },
+  THB: { sym: '฿', name: '泰铢 (THB)', frac: 0, rate: 0.2, cls: 'from-lime-500 to-green-600', region: '泰国' },
+  MYR: { sym: 'RM', name: '林吉特 (MYR)', frac: 0, rate: 1.53, cls: 'from-cyan-500 to-sky-600', region: '马来西亚' },
 };
 
 export const LANGUAGE_META: Record<Language, { zh: string; en: string; native: string; flag: string }> = {

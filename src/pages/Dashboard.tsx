@@ -16,7 +16,7 @@ import {
 } from '@/utils/meta';
 import type { Currency } from '@/shared/types';
 
-const FX_RATES: Record<Currency, number> = { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3 };
+const FX_RATES: Record<Currency, number> = { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3, THB: 0.2, MYR: 1.53 };
 function fxRate(c: Currency) { return FX_RATES[c] || 1; }
 
 const PAGE_I18N = {
@@ -99,6 +99,17 @@ const PAGE_I18N = {
 } as const;
 
 export default function Dashboard() {
+  // #region debug-point H1H3H4:dash-entry
+  (() => {
+    const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
+    const _dbg = (hypothesisId: string, msg: string, data: any = {}) => { try { fetch(_u, { method: 'POST', body: JSON.stringify({ sessionId: _s, runId: 'pre', hypothesisId, location: 'src/pages/Dashboard.tsx:101', msg: `[DEBUG] ${msg}`, data, ts: Date.now() }) }).catch(() => {}); } catch {} };
+    _dbg('H3', 'dash_component_entry', {});
+    try {
+      const s = (window as any).__STORE_SNAPSHOT__;
+      _dbg('H3', 'store_state_checked', { hasStore: !!s, dashboard: s?.dashboard ? 'exists' : 'null', dashboardKeys: s?.dashboard ? Object.keys(s.dashboard) : [] });
+    } catch (e) { _dbg('H3', 'store_access_error', { err: String(e) }); }
+  })();
+  // #endregion
   const { language, currency } = useAppStore();
   const t = PAGE_I18N[language] || PAGE_I18N.zh;
   const nav = useNavigate();
@@ -106,7 +117,34 @@ export default function Dashboard() {
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
-    api.get<DashboardKpi>('/api/dashboard').then(setData).catch((e) => setErr(e.message));
+    // #region debug-point H2:dash-api-fetch
+    (() => {
+      const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
+      const _dbg = (hypothesisId: string, msg: string, data: any = {}) => { try { fetch(_u, { method: 'POST', body: JSON.stringify({ sessionId: _s, runId: 'pre', hypothesisId, location: 'src/pages/Dashboard.tsx:108', msg: `[DEBUG] ${msg}`, data, ts: Date.now() }) }).catch(() => {}); } catch {} };
+      _dbg('H2', 'dash_useEffect_start', { url: '/api/dashboard' });
+    })();
+    // #endregion
+    api.get<DashboardKpi>('/api/dashboard')
+      .then((d) => {
+        // #region debug-point H2:dash-api-ok
+        (() => {
+          const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
+          const _dbg = (hypothesisId: string, msg: string, data: any = {}) => { try { fetch(_u, { method: 'POST', body: JSON.stringify({ sessionId: _s, runId: 'pre', hypothesisId, location: 'src/pages/Dashboard.tsx:110', msg: `[DEBUG] ${msg}`, data, ts: Date.now() }) }).catch(() => {}); } catch {} };
+          _dbg('H2', 'dash_api_success', { dataKeys: d ? Object.keys(d) : null, null: d === null, undefined: d === undefined, onSaleEvents: d?.onSaleEvents, pricingHeatLen: d?.pricingHeat?.length, currencyBreakdownLen: d?.currencyBreakdown?.length, trendingArtistsLen: d?.trendingArtists?.length, topEventsLen: d?.topEvents?.length });
+        })();
+        // #endregion
+        setData(d);
+      })
+      .catch((e) => {
+        // #region debug-point H2:dash-api-err
+        (() => {
+          const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
+          const _dbg = (hypothesisId: string, msg: string, data: any = {}) => { try { fetch(_u, { method: 'POST', body: JSON.stringify({ sessionId: _s, runId: 'pre', hypothesisId, location: 'src/pages/Dashboard.tsx:110', msg: `[DEBUG] ${msg}`, data, ts: Date.now() }) }).catch(() => {}); } catch {} };
+          _dbg('H2', 'dash_api_error', { message: e.message, stack: e.stack });
+        })();
+        // #endregion
+        setErr(e.message);
+      });
   }, []);
 
   const kpis = data ? [
@@ -243,7 +281,7 @@ export default function Dashboard() {
                 <h2 className="font-display font-bold text-2xl">{t.gmvTitle}</h2>
               </div>
             </div>
-            {data ? <GMVChart bd={data.currencyBreakdown} currency={currency} /> : <div className="h-48 animate-pulse rounded-xl bg-white/5" />}
+            {data ? <GMVChart bd={data.currencyBreakdown} currency={currency} language={language} /> : <div className="h-48 animate-pulse rounded-xl bg-white/5" />}
           </div>
           <div className="card p-5">
             <div className="section-head">
@@ -290,6 +328,13 @@ function PricingHeatChart({ heat, language }: { heat: DashboardKpi['pricingHeat'
     heat: h.heatIndex,
     remain: h.remainingPct,
   }));
+  // #region debug-point H2H5:chart-data
+  (() => {
+    const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
+    const _dbg = (hypothesisId: string, msg: string, data: any = {}) => { try { fetch(_u, { method: 'POST', body: JSON.stringify({ sessionId: _s, runId: 'pre', hypothesisId, location: 'src/pages/Dashboard.tsx:PricingHeatChart', msg: `[DEBUG] ${msg}`, data, ts: Date.now() }) }).catch(() => {}); } catch {} };
+    _dbg('H5', 'pricing_chart_data', { len: data.length, firstItem: data[0] || null, isArray: Array.isArray(data) });
+  })();
+  // #endregion
   return (
     <ResponsiveContainer width="100%" height={320}>
       <ComposedChart data={data} margin={{ left: 8, right: 16, top: 10, bottom: 8 }}>
@@ -325,7 +370,14 @@ function PricingHeatChart({ heat, language }: { heat: DashboardKpi['pricingHeat'
   );
 }
 
-function GMVChart({ bd, currency }: { bd: DashboardKpi['currencyBreakdown']; currency: 'CNY' | 'HKD' | 'TWD' | 'JPY' | 'KRW' | 'USD' | 'SGD' }) {
+function GMVChart({ bd, currency, language }: { bd: DashboardKpi['currencyBreakdown']; currency: Currency; language: 'zh' | 'en' | 'ja' | 'ko' }) {
+  // #region debug-point H2H5:gmv-chart
+  (() => {
+    const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
+    const _dbg = (hypothesisId: string, msg: string, data: any = {}) => { try { fetch(_u, { method: 'POST', body: JSON.stringify({ sessionId: _s, runId: 'pre', hypothesisId, location: 'src/pages/Dashboard.tsx:GMVChart', msg: `[DEBUG] ${msg}`, data, ts: Date.now() }) }).catch(() => {}); } catch {} };
+    _dbg('H5', 'gmv_chart_data', { len: bd.length, isArray: Array.isArray(bd), firstItem: bd[0] || null });
+  })();
+  // #endregion
   const palette = ['#FF2E88', '#F5B544', '#8B5CF6', '#2DD4BF', '#60A5FA', '#F472B6', '#22D3EE'];
   const rows = bd.map((b, i) => ({
     ...b,
@@ -333,12 +385,12 @@ function GMVChart({ bd, currency }: { bd: DashboardKpi['currencyBreakdown']; cur
     display: fmtMoney(b.amount, b.c),
     cname: CURRENCY_META[b.c].name,
   }));
-  const total = bd.reduce((s, b) => s + b.amount / { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3 }[b.c], 0);
+  const total = bd.reduce((s, b) => s + b.amount / FX_RATES[b.c], 0);
   return (
     <div className="grid md:grid-cols-2 gap-4 items-center">
       <ResponsiveContainer width="100%" height={180}>
         <PieChart>
-          <Pie data={bd.map((b, i) => ({ name: b.c, value: b.amount / { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3 }[b.c], fill: palette[i % palette.length] }))}
+          <Pie data={bd.map((b, i) => ({ name: b.c, value: b.amount / FX_RATES[b.c], fill: palette[i % palette.length] }))}
             innerRadius={48} outerRadius={76} paddingAngle={2} dataKey="value" stroke="none"
           >
           </Pie>
@@ -374,9 +426,15 @@ function GMVChart({ bd, currency }: { bd: DashboardKpi['currencyBreakdown']; cur
     </div>
   );
 }
-const language: 'zh' | 'en' | 'ja' | 'ko' = 'zh';
 
 function ArtistRanking({ artists, language }: { artists: DashboardKpi['trendingArtists']; language: 'zh' | 'en' | 'ja' | 'ko' }) {
+  // #region debug-point H2H5:artist-ranking
+  (() => {
+    const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
+    const _dbg = (hypothesisId: string, msg: string, data: any = {}) => { try { fetch(_u, { method: 'POST', body: JSON.stringify({ sessionId: _s, runId: 'pre', hypothesisId, location: 'src/pages/Dashboard.tsx:ArtistRanking', msg: `[DEBUG] ${msg}`, data, ts: Date.now() }) }).catch(() => {}); } catch {} };
+    _dbg('H5', 'artist_ranking_data', { len: artists.length, isArray: Array.isArray(artists), firstItem: artists[0] || null });
+  })();
+  // #endregion
   return (
     <ul className="space-y-2">
       {artists.map((a, i) => {

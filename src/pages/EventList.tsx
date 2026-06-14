@@ -151,7 +151,7 @@ export default function EventList() {
           </FilterGroup>
           <FilterGroup title={t.currencies}>
             <Chip active={q.currency === 'all'} onClick={() => patch({ currency: 'all' })}>{language === 'zh' ? '全部' : 'All'}</Chip>
-            {(['CNY', 'HKD', 'TWD', 'JPY', 'KRW', 'USD', 'SGD'] as Currency[]).map((c) => (
+            {(['CNY', 'HKD', 'TWD', 'JPY', 'KRW', 'USD', 'SGD', 'THB', 'MYR'] as Currency[]).map((c) => (
               <Chip key={c} active={q.currency === c} onClick={() => patch({ currency: c })} color="text-neon-amber">
                 <Coins className="w-3 h-3 mr-1" />{c} · {CURRENCY_META[c].name}
               </Chip>

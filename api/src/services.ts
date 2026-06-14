@@ -36,9 +36,9 @@ export const ml = (
   zh: string, en: string, ja: string | null | undefined, ko: string | null | undefined,
 ): MultiLang => ({ zh, en, ja: ja || undefined, ko: ko || undefined });
 
-const FX: Record<Currency, number> = { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3 };
+const FX: Record<Currency, number> = { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3, THB: 0.2, MYR: 1.53 };
 const CURRENCY_SYMBOL: Record<Currency, string> = {
-  CNY: '¥', HKD: 'HK$', TWD: 'NT$', JPY: '¥', KRW: '₩', USD: '$', SGD: 'S$',
+  CNY: '¥', HKD: 'HK$', TWD: 'NT$', JPY: '¥', KRW: '₩', USD: '$', SGD: 'S$', THB: '฿', MYR: 'RM',
 };
 export function formatCurrency(amount: number, currency: Currency): string {
   const sym = CURRENCY_SYMBOL[currency];
