@@ -58,6 +58,7 @@ export default function Home() {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
 
   const pageSize = 10;
+  const hasActiveSearch = Boolean(keyword || location || major || salaryMin > 0);
 
   useEffect(() => {
     fetchJobs();
@@ -136,6 +137,8 @@ export default function Home() {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="text"
+                  name="search"
+                  aria-label="搜索岗位"
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                   onKeyPress={handleKeyPress}
@@ -295,6 +298,7 @@ export default function Home() {
           <div className="flex-1">
             <div className="flex items-center justify-between mb-4">
               <p className="text-gray-600">
+                {hasActiveSearch ? '搜索结果：' : ''}
                 共 <span className="font-semibold text-gray-900">{total}</span> 个岗位
               </p>
               <div className="flex items-center space-x-2 text-sm">
