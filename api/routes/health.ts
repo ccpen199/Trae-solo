@@ -4,6 +4,13 @@ import { completeTask } from '../services/taskService.js'
 
 const router = Router()
 
+router.get('/', (_req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: 'ok',
+  })
+})
+
 router.get('/water/today', (req: Request, res: Response) => {
   try {
     const userId = req.headers['x-user-id'] as string

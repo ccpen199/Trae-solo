@@ -1,14 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { UserPlus, ArrowLeft, User, Phone, Gift } from 'lucide-react';
 import { useUserStore } from '../stores/userStore';
 
 const Register = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { register, loading } = useUserStore();
   const [phone, setPhone] = useState('');
   const [nickname, setNickname] = useState('');
   const [inviteCode, setInviteCode] = useState('');
+
+  useEffect(() => {
+    const code = searchParams.get('inviteCode') || localStorage.getItem('inviteCode');
+    if (code) {
+      setInviteCode(code);
+    }
+  }, [searchParams]);
 
   const handleRegister = async () => {
     if (!phone || phone.length !== 11) {
@@ -22,7 +30,13 @@ const Register = () => {
     
     const result = await register(phone, nickname, inviteCode || undefined);
     if (result.success) {
-      navigate('/');
+      localStorage.removeItem('inviteCode');
+      const from = searchParams.get('from');
+      if (from) {
+        navigate(from, { replace: true });
+      } else {
+        navigate('/', { replace: true });
+      }
     } else {
       alert(result.message || '注册失败');
     }
@@ -110,7 +124,7 @@ const Register = () => {
         <div className="mt-6 text-center">
           <span className="text-dark-500 text-sm">已有账号？</span>
           <button 
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/login' + (searchParams.get('from') ? `?from=${encodeURIComponent(searchParams.get('from')!)}` : ''))}
             className="text-primary-500 font-medium text-sm ml-1"
           >
             立即登录

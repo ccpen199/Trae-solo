@@ -1,5 +1,5 @@
 import { Router, type Request, type Response } from 'express'
-import { getUserTasks, getUserTask, completeTask, getRecommendedTasks, getTaskById } from '../services/taskService.js'
+import { getUserTasks, getUserTask, completeTask, getRecommendedTasks, getTaskById, getTasksByCategory, getAllTasks } from '../services/taskService.js'
 
 const router = Router()
 
@@ -18,10 +18,8 @@ router.get('/', (req: Request, res: Response) => {
       const { category } = req.query
       let tasks: any[] = []
       if (category) {
-        const { getTasksByCategory } = require('../services/taskService')
-        tasks = getTasksByCategory(category)
+        tasks = getTasksByCategory(category as string)
       } else {
-        const { getAllTasks } = require('../services/taskService')
         tasks = getAllTasks()
       }
       res.json({ success: true, tasks })

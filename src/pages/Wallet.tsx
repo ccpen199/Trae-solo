@@ -23,7 +23,7 @@ const Wallet = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate('/login?from=' + encodeURIComponent('/wallet'));
       return;
     }
     loadData();

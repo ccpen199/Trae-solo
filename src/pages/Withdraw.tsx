@@ -25,7 +25,7 @@ const Withdraw = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate('/login?from=' + encodeURIComponent('/withdraw'));
       return;
     }
     loadTodayLimit();
