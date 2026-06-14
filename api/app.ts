@@ -29,12 +29,19 @@ const FRONTEND_ORIGINS = [
   'http://127.0.0.1:5173',
   'http://127.0.0.1:5174',
   'http://127.0.0.1:5175',
+  'http://localhost:49196',
+  'http://127.0.0.1:49196',
 ]
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || FRONTEND_ORIGINS.includes(origin) || origin.includes('localhost')) {
+      if (
+        !origin ||
+        FRONTEND_ORIGINS.includes(origin) ||
+        origin.includes('localhost') ||
+        origin.startsWith('http://127.0.0.1:')
+      ) {
         callback(null, true)
       } else {
         callback(null, false)
