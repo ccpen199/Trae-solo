@@ -33,6 +33,7 @@ const router = createBrowserRouter([
       { path: 'dashboard', element: <LazyWrapper><Dashboard /></LazyWrapper> },
       { path: 'nurses', element: <LazyWrapper><NurseList /></LazyWrapper> },
       { path: 'nurses/:id/verify', element: <LazyWrapper><NurseVerify /></LazyWrapper> },
+      { path: 'nurses/verify/:id', element: <LazyWrapper><NurseVerify /></LazyWrapper> },
       { path: 'orders', element: <LazyWrapper><OrderList /></LazyWrapper> },
       { path: 'orders/:id', element: <LazyWrapper><OrderDetail /></LazyWrapper> },
       { path: 'orders/:id/risk-assessment', element: <LazyWrapper><RiskAssessment /></LazyWrapper> },

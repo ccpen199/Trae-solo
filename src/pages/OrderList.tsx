@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Dropdown, Space, Tag, message } from 'antd';
-import type { MenuProps } from 'antd';
+import { Button, Dropdown, message } from 'antd';
+import type { MenuProps, TableProps } from 'antd';
 import {
   HeartHandshake,
   Baby,
@@ -9,9 +9,17 @@ import {
   Feather,
   Eye,
   FileText,
-  Send,
-  MoreHorizontal,
   AlertTriangle,
+  MoreHorizontal,
+  ShieldCheck,
+  Video,
+  ClipboardList,
+  FileCheck,
+  Ticket,
+  Play,
+  Star,
+  Check,
+  X,
 } from 'lucide-react';
 import { useGlobalStore } from '@/store/useGlobalStore';
 import { mockOrders, mockNurses } from '@/mock';
@@ -20,15 +28,24 @@ import DataTable from '@/components/DataTable';
 import StatCard from '@/components/StatCard';
 import PatientTypeTag from '@/components/PatientTypeTag';
 import StatusBadge from '@/components/StatusBadge';
-import type { ServiceOrder, PatientType, RiskLevel, OrderStatus } from '@/types';
+import type {
+  ServiceOrder,
+  PatientType,
+  OrderStatus,
+  RiskAssessmentStatus,
+  PolicyStatus,
+  RecordingStatus,
+  DataBindingStatus,
+} from '@/types';
 import {
   PATIENT_TYPE_MAP,
   PATIENT_TYPE_OPTIONS,
   RISK_LEVEL_OPTIONS,
   ORDER_STATUS_OPTIONS,
+  POLICY_STATUS_MAP,
 } from '@/utils/constants';
 import { formatCurrency } from '@/utils';
-import dayjs from 'dayjs';
+import { cn } from '@/lib/utils';
 
 const patientTypeCards: { type: PatientType; gradient: 'orange' | 'pink' | 'blue' | 'purple' }[] = [
   { type: 'elderly', gradient: 'orange' },
@@ -44,12 +61,102 @@ const iconMap: Record<PatientType, React.ReactNode> = {
   hospice: <Feather className="h-5 w-5" />,
 };
 
-const riskLevelColor: Record<RiskLevel, string> = {
-  low: 'text-emerald-600 bg-emerald-50',
-  medium: 'text-amber-600 bg-amber-50',
-  high: 'text-orange-600 bg-orange-50',
-  critical: 'text-red-600 bg-red-50',
+
+
+const riskAssessmentStatusConfig: Record<
+  RiskAssessmentStatus,
+  { label: string; className: string }
+> = {
+  'not-triggered': {
+    label: '未触发',
+    className: 'bg-slate-100 text-slate-600 border-slate-200',
+  },
+  triggered: {
+    label: '已触发',
+    className: 'bg-blue-50 text-blue-700 border-blue-200',
+  },
+  'in-progress': {
+    label: '进行中',
+    className: 'bg-amber-50 text-amber-700 border-amber-200',
+  },
+  completed: {
+    label: '已完成',
+    className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  },
 };
+
+const recordingStatusConfig: Record<
+  RecordingStatus,
+  { label: string; className: string; pulse?: boolean }
+> = {
+  'not-started': {
+    label: '未开始',
+    className: 'bg-slate-100 text-slate-600 border-slate-200',
+  },
+  recording: {
+    label: '录制中',
+    className: 'bg-red-50 text-red-700 border-red-200',
+    pulse: true,
+  },
+  paused: {
+    label: '已暂停',
+    className: 'bg-amber-50 text-amber-700 border-amber-200',
+  },
+  completed: {
+    label: '已完成',
+    className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  },
+  interrupted: {
+    label: '已中断',
+    className: 'bg-red-50 text-red-700 border-red-200',
+  },
+};
+
+const dataBindingStatusConfig: Record<
+  DataBindingStatus,
+  { label: string; className: string }
+> = {
+  'not-bound': {
+    label: '未绑定',
+    className: 'text-slate-500',
+  },
+  partial: {
+    label: '部分绑定',
+    className: 'text-amber-600',
+  },
+  'fully-bound': {
+    label: '完全绑定',
+    className: 'text-emerald-600',
+  },
+};
+
+const RISK_ASSESSMENT_STATUS_OPTIONS = [
+  { label: '未触发', value: 'not-triggered' as RiskAssessmentStatus },
+  { label: '已触发', value: 'triggered' as RiskAssessmentStatus },
+  { label: '进行中', value: 'in-progress' as RiskAssessmentStatus },
+  { label: '已完成', value: 'completed' as RiskAssessmentStatus },
+];
+
+const INSURANCE_STATUS_OPTIONS = [
+  { label: '投保中', value: 'pending' as PolicyStatus },
+  { label: '保障中', value: 'active' as PolicyStatus },
+  { label: '已过期', value: 'expired' as PolicyStatus },
+  { label: '理赔中', value: 'claimed' as PolicyStatus },
+];
+
+const RECORDING_STATUS_OPTIONS = [
+  { label: '未开始', value: 'not-started' as RecordingStatus },
+  { label: '录制中', value: 'recording' as RecordingStatus },
+  { label: '已暂停', value: 'paused' as RecordingStatus },
+  { label: '已完成', value: 'completed' as RecordingStatus },
+  { label: '已中断', value: 'interrupted' as RecordingStatus },
+];
+
+const DATA_BINDING_STATUS_OPTIONS = [
+  { label: '未绑定', value: 'not-bound' as DataBindingStatus },
+  { label: '部分绑定', value: 'partial' as DataBindingStatus },
+  { label: '完全绑定', value: 'fully-bound' as DataBindingStatus },
+];
 
 export default function OrderList() {
   const navigate = useNavigate();
@@ -93,7 +200,8 @@ export default function OrderList() {
         (o) =>
           o.orderNo.includes(searchKeyword) ||
           o.patientInfo.name.toLowerCase().includes(lower) ||
-          o.patientInfo.phone.includes(searchKeyword)
+          o.patientInfo.phone.includes(searchKeyword) ||
+          (o.nurseInfo?.name && o.nurseInfo.name.toLowerCase().includes(lower))
       );
     }
 
@@ -102,6 +210,21 @@ export default function OrderList() {
     }
     if (filters.riskLevel) {
       result = result.filter((o) => o.riskLevel === filters.riskLevel);
+    }
+    if (filters.patientType) {
+      result = result.filter((o) => o.patientType === filters.patientType);
+    }
+    if (filters.riskAssessmentStatus) {
+      result = result.filter((o) => o.riskAssessmentStatus === filters.riskAssessmentStatus);
+    }
+    if (filters.insuranceStatus) {
+      result = result.filter((o) => o.insuranceStatus === filters.insuranceStatus);
+    }
+    if (filters.recordingStatus) {
+      result = result.filter((o) => o.recordingStatus === filters.recordingStatus);
+    }
+    if (filters.dataBindingStatus) {
+      result = result.filter((o) => o.dataBindingStatus === filters.dataBindingStatus);
     }
     if (filters.hasNurse === 'yes') {
       result = result.filter((o) => !!o.nurseId);
@@ -133,8 +256,28 @@ export default function OrderList() {
     navigate(`/risk-assessment/${order.id}`);
   };
 
-  const handleDispatch = (order: ServiceOrder) => {
-    navigate(`/orders/${order.id}?tab=nurse`);
+  const handleServiceRecord = (order: ServiceOrder) => {
+    navigate(`/orders/${order.id}?tab=record`);
+  };
+
+  const handleAudit = (order: ServiceOrder) => {
+    navigate(`/audit/${order.id}`);
+  };
+
+  const handleTicket = (order: ServiceOrder) => {
+    navigate(`/tickets?orderId=${order.id}`);
+  };
+
+  const handleViewPolicy = (order: ServiceOrder) => {
+    if (order.policyId) {
+      navigate(`/insurance/${order.policyId}`);
+    }
+  };
+
+  const handleViewRecording = (order: ServiceOrder) => {
+    if (order.recordingId) {
+      navigate(`/recordings/${order.recordingId}`);
+    }
   };
 
   const getActionMenu = (order: ServiceOrder): MenuProps['items'] => [
@@ -144,32 +287,63 @@ export default function OrderList() {
       icon: <Eye className="h-4 w-4" />,
       onClick: () => handleViewDetail(order),
     },
-    {
-      key: 'risk',
-      label: '风险评估',
-      icon: <AlertTriangle className="h-4 w-4" />,
-      onClick: () => handleRiskAssessment(order),
-    },
-    ...(order.status === 'risk-assessed' || order.status === 'created'
+    ...(order.riskAssessmentStatus !== 'completed'
       ? [
           {
-            key: 'dispatch',
-            label: '派单',
-            icon: <Send className="h-4 w-4" />,
-            onClick: () => handleDispatch(order),
+            key: 'risk',
+            label: '风险评估',
+            icon: <AlertTriangle className="h-4 w-4" />,
+            onClick: () => handleRiskAssessment(order),
           },
         ]
       : []),
+    ...(order.serviceRecordId
+      ? [
+          {
+            key: 'record',
+            label: '服务记录',
+            icon: <ClipboardList className="h-4 w-4" />,
+            onClick: () => handleServiceRecord(order),
+          },
+        ]
+      : []),
+    {
+      key: 'audit',
+      label: '审核',
+      icon: <FileCheck className="h-4 w-4" />,
+      onClick: () => handleAudit(order),
+    },
+    {
+      key: 'ticket',
+      label: '工单',
+      icon: <Ticket className="h-4 w-4" />,
+      onClick: () => handleTicket(order),
+    },
   ];
 
-  const columns = [
+  const getRowClassName = (record: ServiceOrder) => {
+    if (record.riskLevel === 'critical') {
+      return 'bg-gradient-to-r from-red-50 to-red-100 hover:from-red-100 hover:to-red-150';
+    }
+    if (record.riskLevel === 'high') {
+      return 'bg-gradient-to-r from-amber-50 to-amber-100 hover:from-amber-100 hover:to-amber-150';
+    }
+    return '';
+  };
+
+  const columns: TableProps<ServiceOrder>['columns'] = [
     {
       title: '订单号',
       dataIndex: 'orderNo',
       key: 'orderNo',
       width: 160,
-      render: (text: string) => (
-        <span className="font-mono text-sm font-medium text-slate-900">{text}</span>
+      render: (text: string, record: ServiceOrder) => (
+        <button
+          onClick={() => navigate(`/orders/${record.id}`)}
+          className="font-mono text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
+        >
+          {text}
+        </button>
       ),
     },
     {
@@ -188,76 +362,210 @@ export default function OrderList() {
           <div className="flex items-center gap-2">
             <span className="font-medium text-slate-900">{record.patientInfo.name}</span>
             <span className="text-sm text-slate-500">
-              {record.patientInfo.gender === 'male' ? '男' : '女'} {record.patientInfo.age}岁
+              {record.patientInfo.gender === 'male' ? '男' : '女'}{' '}
+              {record.patientInfo.age}岁
             </span>
           </div>
           <div className="text-sm text-slate-500">{record.patientInfo.phone}</div>
-          <div className="text-xs text-slate-400 truncate max-w-[180px]">
-            {record.patientInfo.address}
-          </div>
         </div>
       ),
     },
     {
       title: '服务项目',
       key: 'serviceItems',
+      width: 180,
+      render: (_: unknown, record: ServiceOrder) => {
+        const firstItem = record.serviceItems[0];
+        const count = record.serviceItems.length;
+        return (
+          <div className="text-sm">
+            <span className="text-slate-900">{firstItem?.name || '-'}</span>
+            {count > 1 && (
+              <span className="text-slate-500 ml-1">等{count}项</span>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      title: '风险评估状态',
+      key: 'riskAssessmentStatus',
       width: 200,
-      render: (_: unknown, record: ServiceOrder) => (
-        <div className="flex flex-wrap gap-1">
-          {record.serviceItems.map((item) => (
-            <Tag key={item.code} className="m-0">
-              {item.name}
-            </Tag>
-          ))}
-        </div>
-      ),
+      render: (_: unknown, record: ServiceOrder) => {
+        const config = riskAssessmentStatusConfig[record.riskAssessmentStatus];
+        return (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span
+                className={cn(
+                  'inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium',
+                  config.className
+                )}
+              >
+                {config.label}
+              </span>
+              {record.riskAssessmentStatus === 'completed' && (
+                <StatusBadge type="risk" status={record.riskLevel} showDot />
+              )}
+            </div>
+            {record.riskAssessmentStatus !== 'completed' && (
+              <Button
+                type="primary"
+                size="small"
+                icon={<Play className="h-3 w-3" />}
+                onClick={() => handleRiskAssessment(record)}
+                className="h-7 px-2 text-xs"
+              >
+                触发评估
+              </Button>
+            )}
+          </div>
+        );
+      },
     },
     {
-      title: '风险等级',
-      dataIndex: 'riskLevel',
-      key: 'riskLevel',
-      width: 100,
-      render: (level: RiskLevel) => (
-        <span
-          className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium ${riskLevelColor[level]}`}
-        >
-          <AlertTriangle className="h-3 w-3" />
-          {{
-            low: '低风险',
-            medium: '中风险',
-            high: '高风险',
-            critical: '极高风险',
-          }[level]}
-        </span>
-      ),
-    },
-    {
-      title: '预约时间',
-      dataIndex: 'scheduledTime',
-      key: 'scheduledTime',
+      title: '投保状态',
+      key: 'insuranceStatus',
       width: 160,
-      render: (time: string) => (
-        <div className="space-y-0.5">
-          <div className="text-sm text-slate-900">{dayjs(time).format('YYYY-MM-DD')}</div>
-          <div className="text-xs text-slate-500">{dayjs(time).format('HH:mm')}</div>
-        </div>
-      ),
+      render: (_: unknown, record: ServiceOrder) => {
+        const config = POLICY_STATUS_MAP[record.insuranceStatus];
+        return (
+          <div className="space-y-1">
+            <span
+              className={cn(
+                'inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium',
+                config.bgColor
+              )}
+            >
+              {record.insuranceStatus === 'active' && (
+                <ShieldCheck className="h-3 w-3" />
+              )}
+              {config.label}
+            </span>
+            {record.insuranceStatus === 'active' && record.policyId && (
+              <button
+                onClick={() => handleViewPolicy(record)}
+                className="block text-xs text-blue-600 hover:text-blue-800 hover:underline"
+              >
+                查看保单
+              </button>
+            )}
+          </div>
+        );
+      },
     },
     {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
-      width: 110,
-      render: (status: OrderStatus) => <StatusBadge type="order" status={status} />,
+      title: '双录状态',
+      key: 'recordingStatus',
+      width: 160,
+      render: (_: unknown, record: ServiceOrder) => {
+        const config = recordingStatusConfig[record.recordingStatus];
+        return (
+          <div className="space-y-1">
+            <span
+              className={cn(
+                'inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs font-medium',
+                config.className
+              )}
+            >
+              {config.pulse && (
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                </span>
+              )}
+              {config.label}
+            </span>
+            {record.recordingId && (
+              <button
+                onClick={() => handleViewRecording(record)}
+                className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 hover:underline"
+              >
+                <Video className="h-3 w-3" />
+                查看录像
+              </button>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      title: '服务记录绑定状态',
+      key: 'dataBindingStatus',
+      width: 180,
+      render: (_: unknown, record: ServiceOrder) => {
+        const config = dataBindingStatusConfig[record.dataBindingStatus];
+        return (
+          <div className="space-y-2">
+            <span className={cn('text-sm font-medium', config.className)}>
+              {config.label}
+            </span>
+            <div className="flex flex-wrap gap-1">
+              <span
+                className={cn(
+                  'inline-flex items-center gap-0.5 rounded px-1.5 py-0.5 text-xs',
+                  record.hasNursingNotes
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'bg-slate-100 text-slate-500'
+                )}
+              >
+                {record.hasNursingNotes ? (
+                  <Check className="h-3 w-3" />
+                ) : (
+                  <X className="h-3 w-3" />
+                )}
+                护理记录
+              </span>
+              <span
+                className={cn(
+                  'inline-flex items-center gap-0.5 rounded px-1.5 py-0.5 text-xs',
+                  record.hasMedicationList
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'bg-slate-100 text-slate-500'
+                )}
+              >
+                {record.hasMedicationList ? (
+                  <Check className="h-3 w-3" />
+                ) : (
+                  <X className="h-3 w-3" />
+                )}
+                用药
+              </span>
+              <span
+                className={cn(
+                  'inline-flex items-center gap-0.5 rounded px-1.5 py-0.5 text-xs',
+                  record.hasVitalSigns
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'bg-slate-100 text-slate-500'
+                )}
+              >
+                {record.hasVitalSigns ? (
+                  <Check className="h-3 w-3" />
+                ) : (
+                  <X className="h-3 w-3" />
+                )}
+                体征
+              </span>
+            </div>
+          </div>
+        );
+      },
     },
     {
       title: '护士',
       key: 'nurse',
-      width: 120,
+      width: 140,
       render: (_: unknown, record: ServiceOrder) =>
         record.nurseInfo ? (
           <div className="space-y-0.5">
-            <div className="text-sm font-medium text-slate-900">{record.nurseInfo.name}</div>
+            <div className="flex items-center gap-1 text-sm font-medium text-slate-900">
+              {record.nurseInfo.name}
+              <span className="flex items-center gap-0.5 text-amber-500">
+                <Star className="h-3 w-3 fill-amber-400" />
+                {nurses.find((n) => n.id === record.nurseId)?.rating.toFixed(1) ||
+                  '5.0'}
+              </span>
+            </div>
             <div className="text-xs text-slate-500">{record.nurseInfo.phone}</div>
           </div>
         ) : (
@@ -268,15 +576,22 @@ export default function OrderList() {
       title: '金额',
       dataIndex: 'totalAmount',
       key: 'totalAmount',
-      width: 100,
+      width: 110,
       render: (value: number) => (
         <span className="font-medium text-slate-900">{formatCurrency(value)}</span>
       ),
     },
     {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      width: 110,
+      render: (status: OrderStatus) => <StatusBadge type="order" status={status} />,
+    },
+    {
       title: '操作',
       key: 'action',
-      width: 120,
+      width: 100,
       fixed: 'right' as const,
       render: (_: unknown, record: ServiceOrder) => (
         <Dropdown menu={{ items: getActionMenu(record) }} trigger={['click']}>
@@ -305,7 +620,14 @@ export default function OrderList() {
             onClick={() =>
               setSelectedPatientType(selectedPatientType === type ? 'all' : type)
             }
-            className={selectedPatientType !== 'all' && selectedPatientType !== type ? 'opacity-50' : ''}
+            className={cn(
+              'cursor-pointer transition-all duration-200',
+              selectedPatientType === type
+                ? 'scale-105 shadow-lg ring-2 ring-offset-2 ring-blue-500'
+                : selectedPatientType !== 'all'
+                ? 'opacity-50'
+                : 'hover:scale-102 hover:shadow-md'
+            )}
           />
         ))}
       </div>
@@ -315,10 +637,16 @@ export default function OrderList() {
         dataSource={filteredOrders}
         rowKey="id"
         showSearch
-        searchPlaceholder="搜索订单号、患者姓名、手机号"
+        searchPlaceholder="搜索订单号、患者姓名、手机号、护士姓名"
         onSearch={handleSearch}
         showFilter
         filterFields={[
+          {
+            key: 'patientType',
+            label: '患者类型',
+            type: 'select',
+            options: PATIENT_TYPE_OPTIONS,
+          },
           {
             key: 'status',
             label: '订单状态',
@@ -330,6 +658,30 @@ export default function OrderList() {
             label: '风险等级',
             type: 'select',
             options: RISK_LEVEL_OPTIONS,
+          },
+          {
+            key: 'riskAssessmentStatus',
+            label: '风险评估状态',
+            type: 'select',
+            options: RISK_ASSESSMENT_STATUS_OPTIONS,
+          },
+          {
+            key: 'insuranceStatus',
+            label: '投保状态',
+            type: 'select',
+            options: INSURANCE_STATUS_OPTIONS,
+          },
+          {
+            key: 'recordingStatus',
+            label: '录制状态',
+            type: 'select',
+            options: RECORDING_STATUS_OPTIONS,
+          },
+          {
+            key: 'dataBindingStatus',
+            label: '数据绑定状态',
+            type: 'select',
+            options: DATA_BINDING_STATUS_OPTIONS,
           },
           {
             key: 'hasNurse',
@@ -345,7 +697,8 @@ export default function OrderList() {
         onFilter={handleFilter}
         showRefresh
         onRefresh={handleRefresh}
-        scroll={{ x: 1600 }}
+        scroll={{ x: 2000 }}
+        rowClassName={getRowClassName}
       />
     </div>
   );

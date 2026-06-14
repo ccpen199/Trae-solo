@@ -36,6 +36,23 @@ export interface PageResult<T> {
   pageSize: number;
 }
 
+export interface VerifyHistoryItem {
+  id: string;
+  type: 'system' | 'manual';
+  action: 'submit' | 'system-check' | 'approve' | 'reject' | 're-submit';
+  operatorId?: string;
+  operatorName?: string;
+  operatorRole?: string;
+  remark?: string;
+  systemCheckItems?: {
+    key: string;
+    label: string;
+    passed: boolean;
+    message: string;
+  }[];
+  time: string;
+}
+
 export interface Nurse {
   id: string;
   name: string;
@@ -50,9 +67,19 @@ export interface Nurse {
   verifyResult?: {
     systemChecked: boolean;
     systemMessage?: string;
+    systemCheckItems?: {
+      key: string;
+      label: string;
+      passed: boolean;
+      message: string;
+    }[];
     manualChecked: boolean;
     manualRemark?: string;
+    manualReviewerId?: string;
+    manualReviewerName?: string;
+    manualReviewTime?: string;
   };
+  verifyHistory: VerifyHistoryItem[];
   validUntil: string;
   organizationId: string;
   organizationName: string;
@@ -60,6 +87,10 @@ export interface Nurse {
   rating: number;
   completedOrders: number;
 }
+
+export type RiskAssessmentStatus = 'not-triggered' | 'triggered' | 'in-progress' | 'completed';
+export type RecordingStatus = 'not-started' | 'recording' | 'paused' | 'completed' | 'interrupted';
+export type DataBindingStatus = 'not-bound' | 'partial' | 'fully-bound';
 
 export interface ServiceOrder {
   id: string;
@@ -77,6 +108,7 @@ export interface ServiceOrder {
   serviceItems: { code: string; name: string; duration: number; price: number }[];
   riskLevel: RiskLevel;
   riskAssessmentId?: string;
+  riskAssessmentStatus: RiskAssessmentStatus;
   nurseId?: string;
   nurseInfo?: Partial<Nurse>;
   scheduledTime: string;
@@ -90,7 +122,16 @@ export interface ServiceOrder {
     | 'platform-check'
     | 'all-passed';
   hasInsurance: boolean;
+  insuranceStatus: PolicyStatus;
   policyId?: string;
+  policyNo?: string;
+  recordingStatus: RecordingStatus;
+  recordingId?: string;
+  serviceRecordId?: string;
+  dataBindingStatus: DataBindingStatus;
+  hasNursingNotes: boolean;
+  hasMedicationList: boolean;
+  hasVitalSigns: boolean;
   totalAmount: number;
   createdAt: string;
   distanceKm?: number;

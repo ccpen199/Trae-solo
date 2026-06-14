@@ -1,4 +1,4 @@
-import type { Nurse, ServiceOrder, RiskQuestion, ServiceRecord, AuditTask, RiskTicket, InsurancePolicy, DashboardStats, User, VitalSign } from '@/types';
+import type { Nurse, ServiceOrder, RiskQuestion, ServiceRecord, AuditTask, RiskTicket, InsurancePolicy, DashboardStats, User, VitalSign, VerifyHistoryItem } from '@/types';
 import dayjs from 'dayjs';
 
 export const mockUser: User = {
@@ -55,6 +55,59 @@ export const mockNurses: Nurse[] = Array.from({ length: 15 }, (_, i) => {
   const name = randomName();
   const status = verifyStatuses[Math.floor(Math.random() * verifyStatuses.length)];
   const orgIndex = Math.floor(Math.random() * orgNames.length);
+  const createdAt = dayjs().subtract(Math.floor(Math.random() * 730), 'day').format('YYYY-MM-DD HH:mm:ss');
+  const systemCheckItems = [
+    { key: 'registry', label: '医师执业注册信息系统核验', passed: status !== 'rejected', message: status === 'rejected' ? '证书编号在注册系统中无法匹配' : '证书编号有效，注册状态正常' },
+    { key: 'qualification', label: '执业资格有效性核验', passed: true, message: '执业资格在有效期内，未被吊销或注销' },
+    { key: 'practice', label: '执业范围核验', passed: true, message: '执业范围与申报匹配，可从事居家护理服务' },
+    { key: 'sanction', label: '违规记录核验', passed: i % 5 !== 3, message: i % 5 === 3 ? '近三年存在1条轻微警告记录，已处理' : '近三年无重大医疗违规处罚记录' },
+  ];
+  const verifyHistory: VerifyHistoryItem[] = [
+    {
+      id: `vh-${i}-1`,
+      type: 'manual' as const,
+      action: 'submit' as const,
+      operatorId: `n${(i + 1).toString().padStart(3, '0')}`,
+      operatorName: name,
+      operatorRole: 'nurse',
+      remark: '提交执业资质核验申请',
+      time: createdAt,
+    },
+  ];
+  if (status !== 'pending') {
+    verifyHistory.push({
+      id: `vh-${i}-2`,
+      type: 'system' as const,
+      action: 'system-check' as const,
+      remark: '对接国家卫健委医师执业注册信息系统完成自动核验',
+      systemCheckItems,
+      time: dayjs(createdAt).add(2, 'minute').format('YYYY-MM-DD HH:mm:ss'),
+    });
+  }
+  if (status === 'verified') {
+    verifyHistory.push({
+      id: `vh-${i}-3`,
+      type: 'manual' as const,
+      action: 'approve' as const,
+      operatorId: 'u002',
+      operatorName: '李红',
+      operatorRole: 'quality-officer',
+      remark: '资料齐全，审核通过，准予开展居家护理服务',
+      time: dayjs(createdAt).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+    });
+  }
+  if (status === 'rejected') {
+    verifyHistory.push({
+      id: `vh-${i}-3`,
+      type: 'manual' as const,
+      action: 'reject' as const,
+      operatorId: 'u003',
+      operatorName: '王芳',
+      operatorRole: 'quality-officer',
+      remark: '证书扫描件不清晰，且在医师执业注册信息系统中无法核验，请重新上传清晰的证件材料',
+      time: dayjs(createdAt).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+    });
+  }
   return {
     id: `n${(i + 1).toString().padStart(3, '0')}`,
     name,
@@ -68,13 +121,18 @@ export const mockNurses: Nurse[] = Array.from({ length: 15 }, (_, i) => {
     verifyResult: status !== 'pending' ? {
       systemChecked: true,
       systemMessage: status === 'rejected' ? '证书信息无法核验' : '证书信息核验通过',
+      systemCheckItems,
       manualChecked: status === 'verified' || status === 'rejected',
-      manualRemark: status === 'rejected' ? '请上传清晰的证书扫描件' : status === 'verified' ? '资料齐全，审核通过' : undefined,
+      manualRemark: status === 'rejected' ? '证书扫描件不清晰，请重新上传' : status === 'verified' ? '资料齐全，审核通过' : undefined,
+      manualReviewerId: status === 'verified' ? 'u002' : status === 'rejected' ? 'u003' : undefined,
+      manualReviewerName: status === 'verified' ? '李红' : status === 'rejected' ? '王芳' : undefined,
+      manualReviewTime: (status === 'verified' || status === 'rejected') ? dayjs(createdAt).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss') : undefined,
     } : undefined,
+    verifyHistory,
     validUntil: dayjs().add(1 + Math.floor(Math.random() * 5), 'year').format('YYYY-MM-DD'),
     organizationId: `org${(orgIndex + 1).toString().padStart(3, '0')}`,
     organizationName: orgNames[orgIndex],
-    createdAt: dayjs().subtract(Math.floor(Math.random() * 730), 'day').format('YYYY-MM-DD HH:mm:ss'),
+    createdAt,
     rating: Number((4 + Math.random()).toFixed(1)),
     completedOrders: Math.floor(Math.random() * 500),
   };
@@ -130,6 +188,19 @@ export const mockOrders: ServiceOrder[] = Array.from({ length: 30 }, (_, i) => {
   const baseAge = patientType === 'maternal' ? 25 : patientType === 'hospice' ? 68 : patientType === 'post-hospital' ? 55 : 72;
   const age = baseAge + Math.floor(Math.random() * 15);
   const patientDiagnosisList = diagnoses[patientType];
+  const riskAssessmentStatus: ServiceOrder['riskAssessmentStatus'] =
+    status === 'created' && Math.random() > 0.5 ? 'not-triggered' :
+    status === 'created' ? 'triggered' :
+    status === 'risk-assessed' ? 'completed' : 'completed';
+  const recordingStatus: ServiceOrder['recordingStatus'] =
+    status === 'in-service' ? (Math.random() > 0.7 ? 'paused' : 'recording') :
+    status === 'completed' ? (i % 7 === 0 ? 'interrupted' : 'completed') :
+    ['dispatched', 'nurse-accepted'].includes(status) ? 'not-started' : 'not-started';
+  const dataBindingStatus: ServiceOrder['dataBindingStatus'] =
+    status === 'completed' ? (recordingStatus === 'completed' && i % 5 !== 2 ? 'fully-bound' : 'partial') :
+    status === 'in-service' ? 'partial' : 'not-bound';
+  const hasServiceRecord = ['in-service', 'completed'].includes(status);
+  const matchedPolicy = hasInsurance ? mockPolicies.find(p => p.orderId === `o${(i + 1).toString().padStart(4, '0')}`) : undefined;
 
   return {
     id: `o${(i + 1).toString().padStart(4, '0')}`,
@@ -146,7 +217,8 @@ export const mockOrders: ServiceOrder[] = Array.from({ length: 30 }, (_, i) => {
     },
     serviceItems: items,
     riskLevel,
-    riskAssessmentId: riskLevel !== 'low' ? `ra${(i + 1).toString().padStart(4, '0')}` : undefined,
+    riskAssessmentId: riskAssessmentStatus === 'completed' ? `ra${(i + 1).toString().padStart(4, '0')}` : undefined,
+    riskAssessmentStatus,
     nurseId: ['dispatched', 'nurse-accepted', 'in-service', 'completed'].includes(status) ? nurse.id : undefined,
     nurseInfo: ['dispatched', 'nurse-accepted', 'in-service', 'completed'].includes(status) ? {
       id: nurse.id,
@@ -159,7 +231,16 @@ export const mockOrders: ServiceOrder[] = Array.from({ length: 30 }, (_, i) => {
     status,
     auditStatus: status === 'completed' ? auditStatuses[Math.floor(Math.random() * auditStatuses.length)] : 'not-submitted',
     hasInsurance,
+    insuranceStatus: matchedPolicy?.status || 'pending',
     policyId: hasInsurance ? `ip${(i + 1).toString().padStart(4, '0')}` : undefined,
+    policyNo: matchedPolicy?.policyNo,
+    recordingStatus,
+    recordingId: hasServiceRecord ? `rec${(i + 1).toString().padStart(4, '0')}` : undefined,
+    serviceRecordId: hasServiceRecord ? `sr${(i + 1).toString().padStart(4, '0')}` : undefined,
+    dataBindingStatus,
+    hasNursingNotes: hasServiceRecord && i % 3 !== 2,
+    hasMedicationList: hasServiceRecord && i % 4 !== 3,
+    hasVitalSigns: hasServiceRecord && i % 5 !== 4,
     totalAmount,
     createdAt: scheduledTime.subtract(2 + Math.floor(Math.random() * 48), 'hour').format('YYYY-MM-DD HH:mm:ss'),
     distanceKm: Number((0.5 + Math.random() * 15).toFixed(1)),

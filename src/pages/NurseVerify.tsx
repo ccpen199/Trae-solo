@@ -1,8 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Avatar, Tag, Input, Steps, Button, message } from 'antd';
+import { Avatar, Tag, Input, Steps, Button, message, Modal } from 'antd';
 import {
-  ArrowLeft,
   Upload,
   CheckCircle,
   XCircle,
@@ -18,23 +17,37 @@ import {
   User,
   Award,
 } from 'lucide-react';
+import dayjs from 'dayjs';
 import PageHeader from '@/components/PageHeader';
 import StatusBadge from '@/components/StatusBadge';
 import Timeline from '@/components/Timeline';
 import type { TimelineItem } from '@/components/Timeline';
 import { useGlobalStore } from '@/store/useGlobalStore';
-import { mockNurses } from '@/mock';
+import { mockNurses, mockUser as authUser } from '@/mock';
 import { cn } from '@/lib/utils';
-import type { Nurse, VerifyStatus } from '@/types';
+import type { Nurse, VerifyStatus, VerifyHistoryItem as NurseVerifyHistoryItem } from '@/types';
 
 const { TextArea } = Input;
 
-const systemCheckItems = [
-  { key: 'registry', label: '医师执业注册信息系统核验', passed: true, message: '证书编号有效，注册状态正常' },
-  { key: 'qualification', label: '执业资格有效性核验', passed: true, message: '执业资格在有效期内，未被吊销或注销' },
-  { key: 'practice', label: '执业范围核验', passed: true, message: '执业范围与申报匹配，可从事居家护理服务' },
-  { key: 'sanction', label: '违规记录核验', passed: false, message: '近三年无重大医疗违规处罚记录（提示：1条轻微警告，已处理）' },
+const defaultSystemCheckItems = [
+  { key: 'registry', label: '医师执业注册信息系统核验', passed: false, message: '等待系统核验' },
+  { key: 'qualification', label: '执业资格有效性核验', passed: false, message: '等待系统核验' },
+  { key: 'practice', label: '执业范围核验', passed: false, message: '等待系统核验' },
+  { key: 'sanction', label: '违规记录核验', passed: false, message: '等待系统核验' },
 ];
+
+const roleLabelMap: Record<string, string> = {
+  'platform-admin': '平台管理员',
+  'org-admin': '机构管理员',
+  'quality-officer': '质控专员',
+  'nurse': '护士',
+  'patient': '患者',
+};
+
+function getRoleLabel(role?: string): string {
+  if (!role) return '审核员';
+  return roleLabelMap[role] || role;
+}
 
 export default function NurseVerify() {
   const { id = 'n001' } = useParams<{ id: string }>();
@@ -42,6 +55,8 @@ export default function NurseVerify() {
   const { getNurseById, updateNurse, setNurses, nurses } = useGlobalStore();
   const [remark, setRemark] = useState('');
   const [loading, setLoading] = useState<{ pass: boolean; reject: boolean }>({ pass: false, reject: false });
+  const [rejectModalVisible, setRejectModalVisible] = useState(false);
+  const [rejectReason, setRejectReason] = useState('');
 
   useEffect(() => {
     if (nurses.length === 0) {
@@ -61,74 +76,155 @@ export default function NurseVerify() {
     return 0;
   }, [nurse]);
 
-  const handlePass = () => {
-    setLoading((s) => ({ ...s, pass: true }));
-    setTimeout(() => {
-      if (nurse) {
-        updateNurse(nurse.id, {
-          verifyStatus: 'verified' as VerifyStatus,
-          verifyResult: {
-            systemChecked: true,
-            systemMessage: '证书信息核验通过',
-            manualChecked: true,
-            manualRemark: remark || '资料齐全，审核通过',
-          },
-        });
+  const isReviewed = useMemo(() => {
+    return nurse?.verifyStatus === 'verified' || nurse?.verifyStatus === 'rejected';
+  }, [nurse]);
+
+  const systemCheckItems = useMemo(() => {
+    return nurse?.verifyResult?.systemCheckItems ?? defaultSystemCheckItems;
+  }, [nurse]);
+
+  const verifyHistory: TimelineItem[] = useMemo(() => {
+    if (!nurse) return [];
+    return nurse.verifyHistory.map((item: NurseVerifyHistoryItem, index: number) => {
+      const isLast = index === nurse.verifyHistory.length - 1;
+      let status: TimelineItem['status'] = 'completed';
+      let color: TimelineItem['color'] | undefined;
+      let title = '';
+      let description = '';
+
+      if (item.action === 'submit') {
+        title = '提交资质申请';
+        description = `${item.operatorName || '护士'} 提交了执业资质核验申请`;
+      } else if (item.action === 'system-check') {
+        title = '系统自动核验';
+        description = item.remark || '完成系统自动核验';
+      } else if (item.action === 'approve') {
+        title = '人工审核通过';
+        description = item.remark || '审核通过';
+        color = 'green';
+      } else if (item.action === 'reject') {
+        title = '人工审核驳回';
+        description = item.remark || '审核驳回';
+        color = 'red';
+        status = 'error';
+      } else if (item.action === 're-submit') {
+        title = '重新提交申请';
+        description = item.remark || '重新提交资质核验申请';
       }
+
+      if (isLast && !isReviewed && item.action !== 'system-check') {
+        status = 'current';
+      }
+
+      const operatorText = item.operatorName
+        ? `${item.operatorName}（${getRoleLabel(item.operatorRole)}）`
+        : '';
+
+      const fullDescription = operatorText
+        ? `${operatorText} · ${description}`
+        : description;
+
+      return {
+        id: item.id,
+        title,
+        description: fullDescription,
+        time: item.time,
+        status,
+        color,
+      };
+    });
+  }, [nurse, isReviewed]);
+
+  const handleRejectClick = () => {
+    setRejectReason('');
+    setRejectModalVisible(true);
+  };
+
+  const handleConfirmReject = () => {
+    if (!rejectReason.trim()) {
+      message.warning('请填写驳回原因');
+      return;
+    }
+    if (!nurse) return;
+
+    setLoading((s) => ({ ...s, reject: true }));
+    setRejectModalVisible(false);
+
+    setTimeout(() => {
+      const now = dayjs().format('YYYY-MM-DD HH:mm:ss');
+      const historyItem: NurseVerifyHistoryItem = {
+        id: `vh-${nurse.id}-${Date.now()}`,
+        type: 'manual',
+        action: 'reject',
+        operatorId: authUser.id,
+        operatorName: authUser.name,
+        operatorRole: authUser.role,
+        remark: rejectReason,
+        time: now,
+      };
+
+      updateNurse(nurse.id, {
+        verifyStatus: 'rejected' as VerifyStatus,
+        verifyResult: {
+          systemChecked: true,
+          systemMessage: nurse.verifyResult?.systemMessage || '证书信息核验完成',
+          systemCheckItems: systemCheckItems,
+          manualChecked: true,
+          manualRemark: rejectReason,
+          manualReviewerId: authUser.id,
+          manualReviewerName: authUser.name,
+          manualReviewTime: now,
+        },
+        verifyHistory: [...nurse.verifyHistory, historyItem],
+      });
+
+      message.error('已驳回核验申请');
+      setLoading((s) => ({ ...s, reject: false }));
+      setRejectReason('');
+    }, 800);
+  };
+
+  const handlePass = () => {
+    if (!nurse) return;
+
+    setLoading((s) => ({ ...s, pass: true }));
+
+    setTimeout(() => {
+      const now = dayjs().format('YYYY-MM-DD HH:mm:ss');
+      const finalRemark = remark.trim() || '资料齐全，审核通过';
+      const historyItem: NurseVerifyHistoryItem = {
+        id: `vh-${nurse.id}-${Date.now()}`,
+        type: 'manual',
+        action: 'approve',
+        operatorId: authUser.id,
+        operatorName: authUser.name,
+        operatorRole: authUser.role,
+        remark: finalRemark,
+        time: now,
+      };
+
+      updateNurse(nurse.id, {
+        verifyStatus: 'verified' as VerifyStatus,
+        verifyResult: {
+          systemChecked: true,
+          systemMessage: nurse.verifyResult?.systemMessage || '证书信息核验通过',
+          systemCheckItems: systemCheckItems,
+          manualChecked: true,
+          manualRemark: finalRemark,
+          manualReviewerId: authUser.id,
+          manualReviewerName: authUser.name,
+          manualReviewTime: now,
+        },
+        verifyHistory: [...nurse.verifyHistory, historyItem],
+      });
+
       message.success('核验已通过');
       setLoading((s) => ({ ...s, pass: false }));
     }, 800);
   };
 
-  const handleReject = () => {
-    if (!remark.trim()) {
-      message.warning('请填写驳回意见');
-      return;
-    }
-    setLoading((s) => ({ ...s, reject: true }));
-    setTimeout(() => {
-      if (nurse) {
-        updateNurse(nurse.id, {
-          verifyStatus: 'rejected' as VerifyStatus,
-          verifyResult: {
-            systemChecked: true,
-            systemMessage: '证书信息核验通过',
-            manualChecked: true,
-            manualRemark: remark,
-          },
-        });
-      }
-      message.error('已驳回核验申请');
-      setLoading((s) => ({ ...s, reject: false }));
-    }, 800);
-  };
-
   if (!nurse) return null;
-
-  const verifyHistory: TimelineItem[] = [
-    {
-      id: 'h1',
-      title: '提交资质申请',
-      description: `护士 ${nurse.name} 提交了执业资质核验申请，附证书扫描件 1 份`,
-      time: nurse.createdAt,
-      status: 'completed' as const,
-    },
-    {
-      id: 'h2',
-      title: '系统自动核验',
-      description: '对接国家卫健委医师执业注册信息系统完成 4 项自动核验',
-      time: nurse.verifyStatus !== 'pending' ? nurse.createdAt : undefined,
-      status: nurse.verifyStatus === 'pending' ? 'pending' : 'completed',
-    },
-    {
-      id: 'h3',
-      title: '人工审核处理',
-      description: nurse.verifyResult?.manualRemark ?? '等待审核员处理',
-      time: nurse.verifyStatus === 'verified' || nurse.verifyStatus === 'rejected' ? nurse.createdAt : undefined,
-      status: nurse.verifyStatus === 'verified' || nurse.verifyStatus === 'rejected' ? 'completed' : 'current',
-      color: (nurse.verifyStatus === 'rejected' ? 'red' : nurse.verifyStatus === 'verified' ? 'green' : undefined) as 'red' | 'green' | undefined,
-    },
-  ];
 
   return (
     <div>
@@ -146,16 +242,16 @@ export default function NurseVerify() {
             icon: <CheckCircle className="h-4 w-4" />,
             onClick: handlePass,
             loading: loading.pass,
-            disabled: nurse.verifyStatus === 'verified',
+            disabled: isReviewed,
           },
           {
             key: 'reject',
             label: '驳回申请',
             icon: <XCircle className="h-4 w-4" />,
             danger: true,
-            onClick: handleReject,
+            onClick: handleRejectClick,
             loading: loading.reject,
-            disabled: nurse.verifyStatus === 'rejected',
+            disabled: isReviewed,
           },
         ]}
       />
@@ -273,9 +369,13 @@ export default function NurseVerify() {
                   <div key={item.key} className="flex items-start gap-2.5 rounded-lg border border-slate-100 bg-slate-50/50 p-3">
                     <div className={cn(
                       'mt-0.5 shrink-0',
-                      item.passed ? 'text-emerald-500' : 'text-amber-500'
+                      item.passed === true ? 'text-emerald-500' : item.passed === false ? 'text-red-500' : 'text-amber-500'
                     )}>
-                      {item.passed ? <CheckCircle className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
+                      {item.passed === true
+                        ? <CheckCircle className="h-4 w-4" />
+                        : item.passed === false
+                        ? <XCircle className="h-4 w-4" />
+                        : <Clock className="h-4 w-4" />}
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="text-xs font-medium text-slate-800">{item.label}</div>
@@ -288,14 +388,37 @@ export default function NurseVerify() {
 
             <div className="mt-6 pt-5 border-t border-slate-100">
               <div className="mb-2 text-xs font-medium text-slate-700">人工审核意见</div>
-              <TextArea
-                value={remark}
-                onChange={(e) => setRemark(e.target.value)}
-                placeholder={nurse.verifyResult?.manualRemark ?? '请填写审核意见，驳回时必填'}
-                rows={4}
-                className="!text-sm"
-                disabled={nurse.verifyStatus === 'verified' || nurse.verifyStatus === 'rejected'}
-              />
+
+              {isReviewed && nurse.verifyResult ? (
+                <div className="space-y-3">
+                  <div className="rounded-lg bg-slate-50 p-3 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500">审核人</span>
+                      <span className="font-medium text-slate-700">
+                        {nurse.verifyResult.manualReviewerName}（{getRoleLabel(authUser.role)}）
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className="text-slate-500">审核时间</span>
+                      <span className="font-medium text-slate-700">{nurse.verifyResult.manualReviewTime}</span>
+                    </div>
+                  </div>
+                  <TextArea
+                    value={nurse.verifyResult.manualRemark}
+                    rows={4}
+                    className="!text-sm"
+                    disabled
+                  />
+                </div>
+              ) : (
+                <TextArea
+                  value={remark}
+                  onChange={(e) => setRemark(e.target.value)}
+                  placeholder="请填写审核意见，驳回时必填"
+                  rows={4}
+                  className="!text-sm"
+                />
+              )}
 
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <Button
@@ -304,7 +427,7 @@ export default function NurseVerify() {
                   icon={<CheckCircle className="h-4 w-4" />}
                   onClick={handlePass}
                   loading={loading.pass}
-                  disabled={nurse.verifyStatus === 'verified'}
+                  disabled={isReviewed}
                   className="!h-11"
                 >
                   通过核验
@@ -313,9 +436,9 @@ export default function NurseVerify() {
                   size="large"
                   danger
                   icon={<XCircle className="h-4 w-4" />}
-                  onClick={handleReject}
+                  onClick={handleRejectClick}
                   loading={loading.reject}
-                  disabled={nurse.verifyStatus === 'rejected'}
+                  disabled={isReviewed}
                   className="!h-11"
                 >
                   驳回申请
@@ -333,6 +456,31 @@ export default function NurseVerify() {
         </div>
         <Timeline items={verifyHistory} />
       </div>
+
+      <Modal
+        title="驳回核验申请"
+        open={rejectModalVisible}
+        onCancel={() => setRejectModalVisible(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setRejectModalVisible(false)}>
+            取消
+          </Button>,
+          <Button key="confirm" danger type="primary" onClick={handleConfirmReject} loading={loading.reject}>
+            确认驳回
+          </Button>,
+        ]}
+      >
+        <div className="space-y-2">
+          <p className="text-sm text-slate-600">请填写驳回原因（必填）：</p>
+          <TextArea
+            value={rejectReason}
+            onChange={(e) => setRejectReason(e.target.value)}
+            placeholder="请详细说明驳回的具体原因，如证书不清晰、信息不符等"
+            rows={4}
+            className="!text-sm"
+          />
+        </div>
+      </Modal>
     </div>
   );
 }
