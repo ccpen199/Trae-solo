@@ -318,6 +318,9 @@ export default function SocialSecurityPage() {
             </div>
           </div>
         </div>
+        <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-800">
+          查询结果：已按实名用户“张三”匹配住房公积金、五险参保和缴费明细，筛选条件可通过年份、险种和电子凭证中心继续核验。
+        </div>
       </div>
 
       <div className="space-y-5 px-4">

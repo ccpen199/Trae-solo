@@ -8,6 +8,7 @@ import TrafficPage from "@/pages/TrafficPage";
 import PaymentPage from "@/pages/PaymentPage";
 import CommunityPage from "@/pages/CommunityPage";
 import PoiPage from "@/pages/PoiPage";
+import AdminPage from "@/pages/AdminPage";
 
 export default function App() {
   return (
@@ -23,6 +24,8 @@ export default function App() {
       <Route path="/policies" element={<PoliciesPage />} />
       <Route path="/policies/:id" element={<PolicyDetailPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/admin/dashboard" element={<AdminPage />} />
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 }

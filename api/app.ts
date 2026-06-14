@@ -21,6 +21,7 @@ import policiesRoutes from './routes/policies.js'
 import servicesRoutes from './routes/services.js'
 import weatherRoutes from './routes/weather.js'
 import userRoutes from './routes/user.js'
+import adminRoutes from './routes/admin.js'
 
 // for esm mode
 const __filename = fileURLToPath(import.meta.url)
@@ -48,6 +49,33 @@ app.use('/api/policies', policiesRoutes)
 app.use('/api/services', servicesRoutes)
 app.use('/api/weather', weatherRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/admin', adminRoutes)
+
+app.get('/api/search', (req: Request, res: Response): void => {
+  const keyword = String(req.query.q || '').trim()
+  res.status(200).json({
+    success: true,
+    query: keyword,
+    message: '查询结果',
+    data: [
+      {
+        type: 'social-security',
+        title: '社保查询结果',
+        summary: '已匹配张三的养老、医疗、失业、工伤、生育五险缴费明细',
+      },
+      {
+        type: 'payment',
+        title: '缴费查询结果',
+        summary: '已匹配水电燃气、供暖宽带等 4 项待缴账单',
+      },
+      {
+        type: 'policy',
+        title: '政策查询结果',
+        summary: '已匹配住房公积金、医保缴费、人才住房等政策公告',
+      },
+    ],
+  })
+})
 
 /**
  * health

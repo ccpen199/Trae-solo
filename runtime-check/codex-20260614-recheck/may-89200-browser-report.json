@@ -1,0 +1,665 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-14T15:16:44.692Z",
+  "order": "may-89200",
+  "roundIndex": 100,
+  "captureId": "codex-20260614-recheck-may-89200",
+  "url": "http://127.0.0.1:49200/",
+  "initialUrl": "http://127.0.0.1:49200/",
+  "finalUrl": "http://127.0.0.1:49200/",
+  "status": 200,
+  "title": "青岛市民通 - 城市级政务民生服务聚合平台",
+  "initialTitle": "青岛市民通 - 城市级政务民生服务聚合平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89200/runtime-check/codex-20260614-recheck/codex-20260614-recheck-may-89200-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89200/runtime-check/codex-20260614-recheck/codex-20260614-recheck-may-89200-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "搜索/筛选相关问题；后台管理相关问题",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题",
+  "targetKind": "search",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49200/service/social-security"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49200/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49200/",
+        "title": "青岛市民通 - 城市级政务民生服务聚合平台",
+        "headings": [
+          "晚上好，张三",
+          "交通态势感知",
+          "事故快报",
+          "地铁延误",
+          "公交预测",
+          "便民服务矩阵",
+          "社保查询",
+          "政策查询",
+          "天气预报",
+          "停车缴费",
+          "惠民补贴",
+          "水电燃气缴费"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "查看全部",
+          "电力 186.50",
+          "水务 58.30",
+          "燃气 92.00",
+          "供暖",
+          "宽带 120.00",
+          "更多",
+          "景区 10",
+          "餐饮 5",
+          "医疗 7",
+          "查看全部政策 →"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索户号、姓名或缴费项目...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "青岛市 · 市南区 · 青岛市人民政府已定位晚上好，张三实名认证22°C多云转晴 · 青岛AQI 45 优湿度 68% · 东南风3级山东省人社厅青岛交警各区缴费系统交通态势感知查看全部事故快报今日 4 起4山东路与延吉路交叉口两车相撞13小时前来源：青岛市公安局交通警察支队地铁延误2 条线路22号线3号线11小时前发生公交预测316路3分钟下一班：鲁B·T12345站点：市政府站已收藏线路电子凭证住房公积金¥128,650.88月缴 2,880.00明细核验数据来源：山东省人社厅电子凭证社会保险156个月养老/医疗/失业/工伤/生育 五险明细核验实时同步便民服务矩阵已为您按市南区位置智能排序距您 0.2km社保查询省人社厅4.8距您 0.2km政策查询市政府办公厅4.7距您 0.3km天气预报市气象局4.6距您 0.2km停车缴费市南区缴费4.4距您 0.6km惠民补贴市民政局4.8距您 0.8km水电燃气缴费市南区缴费4.8距您 0.5km快递查询邮政管理局4.4距您 0.7km社区活动市南区文旅局4.5距您 0.5km投诉建议12345热线4.2便民缴费市南/市北/崂山等各区缴费系统直连4 项账单待缴费合计 ¥456.80电力186.50水务58.30燃气92.00供暖宽带120.00青青岛社区舆情舆情等级 3级 · 中等正面中性负面今日热帖 Top3五四广场灯光秀真的太美了！青岛生活12580 阅读崂山区某小区物业不作为，垃圾堆积如山无人清理民生投诉8923 阅读栈桥附近的海鲜大排档太坑了！大家别去！民生投诉23456 阅读城市服务图谱更多景区10餐饮5医疗71五四广场4A级景区市文旅局0.7km2青岛奥帆中心4A级景区市文旅局1.3km3八大关风景区4A级景区市文旅局4.1km政策公告0 篇已缓存离线模式青岛市住房公积金2026年缴存基数调整通知青岛市住房公积金管理中心2026-06-01青岛市居民基本医疗保险2026年度缴费通知青岛市医疗保障局2026-05-20青岛市人才住房建设和管理办法青岛市住房和城乡建设局2026-04-15关于优化青岛市义务教育阶段入学报名工作的通知青岛市教育局2026-04-28查看全部政策 →首页办事出行生活我的",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2522,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-20260614-recheck-may-89200-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49200/",
+          "title": "青岛市民通 - 城市级政务民生服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89200/runtime-check/codex-20260614-recheck/codex-20260614-recheck-may-89200-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89200/runtime-check/codex-20260614-recheck/codex-20260614-recheck-may-89200-structure-01-首屏.png",
+          "elementCount": 873,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "查看全部",
+            "搜索户号、姓名或缴费项目...",
+            "电力 186.50",
+            "水务 58.30",
+            "燃气 92.00",
+            "供暖",
+            "宽带 120.00",
+            "更多",
+            "景区 10",
+            "餐饮 5",
+            "医疗 7",
+            "查看全部政策 →",
+            "首页",
+            "办事",
+            "出行",
+            "生活",
+            "我的"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-recheck-may-89200-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49200/",
+        "title": "青岛市民通 - 城市级政务民生服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89200/runtime-check/codex-20260614-recheck/codex-20260614-recheck-may-89200-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89200/runtime-check/codex-20260614-recheck/codex-20260614-recheck-may-89200-structure-01-首屏.png",
+        "elementCount": 873,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "查看全部",
+          "搜索户号、姓名或缴费项目...",
+          "电力 186.50",
+          "水务 58.30",
+          "燃气 92.00",
+          "供暖",
+          "宽带 120.00",
+          "更多",
+          "景区 10",
+          "餐饮 5",
+          "医疗 7",
+          "查看全部政策 →",
+          "首页",
+          "办事",
+          "出行",
+          "生活",
+          "我的"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49200/",
+    "representativeScreenshotLabel": "晚上好，张三"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-recheck-may-89200-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49200/",
+        "title": "青岛市民通 - 城市级政务民生服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89200/runtime-check/codex-20260614-recheck/codex-20260614-recheck-may-89200-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89200/runtime-check/codex-20260614-recheck/codex-20260614-recheck-may-89200-structure-01-首屏.png",
+        "elementCount": 873,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "查看全部",
+          "搜索户号、姓名或缴费项目...",
+          "电力 186.50",
+          "水务 58.30",
+          "燃气 92.00",
+          "供暖",
+          "宽带 120.00",
+          "更多",
+          "景区 10",
+          "餐饮 5",
+          "医疗 7",
+          "查看全部政策 →",
+          "首页",
+          "办事",
+          "出行",
+          "生活",
+          "我的"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 2522
+  },
+  "initialBodyTextPreview": "青岛市 · 市南区 · 青岛市人民政府\n已定位\n晚上好，张三\n实名认证\n22\n°C\n\n多云转晴 · 青岛\n\nAQI 45 优\n\n湿度 68% · 东南风3级\n\n山东省人社厅\n青岛交警\n各区缴费系统\n交通态势感知\n查看全部\n事故快报\n\n今日 4 起\n\n4\n\n山东路与延吉路交叉口两车相撞\n\n13小时前\n\n来源：\n青岛市公安局交通警察支队\n地铁延误\n\n2 条线路\n\n2\n2号线\n3号线\n\n11小时前发生\n\n公交预测\n\n316路\n\n3分钟\n\n下一班：鲁B·T12345\n\n站点：市政府站\n\n已收藏线路\n电子凭证\n住房公积金\n¥128,650.88\n\n月缴 2,880.00\n\n明细核验\n数据来源：山东省人社厅\n电子凭证\n社会保险\n156个月\n\n养老/医疗/失业/工伤/生育 五险\n\n明细核验\n实时同步\n便民服务矩阵\n已为您按市南区位置智能排序\n距您 0.2km\n社保查询\n省人社厅\n4.8\n距您 0.2km\n政策查询\n市政府办公厅\n4.7\n距您 0.3km\n天气预报\n市气象局\n4.6\n距您 0.2km\n停车缴费\n市南区缴费\n4.4\n距您 0.6km\n惠民补贴\n市民政局\n4.8\n距您 0.8km\n水电燃气缴费\n市南区缴费\n4.8\n距您 0.5km\n快递查询\n邮政管理局\n4.4\n距您 0.7km\n社区活动\n市南区文旅局\n4.5\n距您 0.5km\n投诉建议\n12345热线\n4.2\n便民缴费\n市南/市北/崂山等各区缴费系统直连\n\n4 项账单待缴费\n\n合计 ¥456.80\n\n电力\n186.50\n水务\n58.30\n燃气\n92.00\n供暖\n宽带\n120.00\n青青岛社区舆情\n舆情等级 3级 · 中等\n正面\n中性\n负面\n\n今日热帖 Top3\n\n五四广场灯光秀真的太美了！\n\n青岛生活\n12580 阅读\n\n崂山区某小区物业不作为，垃圾堆积如山无人清理\n\n民生投诉\n8923 阅读\n\n栈桥附近的海鲜大排档太坑了！大家别去！\n\n民生投诉\n23456 阅读\n城市服务图谱\n更多\n景区\n10\n餐饮\n5\n医疗\n7\n1\n五四广场\n4A级景区\n市文旅局\n0.7km\n2\n青岛奥帆中心\n4A级景区\n市文旅局\n1.3km\n3\n八大关风景区\n4A级景区\n市文旅局\n4.1km\n政策公告\n0 篇已缓存\n离线模式\n青岛市住房公积金2026年缴存基数调整通知\n青岛市住房公积金管理中心\n2026-06-01\n青岛市居民基本医疗保险2026年度缴费通知\n青岛市医疗保障局\n2026-05-20\n青岛市人才住房建设和管理办法\n青岛市住房和城乡建设局\n2026-04-15\n关于优化青岛市义务教育阶段入学报名工作的通知\n青岛市教育局\n2026-04-28\n查看全部政策 →",
+  "bodyTextPreview": "青岛市 · 市南区 · 青岛市人民政府\n已定位\n晚上好，张三\n实名认证\n22\n°C\n\n多云转晴 · 青岛\n\nAQI 45 优\n\n湿度 68% · 东南风3级\n\n山东省人社厅\n青岛交警\n各区缴费系统\n交通态势感知\n查看全部\n事故快报\n\n今日 4 起\n\n4\n\n山东路与延吉路交叉口两车相撞\n\n13小时前\n\n来源：\n青岛市公安局交通警察支队\n地铁延误\n\n2 条线路\n\n2\n2号线\n3号线\n\n11小时前发生\n\n公交预测\n\n316路\n\n3分钟\n\n下一班：鲁B·T12345\n\n站点：市政府站\n\n已收藏线路\n电子凭证\n住房公积金\n¥128,650.88\n\n月缴 2,880.00\n\n明细核验\n数据来源：山东省人社厅\n电子凭证\n社会保险\n156个月\n\n养老/医疗/失业/工伤/生育 五险\n\n明细核验\n实时同步\n便民服务矩阵\n已为您按市南区位置智能排序\n距您 0.2km\n社保查询\n省人社厅\n4.8\n距您 0.2km\n政策查询\n市政府办公厅\n4.7\n距您 0.3km\n天气预报\n市气象局\n4.6\n距您 0.2km\n停车缴费\n市南区缴费\n4.4\n距您 0.6km\n惠民补贴\n市民政局\n4.8\n距您 0.8km\n水电燃气缴费\n市南区缴费\n4.8\n距您 0.5km\n快递查询\n邮政管理局\n4.4\n距您 0.7km\n社区活动\n市南区文旅局\n4.5\n距您 0.5km\n投诉建议\n12345热线\n4.2\n便民缴费\n市南/市北/崂山等各区缴费系统直连\n\n4 项账单待缴费\n\n合计 ¥456.80\n\n电力\n186.50\n水务\n58.30\n燃气\n92.00\n供暖\n宽带\n120.00\n青青岛社区舆情\n舆情等级 3级 · 中等\n正面\n中性\n负面\n\n今日热帖 Top3\n\n五四广场灯光秀真的太美了！\n\n青岛生活\n12580 阅读\n\n崂山区某小区物业不作为，垃圾堆积如山无人清理\n\n民生投诉\n8923 阅读\n\n栈桥附近的海鲜大排档太坑了！大家别去！\n\n民生投诉\n23456 阅读\n城市服务图谱\n更多\n景区\n10\n餐饮\n5\n医疗\n7\n1\n五四广场\n4A级景区\n市文旅局\n0.7km\n2\n青岛奥帆中心\n4A级景区\n市文旅局\n1.3km\n3\n八大关风景区\n4A级景区\n市文旅局\n4.1km\n政策公告\n0 篇已缓存\n离线模式\n青岛市住房公积金2026年缴存基数调整通知\n青岛市住房公积金管理中心\n2026-06-01\n青岛市居民基本医疗保险2026年度缴费通知\n青岛市医疗保障局\n2026-05-20\n青岛市人才住房建设和管理办法\n青岛市住房和城乡建设局\n2026-04-15\n关于优化青岛市义务教育阶段入学报名工作的通知\n青岛市教育局\n2026-04-28\n查看全部政策 →",
+  "apiBase": "http://127.0.0.1:59200",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/weather?lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/services/rank"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/traffic/events"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/traffic/bus/predictions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/social-security/370202199001011234"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/payment/accounts?keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/community/posts?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/community/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=scenic&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=restaurant&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=medical&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/policies?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/user/profile"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/services/rank"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/weather?lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/traffic/events"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/traffic/bus/predictions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/social-security/370202199001011234"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/payment/accounts?keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/community/posts?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/community/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=scenic&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=restaurant&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=medical&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/policies?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/user/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/social-security/370202199001011234"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/social-security/370202199001011234"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/weather?lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/services/rank"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/traffic/events"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/traffic/bus/predictions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/social-security/370202199001011234"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/payment/accounts?keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/community/posts?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/community/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=scenic&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=restaurant&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/services/rank"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=medical&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/policies?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/user/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/weather?lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/traffic/events"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/traffic/bus/predictions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/social-security/370202199001011234"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/payment/accounts?keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/community/posts?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/community/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=scenic&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=medical&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/poi?type=restaurant&radius=5000&lat=36.0671&lng=120.3826"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/policies?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49200/api/user/profile"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/weather?lat=36.0671&lng=120.3826",
+      "path": "/api/weather?lat=36.0671&lng=120.3826",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"city\":\"青岛\",\"temperature\":22,\"condition\":\"多云转晴\",\"humidity\":68,\"aqi\":45,\"aqiLevel\":\"优\",\"wind\":\"东南风3级\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/traffic/events",
+      "path": "/api/traffic/events",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"te-metro-002\",\"type\":\"metro_delay\",\"source\":\"青岛地铁集团运营有限公司\",\"title\":\"地铁2号线苗岭路站临时关闭\",\"description\":\"因设备故障，地铁2号线苗岭路站临时关闭，列车通过不停车，预计两小时后恢复。\",\"location\":{\"lat\":36.1025,\"lng\":120.4048,\"address\":\"青岛市崂山区苗岭路站\",\"district\":\"崂山区\"},\"severity\":\"danger\",\"timestamp\":\"2026-06-14T11:20:00+08:00\",\"expiresAt\":\"2026-06-14T13:20:00+08:00\"},{\"id\":\"te-acc-002\",\"type\":\"accident\",\"source\":\"青岛市公安局交通警察支队\",\"title\":\"黑龙江中路李沧段多车剐蹭\",\"description\":\"黑龙江中路李沧万达附近发生三车剐蹭事故，占用一条车道，后方车辆缓慢通行，请提前规划路线。\",\"loc"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/traffic/bus/predictions",
+      "path": "/api/traffic/bus/predictions",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"routeId\":\"316\",\"routeName\":\"316路\",\"stopName\":\"市政府站\",\"status\":\"normal\",\"crowdLevel\":\"moderate\",\"currentStationIndex\":3,\"totalStations\":12,\"stations\":[\"团岛站\",\"火车站\",\"栈桥站\",\"中山路站\",\"市政府站\",\"浮山所站\",\"福州路站\",\"辛家庄站\",\"高雄路站\",\"青岛大学站\",\"麦岛站\",\"极地海洋世界站\"],\"predictions\":[{\"plateNumber\":\"鲁B·T12345\",\"minutes\":3,\"distance\":\"800米\",\"crowdLevel\":\"moderate\",\"currentStation\":\"浮山所站\"},{\"plateNumber\":\"鲁B·T67890\",\"minutes\":8,\"distance\":\"2.3公里\",\"crowdLevel\":\"crowded\",\"currentStation\":\"辛家庄站\"},{\"plateNumber"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/social-security/370202199001011234",
+      "path": "/api/social-security/370202199001011234",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"ssa-001\",\"name\":\"张三\",\"idCard\":\"370202199001011234\",\"housingFund\":{\"balance\":128650.88,\"monthlyContribution\":2880,\"lastDepositDate\":\"2026-05-25\",\"status\":\"normal\",\"unit\":\"青岛海信集团有限公司\"},\"socialInsurance\":{\"pension\":{\"months\":156,\"status\":\"正常缴费\",\"base\":8500},\"medical\":{\"months\":156,\"status\":\"正常缴费\",\"base\":8500},\"unemployment\":{\"months\":156,\"status\":\"正常缴费\",\"base\":8500},\"workInjury\":{\"months\":156,\"status\":\"正常缴费\",\"base\":8500},\"maternity\":{\"months\":156,\"status\":\"正常缴费\",\"base\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/payment/accounts?keyword=",
+      "path": "/api/payment/accounts?keyword=",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"pa-001\",\"category\":\"electric\",\"categoryName\":\"电费\",\"district\":\"市南区\",\"accountNumber\":\"3702020010012345\",\"accountName\":\"张三\",\"amountDue\":186.5,\"dueDate\":\"2026-06-25\",\"status\":\"unpaid\",\"matchScore\":100,\"matchDegree\":100},{\"id\":\"pa-002\",\"category\":\"water\",\"categoryName\":\"水费\",\"district\":\"市南区\",\"accountNumber\":\"QD202010012345\",\"accountName\":\"张三\",\"amountDue\":58.3,\"dueDate\":\"2026-06-20\",\"status\":\"unpaid\",\"matchScore\":100,\"matchDegree\":100},{\"id\":\"pa-003\",\"category\":\"gas\",\"cat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/community/posts?pageSize=3",
+      "path": "/api/community/posts?pageSize=3",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"cp-001\",\"title\":\"五四广场灯光秀真的太美了！\",\"author\":\"海边的风\",\"content\":\"昨天晚上和家人一起去五四广场看灯光秀，真的被震撼到了！\\\"五月的风\\\"雕塑配合着绚丽的灯光和音乐，整个广场灯火通明，人潮涌动。青岛的夜景真的越来越美了，作为青岛人感到非常自豪！强烈推荐外地来的朋友一定要去看看，最好周末晚上去，灯光秀持续时间更长。\",\"board\":\"青岛生活\",\"viewCount\":12580,\"replyCount\":186,\"likeCount\":892,\"sentiment\":\"positive\",\"sentimentScore\":0.92,\"opinionLevel\":1,\"keywords\":[\"五四广场\",\"灯光秀\",\"夜景\",\"旅游\"],\"publishedAt\":\"2026-06-13T20:15:00+08:00\",\"nlpAnalysis\":{\"sentimentConfidence\":94.4,\"sentimentLabel\":\"正面\",\"keywords\":[{\"w"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/community/dashboard",
+      "path": "/api/community/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"totalPosts\":320,\"positiveCount\":128,\"neutralCount\":112,\"negativeCount\":80,\"trend\":[{\"date\":\"06-08\",\"positive\":18,\"neutral\":15,\"negative\":10},{\"date\":\"06-09\",\"positive\":22,\"neutral\":18,\"negative\":12},{\"date\":\"06-10\",\"positive\":15,\"neutral\":20,\"negative\":14},{\"date\":\"06-11\",\"positive\":25,\"neutral\":16,\"negative\":9},{\"date\":\"06-12\",\"positive\":19,\"neutral\":17,\"negative\":15},{\"date\":\"06-13\",\"positive\":17,\"neutral\":14,\"negative\":11},{\"date\":\"06-14\",\"positive\":12,\"neutral\":12,\"n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/poi?type=scenic&radius=5000&lat=36.0671&lng=120.3826",
+      "path": "/api/poi?type=scenic&radius=5000&lat=36.0671&lng=120.3826",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"poi-004\",\"type\":\"scenic\",\"name\":\"五四广场\",\"rating\":\"AAAA\",\"level\":\"4A级景区\",\"address\":\"青岛市市南区东海西路\",\"lat\":36.0607,\"lng\":120.3848,\"source\":\"青岛市文化和旅游局\",\"tags\":[\"城市地标\",\"灯光秀\",\"免费开放\"],\"description\":\"五四广场因青岛为五四运动导火索而得名，标志性雕塑\\\"五月的风\\\"已成为青岛的城市象征。\",\"distance\":0.7386112901367833},{\"id\":\"poi-005\",\"type\":\"scenic\",\"name\":\"青岛奥帆中心\",\"rating\":\"AAAA\",\"level\":\"4A级景区\",\"address\":\"青岛市市南区新会路1号\",\"lat\":36.0598,\"lng\":120.3945,\"phone\":\"0532-88908890\",\"source\":\"青岛市文化和旅游局\",\"tags\":[\"奥运遗产\",\"帆船运动\",\"夜景优美"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/poi?type=restaurant&radius=5000&lat=36.0671&lng=120.3826",
+      "path": "/api/poi?type=restaurant&radius=5000&lat=36.0671&lng=120.3826",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"poi-104\",\"type\":\"restaurant\",\"name\":\"船歌鱼水饺\",\"rating\":\"四钻\",\"level\":\"连锁餐饮\",\"address\":\"青岛市市南区闽江路50号\",\"lat\":36.0741,\"lng\":120.3822,\"phone\":\"0532-85727788\",\"source\":\"青岛市商务局\",\"tags\":[\"海鲜水饺\",\"特色美食\",\"本地品牌\"],\"description\":\"青岛本土知名餐饮品牌，墨鱼水饺、黄花鱼水饺是其特色。\",\"distance\":0.7791943031866476},{\"id\":\"poi-102\",\"type\":\"restaurant\",\"name\":\"青岛啤酒博物馆餐厅\",\"rating\":\"五钻\",\"level\":\"特色餐厅\",\"address\":\"青岛市市北区登州路56号\",\"lat\":36.0782,\"lng\":120.3529,\"phone\":\"0532-83833437\",\"source\":\"青岛市商务局\",\"tags\":[\"啤酒文化\",\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/poi?type=medical&radius=5000&lat=36.0671&lng=120.3826",
+      "path": "/api/poi?type=medical&radius=5000&lat=36.0671&lng=120.3826",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"poi-205\",\"type\":\"medical\",\"name\":\"青岛市海慈医疗集团\",\"rating\":\"三级甲等\",\"level\":\"三甲中医医院\",\"address\":\"青岛市市北区人民路4号\",\"lat\":36.108,\"lng\":120.366,\"phone\":\"0532-83777555\",\"source\":\"青岛市卫生健康委员会\",\"tags\":[\"中医医院\",\"三甲\",\"中西医结合\"],\"description\":\"青岛市海慈医疗集团是山东省规模最大的集医疗、预防、科研、教学于一体的综合性中医医疗集团。\",\"distance\":4.786248266535596},{\"id\":\"poi-201\",\"type\":\"medical\",\"name\":\"青岛大学附属医院\",\"rating\":\"三级甲等\",\"level\":\"三甲综合医院\",\"address\":\"青岛市市南区江苏路16号\",\"lat\":36.0647,\"lng\":120.325,\"phone\":\"0532-82911847\",\"source\":\"青岛市"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/policies?pageSize=5",
+      "path": "/api/policies?pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"pol-001\",\"title\":\"青岛市住房公积金2026年缴存基数调整通知\",\"department\":\"青岛市住房公积金管理中心\",\"category\":\"住房公积金\",\"summary\":\"自2026年7月1日起，青岛市住房公积金缴存基数上限调整为31875元，下限为2100元，各单位应于8月底前完成调整。\",\"content\":\"各缴存单位、缴存职工：根据国务院《住房公积金管理条例》及我市相关规定，现就2026年度我市住房公积金缴存基数调整有关事项通知如下：一、调整范围：2026年6月30日前在青岛市住房公积金管理中心办理缴存登记的单位及其在职职工。二、缴存基数：职工住房公积金缴存基数为职工本人2025年月平均工资总额，缴存基数上限为31875元，下限为2100元。三、缴存比例：单位和职工住房公积金缴存比例均不得低于5%，不得高于12%。四、执行时间：2026年7月1日至2027年6月30日。五、办理时限：各单位应于2026年8月31日前完成调整工作。\",\"publishedAt\":\"2026-06-01T09:0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"user-001\",\"phone\":\"13800138000\",\"name\":\"张三\",\"idCard\":\"370202199001011234\",\"verified\":true,\"district\":\"市南区\",\"createdAt\":\"2025-03-15T10:30:00+08:00\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59200/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49200/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49200/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49200/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2d7e40dd",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49200/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49200/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49200/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2d7e40dd",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

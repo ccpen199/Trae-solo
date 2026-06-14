@@ -518,6 +518,14 @@ export default function HomePage() {
                   </span>
                 </div>
               </div>
+              <button
+                type="button"
+                onClick={() => navigate("/admin/dashboard")}
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-white/15 px-3 py-2 text-sm font-medium text-white ring-1 ring-white/20 transition-colors hover:bg-white/25"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                管理后台
+              </button>
             </div>
 
             <div className="flex items-center justify-between mb-5 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">

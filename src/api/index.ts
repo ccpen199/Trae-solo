@@ -70,17 +70,6 @@ export const trafficApi = {
     client.post<TrafficEvent>("/traffic/events", data),
 };
 
-export const paymentApi = {
-  searchAccounts: (keyword?: string): Promise<PaymentAccount[]> =>
-    client.get<PaymentAccount[]>("/payment/accounts", { keyword }),
-  getAccounts: (category?: PaymentCategory): Promise<PaymentAccount[]> =>
-    client.get<PaymentAccount[]>("/payment/accounts", { category }),
-  getRecords: (accountId?: string): Promise<PaymentRecord[]> =>
-    client.get<PaymentRecord[]>("/payment/records", { accountId }),
-  pay: (accountId: string, amount: number): Promise<PaymentRecord> =>
-    client.post<PaymentRecord>("/payment/pay", { accountId, amount }),
-};
-
 export const communityApi = {
   getPosts: (params?: {
     board?: string;
@@ -153,4 +142,22 @@ export const userApi = {
   ): Promise<Favorite> => client.post<Favorite>("/user/favorites", data),
   removeFavorite: (id: string): Promise<void> =>
     client.delete<void>(`/user/favorites/${id}`),
+};
+
+export const adminApi = {
+  getOverview: (): Promise<{
+    serviceStatus: Array<{
+      name: string;
+      status: "online" | "cached" | "offline";
+      requestsToday: number;
+      successRate: number;
+    }>;
+    alerts: Array<{ id: string; level: string; title: string; owner: string }>;
+    metrics: {
+      usersOnline: number;
+      apiSuccessRate: number;
+      pendingTickets: number;
+      cachedPolicies: number;
+    };
+  }> => client.get("/admin/overview"),
 };
