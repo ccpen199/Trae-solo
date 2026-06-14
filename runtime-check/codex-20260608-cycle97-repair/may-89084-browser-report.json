@@ -1,0 +1,3072 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T06:13:55.852Z",
+  "order": "may-89084",
+  "roundIndex": 5,
+  "captureId": "may-89084-cycle97-repair",
+  "url": "http://127.0.0.1:49084/",
+  "initialUrl": "http://127.0.0.1:49084/",
+  "finalUrl": "http://127.0.0.1:49084/",
+  "status": 200,
+  "title": "灵活就业任务撮合平台",
+  "initialTitle": "灵活就业任务撮合平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-02-导航-灵活就业平台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-03-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-04-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-05-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-06-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-07-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-08-导航-任务大厅.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetReason": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49084/login"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49084/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:灵活就业平台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情#2",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情#2",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:任务大厅",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 12
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:下一页",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:下一页:上一页",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:登录",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:立即登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:注册",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:立即注册",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "灵活就业，轻松赚钱",
+          "为什么选择我们",
+          "实名认证",
+          "T+1结算",
+          "智能匹配",
+          "风控保障",
+          "最新任务",
+          "短视频内容审核",
+          "大学生消费习惯调研",
+          "电商平台数据录入",
+          "产品宣传文案撰写",
+          "商品图片美化处理"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "查看详情"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "进入任务大厅"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册灵活就业，轻松赚钱为在校学生、居家宝妈、兼职上班族提供优质灵活就业机会立即注册登录账号为什么选择我们🔒实名认证所有用户和企业均需实名认证，保障交易安全💰T+1结算任务完成后次日自动结算，支持多种提现方式🎯智能匹配根据技能、位置、时间智能推荐合适任务🛡️风控保障多级审核机制，确保任务真实可靠最新任务短视频内容审核¥0.05元/条线上招募中低风险信用 A对平台上传的短视频进行内容合规性审核，判断是否包含违规内容内容审核视频编辑🏢 演示科技有限公司👥 1/1000人查看详情大学生消费习惯调研¥20元/单线上招募中低风险信用 A针对在校大学生的消费习惯调查问卷，约15分钟完成问卷填写🏢 美团点评有限公司👥 0/200人查看详情电商平台数据录入¥0.1元/条线上招募中中风险信用 A将纸质销售数据录入到电商平台后台系统，要求准确率99%以上数据录入打字速度Excel🏢 演示科技有限公司👥 0/5000人查看详情产品宣传文案撰写¥30元/单线上招募中低风险信用 AA为新产品撰写朋友圈推广文案，每条50-100字文案写作创意策划🏢 阿里巴巴信息服务有限公司👥 0/50人查看详情商品图片美化处理¥15元/单线上招募中低风险信用 AA对电商平台商品图片进行修图、调色、添加水印等处理图片处理Photoshop🏢 腾讯科技有限公司👥 0/300人查看详情在线客服兼职¥25元/小时线上招募中中风险信用 A回答平台用户的咨询问题，要求打字速度快，态度友好客服服务沟通表达🏢 拼多多信息技术有限公司👥 0/100人查看详情新游戏试玩体验¥35元/单线上招募中低风险信用 A下载试玩新上线的手机游戏，达到指定等级并提交体验报告试玩推广游戏体验🏢 拼多多信息技术有限公司👥 0/500人查看详情英文文档翻译¥200元/单线上招募中中风险信用 AA将产品说明书从英文翻译成中文，约5000字翻译服务英语专业🏢 腾讯科技有限公司👥 0/20人查看详情进入任务大厅适合人群👨‍🎓在校学生利用课余时间赚取生活费，积累社会实践经验👩‍👧居家宝妈时间灵活，在家即可工作，兼顾家庭与收入💼兼职上班族下班后和周末做副业，增加额外收入来源",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2511,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49084/",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-01-首屏.png",
+          "elementCount": 231,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "立即注册",
+            "登录账号",
+            "查看详情",
+            "进入任务大厅"
+          ]
+        }
+      },
+      {
+        "label": "导航:灵活就业平台",
+        "url": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "灵活就业，轻松赚钱",
+          "为什么选择我们",
+          "实名认证",
+          "T+1结算",
+          "智能匹配",
+          "风控保障",
+          "最新任务",
+          "短视频内容审核",
+          "大学生消费习惯调研",
+          "电商平台数据录入",
+          "产品宣传文案撰写",
+          "商品图片美化处理"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "查看详情"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "进入任务大厅"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册灵活就业，轻松赚钱为在校学生、居家宝妈、兼职上班族提供优质灵活就业机会立即注册登录账号为什么选择我们🔒实名认证所有用户和企业均需实名认证，保障交易安全💰T+1结算任务完成后次日自动结算，支持多种提现方式🎯智能匹配根据技能、位置、时间智能推荐合适任务🛡️风控保障多级审核机制，确保任务真实可靠最新任务短视频内容审核¥0.05元/条线上招募中低风险信用 A对平台上传的短视频进行内容合规性审核，判断是否包含违规内容内容审核视频编辑🏢 演示科技有限公司👥 1/1000人查看详情大学生消费习惯调研¥20元/单线上招募中低风险信用 A针对在校大学生的消费习惯调查问卷，约15分钟完成问卷填写🏢 美团点评有限公司👥 0/200人查看详情电商平台数据录入¥0.1元/条线上招募中中风险信用 A将纸质销售数据录入到电商平台后台系统，要求准确率99%以上数据录入打字速度Excel🏢 演示科技有限公司👥 0/5000人查看详情产品宣传文案撰写¥30元/单线上招募中低风险信用 AA为新产品撰写朋友圈推广文案，每条50-100字文案写作创意策划🏢 阿里巴巴信息服务有限公司👥 0/50人查看详情商品图片美化处理¥15元/单线上招募中低风险信用 AA对电商平台商品图片进行修图、调色、添加水印等处理图片处理Photoshop🏢 腾讯科技有限公司👥 0/300人查看详情在线客服兼职¥25元/小时线上招募中中风险信用 A回答平台用户的咨询问题，要求打字速度快，态度友好客服服务沟通表达🏢 拼多多信息技术有限公司👥 0/100人查看详情新游戏试玩体验¥35元/单线上招募中低风险信用 A下载试玩新上线的手机游戏，达到指定等级并提交体验报告试玩推广游戏体验🏢 拼多多信息技术有限公司👥 0/500人查看详情英文文档翻译¥200元/单线上招募中中风险信用 AA将产品说明书从英文翻译成中文，约5000字翻译服务英语专业🏢 腾讯科技有限公司👥 0/20人查看详情进入任务大厅适合人群👨‍🎓在校学生利用课余时间赚取生活费，积累社会实践经验👩‍👧居家宝妈时间灵活，在家即可工作，兼顾家庭与收入💼兼职上班族下班后和周末做副业，增加额外收入来源",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2511,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-02-导航-灵活就业平台",
+          "label": "导航:灵活就业平台",
+          "finalUrl": "http://127.0.0.1:49084/",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-02-导航-灵活就业平台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-02-导航-灵活就业平台.png",
+          "elementCount": 231,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "立即注册",
+            "登录账号",
+            "查看详情",
+            "进入任务大厅"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "短视频内容审核",
+          "任务描述",
+          "需求技能",
+          "任务信息",
+          "🏢 雇主信息"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "← 返回",
+          "📞 联系雇主",
+          "立即接单"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "查看信用看板 →"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册← 返回线上任务招募中短视频内容审核任务佣金¥0.05per_item已接/总名额1/1000任务分类内容审核任务描述对平台上传的短视频进行内容合规性审核，判断是否包含违规内容需求技能内容审核视频编辑任务信息📏 服务半径：10公里🏢 雇主信息查看信用看板 →演演示科技有限公司已认证信用等级：A联系人：张经理📊 信用评级依据信用极好，历史任务100%按时完成，无投诉记录✅ 资质审核过程• 营业执照已核验• 统一社会信用代码已验证• 企业法人身份已核实• 联系方式已确认📋 任务方发布管理视图发布任务数10完成任务数10总预算¥535.15投诉率0%📞 联系雇主立即接单接单前请确保已完成实名认证接单后需在规定时间内完成工作并提交成果",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-03-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49084/tasks/5",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-03-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-03-操作-查看详情.png",
+          "elementCount": 97,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "返回",
+            "查看信用看板 →",
+            "联系雇主",
+            "立即接单"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49084/tasks/6",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "大学生消费习惯调研",
+          "任务描述",
+          "需求技能",
+          "任务信息",
+          "🏢 雇主信息"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "← 返回",
+          "📞 联系雇主",
+          "立即接单"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "查看信用看板 →"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册← 返回线上任务招募中大学生消费习惯调研任务佣金¥20per_task已接/总名额0/200任务分类问卷填写任务描述针对在校大学生的消费习惯调查问卷，约15分钟完成需求技能问卷填写任务信息📏 服务半径：10公里🏢 雇主信息查看信用看板 →美美团点评有限公司已认证信用等级：A联系人：张总📊 信用评级依据信用极好，历史任务100%按时完成，无投诉记录✅ 资质审核过程• 营业执照已核验• 统一社会信用代码已验证• 企业法人身份已核实• 联系方式已确认📋 任务方发布管理视图发布任务数4完成任务数10总预算¥125投诉率0%📞 联系雇主立即接单接单前请确保已完成实名认证接单后需在规定时间内完成工作并提交成果",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-04-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49084/tasks/6",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-04-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-04-操作-查看详情.png",
+          "elementCount": 96,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "返回",
+            "查看信用看板 →",
+            "联系雇主",
+            "立即接单"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "灵活就业，轻松赚钱",
+          "为什么选择我们",
+          "实名认证",
+          "T+1结算",
+          "智能匹配",
+          "风控保障",
+          "最新任务",
+          "短视频内容审核",
+          "大学生消费习惯调研",
+          "电商平台数据录入",
+          "产品宣传文案撰写",
+          "商品图片美化处理"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "查看详情"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "进入任务大厅"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册灵活就业，轻松赚钱为在校学生、居家宝妈、兼职上班族提供优质灵活就业机会立即注册登录账号为什么选择我们🔒实名认证所有用户和企业均需实名认证，保障交易安全💰T+1结算任务完成后次日自动结算，支持多种提现方式🎯智能匹配根据技能、位置、时间智能推荐合适任务🛡️风控保障多级审核机制，确保任务真实可靠最新任务短视频内容审核¥0.05元/条线上招募中低风险信用 A对平台上传的短视频进行内容合规性审核，判断是否包含违规内容内容审核视频编辑🏢 演示科技有限公司👥 1/1000人查看详情大学生消费习惯调研¥20元/单线上招募中低风险信用 A针对在校大学生的消费习惯调查问卷，约15分钟完成问卷填写🏢 美团点评有限公司👥 0/200人查看详情电商平台数据录入¥0.1元/条线上招募中中风险信用 A将纸质销售数据录入到电商平台后台系统，要求准确率99%以上数据录入打字速度Excel🏢 演示科技有限公司👥 0/5000人查看详情产品宣传文案撰写¥30元/单线上招募中低风险信用 AA为新产品撰写朋友圈推广文案，每条50-100字文案写作创意策划🏢 阿里巴巴信息服务有限公司👥 0/50人查看详情商品图片美化处理¥15元/单线上招募中低风险信用 AA对电商平台商品图片进行修图、调色、添加水印等处理图片处理Photoshop🏢 腾讯科技有限公司👥 0/300人查看详情在线客服兼职¥25元/小时线上招募中中风险信用 A回答平台用户的咨询问题，要求打字速度快，态度友好客服服务沟通表达🏢 拼多多信息技术有限公司👥 0/100人查看详情新游戏试玩体验¥35元/单线上招募中低风险信用 A下载试玩新上线的手机游戏，达到指定等级并提交体验报告试玩推广游戏体验🏢 拼多多信息技术有限公司👥 0/500人查看详情英文文档翻译¥200元/单线上招募中中风险信用 AA将产品说明书从英文翻译成中文，约5000字翻译服务英语专业🏢 腾讯科技有限公司👥 0/20人查看详情进入任务大厅适合人群👨‍🎓在校学生利用课余时间赚取生活费，积累社会实践经验👩‍👧居家宝妈时间灵活，在家即可工作，兼顾家庭与收入💼兼职上班族下班后和周末做副业，增加额外收入来源",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2511,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-05-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49084/",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-05-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-05-导航-首页.png",
+          "elementCount": 231,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "立即注册",
+            "登录账号",
+            "查看详情",
+            "进入任务大厅"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "短视频内容审核",
+          "任务描述",
+          "需求技能",
+          "任务信息",
+          "🏢 雇主信息"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "← 返回",
+          "📞 联系雇主",
+          "立即接单"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "查看信用看板 →"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册← 返回线上任务招募中短视频内容审核任务佣金¥0.05per_item已接/总名额1/1000任务分类内容审核任务描述对平台上传的短视频进行内容合规性审核，判断是否包含违规内容需求技能内容审核视频编辑任务信息📏 服务半径：10公里🏢 雇主信息查看信用看板 →演演示科技有限公司已认证信用等级：A联系人：张经理📊 信用评级依据信用极好，历史任务100%按时完成，无投诉记录✅ 资质审核过程• 营业执照已核验• 统一社会信用代码已验证• 企业法人身份已核实• 联系方式已确认📋 任务方发布管理视图发布任务数10完成任务数10总预算¥535.15投诉率0%📞 联系雇主立即接单接单前请确保已完成实名认证接单后需在规定时间内完成工作并提交成果",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-06-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49084/tasks/5",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-06-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-06-操作-查看详情.png",
+          "elementCount": 97,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "返回",
+            "查看信用看板 →",
+            "联系雇主",
+            "立即接单"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49084/tasks/6",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "大学生消费习惯调研",
+          "任务描述",
+          "需求技能",
+          "任务信息",
+          "🏢 雇主信息"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "← 返回",
+          "📞 联系雇主",
+          "立即接单"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "查看信用看板 →"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册← 返回线上任务招募中大学生消费习惯调研任务佣金¥20per_task已接/总名额0/200任务分类问卷填写任务描述针对在校大学生的消费习惯调查问卷，约15分钟完成需求技能问卷填写任务信息📏 服务半径：10公里🏢 雇主信息查看信用看板 →美美团点评有限公司已认证信用等级：A联系人：张总📊 信用评级依据信用极好，历史任务100%按时完成，无投诉记录✅ 资质审核过程• 营业执照已核验• 统一社会信用代码已验证• 企业法人身份已核实• 联系方式已确认📋 任务方发布管理视图发布任务数4完成任务数10总预算¥125投诉率0%📞 联系雇主立即接单接单前请确保已完成实名认证接单后需在规定时间内完成工作并提交成果",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-07-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49084/tasks/6",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-07-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-07-操作-查看详情.png",
+          "elementCount": 96,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "返回",
+            "查看信用看板 →",
+            "联系雇主",
+            "立即接单"
+          ]
+        }
+      },
+      {
+        "label": "导航:任务大厅",
+        "url": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "任务大厅",
+          "短视频内容审核",
+          "大学生消费习惯调研",
+          "电商平台数据录入",
+          "产品宣传文案撰写",
+          "商品图片美化处理",
+          "在线客服兼职",
+          "新游戏试玩体验",
+          "英文文档翻译",
+          "APP地推活动",
+          "手机门店促销",
+          "品牌快闪店协助"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索任务",
+            "name": "keyword",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "task_type",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "category",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最低",
+            "name": "min_budget",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最高",
+            "name": "max_budget",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "城市/区域",
+            "name": "location",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册任务大厅关键词任务类型全部线上任务线下任务混合任务任务分类全部问卷填写内容审核试玩推广地推快闪活动门店驻点社区团购校园代理数据录入最低金额最高金额地区重置共找到 26 个任务短视频内容审核¥0.05元/条线上招募中低风险信用 A对平台上传的短视频进行内容合规性审核，判断是否包含违规内容内容审核视频编辑🏢 演示科技有限公司👥 1/1000人查看详情大学生消费习惯调研¥20元/单线上招募中低风险信用 A针对在校大学生的消费习惯调查问卷，约15分钟完成问卷填写🏢 美团点评有限公司👥 0/200人查看详情电商平台数据录入¥0.1元/条线上招募中中风险信用 A将纸质销售数据录入到电商平台后台系统，要求准确率99%以上数据录入打字速度Excel🏢 演示科技有限公司👥 0/5000人查看详情产品宣传文案撰写¥30元/单线上招募中低风险信用 AA为新产品撰写朋友圈推广文案，每条50-100字文案写作创意策划🏢 阿里巴巴信息服务有限公司👥 0/50人查看详情商品图片美化处理¥15元/单线上招募中低风险信用 AA对电商平台商品图片进行修图、调色、添加水印等处理图片处理Photoshop🏢 腾讯科技有限公司👥 0/300人查看详情在线客服兼职¥25元/小时线上招募中中风险信用 A回答平台用户的咨询问题，要求打字速度快，态度友好客服服务沟通表达🏢 拼多多信息技术有限公司👥 0/100人查看详情新游戏试玩体验¥35元/单线上招募中低风险信用 A下载试玩新上线的手机游戏，达到指定等级并提交体验报告试玩推广游戏体验🏢 拼多多信息技术有限公司👥 0/500人查看详情英文文档翻译¥200元/单线上招募中中风险信用 AA将产品说明书从英文翻译成中文，约5000字翻译服务英语专业🏢 腾讯科技有限公司👥 0/20人查看详情APP地推活动¥150元/天线下招募中中风险信用 AA在商圈/地铁站推广新APP，引导用户下载注册，底薪+提成地推活动沟通表达🏢 阿里巴巴信息服务有限公司👥 0/50人📍 北京市东城区查看详情手机门店促销¥180元/天线下招募中低风险信用 BBB在手机卖场协助销售新款手机，提供产品讲解和演示促销活动产品知识🏢 滴滴出行科技有限公司👥 0/30人📍 北京市西城区查看详情品牌快闪店协助¥220元/天线下招募中低风险信用 A协助品牌快闪店的搭建、顾客引导、活动执行活动执行快闪活动🏢 演示科技有限公司👥 0/40人📍 北京市朝阳区查看详情同城快递兼职配送¥5元/单线下招募中低风险信用 A在指定区域内进行快递包裹配送，要求熟悉路况物流配送熟悉路况🏢 美团点评有限公司👥 0/200人📍 北京市海淀区查看详情上一页1 / 3下一页",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1858,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-08-导航-任务大厅",
+          "label": "导航:任务大厅",
+          "finalUrl": "http://127.0.0.1:49084/tasks",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-08-导航-任务大厅.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-08-导航-任务大厅.png",
+          "elementCount": 307,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "搜索任务",
+            "全部 线上任务 线下任务 混合任务",
+            "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+            "最低",
+            "最高",
+            "城市/区域",
+            "重置",
+            "查看详情",
+            "上一页",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "短视频内容审核",
+          "任务描述",
+          "需求技能",
+          "任务信息",
+          "🏢 雇主信息"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "← 返回",
+          "📞 联系雇主",
+          "立即接单"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "查看信用看板 →"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册← 返回线上任务招募中短视频内容审核任务佣金¥0.05per_item已接/总名额1/1000任务分类内容审核任务描述对平台上传的短视频进行内容合规性审核，判断是否包含违规内容需求技能内容审核视频编辑任务信息📏 服务半径：10公里🏢 雇主信息查看信用看板 →演演示科技有限公司已认证信用等级：A联系人：张经理📊 信用评级依据信用极好，历史任务100%按时完成，无投诉记录✅ 资质审核过程• 营业执照已核验• 统一社会信用代码已验证• 企业法人身份已核实• 联系方式已确认📋 任务方发布管理视图发布任务数10完成任务数10总预算¥535.15投诉率0%📞 联系雇主立即接单接单前请确保已完成实名认证接单后需在规定时间内完成工作并提交成果",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-09-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49084/tasks/5",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-09-操作-查看详情.json",
+          "screenshotPath": "",
+          "elementCount": 97,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "返回",
+            "查看信用看板 →",
+            "联系雇主",
+            "立即接单"
+          ]
+        }
+      },
+      {
+        "label": "操作:下一页",
+        "url": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "任务大厅",
+          "街头问卷调查",
+          "展会现场协助",
+          "家庭保洁服务",
+          "校园信用卡代理",
+          "社区团购团长",
+          "美妆产品代理",
+          "在线家教辅导",
+          "活动跟拍服务",
+          "LOGO设计兼职",
+          "小程序开发兼职",
+          "市场调研问卷填写"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索任务",
+            "name": "keyword",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "task_type",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "category",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最低",
+            "name": "min_budget",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最高",
+            "name": "max_budget",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "城市/区域",
+            "name": "location",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册任务大厅关键词任务类型全部线上任务线下任务混合任务任务分类全部问卷填写内容审核试玩推广地推快闪活动门店驻点社区团购校园代理数据录入最低金额最高金额地区重置共找到 26 个任务街头问卷调查¥15元/份线下招募中低风险信用 A在商圈进行街头问卷调研，完成指定数量的有效问卷市场调研沟通表达🏢 演示科技有限公司👥 0/300人📍 北京市丰台区查看详情展会现场协助¥200元/天线下招募中中风险信用 AA在展会现场协助参展商进行观众登记、资料派发等工作活动执行会展服务🏢 腾讯科技有限公司👥 0/25人📍 北京市东城区查看详情家庭保洁服务¥60元/小时线下招募中低风险信用 A为客户提供家庭日常保洁服务，3小时/次家政服务清洁工作🏢 演示科技有限公司👥 0/100人📍 北京市西城区查看详情校园信用卡代理¥100佣金混合招募中高风险信用 A在大学校园推广信用卡产品，负责意向客户对接和资料收集校园代理销售推广🏢 美团点评有限公司👥 0/50人查看详情社区团购团长¥0佣金混合招募中中风险信用 A负责社区微信群运营，推广团购商品，统计订单，佣金结算社区运营销售推广🏢 演示科技有限公司👥 0/100人查看详情美妆产品代理¥0佣金混合招募中中风险信用 A代理美妆产品，通过社交媒体进行销售，无需囤货社交媒体销售推广🏢 美团点评有限公司👥 0/200人查看详情在线家教辅导¥80元/小时混合招募中低风险信用 AA为中小学生提供在线一对一辅导服务，科目不限家教辅导学科专业🏢 阿里巴巴信息服务有限公司👥 0/80人查看详情活动跟拍服务¥500元/场混合招募中低风险信用 BBB为各类活动提供摄影摄像服务，包括后期处理摄影摄像后期制作🏢 滴滴出行科技有限公司👥 0/30人查看详情LOGO设计兼职¥300元/单混合招募中低风险信用 BBB为企业客户设计LOGO，提供3个方案供选择设计服务平面设计🏢 滴滴出行科技有限公司👥 0/40人查看详情小程序开发兼职¥2000元/单线上招募中高风险信用 BBB开发一个简单的展示类小程序，5个页面以内编程开发小程序🏢 滴滴出行科技有限公司👥 0/10人查看详情市场调研问卷填写¥15元/单线上招募中低风险信用 A完成一份关于消费习惯的调查问卷，约10分钟，填写完成后提交截图问卷填写🏢 演示科技有限公司👥 0/50人查看详情APP试玩推广任务¥25元/单线上招募中低风险信用 A下载指定APP并注册账号，完成新手引导任务，截图提交试玩推广手机操作🏢 演示科技有限公司👥 0/100人查看详情上一页2 / 3下一页",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1816,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-10-操作-下一页",
+          "label": "操作:下一页",
+          "finalUrl": "http://127.0.0.1:49084/tasks",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-10-操作-下一页.json",
+          "screenshotPath": "",
+          "elementCount": 305,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "搜索任务",
+            "全部 线上任务 线下任务 混合任务",
+            "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+            "最低",
+            "最高",
+            "城市/区域",
+            "重置",
+            "查看详情",
+            "上一页",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:下一页->上一页",
+        "url": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "任务大厅",
+          "短视频内容审核",
+          "大学生消费习惯调研",
+          "电商平台数据录入",
+          "产品宣传文案撰写",
+          "商品图片美化处理",
+          "在线客服兼职",
+          "新游戏试玩体验",
+          "英文文档翻译",
+          "APP地推活动",
+          "手机门店促销",
+          "品牌快闪店协助"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索任务",
+            "name": "keyword",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "task_type",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "category",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最低",
+            "name": "min_budget",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最高",
+            "name": "max_budget",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "城市/区域",
+            "name": "location",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册任务大厅关键词任务类型全部线上任务线下任务混合任务任务分类全部问卷填写内容审核试玩推广地推快闪活动门店驻点社区团购校园代理数据录入最低金额最高金额地区重置共找到 26 个任务短视频内容审核¥0.05元/条线上招募中低风险信用 A对平台上传的短视频进行内容合规性审核，判断是否包含违规内容内容审核视频编辑🏢 演示科技有限公司👥 1/1000人查看详情大学生消费习惯调研¥20元/单线上招募中低风险信用 A针对在校大学生的消费习惯调查问卷，约15分钟完成问卷填写🏢 美团点评有限公司👥 0/200人查看详情电商平台数据录入¥0.1元/条线上招募中中风险信用 A将纸质销售数据录入到电商平台后台系统，要求准确率99%以上数据录入打字速度Excel🏢 演示科技有限公司👥 0/5000人查看详情产品宣传文案撰写¥30元/单线上招募中低风险信用 AA为新产品撰写朋友圈推广文案，每条50-100字文案写作创意策划🏢 阿里巴巴信息服务有限公司👥 0/50人查看详情商品图片美化处理¥15元/单线上招募中低风险信用 AA对电商平台商品图片进行修图、调色、添加水印等处理图片处理Photoshop🏢 腾讯科技有限公司👥 0/300人查看详情在线客服兼职¥25元/小时线上招募中中风险信用 A回答平台用户的咨询问题，要求打字速度快，态度友好客服服务沟通表达🏢 拼多多信息技术有限公司👥 0/100人查看详情新游戏试玩体验¥35元/单线上招募中低风险信用 A下载试玩新上线的手机游戏，达到指定等级并提交体验报告试玩推广游戏体验🏢 拼多多信息技术有限公司👥 0/500人查看详情英文文档翻译¥200元/单线上招募中中风险信用 AA将产品说明书从英文翻译成中文，约5000字翻译服务英语专业🏢 腾讯科技有限公司👥 0/20人查看详情APP地推活动¥150元/天线下招募中中风险信用 AA在商圈/地铁站推广新APP，引导用户下载注册，底薪+提成地推活动沟通表达🏢 阿里巴巴信息服务有限公司👥 0/50人📍 北京市东城区查看详情手机门店促销¥180元/天线下招募中低风险信用 BBB在手机卖场协助销售新款手机，提供产品讲解和演示促销活动产品知识🏢 滴滴出行科技有限公司👥 0/30人📍 北京市西城区查看详情品牌快闪店协助¥220元/天线下招募中低风险信用 A协助品牌快闪店的搭建、顾客引导、活动执行活动执行快闪活动🏢 演示科技有限公司👥 0/40人📍 北京市朝阳区查看详情同城快递兼职配送¥5元/单线下招募中低风险信用 A在指定区域内进行快递包裹配送，要求熟悉路况物流配送熟悉路况🏢 美团点评有限公司👥 0/200人📍 北京市海淀区查看详情上一页1 / 3下一页",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1858,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-11-二层操作-下一页-上一页",
+          "label": "二层操作:下一页->上一页",
+          "finalUrl": "http://127.0.0.1:49084/tasks",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-11-二层操作-下一页-上一页.json",
+          "screenshotPath": "",
+          "elementCount": 307,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "搜索任务",
+            "全部 线上任务 线下任务 混合任务",
+            "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+            "最低",
+            "最高",
+            "城市/区域",
+            "重置",
+            "查看详情",
+            "上一页",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "导航:登录",
+        "url": "http://127.0.0.1:49084/login",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "灵活就业任务撮合平台",
+          "账号密码登录"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "立即登录"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名、手机号或邮箱",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册灵活就业任务撮合平台请选择您的角色，快速进入专属工作台👷兼职用户在校学生 / 居家宝妈 / 兼职上班族浏览任务大厅，智能匹配适合您的灵活就业机会📋 任务大厅 - 海量任务任你选🔥 履约热力图 - 查看热门接单区域💰 T+1结算 - 收入自动到账📈 区域供需 - 把握市场机会演示账号worker_demo / 123456🏢企业雇主发布任务，高效匹配优质人才快速发布灵活用工需求，智能推荐匹配的工作者📝 任务发布 - 一键发布用工需求👥 智能匹配 - 精准推荐合适人才📊 任务管理 - 全生命周期跟踪💳 一键结算 - 安全便捷付款演示账号employer_demo / 123456👨‍💼平台管理员后台管理与数据统计全方位平台管理，数据驱动决策📊 后台统计 - 核心数据一目了然🏢 雇主信用 - 企业资质与信用管理🔍 任务审核 - 风控审核保障质量⚖️ 申诉处理 - 公正处理纠纷演示账号admin / admin123账号密码登录用户名/手机号/邮箱密码立即登录还没有账号？立即注册💡 点击上方角色卡片可自动填充演示账号",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-12-导航-登录",
+          "label": "导航:登录",
+          "finalUrl": "http://127.0.0.1:49084/login",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-12-导航-登录.json",
+          "screenshotPath": "",
+          "elementCount": 85,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "请输入用户名、手机号或邮箱",
+            "请输入密码",
+            "立即登录",
+            "立即注册"
+          ]
+        }
+      },
+      {
+        "label": "操作:立即登录",
+        "url": "http://127.0.0.1:49084/login",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "灵活就业任务撮合平台",
+          "账号密码登录"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "立即登录"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名、手机号或邮箱",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册灵活就业任务撮合平台请选择您的角色，快速进入专属工作台👷兼职用户在校学生 / 居家宝妈 / 兼职上班族浏览任务大厅，智能匹配适合您的灵活就业机会📋 任务大厅 - 海量任务任你选🔥 履约热力图 - 查看热门接单区域💰 T+1结算 - 收入自动到账📈 区域供需 - 把握市场机会演示账号worker_demo / 123456🏢企业雇主发布任务，高效匹配优质人才快速发布灵活用工需求，智能推荐匹配的工作者📝 任务发布 - 一键发布用工需求👥 智能匹配 - 精准推荐合适人才📊 任务管理 - 全生命周期跟踪💳 一键结算 - 安全便捷付款演示账号employer_demo / 123456👨‍💼平台管理员后台管理与数据统计全方位平台管理，数据驱动决策📊 后台统计 - 核心数据一目了然🏢 雇主信用 - 企业资质与信用管理🔍 任务审核 - 风控审核保障质量⚖️ 申诉处理 - 公正处理纠纷演示账号admin / admin123账号密码登录用户名/手机号/邮箱密码立即登录还没有账号？立即注册💡 点击上方角色卡片可自动填充演示账号请填写用户名和密码",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-13-操作-立即登录",
+          "label": "操作:立即登录",
+          "finalUrl": "http://127.0.0.1:49084/login",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-13-操作-立即登录.json",
+          "screenshotPath": "",
+          "elementCount": 86,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "请输入用户名、手机号或邮箱",
+            "请输入密码",
+            "立即登录",
+            "立即注册"
+          ]
+        }
+      },
+      {
+        "label": "导航:注册",
+        "url": "http://127.0.0.1:49084/register",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "注册账号"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "立即注册"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即登录"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "username",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入真实姓名",
+            "name": "real_name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请设置密码",
+            "name": "password",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请再次输入密码",
+            "name": "confirmPassword",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "请输入邮箱",
+            "name": "email",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入18位身份证号码，用于实名认证",
+            "name": "id_card",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：北京市海淀区",
+            "name": "location",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册注册账号用户类型 *👨‍🎓在校学生利用课余时间👩‍👧居家宝妈灵活时间💼兼职上班族增加收入🏢企业雇主发布任务用户名 *真实姓名 *密码 *确认密码 *手机号 *邮箱身份证号 (实名认证所在城市技能标签 (可多选，用于任务匹配问卷填写内容审核数据录入文案写作图片处理试玩推广客服服务地推活动促销销售物流配送活动执行摄影摄像翻译服务设计服务编程开发家教辅导社区运营销售推广家政服务ExcelPhotoshop视频编辑空闲时段 (可多选)周一至周五 上午周一至周五 下午周一至周五 晚上周六 上午周六 下午周六 晚上周日 上午周日 下午周日 晚上周末全天节假日📋 实名认证说明注册后您可以先浏览任务，但接单前需要完成实名认证（提交身份证正反面照片。 您可以在\"个人中心-实名认证页面提交审核材料。立即注册已有账号？立即登录",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-14-导航-注册",
+          "label": "导航:注册",
+          "finalUrl": "http://127.0.0.1:49084/register",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-14-导航-注册.json",
+          "screenshotPath": "",
+          "elementCount": 152,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "请输入用户名",
+            "请输入真实姓名",
+            "请设置密码",
+            "请再次输入密码",
+            "请输入手机号",
+            "请输入邮箱",
+            "请输入18位身份证号码，用于实名认证",
+            "如：北京市海淀区",
+            "问卷填写",
+            "内容审核",
+            "数据录入",
+            "文案写作",
+            "图片处理",
+            "试玩推广",
+            "客服服务",
+            "地推活动",
+            "促销销售",
+            "物流配送",
+            "活动执行",
+            "摄影摄像",
+            "翻译服务",
+            "设计服务",
+            "编程开发",
+            "家教辅导",
+            "社区运营"
+          ]
+        }
+      },
+      {
+        "label": "操作:立即注册",
+        "url": "http://127.0.0.1:49084/register",
+        "title": "灵活就业任务撮合平台",
+        "headings": [
+          "注册账号"
+        ],
+        "navLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "立即注册"
+        ],
+        "links": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即登录"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "username",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入真实姓名",
+            "name": "real_name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请设置密码",
+            "name": "password",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请再次输入密码",
+            "name": "confirmPassword",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "请输入邮箱",
+            "name": "email",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入18位身份证号码，用于实名认证",
+            "name": "id_card",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：北京市海淀区",
+            "name": "location",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "灵活就业平台首页任务大厅登录注册注册账号用户类型 *👨‍🎓在校学生利用课余时间👩‍👧居家宝妈灵活时间💼兼职上班族增加收入🏢企业雇主发布任务用户名 *真实姓名 *密码 *确认密码 *手机号 *邮箱身份证号 (实名认证所在城市技能标签 (可多选，用于任务匹配问卷填写内容审核数据录入文案写作图片处理试玩推广客服服务地推活动促销销售物流配送活动执行摄影摄像翻译服务设计服务编程开发家教辅导社区运营销售推广家政服务ExcelPhotoshop视频编辑空闲时段 (可多选)周一至周五 上午周一至周五 下午周一至周五 晚上周六 上午周六 下午周六 晚上周日 上午周日 下午周日 晚上周末全天节假日📋 实名认证说明注册后您可以先浏览任务，但接单前需要完成实名认证（提交身份证正反面照片。 您可以在\"个人中心-实名认证页面提交审核材料。立即注册已有账号？立即登录请填写用户名和密码",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1600,
+          "scrollWidth": 1952,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89084-cycle97-repair-structure-15-操作-立即注册",
+          "label": "操作:立即注册",
+          "finalUrl": "http://127.0.0.1:49084/register",
+          "title": "灵活就业任务撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-15-操作-立即注册.json",
+          "screenshotPath": "",
+          "elementCount": 153,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "灵活就业平台",
+            "首页",
+            "任务大厅",
+            "登录",
+            "注册",
+            "请输入用户名",
+            "请输入真实姓名",
+            "请设置密码",
+            "请再次输入密码",
+            "请输入手机号",
+            "请输入邮箱",
+            "请输入18位身份证号码，用于实名认证",
+            "如：北京市海淀区",
+            "问卷填写",
+            "内容审核",
+            "数据录入",
+            "文案写作",
+            "图片处理",
+            "试玩推广",
+            "客服服务",
+            "地推活动",
+            "促销销售",
+            "物流配送",
+            "活动执行",
+            "摄影摄像",
+            "翻译服务",
+            "设计服务",
+            "编程开发",
+            "家教辅导",
+            "社区运营"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "灵活就业平台",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "灵活就业平台",
+        "label": "查看详情",
+        "ordinal": 1,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看详情",
+        "ordinal": 1,
+        "unsafe": false
+      },
+      {
+        "nav": "任务大厅",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "任务大厅",
+        "label": "下一页",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "任务大厅",
+        "label": "下一页->上一页",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "登录",
+        "label": "立即登录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "注册",
+        "label": "立即注册",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-01-首屏.png",
+        "elementCount": 231,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "查看详情",
+          "进入任务大厅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-02-导航-灵活就业平台",
+        "label": "导航:灵活就业平台",
+        "finalUrl": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-02-导航-灵活就业平台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-02-导航-灵活就业平台.png",
+        "elementCount": 231,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "查看详情",
+          "进入任务大厅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-03-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-03-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-03-操作-查看详情.png",
+        "elementCount": 97,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-04-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/6",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-04-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-04-操作-查看详情.png",
+        "elementCount": 96,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-05-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-05-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-05-导航-首页.png",
+        "elementCount": 231,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "查看详情",
+          "进入任务大厅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-06-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-06-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-06-操作-查看详情.png",
+        "elementCount": 97,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-07-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/6",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-07-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-07-操作-查看详情.png",
+        "elementCount": 96,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-08-导航-任务大厅",
+        "label": "导航:任务大厅",
+        "finalUrl": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-08-导航-任务大厅.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-08-导航-任务大厅.png",
+        "elementCount": 307,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "搜索任务",
+          "全部 线上任务 线下任务 混合任务",
+          "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+          "最低",
+          "最高",
+          "城市/区域",
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-09-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-09-操作-查看详情.json",
+        "screenshotPath": "",
+        "elementCount": 97,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-10-操作-下一页",
+        "label": "操作:下一页",
+        "finalUrl": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-10-操作-下一页.json",
+        "screenshotPath": "",
+        "elementCount": 305,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "搜索任务",
+          "全部 线上任务 线下任务 混合任务",
+          "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+          "最低",
+          "最高",
+          "城市/区域",
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-11-二层操作-下一页-上一页",
+        "label": "二层操作:下一页->上一页",
+        "finalUrl": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-11-二层操作-下一页-上一页.json",
+        "screenshotPath": "",
+        "elementCount": 307,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "搜索任务",
+          "全部 线上任务 线下任务 混合任务",
+          "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+          "最低",
+          "最高",
+          "城市/区域",
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-12-导航-登录",
+        "label": "导航:登录",
+        "finalUrl": "http://127.0.0.1:49084/login",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-12-导航-登录.json",
+        "screenshotPath": "",
+        "elementCount": 85,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "请输入用户名、手机号或邮箱",
+          "请输入密码",
+          "立即登录",
+          "立即注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-13-操作-立即登录",
+        "label": "操作:立即登录",
+        "finalUrl": "http://127.0.0.1:49084/login",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-13-操作-立即登录.json",
+        "screenshotPath": "",
+        "elementCount": 86,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "请输入用户名、手机号或邮箱",
+          "请输入密码",
+          "立即登录",
+          "立即注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-14-导航-注册",
+        "label": "导航:注册",
+        "finalUrl": "http://127.0.0.1:49084/register",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-14-导航-注册.json",
+        "screenshotPath": "",
+        "elementCount": 152,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "请输入用户名",
+          "请输入真实姓名",
+          "请设置密码",
+          "请再次输入密码",
+          "请输入手机号",
+          "请输入邮箱",
+          "请输入18位身份证号码，用于实名认证",
+          "如：北京市海淀区",
+          "问卷填写",
+          "内容审核",
+          "数据录入",
+          "文案写作",
+          "图片处理",
+          "试玩推广",
+          "客服服务",
+          "地推活动",
+          "促销销售",
+          "物流配送",
+          "活动执行",
+          "摄影摄像",
+          "翻译服务",
+          "设计服务",
+          "编程开发",
+          "家教辅导",
+          "社区运营"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-15-操作-立即注册",
+        "label": "操作:立即注册",
+        "finalUrl": "http://127.0.0.1:49084/register",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-15-操作-立即注册.json",
+        "screenshotPath": "",
+        "elementCount": 153,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "请输入用户名",
+          "请输入真实姓名",
+          "请设置密码",
+          "请再次输入密码",
+          "请输入手机号",
+          "请输入邮箱",
+          "请输入18位身份证号码，用于实名认证",
+          "如：北京市海淀区",
+          "问卷填写",
+          "内容审核",
+          "数据录入",
+          "文案写作",
+          "图片处理",
+          "试玩推广",
+          "客服服务",
+          "地推活动",
+          "促销销售",
+          "物流配送",
+          "活动执行",
+          "摄影摄像",
+          "翻译服务",
+          "设计服务",
+          "编程开发",
+          "家教辅导",
+          "社区运营"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49084/",
+    "representativeScreenshotLabel": "灵活就业，轻松赚钱"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 15,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-01-首屏.png",
+        "elementCount": 231,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "查看详情",
+          "进入任务大厅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-02-导航-灵活就业平台",
+        "label": "导航:灵活就业平台",
+        "finalUrl": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-02-导航-灵活就业平台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-02-导航-灵活就业平台.png",
+        "elementCount": 231,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "查看详情",
+          "进入任务大厅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-03-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-03-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-03-操作-查看详情.png",
+        "elementCount": 97,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-04-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/6",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-04-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-04-操作-查看详情.png",
+        "elementCount": 96,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-05-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49084/",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-05-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-05-导航-首页.png",
+        "elementCount": 231,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "立即注册",
+          "登录账号",
+          "查看详情",
+          "进入任务大厅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-06-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-06-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-06-操作-查看详情.png",
+        "elementCount": 97,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-07-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/6",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-07-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-07-操作-查看详情.png",
+        "elementCount": 96,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-08-导航-任务大厅",
+        "label": "导航:任务大厅",
+        "finalUrl": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-08-导航-任务大厅.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-08-导航-任务大厅.png",
+        "elementCount": 307,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "搜索任务",
+          "全部 线上任务 线下任务 混合任务",
+          "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+          "最低",
+          "最高",
+          "城市/区域",
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-09-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49084/tasks/5",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-09-操作-查看详情.json",
+        "screenshotPath": "",
+        "elementCount": 97,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "返回",
+          "查看信用看板 →",
+          "联系雇主",
+          "立即接单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-10-操作-下一页",
+        "label": "操作:下一页",
+        "finalUrl": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-10-操作-下一页.json",
+        "screenshotPath": "",
+        "elementCount": 305,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "搜索任务",
+          "全部 线上任务 线下任务 混合任务",
+          "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+          "最低",
+          "最高",
+          "城市/区域",
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-11-二层操作-下一页-上一页",
+        "label": "二层操作:下一页->上一页",
+        "finalUrl": "http://127.0.0.1:49084/tasks",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-11-二层操作-下一页-上一页.json",
+        "screenshotPath": "",
+        "elementCount": 307,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "搜索任务",
+          "全部 线上任务 线下任务 混合任务",
+          "全部 问卷填写 内容审核 试玩推广 地推 快闪活动 门店驻点 社区团购 校园代理 数据录入",
+          "最低",
+          "最高",
+          "城市/区域",
+          "重置",
+          "查看详情",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-12-导航-登录",
+        "label": "导航:登录",
+        "finalUrl": "http://127.0.0.1:49084/login",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-12-导航-登录.json",
+        "screenshotPath": "",
+        "elementCount": 85,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "请输入用户名、手机号或邮箱",
+          "请输入密码",
+          "立即登录",
+          "立即注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-13-操作-立即登录",
+        "label": "操作:立即登录",
+        "finalUrl": "http://127.0.0.1:49084/login",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-13-操作-立即登录.json",
+        "screenshotPath": "",
+        "elementCount": 86,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "请输入用户名、手机号或邮箱",
+          "请输入密码",
+          "立即登录",
+          "立即注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-14-导航-注册",
+        "label": "导航:注册",
+        "finalUrl": "http://127.0.0.1:49084/register",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-14-导航-注册.json",
+        "screenshotPath": "",
+        "elementCount": 152,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "请输入用户名",
+          "请输入真实姓名",
+          "请设置密码",
+          "请再次输入密码",
+          "请输入手机号",
+          "请输入邮箱",
+          "请输入18位身份证号码，用于实名认证",
+          "如：北京市海淀区",
+          "问卷填写",
+          "内容审核",
+          "数据录入",
+          "文案写作",
+          "图片处理",
+          "试玩推广",
+          "客服服务",
+          "地推活动",
+          "促销销售",
+          "物流配送",
+          "活动执行",
+          "摄影摄像",
+          "翻译服务",
+          "设计服务",
+          "编程开发",
+          "家教辅导",
+          "社区运营"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89084-cycle97-repair-structure-15-操作-立即注册",
+        "label": "操作:立即注册",
+        "finalUrl": "http://127.0.0.1:49084/register",
+        "title": "灵活就业任务撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89084/runtime-check/codex-20260608-cycle97-repair/may-89084-cycle97-repair-structure-15-操作-立即注册.json",
+        "screenshotPath": "",
+        "elementCount": 153,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "灵活就业平台",
+          "首页",
+          "任务大厅",
+          "登录",
+          "注册",
+          "请输入用户名",
+          "请输入真实姓名",
+          "请设置密码",
+          "请再次输入密码",
+          "请输入手机号",
+          "请输入邮箱",
+          "请输入18位身份证号码，用于实名认证",
+          "如：北京市海淀区",
+          "问卷填写",
+          "内容审核",
+          "数据录入",
+          "文案写作",
+          "图片处理",
+          "试玩推广",
+          "客服服务",
+          "地推活动",
+          "促销销售",
+          "物流配送",
+          "活动执行",
+          "摄影摄像",
+          "翻译服务",
+          "设计服务",
+          "编程开发",
+          "家教辅导",
+          "社区运营"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1984,
+    "height": 1600,
+    "scrollWidth": 1952,
+    "scrollHeight": 2511
+  },
+  "initialBodyTextPreview": "灵活就业平台\n首页\n任务大厅\n登录\n注册\n灵活就业，轻松赚钱\n\n为在校学生、居家宝妈、兼职上班族提供优质灵活就业机会\n\n立即注册\n登录账号\n为什么选择我们\n🔒\n实名认证\n\n所有用户和企业均需实名认证，保障交易安全\n\n💰\nT+1结算\n\n任务完成后次日自动结算，支持多种提现方式\n\n🎯\n智能匹配\n\n根据技能、位置、时间智能推荐合适任务\n\n🛡️\n风控保障\n\n多级审核机制，确保任务真实可靠\n\n最新任务\n短视频内容审核\n¥0.05元/条\n线上\n招募中\n低风险\n信用 A\n\n对平台上传的短视频进行内容合规性审核，判断是否包含违规内容\n\n内容审核\n视频编辑\n🏢 演示科技有限公司\n👥 1/1000人\n查看详情\n大学生消费习惯调研\n¥20元/单\n线上\n招募中\n低风险\n信用 A\n\n针对在校大学生的消费习惯调查问卷，约15分钟完成\n\n问卷填写\n🏢 美团点评有限公司\n👥 0/200人\n查看详情\n电商平台数据录入\n¥0.1元/条\n线上\n招募中\n中风险\n信用 A\n\n将纸质销售数据录入到电商平台后台系统，要求准确率99%以上\n\n数据录入\n打字速度\nExcel\n🏢 演示科技有限公司\n👥 0/5000人\n查看详情\n产品宣传文案撰写\n¥30元/单\n线上\n招募中\n低风险\n信用 AA\n\n为新产品撰写朋友圈推广文案，每条50-100字\n\n文案写作\n创意策划\n🏢 阿里巴巴信息服务有限公司\n👥 0/50人\n查看详情\n商品图片美化处理\n¥15元/单\n线上\n招募中\n低风险\n信用 AA\n\n对电商平台商品图片进行修图、调色、添加水印等处理\n\n图片处理\nPhotoshop\n🏢 腾讯科技有限公司\n👥 0/300人\n查看详情\n在线客服兼职\n¥25元/小时\n线上\n招募中\n中风险\n信用 A\n\n回答平台用户的咨询问题，要求打字速度快，态度友好\n\n客服服务\n沟通表达\n🏢 拼多多信息技术有限公司\n👥 0/100人\n查看详情\n新游戏试玩体验\n¥35元/单\n线上\n招募中\n低风险\n信用 A\n\n下载试玩新上线的手机游戏，达到指定等级并提交体验报告\n\n试玩推广\n游戏体验\n🏢 拼多多信息技术有限公司\n👥 0/500人\n查看详情\n英文文档翻译\n¥200元/单\n线上\n招募中\n中风险\n信用 AA\n\n将产品说明书从英文翻译成中文，约5000字\n\n翻译服务\n英语专业\n🏢 腾讯科技有限公司\n👥 0/20人\n查看详情\n进入任务大厅\n适合人群\n👨‍🎓\n在校学生\n\n利用课余时间赚取生活费，积累社会实践经验\n\n👩‍👧\n居家宝妈\n\n时间灵活，在家即可工作，兼顾家庭与收入\n\n💼\n兼职上班族\n\n下班后和周末做副业，增加额外收入来源",
+  "bodyTextPreview": "灵活就业平台\n首页\n任务大厅\n登录\n注册\n灵活就业，轻松赚钱\n\n为在校学生、居家宝妈、兼职上班族提供优质灵活就业机会\n\n立即注册\n登录账号\n为什么选择我们\n🔒\n实名认证\n\n所有用户和企业均需实名认证，保障交易安全\n\n💰\nT+1结算\n\n任务完成后次日自动结算，支持多种提现方式\n\n🎯\n智能匹配\n\n根据技能、位置、时间智能推荐合适任务\n\n🛡️\n风控保障\n\n多级审核机制，确保任务真实可靠\n\n最新任务\n短视频内容审核\n¥0.05元/条\n线上\n招募中\n低风险\n信用 A\n\n对平台上传的短视频进行内容合规性审核，判断是否包含违规内容\n\n内容审核\n视频编辑\n🏢 演示科技有限公司\n👥 1/1000人\n查看详情\n大学生消费习惯调研\n¥20元/单\n线上\n招募中\n低风险\n信用 A\n\n针对在校大学生的消费习惯调查问卷，约15分钟完成\n\n问卷填写\n🏢 美团点评有限公司\n👥 0/200人\n查看详情\n电商平台数据录入\n¥0.1元/条\n线上\n招募中\n中风险\n信用 A\n\n将纸质销售数据录入到电商平台后台系统，要求准确率99%以上\n\n数据录入\n打字速度\nExcel\n🏢 演示科技有限公司\n👥 0/5000人\n查看详情\n产品宣传文案撰写\n¥30元/单\n线上\n招募中\n低风险\n信用 AA\n\n为新产品撰写朋友圈推广文案，每条50-100字\n\n文案写作\n创意策划\n🏢 阿里巴巴信息服务有限公司\n👥 0/50人\n查看详情\n商品图片美化处理\n¥15元/单\n线上\n招募中\n低风险\n信用 AA\n\n对电商平台商品图片进行修图、调色、添加水印等处理\n\n图片处理\nPhotoshop\n🏢 腾讯科技有限公司\n👥 0/300人\n查看详情\n在线客服兼职\n¥25元/小时\n线上\n招募中\n中风险\n信用 A\n\n回答平台用户的咨询问题，要求打字速度快，态度友好\n\n客服服务\n沟通表达\n🏢 拼多多信息技术有限公司\n👥 0/100人\n查看详情\n新游戏试玩体验\n¥35元/单\n线上\n招募中\n低风险\n信用 A\n\n下载试玩新上线的手机游戏，达到指定等级并提交体验报告\n\n试玩推广\n游戏体验\n🏢 拼多多信息技术有限公司\n👥 0/500人\n查看详情\n英文文档翻译\n¥200元/单\n线上\n招募中\n中风险\n信用 AA\n\n将产品说明书从英文翻译成中文，约5000字\n\n翻译服务\n英语专业\n🏢 腾讯科技有限公司\n👥 0/20人\n查看详情\n进入任务大厅\n适合人群\n👨‍🎓\n在校学生\n\n利用课余时间赚取生活费，积累社会实践经验\n\n👩‍👧\n居家宝妈\n\n时间灵活，在家即可工作，兼顾家庭与收入\n\n💼\n兼职上班族\n\n下班后和周末做副业，增加额外收入来源",
+  "apiBase": "http://127.0.0.1:59084/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks/5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?page=2&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49084/api/tasks?pageSize=8"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-08T06:13:20.908Z\",\"uptime\":6538.424447792,\"database\":\"connected\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/tasks?pageSize=8",
+      "path": "/api/tasks?pageSize=8",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":5,\"employer_id\":1,\"title\":\"短视频内容审核\",\"description\":\"对平台上传的短视频进行内容合规性审核，判断是否包含违规内容\",\"task_type\":\"online\",\"category\":\"内容审核\",\"skills_required\":[\"内容审核\",\"视频编辑\"],\"location\":null,\"latitude\":null,\"longitude\":null,\"radius\":10,\"budget\":0.05,\"unit\":\"per_item\",\"total_count\":1000,\"accepted_count\":1,\"start_time\":null,\"end_time\":null,\"status\":\"published\",\"review_note\":null,\"risk_level\":\"low\",\"created_at\":\"2026-06-08 00:19:16\",\"updated_at\":\"2026-06-08 00:32:05\",\"company_name\":\"演示科技有限公司\",\"credit_ra"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/tasks/5",
+      "path": "/api/tasks/5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":5,\"employer_id\":1,\"title\":\"短视频内容审核\",\"description\":\"对平台上传的短视频进行内容合规性审核，判断是否包含违规内容\",\"task_type\":\"online\",\"category\":\"内容审核\",\"skills_required\":[\"内容审核\",\"视频编辑\"],\"location\":null,\"latitude\":null,\"longitude\":null,\"radius\":10,\"budget\":0.05,\"unit\":\"per_item\",\"total_count\":1000,\"accepted_count\":1,\"start_time\":null,\"end_time\":null,\"status\":\"published\",\"review_note\":null,\"risk_level\":\"low\",\"created_at\":\"2026-06-08 00:19:16\",\"updated_at\":\"2026-06-08 00:32:05\",\"company_name\":\"演示科技有限公司\",\"contact_name\":\"张经理"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/tasks/6",
+      "path": "/api/tasks/6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":6,\"employer_id\":4,\"title\":\"大学生消费习惯调研\",\"description\":\"针对在校大学生的消费习惯调查问卷，约15分钟完成\",\"task_type\":\"online\",\"category\":\"问卷填写\",\"skills_required\":[\"问卷填写\"],\"location\":null,\"latitude\":null,\"longitude\":null,\"radius\":10,\"budget\":20,\"unit\":\"per_task\",\"total_count\":200,\"accepted_count\":0,\"start_time\":null,\"end_time\":null,\"status\":\"published\",\"review_note\":null,\"risk_level\":\"low\",\"created_at\":\"2026-06-08 00:19:16\",\"updated_at\":\"2026-06-08 00:19:16\",\"company_name\":\"美团点评有限公司\",\"contact_name\":\"张总\",\"contact_pho"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/tasks?page=1&pageSize=12",
+      "path": "/api/tasks?page=1&pageSize=12",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":5,\"employer_id\":1,\"title\":\"短视频内容审核\",\"description\":\"对平台上传的短视频进行内容合规性审核，判断是否包含违规内容\",\"task_type\":\"online\",\"category\":\"内容审核\",\"skills_required\":[\"内容审核\",\"视频编辑\"],\"location\":null,\"latitude\":null,\"longitude\":null,\"radius\":10,\"budget\":0.05,\"unit\":\"per_item\",\"total_count\":1000,\"accepted_count\":1,\"start_time\":null,\"end_time\":null,\"status\":\"published\",\"review_note\":null,\"risk_level\":\"low\",\"created_at\":\"2026-06-08 00:19:16\",\"updated_at\":\"2026-06-08 00:32:05\",\"company_name\":\"演示科技有限公司\",\"credit_ra"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/tasks?page=2&pageSize=12",
+      "path": "/api/tasks?page=2&pageSize=12",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":17,\"employer_id\":1,\"title\":\"街头问卷调查\",\"description\":\"在商圈进行街头问卷调研，完成指定数量的有效问卷\",\"task_type\":\"offline\",\"category\":\"市场调研\",\"skills_required\":[\"市场调研\",\"沟通表达\"],\"location\":\"北京市丰台区\",\"latitude\":39.80526075574569,\"longitude\":116.30663715749849,\"radius\":10,\"budget\":15,\"unit\":\"per_questionnaire\",\"total_count\":300,\"accepted_count\":0,\"start_time\":null,\"end_time\":null,\"status\":\"published\",\"review_note\":null,\"risk_level\":\"low\",\"created_at\":\"2026-06-08 00:19:16\",\"updated_at\":\"2026-06-08 00:19:16\",\"com"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59084/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/chunk-PJEEZAML.js?v=337a5368",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49084/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/chunk-PJEEZAML.js?v=337a5368",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/chunk-PJEEZAML.js?v=337a5368",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/chunk-PJEEZAML.js?v=337a5368",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/chunk-PJEEZAML.js?v=337a5368",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/chunk-PJEEZAML.js?v=337a5368",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/chunk-PJEEZAML.js?v=337a5368",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49084/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"new-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49084/register",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"new-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49084/register",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49084/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/chunk-PJEEZAML.js?v=337a5368",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49084/node_modules/.vite/deps/react-router-dom.js?v=337a5368",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
