@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from "react"
-import { Send, Bot, User, BookOpen, ChevronDown, ChevronUp, Download, ArrowRight, CheckCircle2, Link2, Trash2, XCircle } from "lucide-react"
+import { Send, Bot, User, BookOpen, ChevronDown, ChevronUp, Download, ArrowRight, CheckCircle2, Link2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useChatStore } from "@/stores/useChatStore"
 import { useBusinessStore } from "@/stores/useBusinessStore"
 import { knowledgeNodes, knowledgeEdges } from "@/mocks/knowledgeGraph"
-import { offlinePackages, deptServices } from "@/mocks/deptServices"
+import { offlinePackages } from "@/mocks/deptServices"
+import { deptServices } from "@/mocks/deptServices"
 import { useECharts } from "@/hooks/useECharts"
 import { cn } from "@/lib/utils"
 import type { KnowledgeNode } from "@/types"
@@ -15,12 +16,9 @@ const nodeColors: Record<KnowledgeNode["type"], string> = {
 const nodeLabels: Record<KnowledgeNode["type"], string> = {
   policy: "政策", condition: "条件", clause: "条款", service: "服务",
 }
-const relationLabels: Record<string, string> = {
-  references: "引用", requires: "前置条件", excludes: "互斥", triggers: "触发",
-}
 
 function getRelatedNodes(nodeId: string) {
-  return knowledgeEdges
+  const direct = knowledgeEdges
     .filter((e) => e.source === nodeId || e.target === nodeId)
     .map((e) => {
       const relatedId = e.source === nodeId ? e.target : e.source
@@ -28,9 +26,10 @@ function getRelatedNodes(nodeId: string) {
       return relatedNode ? { ...relatedNode, relation: e.relation } : null
     })
     .filter(Boolean) as (KnowledgeNode & { relation: string })[]
+  return direct
 }
 
-function PolicyRef({ node, onConsult }: { node: KnowledgeNode; onConsult: (label: string) => void }) {
+function PolicyRef({ node }: { node: KnowledgeNode }) {
   const [open, setOpen] = useState(false)
   const related = getRelatedNodes(node.id)
   return (
@@ -51,17 +50,12 @@ function PolicyRef({ node, onConsult }: { node: KnowledgeNode; onConsult: (label
                 {related.map((r) => (
                   <div key={r.id} className="flex items-center gap-1 pl-2">
                     <Link2 className="h-2.5 w-2.5 text-gray-400" />
-                    <span className="inline-block rounded px-1 py-px text-[10px] text-white" style={{ background: nodeColors[r.type] }}>{nodeLabels[r.type]}</span>
-                    <span className="text-gray-600">{r.label}</span>
-                    <span className="text-gray-300">({relationLabels[r.relation] ?? r.relation})</span>
+                    <span className="text-gray-500">[{nodeLabels[r.type]}] {r.label}</span>
+                    <span className="text-gray-300">({r.relation})</span>
                   </div>
                 ))}
               </div>
             )}
-            <button onClick={() => onConsult(node.label)}
-              className="mt-1.5 inline-flex items-center gap-1 rounded bg-blue-50 px-2 py-0.5 text-[11px] font-medium text-[#1A56DB] hover:bg-blue-100 transition-colors">
-              <ArrowRight className="h-2.5 w-2.5" />去咨询
-            </button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -116,14 +110,10 @@ export default function Assistant() {
     setTimeout(() => setToast(null), 3000)
   }, [submitApplication, recordPreference])
 
-  const handleConsult = useCallback((label: string) => {
-    sendMessage(`请详细解读：${label}`)
-  }, [sendMessage])
-
   const chartRef = useECharts({
     tooltip: {
       formatter: (p: unknown) => {
-        const params = p as { data?: { name?: string } }
+        const params = p as { data?: { name?: string; category?: string } }
         const node = knowledgeNodes.find((n) => n.label === params.data?.name)
         return node ? `<b>${node.label}</b><br/>类型：${nodeLabels[node.type]}<br/>${node.content}` : params.data?.name || ""
       },
@@ -133,8 +123,7 @@ export default function Assistant() {
       label: { show: true, fontSize: 11, color: "#374151" },
       force: { repulsion: 180, edgeLength: [80, 160] },
       edgeSymbol: ["none", "arrow"],
-      edgeLabel: { fontSize: 9, formatter: (p: unknown) => relationLabels[(p as { data?: { relation?: string } }).data?.relation ?? ""] ?? "" },
-      emphasis: { focus: "adjacency", lineStyle: { width: 3 } },
+      edgeLabel: { fontSize: 9, formatter: (p: unknown) => (p as { data?: { relation?: string } }).data?.relation || "" },
       data: knowledgeNodes.map((n) => ({ name: n.label, category: n.type, symbolSize: n.type === "policy" ? 36 : 28, itemStyle: { color: nodeColors[n.type] } })),
       edges: knowledgeEdges.map((e) => ({ source: knowledgeNodes.find((n) => n.id === e.source)!.label, target: knowledgeNodes.find((n) => n.id === e.target)!.label, relation: e.relation })),
     }],
@@ -143,19 +132,22 @@ export default function Assistant() {
   const chartElRef = useRef<HTMLDivElement | null>(null)
   useEffect(() => { chartElRef.current = chartRef.current }, [chartRef])
 
+  const handleChartClick = useCallback((params: unknown) => {
+    const p = params as { name?: string }
+    const node = knowledgeNodes.find((n) => n.label === p.name)
+    if (node) setSelectedNode(node)
+  }, [])
+
   useEffect(() => {
     const el = chartElRef.current
     if (!el) return
     let inst: import("echarts").ECharts | undefined
     import("echarts").then((echarts) => {
       inst = echarts.getInstanceByDom(el)
-      inst?.on("click", (params: any) => {
-        const node = knowledgeNodes.find((n) => n.label === params.name)
-        if (node) setSelectedNode(node)
-      })
+      inst?.on("click", handleChartClick)
     })
-    return () => { inst?.off("click") }
-  }, [])
+    return () => { inst?.off("click", handleChartClick) }
+  }, [handleChartClick])
 
   const handleDownloadPkg = (pkgId: string) => {
     setDlProgress((p) => ({ ...p, [pkgId]: 0 }))
@@ -167,11 +159,6 @@ export default function Assistant() {
       else setCachedPkgs((c) => ({ ...c, [pkgId]: { cachedAt: new Date().toLocaleString("zh-CN") } }))
     }
     requestAnimationFrame(tick)
-  }
-
-  const handleClearCache = (pkgId: string) => {
-    setCachedPkgs((c) => { const next = { ...c }; delete next[pkgId]; return next })
-    setDlProgress((p) => { const next = { ...p }; delete next[pkgId]; return next })
   }
 
   const handleSend = () => {
@@ -198,7 +185,7 @@ export default function Assistant() {
               </div>
               <div className={cn("max-w-[75%] rounded-2xl px-4 py-2.5 text-sm shadow-sm", msg.role === "user" ? "rounded-br bg-blue-500 text-white" : "rounded-bl bg-gray-50 text-gray-800")}>
                 <p className="whitespace-pre-wrap">{msg.content}</p>
-                {msg.references?.map((ref) => <PolicyRef key={ref.id} node={ref} onConsult={handleConsult} />)}
+                {msg.references?.map((ref) => <PolicyRef key={ref.id} node={ref} />)}
                 {msg.actionLink && msg.role === "assistant" && (
                   <button onClick={() => handleActionLink(msg.actionLink!.serviceId, msg.actionLink!.label)}
                     className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-[#1A56DB] px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition-colors">
@@ -213,7 +200,7 @@ export default function Assistant() {
         </div>
 
         <div className="border-t px-4 py-2">
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex gap-2 overflow-x-auto pb-2">
             {suggestedQuestions.map((q) => (
               <button key={q} onClick={() => sendMessage(q)}
                 className="shrink-0 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs text-blue-600 transition hover:bg-blue-100">{q}</button>
@@ -245,10 +232,10 @@ export default function Assistant() {
             className="rounded-xl bg-white shadow-sm p-4 border border-blue-100">
             <div className="flex items-center justify-between mb-2">
               <h4 className="text-sm font-semibold text-gray-800 flex items-center gap-2">
-                <span className="inline-block rounded px-1.5 py-0.5 text-[10px] font-medium text-white" style={{ background: nodeColors[selectedNode.type] }}>{nodeLabels[selectedNode.type]}</span>
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: nodeColors[selectedNode.type] }} />
                 {selectedNode.label}
               </h4>
-              <button onClick={() => setSelectedNode(null)} className="text-gray-400 hover:text-gray-600"><XCircle className="h-4 w-4" /></button>
+              <button onClick={() => setSelectedNode(null)} className="text-gray-400 hover:text-gray-600 text-xs">关闭</button>
             </div>
             <p className="text-xs text-gray-500 mb-2">{selectedNode.content}</p>
             {relatedToSelected.length > 0 && (
@@ -257,23 +244,18 @@ export default function Assistant() {
                 {relatedToSelected.map((r) => (
                   <div key={r.id} className="flex items-center gap-1 text-xs text-gray-500">
                     <Link2 className="h-3 w-3" />
-                    <span className="inline-block rounded px-1 py-px text-[10px] text-white" style={{ background: nodeColors[r.type] }}>{nodeLabels[r.type]}</span>
-                    {r.label} <span className="text-gray-300">({relationLabels[r.relation] ?? r.relation})</span>
+                    <span className="w-2 h-2 rounded-full" style={{ background: nodeColors[r.type] }} />
+                    {r.label} <span className="text-gray-300">({r.relation})</span>
                   </div>
                 ))}
               </div>
             )}
-            {svcFromSelected ? (
+            {svcFromSelected && (
               <button onClick={() => handleActionLink(svcFromSelected.id, `办理${svcFromSelected.name}`)}
                 className="w-full rounded-lg bg-[#1A56DB] px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition-colors flex items-center justify-center gap-1">
                 <ArrowRight className="h-3 w-3" />办理此服务
               </button>
-            ) : selectedNode.type === "policy" ? (
-              <button onClick={() => handleConsult(selectedNode.label)}
-                className="w-full rounded-lg bg-[#1A56DB] px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition-colors flex items-center justify-center gap-1">
-                <BookOpen className="h-3 w-3" />查看条款解读
-              </button>
-            ) : null}
+            )}
           </motion.div>
         )}
 
@@ -281,36 +263,20 @@ export default function Assistant() {
           <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
             <Download className="h-4 w-4 text-[#1A56DB]" />离线服务包
           </h3>
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             {offlinePackages.map((pkg) => {
-              const cached = cachedPkgs[pkg.id]
-              const prog = dlProgress[pkg.id]
-              const downloading = prog !== undefined && prog < 100
-              const downloaded = !!cached
+              const cached = cachedPkgs[pkg.id], prog = dlProgress[pkg.id]
+              const downloading = prog !== undefined && prog < 100, downloaded = !!cached
               return (
-                <div key={pkg.id} className="rounded-lg border border-gray-100 p-2.5">
-                  <div className="flex items-center gap-2 text-xs">
-                    <span className="flex-1 text-gray-700 font-medium truncate">{pkg.name}</span>
-                    <span className="text-gray-400 shrink-0">{pkg.size}</span>
-                    <span className="text-gray-300 shrink-0">{pkg.version}</span>
-                  </div>
-                  {downloading && (
-                    <div className="mt-1.5 h-1.5 rounded-full bg-gray-100 overflow-hidden">
-                      <motion.div className="h-full rounded-full bg-blue-500" initial={{ width: 0 }} animate={{ width: `${prog}%` }} transition={{ duration: 0.3 }} />
-                    </div>
-                  )}
-                  <div className="mt-1.5 flex items-center justify-end gap-2">
-                    {downloaded ? (
-                      <>
-                        <span className="flex items-center gap-0.5 text-[11px] text-emerald-600"><CheckCircle2 className="h-3 w-3" />已缓存 {cached.cachedAt}</span>
-                        <button onClick={() => handleClearCache(pkg.id)} className="flex items-center gap-0.5 text-[11px] text-gray-400 hover:text-red-500 transition-colors"><Trash2 className="h-3 w-3" />清除缓存</button>
-                      </>
-                    ) : !downloading ? (
-                      <button onClick={() => handleDownloadPkg(pkg.id)} className="flex items-center gap-0.5 rounded px-2 py-0.5 text-[11px] font-medium text-[#1A56DB] bg-blue-50 hover:bg-blue-100 transition-colors"><Download className="h-3 w-3" />下载缓存</button>
-                    ) : (
-                      <span className="text-[11px] text-blue-500">{prog}%</span>
-                    )}
-                  </div>
+                <div key={pkg.id} className="flex items-center gap-2 text-xs">
+                  <span className="flex-1 text-gray-700 truncate">{pkg.name}</span>
+                  <span className="text-gray-400 shrink-0">{pkg.size}</span>
+                  {downloading && <span className="text-blue-500 shrink-0">{prog}%</span>}
+                  {downloaded ? (
+                    <span className="flex items-center gap-0.5 text-emerald-600 shrink-0"><CheckCircle2 className="h-3 w-3" />已缓存</span>
+                  ) : !downloading ? (
+                    <button onClick={() => handleDownloadPkg(pkg.id)} className="shrink-0 px-2 py-0.5 rounded text-[#1A56DB] bg-blue-50 hover:bg-blue-100 font-medium">下载</button>
+                  ) : null}
                 </div>
               )
             })}
