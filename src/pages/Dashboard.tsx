@@ -7,7 +7,7 @@ import {
   Camera, User, Shield, FileCheck, CheckCircle as CheckCircleImport, XCircle,
   ChevronRight, Zap, Navigation, ScanFace, Image, Clock3, Banknote,
   Award, AlertCircle, Wrench, Snowflake, Droplets, Lock, Flame, Bug, Eye,
-  CheckCircle2, Circle,
+  CheckCircle2, Circle, Info,
 } from 'lucide-react';
 import { workers } from '@/data/workers';
 import { laborRates } from '@/data/parts';
@@ -431,28 +431,66 @@ function EscrowFlowDisplay({ order }: { order: Order }) {
 function OrderDetailPanel({ order }: { order: Order }) {
   const worker = order.workerId ? workers.find(w => w.id === order.workerId) : null;
   const cityRate = laborRates.find(r => r.city === (order.city || '上海'));
+  const candidateWorkers = workers
+    .filter(w => w.status !== 'offline' && w.skills.some(s => s.status === 'verified'))
+    .slice(0, 3)
+    .map((w, i) => ({ ...w, matchScore: 95 - i * 5, distanceKm: 1.5 + i * 0.8 }));
+
+  const getDispatchStatusLabel = (status: string) => {
+    switch (status) {
+      case 'pending': return '待派单';
+      case 'matched': return '已派单';
+      case 'paid': return '已支付';
+      case 'in_service': return '服务中';
+      case 'completed': return '已完成';
+      case 'reviewed': return '已评价';
+      default: return status;
+    }
+  };
+
+  const getDispatchStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending': return 'bg-amber-100 text-amber-700';
+      case 'matched': return 'bg-blue-100 text-blue-700';
+      case 'paid': return 'bg-purple-100 text-purple-700';
+      case 'in_service': return 'bg-green-100 text-green-700';
+      case 'completed': return 'bg-emerald-100 text-emerald-700';
+      case 'reviewed': return 'bg-slate-100 text-slate-700';
+      default: return 'bg-slate-100 text-slate-700';
+    }
+  };
 
   return (
     <motion.div
+      key={order.id}
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      transition={{ duration: 0.25 }}
       className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-4"
     >
       <div className="flex items-start justify-between">
         <div>
-          <h4 className="font-bold text-slate-800 text-sm">{order.faultTypeName}</h4>
-          <p className="text-[11px] text-slate-500 mt-0.5">{order.id}</p>
+          <div className="flex items-center gap-2 mb-0.5">
+            <h4 className="font-bold text-slate-800 text-sm">{order.faultTypeName}</h4>
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${getDispatchStatusColor(order.status)}`}>
+              {getDispatchStatusLabel(order.status)}
+            </span>
+          </div>
+          <p className="text-[11px] text-slate-500">{order.id} · {order.homeownerAddress.slice(0, 15)}...</p>
         </div>
         <div className="text-right">
           <p className="text-[10px] text-slate-400">匹配得分</p>
-          <p className="text-lg font-bold text-orange-500">{order.matchScore || '—'}</p>
+          <p className="text-lg font-bold text-orange-500">
+            {order.matchScore && order.matchScore > 0 ? order.matchScore : '匹配中'}
+          </p>
         </div>
       </div>
 
       <div>
         <p className="text-[11px] text-slate-500 mb-2 flex items-center gap-1">
           <User className="w-3 h-3" />
-          指派师傅
+          {worker ? '指派师傅' : '候选师傅（智能推荐）'}
         </p>
         {worker ? (
           <div className="p-3 bg-white rounded-lg border border-slate-200/50 space-y-2.5">
@@ -476,9 +514,35 @@ function OrderDetailPanel({ order }: { order: Order }) {
             </div>
           </div>
         ) : (
-          <div className="p-3 bg-amber-50 rounded-lg border border-amber-200/50 flex items-center gap-2">
-            <Clock className="w-4 h-4 text-amber-500" />
-            <p className="text-xs text-amber-700">系统正在匹配就近持证师傅...</p>
+          <div className="space-y-2">
+            {candidateWorkers.map((w, idx) => (
+              <div key={w.id} className="p-2.5 bg-white rounded-lg border border-slate-200/50 flex items-center gap-2.5 hover:border-orange-300 hover:shadow-sm transition-all cursor-pointer">
+                <div className="relative">
+                  <img src={w.avatar} alt={w.name} className="w-9 h-9 rounded-full bg-slate-200" />
+                  <span className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${
+                    w.status === 'online' ? 'bg-green-500' : 'bg-amber-500'
+                  }`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <p className="text-xs font-semibold text-slate-800">{w.name}</p>
+                    {idx === 0 && <span className="text-[9px] bg-orange-100 text-orange-600 px-1.5 py-0.5 rounded font-medium">最优</span>}
+                  </div>
+                  <div className="flex items-center gap-2 text-[10px] text-slate-500">
+                    <span className="flex items-center gap-0.5">
+                      <Star className="w-2.5 h-2.5 text-amber-400 fill-amber-400" />{w.rating}
+                    </span>
+                    <span>· {w.distanceKm.toFixed(1)}km</span>
+                    <span>· 匹配{w.matchScore}分</span>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-300" />
+              </div>
+            ))}
+            <p className="text-[10px] text-slate-400 text-center pt-1">
+              <Clock className="w-3 h-3 inline mr-1 -mt-0.5" />
+              预计 60 秒内完成智能匹配
+            </p>
           </div>
         )}
       </div>
@@ -488,10 +552,42 @@ function OrderDetailPanel({ order }: { order: Order }) {
           <Zap className="w-3 h-3" />
           匹配原因（就近+技能+评分）
         </p>
-        <MatchReasonsDisplay order={order} />
+        {order.matchReasons && order.matchReasons.length > 0 ? (
+          <MatchReasonsDisplay order={order} />
+        ) : (
+          <div className="space-y-1.5">
+            <div className="flex items-start gap-2">
+              <div className="w-5 h-5 rounded-md bg-green-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Navigation className="w-3 h-3 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-medium text-slate-700">距离优先</p>
+                <p className="text-[11px] text-slate-500">3km范围内 {candidateWorkers.length} 位在线师傅，优先派单最近者</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-5 h-5 rounded-md bg-green-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Award className="w-3 h-3 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-medium text-slate-700">技能认证匹配</p>
+                <p className="text-[11px] text-slate-500">需持有低压电工操作证，自动过滤无证师傅</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-5 h-5 rounded-md bg-green-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Star className="w-3 h-3 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-medium text-slate-700">评分权重排序</p>
+                <p className="text-[11px] text-slate-500">评分4.8分以上师傅优先，差评率高的自动降权</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      {order.quote && cityRate && (
+      {order.quote && cityRate ? (
         <div>
           <p className="text-[11px] text-slate-500 mb-2 flex items-center gap-1">
             <Wallet className="w-3 h-3" />
@@ -522,7 +618,35 @@ function OrderDetailPanel({ order }: { order: Order }) {
             </div>
           </div>
         </div>
-      )}
+      ) : cityRate ? (
+        <div>
+          <p className="text-[11px] text-slate-500 mb-2 flex items-center gap-1">
+            <Wallet className="w-3 h-3" />
+            预估价 · {order.city || '上海'}基准工时费 ¥{cityRate.baseRate}/小时
+          </p>
+          <div className="p-3 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg border border-orange-200/50 space-y-2">
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div>
+                <p className="text-[10px] text-slate-500">配件费</p>
+                <p className="text-sm font-bold text-slate-700">¥80-150</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-500">工时费</p>
+                <p className="text-sm font-bold text-slate-700">¥80-240</p>
+                <p className="text-[9px] text-slate-400">1-3h × ¥{cityRate.baseRate}</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-500">预计合计</p>
+                <p className="text-sm font-bold text-orange-600">¥180-420</p>
+              </div>
+            </div>
+            <p className="text-[10px] text-amber-600 text-center">
+              <Info className="w-3 h-3 inline mr-1 -mt-0.5" />
+              师傅上门检测后给出精准报价，多退少补
+            </p>
+          </div>
+        </div>
+      ) : null}
 
       <ComplianceDisplay order={order} />
 

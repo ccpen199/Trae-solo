@@ -6,7 +6,7 @@ import { getWorkersBySkillCategory } from '@/data/workers';
 import { getPartsByCategory, getLaborRateByCity } from '@/data/parts';
 import {
   ChevronRight, Star, MapPin, Shield, Clock, Check, Award,
-  FileText, Upload, X, Info, ChevronDown, Building, Zap,
+  FileText, Upload, X, Info, ChevronDown, Building, Zap, Wrench,
 } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import type { FaultType, PartItem } from '@/types';
@@ -605,31 +605,121 @@ export default function RepairPage() {
         <div className="col-span-1">
           <div className="sticky top-6 space-y-4">
             <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-5">
-              <h3 className="font-semibold text-slate-800 mb-4">订单摘要</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-slate-800">订单摘要</h3>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                  step === 'fault' ? 'bg-orange-100 text-orange-600' :
+                  step === 'worker' ? 'bg-blue-100 text-blue-600' :
+                  'bg-green-100 text-green-600'
+                }`}>
+                  第{['fault', 'worker', 'quote'].indexOf(step) + 1}步
+                </span>
+              </div>
+
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">故障类型</span>
-                  <span className="text-slate-700 font-medium">
-                    {selectedFault?.name || '请选择'}
-                  </span>
+                <div className="p-2.5 bg-slate-50 rounded-lg">
+                  <div className="flex items-center justify-between text-sm mb-1">
+                    <span className="text-slate-500 text-xs">故障类型</span>
+                    {selectedFault && <span className="text-[10px] text-green-600 font-medium">已选择</span>}
+                  </div>
+                  <p className="text-sm font-semibold text-slate-800">
+                    {selectedFault?.name || '请选择故障类型'}
+                  </p>
+                  {selectedCategory && (
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      {selectedCategory.name} · 共 {selectedCategory.children?.length || 0} 种故障
+                    </p>
+                  )}
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">指派师傅</span>
-                  <span className="text-slate-700 font-medium">
-                    {matchedWorkers.find(w => w.id === selectedWorker)?.name || '智能匹配'}
-                  </span>
+
+                <div className={`p-2.5 rounded-lg ${
+                  selectedWorker ? 'bg-blue-50 border border-blue-200' : 'bg-slate-50'
+                }`}>
+                  <div className="flex items-center justify-between text-sm mb-1">
+                    <span className="text-slate-500 text-xs">
+                      {step === 'worker' ? '意向师傅' : '指派师傅'}
+                    </span>
+                    {selectedWorker && <span className="text-[10px] text-blue-600 font-medium">已选择</span>}
+                  </div>
+                  {selectedWorker ? (
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={matchedWorkers.find(w => w.id === selectedWorker)?.avatar}
+                        alt=""
+                        className="w-7 h-7 rounded-full bg-slate-200"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800 truncate">
+                          {matchedWorkers.find(w => w.id === selectedWorker)?.name}
+                        </p>
+                        <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
+                          <Star className="w-2.5 h-2.5 text-amber-400 fill-amber-400" />
+                          <span>{matchedWorkers.find(w => w.id === selectedWorker)?.rating}分</span>
+                          <span>·</span>
+                          <span>匹配{matchedWorkers.find(w => w.id === selectedWorker)?.matchScore}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-slate-500">
+                      {step === 'worker' ? '点击师傅卡片选择' : '智能匹配最优师傅'}
+                    </p>
+                  )}
                 </div>
+
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-500">服务城市</span>
                   <span className="text-slate-700 font-medium">{selectedCity}</span>
                 </div>
+
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-500">基准工时费</span>
-                  <span className="text-slate-700 font-medium">¥{cityRate?.baseRate || 80}/h</span>
+                  <span className="text-orange-600 font-medium">¥{cityRate?.baseRate || 80}/h</span>
                 </div>
               </div>
 
-              <div className="border-t border-slate-100 my-4 pt-4 space-y-2.5">
+              {selectedFault && (
+                <div className="border-t border-slate-100 my-3 pt-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-medium text-slate-700 flex items-center gap-1">
+                      <Wrench className="w-3 h-3 text-slate-400" />
+                      标准配件（常用）
+                    </p>
+                    <span className="text-[10px] text-slate-400">{allFaultParts.length}种可选</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {allFaultParts.slice(0, 4).map(part => (
+                      <span key={part.id} className="text-[10px] bg-slate-50 text-slate-600 px-2 py-0.5 rounded border border-slate-200">
+                        {part.name}
+                      </span>
+                    ))}
+                    {allFaultParts.length > 4 && (
+                      <span className="text-[10px] text-slate-400 px-1">+{allFaultParts.length - 4}种</span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {cityRate && (
+                <div className="border-t border-slate-100 my-3 pt-3">
+                  <p className="text-xs font-medium text-slate-700 mb-2 flex items-center gap-1">
+                    <Clock className="w-3 h-3 text-slate-400" />
+                    工时阶梯价
+                  </p>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {cityRate.tierRates.slice(0, 2).map(tier => (
+                      <div key={tier.tier} className="p-1.5 bg-slate-50 rounded text-center">
+                        <p className="text-[10px] text-slate-500">{tier.tier}</p>
+                        <p className="text-xs font-semibold text-slate-700">
+                          ¥{Math.round(cityRate.baseRate * tier.multiplier)}/h
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="border-t border-slate-200 my-3 pt-3 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-slate-500">配件费</span>
                   <span className="text-sm text-slate-700">¥{quoteData.partsTotal}</span>

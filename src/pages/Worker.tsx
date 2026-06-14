@@ -259,7 +259,7 @@ function SkillCertCard({ skill }: { skill: SkillCert }) {
   );
 }
 
-function SkillMapSection() {
+function SkillMapSection({ onAddCert }: { onAddCert?: () => void }) {
   const { currentWorkerId } = useAppStore();
   const worker = workers.find(w => w.id === currentWorkerId) || workers[0];
 
@@ -312,7 +312,10 @@ function SkillMapSection() {
             <h3 className="font-semibold text-slate-800">资质证书列表</h3>
             <p className="text-xs text-slate-500 mt-0.5">点击卡片查看完整认证链路</p>
           </div>
-          <button className="text-xs text-orange-600 font-medium hover:text-orange-700 flex items-center gap-1">
+          <button
+            onClick={onAddCert}
+            className="text-xs text-orange-600 font-medium hover:text-orange-700 flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-orange-50 transition-all"
+          >
             <Upload className="w-3.5 h-3.5" />
             添加证书
           </button>
@@ -329,6 +332,7 @@ function SkillMapSection() {
 
 function CertUploadSection() {
   const [uploading, setUploading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [ocrResult, setOcrResult] = useState<null | {
     name: string;
     certType: string;
@@ -355,8 +359,56 @@ function CertUploadSection() {
     }, 2000);
   };
 
+  const handleSubmit = () => {
+    setSubmitted(true);
+  };
+
+  const currentStep = !ocrResult ? 1 : !submitted ? 2 : submitted ? 3 : 4;
+
+  const steps = [
+    { id: 1, title: '证件上传', desc: '上传清晰的证件照片', icon: Upload, done: !!ocrResult },
+    { id: 2, title: 'OCR识别', desc: '系统自动识别证件信息', icon: FileCheck, done: !!ocrResult && !submitted },
+    { id: 3, title: '提交审核', desc: '确认信息后提交人工复核', icon: UserCheck, done: submitted },
+    { id: 4, title: '人工复核', desc: '运营专员24小时内完成审核', icon: Shield, done: false },
+  ];
+
   return (
     <div className="space-y-6">
+      <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-6">
+        <h3 className="font-semibold text-slate-800 mb-1">资质认证完整流程</h3>
+        <p className="text-sm text-slate-500 mb-5">四步完成资质认证，通过后即可接单</p>
+
+        <div className="flex items-start gap-2">
+          {steps.map((step, idx) => {
+            const Icon = step.icon;
+            const isActive = currentStep === step.id;
+            const isDone = step.done;
+            return (
+              <div key={step.id} className="flex-1 relative">
+                <div className="flex flex-col items-center text-center">
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-2 relative z-10 ${
+                    isDone ? 'bg-green-500 text-white shadow-md' :
+                    isActive ? 'bg-orange-500 text-white shadow-md ring-4 ring-orange-100' :
+                    'bg-slate-100 text-slate-400'
+                  }`}>
+                    {isDone ? <Check className="w-5 h-5" /> : <Icon className="w-5 h-5" />}
+                  </div>
+                  <p className={`text-xs font-semibold ${
+                    isDone || isActive ? 'text-slate-800' : 'text-slate-400'
+                  }`}>{step.title}</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">{step.desc}</p>
+                </div>
+                {idx < steps.length - 1 && (
+                  <div className={`absolute top-5 left-[60%] w-[80%] h-0.5 ${
+                    steps[idx].done ? 'bg-green-400' : 'bg-slate-200'
+                  }`} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-6">
         <h3 className="font-semibold text-slate-800 mb-1">证件上传与OCR识别</h3>
         <p className="text-sm text-slate-500 mb-4">上传技能证件，系统自动识别并填充信息</p>
@@ -396,7 +448,7 @@ function CertUploadSection() {
           </div>
         )}
 
-        {ocrResult && (
+        {ocrResult && !submitted && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -442,10 +494,74 @@ function CertUploadSection() {
               >
                 重新上传
               </button>
-              <button className="flex-1 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all">
+              <button
+                onClick={handleSubmit}
+                className="flex-1 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-semibold shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
+              >
                 提交审核
               </button>
             </div>
+          </motion.div>
+        )}
+
+        {submitted && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-4"
+          >
+            <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-blue-600" />
+                <span className="text-sm font-medium text-blue-700">已提交人工复核</span>
+              </div>
+              <span className="text-xs text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
+                审核中
+              </span>
+            </div>
+
+            <div className="p-4 bg-slate-50 rounded-lg space-y-3">
+              <p className="text-xs font-semibold text-slate-700">审核进度</p>
+              <div className="space-y-2">
+                {[
+                  { title: '材料完整性校验', done: true, time: '14:32:05' },
+                  { title: '证件有效期核对', done: true, time: '14:32:08' },
+                  { title: '官方数据库比对', done: false, time: '' },
+                  { title: '运营专员复核', done: false, time: '' },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2.5">
+                    <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      item.done ? 'bg-green-500' : 'bg-slate-200'
+                    }`}>
+                      {item.done && <Check className="w-3 h-3 text-white" />}
+                    </div>
+                    <span className={`text-xs ${item.done ? 'text-slate-700' : 'text-slate-400'}`}>
+                      {item.title}
+                    </span>
+                    {item.time && (
+                      <span className="text-[10px] text-slate-400 ml-auto font-mono">{item.time}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs font-semibold text-amber-800">审核说明</p>
+                <p className="text-[11px] text-amber-700 mt-0.5">
+                  人工复核通常在 24 小时内完成。审核通过后，您的资质证书将自动生效，并可接收对应品类的订单推送。
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => { setSubmitted(false); setOcrResult(null); }}
+              className="w-full py-2.5 border border-slate-300 rounded-lg text-slate-600 font-medium hover:bg-slate-50 transition-colors"
+            >
+              上传其他证件
+            </button>
           </motion.div>
         )}
       </div>
@@ -810,7 +926,9 @@ export default function WorkerPage() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              {activeTab === 'skills' && <SkillMapSection />}
+              {activeTab === 'skills' && (
+                <SkillMapSection onAddCert={() => setActiveTab('cert')} />
+              )}
               {activeTab === 'cert' && <CertUploadSection />}
               {activeTab === 'orders' && <OrderCenterSection />}
               {activeTab === 'checkin' && <CheckInSection />}

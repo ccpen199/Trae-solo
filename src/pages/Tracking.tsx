@@ -301,6 +301,119 @@ function TrackingPage() {
           </div>
 
           <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="font-semibold text-slate-800 text-base">服务合规强制校验</h3>
+                <p className="text-xs text-slate-500 mt-0.5">GPS·人脸·工序照片·隐蔽工程 · 平台强制留痕</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-500">合规率</span>
+                <span className="text-sm font-bold text-green-600">
+                  {Math.min(100, Math.round((
+                    (selectedOrder.checkIns.filter(c => c.type === 'gps' && c.verified).length > 0 ? 25 : 0) +
+                    (selectedOrder.checkIns.filter(c => c.type === 'face' && c.verified).length > 0 ? 25 : 0) +
+                    (selectedOrder.processPhotos.filter(p => p.isRequired && p.timestamp).length /
+                     Math.max(1, selectedOrder.processPhotos.filter(p => p.isRequired).length)) * 30 +
+                    (selectedOrder.processPhotos.filter(p => p.isHiddenWork && p.timestamp).length /
+                     Math.max(1, selectedOrder.processPhotos.filter(p => p.isHiddenWork).length)) * 20
+                  )))}%
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-4 gap-3">
+              {[
+                {
+                  key: 'gps',
+                  icon: Navigation,
+                  title: 'GPS打卡',
+                  label: '定位校验',
+                  done: selectedOrder.checkIns.some(c => c.type === 'gps' && c.verified),
+                  detail: selectedOrder.checkIns.find(c => c.type === 'gps')
+                    ? `精度 ${selectedOrder.checkIns.find(c => c.type === 'gps')?.location.accuracy}m`
+                    : '未开始',
+                  color: 'blue',
+                },
+                {
+                  key: 'face',
+                  icon: ScanFace,
+                  title: '人脸核验',
+                  label: '本人认证',
+                  done: selectedOrder.checkIns.some(c => c.type === 'face' && c.verified),
+                  detail: selectedOrder.checkIns.find(c => c.type === 'face')?.verified
+                    ? '人证合一通过'
+                    : selectedOrder.checkIns.some(c => c.type === 'face')
+                    ? '验证失败'
+                    : '待核验',
+                  color: 'green',
+                },
+                {
+                  key: 'process',
+                  icon: Camera,
+                  title: '工序照片',
+                  label: `${selectedOrder.processPhotos.filter(p => p.timestamp).length}/${selectedOrder.processPhotos.length} 已上传`,
+                  done: selectedOrder.processPhotos.filter(p => p.isRequired && p.timestamp).length ===
+                        selectedOrder.processPhotos.filter(p => p.isRequired).length &&
+                        selectedOrder.processPhotos.filter(p => p.isRequired).length > 0,
+                  detail: '必传工序全部完成',
+                  color: 'purple',
+                },
+                {
+                  key: 'hidden',
+                  icon: Zap,
+                  title: '隐蔽工程',
+                  label: selectedOrder.faultCategory.some(c => c.includes('水电改造')) ? '水电必传项' : '非水电类',
+                  done: !selectedOrder.faultCategory.some(c => c.includes('水电改造')) ||
+                        selectedOrder.processPhotos.filter(p => p.isHiddenWork && p.timestamp).length ===
+                        selectedOrder.processPhotos.filter(p => p.isHiddenWork).length,
+                  detail: selectedOrder.faultCategory.some(c => c.includes('水电改造'))
+                    ? `已传 ${selectedOrder.processPhotos.filter(p => p.isHiddenWork && p.timestamp).length}/${selectedOrder.processPhotos.filter(p => p.isHiddenWork).length}`
+                    : '不涉及',
+                  color: 'red',
+                },
+              ].map(item => {
+                const Icon = item.icon;
+                const colorMap: Record<string, { bg: string; text: string; border: string; light: string }> = {
+                  blue: { bg: 'bg-blue-500', text: 'text-blue-600', border: 'border-blue-200', light: 'bg-blue-50' },
+                  green: { bg: 'bg-green-500', text: 'text-green-600', border: 'border-green-200', light: 'bg-green-50' },
+                  purple: { bg: 'bg-purple-500', text: 'text-purple-600', border: 'border-purple-200', light: 'bg-purple-50' },
+                  red: { bg: 'bg-red-500', text: 'text-red-600', border: 'border-red-200', light: 'bg-red-50' },
+                };
+                const c = colorMap[item.color];
+                return (
+                  <div key={item.key} className={`relative p-4 rounded-xl border-2 transition-all ${
+                    item.done ? `${c.light} ${c.border}` : 'bg-slate-50 border-slate-200'
+                  }`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2.5 ${
+                      item.done ? `${c.bg} text-white shadow-md` : 'bg-slate-200 text-slate-400'
+                    }`}>
+                      {item.done ? (
+                        <Check className="w-5 h-5" />
+                      ) : (
+                        <Icon className="w-5 h-5" />
+                      )}
+                    </div>
+                    <p className={`text-sm font-semibold ${item.done ? c.text : 'text-slate-500'}`}>
+                      {item.title}
+                    </p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">{item.label}</p>
+                    <p className={`text-[10px] mt-1.5 ${
+                      item.done ? c.text : 'text-slate-400'
+                    }`}>
+                      {item.detail}
+                    </p>
+                    {!item.done && (
+                      <span className="absolute top-2.5 right-2.5 text-[9px] px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-600 font-medium">
+                        待完成
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-slate-200/50 shadow-sm p-6">
             <div className="flex items-center justify-between mb-5">
               <div>
                 <h3 className="font-semibold text-slate-800 text-base">服务过程时间线</h3>
