@@ -13,6 +13,8 @@ import {
   LogOut,
   User,
   Shield,
+  ShieldCheck,
+  ShieldAlert,
 } from 'lucide-vue-next';
 import { useAdminStore } from '@/stores/admin';
 
@@ -21,7 +23,7 @@ const route = useRoute();
 const adminStore = useAdminStore();
 const collapsed = ref(false);
 
-const menuItems = [
+const allMenuItems = [
   { key: 'dashboard', label: '数据看板', icon: LayoutDashboard, path: '/' },
   { key: 'cert-analysis', label: '认证分析', icon: BarChart3, path: '/statistics/certification' },
   { key: 'query-top', label: '高频查询', icon: Search, path: '/statistics/query-top' },
@@ -30,16 +32,37 @@ const menuItems = [
   { key: 'system', label: '系统管理', icon: Settings, path: '/system/users' },
 ];
 
+const menuItems = computed(() =>
+  allMenuItems.filter((item) => adminStore.hasPermission(item.key))
+);
+
 const currentMenu = computed(() => {
-  const item = menuItems.find((m) => m.path === route.path);
+  const item = allMenuItems.find((m) => m.path === route.path);
   return item?.key ?? 'dashboard';
 });
 
 const breadcrumbItems = computed(() => {
-  const item = menuItems.find((m) => m.path === route.path);
+  const item = allMenuItems.find((m) => m.path === route.path);
   if (!item) return [{ label: '数据看板' }];
   if (item.key === 'dashboard') return [{ label: '数据看板' }];
   return [{ label: '首页', path: '/' }, { label: item.label }];
+});
+
+const roleIcon = computed(() => {
+  switch (adminStore.roleLabel) {
+    case '超级管理员': return ShieldCheck;
+    case '审计员': return ShieldAlert;
+    default: return Shield;
+  }
+});
+
+const roleColor = computed(() => {
+  switch (adminStore.roleLabel) {
+    case '超级管理员': return 'bg-red-50 text-red-600 border-red-200';
+    case '审计员': return 'bg-amber-50 text-amber-600 border-amber-200';
+    case '运营专员': return 'bg-blue-50 text-blue-600 border-blue-200';
+    default: return 'bg-gray-50 text-gray-600 border-gray-200';
+  }
 });
 
 function handleMenuClick(path: string) {
@@ -120,6 +143,16 @@ function toggleSidebar() {
             <User class="w-4 h-4" />
             <span>{{ adminStore.adminInfo?.nameMasked ?? '管理员' }}</span>
           </div>
+          <span
+            class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium border"
+            :class="roleColor"
+          >
+            <component :is="roleIcon" class="w-3 h-3" />
+            {{ adminStore.roleLabel }}
+          </span>
+          <span class="text-[11px] text-gray-400 max-w-[200px] truncate">
+            权限：{{ adminStore.permissions.join('、') }}
+          </span>
           <button
             class="flex items-center gap-1 text-sm text-gray-500 hover:text-danger transition-colors"
             @click="handleLogout"

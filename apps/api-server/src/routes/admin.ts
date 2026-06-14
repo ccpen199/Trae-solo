@@ -17,22 +17,22 @@ const router = Router();
 router.use(authMiddleware);
 router.use(requireRole('admin'));
 
-router.get('/dashboard/summary', (_req, res) => {
+router.get(['/dashboard/summary', '/summary'], (_req, res) => {
   const data = getDashboardSummary();
   res.json({ code: 0, data });
 });
 
-router.get('/statistics/pass-rate-trend', (_req, res) => {
+router.get(['/dashboard/pass-rate-trend', '/statistics/pass-rate-trend'], (_req, res) => {
   const data = getPassRateTrend();
   res.json({ code: 0, data });
 });
 
-router.get('/statistics/query-top', (_req, res) => {
+router.get(['/dashboard/query-top', '/statistics/query-top'], (_req, res) => {
   const data = getQueryTop10();
   res.json({ code: 0, data });
 });
 
-router.post('/people/uncertified', (req, res) => {
+router.post(['/reminder/people', '/people/uncertified'], (req, res) => {
   const filter = req.body;
   const data = getUncertifiedPersons(filter);
   res.json({ code: 0, data });
@@ -50,12 +50,12 @@ router.post('/tasks/reminder/create', (req, res) => {
   res.json({ code: 0, data });
 });
 
-router.get('/tasks/reminder', (_req, res) => {
+router.get(['/reminder/tasks', '/tasks/reminder'], (_req, res) => {
   const data = getReminderTasks();
   res.json({ code: 0, data });
 });
 
-router.get('/tasks/reminder/:id', (req, res) => {
+router.get(['/reminder/tasks/:id', '/tasks/reminder/:id'], (req, res) => {
   const { id } = req.params;
   const data = getReminderTaskDetail(id);
 

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { adminApi } from '@/api/admin';
 
 interface AdminInfo {
@@ -8,10 +8,28 @@ interface AdminInfo {
   role: string;
 }
 
+const ROLE_PERMISSIONS: Record<string, string[]> = {
+  '超级管理员': ['dashboard', 'cert-analysis', 'query-top', 'reminder', 'audit', 'system'],
+  '运营专员': ['dashboard', 'query-top', 'reminder'],
+  '审计员': ['dashboard', 'audit', 'cert-analysis'],
+};
+
 export const useAdminStore = defineStore('admin', () => {
   const token = ref<string>(localStorage.getItem('adminToken') ?? '');
   const adminInfo = ref<AdminInfo | null>(null);
   const currentMenu = ref('dashboard');
+
+  const permissions = computed(() => {
+    if (!adminInfo.value) return [];
+    return ROLE_PERMISSIONS[adminInfo.value.role] || ['dashboard'];
+  });
+
+  const roleLabel = computed(() => adminInfo.value?.role ?? '');
+  const isSupervisor = computed(() => adminInfo.value?.role === '超级管理员');
+
+  function hasPermission(key: string): boolean {
+    return permissions.value.includes(key);
+  }
 
   async function login(employeeId: string, password: string) {
     const res = await adminApi.login(employeeId, password);
@@ -54,5 +72,5 @@ export const useAdminStore = defineStore('admin', () => {
     }
   }
 
-  return { token, adminInfo, currentMenu, login, logout, checkAuth };
+  return { token, adminInfo, currentMenu, permissions, roleLabel, isSupervisor, hasPermission, login, logout, checkAuth, demoLogin };
 });

@@ -31,7 +31,7 @@ router.post('/start', (req, res) => {
   res.json({ code: 0, data });
 });
 
-router.post('/liveness-submit', (req, res) => {
+router.post(['/liveness-submit', '/liveness'], (req, res) => {
   const body = req.body as LivenessSubmitRequest;
   const { sessionId, actionIndex, actionResult, encryptedFeatureHash, deviceFingerprint } = body;
 

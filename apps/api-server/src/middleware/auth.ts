@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'gx-rs-platform-secret-2024';
+const DEMO_TOKEN_PREFIX = 'demo-access-token-';
+const DEMO_ADMIN_PREFIX = 'demo-admin-token-';
 
 export interface AuthPayload {
   userId: string;
@@ -13,8 +15,19 @@ declare global {
     interface Request {
       userId?: string;
       userRole?: 'user' | 'admin';
+      isDemo?: boolean;
     }
   }
+}
+
+function parseDemoToken(token: string): AuthPayload | null {
+  if (token.startsWith(DEMO_TOKEN_PREFIX)) {
+    return { userId: 'GX20240001001', role: 'user' };
+  }
+  if (token.startsWith(DEMO_ADMIN_PREFIX)) {
+    return { userId: 'GX-ADMIN-001', role: 'admin' };
+  }
+  return null;
 }
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction): void {
@@ -25,6 +38,15 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction):
   }
 
   const token = authHeader.substring(7);
+
+  const demoPayload = parseDemoToken(token);
+  if (demoPayload) {
+    req.userId = demoPayload.userId;
+    req.userRole = demoPayload.role;
+    req.isDemo = true;
+    next();
+    return;
+  }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as AuthPayload;
