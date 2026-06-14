@@ -1,17 +1,20 @@
-import 'dotenv/config';
-import { server } from './app.js';
-import { initDb } from './db/index.js';
+/**
+ * local server entry file, for local development
+ */
+import app from './app.js';
 
-const BACKEND_PORT = parseInt(process.env.BACKEND_PORT || '59074');
-const HOST = '127.0.0.1';
+/**
+ * start server with port
+ */
+const PORT = process.env.PORT || 3001;
 
-initDb();
-
-server.listen(BACKEND_PORT, HOST, () => {
-  console.log(`Server ready on http://${HOST}:${BACKEND_PORT}`);
-  console.log(`Socket.IO ready on ws://${HOST}:${BACKEND_PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`Server ready on port ${PORT}`);
 });
 
+/**
+ * close server
+ */
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received');
   server.close(() => {
@@ -28,4 +31,4 @@ process.on('SIGINT', () => {
   });
 });
 
-export default server;
+export default app;

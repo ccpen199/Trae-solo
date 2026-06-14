@@ -1,0 +1,84 @@
+{
+  "ok": true,
+  "uniqueName": "cycle3200提交验证货源-1780996279345",
+  "finalUrl": "http://127.0.0.1:50105/cargo/list",
+  "listed": true,
+  "apiListed": true,
+  "apiCheckStatus": 200,
+  "responseErrors": [],
+  "requestFailures": [],
+  "apiResponses": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/freightRates.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/index.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/cargo.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/capacity.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/orders.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/tracking.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/waybill.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/bill.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/settlement.ts",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50105/src/api/auth.ts",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:59105/api/cargo",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:59105/api/cargo/c50f4ebe-31e6-4cfc-bddb-e8110885c24f/publish",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/cargo?page=1&pageSize=10",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/cargo?page=1&pageSize=10",
+      "status": 200
+    }
+  ],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-cycle3200-final/may-89105-submit-final.png",
+  "error": ""
+}

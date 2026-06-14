@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.may-89105.backend</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89105</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89105/.launchd/start-backend.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PROJECT_NAME</key>
+    <string>may-89105</string>
+    <key>NODE_ENV</key>
+    <string>development</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOST</key>
+    <string>127.0.0.1</string>
+    <key>FRONTEND_PORT</key>
+    <string>50105</string>
+    <key>APP_PORT</key>
+    <string>50105</string>
+    <key>BACKEND_PORT</key>
+    <string>59105</string>
+    <key>FRONTEND_URL</key>
+    <string>http://127.0.0.1:50105</string>
+    <key>BACKEND_URL</key>
+    <string>http://127.0.0.1:59105</string>
+    <key>API_BASE_URL</key>
+    <string>http://127.0.0.1:59105/api</string>
+    <key>VITE_API_URL</key>
+    <string>http://127.0.0.1:59105/api</string>
+    <key>VITE_API_BASE_URL</key>
+    <string>http://127.0.0.1:59105/api</string>
+    <key>DATABASE_URL</key>
+    <string>./data/app.sqlite</string>
+    <key>DB_PATH</key>
+    <string>./data/app.sqlite</string>
+    <key>JWT_SECRET</key>
+    <string>freight-platform-secret-key-2024</string>
+    <key>JWT_EXPIRES_IN</key>
+    <string>7d</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89105/backend.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89105/backend.log</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+</dict>
+</plist>

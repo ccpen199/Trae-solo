@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "status": 200,
+  "finalUrl": "http://127.0.0.1:50105/cargo/list",
+  "actions": [
+    {
+      "action": "click",
+      "label": "下一步-货物信息",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "下一步-运输要求",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "下一步-保险与温控",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "提交发布",
+      "ok": true
+    }
+  ],
+  "bodyTextPreview": "W 货运数字化平台 管理员端 首页 运价查询 发布货源 货源列表 订单管理 运单管理 轨迹追踪 账单管理 结算中心 运力管理 认证审核 个人中心 系统设置 需要帮助？ 联系客服获取技术支持 联系客服 2026年6月9日星期二 admin 管理员 · 138****0000 状态筛选 查询 重 置 货源列表 订单号 货物名称 类型 路线 重量(吨) 价格 状态 操作 订单号 货物名称 类型 路线 重量(吨) 价格 状态 操作 ORD1780997487102 工业配件托盘货 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780996728251 cycle3346提交验证货源-1780996725945 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780996284132 cycle3200提交验证货源-1780996279345 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780995758363 cycle2973提交验证货源-1780995749690 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780995028672 cycle2843提交验证货源-1780995028 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780994218850 工业配件托盘货 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780992942604 工业配件托盘货 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780992846518 工业配件托盘货 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780992746178 工业配件托盘货 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 ORD1780992680056 工业配件托盘货 整车 上海 → 北京 8 ¥8,600.00 已发布 详情 派单 共 21 条 1 2 3 10 条/页 货源发布成功：ORD1780997487102",
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-cycle3548-submit/may-89105-submit-chain.png",
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-cycle3548-submit/may-89105-submit-chain-report.json"
+}

@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "url": "http://localhost:50105/",
+  "startedAt": "2026-06-09T07:24:08.799Z",
+  "checks": [
+    {
+      "name": "frontend opens from localhost",
+      "ok": true,
+      "status": 200,
+      "title": "货运数字化服务平台"
+    },
+    {
+      "name": "demo admin dashboard visible",
+      "ok": true
+    },
+    {
+      "name": "price query page and search action usable",
+      "ok": true
+    },
+    {
+      "name": "admin auth review page visible",
+      "ok": true
+    },
+    {
+      "name": "cargo publish submit creates visible cargo",
+      "ok": true,
+      "cargoName": "Codex提交链路验证-1780989852654"
+    },
+    {
+      "name": "cargo assignment submit succeeds",
+      "ok": true
+    },
+    {
+      "name": "no failed browser requests",
+      "ok": true,
+      "requestFailures": []
+    },
+    {
+      "name": "no http 4xx or 5xx responses",
+      "ok": true,
+      "responseErrors": []
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "consoleErrors": [
+    {
+      "type": "error",
+      "text": "Warning: [antd: InputNumber] `addonAfter` is deprecated. Please use `Space.Compact` instead."
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead."
+    }
+  ],
+  "finalUrl": "http://localhost:50105/cargo/list",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-page-repair/may-89105-playwright-page-repair-final.png",
+  "finishedAt": "2026-06-09T07:24:16.079Z"
+}
