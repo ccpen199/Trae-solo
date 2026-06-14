@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useRef } from 'react';
+import { createContext, useContext, useEffect, useState, useRef, useCallback } from 'react';
 import { useOrderStore } from '@/store/orderStore';
 import { useDispatchStore } from '@/store/dispatchStore';
 import { useAuthStore } from '@/store/authStore';
@@ -56,31 +56,36 @@ export function ProtectedRoute({
   allowedRoles: UserRole[];
 }) {
   const location = useLocation();
+  const user = useAuthStore((s) => s.user);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const restoreSession = useAuthStore((s) => s.restoreSession);
   const [checking, setChecking] = useState(true);
   const sessionChecked = useRef(false);
 
-  useEffect(() => {
+  const initAuth = useCallback(() => {
     if (sessionChecked.current) return;
+    sessionChecked.current = true;
 
-    const state = useAuthStore.getState();
-    if (state.isAuthenticated && state.user) {
-      sessionChecked.current = true;
+    if (isAuthenticated && user) {
       setChecking(false);
       return;
     }
 
-    const restored = restoreSession();
-    sessionChecked.current = true;
-
-    if (!restored) {
+    restoreSession();
+    setTimeout(() => {
       setChecking(false);
-    } else {
-      setTimeout(() => {
-        setChecking(false);
-      }, 50);
+    }, 100);
+  }, [isAuthenticated, user, restoreSession]);
+
+  useEffect(() => {
+    initAuth();
+  }, [initAuth]);
+
+  useEffect(() => {
+    if (!checking && isAuthenticated && user) {
+      sessionChecked.current = true;
     }
-  }, [restoreSession]);
+  }, [checking, isAuthenticated, user]);
 
   if (checking) {
     return (
@@ -92,10 +97,6 @@ export function ProtectedRoute({
       </div>
     );
   }
-
-  const latestState = useAuthStore.getState();
-  const isAuthenticated = latestState.isAuthenticated;
-  const user = latestState.user;
 
   if (!isAuthenticated || !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;

@@ -168,6 +168,8 @@ export default function LoginPage() {
   const [successMsg, setSuccessMsg] = useState<string>('');
   const [codeSent, setCodeSent] = useState<boolean>(false);
   const [validationState, setValidationState] = useState<'idle' | 'checking' | 'success' | 'fail'>('idle');
+  const [navigateFailed, setNavigateFailed] = useState<boolean>(false);
+  const [navigateTarget, setNavigateTarget] = useState<string>('');
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -254,21 +256,72 @@ export default function LoginPage() {
     setLoading(true);
     setErrors([]);
     setValidationState('success');
+    setNavigateFailed(false);
     setSuccessMsg('身份验证通过，正在进入系统...');
 
     const tab = roleTabs.find((t) => t.key === role)!;
     const targetPath = tab.defaultRoute;
+    setNavigateTarget(targetPath);
 
     setTimeout(() => {
       login(role, tab.phone);
-      setLoading(false);
+      
+      const state = useAuthStore.getState();
+      
+      if (!state.isAuthenticated || !state.user) {
+        setLoading(false);
+        setValidationState('fail');
+        setErrors([{
+          type: 'phone_not_match',
+          field: 'general',
+          message: '登录状态写入失败',
+          suggestion: '请尝试刷新页面或使用一键登录按钮',
+        }]);
+        return;
+      }
+
+      if (state.user.role !== role) {
+        setLoading(false);
+        setValidationState('fail');
+        setErrors([{
+          type: 'phone_wrong_role',
+          field: 'general',
+          message: `角色不匹配：当前用户角色为 ${state.user.role}，期望 ${role}`,
+          suggestion: '请使用对应角色的账号登录',
+        }]);
+        return;
+      }
+
+      setSuccessMsg(`登录成功，正在跳转到 ${targetPath} ...`);
       navigate(targetPath, { replace: true });
+
+      setTimeout(() => {
+        const stillOnLogin = window.location.pathname === '/login' || window.location.pathname === '/';
+        if (stillOnLogin) {
+          setLoading(false);
+          setNavigateFailed(true);
+          setValidationState('fail');
+          setErrors([{
+            type: 'phone_not_match',
+            field: 'general',
+            message: `跳转失败：已成功登录为「${tab.label}」，但路由拦截未放行到 ${targetPath}`,
+            suggestion: '请检查浏览器地址栏是否已变更，或点击下方一键登录按钮重试',
+          }]);
+          console.error('[Login] Navigate failed:', {
+            expectedPath: targetPath,
+            currentPath: window.location.pathname,
+            authState: state,
+            targetRole: role,
+          });
+        }
+      }, 2000);
     }, 800);
   }, [login, navigate]);
 
   const handleLogin = () => {
     setErrors([]);
     setSuccessMsg('');
+    setNavigateFailed(false);
     setValidationState('checking');
 
     const result = getValidationResult(phone, code, activeRole);
@@ -300,15 +353,52 @@ export default function LoginPage() {
   const handleQuickLogin = (role: UserRole) => {
     setActiveRole(role);
     setErrors([]);
+    setNavigateFailed(false);
     setValidationState('success');
     const tab = roleTabs.find((t) => t.key === role)!;
+    const targetPath = tab.defaultRoute;
+    setNavigateTarget(targetPath);
     setSuccessMsg(`正在以「${tab.label}」身份快速登录...`);
     setLoading(true);
 
     setTimeout(() => {
       login(role, tab.phone);
-      setLoading(false);
-      navigate(tab.defaultRoute, { replace: true });
+      
+      const state = useAuthStore.getState();
+      if (!state.isAuthenticated || !state.user) {
+        setLoading(false);
+        setValidationState('fail');
+        setErrors([{
+          type: 'phone_not_match',
+          field: 'general',
+          message: '一键登录失败：状态未正确写入',
+          suggestion: '请尝试刷新页面后重试',
+        }]);
+        return;
+      }
+
+      setSuccessMsg(`登录成功，正在跳转到 ${targetPath} ...`);
+      navigate(targetPath, { replace: true });
+
+      setTimeout(() => {
+        const stillOnLogin = window.location.pathname === '/login' || window.location.pathname === '/';
+        if (stillOnLogin) {
+          setLoading(false);
+          setNavigateFailed(true);
+          setValidationState('fail');
+          setErrors([{
+            type: 'phone_not_match',
+            field: 'general',
+            message: `跳转失败：已成功登录为「${tab.label}」，但路由未跳转到 ${targetPath}`,
+            suggestion: '请手动检查地址栏，或刷新页面后重试',
+          }]);
+          console.error('[QuickLogin] Navigate failed:', {
+            expectedPath: targetPath,
+            currentPath: window.location.pathname,
+            authState: state,
+          });
+        }
+      }, 2000);
     }, 600);
   };
 
@@ -585,6 +675,71 @@ export default function LoginPage() {
               <div className="mb-4 flex items-start gap-2 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-sm">
                 <CheckCircle2 size={14} className="text-signal-green shrink-0 mt-0.5" />
                 <p className="text-[11px] text-emerald-300 leading-relaxed">{successMsg}</p>
+              </div>
+            )}
+
+            {navigateFailed && (
+              <div className="mb-4 p-3 bg-signal-red/10 border border-signal-red/40 rounded-sm space-y-3">
+                <div className="flex items-start gap-2">
+                  <AlertTriangle size={14} className="text-signal-red shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-[11px] text-signal-red font-semibold">路由跳转拦截检测</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">登录状态已成功写入，但路由守卫未放行。以下是实时诊断信息：</p>
+                  </div>
+                </div>
+                <div className="font-mono text-[10px] space-y-1.5 p-2.5 bg-ink-950/60 border border-ink-700/50 rounded-sm">
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">认证状态</span>
+                    <span className={useAuthStore.getState().isAuthenticated ? 'text-signal-green' : 'text-signal-red'}>
+                      {useAuthStore.getState().isAuthenticated ? '已认证 ✓' : '未认证 ✗'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">当前用户</span>
+                    <span className="text-slate-300">
+                      {useAuthStore.getState().user?.name ?? '-'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">用户角色</span>
+                    <span className="text-signal-cyan">
+                      {useAuthStore.getState().user?.role ?? '-'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">目标路径</span>
+                    <span className="text-orange-500">{navigateTarget}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">当前地址</span>
+                    <span className="text-slate-400">{window.location.pathname}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">LocalStorage</span>
+                    <span className={localStorage.getItem('tc_auth_state') ? 'text-signal-green' : 'text-signal-red'}>
+                      {localStorage.getItem('tc_auth_state') ? '存在 ✓' : '不存在 ✗'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      window.location.href = navigateTarget;
+                    }}
+                    className="flex-1 py-2 text-xs font-semibold text-white bg-gradient-to-br from-orange-500 to-orange-600 hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] rounded-sm transition-all"
+                  >
+                    ⚡ 强制跳转 {navigateTarget}
+                  </button>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('tc_auth_state');
+                      window.location.reload();
+                    }}
+                    className="px-4 py-2 text-xs font-semibold text-slate-400 border border-ink-600 hover:border-ink-500 hover:text-white rounded-sm transition-all"
+                  >
+                    重置状态
+                  </button>
+                </div>
               </div>
             )}
 
