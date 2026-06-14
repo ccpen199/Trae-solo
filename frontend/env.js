@@ -1,0 +1,7 @@
+window.__ENV__ = {
+  FRONTEND_PORT: 49095,
+  BACKEND_PORT: 59095,
+  BACKEND_URL: 'http://127.0.0.1:59095',
+  API_BASE_URL: 'http://127.0.0.1:59095/api',
+  PROJECT_NAME: 'may-89095'
+};

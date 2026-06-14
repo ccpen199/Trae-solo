@@ -1,23 +1,15 @@
-
 {
-  "name": "referral-platform-frontend",
-  "private": true,
+  "name": "may-89095-frontend",
   "version": "1.0.0",
-  "type": "module",
+  "description": "PinAI 本地服务台 - 前端静态页面",
+  "main": "static-server.js",
+  "type": "commonjs",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 50065 --strictPort",
-    "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1 --port 50065 --strictPort"
+    "start": "node static-server.js",
+    "dev": "node --watch static-server.js"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1",
-    "axios": "^1.6.2",
-    "zustand": "^4.4.7"
+    "dotenv": "^16.4.5"
   },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.8"
-  }
+  "devDependencies": {}
 }

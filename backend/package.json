@@ -1,25 +1,19 @@
-
 {
-  "name": "referral-platform-backend",
+  "name": "may-89095-backend",
   "version": "1.0.0",
-  "description": "熟人推荐社区化招聘平台后端",
+  "description": "PinAI 本地服务台 - 后端 API (Node.js + SQLite)",
   "main": "server.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "node --watch server.js",
+    "init-db": "node -e \"require('./server.js')\""
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "better-sqlite3": "^9.2.2",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "multer": "^1.4.5-lts.1",
-    "crypto": "^1.0.1",
-    "express-rate-limit": "^7.1.5"
+    "dotenv": "^16.4.5"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
-  }
+  "devDependencies": {}
 }

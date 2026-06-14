@@ -1,0 +1,2613 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T08:55:07.062Z",
+  "order": "may-89095",
+  "roundIndex": 99,
+  "captureId": "may-89095-final-repair",
+  "url": "http://127.0.0.1:49095/",
+  "initialUrl": "http://127.0.0.1:49095/",
+  "finalUrl": "http://127.0.0.1:49095/",
+  "status": 200,
+  "title": "PinAI 本地服务台",
+  "initialTitle": "PinAI 本地服务台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-02-导航-搜索筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-03-操作-重置筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-05-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-06-二层操作-刷新-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-07-导航-购买提交.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-08-操作-重置筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-10-操作-刷新.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在购买/商品入口，优先复验交易链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49095/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49095/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:搜索筛选",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:重置筛选:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:刷新:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:购买提交",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:重置筛选:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49095/",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单21 需求0 #21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单21 收入¥4179 user提交订单 #21user提交订单 #20user提交订单 #19user提交订单 #18user提交订单 #17 接口响应 { \"ok\": true, \"status\": \"ok\", \"project\": \"may-89095\", \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89095/data/app.sqlite\", \"time\": 1780908835668 }",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 3937,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49095/",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-01-首屏.png",
+          "elementCount": 259,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "导航:搜索筛选",
+        "url": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单21 需求0 #21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单21 收入¥4179 user提交订单 #21user提交订单 #20user提交订单 #19user提交订单 #18user提交订单 #17 接口响应 { \"ok\": true, \"status\": \"ok\", \"project\": \"may-89095\", \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89095/data/app.sqlite\", \"time\": 1780908835668 }",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 3937,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-02-导航-搜索筛选",
+          "label": "导航:搜索筛选",
+          "finalUrl": "http://127.0.0.1:49095/#search",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-02-导航-搜索筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-02-导航-搜索筛选.png",
+          "elementCount": 259,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置筛选",
+        "url": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单21 需求0 #21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单21 收入¥4179 user提交订单 #21user提交订单 #20user提交订单 #19user提交订单 #18user提交订单 #17 接口响应 { \"ok\": true, \"status\": \"ok\", \"project\": \"may-89095\", \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89095/data/app.sqlite\", \"time\": 1780908835668 }",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 3937,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-03-操作-重置筛选",
+          "label": "操作:重置筛选",
+          "finalUrl": "http://127.0.0.1:49095/#search",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-03-操作-重置筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-03-操作-重置筛选.png",
+          "elementCount": 259,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:重置筛选->提交购买",
+        "url": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单22 需求0 #22 演示用户已提交 ¥199#21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单22 收入¥4378 user提交订单 #22user提交订单 #21user提交订单 #20user提交订单 #19user提交订单 #18 接口响应 { \"ok\": true, \"data\": { \"id\": 22, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 199, \"status\": \"已提交\", \"note\": \"请安排顾问跟进本次服务。\", \"created_at\": \"2026-06-08T08:54:09.523Z\" } }",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 4092,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买",
+          "label": "二层操作:重置筛选->提交购买",
+          "finalUrl": "http://127.0.0.1:49095/#search",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买.png",
+          "elementCount": 262,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单22 需求0 #22 演示用户已提交 ¥199#21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单22 收入¥4378 user提交订单 #22user提交订单 #21user提交订单 #20user提交订单 #19user提交订单 #18 接口响应 { \"ok\": true, \"data\": { \"id\": 22, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 199, \"status\": \"已提交\", \"note\": \"请安排顾问跟进本次服务。\", \"created_at\": \"2026-06-08T08:54:09.523Z\" } }",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 4092,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-05-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49095/#search",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-05-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-05-操作-刷新.png",
+          "elementCount": 262,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:刷新->提交购买",
+        "url": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单23 需求0 #23 演示用户已提交 ¥199#22 演示用户已提交 ¥199#21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单23 收入¥4577 user提交订单 #23user提交订单 #22user提交订单 #21user提交订单 #20user提交订单 #19 接口响应 { \"ok\": true, \"data\": { \"id\": 23, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 199, \"status\": \"已提交\", \"note\": \"请安排顾问跟进本次服务。\", \"created_at\": \"2026-06-08T08:54:18.594Z\" } }",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 4148,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-06-二层操作-刷新-提交购买",
+          "label": "二层操作:刷新->提交购买",
+          "finalUrl": "http://127.0.0.1:49095/#search",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-06-二层操作-刷新-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-06-二层操作-刷新-提交购买.png",
+          "elementCount": 265,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "导航:购买提交",
+        "url": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单23 需求0 #23 演示用户已提交 ¥199#22 演示用户已提交 ¥199#21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单23 收入¥4577 user提交订单 #23user提交订单 #22user提交订单 #21user提交订单 #20user提交订单 #19 接口响应 { \"ok\": true, \"data\": { \"id\": 23, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 199, \"status\": \"已提交\", \"note\": \"请安排顾问跟进本次服务。\", \"created_at\": \"2026-06-08T08:54:18.594Z\" } }",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 4148,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-07-导航-购买提交",
+          "label": "导航:购买提交",
+          "finalUrl": "http://127.0.0.1:49095/#purchase",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-07-导航-购买提交.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-07-导航-购买提交.png",
+          "elementCount": 265,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置筛选",
+        "url": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单23 需求0 #23 演示用户已提交 ¥199#22 演示用户已提交 ¥199#21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单23 收入¥4577 user提交订单 #23user提交订单 #22user提交订单 #21user提交订单 #20user提交订单 #19 接口响应 { \"ok\": true, \"data\": { \"id\": 23, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 199, \"status\": \"已提交\", \"note\": \"请安排顾问跟进本次服务。\", \"created_at\": \"2026-06-08T08:54:18.594Z\" } }",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 4148,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-08-操作-重置筛选",
+          "label": "操作:重置筛选",
+          "finalUrl": "http://127.0.0.1:49095/#purchase",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-08-操作-重置筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-08-操作-重置筛选.png",
+          "elementCount": 265,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:重置筛选->提交购买",
+        "url": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单24 需求0 #24 演示用户已提交 ¥199#23 演示用户已提交 ¥199#22 演示用户已提交 ¥199#21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单24 收入¥4776 user提交订单 #24user提交订单 #23user提交订单 #22user提交订单 #21user提交订单 #20 接口响应 { \"ok\": true, \"data\": { \"id\": 24, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 199, \"status\": \"已提交\", \"note\": \"请安排顾问跟进本次服务。\", \"created_at\": \"2026-06-08T08:54:27.670Z\" } }",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 4204,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买",
+          "label": "二层操作:重置筛选->提交购买",
+          "finalUrl": "http://127.0.0.1:49095/#purchase",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买.png",
+          "elementCount": 268,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "headings": [
+          "may-89095 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能投顾组合诊断",
+          "小微企业预算管家",
+          "家庭账本自动整理",
+          "发票报销审核",
+          "资金周转测算",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单与资料",
+          "运营看板"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索资产、预算、账本、报销",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89095 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49095 后端 http://127.0.0.1:59095/api 健康检查 正常 登录注册 演示账号快速进入 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心企业服务后台管理搜索筛选资产规划 重置筛选 资产规划 可购买 智能投顾组合诊断 分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。 PinAI 顾问中心 评分 4.8 ¥199 购买 企业服务 可购买 小微企业预算管家 为门店和工作室建立收入、成本、库存与税费预算模型。 财务自动化实验室 评分 4.7 ¥399 购买 个人中心 可购买 家庭账本自动整理 导入日常收支，自动生成分类、趋势和异常提醒。 本地数据助手 评分 4.6 ¥99 购买 后台管理 审核中 发票报销审核 面向管理后台的票据查重、报销规则校验和审批留痕。 合规审核台 评分 4.5 ¥149 购买 搜索筛选 可购买 资金周转测算 按客户、项目和周期筛选测算未来 90 天资金缺口。 现金流引擎 评分 4.4 ¥129 购买 购买 / 提交 提交购买或业务需求 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 智能投顾组合诊断 - ¥199小微企业预算管家 - ¥399家庭账本自动整理 - ¥99发票报销审核 - ¥149资金周转测算 - ¥129 请安排顾问跟进本次服务。 提交购买 需求提交 没有合适服务时创建需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单24 需求0 #24 演示用户已提交 ¥199#23 演示用户已提交 ¥199#22 演示用户已提交 ¥199#21 演示用户已提交 ¥199#20 演示用户已提交 ¥199#19 演示用户已提交 ¥199#18 演示用户已提交 ¥199#17 演示用户已提交 ¥199#16 演示用户已提交 ¥199#15 演示用户已提交 ¥199#14 演示用户已提交 ¥199#13 演示用户已提交 ¥199#12 演示用户已提交 ¥199#11 演示用户已提交 ¥199#10 演示用户已提交 ¥199#9 演示用户已提交 ¥199#8 演示用户已提交 ¥199#7 演示用户已提交 ¥199#6 演示用户已提交 ¥199#5 测试用户已提交 ¥199#4 演示用户已提交 ¥199#3 演示用户已提交 ¥199#2 演示用户已提交 ¥199#1 演示用户已提交 ¥199 后台管理 运营看板 刷新后台 用户2 服务5 订单24 收入¥4776 user提交订单 #24user提交订单 #23user提交订单 #22user提交订单 #21user提交订单 #20 接口响应 { \"ok\": true, \"data\": { \"id\": 24, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 199, \"status\": \"已提交\", \"note\": \"请安排顾问跟进本次服务。\", \"created_at\": \"2026-06-08T08:54:27.670Z\" } }",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 4204,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89095-final-repair-structure-10-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49095/#purchase",
+          "title": "PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-10-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-10-操作-刷新.png",
+          "elementCount": 268,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索资产、预算、账本、报销",
+            "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+            "重置筛选",
+            "购买",
+            "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+            "请安排顾问跟进本次服务。",
+            "提交购买",
+            "现金流诊断需求",
+            "希望按月分析收支并给出提醒规则。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "搜索筛选",
+        "label": "重置筛选",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "重置筛选->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "刷新->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "购买提交",
+        "label": "重置筛选",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "购买提交",
+        "label": "重置筛选->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "购买提交",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 3,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49095/",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-01-首屏.png",
+        "elementCount": 259,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-02-导航-搜索筛选",
+        "label": "导航:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-02-导航-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-02-导航-搜索筛选.png",
+        "elementCount": 259,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-03-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-03-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-03-操作-重置筛选.png",
+        "elementCount": 259,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买.png",
+        "elementCount": 262,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-05-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-05-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-05-操作-刷新.png",
+        "elementCount": 262,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-06-二层操作-刷新-提交购买",
+        "label": "二层操作:刷新->提交购买",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-06-二层操作-刷新-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-06-二层操作-刷新-提交购买.png",
+        "elementCount": 265,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-07-导航-购买提交",
+        "label": "导航:购买提交",
+        "finalUrl": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-07-导航-购买提交.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-07-导航-购买提交.png",
+        "elementCount": 265,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-08-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-08-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-08-操作-重置筛选.png",
+        "elementCount": 265,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买.png",
+        "elementCount": 268,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-10-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-10-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-10-操作-刷新.png",
+        "elementCount": 268,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49095/",
+    "representativeScreenshotLabel": "may-89095 本地服务台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 10,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49095/",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-01-首屏.png",
+        "elementCount": 259,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-02-导航-搜索筛选",
+        "label": "导航:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-02-导航-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-02-导航-搜索筛选.png",
+        "elementCount": 259,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-03-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-03-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-03-操作-重置筛选.png",
+        "elementCount": 259,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-04-二层操作-重置筛选-提交购买.png",
+        "elementCount": 262,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-05-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-05-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-05-操作-刷新.png",
+        "elementCount": 262,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-06-二层操作-刷新-提交购买",
+        "label": "二层操作:刷新->提交购买",
+        "finalUrl": "http://127.0.0.1:49095/#search",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-06-二层操作-刷新-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-06-二层操作-刷新-提交购买.png",
+        "elementCount": 265,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-07-导航-购买提交",
+        "label": "导航:购买提交",
+        "finalUrl": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-07-导航-购买提交.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-07-导航-购买提交.png",
+        "elementCount": 265,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-08-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-08-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-08-操作-重置筛选.png",
+        "elementCount": 265,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-09-二层操作-重置筛选-提交购买.png",
+        "elementCount": 268,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89095-final-repair-structure-10-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49095/#purchase",
+        "title": "PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-10-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89095/runtime-check/codex-20260608-final-repair/may-89095-final-repair-structure-10-操作-刷新.png",
+        "elementCount": 268,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索资产、预算、账本、报销",
+          "全部 个人中心 企业服务 后台管理 搜索筛选 资产规划",
+          "重置筛选",
+          "购买",
+          "智能投顾组合诊断 - ¥199 小微企业预算管家 - ¥399 家庭账本自动整理 - ¥99 发票报销审核 - ¥149 资金周转测算 - ¥129",
+          "请安排顾问跟进本次服务。",
+          "提交购买",
+          "现金流诊断需求",
+          "希望按月分析收支并给出提醒规则。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1824,
+    "height": 1600,
+    "scrollWidth": 1792,
+    "scrollHeight": 4105
+  },
+  "initialBodyTextPreview": "LOCAL SQLITE FULL STACK\n\nmay-89095 本地服务台\n搜索筛选\n购买提交\n个人中心\n后台管理\n前端\nhttp://127.0.0.1:49095\n后端\nhttp://127.0.0.1:59095/api\n健康检查\n正常\n\n登录注册\n\n演示账号快速进入\n\n可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。\n\n登录 / 注册\n\n搜索 / 筛选\n\n服务与方案\n全部\n个人中心\n企业服务\n后台管理\n搜索筛选\n资产规划\n重置筛选\n资产规划\n可购买\n智能投顾组合诊断\n\n分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。\n\nPinAI 顾问中心\n评分 4.8\n¥199\n购买\n企业服务\n可购买\n小微企业预算管家\n\n为门店和工作室建立收入、成本、库存与税费预算模型。\n\n财务自动化实验室\n评分 4.7\n¥399\n购买\n个人中心\n可购买\n家庭账本自动整理\n\n导入日常收支，自动生成分类、趋势和异常提醒。\n\n本地数据助手\n评分 4.6\n¥99\n购买\n后台管理\n审核中\n发票报销审核\n\n面向管理后台的票据查重、报销规则校验和审批留痕。\n\n合规审核台\n评分 4.5\n¥149\n购买\n搜索筛选\n可购买\n资金周转测算\n\n按客户、项目和周期筛选测算未来 90 天资金缺口。\n\n现金流引擎\n评分 4.4\n¥129\n购买\n\n购买 / 提交\n\n提交购买或业务需求\n\n表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。\n\n智能投顾组合诊断 - ¥199\n小微企业预算管家 - ¥399\n家庭账本自动整理 - ¥99\n发票报销审核 - ¥149\n资金周转测算 - ¥129\n提交购买\n\n需求提交\n\n没有合适服务时创建需求\n提交需求\n\n个人中心 / 我的\n\n我的订单与资料\n刷新\n用户\n演示用户\n手机\n13800138000\n订单\n21\n需求\n0\n#21 演示用户\n已提交 ¥199\n#20 演示用户\n已提交 ¥199\n#19 演示用户\n已提交 ¥199\n#18 演示用户\n已提交 ¥199\n#17 演示用户\n已提交 ¥199\n#16 演示用户\n已提交 ¥199\n#15 演示用户\n已提交 ¥199\n#14 演示用户\n已提交 ¥199\n#13 演示用户\n已提交 ¥199\n#12 演示用户\n已提交 ¥199\n#11 演示用户\n已提交 ¥199\n#10 演示用户\n已提交 ¥199\n#9 演示用户\n已提交 ¥199\n#8 演示用户\n已提交 ¥199\n#7 演示用户\n已提交 ¥199\n#6 演示用户\n已提交 ¥199\n#5 测试用户\n已提交 ¥199\n#4 演示用户\n已提交 ¥199\n#3 演示用户\n已提交 ¥199\n#2 演示用户\n已提交 ¥199\n#1 演示用户\n已提交 ¥199\n\n后台管理\n\n运营看板\n刷新后台\n用户\n2\n服务\n5\n订单\n21\n收入\n¥4179\nuser\n提交订单 #21\nuser\n提交订单 #20\nuser\n提交订单 #19\nuser\n提交订单 #18\nuser\n提交订单 #17\n\n接口响应\n\n{\n  \"ok\": true,\n  \"status\": \"ok\",\n  \"project\": \"may-89095\",\n  \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89095/data/app.sqlite\",\n  \"time\": 1780908835668\n}",
+  "bodyTextPreview": "LOCAL SQLITE FULL STACK\n\nmay-89095 本地服务台\n搜索筛选\n购买提交\n个人中心\n后台管理\n前端\nhttp://127.0.0.1:49095\n后端\nhttp://127.0.0.1:59095/api\n健康检查\n正常\n\n登录注册\n\n演示账号快速进入\n\n可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。\n\n登录 / 注册\n\n搜索 / 筛选\n\n服务与方案\n全部\n个人中心\n企业服务\n后台管理\n搜索筛选\n资产规划\n重置筛选\n资产规划\n可购买\n智能投顾组合诊断\n\n分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。\n\nPinAI 顾问中心\n评分 4.8\n¥199\n购买\n企业服务\n可购买\n小微企业预算管家\n\n为门店和工作室建立收入、成本、库存与税费预算模型。\n\n财务自动化实验室\n评分 4.7\n¥399\n购买\n个人中心\n可购买\n家庭账本自动整理\n\n导入日常收支，自动生成分类、趋势和异常提醒。\n\n本地数据助手\n评分 4.6\n¥99\n购买\n后台管理\n审核中\n发票报销审核\n\n面向管理后台的票据查重、报销规则校验和审批留痕。\n\n合规审核台\n评分 4.5\n¥149\n购买\n搜索筛选\n可购买\n资金周转测算\n\n按客户、项目和周期筛选测算未来 90 天资金缺口。\n\n现金流引擎\n评分 4.4\n¥129\n购买\n\n购买 / 提交\n\n提交购买或业务需求\n\n表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。\n\n智能投顾组合诊断 - ¥199\n小微企业预算管家 - ¥399\n家庭账本自动整理 - ¥99\n发票报销审核 - ¥149\n资金周转测算 - ¥129\n提交购买\n\n需求提交\n\n没有合适服务时创建需求\n提交需求\n\n个人中心 / 我的\n\n我的订单与资料\n刷新\n用户\n演示用户\n手机\n13800138000\n订单\n24\n需求\n0\n#24 演示用户\n已提交 ¥199\n#23 演示用户\n已提交 ¥199\n#22 演示用户\n已提交 ¥199\n#21 演示用户\n已提交 ¥199\n#20 演示用户\n已提交 ¥199\n#19 演示用户\n已提交 ¥199\n#18 演示用户\n已提交 ¥199\n#17 演示用户\n已提交 ¥199\n#16 演示用户\n已提交 ¥199\n#15 演示用户\n已提交 ¥199\n#14 演示用户\n已提交 ¥199\n#13 演示用户\n已提交 ¥199\n#12 演示用户\n已提交 ¥199\n#11 演示用户\n已提交 ¥199\n#10 演示用户\n已提交 ¥199\n#9 演示用户\n已提交 ¥199\n#8 演示用户\n已提交 ¥199\n#7 演示用户\n已提交 ¥199\n#6 演示用户\n已提交 ¥199\n#5 测试用户\n已提交 ¥199\n#4 演示用户\n已提交 ¥199\n#3 演示用户\n已提交 ¥199\n#2 演示用户\n已提交 ¥199\n#1 演示用户\n已提交 ¥199\n\n后台管理\n\n运营看板\n刷新后台\n用户\n2\n服务\n5\n订单\n24\n收入\n¥4776\nuser\n提交订单 #24\nuser\n提交订单 #23\nuser\n提交订单 #22\nuser\n提交订单 #21\nuser\n提交订单 #20\n\n接口响应\n\n{\n  \"ok\": true,\n  \"status\": \"ok\",\n  \"project\": \"may-89095\",\n  \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89095/data/app.sqlite\",\n  \"time\": 1780908876036\n}",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59095/api/admin/summary"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [],
+  "responseErrors": []
+}

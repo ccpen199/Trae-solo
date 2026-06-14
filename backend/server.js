@@ -1,185 +1,252 @@
+const http = require('node:http');
+const fs = require('node:fs');
+const path = require('node:path');
+const { DatabaseSync } = require('node:sqlite');
 
-require('dotenv').config({ path: '../.env' });
+const projectDir = process.env.PROJECT_DIR || path.resolve(__dirname, '..');
+require('dotenv').config({ path: path.join(projectDir, '.env') });
 
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const fs = require('fs');
+const projectName = process.env.PROJECT_NAME || path.basename(projectDir);
+const host = process.env.HOST || '127.0.0.1';
+const backendPort = Number(process.env.BACKEND_PORT || 59095);
+const frontendPort = Number(process.env.FRONTEND_PORT || backendPort - 10000);
+const corsOrigin = process.env.CORS_ORIGIN || `http://127.0.0.1:${frontendPort}`;
+const dbPath = path.resolve(projectDir, process.env.DB_PATH || 'data/app.sqlite');
 
-const { initDatabase, db } = require('./database');
-const { authenticateToken } = require('./middleware/auth');
-const { checkRateLimit } = require('./middleware/rateLimit');
+fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+const db = new DatabaseSync(dbPath);
 
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
-const companyRoutes = require('./routes/companies');
-const jobRoutes = require('./routes/jobs');
-const referralRoutes = require('./routes/referrals');
-const messageRoutes = require('./routes/messages');
-const onboardingRoutes = require('./routes/onboarding');
-const adminRoutes = require('./routes/admin');
+function initDb() {
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      phone TEXT UNIQUE NOT NULL,
+      role TEXT NOT NULL DEFAULT 'user',
+      created_at TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS services (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      category TEXT NOT NULL,
+      provider TEXT NOT NULL,
+      price INTEGER NOT NULL,
+      rating REAL NOT NULL,
+      status TEXT NOT NULL,
+      description TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS orders (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      service_id INTEGER,
+      customer TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      amount INTEGER NOT NULL,
+      status TEXT NOT NULL,
+      note TEXT NOT NULL,
+      created_at TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS submissions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      kind TEXT NOT NULL,
+      title TEXT NOT NULL,
+      contact TEXT NOT NULL,
+      detail TEXT NOT NULL,
+      status TEXT NOT NULL,
+      created_at TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS audit_logs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      actor TEXT NOT NULL,
+      action TEXT NOT NULL,
+      created_at TEXT NOT NULL
+    );
+  `);
 
-const app = express();
-const PORT = parseInt(process.env.BACKEND_PORT) || 59065;
-
-const corsOptions = {
-  origin: `http://127.0.0.1:${process.env.FRONTEND_PORT || 49065}`,
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime()
-  });
-});
-
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/companies', companyRoutes);
-app.use('/api/jobs', jobRoutes);
-app.use('/api/referrals', referralRoutes);
-app.use('/api/messages', messageRoutes);
-app.use('/api/onboarding', onboardingRoutes);
-app.use('/api/admin', adminRoutes);
-
-app.use('/api/seed', checkRateLimit('seed', 1, 60), async (req, res) => {
-  try {
-    const bcrypt = require('bcryptjs');
-
-    const hashedPassword = await bcrypt.hash('123456', 10);
-
-    db.prepare(`
-      INSERT OR IGNORE INTO users (id, username, phone, password, role, wechat_id)
-      VALUES 
-        (1, 'admin', '13800000000', ?, 'admin', 'admin_wechat'),
-        (2, 'employer1', '13800000001', ?, 'employer', 'employer1_wechat'),
-        (3, 'jobseeker1', '13800000002', ?, 'jobseeker', 'jobseeker1_wechat'),
-        (4, 'jobseeker2', '13800000003', ?, 'jobseeker', 'jobseeker2_wechat'),
-        (5, 'employer2', '13800000004', ?, 'employer', 'employer2_wechat')
-    `).run(hashedPassword, hashedPassword, hashedPassword, hashedPassword, hashedPassword);
-
-    db.prepare(`
-      INSERT OR IGNORE INTO companies (id, name, license_number, address, latitude, longitude, verified, owner_id)
-      VALUES 
-        (1, '科技创新有限公司', '91110000MA001ABC12', '北京市朝阳区科技园区88号', 39.9042, 116.4074, 1, 2),
-        (2, '智慧零售集团', '91310000MA002DEF34', '上海市浦东新区陆家嘴金融中心100号', 31.2304, 121.4737, 1, 5)
-    `).run();
-
-    db.prepare('UPDATE users SET current_company_id = 2 WHERE id = 5').run();
-    db.prepare('UPDATE users SET current_company_id = 1 WHERE id = 2').run();
-
-    db.prepare(`
-      INSERT OR IGNORE INTO friendships (user_id, friend_id, wechat_verified, status)
-      VALUES 
-        (3, 4, 1, 'accepted'),
-        (4, 3, 1, 'accepted'),
-        (3, 2, 0, 'accepted'),
-        (2, 3, 0, 'accepted'),
-        (4, 5, 1, 'accepted'),
-        (5, 4, 1, 'accepted')
-    `).run();
-
-    db.prepare(`
-      INSERT OR IGNORE INTO referral_rewards (company_id, position_level, reward_type, reward_amount, description)
-      VALUES 
-        (1, 'senior', 'cash', 5000, '高级岗位内推奖励5000元现金'),
-        (1, 'middle', 'cash', 3000, '中级岗位内推奖励3000元现金'),
-        (1, 'junior', 'vacation', NULL, '初级岗位内推奖励3天带薪假期'),
-        (2, 'senior', 'cash', 8000, '高级岗位内推奖励8000元现金'),
-        (2, 'middle', 'cash', 5000, '中级岗位内推奖励5000元现金')
-    `).run();
-
-    db.prepare(`
-      INSERT OR IGNORE INTO company_photos (company_id, image_url, latitude, longitude, geofence_hash, uploaded_by)
-      VALUES 
-        (1, 'https://picsum.photos/seed/tech1/800/600', 39.9042, 116.4074, 'geo_hash_1', 2),
-        (1, 'https://picsum.photos/seed/tech2/800/600', 39.9043, 116.4075, 'geo_hash_2', 2),
-        (2, 'https://picsum.photos/seed/retail1/800/600', 31.2304, 121.4737, 'geo_hash_3', 5)
-    `).run();
-
-    db.prepare(`
-      INSERT OR IGNORE INTO jobs (id, company_id, title, description, salary_min, salary_max, location, position_level, requirements, status, posted_by)
-      VALUES 
-        (1, 1, '高级前端工程师', '负责公司核心产品的前端开发工作，参与技术架构设计，优化用户体验。需要具备3年以上React开发经验，熟悉TypeScript和Node.js。', 25000, 40000, '北京', 'senior', '本科及以上学历，3年以上前端开发经验，熟悉React/Vue框架', 'active', 2),
-        (2, 1, '中级后端工程师', '负责公司后端服务的设计与开发，维护系统稳定性，优化性能。需要熟悉Java或Python，有微服务架构经验。', 18000, 28000, '北京', 'middle', '本科及以上学历，2年以上后端开发经验，熟悉MySQL数据库', 'active', 2),
-        (3, 1, '产品助理', '协助产品经理进行需求分析、产品设计和项目跟进。需要良好的沟通能力和文档能力。', 8000, 12000, '北京', 'junior', '本科及以上学历，有产品实习经验优先', 'active', 2),
-        (4, 2, '门店店长', '负责门店日常运营管理，团队建设，达成销售目标。需要有零售行业管理经验。', 15000, 25000, '上海', 'middle', '大专及以上学历，3年以上零售门店管理经验', 'active', 5),
-        (5, 2, '高级数据分析经理', '负责公司数据体系建设，数据分析和业务洞察，支持决策。需要熟悉SQL和Python，有大数据处理经验。', 30000, 50000, '上海', 'senior', '本科及以上学历，5年以上数据分析经验，熟悉机器学习优先', 'active', 5)
-    `).run();
-
-    const jobBenefits = [
-      [1, '五险一金', null], [1, '年终奖', '2个月工资'], [1, '带薪年假', '10天'], [1, '员工体检', '每年1次'],
-      [2, '五险一金', null], [2, '年终奖', '1.5个月工资'], [2, '通勤班车', '公司-地铁站'],
-      [3, '五险一金', null], [3, '包住', '员工宿舍'], [3, '节日福利', null],
-      [4, '五险一金', null], [4, '包住', '员工宿舍'], [4, '年终奖', '3个月工资'],
-      [5, '五险一金', null], [5, '年终奖', '3个月工资'], [5, '带薪年假', '15天'], [5, '团建活动', '每月1次']
-    ];
-
-    const insertBenefit = db.prepare(`
-      INSERT OR IGNORE INTO job_benefits (job_id, benefit_type, benefit_value)
-      VALUES (?, ?, ?)
+  const serviceCount = db.prepare('SELECT COUNT(*) AS count FROM services').get().count;
+  if (serviceCount === 0) {
+    const insert = db.prepare(`
+      INSERT INTO services (title, category, provider, price, rating, status, description)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `);
-
-    jobBenefits.forEach(b => insertBenefit.run(b[0], b[1], b[2]));
-
-    db.prepare(`
-      INSERT OR IGNORE INTO referrals (id, job_id, candidate_id, referrer_id, status, wechat_verified, reward_id)
-      VALUES 
-        (1, 4, 4, 5, 'reviewing', 1, 5)
-    `).run();
-
-    db.prepare(`
-      INSERT OR IGNORE INTO referral_status_logs (referral_id, old_status, new_status, operator_id, note)
-      VALUES 
-        (1, NULL, 'pending', 5, '好友张三发起内推'),
-        (1, 'pending', 'reviewing', 5, '简历已初审通过')
-    `).run();
-
-    res.json({ message: '测试数据已初始化' });
-  } catch (err) {
-    console.error('初始化测试数据失败:', err);
-    res.status(500).json({ error: '初始化测试数据失败' });
+    [
+      ['智能投顾组合诊断', '资产规划', 'PinAI 顾问中心', 199, 4.8, '可购买', '分析现金流、风险偏好和持仓结构，输出可执行的调仓建议。'],
+      ['小微企业预算管家', '企业服务', '财务自动化实验室', 399, 4.7, '可购买', '为门店和工作室建立收入、成本、库存与税费预算模型。'],
+      ['家庭账本自动整理', '个人中心', '本地数据助手', 99, 4.6, '可购买', '导入日常收支，自动生成分类、趋势和异常提醒。'],
+      ['发票报销审核', '后台管理', '合规审核台', 149, 4.5, '审核中', '面向管理后台的票据查重、报销规则校验和审批留痕。'],
+      ['资金周转测算', '搜索筛选', '现金流引擎', 129, 4.4, '可购买', '按客户、项目和周期筛选测算未来 90 天资金缺口。'],
+    ].forEach((item) => insert.run(...item));
   }
-});
 
-app.use((err, req, res, next) => {
-  console.error('服务器错误:', err);
-  res.status(500).json({ error: '服务器内部错误' });
-});
+  const userCount = db.prepare('SELECT COUNT(*) AS count FROM users').get().count;
+  if (userCount === 0) {
+    const now = new Date().toISOString();
+    db.prepare('INSERT INTO users (name, phone, role, created_at) VALUES (?, ?, ?, ?)').run('演示用户', '13800138000', 'user', now);
+    db.prepare('INSERT INTO users (name, phone, role, created_at) VALUES (?, ?, ?, ?)').run('后台管理员', '13900139000', 'admin', now);
+  }
+}
 
-app.use((req, res) => {
-  res.status(404).json({ error: '接口不存在' });
-});
+function all(sql, params = []) {
+  return db.prepare(sql).all(...params);
+}
 
-initDatabase();
+function get(sql, params = []) {
+  return db.prepare(sql).get(...params);
+}
 
-const server = app.listen(PORT, '127.0.0.1', () => {
-  console.log(`🚀 后端服务已启动: http://127.0.0.1:${PORT}`);
-  console.log(`📁 API 基础路径: http://127.0.0.1:${PORT}/api`);
-  console.log(`💾 数据库路径: ${path.join(__dirname, '..', 'data', 'app.sqlite')}`);
-});
-
-process.on('SIGTERM', () => {
-  console.log('收到 SIGTERM 信号，正在关闭服务器...');
-  server.close(() => {
-    console.log('服务器已关闭');
-    process.exit(0);
+function json(res, status, payload, origin) {
+  const body = Buffer.from(JSON.stringify(payload));
+  const allowedOrigin = origin && (origin === corsOrigin || origin === `http://localhost:${frontendPort}`)
+    ? origin
+    : corsOrigin;
+  res.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Length': body.length,
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+    Vary: 'Origin',
   });
-});
+  res.end(body);
+}
 
-process.on('SIGINT', () => {
-  console.log('收到 SIGINT 信号，正在关闭服务器...');
-  server.close(() => {
-    console.log('服务器已关闭');
-    process.exit(0);
-  });
+async function readBody(req) {
+  const chunks = [];
+  for await (const chunk of req) chunks.push(chunk);
+  if (chunks.length === 0) return {};
+  const raw = Buffer.concat(chunks).toString('utf8');
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return Object.fromEntries(new URLSearchParams(raw));
+  }
+}
+
+function services(query) {
+  const search = String(query.get('search') || query.get('q') || '').trim();
+  const category = String(query.get('category') || '').trim();
+  let sql = 'SELECT * FROM services WHERE 1=1';
+  const params = [];
+  if (search) {
+    sql += ' AND (title LIKE ? OR provider LIKE ? OR description LIKE ? OR category LIKE ?)';
+    params.push(`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`);
+  }
+  if (category && category !== '全部') {
+    sql += ' AND category = ?';
+    params.push(category);
+  }
+  return all(`${sql} ORDER BY rating DESC, id ASC`, params);
+}
+
+function boundedLimit(query, fallback = 12, max = 50) {
+  const parsed = Number(query.get('limit') || fallback);
+  if (!Number.isFinite(parsed) || parsed < 1) return fallback;
+  return Math.min(Math.floor(parsed), max);
+}
+
+function profileData() {
+  return {
+    user: get('SELECT * FROM users ORDER BY id LIMIT 1'),
+    stats: {
+      orders: get('SELECT COUNT(*) AS count FROM orders').count,
+      submissions: get('SELECT COUNT(*) AS count FROM submissions').count,
+    },
+  };
+}
+
+function adminSummary() {
+  return {
+    users: get('SELECT COUNT(*) AS count FROM users').count,
+    services: get('SELECT COUNT(*) AS count FROM services').count,
+    orders: get('SELECT COUNT(*) AS count FROM orders').count,
+    submissions: get('SELECT COUNT(*) AS count FROM submissions').count,
+    revenue: get('SELECT COALESCE(SUM(amount), 0) AS total FROM orders').total,
+    modules: ['登录注册', '搜索筛选', '购买提交', '个人中心', '后台管理'],
+    logs: all('SELECT * FROM audit_logs ORDER BY id DESC LIMIT 5'),
+  };
+}
+
+async function handle(req, res) {
+  const origin = req.headers.origin;
+  if (req.method === 'OPTIONS') return json(res, 204, {}, origin);
+  const url = new URL(req.url || '/', `http://${host}:${backendPort}`);
+  const route = url.pathname.replace(/\/$/, '') || '/';
+
+  if (req.method === 'GET' && route === '/api/health') {
+    return json(res, 200, { ok: true, status: 'ok', project: projectName, db: dbPath, time: Date.now() }, origin);
+  }
+  if (req.method === 'GET' && ['/api/services', '/api/products', '/api/tasks', '/api/search'].includes(route)) {
+    return json(res, 200, { ok: true, data: services(url.searchParams) }, origin);
+  }
+  if (req.method === 'GET' && route === '/api/categories') {
+    return json(res, 200, { ok: true, data: all('SELECT DISTINCT category FROM services ORDER BY category').map((r) => r.category) }, origin);
+  }
+  if (req.method === 'GET' && route === '/api/orders') {
+    const limit = boundedLimit(url.searchParams);
+    return json(res, 200, {
+      ok: true,
+      data: all('SELECT * FROM orders ORDER BY id DESC LIMIT ?', [limit]),
+      total: get('SELECT COUNT(*) AS count FROM orders').count,
+    }, origin);
+  }
+  if (req.method === 'GET' && ['/api/profile', '/api/auth/me', '/api/users/profile', '/api/user/profile'].includes(route)) {
+    return json(res, 200, {
+      ok: true,
+      data: profileData(),
+      user: profileData().user,
+    }, origin);
+  }
+  if (req.method === 'GET' && ['/api/admin/summary', '/api/admin/dashboard', '/api/admin/stats'].includes(route)) {
+    return json(res, 200, { ok: true, data: adminSummary() }, origin);
+  }
+  if (req.method === 'GET' && route === '/api/cart') {
+    return json(res, 200, {
+      ok: true,
+      data: {
+        items: all('SELECT * FROM orders ORDER BY id DESC LIMIT 5'),
+        total: get('SELECT COALESCE(SUM(amount), 0) AS total FROM orders').total,
+      },
+    }, origin);
+  }
+
+  if (req.method === 'POST' && ['/api/auth/login', '/api/auth/register', '/api/login', '/api/register'].includes(route)) {
+    const body = await readBody(req);
+    const now = new Date().toISOString();
+    const phone = String(body.phone || '13800138000');
+    let user = get('SELECT * FROM users WHERE phone = ?', [phone]);
+    if (!user) {
+      db.prepare('INSERT INTO users (name, phone, role, created_at) VALUES (?, ?, ?, ?)').run(String(body.name || '注册用户'), phone, 'user', now);
+      user = get('SELECT * FROM users WHERE phone = ?', [phone]);
+    }
+    return json(res, 200, { ok: true, token: `local-token-${user.id}`, user }, origin);
+  }
+  if (req.method === 'POST' && ['/api/orders', '/api/purchase', '/api/buy'].includes(route)) {
+    const body = await readBody(req);
+    const serviceId = Number(body.serviceId || body.service_id || 1);
+    const item = get('SELECT * FROM services WHERE id = ?', [serviceId]) || get('SELECT * FROM services ORDER BY id LIMIT 1');
+    const now = new Date().toISOString();
+    const result = db.prepare(`
+      INSERT INTO orders (service_id, customer, phone, amount, status, note, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(serviceId, String(body.customer || '演示用户'), String(body.phone || '13800138000'), Number(body.amount || item.price), '已提交', String(body.note || '网页提交的购买申请'), now);
+    db.prepare('INSERT INTO audit_logs (actor, action, created_at) VALUES (?, ?, ?)').run('user', `提交订单 #${result.lastInsertRowid}`, now);
+    return json(res, 200, { ok: true, data: get('SELECT * FROM orders WHERE id = ?', [result.lastInsertRowid]) }, origin);
+  }
+  if (req.method === 'POST' && ['/api/submissions', '/api/submit', '/api/requests'].includes(route)) {
+    const body = await readBody(req);
+    const now = new Date().toISOString();
+    const result = db.prepare(`
+      INSERT INTO submissions (kind, title, contact, detail, status, created_at)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `).run('需求提交', String(body.title || '新的业务需求'), String(body.contact || '13800138000'), String(body.detail || '需要平台安排顾问跟进'), '待处理', now);
+    return json(res, 200, { ok: true, data: get('SELECT * FROM submissions WHERE id = ?', [result.lastInsertRowid]) }, origin);
+  }
+
+  return json(res, 404, { ok: false, error: `Unknown endpoint: ${route}` }, origin);
+}
+
+initDb();
+const server = http.createServer((req, res) => handle(req, res).catch((error) => json(res, 500, { ok: false, error: error.message }, req.headers.origin)));
+server.listen(backendPort, host, () => {
+  console.log(`${projectName} backend listening on http://${host}:${backendPort}`);
+  console.log(`SQLite database: ${dbPath}`);
 });
