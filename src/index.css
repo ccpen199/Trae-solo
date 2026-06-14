@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  * {
+    @apply border-surface-200;
+  }
+
+  body {
+    @apply bg-surface-50 text-surface-900;
+  }
+
+  .dark body {
+    @apply bg-surface-950 text-surface-100;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-xl border border-surface-200 shadow-sm transition-all duration-200;
+  }
+  .card:hover {
+    @apply shadow-md;
+  }
+  .dark .card {
+    @apply bg-surface-800 border-surface-700;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-brand {
+    @apply badge bg-brand-100 text-brand-700;
+  }
+  .dark .badge-brand {
+    @apply bg-brand-900/30 text-brand-300;
+  }
+  .badge-accent {
+    @apply badge bg-accent-100 text-accent-700;
+  }
+  .dark .badge-accent {
+    @apply bg-accent-900/30 text-accent-300;
+  }
+  .badge-warn {
+    @apply badge bg-warn-100 text-warn-700;
+  }
+  .dark .badge-warn {
+    @apply bg-warn-900/30 text-warn-300;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg bg-brand-600 text-white font-medium transition-all duration-200 hover:bg-brand-700 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg bg-surface-100 text-surface-700 font-medium transition-all duration-200 hover:bg-surface-200 active:scale-[0.98];
+  }
+  .dark .btn-secondary {
+    @apply bg-surface-700 text-surface-200 hover:bg-surface-600;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg border border-brand-600 text-brand-600 font-medium transition-all duration-200 hover:bg-brand-50 active:scale-[0.98];
+  }
+  .dark .btn-outline {
+    @apply border-brand-400 text-brand-400 hover:bg-brand-900/20;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 rounded-lg border border-surface-300 bg-white text-surface-900 placeholder:text-surface-400 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent;
+  }
+  .dark .input-field {
+    @apply bg-surface-800 border-surface-600 text-surface-100 placeholder:text-surface-500;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold text-surface-900;
+  }
+  .dark .section-title {
+    @apply text-surface-50;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-surface-600 transition-all duration-200 hover:bg-surface-100 hover:text-surface-900;
+  }
+  .sidebar-link.active {
+    @apply bg-brand-50 text-brand-700 font-medium;
+  }
+  .dark .sidebar-link {
+    @apply text-surface-400 hover:bg-surface-800 hover:text-surface-200;
+  }
+  .dark .sidebar-link.active {
+    @apply bg-brand-900/30 text-brand-300;
+  }
+
+  .stat-card {
+    @apply card p-5;
+  }
+
+  .gantt-bar {
+    @apply absolute h-8 rounded-full flex items-center px-3 text-xs font-medium text-white cursor-pointer transition-all hover:shadow-lg hover:scale-y-110;
+  }
+
+  .timeline-dot {
+    @apply w-3 h-3 rounded-full border-2 border-brand-500 bg-white;
+  }
+  .dark .timeline-dot {
+    @apply bg-surface-800;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-surface-300 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-surface-400;
+}
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-surface-600;
+}
