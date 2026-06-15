@@ -175,7 +175,7 @@ function TimelineConflictCard({ conflict }: { conflict: TimelineConflict }) {
 export default function Diagnosis() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { currentResume, loadResume } = useResumeStore();
+  const { currentResume, loadResume, setLastDiagnosis } = useResumeStore();
   const [result, setResult] = useState<DiagnosisResult | null>(null);
 
   useEffect(() => {
@@ -188,14 +188,16 @@ export default function Diagnosis() {
     if (currentResume) {
       const diagnosis = diagnoseResume(currentResume, (String(currentResume.templateId).split('-')[0] as any) || 'tech');
       setResult(diagnosis);
+      setLastDiagnosis(id!, diagnosis);
       addAuditLog('ai.diagnosis', { resumeId: id, score: diagnosis.score, title: currentResume.title });
     }
-  }, [currentResume, id]);
+  }, [currentResume, id, setLastDiagnosis]);
 
   const handleRerun = () => {
     if (currentResume) {
       const diagnosis = diagnoseResume(currentResume, (String(currentResume.templateId).split('-')[0] as any) || 'tech');
       setResult(diagnosis);
+      setLastDiagnosis(id!, diagnosis);
       addAuditLog('ai.diagnosis', { resumeId: id, score: diagnosis.score, title: currentResume.title, rerun: true });
     }
   };

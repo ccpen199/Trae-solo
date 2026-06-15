@@ -266,7 +266,7 @@ function KeywordDensityCard({ keywords }: { keywords: AtsCheckResult['keywordDen
 export default function AtsCheck() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { currentResume, loadResume, setAtsPassed } = useResumeStore();
+  const { currentResume, loadResume, setAtsPassed, setLastAtsCheck } = useResumeStore();
   const [result, setResult] = useState<AtsCheckResult | null>(null);
   const [exporting, setExporting] = useState(false);
 
@@ -281,10 +281,11 @@ export default function AtsCheck() {
       const check = checkAtsCompatibility(currentResume, currentResume.theme?.fontFamily);
       setResult(check);
       const passed = check.score >= 85;
-      setAtsPassed(id, passed);
+      setAtsPassed(id!, passed);
+      setLastAtsCheck(id!, check);
       addAuditLog('ats.check', { resumeId: id, score: check.score, title: currentResume.title, passed });
     }
-  }, [currentResume, id, setAtsPassed]);
+  }, [currentResume, id, setAtsPassed, setLastAtsCheck]);
 
   const handleExportWord = async () => {
     if (!currentResume) return;

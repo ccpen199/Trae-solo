@@ -1,0 +1,14 @@
+{
+  "order": "may-89198",
+  "url": "http://127.0.0.1:49198/",
+  "status": 200,
+  "ok": true,
+  "title": "My Trae Project",
+  "textLength": 457,
+  "sample": "智能简历工作台 Resume Workbench 工作台 模板库 个人中心 管理后台 设置 已加密 共 0 份简历 模板库 设置 开始创建你的简历 专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储 空白简历 使用行业模板 AI智能诊断 深度分析简历内容，提供专业优化建议，提升简历竞争力 立即检测 ATS兼容性检测 智能检测简历与招聘系统的兼容性，提升通过率 立即检测 Word原生导出 一键导出标准Word格式，排版完美还原，可直接投递 格式保真 AES加密存",
+  "consoleErrors": [],
+  "failedRequests": [],
+  "responseErrors": [],
+  "error": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-smoke-may-89198.png"
+}

@@ -5,7 +5,7 @@ import {
   Save, Undo2, Redo2, FileDown, Brain, ScanLine,
   Eye, EyeOff, GripVertical, Plus, Trash2,
   X, Palette, Settings2, Upload, FileText,
-  Shield, Lock, AlertTriangle, CheckCircle2,
+  Shield, Lock, AlertTriangle, CheckCircle2, Info,
 } from 'lucide-react';
 import { DndContext, closestCenter, DragOverlay, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -90,8 +90,10 @@ function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
 
   if (module.type === 'custom') {
     const customFields = (f.customFields || []) as Array<{ key: string; label: string; value: string; visible: boolean }>;
+    const visibleFields = customFields.filter(field => field.visible ?? true);
+    const hiddenFields = customFields.filter(field => !(field.visible ?? true));
     return (
-      <div className="space-y-3">
+      <div className="space-y-4">
         <div>
           <label className="text-xs text-navy-400 mb-1 block">模块名称</label>
           <input className="input-field text-sm" value={f.title ?? ''} onChange={e => set('title', e.target.value)} placeholder="请输入模块名称" />
@@ -102,67 +104,120 @@ function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
           </div>
           <textarea className="input-field text-sm" rows={3} value={f.content ?? ''} onChange={e => set('content', e.target.value)} placeholder="请输入模块主要内容" />
         </div>
-        {customFields.length > 0 && (
-          <div className="space-y-2 pt-2 border-t border-navy-100">
-            <label className="text-xs text-navy-400 mb-1 block">自定义字段</label>
-            {customFields.map((field, idx) => (
-              <div key={field.key || idx} className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <input
-                    className="input-field text-xs flex-1"
-                    value={field.label}
-                    onChange={e => {
-                      const newFields = [...customFields];
-                      newFields[idx] = { ...field, label: e.target.value };
-                      set('customFields', newFields);
-                    }}
-                    placeholder="字段名"
-                  />
-                  {onToggleVisibility && (
-                    <button
-                      onClick={() => {
+
+        {/* 自定义字段列表 */}
+        <div className="space-y-2 pt-2 border-t border-navy-100">
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-navy-400 font-medium">自定义字段</label>
+            <span className="text-[10px] text-navy-300">
+              {visibleFields.length}显示 / {hiddenFields.length}隐藏
+            </span>
+          </div>
+          {customFields.length > 0 && (
+            <div className="space-y-2">
+              {customFields.map((field, idx) => (
+                <div key={field.key || idx} className={cn(
+                  'p-2 rounded-lg border transition-all',
+                  field.visible ?? true ? 'bg-white border-navy-100' : 'bg-gray-50 border-gray-200 opacity-70'
+                )}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <input
+                      className="input-field text-xs flex-1"
+                      value={field.label}
+                      onChange={e => {
                         const newFields = [...customFields];
-                        newFields[idx] = { ...field, visible: !field.visible };
+                        newFields[idx] = { ...field, label: e.target.value };
                         set('customFields', newFields);
                       }}
-                      className="p-1 text-navy-300 hover:text-navy-600"
+                      placeholder="字段名"
+                    />
+                    {onToggleVisibility && (
+                      <button
+                        onClick={() => {
+                          const newFields = [...customFields];
+                          newFields[idx] = { ...field, visible: !field.visible };
+                          set('customFields', newFields);
+                        }}
+                        className={cn(
+                          'p-1.5 rounded-lg transition-colors',
+                          field.visible ?? true ? 'text-navy-500 hover:bg-navy-50 hover:text-navy-700' : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'
+                        )}
+                        title={field.visible ?? true ? '点击隐藏此字段' : '点击显示此字段'}
+                      >
+                        {field.visible ?? true ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        const newFields = customFields.filter((_, i) => i !== idx);
+                        set('customFields', newFields);
+                      }}
+                      className="p-1.5 text-navy-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                      title="删除此字段"
                     >
-                      {field.visible ?? true ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                      <X className="w-4 h-4" />
                     </button>
-                  )}
-                  <button
-                    onClick={() => {
-                      const newFields = customFields.filter((_, i) => i !== idx);
+                  </div>
+                  <input
+                    className="input-field text-xs"
+                    value={field.value}
+                    onChange={e => {
+                      const newFields = [...customFields];
+                      newFields[idx] = { ...field, value: e.target.value };
                       set('customFields', newFields);
                     }}
-                    className="p-1 text-navy-300 hover:text-red-500"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
+                    placeholder="字段值"
+                  />
                 </div>
-                <input
-                  className="input-field text-sm"
-                  value={field.value}
-                  onChange={e => {
-                    const newFields = [...customFields];
-                    newFields[idx] = { ...field, value: e.target.value };
-                    set('customFields', newFields);
-                  }}
-                  placeholder="字段值"
-                />
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
+
         <button
           onClick={() => {
-            const newFields = [...customFields, { key: generateId(), label: '', value: '', visible: true }];
+            const newFields = [...customFields, { key: generateId(), label: '新字段', value: '字段内容示例', visible: true }];
             set('customFields', newFields);
           }}
-          className="btn-ghost text-xs w-full flex items-center justify-center gap-1 py-2"
+          className="btn-primary text-xs w-full flex items-center justify-center gap-1.5 py-2"
         >
-          <Plus className="w-3.5 h-3.5" />添加自定义字段
+          <Plus className="w-4 h-4" />添加自定义字段
         </button>
+
+        {/* 实时预览卡片 */}
+        <div className="pt-3 border-t border-navy-100">
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-xs text-navy-400 font-medium">实时预览效果</label>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 border border-emerald-100">
+              A4 预览同步
+            </span>
+          </div>
+          <div className="p-3 bg-gradient-to-br from-white to-navy-50/30 rounded-lg border border-navy-100 shadow-sm">
+            <div>
+              <h4 className="text-xs font-bold border-b-2 pb-1 mb-2" style={{ borderColor: '#1e3a5f', color: '#1e3a5f' }}>
+                {f.title || '自定义模块'}
+              </h4>
+              {f.content && <p className="text-[11px] text-gray-600 leading-relaxed mb-2">{f.content}</p>}
+              {visibleFields.length > 0 ? (
+                <div className="space-y-1">
+                  {visibleFields.map((field, idx) => (
+                    <div key={field.key || idx} className="text-[11px]">
+                      {field.label && <span className="font-semibold text-gray-700">{field.label}：</span>}
+                      <span className="text-gray-600">{field.value || '（空）'}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[11px] text-gray-400 italic">（无显示的自定义字段）</p>
+              )}
+              {hiddenFields.length > 0 && (
+                <p className="text-[10px] text-gray-400 mt-2 pt-2 border-t border-dashed border-gray-200">
+                  💡 已隐藏 {hiddenFields.length} 个字段，点击 👁 图标可切换显示
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -446,6 +501,7 @@ export default function Editor() {
   const [importing, setImporting] = useState(false);
   const [importFileName, setImportFileName] = useState<string | null>(null);
   const [showAtsWarning, setShowAtsWarning] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'warning' } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
@@ -461,6 +517,11 @@ export default function Editor() {
   const activeDragModule = currentResume?.modules.find(m => m.id === activeDragId) || null;
   const atsIsPassed = atsPassed[id] || false;
 
+  const showToast = useCallback((message: string, type: 'success' | 'info' | 'warning' = 'info') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 2500);
+  }, []);
+
   const handleDragStart = useCallback((event: any) => {
     setActiveDragId(event.active.id);
   }, []);
@@ -472,6 +533,7 @@ export default function Editor() {
       reorderModules(active.id, over.id);
       addAuditLog('module.reorder', { resumeId: id, activeId: active.id, overId: over.id });
       setSaved(false);
+      showToast('模块顺序已调整，A4预览已同步更新', 'success');
     }
   }, [reorderModules, id]);
 
@@ -481,6 +543,7 @@ export default function Editor() {
       await saveCurrentResume();
       setSaved(true);
       await addAuditLog('resume.save', { resumeId: id, title: currentResume?.title });
+      showToast('简历已保存至本地', 'success');
       setTimeout(() => setSaved(false), 2000);
     } finally {
       setSaving(false);
@@ -516,16 +579,37 @@ export default function Editor() {
   };
 
   const handleAddModule = () => {
+    const newModuleId = `custom-${Date.now()}`;
     const newModule: ResumeModule = {
-      id: '',
+      id: newModuleId,
       type: 'custom',
       visible: true,
       order: modules.length,
-      fields: { title: '', content: '', customFields: [] },
+      fields: {
+        title: '自定义模块',
+        content: '在这里填写模块内容...',
+        customFields: [
+          { key: 'field-1', label: '字段名称 1', value: '字段示例内容', visible: true },
+        ],
+      },
     };
     addModule(newModule);
-    addAuditLog('module.add', { resumeId: id, moduleType: 'custom' });
+    setActiveModuleId(newModuleId);
+    addAuditLog('module.add', { resumeId: id, moduleType: 'custom', moduleId: newModuleId });
     setSaved(false);
+    showToast('已添加自定义模块，右侧编辑面板已激活', 'success');
+  };
+
+  const handleRemoveModule = (moduleId: string) => {
+    if (!confirm('确定删除该模块吗？')) return;
+    removeModule(moduleId);
+    addAuditLog('module.remove', { resumeId: id, moduleId });
+    if (activeModuleId === moduleId) {
+      const remaining = modules.filter(m => m.id !== moduleId);
+      setActiveModuleId(remaining.length > 0 ? remaining[0].id : null);
+    }
+    setSaved(false);
+    showToast('模块已删除', 'info');
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -541,6 +625,7 @@ export default function Editor() {
       setImporting(false);
       setImportFileName(file.name);
       if (fileInputRef.current) fileInputRef.current.value = '';
+      showToast(`已导入 ${file.name}，Word 原生版式已渲染`, 'success');
     }, 1500);
   };
 
@@ -561,6 +646,20 @@ export default function Editor() {
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-slate-50 to-slate-100">
+      {/* Toast 通知 */}
+      {toast && (
+        <div className={cn(
+          'fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium flex items-center gap-2 animate-fade-in',
+          toast.type === 'success' ? 'bg-emerald-500 text-white' :
+          toast.type === 'warning' ? 'bg-amber-500 text-white' :
+          'bg-navy-600 text-white'
+        )}>
+          {toast.type === 'success' && <CheckCircle2 className="w-4 h-4" />}
+          {toast.type === 'warning' && <AlertTriangle className="w-4 h-4" />}
+          {toast.type === 'info' && <Info className="w-4 h-4" />}
+          {toast.message}
+        </div>
+      )}
       <header className="bg-white border-b border-navy-100 shadow-sm flex-shrink-0">
         <div className="flex items-center gap-2 px-4 py-2">
           <h1 className="text-sm font-semibold text-navy-700 mr-4 truncate max-w-[200px]">{currentResume?.title}</h1>
@@ -692,17 +791,17 @@ export default function Editor() {
 
         <aside className="w-[280px] border-l border-navy-100 bg-white flex flex-col flex-shrink-0">
           <div className="flex border-b border-navy-100">
-            <button className={cn('flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1', !activeModule ? 'text-navy-700 border-b-2 border-gold-500' : 'text-navy-400')}
+            <button className={cn('flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1', activeModuleId === null ? 'text-navy-700 border-b-2 border-gold-500' : 'text-navy-400')}
               onClick={() => setActiveModuleId(null)}>
               <Palette className="w-3.5 h-3.5" />主题
             </button>
-            <button className={cn('flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1', activeModule ? 'text-navy-700 border-b-2 border-gold-500' : 'text-navy-400')}
+            <button className={cn('flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1', activeModuleId !== null ? 'text-navy-700 border-b-2 border-gold-500' : 'text-navy-400')}
               onClick={() => activeModuleId || setActiveModuleId(modules[0]?.id ?? null)}>
               <Settings2 className="w-3.5 h-3.5" />编辑
             </button>
           </div>
           <div className="flex-1 overflow-y-auto p-4">
-            {!activeModule ? (
+            {activeModuleId === null ? (
               <div className="space-y-4">
                 <div>
                   <label className="text-xs text-navy-400 mb-1.5 block">预设配色</label>
@@ -748,10 +847,43 @@ export default function Editor() {
                 </div>
               </div>
             ) : (
-              <ModuleEditor module={activeModule} onUpdate={fields => handleFieldUpdate(activeModule.id, fields)} onToggleVisibility={(key) => {
-                const vis = (activeModule.fields._fieldVisibility || {}) as Record<string, boolean>;
-                handleFieldUpdate(activeModule.id, { ...activeModule.fields, _fieldVisibility: { ...vis, [key]: !(vis[key] ?? true) } });
-              }} />
+              <ModuleEditor
+                module={
+                  activeModule || {
+                    id: activeModuleId,
+                    type: 'custom' as ModuleType,
+                    visible: true,
+                    order: 0,
+                    fields: {
+                      title: '自定义模块',
+                      content: '在这里填写模块内容...',
+                      customFields: [
+                        { key: 'field-1', label: '字段名称 1', value: '字段示例内容', visible: true },
+                      ],
+                    },
+                  }
+                }
+                onUpdate={fields => handleFieldUpdate(activeModuleId, fields)}
+                onToggleVisibility={(key) => {
+                  const target = activeModule || {
+                    id: activeModuleId,
+                    type: 'custom' as ModuleType,
+                    visible: true,
+                    order: 0,
+                    fields: { customFields: [] },
+                  };
+                  const fields = target.fields || {};
+                  if (target.type === 'custom' && fields.customFields) {
+                    const updated = fields.customFields.map((f: any) =>
+                      f.key === key ? { ...f, visible: !(f.visible ?? true) } : f
+                    );
+                    handleFieldUpdate(activeModuleId, { ...fields, customFields: updated });
+                  } else {
+                    const vis = (fields._fieldVisibility || {}) as Record<string, boolean>;
+                    handleFieldUpdate(activeModuleId, { ...fields, _fieldVisibility: { ...vis, [key]: !(vis[key] ?? true) } });
+                  }
+                }}
+              />
             )}
           </div>
         </aside>

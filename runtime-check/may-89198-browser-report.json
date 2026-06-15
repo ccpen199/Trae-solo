@@ -1,0 +1,1681 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T19:52:44.300Z",
+  "order": "may-89198",
+  "roundIndex": 99,
+  "captureId": "codex-repair-may-89198",
+  "url": "http://127.0.0.1:49198/",
+  "initialUrl": "http://127.0.0.1:49198/",
+  "finalUrl": "http://127.0.0.1:49198/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-03-操作-创建空白简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-05-操作-新建.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-07-导航-模板库.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-08-操作-技术岗.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-09-操作-全部.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49198/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49198/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建空白简历",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:创建空白简历:添加自定义模块",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:新建",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建:添加自定义模块",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:模板库",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:技术岗",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "空白简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "创建空白简历",
+          "选择行业模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储空白简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建空白简历选择行业模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-01-首屏.png",
+          "elementCount": 269,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "空白简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "创建空白简历",
+            "选择行业模板"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "空白简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "创建空白简历",
+          "选择行业模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储空白简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建空白简历选择行业模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-02-导航-工作台.png",
+          "elementCount": 269,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "空白简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "创建空白简历",
+            "选择行业模板"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建空白简历",
+        "url": "http://127.0.0.1:49198/editor/mqfmnxtr3sjyyv2sjzt",
+        "title": "My Trae Project",
+        "headings": [
+          "你的姓名",
+          "模块列表",
+          "教育经历",
+          "工作经历",
+          "项目经历",
+          "专业技能",
+          "自我评价"
+        ],
+        "navLabels": [
+          "应聘岗位名称",
+          "教育经历",
+          "工作经历",
+          "项目经历",
+          "专业技能",
+          "自我评价",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "姓名",
+          "职位",
+          "电话",
+          "邮箱",
+          "地址",
+          "网站",
+          "GitHub",
+          "作品集"
+        ],
+        "buttons": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "你的姓名保存导入WordAI诊断ATS检测AES加密 · 本地存储导出Word点击\"导入Word\"上传 .docx实时预览就绪导出前需通过ATS检测字段：6 显示 / 0 隐藏 · 0 个链接云端已关闭 · 本地加密缓存模块列表应聘岗位名称教育经历工作经历项目经历专业技能自我评价 To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item. Press space again to drop the item in its new position, or press escape to cancel. 添加自定义模块当前选中：应聘岗位名称有未保存的修改你的姓名应聘岗位名称138-xxxx-xxxx · your.email@example.com · 所在城市教育经历学校名称 · 专业名称2020-09 - 2024-06学历（如：本科） · GPA: 如：3.7/4.0主修课程、获奖情况、社团经历等（选填）工作经历公司/组织名称 · 担任职位2023-07 - 至今• 描述你负责的工作内容，建议使用STAR法则• 量化你的成果，例如：提升XX%、节省XX元• 列出你使用的工具或技能项目经历项目名称 · 你的角色2023-03 - 2023-09简要描述项目背景、你的贡献和成果专业技能专业技能: 技能1 · 技能2 · 技能3软件工具: 工具1 · 工具2自我评价请用3-5句话概括你的核心优势：包括专业背景、关键技能、代表性成果和职业目标。建议突出与目标岗位匹配的能力。主题编辑姓名职位电话邮箱地址网站GitHub作品集",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-03-操作-创建空白简历",
+          "label": "操作:创建空白简历",
+          "finalUrl": "http://127.0.0.1:49198/editor/mqfmnxtr3sjyyv2sjzt",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-03-操作-创建空白简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-03-操作-创建空白简历.png",
+          "elementCount": 359,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "保存",
+            "导入Word",
+            "AI诊断",
+            "ATS检测",
+            "导出Word",
+            "添加自定义模块",
+            "主题",
+            "编辑",
+            "你的姓名",
+            "应聘岗位名称",
+            "138-xxxx-xxxx",
+            "your.email@example.com",
+            "所在城市"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:创建空白简历->添加自定义模块",
+        "url": "http://127.0.0.1:49198/editor/mqfmnxtr3sjyyv2sjzt",
+        "title": "My Trae Project",
+        "headings": [
+          "你的姓名",
+          "模块列表",
+          "教育经历",
+          "工作经历",
+          "项目经历",
+          "专业技能",
+          "自我评价",
+          "自定义模块"
+        ],
+        "navLabels": [
+          "应聘岗位名称",
+          "教育经历",
+          "工作经历",
+          "项目经历",
+          "专业技能",
+          "自我评价",
+          "自定义模块",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "模块内容",
+          "添加自定义字段"
+        ],
+        "buttons": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "添加自定义字段"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入模块名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入模块主要内容",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "字段名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "字段值",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "你的姓名保存导入WordAI诊断ATS检测AES加密 · 本地存储导出Word点击\"导入Word\"上传 .docx实时预览就绪导出前需通过ATS检测字段：7 显示 / 0 隐藏 · 0 个链接云端已关闭 · 本地加密缓存模块列表应聘岗位名称教育经历工作经历项目经历专业技能自我评价自定义模块 To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item. Press space again to drop the item in its new position, or press escape to cancel. 添加自定义模块当前选中：自定义模块有未保存的修改你的姓名应聘岗位名称138-xxxx-xxxx · your.email@example.com · 所在城市教育经历学校名称 · 专业名称2020-09 - 2024-06学历（如：本科） · GPA: 如：3.7/4.0主修课程、获奖情况、社团经历等（选填）工作经历公司/组织名称 · 担任职位2023-07 - 至今• 描述你负责的工作内容，建议使用STAR法则• 量化你的成果，例如：提升XX%、节省XX元• 列出你使用的工具或技能项目经历项目名称 · 你的角色2023-03 - 2023-09简要描述项目背景、你的贡献和成果专业技能专业技能: 技能1 · 技能2 · 技能3软件工具: 工具1 · 工具2自我评价请用3-5句话概括你的核心优势：包括专业背景、关键技能、代表性成果和职业目标。建议突出与目标岗位匹配的能力。自定义模块在这里填写模块内容...字段名称 1：字段示例内容主题编辑模块名称模块内容在这里填写模块内容...自定义字段添加自定义字段",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块",
+          "label": "二层操作:创建空白简历->添加自定义模块",
+          "finalUrl": "http://127.0.0.1:49198/editor/mqfmnxtr3sjyyv2sjzt",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块.png",
+          "elementCount": 350,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "保存",
+            "导入Word",
+            "AI诊断",
+            "ATS检测",
+            "导出Word",
+            "添加自定义模块",
+            "主题",
+            "编辑",
+            "自定义模块",
+            "在这里填写模块内容...",
+            "字段名称 1",
+            "字段示例内容",
+            "添加自定义字段"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建",
+        "url": "http://127.0.0.1:49198/editor/mqfmo2nfmza101f6g4",
+        "title": "My Trae Project",
+        "headings": [
+          "你的姓名",
+          "模块列表",
+          "教育经历",
+          "工作经历",
+          "项目经历",
+          "专业技能",
+          "自我评价"
+        ],
+        "navLabels": [
+          "应聘岗位名称",
+          "教育经历",
+          "工作经历",
+          "项目经历",
+          "专业技能",
+          "自我评价",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "姓名",
+          "职位",
+          "电话",
+          "邮箱",
+          "地址",
+          "网站",
+          "GitHub",
+          "作品集"
+        ],
+        "buttons": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "你的姓名保存导入WordAI诊断ATS检测AES加密 · 本地存储导出Word点击\"导入Word\"上传 .docx实时预览就绪导出前需通过ATS检测字段：6 显示 / 0 隐藏 · 0 个链接云端已关闭 · 本地加密缓存模块列表应聘岗位名称教育经历工作经历项目经历专业技能自我评价 To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item. Press space again to drop the item in its new position, or press escape to cancel. 添加自定义模块当前选中：应聘岗位名称有未保存的修改你的姓名应聘岗位名称138-xxxx-xxxx · your.email@example.com · 所在城市教育经历学校名称 · 专业名称2020-09 - 2024-06学历（如：本科） · GPA: 如：3.7/4.0主修课程、获奖情况、社团经历等（选填）工作经历公司/组织名称 · 担任职位2023-07 - 至今• 描述你负责的工作内容，建议使用STAR法则• 量化你的成果，例如：提升XX%、节省XX元• 列出你使用的工具或技能项目经历项目名称 · 你的角色2023-03 - 2023-09简要描述项目背景、你的贡献和成果专业技能专业技能: 技能1 · 技能2 · 技能3软件工具: 工具1 · 工具2自我评价请用3-5句话概括你的核心优势：包括专业背景、关键技能、代表性成果和职业目标。建议突出与目标岗位匹配的能力。主题编辑姓名职位电话邮箱地址网站GitHub作品集",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-05-操作-新建",
+          "label": "操作:新建",
+          "finalUrl": "http://127.0.0.1:49198/editor/mqfmo2nfmza101f6g4",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-05-操作-新建.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-05-操作-新建.png",
+          "elementCount": 359,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "保存",
+            "导入Word",
+            "AI诊断",
+            "ATS检测",
+            "导出Word",
+            "添加自定义模块",
+            "主题",
+            "编辑",
+            "你的姓名",
+            "应聘岗位名称",
+            "138-xxxx-xxxx",
+            "your.email@example.com",
+            "所在城市"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建->添加自定义模块",
+        "url": "http://127.0.0.1:49198/editor/mqfmo2nfmza101f6g4",
+        "title": "My Trae Project",
+        "headings": [
+          "你的姓名",
+          "模块列表",
+          "教育经历",
+          "工作经历",
+          "项目经历",
+          "专业技能",
+          "自我评价",
+          "自定义模块"
+        ],
+        "navLabels": [
+          "应聘岗位名称",
+          "教育经历",
+          "工作经历",
+          "项目经历",
+          "专业技能",
+          "自我评价",
+          "自定义模块",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "模块内容",
+          "添加自定义字段"
+        ],
+        "buttons": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "添加自定义字段"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入模块名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入模块主要内容",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "字段名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "字段值",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "你的姓名保存导入WordAI诊断ATS检测AES加密 · 本地存储导出Word点击\"导入Word\"上传 .docx实时预览就绪导出前需通过ATS检测字段：7 显示 / 0 隐藏 · 0 个链接云端已关闭 · 本地加密缓存模块列表应聘岗位名称教育经历工作经历项目经历专业技能自我评价自定义模块 To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item. Press space again to drop the item in its new position, or press escape to cancel. 添加自定义模块当前选中：自定义模块有未保存的修改你的姓名应聘岗位名称138-xxxx-xxxx · your.email@example.com · 所在城市教育经历学校名称 · 专业名称2020-09 - 2024-06学历（如：本科） · GPA: 如：3.7/4.0主修课程、获奖情况、社团经历等（选填）工作经历公司/组织名称 · 担任职位2023-07 - 至今• 描述你负责的工作内容，建议使用STAR法则• 量化你的成果，例如：提升XX%、节省XX元• 列出你使用的工具或技能项目经历项目名称 · 你的角色2023-03 - 2023-09简要描述项目背景、你的贡献和成果专业技能专业技能: 技能1 · 技能2 · 技能3软件工具: 工具1 · 工具2自我评价请用3-5句话概括你的核心优势：包括专业背景、关键技能、代表性成果和职业目标。建议突出与目标岗位匹配的能力。自定义模块在这里填写模块内容...字段名称 1：字段示例内容主题编辑模块名称模块内容在这里填写模块内容...自定义字段添加自定义字段",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块",
+          "label": "二层操作:新建->添加自定义模块",
+          "finalUrl": "http://127.0.0.1:49198/editor/mqfmo2nfmza101f6g4",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块.png",
+          "elementCount": 350,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "保存",
+            "导入Word",
+            "AI诊断",
+            "ATS检测",
+            "导出Word",
+            "添加自定义模块",
+            "主题",
+            "编辑",
+            "自定义模块",
+            "在这里填写模块内容...",
+            "字段名称 1",
+            "字段示例内容",
+            "添加自定义字段"
+          ]
+        }
+      },
+      {
+        "label": "导航:模板库",
+        "url": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "选择行业语义模板",
+          "前端工程师模板",
+          "UI设计师模板",
+          "行政运营岗模板",
+          "空白模板"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台智能语义匹配选择行业语义模板根据求职方向，选择最适合你的简历模板。每个模板内置行业专属语义字段， 让你的简历表达更专业、更有说服力全部技术岗设计岗职能岗张明高级前端工程师项目经历字节跳动高级前端工程师技能标签ReactVue 3TypeScriptJavaScript前端工程师模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师语义字段亮点项目指标技术栈标签GitHub链接STAR成果表达使用此模板李雪高级UI/UX设计师工作经历腾讯高级UI设计师技能标签FigmaSketchAdobe XDPhotoshopUI设计师模板设计岗设计岗专用，强化作品集链接与设计成果展示语义字段亮点作品集链接Behance/Dribbble设计工具列视觉规范组件使用此模板王芳高级行政运营经理项目经历华为行政运营经理技能标签WordExcel（高级函数/数据透视表）PPTOutlook行政运营岗模板职能岗职能岗专用，侧重流程优化与管理成果语义字段亮点流程优化成果供应商管理预算节省数据SLA指标使用此模板你的姓名应聘岗位名称项目经历技能标签空白模板空白模板从零开始创建你的专属简历，内置引导示例帮你快速上手语义字段亮点完全自定义使用此模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-07-导航-模板库",
+          "label": "导航:模板库",
+          "finalUrl": "http://127.0.0.1:49198/templates",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-07-导航-模板库.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-07-导航-模板库.png",
+          "elementCount": 387,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "全部",
+            "技术岗",
+            "设计岗",
+            "职能岗",
+            "使用此模板"
+          ]
+        }
+      },
+      {
+        "label": "操作:技术岗",
+        "url": "http://127.0.0.1:49198/templates?category=tech",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "选择行业语义模板",
+          "前端工程师模板"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台智能语义匹配选择行业语义模板根据求职方向，选择最适合你的简历模板。每个模板内置行业专属语义字段， 让你的简历表达更专业、更有说服力全部技术岗设计岗职能岗张明高级前端工程师项目经历字节跳动高级前端工程师技能标签ReactVue 3TypeScriptJavaScript前端工程师模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师语义字段亮点项目指标技术栈标签GitHub链接STAR成果表达使用此模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-08-操作-技术岗",
+          "label": "操作:技术岗",
+          "finalUrl": "http://127.0.0.1:49198/templates?category=tech",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-08-操作-技术岗.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-08-操作-技术岗.png",
+          "elementCount": 177,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "全部",
+            "技术岗",
+            "设计岗",
+            "职能岗",
+            "使用此模板"
+          ]
+        }
+      },
+      {
+        "label": "操作:全部",
+        "url": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "选择行业语义模板",
+          "前端工程师模板",
+          "UI设计师模板",
+          "行政运营岗模板",
+          "空白模板"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台智能语义匹配选择行业语义模板根据求职方向，选择最适合你的简历模板。每个模板内置行业专属语义字段， 让你的简历表达更专业、更有说服力全部技术岗设计岗职能岗张明高级前端工程师项目经历字节跳动高级前端工程师技能标签ReactVue 3TypeScriptJavaScript前端工程师模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师语义字段亮点项目指标技术栈标签GitHub链接STAR成果表达使用此模板李雪高级UI/UX设计师工作经历腾讯高级UI设计师技能标签FigmaSketchAdobe XDPhotoshopUI设计师模板设计岗设计岗专用，强化作品集链接与设计成果展示语义字段亮点作品集链接Behance/Dribbble设计工具列视觉规范组件使用此模板王芳高级行政运营经理项目经历华为行政运营经理技能标签WordExcel（高级函数/数据透视表）PPTOutlook行政运营岗模板职能岗职能岗专用，侧重流程优化与管理成果语义字段亮点流程优化成果供应商管理预算节省数据SLA指标使用此模板你的姓名应聘岗位名称项目经历技能标签空白模板空白模板从零开始创建你的专属简历，内置引导示例帮你快速上手语义字段亮点完全自定义使用此模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-repair-may-89198-structure-09-操作-全部",
+          "label": "操作:全部",
+          "finalUrl": "http://127.0.0.1:49198/templates",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-09-操作-全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-09-操作-全部.png",
+          "elementCount": 387,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "全部",
+            "技术岗",
+            "设计岗",
+            "职能岗",
+            "使用此模板"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "创建空白简历",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "创建空白简历->添加自定义模块",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "新建",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "新建->添加自定义模块",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "模板库",
+        "label": "技术岗",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "模板库",
+        "label": "全部",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-01-首屏.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "空白简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "创建空白简历",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-02-导航-工作台.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "空白简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "创建空白简历",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-03-操作-创建空白简历",
+        "label": "操作:创建空白简历",
+        "finalUrl": "http://127.0.0.1:49198/editor/mqfmnxtr3sjyyv2sjzt",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-03-操作-创建空白简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-03-操作-创建空白简历.png",
+        "elementCount": 359,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "你的姓名",
+          "应聘岗位名称",
+          "138-xxxx-xxxx",
+          "your.email@example.com",
+          "所在城市"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块",
+        "label": "二层操作:创建空白简历->添加自定义模块",
+        "finalUrl": "http://127.0.0.1:49198/editor/mqfmnxtr3sjyyv2sjzt",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块.png",
+        "elementCount": 350,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "自定义模块",
+          "在这里填写模块内容...",
+          "字段名称 1",
+          "字段示例内容",
+          "添加自定义字段"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-05-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49198/editor/mqfmo2nfmza101f6g4",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-05-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-05-操作-新建.png",
+        "elementCount": 359,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "你的姓名",
+          "应聘岗位名称",
+          "138-xxxx-xxxx",
+          "your.email@example.com",
+          "所在城市"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块",
+        "label": "二层操作:新建->添加自定义模块",
+        "finalUrl": "http://127.0.0.1:49198/editor/mqfmo2nfmza101f6g4",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块.png",
+        "elementCount": 350,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "自定义模块",
+          "在这里填写模块内容...",
+          "字段名称 1",
+          "字段示例内容",
+          "添加自定义字段"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-07-导航-模板库",
+        "label": "导航:模板库",
+        "finalUrl": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-07-导航-模板库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-07-导航-模板库.png",
+        "elementCount": 387,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-08-操作-技术岗",
+        "label": "操作:技术岗",
+        "finalUrl": "http://127.0.0.1:49198/templates?category=tech",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-08-操作-技术岗.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-08-操作-技术岗.png",
+        "elementCount": 177,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-09-操作-全部",
+        "label": "操作:全部",
+        "finalUrl": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-09-操作-全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-09-操作-全部.png",
+        "elementCount": 387,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49198/",
+    "representativeScreenshotLabel": "智能简历工作台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-01-首屏.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "空白简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "创建空白简历",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-02-导航-工作台.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "空白简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "创建空白简历",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-03-操作-创建空白简历",
+        "label": "操作:创建空白简历",
+        "finalUrl": "http://127.0.0.1:49198/editor/mqfmnxtr3sjyyv2sjzt",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-03-操作-创建空白简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-03-操作-创建空白简历.png",
+        "elementCount": 359,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "你的姓名",
+          "应聘岗位名称",
+          "138-xxxx-xxxx",
+          "your.email@example.com",
+          "所在城市"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块",
+        "label": "二层操作:创建空白简历->添加自定义模块",
+        "finalUrl": "http://127.0.0.1:49198/editor/mqfmnxtr3sjyyv2sjzt",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-04-二层操作-创建空白简历-添加自定义模块.png",
+        "elementCount": 350,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "自定义模块",
+          "在这里填写模块内容...",
+          "字段名称 1",
+          "字段示例内容",
+          "添加自定义字段"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-05-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49198/editor/mqfmo2nfmza101f6g4",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-05-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-05-操作-新建.png",
+        "elementCount": 359,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "你的姓名",
+          "应聘岗位名称",
+          "138-xxxx-xxxx",
+          "your.email@example.com",
+          "所在城市"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块",
+        "label": "二层操作:新建->添加自定义模块",
+        "finalUrl": "http://127.0.0.1:49198/editor/mqfmo2nfmza101f6g4",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-06-二层操作-新建-添加自定义模块.png",
+        "elementCount": 350,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "保存",
+          "导入Word",
+          "AI诊断",
+          "ATS检测",
+          "导出Word",
+          "添加自定义模块",
+          "主题",
+          "编辑",
+          "自定义模块",
+          "在这里填写模块内容...",
+          "字段名称 1",
+          "字段示例内容",
+          "添加自定义字段"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-07-导航-模板库",
+        "label": "导航:模板库",
+        "finalUrl": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-07-导航-模板库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-07-导航-模板库.png",
+        "elementCount": 387,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-08-操作-技术岗",
+        "label": "操作:技术岗",
+        "finalUrl": "http://127.0.0.1:49198/templates?category=tech",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-08-操作-技术岗.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-08-操作-技术岗.png",
+        "elementCount": 177,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-repair-may-89198-structure-09-操作-全部",
+        "label": "操作:全部",
+        "finalUrl": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-09-操作-全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-repair-may-89198-structure-09-操作-全部.png",
+        "elementCount": 387,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "全部",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "使用此模板"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1600,
+    "scrollWidth": 1760,
+    "scrollHeight": 1746
+  },
+  "initialBodyTextPreview": "智能简历工作台\n\nResume Workbench\n\n工作台\n模板库\n个人中心\n管理后台\n设置\n已加密\n共 0 份简历\n模板库\n设置\n开始创建你的简历\n\n专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储\n\n空白简历\n使用行业模板\nAI智能诊断\n\n深度分析简历内容，提供专业优化建议，提升简历竞争力\n\n立即检测\nATS兼容性检测\n\n智能检测简历与招聘系统的兼容性，提升通过率\n\n立即检测\nWord原生导出\n\n一键导出标准Word格式，排版完美还原，可直接投递\n\n格式保真\nAES加密存储\n\n银行级AES加密，数据仅保存在本地，隐私安全有保障\n\n前往设置\n行业模板\n技术岗\n\n技术岗专用，突出项目指标与技术栈，适合前端开发工程师\n\n项目指标\n技术栈标签\n开源贡献\n使用此模板\n设计岗\n\n设计岗专用，强化作品集链接与设计成果展示\n\n作品集链接\n设计工具\n视觉规范\n使用此模板\n职能岗\n\n职能岗专用，侧重流程优化与管理成果\n\n流程优化\n供应商管理\n预算控制\n使用此模板\n最近简历\n新建\n还没有简历\n\n创建你的第一份简历，开启求职之旅\n\n创建空白简历\n选择行业模板\n隐私保护模式 · 数据仅存本地 · AES加密存储\n\n© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+  "bodyTextPreview": "智能简历工作台\n\nResume Workbench\n\n工作台\n模板库\n个人中心\n管理后台\n设置\n已加密\n共 0 份简历\n模板库\n设置\n开始创建你的简历\n\n专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储\n\n空白简历\n使用行业模板\nAI智能诊断\n\n深度分析简历内容，提供专业优化建议，提升简历竞争力\n\n立即检测\nATS兼容性检测\n\n智能检测简历与招聘系统的兼容性，提升通过率\n\n立即检测\nWord原生导出\n\n一键导出标准Word格式，排版完美还原，可直接投递\n\n格式保真\nAES加密存储\n\n银行级AES加密，数据仅保存在本地，隐私安全有保障\n\n前往设置\n行业模板\n技术岗\n\n技术岗专用，突出项目指标与技术栈，适合前端开发工程师\n\n项目指标\n技术栈标签\n开源贡献\n使用此模板\n设计岗\n\n设计岗专用，强化作品集链接与设计成果展示\n\n作品集链接\n设计工具\n视觉规范\n使用此模板\n职能岗\n\n职能岗专用，侧重流程优化与管理成果\n\n流程优化\n供应商管理\n预算控制\n使用此模板\n最近简历\n新建\n还没有简历\n\n创建你的第一份简历，开启求职之旅\n\n创建空白简历\n选择行业模板\n隐私保护模式 · 数据仅存本地 · AES加密存储\n\n© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/resumes/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/resumes/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/admin/stats"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

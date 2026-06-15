@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Home from '@/pages/Home';
@@ -8,8 +9,13 @@ import AtsCheck from '@/pages/AtsCheck';
 import Settings from '@/pages/Settings';
 import Profile from '@/pages/Profile';
 import Admin from '@/pages/Admin';
+import { initAuditLog } from './utils/audit';
 
 export default function App() {
+  useEffect(() => {
+    initAuditLog();
+  }, []);
+
   return (
     <Router>
       <Routes>

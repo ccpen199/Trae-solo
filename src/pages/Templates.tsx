@@ -52,8 +52,9 @@ export default function Templates() {
     }
   }, [urlCategory]);
 
-  const handleFilterChange = (category: FilterCategory) => {
+  const handleFilterChange = async (category: FilterCategory) => {
     setActiveCategory(category);
+    await addAuditLog('template.filter', { category });
     if (category === 'all') {
       searchParams.delete('category');
       setSearchParams(searchParams);
@@ -83,57 +84,93 @@ export default function Templates() {
   };
 
   const renderPreview = (template: ResumeTemplate) => {
+    const basicMod = template.modules.find(m => m.type === 'basic');
+    const expMod = template.modules.find(m => m.type === 'experience');
+    const name = (basicMod?.fields as any)?.name || '候选人';
+    const title = (basicMod?.fields as any)?.title || '目标岗位';
+    const theme = template.theme;
+    const hasSample = template.category !== 'blank';
+
     return (
-      <div className="aspect-[210/297] rounded-lg overflow-hidden relative bg-white">
-        <div
-          className="absolute inset-0 opacity-15"
-          style={{
-            background: `linear-gradient(135deg, ${template.theme.primaryColor} 0%, ${template.theme.secondaryColor} 100%)`,
-          }}
-        />
-        <div className="relative z-10 p-3 h-full flex flex-col gap-2">
+      <div className="aspect-[210/297] rounded-lg overflow-hidden relative bg-white shadow-sm border border-gray-100">
+        <div className="relative z-10 p-3 h-full flex flex-col gap-2 text-left">
+          {/* 顶部名字 */}
           <div
-            className="h-6 rounded"
-            style={{ backgroundColor: template.theme.primaryColor }}
-          />
-          <div className="flex items-center gap-2 mt-1">
-            <div
-              className="h-2 w-16 rounded-full"
-              style={{ backgroundColor: template.theme.secondaryColor }}
-            />
-            <div className="h-2 w-12 rounded-full bg-gray-200" />
-            <div className="h-2 w-10 rounded-full bg-gray-200" />
+            className="py-1.5 px-2 rounded"
+            style={{ backgroundColor: theme.primaryColor }}
+          >
+            <div className="text-white text-[11px] font-bold truncate">{name}</div>
+            <div className="text-white/70 text-[8px] truncate">{title}</div>
           </div>
-          <div className="flex flex-col gap-1.5 mt-2">
-            <div
-              className="h-2.5 w-1/3 rounded"
-              style={{ backgroundColor: template.theme.primaryColor }}
-            />
-            <div className="h-2 w-full rounded bg-gray-200" />
-            <div className="h-2 w-5/6 rounded bg-gray-200" />
-            <div className="h-2 w-4/6 rounded bg-gray-200" />
+
+          {/* 基础信息条 */}
+          <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+            <div className="h-1.5 w-8 rounded-full" style={{ backgroundColor: theme.secondaryColor }} />
+            <div className="h-1.5 w-6 rounded-full bg-gray-200" />
+            <div className="h-1.5 w-5 rounded-full bg-gray-200" />
           </div>
-          <div className="flex flex-col gap-1.5 mt-3">
+
+          {/* 经历 / 项目模块 */}
+          <div className="mt-1.5">
             <div
-              className="h-2.5 w-1/3 rounded"
-              style={{ backgroundColor: template.theme.primaryColor }}
-            />
-            <div className="h-2 w-full rounded bg-gray-200" />
-            <div className="h-2 w-5/6 rounded bg-gray-200" />
+              className="text-[8px] font-bold mb-1"
+              style={{ color: theme.primaryColor }}
+            >
+              {template.category === 'design' ? '工作经历' : '项目经历'}
+            </div>
+            {hasSample ? (
+              <>
+                <div className="text-[7px] font-semibold text-navy-700 truncate">
+                  {expMod?.fields?.items?.[0]?.company || expMod?.fields?.items?.[0]?.name || '示例公司'}
+                </div>
+                <div className="text-[6.5px] text-navy-400 truncate">
+                  {expMod?.fields?.items?.[0]?.position || '示例职位'}
+                </div>
+                <div className="mt-1 space-y-0.5">
+                  {[0, 1].map(i => (
+                    <div key={i} className="flex items-start gap-0.5">
+                      <div className="w-0.5 h-0.5 rounded-full mt-1 flex-shrink-0" style={{ backgroundColor: theme.secondaryColor }} />
+                      <div className="h-1 flex-1 rounded bg-gray-200" />
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="space-y-0.5">
+                <div className="h-1.5 w-full rounded bg-gray-100" />
+                <div className="h-1.5 w-5/6 rounded bg-gray-100" />
+              </div>
+            )}
           </div>
-          <div className="flex flex-col gap-1.5 mt-3">
+
+          {/* 技能标签 */}
+          <div className="mt-auto">
             <div
-              className="h-2.5 w-1/4 rounded"
-              style={{ backgroundColor: template.theme.primaryColor }}
-            />
-            <div className="flex gap-1.5 flex-wrap">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="h-4 rounded px-2"
-                  style={{ backgroundColor: `${template.theme.secondaryColor}30` }}
-                />
-              ))}
+              className="text-[8px] font-bold mb-1"
+              style={{ color: theme.primaryColor }}
+            >
+              技能标签
+            </div>
+            <div className="flex gap-1 flex-wrap">
+              {hasSample ? (
+                template.modules.find(m => m.type === 'skills')?.fields?.groups?.[0]?.items?.slice(0, 4).map((skill: string, i: number) => (
+                  <span
+                    key={i}
+                    className="text-[6px] px-1 py-0.5 rounded"
+                    style={{ backgroundColor: `${theme.secondaryColor}25`, color: theme.primaryColor }}
+                  >
+                    {skill}
+                  </span>
+                ))
+              ) : (
+                [0, 1, 2].map(i => (
+                  <span
+                    key={i}
+                    className="h-2 w-6 rounded"
+                    style={{ backgroundColor: `${theme.secondaryColor}25` }}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -257,6 +294,71 @@ export default function Templates() {
                         ))}
                       </div>
                     </div>
+
+                    {template.category !== 'blank' && (
+                      <div className="mb-5 p-3 bg-navy-25/50 rounded-lg border border-navy-100">
+                        <div className="flex items-center gap-1.5 mb-2">
+                          <FileText className="w-3.5 h-3.5 text-navy-500" />
+                          <span className="text-xs font-medium text-navy-500">语义字段示例</span>
+                        </div>
+                        {template.category === 'tech' && (
+                          <div className="space-y-2 text-xs">
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">项目指标：</span>
+                              <span className="text-navy-600">QPS提升35%、打包时间缩短40%、代码覆盖率从68%→85%</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">技术栈：</span>
+                              <div className="flex gap-1 flex-wrap">
+                                {['React', 'TypeScript', 'Node.js', 'Webpack'].map(t => (
+                                  <span key={t} className="px-1.5 py-0.5 rounded text-[10px]" style={{ backgroundColor: `${template.theme.secondaryColor}25`, color: template.theme.primaryColor }}>{t}</span>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">GitHub：</span>
+                              <span className="text-navy-600 font-mono">github.com/yourname</span>
+                            </div>
+                          </div>
+                        )}
+                        {template.category === 'design' && (
+                          <div className="space-y-2 text-xs">
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">作品集：</span>
+                              <span className="text-navy-600">portfolio.com/lixue · behance.net/lixue</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">设计工具：</span>
+                              <div className="flex gap-1 flex-wrap">
+                                {['Figma', 'Sketch', 'Principle', 'Framer'].map(t => (
+                                  <span key={t} className="px-1.5 py-0.5 rounded text-[10px]" style={{ backgroundColor: `${template.theme.secondaryColor}25`, color: template.theme.primaryColor }}>{t}</span>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">视觉规范：</span>
+                              <span className="text-navy-600">5套设计系统、20+组件库、150+图标库</span>
+                            </div>
+                          </div>
+                        )}
+                        {template.category === 'function' && (
+                          <div className="space-y-2 text-xs">
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">流程优化：</span>
+                              <span className="text-navy-600">审批流程简化40%、会议效率提升50%</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">成本控制：</span>
+                              <span className="text-navy-600">年度预算节省18万、供应商成本降低22%</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <span className="text-navy-400 flex-shrink-0">SLA指标：</span>
+                              <span className="text-navy-600">需求响应≤2小时、问题解决率98%</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
 
                     <div className="mt-auto">
                       <button

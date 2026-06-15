@@ -551,9 +551,9 @@ const functionTemplate: ResumeTemplate = {
 
 const blankTemplate: ResumeTemplate = {
   id: 'blank',
-  name: '空白模板',
+  name: '应届生简历',
   category: 'blank',
-  description: '从零开始创建你的专属简历',
+  description: '面向应届生与职场新人的完整简历样例，直接编辑即可快速生成专业简历',
   theme: {
     primaryColor: '#1e3a5f',
     secondaryColor: '#c9a24a',
@@ -567,12 +567,14 @@ const blankTemplate: ResumeTemplate = {
       visible: true,
       order: 0,
       fields: {
-        name: '',
-        title: '',
-        phone: '',
-        email: '',
-        location: '',
+        name: '陈思远',
+        title: '前端开发工程师',
+        phone: '139-2345-6789',
+        email: 'chensiyuan2024@gmail.com',
+        location: '杭州',
         website: '',
+        github: 'github.com/chensiyuan',
+        portfolio: '',
         avatar: ''
       }
     },
@@ -582,7 +584,18 @@ const blankTemplate: ResumeTemplate = {
       visible: true,
       order: 1,
       fields: {
-        items: []
+        items: [
+          {
+            id: 'edu-blank-1',
+            school: '浙江大学',
+            major: '计算机科学与技术',
+            degree: '本科',
+            startDate: '2020-09',
+            endDate: '2024-06',
+            gpa: '3.82/4.0（专业前15%）',
+            description: '主修数据结构、操作系统、计算机网络、软件工程；获校级一等奖学金2次、ACM校赛银奖'
+          }
+        ]
       }
     },
     {
@@ -591,7 +604,32 @@ const blankTemplate: ResumeTemplate = {
       visible: true,
       order: 2,
       fields: {
-        items: []
+        items: [
+          {
+            id: 'exp-blank-1',
+            company: '字节跳动',
+            position: '前端开发实习生',
+            startDate: '2023-07',
+            endDate: '2023-12',
+            responsibilities: [
+              '负责抖音电商后台管理系统开发，使用React + TypeScript重构商品列表页，页面加载速度提升40%',
+              '独立完成数据看板模块，对接3个后端API，实现日活/转化率/GMV等核心指标可视化',
+              '参与组件库建设，封装5个通用业务组件，被团队3个项目复用，减少重复开发约30%'
+            ]
+          },
+          {
+            id: 'exp-blank-2',
+            company: '校园创业项目 · 智选课',
+            position: '全栈开发负责人',
+            startDate: '2022-03',
+            endDate: '2023-06',
+            responsibilities: [
+              '从0到1搭建课程推荐平台，服务校内2000+学生，日均访问量500+',
+              '使用Vue 3 + Express + MongoDB技术栈，实现课表冲突检测与智能推荐算法',
+              '项目获校级创新创业大赛二等奖，被学校教务处采纳为选课辅助工具'
+            ]
+          }
+        ]
       }
     },
     {
@@ -600,7 +638,19 @@ const blankTemplate: ResumeTemplate = {
       visible: true,
       order: 3,
       fields: {
-        items: []
+        items: [
+          {
+            id: 'proj-blank-1',
+            name: '低代码搭建平台',
+            role: '核心开发者',
+            startDate: '2023-09',
+            endDate: '2024-03',
+            techStack: ['React', 'TypeScript', 'Zustand', 'DnD-Kit'],
+            link: 'github.com/chensiyuan/lowcode-builder',
+            metrics: ['支持12种组件拖拽配置', '生成页面体积较竞品减小35%', 'GitHub Stars 280+'],
+            description: '基于React的可视化页面搭建工具，支持组件拖拽、属性配置、实时预览与代码导出。采用插件化架构，核心引擎仅8KB gzipped。'
+          }
+        ]
       }
     },
     {
@@ -609,7 +659,23 @@ const blankTemplate: ResumeTemplate = {
       visible: true,
       order: 4,
       fields: {
-        groups: []
+        groups: [
+          {
+            id: 'skill-blank-1',
+            name: '前端技术',
+            items: ['React', 'Vue 3', 'TypeScript', 'Next.js', 'TailwindCSS', 'Webpack/Vite']
+          },
+          {
+            id: 'skill-blank-2',
+            name: '后端与工具',
+            items: ['Node.js', 'Express', 'MongoDB', 'Git', 'Docker', 'Linux']
+          },
+          {
+            id: 'skill-blank-3',
+            name: '软实力',
+            items: ['敏捷开发', '技术分享（内部分享5次）', '英文文档阅读', '跨团队协作']
+          }
+        ]
       }
     },
     {
@@ -618,7 +684,7 @@ const blankTemplate: ResumeTemplate = {
       visible: true,
       order: 5,
       fields: {
-        content: ''
+        content: '计算机专业应届毕业生，1年大厂前端实习经验。熟悉React/Vue技术栈，有从0到1项目落地经历，注重代码质量与工程规范。在字节跳动实习期间独立负责数据看板模块，页面加载速度优化40%；校园创业项目获校级二等奖并被教务处采纳。对前端工程化和用户体验有持续热情，保持技术博客输出（累计50+篇）。'
       }
     }
   ]

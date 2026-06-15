@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { Resume, ResumeTheme, ResumeModule, TemplateCategory, AppSettings } from '../types';
 import { saveResume, getResume, getResumes, deleteResume, saveSetting, getSetting, clearAllData } from '../utils/db';
 import { encrypt, decrypt } from '../utils/crypto';
+import { addAuditLog } from '../utils/audit';
 
 interface ResumeStore {
   currentResume: Resume | null;
@@ -11,6 +12,8 @@ interface ResumeStore {
   historyIndex: number;
   loading: boolean;
   atsPassed: Record<string, boolean>;
+  lastDiagnosis: Record<string, any>;
+  lastAtsCheck: Record<string, any>;
   setCurrentResume: (resume: Resume | null) => void;
   updateResume: (updater: (resume: Resume) => Resume) => void;
   updateModule: (moduleId: string, updater: (module: ResumeModule) => ResumeModule) => void;
@@ -27,6 +30,8 @@ interface ResumeStore {
   createNewResume: (templateId: string, category: TemplateCategory, modules: ResumeModule[], theme: ResumeTheme) => void;
   createAndSaveResume: (templateId: string, category: TemplateCategory, modules: ResumeModule[], theme: ResumeTheme) => Promise<Resume | null>;
   setAtsPassed: (resumeId: string, passed: boolean) => void;
+  setLastDiagnosis: (resumeId: string, result: any) => void;
+  setLastAtsCheck: (resumeId: string, result: any) => void;
   clearData: () => Promise<void>;
   undo: () => void;
   redo: () => void;
@@ -69,6 +74,8 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
   historyIndex: -1,
   loading: false,
   atsPassed: {},
+  lastDiagnosis: {},
+  lastAtsCheck: {},
   canUndo: false,
   canRedo: false,
 
@@ -112,13 +119,22 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
       ...resume,
       modules: [...resume.modules, { ...module, id: module.id || generateId(), order: resume.modules.length }],
     }));
+    const { currentResume } = get();
+    if (currentResume) {
+      addAuditLog('module.add', { resumeId: currentResume.id, moduleId: module.id, moduleType: module.type, moduleName: module.fields?.title || String(module.type) });
+    }
   },
 
   removeModule: (moduleId) => {
+    const { currentResume } = get();
+    const moduleToRemove = currentResume?.modules.find(m => m.id === moduleId);
     get().updateResume(resume => ({
       ...resume,
       modules: resume.modules.filter(m => m.id !== moduleId).map((m, i) => ({ ...m, order: i })),
     }));
+    if (currentResume) {
+      addAuditLog('module.remove', { resumeId: currentResume.id, moduleId, moduleType: moduleToRemove?.type, moduleName: moduleToRemove?.fields?.title || String(moduleToRemove?.type) });
+    }
   },
 
   reorderModules: (activeId, overId) => {
@@ -134,6 +150,10 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
         modules: modules.map((m, i) => ({ ...m, order: i })),
       };
     });
+    const { currentResume } = get();
+    if (currentResume) {
+      addAuditLog('module.reorder', { resumeId: currentResume.id, activeId, overId });
+    }
   },
 
   updateTheme: (theme) => {
@@ -156,6 +176,7 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
         await saveResume(resumeToSave);
       }
       set({ currentResume: resumeToSave });
+      addAuditLog('resume.save', { resumeId: resumeToSave.id, title: resumeToSave.title, moduleCount: resumeToSave.modules.length });
     } finally {
       set({ loading: false });
     }
@@ -203,7 +224,22 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
           return item as Resume;
         })
       );
-      set({ resumes: resumes.sort((a, b) => b.updatedAt - a.updatedAt) });
+      const sortedResumes = resumes.sort((a, b) => b.updatedAt - a.updatedAt);
+      
+      const diagnosisResults: Record<string, any> = {};
+      const atsResults: Record<string, any> = {};
+      for (const r of sortedResumes) {
+        const diag = await getSetting(`diagnosis_${r.id}`);
+        if (diag) diagnosisResults[r.id] = diag;
+        const ats = await getSetting(`atscheck_${r.id}`);
+        if (ats) atsResults[r.id] = ats;
+      }
+      
+      set({ 
+        resumes: sortedResumes, 
+        lastDiagnosis: diagnosisResults,
+        lastAtsCheck: atsResults,
+      });
     } finally {
       set({ loading: false });
     }
@@ -269,6 +305,7 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
         await saveResume(resume);
       }
       set(state => ({ resumes: [resume, ...state.resumes].sort((a, b) => b.updatedAt - a.updatedAt) }));
+      addAuditLog('resume.create', { resumeId: resume.id, title: resume.title, templateId, category, moduleCount: modules.length });
       return resume;
     } catch (e) {
       console.error('Failed to save new resume', e);
@@ -280,6 +317,20 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
     set(state => ({
       atsPassed: { ...state.atsPassed, [resumeId]: passed },
     }));
+  },
+
+  setLastDiagnosis: (resumeId, result) => {
+    set(state => ({
+      lastDiagnosis: { ...state.lastDiagnosis, [resumeId]: result },
+    }));
+    saveSetting(`diagnosis_${resumeId}`, result);
+  },
+
+  setLastAtsCheck: (resumeId, result) => {
+    set(state => ({
+      lastAtsCheck: { ...state.lastAtsCheck, [resumeId]: result },
+    }));
+    saveSetting(`atscheck_${resumeId}`, result);
   },
 
   clearData: async () => {
