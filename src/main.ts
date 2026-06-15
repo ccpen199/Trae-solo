@@ -38,6 +38,19 @@ async function bootstrap(): Promise<void> {
   app.use(helmet());
   app.use(compression());
 
+  app.use('/api/health', (_req, res) => {
+    res.status(200).json({
+      success: true,
+      status: 'ok',
+      service: 'nx-city-service-gateway',
+      mode:
+        process.env.LOCAL_SMOKE_MODE === 'true'
+          ? 'local-smoke'
+          : nodeEnv,
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   app.setGlobalPrefix('/api/v1');
 
   app.useGlobalPipes(
@@ -96,16 +109,16 @@ async function bootstrap(): Promise<void> {
     );
   }
 
-  await app.listen(port);
+  await app.listen(port, '127.0.0.1');
 
   logger.log('========================================');
   logger.log(`🚀 应用启动成功!`);
   logger.log(`📋 环境: ${nodeEnv}`);
   logger.log(`🌐 端口: ${port}`);
-  logger.log(`📡 服务地址: http://localhost:${port}`);
+  logger.log(`📡 服务地址: http://127.0.0.1:${port}`);
   logger.log(`🎯 API前缀: /api/v1`);
   if (nodeEnv !== 'production') {
-    logger.log(`📚 Swagger文档: http://localhost:${port}/api/docs`);
+    logger.log(`📚 Swagger文档: http://127.0.0.1:${port}/api/docs`);
   }
   logger.log('========================================');
 }

@@ -1,0 +1,1046 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T04:40:35.862Z",
+  "order": "may-89213",
+  "roundIndex": 2,
+  "captureId": "codex-actual-50213",
+  "url": "http://127.0.0.1:50213/",
+  "initialUrl": "http://127.0.0.1:50213/",
+  "finalUrl": "http://127.0.0.1:50213/dashboard",
+  "status": 200,
+  "title": "宁夏自治区一网通办管理后台",
+  "initialTitle": "宁夏自治区一网通办管理后台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-03-导航-委办局管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-04-导航-服务事项中枢.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-05-导航-电子证照库.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-06-导航-12345工单系统.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-07-导航-审计日志.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50213/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:50213/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:委办局管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:服务事项中枢",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:电子证照库",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:12345工单系统",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:审计日志",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "一网通办工作台"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业务对象",
+              "责任部门",
+              "状态",
+              "更新时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业务对象 责任部门 状态 更新时间 企业开办一件事 市场监管厅 运行中 09:30 电子营业执照核验 政务数据局 已完成 09:18 民生诉求智能分派 12345 中心 待处理 08:56"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员一网通办工作台汇总事项办理、证照调用、12345 工单和城市数据秘书的实时运行情况。今日办件1,286在线事项426证照调用35,620工单办结率96.8%业务清单业务对象责任部门状态更新时间企业开办一件事市场监管厅运行中09:30电子营业执照核验政务数据局已完成09:18民生诉求智能分派12345 中心待处理08:56运行态势88%统一身份认证正常证照共享接口完成巡检12345 热点诉求已同步",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-actual-50213-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-01-首屏.png",
+          "elementCount": 198,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:50213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "一网通办工作台"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业务对象",
+              "责任部门",
+              "状态",
+              "更新时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业务对象 责任部门 状态 更新时间 企业开办一件事 市场监管厅 运行中 09:30 电子营业执照核验 政务数据局 已完成 09:18 民生诉求智能分派 12345 中心 待处理 08:56"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员一网通办工作台汇总事项办理、证照调用、12345 工单和城市数据秘书的实时运行情况。今日办件1,286在线事项426证照调用35,620工单办结率96.8%业务清单业务对象责任部门状态更新时间企业开办一件事市场监管厅运行中09:30电子营业执照核验政务数据局已完成09:18民生诉求智能分派12345 中心待处理08:56运行态势88%统一身份认证正常证照共享接口完成巡检12345 热点诉求已同步",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-actual-50213-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:50213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-02-导航-工作台.png",
+          "elementCount": 198,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:委办局管理",
+        "url": "http://127.0.0.1:50213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "委办局管理"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业务对象",
+              "责任部门",
+              "状态",
+              "更新时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业务对象 责任部门 状态 更新时间 自治区住建厅 政务协同组 运行中 09:26 银川市审批局 区域运营组 审核中 09:08 医保局数据接口 数据交换组 预警 08:40"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理委办局管理5管理员委办局管理维护自治区、地市、区县多级部门的服务目录、接口联通和责任边界。接入部门86接口在线率99.2%待协同事项18本周巡检42业务清单业务对象责任部门状态更新时间自治区住建厅政务协同组运行中09:26银川市审批局区域运营组审核中09:08医保局数据接口数据交换组预警08:40运行态势88%新增部门接入申请 2 条跨部门材料复用规则已更新低频接口进入重点巡检",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-actual-50213-structure-03-导航-委办局管理",
+          "label": "导航:委办局管理",
+          "finalUrl": "http://127.0.0.1:50213/departments",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-03-导航-委办局管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-03-导航-委办局管理.png",
+          "elementCount": 199,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:服务事项中枢",
+        "url": "http://127.0.0.1:50213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "服务事项中枢"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业务对象",
+              "责任部门",
+              "状态",
+              "更新时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业务对象 责任部门 状态 更新时间 个体工商户设立登记 市场监管厅 已发布 09:16 不动产登记资料查询 自然资源厅 运行中 09:03 社保关系转移接续 人社厅 审核中 08:35"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理服务事项中枢5管理员服务事项中枢管理政务事项、情形引导、办事材料和线上线下办理渠道。事项总数1,248可网办事项1,120材料免提交318平均办理时长1.8天业务清单业务对象责任部门状态更新时间个体工商户设立登记市场监管厅已发布09:16不动产登记资料查询自然资源厅运行中09:03社保关系转移接续人社厅审核中08:35运行态势88%高频事项清单已同步情形引导树完成灰度发布材料共享命中率持续上升",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-actual-50213-structure-04-导航-服务事项中枢",
+          "label": "导航:服务事项中枢",
+          "finalUrl": "http://127.0.0.1:50213/services",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-04-导航-服务事项中枢.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-04-导航-服务事项中枢.png",
+          "elementCount": 200,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:电子证照库",
+        "url": "http://127.0.0.1:50213/certificates",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "电子证照库"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业务对象",
+              "责任部门",
+              "状态",
+              "更新时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业务对象 责任部门 状态 更新时间 营业执照 市场监管厅 运行中 09:28 不动产权证 自然资源厅 运行中 09:01 社会保障卡 人社厅 已完成 08:48"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理电子证照库5管理员电子证照库集中管理证照目录、授权调用、核验日志和跨部门共享状态。证照目录214有效证照186,420今日核验5,218共享成功率98.7%业务清单业务对象责任部门状态更新时间营业执照市场监管厅运行中09:28不动产权证自然资源厅运行中09:01社会保障卡人社厅已完成08:48运行态势88%证照授权策略完成校验调用峰值低于告警阈值跨省核验通道正常",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-actual-50213-structure-05-导航-电子证照库",
+          "label": "导航:电子证照库",
+          "finalUrl": "http://127.0.0.1:50213/certificates",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-05-导航-电子证照库.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-05-导航-电子证照库.png",
+          "elementCount": 201,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:12345工单系统",
+        "url": "http://127.0.0.1:50213/tickets",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "12345 工单系统"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业务对象",
+              "责任部门",
+              "状态",
+              "更新时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业务对象 责任部门 状态 更新时间 供暖维修诉求 住建厅 待处理 09:24 医保报销咨询 医保局 运行中 09:12 道路交通建议 交通厅 已完成 08:52"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理12345工单系统5管理员12345 工单系统跟踪诉求受理、智能分派、部门回复、满意度评价和超期预警。今日诉求932智能分派884处理中76满意率97.1%业务清单业务对象责任部门状态更新时间供暖维修诉求住建厅待处理09:24医保报销咨询医保局运行中09:12道路交通建议交通厅已完成08:52运行态势88%热点诉求词云完成刷新超期工单已推送提醒满意度回访样本已生成",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-actual-50213-structure-06-导航-12345工单系统",
+          "label": "导航:12345工单系统",
+          "finalUrl": "http://127.0.0.1:50213/tickets",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-06-导航-12345工单系统.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-06-导航-12345工单系统.png",
+          "elementCount": 202,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:审计日志",
+        "url": "http://127.0.0.1:50213/audit-logs",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "审计日志"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业务对象",
+              "责任部门",
+              "状态",
+              "更新时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业务对象 责任部门 状态 更新时间 证照目录变更 平台管理员 已完成 09:22 高频接口访问 安全审计组 运行中 09:10 异常登录核查 安全审计组 预警 08:44"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理审计日志5管理员审计日志记录账号登录、接口调用、证照授权、事项变更和系统管理操作。今日日志8,420风险事件3接口调用56,810留存天数90业务清单业务对象责任部门状态更新时间证照目录变更平台管理员已完成09:22高频接口访问安全审计组运行中09:10异常登录核查安全审计组预警08:44运行态势88%审计归档任务正常敏感操作已完成二次确认风险事件进入人工复核",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-actual-50213-structure-07-导航-审计日志",
+          "label": "导航:审计日志",
+          "finalUrl": "http://127.0.0.1:50213/audit-logs",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-07-导航-审计日志.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-07-导航-审计日志.png",
+          "elementCount": 201,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-01-首屏.png",
+        "elementCount": 198,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:50213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-02-导航-工作台.png",
+        "elementCount": 198,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-03-导航-委办局管理",
+        "label": "导航:委办局管理",
+        "finalUrl": "http://127.0.0.1:50213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-03-导航-委办局管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-03-导航-委办局管理.png",
+        "elementCount": 199,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-04-导航-服务事项中枢",
+        "label": "导航:服务事项中枢",
+        "finalUrl": "http://127.0.0.1:50213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-04-导航-服务事项中枢.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-04-导航-服务事项中枢.png",
+        "elementCount": 200,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-05-导航-电子证照库",
+        "label": "导航:电子证照库",
+        "finalUrl": "http://127.0.0.1:50213/certificates",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-05-导航-电子证照库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-05-导航-电子证照库.png",
+        "elementCount": 201,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-06-导航-12345工单系统",
+        "label": "导航:12345工单系统",
+        "finalUrl": "http://127.0.0.1:50213/tickets",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-06-导航-12345工单系统.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-06-导航-12345工单系统.png",
+        "elementCount": 202,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-07-导航-审计日志",
+        "label": "导航:审计日志",
+        "finalUrl": "http://127.0.0.1:50213/audit-logs",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-07-导航-审计日志.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-07-导航-审计日志.png",
+        "elementCount": 201,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50213/dashboard",
+    "representativeScreenshotLabel": "一网通办工作台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-01-首屏.png",
+        "elementCount": 198,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:50213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-02-导航-工作台.png",
+        "elementCount": 198,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-03-导航-委办局管理",
+        "label": "导航:委办局管理",
+        "finalUrl": "http://127.0.0.1:50213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-03-导航-委办局管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-03-导航-委办局管理.png",
+        "elementCount": 199,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-04-导航-服务事项中枢",
+        "label": "导航:服务事项中枢",
+        "finalUrl": "http://127.0.0.1:50213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-04-导航-服务事项中枢.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-04-导航-服务事项中枢.png",
+        "elementCount": 200,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-05-导航-电子证照库",
+        "label": "导航:电子证照库",
+        "finalUrl": "http://127.0.0.1:50213/certificates",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-05-导航-电子证照库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-05-导航-电子证照库.png",
+        "elementCount": 201,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-06-导航-12345工单系统",
+        "label": "导航:12345工单系统",
+        "finalUrl": "http://127.0.0.1:50213/tickets",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-06-导航-12345工单系统.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-06-导航-12345工单系统.png",
+        "elementCount": 202,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-actual-50213-structure-07-导航-审计日志",
+        "label": "导航:审计日志",
+        "finalUrl": "http://127.0.0.1:50213/audit-logs",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-07-导航-审计日志.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-actual-50213/codex-actual-50213-structure-07-导航-审计日志.png",
+        "elementCount": 201,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1000,
+    "scrollWidth": 1696,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "宁夏政务管理后台\n工作台\n委办局管理\n服务事项中枢\n电子证照库\n12345工单系统\n审计日志\n城市数据秘书\n系统管理\n工作台\n5\n管理员\n一网通办工作台\n汇总事项办理、证照调用、12345 工单和城市数据秘书的实时运行情况。\n今日办件\n1,286\n在线事项\n426\n证照调用\n35,620\n工单办结率\n96.8%\n业务清单\n业务对象\t责任部门\t状态\t更新时间\n企业开办一件事\t市场监管厅\t运行中\t09:30\n电子营业执照核验\t政务数据局\t已完成\t09:18\n民生诉求智能分派\t12345 中心\t待处理\t08:56\n运行态势\n88%\n统一身份认证正常\n证照共享接口完成巡检\n12345 热点诉求已同步",
+  "bodyTextPreview": "宁夏政务管理后台\n工作台\n委办局管理\n服务事项中枢\n电子证照库\n12345工单系统\n审计日志\n城市数据秘书\n系统管理\n工作台\n5\n管理员",
+  "apiBase": "http://127.0.0.1:60213",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:60213/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"status\":\"ok\",\"service\":\"nx-city-service-gateway\",\"mode\":\"local-smoke\",\"timestamp\":\"2026-06-15T04:40:21.162Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:60213/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/admin/stats\",\"error\":\"Not Found\",\"statusCode\":404}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:60213/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"message\":\"Cannot GET /api/admin/dashboard\",\"error\":\"Not Found\",\"statusCode\":404}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 203,
+        "columnNumber": 9161
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 224,
+        "columnNumber": 6065
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 224,
+        "columnNumber": 6065
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 203,
+        "columnNumber": 9161
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 224,
+        "columnNumber": 6065
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 224,
+        "columnNumber": 6065
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 203,
+        "columnNumber": 9161
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 224,
+        "columnNumber": 6065
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50213/assets/index-oZx47lRP.js",
+        "lineNumber": 224,
+        "columnNumber": 6065
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

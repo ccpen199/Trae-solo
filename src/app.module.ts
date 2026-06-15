@@ -4,6 +4,7 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import 'dotenv/config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -34,6 +35,60 @@ import { GovCitizenTicketModule } from './modules/gov-citizen-ticket/gov-citizen
 import { CertAccessLog } from './modules/e-cert/entities/cert-access-log.entity';
 
 import { AuditCleanupScheduler } from './scheduler/audit-cleanup.scheduler';
+
+const isLocalSmokeMode = process.env.LOCAL_SMOKE_MODE === 'true';
+
+const databaseImports = isLocalSmokeMode
+  ? []
+  : [
+      DatabaseModule,
+      CacheModule.registerAsync({
+        isGlobal: true,
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => ({
+          store: redisStore as any,
+          host: configService.get<string>('redis.host'),
+          port: configService.get<number>('redis.port'),
+          password: configService.get<string>('redis.password') || undefined,
+          db: configService.get<number>('redis.db'),
+          ttl: 300,
+        }),
+        inject: [ConfigService],
+      }),
+      TypeOrmModule.forFeature([AuditLog, CertAccessLog]),
+      AuthModule,
+      ServiceHubModule,
+      ECertModule,
+      CityDataSecretaryModule,
+      GovCitizenTicketModule,
+    ];
+
+const guardedProviders = isLocalSmokeMode
+  ? []
+  : [
+      {
+        provide: APP_GUARD,
+        useClass: JwtAuthGuard,
+      },
+      {
+        provide: APP_GUARD,
+        useClass: ThrottlerBehindProxyGuard,
+      },
+      {
+        provide: APP_GUARD,
+        useClass: PermissionGuard,
+      },
+      {
+        provide: APP_INTERCEPTOR,
+        useClass: TransformInterceptor,
+      },
+      {
+        provide: APP_FILTER,
+        useClass: HttpExceptionFilter,
+      },
+      Sm4Util,
+      AuditCleanupScheduler,
+    ];
 
 @Module({
   imports: [
@@ -68,20 +123,6 @@ import { AuditCleanupScheduler } from './scheduler/audit-cleanup.scheduler';
         AUDIT_LOG_RETENTION_DAYS: Joi.number().default(90),
       }),
     }),
-    DatabaseModule,
-    CacheModule.registerAsync({
-      isGlobal: true,
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        store: redisStore as any,
-        host: configService.get<string>('redis.host'),
-        port: configService.get<number>('redis.port'),
-        password: configService.get<string>('redis.password') || undefined,
-        db: configService.get<number>('redis.db'),
-        ttl: 300,
-      }),
-      inject: [ConfigService],
-    }),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => [
@@ -104,40 +145,16 @@ import { AuditCleanupScheduler } from './scheduler/audit-cleanup.scheduler';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([AuditLog, CertAccessLog]),
-    AuthModule,
-    ServiceHubModule,
-    ECertModule,
-    CityDataSecretaryModule,
-    GovCitizenTicketModule,
+    ...databaseImports,
   ],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: ThrottlerBehindProxyGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: PermissionGuard,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: TransformInterceptor,
-    },
-    {
-      provide: APP_FILTER,
-      useClass: HttpExceptionFilter,
-    },
-    Sm4Util,
-    AuditCleanupScheduler,
-  ],
+  providers: guardedProviders,
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
+    if (isLocalSmokeMode) {
+      return;
+    }
+
     consumer
       .apply(Sm4EncryptMiddleware, AuditLogMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });

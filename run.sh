@@ -1,8 +1,22 @@
 #!/bin/bash
 set -e
 
-PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$PROJECT_DIR"
+
+if [ -f .env ]; then
+  set -a
+  # shellcheck disable=SC1091
+  source .env
+  set +a
+fi
+
+PORT="${BACKEND_PORT:-${PORT:-60213}}"
+FRONTEND_PORT="${FRONTEND_PORT:-50213}"
+
+get_process_cwd() {
+  lsof -a -p "$1" -d cwd -Fn 2>/dev/null | awk '/^n/ { print substr($0, 2); exit }'
+}
 
 echo "========================================"
 echo " 宁夏城市服务总入口后端系统 - 启动脚本"
@@ -49,10 +63,10 @@ case "${1:-dev}" in
       echo "dist目录不存在，先执行构建..."
       npm run build
     fi
-    echo "[启动] node dist/main.js"
+    echo "[启动] node dist/src/main.js"
     echo ""
     export NODE_ENV=production
-    node dist/main.js
+    node dist/src/main.js
     ;;
 
   init-data)
@@ -106,7 +120,8 @@ case "${1:-dev}" in
     PORT="${PORT:-3000}"
     if lsof -i :$PORT >/dev/null 2>&1; then
       PID=$(lsof -ti :$PORT | head -1)
-      CWD=$(ps -p $PID -o cwd= 2>/dev/null || echo "unknown")
+      CWD=$(get_process_cwd "$PID")
+      CWD="${CWD:-unknown}"
       CMDLINE=$(ps -p $PID -o command= 2>/dev/null || echo "unknown")
       if echo "$CWD" | grep -q "$PROJECT_DIR" || echo "$CMDLINE" | grep -q "nx-city-service"; then
         echo "✅ 服务正在运行 (PID: $PID, 端口: $PORT)"
@@ -129,7 +144,7 @@ case "${1:-dev}" in
     if lsof -i :$PORT >/dev/null 2>&1; then
       PIDS=$(lsof -ti :$PORT)
       for PID in $PIDS; do
-        CWD=$(ps -p $PID -o cwd= 2>/dev/null || echo "")
+        CWD=$(get_process_cwd "$PID")
         CMDLINE=$(ps -p $PID -o command= 2>/dev/null || echo "")
         if echo "$CWD" | grep -q "$PROJECT_DIR" || echo "$CMDLINE" | grep -q "nx-city-service\|nest start\|dist/main.js"; then
           echo "终止进程 PID=$PID (属于本项目)"

@@ -26,5 +26,6 @@
       "@modules/*": ["src/modules/*"],
       "@database/*": ["src/database/*"]
     }
-  }
+  },
+  "exclude": ["admin", "node_modules", "dist"]
 }
