@@ -141,7 +141,7 @@ const CourseCard = ({ course, variant = 'default', showStatus = false, className
             )}
           </div>
           <span className="text-xs text-zinc-500">
-            {course.chapters?.length || 0} 章节
+            {course.chapterCount || course.chapters?.length || 0} 章节
           </span>
         </div>
       </div>
