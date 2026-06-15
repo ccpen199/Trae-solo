@@ -1,4 +1,4 @@
-import { ArrowRight, ShieldCheck, Clock, Star, Sparkles, Baby, ChefHat, ClipboardList, MapPin, Phone, Zap, Shield, BadgeCheck, CircleDollarSign, Timer, Navigation, ChevronRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Clock, Star, Sparkles, Baby, ChefHat, ClipboardList, MapPin, Phone, Zap, Shield, BadgeCheck, CircleDollarSign, Timer, Navigation, ChevronRight, HandHeart, LayoutDashboard, Building2, FileSearch, ScanLine, Flame, FileText, Mic, BarChart3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import QuickOrderForm from '@/components/QuickOrderForm';
@@ -345,6 +345,105 @@ export default function Home() {
             <Zap className="w-5 h-5" />
             立即下单体验
           </a>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-16">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-secondary-900 mb-3">多端业务入口</h2>
+          <p className="text-secondary-500">从不同角色视角体验平台完整能力</p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          <Link to="/worker" className="card-hover p-6 group">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-100 to-orange-50 flex items-center justify-center">
+                <HandHeart className="w-6 h-6 text-orange-500" />
+              </div>
+              <div>
+                <h3 className="font-bold text-secondary-800">阿姨端</h3>
+                <p className="text-xs text-secondary-500">阿姨接单工作台</p>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {[
+                { icon: ScanLine, text: '三证OCR识别+人工复核', desc: '身份证/健康证/无犯罪记录' },
+                { icon: Star, text: '服务评分动态加权', desc: '准时率40% · 好评50% · 投诉10%' },
+                { icon: Flame, text: '地理位置热力图调度', desc: '1km内优先派单' },
+              ].map((item) => (
+                <div key={item.text} className="flex items-start gap-2 text-sm">
+                  <item.icon className="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-secondary-700 font-medium">{item.text}</p>
+                    <p className="text-xs text-secondary-400">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center gap-1 text-orange-600 text-sm font-medium group-hover:gap-2 transition-all">
+              进入阿姨端 <ArrowRight className="w-4 h-4" />
+            </div>
+          </Link>
+
+          <Link to="/admin" className="card-hover p-6 group">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-100 to-teal-50 flex items-center justify-center">
+                <LayoutDashboard className="w-6 h-6 text-teal-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-secondary-800">管理后台</h3>
+                <p className="text-xs text-secondary-500">运营管理中枢</p>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {[
+                { icon: Shield, text: '保险SaaS集成', desc: '自动投保/出单/理赔' },
+                { icon: FileText, text: 'SOP标准文档库', desc: '保洁/育婴/做饭三类SOP' },
+                { icon: Mic, text: '录音转文字质检', desc: '关键词合规率自动检测' },
+                { icon: BarChart3, text: '差评根因聚类', desc: '词云+饼图+趋势分析' },
+              ].map((item) => (
+                <div key={item.text} className="flex items-start gap-2 text-sm">
+                  <item.icon className="w-4 h-4 text-teal-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-secondary-700 font-medium">{item.text}</p>
+                    <p className="text-xs text-secondary-400">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center gap-1 text-teal-600 text-sm font-medium group-hover:gap-2 transition-all">
+              进入管理后台 <ArrowRight className="w-4 h-4" />
+            </div>
+          </Link>
+
+          <Link to="/enterprise" className="card-hover p-6 group">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-purple-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-secondary-800">企业客户</h3>
+                <p className="text-xs text-secondary-500">批量采购服务包</p>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {[
+                { icon: Building2, text: '物业/公寓定制化服务包', desc: '按需组合保洁+育婴+做饭' },
+                { icon: ClipboardList, text: '批量订单管理', desc: '次数卡模式一键消耗' },
+                { icon: CircleDollarSign, text: '企业账单中心', desc: '月度账单+发票申请' },
+              ].map((item) => (
+                <div key={item.text} className="flex items-start gap-2 text-sm">
+                  <item.icon className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-secondary-700 font-medium">{item.text}</p>
+                    <p className="text-xs text-secondary-400">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center gap-1 text-purple-600 text-sm font-medium group-hover:gap-2 transition-all">
+              进入企业端 <ArrowRight className="w-4 h-4" />
+            </div>
+          </Link>
         </div>
       </section>
 

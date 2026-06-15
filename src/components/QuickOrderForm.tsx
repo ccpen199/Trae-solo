@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAppStore, serviceTypeList } from '@/store';
@@ -29,6 +29,14 @@ function getDateStr(offset: number) {
   return d.toISOString().split('T')[0];
 }
 
+function addMinutes(timeStr: string, minutes: number) {
+  const [h, m] = timeStr.split(':').map(Number);
+  const total = h * 60 + m + minutes;
+  const nh = Math.floor(total / 60) % 24;
+  const nm = total % 60;
+  return `${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
+}
+
 export default function QuickOrderForm() {
   const addresses = useAppStore((state) => state.addresses);
   const selectedAddress = useAppStore((state) => state.selectedAddress);
@@ -43,6 +51,7 @@ export default function QuickOrderForm() {
   const [showAddressDropdown, setShowAddressDropdown] = useState(false);
   const [showFeeDetail, setShowFeeDetail] = useState(false);
   const [showCompensationRule, setShowCompensationRule] = useState(false);
+  const [showConfirmDetail, setShowConfirmDetail] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [orderId, setOrderId] = useState(0);
@@ -52,6 +61,17 @@ export default function QuickOrderForm() {
   const baseFee = currentService.price * duration;
   const insuranceFee = 2;
   const totalFee = baseFee + insuranceFee;
+
+  const nearbyWorkers = 7;
+  const avgScore = 4.8;
+
+  const timeline = useMemo(() => [
+    { label: '预计派单', time: addMinutes(time, 3), desc: `1km内${nearbyWorkers}位可派阿姨`, icon: Navigation },
+    { label: '预计接单', time: addMinutes(time, 8), desc: '阿姨确认接单', icon: CheckCircle },
+    { label: '预计出发', time: addMinutes(time, 15), desc: '阿姨从服务点出发', icon: MapPin },
+    { label: '预计到达', time: addMinutes(time, 35), desc: '阿姨到达服务地址', icon: Users },
+    { label: '服务结束', time: addMinutes(time, 35 + duration * 60), desc: `服务${duration}小时后完成`, icon: Star },
+  ], [time, duration, nearbyWorkers]);
 
   const handleSubmit = () => {
     if (!selectedAddress) return;
@@ -90,9 +110,20 @@ export default function QuickOrderForm() {
         </div>
         <h3 className="text-2xl font-bold text-secondary-800 mb-2">下单成功！</h3>
         <p className="text-secondary-500 mb-2">订单号 #{orderId}</p>
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 text-primary-700 text-sm mb-6">
-          <Navigation className="w-4 h-4" />
-          正在匹配1km内阿姨，预计3分钟内派单
+        <div className="space-y-2 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 text-primary-700 text-sm">
+            <Navigation className="w-4 h-4" />
+            正在匹配1km内阿姨，预计3分钟内派单
+          </div>
+          <div className="flex flex-col gap-1 text-xs text-secondary-500 bg-secondary-50 rounded-xl p-3 max-w-xs mx-auto">
+            {timeline.map((node, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <span className="text-secondary-400 w-16 text-right">{node.time}</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-primary-400" />
+                <span>{node.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex gap-3 justify-center">
           <button onClick={() => navigate(`/orders/${orderId}`)} className="btn-primary text-sm">
@@ -256,6 +287,118 @@ export default function QuickOrderForm() {
           <div className="flex justify-between text-[10px] text-secondary-400 mt-1">
             <span>1h</span><span>4h</span><span>8h</span>
           </div>
+        </div>
+
+        <div className="rounded-xl bg-gradient-to-br from-primary-50 to-secondary-50 p-4 border border-primary-100">
+          <div
+            className="flex items-center justify-between cursor-pointer"
+            onClick={() => setShowConfirmDetail(!showConfirmDetail)}
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-lg bg-primary-100 flex items-center justify-center">
+                <CheckCircle className="w-3.5 h-3.5 text-primary-600" />
+              </div>
+              <span className="text-sm font-medium text-secondary-800">下单确认信息</span>
+            </div>
+            <ChevronDown className={cn('w-4 h-4 text-secondary-400 transition-transform', showConfirmDetail && 'rotate-180')} />
+          </div>
+
+          {showConfirmDetail && (
+            <div className="mt-3 space-y-3 animate-fade-up">
+              <div className="grid grid-cols-2 gap-2">
+                <div className="bg-white rounded-lg p-2.5 border border-primary-100">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <Navigation className="w-3.5 h-3.5 text-primary-500" />
+                    <span className="text-[10px] text-secondary-500">1km可派阿姨</span>
+                  </div>
+                  <p className="text-lg font-bold text-primary-600">{nearbyWorkers}<span className="text-xs text-secondary-400 font-normal ml-0.5">人</span></p>
+                </div>
+                <div className="bg-white rounded-lg p-2.5 border border-primary-100">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <Star className="w-3.5 h-3.5 text-yellow-500" />
+                    <span className="text-[10px] text-secondary-500">平均评分</span>
+                  </div>
+                  <p className="text-lg font-bold text-yellow-600">{avgScore}<span className="text-xs text-secondary-400 font-normal ml-0.5">/5</span></p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-2.5 border border-primary-100">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Award className="w-3.5 h-3.5 text-primary-500" />
+                  <span className="text-[10px] text-secondary-500">评分权重（动态加权）</span>
+                </div>
+                <div className="space-y-1.5">
+                  <div>
+                    <div className="flex justify-between text-[10px] mb-0.5"><span className="text-secondary-600">准时率</span><span className="text-primary-600 font-medium">40%</span></div>
+                    <div className="w-full h-1.5 bg-gray-100 rounded-full"><div className="h-full bg-primary-500 rounded-full" style={{ width: '40%' }} /></div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-[10px] mb-0.5"><span className="text-secondary-600">客户好评</span><span className="text-yellow-600 font-medium">50%</span></div>
+                    <div className="w-full h-1.5 bg-gray-100 rounded-full"><div className="h-full bg-yellow-500 rounded-full" style={{ width: '50%' }} /></div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-[10px] mb-0.5"><span className="text-secondary-600">投诉率</span><span className="text-red-600 font-medium">10%</span></div>
+                    <div className="w-full h-1.5 bg-gray-100 rounded-full"><div className="h-full bg-red-400 rounded-full" style={{ width: '10%' }} /></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-2.5 border border-green-100">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <Shield className="w-3.5 h-3.5 text-green-500" />
+                  <span className="text-[10px] text-secondary-500">保险承保</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-secondary-700">家政服务责任险 · 保额<span className="font-bold text-green-600">50万</span></p>
+                  <span className="text-[10px] text-green-600 font-medium">¥{insuranceFee}/单</span>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-2.5 border border-red-50">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <CircleDollarSign className="w-3.5 h-3.5 text-red-500" />
+                  <span className="text-[10px] text-secondary-500">爽约赔付规则</span>
+                </div>
+                <div className="space-y-0.5 text-[10px] text-secondary-600">
+                  <p>迟到&gt;30min → 全额退款+30元券</p>
+                  <p>未上门 → 全额退款+30元券</p>
+                  <p>不达标 → 免费重做或退款</p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-3 border border-primary-100">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Timer className="w-3.5 h-3.5 text-primary-500" />
+                  <span className="text-[10px] text-secondary-500 font-medium">预计履约节点</span>
+                </div>
+                <div className="space-y-0">
+                  {timeline.map((node, i) => {
+                    const NodeIcon = node.icon;
+                    return (
+                      <div key={i} className="flex items-start gap-2">
+                        <div className="flex flex-col items-center">
+                          <div className={cn(
+                            'w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0',
+                            i === 0 ? 'bg-primary-100 text-primary-600' : 'bg-secondary-100 text-secondary-500'
+                          )}>
+                            <NodeIcon className="w-3 h-3" />
+                          </div>
+                          {i < timeline.length - 1 && <div className="w-0.5 h-4 bg-gray-200" />}
+                        </div>
+                        <div className="pb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-medium text-secondary-800">{node.label}</span>
+                            <span className="text-[10px] text-primary-600 font-medium">{node.time}</span>
+                          </div>
+                          <p className="text-[10px] text-secondary-400">{node.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="rounded-xl bg-cream-100 p-4 space-y-2">
