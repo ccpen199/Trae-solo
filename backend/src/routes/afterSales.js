@@ -4,7 +4,7 @@ const db = require('../db/database');
 const dayjs = require('dayjs');
 
 router.get('/', (req, res) => {
-  const { order_id, type, status, page = 1, pageSize = 20 } = req.query;
+  const { order_id, platform_id, type, status, page = 1, pageSize = 20 } = req.query;
   
   let query = 'SELECT a.*, o.order_no, p.name as platform_name FROM after_sales a';
   query += ' LEFT JOIN orders o ON a.order_id = o.id';
@@ -16,6 +16,10 @@ router.get('/', (req, res) => {
   if (order_id) {
     where.push('a.order_id = ?');
     params.push(order_id);
+  }
+  if (platform_id) {
+    where.push('o.platform_id = ?');
+    params.push(platform_id);
   }
   if (type) {
     where.push('a.type = ?');
@@ -37,12 +41,42 @@ router.get('/', (req, res) => {
   const afterSales = db.prepare(query).all(...params);
   
   let countQuery = 'SELECT COUNT(*) as total FROM after_sales a';
+  if (platform_id) {
+    countQuery += ' LEFT JOIN orders o ON a.order_id = o.id';
+  }
   if (where.length > 0) {
     countQuery += ' WHERE ' + where.join(' AND ');
   }
   const { total } = db.prepare(countQuery).get(...params.slice(0, params.length - 2));
   
   res.json({ success: true, data: afterSales, total, page: parseInt(page), pageSize: parseInt(pageSize) });
+});
+
+router.get('/stats', (req, res) => {
+  const stats = db.prepare(`
+    SELECT
+      SUM(CASE WHEN status = 'processing' THEN 1 ELSE 0 END) as pending_count,
+      SUM(CASE WHEN status IN ('processing', 'accepted') THEN 1 ELSE 0 END) as processing_count,
+      SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_count,
+      SUM(CASE WHEN type = 'complaint' THEN 1 ELSE 0 END) as complaint_count,
+      COUNT(*) as total_count
+    FROM after_sales
+  `).get();
+
+  const totalOrders = db.prepare('SELECT COUNT(*) as count FROM orders').get().count || 0;
+  const complaintRate = totalOrders > 0 ? ((stats.complaint_count || 0) / totalOrders) * 100 : 0;
+
+  res.json({
+    success: true,
+    data: {
+      pending_count: stats.pending_count || 0,
+      processing_count: stats.processing_count || 0,
+      completed_count: stats.completed_count || 0,
+      complaint_count: stats.complaint_count || 0,
+      total_count: stats.total_count || 0,
+      complaint_rate: Number(complaintRate.toFixed(2))
+    }
+  });
 });
 
 router.post('/', (req, res) => {

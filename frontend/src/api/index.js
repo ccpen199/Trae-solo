@@ -42,14 +42,22 @@ export const merchantApi = {
 export const afterSalesApi = {
   list: (params) => api.get('/after-sales', { params }),
   create: (data) => api.post('/after-sales', data),
-  updateStatus: (id, data) => api.put(`/after-sales/${id}/status`, data)
+  stats: () => api.get('/after-sales/stats'),
+  updateStatus: (id, status, result) => api.put(
+    `/after-sales/${id}/status`,
+    typeof status === 'object' ? status : { status, result }
+  )
 }
 
 export const compensationApi = {
   list: (params) => api.get('/compensations', { params }),
   stats: () => api.get('/compensations/stats'),
   checkTimeout: () => api.post('/compensations/check-timeout'),
-  manual: (data) => api.post('/compensations/manual', data)
+  manual: (data) => api.post('/compensations/manual', data),
+  updateStatus: (id, status, result) => api.put(
+    `/compensations/${id}/status`,
+    typeof status === 'object' ? status : { status, result }
+  )
 }
 
 export const settlementApi = {

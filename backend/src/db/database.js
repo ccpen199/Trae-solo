@@ -120,6 +120,8 @@ function initDatabase() {
       coupon_code TEXT,
       reason TEXT,
       status TEXT DEFAULT 'pending',
+      review_result TEXT,
+      reviewed_at DATETIME,
       triggered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (order_id) REFERENCES orders(id),
       FOREIGN KEY (merchant_id) REFERENCES merchants(id)
@@ -151,6 +153,13 @@ function initDatabase() {
       FOREIGN KEY (order_id) REFERENCES orders(id)
     );
   `);
+
+  try {
+    db.prepare('ALTER TABLE compensations ADD COLUMN review_result TEXT').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE compensations ADD COLUMN reviewed_at DATETIME').run();
+  } catch (e) {}
 
   const platformCount = db.prepare('SELECT COUNT(*) as count FROM platforms').get().count;
   if (platformCount === 0) {

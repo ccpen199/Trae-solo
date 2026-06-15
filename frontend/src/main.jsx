@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         borderRadius: 6
       }
     }}>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <App />
       </BrowserRouter>
     </ConfigProvider>

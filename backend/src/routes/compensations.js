@@ -13,11 +13,12 @@ function generateCouponCode() {
 }
 
 router.get('/', (req, res) => {
-  const { merchant_id, status, type, page = 1, pageSize = 20 } = req.query;
+  const { merchant_id, platform_id, status, type, page = 1, pageSize = 20 } = req.query;
   
-  let query = 'SELECT c.*, o.order_no, m.name as merchant_name FROM compensations c';
+  let query = 'SELECT c.*, o.order_no, m.name as merchant_name, p.name as platform_name FROM compensations c';
   query += ' LEFT JOIN orders o ON c.order_id = o.id';
   query += ' LEFT JOIN merchants m ON c.merchant_id = m.id';
+  query += ' LEFT JOIN platforms p ON o.platform_id = p.id';
   
   const where = [];
   const params = [];
@@ -25,6 +26,10 @@ router.get('/', (req, res) => {
   if (merchant_id) {
     where.push('c.merchant_id = ?');
     params.push(merchant_id);
+  }
+  if (platform_id) {
+    where.push('o.platform_id = ?');
+    params.push(platform_id);
   }
   if (status) {
     where.push('c.status = ?');
@@ -46,6 +51,9 @@ router.get('/', (req, res) => {
   const compensations = db.prepare(query).all(...params);
   
   let countQuery = 'SELECT COUNT(*) as total FROM compensations c';
+  if (platform_id) {
+    countQuery += ' LEFT JOIN orders o ON c.order_id = o.id';
+  }
   if (where.length > 0) {
     countQuery += ' WHERE ' + where.join(' AND ');
   }
@@ -141,14 +149,38 @@ router.post('/manual', (req, res) => {
     .run(order_id, 'compensation', `人工赔付：${amount}元补偿券 ${couponCode}`);
   
   const compensation = db.prepare(`
-    SELECT c.*, o.order_no, m.name as merchant_name
+    SELECT c.*, o.order_no, m.name as merchant_name, p.name as platform_name
     FROM compensations c
     LEFT JOIN orders o ON c.order_id = o.id
     LEFT JOIN merchants m ON c.merchant_id = m.id
+    LEFT JOIN platforms p ON o.platform_id = p.id
     WHERE c.id = ?
   `).get(result.lastInsertRowid);
   
   res.json({ success: true, data: compensation });
+});
+
+router.put('/:id/status', (req, res) => {
+  const { status, result } = req.body;
+  const compensation = db.prepare('SELECT * FROM compensations WHERE id = ?').get(req.params.id);
+  
+  if (!compensation) {
+    return res.status(404).json({ success: false, message: '赔付记录不存在' });
+  }
+  
+  db.prepare('UPDATE compensations SET status = ?, review_result = ?, reviewed_at = datetime(\'now\') WHERE id = ?')
+    .run(status, result || '', req.params.id);
+  
+  const updated = db.prepare(`
+    SELECT c.*, o.order_no, m.name as merchant_name, p.name as platform_name
+    FROM compensations c
+    LEFT JOIN orders o ON c.order_id = o.id
+    LEFT JOIN merchants m ON c.merchant_id = m.id
+    LEFT JOIN platforms p ON o.platform_id = p.id
+    WHERE c.id = ?
+  `).get(req.params.id);
+  
+  res.json({ success: true, data: updated });
 });
 
 module.exports = router;

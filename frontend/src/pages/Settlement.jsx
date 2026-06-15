@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Table, Tag, Button, Select, Statistic, Modal, Drawer, Descriptions, message, Space, DatePicker } from 'antd'
+import { Row, Col, Card, Table, Tag, Button, Select, Statistic, Modal, Drawer, Descriptions, message, Space, DatePicker, List, Progress, Alert, Steps, Checkbox, Form, Input } from 'antd'
 import {
   MoneyCollectOutlined,
   FileTextOutlined,
   CheckCircleOutlined,
   ClockCircleOutlined,
   SyncOutlined,
-  EyeOutlined
+  EyeOutlined,
+  FileSearchOutlined,
+  FileDoneOutlined,
+  PayCircleOutlined,
+  ReconciliationOutlined,
+  PrinterOutlined
 } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import dayjs from 'dayjs'
 import { settlementApi, platformApi } from '../api'
+import { useNavigate } from 'react-router-dom'
 
 const { Option } = Select
 const { RangePicker } = DatePicker
+const { Step } = Steps
 
 function Settlement() {
+  const navigate = useNavigate()
   const [list, setList] = useState([])
   const [monthlySummary, setMonthlySummary] = useState([])
   const [platforms, setPlatforms] = useState([])
@@ -26,6 +34,12 @@ function Settlement() {
   const [currentSettlement, setCurrentSettlement] = useState(null)
   const [generateModal, setGenerateModal] = useState(false)
   const [generatePeriod, setGeneratePeriod] = useState(null)
+  const [reconcileModal, setReconcileModal] = useState(false)
+  const [invoiceModal, setInvoiceModal] = useState(false)
+  const [paymentModal, setPaymentModal] = useState(false)
+  const [reconcileForm] = Form.useForm()
+  const [invoiceForm] = Form.useForm()
+  const [paymentForm] = Form.useForm()
 
   useEffect(() => {
     loadPlatforms()
@@ -75,6 +89,65 @@ function Settlement() {
       }
     } catch (e) {
       message.error('加载详情失败')
+    }
+  }
+
+  const handleReconcile = (item) => {
+    setCurrentSettlement(item)
+    reconcileForm.resetFields()
+    setReconcileModal(true)
+  }
+
+  const submitReconcile = async (values) => {
+    try {
+      if (values.matched) {
+        await handleUpdateStatus(currentSettlement.id, 'processing')
+        message.success('对账完成，已进入结算流程')
+      } else {
+        message.warning('对账差异已记录，请联系平台处理')
+      }
+      setReconcileModal(false)
+    } catch (e) {
+      message.error('操作失败')
+    }
+  }
+
+  const handleInvoice = (item) => {
+    setCurrentSettlement(item)
+    invoiceForm.resetFields()
+    invoiceForm.setFieldsValue({
+      title: `${item.platform_name} ${item.period} 服务费`,
+      amount: item.commission_amount,
+      type: 'company'
+    })
+    setInvoiceModal(true)
+  }
+
+  const submitInvoice = async (values) => {
+    try {
+      message.success('发票申请已提交，将在3个工作日内开具')
+      setInvoiceModal(false)
+      loadList()
+    } catch (e) {
+      message.error('申请失败')
+    }
+  }
+
+  const handlePayment = (item) => {
+    setCurrentSettlement(item)
+    paymentForm.resetFields()
+    setPaymentModal(true)
+  }
+
+  const submitPayment = async (values) => {
+    try {
+      await handleUpdateStatus(currentSettlement.id, 'completed')
+      message.success(`已完成付款 ¥${currentSettlement.settlement_amount?.toFixed(2)}`)
+      setPaymentModal(false)
+      loadList()
+      loadMonthlySummary()
+    } catch (e) {
+      message.error('付款失败')
     }
   }
 
@@ -208,26 +281,47 @@ function Settlement() {
     },
     {
       title: '操作',
-      width: 180,
+      width: 300,
       render: (_, record) => (
-        <Space size="small">
+        <Space size="small" wrap>
           <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>
             详情
           </Button>
           {record.status === 'pending' && (
-            <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'processing')}>
-              开始结算
-            </Button>
+            <>
+              <Button type="link" size="small" icon={<ReconciliationOutlined />} onClick={() => handleReconcile(record)}>
+                对账
+              </Button>
+            </>
           )}
           {record.status === 'processing' && (
-            <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'completed')}>
-              完成结算
+            <>
+              <Button type="link" size="small" icon={<PayCircleOutlined />} onClick={() => handlePayment(record)}>
+                付款
+              </Button>
+              <Button type="link" size="small" icon={<FileDoneOutlined />} onClick={() => handleInvoice(record)}>
+                开发票
+              </Button>
+            </>
+          )}
+          {record.status === 'completed' && (
+            <Button type="link" size="small" icon={<PrinterOutlined />} onClick={() => message.info('已导出结算单')}>
+              导出
             </Button>
           )}
         </Space>
       )
     }
   ]
+
+  const getStatusStep = (status) => {
+    switch (status) {
+      case 'pending': return 0
+      case 'processing': return 1
+      case 'completed': return 2
+      default: return 0
+    }
+  }
 
   const totalAmount = monthlySummary.reduce((s, m) => s + (m.total_amount || 0), 0)
   const totalCommission = monthlySummary.reduce((s, m) => s + (m.total_commission || 0), 0)
@@ -239,6 +333,9 @@ function Settlement() {
         <h2 className="page-title">多平台结算中心</h2>
         <Space>
           <Button icon={<SyncOutlined />} onClick={loadList}>刷新</Button>
+          <Button icon={<FileSearchOutlined />} onClick={() => navigate('/platform-monitor')}>
+            运力监控
+          </Button>
           <Button type="primary" icon={<MoneyCollectOutlined />} onClick={() => setGenerateModal(true)}>
             生成结算单
           </Button>
@@ -370,12 +467,20 @@ function Settlement() {
       <Drawer
         title="结算单详情"
         placement="right"
-        width={520}
+        width={560}
         open={detailDrawer}
         onClose={() => setDetailDrawer(false)}
       >
         {currentSettlement && (
           <div>
+            <Card size="small" style={{ marginBottom: 16 }}>
+              <Steps current={getStatusStep(currentSettlement.status)} size="small">
+                <Step title="待对账" description={currentSettlement.status === 'pending' ? '当前' : '已完成'} />
+                <Step title="结算中" description={currentSettlement.status === 'processing' ? '当前' : currentSettlement.status === 'pending' ? '待处理' : '已完成'} />
+                <Step title="已完成" description={currentSettlement.status === 'completed' ? '当前' : '待处理'} />
+              </Steps>
+            </Card>
+
             <Descriptions title="基本信息" column={1} size="small" style={{ marginBottom: 16 }}>
               <Descriptions.Item label="结算单号">
                 <span style={{ fontFamily: 'monospace' }}>{currentSettlement.settlement_no}</span>
@@ -411,6 +516,29 @@ function Settlement() {
               </Descriptions.Item>
             </Descriptions>
 
+            <Space style={{ marginBottom: 16, width: '100%', justifyContent: 'center' }} wrap>
+              {currentSettlement.status === 'pending' && (
+                <Button type="primary" icon={<ReconciliationOutlined />} onClick={() => { setDetailDrawer(false); handleReconcile(currentSettlement); }}>
+                  开始对账
+                </Button>
+              )}
+              {currentSettlement.status === 'processing' && (
+                <>
+                  <Button type="primary" icon={<PayCircleOutlined />} onClick={() => { setDetailDrawer(false); handlePayment(currentSettlement); }}>
+                    确认付款
+                  </Button>
+                  <Button icon={<FileDoneOutlined />} onClick={() => { setDetailDrawer(false); handleInvoice(currentSettlement); }}>
+                    申请发票
+                  </Button>
+                </>
+              )}
+              {currentSettlement.status === 'completed' && (
+                <Button icon={<PrinterOutlined />} onClick={() => message.info('已导出结算单')}>
+                  导出结算单
+                </Button>
+              )}
+            </Space>
+
             <div style={{ marginBottom: 8, fontWeight: 500 }}>
               结算明细 ({currentSettlement.items?.length || 0} 条)
             </div>
@@ -419,7 +547,7 @@ function Settlement() {
               rowKey="id"
               size="small"
               pagination={false}
-              scroll={{ y: 300 }}
+              scroll={{ y: 250 }}
               columns={[
                 {
                   title: '订单号',
@@ -443,6 +571,150 @@ function Settlement() {
           </div>
         )}
       </Drawer>
+
+      <Modal
+        title="对账确认"
+        open={reconcileModal}
+        onCancel={() => setReconcileModal(false)}
+        footer={null}
+        width={520}
+        destroyOnClose
+      >
+        {currentSettlement && (
+          <div>
+            <Alert
+              message="对账信息"
+              description={
+                <div>
+                  <div>结算单号: {currentSettlement.settlement_no}</div>
+                  <div>平台: {currentSettlement.platform_logo} {currentSettlement.platform_name}</div>
+                  <div>周期: {currentSettlement.period}</div>
+                  <div>订单数: {currentSettlement.total_orders} 单</div>
+                  <div>应付金额: <span style={{ color: '#1677ff', fontWeight: 600 }}>¥{currentSettlement.settlement_amount?.toFixed(2)}</span></div>
+                </div>
+              }
+              type="info"
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+            <Form form={reconcileForm} layout="vertical" onFinish={submitReconcile}>
+              <Form.Item name="matched" label="对账结果" rules={[{ required: true }]} initialValue={true}>
+                <Radio.Group>
+                  <Radio value={true}>账实一致，确认对账</Radio>
+                  <Radio value={false}>存在差异，标记待处理</Radio>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item noStyle shouldUpdate={(prev, curr) => prev.matched !== curr.matched}>
+                {({ getFieldValue }) => !getFieldValue('matched') && (
+                  <Form.Item name="diff_amount" label="差异金额(元)" rules={[{ required: true }]}>
+                    <Input.Number step={0.01} style={{ width: '100%' }} placeholder="请输入差异金额" />
+                  </Form.Item>
+                )}
+              </Form.Item>
+              <Form.Item name="remark" label="备注">
+                <Input.TextArea rows={2} placeholder="备注说明（可选）" />
+              </Form.Item>
+              <div style={{ textAlign: 'right' }}>
+                <Button onClick={() => setReconcileModal(false)} style={{ marginRight: 8 }}>取消</Button>
+                <Button type="primary" htmlType="submit">确认对账</Button>
+              </div>
+            </Form>
+          </div>
+        )}
+      </Modal>
+
+      <Modal
+        title="申请发票"
+        open={invoiceModal}
+        onCancel={() => setInvoiceModal(false)}
+        footer={null}
+        width={520}
+        destroyOnClose
+      >
+        {currentSettlement && (
+          <Form form={invoiceForm} layout="vertical" onFinish={submitInvoice}>
+            <Form.Item name="type" label="发票类型" rules={[{ required: true }]}>
+              <Radio.Group>
+                <Radio value="company">企业专票</Radio>
+                <Radio value="personal">个人普票</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item name="title" label="发票抬头" rules={[{ required: true }]}>
+              <Input placeholder="请输入发票抬头" />
+            </Form.Item>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item name="amount" label="开票金额(元)" rules={[{ required: true }]}>
+                  <Input.Number step={0.01} style={{ width: '100%' }} />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item name="tax_no" label="税号">
+                  <Input placeholder="选填" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item name="email" label="接收邮箱" rules={[{ required: true, type: 'email' }]}>
+              <Input placeholder="请输入接收发票的邮箱" />
+            </Form.Item>
+            <div style={{ textAlign: 'right' }}>
+              <Button onClick={() => setInvoiceModal(false)} style={{ marginRight: 8 }}>取消</Button>
+              <Button type="primary" htmlType="submit">提交申请</Button>
+            </div>
+          </Form>
+        )}
+      </Modal>
+
+      <Modal
+        title="确认付款"
+        open={paymentModal}
+        onCancel={() => setPaymentModal(false)}
+        footer={null}
+        width={480}
+        destroyOnClose
+      >
+        {currentSettlement && (
+          <div>
+            <Alert
+              message="付款确认"
+              description={
+                <div>
+                  <div style={{ marginBottom: 8 }}>
+                    向 <b>{currentSettlement.platform_logo} {currentSettlement.platform_name}</b> 支付
+                  </div>
+                  <div style={{ fontSize: 28, fontWeight: 700, color: '#1677ff', textAlign: 'center' }}>
+                    ¥{currentSettlement.settlement_amount?.toFixed(2)}
+                  </div>
+                  <div style={{ marginTop: 8, fontSize: 12, color: '#666', textAlign: 'center' }}>
+                    结算周期: {currentSettlement.period} | 订单数: {currentSettlement.total_orders} 单
+                  </div>
+                </div>
+              }
+              type="warning"
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+            <Form form={paymentForm} layout="vertical" onFinish={submitPayment}>
+              <Form.Item name="payment_method" label="付款方式" rules={[{ required: true }]} initialValue="bank">
+                <Radio.Group>
+                  <Radio value="bank">银行转账</Radio>
+                  <Radio value="alipay">支付宝</Radio>
+                  <Radio value="wechat">微信支付</Radio>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item name="remark" label="备注">
+                <Input.TextArea rows={2} placeholder="备注说明（可选）" />
+              </Form.Item>
+              <div style={{ textAlign: 'right' }}>
+                <Button onClick={() => setPaymentModal(false)} style={{ marginRight: 8 }}>取消</Button>
+                <Button type="primary" danger htmlType="submit" icon={<PayCircleOutlined />}>
+                  确认付款
+                </Button>
+              </div>
+            </Form>
+          </div>
+        )}
+      </Modal>
 
       <Modal
         title="生成结算单"

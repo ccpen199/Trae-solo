@@ -83,6 +83,70 @@ app.get('/api/dashboard/summary', (req, res) => {
   });
 });
 
+app.get(['/api/admin/stats', '/api/admin/dashboard'], (req, res) => {
+  const summary = db.prepare(`
+    SELECT
+      (SELECT COUNT(*) FROM orders) as total_orders,
+      (SELECT COUNT(*) FROM orders WHERE delivery_status = 'delivering') as delivering_count,
+      (SELECT COUNT(*) FROM orders WHERE delivery_status = 'delivered') as delivered_count,
+      (SELECT COALESCE(SUM(total_fee), 0) FROM orders WHERE delivery_status = 'delivered') as total_revenue,
+      (SELECT COUNT(*) FROM platforms WHERE status = 'active') as active_platforms,
+      (SELECT COUNT(*) FROM merchants WHERE status = 'active') as active_merchants,
+      (SELECT COUNT(*) FROM after_sales WHERE status IN ('processing', 'accepted')) as pending_after_sales,
+      (SELECT COUNT(*) FROM compensations WHERE status = 'pending') as pending_compensations
+  `).get();
+
+  const platformHealth = db.prepare(`
+    SELECT id, code, name, logo, capacity_saturation, on_time_rate, loss_rate, complaint_rate, status
+    FROM platforms
+    ORDER BY id
+  `).all();
+
+  res.json({
+    success: true,
+    data: {
+      ...summary,
+      platform_health: platformHealth
+    }
+  });
+});
+
+app.get('/api/products', (req, res) => {
+  const products = db.prepare(`
+    SELECT
+      id,
+      code,
+      name,
+      logo,
+      base_price,
+      per_km_price,
+      per_kg_price,
+      min_delivery_time,
+      max_delivery_time,
+      capacity_saturation,
+      status
+    FROM platforms
+    WHERE status = 'active'
+    ORDER BY id
+  `).all();
+
+  res.json({
+    success: true,
+    data: products.map(platform => ({
+      id: platform.id,
+      sku: platform.code,
+      name: `${platform.logo} ${platform.name} 配送服务`,
+      category: '即时配送平台',
+      base_price: platform.base_price,
+      per_km_price: platform.per_km_price,
+      per_kg_price: platform.per_kg_price,
+      delivery_window: `${platform.min_delivery_time}-${platform.max_delivery_time}分钟`,
+      capacity_saturation: platform.capacity_saturation,
+      status: platform.status
+    }))
+  });
+});
+
 app.use((err, req, res, next) => {
   console.error('API Error:', err);
   res.status(500).json({
