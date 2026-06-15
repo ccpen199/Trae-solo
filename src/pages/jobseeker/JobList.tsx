@@ -380,6 +380,24 @@ function JobList() {
                       <div key={idx} className="bg-red-50 border border-red-100 rounded p-2 text-xs">
                         <div className="font-medium text-red-700">{item.name}</div>
                         <div className="text-red-600 mt-0.5">{item.suggestion || `建议补充${item.name}经验`}</div>
+                        {item.learningPath && (
+                          <div className="mt-2 pt-2 border-t border-red-200 space-y-1">
+                            <div className="flex items-center gap-1 text-gray-600">
+                              <span className="text-gray-500">📚 学习路径：</span>
+                              <a href={item.learningPath.courseLink} className="text-red-600 underline hover:text-red-800">
+                                查看课程
+                              </a>
+                            </div>
+                            <div className="flex items-center gap-1 text-gray-600">
+                              <span className="text-gray-500">⏱️ 学习周期：</span>
+                              <span>{item.learningPath.duration}</span>
+                            </div>
+                            <div className="flex items-start gap-1 text-gray-600">
+                              <span className="text-gray-500">🎯 预期效果：</span>
+                              <span>{item.learningPath.expectedOutcome}</span>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

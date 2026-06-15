@@ -186,16 +186,25 @@ function Township() {
     setEducationFilter('全部');
   };
 
+  const unifiedStats = mockData.unifiedStats;
+  const townshipStats = {
+    totalTownships: unifiedStats.totalTownships,
+    totalJobs: unifiedStats.totalJobs,
+    totalEnterprises: unifiedStats.totalEnterprises,
+    totalPopulation: unifiedStats.totalPopulation,
+    certifiedEnterprises: unifiedStats.certifiedEnterprises,
+    hotTownships: unifiedStats.hotTownships,
+  };
   const townshipJobCounts = useMemo(() => {
     const counts: Record<string, { enterprises: number; jobs: number }> = {};
-    TOWNSHIPS.forEach((t) => {
+    unifiedStats.townshipStats.forEach((t) => {
       counts[t.code] = {
-        enterprises: t.openEnterpriseCount,
-        jobs: Math.floor(t.openEnterpriseCount * (5 + Math.random() * 10)),
+        enterprises: t.enterpriseCount,
+        jobs: t.jobCount,
       };
     });
     return counts;
-  }, []);
+  }, [unifiedStats.townshipStats]);
 
   const industryDistribution = useMemo(() => {
     const counts: Record<IndustryTag, number> = {} as Record<IndustryTag, number>;
@@ -262,12 +271,12 @@ function Township() {
     );
   }, [townshipJobCounts]);
 
-  const totalStats = useMemo(() => {
-    const totalJobs = Object.values(townshipJobCounts).reduce((s, c) => s + c.jobs, 0);
-    const totalEnterprises = Object.values(townshipJobCounts).reduce((s, c) => s + c.enterprises, 0);
-    const totalPopulation = TOWNSHIPS.reduce((s, t) => s + t.population, 0);
-    return { totalJobs, totalEnterprises, totalPopulation };
-  }, [townshipJobCounts]);
+  const totalStats = {
+    totalJobs: unifiedStats.totalJobs,
+    totalEnterprises: unifiedStats.totalEnterprises,
+    certifiedEnterprises: unifiedStats.certifiedEnterprises,
+    totalPopulation: unifiedStats.totalPopulation,
+  };
 
   return (
     <div className="space-y-6">
@@ -280,22 +289,14 @@ function Township() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-2xl font-bold mb-2">🗺️ 中山市镇街招聘专区</h1>
-            <p className="text-industrial-blue-100">覆盖全市25个镇街，精准对接产业集群与人才需求</p>
+            <p className="text-industrial-blue-100">覆盖全市 {townshipStats.totalTownships} 个镇街，精准对接产业集群与人才需求</p>
           </div>
           <div className="hidden md:flex items-center gap-2 text-sm">
             <MapPin size={18} className="text-vital-orange-400" />
             <span>中山市全域招聘地图</span>
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatsCard
-            title="在招企业"
-            value={totalStats.totalEnterprises}
-            suffix="家"
-            theme="orange"
-            icon={<Building2 size={20} />}
-            trend={12}
-          />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <StatsCard
             title="在招职位"
             value={totalStats.totalJobs}
@@ -305,11 +306,28 @@ function Township() {
             trend={18}
           />
           <StatsCard
-            title="覆盖镇街"
-            value={25}
-            suffix="个"
+            title="在招企业"
+            value={totalStats.totalEnterprises}
+            suffix="家"
+            theme="orange"
+            icon={<Building2 size={20} />}
+            trend={12}
+          />
+          <StatsCard
+            title="认证企业"
+            value={totalStats.certifiedEnterprises}
+            suffix="家"
             theme="green"
+            icon={<Building2 size={20} />}
+            trend={9}
+          />
+          <StatsCard
+            title="覆盖镇街"
+            value={townshipStats.totalTownships}
+            unit="个"
+            theme="cyan"
             icon={<MapPin size={20} />}
+            suffix="全市"
           />
           <StatsCard
             title="服务人口"

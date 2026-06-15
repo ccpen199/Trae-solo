@@ -45,13 +45,12 @@ const SUCCESS_GREEN = '#00B42A';
 
 function HeatmapGrid() {
   const heatmapData = useMemo(() => {
-    return TOWNSHIPS.map((twp) => {
-      const positions = mockData.positions.filter((p) => p.township === twp.code);
-      const intensity = Math.min(100, positions.length * 2 + Math.random() * 30);
+    return mockData.unifiedStats.townshipStats.map((twp) => {
+      const intensity = Math.min(100, twp.jobCount * 2 + Math.random() * 30);
       return {
         code: twp.code,
         name: twp.name,
-        count: positions.length,
+        count: twp.jobCount,
         intensity,
       };
     }).sort((a, b) => b.count - a.count);
@@ -190,7 +189,10 @@ function ActivityTrendChart() {
 }
 
 export default function Summary() {
-  const { enterprises, positions, jobSeekers, subsidyApplications, applications } = mockData;
+  const { enterprises, positions, jobSeekers, subsidyApplications, applications, unifiedStats } = mockData;
+  const townshipStats = {
+    totalTownships: unifiedStats.totalTownships,
+  };
 
   const pendingEnterprises = useMemo(() => {
     return enterprises
@@ -352,7 +354,7 @@ export default function Summary() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatsCard
           title="平台企业数"
-          value={enterprises.length}
+          value={unifiedStats.totalEnterprises}
           icon={<Building size={20} />}
           theme="blue"
           suffix=" 家"
@@ -360,17 +362,25 @@ export default function Summary() {
         />
         <StatsCard
           title="平台职位数"
-          value={positions.length}
+          value={unifiedStats.totalJobs}
           icon={<Briefcase size={20} />}
           theme="orange"
           suffix=" 个"
           trend={12.3}
         />
         <StatsCard
-          title="总求职者"
-          value={jobSeekers.length}
-          icon={<Users size={20} />}
+          title="认证企业"
+          value={unifiedStats.certifiedEnterprises}
+          icon={<Building size={20} />}
           theme="green"
+          suffix=" 家"
+          trend={6.8}
+        />
+        <StatsCard
+          title="总求职者"
+          value={unifiedStats.totalSeekers}
+          icon={<Users size={20} />}
+          theme="cyan"
           suffix=" 人"
           trend={15.8}
         />
@@ -410,7 +420,7 @@ export default function Summary() {
           title={
             <div className="flex items-center gap-2">
               <MapPin size={18} style={{ color: VITAL_ORANGE }} />
-              <span>25镇街招聘热力图</span>
+              <span>{townshipStats.totalTownships}镇街招聘热力图</span>
             </div>
           }
         >

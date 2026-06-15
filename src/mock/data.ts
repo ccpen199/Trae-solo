@@ -24,7 +24,7 @@ import {
   CourseType,
   JobWithMatch,
 } from '../../shared/types';
-import { TOWNSHIPS } from './townships';
+import { TOWNSHIPS, TownshipData } from './townships';
 import {
   createEnterprise,
   createJobPosition,
@@ -53,6 +53,25 @@ function weightedPick<T>(items: { value: T; weight: number }[]): T {
   return items[0].value;
 }
 
+export type TownshipStat = {
+  code: string;
+  name: string;
+  enterpriseCount: number;
+  jobCount: number;
+  certifiedEnterpriseCount: number;
+};
+
+export type UnifiedStats = {
+  totalJobs: number;
+  totalEnterprises: number;
+  certifiedEnterprises: number;
+  totalTownships: number;
+  totalSeekers: number;
+  totalPopulation: number;
+  townshipStats: TownshipStat[];
+  hotTownships: (TownshipData & { enterpriseCount: number; jobCount: number; certifiedEnterpriseCount: number })[];
+};
+
 export type MockDataset = {
   enterprises: Enterprise[];
   positions: JobPosition[];
@@ -68,6 +87,7 @@ export type MockDataset = {
   campusSessions: CampusSession[];
   educationCourses: EducationCourse[];
   jobsWithMatch: JobWithMatch[];
+  unifiedStats: UnifiedStats;
 };
 
 export const generateMockData = (): MockDataset => {
@@ -379,6 +399,41 @@ export const generateMockData = (): MockDataset => {
     jobsWithMatch.push(createJobWithMatch(pos, sampleJobSeeker, sampleResume));
   }
 
+  const townshipStats: TownshipStat[] = TOWNSHIPS.map(township => {
+    const townshipEnterprises = enterprises.filter(e => e.township === township.code);
+    const townshipPositions = positions.filter(p => p.township === township.code);
+    return {
+      code: township.code,
+      name: township.name,
+      enterpriseCount: townshipEnterprises.length,
+      jobCount: townshipPositions.length,
+      certifiedEnterpriseCount: townshipEnterprises.filter(e => e.verified).length,
+    };
+  });
+
+  const hotTownships = townshipStats
+    .sort((a, b) => b.jobCount - a.jobCount)
+    .map(ts => {
+      const townshipData = TOWNSHIPS.find(t => t.code === ts.code)!;
+      return {
+        ...townshipData,
+        enterpriseCount: ts.enterpriseCount,
+        jobCount: ts.jobCount,
+        certifiedEnterpriseCount: ts.certifiedEnterpriseCount,
+      };
+    });
+
+  const unifiedStats: UnifiedStats = {
+    totalJobs: positions.length,
+    totalEnterprises: enterprises.length,
+    certifiedEnterprises: enterprises.filter(e => e.verified).length,
+    totalTownships: TOWNSHIPS.length,
+    totalSeekers: jobSeekers.length,
+    totalPopulation: TOWNSHIPS.reduce((s, t) => s + t.population, 0),
+    townshipStats,
+    hotTownships,
+  };
+
   return {
     enterprises,
     positions,
@@ -394,6 +449,7 @@ export const generateMockData = (): MockDataset => {
     campusSessions,
     educationCourses,
     jobsWithMatch,
+    unifiedStats,
   };
 };
 

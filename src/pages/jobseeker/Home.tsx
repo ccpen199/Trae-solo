@@ -15,7 +15,7 @@ import {
   ChevronRight,
   Factory,
 } from 'lucide-react';
-import { Input, Select, Tag, Button, Tooltip } from 'antd';
+import { Input, Select, Tag, Button, Tooltip, Badge } from 'antd';
 import { motion } from 'framer-motion';
 import {
   LineChart,
@@ -30,6 +30,7 @@ import {
 } from 'recharts';
 import { generateMockData } from '@/mock/data';
 import { TOWNSHIPS, getTownshipByCode } from '@/mock/townships';
+import { getCampusHomeBadge, getEducationHomeBadge } from '@/mock/progress';
 import { TownshipCode, IndustryTag, JobSeekerType } from '@shared/types';
 import JobCard from '@/components/common/JobCard';
 import StatsCard from '@/components/common/StatsCard';
@@ -79,6 +80,7 @@ const QUICK_ENTRIES = [
     bg: 'bg-purple-50',
     iconBg: 'bg-purple-100',
     iconColor: 'text-purple-600',
+    progressBadge: getEducationHomeBadge(),
   },
   {
     key: 'campus',
@@ -89,6 +91,7 @@ const QUICK_ENTRIES = [
     bg: 'bg-cyan-50',
     iconBg: 'bg-cyan-100',
     iconColor: 'text-cyan-600',
+    progressBadge: getCampusHomeBadge(),
   },
 ];
 
@@ -114,14 +117,14 @@ function Home() {
 
   const townshipJobCounts = useMemo(() => {
     const counts: Record<string, { enterprises: number; jobs: number }> = {};
-    TOWNSHIPS.forEach((t) => {
+    mockData.unifiedStats.townshipStats.forEach((t) => {
       counts[t.code] = {
-        enterprises: t.openEnterpriseCount,
-        jobs: Math.floor(t.openEnterpriseCount * (5 + Math.random() * 10)),
+        enterprises: t.enterpriseCount,
+        jobs: t.jobCount,
       };
     });
     return counts;
-  }, []);
+  }, [mockData.unifiedStats.townshipStats]);
 
   const recommendedJobs = useMemo(() => {
     const shuffled = [...mockData.positions].sort(() => Math.random() - 0.5);
@@ -140,13 +143,21 @@ function Home() {
     }));
   }, []);
 
-  const totalStats = useMemo(() => {
-    const totalJobs = mockData.positions.length;
-    const totalEnterprises = mockData.enterprises.length;
-    const totalSeekers = mockData.jobSeekers.length;
-    const hotTownships = TOWNSHIPS.slice(0, 5).length;
-    return { totalJobs, totalEnterprises, totalSeekers, hotTownships };
-  }, [mockData]);
+  const unifiedStats = mockData.unifiedStats;
+  const townshipStats = {
+    totalTownships: unifiedStats.totalTownships,
+    totalJobs: unifiedStats.totalJobs,
+    totalEnterprises: unifiedStats.totalEnterprises,
+    totalPopulation: unifiedStats.totalPopulation,
+    certifiedEnterprises: unifiedStats.certifiedEnterprises,
+    hotTownships: unifiedStats.hotTownships,
+  };
+  const totalStats = {
+    totalJobs: unifiedStats.totalJobs,
+    totalEnterprises: unifiedStats.totalEnterprises,
+    certifiedEnterprises: unifiedStats.certifiedEnterprises,
+    totalSeekers: unifiedStats.totalSeekers,
+  };
 
   return (
     <div className="space-y-6">
@@ -175,7 +186,7 @@ function Home() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="text-industrial-blue-100 text-base md:text-lg mb-8"
             >
-              25个镇街产业专区 · {totalStats.totalEnterprises}家优质企业 · {totalStats.totalJobs}个热招岗位
+              {townshipStats.totalTownships}个镇街产业专区 · {totalStats.certifiedEnterprises}家认证企业 · {totalStats.totalJobs}个热招岗位
             </motion.p>
 
             <motion.div
@@ -253,7 +264,7 @@ function Home() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <StatsCard
           title="在招职位"
           value={totalStats.totalJobs}
@@ -264,7 +275,7 @@ function Home() {
           trendLabel="月环比"
         />
         <StatsCard
-          title="认证企业"
+          title="在招企业"
           value={totalStats.totalEnterprises}
           unit="家"
           theme="orange"
@@ -273,21 +284,30 @@ function Home() {
           trendLabel="月环比"
         />
         <StatsCard
+          title="认证企业"
+          value={totalStats.certifiedEnterprises}
+          unit="家"
+          theme="green"
+          icon={<Building2 size={20} />}
+          trend={6.8}
+          trendLabel="月环比"
+        />
+        <StatsCard
           title="活跃求职者"
           value={totalStats.totalSeekers}
           unit="人"
-          theme="green"
+          theme="cyan"
           icon={<TrendingUp size={20} />}
           trend={15.7}
           trendLabel="月环比"
         />
         <StatsCard
-          title="热门镇街"
-          value={25}
+          title="覆盖镇街"
+          value={townshipStats.totalTownships}
           unit="个"
           theme="purple"
           icon={<MapPin size={20} />}
-          suffix="全覆盖"
+          suffix="全市"
         />
       </div>
 
@@ -326,10 +346,22 @@ function Home() {
                   entry.color
                 )}
               />
+              {entry.progressBadge && (
+                <div className="absolute top-3 right-3">
+                  <Tooltip title={entry.progressBadge.tooltip}>
+                    <Badge.Ribbon
+                      text={entry.progressBadge.text}
+                      color="red"
+                      placement="end"
+                      className="!text-xs !font-medium"
+                    />
+                  </Tooltip>
+                </div>
+              )}
               <div className={cn('w-14 h-14 rounded-xl flex items-center justify-center mb-3', entry.iconBg)}>
                 <span className={entry.iconColor}>{entry.icon}</span>
               </div>
-              <h3 className="text-base font-semibold text-gray-900 mb-1 group-hover:text-industrial-blue-600 transition-colors">
+              <h3 className="text-base font-semibold text-gray-900 mb-1 group-hover:text-industrial-blue-600 transition-colors pr-16">
                 {entry.title}
               </h3>
               <p className="text-xs text-gray-500 mb-2">{entry.desc}</p>
@@ -352,7 +384,7 @@ function Home() {
               <span className="w-1 h-5 bg-industrial-blue-500 rounded-full inline-block" />
               镇街招聘专区
             </h2>
-            <p className="text-sm text-gray-500 mt-1">中山市25个镇街产业集群招聘</p>
+            <p className="text-sm text-gray-500 mt-1">中山市{townshipStats.totalTownships}个镇街产业集群招聘</p>
           </div>
           <Button
             type="link"
@@ -535,8 +567,9 @@ function Home() {
           <div className="mt-4 bg-white rounded-xl border border-gray-100 p-5">
             <h3 className="text-sm font-semibold text-gray-900 mb-3">热门镇街 TOP5</h3>
             <div className="space-y-3">
-              {TOWNSHIPS.slice(0, 5).map((t, idx) => {
-                const heat = 100 - idx * 15;
+              {townshipStats.hotTownships.slice(0, 5).map((t, idx) => {
+                const maxJobs = townshipStats.hotTownships[0]?.jobCount || 1;
+                const heat = Math.max(15, Math.floor((t.jobCount / maxJobs) * 100));
                 return (
                   <div key={t.code} className="flex items-center gap-3">
                     <span
@@ -561,7 +594,7 @@ function Home() {
                       />
                     </div>
                     <span className="text-xs text-gray-500 font-mono-num w-12 text-right">
-                      {heat}℃
+                      {t.jobCount}岗
                     </span>
                   </div>
                 );

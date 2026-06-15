@@ -1,0 +1,18 @@
+{
+  "order": "may-89210",
+  "url": "http://127.0.0.1:49210/",
+  "status": 200,
+  "ok": true,
+  "title": "My Trae Project",
+  "textLength": 1335,
+  "sample": "南 华南智造招聘 求职者端 首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心 收起菜单 求职者端 3 张三 求职者 首页 中山智能招聘 · 找到你的理想工作 25个镇街产业专区 · 3508家认证企业 · 42358个热招岗位 选择镇街 职位类型 搜索职位 热门搜索： CNC操作员 电工 普工 装配工 质检 仓管 在招职位 42,358个 +12.5% 月环比 在招企业 4,873家 +8.3% 月环比 认证企业 3,508家 +6.8% 月环比 活",
+  "consoleErrors": [
+    "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+    "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49210/node_modules/.v",
+    "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper4 \n    at"
+  ],
+  "failedRequests": [],
+  "responseErrors": [],
+  "error": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-smoke-may-89210.png"
+}

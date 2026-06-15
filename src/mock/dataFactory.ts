@@ -35,7 +35,7 @@ import {
   RetentionAnalysis,
   CreditBankRecord
 } from '../../shared/types';
-import { TOWNSHIP_DATA } from './townshipData';
+import { TOWNSHIPS } from './townships';
 
 export class SeededRandom {
   private seed: number;
@@ -164,7 +164,7 @@ const MAJORS = ['机械设计制造', '机电一体化', '数控技术', '模具
 const WELFARE_OPTIONS = ['五险一金', '包食宿', '带薪年假', '节日福利', '员工体检', '年终奖', '绩效奖金', '全勤奖', '加班费', '班车接送', '员工旅游', '培训提升', '弹性工作', '股权激励', '通讯补贴', '交通补贴', '餐补', '住房补贴', '高温补贴', '生日福利'];
 
 const pickTownshipByIndustry = (rng: SeededRandom, industry: IndustryTag): TownshipCode => {
-  const items = TOWNSHIP_DATA.map(t => ({
+  const items = TOWNSHIPS.map(t => ({
     value: t.code,
     weight: t.enterpriseWeight[industry] || 1
   }));
@@ -311,7 +311,7 @@ export function generateEnterprises(count: number, rng: SeededRandom): Enterpris
   for (let i = 1; i <= count; i++) {
     const industry = rng.weightedPick(industryWeights);
     const township = pickTownshipByIndustry(rng, industry);
-    const townshipData = TOWNSHIP_DATA.find(t => t.code === township)!;
+    const townshipData = TOWNSHIPS.find(t => t.code === township)!;
     const names = randomEnterpriseName(rng, industry);
     const employeeCount = rng.int(15, 3500);
     const welfareCount = rng.int(5, 10);
@@ -382,7 +382,7 @@ export function generateJobs(count: number, enterprises: Enterprise[], rng: Seed
         weight: idx === 0 ? 35 : idx === 1 ? 25 : idx === 2 ? 20 : 20
       }));
 
-      const township = TOWNSHIP_DATA.find(t => t.code === ent.township)!;
+      const township = TOWNSHIPS.find(t => t.code === ent.township)!;
 
       jobs.push({
         id: `pos_${posIdx}`,
@@ -443,7 +443,7 @@ export function generateJobs(count: number, enterprises: Enterprise[], rng: Seed
       { value: JobSeekerType.GRADUATE, weight: 12 }
     ]);
     const salary = randomSalaryRange(rng, type);
-    const township = TOWNSHIP_DATA.find(t => t.code === ent.township)!;
+    const township = TOWNSHIPS.find(t => t.code === ent.township)!;
     const skillsPool = COMMON_SKILLS[type];
     const requiredSkillCount = rng.int(2, 4);
     const requiredSkills: RequiredSkill[] = rng.picks(skillsPool, requiredSkillCount).map((name, idx) => ({
@@ -513,7 +513,7 @@ export function generateJobSeekers(count: number, rng: SeededRandom): JobSeeker[
       age,
       phone: randomPhone(rng),
       type,
-      township: rng.pick(TOWNSHIP_DATA).code,
+      township: rng.pick(TOWNSHIPS).code,
       expectPosition,
       expectSalaryMin: expect.min,
       expectSalaryMax: expect.max,
@@ -994,7 +994,7 @@ export function generateFunnelMetrics(periods: string[], rng: SeededRandom): Fun
  */
 export function generateRetentionData(periods: string[], rng: SeededRandom): RetentionAnalysis[] {
   const retentionAnalyses: RetentionAnalysis[] = [];
-  const townshipCodes = TOWNSHIP_DATA.map(t => t.code);
+  const townshipCodes = TOWNSHIPS.map(t => t.code);
   let retIdx = 1;
 
   for (const period of periods) {
@@ -1065,7 +1065,7 @@ export function generateCampusSessions(
     const participantCount = rng.int(200, 1200);
     const hireTarget = Math.floor(participantCount * rng.float(0.05, 0.15));
     const industries = rng.picks(Object.values(IndustryTag), rng.int(3, 6));
-    const township = rng.pick(TOWNSHIP_DATA);
+    const township = rng.pick(TOWNSHIPS);
 
     const samplePositions = selectedEnterprises.length > 0
       ? selectedEnterprises.flatMap(e => e.id ? [] : []).slice(0, 1)
@@ -1180,7 +1180,7 @@ export function generateEducationCourses(
     { name: '人力资源管理师二级', category: '职业资格', level: '本科' as const, type: '职业资格' as const }
   ];
   const courses: EducationCourse[] = [];
-  const townshipCodes = TOWNSHIP_DATA.map(t => t.code);
+  const townshipCodes = TOWNSHIPS.map(t => t.code);
 
   for (let i = 0; i < Math.min(count, courseNames.length); i++) {
     const cn = courseNames[i];
@@ -1190,7 +1190,7 @@ export function generateEducationCourses(
     const maxStudents = cn.category === '学历提升' ? rng.int(60, 150) : rng.int(25, 50);
     const enrollmentCount = Math.floor(maxStudents * rng.float(0.55, 0.98));
     const township = rng.pick(townshipCodes);
-    const townshipName = TOWNSHIP_DATA.find(t => t.code === township)?.name || '中山';
+    const townshipName = TOWNSHIPS.find(t => t.code === township)?.name || '中山';
     const statusTypes: Array<'招生中' | '已开班' | '已结束'> = ['招生中', '已开班', '已结束'];
 
     courses.push({

@@ -34,6 +34,16 @@ import {
 } from '../../shared/types';
 import { TOWNSHIPS } from './townships';
 
+export const seededRandom = (seed: string): number => {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash) / 2147483647;
+};
+
 export const randomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -389,7 +399,7 @@ export const createEnterprise = (id: string): Enterprise => {
     contactName: randomChineseName(),
     contactPhone: randomPhone(),
     contactEmail: `hr${randomInt(100, 999)}@${names.short.toLowerCase()}${randomPick(['.com', '.cn', '.com.cn'])}`,
-    verified: Math.random() > 0.12,
+    verified: seededRandom(id + '_verified') > 0.28,
     employeeCount,
     openPositionCount: randomInt(1, 25),
     createdAt: randomDate(new Date(2020, 0, 1), new Date(2024, 1, 1))
@@ -817,36 +827,153 @@ export const createSkillAlignment = (jobSkills: RequiredSkill[], resumeSkills: s
   const matched: SkillAlignmentResult['matched'] = [];
   const missing: SkillAlignmentResult['missing'] = [];
   const related: SkillAlignmentResult['related'] = [];
+  const typeValue = String(type);
 
   const jobSkillNames = jobSkills.map(s => s.name);
-  const matchCount = Math.min(jobSkills.length, randomInt(1, jobSkills.length));
+  const matchCount = Math.min(jobSkills.length, randomInt(2, jobSkills.length));
+
+  const blueCollarBasicSkills = ['流水线操作', '包装组装', '物料搬运', '设备点检', '品质检验', '清洁整理'];
+  const blueCollarSoftSkills = ['吃苦耐劳', '手脚麻利', '服从安排', '责任心强', '适应加班', '团队协作'];
+  const blueCollarMissingSkills = [
+    { name: '数控操作基础', suggestion: '建议学习数控操作基础，掌握后可转岗数控操作员', salaryBoost: '+15%' },
+    { name: '自动化设备基础', suggestion: '学习自动化设备操作，提升岗位竞争力', salaryBoost: '+12%' },
+    { name: 'PLC入门', suggestion: '掌握PLC基础编程，迈向技术岗', salaryBoost: '+20%' },
+    { name: '质量管理体系', suggestion: '学习ISO质量管理体系，可晋升组长', salaryBoost: '+18%' },
+  ];
+  const blueCollarCourses = [
+    { courseLink: '/courses/vocational/cnc-operator', duration: '3个月', expectedOutcome: '获得数控操作员资格证，薪资提升15%' },
+    { courseLink: '/courses/vocational/automation-basic', duration: '2个月', expectedOutcome: '掌握自动化设备操作技能' },
+    { courseLink: '/courses/vocational/plc-intro', duration: '4个月', expectedOutcome: '掌握PLC基础编程，可转岗技术岗' },
+    { courseLink: '/courses/vocational/quality-management', duration: '2个月', expectedOutcome: '获得质量管理体系内审员证书' },
+  ];
+
+  const skilledCertSkills = ['焊工证', '电工证', 'PLC编程', '数控编程', '模具设计', 'UG建模', '五轴联动', '工业机器人操作'];
+  const skilledMissingSkills = [
+    { name: 'UG建模高级', suggestion: '掌握后薪资可提升20%，可晋升技术组长', salaryBoost: '+20%' },
+    { name: '五轴联动加工', suggestion: '稀缺技能，掌握后薪资可提升25%', salaryBoost: '+25%' },
+    { name: '工业机器人编程', suggestion: '智能制造必备技能，薪资提升30%', salaryBoost: '+30%' },
+    { name: 'PLC高级应用', suggestion: '精通后可担任自动化工程师', salaryBoost: '+28%' },
+    { name: '模具设计进阶', suggestion: '掌握复杂模具设计，薪资提升22%', salaryBoost: '+22%' },
+  ];
+  const skilledCourses = [
+    { courseLink: '/courses/skilled/ug-advanced', duration: '6个月', expectedOutcome: '精通UG建模，可独立完成复杂零件设计' },
+    { courseLink: '/courses/skilled/5axis-machining', duration: '8个月', expectedOutcome: '掌握五轴联动加工技术，成为稀缺技能人才' },
+    { courseLink: '/courses/skilled/industrial-robot', duration: '5个月', expectedOutcome: '获得工业机器人操作工程师认证' },
+    { courseLink: '/courses/skilled/plc-advanced', duration: '6个月', expectedOutcome: '精通PLC编程，可担任自动化工程师' },
+  ];
+
+  const graduateBasicSkills = ['Office办公软件', 'CAD绘图', '英语四级', '专业基础知识', '实习经验', '数据整理'];
+  const graduateSoftSkills = ['在校成绩优异', '竞赛获奖', '社团干部', '项目经验', '沟通表达', '学习能力强'];
+  const graduateMissingSkills = [
+    { name: '岗位实操技能', suggestion: '可参加公司岗前培训计划，快速上手工作', salaryBoost: '快速转正' },
+    { name: '职场软技能', suggestion: '提升职场沟通与协作能力', salaryBoost: '加速晋升' },
+    { name: '行业专业技能', suggestion: '深入学习行业专业知识，增强竞争力', salaryBoost: '+10%' },
+    { name: '项目管理基础', suggestion: '掌握项目管理方法，为管理岗做准备', salaryBoost: '+15%' },
+  ];
+  const graduateCourses = [
+    { courseLink: '/courses/graduate/onboarding', duration: '1个月', expectedOutcome: '完成公司岗前培训，快速适应岗位' },
+    { courseLink: '/courses/graduate/soft-skills', duration: '2个月', expectedOutcome: '提升职场沟通、时间管理等软技能' },
+    { courseLink: '/courses/graduate/professional', duration: '3个月', expectedOutcome: '系统学习行业专业技能' },
+    { courseLink: '/courses/graduate/project-management', duration: '2个月', expectedOutcome: '掌握项目管理基础方法论' },
+  ];
 
   for (let i = 0; i < matchCount; i++) {
     const skill = jobSkills[i];
+    let level: string;
+    if (typeValue === JobSeekerType.SKILLED) {
+      level = randomPick(['熟练', '熟练', '精通', '精通']);
+    } else if (typeValue === JobSeekerType.GRADUATE) {
+      level = randomPick(['了解', '熟练', '熟练']);
+    } else {
+      level = randomPick(['熟练', '熟练', '熟练', '了解']);
+    }
     matched.push({
       name: skill.name,
-      level: randomPick(SKILL_LEVELS),
+      level,
       required: skill.required ? '熟练' : '了解',
     });
   }
 
+  if (typeValue === JobSeekerType.SKILLED) {
+    for (let i = 0; i < randomInt(1, 2); i++) {
+      const certSkill = randomPick(skilledCertSkills.filter(s => !jobSkillNames.includes(s) && !matched.find(m => m.name === s)));
+      if (certSkill) {
+        matched.unshift({
+          name: certSkill,
+          level: randomPick(['熟练', '精通']),
+          required: '熟练',
+        });
+      }
+    }
+  } else if (typeValue === JobSeekerType.GRADUATE) {
+    for (let i = 0; i < randomInt(1, 2); i++) {
+      const basicSkill = randomPick(graduateBasicSkills.filter(s => !jobSkillNames.includes(s) && !matched.find(m => m.name === s)));
+      if (basicSkill) {
+        matched.unshift({
+          name: basicSkill,
+          level: randomPick(['了解', '熟练']),
+          required: '了解',
+        });
+      }
+    }
+  } else {
+    for (let i = 0; i < randomInt(1, 2); i++) {
+      const basicSkill = randomPick(blueCollarBasicSkills.filter(s => !jobSkillNames.includes(s) && !matched.find(m => m.name === s)));
+      if (basicSkill) {
+        matched.unshift({
+          name: basicSkill,
+          level: '熟练',
+          required: '了解',
+        });
+      }
+    }
+  }
+
   for (let i = matchCount; i < jobSkills.length; i++) {
     const skill = jobSkills[i];
-    if (Math.random() > 0.4) {
+    if (Math.random() > 0.3) {
+      let suggestion = `可通过学习${skill.name}基础课程补上`;
+      let learningPath;
+      if (typeValue === JobSeekerType.SKILLED) {
+        const missingSkill = skilledMissingSkills[missing.length % skilledMissingSkills.length];
+        suggestion = missingSkill.suggestion;
+        const course = skilledCourses[missing.length % skilledCourses.length];
+        learningPath = course;
+      } else if (typeValue === JobSeekerType.GRADUATE) {
+        const missingSkill = graduateMissingSkills[missing.length % graduateMissingSkills.length];
+        suggestion = missingSkill.suggestion;
+        const course = graduateCourses[missing.length % graduateCourses.length];
+        learningPath = course;
+      } else {
+        const missingSkill = blueCollarMissingSkills[missing.length % blueCollarMissingSkills.length];
+        suggestion = missingSkill.suggestion;
+        const course = blueCollarCourses[missing.length % blueCollarCourses.length];
+        learningPath = course;
+      }
       missing.push({
         name: skill.name,
         required: skill.required ? '熟练' : '了解',
-        suggestion: `可通过学习${skill.name}基础课程补上`,
+        suggestion,
+        learningPath,
       });
     }
   }
 
-  const relatedSkills = resumeSkills.filter(s => !jobSkillNames.includes(s)).slice(0, randomInt(0, 3));
+  const relatedSkills = resumeSkills.filter(s => !jobSkillNames.includes(s)).slice(0, randomInt(1, 3));
   for (const skill of relatedSkills) {
+    let bonus = `+${randomInt(3, 8)}%`;
+    if (typeValue === JobSeekerType.SKILLED) {
+      bonus = `${randomInt(3, 10)}年行业经验 +${randomInt(8, 15)}%`;
+    } else if (typeValue === JobSeekerType.GRADUATE) {
+      bonus = randomPick(['专业排名前10% +8%', '竞赛一等奖 +10%', '学生会干部 +6%', '项目经验 +7%', '实习经历 +5%']);
+    } else {
+      const softSkill = randomPick(blueCollarSoftSkills);
+      bonus = `${softSkill} +${randomInt(3, 8)}%`;
+    }
     related.push({
       name: skill,
-      level: randomPick(SKILL_LEVELS),
-      bonus: `+${randomInt(3, 8)}%`,
+      level: typeValue === JobSeekerType.SKILLED ? randomPick(['熟练', '精通']) : randomPick(SKILL_LEVELS),
+      bonus,
     });
   }
 
@@ -863,26 +990,37 @@ export const createDifferentiation = (type: JobSeekerType, resumeParse: ResumePa
         : { type: 'blue_collar', label: '蓝领' };
 
   const blueCollarHighlights = [
-    '✅ 包吃包住，符合您的住宿需求',
-    '✅ 加班补贴丰厚，多劳多得',
-    '✅ 稳岗补贴政策适用，工作稳定有保障',
-    '✅ 厂区直招，无中介费',
-    '💡 建议申请技能培训补贴，提升职业等级',
+    '🎯 您的吃苦耐劳品质与岗位需求高度匹配，是车间一线的核心竞争力',
+    `🎯 ${resumeParse.yearsOfExperience}年生产线工作经验，能快速适应流水线节奏`,
+    '🎯 手脚麻利、服从安排，符合车间高效作业的管理要求',
+    `🎯 期望薪资${resumeParse.targetSalary[0]}-${resumeParse.targetSalary[1]}K与岗位预算高度匹配`,
+    '🎯 工作地点与您期望一致，通勤便利稳定性高',
+    '🎯 愿意加班和倒班，符合生产型企业的用工需求',
+    '💡 可申请职业资格培训补贴，提升技能等级',
+    '💡 建议学习数控操作基础，可转岗技术岗位薪资提升15%',
   ];
 
   const skilledHighlights = [
-    `✅ 持${resumeParse.certificates[0] || '高级技能等级证书'}，符合技工岗位优先条件`,
-    `✅ ${resumeParse.yearsOfExperience}年行业经验，匹配度 +${randomInt(10, 20)}%`,
-    '✅ 期望薪资与岗位预算高度吻合',
-    `💡 建议补充${randomPick(['UG编程', 'PLC高级应用', '三维建模'])}技能，可提升至技术组长岗`,
+    `🎯 持${resumeParse.certificates[0] || '高级技能等级证书'}，是岗位急需的持证技术人才`,
+    `🎯 ${resumeParse.yearsOfExperience}年行业经验，匹配度 +${randomInt(12, 22)}%，能独立带项目`,
+    `🎯 ${randomPick(['模具', '五金', '机械', '电子'])}行业深耕多年，技术积累深厚`,
+    `🎯 期望薪资${resumeParse.targetSalary[0]}-${resumeParse.targetSalary[1]}K与岗位预算高度吻合`,
+    '🎯 岗位急需的实操型技术人才，无需长时间培养即可上手',
+    `🎯 ${randomPick(['精通', '熟练'])}${randomPick(['PLC编程', 'UG建模', '数控加工', '焊接技术'])}，正是企业核心技术需求`,
+    '💡 建议学习五轴联动技术，掌握后薪资可提升25%',
+    '💡 可考虑技术组长岗位方向，现有经验已具备管理基础',
   ];
 
   const graduateHighlights = [
-    `✅ ${resumeParse.education}学历，专业对口`,
-    '✅ 有相关实习经历，基础扎实',
-    '✅ 公司提供完善的应届生培养体系，成长空间大',
-    '✅ 可申请高校毕业生就业补贴',
-    '💡 建议参加公司的管培生计划，加速职业发展',
+    `🎯 ${resumeParse.education}学历${randomPick(['专业对口', '专业匹配度高'])}，理论基础扎实`,
+    '🎯 有相关实习经历，已初步了解行业工作流程',
+    '🎯 学习能力强，能快速掌握公司业务和岗位技能',
+    `🎯 期望薪资${resumeParse.targetSalary[0]}-${resumeParse.targetSalary[1]}K符合应届生薪资范围`,
+    '🎯 公司有完善的应届生培养体系，助您快速成长',
+    '🎯 年轻有活力，能为团队带来新想法和创造力',
+    '🎯 可参加公司岗前培训计划，30天快速上岗',
+    '💡 建议参加管培生计划，2年内成长为骨干员工',
+    '💡 可申请高校毕业生就业补贴，减轻生活压力',
   ];
 
   const highlightsPool = typeInfo.type === 'blue_collar' ? blueCollarHighlights
@@ -892,7 +1030,7 @@ export const createDifferentiation = (type: JobSeekerType, resumeParse: ResumePa
   return {
     type: typeInfo.type,
     typeLabel: typeInfo.label,
-    highlights: randomPicks(highlightsPool, randomInt(3, 4)),
+    highlights: randomPicks(highlightsPool, randomInt(4, 5)),
   };
 };
 

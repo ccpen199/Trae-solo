@@ -22,6 +22,7 @@ import educationRoutes from './routes/education.js'
 import analyticsRoutes from './routes/analytics.js'
 import adminRoutes from './routes/admin.js'
 import subsidyRoutes from './routes/subsidy.js'
+import { MOCK_ENTERPRISES, MOCK_JOBS } from './mock/mockData.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -48,6 +49,41 @@ app.use('/api/education', educationRoutes)
 app.use('/api/analytics', analyticsRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/subsidy', subsidyRoutes)
+
+app.get('/api/search', (req: Request, res: Response): void => {
+  const query = String(req.query.q || req.query.keyword || '').trim().toLowerCase()
+  const jobs = MOCK_JOBS.filter((job) => {
+    const text = `${job.title} ${job.category} ${job.skills?.join(' ') || ''}`.toLowerCase()
+    return !query || text.includes(query)
+  }).slice(0, 20)
+  const enterprises = MOCK_ENTERPRISES.filter((enterprise) => {
+    const text = `${enterprise.name} ${enterprise.industry} ${enterprise.township}`.toLowerCase()
+    return !query || text.includes(query)
+  }).slice(0, 10)
+
+  res.json({
+    success: true,
+    data: {
+      query,
+      total: jobs.length + enterprises.length,
+      jobs,
+      enterprises,
+    },
+  })
+})
+
+app.get(['/api/users/profile', '/api/user/profile'], (_req: Request, res: Response): void => {
+  res.json({
+    success: true,
+    data: {
+      id: 'local-jobseeker',
+      name: '本地求职者',
+      role: 'jobseeker',
+      phone: '13800138000',
+      verified: true,
+    },
+  })
+})
 
 /**
  * health

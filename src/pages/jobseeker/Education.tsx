@@ -15,6 +15,7 @@ import {
   Calendar,
   Target,
   Users,
+  ChevronDown,
 } from 'lucide-react';
 import {
   Tabs,
@@ -27,11 +28,17 @@ import {
   Badge,
   Timeline,
   Space,
+  Card,
 } from 'antd';
 import dayjs from 'dayjs';
 import { cn } from '@/lib/utils';
 import MatchScoreRing from '@/components/common/MatchScoreRing';
 import StatsCard from '@/components/common/StatsCard';
+import {
+  educationProgress,
+  getTotalEarnedCredits,
+  getCreditDistribution,
+} from '@/mock/progress';
 
 const { Option } = Select;
 
@@ -283,6 +290,10 @@ export default function Education() {
   const [filterMajor, setFilterMajor] = useState<string | undefined>();
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 30000]);
 
+  const { courses, certification } = educationProgress;
+  const totalEarnedCredits = getTotalEarnedCredits();
+  const creditDistribution = getCreditDistribution();
+
   const filteredCourses = useMemo(() => {
     return mockCourses.filter((c) => {
       if (filterType && c.type !== filterType) return false;
@@ -292,10 +303,6 @@ export default function Education() {
       return true;
     });
   }, [filterType, filterDegree, filterMajor, priceRange]);
-
-  const totalEarnedCredits = useMemo(() => {
-    return mockCreditCourses.reduce((sum, c) => sum + c.earnedCredits, 0);
-  }, []);
 
   const totalTargetCredits = 110;
   const creditProgress = (totalEarnedCredits / totalTargetCredits) * 100;
@@ -337,6 +344,214 @@ export default function Education() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1, duration: 0.4 }}
       >
+        <div className="bg-white rounded-xl border border-gray-100 p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+              <TrendingUp size={20} className="text-purple-500" />
+              我的学习进度
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.4 }}
+              className="rounded-xl border border-gray-100 overflow-hidden hover:shadow-card-hover transition-all duration-300"
+            >
+              <div className="bg-gradient-to-r from-industrial-blue-500 to-industrial-blue-600 p-3">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <BookOpen size={16} />
+                  已购课程
+                </h3>
+              </div>
+              <div className="p-4">
+                <div className="flex items-end justify-between mb-3">
+                  <div className="flex items-end gap-4">
+                    <div>
+                      <div className="text-3xl font-bold text-gray-900">
+                        {courses.filter((c) => c.status === '进行中').length}
+                      </div>
+                      <div className="text-xs text-gray-500">学习中</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-success-500">
+                        {courses.filter((c) => c.status === '已完成').length}
+                      </div>
+                      <div className="text-xs text-gray-500">已完成</div>
+                    </div>
+                  </div>
+                </div>
+                {courses.filter((c) => c.status === '进行中').length > 0 ? (
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium text-gray-800 truncate">
+                      {courses.filter((c) => c.status === '进行中')[0].title}
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-gray-500">学习进度</span>
+                        <span className="text-industrial-blue-600 font-medium">
+                          {courses.filter((c) => c.status === '进行中')[0].progress}%
+                        </span>
+                      </div>
+                      <Progress
+                        percent={courses.filter((c) => c.status === '进行中')[0].progress}
+                        showInfo={false}
+                        size="small"
+                        strokeColor={{
+                          '0%': '#699EFF',
+                          '100%': '#165DFF',
+                        }}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-400">暂无课程，去看看 →</div>
+                )}
+                <div className="mt-3 pt-3 border-t border-gray-50">
+                  <Button
+                    type="link"
+                    size="small"
+                    className="!p-0 !h-auto !text-xs !text-industrial-blue-600"
+                    onClick={() => setActiveTab('courses')}
+                  >
+                    查看全部 <ChevronDown size={12} className="inline" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="rounded-xl border border-gray-100 overflow-hidden hover:shadow-card-hover transition-all duration-300"
+            >
+              <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 p-3">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <Award size={16} />
+                  学分银行
+                </h3>
+              </div>
+              <div className="p-4">
+                <div className="flex items-end justify-between mb-3">
+                  <div>
+                    <div className="text-3xl font-bold text-gray-900">
+                      {totalEarnedCredits}
+                    </div>
+                    <div className="text-xs text-gray-500">累计学分</div>
+                  </div>
+                  <div>
+                    <div className="text-lg font-bold text-success-500">
+                      {totalEarnedCredits}
+                    </div>
+                    <div className="text-xs text-gray-500">已兑换</div>
+                  </div>
+                </div>
+                <div className="space-y-1 mb-2">
+                  <div className="text-xs text-gray-500">学分来源分布</div>
+                  <div className="flex flex-wrap gap-2">
+                    {Object.entries(creditDistribution)
+                      .filter(([_, v]) => v > 0)
+                      .map(([source, credits]) => (
+                        <Tag
+                          key={source}
+                          color={
+                            source === '自考'
+                              ? 'blue'
+                              : source === '成考'
+                              ? 'purple'
+                              : 'orange'
+                          }
+                          className="!m-0 !text-xs"
+                        >
+                          {source} {credits}学分
+                        </Tag>
+                      ))}
+                  </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-gray-50">
+                  <Button
+                    type="link"
+                    size="small"
+                    className="!p-0 !h-auto !text-xs !text-industrial-blue-600"
+                    onClick={() => setActiveTab('credit')}
+                  >
+                    查看全部 <ChevronDown size={12} className="inline" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.4 }}
+              className="rounded-xl border border-gray-100 overflow-hidden hover:shadow-card-hover transition-all duration-300"
+            >
+              <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-3">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <GraduationCap size={16} />
+                  学历认证进度
+                </h3>
+              </div>
+              <div className="p-4">
+                <div className="mb-3">
+                  <div className="text-sm font-medium text-gray-900 mb-1">
+                    目标：{certification.targetDegree} · {certification.targetMajor}
+                  </div>
+                  <div className="flex items-end justify-between mb-1">
+                    <div className="text-3xl font-bold text-gray-900">
+                      {certification.progressPercent}%
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      预估拿证：{certification.estimatedDate}
+                    </div>
+                  </div>
+                  <Progress
+                    percent={certification.progressPercent}
+                    showInfo={false}
+                    size="small"
+                    strokeColor={{
+                      '0%': '#B37FEB',
+                      '100%': '#722ED1',
+                    }}
+                  />
+                </div>
+                <div className="space-y-1">
+                  {certification.timeline.slice(0, 3).map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-xs">
+                      <div
+                        className="w-2 h-2 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <span className={item.done ? 'text-gray-600' : 'text-gray-400'}>
+                        {item.title}
+                      </span>
+                      <span className="text-gray-400 ml-auto">{item.time}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 pt-3 border-t border-gray-50">
+                  <Button
+                    type="link"
+                    size="small"
+                    className="!p-0 !h-auto !text-xs !text-industrial-blue-600"
+                    onClick={() => setActiveTab('credit')}
+                  >
+                    查看详情 <ChevronDown size={12} className="inline" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.4 }}
+      >
         <Tabs
           activeKey={activeTab}
           onChange={setActiveTab}
@@ -352,6 +567,103 @@ export default function Education() {
               ),
               children: (
                 <div className="space-y-6">
+                  {courses.length > 0 && (
+                    <div className="bg-gradient-to-r from-industrial-blue-50 to-white rounded-xl border border-industrial-blue-100 p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                          <BookOpen size={16} className="text-industrial-blue-500" />
+                          我的学习
+                          <Badge count={courses.length} size="small" />
+                        </h3>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                        {courses.map((course, idx) => (
+                          <motion.div
+                            key={course.id}
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 + idx * 0.05, duration: 0.4 }}
+                            whileHover={{ y: -2 }}
+                            className="bg-white rounded-lg border border-industrial-blue-100 overflow-hidden transition-all duration-300 hover:shadow-md"
+                          >
+                            <div
+                              className={cn(
+                                'relative h-16 bg-gradient-to-br',
+                                course.coverColor
+                              )}
+                            >
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <GraduationCap size={32} className="text-white/30" />
+                              </div>
+                              <div className="absolute top-2 right-2">
+                                <Tag
+                                  color={
+                                    course.status === '进行中'
+                                      ? 'processing'
+                                      : course.status === '已完成'
+                                      ? 'success'
+                                      : 'default'
+                                  }
+                                  className="!m-0 !text-xs"
+                                >
+                                  {course.status}
+                                </Tag>
+                              </div>
+                              <div className="absolute top-2 left-2">
+                                <Tag
+                                  color={
+                                    course.type === '自考'
+                                      ? 'blue'
+                                      : course.type === '成考'
+                                      ? 'purple'
+                                      : 'orange'
+                                  }
+                                  className="!m-0 !text-xs"
+                                >
+                                  {course.type}
+                                </Tag>
+                              </div>
+                            </div>
+                            <div className="p-3">
+                              <h4 className="text-sm font-medium text-gray-900 line-clamp-1 mb-1">
+                                {course.title}
+                              </h4>
+                              <p className="text-xs text-gray-500 truncate mb-2">
+                                {course.provider}
+                              </p>
+                              <div className="space-y-1">
+                                <div className="flex justify-between text-xs">
+                                  <span className="text-gray-500">
+                                    学分：{course.earnedCredits}/{course.totalCredits}
+                                  </span>
+                                  <span className="text-industrial-blue-600 font-medium">
+                                    {course.progress}%
+                                  </span>
+                                </div>
+                                <Progress
+                                  percent={course.progress}
+                                  showInfo={false}
+                                  size="small"
+                                  strokeColor={
+                                    course.status === '已完成'
+                                      ? '#00B42A'
+                                      : '#165DFF'
+                                  }
+                                />
+                              </div>
+                              {course.lastStudyTime && (
+                                <div className="mt-2 text-xs text-gray-400 flex items-center gap-1">
+                                  <Clock size={12} />
+                                  上次学习：{dayjs(course.lastStudyTime).format('MM-DD HH:mm')}
+                                </div>
+                              )}
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="bg-white rounded-xl border border-gray-100 p-5">
                     <div className="flex items-center gap-2 mb-4">
                       <Filter size={18} className="text-gray-500" />
@@ -568,6 +880,83 @@ export default function Education() {
               ),
               children: (
                 <div className="space-y-6">
+                  <div className="bg-gradient-to-r from-emerald-50 to-white rounded-xl border border-emerald-100 p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                        <Award size={16} className="text-emerald-500" />
+                        我的学分概览
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <Card size="small" className="!border-emerald-200">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-emerald-600">
+                            {totalEarnedCredits}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">累计已获学分</div>
+                        </div>
+                      </Card>
+                      <Card size="small" className="!border-industrial-blue-200">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-industrial-blue-600">
+                            {certification.progressPercent}%
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">认证进度</div>
+                        </div>
+                      </Card>
+                      <Card size="small" className="!border-purple-200">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-purple-600">
+                            {certification.targetDegree}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {certification.targetMajor}
+                          </div>
+                        </div>
+                      </Card>
+                      <Card size="small" className="!border-vital-orange-200">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-vital-orange-600">
+                            {certification.estimatedDate}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">预估拿证时间</div>
+                        </div>
+                      </Card>
+                    </div>
+                    <div className="mt-4">
+                      <div className="text-xs text-gray-500 mb-2">学分来源分布</div>
+                      <div className="grid grid-cols-3 gap-3">
+                        {Object.entries(creditDistribution).map(([source, credits]) => (
+                          <div
+                            key={source}
+                            className={cn(
+                              'rounded-lg p-3 text-center',
+                              source === '自考'
+                                ? 'bg-industrial-blue-50 border border-industrial-blue-100'
+                                : source === '成考'
+                                ? 'bg-purple-50 border border-purple-100'
+                                : 'bg-vital-orange-50 border border-vital-orange-100'
+                            )}
+                          >
+                            <div
+                              className={cn(
+                                'text-lg font-bold',
+                                source === '自考'
+                                  ? 'text-industrial-blue-600'
+                                  : source === '成考'
+                                  ? 'text-purple-600'
+                                  : 'text-vital-orange-600'
+                              )}
+                            >
+                              {credits} 学分
+                            </div>
+                            <div className="text-xs text-gray-500 mt-0.5">{source}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <StatsCard
                       title="累计已获学分"

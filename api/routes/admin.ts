@@ -58,6 +58,21 @@ router.get('/dashboard', async (req: Request, res: Response): Promise<void> => {
   res.json(ok({ kpis, recentActivities, enterpriseByTownship }));
 });
 
+router.get('/stats', async (_req: Request, res: Response): Promise<void> => {
+  const verifiedEnterprises = MOCK_ENTERPRISES.filter(e => e.verified).length;
+  const pendingEnterprises = MOCK_ENTERPRISES.length - verifiedEnterprises;
+  const activeJobs = MOCK_ENTERPRISES.reduce((sum, enterprise) => sum + enterprise.jobCount, 0);
+
+  res.json(ok({
+    totalEnterprises: MOCK_ENTERPRISES.length,
+    verifiedEnterprises,
+    pendingEnterprises,
+    activeJobs,
+    subsidyApplications: MOCK_SUBSIDY_APPS.length,
+    pendingSubsidies: MOCK_SUBSIDY_APPS.filter(s => s.status === '审核中').length,
+  }));
+});
+
 router.get('/enterprise-verification', async (req: Request, res: Response): Promise<void> => {
   const page = parseInt(req.query.page as string) || 1;
   const pageSize = parseInt(req.query.pageSize as string) || 20;

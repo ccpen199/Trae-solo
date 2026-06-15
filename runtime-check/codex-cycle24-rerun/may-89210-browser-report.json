@@ -1,0 +1,3204 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T22:03:00.494Z",
+  "order": "may-89210",
+  "roundIndex": 24,
+  "captureId": "may-89210-codex-cycle24-rerun",
+  "url": "http://127.0.0.1:49210/",
+  "initialUrl": "http://127.0.0.1:49210/",
+  "finalUrl": "http://127.0.0.1:49210/jobseeker/home",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-03-操作-查看更多.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在我的/账号入口，优先复验个人中心链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "search",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在搜索/发现入口，优先复验检索链路",
+      "ok": true
+    },
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在搜索/发现入口，优先复验检索链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49210/jobseeker/home"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49210/jobseeker/home",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看更多:查看匹配分析",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 30
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部镇街",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部镇街:查看镇街职位",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 25
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:职位搜索",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看匹配分析",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 30
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看匹配分析:收起匹配分析",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部镇街",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49210/jobseeker/home",
+        "title": "My Trae Project",
+        "headings": [
+          "中山智能招聘 · 找到你的理想工作",
+          "快捷入口",
+          "技工专区",
+          "应届生专区",
+          "蓝领普工",
+          "学历提升",
+          "校园招聘会",
+          "镇街招聘专区",
+          "石岐街道",
+          "东区街道",
+          "西区街道",
+          "南区街道"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "搜索职位",
+          "查看全部镇街",
+          "查看更多",
+          "查看详情"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位名称、企业名称或关键词",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页中山智能招聘 · 找到你的理想工作25个镇街产业专区 · 108家认证企业 · 1013个热招岗位选择镇街职位类型搜索职位热门搜索：CNC操作员电工普工装配工质检仓管在招职位600个+12.5%月环比在招企业89家+8.3%月环比认证企业64家+6.8%月环比活跃求职者296人+15.7%月环比覆盖镇街15全市个快捷入口直达专属招聘专区技工专区高薪技术岗位查看详情 应届生专区校招专属岗位查看详情 蓝领普工大量基础岗位查看详情 2 门学习中学历提升职业技能培训查看详情 1 个待面试校园招聘会近期宣讲会查看详情 镇街招聘专区中山市25个镇街产业集群招聘查看全部镇街 石岐街道⚡ 企业4 职位33电子食品东区街道⚡ 企业5 职位40电子工业机器人西区街道 企业13 职位67机械装备五金南区街道⚡ 企业7 职位31电子家电五桂山街道🍜 企业3 职位27食品电子小榄镇 企业8 职位49五金电子古镇镇💡 企业15 职位88灯饰五金东升镇 企业6 职位47五金家具东凤镇 企业3 职位20家电电子阜沙镇 企业6 职位36五金机械装备黄圃镇🍜 企业4 职位27食品五金南头镇 企业7 职位56家电电子三角镇⚡ 企业1 职位5电子机械装备民众镇🍜 企业5 职位43食品家具南朗镇🛋️ 企业0 职位0家具电子港口镇 企业10 职位59机械装备五金沙溪镇👕 企业8 职位71休闲服家具大涌镇🛋️ 企业14 职位96家具休闲服板芙镇🛋️ 企业4 职位34家具五金三乡镇🛋️ 企业1 职位7家具灯饰坦洲镇⚡ 企业10 职位54电子家具神湾镇🍜 企业4 职位35食品家具横栏镇💡 企业8 职位68灯饰五金中山港街道（火炬开发区）⚡ 企业2 职位10电子新能源翠亨新区（翠亨街道） 企业2 职位10新能源工业机器人智能职位推荐基于您的简历和偏好为您匹配查看更多 41%匹配度采购员7890-11169K月薪南头镇1-3年中专包食宿员工旅游加班费绩效奖金查看详情50%匹配度仓管员5323-7269K计件古镇镇3-5年不限交通补贴培训提升生日福利查看详情52%匹配度模具师傅6125-9742K月薪南头镇3-5年中专年终奖包食宿交通补贴股权激励节日福利查看详情44%匹配度运营助理5017-6434K计件三乡镇不限不限全勤奖住房补贴带薪年假高温补贴查看详情44%匹配度生产主管4281-7049K月薪古镇镇3-5年高中股权激励全勤奖住房补贴高温补贴查看详情46%匹配度木工开料4484-6271K日薪港口镇应届生不限年终奖绩效奖金高温补贴查看详情招聘热度趋势近6个月镇街招聘数据1月招聘热度投递数量热门镇街 TOP51大涌镇96岗2古镇镇88岗3沙溪镇71岗4横栏镇68岗5西区街道67岗© 2026 华南制造业智能招聘中台 · Powered by 科技创新 0",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2427,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/home",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-01-首屏.png",
+          "elementCount": 1200,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "搜索职位名称、企业名称或关键词",
+            "搜索职位",
+            "查看全部镇街",
+            "查看更多",
+            "查看详情"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49210/jobseeker/home",
+        "title": "My Trae Project",
+        "headings": [
+          "中山智能招聘 · 找到你的理想工作",
+          "快捷入口",
+          "技工专区",
+          "应届生专区",
+          "蓝领普工",
+          "学历提升",
+          "校园招聘会",
+          "镇街招聘专区",
+          "石岐街道",
+          "东区街道",
+          "西区街道",
+          "南区街道"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "搜索职位",
+          "查看全部镇街",
+          "查看更多",
+          "查看详情"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位名称、企业名称或关键词",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页中山智能招聘 · 找到你的理想工作25个镇街产业专区 · 108家认证企业 · 1013个热招岗位选择镇街职位类型搜索职位热门搜索：CNC操作员电工普工装配工质检仓管在招职位1,013个+12.5%月环比在招企业150家+8.3%月环比认证企业108家+6.8%月环比活跃求职者500人+15.7%月环比覆盖镇街25全市个快捷入口直达专属招聘专区技工专区高薪技术岗位查看详情 应届生专区校招专属岗位查看详情 蓝领普工大量基础岗位查看详情 2 门学习中学历提升职业技能培训查看详情 1 个待面试校园招聘会近期宣讲会查看详情 镇街招聘专区中山市25个镇街产业集群招聘查看全部镇街 石岐街道⚡ 企业4 职位33电子食品东区街道⚡ 企业5 职位40电子工业机器人西区街道 企业13 职位67机械装备五金南区街道⚡ 企业7 职位31电子家电五桂山街道🍜 企业3 职位27食品电子小榄镇 企业8 职位49五金电子古镇镇💡 企业15 职位88灯饰五金东升镇 企业6 职位47五金家具东凤镇 企业3 职位20家电电子阜沙镇 企业6 职位36五金机械装备黄圃镇🍜 企业4 职位27食品五金南头镇 企业7 职位56家电电子三角镇⚡ 企业1 职位5电子机械装备民众镇🍜 企业5 职位43食品家具南朗镇🛋️ 企业0 职位0家具电子港口镇 企业10 职位59机械装备五金沙溪镇👕 企业8 职位71休闲服家具大涌镇🛋️ 企业14 职位96家具休闲服板芙镇🛋️ 企业4 职位34家具五金三乡镇🛋️ 企业1 职位7家具灯饰坦洲镇⚡ 企业10 职位54电子家具神湾镇🍜 企业4 职位35食品家具横栏镇💡 企业8 职位68灯饰五金中山港街道（火炬开发区）⚡ 企业2 职位10电子新能源翠亨新区（翠亨街道） 企业2 职位10新能源工业机器人智能职位推荐基于您的简历和偏好为您匹配查看更多 70%匹配度采购员7890-11169K月薪南头镇1-3年中专包食宿员工旅游加班费绩效奖金查看详情85%匹配度仓管员5323-7269K计件古镇镇3-5年不限交通补贴培训提升生日福利查看详情88%匹配度模具师傅6125-9742K月薪南头镇3-5年中专年终奖包食宿交通补贴股权激励节日福利查看详情75%匹配度运营助理5017-6434K计件三乡镇不限不限全勤奖住房补贴带薪年假高温补贴查看详情74%匹配度生产主管4281-7049K月薪古镇镇3-5年高中股权激励全勤奖住房补贴高温补贴查看详情77%匹配度木工开料4484-6271K日薪港口镇应届生不限年终奖绩效奖金高温补贴查看详情招聘热度趋势近6个月镇街招聘数据1月招聘热度投递数量热门镇街 TOP51大涌镇96岗2古镇镇88岗3沙溪镇71岗4横栏镇68岗5西区街道67岗© 2026 华南制造业智能招聘中台 · Powered by 科技创新 0",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2404,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/home",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-02-导航-首页.png",
+          "elementCount": 1200,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "搜索职位名称、企业名称或关键词",
+            "搜索职位",
+            "查看全部镇街",
+            "查看更多",
+            "查看详情"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看更多",
+        "url": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "headings": [
+          "智能岗位匹配",
+          "FAE现场应用",
+          "生产组长",
+          "测试工程师",
+          "喷涂工",
+          "跟单员",
+          "CNC操作工",
+          "电子装配工",
+          "木工师傅",
+          "排钻工",
+          "服装缝纫工",
+          "车间主任"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "重置筛选",
+          "搜索",
+          "查看全部镇街",
+          "查看详情",
+          "查看匹配分析"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位名称、企业名称或技能",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页/职位搜索职位搜索智能岗位匹配按镇街、薪资、经验和技能快速筛选中山制造业岗位。重置筛选不限不限搜索 镇街石岐街道东区街道西区街道南区街道五桂山街道小榄镇古镇镇东升镇东凤镇阜沙镇查看全部镇街 月薪范围0-30K 企业规模20人以下20-99人100-499人500-999人1000人以上 技能标签CNC操作电工焊工PLC编程机械设计模具设计质检装配仓储管理电子维修CAD绘图数控编程注塑工艺表面处理SMT操作PCB设计品质管理共找到 943 个岗位匹配度最新薪资距离96%匹配度96%匹配度FAE现场应用中山华恒电子电器有限公司5216-6893K月薪黄圃镇3-5年高中五险一金节日福利高温补贴加班费查看详情黄圃镇 5月5日 招3人查看匹配分析96%匹配度96%匹配度生产组长中山华恒电子电器有限公司4117-6341K月薪黄圃镇5-10年中专高温补贴通讯补贴包食宿节日福利五险一金查看详情黄圃镇 3月18日 招7人查看匹配分析96%匹配度96%匹配度测试工程师盛达宏瑞动力电池有限公司4588-5829K月薪翠亨新区（翠亨街道）不限不限生日福利培训提升班车接送查看详情翠亨新区（翠亨街道） 5月4日 招1人查看匹配分析96%匹配度96%匹配度喷涂工急招恒达盛永冲压件有限公司5906-7726K计件五桂山街道不限中专培训提升餐补高温补贴绩效奖金查看详情五桂山街道 5月27日 招9人查看匹配分析96%匹配度96%匹配度跟单员顺达永达户外家具有限公司4633-6049K月薪三乡镇应届生本科通讯补贴五险一金培训提升班车接送查看详情三乡镇 5月6日 招3人查看匹配分析96%匹配度96%匹配度CNC操作工永达华瑞精密五金有限公司7473-10927K月薪小榄镇不限大专高温补贴餐补员工体检班车接送包食宿查看详情小榄镇 5月21日 招5人查看匹配分析96%匹配度96%匹配度电子装配工金达顺德光电科技有限公司5125-7320K月薪南朗镇1-3年不限绩效奖金年终奖住房补贴查看详情南朗镇 3月17日 招6人查看匹配分析96%匹配度96%匹配度木工师傅国盛金鑫实木家具有限公司6885-11727K计件南区街道5-10年大专五险一金通讯补贴弹性工作查看详情南区街道 4月16日 招2人查看匹配分析96%匹配度96%匹配度排钻工急招国盛华祥实木家具有限公司5499-7500K日薪大涌镇应届生不限节日福利带薪年假生日福利查看详情大涌镇 4月13日 招3人查看匹配分析96%匹配度96%匹配度服装缝纫工恒达盛祥制衣厂有限公司6280-9492K计件东区街道5-10年中专加班费高温补贴培训提升包食宿查看详情东区街道 5月31日 招4人查看匹配分析96%匹配度96%匹配度车间主任华南宏顺冲压件有限公司4733-6423K月薪小榄镇5-10年中专股权激励生日福利全勤奖加班费查看详情小榄镇 5月11日 招7人查看匹配分析96%匹配度96%匹配度生产组长急招华盛金昌智能科技有限公司8654-11160K月薪东凤镇不限大专通讯补贴加班费班车接送查看详情东凤镇 5月9日 招9人查看匹配分析96%匹配度96%匹配度生产计划永达恒永家具制造有限公司7805-12642K日薪港口镇3-5年高中股权激励生日福利员工体检查看详情港口镇 3月16日 招6人查看匹配分析96%匹配度96%匹配度包装工利达顺泰灯饰有限公司5016-7242K日薪小榄镇不限不限生日福利弹性工作包食宿查看详情小榄镇 3月31日 招7人查看匹配分析96%匹配度96%匹配度品检员急招安盛德德精密机械有限公司5772-8500K日薪东升镇不限中专员工旅游年终奖全勤奖住房补贴查看详情东升镇 6月18日 招8人查看匹配分析96%匹配度96%匹配度LED焊锡工宏盛鑫金灯饰电器有限公司4505-6190K计件横栏镇1-3年不限住房补贴高温补贴交通补贴加班费查看详情横栏镇 6月12日 招9人查看匹配分析96%匹配度96%匹配度波峰焊技术员昌盛华鑫智能科技有限公司4125-6656K日薪中山港街道（火炬开发区）1-3年不限通讯补贴五险一金包食宿查看详情中山港街道（火炬开发区） 4月17日 招7人查看匹配分析96%匹配度96%匹配度打版师鑫",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 9468,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-03-操作-查看更多",
+          "label": "操作:查看更多",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-03-操作-查看更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-03-操作-查看更多.png",
+          "elementCount": 1200,
+          "interactiveCount": 101,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "重置筛选",
+            "搜索职位名称、企业名称或技能",
+            "搜索",
+            "SQ",
+            "DQ",
+            "XQ",
+            "NQ",
+            "WGS",
+            "XL",
+            "GZ",
+            "DS",
+            "DF",
+            "FS",
+            "查看全部镇街",
+            "20人以下",
+            "20-99人",
+            "100-499人",
+            "500-999人",
+            "1000-9999人"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看更多->查看匹配分析",
+        "url": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "headings": [
+          "智能岗位匹配",
+          "FAE现场应用",
+          "生产组长",
+          "测试工程师",
+          "喷涂工",
+          "跟单员",
+          "CNC操作工",
+          "电子装配工",
+          "木工师傅",
+          "排钻工",
+          "服装缝纫工",
+          "车间主任"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "重置筛选",
+          "搜索",
+          "查看全部镇街",
+          "查看详情",
+          "收起匹配分析",
+          "查看匹配分析"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位名称、企业名称或技能",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "工作经验 0年 学历 高中 期望地点 民众镇 期望薪资 4-7K"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页/职位搜索职位搜索智能岗位匹配按镇街、薪资、经验和技能快速筛选中山制造业岗位。重置筛选不限不限搜索 镇街石岐街道东区街道西区街道南区街道五桂山街道小榄镇古镇镇东升镇东凤镇阜沙镇查看全部镇街 月薪范围0-30K 企业规模20人以下20-99人100-499人500-999人1000人以上 技能标签CNC操作电工焊工PLC编程机械设计模具设计质检装配仓储管理电子维修CAD绘图数控编程注塑工艺表面处理SMT操作PCB设计品质管理共找到 943 个岗位匹配度最新薪资距离98%匹配度98%匹配度FAE现场应用中山华恒电子电器有限公司5216-6893K月薪黄圃镇3-5年高中五险一金节日福利高温补贴加班费查看详情黄圃镇 5月5日 招3人收起匹配分析📄 简历解析结果工作经验0年学历高中期望地点民众镇期望薪资4-7K技能标签叉车驾驶装配持有证书PLC编程工程师证焊接技师证🎯 JD语义匹配经验匹配73%要求3-5年，您有0年，超出要求学历匹配94%要求高中，您是高中，符合要求地域匹配82%职位在民众镇，您期望在民众镇工作薪酬匹配89%岗位预算5216-6893K，符合您的薪资期望🔧 技能图谱对齐 已匹配技能物料搬运掌握: 熟练 / 要求: 了解品质检验掌握: 熟练 / 要求: 了解包装掌握: 熟练 / 要求: 熟练清洁掌握: 熟练 / 要求: 熟练 相关技能叉车驾驶加分 适应加班 +6%掌握: 精通 待补技能暂无明显短板🔵 蓝领🎯 0年生产线工作经验，能快速适应流水线节奏💡 可申请职业资格培训补贴，提升技能等级🎯 期望薪资4-7K与岗位预算高度匹配🎯 工作地点与您期望一致，通勤便利稳定性高🎯 愿意加班和倒班，符合生产型企业的用工需求98%匹配度98%匹配度生产组长中山华恒电子电器有限公司4117-6341K月薪黄圃镇5-10年中专高温补贴通讯补贴包食宿节日福利五险一金查看详情黄圃镇 3月18日 招7人查看匹配分析98%匹配度98%匹配度测试工程师盛达宏瑞动力电池有限公司4588-5829K月薪翠亨新区（翠亨街道）不限不限生日福利培训提升班车接送查看详情翠亨新区（翠亨街道） 5月4日 招1人查看匹配分析98%匹配度98%匹配度喷涂工急招恒达盛永冲压件有限公司5906-7726K计件五桂山街道不限中专培训提升餐补高温补贴绩效奖金查看详情五桂山街道 5月27日 招9人查看匹配分析98%匹配度98%匹配度跟单员顺达永达户外家具有限公司4633-6049K月薪三乡镇应届生本科通讯补贴五险一金培训提升班车接送查看详情三乡镇 5月6日 招3人查看匹配分析98%匹配度98%匹配度CNC操作工永达华瑞精密五金有限公司7473-10927K月薪小榄镇不限大专高温补贴餐补员工体检班车接送包食宿查看详情小榄镇 5月21日 招5人查看匹配分析98%匹配度98%匹配度电子装配工金达顺德光电科技有限公司5125-7320K月薪南朗镇1-3年不限绩效奖金年终奖住房补贴查看详情南朗镇 3月17日 招6人查看匹配分析98%匹配度98%匹配度木工师傅国盛金鑫实木家具有限公司6885-11727K计件南区街道5-10年大专五险一金通讯补贴弹性工作查看详情南区街道 4月16日 招2人查看匹配分析98%匹配度98%匹配度排钻工急招国盛华祥实木家具有限公司5499-7500K日薪大涌镇应届生不限节日福利带薪年假生日福利查看详情大涌镇 4月13日 招3人查看匹配分析98%匹配度98%匹配度服装缝纫工恒达盛祥制衣厂有限公司6280-9492K计件东区街道5-10年中专加班费高温补贴培训提升包食宿查看详情东区街道 5月31日 招4人查看匹配分析98%匹配度98%匹配度车间主任华南宏顺冲压件有限公司4733-6423K月薪小榄镇5-10年中专股权激励生日福利全勤奖加班费查看详情小榄镇 5月11日 招7人查看匹配分析98%匹配度98%匹配度生产组长急招华盛金昌智能科技有限公司8654-11160K月薪东凤镇不限大专通讯补贴加班费班车接送查看详情东凤镇 5月9日 招9人查看匹配分析98%匹配度98%匹配度生产计划永达恒永家具制造有限公司7805-12642K日薪港口镇3-5年高中",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 10301,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析",
+          "label": "二层操作:查看更多->查看匹配分析",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析.png",
+          "elementCount": 1200,
+          "interactiveCount": 101,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "重置筛选",
+            "搜索职位名称、企业名称或技能",
+            "搜索",
+            "SQ",
+            "DQ",
+            "XQ",
+            "NQ",
+            "WGS",
+            "XL",
+            "GZ",
+            "DS",
+            "DF",
+            "FS",
+            "查看全部镇街",
+            "20人以下",
+            "20-99人",
+            "100-499人",
+            "500-999人",
+            "1000-9999人"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部镇街",
+        "url": "http://127.0.0.1:49210/jobseeker/township",
+        "title": "My Trae Project",
+        "headings": [
+          "🗺️ 中山市镇街招聘专区",
+          "西区街道",
+          "三乡镇",
+          "古镇镇",
+          "五桂山街道",
+          "民众镇",
+          "大涌镇",
+          "中山港街道（火炬开发区）",
+          "翠亨新区（翠亨街道）",
+          "东区街道",
+          "横栏镇",
+          "沙溪镇"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "查看镇街职位"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页/镇街专区🗺️ 中山市镇街招聘专区覆盖全市 25 个镇街，精准对接产业集群与人才需求中山市全域招聘地图在招职位931个+18%同比在招企业149家+12%同比认证企业108家+9%同比覆盖镇街25全市个服务人口403万人📊镇街产业分布电子五金机械装备灯饰家具家电休闲服新能源高新技术传统制造🔥招聘热度地图热度：一般中中高极高石岐街道22个职位4家企业东区街道45个职位7家企业西区街道67个职位8家企业南区街道10个职位3家企业五桂山街道56个职位7家企业小榄镇36个职位5家企业古镇镇58个职位9家企业东升镇22个职位4家企业东凤镇23个职位4家企业阜沙镇26个职位5家企业黄圃镇36个职位6家企业南头镇33个职位5家企业三角镇12个职位2家企业民众镇53个职位7家企业南朗镇18个职位5家企业港口镇16个职位4家企业沙溪镇41个职位5家企业大涌镇52个职位9家企业板芙镇38个职位6家企业三乡镇65个职位11家企业坦洲镇27个职位5家企业神湾镇36个职位6家企业横栏镇43个职位7家企业中山港街道（火炬开发区）52个职位9家企业翠亨新区（翠亨街道）48个职位7家企业🏙️镇街详情共 25 个按招聘热度排序西区街道极高热度商贸物流中心，专业市场聚集，装备制造和五金产业发达机械装备🔧五金🛋️家具在招职位67在招企业8🏢龙头企业宏达盛华智能家电有限公司万达永华家居用品有限公司金达金宏生活电器有限公司住房均价1.1万/㎡交通地铁3号线教育18所中小学查看镇街职位三乡镇极高热度南部中心镇，古典家具名镇，机械装备产业聚集🛋️家具💡灯饰机械装备在招职位65在招企业11🏢龙头企业德盛鑫鑫数控机床有限公司广东鑫祥五金电子有限公司昌盛鑫华精密五金有限公司住房均价0.9万/㎡交通广珠公路教育20所中小学查看镇街职位古镇镇极高热度中国灯饰之都，灯饰照明产业占全国70%以上市场份额💡灯饰🔧五金⚡电子在招职位58在招企业9🏢龙头企业鼎盛鑫鑫光电科技有限公司德盛华瑞小家电有限公司鑫达宏鑫不锈钢制品有限公司住房均价0.9万/㎡交通城际轻轨古镇站教育20所中小学查看镇街职位五桂山街道极高热度中山市生态保护区，生态旅游和绿色产业聚集🍜食品⚡电子新能源在招职位56在招企业7🏢龙头企业永达华鑫机械五金有限公司顺达宏鑫健康食品有限公司广东华恒光电科技有限公司住房均价0.9万/㎡交通多条公交线路教育8所中小学查看镇街职位民众镇高热度现代农业和高端制造产业镇🍜食品🛋️家具新能源在招职位53在招企业7🏢龙头企业金达瑞恒数码科技有限公司盛达泰永生活电器有限公司华盛鑫华五金制品有限公司住房均价0.6万/㎡交通省道S111教育10所中小学查看镇街职位大涌镇高热度中国红木家具之都，牛仔服装生产基地🛋️家具👕休闲服🔧五金在招职位52在招企业9🏢龙头企业金达金祥智能家居有限公司安盛祥顺冲压件有限公司德盛瑞祥服饰有限公司住房均价0.7万/㎡交通105国道教育13所中小学查看镇街职位中山港街道（火炬开发区）高热度国家级高新技术产业开发区，健康医药和装备制造产业基地⚡电子新能源🤖工业机器人在招职位52在招企业9🏢龙头企业恒达泰盛数码科技有限公司广东永宏灯饰电器有限公司鼎盛鑫达食品科技有限公司住房均价1.3万/㎡交通中山港客运码头教育26所中小学查看镇街职位翠亨新区（翠亨街道）高热度粤澳合作示范区，先进装备制造和新能源产业聚集新能源🤖工业机器人机械装备在招职位48在招企业7🏢龙头企业顺达盛鑫智能机器人有限公司昌盛顺泰粮油食品有限公司华盛顺祥数控机床有限公司住房均价1.5万/㎡交通翠亨快线教育12所中小学查看镇街职位东区街道高热度中山市政治经济文化中心，CBD核心区，高端服务业和高新技术产业聚集⚡电子🤖工业机器人新能源在招职位45在招企业7🏢龙头企业利达昌达电子有限公司安盛瑞泰肉制品有限公司安盛华宏光电有限公司住房均价1.8万/㎡交通地铁1/6号线教育32所中小学查看镇街职位横栏镇高热度中国花木之乡，LED照明和五金产业镇💡灯饰🔧五金🛋️家具在招职位43在招企业7🏢龙头企业宏达鑫瑞光电有限公司金达鑫盛模具有限公司昌盛瑞恒智能家居有限公司住房",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 4663,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街",
+          "label": "操作:查看全部镇街",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/township",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街.png",
+          "elementCount": 1200,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "查看镇街职位"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部镇街->查看镇街职位",
+        "url": "http://127.0.0.1:49210/jobseeker/township?township=XQ",
+        "title": "My Trae Project",
+        "headings": [
+          "🗺️ 中山市镇街招聘专区",
+          "西区街道",
+          "注塑机调机师",
+          "模具师傅",
+          "电子工程师",
+          "售后维修",
+          "采购员",
+          "三乡镇",
+          "古镇镇",
+          "五桂山街道",
+          "民众镇",
+          "大涌镇"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "收起详情",
+          "重置",
+          "查看详情",
+          "查看全部 67 个职位",
+          "查看镇街职位"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页/镇街专区🗺️ 中山市镇街招聘专区覆盖全市 25 个镇街，精准对接产业集群与人才需求中山市全域招聘地图在招职位935个+18%同比在招企业150家+12%同比认证企业108家+9%同比覆盖镇街25全市个服务人口405万人📊镇街产业分布电子五金机械装备灯饰家具家电休闲服新能源高新技术传统制造🔥招聘热度地图热度：一般中中高极高石岐街道22个职位4家企业东区街道45个职位7家企业西区街道67个职位8家企业南区街道10个职位3家企业五桂山街道56个职位7家企业小榄镇36个职位5家企业古镇镇58个职位9家企业东升镇22个职位4家企业东凤镇23个职位4家企业阜沙镇26个职位5家企业黄圃镇36个职位6家企业南头镇33个职位5家企业三角镇12个职位2家企业民众镇53个职位7家企业南朗镇18个职位5家企业港口镇16个职位4家企业沙溪镇41个职位5家企业大涌镇52个职位9家企业板芙镇38个职位6家企业三乡镇65个职位11家企业坦洲镇27个职位5家企业神湾镇36个职位6家企业横栏镇43个职位7家企业中山港街道（火炬开发区）52个职位9家企业翠亨新区（翠亨街道）48个职位7家企业🏙️镇街详情共 25 个按招聘热度排序西区街道极高热度定位中商贸物流中心，专业市场聚集，装备制造和五金产业发达机械装备🔧五金🛋️家具在招职位67在招企业8🏢龙头企业宏达盛华智能家电有限公司万达永华家居用品有限公司金达金宏生活电器有限公司住房均价1.1万/㎡交通地铁3号线教育18所中小学收起详情筛选条件重置在招职位 (67)入驻企业 (8)薪资范围全部经验要求全部学历要求全部注塑机调机师6461-11974K月薪西区街道不限高中员工旅游五险一金节日福利带薪年假查看详情模具师傅8463-14250K月薪西区街道不限中专员工旅游节日福利通讯补贴五险一金带薪年假查看详情电子工程师4324-6892K日薪西区街道1-3年中专通讯补贴员工旅游五险一金带薪年假节日福利查看详情模具师傅4537-7069K日薪西区街道不限中专五险一金通讯补贴带薪年假员工旅游节日福利查看详情售后维修6866-11971K月薪西区街道不限不限带薪年假员工旅游节日福利查看详情采购员4689-6302K日薪西区街道不限本科员工旅游节日福利五险一金查看详情查看全部 67 个职位 三乡镇极高热度南部中心镇，古典家具名镇，机械装备产业聚集🛋️家具💡灯饰机械装备在招职位65在招企业11🏢龙头企业德盛鑫鑫数控机床有限公司广东鑫祥五金电子有限公司昌盛鑫华精密五金有限公司住房均价0.9万/㎡交通广珠公路教育20所中小学查看镇街职位古镇镇极高热度中国灯饰之都，灯饰照明产业占全国70%以上市场份额💡灯饰🔧五金⚡电子在招职位58在招企业9🏢龙头企业鼎盛鑫鑫光电科技有限公司德盛华瑞小家电有限公司鑫达宏鑫不锈钢制品有限公司住房均价0.9万/㎡交通城际轻轨古镇站教育20所中小学查看镇街职位五桂山街道极高热度中山市生态保护区，生态旅游和绿色产业聚集🍜食品⚡电子新能源在招职位56在招企业7🏢龙头企业永达华鑫机械五金有限公司顺达宏鑫健康食品有限公司广东华恒光电科技有限公司住房均价0.9万/㎡交通多条公交线路教育8所中小学查看镇街职位民众镇高热度现代农业和高端制造产业镇🍜食品🛋️家具新能源在招职位53在招企业7🏢龙头企业金达瑞恒数码科技有限公司盛达泰永生活电器有限公司华盛鑫华五金制品有限公司住房均价0.6万/㎡交通省道S111教育10所中小学查看镇街职位大涌镇高热度中国红木家具之都，牛仔服装生产基地🛋️家具👕休闲服🔧五金在招职位52在招企业9🏢龙头企业金达金祥智能家居有限公司安盛祥顺冲压件有限公司德盛瑞祥服饰有限公司住房均价0.7万/㎡交通105国道教育13所中小学查看镇街职位中山港街道（火炬开发区）高热度国家级高新技术产业开发区，健康医药和装备制造产业基地⚡电子新能源🤖工业机器人在招职位52在招企业9🏢龙头企业恒达泰盛数码科技有限公司广东永宏灯饰电器有限公司鼎盛鑫达食品科技有限公司住房均价1.3万/㎡交通中山港客运码头教育26所中小学查看镇街职位翠亨新区（翠亨街道）高热度粤澳合作示范区，先进装备制",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 5752,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位",
+          "label": "二层操作:查看全部镇街->查看镇街职位",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/township?township=XQ",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位.png",
+          "elementCount": 1200,
+          "interactiveCount": 54,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "收起详情",
+            "重置",
+            "在招职位 (67)",
+            "查看详情",
+            "查看全部 67 个职位",
+            "查看镇街职位"
+          ]
+        }
+      },
+      {
+        "label": "导航:职位搜索",
+        "url": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "headings": [
+          "智能岗位匹配",
+          "生产组长",
+          "软件工程师",
+          "维修技术员",
+          "线切割师傅",
+          "品检员",
+          "组装线长",
+          "光伏安装工",
+          "生产主管",
+          "设备维修工",
+          "数控车床师傅",
+          "电商运营"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "重置筛选",
+          "搜索",
+          "查看全部镇街",
+          "查看详情",
+          "查看匹配分析"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位名称、企业名称或技能",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页/职位搜索职位搜索智能岗位匹配按镇街、薪资、经验和技能快速筛选中山制造业岗位。重置筛选不限不限搜索 镇街石岐街道东区街道西区街道南区街道五桂山街道小榄镇古镇镇东升镇东凤镇阜沙镇查看全部镇街 月薪范围0-30K 企业规模20人以下20-99人100-499人500-999人1000人以上 技能标签CNC操作电工焊工PLC编程机械设计模具设计质检装配仓储管理电子维修CAD绘图数控编程注塑工艺表面处理SMT操作PCB设计品质管理共找到 959 个岗位匹配度最新薪资距离98%匹配度98%匹配度生产组长急招国盛祥永电子科技有限公司4934-7547K月薪南区街道1-3年不限全勤奖交通补贴员工体检生日福利班车接送查看详情南区街道 3月4日 招4人查看匹配分析98%匹配度98%匹配度软件工程师广东鑫盛电子电器有限公司5116-6540K月薪小榄镇不限不限节日福利加班费交通补贴股权激励查看详情小榄镇 3月20日 招9人查看匹配分析98%匹配度98%匹配度维修技术员广东鑫盛电子电器有限公司7845-12929K月薪小榄镇3-5年不限加班费交通补贴节日福利股权激励生日福利查看详情小榄镇 3月16日 招6人查看匹配分析98%匹配度98%匹配度线切割师傅华盛鑫鑫冲压件有限公司9151-11717K月薪南朗镇1-3年高中弹性工作节日福利班车接送员工旅游查看详情南朗镇 6月28日 招1人查看匹配分析98%匹配度98%匹配度品检员万达泰达五金电子有限公司5032-7664K月薪三乡镇5-10年高中员工旅游餐补高温补贴生日福利查看详情三乡镇 3月6日 招2人查看匹配分析98%匹配度98%匹配度组装线长急招华盛宏宏灯饰有限公司5762-8454K月薪五桂山街道1-3年不限员工体检节日福利培训提升年终奖查看详情五桂山街道 3月1日 招7人查看匹配分析98%匹配度98%匹配度光伏安装工急招安盛鑫昌新能源汽车有限公司8992-12976K月薪港口镇3-5年大专交通补贴餐补弹性工作节日福利带薪年假查看详情港口镇 3月3日 招2人查看匹配分析98%匹配度98%匹配度组装线长鑫达恒昌小家电有限公司4843-6448K月薪三角镇3-5年不限培训提升五险一金交通补贴员工旅游包食宿查看详情三角镇 5月23日 招5人查看匹配分析98%匹配度98%匹配度生产主管鑫达恒盛精密五金有限公司5211-7385K月薪东升镇1-3年高中住房补贴培训提升加班费员工体检查看详情东升镇 5月13日 招2人查看匹配分析98%匹配度98%匹配度线切割师傅盛达达鑫五金塑胶有限公司7728-12925K月薪小榄镇1-3年中专节日福利年终奖培训提升员工旅游查看详情小榄镇 4月2日 招2人查看匹配分析98%匹配度98%匹配度设备维修工国盛华泰机械设备有限公司7961-11468K日薪古镇镇不限中专五险一金带薪年假生日福利股权激励查看详情古镇镇 4月10日 招5人查看匹配分析98%匹配度98%匹配度数控车床师傅国盛华泰机械设备有限公司8074-13456K日薪古镇镇5-10年中专节日福利带薪年假生日福利弹性工作五险一金查看详情古镇镇 5月1日 招9人查看匹配分析98%匹配度98%匹配度电商运营安盛鑫德照明电器有限公司5421-8257K日薪横栏镇1-3年中专通讯补贴五险一金包食宿查看详情横栏镇 6月5日 招2人查看匹配分析98%匹配度98%匹配度喷涂工安盛达鑫机械五金有限公司8238-11586K日薪港口镇3-5年高中全勤奖绩效奖金包食宿交通补贴查看详情港口镇 6月26日 招2人查看匹配分析98%匹配度98%匹配度品检员急招万达永永精密机械有限公司4621-7144K日薪三角镇不限不限高温补贴生日福利包食宿住房补贴五险一金查看详情三角镇 6月24日 招1人查看匹配分析98%匹配度98%匹配度物料采购员急招中山达金照明科技有限公司8759-14581K计件黄圃镇1-3年大专生日福利通讯补贴餐补加班费弹性工作查看详情黄圃镇 3月26日 招8人查看匹配分析97%匹配度97%匹配度FAE现场应用急招国盛祥永电子科技有限公司4871-7614K月薪南区街道1-3年不限生日福利全勤奖节日福利查看详情南区街道 4月22日",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 9493,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索",
+          "label": "导航:职位搜索",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索.png",
+          "elementCount": 1200,
+          "interactiveCount": 101,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "重置筛选",
+            "搜索职位名称、企业名称或技能",
+            "搜索",
+            "SQ",
+            "DQ",
+            "XQ",
+            "NQ",
+            "WGS",
+            "XL",
+            "GZ",
+            "DS",
+            "DF",
+            "FS",
+            "查看全部镇街",
+            "20人以下",
+            "20-99人",
+            "100-499人",
+            "500-999人",
+            "1000-9999人"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看匹配分析",
+        "url": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "headings": [
+          "智能岗位匹配",
+          "生产组长",
+          "软件工程师",
+          "维修技术员",
+          "线切割师傅",
+          "品检员",
+          "组装线长",
+          "光伏安装工",
+          "生产主管",
+          "设备维修工",
+          "数控车床师傅",
+          "电商运营"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "重置筛选",
+          "搜索",
+          "查看全部镇街",
+          "查看详情",
+          "收起匹配分析",
+          "查看匹配分析"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位名称、企业名称或技能",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "工作经验 24年 学历 高中 期望地点 中山港街道（火炬开发区） 期望薪资 5-8K"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页/职位搜索职位搜索智能岗位匹配按镇街、薪资、经验和技能快速筛选中山制造业岗位。重置筛选不限不限搜索 镇街石岐街道东区街道西区街道南区街道五桂山街道小榄镇古镇镇东升镇东凤镇阜沙镇查看全部镇街 月薪范围0-30K 企业规模20人以下20-99人100-499人500-999人1000人以上 技能标签CNC操作电工焊工PLC编程机械设计模具设计质检装配仓储管理电子维修CAD绘图数控编程注塑工艺表面处理SMT操作PCB设计品质管理共找到 959 个岗位匹配度最新薪资距离98%匹配度98%匹配度生产组长急招国盛祥永电子科技有限公司4934-7547K月薪南区街道1-3年不限全勤奖交通补贴员工体检生日福利班车接送查看详情南区街道 3月4日 招4人收起匹配分析📄 简历解析结果工作经验24年学历高中期望地点中山港街道（火炬开发区）期望薪资5-8K技能标签包装开料物料分拣🎯 JD语义匹配经验匹配94%经验要求1-3年，您的24年经验符合要求学历匹配84%要求不限，您是高中，超出要求地域匹配86%工作地点中山港街道（火炬开发区），与您期望地点一致薪酬匹配90%岗位预算4934-7547K，符合您的薪资期望🔧 技能图谱对齐 已匹配技能清洁整理掌握: 熟练 / 要求: 了解冲压操作掌握: 熟练 / 要求: 熟练CNC基础操作掌握: 熟练 / 要求: 熟练缝纫掌握: 熟练 / 要求: 了解 相关技能包装加分 适应加班 +6%掌握: 精通 待补技能暂无明显短板🔵 蓝领🎯 手脚麻利、服从安排，符合车间高效作业的管理要求💡 可申请职业资格培训补贴，提升技能等级🎯 您的吃苦耐劳品质与岗位需求高度匹配，是车间一线的核心竞争力🎯 愿意加班和倒班，符合生产型企业的用工需求98%匹配度98%匹配度软件工程师广东鑫盛电子电器有限公司5116-6540K月薪小榄镇不限不限节日福利加班费交通补贴股权激励查看详情小榄镇 3月20日 招9人查看匹配分析98%匹配度98%匹配度维修技术员广东鑫盛电子电器有限公司7845-12929K月薪小榄镇3-5年不限加班费交通补贴节日福利股权激励生日福利查看详情小榄镇 3月16日 招6人查看匹配分析98%匹配度98%匹配度线切割师傅华盛鑫鑫冲压件有限公司9151-11717K月薪南朗镇1-3年高中弹性工作节日福利班车接送员工旅游查看详情南朗镇 6月28日 招1人查看匹配分析98%匹配度98%匹配度品检员万达泰达五金电子有限公司5032-7664K月薪三乡镇5-10年高中员工旅游餐补高温补贴生日福利查看详情三乡镇 3月6日 招2人查看匹配分析98%匹配度98%匹配度组装线长急招华盛宏宏灯饰有限公司5762-8454K月薪五桂山街道1-3年不限员工体检节日福利培训提升年终奖查看详情五桂山街道 3月1日 招7人查看匹配分析98%匹配度98%匹配度光伏安装工急招安盛鑫昌新能源汽车有限公司8992-12976K月薪港口镇3-5年大专交通补贴餐补弹性工作节日福利带薪年假查看详情港口镇 3月3日 招2人查看匹配分析98%匹配度98%匹配度组装线长鑫达恒昌小家电有限公司4843-6448K月薪三角镇3-5年不限培训提升五险一金交通补贴员工旅游包食宿查看详情三角镇 5月23日 招5人查看匹配分析98%匹配度98%匹配度生产主管鑫达恒盛精密五金有限公司5211-7385K月薪东升镇1-3年高中住房补贴培训提升加班费员工体检查看详情东升镇 5月13日 招2人查看匹配分析98%匹配度98%匹配度线切割师傅盛达达鑫五金塑胶有限公司7728-12925K月薪小榄镇1-3年中专节日福利年终奖培训提升员工旅游查看详情小榄镇 4月2日 招2人查看匹配分析98%匹配度98%匹配度设备维修工国盛华泰机械设备有限公司7961-11468K日薪古镇镇不限中专五险一金带薪年假生日福利股权激励查看详情古镇镇 4月10日 招5人查看匹配分析98%匹配度98%匹配度数控车床师傅国盛华泰机械设备有限公司8074-13456K日薪古镇镇5-10年中专节日福利带薪年假生日福利弹性工作五险一金查看详情古镇镇 5月1日 招9人查看匹配分析98%匹配度98%匹配度电商运营安盛鑫德照明",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 10288,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析",
+          "label": "操作:查看匹配分析",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析.png",
+          "elementCount": 1200,
+          "interactiveCount": 101,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "重置筛选",
+            "搜索职位名称、企业名称或技能",
+            "搜索",
+            "SQ",
+            "DQ",
+            "XQ",
+            "NQ",
+            "WGS",
+            "XL",
+            "GZ",
+            "DS",
+            "DF",
+            "FS",
+            "查看全部镇街",
+            "20人以下",
+            "20-99人",
+            "100-499人",
+            "500-999人",
+            "1000-9999人"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看匹配分析->收起匹配分析",
+        "url": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "headings": [
+          "智能岗位匹配",
+          "生产组长",
+          "软件工程师",
+          "维修技术员",
+          "线切割师傅",
+          "品检员",
+          "组装线长",
+          "光伏安装工",
+          "生产主管",
+          "设备维修工",
+          "数控车床师傅",
+          "电商运营"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "重置筛选",
+          "搜索",
+          "查看全部镇街",
+          "查看详情",
+          "查看匹配分析"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位名称、企业名称或技能",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页/职位搜索职位搜索智能岗位匹配按镇街、薪资、经验和技能快速筛选中山制造业岗位。重置筛选不限不限搜索 镇街石岐街道东区街道西区街道南区街道五桂山街道小榄镇古镇镇东升镇东凤镇阜沙镇查看全部镇街 月薪范围0-30K 企业规模20人以下20-99人100-499人500-999人1000人以上 技能标签CNC操作电工焊工PLC编程机械设计模具设计质检装配仓储管理电子维修CAD绘图数控编程注塑工艺表面处理SMT操作PCB设计品质管理共找到 959 个岗位匹配度最新薪资距离98%匹配度98%匹配度生产组长急招国盛祥永电子科技有限公司4934-7547K月薪南区街道1-3年不限全勤奖交通补贴员工体检生日福利班车接送查看详情南区街道 3月4日 招4人查看匹配分析98%匹配度98%匹配度软件工程师广东鑫盛电子电器有限公司5116-6540K月薪小榄镇不限不限节日福利加班费交通补贴股权激励查看详情小榄镇 3月20日 招9人查看匹配分析98%匹配度98%匹配度维修技术员广东鑫盛电子电器有限公司7845-12929K月薪小榄镇3-5年不限加班费交通补贴节日福利股权激励生日福利查看详情小榄镇 3月16日 招6人查看匹配分析98%匹配度98%匹配度线切割师傅华盛鑫鑫冲压件有限公司9151-11717K月薪南朗镇1-3年高中弹性工作节日福利班车接送员工旅游查看详情南朗镇 6月28日 招1人查看匹配分析98%匹配度98%匹配度品检员万达泰达五金电子有限公司5032-7664K月薪三乡镇5-10年高中员工旅游餐补高温补贴生日福利查看详情三乡镇 3月6日 招2人查看匹配分析98%匹配度98%匹配度组装线长急招华盛宏宏灯饰有限公司5762-8454K月薪五桂山街道1-3年不限员工体检节日福利培训提升年终奖查看详情五桂山街道 3月1日 招7人查看匹配分析98%匹配度98%匹配度光伏安装工急招安盛鑫昌新能源汽车有限公司8992-12976K月薪港口镇3-5年大专交通补贴餐补弹性工作节日福利带薪年假查看详情港口镇 3月3日 招2人查看匹配分析98%匹配度98%匹配度组装线长鑫达恒昌小家电有限公司4843-6448K月薪三角镇3-5年不限培训提升五险一金交通补贴员工旅游包食宿查看详情三角镇 5月23日 招5人查看匹配分析98%匹配度98%匹配度生产主管鑫达恒盛精密五金有限公司5211-7385K月薪东升镇1-3年高中住房补贴培训提升加班费员工体检查看详情东升镇 5月13日 招2人查看匹配分析98%匹配度98%匹配度线切割师傅盛达达鑫五金塑胶有限公司7728-12925K月薪小榄镇1-3年中专节日福利年终奖培训提升员工旅游查看详情小榄镇 4月2日 招2人查看匹配分析98%匹配度98%匹配度设备维修工国盛华泰机械设备有限公司7961-11468K日薪古镇镇不限中专五险一金带薪年假生日福利股权激励查看详情古镇镇 4月10日 招5人查看匹配分析98%匹配度98%匹配度数控车床师傅国盛华泰机械设备有限公司8074-13456K日薪古镇镇5-10年中专节日福利带薪年假生日福利弹性工作五险一金查看详情古镇镇 5月1日 招9人查看匹配分析98%匹配度98%匹配度电商运营安盛鑫德照明电器有限公司5421-8257K日薪横栏镇1-3年中专通讯补贴五险一金包食宿查看详情横栏镇 6月5日 招2人查看匹配分析98%匹配度98%匹配度喷涂工安盛达鑫机械五金有限公司8238-11586K日薪港口镇3-5年高中全勤奖绩效奖金包食宿交通补贴查看详情港口镇 6月26日 招2人查看匹配分析98%匹配度98%匹配度品检员急招万达永永精密机械有限公司4621-7144K日薪三角镇不限不限高温补贴生日福利包食宿住房补贴五险一金查看详情三角镇 6月24日 招1人查看匹配分析98%匹配度98%匹配度物料采购员急招中山达金照明科技有限公司8759-14581K计件黄圃镇1-3年大专生日福利通讯补贴餐补加班费弹性工作查看详情黄圃镇 3月26日 招8人查看匹配分析97%匹配度97%匹配度FAE现场应用急招国盛祥永电子科技有限公司4871-7614K月薪南区街道1-3年不限生日福利全勤奖节日福利查看详情南区街道 4月22日",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 9493,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析",
+          "label": "二层操作:查看匹配分析->收起匹配分析",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析.png",
+          "elementCount": 1200,
+          "interactiveCount": 101,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "重置筛选",
+            "搜索职位名称、企业名称或技能",
+            "搜索",
+            "SQ",
+            "DQ",
+            "XQ",
+            "NQ",
+            "WGS",
+            "XL",
+            "GZ",
+            "DS",
+            "DF",
+            "FS",
+            "查看全部镇街",
+            "20人以下",
+            "20-99人",
+            "100-499人",
+            "500-999人",
+            "1000-9999人"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部镇街",
+        "url": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "headings": [
+          "智能岗位匹配",
+          "生产组长",
+          "软件工程师",
+          "维修技术员",
+          "线切割师傅",
+          "品检员",
+          "组装线长",
+          "光伏安装工",
+          "生产主管",
+          "设备维修工",
+          "数控车床师傅",
+          "电商运营"
+        ],
+        "navLabels": [
+          "南 华南智造招聘 求职者端",
+          "南",
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "home",
+          "职位搜索",
+          "search",
+          "我的简历",
+          "file-text",
+          "镇街专区",
+          "environment",
+          "校园招聘",
+          "bank",
+          "学历提升",
+          "read",
+          "投递记录",
+          "history",
+          "个人中心",
+          "user",
+          "收起菜单"
+        ],
+        "buttons": [
+          "求职者端",
+          "重置筛选",
+          "搜索",
+          "收起镇街",
+          "查看详情",
+          "查看匹配分析"
+        ],
+        "links": [
+          "首页"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位、公司、技能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索职位名称、企业名称或技能",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南华南智造招聘求职者端首页职位搜索我的简历镇街专区校园招聘学历提升投递记录个人中心收起菜单求职者端3张三求职者首页/职位搜索职位搜索智能岗位匹配按镇街、薪资、经验和技能快速筛选中山制造业岗位。重置筛选不限不限搜索 镇街石岐街道东区街道西区街道南区街道五桂山街道小榄镇古镇镇东升镇东凤镇阜沙镇黄圃镇南头镇三角镇民众镇南朗镇港口镇沙溪镇大涌镇板芙镇三乡镇坦洲镇神湾镇横栏镇中山港街道（火炬开发区）翠亨新区（翠亨街道）收起镇街 月薪范围0-30K 企业规模20人以下20-99人100-499人500-999人1000人以上 技能标签CNC操作电工焊工PLC编程机械设计模具设计质检装配仓储管理电子维修CAD绘图数控编程注塑工艺表面处理SMT操作PCB设计品质管理共找到 959 个岗位匹配度最新薪资距离98%匹配度98%匹配度生产组长急招国盛祥永电子科技有限公司4934-7547K月薪南区街道1-3年不限全勤奖交通补贴员工体检生日福利班车接送查看详情南区街道 3月4日 招4人查看匹配分析98%匹配度98%匹配度软件工程师广东鑫盛电子电器有限公司5116-6540K月薪小榄镇不限不限节日福利加班费交通补贴股权激励查看详情小榄镇 3月20日 招9人查看匹配分析98%匹配度98%匹配度维修技术员广东鑫盛电子电器有限公司7845-12929K月薪小榄镇3-5年不限加班费交通补贴节日福利股权激励生日福利查看详情小榄镇 3月16日 招6人查看匹配分析98%匹配度98%匹配度线切割师傅华盛鑫鑫冲压件有限公司9151-11717K月薪南朗镇1-3年高中弹性工作节日福利班车接送员工旅游查看详情南朗镇 6月28日 招1人查看匹配分析98%匹配度98%匹配度品检员万达泰达五金电子有限公司5032-7664K月薪三乡镇5-10年高中员工旅游餐补高温补贴生日福利查看详情三乡镇 3月6日 招2人查看匹配分析98%匹配度98%匹配度组装线长急招华盛宏宏灯饰有限公司5762-8454K月薪五桂山街道1-3年不限员工体检节日福利培训提升年终奖查看详情五桂山街道 3月1日 招7人查看匹配分析98%匹配度98%匹配度光伏安装工急招安盛鑫昌新能源汽车有限公司8992-12976K月薪港口镇3-5年大专交通补贴餐补弹性工作节日福利带薪年假查看详情港口镇 3月3日 招2人查看匹配分析98%匹配度98%匹配度组装线长鑫达恒昌小家电有限公司4843-6448K月薪三角镇3-5年不限培训提升五险一金交通补贴员工旅游包食宿查看详情三角镇 5月23日 招5人查看匹配分析98%匹配度98%匹配度生产主管鑫达恒盛精密五金有限公司5211-7385K月薪东升镇1-3年高中住房补贴培训提升加班费员工体检查看详情东升镇 5月13日 招2人查看匹配分析98%匹配度98%匹配度线切割师傅盛达达鑫五金塑胶有限公司7728-12925K月薪小榄镇1-3年中专节日福利年终奖培训提升员工旅游查看详情小榄镇 4月2日 招2人查看匹配分析98%匹配度98%匹配度设备维修工国盛华泰机械设备有限公司7961-11468K日薪古镇镇不限中专五险一金带薪年假生日福利股权激励查看详情古镇镇 4月10日 招5人查看匹配分析98%匹配度98%匹配度数控车床师傅国盛华泰机械设备有限公司8074-13456K日薪古镇镇5-10年中专节日福利带薪年假生日福利弹性工作五险一金查看详情古镇镇 5月1日 招9人查看匹配分析98%匹配度98%匹配度电商运营安盛鑫德照明电器有限公司5421-8257K日薪横栏镇1-3年中专通讯补贴五险一金包食宿查看详情横栏镇 6月5日 招2人查看匹配分析98%匹配度98%匹配度喷涂工安盛达鑫机械五金有限公司8238-11586K日薪港口镇3-5年高中全勤奖绩效奖金包食宿交通补贴查看详情港口镇 6月26日 招2人查看匹配分析98%匹配度98%匹配度品检员急招万达永永精密机械有限公司4621-7144K日薪三角镇不限不限高温补贴生日福利包食宿住房补贴五险一金查看详情三角镇 6月24日 招1人查看匹配分析98%匹配度98%匹配度物料采购员急招中山达金照明科技有限公司8759-14581K计件黄圃镇1-3年大专生日福利通讯补贴餐补加班费弹性工作查看详情黄圃镇 3月26日 招8人查看匹配分析97%匹配度97%匹配度FAE现场应用急招",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 9493,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街",
+          "label": "操作:查看全部镇街",
+          "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街.png",
+          "elementCount": 1200,
+          "interactiveCount": 116,
+          "interactiveLabels": [
+            "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+            "首页",
+            "职位搜索",
+            "我的简历",
+            "镇街专区",
+            "校园招聘",
+            "学历提升",
+            "投递记录",
+            "个人中心",
+            "搜索职位、公司、技能...",
+            "求职者端",
+            "重置筛选",
+            "搜索职位名称、企业名称或技能",
+            "搜索",
+            "SQ",
+            "DQ",
+            "XQ",
+            "NQ",
+            "WGS",
+            "XL",
+            "GZ",
+            "DS",
+            "DF",
+            "FS",
+            "HP",
+            "NT",
+            "SJ",
+            "MZ",
+            "NL",
+            "GK"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看更多->查看匹配分析",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部镇街",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部镇街->查看镇街职位",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "职位搜索",
+        "label": "查看匹配分析",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "职位搜索",
+        "label": "查看匹配分析->收起匹配分析",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "职位搜索",
+        "label": "查看全部镇街",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 3,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/home",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "搜索职位名称、企业名称或关键词",
+          "搜索职位",
+          "查看全部镇街",
+          "查看更多",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/home",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-02-导航-首页.png",
+        "elementCount": 1200,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "搜索职位名称、企业名称或关键词",
+          "搜索职位",
+          "查看全部镇街",
+          "查看更多",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-03-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-03-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-03-操作-查看更多.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析",
+        "label": "二层操作:查看更多->查看匹配分析",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街",
+        "label": "操作:查看全部镇街",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/township",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街.png",
+        "elementCount": 1200,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "查看镇街职位"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位",
+        "label": "二层操作:查看全部镇街->查看镇街职位",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/township?township=XQ",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位.png",
+        "elementCount": 1200,
+        "interactiveCount": 54,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "收起详情",
+          "重置",
+          "在招职位 (67)",
+          "查看详情",
+          "查看全部 67 个职位",
+          "查看镇街职位"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索",
+        "label": "导航:职位搜索",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析",
+        "label": "操作:查看匹配分析",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析",
+        "label": "二层操作:查看匹配分析->收起匹配分析",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街",
+        "label": "操作:查看全部镇街",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街.png",
+        "elementCount": 1200,
+        "interactiveCount": 116,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "HP",
+          "NT",
+          "SJ",
+          "MZ",
+          "NL",
+          "GK"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49210/jobseeker/home",
+    "representativeScreenshotLabel": "中山智能招聘 · 找到你的理想工作"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 10,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/home",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "搜索职位名称、企业名称或关键词",
+          "搜索职位",
+          "查看全部镇街",
+          "查看更多",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/home",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-02-导航-首页.png",
+        "elementCount": 1200,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "搜索职位名称、企业名称或关键词",
+          "搜索职位",
+          "查看全部镇街",
+          "查看更多",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-03-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-03-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-03-操作-查看更多.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析",
+        "label": "二层操作:查看更多->查看匹配分析",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-04-二层操作-查看更多-查看匹配分析.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街",
+        "label": "操作:查看全部镇街",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/township",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-05-操作-查看全部镇街.png",
+        "elementCount": 1200,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "查看镇街职位"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位",
+        "label": "二层操作:查看全部镇街->查看镇街职位",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/township?township=XQ",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-06-二层操作-查看全部镇街-查看镇街职位.png",
+        "elementCount": 1200,
+        "interactiveCount": 54,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "收起详情",
+          "重置",
+          "在招职位 (67)",
+          "查看详情",
+          "查看全部 67 个职位",
+          "查看镇街职位"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索",
+        "label": "导航:职位搜索",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-07-导航-职位搜索.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析",
+        "label": "操作:查看匹配分析",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-08-操作-查看匹配分析.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析",
+        "label": "二层操作:查看匹配分析->收起匹配分析",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-09-二层操作-查看匹配分析-收起匹配分析.png",
+        "elementCount": 1200,
+        "interactiveCount": 101,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "查看全部镇街",
+          "20人以下",
+          "20-99人",
+          "100-499人",
+          "500-999人",
+          "1000-9999人"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街",
+        "label": "操作:查看全部镇街",
+        "finalUrl": "http://127.0.0.1:49210/jobseeker/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89210/runtime-check/codex-cycle24-rerun/may-89210-codex-cycle24-rerun-structure-10-操作-查看全部镇街.png",
+        "elementCount": 1200,
+        "interactiveCount": 116,
+        "interactiveLabels": [
+          "首页 职位搜索 我的简历 镇街专区 校园招聘 学历提升 投递记录 个人中心",
+          "首页",
+          "职位搜索",
+          "我的简历",
+          "镇街专区",
+          "校园招聘",
+          "学历提升",
+          "投递记录",
+          "个人中心",
+          "搜索职位、公司、技能...",
+          "求职者端",
+          "重置筛选",
+          "搜索职位名称、企业名称或技能",
+          "搜索",
+          "SQ",
+          "DQ",
+          "XQ",
+          "NQ",
+          "WGS",
+          "XL",
+          "GZ",
+          "DS",
+          "DF",
+          "FS",
+          "HP",
+          "NT",
+          "SJ",
+          "MZ",
+          "NL",
+          "GK"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1824,
+    "height": 1600,
+    "scrollWidth": 1792,
+    "scrollHeight": 2381
+  },
+  "initialBodyTextPreview": "南\n华南智造招聘\n求职者端\n首页\n职位搜索\n我的简历\n镇街专区\n校园招聘\n学历提升\n投递记录\n个人中心\n收起菜单\n求职者端\n3\n张三\n求职者\n首页\n中山智能招聘 · 找到你的理想工作\n\n25个镇街产业专区 · 108家认证企业 · 960个热招岗位\n\n选择镇街\n职位类型\n搜索职位\n热门搜索：\nCNC操作员\n电工\n普工\n装配工\n质检\n仓管\n在招职位\n960个\n+12.5%\n月环比\n在招企业\n150家\n+8.3%\n月环比\n认证企业\n108家\n+6.8%\n月环比\n活跃求职者\n500人\n+15.7%\n月环比\n覆盖镇街\n25全市个\n快捷入口\n\n直达专属招聘专区\n\n技工专区\n\n高薪技术岗位\n\n查看详情\n应届生专区\n\n校招专属岗位\n\n查看详情\n蓝领普工\n\n大量基础岗位\n\n查看详情\n2 门学习中\n学历提升\n\n职业技能培训\n\n查看详情\n1 个待面试\n校园招聘会\n\n近期宣讲会\n\n查看详情\n镇街招聘专区\n\n中山市25个镇街产业集群招聘\n\n查看全部镇街\n石岐街道\n⚡\n企业\n6\n职位\n46\n电子\n食品\n东区街道\n⚡\n企业\n4\n职位\n29\n电子\n工业机器人\n西区街道\n企业\n6\n职位\n37\n机械装备\n五金\n南区街道\n⚡\n企业\n3\n职位\n6\n电子\n家电\n五桂山街道\n🍜\n企业\n5\n职位\n24\n食品\n电子\n小榄镇\n企业\n5\n职位\n33\n五金\n电子\n古镇镇\n💡\n企业\n19\n职位\n120\n灯饰\n五金\n东升镇\n企业\n8\n职位\n59\n五金\n家具\n东凤镇\n企业\n7\n职位\n43\n家电\n电子\n阜沙镇\n企业\n9\n职位\n44\n五金\n机械装备\n黄圃镇\n🍜\n企业\n2\n职位\n9\n食品\n五金\n南头镇\n企业\n3\n职位\n10\n家电\n电子\n三角镇\n⚡\n企业\n7\n职位\n41\n电子\n机械装备\n民众镇\n🍜\n企业\n4\n职位\n20\n食品\n家具\n南朗镇\n🛋️\n企业\n6\n职位\n59\n家具\n电子\n港口镇\n企业\n2\n职位\n9\n机械装备\n五金\n沙溪镇\n👕\n企业\n4\n职位\n31\n休闲服\n家具\n大涌镇\n🛋️\n企业\n6\n职位\n37\n家具\n休闲服\n板芙镇\n🛋️\n企业\n8\n职位\n65\n家具\n五金\n三乡镇\n🛋️\n企业\n9\n职位\n62\n家具\n灯饰\n坦洲镇\n⚡\n企业\n8\n职位\n50\n电子\n家具\n神湾镇\n🍜\n企业\n10\n职位\n55\n食品\n家具\n横栏镇\n💡\n企业\n6\n职位\n49\n灯饰\n五金\n中山港街道（火炬开发区）\n⚡\n企业\n1\n职位\n9\n电子\n新能源\n翠亨新区（翠亨街道）\n企业\n2\n职位\n13\n新能源\n工业机器人\n智能职位推荐\n\n基于您的简历和偏好为您匹配\n\n查看更多\n85%\n匹配度\n仓库管理员\n\n5478-7223K\n月薪\n三角镇\n不限\n中专\n绩效奖金\n股权激励\n带薪年假\n员工旅游\n查看详情\n72%\n匹配度\n铣床技工\n\n4265-6592K\n月薪\n东凤镇\n1-3年\n中专\n包食宿\n班车接送\n交通补贴\n绩效奖金\n查看详情\n83%\n匹配度\n软件工程师\n\n4965-7347K\n月薪\n古镇镇\n5-10年\n高中\n节日福利\n五险一金\n餐补\n绩效奖金\n查看详情\n85%\n匹配度\nLED焊锡工\n\n8633-11509K\n日薪\n横栏镇\n不限\n不限\n交通补贴\n带薪年假\n节日福利\n餐补\n住房补贴\n查看详情\n88%\n匹配度\n线切割师傅\n\n5073-7371K\n月薪\n横栏镇\n3-5年\n中专\n加班费\n包食宿\n年终奖\n班车接送\n全勤奖\n查看详情\n94%\n匹配度\n采购专员\n\n4617-7580K\n月薪\n东升镇\n3-5年\n高中\n五险一金\n员工体检\n交通补贴\n班车接送\n生日福利\n查看详情\n招聘热度趋势\n\n近6个月镇街招聘数据\n\n1月\n2月\n3月\n4月\n5月\n6月\n0\n400\n800\n1200\n1600\n招聘热度\n投递数量\n热门镇街 TOP5\n1\n古镇镇\n120岗\n2\n板芙镇\n65岗\n3\n三乡镇\n62岗\n4\n东升镇\n59岗\n5\n南朗镇\n59岗\n© 2026 华南制",
+  "bodyTextPreview": "南\n华南智造招聘\n求职者端\n首页\n职位搜索\n我的简历\n镇街专区\n校园招聘\n学历提升\n投递记录\n个人中心\n收起菜单\n求职者端\n3\n张三\n求职者\n首页\n中山智能招聘 · 找到你的理想工作\n\n25个镇街产业专区 · 108家认证企业 · 941个热招岗位\n\n选择镇街\n职位类型\n搜索职位\n热门搜索：\nCNC操作员\n电工\n普工\n装配工\n质检\n仓管\n在招职位\n301个\n+12.5%\n月环比\n在招企业\n48家\n+8.3%\n月环比\n认证企业\n35家\n+6.8%\n月环比\n活跃求职者\n160人\n+15.7%\n月环比\n覆盖镇街\n8全市个\n快捷入口\n\n直达专属招聘专区\n\n技工专区\n\n高薪技术岗位\n\n查看详情\n应届生专区\n\n校招专属岗位\n\n查看详情\n蓝领普工\n\n大量基础岗位\n\n查看详情\n2 门学习中\n学历提升\n\n职业技能培训\n\n查看详情\n1 个待面试\n校园招聘会\n\n近期宣讲会\n\n查看详情\n镇街招聘专区\n\n中山市25个镇街产业集群招聘\n\n查看全部镇街\n石岐街道\n⚡\n企业\n3\n职位\n19\n电子\n食品\n东区街道\n⚡\n企业\n1\n职位\n4\n电子\n工业机器人\n西区街道\n企业\n5\n职位\n29\n机械装备\n五金\n南区街道\n⚡\n企业\n9\n职位\n80\n电子\n家电\n五桂山街道\n🍜\n企业\n5\n职位\n25\n食品\n电子\n小榄镇\n企业\n13\n职位\n69\n五金\n电子\n古镇镇\n💡\n企业\n9\n职位\n49\n灯饰\n五金\n东升镇\n企业\n7\n职位\n44\n五金\n家具\n东凤镇\n企业\n5\n职位\n32\n家电\n电子\n阜沙镇\n企业\n4\n职位\n38\n五金\n机械装备\n黄圃镇\n🍜\n企业\n9\n职位\n66\n食品\n五金\n南头镇\n企业\n7\n职位\n48\n家电\n电子\n三角镇\n⚡\n企业\n9\n职位\n60\n电子\n机械装备\n民众镇\n🍜\n企业\n6\n职位\n44\n食品\n家具\n南朗镇\n🛋️\n企业\n4\n职位\n22\n家具\n电子\n港口镇\n企业\n3\n职位\n15\n机械装备\n五金\n沙溪镇\n👕\n企业\n7\n职位\n32\n休闲服\n家具\n大涌镇\n🛋️\n企业\n7\n职位\n50\n家具\n休闲服\n板芙镇\n🛋️\n企业\n9\n职位\n44\n家具\n五金\n三乡镇\n🛋️\n企业\n6\n职位\n38\n家具\n灯饰\n坦洲镇\n⚡\n企业\n10\n职位\n63\n电子\n家具\n神湾镇\n🍜\n企业\n2\n职位\n16\n食品\n家具\n横栏镇\n💡\n企业\n5\n职位\n18\n灯饰\n五金\n中山港街道（火炬开发区）\n⚡\n企业\n4\n职位\n27\n电子\n新能源\n翠亨新区（翠亨街道）\n企业\n1\n职位\n9\n新能源\n工业机器人\n智能职位推荐\n\n基于您的简历和偏好为您匹配\n\n查看更多\n30%\n匹配度\n生产组长\n\n5418-7605K\n月薪\n三角镇\n5-10年\n高中\n带薪年假\n住房补贴\n通讯补贴\n查看详情\n24%\n匹配度\n电商运营\n\n4846-6427K\n月薪\n南区街道\n1-3年\n中专\n餐补\n班车接送\n带薪年假\n五险一金\n查看详情\n27%\n匹配度\nQA品质保证\n\n9825-13115K\n月薪\n南区街道\n1-3年\n大专\n餐补\n包食宿\n班车接送\n培训提升\n高温补贴\n查看详情\n30%\n匹配度\nQE工程师\n\n4853-7472K\n计件\n小榄镇\n1-3年\n中专\n班车接送\n绩效奖金\n年终奖\n生日福利\n查看详情\n27%\n匹配度\n光学工程师\n\n4183-5707K\n月薪\n坦洲镇\n1-3年\n不限\n绩效奖金\n节日福利\n五险一金\n查看详情\n30%\n匹配度\nPM项目经理\n\n4710-6272K\n月薪\n板芙镇\n3-5年\n高中\n包食宿\n通讯补贴\n培训提升\n节日福利\n查看详情\n招聘热度趋势\n\n近6个月镇街招聘数据\n\n1月\n2月\n3月\n4月\n5月\n6月\n0\n400\n800\n1200\n1600\n招聘热度\n投递数量\n热门镇街 TOP5\n1\n南区街道\n80岗\n2\n小榄镇\n69岗\n3\n黄圃镇\n66岗\n4\n坦洲镇\n63岗\n5\n三角镇\n60岗\n© 2026 华南制造业智能招聘中台 · Powered by 科技创新\n0",
+  "apiBase": "http://127.0.0.1:59210",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59210/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59210/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59210/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59210/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59210/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59210/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59210/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"kpis\":[{\"name\":\"企业总数\",\"value\":80,\"unit\":\"家\"},{\"name\":\"待审核企业\",\"value\":8,\"unit\":\"家\"},{\"name\":\"补贴申请总数\",\"value\":25,\"unit\":\"件\"},{\"name\":\"待审核补贴\",\"value\":0,\"unit\":\"件\"},{\"name\":\"已发放补贴\",\"value\":0,\"unit\":\"元\"},{\"name\":\"平台用户数\",\"value\":28600,\"unit\":\"人\"}],\"recentActivities\":[{\"type\":\"企业审核\",\"content\":\"中山市XX五金有限公司提交审核申请\",\"time\":\"10分钟前\",\"status\":\"pending\"},{\"type\":\"补贴审批\",\"content\":\"员工张三技能提升补贴通过镇街复核\",\"time\":\"30分钟前\",\"status\":\"approved\"},{\"type\":\"企业审核\",\"content\":\"中山市YY灯饰有限公司审核通过\",\"time\":\"1小"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-CIXQT33J.js?v=f21b7f7d",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper4 \n    at span\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:30752:16\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Dropdown (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:31050:28)\n    at Dropdown2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:34724:5)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-CIXQT33J.js?v=f21b7f7d",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper4 \n    at span\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:30752:16\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Dropdown (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:31050:28)\n    at Dropdown2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:34724:5)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-CIXQT33J.js?v=f21b7f7d",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper4 \n    at span\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:30752:16\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Dropdown (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:31050:28)\n    at Dropdown2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:34724:5)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-CIXQT33J.js?v=f21b7f7d",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper4 \n    at span\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:30752:16\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Dropdown (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:31050:28)\n    at Dropdown2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:34724:5)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49210/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-CIXQT33J.js?v=f21b7f7d",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper4 \n    at span\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:30752:16\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Dropdown (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:31050:28)\n    at Dropdown2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:34724:5)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:22389:24\n    at DomWrapper4 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1314:5)\n    at SingleObserver (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1328:24)\n    at ResizeObserver3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:1405:24)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:23042:34\n    at Tooltip2 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:28698:32)\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:29368:16\n    at div\n    at Item3 (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60482:3)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:60602:7\n    at header\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66364:16\n    at Header\n    at Header (http://127.0.0.1:49210/src/layouts/components/Header.tsx:32:20)\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at div\n    at http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:66383:16\n    at Layout\n    at AppLayout (http://127.0.0.1:49210/src/layouts/AppLayout.tsx:27:37)\n    at RenderedRoute (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:6626:26)\n    at Routes (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7561:3)\n    at AppRouter\n    at Router (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:7500:13)\n    at BrowserRouter (http://127.0.0.1:49210/node_modules/.vite/deps/react-router-dom.js?v=f21b7f7d:10787:3)\n    at div\n    at App (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:21027:16)\n    at LocaleProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:3756:13)\n    at MotionWrapper (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6290:32)\n    at ProviderChildren (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6398:5)\n    at ConfigProvider (http://127.0.0.1:49210/node_modules/.vite/deps/antd.js?v=f21b7f7d:6689:27)\n    at ThemeProvider (http://127.0.0.1:49210/src/theme/antdConfig.tsx:283:33)\n    at App (http://127.0.0.1:49210/src/App.tsx?t=1781560926938:24:22)",
+      "location": {
+        "url": "http://127.0.0.1:49210/node_modules/.vite/deps/chunk-FD5SMSK5.js?v=f21b7f7d",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

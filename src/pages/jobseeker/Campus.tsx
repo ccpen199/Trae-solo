@@ -17,6 +17,8 @@ import {
   Smile,
   Mic,
   MessageSquare,
+  ChevronDown,
+  CalendarCheck2,
 } from 'lucide-react';
 import {
   Tabs,
@@ -30,6 +32,13 @@ import {
 } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import { cn } from '@/lib/utils';
+import {
+  campusProgress,
+  type MyCampusSession,
+  type MyWrittenExam,
+  type MyAIInterview,
+  type MyFinalInterview,
+} from '@/mock/progress';
 
 interface CampusSessionMock {
   id: string;
@@ -289,6 +298,8 @@ export default function Campus() {
   const [viewMode, setViewMode] = useState<'calendar' | 'list'>('list');
   const [currentMonth, setCurrentMonth] = useState<Dayjs>(dayjs());
 
+  const { sessions, exams, aiInterviews, finalInterviews } = campusProgress;
+
   const sessionDates = useMemo(() => {
     const map = new Map<string, CampusSessionMock[]>();
     mockSessions.forEach((s) => {
@@ -429,6 +440,229 @@ export default function Campus() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1, duration: 0.4 }}
       >
+        <div className="bg-white rounded-xl border border-gray-100 p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+              <CalendarCheck2 size={20} className="text-industrial-blue-500" />
+              我的校招进度
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.4 }}
+              className="rounded-xl border border-gray-100 overflow-hidden hover:shadow-card-hover transition-all duration-300"
+            >
+              <div className="bg-gradient-to-r from-cyan-500 to-cyan-600 p-3">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <CalendarDays size={16} />
+                  宣讲会预约
+                </h3>
+              </div>
+              <div className="p-4">
+                <div className="flex items-end justify-between mb-3">
+                  <div>
+                    <div className="text-3xl font-bold text-gray-900">{sessions.length}</div>
+                    <div className="text-xs text-gray-500">已预约</div>
+                  </div>
+                  {sessions.length > 0 && (
+                    <Tag color="success" className="!m-0">
+                      {sessions[0].status}
+                    </Tag>
+                  )}
+                </div>
+                {sessions.length > 0 ? (
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium text-gray-800 truncate">
+                      {sessions[0].name}
+                    </div>
+                    <div className="text-xs text-gray-500 flex items-center gap-1">
+                      <Clock size={12} />
+                      {dayjs(sessions[0].date).format('MM-DD')} {sessions[0].time}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-400">暂无安排，去看看 →</div>
+                )}
+                <div className="mt-3 pt-3 border-t border-gray-50">
+                  <Button
+                    type="link"
+                    size="small"
+                    className="!p-0 !h-auto !text-xs !text-industrial-blue-600"
+                    onClick={() => setActiveTab('sessions')}
+                  >
+                    查看全部 <ChevronDown size={12} className="inline" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="rounded-xl border border-gray-100 overflow-hidden hover:shadow-card-hover transition-all duration-300"
+            >
+              <div className="bg-gradient-to-r from-vital-orange-500 to-vital-orange-600 p-3">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <FileText size={16} />
+                  在线笔试
+                </h3>
+              </div>
+              <div className="p-4">
+                <div className="flex items-end justify-between mb-3">
+                  <div>
+                    <div className="text-3xl font-bold text-gray-900">
+                      {exams.filter((e) => e.status !== '已完成').length}
+                    </div>
+                    <div className="text-xs text-gray-500">待考试</div>
+                  </div>
+                  {exams.length > 0 && exams[0].status !== '已完成' && (
+                    <Tag color="warning" className="!m-0">
+                      进行中
+                    </Tag>
+                  )}
+                </div>
+                {exams.filter((e) => e.status !== '已完成').length > 0 ? (
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium text-gray-800 truncate">
+                      {exams.filter((e) => e.status !== '已完成')[0].position}
+                    </div>
+                    <div className="text-xs text-vital-orange-600 flex items-center gap-1 font-medium">
+                      <Timer size={12} />
+                      {countdownText(exams.filter((e) => e.status !== '已完成')[0].deadline)}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-400">暂无安排，去看看 →</div>
+                )}
+                <div className="mt-3 pt-3 border-t border-gray-50">
+                  <Button
+                    type="link"
+                    size="small"
+                    className="!p-0 !h-auto !text-xs !text-industrial-blue-600"
+                    onClick={() => setActiveTab('exam')}
+                  >
+                    查看全部 <ChevronDown size={12} className="inline" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.4 }}
+              className="rounded-xl border border-gray-100 overflow-hidden hover:shadow-card-hover transition-all duration-300"
+            >
+              <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-3">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <Bot size={16} />
+                  AI 面试
+                </h3>
+              </div>
+              <div className="p-4">
+                <div className="flex items-end justify-between mb-3">
+                  <div>
+                    <div className="text-3xl font-bold text-gray-900">
+                      {aiInterviews.filter((i) => i.status !== '已完成').length}
+                    </div>
+                    <div className="text-xs text-gray-500">待面试</div>
+                  </div>
+                  {aiInterviews.length > 0 && (
+                    <Tag color="processing" className="!m-0">
+                      {aiInterviews[0].appointmentStatus}
+                    </Tag>
+                  )}
+                </div>
+                {aiInterviews.filter((i) => i.status !== '已完成').length > 0 ? (
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium text-gray-800 truncate">
+                      {aiInterviews.filter((i) => i.status !== '已完成')[0].position}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      评分维度：表情{aiInterviews[0].expressionWeight}% / 语音
+                      {aiInterviews[0].speechWeight}% / 语义{aiInterviews[0].semanticsWeight}%
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-400">暂无安排，去看看 →</div>
+                )}
+                <div className="mt-3 pt-3 border-t border-gray-50">
+                  <Button
+                    type="link"
+                    size="small"
+                    className="!p-0 !h-auto !text-xs !text-industrial-blue-600"
+                    onClick={() => setActiveTab('ai')}
+                  >
+                    查看全部 <ChevronDown size={12} className="inline" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="rounded-xl border border-gray-100 overflow-hidden hover:shadow-card-hover transition-all duration-300"
+            >
+              <div className="bg-gradient-to-r from-industrial-blue-500 to-industrial-blue-600 p-3">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <Video size={16} />
+                  HR 终面
+                </h3>
+              </div>
+              <div className="p-4">
+                <div className="flex items-end justify-between mb-3">
+                  <div>
+                    <div className="text-3xl font-bold text-gray-900">{finalInterviews.length}</div>
+                    <div className="text-xs text-gray-500">终面排期</div>
+                  </div>
+                  {finalInterviews.length > 0 && (
+                    <Tag
+                      color={finalInterviews[0].type === '线上' ? 'purple' : 'orange'}
+                      className="!m-0"
+                    >
+                      {finalInterviews[0].type}
+                    </Tag>
+                  )}
+                </div>
+                {finalInterviews.length > 0 ? (
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium text-gray-800 truncate">
+                      {finalInterviews[0].position}
+                    </div>
+                    <div className="text-xs text-gray-500 flex items-center gap-1">
+                      <Clock size={12} />
+                      {dayjs(finalInterviews[0].date).format('MM-DD')} {finalInterviews[0].time}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-400">暂无安排，去看看 →</div>
+                )}
+                <div className="mt-3 pt-3 border-t border-gray-50">
+                  <Button
+                    type="link"
+                    size="small"
+                    className="!p-0 !h-auto !text-xs !text-industrial-blue-600"
+                    onClick={() => setActiveTab('final')}
+                  >
+                    查看全部 <ChevronDown size={12} className="inline" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.4 }}
+      >
         <Tabs
           activeKey={activeTab}
           onChange={setActiveTab}
@@ -444,6 +678,55 @@ export default function Campus() {
               ),
               children: (
                 <div className="space-y-4">
+                  {sessions.length > 0 && (
+                    <div className="bg-gradient-to-r from-cyan-50 to-white rounded-xl border border-cyan-100 p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                          <CalendarDays size={16} className="text-cyan-500" />
+                          我的预约
+                          <Badge count={sessions.length} size="small" />
+                        </h3>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {sessions.map((session, idx) => (
+                          <motion.div
+                            key={session.id}
+                            initial={{ opacity: 0, x: -16 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.1 + idx * 0.05, duration: 0.4 }}
+                            className="bg-white rounded-lg p-3 border border-cyan-100"
+                          >
+                            <div className="flex items-start justify-between mb-2">
+                              <h4 className="text-sm font-medium text-gray-900 truncate flex-1">
+                                {session.name}
+                              </h4>
+                              <Tag
+                                color={session.status === '待参加' ? 'success' : 'blue'}
+                                className="!m-0 !ml-2 flex-shrink-0"
+                              >
+                                {session.status}
+                              </Tag>
+                            </div>
+                            <div className="text-xs text-gray-500 space-y-1">
+                              <div className="flex items-center gap-1">
+                                <Building2 size={12} />
+                                {session.school}
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <Clock size={12} />
+                                {dayjs(session.date).format('MM-DD')} {session.time}
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <MapPin size={12} />
+                                {session.venue}
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex items-center justify-between">
                     <Radio.Group
                       value={viewMode}
@@ -596,6 +879,60 @@ export default function Campus() {
               ),
               children: (
                 <div className="space-y-4">
+                  {exams.filter((e) => e.status !== '已完成').length > 0 && (
+                    <div className="bg-gradient-to-r from-vital-orange-50 to-white rounded-xl border border-vital-orange-100 p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                          <FileText size={16} className="text-vital-orange-500" />
+                          我的待考
+                          <Badge
+                            count={exams.filter((e) => e.status !== '已完成').length}
+                            size="small"
+                          />
+                        </h3>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {exams
+                          .filter((e) => e.status !== '已完成')
+                          .map((exam, idx) => (
+                            <motion.div
+                              key={exam.id}
+                              initial={{ opacity: 0, x: -16 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.1 + idx * 0.05, duration: 0.4 }}
+                              className="bg-white rounded-lg p-3 border border-vital-orange-100"
+                            >
+                              <div className="flex items-start justify-between mb-2">
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="text-sm font-medium text-gray-900 truncate">
+                                    {exam.position}
+                                  </h4>
+                                  <p className="text-xs text-gray-500 truncate">
+                                    {exam.enterprise}
+                                  </p>
+                                </div>
+                                <Tag
+                                  color={exam.status === '进行中' ? 'warning' : 'processing'}
+                                  className="!m-0 !ml-2 flex-shrink-0"
+                                >
+                                  {exam.status}
+                                </Tag>
+                              </div>
+                              <div className="flex items-center justify-between text-xs">
+                                <div className="text-gray-500">
+                                  {exam.duration}分钟 · {exam.questionCount}题
+                                </div>
+                                <div className="text-vital-orange-600 font-medium flex items-center gap-1">
+                                  <Timer size={12} />
+                                  {countdownText(exam.deadline)}
+                                </div>
+                              </div>
+                            </motion.div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
                   <p className="text-sm text-gray-500">
                     共 {mockWrittenExams.length} 场受邀笔试
                   </p>
@@ -670,6 +1007,57 @@ export default function Campus() {
               ),
               children: (
                 <div className="space-y-4">
+                  {aiInterviews.filter((i) => i.status !== '已完成').length > 0 && (
+                    <div className="bg-gradient-to-r from-purple-50 to-white rounded-xl border border-purple-100 p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                          <Bot size={16} className="text-purple-500" />
+                          我的面试
+                          <Badge
+                            count={aiInterviews.filter((i) => i.status !== '已完成').length}
+                            size="small"
+                          />
+                        </h3>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {aiInterviews
+                          .filter((i) => i.status !== '已完成')
+                          .map((interview, idx) => (
+                            <motion.div
+                              key={interview.id}
+                              initial={{ opacity: 0, x: -16 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.1 + idx * 0.05, duration: 0.4 }}
+                              className="bg-white rounded-lg p-3 border border-purple-100"
+                            >
+                              <div className="flex items-start justify-between mb-2">
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="text-sm font-medium text-gray-900 truncate">
+                                    {interview.position}
+                                  </h4>
+                                  <p className="text-xs text-gray-500 truncate">
+                                    {interview.enterprise}
+                                  </p>
+                                </div>
+                                <Tag color="processing" className="!m-0 !ml-2 flex-shrink-0">
+                                  {interview.appointmentStatus}
+                                </Tag>
+                              </div>
+                              <div className="flex items-center justify-between text-xs">
+                                <div className="text-gray-500">
+                                  {interview.questionCount}题 · 每题{interview.durationPerQuestion}秒
+                                </div>
+                                <div className="text-purple-600 font-medium flex items-center gap-1">
+                                  <Timer size={12} />
+                                  {countdownText(interview.deadline)}
+                                </div>
+                              </div>
+                            </motion.div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
                   <p className="text-sm text-gray-500">
                     共 {mockAIInterviews.length} 个AI面试任务
                   </p>
@@ -785,6 +1173,66 @@ export default function Campus() {
               ),
               children: (
                 <div className="space-y-4">
+                  {finalInterviews.length > 0 && (
+                    <div className="bg-gradient-to-r from-industrial-blue-50 to-white rounded-xl border border-industrial-blue-100 p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                          <Video size={16} className="text-industrial-blue-500" />
+                          我的排期
+                          <Badge count={finalInterviews.length} size="small" />
+                        </h3>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {finalInterviews.map((interview, idx) => (
+                          <motion.div
+                            key={interview.id}
+                            initial={{ opacity: 0, x: -16 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.1 + idx * 0.05, duration: 0.4 }}
+                            className="bg-white rounded-lg p-3 border border-industrial-blue-100"
+                          >
+                            <div className="flex items-start gap-3">
+                              <div
+                                className={cn(
+                                  'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
+                                  interview.type === '线上' ? 'bg-purple-50' : 'bg-vital-orange-50'
+                                )}
+                              >
+                                {interview.type === '线上' ? (
+                                  <Video size={18} className="text-purple-600" />
+                                ) : (
+                                  <MapPin size={18} className="text-vital-orange-600" />
+                                )}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Tag
+                                    color={interview.type === '线上' ? 'purple' : 'orange'}
+                                    className="!m-0"
+                                  >
+                                    {interview.type}
+                                  </Tag>
+                                  <span className="text-xs text-gray-500">
+                                    {dayjs(interview.date).format('MM-DD')} {interview.time}
+                                  </span>
+                                </div>
+                                <h4 className="text-sm font-medium text-gray-900 truncate">
+                                  {interview.position}
+                                </h4>
+                                <p className="text-xs text-gray-500 truncate">
+                                  {interview.enterprise}
+                                </p>
+                                <p className="text-xs text-gray-400 truncate mt-0.5">
+                                  面试官：{interview.interviewer}
+                                </p>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-2">
                       <div className="bg-white rounded-xl border border-gray-100 p-4">

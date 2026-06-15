@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type StatsCardTheme = 'blue' | 'orange' | 'green' | 'purple';
+export type StatsCardTheme = 'blue' | 'orange' | 'green' | 'purple' | 'cyan';
 
 export interface StatsCardProps {
   title: string;
@@ -59,6 +59,13 @@ const THEME_CONFIG: Record<StatsCardTheme, {
     valueColor: 'text-purple-700',
     accentColor: '#722ED1',
   },
+  cyan: {
+    bgGradient: 'from-cyan-50 to-white',
+    iconBg: 'bg-cyan-100',
+    iconColor: 'text-cyan-600',
+    valueColor: 'text-cyan-700',
+    accentColor: '#0891B2',
+  },
 };
 
 const DEFAULT_ICONS: Record<StatsCardTheme, React.ReactNode> = {
@@ -66,6 +73,7 @@ const DEFAULT_ICONS: Record<StatsCardTheme, React.ReactNode> = {
   orange: <Briefcase size={20} />,
   green: <DollarSign size={20} />,
   purple: <BarChart3 size={20} />,
+  cyan: <BarChart3 size={20} />,
 };
 
 function useCountUp(target: number | string, duration: number = 1200): number | string {

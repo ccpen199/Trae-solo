@@ -426,12 +426,19 @@ export interface JDMatchResult {
 /**
  * 技能对齐项
  */
+export interface LearningPath {
+  courseLink: string;
+  duration: string;
+  expectedOutcome: string;
+}
+
 export interface SkillAlignmentItem {
   name: string;
   level?: string;
   required?: string;
   suggestion?: string;
   bonus?: string;
+  learningPath?: LearningPath;
 }
 
 /**

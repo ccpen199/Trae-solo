@@ -1,4 +1,4 @@
-import { TownshipCode, IndustryTag } from '../../shared/types';
+import { TownshipCode, IndustryTag, Enterprise, JobPosition } from '../../shared/types';
 
 export type TownshipData = {
   code: TownshipCode;
@@ -7,6 +7,7 @@ export type TownshipData = {
   description: string;
   population: number;
   openEnterpriseCount: number;
+  openJobCount: number;
   enterpriseWeight: Record<IndustryTag, number>;
 };
 
@@ -18,6 +19,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中山市中心城区，历史文化核心区，商业服务业发达，家电电子产业聚集',
     population: 205000,
     openEnterpriseCount: 186,
+    openJobCount: 1488,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 5,
       [IndustryTag.LIGHTING]: 3,
@@ -38,6 +40,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中山市政治经济文化中心，CBD核心区，高端服务业和高新技术产业聚集',
     population: 286000,
     openEnterpriseCount: 245,
+    openJobCount: 2205,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 4,
       [IndustryTag.LIGHTING]: 2,
@@ -58,6 +61,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '商贸物流中心，专业市场聚集，装备制造和五金产业发达',
     population: 132000,
     openEnterpriseCount: 158,
+    openJobCount: 1264,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 20,
       [IndustryTag.LIGHTING]: 5,
@@ -78,6 +82,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '生态宜居新区，电子信息和食品产业聚集区',
     population: 92000,
     openEnterpriseCount: 112,
+    openJobCount: 896,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 8,
       [IndustryTag.LIGHTING]: 5,
@@ -98,6 +103,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中山市生态保护区，生态旅游和绿色产业聚集',
     population: 48000,
     openEnterpriseCount: 56,
+    openJobCount: 392,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 5,
       [IndustryTag.LIGHTING]: 3,
@@ -118,6 +124,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国五金制品产业基地，锁具、燃气具、LED产业聚集，中山北部中心镇',
     population: 526000,
     openEnterpriseCount: 486,
+    openJobCount: 4374,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 35,
       [IndustryTag.LIGHTING]: 15,
@@ -138,6 +145,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国灯饰之都，灯饰照明产业占全国70%以上市场份额',
     population: 235000,
     openEnterpriseCount: 385,
+    openJobCount: 3465,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 12,
       [IndustryTag.LIGHTING]: 55,
@@ -158,6 +166,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国办公家具重镇，五金机械产业聚集',
     population: 138000,
     openEnterpriseCount: 165,
+    openJobCount: 1320,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 25,
       [IndustryTag.LIGHTING]: 5,
@@ -178,6 +187,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国小家电产业基地，知名家电品牌聚集地',
     population: 129000,
     openEnterpriseCount: 178,
+    openJobCount: 1602,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 15,
       [IndustryTag.LIGHTING]: 5,
@@ -198,6 +208,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '精细化工和五金模具产业镇',
     population: 58000,
     openEnterpriseCount: 78,
+    openJobCount: 624,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 28,
       [IndustryTag.LIGHTING]: 5,
@@ -218,6 +229,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国食品工业示范基地，腊味食品名镇，家电配套产业聚集',
     population: 152000,
     openEnterpriseCount: 185,
+    openJobCount: 1480,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 18,
       [IndustryTag.LIGHTING]: 3,
@@ -238,6 +250,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国家电产业基地，TCL、长虹等知名家电企业聚集地',
     population: 105000,
     openEnterpriseCount: 158,
+    openJobCount: 1422,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 12,
       [IndustryTag.LIGHTING]: 3,
@@ -258,6 +271,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中山市产业转移示范镇，电子信息和新能源产业聚集',
     population: 128000,
     openEnterpriseCount: 142,
+    openJobCount: 1136,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 10,
       [IndustryTag.LIGHTING]: 5,
@@ -278,6 +292,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '现代农业和高端制造产业镇',
     population: 108000,
     openEnterpriseCount: 98,
+    openJobCount: 686,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 8,
       [IndustryTag.LIGHTING]: 3,
@@ -298,6 +313,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '翠亨新区核心区，装备制造和旅游文化产业镇',
     population: 102000,
     openEnterpriseCount: 125,
+    openJobCount: 1000,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 8,
       [IndustryTag.LIGHTING]: 5,
@@ -318,6 +334,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '现代物流业和装备制造业基地',
     population: 118000,
     openEnterpriseCount: 135,
+    openJobCount: 1080,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 20,
       [IndustryTag.LIGHTING]: 5,
@@ -338,6 +355,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国休闲服装名镇，休闲服产业占全国重要份额',
     population: 228000,
     openEnterpriseCount: 285,
+    openJobCount: 2565,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 8,
       [IndustryTag.LIGHTING]: 3,
@@ -358,6 +376,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国红木家具之都，牛仔服装生产基地',
     population: 98000,
     openEnterpriseCount: 185,
+    openJobCount: 1665,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 10,
       [IndustryTag.LIGHTING]: 2,
@@ -378,6 +397,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '家具和户外休闲用品产业镇',
     population: 95000,
     openEnterpriseCount: 122,
+    openJobCount: 976,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 15,
       [IndustryTag.LIGHTING]: 5,
@@ -398,6 +418,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '南部中心镇，古典家具名镇，机械装备产业聚集',
     population: 208000,
     openEnterpriseCount: 225,
+    openJobCount: 1913,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 12,
       [IndustryTag.LIGHTING]: 15,
@@ -418,6 +439,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '珠海后花园，电子信息和精密制造产业镇',
     population: 278000,
     openEnterpriseCount: 268,
+    openJobCount: 2412,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 15,
       [IndustryTag.LIGHTING]: 5,
@@ -438,6 +460,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '滨海生态镇，游艇制造和旅游产业',
     population: 38000,
     openEnterpriseCount: 48,
+    openJobCount: 336,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 10,
       [IndustryTag.LIGHTING]: 3,
@@ -458,6 +481,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '中国花木之乡，LED照明和五金产业镇',
     population: 202000,
     openEnterpriseCount: 255,
+    openJobCount: 2295,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 22,
       [IndustryTag.LIGHTING]: 38,
@@ -478,6 +502,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '国家级高新技术产业开发区，健康医药和装备制造产业基地',
     population: 258000,
     openEnterpriseCount: 425,
+    openJobCount: 4250,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 5,
       [IndustryTag.LIGHTING]: 3,
@@ -498,6 +523,7 @@ export const TOWNSHIPS: TownshipData[] = [
     description: '粤澳合作示范区，先进装备制造和新能源产业聚集',
     population: 85000,
     openEnterpriseCount: 168,
+    openJobCount: 1512,
     enterpriseWeight: {
       [IndustryTag.HARDWARE]: 3,
       [IndustryTag.LIGHTING]: 2,
@@ -521,3 +547,41 @@ export const TOWNSHIP_NAMES: Record<TownshipCode, string> = TOWNSHIPS.reduce(
   (acc, t) => ({ ...acc, [t.code]: t.name }),
   {} as Record<TownshipCode, string>
 );
+
+export type HotTownshipStat = TownshipData & {
+  enterpriseCount: number;
+  jobCount: number;
+  certifiedEnterpriseCount: number;
+};
+
+export function getTownshipStats(enterprises: Enterprise[], positions: JobPosition[]) {
+  const totalEnterprises = enterprises.length;
+  const totalJobs = positions.length;
+  const totalPopulation = TOWNSHIPS.reduce((s, t) => s + t.population, 0);
+  const certifiedEnterprises = enterprises.filter(e => e.verified).length;
+
+  const townshipStats = TOWNSHIPS.map(township => {
+    const townshipEnterprises = enterprises.filter(e => e.township === township.code);
+    const townshipPositions = positions.filter(p => p.township === township.code);
+    return {
+      ...township,
+      enterpriseCount: townshipEnterprises.length,
+      jobCount: townshipPositions.length,
+      certifiedEnterpriseCount: townshipEnterprises.filter(e => e.verified).length,
+    };
+  });
+
+  const hotTownships: HotTownshipStat[] = [...townshipStats]
+    .sort((a, b) => b.jobCount - a.jobCount)
+    .slice(0, 10);
+
+  return {
+    totalTownships: TOWNSHIPS.length,
+    totalEnterprises,
+    totalJobs,
+    totalPopulation,
+    certifiedEnterprises,
+    hotTownships,
+    townshipStats,
+  };
+}
