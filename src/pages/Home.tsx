@@ -1,5 +1,6 @@
-import { ArrowRight, ShieldCheck, Clock, Star, Sparkles, Baby, ChefHat, ClipboardList, MapPin, Phone, Zap, Shield, BadgeCheck, CircleDollarSign, Timer, Navigation, ChevronRight, HandHeart, LayoutDashboard, Building2, FileSearch, ScanLine, Flame, FileText, Mic, BarChart3, Gift, CheckCircle, AlertTriangle, UserCheck, Eye, Users, Award } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { ArrowRight, ShieldCheck, Clock, Star, Sparkles, Baby, ChefHat, ClipboardList, MapPin, Phone, Zap, Shield, BadgeCheck, CircleDollarSign, Timer, Navigation, ChevronRight, HandHeart, LayoutDashboard, Building2, FileSearch, ScanLine, Flame, FileText, Mic, BarChart3, Gift, CheckCircle, AlertTriangle, UserCheck, Eye, Users, Award, TrendingUp, User } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import QuickOrderForm from '@/components/QuickOrderForm';
 import { useAppStore, serviceTypeList } from '@/store';
@@ -70,11 +71,31 @@ function OrderNodeTimeline({ order }: { order: Order }) {
 function OngoingOrderCard({ order }: { order: Order }) {
   const Icon = serviceIconMap[order.service_type];
   const badge = getStatusBadge(order.status);
+  const advanceOrderStatus = useAppStore((state) => state.advanceOrderStatus);
+  const navigate = useNavigate();
+  const [advancing, setAdvancing] = useState(false);
+  const canAdvance = !['completed', 'cancelled', 'compensated'].includes(order.status);
+  const canClaim = ['accepted', 'departing', 'arrived', 'servicing'].includes(order.status) || order.is_overtime;
+
+  const handleAdvance = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setAdvancing(true);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    advanceOrderStatus(order.id);
+    setAdvancing(false);
+  };
+
+  const handleCall = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (order.worker_phone) {
+      window.location.href = `tel:${order.worker_phone}`;
+    }
+  };
 
   return (
-    <Link to={`/orders/${order.id}`} className="card-hover p-5 block">
+    <div className="card-hover p-5 block">
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate(`/orders/${order.id}`)}>
           <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center">
             <Icon className="w-5 h-5 text-primary-500" />
           </div>
@@ -85,20 +106,20 @@ function OngoingOrderCard({ order }: { order: Order }) {
                 <span className="text-[9px] px-1.5 py-0.5 rounded bg-secondary-100 text-secondary-500">{order.address_name}</span>
               )}
             </div>
-            <p className="text-xs text-secondary-400">#{order.id}</p>
+            <p className="text-xs text-secondary-400">#{order.id} · 履约单据</p>
           </div>
         </div>
         <span className={badge.className}>{badge.label}</span>
       </div>
 
-      <div className="space-y-1 text-xs">
+      <div className="space-y-1 text-xs mb-3">
         <div className="flex items-center gap-2 text-secondary-600">
           <Clock className="w-3 h-3 text-secondary-400" />
           <span>{order.start_time} · {order.duration_hours}h</span>
         </div>
         {order.worker_name && (
           <div className="flex items-center gap-2 text-secondary-600">
-            <Phone className="w-3 h-3 text-secondary-400" />
+            <User className="w-3 h-3 text-secondary-400" />
             <span>{order.worker_name}</span>
             {order.worker_score && (
               <span className="text-yellow-500 flex items-center gap-0.5"><Star className="w-2.5 h-2.5 fill-yellow-500" />{order.worker_score}</span>
@@ -106,11 +127,21 @@ function OngoingOrderCard({ order }: { order: Order }) {
             {order.distance_km && <span className="text-secondary-400">· {order.distance_km}km</span>}
           </div>
         )}
+        <div className="flex items-center gap-2 text-secondary-600">
+          <MapPin className="w-3 h-3 text-secondary-400" />
+          <span className="truncate">{order.address}</span>
+        </div>
       </div>
 
       {order.is_overtime && (
-        <div className="mt-2 flex items-center gap-1 text-[10px] px-2 py-1 rounded-full bg-red-50 text-red-600 w-fit">
+        <div className="mb-3 flex items-center gap-1.5 text-[10px] px-3 py-1.5 rounded-full bg-red-50 text-red-600 w-fit">
           <AlertTriangle className="w-3 h-3" />超时{order.overtime_minutes}分钟 · 已触发自动赔付
+        </div>
+      )}
+
+      {order.insurance && (
+        <div className="mb-3 flex items-center gap-1.5 text-[10px] px-3 py-1.5 rounded-full bg-green-50 text-green-600 w-fit">
+          <Shield className="w-3 h-3" />保单{order.insurance.policy_no.slice(-8)} · 保障中
         </div>
       )}
 
@@ -118,11 +149,49 @@ function OngoingOrderCard({ order }: { order: Order }) {
 
       <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
         <p className="text-lg font-bold text-primary-600">¥{order.amount}</p>
-        <span className="text-xs text-primary-600 font-medium flex items-center gap-0.5">
-          追踪详情 <ChevronRight className="w-3 h-3" />
-        </span>
+        <div className="flex items-center gap-1.5">
+          {order.worker_phone && (
+            <button
+              onClick={handleCall}
+              className="px-2.5 py-1.5 rounded-lg bg-green-50 text-green-600 text-[10px] font-medium hover:bg-green-100 transition-colors flex items-center gap-1"
+            >
+              <Phone className="w-2.5 h-2.5" />
+              联系
+            </button>
+          )}
+          {canAdvance && (
+            <button
+              onClick={handleAdvance}
+              disabled={advancing}
+              className="px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-600 text-[10px] font-medium hover:bg-blue-100 transition-colors flex items-center gap-1 disabled:opacity-60"
+            >
+              {advancing ? (
+                <span className="inline-block w-2.5 h-2.5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <TrendingUp className="w-2.5 h-2.5" />
+              )}
+              推进
+            </button>
+          )}
+          {canClaim && (
+            <button
+              onClick={(e) => { e.stopPropagation(); navigate(`/orders/${order.id}`); }}
+              className="px-2.5 py-1.5 rounded-lg bg-red-50 text-red-600 text-[10px] font-medium hover:bg-red-100 transition-colors flex items-center gap-1"
+            >
+              <CircleDollarSign className="w-2.5 h-2.5" />
+              赔付
+            </button>
+          )}
+          <button
+            onClick={() => navigate(`/orders/${order.id}`)}
+            className="px-2.5 py-1.5 rounded-lg bg-primary-50 text-primary-600 text-[10px] font-medium hover:bg-primary-100 transition-colors flex items-center gap-1"
+          >
+            详情
+            <ChevronRight className="w-2.5 h-2.5" />
+          </button>
+        </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

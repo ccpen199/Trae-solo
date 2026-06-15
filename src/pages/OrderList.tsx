@@ -360,7 +360,17 @@ function CompletedOrderDetail({ order }: { order: Order }) {
 }
 
 function OngoingActions({ order }: { order: Order }) {
+  const advanceOrderStatus = useAppStore((state) => state.advanceOrderStatus);
+  const [advancing, setAdvancing] = useState(false);
   const canClaimCompensation = ['accepted', 'departing', 'arrived', 'servicing'].includes(order.status) || order.is_overtime;
+  const canAdvance = order.status !== 'completed' && order.status !== 'cancelled' && order.status !== 'compensated';
+
+  const handleAdvance = async () => {
+    setAdvancing(true);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    advanceOrderStatus(order.id);
+    setAdvancing(false);
+  };
 
   return (
     <div className="mt-3 flex items-center gap-2">
@@ -370,6 +380,20 @@ function OngoingActions({ order }: { order: Order }) {
       >
         追踪详情
       </Link>
+      {canAdvance && (
+        <button
+          onClick={handleAdvance}
+          disabled={advancing}
+          className="flex-1 text-center py-1.5 rounded-lg bg-green-50 text-green-600 text-xs font-medium hover:bg-green-100 transition-colors disabled:opacity-60 flex items-center justify-center gap-1"
+        >
+          {advancing ? (
+            <span className="inline-block w-3 h-3 border-2 border-green-500 border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <Navigation className="w-3 h-3" />
+          )}
+          {advancing ? '推进中...' : '推进状态'}
+        </button>
+      )}
       {canClaimCompensation && (
         <Link
           to={`/orders/${order.id}`}

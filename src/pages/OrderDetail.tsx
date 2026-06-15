@@ -7,7 +7,7 @@ import {
   Shield, FileCheck, Users, Timer, TrendingUp,
   CheckCircle, CircleDollarSign, Gift, UserCheck,
   Mic, BarChart3, Navigation, Eye, ThumbsUp, ThumbsDown,
-  Play, XCircle,
+  Play, XCircle, AlertCircle,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import { useAppStore } from '@/store';
@@ -383,12 +383,14 @@ export default function OrderDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const orders = useAppStore((state) => state.orders);
+  const advanceOrderStatus = useAppStore((state) => state.advanceOrderStatus);
   const order = orders.find((o) => o.id === Number(id)) as Order | undefined;
 
   const [showCompensation, setShowCompensation] = useState(false);
   const [selectedReason, setSelectedReason] = useState('');
   const [compensationDesc, setCompensationDesc] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [advancing, setAdvancing] = useState(false);
 
   if (!order) {
     return (
@@ -419,6 +421,28 @@ export default function OrderDetail() {
       setShowCompensation(false);
       alert('赔付申请已提交，客服将在24小时内与您联系');
     }, 1000);
+  };
+
+  const handleAdvance = async () => {
+    if (!order) return;
+    setAdvancing(true);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    advanceOrderStatus(order.id);
+    setAdvancing(false);
+  };
+
+  const canAdvance = order && !['completed', 'cancelled', 'compensated'].includes(order.status);
+
+  const statusFlowLabels: Record<Order['status'], { next: string; action: string }> = {
+    pending: { next: '待接单', action: '确认派单' },
+    assigned: { next: '已接单', action: '模拟阿姨接单' },
+    accepted: { next: '已出发', action: '模拟阿姨出发' },
+    departing: { next: '已到达', action: '模拟到达地址' },
+    arrived: { next: '服务中', action: '开始服务' },
+    servicing: { next: '已完成', action: '完成服务' },
+    completed: { next: '已完成', action: '已完成' },
+    cancelled: { next: '已取消', action: '已取消' },
+    compensated: { next: '已赔付', action: '已赔付' },
   };
 
   return (
@@ -487,6 +511,64 @@ export default function OrderDetail() {
 
         {order.nodes && order.nodes.length > 0 && (
           <NodeTimelineSection nodes={order.nodes} status={order.status} />
+        )}
+
+        {canAdvance && (
+          <div className="card p-5 mb-6 bg-gradient-to-r from-blue-50 via-green-50 to-yellow-50 border border-green-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm">
+                  <Navigation className="w-5.5 h-5.5 text-green-600" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-secondary-800">履约状态实时流转</h3>
+                  <p className="text-xs text-secondary-500 mt-0.5">
+                    当前状态：{badge.label} → 下一状态：{statusFlowLabels[order.status].next}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleAdvance}
+                disabled={advancing}
+                className="px-5 py-2.5 rounded-xl bg-secondary-600 text-white text-sm font-medium hover:bg-secondary-700 transition-colors disabled:opacity-60 flex items-center gap-1.5 shadow-sm"
+              >
+                {advancing ? (
+                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <TrendingUp className="w-4 h-4" />
+                )}
+                {advancing ? '流转中...' : statusFlowLabels[order.status].action}
+              </button>
+            </div>
+            {order.is_overtime && (
+              <div className="mt-3 p-2.5 bg-red-50 rounded-lg border border-red-100 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
+                <p className="text-[11px] text-red-600">
+                  本次到达超时 {order.overtime_minutes} 分钟，已触发自动赔付流程，将在到达节点后自动计算赔付金额
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {isOngoing && !order.is_overtime && (
+          <div className="card p-4 mb-6 bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-100">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center">
+                <Timer className="w-4.5 h-4.5 text-orange-500" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-bold text-secondary-800">实时履约监控</p>
+                <p className="text-xs text-secondary-500 mt-0.5">
+                  距离约定开始时间 <span className="font-medium text-orange-600">≤30分钟</span> 均为正常履约
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-secondary-400">超时阈值</p>
+                <p className="text-sm font-bold text-orange-600">30分钟</p>
+              </div>
+            </div>
+          </div>
         )}
 
         {order.worker_name && (

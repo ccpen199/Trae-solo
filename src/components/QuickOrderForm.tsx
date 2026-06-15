@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift } from 'lucide-react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift, Receipt } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAppStore, serviceTypeList } from '@/store';
@@ -148,109 +148,24 @@ export default function QuickOrderForm() {
   };
 
   if (orderSuccess) {
-    return (
-      <div className="py-6 animate-fade-up">
-        <div className="text-center mb-5">
-          <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
-            <CheckCircle className="w-8 h-8 text-green-500" />
-          </div>
-          <h3 className="text-xl font-bold text-secondary-800">下单成功！</h3>
-          <p className="text-xs text-secondary-500 mt-1">订单号 #{orderId}</p>
-        </div>
+    const createdOrder = useAppStore.getState().orders.find(o => o.id === orderId);
+    const realNodes = createdOrder?.nodes || [];
+    const realInsurance = createdOrder?.insurance;
 
-        <div className="space-y-3 mb-5">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-primary-50 text-primary-700 text-xs mx-auto w-fit">
-            <Navigation className="w-3.5 h-3.5" />
-            正在匹配1km内阿姨 · 预计3分钟内派单
-          </div>
-
-          <div className="card p-4 bg-gradient-to-br from-green-50 to-blue-50 border-green-100">
-            <div className="flex items-center gap-2 mb-2">
-              <Shield className="w-4 h-4 text-green-600" />
-              <span className="text-sm font-bold text-green-800">保险已自动承保</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-[11px]">
-              <div className="bg-white/80 rounded-lg p-2">
-                <p className="text-secondary-500">保单号</p>
-                <p className="font-mono text-secondary-800 font-medium truncate">
-                  JZ{dateStr.replace(/-/g, '')}{String(orderId).slice(-6)}
-                </p>
-              </div>
-              <div className="bg-white/80 rounded-lg p-2">
-                <p className="text-secondary-500">保额</p>
-                <p className="font-bold text-green-700">50万元</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="card p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-4 h-4 text-orange-500" />
-              <span className="text-sm font-bold text-secondary-800">履约节点实时推送</span>
-            </div>
-            <div className="relative">
-              {timeline.slice(0, 4).map((node, i) => {
-                const NodeIcon = node.icon;
-                const isDone = i === 0;
-                return (
-                  <div key={i} className="flex items-start gap-2.5">
-                    <div className="flex flex-col items-center">
-                      <div className={cn(
-                        'w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0',
-                        isDone ? 'bg-primary-500 text-white' : 'bg-gray-100 text-gray-400'
-                      )}>
-                        <NodeIcon className="w-3.5 h-3.5" />
-                      </div>
-                      {i < 3 && <div className={cn('w-0.5 h-6 mt-0.5', isDone ? 'bg-primary-300' : 'bg-gray-200')} />}
-                    </div>
-                    <div className="pb-2 flex-1">
-                      <div className="flex items-center gap-1.5">
-                        <span className={cn('text-xs font-medium', isDone ? 'text-secondary-800' : 'text-secondary-400')}>
-                          {node.label}
-                        </span>
-                        {isDone && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">已完成</span>}
-                      </div>
-                      <p className="text-[10px] text-secondary-400 mt-0.5">{node.time} · {node.desc}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="card p-4 bg-gradient-to-r from-red-50 to-orange-50 border-red-100">
-            <div className="flex items-start gap-2">
-              <CircleDollarSign className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-              <div className="flex-1">
-                <p className="text-sm font-bold text-red-800">爽约赔付保障已激活</p>
-                <p className="text-[11px] text-red-600 mt-0.5">
-                  阿姨迟到&gt;30分钟或未上门 → 全额退款 + 30元补偿券
-                </p>
-                <div className="flex items-center gap-3 mt-2 text-[10px] text-red-600">
-                  <span className="flex items-center gap-1">
-                    <Timer className="w-3 h-3" />
-                    24h自动到账
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Gift className="w-3 h-3" />
-                    平台先行垫付
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-2">
-          <button onClick={() => navigate(`/orders/${orderId}`)} className="btn-primary text-sm flex-1">
-            追踪订单
-          </button>
-          <button onClick={() => setOrderSuccess(false)} className="btn-secondary text-sm flex-1">
-            继续下单
-          </button>
-        </div>
-      </div>
-    );
+    return <OrderSuccessView
+      orderId={orderId}
+      order={createdOrder || null}
+      realNodes={realNodes}
+      realInsurance={realInsurance || null}
+      currentService={currentService}
+      selectedAddress={selectedAddress}
+      totalFee={totalFee}
+      duration={duration}
+      time={time}
+      dateStr={dateStr}
+      navigate={navigate}
+      onReset={() => setOrderSuccess(false)}
+    />;
   }
 
   return (
@@ -621,6 +536,228 @@ export default function QuickOrderForm() {
           <span className="flex items-center gap-1"><Navigation className="w-3 h-3" />1km派单</span>
           <span className="flex items-center gap-1"><Shield className="w-3 h-3" />全程保险</span>
         </div>
+      </div>
+    </div>
+  );
+}
+
+const nodeIconMap: Record<string, typeof CheckCircle> = {
+  order_created: Zap,
+  assigned: Navigation,
+  accepted: CheckCircle,
+  departing: MapPin,
+  arrived: Navigation,
+  servicing: Sparkles,
+  completed: CheckCircle,
+};
+
+function OrderSuccessView({
+  orderId,
+  order,
+  realNodes,
+  realInsurance,
+  currentService,
+  selectedAddress,
+  totalFee,
+  duration,
+  time,
+  dateStr,
+  navigate,
+  onReset,
+}: {
+  orderId: number;
+  order: import('@/types').Order | null;
+  realNodes: import('@/types').ServiceNode[];
+  realInsurance: import('@/types').InsuranceInfo | null;
+  currentService: { label: string; price: number };
+  selectedAddress: import('@/types').Address | null;
+  totalFee: number;
+  duration: number;
+  time: string;
+  dateStr: string;
+  navigate: (path: string) => void;
+  onReset: () => void;
+}) {
+  const advanceOrderStatus = useAppStore((state) => state.advanceOrderStatus);
+  const [liveOrder, setLiveOrder] = useState(order);
+  const [autoAdvancing, setAutoAdvancing] = useState(true);
+  const autoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!autoAdvancing || !liveOrder) return;
+    if (['completed', 'cancelled', 'compensated'].includes(liveOrder.status)) {
+      setAutoAdvancing(false);
+      return;
+    }
+    autoTimerRef.current = setTimeout(() => {
+      const updated = advanceOrderStatus(orderId);
+      if (updated) {
+        setLiveOrder(updated);
+      } else {
+        setAutoAdvancing(false);
+      }
+    }, 2000);
+    return () => {
+      if (autoTimerRef.current) clearTimeout(autoTimerRef.current);
+    };
+  }, [liveOrder, autoAdvancing, orderId, advanceOrderStatus]);
+
+  const displayNodes = liveOrder?.nodes || realNodes;
+  const displayStatus = liveOrder?.status || order?.status;
+  const displayInsurance = liveOrder?.insurance || realInsurance;
+
+  const statusLabelMap: Record<string, string> = {
+    assigned: '已派单 · 等待阿姨接单',
+    accepted: '阿姨已接单 · 准备出发',
+    departing: '阿姨已出发 · 正在赶来',
+    arrived: '阿姨已到达 · 即将开始服务',
+    servicing: '服务进行中',
+    completed: '服务已完成',
+  };
+
+  return (
+    <div className="py-4 animate-fade-up">
+      <div className="text-center mb-4">
+        <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-2">
+          <CheckCircle className="w-7 h-7 text-green-500" />
+        </div>
+        <h3 className="text-lg font-bold text-secondary-800">下单成功！履约单据已生成</h3>
+        <p className="text-[10px] text-secondary-500 mt-0.5">订单号 #{orderId}</p>
+      </div>
+
+      <div className="space-y-3 mb-4">
+        <div className={cn(
+          'flex items-center gap-2 px-3 py-2 rounded-full text-xs mx-auto w-fit',
+          displayStatus === 'completed' ? 'bg-green-50 text-green-700' : 'bg-primary-50 text-primary-700'
+        )}>
+          <Navigation className="w-3.5 h-3.5" />
+          {displayStatus ? (statusLabelMap[displayStatus] || '处理中') : '派单中...'}
+          {autoAdvancing && displayStatus !== 'completed' && (
+            <span className="inline-block w-2.5 h-2.5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
+          )}
+        </div>
+
+        <div className="card p-3">
+          <div className="flex items-center gap-1.5 mb-2">
+            <FileCheck className="w-3.5 h-3.5 text-primary-500" />
+            <span className="text-xs font-bold text-secondary-800">履约单据</span>
+            <span className="text-[9px] text-secondary-400 ml-auto">{displayNodes.length}个节点已记录</span>
+          </div>
+          <div className="space-y-0">
+            {displayNodes.map((node, i) => {
+              const isDone = i < displayNodes.length - 1 || displayStatus === 'completed';
+              const isCurrent = !isDone && i === displayNodes.length - 1;
+              const Icon = nodeIconMap[node.node_type] || CheckCircle;
+              return (
+                <div key={node.id} className="flex items-start gap-2.5">
+                  <div className="flex flex-col items-center">
+                    <div className={cn(
+                      'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0',
+                      isDone ? 'bg-primary-500 text-white' : isCurrent ? 'bg-primary-100 text-primary-600 ring-2 ring-primary-300 animate-pulse' : 'bg-gray-100 text-gray-400'
+                    )}>
+                      <Icon className="w-3 h-3" />
+                    </div>
+                    {i < displayNodes.length - 1 && (
+                      <div className={cn('w-0.5 h-5', isDone ? 'bg-primary-300' : 'bg-gray-200')} />
+                    )}
+                  </div>
+                  <div className="pb-1.5 flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className={cn('text-[11px] font-medium', isDone ? 'text-secondary-800' : isCurrent ? 'text-primary-600' : 'text-gray-400')}>
+                        {node.node_label}
+                      </span>
+                      {isCurrent && <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-primary-100 text-primary-600 animate-pulse">当前</span>}
+                      {isDone && <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">✓</span>}
+                    </div>
+                    <div className="flex items-center gap-2 text-[9px] text-secondary-400">
+                      <span>{node.node_time.slice(11, 16)}</span>
+                      {node.remark && <span>· {node.remark}</span>}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {displayInsurance && (
+          <div className="card p-3 bg-gradient-to-br from-green-50 to-blue-50 border-green-100">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield className="w-4 h-4 text-green-600" />
+              <span className="text-xs font-bold text-green-800">保险已自动承保</span>
+              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-200 text-green-800 ml-auto">生效中</span>
+            </div>
+            <div className="grid grid-cols-3 gap-1.5 text-[10px]">
+              <div className="bg-white/80 rounded-lg p-1.5">
+                <p className="text-secondary-400">保单号</p>
+                <p className="font-mono text-secondary-800 font-medium truncate">{displayInsurance.policy_no.slice(-10)}</p>
+              </div>
+              <div className="bg-white/80 rounded-lg p-1.5">
+                <p className="text-secondary-400">保额</p>
+                <p className="font-bold text-green-700">{(displayInsurance.coverage_amount / 10000).toFixed(0)}万</p>
+              </div>
+              <div className="bg-white/80 rounded-lg p-1.5">
+                <p className="text-secondary-400">保费</p>
+                <p className="font-bold text-secondary-700">¥{displayInsurance.premium}/单</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="card p-3 bg-gradient-to-r from-red-50 to-orange-50 border-red-100">
+          <div className="flex items-start gap-2">
+            <CircleDollarSign className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-xs font-bold text-red-800">爽约赔付保障已激活</p>
+              <p className="text-[10px] text-red-600 mt-0.5">
+                迟到&gt;30min/未上门 → 全额退款+30元券 · 24h自动到账
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card p-3">
+          <div className="flex items-center gap-1.5 mb-2">
+            <Receipt className="w-3.5 h-3.5 text-primary-500" />
+            <span className="text-xs font-bold text-secondary-800">费用明细</span>
+          </div>
+          <div className="space-y-1 text-[11px]">
+            <div className="flex justify-between text-secondary-600">
+              <span>{currentService.label} × {duration}小时</span>
+              <span>¥{totalFee - 2}</span>
+            </div>
+            <div className="flex justify-between text-secondary-600">
+              <span className="flex items-center gap-1"><Shield className="w-3 h-3 text-green-500" />家政服务责任险</span>
+              <span>¥2</span>
+            </div>
+            <div className="flex justify-between font-bold text-secondary-800 pt-1 border-t border-dashed border-gray-200">
+              <span>合计</span>
+              <span className="text-primary-600">¥{totalFee}</span>
+            </div>
+          </div>
+        </div>
+
+        {selectedAddress && (
+          <div className="card p-3">
+            <div className="flex items-start gap-2 text-[11px]">
+              <MapPin className="w-3.5 h-3.5 text-primary-500 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium text-secondary-800">{selectedAddress.name}</p>
+                <p className="text-secondary-500">{selectedAddress.detail}</p>
+                <p className="text-secondary-400 mt-0.5">{dateStr} {time} · {duration}小时</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="flex gap-2">
+        <button onClick={() => navigate(`/orders/${orderId}`)} className="btn-primary text-sm flex-1">
+          查看履约单据
+        </button>
+        <button onClick={onReset} className="btn-secondary text-sm flex-1">
+          继续下单
+        </button>
       </div>
     </div>
   );
