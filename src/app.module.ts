@@ -20,6 +20,7 @@ import { OpenApiModule } from './modules/open-api/open-api.module';
 import { IntegrationModule } from './modules/integration/integration.module';
 import { SystemModule } from './modules/system/system.module';
 import { TasksModule } from './tasks/tasks.module';
+import { AdminConsoleModule } from './modules/admin-console/admin-console.module';
 
 @Module({
   imports: [
@@ -83,6 +84,7 @@ import { TasksModule } from './tasks/tasks.module';
     IntegrationModule,
     SystemModule,
     TasksModule,
+    AdminConsoleModule,
   ],
 })
 export class AppModule {}
