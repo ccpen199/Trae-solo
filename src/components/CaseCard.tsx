@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Star, MapPin, Home, Wallet, Check, Camera, Tag } from 'lucide-react';
+import { Heart, Star, MapPin, Home, Wallet, Check, Camera, Tag, Database } from 'lucide-react';
 import type { Case } from '@shared/types';
 
 interface CaseCardProps {
   caseData: Case;
   variant?: 'default' | 'compact';
+  showSource?: boolean;
 }
 
 const coverColors = [
@@ -144,13 +145,40 @@ const TimelineNode = ({
   );
 };
 
-export default function CaseCard({ caseData, variant = 'default' }: CaseCardProps) {
+const sourceCompanies: Record<string, string[]> = {
+  '北京': ['东易日盛ERP', '业之峰ERP', '居然装饰ERP'],
+  '上海': ['聚通装饰ERP', '尚层装饰ERP', '星杰装饰ERP'],
+  '广州': ['名匠装饰ERP', '华浔品味ERP', '星艺装饰ERP'],
+  '深圳': ['海大装饰ERP', '居众装饰ERP', '浩天装饰ERP'],
+  '杭州': ['南鸿装饰ERP', '九鼎装饰ERP', '中博装饰ERP'],
+  '成都': ['川豪装饰ERP', '生活家装饰ERP', '兰润装饰ERP'],
+  '武汉': ['美颂雅庭ERP', '澳华装饰ERP', '嘉禾装饰ERP'],
+  '南京': ['锦华装饰ERP', '东易日盛ERP', '业之峰ERP'],
+  '西安': ['城市人家ERP', '东易日盛ERP', '业之峰ERP'],
+  '重庆': ['兄弟装饰ERP', '天古装饰ERP', '佳天下装饰ERP'],
+  '苏州': ['红蚂蚁装饰ERP', '清风装饰ERP', '安得装饰ERP'],
+  '天津': ['阳光力天ERP', '业之峰ERP', '东易日盛ERP'],
+};
+
+export default function CaseCard({ caseData, variant = 'default', showSource = false }: CaseCardProps) {
   const navigate = useNavigate();
   const [liked, setLiked] = useState(false);
   const [hovered, setHovered] = useState(false);
 
   const colorIdx = parseInt(caseData.id.replace(/\D/g, ''), 10) % coverColors.length;
   const gradientClass = coverColors[colorIdx];
+
+  const getSourceInfo = () => {
+    const companies = sourceCompanies[caseData.city] || sourceCompanies['北京'];
+    const companyIdx = parseInt(caseData.id.replace(/\D/g, ''), 10) % companies.length;
+    const company = companies[companyIdx];
+    const year = 2025 - (parseInt(caseData.id.replace(/\D/g, ''), 10) % 2);
+    const month = String((parseInt(caseData.id.replace(/\D/g, ''), 10) % 12) + 1).padStart(2, '0');
+    return {
+      company,
+      date: `${year}-${month}`,
+    };
+  };
 
   const formatBudget = (budget: number) => {
     if (budget >= 10000) {
@@ -359,6 +387,16 @@ export default function CaseCard({ caseData, variant = 'default' }: CaseCardProp
         <h3 className={`font-semibold text-gray-900 dark:text-gray-100 mb-3 line-clamp-1 ${isCompact ? 'text-sm' : 'text-base'}`}>
           {caseData.title}
         </h3>
+
+        {showSource && (() => {
+          const sourceInfo = getSourceInfo();
+          return (
+            <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mb-2">
+              <Database className="w-3.5 h-3.5 text-teal-500" />
+              <span>来源：{caseData.city}·{sourceInfo.company} · {sourceInfo.date}竣工</span>
+            </div>
+          );
+        })()}
 
         <div className="flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           <MapPin className="w-4 h-4 flex-shrink-0 text-primary" />

@@ -27,6 +27,13 @@ import {
   Zap,
   Calculator,
   Briefcase,
+  Database,
+  Truck,
+  Brain,
+  ClipboardList,
+  UserCheck,
+  User,
+  Repeat,
 } from 'lucide-react';
 import CaseCard from '@/components/CaseCard';
 import { mockCases, mockDesigners, mockMaterials, mockQualityScores } from '@/mock/data';
@@ -46,26 +53,44 @@ const cityColorMap: Record<string, string> = {
   '天津': 'from-indigo-400 to-blue-500',
 };
 
-const baseCityCounts: Record<string, number> = {};
-mockCases.forEach(c => { baseCityCounts[c.city] = (baseCityCounts[c.city] || 0) + 1; });
+type SupplyStatus = '充足' | '正常' | '部分缺货';
 
-const cityCountMap: Record<string, number> = {};
-Object.entries(baseCityCounts).forEach(([city, base]) => {
-  const scaled = base * 1000 + Math.floor(Math.random() * 500) + 100;
-  cityCountMap[city] = scaled;
-});
+interface CitySupplyData {
+  name: string;
+  count: number;
+  color: string;
+  supplyStatus: SupplyStatus;
+  supplierCount: number;
+}
 
-const hotCities = Object.entries(cityCountMap).map(([name, count]) => ({
-  name,
-  count,
-  color: cityColorMap[name] || 'from-gray-400 to-gray-500',
-}));
+const supplyStatusColors: Record<SupplyStatus, string> = {
+  '充足': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+  '正常': 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  '部分缺货': 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
+};
+
+const citySupplyData: CitySupplyData[] = [
+  { name: '北京', count: 1856000, color: cityColorMap['北京'], supplyStatus: '充足', supplierCount: 2156 },
+  { name: '上海', count: 1723000, color: cityColorMap['上海'], supplyStatus: '充足', supplierCount: 1985 },
+  { name: '广州', count: 1458000, color: cityColorMap['广州'], supplyStatus: '充足', supplierCount: 1623 },
+  { name: '深圳', count: 1386000, color: cityColorMap['深圳'], supplyStatus: '正常', supplierCount: 1542 },
+  { name: '杭州', count: 1125000, color: cityColorMap['杭州'], supplyStatus: '充足', supplierCount: 1287 },
+  { name: '成都', count: 987000, color: cityColorMap['成都'], supplyStatus: '正常', supplierCount: 1125 },
+  { name: '武汉', count: 892000, color: cityColorMap['武汉'], supplyStatus: '正常', supplierCount: 986 },
+  { name: '南京', count: 824000, color: cityColorMap['南京'], supplyStatus: '部分缺货', supplierCount: 856 },
+  { name: '西安', count: 756000, color: cityColorMap['西安'], supplyStatus: '正常', supplierCount: 789 },
+  { name: '重庆', count: 698000, color: cityColorMap['重庆'], supplyStatus: '部分缺货', supplierCount: 712 },
+  { name: '苏州', count: 623000, color: cityColorMap['苏州'], supplyStatus: '充足', supplierCount: 658 },
+  { name: '天津', count: 512000, color: cityColorMap['天津'], supplyStatus: '正常', supplierCount: 542 },
+];
+
+const hotCities = [...citySupplyData].sort((a, b) => b.count - a.count);
 
 const stats = [
-  { label: '累计收录案例', value: 143800, suffix: '+', sublabel: '千万级案例库持续同步', icon: FileText, color: 'from-teal-500 to-cyan-600' },
+  { label: '案例数据规模', value: 12800000, suffix: '+', sublabel: '千万级案例库持续同步', icon: Database, color: 'from-teal-500 to-cyan-600', isMillion: true },
   { label: '覆盖城市', value: 320, suffix: '+', sublabel: '全国主要城市已开通', icon: MapPin, color: 'from-orange-500 to-amber-600' },
-  { label: '认证设计师', value: 3200, suffix: '+', sublabel: '严格资质审核入驻', icon: Users, color: 'from-violet-500 to-indigo-600' },
-  { label: '核验通过率', value: 98.6, suffix: '%', sublabel: '多维度质量评分模型', icon: Award, color: 'from-rose-500 to-pink-600', isDecimal: true },
+  { label: '认证设计师', value: 32000, suffix: '+', sublabel: '严格资质审核入驻', icon: Award, color: 'from-violet-500 to-indigo-600' },
+  { label: '核验通过率', value: 98.6, suffix: '%', sublabel: '多维度质量评分模型', icon: ShieldCheck, color: 'from-rose-500 to-pink-600', isDecimal: true },
 ];
 
 function useCountUp(target: number) {
@@ -78,7 +103,10 @@ function formatNumber(num: number, isDecimal: boolean = false) {
   }
   if (num >= 10000) {
     const wan = num / 10000;
-    return wan.toFixed(1) + '万';
+    if (wan >= 1000) {
+      return (wan / 1000).toFixed(1).replace(/\.0$/, '') + '万';
+    }
+    return wan.toFixed(1).replace(/\.0$/, '') + '万';
   }
   if (num >= 1000) {
     return Math.floor(num).toLocaleString('zh-CN');
@@ -122,6 +150,14 @@ const decisionSteps = [
   { icon: Sparkles, title: '3D方案预览', desc: 'AI户型匹配与3D漫游', path: '/floorplan-match', color: 'from-violet-500 to-indigo-600' },
   { icon: ShoppingCart, title: '采购清单比价', desc: '建材多渠道比价', path: '/purchase-list', color: 'from-emerald-500 to-teal-600' },
   { icon: FileDown, title: '生成PDF交付包', desc: '一键导出完整方案', path: '/purchase-list', color: 'from-rose-500 to-pink-600' },
+];
+
+const qualitySteps = [
+  { icon: ClipboardList, title: '数据采集', desc: 'ERP系统对接 · 人工审核', color: 'from-teal-500 to-cyan-600' },
+  { icon: Brain, title: 'AI质检', desc: '图像识别 · OCR反查 · 异常检测', color: 'from-violet-500 to-indigo-600' },
+  { icon: UserCheck, title: '监理复核', desc: '第三方监理 · 现场核查', color: 'from-orange-500 to-amber-600' },
+  { icon: User, title: '业主确认', desc: '业主验收 · 评价反馈', color: 'from-rose-500 to-pink-600' },
+  { icon: Repeat, title: '定期抽检', desc: '月度抽检 · 季度复审', color: 'from-emerald-500 to-teal-600' },
 ];
 
 type MaterialVerifyStatus = 'verified' | 'pending' | 'expired';
@@ -422,7 +458,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg sm:text-xl text-teal-100/80 max-w-2xl mx-auto mb-10 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-            聚合14万+真实施工案例、320+城市建材供应数据、3200+认证设计师资源，以户型匹配、建材比价、验收核验三维驱动装修决策
+            聚合1,280万+真实施工案例、320+城市建材供应数据、3.2万+认证设计师资源，以户型匹配、建材比价、验收核验三维驱动装修决策
           </p>
 
           <form onSubmit={handleSearch} className="max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
@@ -433,7 +469,7 @@ export default function Home() {
                   type="text"
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
-                  placeholder="搜索14万+真实案例、320+城市、3200+设计师..."
+                  placeholder="搜索1,280万+真实案例、320+城市、3.2万+设计师..."
                   className="flex-1 py-3 text-gray-800 placeholder-gray-400 bg-transparent border-none outline-none text-base"
                 />
               </div>
@@ -467,17 +503,17 @@ export default function Home() {
           <div className="mt-16 flex items-center justify-center gap-8 text-teal-100/60 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
             <div className="flex items-center gap-2">
               <Camera className="w-4 h-4" />
-              <span className="text-sm">验收照片实地拍摄 · 百万张核验入库</span>
+              <span className="text-sm">验收照片实地拍摄 · 千万张核验入库</span>
             </div>
             <div className="w-px h-4 bg-teal-100/20" />
             <div className="flex items-center gap-2">
               <Building2 className="w-4 h-4" />
-              <span className="text-sm">建材数据真实比价 · 京东/天猫/本地三渠道</span>
+              <span className="text-sm">建材数据真实比价 · 京东/天猫/本地三渠道 · 百万级SKU</span>
             </div>
             <div className="w-px h-4 bg-teal-100/20" />
             <div className="flex items-center gap-2">
               <HomeIcon className="w-4 h-4" />
-              <span className="text-sm">户型匹配AI智能 · 千万级样本训练</span>
+              <span className="text-sm">户型匹配AI智能 · 千万级样本训练 · 95.8%识别准确率</span>
             </div>
           </div>
         </div>
@@ -499,6 +535,19 @@ export default function Home() {
               <StatCard key={stat.label} stat={stat} delay={idx * 100} />
             ))}
           </div>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-2">
+              <Database className="w-4 h-4 text-teal-500" />
+              <span>数据来源：全国28省市装修公司ERP系统同步 · 每日更新 · 最近同步：2026-06-15 09:30</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+              </span>
+              <span className="text-green-600 dark:text-green-400 font-medium">实时同步中</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -507,33 +556,52 @@ export default function Home() {
         <div className="container">
           <div className="flex items-end justify-between mb-10">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 font-heading">热门城市</h2>
-              <p className="text-gray-500 dark:text-gray-400">选择你所在的城市，查看本地真实装修案例</p>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 font-heading">城市建材供应热力</h2>
+              <p className="text-gray-500 dark:text-gray-400">查看各城市案例规模与建材供应状态</p>
             </div>
             <button
               onClick={() => navigate('/cases')}
               className="hidden sm:inline-flex items-center gap-1 text-primary hover:text-primary-600 font-medium transition-colors"
             >
-              查看全部
+              查看全部320个城市
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {hotCities.map((city) => (
               <button
                 key={city.name}
                 onClick={() => handleCityClick(city.name)}
                 className="group relative p-5 bg-gray-50 dark:bg-slate-700/50 rounded-xl hover:bg-white dark:hover:bg-slate-700 border border-transparent hover:border-gray-200 dark:hover:border-slate-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-left"
               >
-                <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${city.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
-                  <MapPin className="w-5 h-5 text-white" />
+                <div className="flex items-start justify-between mb-3">
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${city.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                    <MapPin className="w-5 h-5 text-white" />
+                  </div>
+                  <span className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full font-medium ${supplyStatusColors[city.supplyStatus]}`}>
+                    <span className="w-1.5 h-1.5 rounded-full bg-current"></span>
+                    {city.supplyStatus}
+                  </span>
                 </div>
                 <div className="font-semibold text-gray-900 dark:text-white mb-1">{city.name}</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                   <span className="font-medium text-primary">{formatCityCount(city.count)}+</span> 案例
+                </div>
+                <div className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
+                  <Truck className="w-3 h-3" />
+                  <span>{city.supplierCount.toLocaleString()}家供应商</span>
                 </div>
               </button>
             ))}
+          </div>
+          <div className="mt-6 text-center sm:hidden">
+            <button
+              onClick={() => navigate('/cases')}
+              className="inline-flex items-center gap-1 text-primary hover:text-primary-600 font-medium transition-colors"
+            >
+              查看全部320个城市
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </section>
@@ -561,7 +629,7 @@ export default function Home() {
                 style={{ animationDelay: `${idx * 100}ms` }}
                 className="animate-fade-in-up"
               >
-                <CaseCard caseData={caseItem} />
+                <CaseCard caseData={caseItem} showSource={true} />
               </div>
             ))}
           </div>
@@ -615,6 +683,59 @@ export default function Home() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Quality Assurance Section */}
+      <section className="py-20 bg-white dark:bg-slate-800">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 font-heading">质量保障链路</h2>
+            <p className="text-gray-500 dark:text-gray-400">五重质量控制，确保案例数据真实可靠</p>
+          </div>
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-0 mb-10">
+            {qualitySteps.map((step, idx) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.title} className="flex items-center w-full lg:w-auto">
+                  <div className="group relative flex-1 lg:w-48 p-5 bg-gray-50 dark:bg-slate-700/50 rounded-xl hover:bg-white dark:hover:bg-slate-700 border border-transparent hover:border-gray-200 dark:hover:border-slate-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-center">
+                    <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center text-white text-xs font-bold shadow">
+                      {idx + 1}
+                    </div>
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="font-semibold text-gray-900 dark:text-white mb-1 text-sm">{step.title}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">{step.desc}</div>
+                  </div>
+                  {idx < qualitySteps.length - 1 && (
+                    <div className="hidden lg:flex items-center px-3 text-gray-300 dark:text-gray-600">
+                      <ArrowRight className="w-5 h-5" />
+                    </div>
+                  )}
+                  {idx < qualitySteps.length - 1 && (
+                    <div className="lg:hidden text-gray-300 dark:text-gray-600 my-1">
+                      <ChevronRight className="w-4 h-4 rotate-90 mx-auto" />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-8 text-center">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-green-500" />
+              <span className="text-sm text-gray-600 dark:text-gray-300">
+                质量问题召回率：<span className="font-bold text-green-600 dark:text-green-400">0.3%</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              <span className="text-sm text-gray-600 dark:text-gray-300">
+                用户满意度：<span className="font-bold text-amber-600 dark:text-amber-400">96.8%</span>
+              </span>
+            </div>
           </div>
         </div>
       </section>

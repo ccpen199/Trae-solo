@@ -117,6 +117,40 @@ export interface Material {
   localSuppliers?: LocalSupplier[];
 }
 
+export interface StagePhoto {
+  id: string;
+  url: string;
+  description: string;
+  takenAt: string;
+  inspector: string;
+  verified: boolean;
+}
+
+export interface OCRMaterial {
+  id: string;
+  brand: string;
+  model: string;
+  name: string;
+  unitPrice: number;
+  ocrVerified: boolean;
+}
+
+export interface ReviewRecord {
+  id: string;
+  date: string;
+  inspector: string;
+  conclusion: 'pass' | 'warning' | 'recheck';
+  description: string;
+}
+
+export interface EvidenceStageDetail {
+  photos: StagePhoto[];
+  ocrMaterials: OCRMaterial[];
+  reviewRecords: ReviewRecord[];
+  ocrAccuracy: number;
+  totalReviews: number;
+}
+
 export interface MaterialPrice {
   id: string;
   materialId: string;

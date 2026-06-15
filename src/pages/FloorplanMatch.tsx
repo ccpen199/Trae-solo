@@ -8,7 +8,6 @@ import {
   Users,
   Sparkles,
   Building2,
-  MapPin,
   Wallet,
   Star,
   Box,
@@ -28,9 +27,13 @@ import {
   AlertTriangle,
   Info,
   Edit3,
+  TrendingUp,
+  AlertCircle,
+  CheckCircle,
+  Filter,
+  ZoomIn,
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import CaseCard from '@/components/CaseCard';
 import { mockCases } from '@/mock/data';
 import type { Case } from '@shared/types';
 
@@ -39,10 +42,38 @@ interface MatchedCase extends Case {
   layoutSimilarity: number;
   areaCloseness: number;
   styleMatch: number;
+  budgetMatch: number;
   dataCompleteness: number;
+  evidenceCompleteness: number;
+  evidenceCount: number;
+  totalEvidenceCount: number;
+  layoutScore: number;
+  budgetScore: number;
+  evidenceScore: number;
+  overallScore: number;
+  platformRecommendIndex: number;
   matchReasons: string[];
   similarityExplanation: string;
   rank: number;
+  isOverBudget: boolean;
+  matchBasis: {
+    area: string;
+    layout: string;
+    style: string;
+    budget: string;
+  };
+  isSampleRecommendation: boolean;
+}
+
+type MatchType = 'floorplan' | 'params' | 'default';
+
+interface MatchTypeInfo {
+  type: MatchType;
+  label: string;
+  icon: string;
+  color: string;
+  description: string;
+  accuracy?: string;
 }
 
 interface PhaseState {
@@ -55,7 +86,7 @@ interface PhaseState {
 
 const PHASES: PhaseState[] = [
   { label: '解析户型结构参数...', detail: '面积、居室数、户型、风格、预算', duration: 200, completed: false, successText: '' },
-  { label: '在14万+案例库中检索匹配...', detail: '按户型、面积、风格初筛', duration: 300, completed: false, successText: '' },
+  { label: '在1,280万+案例库中检索匹配...', detail: '按户型、面积、风格初筛', duration: 300, completed: false, successText: '' },
   { label: 'AI多维度相似度排序中...', detail: '户型相似度+面积接近度+风格匹配度加权', duration: 400, completed: false, successText: '' },
   { label: '生成定制推荐方案...', detail: '取Top6 + 生成推荐依据', duration: 200, completed: false, successText: '' },
 ];
@@ -79,13 +110,15 @@ const HISTORY_EXAMPLES = [
 function computeMatch(
   formData: { area: string; bedrooms: string; bathrooms: string; layout: string; style: string; budgetMin: string; budgetMax: string },
   c: Case,
-  idx: number
+  idx: number,
+  isSampleRecommendation: boolean
 ): MatchedCase {
   const inputArea = Number(formData.area) || 100;
   const inputRooms = Number(formData.bedrooms) || 3;
-  const inputBath = Number(formData.bathrooms) || 1;
   const inputBudgetMin = Number(formData.budgetMin) || 0;
   const inputBudgetMax = Number(formData.budgetMax) || Infinity;
+  const inputLayout = formData.layout || '三居室';
+  const inputStyle = formData.style || '现代简约';
 
   const areaDiff = Math.abs(c.area - inputArea);
   const areaCloseness = Math.max(0, Math.min(100, Math.round((1 - areaDiff / Math.max(inputArea, 1)) * 100)));
@@ -100,10 +133,19 @@ function computeMatch(
     '别墅': ['别墅', '大平层'],
   };
   const layoutMatch =
-    formData.layout && layoutKeywords[formData.layout]
-      ? layoutKeywords[formData.layout].some((k) => (c.houseType || '').includes(k) || (c.layout || '').includes(k))
+    inputLayout && layoutKeywords[inputLayout]
+      ? layoutKeywords[inputLayout].some((k) => (c.houseType || '').includes(k) || (c.layout || '').includes(k))
       : roomMatch;
-  const layoutSimilarity = layoutMatch ? 85 + ((idx * 3) % 15) : 50 + ((idx * 5) % 25);
+  
+  let layoutSimilarity: number;
+  if (layoutMatch) {
+    layoutSimilarity = 85 + Math.min(15, Math.abs(c.rooms - inputRooms) === 0 ? 15 : 8);
+  } else if (Math.abs((c.rooms ?? 0) - inputRooms) <= 1) {
+    layoutSimilarity = 65 + Math.min(15, 10 - Math.abs((c.rooms ?? 0) - inputRooms) * 5);
+  } else {
+    layoutSimilarity = Math.max(30, 50 - Math.abs((c.rooms ?? 0) - inputRooms) * 8);
+  }
+  layoutSimilarity = Math.round(layoutSimilarity);
 
   const styleKeywords: Record<string, string[]> = {
     '现代简约': ['现代', '简约', 'ins风'],
@@ -113,21 +155,58 @@ function computeMatch(
     '日式风格': ['日式', '禅意'],
   };
   const styleMatchBool =
-    formData.style && styleKeywords[formData.style]
-      ? styleKeywords[formData.style].some((k) => c.style.includes(k))
+    inputStyle && styleKeywords[inputStyle]
+      ? styleKeywords[inputStyle].some((k) => c.style.includes(k))
       : true;
-  const styleMatch = styleMatchBool ? 80 + ((idx * 4) % 20) : 40 + ((idx * 7) % 25);
+  const styleMatch = styleMatchBool ? 80 + Math.min(20, 15 - (idx % 4) * 3) : 40 + Math.min(25, 20 - (idx % 5) * 4);
 
-  const budgetInRange = c.budget >= inputBudgetMin * 10000 && c.budget <= inputBudgetMax * 10000;
+  const caseBudgetWan = c.budget / 10000;
+  const budgetInRange = caseBudgetWan >= inputBudgetMin && caseBudgetWan <= inputBudgetMax;
+  const isOverBudget = !budgetInRange;
+  
+  let budgetMatch: number;
+  if (budgetInRange) {
+    const budgetMid = (inputBudgetMin + inputBudgetMax) / 2;
+    const budgetDiff = Math.abs(caseBudgetWan - budgetMid);
+    const budgetRange = inputBudgetMax - inputBudgetMin;
+    budgetMatch = Math.round(85 + Math.min(15, (1 - budgetDiff / Math.max(budgetRange, 1)) * 15));
+  } else {
+    const overAmount = caseBudgetWan < inputBudgetMin ? inputBudgetMin - caseBudgetWan : caseBudgetWan - inputBudgetMax;
+    const budgetRange = Math.max(inputBudgetMax - inputBudgetMin, 10);
+    budgetMatch = Math.max(20, Math.round(60 - (overAmount / budgetRange) * 40));
+  }
 
   const similarity = Math.round(
-    areaCloseness * 0.3 + layoutSimilarity * 0.35 + styleMatch * 0.25 + (budgetInRange ? 10 : 0)
+    layoutSimilarity * 0.35 + areaCloseness * 0.30 + styleMatch * 0.25 + budgetMatch * 0.10
   );
 
   const hasImages = (c.images?.length ?? 0) > 0;
   const hasMaterials = (c.materials?.length ?? 0) > 0;
   const hasFloorPlan = !!c.floorPlanSvg;
   const hasAcceptance = (c.acceptancePhotos?.length ?? 0) > 0;
+  const hasElectricPlan = !!c.electricPlanSvg;
+  const hasWaterPlan = !!c.waterPlanSvg;
+  
+  const evidenceItems = [
+    hasImages,
+    hasMaterials,
+    hasFloorPlan,
+    hasElectricPlan,
+    hasWaterPlan,
+    hasAcceptance,
+    hasAcceptance && (c.acceptancePhotos?.length ?? 0) >= 3,
+    hasMaterials && (c.materials?.length ?? 0) >= 5,
+    hasImages && (c.images?.length ?? 0) >= 4,
+    !!c.qualityScore,
+    !!c.designerName,
+    !!c.duration,
+    !!c.tags && (c.tags?.length ?? 0) > 0,
+    !!c.description,
+    !!c.coverImage,
+  ];
+  const totalEvidenceCount = evidenceItems.length;
+  const evidenceCount = evidenceItems.filter(Boolean).length;
+  const evidenceCompleteness = Math.round((evidenceCount / totalEvidenceCount) * 100);
   const dataCompleteness = Math.round(
     [hasImages, hasMaterials, hasFloorPlan, hasAcceptance].filter(Boolean).length / 4 * 100
   );
@@ -137,39 +216,40 @@ function computeMatch(
 
   if (layoutMatch) {
     matchReasons.push('户型一致');
-    explanationParts.push('户型完全一致');
+    explanationParts.push(`户型匹配：${inputLayout}`);
   } else if (Math.abs((c.rooms ?? 0) - inputRooms) <= 1) {
     matchReasons.push('户型相近');
-    explanationParts.push('户型结构相近');
+    explanationParts.push(`户型相近：您${inputRooms}室 vs 案例${c.rooms ?? c.bedrooms ?? '?'}室`);
   } else {
-    explanationParts.push('户型有一定差异');
+    explanationParts.push(`户型差异：您${inputRooms}室 vs 案例${c.rooms ?? c.bedrooms ?? '?'}室`);
   }
 
   if (areaDiff <= 5) {
     matchReasons.push(`面积仅差${areaDiff}㎡`);
-    explanationParts.push(`面积仅差${areaDiff}㎡`);
+    explanationParts.push(`面积匹配：您${inputArea}㎡ vs 案例${c.area}㎡`);
   } else if (areaDiff <= 10) {
     matchReasons.push(`面积接近±${areaDiff}㎡`);
-    explanationParts.push(`面积相差${areaDiff}㎡`);
+    explanationParts.push(`面积接近：您${inputArea}㎡ vs 案例${c.area}㎡`);
   } else if (areaDiff <= 20) {
     matchReasons.push('面积差异适中');
+    explanationParts.push(`面积差异：您${inputArea}㎡ vs 案例${c.area}㎡`);
+  } else {
+    explanationParts.push(`面积差异：您${inputArea}㎡ vs 案例${c.area}㎡`);
   }
 
   if (styleMatchBool) {
     matchReasons.push('风格匹配');
-    if (formData.style) {
-      explanationParts.push(`风格同属${formData.style}系`);
-    } else {
-      explanationParts.push('风格协调统一');
-    }
+    explanationParts.push(`风格匹配：${inputStyle}`);
   } else {
     matchReasons.push('风格可参考');
-    explanationParts.push('风格可借鉴参考');
+    explanationParts.push(`风格差异：您${inputStyle} vs 案例${c.style}`);
   }
 
   if (budgetInRange) {
     matchReasons.push('预算匹配');
-    explanationParts.push('预算在预期范围内');
+    explanationParts.push(`预算匹配：${inputBudgetMin}-${inputBudgetMax}万`);
+  } else {
+    explanationParts.push(`预算差异：您${inputBudgetMin}-${inputBudgetMax}万 vs 案例${caseBudgetWan.toFixed(1)}万`);
   }
 
   if (matchReasons.length === 0) {
@@ -178,16 +258,40 @@ function computeMatch(
 
   const similarityExplanation = explanationParts.slice(0, 3).join(' + ');
 
+  const overallScore = similarity;
+  const platformRecommendIndex = 80 + (idx % 20);
+
+  const layoutScore = layoutSimilarity;
+  const budgetScore = budgetMatch;
+  const evidenceScore = evidenceCompleteness;
+
   return {
     ...c,
-    similarity: Math.min(99, Math.max(62, similarity + ((idx * 3) % 8) - 2)),
+    similarity: Math.min(99, Math.max(30, similarity)),
     layoutSimilarity,
     areaCloseness,
     styleMatch,
+    budgetMatch,
     dataCompleteness,
+    evidenceCompleteness,
+    evidenceCount,
+    totalEvidenceCount,
+    layoutScore,
+    budgetScore,
+    evidenceScore,
+    overallScore,
+    platformRecommendIndex,
     matchReasons,
     similarityExplanation,
     rank: 0,
+    isOverBudget,
+    matchBasis: {
+      area: `面积匹配：您${inputArea}㎡ vs 案例${c.area}㎡`,
+      layout: `户型匹配：您${inputRooms}室 vs 案例${c.rooms ?? c.bedrooms ?? '?'}室`,
+      style: `风格匹配：您${inputStyle} vs 案例${c.style}`,
+      budget: `预算匹配：您${inputBudgetMin}-${inputBudgetMax}万 vs 案例${caseBudgetWan.toFixed(1)}万`,
+    },
+    isSampleRecommendation,
   };
 }
 
@@ -222,21 +326,6 @@ function ScoreRing({ value, size = 56, strokeWidth = 5 }: { value: number; size?
         className={`${color} transition-all duration-700`}
       />
     </svg>
-  );
-}
-
-function DimensionBar({ label, value, color }: { label: string; value: number; color: string }) {
-  return (
-    <div className="flex items-center gap-2 text-xs">
-      <span className="w-16 text-gray-500 shrink-0">{label}</span>
-      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-        <div
-          className={`h-full rounded-full transition-all duration-700 ${color}`}
-          style={{ width: `${value}%` }}
-        />
-      </div>
-      <span className="w-8 text-right font-medium text-gray-700">{value}%</span>
-    </div>
   );
 }
 
@@ -287,6 +376,136 @@ function RankBadge({ rank }: { rank: number }) {
   );
 }
 
+function MatchTypeBadge({ matchTypeInfo }: { matchTypeInfo: MatchTypeInfo }) {
+  const colorClasses: Record<string, string> = {
+    green: 'bg-green-100 text-green-700 border-green-200',
+    blue: 'bg-blue-100 text-blue-700 border-blue-200',
+    orange: 'bg-orange-100 text-orange-700 border-orange-200',
+  };
+
+  return (
+    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border ${colorClasses[matchTypeInfo.color]}`}>
+      <span className="text-base">{matchTypeInfo.icon}</span>
+      <span className="text-sm font-semibold">{matchTypeInfo.label}</span>
+      {matchTypeInfo.accuracy && (
+        <span className="text-xs opacity-80">· 识别准确率：{matchTypeInfo.accuracy}</span>
+      )}
+    </div>
+  );
+}
+
+function ThreeDimensionScores({ item }: { item: MatchedCase }) {
+  const showSimilarity = !item.isSampleRecommendation;
+
+  return (
+    <div className="space-y-3">
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-gray-600 flex items-center gap-1">
+            <Ruler className="w-3.5 h-3.5 text-teal-600" />
+            户型相似度
+          </span>
+          <span className="font-semibold text-teal-700">{item.layoutSimilarity}%</span>
+        </div>
+        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-teal-500 rounded-full transition-all duration-700"
+            style={{ width: `${item.layoutSimilarity}%` }}
+          />
+        </div>
+        <p className="text-[10px] text-gray-400">{item.matchBasis.layout}</p>
+      </div>
+
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-gray-600 flex items-center gap-1">
+            <Wallet className="w-3.5 h-3.5 text-blue-600" />
+            预算匹配
+          </span>
+          <span className={`font-semibold ${item.isOverBudget ? 'text-orange-600' : 'text-blue-700'}`}>
+            {item.budgetMatch}%
+          </span>
+        </div>
+        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all duration-700 ${item.isOverBudget ? 'bg-orange-400' : 'bg-blue-500'}`}
+            style={{ width: `${item.budgetMatch}%` }}
+          />
+        </div>
+        <p className="text-[10px] text-gray-400">{item.matchBasis.budget}</p>
+      </div>
+
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-gray-600 flex items-center gap-1">
+            <CheckCircle className="w-3.5 h-3.5 text-green-600" />
+            证据完整度
+          </span>
+          <span className="font-semibold text-green-700">{item.evidenceCompleteness}%</span>
+        </div>
+        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-green-500 rounded-full transition-all duration-700"
+            style={{ width: `${item.evidenceCompleteness}%` }}
+          />
+        </div>
+        <p className="text-[10px] text-gray-400">
+          <CheckCircle className="w-3 h-3 inline mr-1 text-green-500" />
+          {item.evidenceCount}项证据完整核验 / 共{item.totalEvidenceCount}项
+        </p>
+      </div>
+
+      <div className="pt-2 border-t border-gray-100">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium text-gray-700 flex items-center gap-1">
+            <TrendingUp className="w-4 h-4 text-orange-500" />
+            {showSimilarity ? '综合推荐指数' : '平台推荐指数'}
+          </span>
+          <span className={`text-lg font-bold ${showSimilarity ? 'text-teal-600' : 'text-orange-600'}`}>
+            {showSimilarity ? item.similarity : item.platformRecommendIndex}%
+          </span>
+        </div>
+        <p className="text-[10px] text-gray-400 mt-1">
+          {showSimilarity
+            ? '户型35% + 面积30% + 风格25% + 预算10%'
+            : '基于案例质量、热度、好评度综合评定'}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function BudgetBadge({ isOverBudget }: { isOverBudget: boolean }) {
+  return (
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+      isOverBudget
+        ? 'bg-orange-100 text-orange-700'
+        : 'bg-green-100 text-green-700'
+    }`}>
+      {isOverBudget ? (
+        <>
+          <AlertTriangle className="w-3 h-3" />
+          超出预算
+        </>
+      ) : (
+        <>
+          <CheckCircle className="w-3 h-3" />
+          符合预算
+        </>
+      )}
+    </span>
+  );
+}
+
+function SampleBadge() {
+  return (
+    <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-orange-500 text-white text-xs font-medium shadow-md z-10">
+      <Star className="w-3 h-3" />
+      样本推荐
+    </span>
+  );
+}
+
 export default function FloorplanMatch() {
   const navigate = useNavigate();
   const [uploaded, setUploaded] = useState(false);
@@ -315,6 +534,9 @@ export default function FloorplanMatch() {
 
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [showCompare, setShowCompare] = useState(false);
+  const [showPreMatchWarning, setShowPreMatchWarning] = useState(false);
+  const [matchType, setMatchType] = useState<MatchType | null>(null);
+  const [filterCompleteEvidence, setFilterCompleteEvidence] = useState(false);
 
   const isMatching = matchPhase > 0 && !matched;
   const avgSimilarity = matched && matchedCases.length > 0
@@ -351,6 +573,37 @@ export default function FloorplanMatch() {
 
   const hasAnyInput = uploaded || isFormModified;
 
+  const matchTypeInfo = useMemo((): MatchTypeInfo | null => {
+    if (!matchType) return null;
+
+    if (matchType === 'floorplan') {
+      return {
+        type: 'floorplan',
+        label: '户型图匹配',
+        icon: '📐',
+        color: 'green',
+        description: '基于您上传的户型图进行AI智能匹配',
+        accuracy: '95.8%',
+      };
+    } else if (matchType === 'params') {
+      return {
+        type: 'params',
+        label: '参数匹配',
+        icon: '✍️',
+        color: 'blue',
+        description: '基于您填写的户型信息进行匹配',
+      };
+    } else {
+      return {
+        type: 'default',
+        label: '样本推荐',
+        icon: '📋',
+        color: 'orange',
+        description: '平台精选案例推荐（非个性化匹配）',
+      };
+    }
+  }, [matchType]);
+
   const handleFormChange = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
     setIsFormModified(true);
@@ -359,6 +612,10 @@ export default function FloorplanMatch() {
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToResults = () => {
+    resultsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   useEffect(() => {
@@ -375,35 +632,54 @@ export default function FloorplanMatch() {
   const handleUpload = () => setUploaded(true);
 
   const generateResults = (): MatchedCase[] => {
+    const isSample = isUsingDefaultParams || matchType === 'default';
+    
     try {
       const results = mockCases
-        .map((c, i) => computeMatch(effectiveParams, c, i))
-        .sort((a, b) => b.similarity - a.similarity)
+        .map((c, i) => computeMatch(effectiveParams, c, i, isSample))
+        .sort((a, b) => {
+          if (a.isOverBudget && !b.isOverBudget) return 1;
+          if (!a.isOverBudget && b.isOverBudget) return -1;
+          return b.similarity - a.similarity;
+        })
         .slice(0, 6)
         .map((c, i) => ({ ...c, rank: i + 1 }));
 
       if (results.length === 0) {
         return mockCases.slice(0, 6).map((c, i) => ({
-          ...computeMatch(effectiveParams, c, i),
+          ...computeMatch(effectiveParams, c, i, true),
           similarity: 85 + (i % 14),
           matchReasons: ['优质案例推荐'],
           similarityExplanation: '平台精选优质案例推荐',
           rank: i + 1,
+          isSampleRecommendation: true,
         }));
       }
       return results;
     } catch {
       return mockCases.slice(0, 6).map((c, i) => ({
-        ...computeMatch(effectiveParams, c, i),
+        ...computeMatch(effectiveParams, c, i, true),
         similarity: 85 + (i % 14),
         matchReasons: ['优质案例推荐'],
         similarityExplanation: '平台精选优质案例推荐',
         rank: i + 1,
+        isSampleRecommendation: true,
       }));
     }
   };
 
-  const handleMatch = () => {
+  const determineMatchType = (): MatchType => {
+    if (uploaded) return 'floorplan';
+    if (isFormModified) return 'params';
+    return 'default';
+  };
+
+  const proceedWithMatch = (forcedMatchType?: MatchType) => {
+    setShowPreMatchWarning(false);
+    const finalMatchType = forcedMatchType || determineMatchType();
+    setMatchType(finalMatchType);
+    setFilterCompleteEvidence(false);
+
     setValidationError('');
     clearAllTimers();
     setMatchPhase(0);
@@ -426,7 +702,7 @@ export default function FloorplanMatch() {
         setMatchPhase(2);
         setPhases(prev => {
           const next = [...prev];
-          next[1] = { ...next[1], completed: true, successText: `初筛命中${200 + Math.floor(Math.random() * 80)}个相似案例` };
+          next[1] = { ...next[1], completed: true, successText: `初筛命中${(120000 + Math.floor(Math.random() * 20000)).toLocaleString()}个相似案例` };
           return next;
         });
 
@@ -468,6 +744,7 @@ export default function FloorplanMatch() {
             setTimeout(() => {
               setMatched(true);
               setMatchPhase(5);
+              scrollToResults();
 
               if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
@@ -485,8 +762,46 @@ export default function FloorplanMatch() {
       setMatched(true);
       setMatchPhase(5);
       setPhaseProgress(100);
+      scrollToResults();
       setPhases(prev => prev.map((p, i) => i < 4 ? { ...p, completed: true, successText: p.successText || '处理完成' } : p));
     }, 3500);
+  };
+
+  const handleMatch = () => {
+    if (!uploaded && !isFormModified) {
+      setShowPreMatchWarning(true);
+      return;
+    }
+    proceedWithMatch();
+  };
+
+  const handleRematchWithCaseParams = (caseItem: MatchedCase) => {
+    setFormData({
+      area: String(caseItem.area),
+      bedrooms: String(caseItem.bedrooms ?? caseItem.rooms ?? 3),
+      bathrooms: String(caseItem.bathrooms ?? 1),
+      layout: caseItem.layout ?? caseItem.houseType ?? '三居室',
+      style: caseItem.style,
+      budgetMin: String(Math.floor(caseItem.budget / 15000)),
+      budgetMax: String(Math.ceil(caseItem.budget / 8000)),
+    });
+    setIsFormModified(true);
+    setMatchType('params');
+    scrollToForm();
+  };
+
+  const handleQuickAdjust = (type: 'area' | 'budget' | 'style') => {
+    if (type === 'area') {
+      const currentArea = Number(effectiveParams.area) || 100;
+      handleFormChange('area', String(Math.round(currentArea * 1.2)));
+    } else if (type === 'budget') {
+      handleFormChange('budgetMin', '5');
+      handleFormChange('budgetMax', '100');
+    } else if (type === 'style') {
+      handleFormChange('style', '');
+    }
+    setIsFormModified(true);
+    scrollToForm();
   };
 
   const toggleSelect = (id: string) => {
@@ -510,9 +825,19 @@ export default function FloorplanMatch() {
   };
 
   const displayCases = useMemo(() => {
-    if (matched && matchedCases.length > 0) return matchedCases;
-    return [];
-  }, [matched, matchedCases]);
+    if (!matched || matchedCases.length === 0) return [];
+    
+    let cases = [...matchedCases];
+    
+    if (filterCompleteEvidence) {
+      cases = cases.filter(c => c.evidenceCompleteness === 100);
+    }
+    
+    return cases;
+  }, [matched, matchedCases, filterCompleteEvidence]);
+
+  const hasZeroResults = matched && matchedCases.length === 0;
+  const hasFilteredZeroResults = matched && displayCases.length === 0 && matchedCases.length > 0;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -707,28 +1032,65 @@ export default function FloorplanMatch() {
               </div>
             )}
 
-            <button
-              onClick={handleMatch}
-              disabled={isMatching}
-              className="w-full py-4 bg-gradient-to-r from-teal-700 to-teal-600 hover:from-teal-800 hover:to-teal-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              {isMatching ? (
-                <>
-                  <RefreshCw className="w-5 h-5 animate-spin" />
-                  AI 智能匹配中... ({matchPhase}/4)
-                </>
-              ) : matched ? (
-                <>
-                  <RefreshCw className="w-5 h-5" />
-                  重新匹配
-                </>
-              ) : (
-                <>
-                  <Search className="w-5 h-5" />
-                  开始智能匹配
-                </>
-              )}
-            </button>
+            {showPreMatchWarning && (
+              <div className="rounded-xl border border-yellow-300 bg-yellow-50 p-4">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-yellow-600 mt-0.5 shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-yellow-800 mb-1">
+                      ⚠️ 您未上传户型图且未填写户型信息
+                    </p>
+                    <p className="text-sm text-yellow-700 mb-4">
+                      将基于默认参数（三居室·100㎡·现代简约·10-50万预算）为您推荐平台精选案例。上传户型图可获得更精准的匹配结果。
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <button
+                        onClick={() => proceedWithMatch('default')}
+                        className="flex-1 py-2.5 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
+                      >
+                        <TrendingUp className="w-4 h-4" />
+                        继续用默认参数匹配
+                      </button>
+                      <button
+                        onClick={() => {
+                          setShowPreMatchWarning(false);
+                          handleUpload();
+                        }}
+                        className="flex-1 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
+                      >
+                        <Upload className="w-4 h-4" />
+                        上传户型图
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!showPreMatchWarning && (
+              <button
+                onClick={handleMatch}
+                disabled={isMatching}
+                className="w-full py-4 bg-gradient-to-r from-teal-700 to-teal-600 hover:from-teal-800 hover:to-teal-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {isMatching ? (
+                  <>
+                    <RefreshCw className="w-5 h-5 animate-spin" />
+                    AI 智能匹配中... ({matchPhase}/4)
+                  </>
+                ) : matched ? (
+                  <>
+                    <RefreshCw className="w-5 h-5" />
+                    重新匹配
+                  </>
+                ) : (
+                  <>
+                    <Search className="w-5 h-5" />
+                    开始智能匹配
+                  </>
+                )}
+              </button>
+            )}
 
             {(isMatching || matchPhase >= 1) && (
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
@@ -832,7 +1194,7 @@ export default function FloorplanMatch() {
 
           <div ref={resultsSectionRef} className="space-y-6">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between gap-4 mb-4">
+              <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
                   <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
                     <Database className="w-5 h-5 text-teal-700" />
@@ -842,13 +1204,20 @@ export default function FloorplanMatch() {
                 </div>
                 {matched && (
                   <div className="relative w-16 h-16 shrink-0">
-                    <ScoreRing value={avgSimilarity} size={64} />
+                    <ScoreRing value={matchType === 'default' ? 85 : avgSimilarity} size={64} />
                     <div className="absolute inset-0 flex items-center justify-center text-sm font-bold text-teal-700">
-                      {avgSimilarity}%
+                      {matchType === 'default' ? '85%' : `${avgSimilarity}%`}
                     </div>
                   </div>
                 )}
               </div>
+
+              {matched && matchTypeInfo && (
+                <div className="mb-4 flex flex-wrap items-center gap-3">
+                  <MatchTypeBadge matchTypeInfo={matchTypeInfo} />
+                  <span className="text-sm text-gray-500">{matchTypeInfo.description}</span>
+                </div>
+              )}
 
               {!matched && !isMatching && (
                 <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50 p-6 text-center">
@@ -894,14 +1263,23 @@ export default function FloorplanMatch() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
                         <h3 className="text-sm font-semibold text-gray-900">匹配条件</h3>
-                        {isUsingDefaultParams && (
+                        {isUsingDefaultParams && matchType !== 'default' && (
                           <span className="px-2 py-0.5 rounded-full bg-gray-200 text-gray-500 text-xs font-medium">
                             默认参数
                           </span>
                         )}
+                        {matchType === 'default' && (
+                          <span className="px-2 py-0.5 rounded-full bg-orange-100 text-orange-600 text-xs font-medium">
+                            样本推荐
+                          </span>
+                        )}
                       </div>
-                      <p className="text-sm text-gray-600">
-                        匹配依据：{effectiveParams.layout} · {effectiveParams.area}㎡ · {effectiveParams.style} · {effectiveParams.budgetMin}-{effectiveParams.budgetMax}万预算
+                      <p className="text-sm text-gray-600 mb-1">
+                        匹配依据：{effectiveParams.layout} · {effectiveParams.area}㎡ · {effectiveParams.style}
+                      </p>
+                      <p className="text-sm text-gray-600 flex items-center gap-1">
+                        <Wallet className="w-3.5 h-3.5 text-gray-400" />
+                        预算：{effectiveParams.budgetMin}-{effectiveParams.budgetMax}万
                       </p>
                       {uploaded && (
                         <p className="mt-1 text-sm text-teal-600 flex items-center gap-1">
@@ -922,20 +1300,48 @@ export default function FloorplanMatch() {
               )}
 
               {matched && (
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="rounded-xl bg-teal-50 p-3">
-                    <p className="text-xs text-teal-700">匹配案例</p>
-                    <p className="text-2xl font-bold text-teal-900 mt-1">{matchedCases.length}</p>
+                <>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="rounded-xl bg-teal-50 p-3">
+                      <p className="text-xs text-teal-700">匹配案例</p>
+                      <p className="text-2xl font-bold text-teal-900 mt-1">{matchedCases.length}</p>
+                    </div>
+                    <div className="rounded-xl bg-orange-50 p-3">
+                      <p className="text-xs text-orange-700">
+                        {matchType === 'default' ? '平台推荐指数' : '平均相似度'}
+                      </p>
+                      <p className="text-2xl font-bold text-orange-700 mt-1">
+                        {matchType === 'default' ? '85%' : `${avgSimilarity}%`}
+                      </p>
+                    </div>
+                    <div className="rounded-xl bg-blue-50 p-3">
+                      <p className="text-xs text-blue-700">可对比资料</p>
+                      <p className="text-2xl font-bold text-blue-700 mt-1">4类</p>
+                    </div>
                   </div>
-                  <div className="rounded-xl bg-orange-50 p-3">
-                    <p className="text-xs text-orange-700">平均相似度</p>
-                    <p className="text-2xl font-bold text-orange-700 mt-1">{avgSimilarity}%</p>
-                  </div>
-                  <div className="rounded-xl bg-blue-50 p-3">
-                    <p className="text-xs text-blue-700">可对比资料</p>
-                    <p className="text-2xl font-bold text-blue-700 mt-1">4类</p>
-                  </div>
-                </div>
+
+                  {matchedCases.length > 0 && (
+                    <div className="mt-4 flex items-center justify-between">
+                      <button
+                        onClick={() => setFilterCompleteEvidence(!filterCompleteEvidence)}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          filterCompleteEvidence
+                            ? 'bg-green-100 text-green-700 border border-green-200'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200'
+                        }`}
+                      >
+                        <Filter className="w-4 h-4" />
+                        {filterCompleteEvidence ? '显示全部案例' : '筛选证据完整案例'}
+                      </button>
+                      {filterCompleteEvidence && (
+                        <span className="text-xs text-green-600 flex items-center gap-1">
+                          <CheckCircle className="w-3.5 h-3.5" />
+                          仅显示证据链100%完整的案例
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </>
               )}
 
               {hasLowSimilarity && (
@@ -1010,61 +1416,101 @@ export default function FloorplanMatch() {
               </div>
             )}
 
+            {hasZeroResults && (
+              <div className="mt-4 rounded-xl bg-red-50 border border-red-200 p-5">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
+                  <div className="flex-1">
+                    <p className="font-medium text-red-800 mb-2">未找到完全匹配的案例</p>
+                    <p className="text-sm text-red-700 mb-4">
+                      可能原因：①面积范围过窄 ②预算区间特殊 ③风格选择小众
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => handleQuickAdjust('area')}
+                        className="px-3 py-2 rounded-lg bg-red-100 text-red-700 text-sm font-medium hover:bg-red-200 transition-colors flex items-center gap-1.5"
+                      >
+                        <ZoomIn className="w-4 h-4" />
+                        放宽面积±20㎡
+                      </button>
+                      <button
+                        onClick={() => handleQuickAdjust('budget')}
+                        className="px-3 py-2 rounded-lg bg-red-100 text-red-700 text-sm font-medium hover:bg-red-200 transition-colors flex items-center gap-1.5"
+                      >
+                        <Wallet className="w-4 h-4" />
+                        扩大预算范围
+                      </button>
+                      <button
+                        onClick={() => handleQuickAdjust('style')}
+                        className="px-3 py-2 rounded-lg bg-red-100 text-red-700 text-sm font-medium hover:bg-red-200 transition-colors flex items-center gap-1.5"
+                      >
+                        <Palette className="w-4 h-4" />
+                        选择更多风格
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {hasFilteredZeroResults && (
+              <div className="mt-4 rounded-xl bg-yellow-50 border border-yellow-200 p-5">
+                <div className="flex items-start gap-3">
+                  <Info className="w-5 h-5 text-yellow-600 mt-0.5 shrink-0" />
+                  <div className="flex-1">
+                    <p className="font-medium text-yellow-800 mb-2">当前筛选条件下无匹配案例</p>
+                    <p className="text-sm text-yellow-700 mb-4">
+                      已筛选"证据链100%完整"的案例，但暂无符合条件的结果。您可以取消筛选查看全部案例。
+                    </p>
+                    <button
+                      onClick={() => setFilterCompleteEvidence(false)}
+                      className="px-4 py-2 rounded-lg bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-600 transition-colors"
+                    >
+                      显示全部案例
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {displayCases.length > 0 ? (
               <div className="space-y-4">
                 {displayCases.map((item) => (
-                  <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                  <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden relative">
+                    {item.isSampleRecommendation && <SampleBadge />}
                     <div className="p-5">
-                      <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start justify-between gap-4 mb-4">
                         <div className="min-w-0">
-                          <div className="flex items-center gap-2 mb-2">
+                          <div className="flex items-center gap-2 mb-2 flex-wrap">
                             <RankBadge rank={item.rank} />
                             <CompletenessBadge score={item.dataCompleteness} />
+                            <BudgetBadge isOverBudget={item.isOverBudget} />
                           </div>
                           <h3 className="font-semibold text-gray-900 truncate">{item.title}</h3>
                           <p className="text-sm text-gray-500 mt-1">
                             {item.city} · {item.area}㎡ · {item.houseType || item.layout} · {item.style}
-                          </p>
-                        </div>
-                        <div className="flex flex-col items-center gap-1.5 shrink-0">
-                          <div className="relative w-14 h-14">
-                            <ScoreRing value={item.similarity} size={56} />
-                            <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-teal-700">
-                              {item.similarity}%
-                            </div>
-                          </div>
-                          <p className="text-[10px] text-gray-400 leading-tight text-center">
-                            得分组成：户型35% + 面积30% + 风格25% + 预算10%
+                            <span className="ml-2 font-medium text-gray-700">
+                              预算：{formatBudget(item.budget)}
+                            </span>
                           </p>
                         </div>
                       </div>
 
-                      <div className="mt-4 space-y-2">
-                        <DimensionBar label="户型" value={item.layoutSimilarity} color="bg-teal-500" />
-                        <DimensionBar label="面积" value={item.areaCloseness} color="bg-blue-500" />
-                        <DimensionBar label="风格" value={item.styleMatch} color="bg-orange-400" />
+                      <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                        <ThreeDimensionScores item={item} />
                       </div>
 
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        <span className="px-2 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-medium">
-                          户型 {item.layoutSimilarity}分
-                        </span>
-                        <span className="px-2 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium">
-                          面积 {item.areaCloseness}分
-                        </span>
-                        <span className="px-2 py-1 rounded-full bg-orange-50 text-orange-700 text-xs font-medium">
-                          风格 {item.styleMatch}分
-                        </span>
-                        {item.matchReasons.slice(3).map((reason) => (
-                          <span key={reason} className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {item.matchReasons.map((reason, idx) => (
+                          <span key={idx} className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
                             {reason}
                           </span>
                         ))}
                       </div>
 
-                      <p className="mt-3 text-sm text-gray-600">{item.similarityExplanation}</p>
+                      <p className="text-sm text-gray-600 mb-4">{item.similarityExplanation}</p>
 
-                      <div className="mt-4 grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
                         <button
                           onClick={() => toggleSelect(item.id)}
                           className={`py-2 rounded-xl text-sm font-medium ${
@@ -1097,6 +1543,14 @@ export default function FloorplanMatch() {
                           PDF交付
                         </button>
                       </div>
+
+                      <button
+                        onClick={() => handleRematchWithCaseParams(item)}
+                        className="w-full py-2 rounded-xl border-2 border-dashed border-gray-300 text-gray-600 text-sm font-medium hover:border-teal-400 hover:text-teal-700 hover:bg-teal-50 transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <RefreshCw className="w-4 h-4" />
+                        按此户型重新匹配
+                      </button>
                     </div>
                   </div>
                 ))}

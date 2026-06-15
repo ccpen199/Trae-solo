@@ -11,14 +11,18 @@ import {
   ZoomOut,
   Download,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   CheckCircle,
   AlertCircle,
+  AlertTriangle,
   Heart,
   Share2,
   MessageCircle,
   User,
   BadgeCheck,
   FileText,
+  FileSearch,
   Boxes,
   Camera,
   LayoutDashboard,
@@ -29,6 +33,7 @@ import {
   History,
   Users,
   ClipboardList,
+  ClipboardCheck,
   X,
   ChevronLeft,
   ExternalLink,
@@ -38,6 +43,7 @@ import {
   HardHat,
   Award,
   GripVertical,
+  Calendar,
 } from 'lucide-react';
 import { mockCases, mockDesigners, mockMaterials } from '@/mock/data';
 import type { Case, CaseMaterial, AcceptancePhoto, Designer, Material } from '@shared/types';
@@ -86,6 +92,7 @@ export default function CaseDetail() {
   const [lightboxImage, setLightboxImage] = useState<AcceptancePhoto | null>(null);
   const [isCollected, setIsCollected] = useState(false);
   const [evidenceModal, setEvidenceModal] = useState<{ title: string; content: string; action: () => void; icon: typeof Home } | null>(null);
+  const [expandedNode, setExpandedNode] = useState<string | null>(null);
 
   useEffect(() => {
     const found = mockCases.find((c) => c.id === id) || mockCases[0];
@@ -563,12 +570,32 @@ export default function CaseDetail() {
                     <div className="absolute left-5 top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary-200 via-primary-300 to-primary-400" />
                     {[
                       {
+                        id: 'design',
                         name: '设计方案',
                         icon: PenTool,
                         status: 'done',
                         desc: '户型设计与3D方案确认',
                         color: 'from-violet-500 to-indigo-600',
                         evidenceCount: 2,
+                        detail: {
+                          photos: [
+                            { id: 'd1', url: 'https://picsum.photos/seed/design-floorplan/400/300', description: '原始户型图', takenAt: '2025-03-01', inspector: '监理·刘工', verified: true },
+                            { id: 'd2', url: 'https://picsum.photos/seed/design-plan/400/300', description: '平面方案设计', takenAt: '2025-03-05', inspector: '监理·刘工', verified: true },
+                            { id: 'd3', url: 'https://picsum.photos/seed/design-3d/400/300', description: '3D效果图', takenAt: '2025-03-08', inspector: '监理·刘工', verified: true },
+                          ],
+                          ocrMaterials: [
+                            { id: 'dm1', brand: '索菲亚', model: 'SF-KC001', name: '定制橱柜', unitPrice: 2580, ocrVerified: true },
+                            { id: 'dm2', brand: 'TATA木门', model: 'AC-001', name: '实木复合门', unitPrice: 2680, ocrVerified: true },
+                            { id: 'dm3', brand: '圣象', model: 'NK8501', name: '多层实木地板', unitPrice: 328, ocrVerified: true },
+                          ],
+                          reviewRecords: [
+                            { id: 'dr1', date: '2025-03-02', inspector: '监理·刘工', conclusion: 'pass' as const, description: '设计交底记录确认' },
+                            { id: 'dr2', date: '2025-03-06', inspector: '监理·刘工', conclusion: 'pass' as const, description: '方案审核通过' },
+                            { id: 'dr3', date: '2025-03-10', inspector: '监理·刘工', conclusion: 'pass' as const, description: '业主签字确认' },
+                          ],
+                          ocrAccuracy: 98.2,
+                          totalReviews: 3,
+                        },
                         evidences: [
                           {
                             label: '户型图SVG',
@@ -585,12 +612,34 @@ export default function CaseDetail() {
                         ],
                       },
                       {
+                        id: 'hydropower',
                         name: '水电交底',
                         icon: Wrench,
                         status: 'done',
                         desc: '水电点位定位与技术交底',
                         color: 'from-blue-500 to-cyan-600',
                         evidenceCount: 4,
+                        detail: {
+                          photos: [
+                            { id: 'h1', url: 'https://picsum.photos/seed/water-pipe/400/300', description: '管线走向实拍', takenAt: '2025-03-15', inspector: '监理·刘工', verified: true },
+                            { id: 'h2', url: 'https://picsum.photos/seed/waterproof/400/300', description: '防水施工', takenAt: '2025-03-17', inspector: '监理·刘工', verified: true },
+                            { id: 'h3', url: 'https://picsum.photos/seed/point-mark/400/300', description: '点位标记', takenAt: '2025-03-18', inspector: '监理·刘工', verified: true },
+                            { id: 'h4', url: 'https://picsum.photos/seed/electric-box/400/300', description: '配电箱接线', takenAt: '2025-03-20', inspector: '监理·刘工', verified: true },
+                          ],
+                          ocrMaterials: [
+                            { id: 'hm1', brand: '远东电缆', model: 'BV-2.5', name: '单芯硬线', unitPrice: 3.5, ocrVerified: true },
+                            { id: 'hm2', brand: '远东电缆', model: 'BV-4', name: '单芯硬线', unitPrice: 5.8, ocrVerified: true },
+                            { id: 'hm3', brand: '联塑', model: 'PPR-D25', name: '热水管', unitPrice: 28, ocrVerified: true },
+                            { id: 'hm4', brand: '东方雨虹', model: 'JSA-101', name: '防水涂料', unitPrice: 168, ocrVerified: true },
+                          ],
+                          reviewRecords: [
+                            { id: 'hr1', date: '2025-03-16', inspector: '监理·刘工', conclusion: 'pass' as const, description: '打压试验合格' },
+                            { id: 'hr2', date: '2025-03-19', inspector: '监理·刘工', conclusion: 'pass' as const, description: '绝缘测试通过' },
+                            { id: 'hr3', date: '2025-03-22', inspector: '监理·刘工', conclusion: 'pass' as const, description: '闭水试验48小时无渗漏' },
+                          ],
+                          ocrAccuracy: 99.1,
+                          totalReviews: 3,
+                        },
                         evidences: [
                           {
                             label: '强电点位图',
@@ -619,12 +668,35 @@ export default function CaseDetail() {
                         ],
                       },
                       {
+                        id: 'mudwood',
                         name: '泥木施工',
                         icon: HardHat,
                         status: 'done',
                         desc: '瓦工铺贴与木工制作',
                         color: 'from-orange-500 to-amber-600',
                         evidenceCount: 3,
+                        detail: {
+                          photos: [
+                            { id: 'm1', url: 'https://picsum.photos/seed/tile-laying/400/300', description: '瓷砖铺贴', takenAt: '2025-04-05', inspector: '监理·刘工', verified: true },
+                            { id: 'm2', url: 'https://picsum.photos/seed/ceiling/400/300', description: '吊顶施工', takenAt: '2025-04-10', inspector: '监理·刘工', verified: true },
+                            { id: 'm3', url: 'https://picsum.photos/seed/partition/400/300', description: '隔墙制作', takenAt: '2025-04-12', inspector: '监理·刘工', verified: true },
+                            { id: 'm4', url: 'https://picsum.photos/seed/door-frame/400/300', description: '门套安装', takenAt: '2025-04-15', inspector: '监理·刘工', verified: true },
+                            { id: 'm5', url: 'https://picsum.photos/seed/cabinet/400/300', description: '柜体制作', takenAt: '2025-04-18', inspector: '监理·刘工', verified: true },
+                          ],
+                          ocrMaterials: [
+                            { id: 'mm1', brand: '东鹏', model: 'FG805001', name: '通体大理石瓷砖', unitPrice: 168, ocrVerified: true },
+                            { id: 'mm2', brand: '圣象', model: 'NK8501', name: '多层实木地板', unitPrice: 328, ocrVerified: true },
+                            { id: 'mm3', brand: '龙牌', model: 'L-50', name: '轻钢龙骨', unitPrice: 18, ocrVerified: true },
+                            { id: 'mm4', brand: '兔宝宝', model: 'TB-E0', name: '生态板材', unitPrice: 258, ocrVerified: true },
+                          ],
+                          reviewRecords: [
+                            { id: 'mr1', date: '2025-04-08', inspector: '监理·刘工', conclusion: 'warning' as const, description: '空鼓检测发现2处需整改' },
+                            { id: 'mr2', date: '2025-04-14', inspector: '监理·刘工', conclusion: 'recheck' as const, description: '平整度复查合格' },
+                            { id: 'mr3', date: '2025-04-20', inspector: '监理·刘工', conclusion: 'pass' as const, description: '垂直度验收通过' },
+                          ],
+                          ocrAccuracy: 97.8,
+                          totalReviews: 3,
+                        },
                         evidences: [
                           {
                             label: '泥木验收照片',
@@ -647,12 +719,33 @@ export default function CaseDetail() {
                         ],
                       },
                       {
+                        id: 'paint',
                         name: '油漆工程',
                         icon: Paintbrush,
                         status: 'done',
                         desc: '墙面处理与乳胶漆施工',
                         color: 'from-pink-500 to-rose-600',
                         evidenceCount: 2,
+                        detail: {
+                          photos: [
+                            { id: 'p1', url: 'https://picsum.photos/seed/base-treatment/400/300', description: '基层处理', takenAt: '2025-05-02', inspector: '监理·刘工', verified: true },
+                            { id: 'p2', url: 'https://picsum.photos/seed/primer/400/300', description: '底漆施工', takenAt: '2025-05-05', inspector: '监理·刘工', verified: true },
+                            { id: 'p3', url: 'https://picsum.photos/seed/topcoat/400/300', description: '面漆施工', takenAt: '2025-05-08', inspector: '监理·刘工', verified: true },
+                            { id: 'p4', url: 'https://picsum.photos/seed/wall-finish/400/300', description: '墙面成品', takenAt: '2025-05-10', inspector: '监理·刘工', verified: true },
+                          ],
+                          ocrMaterials: [
+                            { id: 'pm1', brand: '多乐士', model: 'A991', name: '竹炭净味乳胶漆', unitPrice: 598, ocrVerified: true },
+                            { id: 'pm2', brand: '立邦', model: 'ML-NXB', name: '抗甲醛腻子粉', unitPrice: 85, ocrVerified: true },
+                            { id: 'pm3', brand: '多乐士', model: 'A914', name: '通用底漆', unitPrice: 468, ocrVerified: true },
+                          ],
+                          reviewRecords: [
+                            { id: 'pr1', date: '2025-05-04', inspector: '监理·刘工', conclusion: 'pass' as const, description: '漆膜厚度达标' },
+                            { id: 'pr2', date: '2025-05-09', inspector: '监理·刘工', conclusion: 'pass' as const, description: '色差检查合格' },
+                            { id: 'pr3', date: '2025-05-12', inspector: '监理·刘工', conclusion: 'pass' as const, description: '阴阳角顺直' },
+                          ],
+                          ocrAccuracy: 98.5,
+                          totalReviews: 3,
+                        },
                         evidences: [
                           {
                             label: '油漆阶段照片',
@@ -669,12 +762,36 @@ export default function CaseDetail() {
                         ],
                       },
                       {
+                        id: 'completion',
                         name: '竣工验收',
                         icon: Award,
                         status: 'done',
                         desc: '整体验收通过，交付业主',
                         color: 'from-emerald-500 to-teal-600',
                         evidenceCount: 2,
+                        detail: {
+                          photos: [
+                            { id: 'c1', url: 'https://picsum.photos/seed/panoramic/400/300', description: '客厅全景', takenAt: '2025-06-01', inspector: '监理·刘工', verified: true },
+                            { id: 'c2', url: 'https://picsum.photos/seed/bedroom-detail/400/300', description: '卧室细部', takenAt: '2025-06-01', inspector: '监理·刘工', verified: true },
+                            { id: 'c3', url: 'https://picsum.photos/seed/kitchen-detail/400/300', description: '厨房设备', takenAt: '2025-06-02', inspector: '监理·刘工', verified: true },
+                            { id: 'c4', url: 'https://picsum.photos/seed/bathroom-detail/400/300', description: '卫生间设备', takenAt: '2025-06-02', inspector: '监理·刘工', verified: true },
+                            { id: 'c5', url: 'https://picsum.photos/seed/balcony-detail/400/300', description: '阳台细部', takenAt: '2025-06-03', inspector: '监理·刘工', verified: true },
+                            { id: 'c6', url: 'https://picsum.photos/seed/overall-view/400/300', description: '整体效果', takenAt: '2025-06-03', inspector: '监理·刘工', verified: true },
+                          ],
+                          ocrMaterials: [
+                            { id: 'cm1', brand: '欧普', model: 'MX800', name: 'LED吸顶灯', unitPrice: 899, ocrVerified: true },
+                            { id: 'cm2', brand: '科勒', model: 'K-3722T', name: '连体座便器', unitPrice: 2680, ocrVerified: true },
+                            { id: 'cm3', brand: '摩恩', model: '12345EC', name: '淋浴花洒', unitPrice: 1580, ocrVerified: true },
+                            { id: 'cm4', brand: '顶固', model: 'DG-8801', name: '五金配件', unitPrice: 368, ocrVerified: true },
+                          ],
+                          reviewRecords: [
+                            { id: 'cr1', date: '2025-06-04', inspector: '监理·刘工', conclusion: 'pass' as const, description: '整体验收合格' },
+                            { id: 'cr2', date: '2025-06-05', inspector: '监理·刘工', conclusion: 'pass' as const, description: '空气质量检测达标' },
+                            { id: 'cr3', date: '2025-06-06', inspector: '监理·刘工', conclusion: 'pass' as const, description: '业主签字交付' },
+                          ],
+                          ocrAccuracy: 99.3,
+                          totalReviews: 3,
+                        },
                         evidences: [
                           {
                             label: '各阶段验收记录',
@@ -692,8 +809,10 @@ export default function CaseDetail() {
                       },
                     ].map((stage, idx) => {
                       const Icon = stage.icon;
+                      const isExpanded = expandedNode === stage.id;
+                      const ChevronIcon = isExpanded ? ChevronUp : ChevronDown;
                       return (
-                        <div key={idx} className="relative flex gap-4 pb-8 last:pb-0">
+                        <div key={stage.id} className={cn('relative flex gap-4 pb-8 last:pb-0 transition-all duration-300')}>
                           <div
                             className={cn(
                               'relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-md',
@@ -710,58 +829,190 @@ export default function CaseDetail() {
                               <Icon className="w-5 h-5 text-white" />
                             )}
                           </div>
-                          <div className="flex-1 pt-1">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="font-semibold text-gray-900 text-base">{stage.name}</span>
-                              {stage.status === 'done' && (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full font-medium">
-                                  <CheckCircle className="w-3 h-3" />
-                                  已完成
-                                </span>
+                          <div className="flex-1 min-w-0">
+                            <div
+                              className={cn(
+                                'flex items-start justify-between gap-4 p-3 rounded-xl cursor-pointer transition-all duration-300',
+                                isExpanded ? 'bg-gray-50' : 'hover:bg-gray-50'
                               )}
-                              {stage.status === 'current' && (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent-100 text-accent-700 text-xs rounded-full font-medium">
-                                  <Clock className="w-3 h-3" />
-                                  进行中
-                                </span>
-                              )}
-                              {stage.status === 'pending' && (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded-full font-medium">
-                                  待开始
-                                </span>
-                              )}
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-50 text-primary-700 text-xs rounded-full font-medium">
-                                <FileText className="w-3 h-3" />
-                                {stage.evidenceCount}项证据
-                              </span>
+                              onClick={() => setExpandedNode(isExpanded ? null : stage.id)}
+                            >
+                              <div className="flex-1 pt-1">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <span className="font-semibold text-gray-900 text-base">{stage.name}</span>
+                                  {stage.status === 'done' && (
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full font-medium">
+                                      <CheckCircle className="w-3 h-3" />
+                                      已完成
+                                    </span>
+                                  )}
+                                  {stage.status === 'current' && (
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent-100 text-accent-700 text-xs rounded-full font-medium">
+                                      <Clock className="w-3 h-3" />
+                                      进行中
+                                    </span>
+                                  )}
+                                  {stage.status === 'pending' && (
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded-full font-medium">
+                                      <Clock className="w-3 h-3" />
+                                      待开始
+                                    </span>
+                                  )}
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-50 text-primary-700 text-xs rounded-full font-medium">
+                                    <FileText className="w-3 h-3" />
+                                    {stage.evidenceCount}项证据
+                                  </span>
+                                </div>
+                                <p className="text-sm text-gray-500 mt-1 mb-3">{stage.desc}</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {stage.evidences.map((evidence, eIdx) => {
+                                    const EvIcon = evidence.icon;
+                                    return (
+                                      <button
+                                        key={eIdx}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          if (idx < 3) {
+                                            setEvidenceModal({
+                                              title: evidence.label,
+                                              content: evidence.description,
+                                              action: evidence.action,
+                                              icon: evidence.icon,
+                                            });
+                                          } else {
+                                            evidence.action();
+                                          }
+                                        }}
+                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-primary-300 text-gray-700 hover:text-primary-600 text-xs font-medium rounded-lg transition-all"
+                                      >
+                                        <EvIcon className="w-3.5 h-3.5" />
+                                        {evidence.label}
+                                        <ExternalLink className="w-3 h-3 opacity-50" />
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                              <button className="p-2 rounded-lg hover:bg-gray-200 transition-colors flex-shrink-0">
+                                <ChevronIcon className="w-5 h-5 text-gray-400" />
+                              </button>
                             </div>
-                            <p className="text-sm text-gray-500 mt-1 mb-3">{stage.desc}</p>
-                            <div className="flex flex-wrap gap-2">
-                              {stage.evidences.map((evidence, eIdx) => {
-                                const EvIcon = evidence.icon;
-                                return (
-                                  <button
-                                    key={eIdx}
-                                    onClick={() => {
-                                      if (idx < 3) {
-                                        setEvidenceModal({
-                                          title: evidence.label,
-                                          content: evidence.description,
-                                          action: evidence.action,
-                                          icon: evidence.icon,
-                                        });
-                                      } else {
-                                        evidence.action();
-                                      }
-                                    }}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-primary-300 text-gray-700 hover:text-primary-600 text-xs font-medium rounded-lg transition-all"
-                                  >
-                                    <EvIcon className="w-3.5 h-3.5" />
-                                    {evidence.label}
-                                    <ExternalLink className="w-3 h-3 opacity-50" />
-                                  </button>
-                                );
-                              })}
+                            <div
+                              className={cn(
+                                'overflow-hidden transition-all duration-300 ease-in-out',
+                                isExpanded ? 'max-h-[800px] opacity-100 mt-4' : 'max-h-0 opacity-0'
+                              )}
+                            >
+                              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 bg-gray-50 rounded-xl p-4 border border-gray-200">
+                                <div className="bg-white rounded-xl p-4 border border-gray-100">
+                                  <h4 className="font-semibold text-gray-900 flex items-center gap-2 mb-3">
+                                    <Camera className="w-4 h-4 text-primary-600" />
+                                    验收照片
+                                  </h4>
+                                  <div className="grid grid-cols-3 gap-2">
+                                    {stage.detail.photos.slice(0, 6).map((photo) => (
+                                      <div key={photo.id} className="relative group">
+                                        <img
+                                          src={photo.url}
+                                          alt={photo.description}
+                                          className="w-full aspect-square object-cover rounded-lg"
+                                        />
+                                        <div className="absolute top-1 right-1 bg-green-500 text-white text-xs px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                                          <CheckCircle className="w-2.5 h-2.5" />
+                                          已核验
+                                        </div>
+                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                          <span className="text-white text-xs text-center px-1">{photo.description}</span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <p className="text-xs text-gray-500 mt-3 flex items-center gap-1">
+                                    <Calendar className="w-3 h-3" />
+                                    {stage.detail.photos[0]?.takenAt} · {stage.detail.photos[0]?.inspector}
+                                  </p>
+                                </div>
+                                <div className="bg-white rounded-xl p-4 border border-gray-100">
+                                  <h4 className="font-semibold text-gray-900 flex items-center gap-2 mb-3">
+                                    <FileSearch className="w-4 h-4 text-primary-600" />
+                                    OCR识别建材
+                                  </h4>
+                                  <div className="space-y-2">
+                                    {stage.detail.ocrMaterials.map((mat) => (
+                                      <div key={mat.id} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                                        <div className="flex-1 min-w-0">
+                                          <div className="text-sm font-medium text-gray-900 truncate">
+                                            {mat.brand} {mat.model}
+                                          </div>
+                                          <div className="text-xs text-gray-500 truncate">{mat.name}</div>
+                                        </div>
+                                        <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                                          <span className="text-sm font-semibold text-accent-600">¥{mat.unitPrice}</span>
+                                          <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-blue-50 text-blue-600 text-xs rounded font-medium">
+                                            OCR
+                                            <CheckCircle className="w-2.5 h-2.5" />
+                                          </span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <p className="text-xs text-gray-500 mt-3 pt-2 border-t border-gray-50">
+                                    识别准确率：<span className="text-green-600 font-semibold">{stage.detail.ocrAccuracy}%</span>
+                                  </p>
+                                </div>
+                                <div className="bg-white rounded-xl p-4 border border-gray-100">
+                                  <h4 className="font-semibold text-gray-900 flex items-center gap-2 mb-3">
+                                    <ClipboardCheck className="w-4 h-4 text-primary-600" />
+                                    复查记录
+                                  </h4>
+                                  <div className="space-y-3">
+                                    {stage.detail.reviewRecords.map((record) => (
+                                      <div key={record.id} className="flex items-start gap-2">
+                                        <div
+                                          className={cn(
+                                            'mt-0.5 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0',
+                                            record.conclusion === 'pass' && 'bg-green-50',
+                                            record.conclusion === 'warning' && 'bg-amber-50',
+                                            record.conclusion === 'recheck' && 'bg-blue-50'
+                                          )}
+                                        >
+                                          {record.conclusion === 'pass' && (
+                                            <CheckCircle className="w-3.5 h-3.5 text-green-600" />
+                                          )}
+                                          {record.conclusion === 'warning' && (
+                                            <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                                          )}
+                                          {record.conclusion === 'recheck' && (
+                                            <Clock className="w-3.5 h-3.5 text-blue-600" />
+                                          )}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <div className="flex items-center gap-2 flex-wrap">
+                                            <span className="text-sm font-medium text-gray-900">{record.date}</span>
+                                            <span className="text-xs text-gray-500">{record.inspector}</span>
+                                            <span
+                                              className={cn(
+                                                'inline-flex items-center px-1.5 py-0.5 text-xs rounded font-medium',
+                                                record.conclusion === 'pass' && 'bg-green-50 text-green-700',
+                                                record.conclusion === 'warning' && 'bg-amber-50 text-amber-700',
+                                                record.conclusion === 'recheck' && 'bg-blue-50 text-blue-700'
+                                              )}
+                                            >
+                                              {record.conclusion === 'pass' && '通过'}
+                                              {record.conclusion === 'warning' && '需整改'}
+                                              {record.conclusion === 'recheck' && '已复查'}
+                                            </span>
+                                          </div>
+                                          <p className="text-xs text-gray-600 mt-0.5">{record.description}</p>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <p className="text-xs text-gray-500 mt-3 pt-2 border-t border-gray-50">
+                                    累计复查：<span className="text-primary-600 font-semibold">{stage.detail.totalReviews}次</span>
+                                  </p>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
