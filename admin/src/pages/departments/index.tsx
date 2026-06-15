@@ -18,7 +18,9 @@ import {
   Descriptions,
   Divider,
   Badge,
-  message
+  message,
+  Alert,
+  Timeline
 } from 'antd'
 import {
   SearchOutlined,
@@ -37,7 +39,11 @@ import {
   FileTextOutlined,
   BranchesOutlined,
   ToolOutlined,
-  PlayCircleOutlined
+  PlayCircleOutlined,
+  WarningOutlined,
+  ExclamationCircleOutlined,
+  SafetyCertificateOutlined,
+  AuditOutlined
 } from '@ant-design/icons'
 import type { DataNode } from 'antd/es/tree'
 import ReactECharts from 'echarts-for-react'
@@ -545,6 +551,148 @@ const Departments: React.FC = () => {
           pagination={false}
         />
       )
+    },
+    {
+      key: 'sync-errors',
+      label: '同步异常',
+      icon: <WarningOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Table
+            columns={[
+              { title: '时间', dataIndex: 'time', key: 'time', width: 160 },
+              { title: '接口', dataIndex: 'interface', key: 'interface' },
+              { title: '异常类型', dataIndex: 'errorType', key: 'errorType', render: (t: string) => <Tag color="error">{t}</Tag> },
+              { title: '影响范围', dataIndex: 'scope', key: 'scope' },
+              {
+                title: '状态',
+                dataIndex: 'status',
+                key: 'status',
+                render: (s: string) => {
+                  const config: Record<string, { color: string; text: string }> = {
+                    recovered: { color: 'green', text: '已恢复' },
+                    processing: { color: 'orange', text: '处理中' },
+                    pending: { color: 'red', text: '待处理' }
+                  }
+                  const item = config[s] || { color: 'default', text: s }
+                  return <Tag color={item.color}>{item.text}</Tag>
+                }
+              }
+            ]}
+            dataSource={[
+              { key: 'e1', time: '2024-01-15 08:30:12', interface: '基础信息查询', errorType: '连接超时', scope: '全部接口', status: 'recovered' },
+              { key: 'e2', time: '2024-01-15 07:15:33', interface: '业务办理查询', errorType: '数据格式错误', scope: '查询接口', status: 'processing' },
+              { key: 'e3', time: '2024-01-14 22:45:18', interface: '数据统计接口', errorType: '权限拒绝', scope: '统计接口', status: 'pending' },
+              { key: 'e4', time: '2024-01-14 18:20:05', interface: '基础信息查询', errorType: '响应超时', scope: '查询接口', status: 'recovered' },
+              { key: 'e5', time: '2024-01-14 10:10:42', interface: '业务办理查询', errorType: '证书过期', scope: '全部接口', status: 'processing' }
+            ]}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+        </div>
+      )
+    },
+    {
+      key: 'responsibility',
+      label: '责任处置',
+      icon: <SafetyCertificateOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Descriptions title="责任人信息" bordered column={1} size="small" style={{ marginBottom: 24 }}>
+            <Descriptions.Item label="责任人姓名">{selectedDepartment.leader}</Descriptions.Item>
+            <Descriptions.Item label="职务">信息化建设负责人</Descriptions.Item>
+            <Descriptions.Item label="联系方式">{selectedDepartment.phone}</Descriptions.Item>
+            <Descriptions.Item label="所属部门">{selectedDepartment.name}</Descriptions.Item>
+          </Descriptions>
+          <Divider />
+          <Title level={5}>处置记录</Title>
+          <Timeline
+            items={[
+              {
+                color: 'green',
+                children: (
+                  <div>
+                    <div style={{ fontWeight: 500 }}>系统升级完成 <Tag color="green">已闭环</Tag></div>
+                    <Text type="secondary">2024-01-15 09:00 - 处置人：王主任</Text>
+                    <div>完成系统升级，所有接口恢复正常服务，平均响应时间恢复至120ms以内</div>
+                  </div>
+                )
+              },
+              {
+                color: 'blue',
+                children: (
+                  <div>
+                    <div style={{ fontWeight: 500 }}>网络故障排查 <Tag color="blue">处置中</Tag></div>
+                    <Text type="secondary">2024-01-14 15:30 - 处置人：张局长</Text>
+                    <div>已定位网络故障原因，正在协调运营商进行线路切换</div>
+                  </div>
+                )
+              },
+              {
+                color: 'orange',
+                children: (
+                  <div>
+                    <div style={{ fontWeight: 500 }}>安全漏洞修复 <Tag color="orange">待确认</Tag></div>
+                    <Text type="secondary">2024-01-14 10:15 - 处置人：李厅长</Text>
+                    <div>发现接口安全漏洞，已提交修复方案，等待确认后实施</div>
+                  </div>
+                )
+              },
+              {
+                color: 'gray',
+                children: (
+                  <div>
+                    <div style={{ fontWeight: 500 }}>数据同步异常处理 <Tag color="blue">处置中</Tag></div>
+                    <Text type="secondary">2024-01-13 16:45 - 处置人：赵主任</Text>
+                    <div>数据同步出现格式异常，正在与数据源单位协调解决</div>
+                  </div>
+                )
+              }
+            ]}
+          />
+        </div>
+      )
+    },
+    {
+      key: 'review',
+      label: '复核记录',
+      icon: <AuditOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Table
+            columns={[
+              { title: '复核时间', dataIndex: 'reviewTime', key: 'reviewTime', width: 160 },
+              { title: '复核人', dataIndex: 'reviewer', key: 'reviewer' },
+              { title: '复核类型', dataIndex: 'reviewType', key: 'reviewType', render: (t: string) => <Tag color="blue">{t}</Tag> },
+              {
+                title: '复核结果',
+                dataIndex: 'result',
+                key: 'result',
+                render: (r: string) => {
+                  const config: Record<string, { color: string; text: string }> = {
+                    passed: { color: 'green', text: '通过' },
+                    failed: { color: 'red', text: '未通过' },
+                    conditional: { color: 'orange', text: '有条件通过' }
+                  }
+                  const item = config[r] || { color: 'default', text: r }
+                  return <Tag color={item.color}>{item.text}</Tag>
+                }
+              },
+              { title: '备注', dataIndex: 'remark', key: 'remark' }
+            ]}
+            dataSource={[
+              { key: 'r1', reviewTime: '2024-01-15 10:30', reviewer: '安全审核组-刘工', reviewType: '接口安全复核', result: 'passed', remark: '接口安全策略符合规范要求' },
+              { key: 'r2', reviewTime: '2024-01-14 14:00', reviewer: '数据审核组-陈工', reviewType: '数据合规复核', result: 'conditional', remark: '数据传输加密需升级至SM4国密标准' },
+              { key: 'r3', reviewTime: '2024-01-13 09:30', reviewer: '权限审核组-周工', reviewType: '权限变更复核', result: 'passed', remark: '权限变更符合最小权限原则' },
+              { key: 'r4', reviewTime: '2024-01-12 16:00', reviewer: '运维审核组-吴工', reviewType: '系统升级复核', result: 'failed', remark: '系统升级方案缺少回滚预案，需补充后重新提交' }
+            ]}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+        </div>
+      )
     }
   ]
 
@@ -555,7 +703,7 @@ const Departments: React.FC = () => {
       </Title>
 
       <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-        <Col span={6}>
+        <Col span={5}>
           <Card>
             <Statistic
               title="已接入委办局"
@@ -566,7 +714,7 @@ const Departments: React.FC = () => {
             />
           </Card>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Card>
             <Statistic
               title="在线率"
@@ -577,7 +725,7 @@ const Departments: React.FC = () => {
             />
           </Card>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Card>
             <Statistic
               title="今日总调用量"
@@ -588,7 +736,7 @@ const Departments: React.FC = () => {
             />
           </Card>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Card>
             <Statistic
               title="平均成功率"
@@ -596,6 +744,17 @@ const Departments: React.FC = () => {
               suffix="%"
               prefix={<RiseOutlined style={{ color: '#13c2c2' }} />}
               valueStyle={{ color: '#13c2c2' }}
+            />
+          </Card>
+        </Col>
+        <Col span={4}>
+          <Card>
+            <Statistic
+              title="未接入单位"
+              value={statistics.total - statistics.onlineCount}
+              suffix="个"
+              prefix={<WarningOutlined style={{ color: '#ff4d4f' }} />}
+              valueStyle={{ color: '#ff4d4f' }}
             />
           </Card>
         </Col>
@@ -620,6 +779,25 @@ const Departments: React.FC = () => {
         </Col>
 
         <Col span={19}>
+          <Alert
+            message="未接入单位提醒"
+            description={
+              <div>
+                <p style={{ marginBottom: 8 }}>以下3个委办局当前未接入平台，请及时跟进：</p>
+                <ul style={{ marginBottom: 0, paddingLeft: 20 }}>
+                  <li><Text strong>宁夏回族自治区中医药管理局</Text> — <Tag color="error">离线</Tag> 原因：网络连接中断，预计恢复时间：2024-01-16 10:00</li>
+                  <li><Text strong>宁夏回族自治区应急管理厅</Text> — <Tag color="error">离线</Tag> 原因：服务器故障，预计恢复时间：2024-01-17 18:00</li>
+                  <li><Text strong>宁夏回族自治区农业农村厅</Text> — <Tag color="warning">维护中</Tag> 原因：系统升级维护，预计恢复时间：2024-01-15 20:00</li>
+                </ul>
+              </div>
+            }
+            type="warning"
+            showIcon
+            icon={<ExclamationCircleOutlined />}
+            closable
+            style={{ marginBottom: 16 }}
+          />
+
           <Card size="small" style={{ marginBottom: 16 }}>
             <Space wrap size="middle">
               <Input

@@ -9,7 +9,8 @@ import {
   Checkbox,
   message,
   Space,
-  Divider
+  Divider,
+  Select
 } from 'antd'
 import {
   UserOutlined,
@@ -20,7 +21,8 @@ import {
   QuestionCircleOutlined,
   PhoneOutlined,
   SafetyOutlined,
-  QrcodeOutlined
+  QrcodeOutlined,
+  TeamOutlined
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { useUserStore } from '@/store/user'
@@ -35,28 +37,72 @@ const LoginPage: React.FC = () => {
   const [qrType, setQrType] = useState<'wechat' | 'alipay'>('wechat')
   const [form] = Form.useForm()
 
-  const handleAccountLogin = async (values: { username: string; password: string; remember: boolean }) => {
+  const roleConfigs: Record<string, {
+    username: string; password: string; name: string; department: string;
+    roles: string[]; permissions: string[]; id: string; email: string; phone: string;
+  }> = {
+    admin: {
+      username: 'admin', password: 'admin123', name: '自治区管理员', department: '数字政务运营中心',
+      roles: ['超级管理员', '平台管理员'], id: 'admin-001', email: 'admin@nx.gov.cn', phone: '138****8888',
+      permissions: ['dashboard:view', 'service:manage', 'ticket:manage', 'certificate:manage', 'audit:view', 'system:manage']
+    },
+    dept_admin: {
+      username: 'dept_admin', password: 'dept123', name: '部门管理员', department: '人力资源社会保障厅',
+      roles: ['委办局管理员'], id: 'dept-admin-001', email: 'dept@nx.gov.cn', phone: '139****6666',
+      permissions: ['dashboard:view', 'service:manage', 'ticket:manage', 'certificate:view']
+    },
+    clerk: {
+      username: 'clerk', password: 'clerk123', name: '窗口办事员', department: '政务服务大厅',
+      roles: ['窗口办事员'], id: 'clerk-001', email: 'clerk@nx.gov.cn', phone: '137****5555',
+      permissions: ['dashboard:view', 'ticket:manage', 'certificate:view']
+    },
+    auditor: {
+      username: 'auditor', password: 'auditor123', name: '审计专员', department: '审计监督处',
+      roles: ['审计员'], id: 'auditor-001', email: 'auditor@nx.gov.cn', phone: '136****4444',
+      permissions: ['dashboard:view', 'audit:view', 'audit:export', 'log:view']
+    }
+  }
+
+  const getMockLoginTrail = (method: string) => {
+    const ips = ['192.168.1.100', '10.0.5.23', '172.16.8.45', '192.168.10.88']
+    const ua = navigator.userAgent
+    let device = '未知设备'
+    if (ua.includes('Windows')) device = 'Windows PC'
+    else if (ua.includes('Mac')) device = 'Mac'
+    else if (ua.includes('Linux')) device = 'Linux PC'
+    else if (ua.includes('Android')) device = 'Android'
+    else if (ua.includes('iPhone') || ua.includes('iPad')) device = 'iOS'
+    return {
+      loginMethod: method,
+      loginIp: ips[Math.floor(Math.random() * ips.length)],
+      loginDevice: device,
+      loginTime: new Date().toLocaleString('zh-CN')
+    }
+  }
+
+  const handleAccountLogin = async (values: { username: string; password: string; remember: boolean; role: string }) => {
     setLoading(true)
     try {
       await new Promise((resolve) => setTimeout(resolve, 800))
+      const config = roleConfigs[values.role]
+      if (!config || values.username !== config.username || values.password !== config.password) {
+        message.error('账号密码或角色不匹配')
+        setLoading(false)
+        return
+      }
+      const trail = getMockLoginTrail('账号密码')
       setToken('nx-gov-token-' + Date.now(), 'nx-gov-refresh-token-' + Date.now())
       setUserInfo({
-        id: 'admin-001',
+        id: config.id,
         username: values.username,
-        name: '自治区管理员',
+        name: config.name,
         avatar: '',
-        email: 'admin@nx.gov.cn',
-        phone: '138****8888',
-        department: '数字政务运营中心',
-        roles: ['超级管理员', '平台管理员'],
-        permissions: [
-          'dashboard:view',
-          'service:manage',
-          'ticket:manage',
-          'certificate:manage',
-          'audit:view',
-          'system:manage'
-        ]
+        email: config.email,
+        phone: config.phone,
+        department: config.department,
+        roles: config.roles,
+        permissions: config.permissions,
+        ...trail
       })
       message.success('登录成功，欢迎回来！')
       navigate('/dashboard')
@@ -71,6 +117,7 @@ const LoginPage: React.FC = () => {
     setLoading(true)
     message.info('正在跳转到宁夏政务服务网...')
     setTimeout(() => {
+      const trail = getMockLoginTrail('宁夏政务SSO')
       setToken('nx-gov-sso-token-' + Date.now(), 'nx-gov-sso-refresh-token-' + Date.now())
       setUserInfo({
         id: 'gov-001',
@@ -81,7 +128,8 @@ const LoginPage: React.FC = () => {
         phone: '139****9999',
         department: '自治区人民政府',
         roles: ['政务用户'],
-        permissions: ['dashboard:view', 'service:view', 'ticket:create']
+        permissions: ['dashboard:view', 'service:view', 'ticket:create'],
+        ...trail
       })
       message.success('宁夏政务登录成功！')
       navigate('/dashboard')
@@ -92,6 +140,8 @@ const LoginPage: React.FC = () => {
   const handleQrScan = () => {
     message.loading({ content: '请使用手机扫码登录...', duration: 2 })
     setTimeout(() => {
+      const methodName = qrType === 'wechat' ? '微信扫码' : '支付宝扫码'
+      const trail = getMockLoginTrail(methodName)
       setToken('qr-login-token-' + Date.now(), 'qr-login-refresh-token-' + Date.now())
       setUserInfo({
         id: 'qr-001',
@@ -100,7 +150,8 @@ const LoginPage: React.FC = () => {
         avatar: '',
         department: '公众用户',
         roles: ['普通用户'],
-        permissions: ['dashboard:view', 'service:view']
+        permissions: ['dashboard:view', 'service:view'],
+        ...trail
       })
       message.success('扫码登录成功！')
       navigate('/dashboard')
@@ -119,10 +170,22 @@ const LoginPage: React.FC = () => {
         <Form
           form={form}
           layout="vertical"
-          initialValues={{ username: 'admin', password: 'admin123', remember: true }}
+          initialValues={{ username: 'admin', password: 'admin123', role: 'admin', remember: true }}
           onFinish={handleAccountLogin}
           className="login-form"
         >
+          <Form.Item
+            label="角色"
+            name="role"
+            rules={[{ required: true, message: '请选择角色' }]}
+          >
+            <Select prefix={<TeamOutlined />} size="large" placeholder="请选择登录角色">
+              <Select.Option value="admin">超级管理员</Select.Option>
+              <Select.Option value="dept_admin">委办局管理员</Select.Option>
+              <Select.Option value="clerk">窗口办事员</Select.Option>
+              <Select.Option value="auditor">审计员</Select.Option>
+            </Select>
+          </Form.Item>
           <Form.Item
             label="账号"
             name="username"

@@ -18,7 +18,10 @@ import {
   Tooltip,
   message,
   Popconfirm,
-  TreeSelect
+  TreeSelect,
+  Drawer,
+  Timeline,
+  Descriptions
 } from 'antd'
 import {
   SearchOutlined,
@@ -36,7 +39,10 @@ import {
   SaveOutlined,
   ArrowUpOutlined,
   ArrowDownOutlined,
-  FileOutlined
+  FileOutlined,
+  SendOutlined,
+  CheckCircleOutlined,
+  ClockCircleOutlined
 } from '@ant-design/icons'
 import type { DataNode } from 'antd/es/tree'
 import type { ColumnsType } from 'antd/es/table'
@@ -80,6 +86,33 @@ interface GuideNode {
   children?: GuideNode[]
   serviceId?: string
   serviceName?: string
+}
+
+interface SubItem {
+  id: string
+  name: string
+  code: string
+  stage: string
+  timeLimit: string
+  isCharged: boolean
+}
+
+interface MaterialItem {
+  id: string
+  name: string
+  type: string
+  copies: number
+  isRequired: boolean
+  source: string
+  format: string
+}
+
+interface AuditStep {
+  step: string
+  person: string
+  time: string
+  status: 'completed' | 'current' | 'pending'
+  remark?: string
 }
 
 const departments = [
@@ -371,6 +404,27 @@ const generateServiceItems = (): ServiceItem[] => {
 
 const servicesData = generateServiceItems()
 
+const mockSubItems: SubItem[] = [
+  { id: 'sub-1', name: '受理环节', code: 'SUB-SL', stage: '受理', timeLimit: '1个工作日', isCharged: false },
+  { id: 'sub-2', name: '审查环节', code: 'SUB-SC', stage: '审查', timeLimit: '3个工作日', isCharged: false },
+  { id: 'sub-3', name: '决定环节', code: 'SUB-JD', stage: '决定', timeLimit: '2个工作日', isCharged: true }
+]
+
+const mockMaterials: MaterialItem[] = [
+  { id: 'mat-1', name: '身份证复印件', type: '身份证明', copies: 1, isRequired: true, source: '申请人提供', format: 'A4纸复印件' },
+  { id: 'mat-2', name: '营业执照', type: '资质证明', copies: 1, isRequired: true, source: '申请人提供', format: '原件及复印件' },
+  { id: 'mat-3', name: '申请表', type: '申请文书', copies: 2, isRequired: true, source: '系统生成', format: 'PDF打印' },
+  { id: 'mat-4', name: '承诺书', type: '申请文书', copies: 1, isRequired: false, source: '申请人提供', format: 'A4纸打印' },
+  { id: 'mat-5', name: '资质证明', type: '资质证明', copies: 1, isRequired: true, source: '主管部门出具', format: '原件及复印件' }
+]
+
+const mockAuditSteps: AuditStep[] = [
+  { step: '事项创建', person: '张三', time: '2024-01-10 09:00:00', status: 'completed' },
+  { step: '科室审核', person: '李四', time: '2024-01-11 14:30:00', status: 'completed', remark: '审核通过' },
+  { step: '领导审批', person: '王五', time: '', status: 'current' },
+  { step: '发布上线', person: '', time: '', status: 'pending' }
+]
+
 const defaultGuideTree: GuideNode = {
   id: 'guide-root',
   type: 'question',
@@ -478,6 +532,13 @@ const Services: React.FC = () => {
   const [editingCategory, setEditingCategory] = useState<CategoryNode | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+  const [editDrawerVisible, setEditDrawerVisible] = useState(false)
+  const [currentEditService, setCurrentEditService] = useState<ServiceItem | null>(null)
+  const [editForm] = Form.useForm()
+  const [editActiveTab, setEditActiveTab] = useState('basic')
+  const [subItems, setSubItems] = useState<SubItem[]>(mockSubItems)
+  const [materials, setMaterials] = useState<MaterialItem[]>(mockMaterials)
+  const [editGuideTree, setEditGuideTree] = useState<GuideNode>(defaultGuideTree)
 
   const treeData: DataNode[] = useMemo(() => {
     const buildTree = (nodes: CategoryNode[]): DataNode[] => {
@@ -574,6 +635,22 @@ const Services: React.FC = () => {
   const handleOpenGuide = (item: ServiceItem) => {
     setCurrentGuideService(item)
     setGuideModalVisible(true)
+  }
+
+  const handleOpenEdit = (item: ServiceItem) => {
+    setCurrentEditService(item)
+    setEditActiveTab('basic')
+    setSubItems(mockSubItems)
+    setMaterials(mockMaterials)
+    setEditGuideTree(defaultGuideTree)
+    const days = item.timeLimit === '即办' ? 0 : parseInt(item.timeLimit) || 1
+    editForm.setFieldsValue({
+      timeLimitDays: days,
+      fee: '免费',
+      address: '宁夏回族自治区政务服务大厅',
+      phone: '0951-12345'
+    })
+    setEditDrawerVisible(true)
   }
 
   const handleToggleStatus = (item: ServiceItem) => {
@@ -675,7 +752,7 @@ const Services: React.FC = () => {
           <Button type="link" size="small" icon={<EyeOutlined />}>
             查看
           </Button>
-          <Button type="link" size="small" icon={<EditOutlined />}>
+          <Button type="link" size="small" icon={<EditOutlined />} onClick={() => handleOpenEdit(record)}>
             编辑
           </Button>
           <Button
@@ -737,7 +814,7 @@ const Services: React.FC = () => {
     }
   ]
 
-  const renderGuideTree = (node: GuideNode, level: number = 0): React.ReactNode => {
+  const renderGuideTree = (node: GuideNode, level: number = 0, tree: GuideNode = guideTree, setTree: React.Dispatch<React.SetStateAction<GuideNode>> = setGuideTree): React.ReactNode => {
     const nodeStyles: Record<string, { bgColor: string; borderColor: string; icon: React.ReactNode }> = {
       question: {
         bgColor: '#e6f4ff',
@@ -792,7 +869,7 @@ const Services: React.FC = () => {
                     }
                     return { ...n, children: n.children?.map(updateTree) }
                   }
-                  setGuideTree(updateTree(guideTree))
+                  setTree(updateTree(tree))
                   message.success('已添加子节点')
                 }}
               />
@@ -802,8 +879,8 @@ const Services: React.FC = () => {
                   const children = n.children?.map(deleteNode).filter(Boolean) as GuideNode[]
                   return { ...n, children }
                 }
-                const newTree = deleteNode(guideTree)
-                if (newTree) setGuideTree(newTree)
+                const newTree = deleteNode(tree)
+                if (newTree) setTree(newTree)
               }}>
                 <Button type="text" size="small" danger icon={<MinusCircleOutlined />} />
               </Popconfirm>
@@ -817,7 +894,7 @@ const Services: React.FC = () => {
         </div>
         {node.children && node.children.length > 0 && (
           <div style={{ marginTop: 8 }}>
-            {node.children.map((child) => renderGuideTree(child, level + 1))}
+            {node.children.map((child) => renderGuideTree(child, level + 1, tree, setTree))}
           </div>
         )}
       </div>
@@ -1070,6 +1147,252 @@ const Services: React.FC = () => {
           </Form.Item>
         </Form>
       </Modal>
+
+      <Drawer
+        title={
+          <Space>
+            <EditOutlined style={{ color: '#0958d9' }} />
+            编辑服务事项 - {currentEditService?.name}
+          </Space>
+        }
+        open={editDrawerVisible}
+        onClose={() => setEditDrawerVisible(false)}
+        width={720}
+        footer={
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
+            <Button onClick={() => setEditDrawerVisible(false)}>取消</Button>
+            <Button icon={<SaveOutlined />} onClick={() => { message.success('草稿保存成功'); setEditDrawerVisible(false) }}>
+              保存草稿
+            </Button>
+            <Button
+              type="primary"
+              icon={<SendOutlined />}
+              onClick={() => { message.success('已提交审核'); setEditDrawerVisible(false) }}
+            >
+              提交审核
+            </Button>
+          </div>
+        }
+      >
+        <Tabs
+          activeKey={editActiveTab}
+          onChange={setEditActiveTab}
+          items={[
+            {
+              key: 'basic',
+              label: '基本信息',
+              children: (
+                <div>
+                  <Descriptions column={2} bordered size="small" style={{ marginBottom: 24 }}>
+                    <Descriptions.Item label="事项名称">{currentEditService?.name}</Descriptions.Item>
+                    <Descriptions.Item label="事项编码">{currentEditService?.code}</Descriptions.Item>
+                    <Descriptions.Item label="所属委办局">{currentEditService?.departmentName}</Descriptions.Item>
+                    <Descriptions.Item label="服务类型">{currentEditService?.serviceType}</Descriptions.Item>
+                    <Descriptions.Item label="办理方式">{currentEditService?.handleType}</Descriptions.Item>
+                    <Descriptions.Item label="当前时限">{currentEditService?.timeLimit}</Descriptions.Item>
+                  </Descriptions>
+                  <Form form={editForm} layout="vertical">
+                    <Row gutter={16}>
+                      <Col span={12}>
+                        <Form.Item name="timeLimitDays" label="承诺时限调整（天）">
+                          <InputNumber min={0} max={999} style={{ width: '100%' }} suffix="个工作日" />
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item name="fee" label="收费标准">
+                          <Input placeholder="请输入收费标准" />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                    <Row gutter={16}>
+                      <Col span={12}>
+                        <Form.Item name="address" label="办理地点">
+                          <Input placeholder="请输入办理地点" />
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item name="phone" label="咨询电话">
+                          <Input placeholder="请输入咨询电话" />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Form>
+                </div>
+              )
+            },
+            {
+              key: 'subItems',
+              label: '子项管理',
+              children: (
+                <div>
+                  <div style={{ marginBottom: 16 }}>
+                    <Button type="primary" icon={<PlusOutlined />} onClick={() => { message.info('新增子项') }}>
+                      新增子项
+                    </Button>
+                  </div>
+                  <Table
+                    dataSource={subItems}
+                    rowKey="id"
+                    size="small"
+                    pagination={false}
+                    columns={[
+                      { title: '子项名称', dataIndex: 'name', key: 'name' },
+                      { title: '子项编码', dataIndex: 'code', key: 'code' },
+                      { title: '办理环节', dataIndex: 'stage', key: 'stage' },
+                      { title: '承诺时限', dataIndex: 'timeLimit', key: 'timeLimit' },
+                      {
+                        title: '是否收费',
+                        dataIndex: 'isCharged',
+                        key: 'isCharged',
+                        render: (v: boolean) => v ? <Tag color="red">收费</Tag> : <Tag color="green">免费</Tag>
+                      },
+                      {
+                        title: '操作',
+                        key: 'action',
+                        width: 140,
+                        render: (_: unknown, record: SubItem) => (
+                          <Space size="small">
+                            <Button type="link" size="small" onClick={() => { message.info('编辑子项') }}>编辑</Button>
+                            <Popconfirm title="确认删除该子项？" onConfirm={() => setSubItems(subItems.filter(s => s.id !== record.id))}>
+                              <Button type="link" size="small" danger>删除</Button>
+                            </Popconfirm>
+                          </Space>
+                        )
+                      }
+                    ]}
+                  />
+                </div>
+              )
+            },
+            {
+              key: 'materials',
+              label: '材料规则',
+              children: (
+                <div>
+                  <div style={{ marginBottom: 16 }}>
+                    <Button type="primary" icon={<PlusOutlined />} onClick={() => { message.info('新增材料') }}>
+                      新增材料
+                    </Button>
+                  </div>
+                  <Table
+                    dataSource={materials}
+                    rowKey="id"
+                    size="small"
+                    pagination={false}
+                    columns={[
+                      { title: '材料名称', dataIndex: 'name', key: 'name' },
+                      { title: '材料类型', dataIndex: 'type', key: 'type', render: (v: string) => <Tag color="blue">{v}</Tag> },
+                      { title: '份数', dataIndex: 'copies', key: 'copies' },
+                      {
+                        title: '是否必须',
+                        dataIndex: 'isRequired',
+                        key: 'isRequired',
+                        render: (v: boolean) => v ? <Tag color="red">必须</Tag> : <Tag color="orange">可选</Tag>
+                      },
+                      { title: '来源', dataIndex: 'source', key: 'source' },
+                      { title: '格式要求', dataIndex: 'format', key: 'format' },
+                      {
+                        title: '操作',
+                        key: 'action',
+                        width: 140,
+                        render: (_: unknown, record: MaterialItem) => (
+                          <Space size="small">
+                            <Button type="link" size="small" onClick={() => { message.info('编辑材料') }}>编辑</Button>
+                            <Popconfirm title="确认删除该材料？" onConfirm={() => setMaterials(materials.filter(m => m.id !== record.id))}>
+                              <Button type="link" size="small" danger>删除</Button>
+                            </Popconfirm>
+                          </Space>
+                        )
+                      }
+                    ]}
+                  />
+                </div>
+              )
+            },
+            {
+              key: 'guide',
+              label: '情形引导配置',
+              children: (
+                <div>
+                  <div style={{ marginBottom: 16, padding: 12, backgroundColor: '#f0f7ff', borderRadius: 6 }}>
+                    <Text type="secondary">通过问答形式引导用户找到合适的服务事项，点击节点右侧按钮可添加或删除子节点</Text>
+                  </div>
+                  <div style={{ padding: '16px', backgroundColor: '#fafafa', borderRadius: 8 }}>
+                    {renderGuideTree(editGuideTree, 0, editGuideTree, setEditGuideTree)}
+                    <div style={{ marginTop: 16, textAlign: 'center' }}>
+                      <Space>
+                        <Button icon={<PlusOutlined />} onClick={() => {
+                          const newNode: GuideNode = {
+                            id: `node-${Date.now()}`,
+                            type: 'question',
+                            title: '新问题节点',
+                            children: []
+                          }
+                          setEditGuideTree({ ...editGuideTree, children: [...(editGuideTree.children || []), newNode] })
+                          message.success('已添加根节点')
+                        }}>
+                          添加根节点
+                        </Button>
+                        <Button type="primary" icon={<SaveOutlined />} onClick={() => message.success('情形引导配置保存成功')}>
+                          保存配置
+                        </Button>
+                      </Space>
+                    </div>
+                  </div>
+                </div>
+              )
+            },
+            {
+              key: 'audit',
+              label: '审核链路',
+              children: (
+                <div>
+                  <div style={{ marginBottom: 24 }}>
+                    <Timeline
+                      items={mockAuditSteps.map((step) => ({
+                        color: step.status === 'completed' ? 'green' : step.status === 'current' ? 'blue' : 'gray',
+                        dot: step.status === 'completed' ? <CheckCircleOutlined style={{ fontSize: 16 }} /> :
+                             step.status === 'current' ? <ClockCircleOutlined style={{ fontSize: 16 }} /> : undefined,
+                        children: (
+                          <div style={{ paddingBottom: 8 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <Text strong style={{ fontSize: 15 }}>{step.step}</Text>
+                              <Tag color={step.status === 'completed' ? 'success' : step.status === 'current' ? 'processing' : 'default'}>
+                                {step.status === 'completed' ? '已完成' : step.status === 'current' ? '审核中' : '待审核'}
+                              </Tag>
+                            </div>
+                            <div style={{ marginTop: 4 }}>
+                              <Text type="secondary">经办人：{step.person || '—'}</Text>
+                            </div>
+                            <div>
+                              <Text type="secondary">时间：{step.time || '—'}</Text>
+                            </div>
+                            {step.remark && (
+                              <div>
+                                <Text type="secondary">备注：{step.remark}</Text>
+                              </div>
+                            )}
+                          </div>
+                        )
+                      }))}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'center', padding: 16, backgroundColor: '#fafafa', borderRadius: 8 }}>
+                    <Button
+                      type="primary"
+                      icon={<SendOutlined />}
+                      size="large"
+                      onClick={() => { message.success('已提交审核，等待领导审批'); setEditDrawerVisible(false) }}
+                    >
+                      提交审核
+                    </Button>
+                  </div>
+                </div>
+              )
+            }
+          ]}
+        />
+      </Drawer>
     </div>
   )
 }

@@ -8,6 +8,10 @@ export interface UserInfo {
   department?: string;
   roles: string[];
   permissions: string[];
+  loginMethod?: string;
+  loginIp?: string;
+  loginDevice?: string;
+  loginTime?: string;
 }
 
 export interface LoginParams {

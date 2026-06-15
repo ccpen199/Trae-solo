@@ -1,0 +1,1849 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T20:33:24.524Z",
+  "order": "may-89213",
+  "roundIndex": 100,
+  "captureId": "may-89213-codex-full",
+  "url": "http://127.0.0.1:49213/",
+  "initialUrl": "http://127.0.0.1:49213/",
+  "finalUrl": "http://127.0.0.1:49213/dashboard",
+  "status": 200,
+  "title": "宁夏自治区一网通办管理后台",
+  "initialTitle": "宁夏自治区一网通办管理后台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-03-操作-快速办件.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-04-操作-消息中心.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-05-导航-委办局管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-06-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-07-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-08-导航-服务事项中枢.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-09-操作-编辑.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49213/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49213/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:快速办件",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:消息中心",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:委办局管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 38
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:服务事项中枢",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:编辑",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "晚上好，管理员超级管理员"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "消息中心",
+          "快速办件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员晚上好，管理员超级管理员 2026年06月15日 Monday · 祝您工作愉快消息中心快速办件今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 事项管理政务服务事项配置证照库电子证照管理工单处理12345工单办理审计查询操作审计追溯委办局接入部门系统对接 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2024年政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报一季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览社保1,258万公积金896万医保1,432万税务768万证照3,256万教育520万交通680万",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2025,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-01-首屏.png",
+          "elementCount": 604,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "消息中心",
+            "快速办件",
+            "更多",
+            "全部"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "晚上好，管理员超级管理员"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "消息中心",
+          "快速办件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员晚上好，管理员超级管理员 2026年06月15日 Monday · 祝您工作愉快消息中心快速办件今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 事项管理政务服务事项配置证照库电子证照管理工单处理12345工单办理审计查询操作审计追溯委办局接入部门系统对接 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2024年政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报一季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览社保1,258万公积金896万医保1,432万税务768万证照3,256万教育520万交通680万",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2025,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-02-导航-工作台.png",
+          "elementCount": 604,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "消息中心",
+            "快速办件",
+            "更多",
+            "全部"
+          ]
+        }
+      },
+      {
+        "label": "操作:快速办件",
+        "url": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "晚上好，管理员超级管理员"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "消息中心",
+          "快速办件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员晚上好，管理员超级管理员 2026年06月15日 Monday · 祝您工作愉快消息中心快速办件今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 事项管理政务服务事项配置证照库电子证照管理工单处理12345工单办理审计查询操作审计追溯委办局接入部门系统对接 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2024年政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报一季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览社保1,258万公积金896万医保1,432万税务768万证照3,256万教育520万交通680万",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 2025,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-03-操作-快速办件",
+          "label": "操作:快速办件",
+          "finalUrl": "http://127.0.0.1:49213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-03-操作-快速办件.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-03-操作-快速办件.png",
+          "elementCount": 606,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "消息中心",
+            "快速办件",
+            "更多",
+            "全部"
+          ]
+        }
+      },
+      {
+        "label": "操作:消息中心",
+        "url": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [
+          "晚上好，管理员超级管理员"
+        ],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "消息中心",
+          "快速办件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理工作台5管理员晚上好，管理员超级管理员 2026年06月15日 Monday · 祝您工作愉快消息中心快速办件今日办件量128件受理156办结105在办23 较昨日 +12.5%电子证照调用量3,846次今日3,846累计125.8万证照类32类 较上周 +8.3%12345工单满意度98.6%待办工单47已办工单1,256按时办结率99.2% 较上月 +1.2%90天审计告警23条异常操作23总操作数45,860风险等级低风险 较上周期 -15.3% 快捷入口更多 事项管理政务服务事项配置证照库电子证照管理工单处理12345工单办理审计查询操作审计追溯委办局接入部门系统对接 我的待办5全部 关于优化营商环境的提案紧急投诉工单10分钟前身份证办理进度查询重要咨询工单30分钟前营业执照变更申请一般办件事项1小时前社保缴费证明打印一般办件事项2小时前社区便民服务中心建设建议普通建议工单3小时前 最新公告更多 通知关于2024年政务服务能力提升培训的通知今天 09:30公告系统升级维护公告（本周五晚）昨天 16:45通报一季度政务服务质量考核结果通报3天前通知新版电子证照系统上线试运行通知5天前 热门服务推荐身份证办理HOT12580人已办社保查询HOT9860人已办公积金提取7650人已办营业执照办理5420人已办医保报销4890人已办不动产登记3560人已办 数据资产概览社保1,258万公积金896万医保1,432万税务768万证照3,256万教育520万交通680万",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 2025,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-04-操作-消息中心",
+          "label": "操作:消息中心",
+          "finalUrl": "http://127.0.0.1:49213/dashboard",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-04-操作-消息中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-04-操作-消息中心.png",
+          "elementCount": 606,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "消息中心",
+            "快速办件",
+            "更多",
+            "全部"
+          ]
+        }
+      },
+      {
+        "label": "导航:委办局管理",
+        "url": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索委办局名称或编码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理委办局管理5管理员委办局管理已接入委办局35/ 38在线率92.1%今日总调用量156,930平均成功率98.3%委办局分类全部委办局38🛡️ 公安类6👥 人社类2🏠 民政类3🏪 市场监管类3🚗 交通类2🏥 卫健类3🎓 教育类1🌿 自然资源类3🏗️ 住建类2💰 税务类1📋 其他类12全部状态全部等级全部分类刷新卡片表格宁宁夏回族自治区公安厅NX-GA-001Level A在线今日调用8,729平均响应106ms成功率98.1%接口数3最后同步: 09:30:00详情测试同步银银川市公安局NX-GA-002Level B在线今日调用5,522平均响应107ms成功率98.4%接口数3最后同步: 09:30:00详情测试同步石石嘴山市公安局NX-GA-003Level C在线今日调用2,215平均响应65ms成功率99.5%接口数3最后同步: 09:30:00详情测试同步吴吴忠市公安局NX-GA-004Level C在线今日调用1,815平均响应116ms成功率98.5%接口数3最后同步: 09:30:00详情测试同步固固原市公安局NX-GA-005Level C在线今日调用2,095平均响应174ms成功率98%接口数3最后同步: 09:30:00详情测试同步中中卫市公安局NX-GA-006Level C在线今日调用2,757平均响应71ms成功率99%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区人力资源和社会保障厅NX-RS-001Level A在线今日调用9,529平均响应50ms成功率98.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区社会保险事业管理局NX-RS-002Level B在线今日调用5,811平均响应141ms成功率98.7%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区民政厅NX-MZ-001Level B在线今日调用6,567平均响应159ms成功率99.6%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区退役军人事务厅NX-MZ-002Level C在线今日调用2,643平均响应179ms成功率97.3%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区乡村振兴局NX-MZ-003Level C在线今日调用2,482平均响应59ms成功率99.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区市场监督管理厅NX-SC-001Level A在线今日调用11,109平均响应65ms成功率98.5%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区药品监督管理局NX-SC-002Level C在线今日调用2,569平均响应172ms成功率98.6%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区知识产权局NX-SC-003Level C在线今日调用1,991平均响应125ms成功率97.3%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区交通运输厅NX-JT-001Level B维护中今日调用0平均响应0ms成功率0%接口数3最后同步: 18:00:00详情测试同步宁宁夏回族自治区公安厅交通管理局NX-JT-002Level A在线今日调用11,913平均响应68ms成功率97.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区卫生健康委员会NX-WJ-001Level A在线今日调用8,874平均响应101ms成功率98.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区医疗保障局NX-WJ-002Level B离线今日调用0平均响应0ms成功率0%接口数3最后同步: 14:30:00详情测试同步宁宁夏回族自治区中医药管理局NX-WJ-003Level C在线今日调用2,285平均响应147ms成功率98%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区教育厅NX-JY-001Level B在线今日调用5,686平均响应130ms成功率97.5%接口数3最后同步: 09:30:00详情测试同步",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 4199,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-05-导航-委办局管理",
+          "label": "导航:委办局管理",
+          "finalUrl": "http://127.0.0.1:49213/departments",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-05-导航-委办局管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-05-导航-委办局管理.png",
+          "elementCount": 1200,
+          "interactiveCount": 134,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "for screen reader",
+            "搜索委办局名称或编码",
+            "刷新",
+            "卡片",
+            "表格",
+            "详情",
+            "测试",
+            "同步"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步",
+          "关闭",
+          "配置",
+          "同步数据"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索委办局名称或编码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "委办局名称",
+              "机构编码",
+              "机构分类",
+              "接入等级",
+              "接入状态",
+              "负责人",
+              "联系电话",
+              "机构地址",
+              "机构描述"
+            ],
+            "rowCount": 9,
+            "hasEmptyText": false,
+            "textPreview": "委办局名称 宁夏回族自治区公安厅 机构编码 NX-GA-001 机构分类 公安类 接入等级 Level A 接入状态 在线 负责人 张局长 联系电话 0951-1854796 机构地址 银川市兴庆区解放西街226号 机构描述 负责全区公安厅相关工作"
+          },
+          {
+            "headers": [
+              "今日调用量",
+              "累计调用量",
+              "平均响应时间",
+              "成功率",
+              "最后同步时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "今日调用量 8,729 累计调用量 1,505,759 平均响应时间 106ms 成功率 98.1% 最后同步时间 2024-01-15 09:30:00"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理委办局管理5管理员委办局管理已接入委办局35/ 38在线率92.1%今日总调用量156,930平均成功率98.3%委办局分类全部委办局38🛡️ 公安类6👥 人社类2🏠 民政类3🏪 市场监管类3🚗 交通类2🏥 卫健类3🎓 教育类1🌿 自然资源类3🏗️ 住建类2💰 税务类1📋 其他类12全部状态全部等级全部分类刷新卡片表格宁宁夏回族自治区公安厅NX-GA-001Level A在线今日调用8,729平均响应106ms成功率98.1%接口数3最后同步: 09:30:00详情测试同步银银川市公安局NX-GA-002Level B在线今日调用5,522平均响应107ms成功率98.4%接口数3最后同步: 09:30:00详情测试同步石石嘴山市公安局NX-GA-003Level C在线今日调用2,215平均响应65ms成功率99.5%接口数3最后同步: 09:30:00详情测试同步吴吴忠市公安局NX-GA-004Level C在线今日调用1,815平均响应116ms成功率98.5%接口数3最后同步: 09:30:00详情测试同步固固原市公安局NX-GA-005Level C在线今日调用2,095平均响应174ms成功率98%接口数3最后同步: 09:30:00详情测试同步中中卫市公安局NX-GA-006Level C在线今日调用2,757平均响应71ms成功率99%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区人力资源和社会保障厅NX-RS-001Level A在线今日调用9,529平均响应50ms成功率98.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区社会保险事业管理局NX-RS-002Level B在线今日调用5,811平均响应141ms成功率98.7%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区民政厅NX-MZ-001Level B在线今日调用6,567平均响应159ms成功率99.6%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区退役军人事务厅NX-MZ-002Level C在线今日调用2,643平均响应179ms成功率97.3%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区乡村振兴局NX-MZ-003Level C在线今日调用2,482平均响应59ms成功率99.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区市场监督管理厅NX-SC-001Level A在线今日调用11,109平均响应65ms成功率98.5%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区药品监督管理局NX-SC-002Level C在线今日调用2,569平均响应172ms成功率98.6%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区知识产权局NX-SC-003Level C在线今日调用1,991平均响应125ms成功率97.3%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区交通运输厅NX-JT-001Level B维护中今日调用0平均响应0ms成功率0%接口数3最后同步: 18:00:00详情测试同步宁宁夏回族自治区公安厅交通管理局NX-JT-002Level A在线今日调用11,913平均响应68ms成功率97.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区卫生健康委员会NX-WJ-001Level A在线今日调用8,874平均响应101ms成功率98.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区医疗保障局NX-WJ-002Level B离线今日调用0平均响应0ms成功率0%接口数3最后同步: 14:30:00详情测试同步宁宁夏回族自治区中医药管理局NX-WJ-003Level C在线今日调用2,285平均响应147ms成功率98%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区教育厅NX-JY-001Level B在线今日调用5,686平均响应130ms成功率97.5%接口数3最后同步: 09:30:00详情测试同步",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 4199,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-06-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49213/departments",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-06-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-06-操作-详情.png",
+          "elementCount": 1200,
+          "interactiveCount": 142,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "for screen reader",
+            "搜索委办局名称或编码",
+            "刷新",
+            "卡片",
+            "表格",
+            "详情",
+            "测试",
+            "同步"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索委办局名称或编码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理委办局管理5管理员委办局管理已接入委办局35/ 38在线率92.1%今日总调用量156,930平均成功率98.3%委办局分类全部委办局38🛡️ 公安类6👥 人社类2🏠 民政类3🏪 市场监管类3🚗 交通类2🏥 卫健类3🎓 教育类1🌿 自然资源类3🏗️ 住建类2💰 税务类1📋 其他类12全部状态全部等级全部分类刷新卡片表格宁宁夏回族自治区公安厅NX-GA-001Level A在线今日调用8,729平均响应106ms成功率98.1%接口数3最后同步: 09:30:00详情测试同步银银川市公安局NX-GA-002Level B在线今日调用5,522平均响应107ms成功率98.4%接口数3最后同步: 09:30:00详情测试同步石石嘴山市公安局NX-GA-003Level C在线今日调用2,215平均响应65ms成功率99.5%接口数3最后同步: 09:30:00详情测试同步吴吴忠市公安局NX-GA-004Level C在线今日调用1,815平均响应116ms成功率98.5%接口数3最后同步: 09:30:00详情测试同步固固原市公安局NX-GA-005Level C在线今日调用2,095平均响应174ms成功率98%接口数3最后同步: 09:30:00详情测试同步中中卫市公安局NX-GA-006Level C在线今日调用2,757平均响应71ms成功率99%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区人力资源和社会保障厅NX-RS-001Level A在线今日调用9,529平均响应50ms成功率98.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区社会保险事业管理局NX-RS-002Level B在线今日调用5,811平均响应141ms成功率98.7%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区民政厅NX-MZ-001Level B在线今日调用6,567平均响应159ms成功率99.6%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区退役军人事务厅NX-MZ-002Level C在线今日调用2,643平均响应179ms成功率97.3%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区乡村振兴局NX-MZ-003Level C在线今日调用2,482平均响应59ms成功率99.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区市场监督管理厅NX-SC-001Level A在线今日调用11,109平均响应65ms成功率98.5%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区药品监督管理局NX-SC-002Level C在线今日调用2,569平均响应172ms成功率98.6%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区知识产权局NX-SC-003Level C在线今日调用1,991平均响应125ms成功率97.3%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区交通运输厅NX-JT-001Level B维护中今日调用0平均响应0ms成功率0%接口数3最后同步: 18:00:00详情测试同步宁宁夏回族自治区公安厅交通管理局NX-JT-002Level A在线今日调用11,913平均响应68ms成功率97.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区卫生健康委员会NX-WJ-001Level A在线今日调用8,874平均响应101ms成功率98.2%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区医疗保障局NX-WJ-002Level B离线今日调用0平均响应0ms成功率0%接口数3最后同步: 14:30:00详情测试同步宁宁夏回族自治区中医药管理局NX-WJ-003Level C在线今日调用2,285平均响应147ms成功率98%接口数3最后同步: 09:30:00详情测试同步宁宁夏回族自治区教育厅NX-JY-001Level B在线今日调用5,686平均响应130ms成功率97.5%接口数3最后同步: 09:30:00详情测试同步",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 4199,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-07-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49213/departments",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-07-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-07-操作-刷新.png",
+          "elementCount": 1200,
+          "interactiveCount": 142,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "for screen reader",
+            "搜索委办局名称或编码",
+            "刷新",
+            "卡片",
+            "表格",
+            "详情",
+            "测试",
+            "同步"
+          ]
+        }
+      },
+      {
+        "label": "导航:服务事项中枢",
+        "url": "http://127.0.0.1:49213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "重置",
+          "查 询",
+          "重 置",
+          "新增事项",
+          "查看",
+          "编辑",
+          "情形引导",
+          "下架",
+          "上架"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索事项名称或编码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": "页"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "事项编码",
+              "事项名称",
+              "所属委办局",
+              "服务类型",
+              "办理方式",
+              "承诺时限",
+              "状态",
+              "操作",
+              "事项编码",
+              "事项名称",
+              "所属委办局",
+              "服务类型"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "事项编码 事项名称 所属委办局 服务类型 办理方式 承诺时限 状态 操作 事项编码 事项名称 所属委办局 服务类型 办理方式 承诺时限 状态 操作 SX0001 营业执照核发 宁夏回族自治区市场监督管理厅 行政许可 即办件 即办 已发布 查看 编辑 情形引导 下架 SX0002 施工许可证核发 宁夏回族自治区人力资源和社会保障厅 行政许可 联办件 3个工作日 已下架 查看 编辑 情形引导 上架 SX0003 药品经营许可证核发 宁夏回族自治区公安厅 行政许可 联办件 25个工作日 已发布 查看 编辑 情形引导 下架 SX0004 医疗机构执业许可 宁夏回族自治区卫生健康委员会 行政许可 联办件"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理服务事项中枢5管理员服务事项中枢事项列表分类管理情形引导事项分类重置个人办事GRBS户籍办理GRBS-HJ户口迁移GRBS-HJ-QY户口登记GRBS-HJ-DJ户口注销GRBS-HJ-ZX社会保障GRBS-SH养老保险GRBS-SH-YL医疗保险GRBS-SH-YB失业保险GRBS-SH-SY教育培训GRBS-JY学历教育GRBS-JY-XL职业资格GRBS-JY-ZG医疗卫生GRBS-YL医疗服务GRBS-YL-FW公共卫生GRBS-YL-GG法人办事FRBS设立变更FRBS-SL企业注册FRBS-SL-ZC企业变更FRBS-SL-BG税务办理FRBS-SW税务登记FRBS-SW-DJ纳税申报FRBS-SW-SB资质认证FRBS-ZZ建筑资质FRBS-ZZ-JZ经营许可FRBS-ZZ-JY主题服务ZTFW创新创业ZTFW-CX小微企业ZTFW-CX-XW高校创业ZTFW-CX-GX便民服务ZTFW-BM交通出行ZTFW-BM-JT住房公积金ZTFW-BM-GJJ部门服务BMFW公安服务BMFW-GA交管服务BMFW-GA-JG出入境服务BMFW-GA-CR人社服务BMFW-RS就业服务BMFW-RS-JY人才服务BMFW-RS-RC全部委办局全部类型全部状态查 询重 置新增事项事项编码事项名称所属委办局服务类型办理方式承诺时限状态操作事项编码事项名称所属委办局服务类型办理方式承诺时限状态操作SX0001营业执照核发宁夏回族自治区市场监督管理厅行政许可即办件即办已发布查看编辑情形引导下架SX0002施工许可证核发宁夏回族自治区人力资源和社会保障厅行政许可联办件3个工作日已下架查看编辑情形引导上架SX0003药品经营许可证核发宁夏回族自治区公安厅行政许可联办件25个工作日已发布查看编辑情形引导下架SX0004医疗机构执业许可宁夏回族自治区卫生健康委员会行政许可联办件12个工作日已下架查看编辑情形引导上架SX0005道路运输经营许可宁夏回族自治区医疗保障局行政许可承诺件7个工作日已发布查看编辑情形引导下架SX0006食品经营许可宁夏回族自治区民政厅行政许可即办件即办已发布查看编辑情形引导下架SX0007公共场所卫生许可宁夏回族自治区住房和城乡建设厅行政许可承诺件26个工作日已发布查看编辑情形引导下架SX0008烟草专卖零售许可宁夏回族自治区教育厅行政许可联办件27个工作日已发布查看编辑情形引导下架SX0009特种设备使用登记国家税务总局宁夏回族自治区税务局行政许可联办件24个工作日草稿查看编辑情形引导上架SX0010建设项目环境影响评价审批国家税务总局宁夏回族自治区税务局行政许可上报件4个工作日已发布查看编辑情形引导下架共 63 条123456710 条/页跳至页",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1648,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-08-导航-服务事项中枢",
+          "label": "导航:服务事项中枢",
+          "finalUrl": "http://127.0.0.1:49213/services",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-08-导航-服务事项中枢.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-08-导航-服务事项中枢.png",
+          "elementCount": 1200,
+          "interactiveCount": 93,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "事项列表",
+            "事项分类 重置 个人办事GRBS 户籍办理GRBS-HJ 户口迁移GRBS-HJ-QY 户口登记GRBS-HJ-DJ 户口注销GRBS-HJ-ZX 社会保障GRBS-SH 养老保险GRBS-SH-YL 医疗保险GRBS-SH-YB 失业保险GRBS-SH-SY 教育培训GRBS-JY 学历教育GRBS-JY-XL 职业资格GRBS-JY-ZG 医疗卫生GRB",
+            "重置",
+            "for screen reader",
+            "搜索事项名称或编码",
+            "查 询",
+            "重 置",
+            "新增事项",
+            "营业执照核发",
+            "查看",
+            "编辑",
+            "情形引导",
+            "下架",
+            "施工许可证核发",
+            "上架",
+            "药品经营许可证核发",
+            "医疗机构执业许可",
+            "道路运输经营许可",
+            "食品经营许可",
+            "公共场所卫生许可",
+            "烟草专卖零售许可"
+          ]
+        }
+      },
+      {
+        "label": "操作:编辑",
+        "url": "http://127.0.0.1:49213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "dashboard",
+          "委办局管理",
+          "bank",
+          "服务事项中枢",
+          "appstore",
+          "电子证照库",
+          "file-text",
+          "12345工单系统",
+          "customer-service",
+          "审计日志",
+          "audit",
+          "城市数据秘书",
+          "database",
+          "系统管理",
+          "setting"
+        ],
+        "buttons": [
+          "重置",
+          "查 询",
+          "重 置",
+          "新增事项",
+          "查看",
+          "编辑",
+          "情形引导",
+          "下架",
+          "上架"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索事项名称或编码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": "页"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "事项编码",
+              "事项名称",
+              "所属委办局",
+              "服务类型",
+              "办理方式",
+              "承诺时限",
+              "状态",
+              "操作",
+              "事项编码",
+              "事项名称",
+              "所属委办局",
+              "服务类型"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "事项编码 事项名称 所属委办局 服务类型 办理方式 承诺时限 状态 操作 事项编码 事项名称 所属委办局 服务类型 办理方式 承诺时限 状态 操作 SX0001 营业执照核发 宁夏回族自治区市场监督管理厅 行政许可 即办件 即办 已发布 查看 编辑 情形引导 下架 SX0002 施工许可证核发 宁夏回族自治区人力资源和社会保障厅 行政许可 联办件 3个工作日 已下架 查看 编辑 情形引导 上架 SX0003 药品经营许可证核发 宁夏回族自治区公安厅 行政许可 联办件 25个工作日 已发布 查看 编辑 情形引导 下架 SX0004 医疗机构执业许可 宁夏回族自治区卫生健康委员会 行政许可 联办件"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宁夏政务管理后台工作台委办局管理服务事项中枢电子证照库12345工单系统审计日志城市数据秘书系统管理服务事项中枢5管理员服务事项中枢事项列表分类管理情形引导事项分类重置个人办事GRBS户籍办理GRBS-HJ户口迁移GRBS-HJ-QY户口登记GRBS-HJ-DJ户口注销GRBS-HJ-ZX社会保障GRBS-SH养老保险GRBS-SH-YL医疗保险GRBS-SH-YB失业保险GRBS-SH-SY教育培训GRBS-JY学历教育GRBS-JY-XL职业资格GRBS-JY-ZG医疗卫生GRBS-YL医疗服务GRBS-YL-FW公共卫生GRBS-YL-GG法人办事FRBS设立变更FRBS-SL企业注册FRBS-SL-ZC企业变更FRBS-SL-BG税务办理FRBS-SW税务登记FRBS-SW-DJ纳税申报FRBS-SW-SB资质认证FRBS-ZZ建筑资质FRBS-ZZ-JZ经营许可FRBS-ZZ-JY主题服务ZTFW创新创业ZTFW-CX小微企业ZTFW-CX-XW高校创业ZTFW-CX-GX便民服务ZTFW-BM交通出行ZTFW-BM-JT住房公积金ZTFW-BM-GJJ部门服务BMFW公安服务BMFW-GA交管服务BMFW-GA-JG出入境服务BMFW-GA-CR人社服务BMFW-RS就业服务BMFW-RS-JY人才服务BMFW-RS-RC全部委办局全部类型全部状态查 询重 置新增事项事项编码事项名称所属委办局服务类型办理方式承诺时限状态操作事项编码事项名称所属委办局服务类型办理方式承诺时限状态操作SX0001营业执照核发宁夏回族自治区市场监督管理厅行政许可即办件即办已发布查看编辑情形引导下架SX0002施工许可证核发宁夏回族自治区人力资源和社会保障厅行政许可联办件3个工作日已下架查看编辑情形引导上架SX0003药品经营许可证核发宁夏回族自治区公安厅行政许可联办件25个工作日已发布查看编辑情形引导下架SX0004医疗机构执业许可宁夏回族自治区卫生健康委员会行政许可联办件12个工作日已下架查看编辑情形引导上架SX0005道路运输经营许可宁夏回族自治区医疗保障局行政许可承诺件7个工作日已发布查看编辑情形引导下架SX0006食品经营许可宁夏回族自治区民政厅行政许可即办件即办已发布查看编辑情形引导下架SX0007公共场所卫生许可宁夏回族自治区住房和城乡建设厅行政许可承诺件26个工作日已发布查看编辑情形引导下架SX0008烟草专卖零售许可宁夏回族自治区教育厅行政许可联办件27个工作日已发布查看编辑情形引导下架SX0009特种设备使用登记国家税务总局宁夏回族自治区税务局行政许可联办件24个工作日草稿查看编辑情形引导上架SX0010建设项目环境影响评价审批国家税务总局宁夏回族自治区税务局行政许可上报件4个工作日已发布查看编辑情形引导下架共 63 条123456710 条/页跳至页",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1648,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89213-codex-full-structure-09-操作-编辑",
+          "label": "操作:编辑",
+          "finalUrl": "http://127.0.0.1:49213/services",
+          "title": "宁夏自治区一网通办管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-09-操作-编辑.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-09-操作-编辑.png",
+          "elementCount": 1200,
+          "interactiveCount": 93,
+          "interactiveLabels": [
+            "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+            "工作台",
+            "委办局管理",
+            "服务事项中枢",
+            "电子证照库",
+            "12345工单系统",
+            "审计日志",
+            "城市数据秘书",
+            "系统管理",
+            "事项列表",
+            "事项分类 重置 个人办事GRBS 户籍办理GRBS-HJ 户口迁移GRBS-HJ-QY 户口登记GRBS-HJ-DJ 户口注销GRBS-HJ-ZX 社会保障GRBS-SH 养老保险GRBS-SH-YL 医疗保险GRBS-SH-YB 失业保险GRBS-SH-SY 教育培训GRBS-JY 学历教育GRBS-JY-XL 职业资格GRBS-JY-ZG 医疗卫生GRB",
+            "重置",
+            "for screen reader",
+            "搜索事项名称或编码",
+            "查 询",
+            "重 置",
+            "新增事项",
+            "营业执照核发",
+            "查看",
+            "编辑",
+            "情形引导",
+            "下架",
+            "施工许可证核发",
+            "上架",
+            "药品经营许可证核发",
+            "医疗机构执业许可",
+            "道路运输经营许可",
+            "食品经营许可",
+            "公共场所卫生许可",
+            "烟草专卖零售许可"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "快速办件",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "消息中心",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "委办局管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "委办局管理",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "服务事项中枢",
+        "label": "编辑",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-01-首屏.png",
+        "elementCount": 604,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心",
+          "快速办件",
+          "更多",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-02-导航-工作台.png",
+        "elementCount": 604,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心",
+          "快速办件",
+          "更多",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-03-操作-快速办件",
+        "label": "操作:快速办件",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-03-操作-快速办件.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-03-操作-快速办件.png",
+        "elementCount": 606,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心",
+          "快速办件",
+          "更多",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-04-操作-消息中心",
+        "label": "操作:消息中心",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-04-操作-消息中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-04-操作-消息中心.png",
+        "elementCount": 606,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心",
+          "快速办件",
+          "更多",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-05-导航-委办局管理",
+        "label": "导航:委办局管理",
+        "finalUrl": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-05-导航-委办局管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-05-导航-委办局管理.png",
+        "elementCount": 1200,
+        "interactiveCount": 134,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "for screen reader",
+          "搜索委办局名称或编码",
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-06-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-06-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-06-操作-详情.png",
+        "elementCount": 1200,
+        "interactiveCount": 142,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "for screen reader",
+          "搜索委办局名称或编码",
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-07-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-07-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-07-操作-刷新.png",
+        "elementCount": 1200,
+        "interactiveCount": 142,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "for screen reader",
+          "搜索委办局名称或编码",
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-08-导航-服务事项中枢",
+        "label": "导航:服务事项中枢",
+        "finalUrl": "http://127.0.0.1:49213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-08-导航-服务事项中枢.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-08-导航-服务事项中枢.png",
+        "elementCount": 1200,
+        "interactiveCount": 93,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "事项列表",
+          "事项分类 重置 个人办事GRBS 户籍办理GRBS-HJ 户口迁移GRBS-HJ-QY 户口登记GRBS-HJ-DJ 户口注销GRBS-HJ-ZX 社会保障GRBS-SH 养老保险GRBS-SH-YL 医疗保险GRBS-SH-YB 失业保险GRBS-SH-SY 教育培训GRBS-JY 学历教育GRBS-JY-XL 职业资格GRBS-JY-ZG 医疗卫生GRB",
+          "重置",
+          "for screen reader",
+          "搜索事项名称或编码",
+          "查 询",
+          "重 置",
+          "新增事项",
+          "营业执照核发",
+          "查看",
+          "编辑",
+          "情形引导",
+          "下架",
+          "施工许可证核发",
+          "上架",
+          "药品经营许可证核发",
+          "医疗机构执业许可",
+          "道路运输经营许可",
+          "食品经营许可",
+          "公共场所卫生许可",
+          "烟草专卖零售许可"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-09-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:49213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-09-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-09-操作-编辑.png",
+        "elementCount": 1200,
+        "interactiveCount": 93,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "事项列表",
+          "事项分类 重置 个人办事GRBS 户籍办理GRBS-HJ 户口迁移GRBS-HJ-QY 户口登记GRBS-HJ-DJ 户口注销GRBS-HJ-ZX 社会保障GRBS-SH 养老保险GRBS-SH-YL 医疗保险GRBS-SH-YB 失业保险GRBS-SH-SY 教育培训GRBS-JY 学历教育GRBS-JY-XL 职业资格GRBS-JY-ZG 医疗卫生GRB",
+          "重置",
+          "for screen reader",
+          "搜索事项名称或编码",
+          "查 询",
+          "重 置",
+          "新增事项",
+          "营业执照核发",
+          "查看",
+          "编辑",
+          "情形引导",
+          "下架",
+          "施工许可证核发",
+          "上架",
+          "药品经营许可证核发",
+          "医疗机构执业许可",
+          "道路运输经营许可",
+          "食品经营许可",
+          "公共场所卫生许可",
+          "烟草专卖零售许可"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49213/dashboard",
+    "representativeScreenshotLabel": "晚上好，管理员超级管理员"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-01-首屏.png",
+        "elementCount": 604,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心",
+          "快速办件",
+          "更多",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-02-导航-工作台.png",
+        "elementCount": 604,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心",
+          "快速办件",
+          "更多",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-03-操作-快速办件",
+        "label": "操作:快速办件",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-03-操作-快速办件.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-03-操作-快速办件.png",
+        "elementCount": 606,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心",
+          "快速办件",
+          "更多",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-04-操作-消息中心",
+        "label": "操作:消息中心",
+        "finalUrl": "http://127.0.0.1:49213/dashboard",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-04-操作-消息中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-04-操作-消息中心.png",
+        "elementCount": 606,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "消息中心",
+          "快速办件",
+          "更多",
+          "全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-05-导航-委办局管理",
+        "label": "导航:委办局管理",
+        "finalUrl": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-05-导航-委办局管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-05-导航-委办局管理.png",
+        "elementCount": 1200,
+        "interactiveCount": 134,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "for screen reader",
+          "搜索委办局名称或编码",
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-06-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-06-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-06-操作-详情.png",
+        "elementCount": 1200,
+        "interactiveCount": 142,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "for screen reader",
+          "搜索委办局名称或编码",
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-07-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49213/departments",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-07-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-07-操作-刷新.png",
+        "elementCount": 1200,
+        "interactiveCount": 142,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "for screen reader",
+          "搜索委办局名称或编码",
+          "刷新",
+          "卡片",
+          "表格",
+          "详情",
+          "测试",
+          "同步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-08-导航-服务事项中枢",
+        "label": "导航:服务事项中枢",
+        "finalUrl": "http://127.0.0.1:49213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-08-导航-服务事项中枢.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-08-导航-服务事项中枢.png",
+        "elementCount": 1200,
+        "interactiveCount": 93,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "事项列表",
+          "事项分类 重置 个人办事GRBS 户籍办理GRBS-HJ 户口迁移GRBS-HJ-QY 户口登记GRBS-HJ-DJ 户口注销GRBS-HJ-ZX 社会保障GRBS-SH 养老保险GRBS-SH-YL 医疗保险GRBS-SH-YB 失业保险GRBS-SH-SY 教育培训GRBS-JY 学历教育GRBS-JY-XL 职业资格GRBS-JY-ZG 医疗卫生GRB",
+          "重置",
+          "for screen reader",
+          "搜索事项名称或编码",
+          "查 询",
+          "重 置",
+          "新增事项",
+          "营业执照核发",
+          "查看",
+          "编辑",
+          "情形引导",
+          "下架",
+          "施工许可证核发",
+          "上架",
+          "药品经营许可证核发",
+          "医疗机构执业许可",
+          "道路运输经营许可",
+          "食品经营许可",
+          "公共场所卫生许可",
+          "烟草专卖零售许可"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89213-codex-full-structure-09-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:49213/services",
+        "title": "宁夏自治区一网通办管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-09-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-codex-full-structure-09-操作-编辑.png",
+        "elementCount": 1200,
+        "interactiveCount": 93,
+        "interactiveLabels": [
+          "工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理",
+          "工作台",
+          "委办局管理",
+          "服务事项中枢",
+          "电子证照库",
+          "12345工单系统",
+          "审计日志",
+          "城市数据秘书",
+          "系统管理",
+          "事项列表",
+          "事项分类 重置 个人办事GRBS 户籍办理GRBS-HJ 户口迁移GRBS-HJ-QY 户口登记GRBS-HJ-DJ 户口注销GRBS-HJ-ZX 社会保障GRBS-SH 养老保险GRBS-SH-YL 医疗保险GRBS-SH-YB 失业保险GRBS-SH-SY 教育培训GRBS-JY 学历教育GRBS-JY-XL 职业资格GRBS-JY-ZG 医疗卫生GRB",
+          "重置",
+          "for screen reader",
+          "搜索事项名称或编码",
+          "查 询",
+          "重 置",
+          "新增事项",
+          "营业执照核发",
+          "查看",
+          "编辑",
+          "情形引导",
+          "下架",
+          "施工许可证核发",
+          "上架",
+          "药品经营许可证核发",
+          "医疗机构执业许可",
+          "道路运输经营许可",
+          "食品经营许可",
+          "公共场所卫生许可",
+          "烟草专卖零售许可"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1600,
+    "scrollWidth": 1760,
+    "scrollHeight": 2025
+  },
+  "initialBodyTextPreview": "宁夏政务管理后台\n工作台\n委办局管理\n服务事项中枢\n电子证照库\n12345工单系统\n审计日志\n城市数据秘书\n系统管理\n工作台\n5\n管理员\n晚上好，管理员超级管理员\n2026年06月15日 Monday · 祝您工作愉快\n消息中心\n快速办件\n今日办件量\n128\n件\n受理\n156\n办结\n105\n在办\n23\n较昨日 +12.5%\n电子证照调用量\n3,846\n次\n今日\n3,846\n累计\n125.8万\n证照类\n32类\n较上周 +8.3%\n12345工单满意度\n98.6\n%\n待办工单\n47\n已办工单\n1,256\n按时办结率\n99.2%\n较上月 +1.2%\n90天审计告警\n23\n条\n异常操作\n23\n总操作数\n45,860\n风险等级\n低风险\n较上周期 -15.3%\n快捷入口\n更多\n事项管理\n政务服务事项配置\n证照库\n电子证照管理\n工单处理\n12345工单办理\n审计查询\n操作审计追溯\n委办局接入\n部门系统对接\n我的待办\n5\n全部\n关于优化营商环境的提案\n紧急\n投诉工单\n10分钟前\n身份证办理进度查询\n重要\n咨询工单\n30分钟前\n营业执照变更申请\n一般\n办件事项\n1小时前\n社保缴费证明打印\n一般\n办件事项\n2小时前\n社区便民服务中心建设建议\n普通\n建议工单\n3小时前\n最新公告\n更多\n通知\n关于2024年政务服务能力提升培训的通知\n今天 09:30\n公告\n系统升级维护公告（本周五晚）\n昨天 16:45\n通报\n一季度政务服务质量考核结果通报\n3天前\n通知\n新版电子证照系统上线试运行通知\n5天前\n热门服务推荐\n身份证办理\nHOT\n12580人已办\n社保查询\nHOT\n9860人已办\n公积金提取\n7650人已办\n营业执照办理\n5420人已办\n医保报销\n4890人已办\n不动产登记\n3560人已办\n数据资产概览\n社保\n1,258万\n公积金\n896万\n医保\n1,432万\n税务\n768万\n证照\n3,256万\n教育\n520万\n交通\n680万",
+  "bodyTextPreview": "宁夏政务管理后台\n工作台\n委办局管理\n服务事项中枢\n电子证照库\n12345工单系统\n审计日志\n城市数据秘书\n系统管理\n工作台\n5\n管理员",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-PJEEZAML.js?v=ec64650f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=ec64650f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=ec64650f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-JC2MCPNC.js?v=ec64650f",
+        "lineNumber": 1190,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-PJEEZAML.js?v=ec64650f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=ec64650f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=ec64650f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-JC2MCPNC.js?v=ec64650f",
+        "lineNumber": 1190,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-JC2MCPNC.js?v=ec64650f",
+        "lineNumber": 1190,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/departments/index.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49213/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-PJEEZAML.js?v=ec64650f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=ec64650f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/react-router-dom.js?v=ec64650f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49213/node_modules/.vite/deps/chunk-JC2MCPNC.js?v=ec64650f",
+        "lineNumber": 1190,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-20260615-full/may-89213-browser-report.json"
+}
