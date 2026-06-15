@@ -15,6 +15,7 @@ img { max-width: 100%; display: block; }
 }
 .page-header h1 { margin: 0; font-size: 18px; font-weight: 600; }
 .page-header .back-btn { background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; }
+.admin-entry { color: white; font-size: 11px; line-height: 1.1; text-align: right; white-space: nowrap; font-weight: 600; }
 
 .banner {
   margin: 16px; border-radius: 16px; overflow: hidden;

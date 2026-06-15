@@ -260,7 +260,7 @@ const seedData = () => {
       if (status === 'completed') {
         const { commissionService } = require('./services/commission');
         const rels = commissionService.getAncestors(uid);
-        rels.forEach(r => {
+        rels.forEach((r: { depth: number; userId: string }) => {
           const rateMap = [0.08, 0.04, 0.02];
           const amt = Math.round(finalAmt * (rateMap[r.depth - 1] || 0) * 100) / 100;
           if (amt > 0) {

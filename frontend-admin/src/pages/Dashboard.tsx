@@ -4,26 +4,15 @@ import { useApp } from '../App';
 
 export default function Dashboard() {
   const { showToast } = useApp();
-  const [stats, setStats] = useState<any>(null);
-  const [riskStats, setRiskStats] = useState<any>(null);
-  const [diagStats, setDiagStats] = useState<any>(null);
-  const [orders, setOrders] = useState<any[]>([]);
+  const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => { loadData(); }, []);
 
   const loadData = async () => {
     try {
-      const [statRes, diagRes, orderRes, riskRes] = await Promise.all([
-        api.get('/orders/stats/summary'),
-        api.get('/admin/diagnostic/stats'),
-        api.get('/orders/admin/list', { params: { page: 1, pageSize: 10 } }),
-        api.get('/admin/risk/logs', { params: { limit: 20 } })
-      ] as any);
-      if (statRes.success) setStats(statRes.data);
-      if (diagRes.success) setDiagStats(diagRes.data);
-      if (orderRes.success) setOrders(orderRes.data.list || []);
-      if (riskRes.success) setRiskStats({ logs: riskRes.data || [] });
+      const res: any = await api.get('/admin/dashboard');
+      if (res.success) setData(res.data);
     } catch (e: any) {
       showToast(e.message || '加载失败', 'error');
     } finally {
@@ -31,26 +20,64 @@ export default function Dashboard() {
     }
   };
 
-  const STAT_CARDS = stats ? [
-    { label: '今日订单', value: stats.today?.orders || 0, icon: '📋', color: '#6366f1', trend: '+12.5%' },
-    { label: '今日流水', value: `¥${Number(stats.today?.amount || 0).toFixed(2)}`, icon: '💰', color: '#10b981', trend: '+8.3%' },
-    { label: '本月订单', value: stats.month?.orders || 0, icon: '📦', color: '#f59e0b', trend: '+15.2%' },
-    { label: '本月佣金', value: `¥${Number(stats.monthCommission || 0).toFixed(2)}`, icon: '🎁', color: '#ef4444', trend: '+22.8%' },
-    { label: '注册用户', value: stats.totalUsers || 0, icon: '👥', color: '#8b5cf6', trend: '+5.7%' },
-    { label: '在售商品', value: stats.totalProducts || 0, icon: '🛍️', color: '#06b6d4', trend: null },
-    { label: '今日失败', value: stats.todayFailures || 0, icon: '⚠️', color: '#ef4444', trend: '-3.1%' },
-    { label: '本月流水', value: `¥${Number(stats.month?.amount || 0).toFixed(0)}`, icon: '📈', color: '#3b82f6', trend: '+18.6%' }
+  const STAT_CARDS = data ? [
+    { label: '今日GMV', value: `¥${Number(data.todayGMV || 0).toFixed(2)}`, icon: '💰', color: '#10b981', trend: '+12.5%' },
+    { label: '今日订单', value: data.todayOrders || 0, icon: '📋', color: '#6366f1', trend: '+8.3%' },
+    { label: '累计GMV', value: `¥${Number(data.totalGMV || 0).toFixed(0)}`, icon: '📈', color: '#8b5cf6', trend: null },
+    { label: '累计订单', value: data.totalOrders || 0, icon: '📦', color: '#f59e0b', trend: null },
+    { label: '注册用户', value: data.totalUsers || 0, icon: '👥', color: '#06b6d4', trend: '+5.7%' },
+    { label: '在售商品', value: data.totalProducts || 0, icon: '🛍️', color: '#ec4899', trend: null },
+    { label: '供应商数', value: data.totalSuppliers || 0, icon: '🏭', color: '#14b8a6', trend: null },
+    { label: '今日失败', value: data.todayFailures || 0, icon: '⚠️', color: '#ef4444', trend: '-3.1%' }
   ] : [];
 
-  const STATUS_MAP: Record<string, { text: string; cls: string }> = {
-    pending: { text: '待支付', cls: 'tag-orange' },
-    paid: { text: '待充值', cls: 'tag-blue' },
-    recharging: { text: '充值中', cls: 'tag-blue' },
-    completed: { text: '已完成', cls: 'tag-green' },
-    failed: { text: '已失败', cls: 'tag-red' }
+  const COMMISSION_CARDS = data ? [
+    { label: '本月佣金', value: `¥${Number(data.monthCommission || 0).toFixed(2)}`, icon: '🎁', color: '#8b5cf6' },
+    { label: '待结算佣金', value: `¥${Number(data.pendingCommission || 0).toFixed(2)}`, icon: '⏳', color: '#f59e0b' },
+    { label: '充值成功率', value: `${Number(data.rechargeSuccessRate || 0).toFixed(1)}%`, icon: '✅', color: '#10b981' },
+    { label: '卡密池总量', value: data.cardPoolCount || 0, icon: '🎫', color: '#6366f1' }
+  ] : [];
+
+  const RISK_CARDS = data ? [
+    { label: '风控日志数', value: data.riskLogCount || 0, icon: '📜', color: '#6366f1' },
+    { label: '今日拦截', value: data.blockedToday || 0, icon: '🚫', color: '#ef4444' },
+    { label: 'IP黑名单', value: data.ipBlacklistCount || 0, icon: '🛡️', color: '#f59e0b' },
+    { label: '地域限制', value: data.regionLimitCount || 0, icon: '🗺️', color: '#8b5cf6' }
+  ] : [];
+
+  const STATUS_MAP: Record<string, { text: string; cls: string; color: string }> = {
+    pending: { text: '待支付', cls: 'tag-orange', color: '#f59e0b' },
+    paid: { text: '待充值', cls: 'tag-blue', color: '#3b82f6' },
+    recharging: { text: '充值中', cls: 'tag-blue', color: '#6366f1' },
+    completed: { text: '已完成', cls: 'tag-green', color: '#10b981' },
+    failed: { text: '已失败', cls: 'tag-red', color: '#ef4444' }
+  };
+
+  const RISK_LEVEL_MAP: Record<string, { text: string; cls: string; color: string }> = {
+    critical: { text: '严重', cls: 'tag-red', color: '#ef4444' },
+    high: { text: '高', cls: 'tag-orange', color: '#f59e0b' },
+    medium: { text: '中', cls: 'tag-blue', color: '#3b82f6' },
+    low: { text: '低', cls: 'tag-green', color: '#10b981' }
   };
 
   if (loading) return <div className="empty"><div className="empty-icon">⏳</div>加载中...</div>;
+
+  const statusTotal = data?.statusBreakdown?.reduce((sum: number, item: any) => sum + (item.cnt || 0), 0) || 1;
+  const riskTotal = data?.levelDistribution?.reduce((sum: number, item: any) => sum + (item.cnt || 0), 0) || 1;
+
+  const getConicGradient = () => {
+    if (!data?.levelDistribution?.length) return '#e2e8f0';
+    let cumulative = 0;
+    const stops: string[] = [];
+    data.levelDistribution.forEach((item: any) => {
+      const s = RISK_LEVEL_MAP[item.risk_level] || { color: '#94a3b8' };
+      const pct = ((item.cnt || 0) / riskTotal) * 100;
+      stops.push(`${s.color} ${cumulative}%`);
+      cumulative += pct;
+      stops.push(`${s.color} ${cumulative}%`);
+    });
+    return `conic-gradient(${stops.join(', ')})`;
+  };
 
   return (
     <div>
@@ -69,112 +96,181 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20, marginBottom: 20 }}>
+      <div className="grid-3" style={{ marginBottom: 20 }}>
+        {COMMISSION_CARDS.map((card, i) => (
+          <div key={i} className="stat-card">
+            <div className="label">{card.label}</div>
+            <div className="value">{card.value}</div>
+            <div className="icon" style={{ color: card.color }}>{card.icon}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20, marginBottom: 20 }}>
         <div className="card">
           <div className="card-header">
-            <div className="card-title">📈 充值诊断分析（近30天）</div>
+            <div className="card-title">📊 订单状态分布</div>
+            <span className="tag tag-blue">总计: {statusTotal}</span>
           </div>
-          <div className="grid-3" style={{ marginBottom: 20 }}>
-            <div style={{ textAlign: 'center', padding: 16, background: '#fef2f2', borderRadius: 12 }}>
-              <div style={{ fontSize: 28, fontWeight: 700, color: '#ef4444' }}>{diagStats?.totalFailures || 0}</div>
-              <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>总失败订单</div>
-            </div>
-            <div style={{ textAlign: 'center', padding: 16, background: '#f0fdf4', borderRadius: 12 }}>
-              <div style={{ fontSize: 28, fontWeight: 700, color: '#10b981' }}>{diagStats?.autoRecoveryRate || 0}%</div>
-              <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>自动恢复率</div>
-            </div>
-            <div style={{ textAlign: 'center', padding: 16, background: '#dbeafe', borderRadius: 12 }}>
-              <div style={{ fontSize: 28, fontWeight: 700, color: '#3b82f6' }}>{diagStats?.avgDiagnosticTime || 0}s</div>
-              <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>平均诊断时间</div>
-            </div>
-          </div>
-
-          {diagStats?.byRootCause && Object.keys(diagStats.byRootCause).length > 0 && (
+          {data?.statusBreakdown?.length > 0 ? (
             <div>
-              <div style={{ fontSize: 13, color: '#64748b', marginBottom: 12 }}>失败原因分布</div>
-              {Object.entries(diagStats.byRootCause).map(([key, val]: any) => (
-                <div key={key} style={{ marginBottom: 10 }}>
-                  <div className="flex-between" style={{ fontSize: 13, marginBottom: 4 }}>
-                    <span>{key.replace(/_/g, ' ')}</span>
-                    <span style={{ fontWeight: 600 }}>{val} 次</span>
+              {data.statusBreakdown.map((item: any, idx: number) => {
+                const s = STATUS_MAP[item.status] || { text: item.status, cls: 'tag-gray', color: '#94a3b8' };
+                const pct = ((item.cnt || 0) / statusTotal) * 100;
+                return (
+                  <div key={idx} style={{ marginBottom: 14 }}>
+                    <div className="flex-between" style={{ marginBottom: 6 }}>
+                      <span className="text-sm">
+                        <span className={`tag ${s.cls}`} style={{ marginRight: 8 }}>{s.text}</span>
+                      </span>
+                      <span className="text-sm text-bold">{item.cnt} 单 ({pct.toFixed(1)}%)</span>
+                    </div>
+                    <div className="progress-bar">
+                      <div className="progress-fill" style={{ width: `${pct}%`, background: s.color }}></div>
+                    </div>
                   </div>
-                  <div className="progress-bar">
-                    <div className="progress-fill" style={{
-                      width: `${(val / (diagStats.totalFailures || 1) * 100)}%`,
-                      background: key.includes('STOCK') ? '#ef4444' : key.includes('TIMEOUT') ? '#f59e0b' : key.includes('REGION') ? '#8b5cf6' : '#6366f1'
-                    }}></div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
-          )}
+          ) : <div className="empty" style={{ padding: '40px 20px' }}><div className="empty-icon">📊</div>暂无数据</div>}
         </div>
 
         <div className="card">
           <div className="card-header">
-            <div className="card-title">🛡️ 风控监测</div>
-            <span className="tag tag-orange">实时</span>
+            <div className="card-title">🛡️ 风险等级分布</div>
           </div>
-          {riskStats?.logs?.length > 0 ? (
-            <div style={{ maxHeight: 320, overflowY: 'auto' }}>
-              {riskStats.logs.slice(0, 10).map((log: any, idx: number) => (
-                <div key={idx} style={{
-                  padding: '10px 0', borderBottom: idx < 9 ? '1px solid #f1f5f9' : 'none',
-                  fontSize: 12
+          {data?.levelDistribution?.length > 0 ? (
+            <div style={{ position: 'relative' }}>
+              <div style={{
+                width: 160, height: 160, borderRadius: '50%',
+                margin: '20px auto',
+                position: 'relative',
+                background: getConicGradient()
+              }}>
+                <div style={{
+                  position: 'absolute', inset: 30, borderRadius: '50%',
+                  background: 'white',
+                  display: 'flex', flexDirection: 'column',
+                  alignItems: 'center', justifyContent: 'center'
                 }}>
-                  <div className="flex-between" style={{ marginBottom: 4 }}>
-                    <span className={`tag ${
-                      log.risk_level === 'critical' ? 'tag-red' :
-                      log.risk_level === 'high' ? 'tag-orange' :
-                      log.risk_level === 'medium' ? 'tag-blue' : 'tag-gray'
-                    }`}>{log.risk_level?.toUpperCase()}</span>
-                    {log.blocked ? <span className="tag tag-red">已拦截</span> : <span className="tag tag-green">放行</span>}
-                  </div>
-                  <div style={{ color: '#374151' }}>{log.action} - {log.region} · {log.ip?.slice(0, 15)}...</div>
-                  <div style={{ color: '#94a3b8', marginTop: 2, fontSize: 11 }}>
-                    {new Date((log.created_at || 0) * 1000).toLocaleString('zh-CN')}
-                  </div>
+                  <div style={{ fontSize: 11, color: '#94a3b8' }}>总计</div>
+                  <div style={{ fontSize: 24, fontWeight: 700 }}>{riskTotal}</div>
                 </div>
-              ))}
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
+                {data.levelDistribution.map((item: any, idx: number) => {
+                  const s = RISK_LEVEL_MAP[item.risk_level] || { text: item.risk_level, cls: 'tag-gray', color: '#94a3b8' };
+                  return (
+                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}>
+                      <span style={{ width: 10, height: 10, borderRadius: 2, background: s.color }}></span>
+                      <span className="text-muted">{s.text}</span>
+                      <span className="text-bold">{item.cnt}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          ) : <div className="empty" style={{ padding: '40px 20px' }}><div className="empty-icon">🛡️</div>暂无风控记录</div>}
+          ) : <div className="empty" style={{ padding: '40px 20px' }}><div className="empty-icon">🛡️</div>暂无数据</div>}
         </div>
+      </div>
+
+      <div className="grid-4" style={{ marginBottom: 20 }}>
+        {RISK_CARDS.map((card, i) => (
+          <div key={i} className="stat-card">
+            <div className="label">{card.label}</div>
+            <div className="value">{card.value}</div>
+            <div className="icon" style={{ color: card.color }}>{card.icon}</div>
+          </div>
+        ))}
       </div>
 
       <div className="card">
         <div className="card-header">
-          <div className="card-title">📋 最新订单</div>
-          <button className="btn btn-default btn-sm" onClick={() => location.hash = '#/orders'}>查看全部 →</button>
+          <div className="card-title">🏭 供应商业绩统计</div>
+          <span className="text-sm text-muted">共 {data?.supplierStats?.length || 0} 家供应商</span>
         </div>
         <table className="data-table" style={{ borderRadius: 0, boxShadow: 'none' }}>
           <thead>
             <tr>
-              <th>订单号</th>
-              <th>商品</th>
-              <th>用户</th>
-              <th>账号</th>
-              <th>金额</th>
+              <th>供应商</th>
+              <th>编码</th>
               <th>状态</th>
-              <th>时间</th>
+              <th>分润比例</th>
+              <th>订单数</th>
+              <th>总金额</th>
+              <th>失败数</th>
+              <th>失败率</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((o: any) => {
-              const s = STATUS_MAP[o.status] || { text: o.status, cls: 'tag-gray' };
-              return (
-                <tr key={o.id}>
-                  <td style={{ fontFamily: 'monospace', fontSize: 12 }}>{o.order_no}</td>
-                  <td style={{ maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{o.product_name}</td>
-                  <td>{o.user_phone?.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') || '-'}</td>
-                  <td style={{ fontFamily: 'monospace' }}>{o.recharge_account}</td>
-                  <td style={{ fontWeight: 600, color: '#ef4444' }}>¥{o.final_amount}</td>
-                  <td><span className={`tag ${s.cls}`}>{s.text}</span></td>
-                  <td style={{ fontSize: 12, color: '#64748b' }}>{new Date((o.created_at || 0) * 1000).toLocaleString('zh-CN')}</td>
-                </tr>
-              );
-            })}
+            {data?.supplierStats?.length > 0 ? data.supplierStats.map((s: any) => (
+              <tr key={s.id}>
+                <td style={{ fontWeight: 500 }}>{s.name}</td>
+                <td style={{ fontFamily: 'monospace', fontSize: 12 }}>{s.code}</td>
+                <td>{s.status === 1 ? <span className="tag tag-green">正常</span> : <span className="tag tag-gray">停用</span>}</td>
+                <td>{(s.settlement_ratio * 100).toFixed(1)}%</td>
+                <td>{s.totalOrders || 0}</td>
+                <td style={{ color: '#ef4444', fontWeight: 600 }}>¥{Number(s.totalAmount || 0).toFixed(2)}</td>
+                <td style={{ color: '#ef4444' }}>{s.failCount || 0}</td>
+                <td>
+                  {s.failRate !== undefined && s.failRate !== null ? (
+                    <span className={`tag ${Number(s.failRate) > 5 ? 'tag-red' : Number(s.failRate) > 2 ? 'tag-orange' : 'tag-green'}`}>
+                      {Number(s.failRate).toFixed(2)}%
+                    </span>
+                  ) : '-'}
+                </td>
+              </tr>
+            )) : <tr><td colSpan={8} className="empty"><div className="empty-icon">🏭</div>暂无数据</td></tr>}
           </tbody>
         </table>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">🎫 卡密池概览</div>
+          </div>
+          <div className="grid-3" style={{ marginBottom: 16 }}>
+            <div style={{ textAlign: 'center', padding: 12, background: '#f0fdf4', borderRadius: 10 }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#10b981' }}>{data?.cardPoolCount || 0}</div>
+              <div style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>总卡密数</div>
+            </div>
+            <div style={{ textAlign: 'center', padding: 12, background: '#dbeafe', borderRadius: 10 }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#3b82f6' }}>{data?.cardUsed || 0}</div>
+              <div style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>已使用</div>
+            </div>
+            <div style={{ textAlign: 'center', padding: 12, background: '#fef2f2', borderRadius: 10 }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#ef4444' }}>{data?.cardExpired || 0}</div>
+              <div style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>已过期</div>
+            </div>
+          </div>
+          <div>
+            <div className="flex-between text-sm mb-8">
+              <span className="text-muted">可用率</span>
+              <span className="text-bold">
+                {data?.cardPoolCount ? Math.round(((data.cardPoolCount - (data.cardUsed || 0)) / data.cardPoolCount) * 100) : 0}%
+              </span>
+            </div>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{
+                width: `${data?.cardPoolCount ? ((data.cardPoolCount - (data.cardUsed || 0)) / data.cardPoolCount) * 100 : 0}%`
+              }}></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">🔍 诊断统计</div>
+          </div>
+          <div style={{ textAlign: 'center', padding: '20px 0' }}>
+            <div style={{ fontSize: 48, fontWeight: 800, color: '#6366f1' }}>{data?.diagnosticCount || 0}</div>
+            <div style={{ color: '#64748b', marginTop: 8 }}>累计诊断次数</div>
+          </div>
+          <div style={{ padding: '12px', background: '#f8fafc', borderRadius: 10, textAlign: 'center' }}>
+            <div className="text-sm text-muted">智能诊断系统实时监控订单异常，自动分析失败原因并提供解决方案</div>
+          </div>
+        </div>
       </div>
     </div>
   );

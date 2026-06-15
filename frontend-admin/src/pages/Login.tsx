@@ -38,7 +38,7 @@ export default function Login() {
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 32, marginBottom: 16, boxShadow: '0 10px 30px rgba(99,102,241,0.4)'
           }}>💎</div>
-          <div className="login-title">虚拟商品管理平台</div>
+          <div className="login-title">虚拟商品管理后台</div>
           <div className="login-subtitle">Virtual Goods Platform · Admin Console</div>
         </div>
 

@@ -17,13 +17,20 @@ export default function Users() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const res: any = await api.get('/admin/users', { params: { keyword: keyword || undefined, page, pageSize: 15 } });
+      const res: any = await api.get('/admin/users', { params: { keyword: keyword || undefined, page, pageSize: 20 } });
       if (res.success) { setUsers(res.data.list || []); setTotal(res.data.total || 0); }
     } catch (e: any) { showToast(e.message, 'error'); }
     finally { setLoading(false); }
   };
 
   const showDetail = (user: any) => setDetail(user);
+
+  const statsCards = [
+    { label: '总用户数', value: total, icon: '👥', color: '#6366f1' },
+    { label: '有邀请关系', value: users.filter(u => u.referrer_id).length, icon: '🤝', color: '#10b981' },
+    { label: '虚拟号段用户', value: users.filter(u => u.is_virtual).length, icon: '⚠️', color: '#f59e0b' },
+    { label: '佣金总额', value: `¥${users.reduce((a, b) => a + (b.total_commission || 0), 0).toFixed(0)}`, icon: '💰', color: '#ef4444' }
+  ];
 
   return (
     <div>
@@ -34,13 +41,8 @@ export default function Users() {
         <span className="text-muted">共 {total} 位用户</span>
       </div>
 
-      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-        {[
-          { label: '总用户数', value: total, icon: '👥', color: '#6366f1' },
-          { label: '有邀请关系', value: users.filter(u => u.referrer_id).length, icon: '🤝', color: '#10b981' },
-          { label: '虚拟号段用户', value: users.filter(u => u.is_virtual).length, icon: '⚠️', color: '#f59e0b' },
-          { label: '佣金总额', value: `¥${users.reduce((a, b) => a + (b.total_commission || 0), 0).toFixed(0)}`, icon: '💰', color: '#ef4444' }
-        ].map((c, i) => (
+      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: 20 }}>
+        {statsCards.map((c, i) => (
           <div key={i} className="stat-card">
             <div className="label">{c.label}</div>
             <div className="value">{c.value}</div>
@@ -60,7 +62,7 @@ export default function Users() {
               <th>累计佣金</th>
               <th>可提佣金</th>
               <th>邀请人</th>
-              <th>是否虚拟号</th>
+              <th>号段类型</th>
               <th>注册时间</th>
               <th>操作</th>
             </tr>
@@ -88,7 +90,9 @@ export default function Users() {
                 <td style={{ color: '#6366f1', fontWeight: 600 }}>¥{Number(u.available_commission || 0).toFixed(2)}</td>
                 <td>{u.referrer_id ? <span className="tag tag-blue">有</span> : <span className="text-muted">-</span>}</td>
                 <td>{u.is_virtual ? <span className="tag tag-orange">虚拟号</span> : <span className="tag tag-green">正常</span>}</td>
-                <td style={{ fontSize: 12, color: '#64748b' }}>{new Date((u.created_at || 0) * 1000).toLocaleDateString()}</td>
+                <td style={{ fontSize: 12, color: '#64748b' }}>
+                  {u.created_at ? new Date((u.created_at || 0) * 1000).toLocaleDateString() : '-'}
+                </td>
                 <td>
                   <button className="btn btn-default btn-sm" onClick={() => showDetail(u)}>详情</button>
                 </td>
@@ -98,7 +102,7 @@ export default function Users() {
         </table>
       </div>
 
-      <Pagination page={page} total={total} onChange={setPage} />
+      <Pagination page={page} total={total} onChange={setPage} pageSize={20} />
 
       {detail && (
         <Modal title={`用户详情 · ${detail.nickname}`} width="600px" onClose={() => setDetail(null)} onOk={() => setDetail(null)} okText="关闭">
@@ -140,8 +144,8 @@ export default function Users() {
             <div className="grid-2">
               <div className="flex-between text-sm mb-8"><span className="text-muted">用户ID</span><span style={{ fontFamily: 'monospace' }}>{detail.id}</span></div>
               <div className="flex-between text-sm mb-8"><span className="text-muted">邀请人ID</span><span style={{ fontFamily: 'monospace' }}>{detail.referrer_id || '-'}</span></div>
-              <div className="flex-between text-sm mb-8"><span className="text-muted">注册时间</span>{new Date((detail.created_at || 0) * 1000).toLocaleString('zh-CN')}</div>
-              <div className="flex-between text-sm mb-8"><span className="text-muted">最近更新</span>{new Date((detail.updated_at || 0) * 1000).toLocaleString('zh-CN')}</div>
+              <div className="flex-between text-sm mb-8"><span className="text-muted">注册时间</span>{detail.created_at ? new Date(detail.created_at * 1000).toLocaleString('zh-CN') : '-'}</div>
+              <div className="flex-between text-sm mb-8"><span className="text-muted">最近更新</span>{detail.updated_at ? new Date(detail.updated_at * 1000).toLocaleString('zh-CN') : '-'}</div>
             </div>
           </div>
         </Modal>

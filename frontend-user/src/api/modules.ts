@@ -1,36 +1,54 @@
 import api from './index';
 
+const data = (request: Promise<unknown>) => request as Promise<any>;
+
 export const authApi = {
-  register: (data: any) => api.post('/auth/register', data),
-  login: (data: any) => api.post('/auth/login', data),
-  getProfile: () => api.get('/auth/profile'),
-  updateProfile: (data: any) => api.put('/auth/profile', data)
+  register: (payload: any) => data(api.post('/auth/register', payload)),
+  login: (payload: any) => data(api.post('/auth/login', payload)),
+  getProfile: () => data(api.get('/auth/profile')),
+  updateProfile: (payload: any) => data(api.put('/auth/profile', payload))
 };
 
 export const productApi = {
-  getCategories: () => api.get('/categories'),
-  getProducts: (params: any) => api.get('/products', { params }),
-  getHotProducts: () => api.get('/products/hot'),
-  getProductDetail: (id: string) => api.get(`/products/${id}`),
-  calculatePrice: (data: any) => api.post('/calculate-price', data),
-  getPromotions: () => api.get('/promotions')
+  getCategories: () => data(api.get('/categories')),
+  getProducts: (params: any) => data(api.get('/products', { params })),
+  getHotProducts: () => data(api.get('/products/hot')),
+  getProductDetail: (id: string) => data(api.get(`/products/${id}`)),
+  calculatePrice: (payload: any) => data(api.post('/calculate-price', payload)),
+  getPromotions: () => data(api.get('/promotions')),
+  syncStock: (id: string) => data(api.post(`/products/${id}/sync-stock`)),
+  getAlternatives: (id: string) => data(api.get(`/products/${id}/alternatives`))
 };
 
 export const orderApi = {
-  create: (data: any) => api.post('/orders', data),
-  pay: (id: string) => api.post(`/orders/${id}/pay`),
-  retry: (id: string) => api.post(`/orders/${id}/retry`),
-  list: (params: any) => api.get('/orders', { params }),
-  detail: (id: string) => api.get(`/orders/${id}`),
-  getCards: (id: string) => api.get(`/orders/${id}/cards`),
-  diagnostic: (id: string) => api.get(`/orders/${id}/diagnostic`)
+  create: (payload: any) => data(api.post('/orders', payload)),
+  pay: (id: string) => data(api.post(`/orders/${id}/pay`)),
+  retry: (id: string) => data(api.post(`/orders/${id}/retry`)),
+  list: (params: any) => data(api.get('/orders', { params })),
+  detail: (id: string) => data(api.get(`/orders/${id}`)),
+  getCards: (id: string) => data(api.get(`/orders/${id}/cards`)),
+  diagnostic: (id: string) => data(api.get(`/orders/${id}/diagnostic`)),
+  retrySwitchChannel: (id: string) => data(api.post(`/orders/${id}/retry-switch-channel`))
 };
 
 export const commissionApi = {
-  records: (params: any) => api.get('/commission/records', { params }),
-  team: (params: any) => api.get('/commission/team', { params }),
-  referrals: () => api.get('/commission/referrals'),
-  shareCode: () => api.get('/commission/share-code'),
-  withdraw: (data: any) => api.post('/commission/withdraw', data),
-  recharge: (data: any) => api.post('/balance/recharge', data)
+  records: (params: any) => data(api.get('/commission/records', { params })),
+  team: (params: any) => data(api.get('/commission/team', { params })),
+  referrals: () => data(api.get('/commission/referrals')),
+  shareCode: () => data(api.get('/commission/share-code')),
+  withdraw: (payload: any) => data(api.post('/commission/withdraw', payload)),
+  recharge: (payload: any) => data(api.post('/balance/recharge', payload)),
+  getRelationChain: () => data(api.get('/commission/relation-chain')),
+  getTraceChain: (commissionId: string) => data(api.get(`/commission/trace/${commissionId}`)),
+  getReviewRecords: () => data(api.get('/commission/reviews')),
+  submitReview: (payload: any) => data(api.post('/commission/reviews', payload))
+};
+
+export const adminApi = {
+  getRiskLogs: (limit: number = 5) => data(api.get(`/admin/risk/logs?limit=${limit}`)),
+  getSettlements: () => data(api.get('/admin/settlements')),
+  getProfitConfigs: () => data(api.get('/admin/profit-configs')),
+  getCardPool: () => data(api.get('/admin/card-pool')),
+  getCardCryptoLogs: () => data(api.get('/admin/card-pool/crypto-logs')),
+  getInvoices: () => data(api.get('/admin/invoices'))
 };

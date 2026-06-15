@@ -95,7 +95,114 @@ router.get('/:id/diagnostic', authMiddleware, (req: AuthRequest, res) => {
 
     const { rechargeDiagnosticService } = require('../services/diagnostic');
     const diagnostic = rechargeDiagnosticService.diagnose(req.params.id);
-    res.json({ success: true, data: diagnostic });
+
+    const switchHistory: any[] = db.prepare(`
+      SELECT cs.*, rc.name as channel_name, s.name as supplier_name
+      FROM channel_switch_logs cs
+      LEFT JOIN recharge_channels rc ON cs.to_channel_id = rc.id
+      LEFT JOIN suppliers s ON cs.to_supplier_id = s.id
+      WHERE cs.order_id = ?
+      ORDER BY cs.created_at DESC
+    `).all(req.params.id);
+
+    const errorCode = order.fail_reason || 'UNKNOWN_ERROR';
+    let category = 'system_error';
+    let severity = 'medium';
+    if (errorCode.includes('TIMEOUT') || errorCode.includes('timeout')) {
+      category = 'network_timeout'; severity = 'high';
+    } else if (errorCode.includes('STOCK') || errorCode.includes('stock') || errorCode.includes('库存')) {
+      category = 'stock_empty'; severity = 'high';
+    } else if (errorCode.includes('ACCOUNT') || errorCode.includes('account') || errorCode.includes('账号')) {
+      category = 'account_error'; severity = 'low';
+    } else if (errorCode.includes('region') || errorCode.includes('REGION') || errorCode.includes('地域')) {
+      category = 'region_limit'; severity = 'medium';
+    } else if (errorCode.includes('maintain') || errorCode.includes('MAINTAIN') || errorCode.includes('维护')) {
+      category = 'supplier_maintenance'; severity = 'medium';
+    }
+
+    const severityLabel: Record<string, string> = { low: '轻微', medium: '中等', high: '严重' };
+    const categoryLabel: Record<string, string> = {
+      network_timeout: '网络超时',
+      stock_empty: '库存不足',
+      account_error: '账号错误',
+      region_limit: '地域限制',
+      supplier_maintenance: '供应商维护',
+      system_error: '系统错误'
+    };
+
+    const enriched = {
+      ...diagnostic,
+      errorCode,
+      category,
+      categoryLabel: categoryLabel[category] || '其他错误',
+      severity,
+      severityLabel: severityLabel[severity] || '中等',
+      userMessage: diagnostic.userMessage,
+      rootCause: diagnostic.rootCause,
+      suggestions: diagnostic.suggestions,
+      autoAction: diagnostic.autoActions.length > 0 ? diagnostic.autoActions.join(', ') : '无',
+      switchChannelAvailable: diagnostic.switchChannel,
+      switchHistory
+    };
+
+    res.json({ success: true, data: enriched });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.post('/:id/retry-switch-channel', authMiddleware, async (req: AuthRequest, res) => {
+  try {
+    const order: any = db.prepare('SELECT * FROM orders WHERE id = ? AND user_id = ?').get(req.params.id, req.userId);
+    if (!order) return res.status(404).json({ success: false, message: '订单不存在' });
+    if (order.status !== 'failed') return res.status(400).json({ success: false, message: '只有失败订单可以重试' });
+
+    const channels: any[] = db.prepare(`
+      SELECT rc.*, s.name as supplier_name
+      FROM recharge_channels rc
+      LEFT JOIN suppliers s ON rc.supplier_id = s.id
+      WHERE rc.product_id = ? AND rc.status = 1 AND rc.id != ?
+      ORDER BY rc.priority ASC
+    `).all(order.product_id, order.channel_id || 0);
+
+    if (channels.length === 0) {
+      return res.status(400).json({ success: false, message: '没有可用的备用通道' });
+    }
+
+    const nextChannel = channels[0];
+    const t = now();
+    const switchId = require('../utils').generateId();
+
+    db.prepare(`
+      INSERT INTO channel_switch_logs (id, order_id, from_channel_id, to_channel_id, from_supplier_id, to_supplier_id, reason, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(switchId, order.id, order.channel_id, nextChannel.id, order.supplier_id, nextChannel.supplier_id, '用户手动重试切换', t);
+
+    db.prepare('UPDATE orders SET channel_id = ?, supplier_id = ?, status = ?, updated_at = ? WHERE id = ?')
+      .run(nextChannel.id, nextChannel.supplier_id, 'processing', t, order.id);
+
+    setTimeout(async () => {
+      const success = Math.random() > 0.3;
+      const { rechargeDiagnosticService } = require('../services/diagnostic');
+      if (success) {
+        db.prepare("UPDATE orders SET status = 'completed', finish_time = ?, updated_at = ? WHERE id = ?")
+          .run(now(), now(), order.id);
+      } else {
+        const diag = rechargeDiagnosticService.diagnose(order.id);
+        db.prepare("UPDATE orders SET status = 'failed', fail_reason = ?, diagnostic_result = ?, updated_at = ? WHERE id = ?")
+          .run(diag.userMessage, JSON.stringify(diag), now(), order.id);
+      }
+    }, 2000);
+
+    res.json({
+      success: true,
+      data: {
+        switchId,
+        newChannel: { id: nextChannel.id, name: nextChannel.name, supplierName: nextChannel.supplier_name },
+        newStatus: 'processing',
+        message: `已切换到 ${nextChannel.supplier_name} - ${nextChannel.name}，正在重试...`
+      }
+    });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
   }

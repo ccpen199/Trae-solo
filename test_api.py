@@ -3,7 +3,7 @@ import urllib.request
 import urllib.parse
 import json
 
-BASE = "http://localhost:3001/api"
+BASE = "http://127.0.0.1:49212/api"
 TOKEN1 = ""
 ADMIN_TOKEN = ""
 
@@ -77,27 +77,34 @@ print(f"  ✓ 邀请码: {d['code']}")
 print(f"  ✓ 分润比: L1={d['rates']['level1']*100:.0f}% L2={d['rates']['level2']*100:.0f}% L3={d['rates']['level3']*100:.0f}%")
 
 section("8. 管理员登录 (admin)")
-r = api("POST", "/auth/login", {"username": "admin", "password": "admin123"})
-print(f"  ✓ 管理员: {r['data']['user']['nickname']} role={r['data']['user']['role']}")
-ADMIN_TOKEN = r['data']['token']
+r = api("POST", "/auth/admin-login", {"username": "admin", "password": "admin123"})
+if not r.get('success'):
+    print(f"  ✗ 失败: {r}")
+else:
+    print(f"  ✓ 管理员: {r['data']['user'].get('username','admin')} role={r['data']['user']['role']}")
+    ADMIN_TOKEN = r['data']['token']
 
 section("9. 后台概览 Dashboard")
-r = api("GET", "/admin/dashboard", token=ADMIN_TOKEN)
-d = r['data']
-print(f"  ✓ 今日GMV: ¥{d['todayGMV']}  今日订单: {d['todayOrders']}")
-print(f"  ✓ 总用户: {d['totalUsers']}  总订单: {d['totalOrders']}  总GMV: ¥{d['totalGMV']}")
-print(f"  ✓ 商品: {d['totalProducts']}  供应商: {d['totalSuppliers']}")
-print(f"  ✓ 卡密池: {d['cardPoolCount']}张  成功率: {d['rechargeSuccessRate']}%")
-print(f"  ✓ 诊断次数: {d['diagnosticCount']}")
+r = api("GET", "/orders/stats/summary", token=ADMIN_TOKEN)
+if not r.get('success'):
+    print(f"  ✗ 失败: {r}")
+else:
+    d = r['data']
+    print(f"  ✓ 今日订单: {d.get('today',{}).get('orders',0)}  今日流水: ¥{d.get('today',{}).get('amount',0):.2f}")
+    print(f"  ✓ 本月订单: {d.get('month',{}).get('orders',0)}  本月流水: ¥{d.get('month',{}).get('amount',0):.0f}")
+    print(f"  ✓ 总用户: {d.get('totalUsers',0)}  总商品: {d.get('totalProducts',0)}")
+    print(f"  ✓ 今日失败: {d.get('todayFailures',0)}")
 
-section("10. 风控引擎统计")
-r = api("GET", "/admin/risk/stats", token=ADMIN_TOKEN)
-d = r['data']
-print(f"  ✓ 风控日志: {d['totalLogs']}条")
-print(f"  ✓ 今日拦截: {d['blockedToday']}次")
-print(f"  ✓ IP黑名单: {d['ipBlacklistCount']}条")
-print(f"  ✓ 地域限制: {d['regionLimitCount']}条")
-print(f"  ✓ 风险等级分布: {d['levelDistribution']}")
+section("10. 风控引擎日志")
+r = api("GET", "/admin/risk/logs?limit=5", token=ADMIN_TOKEN)
+if not r.get('success'):
+    print(f"  ✗ 失败: {r}")
+else:
+    logs = r.get('data', [])
+    print(f"  ✓ 风控日志: {len(logs) if isinstance(logs, list) else 'N/A'}条")
+    if isinstance(logs, list) and logs:
+        for log in logs[:3]:
+            print(f"    [{log.get('risk_level','?')}] {log.get('action','')} blocked={log.get('blocked',False)}")
 
 section("11. 供应商管理")
 r = api("GET", "/admin/suppliers", token=ADMIN_TOKEN)

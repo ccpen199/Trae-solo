@@ -9,6 +9,12 @@ export const db = new Database(dbPath);
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
+function addColumnIfMissing(table: string, column: string, definition: string) {
+  const columns = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>;
+  if (columns.some((item) => item.name === column)) return;
+  db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+}
+
 export function initDatabase() {
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
@@ -232,6 +238,56 @@ export function initDatabase() {
       FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
     );
 
+    CREATE TABLE IF NOT EXISTS channel_switch_logs (
+      id TEXT PRIMARY KEY,
+      order_id TEXT NOT NULL,
+      from_channel_id INTEGER,
+      to_channel_id INTEGER,
+      from_supplier_id TEXT,
+      to_supplier_id TEXT,
+      reason TEXT,
+      created_at INTEGER NOT NULL,
+      FOREIGN KEY (order_id) REFERENCES orders(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS stock_sync_history (
+      id TEXT PRIMARY KEY,
+      product_id TEXT NOT NULL,
+      before_stock INTEGER NOT NULL,
+      after_stock INTEGER NOT NULL,
+      variance INTEGER NOT NULL,
+      sync_time INTEGER NOT NULL,
+      sync_batch TEXT,
+      FOREIGN KEY (product_id) REFERENCES products(id)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_stock_sync_product ON stock_sync_history(product_id);
+    CREATE INDEX IF NOT EXISTS idx_stock_sync_time ON stock_sync_history(sync_time);
+
+    CREATE TABLE IF NOT EXISTS card_crypto_logs (
+      id TEXT PRIMARY KEY,
+      card_id TEXT NOT NULL,
+      operation TEXT NOT NULL,
+      operator_id TEXT,
+      operator_role TEXT,
+      encryption_method TEXT,
+      decrypted_preview TEXT,
+      created_at INTEGER NOT NULL,
+      FOREIGN KEY (card_id) REFERENCES card_pool(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS profit_share_configs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      supplier_id TEXT NOT NULL,
+      level1_ratio REAL DEFAULT 0.08,
+      level2_ratio REAL DEFAULT 0.04,
+      level3_ratio REAL DEFAULT 0.02,
+      supplier_ratio REAL DEFAULT 0.7,
+      platform_ratio REAL DEFAULT 0.3,
+      updated_at INTEGER,
+      updated_by TEXT
+    );
+
     CREATE TABLE IF NOT EXISTS error_code_mapping (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       supplier_code TEXT NOT NULL,
@@ -252,4 +308,10 @@ export function initDatabase() {
     CREATE INDEX IF NOT EXISTS idx_risk_user ON risk_logs(user_id);
     CREATE INDEX IF NOT EXISTS idx_risk_created ON risk_logs(created_at);
   `);
+
+  addColumnIfMissing('orders', 'channel_id', 'INTEGER');
+  addColumnIfMissing('card_pool', 'batch_no', 'TEXT');
+  addColumnIfMissing('settlements', 'invoice_no', 'TEXT');
+  addColumnIfMissing('settlements', 'invoice_amount', 'REAL');
+  addColumnIfMissing('settlements', 'invoice_date', 'INTEGER');
 }

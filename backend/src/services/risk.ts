@@ -182,7 +182,9 @@ class RiskEngine {
       riskLevel: failures[0].riskLevel,
       reason: failures.map(f => f.reason).filter(Boolean).join('；'),
       blocked: failures.some(f => f.blocked),
-      suggestions: failures.map(f => f.suggestions).flat().filter(Boolean)
+      suggestions: failures
+        .flatMap(f => f.suggestions || [])
+        .filter((suggestion): suggestion is string => Boolean(suggestion))
     };
   }
 

@@ -170,4 +170,133 @@ router.put('/suppliers/:id', authMiddleware, adminMiddleware, (req, res) => {
   }
 });
 
+router.get('/commission/relation-chain', authMiddleware, (req: AuthRequest, res) => {
+  try {
+    const user: any = db.prepare('SELECT * FROM users WHERE id = ?').get(req.userId);
+    if (!user) return res.status(404).json({ success: false, message: '用户不存在' });
+
+    const ancestors: any[] = db.prepare(`
+      SELECT ur.parent_id as ancestor_id, ur.depth, u.phone, u.nickname, u.avatar, u.level,
+             u.total_commission as totalCommission, u.available_commission as availableCommission
+      FROM user_relations ur
+      LEFT JOIN users u ON ur.parent_id = u.id
+      WHERE ur.user_id = ? AND ur.depth <= 3
+      ORDER BY ur.depth ASC
+    `).all(req.userId);
+
+    const upline = ancestors.map(a => ({
+      id: a.ancestor_id,
+      phone: a.phone,
+      nickname: a.nickname,
+      avatar: a.avatar,
+      level: a.level || 0,
+      depth: a.depth,
+      relation: a.depth === 1 ? '一级邀请人' : a.depth === 2 ? '二级邀请人' : '三级邀请人',
+      totalCommission: a.totalCommission || 0
+    }));
+
+    const nowTs = now();
+    const monthAgo = nowTs - 86400 * 30;
+
+    const downline: any[] = db.prepare(`
+      SELECT ur.user_id as descendant_id, ur.depth, u.phone, u.nickname, u.avatar, u.level, 1 as status,
+             u.created_at as registerTime,
+             (SELECT COALESCE(SUM(final_amount),0) FROM orders WHERE user_id = u.id AND status = 'completed') as totalSpent,
+             (SELECT COALESCE(SUM(amount),0) FROM commission_records WHERE user_id = ? AND from_user_id = u.id) as contributedCommission,
+             (SELECT COUNT(*) FROM orders WHERE user_id = u.id AND created_at >= ? AND status = 'completed') as recentOrderCount
+      FROM user_relations ur
+      LEFT JOIN users u ON ur.user_id = u.id
+      WHERE ur.parent_id = ? AND ur.depth <= 3
+      ORDER BY ur.depth ASC, u.created_at DESC
+      LIMIT 200
+    `).all(req.userId, monthAgo, req.userId);
+
+    const downlineGrouped: Record<string, any[]> = { '1': [], '2': [], '3': [] };
+    let monthlyActive = 0;
+    downline.forEach(d => {
+      const depth = String(d.depth);
+      if (downlineGrouped[depth]) {
+        const member = {
+          id: d.descendant_id,
+          phone: d.phone,
+          nickname: d.nickname,
+          avatar: d.avatar,
+          level: d.level || 0,
+          status: d.status || 1,
+          depth: d.depth,
+          registerTime: d.registerTime,
+          totalSpent: d.totalSpent || 0,
+          contributedCommission: d.contributedCommission || 0,
+          recentOrderCount: d.recentOrderCount || 0,
+          isActive: (d.recentOrderCount || 0) > 0
+        };
+        if (member.isActive) monthlyActive++;
+        downlineGrouped[depth].push(member);
+      }
+    });
+
+    const recentRecords: any[] = db.prepare(`
+      SELECT cr.*, p.name as product_name, u.nickname as from_nickname, u.avatar as from_avatar,
+             o.status as order_status, o.fail_reason as fail_reason
+      FROM commission_records cr
+      LEFT JOIN orders o ON cr.order_id = o.id
+      LEFT JOIN products p ON o.product_id = p.id
+      LEFT JOIN users u ON cr.from_user_id = u.id
+      WHERE cr.user_id = ?
+      ORDER BY cr.created_at DESC
+      LIMIT 50
+    `).all(req.userId);
+
+    const abnormalRecords = recentRecords.filter(r =>
+      r.status === 'failed' || r.status === 'reversed'
+    ).map(r => ({
+      ...r,
+      failReason: r.status === 'reversed' ? '订单退款追回' :
+                  r.fail_reason ? `风控拦截：${r.fail_reason}` :
+                  '用户投诉/违规操作'
+    }));
+
+    const relationStats = {
+      uplineCount: upline.length,
+      downlineL1Count: downlineGrouped['1'].length,
+      downlineL2Count: downlineGrouped['2'].length,
+      downlineL3Count: downlineGrouped['3'].length,
+      totalDownline: downline.length,
+      monthlyActive
+    };
+
+    res.json({
+      success: true,
+      data: {
+        user: {
+          id: user.id,
+          phone: user.phone,
+          nickname: user.nickname,
+          avatar: user.avatar,
+          level: user.level || 0,
+          totalCommission: user.total_commission || 0,
+          availableCommission: user.available_commission || 0
+        },
+        upline,
+        downline: downlineGrouped,
+        relationStats,
+        recentCommission: recentRecords,
+        abnormalCommission: abnormalRecords,
+        rates: { level1: 0.08, level2: 0.04, level3: 0.02 },
+        settlementPolicy: {
+          settlementDelay: 7,
+          settlementUnit: '天',
+          minWithdraw: 10,
+          withdrawFee: 0.01,
+          payoutChannel: '微信钱包 / 支付宝 / 银行卡',
+          holidayPolicy: '节假日自动顺延至下一个工作日结算到账',
+          description: '佣金在订单确认收货且无售后问题后自动进入结算周期。结算周期为T+7自然日，结算完成后佣金转入可提现余额。满10元可发起提现申请，提现手续费为提现金额的1%（最低1元）。支持微信钱包、支付宝、银行卡等多种提现渠道，节假日期间结算自动顺延至下一个工作日处理。'
+        }
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
 export default router;

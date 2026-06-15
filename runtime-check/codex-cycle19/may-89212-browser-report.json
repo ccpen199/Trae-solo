@@ -1,0 +1,841 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T21:18:19.261Z",
+  "order": "may-89212",
+  "roundIndex": 2,
+  "captureId": "may-89212-codex-cycle19",
+  "url": "http://127.0.0.1:49212/",
+  "initialUrl": "http://127.0.0.1:49212/",
+  "finalUrl": "http://127.0.0.1:49212/",
+  "status": 200,
+  "title": "虚拟商品聚合平台 - 极速充值",
+  "initialTitle": "虚拟商品聚合平台 - 极速充值",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-cycle19/may-89212-codex-cycle19-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-cycle19/may-89212-codex-cycle19-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在购买/商品入口，优先复验交易链路；页面存在我的/账号入口，优先复验个人中心链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50212/login"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49212/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "headings": [
+          "虚拟商品中心",
+          "🎉 新用户首单立减20元",
+          "🔥 热门推荐",
+          "📦 完整SKU分类"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "⚠️ 2",
+          "🔄",
+          "🏪 1家供应商",
+          "📊 关系链",
+          "立即充值",
+          "💰 优惠明细",
+          "📊 佣金明细",
+          "📞 充值试算",
+          "⚠️ 1"
+        ],
+        "links": [
+          "运营后台",
+          "📱 话费充值 6款",
+          "🌐 流量充值 4款",
+          "🎬 视频会员 8款",
+          "🎵 音乐会员 4款",
+          "🍔 外卖券 3款",
+          "🛒 电商购物卡 5款",
+          "🏠 首页",
+          "📂 分类",
+          "📋 订单",
+          "👤 我的"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "虚拟商品中心运营后台🎉 新用户首单立减20元200+商品极速充值 · 安全保障 · 佣金实时到账🔥 满100减10全场通用 ·可叠加🔥 满50减5话费专享 ·可叠加🔥 会员全场95折 ·可叠加🔥 满200返20元佣金 📱话费充值6款🌐流量充值4款🎬视频会员8款🎵音乐会员4款🍔外卖券3款🛒电商购物卡5款🔥 热门推荐查看全部 ›📦 完整SKU分类📱话费充值6个商品查看全部 →🌐流量充值4个商品查看全部 →🎬视频会员8个商品查看全部 →🎵音乐会员4个商品查看全部 →🍔外卖券3个商品查看全部 →🛒电商购物卡5个商品查看全部 →话费50元📍 部分地区⚠️2🔄HOT腾讯充值中心🏪 1家供应商4通道🛡️ 备用1个可叠加优惠中国移动话费50元库存充足3小时前同步批次 BATCH2026061520¥49.5¥50实付预估 ¥49.50赚 ¥1.48📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算话费100元📍 部分地区🔄HOT腾讯充值中心🏪 1家供应商3通道🛡️ 备用1个可叠加优惠中国移动话费100元库存充足3小时前同步批次 BATCH2026061520¥99¥100实付预估 ¥99.00赚 ¥2.97📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算电信话费100📍 部分地区🔄HOT腾讯充值中心🏪 1家供应商3通道🛡️ 备用1个可叠加优惠中国电信话费100元库存充足3小时前同步批次 BATCH2026061520¥99.8¥100实付预估 ¥99.80赚 ¥2.99📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算流量5G📍 部分地区🔄HOT腾讯充值中心🏪 1家供应商3通道🛡️ 备用1个可叠加优惠全国通用流量5GB库存充足3小时前同步批次 BATCH2026061520¥25.5¥30实付预估 ¥25.50赚 ¥1.28📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算爱奇艺月卡📍 部分地区🔄HOT爱奇艺会员中心🏪 1家供应商3通道🛡️ 备用1个可叠加优惠爱奇艺黄金会员月卡库存充足3小时前同步批次 BATCH2026061520¥25¥30实付预估 ¥25.00赚 ¥2.00📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算爱奇艺年卡📍 部分地区🔄HOT爱奇艺会员中心🏪 1家供应商3通道🛡️ 备用1个可叠加优惠爱奇艺黄金会员年卡库存充足3小时前同步批次 BATCH2026061520¥198¥248实付预估 ¥198.00赚 ¥15.84📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算美团50券📍 部分地区⚠️1🔄HOT美团外卖券🏪 1家供应商4通道🛡️ 备用1个可叠加优惠美团外卖券50元仅剩9件3小时前同步批次 BATCH2026061520¥46¥50实付预估 ¥46.00赚 ¥1.84📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算京东100📍 部分地区🔄HOT京东E卡🏪 1家供应商4通道🛡️ 备用1个可叠加优惠京东E卡100元库存充足19小时前同步批次 BATCH2026061505¥97.5¥100实付预估 ¥97.50赚 ¥1.95📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算绿钻年卡📍 部分地区⚠️1🔄HOT腾讯充值中心🏪 1家供应商4通道🛡️ 备用1个可叠加优惠QQ音乐绿钻年卡库存充足3小时前同步批次 BATCH2026061520¥148¥180实付预估 ¥148.00赚 ¥8.88📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细📞充值试算腾讯视频月卡📍 部分地区🔄HOT腾讯充值中心🏪 1家供应商4通道🛡️ 备用1个可叠加优惠腾讯视频VIP月卡库存充足3小时前同步批次 BATCH2026",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 4194,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-cycle19-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49212/",
+          "title": "虚拟商品聚合平台 - 极速充值",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-cycle19/may-89212-codex-cycle19-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-cycle19/may-89212-codex-cycle19-structure-01-首屏.png",
+          "elementCount": 603,
+          "interactiveCount": 92,
+          "interactiveLabels": [
+            "运营后台",
+            "话费充值 6款",
+            "流量充值 4款",
+            "视频会员 8款",
+            "音乐会员 4款",
+            "外卖券 3款",
+            "电商购物卡 5款",
+            "2",
+            "1家供应商",
+            "关系链",
+            "立即充值",
+            "优惠明细",
+            "佣金明细",
+            "充值试算",
+            "1"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/calculate-price 返回 HTTP 404，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "补齐 /api/calculate-price 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/calculate-price"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-cycle19-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-cycle19/may-89212-codex-cycle19-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-cycle19/may-89212-codex-cycle19-structure-01-首屏.png",
+        "elementCount": 603,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "运营后台",
+          "话费充值 6款",
+          "流量充值 4款",
+          "视频会员 8款",
+          "音乐会员 4款",
+          "外卖券 3款",
+          "电商购物卡 5款",
+          "2",
+          "1家供应商",
+          "关系链",
+          "立即充值",
+          "优惠明细",
+          "佣金明细",
+          "充值试算",
+          "1"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49212/",
+    "representativeScreenshotLabel": "虚拟商品中心"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-cycle19-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-cycle19/may-89212-codex-cycle19-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-cycle19/may-89212-codex-cycle19-structure-01-首屏.png",
+        "elementCount": 603,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "运营后台",
+          "话费充值 6款",
+          "流量充值 4款",
+          "视频会员 8款",
+          "音乐会员 4款",
+          "外卖券 3款",
+          "电商购物卡 5款",
+          "2",
+          "1家供应商",
+          "关系链",
+          "立即充值",
+          "优惠明细",
+          "佣金明细",
+          "充值试算",
+          "1"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 4194
+  },
+  "initialBodyTextPreview": "虚拟商品中心\n运营后台\n🎉 新用户首单立减20元\n\n200+商品极速充值 · 安全保障 · 佣金实时到账\n\n🔥 满100减10全场通用 ·可叠加\n🔥 满50减5话费专享 ·可叠加\n🔥 会员全场95折 ·可叠加\n🔥 满200返20元佣金\n📱\n话费充值\n6款\n🌐\n流量充值\n4款\n🎬\n视频会员\n8款\n🎵\n音乐会员\n4款\n🍔\n外卖券\n3款\n🛒\n电商购物卡\n5款\n🔥 热门推荐\n查看全部 ›\n📦 完整SKU分类\n📱\n话费充值\n6个商品\n查看全部 →\n🌐\n流量充值\n4个商品\n查看全部 →\n🎬\n视频会员\n8个商品\n查看全部 →\n🎵\n音乐会员\n4个商品\n查看全部 →\n🍔\n外卖券\n3个商品\n查看全部 →\n🛒\n电商购物卡\n5个商品\n查看全部 →\n话费50元\n📍 部分地区\n⚠️\n2\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n4通道\n🛡️ 备用1个\n可叠加优惠\n中国移动话费50元\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥49.5\n¥50\n实付预估 ¥49.50\n赚 ¥1.48\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n话费100元\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n中国移动话费100元\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥99\n¥100\n实付预估 ¥99.00\n赚 ¥2.97\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n电信话费100\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n中国电信话费100元\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥99.8\n¥100\n实付预估 ¥99.80\n赚 ¥2.99\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n流量5G\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n全国通用流量5GB\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥25.5\n¥30\n实付预估 ¥25.50\n赚 ¥1.28\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n爱奇艺月卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员月卡\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥25\n¥30\n实付预估 ¥25.00\n赚 ¥2.00\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n爱奇艺年卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员年卡\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥198\n¥248\n实付预估 ¥198.00\n赚 ¥15.84\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n美团50券\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n美团外卖券\n🏪 1家供应商\n4通道\n🛡️ 备用1个\n可叠加优惠\n美团外卖券50元\n仅剩9件\n3小时前同步\n批次 BATCH2026061520\n¥46\n¥50\n实付预估 ¥46.00\n赚 ¥1.84\n📊 关系链\nL1 8% / L",
+  "bodyTextPreview": "虚拟商品中心\n运营后台\n🎉 新用户首单立减20元\n\n200+商品极速充值 · 安全保障 · 佣金实时到账\n\n🔥 满100减10全场通用 ·可叠加\n🔥 满50减5话费专享 ·可叠加\n🔥 会员全场95折 ·可叠加\n🔥 满200返20元佣金\n📱\n话费充值\n6款\n🌐\n流量充值\n4款\n🎬\n视频会员\n8款\n🎵\n音乐会员\n4款\n🍔\n外卖券\n3款\n🛒\n电商购物卡\n5款\n🔥 热门推荐\n查看全部 ›\n📦 完整SKU分类\n📱\n话费充值\n6个商品\n查看全部 →\n🌐\n流量充值\n4个商品\n查看全部 →\n🎬\n视频会员\n8个商品\n查看全部 →\n🎵\n音乐会员\n4个商品\n查看全部 →\n🍔\n外卖券\n3个商品\n查看全部 →\n🛒\n电商购物卡\n5个商品\n查看全部 →\n话费50元\n📍 部分地区\n⚠️\n2\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n4通道\n🛡️ 备用1个\n可叠加优惠\n中国移动话费50元\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥49.5\n¥50\n实付预估 ¥49.50\n赚 ¥1.48\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n话费100元\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n中国移动话费100元\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥99\n¥100\n实付预估 ¥99.00\n赚 ¥2.97\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n电信话费100\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n中国电信话费100元\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥99.8\n¥100\n实付预估 ¥99.80\n赚 ¥2.99\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n流量5G\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n全国通用流量5GB\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥25.5\n¥30\n实付预估 ¥25.50\n赚 ¥1.28\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n爱奇艺月卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员月卡\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥25\n¥30\n实付预估 ¥25.00\n赚 ¥2.00\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n爱奇艺年卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员年卡\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥198\n¥248\n实付预估 ¥198.00\n赚 ¥15.84\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n美团50券\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n美团外卖券\n🏪 1家供应商\n4通道\n🛡️ 备用1个\n可叠加优惠\n美团外卖券50元\n仅剩9件\n3小时前同步\n批次 BATCH2026061520\n¥46\n¥50\n实付预估 ¥46.00\n赚 ¥1.84\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n京东100\n📍 部分地区\n🔄\nHOT\n京东E卡\n🏪 1家供应商\n4通道\n🛡️ 备用1个\n可叠加优惠\n京东E卡100元\n库存充足\n19小时前同步\n批次 BATCH2026061505\n¥97.5\n¥100\n实付预估 ¥97.50\n赚 ¥1.95\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n绿钻年卡\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n4通道\n🛡️ 备用1个\n可叠加优惠\nQQ音乐绿钻年卡\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥148\n¥180\n实付预估 ¥148.00\n赚 ¥8.88\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n腾讯视频月卡\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n4通道\n🛡️ 备用1个\n可叠加优惠\n腾讯视频VIP月卡\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥25\n¥30\n实付预估 ¥25.00\n赚 ¥2.00\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n腾讯视频年卡\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n腾讯充值中心\n🏪 1家供应商\n3通道\n🛡️ 备用1个\n可叠加优惠\n腾讯视频VIP年卡\n库存充足\n3小时前同步\n批次 BATCH2026061520\n¥198\n¥288\n实付预估 ¥198.00\n赚 ¥15.84\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n📞\n充值试算\n\n— 已显示全部推荐商品 —\n\n🏠\n首页\n📂\n分类\n📋\n订单\n👤\n我的",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=6e305429",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4e33f11f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:50212/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:50212/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=6e305429",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/api/calculate-price",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    }
+  ]
+}

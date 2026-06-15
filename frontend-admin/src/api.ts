@@ -25,4 +25,26 @@ api.interceptors.response.use(
   }
 );
 
+export const adminApi = {
+  syncStock: () => api.post('/admin/stock/sync'),
+  getCardPoolCryptoLogs: (params: { page: number; pageSize: number }) =>
+    api.get('/admin/card-pool/crypto-logs', { params }),
+  getProfitConfigs: () => api.get('/admin/profit-configs'),
+  saveProfitConfig: (data: {
+    supplierId: string;
+    level1Ratio: number;
+    level2Ratio: number;
+    level3Ratio: number;
+    supplierRatio: number;
+    platformRatio: number;
+  }) => api.post('/admin/profit-configs', data),
+  getSettlementInvoice: (id: string) => api.get(`/admin/settlements/${id}/invoice`),
+  saveSettlementInvoice: (id: string, data: {
+    invoiceNo: string;
+    invoiceAmount: number;
+    invoiceDate: string;
+  }) => api.post(`/admin/settlements/${id}/invoice`, data),
+  getRiskLogDetail: (id: string) => api.get(`/admin/risk/logs/${id}`),
+};
+
 export default api;

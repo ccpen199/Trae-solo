@@ -10,7 +10,7 @@ export default function Header({ title, showBack = true, right }: { title: strin
         )}
       </div>
       <h1>{title}</h1>
-      <div style={{ width: 32, display: 'flex', justifyContent: 'flex-end' }}>{right}</div>
+      <div style={{ minWidth: right ? 72 : 32, display: 'flex', justifyContent: 'flex-end' }}>{right}</div>
     </div>
   );
 }

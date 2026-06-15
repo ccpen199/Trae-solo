@@ -2,8 +2,18 @@ import { Router } from 'express';
 import { db } from '../database';
 import { authMiddleware, AuthRequest, adminMiddleware } from '../middleware/auth';
 import { promotionEngine } from '../services/promotion';
+import { verifyToken, now, generateId } from '../utils';
 
 const router = Router();
+
+function formatBatchNo(timestamp: number): string {
+  const d = new Date(timestamp * 1000);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hour = String(d.getHours()).padStart(2, '0');
+  return `BATCH${year}${month}${day}${hour}`;
+}
 
 router.get('/categories', (_req, res) => {
   try {
@@ -57,10 +67,43 @@ router.get('/products', (req, res) => {
       LIMIT ? OFFSET ?
     `).all(...params);
 
+    const enriched = products.map((p: any) => {
+      const ch: any[] = db.prepare(`
+        SELECT rc.*, s.name as supplier_name
+        FROM recharge_channels rc
+        LEFT JOIN suppliers s ON rc.supplier_id = s.id
+        WHERE rc.product_id = ?
+        ORDER BY rc.priority ASC
+      `).all(p.id);
+      const activeChannels = ch.filter(c => c.status === 1);
+      const inactiveChannels = ch.filter(c => c.status !== 1);
+      const hasFallback = ch.length > 1;
+      const regionLimits: any[] = db.prepare('SELECT region_code FROM region_limits WHERE product_id = ? AND allow = 1').all(p.id);
+      const regionLimited = p.region_limit ? 1 : (regionLimits.length > 0 ? 1 : 0);
+      const syncBatch = p.updated_at ? formatBatchNo(p.updated_at) : null;
+      return {
+        ...p,
+        channels: ch,
+        channelCount: ch.length,
+        activeChannelCount: activeChannels.length,
+        hasFallback,
+        lastSync: p.updated_at,
+        sync_batch: syncBatch,
+        region_limited: regionLimited,
+        available_regions: regionLimits.length > 0 ? regionLimits.map(r => r.region_code) : ['全国'],
+        channelStatus: {
+          total: ch.length,
+          active: activeChannels.length,
+          inactive: inactiveChannels.length,
+          successRate: ch.length > 0 ? Math.round(activeChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / ch.length * 100) / 100 : 0
+        }
+      };
+    });
+
     res.json({
       success: true,
       data: {
-        list: products,
+        list: enriched,
         total: totalRow.cnt,
         page: Number(page),
         pageSize: Number(pageSize),
@@ -75,13 +118,48 @@ router.get('/products', (req, res) => {
 router.get('/products/hot', (_req, res) => {
   try {
     const products = db.prepare(`
-      SELECT p.*, c.name as category_name, c.icon as category_icon
+      SELECT p.*, c.name as category_name, c.icon as category_icon, s.name as supplier_name, s.code as supplier_code
       FROM products p
       LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN suppliers s ON p.supplier_id = s.id
       WHERE p.status = 1 AND p.is_hot = 1
       ORDER BY p.sort ASC LIMIT 20
     `).all();
-    res.json({ success: true, data: products });
+
+    const enriched = products.map((p: any) => {
+      const channels: any[] = db.prepare(`
+        SELECT rc.*, s.name as supplier_name
+        FROM recharge_channels rc
+        LEFT JOIN suppliers s ON rc.supplier_id = s.id
+        WHERE rc.product_id = ?
+        ORDER BY rc.priority ASC
+      `).all(p.id);
+      const activeChannels = channels.filter(c => c.status === 1);
+      const inactiveChannels = channels.filter(c => c.status !== 1);
+      const hasFallback = channels.length > 1;
+      const regionLimits: any[] = db.prepare('SELECT region_code FROM region_limits WHERE product_id = ? AND allow = 1').all(p.id);
+      const regionLimited = p.region_limit ? 1 : (regionLimits.length > 0 ? 1 : 0);
+      const syncBatch = p.updated_at ? formatBatchNo(p.updated_at) : null;
+      return {
+        ...p,
+        channels,
+        channelCount: channels.length,
+        activeChannelCount: activeChannels.length,
+        hasFallback,
+        lastSync: p.updated_at,
+        sync_batch: syncBatch,
+        region_limited: regionLimited,
+        available_regions: regionLimits.length > 0 ? regionLimits.map(r => r.region_code) : ['全国'],
+        channelStatus: {
+          total: channels.length,
+          active: activeChannels.length,
+          inactive: inactiveChannels.length,
+          successRate: channels.length > 0 ? Math.round(activeChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / channels.length * 100) / 100 : 0
+        }
+      };
+    });
+
+    res.json({ success: true, data: enriched });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
   }
@@ -90,7 +168,7 @@ router.get('/products/hot', (_req, res) => {
 router.get('/products/:id', (req, res) => {
   try {
     const product: any = db.prepare(`
-      SELECT p.*, c.name as category_name, s.name as supplier_name, s.code as supplier_code
+      SELECT p.*, c.name as category_name, c.icon as category_icon, s.name as supplier_name, s.code as supplier_code
       FROM products p
       LEFT JOIN categories c ON p.category_id = c.id
       LEFT JOIN suppliers s ON p.supplier_id = s.id
@@ -99,29 +177,297 @@ router.get('/products/:id', (req, res) => {
 
     if (!product) return res.status(404).json({ success: false, message: '商品不存在' });
 
-    res.json({ success: true, data: product });
+    const channels: any[] = db.prepare(`
+      SELECT rc.*, s.name as supplier_name, s.code as supplier_code
+      FROM recharge_channels rc
+      LEFT JOIN suppliers s ON rc.supplier_id = s.id
+      WHERE rc.product_id = ?
+      ORDER BY rc.priority ASC
+    `).all(product.id);
+    const activeChannels = channels.filter(c => c.status === 1);
+    const hasFallback = channels.length > 1;
+
+    const regionLimits: any[] = db.prepare('SELECT region_code FROM region_limits WHERE product_id = ? AND allow = 1').all(product.id);
+    const regionLimited = product.region_limit ? 1 : (regionLimits.length > 0 ? 1 : 0);
+    const availableRegions = regionLimits.length > 0 ? regionLimits.map(r => r.region_code) : ['全国'];
+
+    const syncBatch = product.updated_at ? formatBatchNo(product.updated_at) : null;
+
+    const supplierChannels = channels.filter(c => c.supplier_id === product.supplier_id);
+    const supplierSuccessRate = supplierChannels.length > 0
+      ? Math.round(supplierChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / supplierChannels.length * 100) / 100
+      : 0.95;
+
+    const supplier_info = {
+      name: product.supplier_name,
+      code: product.supplier_code,
+      success_rate: supplierSuccessRate,
+      channel_count: supplierChannels.length
+    };
+
+    const syncHistory: any[] = db.prepare(`
+      SELECT before_stock as before, after_stock as after, variance, sync_time as time
+      FROM stock_sync_history
+      WHERE product_id = ?
+      ORDER BY sync_time DESC
+      LIMIT 3
+    `).all(product.id);
+
+    const promotions = promotionEngine.getActivePromotions().filter(pr => {
+      const scope = pr.rules.scope;
+      if (!scope) return true;
+      if (scope.productIds && scope.productIds.length > 0) return scope.productIds.includes(product.id);
+      if (scope.categoryIds && scope.categoryIds.length > 0) return scope.categoryIds.includes(product.category_id);
+      return true;
+    });
+
+    const inactiveChannels = channels.filter(c => c.status !== 1);
+
+    res.json({
+      success: true,
+      data: {
+        ...product,
+        channels,
+        channelCount: channels.length,
+        activeChannelCount: activeChannels.length,
+        hasFallback,
+        lastSync: product.updated_at,
+        sync_batch: syncBatch,
+        region_limited: regionLimited,
+        available_regions: availableRegions,
+        supplier_info,
+        stock_sync_history: syncHistory,
+        channelStatus: {
+          total: channels.length,
+          active: activeChannels.length,
+          inactive: inactiveChannels.length,
+          successRate: channels.length > 0 ? Math.round(activeChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / channels.length * 100) / 100 : 0
+        },
+        applicablePromotions: promotions
+      }
+    });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
   }
 });
 
-router.post('/calculate-price', authMiddleware, (req: AuthRequest, res) => {
+function calculatePrice(req: AuthRequest, res: any) {
   try {
+    const token = req.headers.authorization?.replace('Bearer ', '');
+    let userId: string | undefined;
+    if (token) {
+      try {
+        const decoded: any = verifyToken(token);
+        if (decoded && decoded.userId) {
+          userId = decoded.userId;
+        }
+      } catch { /* ignore invalid token */ }
+    }
+
+    let items = req.body?.items || [];
+    if (!Array.isArray(items) || items.length === 0) {
+      const singleProductId = req.body?.productId;
+      const singleQuantity = req.body?.quantity || 1;
+      if (singleProductId) {
+        items = [{ productId: singleProductId, quantity: singleQuantity }];
+      } else {
+        return res.status(400).json({ success: false, message: '请选择商品' });
+      }
+    }
+
+    const resolvedItems = items.map((item: any) => {
+      if (!item || !item.productId) return null;
+      const product: any = db.prepare('SELECT * FROM products WHERE id = ?').get(item.productId);
+      if (!product) return null;
+      return {
+        productId: product.id,
+        productName: product.name,
+        unitPrice: product.price,
+        quantity: Math.max(1, parseInt(item.quantity) || 1),
+        categoryId: product.category_id,
+        commissionRate: product.commission_rate || 0
+      };
+    }).filter(Boolean) as Array<{productId: string, productName: string, unitPrice: number, quantity: number, categoryId: string, commissionRate: number}>;
+
+    if (resolvedItems.length === 0) {
+      return res.status(400).json({ success: false, message: '未找到有效商品' });
+    }
+
     const result = promotionEngine.calculate({
-      items: req.body.items,
-      userId: req.userId,
-      couponCode: req.body.couponCode
+      items: resolvedItems,
+      userId: userId,
+      couponCode: req.body?.couponCode
     });
-    res.json({ success: true, data: result });
+
+    const originalPrice = result.originalAmount;
+    const finalPrice = result.finalAmount;
+    const savedAmount = result.totalDiscount + result.cashbackAmount;
+    const commissionEarned = Math.round(finalPrice * resolvedItems.reduce((sum, i) => sum + i.commissionRate * i.quantity, 0) / resolvedItems.reduce((sum, i) => sum + i.quantity, 0) * 100) / 100;
+
+    const breakdown = result.discountDetails.map((d: any) => ({
+      type: d.type,
+      name: d.promotionName,
+      description: d.description,
+      discount: d.discountAmount,
+      rule: d.type
+    }));
+
+    res.json({
+      success: true,
+      data: {
+        originalPrice,
+        finalPrice,
+        savedAmount,
+        commissionEarned,
+        breakdown
+      }
+    });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
   }
-});
+}
+
+router.post('/products/calculate-price', calculatePrice);
+router.post('/calculate-price', calculatePrice);
 
 router.get('/promotions', (_req, res) => {
   try {
     const promotions = promotionEngine.getActivePromotions();
     res.json({ success: true, data: promotions });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.post('/products/:id/sync-stock', (req, res) => {
+  try {
+    const product: any = db.prepare('SELECT * FROM products WHERE id = ?').get(req.params.id);
+    if (!product) return res.status(404).json({ success: false, message: '商品不存在' });
+
+    const t = now();
+    const variance = Math.floor(Math.random() * 40) - 20;
+    const newStock = Math.max(0, product.stock + variance);
+    const batchNo = formatBatchNo(t);
+
+    db.prepare('UPDATE products SET stock = ?, updated_at = ? WHERE id = ?').run(newStock, t, product.id);
+
+    db.prepare(`
+      INSERT INTO stock_sync_history (id, product_id, before_stock, after_stock, variance, sync_time, sync_batch)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(generateId(), product.id, product.stock, newStock, variance, t, batchNo);
+
+    const updated: any = db.prepare(`
+      SELECT p.*, c.name as category_name, c.icon as category_icon, s.name as supplier_name, s.code as supplier_code
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN suppliers s ON p.supplier_id = s.id
+      WHERE p.id = ?
+    `).get(product.id);
+
+    const ch: any[] = db.prepare(`
+      SELECT rc.*, s.name as supplier_name, s.code as supplier_code
+      FROM recharge_channels rc
+      LEFT JOIN suppliers s ON rc.supplier_id = s.id
+      WHERE rc.product_id = ?
+      ORDER BY rc.priority ASC
+    `).all(product.id);
+    const activeChannels = ch.filter(c => c.status === 1);
+    const inactiveChannels = ch.filter(c => c.status !== 1);
+    const hasFallback = ch.length > 1;
+    const regionLimits: any[] = db.prepare('SELECT region_code FROM region_limits WHERE product_id = ? AND allow = 1').all(product.id);
+    const regionLimited = product.region_limit ? 1 : (regionLimits.length > 0 ? 1 : 0);
+    const availableRegions = regionLimits.length > 0 ? regionLimits.map(r => r.region_code) : ['全国'];
+
+    const supplierChannels = ch.filter(c => c.supplier_id === product.supplier_id);
+    const supplierSuccessRate = supplierChannels.length > 0
+      ? Math.round(supplierChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / supplierChannels.length * 100) / 100
+      : 0.95;
+
+    const supplier_info = {
+      name: updated.supplier_name,
+      code: updated.supplier_code,
+      success_rate: supplierSuccessRate,
+      channel_count: supplierChannels.length
+    };
+
+    const syncHistory: any[] = db.prepare(`
+      SELECT before_stock as before, after_stock as after, variance, sync_time as time
+      FROM stock_sync_history
+      WHERE product_id = ?
+      ORDER BY sync_time DESC
+      LIMIT 3
+    `).all(product.id);
+
+    res.json({
+      success: true,
+      data: {
+        ...updated,
+        channels: ch,
+        channelCount: ch.length,
+        activeChannelCount: activeChannels.length,
+        hasFallback,
+        lastSync: t,
+        sync_batch: batchNo,
+        region_limited: regionLimited,
+        available_regions: availableRegions,
+        supplier_info,
+        stock_sync_history: syncHistory,
+        channelStatus: {
+          total: ch.length,
+          active: activeChannels.length,
+          inactive: inactiveChannels.length,
+          successRate: ch.length > 0 ? Math.round(activeChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / ch.length * 100) / 100 : 0
+        },
+        syncResult: {
+          before: product.stock,
+          after: newStock,
+          variance,
+          timestamp: t
+        }
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/products/:id/alternatives', (req, res) => {
+  try {
+    const product: any = db.prepare('SELECT * FROM products WHERE id = ?').get(req.params.id);
+    if (!product) return res.status(404).json({ success: false, message: '商品不存在' });
+
+    const alternatives: any[] = db.prepare(`
+      SELECT p.*, s.name as supplier_name, s.code as supplier_code, s.status as supplier_status
+      FROM products p
+      LEFT JOIN suppliers s ON p.supplier_id = s.id
+      WHERE p.category_id = ? AND p.id != ? AND p.status = 1
+      ORDER BY p.supplier_id = ? DESC, p.stock DESC, p.price ASC
+      LIMIT 10
+    `).all(product.category_id, product.id, product.supplier_id);
+
+    const enriched = alternatives.map((alt: any) => {
+      const ch: any[] = db.prepare('SELECT id, priority, success_rate, status FROM recharge_channels WHERE product_id = ? AND status = 1 ORDER BY priority ASC').all(alt.id);
+      const priceDiff = alt.price - product.price;
+      return {
+        ...alt,
+        channelCount: ch.length,
+        lastSync: alt.updated_at,
+        priceDiff,
+        priceDiffLabel: priceDiff > 0 ? `贵¥${priceDiff.toFixed(2)}` : priceDiff < 0 ? `省¥${Math.abs(priceDiff).toFixed(2)}` : '同价',
+        hasFallback: ch.length > 1,
+        successRate: ch.length > 0 ? Math.round(ch.reduce((sum, c) => sum + c.success_rate, 0) / ch.length * 100) : 0
+      };
+    });
+
+    res.json({
+      success: true,
+      data: {
+        currentSupplier: product.supplier_id,
+        alternatives: enriched,
+        totalAlternatives: enriched.length,
+        hasMultiSupplier: enriched.length > 0
+      }
+    });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
   }

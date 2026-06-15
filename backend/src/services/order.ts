@@ -285,10 +285,10 @@ class OrderService {
       ${whereSql}
       ORDER BY o.created_at DESC
       LIMIT ? OFFSET ?
-    `).all(...params);
+    `).all(...params) as any[];
 
     const hasMore = rows.length > pageSize;
-    const list = rows.slice(0, pageSize).map(row => {
+    const list = rows.slice(0, pageSize).map((row: any) => {
       const r: any = { ...row };
       if (r.diagnostic_result) {
         try { r.diagnostic_result = JSON.parse(r.diagnostic_result); } catch { }

@@ -9,14 +9,13 @@ const STATUS_MAP: Record<string, { text: string; cls: string }> = {
   recharging: { text: '充值中', cls: 'tag-blue' },
   completed: { text: '已完成', cls: 'tag-green' },
   failed: { text: '已失败', cls: 'tag-red' },
-  retrying: { text: '重试中', cls: 'tag-orange' },
-  channel_switch: { text: '切换通道', cls: 'tag-purple' }
+  refunded: { text: '已退款', cls: 'tag-gray' }
 };
 
 export default function Orders() {
   const { showToast } = useApp();
   const [orders, setOrders] = useState<any[]>([]);
-  const [filter, setFilter] = useState({ keyword: '', status: 'all', startDate: '', endDate: '' });
+  const [filter, setFilter] = useState({ keyword: '', status: 'all' });
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [detail, setDetail] = useState<any>(null);
@@ -27,23 +26,26 @@ export default function Orders() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const params: any = { page, pageSize: 15, ...filter };
-      if (filter.status === 'all') delete params.status;
-      if (!filter.keyword) delete params.keyword;
-      if (!filter.startDate) delete params.startDate;
-      if (!filter.endDate) delete params.endDate;
-      const res: any = await api.get('/orders/admin/list', { params });
+      const params: any = { page, pageSize: 20 };
+      if (filter.status !== 'all') params.status = filter.status;
+      if (filter.keyword) params.keyword = filter.keyword;
+      const res: any = await api.get('/admin/orders', { params });
       if (res.success) { setOrders(res.data.list || []); setTotal(res.data.total || 0); }
     } catch (e: any) { showToast(e.message, 'error'); }
     finally { setLoading(false); }
   };
 
-  const showDetail = async (id: string) => {
-    try {
-      const res: any = await api.get(`/orders/${id}`);
-      if (res.success) setDetail(res.data);
-    } catch (e: any) { showToast(e.message, 'error'); }
+  const showDetail = (order: any) => {
+    setDetail(order);
   };
+
+  const statsCards = [
+    { label: '全部订单', value: total, icon: '📋', color: '#6366f1', status: 'all' },
+    { label: '待支付', value: orders.filter(o => o.status === 'pending').length, icon: '⏳', color: '#f59e0b', status: 'pending' },
+    { label: '充值中', value: orders.filter(o => o.status === 'recharging' || o.status === 'paid').length, icon: '⚡', color: '#3b82f6', status: 'recharging' },
+    { label: '已完成', value: orders.filter(o => o.status === 'completed').length, icon: '✅', color: '#10b981', status: 'completed' },
+    { label: '已失败', value: orders.filter(o => o.status === 'failed').length, icon: '❌', color: '#ef4444', status: 'failed' }
+  ];
 
   return (
     <div>
@@ -55,11 +57,18 @@ export default function Orders() {
           <option value="all">全部状态</option>
           {Object.entries(STATUS_MAP).map(([k, v]) => <option key={k} value={k}>{v.text}</option>)}
         </select>
-        <input type="date" className="form-input" value={filter.startDate}
-          onChange={e => setFilter({ ...filter, startDate: e.target.value })} />
-        <span className="text-muted" style={{ alignSelf: 'center' }}>至</span>
-        <input type="date" className="form-input" value={filter.endDate}
-          onChange={e => setFilter({ ...filter, endDate: e.target.value })} />
+        <div style={{ flex: 1 }} />
+        <button className="btn btn-default" onClick={() => showToast('导出中...', 'info')}>📥 导出</button>
+      </div>
+
+      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)', marginBottom: 20 }}>
+        {statsCards.map((card, i) => (
+          <div key={i} className="stat-card" style={{ cursor: 'pointer' }} onClick={() => { setPage(1); setFilter({ ...filter, status: card.status }); }}>
+            <div className="label">{card.label}</div>
+            <div className="value">{card.value}</div>
+            <div className="icon" style={{ color: card.color }}>{card.icon}</div>
+          </div>
+        ))}
       </div>
 
       <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
@@ -72,33 +81,33 @@ export default function Orders() {
               <th>充值账号</th>
               <th>数量</th>
               <th>金额</th>
-              <th>佣金</th>
               <th>状态</th>
               <th>创建时间</th>
               <th>操作</th>
             </tr>
           </thead>
           <tbody>
-            {loading ? <tr><td colSpan={10} className="empty"><div className="empty-icon">⏳</div>加载中...</td></tr> :
-            orders.length === 0 ? <tr><td colSpan={10} className="empty"><div className="empty-icon">📋</div>暂无订单</td></tr> :
+            {loading ? <tr><td colSpan={9} className="empty"><div className="empty-icon">⏳</div>加载中...</td></tr> :
+            orders.length === 0 ? <tr><td colSpan={9} className="empty"><div className="empty-icon">📋</div>暂无订单</td></tr> :
             orders.map(o => {
               const s = STATUS_MAP[o.status] || { text: o.status, cls: 'tag-gray' };
               return (
                 <tr key={o.id}>
                   <td style={{ fontFamily: 'monospace', fontSize: 12 }}>{o.order_no}</td>
                   <td style={{ maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{o.product_name}</td>
-                  <td>{o.user_phone ? o.user_phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : '-'}</td>
+                  <td>
+                    {o.user_phone ? o.user_phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : '-'}
+                    {o.user_name && <div style={{ fontSize: 11, color: '#94a3b8' }}>{o.user_name}</div>}
+                  </td>
                   <td style={{ fontFamily: 'monospace' }}>{o.recharge_account}</td>
                   <td>×{o.quantity}</td>
-                  <td>
-                    <div style={{ fontWeight: 600, color: '#ef4444' }}>¥{o.final_amount}</div>
-                    {o.discount_amount > 0 && <div style={{ fontSize: 11, color: '#94a3b8' }}>优惠¥{o.discount_amount}</div>}
-                  </td>
-                  <td style={{ color: '#10b981', fontWeight: 500 }}>+¥{o.commission_amount}</td>
+                  <td style={{ fontWeight: 600, color: '#ef4444' }}>¥{o.final_amount}</td>
                   <td><span className={`tag ${s.cls}`}>{s.text}</span></td>
-                  <td style={{ fontSize: 12, color: '#64748b' }}>{new Date((o.created_at || 0) * 1000).toLocaleString('zh-CN')}</td>
+                  <td style={{ fontSize: 12, color: '#64748b' }}>
+                    {o.created_at ? new Date((o.created_at || 0) * 1000).toLocaleString('zh-CN') : '-'}
+                  </td>
                   <td>
-                    <button className="btn btn-default btn-sm" onClick={() => showDetail(o.id)}>详情</button>
+                    <button className="btn btn-default btn-sm" onClick={() => showDetail(o)}>详情</button>
                   </td>
                 </tr>
               );
@@ -107,7 +116,7 @@ export default function Orders() {
         </table>
       </div>
 
-      <Pagination page={page} total={total} onChange={setPage} />
+      <Pagination page={page} total={total} onChange={setPage} pageSize={20} />
 
       {detail && (
         <Modal title={`订单详情 · ${detail.order_no}`} width="640px" onClose={() => setDetail(null)} onOk={() => setDetail(null)} okText="关闭">
@@ -130,7 +139,11 @@ export default function Orders() {
               <div className="text-sm text-muted mb-8">商品信息</div>
               <div className="card" style={{ margin: 0, padding: 14 }}>
                 <div style={{ fontWeight: 600, marginBottom: 8 }}>{detail.product_name}</div>
-                <div className="flex-between text-sm mb-8"><span className="text-muted">单价</span>¥{detail.unit_price}</div>
+                <div className="flex-between text-sm mb-8">
+                  <span className="text-muted">商品类型</span>
+                  <span className="tag tag-cyan">{detail.sku_type === 'card' ? '卡密类' : '直充类'}</span>
+                </div>
+                <div className="flex-between text-sm mb-8"><span className="text-muted">单价</span>¥{Number(detail.final_amount || 0) / (detail.quantity || 1).toFixed(2)}</div>
                 <div className="flex-between text-sm mb-8"><span className="text-muted">数量</span>×{detail.quantity}</div>
                 <div className="flex-between text-sm"><span className="text-muted">供应商</span>{detail.supplier_name || '-'}</div>
               </div>
@@ -140,33 +153,18 @@ export default function Orders() {
               <div className="card" style={{ margin: 0, padding: 14 }}>
                 <div className="flex-between text-sm mb-8"><span className="text-muted">订单号</span><span style={{ fontFamily: 'monospace' }}>{detail.order_no}</span></div>
                 <div className="flex-between text-sm mb-8"><span className="text-muted">充值账号</span><span style={{ fontFamily: 'monospace', fontWeight: 600 }}>{detail.recharge_account}</span></div>
-                <div className="flex-between text-sm mb-8"><span className="text-muted">供应商单号</span><span style={{ fontFamily: 'monospace' }}>{detail.supplier_order_id || '-'}</span></div>
-                <div className="flex-between text-sm"><span className="text-muted">重试次数</span>{detail.retry_count || 0}</div>
+                <div className="flex-between text-sm mb-8"><span className="text-muted">用户手机号</span>{detail.user_phone || '-'}</div>
+                <div className="flex-between text-sm mb-8"><span className="text-muted">创建时间</span>{detail.created_at ? new Date(detail.created_at * 1000).toLocaleString('zh-CN') : '-'}</div>
+                <div className="flex-between text-sm"><span className="text-muted">完成时间</span>{detail.finish_time ? new Date(detail.finish_time * 1000).toLocaleString('zh-CN') : '-'}</div>
               </div>
             </div>
           </div>
 
-          {detail.status === 'failed' && (
+          {detail.status === 'failed' && detail.fail_reason && (
             <div style={{ marginTop: 16 }}>
-              <div className="text-sm text-muted mb-8">🔍 智能诊断</div>
+              <div className="text-sm text-muted mb-8">🔍 失败原因</div>
               <div style={{ padding: 14, background: '#fff7ed', borderRadius: 12, border: '1px solid #fed7aa' }}>
-                {detail.diagnostic_result ? (
-                  <div>
-                    <div style={{ fontWeight: 600, color: '#c2410c', marginBottom: 6 }}>
-                      {detail.diagnostic_result.userMessage || detail.fail_reason}
-                    </div>
-                    {detail.diagnostic_result.suggestions?.length > 0 && (
-                      <div className="text-sm" style={{ marginTop: 8, color: '#92400e' }}>
-                        <div style={{ marginBottom: 4, fontWeight: 500 }}>建议方案：</div>
-                        {detail.diagnostic_result.suggestions.map((s: string, i: number) => <div key={i}>• {s}</div>)}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="text-sm" style={{ color: '#92400e' }}>
-                    失败原因：{detail.fail_reason || '未知'}
-                  </div>
-                )}
+                <div style={{ color: '#92400e', fontWeight: 500 }}>{detail.fail_reason}</div>
               </div>
             </div>
           )}
@@ -174,24 +172,11 @@ export default function Orders() {
           <div style={{ marginTop: 16 }}>
             <div className="text-sm text-muted mb-8">💰 金额明细</div>
             <div className="card" style={{ margin: 0, padding: 14 }}>
-              <div className="flex-between text-sm mb-8"><span className="text-muted">商品总价</span>¥{detail.original_amount}</div>
-              {detail.discount_amount > 0 && <div className="flex-between text-sm mb-8"><span className="text-muted">优惠金额</span><span className="text-success">-¥{detail.discount_amount}</span></div>}
-              <div className="flex-between text-sm mb-8"><span className="text-muted">佣金</span><span className="text-success">¥{detail.commission_amount}</span></div>
+              <div className="flex-between text-sm mb-8"><span className="text-muted">商品总价</span>¥{Number(detail.final_amount || 0).toFixed(2)}</div>
               <div style={{ height: 1, background: '#f1f5f9', margin: '8px 0' }}></div>
-              <div className="flex-between"><span style={{ fontWeight: 600 }}>实付金额</span><span style={{ fontSize: 20, fontWeight: 800, color: '#ef4444' }}>¥{detail.final_amount}</span></div>
+              <div className="flex-between"><span style={{ fontWeight: 600 }}>实付金额</span><span style={{ fontSize: 20, fontWeight: 800, color: '#ef4444' }}>¥{Number(detail.final_amount || 0).toFixed(2)}</span></div>
             </div>
           </div>
-
-          {detail.sku_type === 'card' && detail.status === 'completed' && detail.cards?.length > 0 && (
-            <div style={{ marginTop: 16 }}>
-              <div className="text-sm text-muted mb-8">🎫 卡密信息</div>
-              {detail.cards.map((c: any, i: number) => (
-                <div key={i} style={{ padding: 12, background: '#fffbe6', borderRadius: 8, border: '1px solid #ffe58f', marginBottom: 8, fontFamily: 'monospace' }}>
-                  卡号：<b>{c.cardNumber}</b> &nbsp; 密码：<b>{c.cardPassword}</b>
-                </div>
-              ))}
-            </div>
-          )}
         </Modal>
       )}
     </div>

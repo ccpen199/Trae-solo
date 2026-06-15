@@ -18,10 +18,18 @@ import commissionRoutes from './routes/commission';
 import adminRoutes from './routes/admin';
 
 const app = express();
-const PORT = parseInt(process.env.BACKEND_PORT || '3001');
+const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
+const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT || '59212');
+const frontendUserUrl = process.env.FRONTEND_URL || `http://127.0.0.1:${process.env.FRONTEND_USER_PORT || 49212}`;
+const frontendAdminUrl = process.env.FRONTEND_ADMIN_URL || `http://127.0.0.1:${process.env.FRONTEND_ADMIN_PORT || 49213}`;
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: [
+    frontendUserUrl,
+    frontendAdminUrl,
+    `http://localhost:${process.env.FRONTEND_USER_PORT || 49212}`,
+    `http://localhost:${process.env.FRONTEND_ADMIN_PORT || 49213}`
+  ],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
@@ -77,11 +85,11 @@ app.use('/api/admin', adminRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`\n========================================`);
-  console.log(`🚀 后端服务已启动: http://localhost:${PORT}`);
-  console.log(`📡 API基础路径: http://localhost:${PORT}/api`);
-  console.log(`💊 健康检查: http://localhost:${PORT}/api/health`);
+  console.log(`后端服务已启动: http://${HOST}:${PORT}`);
+  console.log(`API基础路径: http://${HOST}:${PORT}/api`);
+  console.log(`健康检查: http://${HOST}:${PORT}/api/health`);
   console.log(`========================================\n`);
 });
 
