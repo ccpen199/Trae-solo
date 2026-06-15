@@ -17,6 +17,7 @@ import materialsRoutes from './routes/materials.js'
 import designersRoutes from './routes/designers.js'
 import adminRoutes from './routes/admin.js'
 import pdfRoutes from './routes/pdf.js'
+import { mockCases, mockDesigners, mockMaterials, mockUsers } from '../src/mock/data.js'
 
 // for esm mode
 const __filename = fileURLToPath(import.meta.url)
@@ -40,6 +41,38 @@ app.use('/api/materials', materialsRoutes)
 app.use('/api/designers', designersRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/pdf', pdfRoutes)
+
+app.get('/api/search', (req: Request, res: Response): void => {
+  const query = String(req.query.q || req.query.keyword || '').trim().toLowerCase()
+  const matches = [
+    ...mockCases.map((item) => ({ type: 'case', item })),
+    ...mockDesigners.map((item) => ({ type: 'designer', item })),
+    ...mockMaterials.map((item) => ({ type: 'material', item })),
+  ].filter(({ item }) => !query || JSON.stringify(item).toLowerCase().includes(query))
+
+  res.status(200).json({
+    success: true,
+    query,
+    data: {
+      total: matches.length,
+      items: matches.slice(0, 20),
+    },
+  })
+})
+
+app.get(['/api/users/profile', '/api/user/profile'], (_req: Request, res: Response): void => {
+  const user = mockUsers[0] || {
+    id: 'user-demo',
+    phone: '13800138001',
+    nickname: '演示用户',
+    role: 'user',
+  }
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  })
+})
 
 /**
  * health

@@ -15,11 +15,49 @@ import {
   Sun,
   Moon,
   ChevronLeft,
+  Upload,
+  ChevronDown,
+  Save,
+  FileDown,
+  CheckCircle2,
+  X,
+  Clock,
+  TrendingDown,
+  TrendingUp,
+  Package,
+  Info,
+  Star,
+  Hammer,
+  Paintbrush,
+  CheckCheck,
 } from 'lucide-react';
 import { mockCases } from '@/mock/data';
 
 type SchemeKey = 'current' | 'A' | 'B';
 type ViewKey = 'perspective' | 'top' | 'front' | 'side';
+type InfoTabKey = 'basic' | 'materials' | 'construction';
+type MaterialKey = 'wall' | 'floor' | 'tile' | 'ceiling' | 'lamp';
+
+interface MaterialItem {
+  key: MaterialKey;
+  name: string;
+  brand: string;
+  model: string;
+  quantity: string;
+  color: string;
+}
+
+interface ConstructionStage {
+  name: string;
+  status: 'completed' | 'in-progress' | 'pending';
+  icon: typeof Hammer;
+}
+
+interface SchemeOverlayInfo {
+  description: string;
+  materialCostChange: number;
+  durationChange: number;
+}
 
 interface SchemeColors {
   name: string;
@@ -62,6 +100,68 @@ const schemePalettes: Record<SchemeKey, SchemeColors> = {
     tvCabinet: '#1a1a1a',
     accent: '#d4af37',
     plantPot: '#2d2d2d',
+  },
+};
+
+const schemeBasis: Record<SchemeKey, string> = {
+  current: '基于户型图自动生成 · 数据来源：SVG户型标注',
+  A: '推荐依据：户型一致 + 面积接近±5㎡ + 风格匹配(北欧系)',
+  B: '推荐依据：预算匹配 + 本地建材供应充足 + 设计师评分4.8',
+};
+
+const schemeMaterials: Record<SchemeKey, MaterialItem[]> = {
+  current: [
+    { key: 'wall', name: '墙面漆', brand: '立邦', model: '净味5合1', quantity: '× 3桶', color: '#f5f0e8' },
+    { key: 'floor', name: '地板', brand: '圣象', model: 'AB1203', quantity: '× 38㎡', color: '#c4a882' },
+    { key: 'tile', name: '瓷砖', brand: '东鹏', model: 'YG802001', quantity: '× 45㎡', color: '#d4a574' },
+    { key: 'ceiling', name: '吊顶', brand: '龙牌', model: '石膏板', quantity: '× 12张', color: '#fafafa' },
+    { key: 'lamp', name: '灯具', brand: '欧普', model: 'LED', quantity: '× 8盏', color: '#d4a574' },
+  ],
+  A: [
+    { key: 'wall', name: '墙面漆', brand: '多乐士', model: '竹炭净味', quantity: '× 3桶', color: '#e8e4df' },
+    { key: 'floor', name: '地板', brand: '大自然', model: 'DSJ001', quantity: '× 38㎡', color: '#d4b896' },
+    { key: 'tile', name: '瓷砖', brand: '马可波罗', model: 'CZ8808', quantity: '× 45㎡', color: '#7d9076' },
+    { key: 'ceiling', name: '吊顶', brand: '可耐福', model: '石膏板', quantity: '× 12张', color: '#f5f0e8' },
+    { key: 'lamp', name: '灯具', brand: '雷士', model: '北欧LED', quantity: '× 8盏', color: '#7d9076' },
+  ],
+  B: [
+    { key: 'wall', name: '墙面漆', brand: '芬琳', model: 'HEMO进口', quantity: '× 4桶', color: '#2d2d2d' },
+    { key: 'floor', name: '地板', brand: '菲林格尔', model: 'F431黑胡桃', quantity: '× 38㎡', color: '#1a1a1a' },
+    { key: 'tile', name: '瓷砖', brand: '诺贝尔', model: 'RS80710', quantity: '× 45㎡', color: '#d4af37' },
+    { key: 'ceiling', name: '吊顶', brand: '龙牌', model: '防水石膏板', quantity: '× 12张', color: '#2d2d2d' },
+    { key: 'lamp', name: '灯具', brand: '欧普', model: '轻奢水晶灯', quantity: '× 8盏', color: '#d4af37' },
+  ],
+};
+
+const schemeMaterialCosts: Record<SchemeKey, number> = {
+  current: 45800,
+  A: 40300,
+  B: 62500,
+};
+
+const constructionStages: ConstructionStage[] = [
+  { name: '隐蔽工程', status: 'completed', icon: Hammer },
+  { name: '泥木工程', status: 'completed', icon: Hammer },
+  { name: '油漆工程', status: 'in-progress', icon: Paintbrush },
+  { name: '安装工程', status: 'pending', icon: Hammer },
+  { name: '竣工验收', status: 'pending', icon: CheckCheck },
+];
+
+const schemeOverlayInfos: Record<SchemeKey, SchemeOverlayInfo> = {
+  current: {
+    description: '当前方案为基准方案',
+    materialCostChange: 0,
+    durationChange: 0,
+  },
+  A: {
+    description: '将北欧清新风格叠加到您的户型上',
+    materialCostChange: -12,
+    durationChange: 3,
+  },
+  B: {
+    description: '将现代轻奢风格叠加到您的户型上',
+    materialCostChange: 36,
+    durationChange: 7,
   },
 };
 
@@ -326,8 +426,22 @@ export default function Case3DView() {
   const [scheme, setScheme] = useState<SchemeKey>('current');
   const [view, setView] = useState<ViewKey>('perspective');
   const [isDark, setIsDark] = useState(true);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [activeInfoTab, setActiveInfoTab] = useState<InfoTabKey>('basic');
+  const [highlightedMaterial, setHighlightedMaterial] = useState<MaterialKey | null>(null);
+  const [expandedOverlay, setExpandedOverlay] = useState<SchemeKey | null>(null);
   const controlsRef = useRef<any>(null);
   const caseData = mockCases.find((c) => c.id === id) || mockCases[0];
+
+  useEffect(() => {
+    if (view === 'front' || view === 'side') {
+      setHighlightedMaterial('wall');
+    } else if (view === 'top') {
+      setHighlightedMaterial('floor');
+    } else {
+      setHighlightedMaterial(null);
+    }
+  }, [view]);
 
   const handleResetView = () => {
     setView('perspective');
@@ -391,7 +505,7 @@ export default function Case3DView() {
             <Lights accent={accentColor} />
             <Scene scheme={scheme} />
             <Environment preset="city" />
-            <EffectComposer multisampling={8}>
+            <EffectComposer multisampling={8} enableNormalPass>
               <SSAO
                 radius={0.15}
                 intensity={1.2}
@@ -407,13 +521,20 @@ export default function Case3DView() {
           </Suspense>
         </Canvas>
 
-        <div className="absolute top-4 left-4 flex gap-2">
+        <div className="absolute top-4 left-4 flex flex-col gap-2">
           <button
             onClick={() => navigate(`/cases/${id}`)}
             className={`flex items-center gap-2 px-4 py-2 ${isDark ? 'bg-gray-800/80 border-gray-700 hover:bg-gray-700' : 'bg-white/90 border-gray-300 hover:bg-gray-50 text-gray-800'} backdrop-blur-sm rounded-lg border transition-colors`}
           >
             <ChevronLeft className="w-4 h-4" />
             返回详情
+          </button>
+          <button
+            onClick={() => setShowImportModal(true)}
+            className={`flex items-center gap-2 px-4 py-2 ${isDark ? 'bg-gray-800/80 border-gray-700 hover:bg-gray-700' : 'bg-white/90 border-gray-300 hover:bg-gray-50 text-gray-800'} backdrop-blur-sm rounded-lg border transition-colors`}
+          >
+            <Upload className="w-4 h-4" />
+            导入户型模型
           </button>
         </div>
 
@@ -464,7 +585,7 @@ export default function Case3DView() {
           </div>
         </div>
 
-        <div className={`absolute left-4 top-20 ${isDark ? 'bg-gray-800/85 border-gray-700' : 'bg-white/95 border-gray-300'} backdrop-blur-md rounded-xl border w-64 overflow-hidden shadow-xl`}>
+        <div className={`absolute left-4 top-20 ${isDark ? 'bg-gray-800/85 border-gray-700' : 'bg-white/95 border-gray-300'} backdrop-blur-md rounded-xl border w-72 overflow-hidden shadow-xl`}>
           <div className={`px-4 py-3 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'} flex items-center gap-2`}>
             <Layers className="w-5 h-5 text-primary-400" />
             <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>方案对比</span>
@@ -473,11 +594,12 @@ export default function Case3DView() {
             {(['current', 'A', 'B'] as SchemeKey[]).map((key) => {
               const palette = schemePalettes[key];
               const isActive = scheme === key;
+              const isExpanded = expandedOverlay === key;
+              const overlayInfo = schemeOverlayInfos[key];
               return (
-                <button
+                <div
                   key={key}
-                  onClick={() => setScheme(key)}
-                  className={`w-full text-left p-3 rounded-lg transition-all ${
+                  className={`rounded-lg transition-all ${
                     isActive
                       ? 'bg-primary-500/20 border-2 border-primary-500'
                       : isDark
@@ -485,82 +607,290 @@ export default function Case3DView() {
                       : 'bg-gray-100 border-2 border-transparent hover:bg-gray-200'
                   }`}
                 >
-                  <div className={`font-medium mb-2 ${isActive ? 'text-primary-400' : isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-                    {palette.name}
-                  </div>
-                  <div className="flex gap-1.5">
-                    <div
-                      className="w-6 h-6 rounded-full border border-black/20"
-                      style={{ backgroundColor: palette.wall }}
-                      title="墙面"
-                    />
-                    <div
-                      className="w-6 h-6 rounded-full border border-black/20"
-                      style={{ backgroundColor: palette.floor }}
-                      title="地板"
-                    />
-                    <div
-                      className="w-6 h-6 rounded-full border border-black/20"
-                      style={{ backgroundColor: palette.sofa }}
-                      title="沙发"
-                    />
-                    <div
-                      className="w-6 h-6 rounded-full border border-black/20"
-                      style={{ backgroundColor: palette.coffeeTable }}
-                      title="茶几"
-                    />
-                    <div
-                      className="w-6 h-6 rounded-full border border-black/20"
-                      style={{ backgroundColor: palette.accent }}
-                      title="点缀色"
-                    />
-                  </div>
-                </button>
+                  <button
+                    onClick={() => setScheme(key)}
+                    className="w-full text-left p-3"
+                  >
+                    <div className={`font-medium mb-2 ${isActive ? 'text-primary-400' : isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                      {palette.name}
+                    </div>
+                    <div className="flex gap-1.5">
+                      <div
+                        className="w-6 h-6 rounded-full border border-black/20"
+                        style={{ backgroundColor: palette.wall }}
+                        title="墙面"
+                      />
+                      <div
+                        className="w-6 h-6 rounded-full border border-black/20"
+                        style={{ backgroundColor: palette.floor }}
+                        title="地板"
+                      />
+                      <div
+                        className="w-6 h-6 rounded-full border border-black/20"
+                        style={{ backgroundColor: palette.sofa }}
+                        title="沙发"
+                      />
+                      <div
+                        className="w-6 h-6 rounded-full border border-black/20"
+                        style={{ backgroundColor: palette.coffeeTable }}
+                        title="茶几"
+                      />
+                      <div
+                        className="w-6 h-6 rounded-full border border-black/20"
+                        style={{ backgroundColor: palette.accent }}
+                        title="点缀色"
+                      />
+                    </div>
+                    <div className={`text-xs mt-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                      {schemeBasis[key]}
+                    </div>
+                  </button>
+
+                  {key !== 'current' && (
+                    <>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedOverlay(isExpanded ? null : key);
+                        }}
+                        className={`w-full flex items-center justify-center gap-1 py-1.5 text-xs font-medium border-t ${
+                          isDark
+                            ? 'border-gray-700 text-gray-400 hover:text-gray-200 hover:bg-gray-700/50'
+                            : 'border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                        } transition-colors`}
+                      >
+                        <Layers className="w-3.5 h-3.5" />
+                        叠加效果
+                        <ChevronDown
+                          className={`w-3.5 h-3.5 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                        />
+                      </button>
+
+                      {isExpanded && (
+                        <div className={`px-3 pb-3 space-y-2 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+                          <div className={`pt-2 text-xs ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                            {overlayInfo.description}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Package className={`w-3.5 h-3.5 ${
+                              overlayInfo.materialCostChange < 0 ? 'text-green-400' : 'text-red-400'
+                            }`} />
+                            <span className={`text-xs ${
+                              overlayInfo.materialCostChange < 0
+                                ? 'text-green-400'
+                                : 'text-red-400'
+                            }`}>
+                              材料费用{overlayInfo.materialCostChange < 0 ? '变化：' : '变化：+'}
+                              {overlayInfo.materialCostChange}%
+                            </span>
+                            {overlayInfo.materialCostChange < 0 ? (
+                              <TrendingDown className="w-3.5 h-3.5 text-green-400" />
+                            ) : (
+                              <TrendingUp className="w-3.5 h-3.5 text-red-400" />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Clock className={`w-3.5 h-3.5 ${
+                              overlayInfo.durationChange < 0 ? 'text-green-400' : 'text-yellow-400'
+                            }`} />
+                            <span className={`text-xs ${
+                              overlayInfo.durationChange < 0
+                                ? 'text-green-400'
+                                : 'text-yellow-400'
+                            }`}>
+                              施工周期{overlayInfo.durationChange >= 0 ? '变化：+' : '变化：'}
+                              {overlayInfo.durationChange}天
+                            </span>
+                            {overlayInfo.durationChange < 0 ? (
+                              <TrendingDown className="w-3.5 h-3.5 text-green-400" />
+                            ) : (
+                              <TrendingUp className="w-3.5 h-3.5 text-yellow-400" />
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               );
             })}
           </div>
         </div>
 
-        <div className={`absolute top-20 left-80 ${isDark ? 'bg-gray-800/85 border-gray-700' : 'bg-white/95 border-gray-300'} backdrop-blur-md rounded-xl border w-72 overflow-hidden shadow-xl`}>
+        <div className={`absolute top-20 left-80 ${isDark ? 'bg-gray-800/85 border-gray-700' : 'bg-white/95 border-gray-300'} backdrop-blur-md rounded-xl border w-80 overflow-hidden shadow-xl`}>
           <div className={`px-4 py-3 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'} flex items-center gap-2`}>
             <Box className="w-5 h-5 text-primary-400" />
             <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>案例信息</span>
           </div>
-          <div className="p-4 space-y-3">
-            <div>
-              <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>案例名称</div>
-              <div className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{caseData.title}</div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>户型</div>
-                <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{caseData.houseType}</div>
-              </div>
-              <div>
-                <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>面积</div>
-                <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{caseData.area}㎡</div>
-              </div>
-              <div>
-                <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>风格</div>
-                <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{caseData.style}</div>
-              </div>
-              <div>
-                <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>预算</div>
-                <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>¥{(caseData.budget / 10000).toFixed(1)}万</div>
-              </div>
-            </div>
-            <div>
-              <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>设计师</div>
-              <div className="flex items-center gap-2">
-                <img
-                  src={caseData.designerAvatar}
-                  alt={caseData.designerName}
-                  className="w-6 h-6 rounded-full"
-                />
-                <span className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{caseData.designerName}</span>
-              </div>
-            </div>
+          <div className={`flex border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+            {([
+              { key: 'basic', label: '基本信息', icon: Info },
+              { key: 'materials', label: '材料用量', icon: Package },
+              { key: 'construction', label: '施工进度', icon: Clock },
+            ] as const).map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                onClick={() => setActiveInfoTab(key)}
+                className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors ${
+                  activeInfoTab === key
+                    ? 'text-primary-400 border-b-2 border-primary-400'
+                    : isDark
+                    ? 'text-gray-400 hover:text-gray-200'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                {label}
+              </button>
+            ))}
           </div>
+
+          {activeInfoTab === 'basic' && (
+            <div className="p-4 space-y-3">
+              <div>
+                <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>案例名称</div>
+                <div className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{caseData.title}</div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>户型</div>
+                  <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{caseData.houseType}</div>
+                </div>
+                <div>
+                  <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>面积</div>
+                  <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{caseData.area}㎡</div>
+                </div>
+                <div>
+                  <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>风格</div>
+                  <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{caseData.style}</div>
+                </div>
+                <div>
+                  <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>预算</div>
+                  <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>¥{(caseData.budget / 10000).toFixed(1)}万</div>
+                </div>
+              </div>
+              <div>
+                <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-1`}>设计师</div>
+                <div className="flex items-center gap-2">
+                  <img
+                    src={caseData.designerAvatar}
+                    alt={caseData.designerName}
+                    className="w-6 h-6 rounded-full"
+                  />
+                  <span className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{caseData.designerName}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeInfoTab === 'materials' && (
+            <div className="p-4 space-y-2.5">
+              {schemeMaterials[scheme].map((mat) => (
+                <div
+                  key={mat.key}
+                  className={`p-2.5 rounded-lg border-2 transition-all ${
+                    highlightedMaterial === mat.key
+                      ? 'border-primary-400 bg-primary-500/10'
+                      : isDark
+                      ? 'border-gray-700/50 bg-gray-700/30'
+                      : 'border-gray-200 bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div
+                      className="w-8 h-8 rounded-md border border-black/20 flex-shrink-0"
+                      style={{ backgroundColor: mat.color }}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                        {mat.name}
+                      </div>
+                      <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        {mat.brand} {mat.model}
+                      </div>
+                    </div>
+                    <div className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      {mat.quantity}
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div className={`pt-2 mt-2 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+                <div className="flex items-center justify-between">
+                  <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>预估材料费用</span>
+                  <span className={`text-lg font-bold ${isDark ? 'text-primary-400' : 'text-primary-600'}`}>
+                    ¥{schemeMaterialCosts[scheme].toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeInfoTab === 'construction' && (
+            <div className="p-4 space-y-4">
+              <div className="space-y-2">
+                {constructionStages.map((stage, idx) => (
+                  <div key={stage.name} className="flex items-center gap-2">
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        stage.status === 'completed'
+                          ? 'bg-green-500/20 text-green-400'
+                          : stage.status === 'in-progress'
+                          ? 'bg-yellow-500/20 text-yellow-400'
+                          : isDark
+                          ? 'bg-gray-700 text-gray-500'
+                          : 'bg-gray-200 text-gray-400'
+                      }`}
+                    >
+                      {stage.status === 'completed' ? (
+                        <CheckCircle2 className="w-4 h-4" />
+                      ) : stage.status === 'in-progress' ? (
+                        <Clock className="w-4 h-4" />
+                      ) : (
+                        <span className="text-xs font-medium">{idx + 1}</span>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className={`text-sm font-medium ${
+                        stage.status === 'completed' || stage.status === 'in-progress'
+                          ? isDark ? 'text-white' : 'text-gray-900'
+                          : isDark ? 'text-gray-500' : 'text-gray-400'
+                      }`}>
+                        {stage.name}
+                      </div>
+                    </div>
+                    <div className={`text-xs ${
+                      stage.status === 'completed'
+                        ? 'text-green-400'
+                        : stage.status === 'in-progress'
+                        ? 'text-yellow-400'
+                        : isDark ? 'text-gray-500' : 'text-gray-400'
+                    }`}>
+                      {stage.status === 'completed' && '已完成'}
+                      {stage.status === 'in-progress' && '进行中'}
+                      {stage.status === 'pending' && '待开始'}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className={`p-3 rounded-lg ${isDark ? 'bg-gray-700/50' : 'bg-gray-100'}`}>
+                <div className={`text-sm font-medium mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  当前：油漆工程，预计还需25天
+                </div>
+                <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  已完成 3/8 验收节点
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  当前评分 {caseData.qualityScore?.toFixed(1) || '4.7'}/5.0
+                </span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className={`absolute right-4 bottom-4 ${isDark ? 'bg-gray-800/80 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-xl border px-4 py-3 text-sm shadow-lg`}>
@@ -580,6 +910,102 @@ export default function Case3DView() {
             </div>
           </div>
         </div>
+
+        <div className={`absolute right-4 bottom-48 ${isDark ? 'bg-gray-800/80 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-xl border px-4 py-3 text-sm shadow-lg`}>
+          <div className={`font-medium mb-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>可交付漫游内容</div>
+          <div className={`space-y-1.5 ${isDark ? 'text-gray-400' : 'text-gray-600'} text-xs`}>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+              3D漫游截图（4视角）
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+              方案对比PDF
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+              材料用量清单
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-yellow-400" />
+              施工注意事项
+            </div>
+          </div>
+          <div className="flex gap-2 mt-3">
+            <button
+              onClick={() => navigate(`/pdf-delivery/${id}`)}
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 bg-primary-500 hover:bg-primary-600 text-white rounded-lg text-xs font-medium transition-colors"
+            >
+              <FileDown className="w-3.5 h-3.5" />
+              生成PDF交付包
+            </button>
+            <button
+              onClick={() => alert('截图已保存')}
+              className={`flex items-center justify-center gap-1.5 px-3 py-1.5 ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-gray-200' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'} rounded-lg text-xs font-medium transition-colors`}
+            >
+              <Save className="w-3.5 h-3.5" />
+              截图保存
+            </button>
+          </div>
+        </div>
+
+        {showImportModal && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'} rounded-2xl border shadow-2xl w-full max-w-md mx-4`}>
+              <div className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+                <div className="flex items-center gap-2">
+                  <Upload className="w-5 h-5 text-primary-400" />
+                  <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>导入3D户型模型</span>
+                </div>
+                <button
+                  onClick={() => setShowImportModal(false)}
+                  className={`p-1 rounded-lg ${isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-500'} transition-colors`}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="px-6 py-4 space-y-4">
+                <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  支持 SketchUp (.skp)、GLTF (.gltf/.glb) 格式
+                </div>
+                <div
+                  className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${
+                    isDark
+                      ? 'border-gray-600 hover:border-primary-500 text-gray-400'
+                      : 'border-gray-300 hover:border-primary-500 text-gray-500'
+                  }`}
+                >
+                  <Upload className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                  <div className="text-sm font-medium">点击选择文件</div>
+                  <div className={`text-xs mt-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>或拖拽文件到此区域</div>
+                </div>
+                <div className={`space-y-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <div className="flex items-center gap-2 text-sm">
+                    <CheckCircle2 className="w-4 h-4 text-green-400" />
+                    living_room.skp 已导入 ✓
+                  </div>
+                </div>
+              </div>
+              <div className={`px-6 py-4 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'} flex justify-end gap-3`}>
+                <button
+                  onClick={() => setShowImportModal(false)}
+                  className={`px-4 py-2 rounded-lg text-sm ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-gray-200' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'} transition-colors`}
+                >
+                  取消
+                </button>
+                <button
+                  onClick={() => {
+                    setShowImportModal(false);
+                    alert('模型导入成功');
+                  }}
+                  className="px-4 py-2 rounded-lg text-sm bg-primary-500 hover:bg-primary-600 text-white font-medium transition-colors"
+                >
+                  确认导入
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

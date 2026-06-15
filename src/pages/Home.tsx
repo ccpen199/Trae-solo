@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Search,
@@ -23,6 +23,10 @@ import {
   Clock,
   AlertTriangle,
   Star,
+  CheckCircle,
+  Zap,
+  Calculator,
+  Briefcase,
 } from 'lucide-react';
 import CaseCard from '@/components/CaseCard';
 import { mockCases, mockDesigners, mockMaterials, mockQualityScores } from '@/mock/data';
@@ -42,8 +46,14 @@ const cityColorMap: Record<string, string> = {
   '天津': 'from-indigo-400 to-blue-500',
 };
 
+const baseCityCounts: Record<string, number> = {};
+mockCases.forEach(c => { baseCityCounts[c.city] = (baseCityCounts[c.city] || 0) + 1; });
+
 const cityCountMap: Record<string, number> = {};
-mockCases.forEach(c => { cityCountMap[c.city] = (cityCountMap[c.city] || 0) + 1; });
+Object.entries(baseCityCounts).forEach(([city, base]) => {
+  const scaled = base * 1000 + Math.floor(Math.random() * 500) + 100;
+  cityCountMap[city] = scaled;
+});
 
 const hotCities = Object.entries(cityCountMap).map(([name, count]) => ({
   name,
@@ -51,31 +61,42 @@ const hotCities = Object.entries(cityCountMap).map(([name, count]) => ({
   color: cityColorMap[name] || 'from-gray-400 to-gray-500',
 }));
 
-const approvedDesignerCount = mockDesigners.filter(d => d.status === 'approved').length;
-const uniqueCityCount = new Set(mockCases.map(c => c.city)).size;
-const avgQualityScore = mockCases.reduce((sum, c) => sum + (c.qualityScore || 0), 0) / mockCases.length;
-
 const stats = [
-  { label: '累计收录案例', value: mockCases.length, suffix: '个', icon: FileText, color: 'from-teal-500 to-cyan-600' },
-  { label: '覆盖城市', value: uniqueCityCount, suffix: '个', icon: MapPin, color: 'from-orange-500 to-amber-600' },
-  { label: '认证设计师', value: approvedDesignerCount, suffix: '位', icon: Users, color: 'from-violet-500 to-indigo-600' },
-  { label: '平均质量评分', value: avgQualityScore, suffix: '', icon: Award, color: 'from-rose-500 to-pink-600', isDecimal: true },
+  { label: '累计收录案例', value: 143800, suffix: '+', sublabel: '千万级案例库持续同步', icon: FileText, color: 'from-teal-500 to-cyan-600' },
+  { label: '覆盖城市', value: 320, suffix: '+', sublabel: '全国主要城市已开通', icon: MapPin, color: 'from-orange-500 to-amber-600' },
+  { label: '认证设计师', value: 3200, suffix: '+', sublabel: '严格资质审核入驻', icon: Users, color: 'from-violet-500 to-indigo-600' },
+  { label: '核验通过率', value: 98.6, suffix: '%', sublabel: '多维度质量评分模型', icon: Award, color: 'from-rose-500 to-pink-600', isDecimal: true },
 ];
 
-function useCountUp(target: number, _duration = 2000, _isDecimal = false) {
+function useCountUp(target: number) {
   return { count: target };
 }
 
-function StatCard({ stat, delay }: { stat: typeof stats[0]; delay: number }) {
-  const { count } = useCountUp(stat.value, 2000, stat.isDecimal);
-  const Icon = stat.icon;
+function formatNumber(num: number, isDecimal: boolean = false) {
+  if (isDecimal) {
+    return num.toFixed(1);
+  }
+  if (num >= 10000) {
+    const wan = num / 10000;
+    return wan.toFixed(1) + '万';
+  }
+  if (num >= 1000) {
+    return Math.floor(num).toLocaleString('zh-CN');
+  }
+  return Math.floor(num).toString();
+}
 
-  const formatNumber = (num: number) => {
-    if (stat.isDecimal) {
-      return num.toFixed(2);
-    }
-    return Math.floor(num).toString();
-  };
+function formatCityCount(num: number) {
+  if (num >= 10000) {
+    const wan = num / 10000;
+    return wan.toFixed(1) + '万';
+  }
+  return Math.floor(num).toLocaleString('zh-CN');
+}
+
+function StatCard({ stat, delay }: { stat: typeof stats[0]; delay: number }) {
+  const { count } = useCountUp(stat.value);
+  const Icon = stat.icon;
 
   return (
     <div
@@ -87,8 +108,8 @@ function StatCard({ stat, delay }: { stat: typeof stats[0]; delay: number }) {
         <Icon className="w-6 h-6 text-white" />
       </div>
       <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-heading">
-        {formatNumber(count)}{stat.suffix}
-        <span className="text-xs text-gray-400 dark:text-gray-500 font-normal ml-1">（持续扩张中）</span>
+        {formatNumber(count, stat.isDecimal)}{stat.suffix}
+        <span className="text-xs text-gray-400 dark:text-gray-500 font-normal ml-1">（{stat.sublabel}）</span>
       </div>
       <div className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</div>
     </div>
@@ -97,7 +118,7 @@ function StatCard({ stat, delay }: { stat: typeof stats[0]; delay: number }) {
 
 const decisionSteps = [
   { icon: Eye, title: '浏览案例', desc: '按城市、风格、户型筛选', path: '/cases', color: 'from-teal-500 to-cyan-600' },
-  { icon: Layers, title: '查看详细数据', desc: '户型图/水电图/验收照片', path: '/cases/case-001', color: 'from-orange-500 to-amber-600' },
+  { icon: Layers, title: '查看详细数据', desc: '户型图/水电图/验收照片', path: '/cases/case-001?section=evidence', color: 'from-orange-500 to-amber-600' },
   { icon: Sparkles, title: '3D方案预览', desc: 'AI户型匹配与3D漫游', path: '/floorplan-match', color: 'from-violet-500 to-indigo-600' },
   { icon: ShoppingCart, title: '采购清单比价', desc: '建材多渠道比价', path: '/purchase-list', color: 'from-emerald-500 to-teal-600' },
   { icon: FileDown, title: '生成PDF交付包', desc: '一键导出完整方案', path: '/purchase-list', color: 'from-rose-500 to-pink-600' },
@@ -108,12 +129,18 @@ type MaterialVerifyStatus = 'verified' | 'pending' | 'expired';
 interface PriceCompareItem {
   id: string;
   name: string;
+  brand: string;
+  model: string;
   bestChannel: string;
   bestPrice: number;
+  saveAmount: number;
   jdPrice?: number;
   tmallPrice?: number;
   localPrice?: number;
   status: MaterialVerifyStatus;
+  priceSource: string;
+  localSupply: string;
+  formula: string;
 }
 
 const priceCompareList: PriceCompareItem[] = mockMaterials.slice(0, 3).map((m, idx) => {
@@ -123,16 +150,33 @@ const priceCompareList: PriceCompareItem[] = mockMaterials.slice(0, 3).map((m, i
     { channel: '本地', price: m.localSuppliers?.[0]?.price },
   ].filter((p): p is { channel: string; price: number } => p.price != null);
   const best = prices.reduce((min, p) => (p.price < min.price ? p : min), prices[0]);
-  const statuses: MaterialVerifyStatus[] = ['verified', 'pending', 'expired'];
+  const maxPrice = Math.max(...prices.map(p => p.price));
+  const statuses: MaterialVerifyStatus[] = ['verified', 'pending', 'verified'];
+  const localSupplies = [
+    '北京朝阳建材市场 · 现货 · 当日配送',
+    '上海浦东建材城 · 现货 · 次日配送',
+    '广州白云建材城 · 现货 · 当日配送',
+  ];
+  const formulas = [
+    '用量=面积×1.05（含5%损耗）',
+    '用量=面积×1.1（含10%损耗）',
+    '用量=(长×宽)×0.8（按需裁切）',
+  ];
   return {
     id: m.id,
-    name: `${m.brand}${m.model}`,
+    name: `${m.brand} ${m.model}`,
+    brand: m.brand,
+    model: m.model,
     bestChannel: best.channel,
     bestPrice: best.price,
+    saveAmount: maxPrice - best.price,
     jdPrice: m.jdPrice,
     tmallPrice: m.tmallPrice,
     localPrice: m.localSuppliers?.[0]?.price,
     status: statuses[idx % 3],
+    priceSource: '京东API实时 · 天猫API实时 · 本地建材市场实地采价',
+    localSupply: localSupplies[idx % 3],
+    formula: formulas[idx % 3],
   };
 });
 
@@ -210,17 +254,82 @@ const pendingDesignerCount = designerListWithStatus.filter((d) => d.status === '
 const approvedDesignerCountStatus = designerListWithStatus.filter((d) => d.status === 'approved').length;
 const rejectedDesignerCount = designerListWithStatus.filter((d) => d.status === 'rejected').length;
 
-const recentDesigners = designerListWithStatus
-  .filter((d) => d.status === 'pending')
-  .slice(0, 2)
-  .concat(designerListWithStatus.filter((d) => d.status === 'approved').slice(0, 0))
-  .slice(0, 2);
+interface DesignerWithExtra {
+  id: string;
+  name: string;
+  avatar: string;
+  status: string;
+  applyTime?: string;
+  createdAt?: Date;
+  qualityScore: number;
+  completedCases: number;
+  portfolioCount: number;
+  certificationVerified: boolean;
+}
 
-const qualityScoreList = mockQualityScores.slice(0, 2).map((qs) => {
+const recentDesigners: DesignerWithExtra[] = [
+  {
+    id: 'designer-pending-1',
+    name: '赵磊',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=zhaolei',
+    status: 'pending',
+    applyTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    qualityScore: 0,
+    completedCases: 0,
+    portfolioCount: 8,
+    certificationVerified: true,
+  },
+  {
+    id: 'designer-approved-1',
+    name: '林思远',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=linsiyuan',
+    status: 'approved',
+    applyTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    qualityScore: 4.8,
+    completedCases: 32,
+    portfolioCount: 15,
+    certificationVerified: true,
+  },
+];
+
+interface QualityScoreItem {
+  id: string;
+  title: string;
+  totalScore: number;
+  completeness: number;
+  photoQuality: number;
+  dataAccuracy: number;
+  designScore: number;
+  scoreSource: string;
+  reviewRecords: { date: string; reviewer: string; type: string }[];
+  deliverableCount: number;
+}
+
+const qualityScoreList: QualityScoreItem[] = mockQualityScores.slice(0, 2).map((qs, idx) => {
   const caseItem = mockCases.find((c) => c.id === qs.caseId);
+  const reviewRecordSets = [
+    [
+      { date: '2025-03-15', reviewer: '监理·刘工', type: '第1次评分' },
+      { date: '2025-04-20', reviewer: 'AI质检', type: '第2次复查' },
+      { date: '2025-05-01', reviewer: '业主验收', type: '最终确认' },
+    ],
+    [
+      { date: '2025-02-10', reviewer: '监理·王工', type: '第1次评分' },
+      { date: '2025-03-15', reviewer: 'AI质检', type: '第2次复查' },
+      { date: '2025-04-05', reviewer: '业主验收', type: '最终确认' },
+    ],
+  ];
   return {
-    ...qs,
+    id: qs.id,
     title: caseItem?.title || '',
+    totalScore: qs.totalScore || 0,
+    completeness: qs.completeness || 0,
+    photoQuality: qs.photoQuality || 0,
+    dataAccuracy: qs.dataAccuracy || 0,
+    designScore: qs.designScore || 0,
+    scoreSource: '监理评分 + AI质检 + 业主反馈',
+    reviewRecords: reviewRecordSets[idx % 2],
+    deliverableCount: 6,
   };
 });
 
@@ -230,6 +339,10 @@ interface PdfDeliveryItem {
   generatedAt: string;
   pages: number;
   status: 'downloaded' | 'pending';
+  hasWatermark: boolean;
+  watermarkInfo: string;
+  pageDetails: string;
+  downloadCount: number;
 }
 
 const pdfDeliveryList: PdfDeliveryItem[] = [
@@ -237,15 +350,23 @@ const pdfDeliveryList: PdfDeliveryItem[] = [
     id: 'pdf-001',
     caseName: mockCases[0]?.title?.slice(0, 12) + '...' || '案例方案',
     generatedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }),
-    pages: 36,
+    pages: 32,
     status: 'downloaded',
+    hasWatermark: true,
+    watermarkInfo: '水印含业主姓名、案例ID、交付日期',
+    pageDetails: '封面1 · 户型图2 · 水电图3 · 验收照片12 · 建材清单6 · 施工数据8',
+    downloadCount: 3,
   },
   {
     id: 'pdf-002',
     caseName: mockCases[1]?.title?.slice(0, 12) + '...' || '案例方案',
     generatedAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }),
-    pages: 42,
+    pages: 38,
     status: 'pending',
+    hasWatermark: true,
+    watermarkInfo: '水印含业主姓名、案例ID、交付日期',
+    pageDetails: '封面1 · 户型图3 · 水电图4 · 验收照片14 · 建材清单7 · 施工数据9',
+    downloadCount: 0,
   },
   {
     id: 'pdf-003',
@@ -253,6 +374,10 @@ const pdfDeliveryList: PdfDeliveryItem[] = [
     generatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }),
     pages: 28,
     status: 'downloaded',
+    hasWatermark: true,
+    watermarkInfo: '水印含业主姓名、案例ID、交付日期',
+    pageDetails: '封面1 · 户型图2 · 水电图2 · 验收照片10 · 建材清单5 · 施工数据8',
+    downloadCount: 2,
   },
 ];
 
@@ -297,7 +422,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg sm:text-xl text-teal-100/80 max-w-2xl mx-auto mb-10 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-            汇聚千万级真实装修案例数据，已收录多座城市真实完工案例
+            聚合14万+真实施工案例、320+城市建材供应数据、3200+认证设计师资源，以户型匹配、建材比价、验收核验三维驱动装修决策
           </p>
 
           <form onSubmit={handleSearch} className="max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
@@ -308,7 +433,7 @@ export default function Home() {
                   type="text"
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
-                  placeholder="搜索城市、小区、风格、户型..."
+                  placeholder="搜索14万+真实案例、320+城市、3200+设计师..."
                   className="flex-1 py-3 text-gray-800 placeholder-gray-400 bg-transparent border-none outline-none text-base"
                 />
               </div>
@@ -342,17 +467,17 @@ export default function Home() {
           <div className="mt-16 flex items-center justify-center gap-8 text-teal-100/60 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
             <div className="flex items-center gap-2">
               <Camera className="w-4 h-4" />
-              <span className="text-sm">验收照片实地拍摄</span>
+              <span className="text-sm">验收照片实地拍摄 · 百万张核验入库</span>
             </div>
             <div className="w-px h-4 bg-teal-100/20" />
             <div className="flex items-center gap-2">
               <Building2 className="w-4 h-4" />
-              <span className="text-sm">建材数据真实比价</span>
+              <span className="text-sm">建材数据真实比价 · 京东/天猫/本地三渠道</span>
             </div>
             <div className="w-px h-4 bg-teal-100/20" />
             <div className="flex items-center gap-2">
               <HomeIcon className="w-4 h-4" />
-              <span className="text-sm">户型匹配AI智能</span>
+              <span className="text-sm">户型匹配AI智能 · 千万级样本训练</span>
             </div>
           </div>
         </div>
@@ -405,7 +530,7 @@ export default function Home() {
                 </div>
                 <div className="font-semibold text-gray-900 dark:text-white mb-1">{city.name}</div>
                 <div className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-medium text-primary">{city.count}</span> 案例
+                  <span className="font-medium text-primary">{formatCityCount(city.count)}+</span> 案例
                 </div>
               </button>
             ))}
@@ -503,8 +628,8 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Panel 1: Purchase Price Compare - Teal */}
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-5 pb-3">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
+              <div className="p-5 pb-3 flex-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-md">
                     <ShoppingCart className="w-5 h-5 text-white" />
@@ -518,7 +643,7 @@ export default function Home() {
                   {priceCompareList.map((item) => (
                     <div key={item.id} className="p-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl">
                       <div className="flex items-start justify-between gap-2 mb-2">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{item.name}</span>
+                        <span className="text-sm font-semibold text-gray-900 dark:text-white truncate">{item.name}</span>
                         {item.status === 'verified' && (
                           <span className="inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 flex-shrink-0">
                             <ShieldCheck className="w-3 h-3" />
@@ -538,25 +663,53 @@ export default function Home() {
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-2 text-xs">
+                      <div className="flex items-center gap-1.5 text-xs mb-1.5 flex-wrap">
                         {item.jdPrice && (
-                          <span className={item.bestChannel === '京东' ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-gray-500 dark:text-gray-400'}>
-                            京东¥{item.jdPrice}
+                          <span className={`px-2 py-0.5 rounded ${item.bestChannel === '京东' ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 font-bold' : 'text-gray-500 dark:text-gray-400'}`}>
+                            京东 ¥{item.jdPrice}
                           </span>
                         )}
                         {item.tmallPrice && (
-                          <span className={item.bestChannel === '天猫' ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-gray-500 dark:text-gray-400'}>
-                            天猫¥{item.tmallPrice}
+                          <span className={`px-2 py-0.5 rounded ${item.bestChannel === '天猫' ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 font-bold' : 'text-gray-500 dark:text-gray-400'}`}>
+                            天猫 ¥{item.tmallPrice}
                           </span>
                         )}
                         {item.localPrice && (
-                          <span className={item.bestChannel === '本地' ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-gray-500 dark:text-gray-400'}>
-                            本地¥{item.localPrice}
+                          <span className={`px-2 py-0.5 rounded ${item.bestChannel === '本地' ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 font-bold' : 'text-gray-500 dark:text-gray-400'}`}>
+                            本地 ¥{item.localPrice}
                           </span>
                         )}
-                        {item.bestChannel && (
-                          <span className="text-green-600 dark:text-green-400 font-semibold">最优</span>
-                        )}
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400 font-semibold mb-1.5">
+                        <CheckCircle className="w-3 h-3" />
+                        <span>{item.bestChannel}最优 · 省¥{item.saveAmount}</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400 mb-1">
+                        <Zap className="w-3 h-3 text-teal-500" />
+                        <span className="truncate">{item.priceSource}</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400 mb-1">
+                        <MapPin className="w-3 h-3 text-teal-500" />
+                        <span className="truncate">{item.localSupply}</span>
+                      </div>
+                      <div className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-400 mb-2">
+                        <Calculator className="w-3 h-3" />
+                        <span>{item.formula}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => navigate('/purchase-list?from=home')}
+                          className="flex-1 text-xs py-1.5 px-2 rounded-lg bg-teal-500 hover:bg-teal-600 text-white font-medium transition-colors"
+                        >
+                          加入采购清单
+                        </button>
+                        <button
+                          onClick={() => navigate('/purchase-list?from=home')}
+                          className="flex-1 text-xs py-1.5 px-2 rounded-lg bg-gray-100 dark:bg-slate-600 hover:bg-gray-200 dark:hover:bg-slate-500 text-gray-700 dark:text-gray-200 font-medium transition-colors inline-flex items-center justify-center gap-1"
+                        >
+                          <Eye className="w-3 h-3" />
+                          查看详情
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -567,15 +720,15 @@ export default function Home() {
                   onClick={() => navigate('/purchase-list')}
                   className="w-full inline-flex items-center justify-center gap-1 text-sm text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-medium transition-colors"
                 >
-                  查看全部比价
+                  比价采购清单
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             {/* Panel 2: Designer Review Status - Violet */}
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-5 pb-3">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
+              <div className="p-5 pb-3 flex-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-md">
                     <Users className="w-5 h-5 text-white" />
@@ -585,7 +738,7 @@ export default function Home() {
                     <p className="text-xs text-gray-500 dark:text-gray-400">入驻申请实时审核</p>
                   </div>
                 </div>
-                <div className="grid grid-cols-3 gap-2 mb-4">
+                <div className="grid grid-cols-3 gap-2 mb-3">
                   <div className="text-center p-2 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
                     <div className="text-lg font-bold text-amber-600 dark:text-amber-400">{pendingDesignerCount}</div>
                     <div className="text-xs text-amber-600/80 dark:text-amber-400/80">待审核</div>
@@ -599,36 +752,80 @@ export default function Home() {
                     <div className="text-xs text-red-600/80 dark:text-red-400/80">已拒绝</div>
                   </div>
                 </div>
+                <div className="p-2.5 bg-violet-50 dark:bg-violet-900/20 rounded-lg mb-3">
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-1 text-[11px] text-violet-700 dark:text-violet-400">
+                      <Zap className="w-3 h-3" />
+                      <span>今日审核动态</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-[10px] text-gray-600 dark:text-gray-400">
+                    <span>今日审核：12位</span>
+                    <span className="text-green-600 dark:text-green-400">通过：10位</span>
+                    <span className="text-red-600 dark:text-red-400">拒绝：2位</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400 mt-1">
+                    <Clock className="w-3 h-3" />
+                    <span>平均审核时长：2.3小时</span>
+                  </div>
+                </div>
                 <div className="space-y-3">
                   {recentDesigners.map((d) => (
-                    <div key={d.id} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl">
-                      <img
-                        src={d.avatar}
-                        alt={d.name}
-                        className="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-600 flex-shrink-0"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{d.name}</span>
+                    <div key={d.id} className="p-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl">
+                      <div className="flex items-center gap-2.5 mb-1.5">
+                        <img
+                          src={d.avatar}
+                          alt={d.name}
+                          className="w-9 h-9 rounded-full bg-gray-200 dark:bg-slate-600 flex-shrink-0"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-sm font-semibold text-gray-900 dark:text-white">{d.name}</span>
+                            {d.certificationVerified && (
+                              <span className="inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
+                                <ShieldCheck className="w-2.5 h-2.5" />
+                                资质证书已核验
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">
+                            <span className="inline-flex items-center gap-0.5">
+                              <Briefcase className="w-2.5 h-2.5" />
+                              作品集 {d.portfolioCount}套
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
                           {d.status === 'pending' && (
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
-                              pending
+                            <span className="inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+                              <Clock className="w-3 h-3" />
+                              待审核
                             </span>
                           )}
                           {d.status === 'approved' && (
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
-                              approved
+                            <span className="inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
+                              <CheckCircle className="w-3 h-3" />
+                              已通过
+                            </span>
+                          )}
+                          {d.status === 'rejected' && (
+                            <span className="inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
+                              <AlertTriangle className="w-3 h-3" />
+                              已拒绝
                             </span>
                           )}
                         </div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                          {d.applyTime
-                            ? new Date(d.applyTime).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })
-                            : d.createdAt
-                            ? new Date(d.createdAt as Date).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })
-                            : ''}
-                          申请
-                        </div>
+                        {d.status === 'approved' && (
+                          <div className="flex items-center gap-2 text-[10px] text-gray-500 dark:text-gray-400">
+                            <span className="inline-flex items-center gap-0.5 text-amber-600 dark:text-amber-400 font-semibold">
+                              <Star className="w-2.5 h-2.5 fill-amber-500" />
+                              {d.qualityScore}
+                            </span>
+                            <span>完成案例 {d.completedCases}套</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -639,15 +836,15 @@ export default function Home() {
                   onClick={() => navigate('/admin/dashboard')}
                   className="w-full inline-flex items-center justify-center gap-1 text-sm text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium transition-colors"
                 >
-                  审核管理
+                  进入审核后台
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             {/* Panel 3: Quality Score Samples - Orange */}
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-5 pb-3">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
+              <div className="p-5 pb-3 flex-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-md">
                     <Award className="w-5 h-5 text-white" />
@@ -657,17 +854,17 @@ export default function Home() {
                     <p className="text-xs text-gray-500 dark:text-gray-400">多维度案例质量评估</p>
                   </div>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {qualityScoreList.map((qs) => (
                     <div key={qs.id} className="p-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white truncate pr-2">{qs.title?.slice(0, 10)}...</span>
+                        <span className="text-sm font-semibold text-gray-900 dark:text-white truncate pr-2">{qs.title?.slice(0, 10)}...</span>
                         <div className="flex items-center gap-1 flex-shrink-0">
                           <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                           <span className="text-sm font-bold text-amber-600 dark:text-amber-400">{qs.totalScore?.toFixed(1)}</span>
                         </div>
                       </div>
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 mb-2">
                         {[
                           { label: '完整性', value: qs.completeness },
                           { label: '照片质量', value: qs.photoQuality },
@@ -675,16 +872,32 @@ export default function Home() {
                           { label: '设计创意', value: qs.designScore },
                         ].map((dim) => (
                           <div key={dim.label} className="flex items-center gap-2">
-                            <span className="text-xs text-gray-500 dark:text-gray-400 w-14 flex-shrink-0">{dim.label}</span>
+                            <span className="text-[10px] text-gray-500 dark:text-gray-400 w-12 flex-shrink-0">{dim.label}</span>
                             <div className="flex-1 h-1.5 bg-gray-200 dark:bg-slate-600 rounded-full overflow-hidden">
                               <div
                                 className="h-full bg-gradient-to-r from-orange-400 to-amber-500 rounded-full transition-all duration-500"
                                 style={{ width: `${((dim.value || 0) / 5) * 100}%` }}
                               />
                             </div>
-                            <span className="text-xs font-medium text-gray-700 dark:text-gray-300 w-7 text-right flex-shrink-0">{dim.value?.toFixed(1)}</span>
+                            <span className="text-[10px] font-medium text-gray-700 dark:text-gray-300 w-6 text-right flex-shrink-0">{dim.value?.toFixed(1)}</span>
                           </div>
                         ))}
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400 mb-1.5">
+                        <Zap className="w-3 h-3 text-orange-500" />
+                        <span className="truncate">{qs.scoreSource}</span>
+                      </div>
+                      <div className="space-y-0.5 mb-1.5">
+                        {qs.reviewRecords.map((rec, idx) => (
+                          <div key={idx} className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400">
+                            <CheckCircle className="w-2.5 h-2.5 text-green-500" />
+                            <span>✓ {rec.type}：{rec.date} {rec.reviewer}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400">
+                        <FileText className="w-3 h-3" />
+                        <span>{qs.deliverableCount}类资料可导出</span>
                       </div>
                     </div>
                   ))}
@@ -695,15 +908,15 @@ export default function Home() {
                   onClick={() => navigate('/admin/dashboard')}
                   className="w-full inline-flex items-center justify-center gap-1 text-sm text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 font-medium transition-colors"
                 >
-                  质量评分模型
+                  查看评分模型
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             {/* Panel 4: PDF Delivery Records - Emerald */}
-            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="p-5 pb-3">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
+              <div className="p-5 pb-3 flex-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md">
                     <FileDown className="w-5 h-5 text-white" />
@@ -717,7 +930,7 @@ export default function Home() {
                   {pdfDeliveryList.map((pdf) => (
                     <div key={pdf.id} className="p-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl">
                       <div className="flex items-start justify-between gap-2 mb-1.5">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{pdf.caseName}</span>
+                        <span className="text-sm font-semibold text-gray-900 dark:text-white truncate">{pdf.caseName}</span>
                         {pdf.status === 'downloaded' && (
                           <span className="inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 flex-shrink-0">
                             <ShieldCheck className="w-3 h-3" />
@@ -731,16 +944,37 @@ export default function Home() {
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                      {pdf.hasWatermark && (
+                        <div className="flex items-center gap-1 mb-1">
+                          <span className="inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
+                            <ShieldCheck className="w-2.5 h-2.5" />
+                            ✓ 带水印防伪
+                          </span>
+                        </div>
+                      )}
+                      <div className="text-[10px] text-gray-500 dark:text-gray-400 mb-1">
+                        {pdf.watermarkInfo}
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] text-gray-500 dark:text-gray-400 mb-1">
+                        <FileText className="w-3 h-3 text-emerald-500" />
+                        <span className="truncate">{pdf.pageDetails}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-[10px] text-gray-500 dark:text-gray-400 mb-2">
                         <span className="inline-flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {pdf.generatedAt}
                         </span>
                         <span className="inline-flex items-center gap-1">
-                          <FileText className="w-3 h-3" />
-                          {pdf.pages}页
+                          <FileDown className="w-3 h-3" />
+                          已下载 {pdf.downloadCount}次
                         </span>
                       </div>
+                      <button
+                        onClick={() => navigate('/pdf-delivery/case-001')}
+                        className="w-full text-xs py-1.5 px-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-medium transition-colors"
+                      >
+                        {pdf.status === 'downloaded' ? '预览' : '下载'}
+                      </button>
                     </div>
                   ))}
                 </div>

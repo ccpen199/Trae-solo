@@ -1,0 +1,286 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T06:05:16.298Z",
+  "order": "may-89197",
+  "roundIndex": 3,
+  "captureId": "codex-20260615-service-fix-may-89197",
+  "url": "http://127.0.0.1:49197/",
+  "initialUrl": "http://127.0.0.1:49197/",
+  "finalUrl": "http://127.0.0.1:49197/",
+  "status": 200,
+  "title": "筑家数据装修案例决策平台",
+  "initialTitle": "筑家数据装修案例决策平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260615-service-fix/codex-20260615-service-fix-may-89197-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260615-service-fix/codex-20260615-service-fix-may-89197-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49197/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49197/",
+        "title": "筑家数据装修案例决策平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-20260615-service-fix-may-89197-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49197/",
+          "title": "筑家数据装修案例决策平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260615-service-fix/codex-20260615-service-fix-may-89197-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260615-service-fix/codex-20260615-service-fix-may-89197-structure-01-首屏.png",
+          "elementCount": 9,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260615-service-fix-may-89197-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49197/",
+        "title": "筑家数据装修案例决策平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260615-service-fix/codex-20260615-service-fix-may-89197-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260615-service-fix/codex-20260615-service-fix-may-89197-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49197/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260615-service-fix-may-89197-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49197/",
+        "title": "筑家数据装修案例决策平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260615-service-fix/codex-20260615-service-fix-may-89197-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260615-service-fix/codex-20260615-service-fix-may-89197-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59197",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59197/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89197/src/pages/Home.tsx: Unterminated string constant. (830:38)\n\n  828 |                     className=\"inline-flex items-center gap-2 px-8 py-4 bg-accent text-white font-medium rounded-xl hover:bg-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl text-lg\"\n  829 |                   >\n> 830 |                     <Upload className=\"w-5 h-5\n      |                                       ^\n828|                      className=\"inline-flex items-center gap-2 px-8 py-4 bg-accent text-white font-medium rounded-xl hover:bg-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl text-lg\"\n829|                    >\n830|                      <Upload className=\"w-5 h-5\n   |                                        ^",
+      "location": {
+        "url": "http://127.0.0.1:49197/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503507137",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89197/src/pages/Home.tsx: Unterminated string constant. (838:44)\n\n  836 |                   >\n  837 |                     了解更多\n> 838 |                     <ChevronRight className=\"\n      |                                             ^\n836|                    >\n837|                      了解更多\n838|                      <ChevronRight className=\"\n   |                                              ^",
+      "location": {
+        "url": "http://127.0.0.1:49197/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503508848",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89197/src/pages/Home.tsx: Unterminated string constant. (856:39)\n\n  854 |                       </div>\n  855 |                       <div className=\"bg-white/10 rounded-xl p-4\">\n> 856 |                         <div className=\"w-12 h\n      |                                        ^\n854|                        </div>\n855|                        <div className=\"bg-white/10 rounded-xl p-4\">\n856|                          <div className=\"w-12 h\n   |                                         ^",
+      "location": {
+        "url": "http://127.0.0.1:49197/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503511904",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503507137",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503508848",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503511904",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503507137"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503508848"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49197/src/pages/Home.tsx?t=1781503511904"
+    }
+  ]
+}

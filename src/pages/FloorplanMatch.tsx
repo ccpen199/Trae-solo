@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Upload,
@@ -17,6 +17,17 @@ import {
   X,
   ShieldCheck,
   BarChart3,
+  Check,
+  Crown,
+  Eye,
+  FileOutput,
+  RefreshCw,
+  Palette,
+  Database,
+  ArrowRight,
+  AlertTriangle,
+  Info,
+  Edit3,
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import CaseCard from '@/components/CaseCard';
@@ -30,17 +41,46 @@ interface MatchedCase extends Case {
   styleMatch: number;
   dataCompleteness: number;
   matchReasons: string[];
+  similarityExplanation: string;
+  rank: number;
 }
 
-function computeMatch(formData: {
-  area: string;
-  bedrooms: string;
-  bathrooms: string;
-  layout: string;
-  style: string;
-  budgetMin: string;
-  budgetMax: string;
-}, c: Case): MatchedCase {
+interface PhaseState {
+  label: string;
+  detail: string;
+  duration: number;
+  completed: boolean;
+  successText: string;
+}
+
+const PHASES: PhaseState[] = [
+  { label: '解析户型结构参数...', detail: '面积、居室数、户型、风格、预算', duration: 200, completed: false, successText: '' },
+  { label: '在14万+案例库中检索匹配...', detail: '按户型、面积、风格初筛', duration: 300, completed: false, successText: '' },
+  { label: 'AI多维度相似度排序中...', detail: '户型相似度+面积接近度+风格匹配度加权', duration: 400, completed: false, successText: '' },
+  { label: '生成定制推荐方案...', detail: '取Top6 + 生成推荐依据', duration: 200, completed: false, successText: '' },
+];
+
+const DEFAULT_PARAMS = {
+  area: '100',
+  bedrooms: '3',
+  bathrooms: '1',
+  layout: '三居室',
+  style: '现代简约',
+  budgetMin: '10',
+  budgetMax: '50',
+};
+
+const HISTORY_EXAMPLES = [
+  { id: 'ex-1', title: '阳光城市花园·北欧风三居', area: 128, layout: '三室两厅两卫', style: '北欧风格', budget: '28万', similarity: 92 },
+  { id: 'ex-2', title: '万科城·新中式雅致三居', area: 115, layout: '三室两厅一卫', style: '新中式', budget: '35万', similarity: 88 },
+  { id: 'ex-3', title: '保利中央公园·现代简约两居', area: 78, layout: '两室一厅一卫', style: '现代简约', budget: '12.8万', similarity: 85 },
+];
+
+function computeMatch(
+  formData: { area: string; bedrooms: string; bathrooms: string; layout: string; style: string; budgetMin: string; budgetMax: string },
+  c: Case,
+  idx: number
+): MatchedCase {
   const inputArea = Number(formData.area) || 100;
   const inputRooms = Number(formData.bedrooms) || 3;
   const inputBath = Number(formData.bathrooms) || 1;
@@ -63,7 +103,7 @@ function computeMatch(formData: {
     formData.layout && layoutKeywords[formData.layout]
       ? layoutKeywords[formData.layout].some((k) => (c.houseType || '').includes(k) || (c.layout || '').includes(k))
       : roomMatch;
-  const layoutSimilarity = layoutMatch ? 85 + Math.round(Math.random() * 15) : 50 + Math.round(Math.random() * 25);
+  const layoutSimilarity = layoutMatch ? 85 + ((idx * 3) % 15) : 50 + ((idx * 5) % 25);
 
   const styleKeywords: Record<string, string[]> = {
     '现代简约': ['现代', '简约', 'ins风'],
@@ -72,16 +112,16 @@ function computeMatch(formData: {
     '轻奢风格': ['轻奢'],
     '日式风格': ['日式', '禅意'],
   };
-  const styleMatch =
+  const styleMatchBool =
     formData.style && styleKeywords[formData.style]
       ? styleKeywords[formData.style].some((k) => c.style.includes(k))
       : true;
-  const styleMatchScore = styleMatch ? 80 + Math.round(Math.random() * 20) : 40 + Math.round(Math.random() * 25);
+  const styleMatch = styleMatchBool ? 80 + ((idx * 4) % 20) : 40 + ((idx * 7) % 25);
 
   const budgetInRange = c.budget >= inputBudgetMin * 10000 && c.budget <= inputBudgetMax * 10000;
 
   const similarity = Math.round(
-    areaCloseness * 0.3 + layoutSimilarity * 0.35 + styleMatchScore * 0.25 + (budgetInRange ? 10 : 0)
+    areaCloseness * 0.3 + layoutSimilarity * 0.35 + styleMatch * 0.25 + (budgetInRange ? 10 : 0)
   );
 
   const hasImages = (c.images?.length ?? 0) > 0;
@@ -93,34 +133,61 @@ function computeMatch(formData: {
   );
 
   const matchReasons: string[] = [];
+  const explanationParts: string[] = [];
+
   if (layoutMatch) {
     matchReasons.push('户型一致');
-  } else if (Math.abs(c.rooms - inputRooms) <= 1) {
+    explanationParts.push('户型完全一致');
+  } else if (Math.abs((c.rooms ?? 0) - inputRooms) <= 1) {
     matchReasons.push('户型相近');
+    explanationParts.push('户型结构相近');
+  } else {
+    explanationParts.push('户型有一定差异');
   }
-  if (areaDiff <= 10) {
+
+  if (areaDiff <= 5) {
+    matchReasons.push(`面积仅差${areaDiff}㎡`);
+    explanationParts.push(`面积仅差${areaDiff}㎡`);
+  } else if (areaDiff <= 10) {
     matchReasons.push(`面积接近±${areaDiff}㎡`);
+    explanationParts.push(`面积相差${areaDiff}㎡`);
   } else if (areaDiff <= 20) {
     matchReasons.push('面积差异适中');
   }
-  if (styleMatch) {
-    matchReasons.push('风格相同');
+
+  if (styleMatchBool) {
+    matchReasons.push('风格匹配');
+    if (formData.style) {
+      explanationParts.push(`风格同属${formData.style}系`);
+    } else {
+      explanationParts.push('风格协调统一');
+    }
+  } else {
+    matchReasons.push('风格可参考');
+    explanationParts.push('风格可借鉴参考');
   }
+
   if (budgetInRange) {
     matchReasons.push('预算匹配');
+    explanationParts.push('预算在预期范围内');
   }
+
   if (matchReasons.length === 0) {
     matchReasons.push('优质案例推荐');
   }
 
+  const similarityExplanation = explanationParts.slice(0, 3).join(' + ');
+
   return {
     ...c,
-    similarity: Math.min(99, Math.max(35, similarity + Math.round(Math.random() * 8 - 4))),
+    similarity: Math.min(99, Math.max(62, similarity + ((idx * 3) % 8) - 2)),
     layoutSimilarity,
     areaCloseness,
-    styleMatch: styleMatchScore,
+    styleMatch,
     dataCompleteness,
     matchReasons,
+    similarityExplanation,
+    rank: 0,
   };
 }
 
@@ -188,77 +255,248 @@ function CompletenessBadge({ score }: { score: number }) {
   );
 }
 
+function RankBadge({ rank }: { rank: number }) {
+  if (rank === 1) {
+    return (
+      <div className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full shadow-sm">
+        <Crown className="w-3.5 h-3.5 text-white" />
+        <span className="text-xs font-bold text-white">Top1</span>
+      </div>
+    );
+  }
+  if (rank === 2) {
+    return (
+      <div className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full shadow-sm">
+        <Crown className="w-3.5 h-3.5 text-white" />
+        <span className="text-xs font-bold text-white">Top2</span>
+      </div>
+    );
+  }
+  if (rank === 3) {
+    return (
+      <div className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-amber-600 to-orange-700 rounded-full shadow-sm">
+        <Crown className="w-3.5 h-3.5 text-white" />
+        <span className="text-xs font-bold text-white">Top3</span>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center gap-1 px-2.5 py-1 bg-gray-100 rounded-full">
+      <span className="text-xs font-semibold text-gray-600">#{rank}</span>
+    </div>
+  );
+}
+
 export default function FloorplanMatch() {
   const navigate = useNavigate();
   const [uploaded, setUploaded] = useState(false);
-  const [matching, setMatching] = useState(false);
+  const [isFormModified, setIsFormModified] = useState(false);
+  const [matchPhase, setMatchPhase] = useState(0);
+  const [phaseProgress, setPhaseProgress] = useState(0);
+  const [phases, setPhases] = useState<PhaseState[]>(PHASES.map(p => ({ ...p })));
   const [matched, setMatched] = useState(false);
-  const [matchError, setMatchError] = useState<string | null>(null);
-  const [hasPartialMatch, setHasPartialMatch] = useState(false);
+  const [matchedCases, setMatchedCases] = useState<MatchedCase[]>([]);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const phaseTimersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const progressTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const formSectionRef = useRef<HTMLDivElement>(null);
+  const resultsSectionRef = useRef<HTMLDivElement>(null);
 
   const [formData, setFormData] = useState({
-    area: '100',
-    bedrooms: '3',
-    bathrooms: '1',
-    layout: '三居室',
-    style: '现代简约',
-    budgetMin: '10',
-    budgetMax: '50',
+    area: '',
+    bedrooms: '',
+    bathrooms: '',
+    layout: '',
+    style: '',
+    budgetMin: '',
+    budgetMax: '',
   });
+  const [validationError, setValidationError] = useState('');
 
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [showCompare, setShowCompare] = useState(false);
 
-  const handleUpload = () => setUploaded(true);
+  const isMatching = matchPhase > 0 && !matched;
+  const avgSimilarity = matched && matchedCases.length > 0
+    ? Math.round(matchedCases.reduce((s, c) => s + c.similarity, 0) / matchedCases.length)
+    : 0;
+  const hasLowSimilarity = matched && matchedCases.length > 0 && avgSimilarity < 70;
 
-  const handleMatch = () => {
-    setMatching(true);
-    setMatched(false);
-    setSelectedIds([]);
-    setShowCompare(false);
-    setMatchError(null);
-    setHasPartialMatch(false);
-    const timer = setTimeout(() => {
-      try {
-        setMatching(false);
-        setMatched(true);
-        const tempResults = mockCases
-          .map((c) => computeMatch(formData, c))
-          .sort((a, b) => b.similarity - a.similarity)
-          .slice(0, 6);
-        const perfectMatch = tempResults.some((r) => r.similarity >= 85 && r.layoutSimilarity >= 85);
-        setHasPartialMatch(!perfectMatch);
-      } catch (e) {
-        setMatching(false);
-        setMatchError('匹配过程出现异常，请稍后重试');
-      }
-    }, 1500);
-    return () => clearTimeout(timer);
+  const clearAllTimers = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    phaseTimersRef.current.forEach(t => clearTimeout(t));
+    phaseTimersRef.current = [];
+    if (progressTimerRef.current) {
+      clearInterval(progressTimerRef.current);
+      progressTimerRef.current = null;
+    }
   };
 
-  const matchedCases: MatchedCase[] = useMemo(() => {
-    if (!matched) return [];
+  const effectiveParams = useMemo(() => ({
+    area: formData.area.trim() || DEFAULT_PARAMS.area,
+    bedrooms: formData.bedrooms.trim() || DEFAULT_PARAMS.bedrooms,
+    bathrooms: formData.bathrooms.trim() || DEFAULT_PARAMS.bathrooms,
+    layout: formData.layout.trim() || DEFAULT_PARAMS.layout,
+    style: formData.style.trim() || DEFAULT_PARAMS.style,
+    budgetMin: formData.budgetMin.trim() || DEFAULT_PARAMS.budgetMin,
+    budgetMax: formData.budgetMax.trim() || DEFAULT_PARAMS.budgetMax,
+  }), [formData]);
+
+  const isUsingDefaultParams = useMemo(() => {
+    return !uploaded && !isFormModified;
+  }, [uploaded, isFormModified]);
+
+  const hasAnyInput = uploaded || isFormModified;
+
+  const handleFormChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    setIsFormModified(true);
+    setValidationError('');
+  };
+
+  const scrollToForm = () => {
+    formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  useEffect(() => {
+    return () => clearAllTimers();
+  }, []);
+
+  const handleUpload = () => setUploaded(true);
+
+  const generateResults = (): MatchedCase[] => {
     try {
       const results = mockCases
-        .map((c) => computeMatch(formData, c))
+        .map((c, i) => computeMatch(effectiveParams, c, i))
         .sort((a, b) => b.similarity - a.similarity)
-        .slice(0, 6);
+        .slice(0, 6)
+        .map((c, i) => ({ ...c, rank: i + 1 }));
+
       if (results.length === 0) {
-        return mockCases.slice(0, 6).map((c) => ({
-          ...computeMatch(formData, c),
-          similarity: 85 + Math.floor(Math.random() * 14),
+        return mockCases.slice(0, 6).map((c, i) => ({
+          ...computeMatch(effectiveParams, c, i),
+          similarity: 85 + (i % 14),
           matchReasons: ['优质案例推荐'],
+          similarityExplanation: '平台精选优质案例推荐',
+          rank: i + 1,
         }));
       }
       return results;
-    } catch (e) {
-      return mockCases.slice(0, 6).map((c, idx) => ({
-        ...computeMatch(formData, c),
-        similarity: 85 + (idx % 14),
+    } catch {
+      return mockCases.slice(0, 6).map((c, i) => ({
+        ...computeMatch(effectiveParams, c, i),
+        similarity: 85 + (i % 14),
         matchReasons: ['优质案例推荐'],
+        similarityExplanation: '平台精选优质案例推荐',
+        rank: i + 1,
       }));
     }
-  }, [matched, formData]);
+  };
+
+  const handleMatch = async () => {
+    setValidationError('');
+    clearAllTimers();
+    setMatchPhase(0);
+    setPhaseProgress(0);
+    setMatched(false);
+    setMatchedCases([]);
+    setSelectedIds([]);
+    setShowCompare(false);
+    setPhases(PHASES.map(p => ({ ...p, completed: false, successText: '' })));
+
+    await new Promise<void>(resolve => setTimeout(resolve, 50));
+
+    setMatchPhase(1);
+
+    timeoutRef.current = setTimeout(() => {
+      const finalResults = generateResults();
+      setMatchedCases(finalResults);
+      setMatchPhase(5);
+      setMatched(true);
+      setPhaseProgress(100);
+    }, 3500);
+
+    runPhase(1, () => {
+      const newPhases = [...phases];
+      newPhases[0] = {
+        ...newPhases[0],
+        completed: true,
+        successText: `已识别：${effectiveParams.layout} / ${effectiveParams.area}㎡ / ${effectiveParams.style}`,
+      };
+      setPhases(newPhases);
+
+      runPhase(2, () => {
+        const newPhases2 = [...newPhases];
+        newPhases2[1] = {
+          ...newPhases2[1],
+          completed: true,
+          successText: `初筛命中${200 + Math.floor(Math.random() * 80)}个相似案例`,
+        };
+        setPhases(newPhases2);
+
+        if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+        let progress = 0;
+        progressTimerRef.current = setInterval(() => {
+          progress += 3;
+          if (progress >= 100) {
+            progress = 100;
+            if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+          }
+          setPhaseProgress(progress);
+        }, 12);
+
+        runPhase(3, () => {
+          const newPhases3 = [...newPhases2];
+          newPhases3[2] = {
+            ...newPhases3[2],
+            completed: true,
+            successText: '已计算相似度权重：户型35% / 面积30% / 风格25% / 预算10%',
+          };
+          setPhases(newPhases3);
+          setPhaseProgress(100);
+
+          runPhase(4, () => {
+            const newPhases4 = [...newPhases3];
+            newPhases4[3] = {
+              ...newPhases4[3],
+              completed: true,
+              successText: '已为您匹配6个最相似装修案例',
+            };
+            setPhases(newPhases4);
+
+            const results = generateResults();
+            setMatchedCases(results);
+            setMatched(true);
+            setMatchPhase(5);
+
+            if (timeoutRef.current) {
+              clearTimeout(timeoutRef.current);
+              timeoutRef.current = null;
+            }
+            if (progressTimerRef.current) {
+              clearInterval(progressTimerRef.current);
+              progressTimerRef.current = null;
+            }
+          });
+        });
+      });
+    });
+  };
+
+  const runPhase = (phaseNum: number, onComplete: () => void) => {
+    const duration = PHASES[phaseNum - 1]?.duration ?? 300;
+    setMatchPhase(phaseNum);
+    if (phaseNum === 3) {
+      setPhaseProgress(0);
+    }
+    const timer = setTimeout(() => {
+      onComplete();
+    }, duration);
+    phaseTimersRef.current.push(timer);
+  };
 
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) => {
@@ -279,6 +517,11 @@ export default function FloorplanMatch() {
     if (budget >= 10000) return `${(budget / 10000).toFixed(1)}万`;
     return `${budget}元`;
   };
+
+  const displayCases = useMemo(() => {
+    if (matched && matchedCases.length > 0) return matchedCases;
+    return [];
+  }, [matched, matchedCases]);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -303,7 +546,7 @@ export default function FloorplanMatch() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          <div className="space-y-6">
+          <div ref={formSectionRef} className="space-y-6">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                 <Upload className="w-5 h-5 text-teal-700" />
@@ -351,7 +594,7 @@ export default function FloorplanMatch() {
                   <input
                     type="number"
                     value={formData.area}
-                    onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+                    onChange={(e) => handleFormChange('area', e.target.value)}
                     placeholder="请输入面积"
                     className="input-base"
                   />
@@ -363,7 +606,7 @@ export default function FloorplanMatch() {
                   </label>
                   <select
                     value={formData.layout}
-                    onChange={(e) => setFormData({ ...formData, layout: e.target.value })}
+                    onChange={(e) => handleFormChange('layout', e.target.value)}
                     className="input-base"
                   >
                     <option value="">请选择户型</option>
@@ -380,7 +623,7 @@ export default function FloorplanMatch() {
                   <input
                     type="number"
                     value={formData.bedrooms}
-                    onChange={(e) => setFormData({ ...formData, bedrooms: e.target.value })}
+                    onChange={(e) => handleFormChange('bedrooms', e.target.value)}
                     placeholder="例如：3"
                     className="input-base"
                   />
@@ -390,7 +633,7 @@ export default function FloorplanMatch() {
                   <input
                     type="number"
                     value={formData.bathrooms}
-                    onChange={(e) => setFormData({ ...formData, bathrooms: e.target.value })}
+                    onChange={(e) => handleFormChange('bathrooms', e.target.value)}
                     placeholder="例如：2"
                     className="input-base"
                   />
@@ -399,7 +642,7 @@ export default function FloorplanMatch() {
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">装修风格</label>
                   <select
                     value={formData.style}
-                    onChange={(e) => setFormData({ ...formData, style: e.target.value })}
+                    onChange={(e) => handleFormChange('style', e.target.value)}
                     className="input-base"
                   >
                     <option value="">不限风格</option>
@@ -419,7 +662,7 @@ export default function FloorplanMatch() {
                     <input
                       type="number"
                       value={formData.budgetMin}
-                      onChange={(e) => setFormData({ ...formData, budgetMin: e.target.value })}
+                      onChange={(e) => handleFormChange('budgetMin', e.target.value)}
                       placeholder="最低"
                       className="input-base"
                     />
@@ -427,7 +670,7 @@ export default function FloorplanMatch() {
                     <input
                       type="number"
                       value={formData.budgetMax}
-                      onChange={(e) => setFormData({ ...formData, budgetMax: e.target.value })}
+                      onChange={(e) => handleFormChange('budgetMax', e.target.value)}
                       placeholder="最高"
                       className="input-base"
                     />
@@ -436,15 +679,57 @@ export default function FloorplanMatch() {
               </div>
             </div>
 
+            {!hasAnyInput && (
+              <div className="flex items-start gap-2 rounded-xl border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-800">
+                <Info className="w-4 h-4 mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium">您还未上传户型图或填写户型信息</p>
+                  <p className="mt-0.5 text-yellow-700">系统将基于默认参数（三居室·100㎡·现代简约·10-50万预算）为您推荐。上传户型图可获得更精准的匹配结果。</p>
+                </div>
+              </div>
+            )}
+
+            {uploaded && !isFormModified && (
+              <div className="flex items-start gap-2 rounded-xl border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800">
+                <Info className="w-4 h-4 mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium">已上传户型图，建议补充户型信息获得更精准匹配</p>
+                  <p className="mt-0.5 text-blue-700">填写面积、户型、风格和预算后，匹配结果会更贴合您的需求。</p>
+                </div>
+              </div>
+            )}
+
+            {!uploaded && isFormModified && (
+              <div className="flex items-start gap-2 rounded-xl border border-teal-200 bg-teal-50 p-3 text-sm text-teal-800">
+                <Info className="w-4 h-4 mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium">已填写户型信息，上传户型图可获得更精准的匹配</p>
+                  <p className="mt-0.5 text-teal-700">上传真实户型图后，AI 能识别更详细的户型结构，匹配度提升约 30%。</p>
+                </div>
+              </div>
+            )}
+
+            {validationError && (
+              <div className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+                <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
+                <span>{validationError}</span>
+              </div>
+            )}
+
             <button
               onClick={handleMatch}
-              disabled={matching}
-              className="w-full py-4 bg-gradient-to-r from-teal-700 to-teal-600 hover:from-teal-800 hover:to-teal-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70"
+              disabled={isMatching}
+              className="w-full py-4 bg-gradient-to-r from-teal-700 to-teal-600 hover:from-teal-800 hover:to-teal-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {matching ? (
+              {isMatching ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  AI 智能匹配中...
+                  <RefreshCw className="w-5 h-5 animate-spin" />
+                  AI 智能匹配中... ({matchPhase}/4)
+                </>
+              ) : matched ? (
+                <>
+                  <RefreshCw className="w-5 h-5" />
+                  重新匹配
                 </>
               ) : (
                 <>
@@ -453,353 +738,401 @@ export default function FloorplanMatch() {
                 </>
               )}
             </button>
-          </div>
 
-          <div className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  <Star className="w-5 h-5 text-orange-500" />
-                  {matched ? `匹配结果 (${matchedCases.length}个)` : '匹配结果预览'}
-                </h2>
-                {matched && selectedIds.length >= 2 && (
-                  <button
-                    onClick={() => setShowCompare(!showCompare)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border-2 border-teal-700 text-teal-700 hover:bg-teal-700 hover:text-white transition-colors"
-                  >
-                    <BarChart3 className="w-4 h-4" />
-                    方案对比 ({selectedIds.length})
-                  </button>
-                )}
-              </div>
-
-              {matchError && (
-                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 flex items-center gap-2">
-                  <X className="w-4 h-4" />
-                  {matchError}
-                </div>
-              )}
-
-              {matching ? (
-                <div className="flex flex-col items-center justify-center h-96 text-center">
-                  <div className="w-16 h-16 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin mb-4" />
-                  <p className="text-lg font-medium text-gray-900 mb-2">AI 智能匹配中...</p>
-                  <p className="text-sm text-gray-500">AI正在分析户型结构，为您匹配最相似的装修案例...</p>
-                </div>
-              ) : matched ? (
-                <div className="space-y-4">
-                  {hasPartialMatch && (
-                    <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-600 flex items-center gap-2">
-                      <X className="w-4 h-4 text-gray-400" />
-                      未找到完全匹配的案例，为您推荐以下高相似度方案
-                    </div>
-                  )}
-                  {matchedCases.map((mc) => (
-                    <div
-                      key={mc.id}
-                      className={`relative rounded-xl border-2 transition-all ${
-                        selectedIds.includes(mc.id)
-                          ? 'border-teal-600 bg-teal-50/30 shadow-md'
-                          : 'border-gray-100 hover:border-gray-200'
-                      }`}
-                    >
-                      <div
-                        className="absolute top-3 right-3 z-10"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleSelect(mc.id);
-                        }}
-                      >
-                        <button
-                          className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all ${
-                            selectedIds.includes(mc.id)
-                              ? 'bg-teal-700 border-teal-700 text-white'
-                              : 'border-gray-300 text-transparent hover:border-teal-400'
-                          }`}
-                        >
-                          <CheckSquare className="w-4 h-4" />
-                        </button>
-                      </div>
-
-                      <div className="p-4">
-                        <div className="flex gap-4">
-                          <div className="flex flex-col items-center justify-center shrink-0">
-                            <div className="relative">
-                              <ScoreRing value={mc.similarity} size={56} strokeWidth={5} />
-                              <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-teal-700">
-                                {mc.similarity}%
-                              </span>
-                            </div>
-                            <span className="text-xs text-teal-600 font-medium mt-1">匹配</span>
+            {(isMatching || matchPhase >= 1) && (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-teal-700" />
+                  匹配进度
+                </h3>
+                <div className="space-y-3">
+                  {phases.map((phase, idx) => {
+                    const phaseNum = idx + 1;
+                    const isActive = matchPhase === phaseNum;
+                    const isDone = phase.completed;
+                    return (
+                      <div key={idx} className="relative">
+                        <div className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-300 ${
+                          isActive ? 'bg-teal-50 border border-teal-200' :
+                          isDone ? 'bg-gray-50' : 'bg-transparent'
+                        }`}>
+                          <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 transition-all ${
+                            isDone ? 'bg-teal-600 text-white' :
+                            isActive ? 'bg-teal-600 text-white' :
+                            'bg-gray-200 text-gray-400'
+                          }`}>
+                            {isDone ? (
+                              <Check className="w-4 h-4" />
+                            ) : (
+                              <span className="text-xs font-semibold">{phaseNum}</span>
+                            )}
                           </div>
-
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-sm font-semibold text-gray-900 truncate">
-                                {mc.title}
-                              </span>
-                              <CompletenessBadge score={mc.dataCompleteness} />
+                            <div className="flex items-center gap-2">
+                              <p className={`text-sm font-medium ${
+                                isDone ? 'text-gray-600' :
+                                isActive ? 'text-teal-700' :
+                                'text-gray-400'
+                              }`}>
+                                {phase.label}
+                              </p>
+                              {isActive && (
+                                <div className="w-4 h-4 border-2 border-teal-200 border-t-teal-600 rounded-full animate-spin shrink-0" />
+                              )}
                             </div>
-                            <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-2">
-                              <MapPin className="w-3 h-3 flex-shrink-0" />
-                              <span className="truncate">{mc.city} · {mc.district}</span>
-                            </div>
-                            <div className="flex flex-wrap gap-1 mb-2">
-                              {mc.matchReasons.slice(0, 3).map((reason, idx) => (
-                                <span
-                                  key={idx}
-                                  className="inline-flex items-center px-1.5 py-0.5 text-xs font-medium bg-teal-50 text-teal-700 rounded"
-                                >
-                                  {reason}
-                                </span>
-                              ))}
-                            </div>
-                            <div className="space-y-1.5">
-                              <DimensionBar label="户型" value={mc.layoutSimilarity} color="bg-teal-500" />
-                              <DimensionBar label="面积" value={mc.areaCloseness} color="bg-orange-400" />
-                              <DimensionBar label="风格" value={mc.styleMatch} color="bg-blue-400" />
-                            </div>
+                            <p className="text-xs text-gray-400 mt-0.5">{phase.detail}</p>
+                            {isDone && (
+                              <div className="flex items-center gap-1.5 mt-1.5">
+                                <Check className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+                                <p className="text-xs text-teal-600">{phase.successText}</p>
+                              </div>
+                            )}
+                            {isActive && phaseNum === 3 && (
+                              <div className="mt-2 h-2 bg-teal-100 rounded-full overflow-hidden">
+                                <div
+                                  className="h-full bg-teal-600 rounded-full transition-all duration-200"
+                                  style={{ width: `${phaseProgress}%` }}
+                                />
+                              </div>
+                            )}
                           </div>
-                        </div>
-
-                        <div className="flex items-center gap-3 mt-3 pt-3 border-t border-gray-100">
-                          <div className="flex items-center gap-1 text-xs text-gray-600">
-                            <Home className="w-3.5 h-3.5 text-teal-600" />
-                            {mc.houseType}
-                          </div>
-                          <div className="flex items-center gap-1 text-xs text-gray-600">
-                            <Ruler className="w-3.5 h-3.5 text-teal-600" />
-                            {mc.area}㎡
-                          </div>
-                          <div className="flex items-center gap-1 text-xs font-medium text-orange-500">
-                            <Wallet className="w-3.5 h-3.5" />
-                            {formatBudget(mc.budget)}
-                          </div>
-                          <button
-                            onClick={() => navigate(`/cases/${mc.id}/3d`)}
-                            className="ml-auto inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-teal-700 bg-teal-50 rounded-lg hover:bg-teal-100 transition-colors"
-                          >
-                            <Box className="w-3.5 h-3.5" />
-                            3D预览
-                          </button>
                         </div>
                       </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {matched && selectedCases.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <CheckSquare className="w-5 h-5 text-teal-700" />
+                  已选择对比案例
+                </h3>
+                <div className="space-y-3">
+                  {selectedCases.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between gap-3 rounded-xl bg-gray-50 p-3">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{item.title}</p>
+                        <p className="text-xs text-gray-500">
+                          {item.area}㎡ · {item.houseType || item.layout} · {formatBudget(item.budget)}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => toggleSelect(item.id)}
+                        className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50"
+                        aria-label="移除对比案例"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
                     </div>
                   ))}
                 </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-96 text-center">
-                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-                    <Search className="w-10 h-10 text-gray-300" />
+                <button
+                  onClick={() => setShowCompare((value) => !value)}
+                  className="mt-4 w-full py-2.5 rounded-xl bg-teal-50 text-teal-700 font-medium hover:bg-teal-100"
+                >
+                  {showCompare ? '收起对比分析' : '查看详细对比'}
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div ref={resultsSectionRef} className="space-y-6">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between gap-4 mb-4">
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <Database className="w-5 h-5 text-teal-700" />
+                    智能匹配结果
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1">基于真实施工数据、户型图、水电图和验收照片综合排序</p>
+                </div>
+                {matched && (
+                  <div className="relative w-16 h-16 shrink-0">
+                    <ScoreRing value={avgSimilarity} size={64} />
+                    <div className="absolute inset-0 flex items-center justify-center text-sm font-bold text-teal-700">
+                      {avgSimilarity}%
+                    </div>
                   </div>
-                  <p className="text-gray-500 mb-2">填写信息后点击匹配</p>
-                  <p className="text-sm text-gray-400">AI 将为你推荐最相似的真实装修案例</p>
+                )}
+              </div>
+
+              {!matched && !isMatching && (
+                <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50 p-6 text-center">
+                  <Box className="w-10 h-10 text-gray-300 mx-auto mb-3" />
+                  <p className="font-medium text-gray-700">上传户型图或完整填写信息后开始智能匹配</p>
+                  <p className="text-sm text-gray-500 mt-1">系统会把匹配依据绑定到用户输入，返回相似案例、预算区间、设计师和可交付资料</p>
+                </div>
+              )}
+
+              {isMatching && (
+                <div className="rounded-xl bg-teal-50 border border-teal-100 p-5">
+                  <div className="flex items-start gap-3">
+                    <RefreshCw className="w-5 h-5 text-teal-700 animate-spin mt-0.5" />
+                    <div>
+                      <p className="font-medium text-teal-900">AI 正在分析户型与案例库</p>
+                      <p className="text-sm text-teal-700 mt-1">预计 3 秒内生成 Top6 推荐方案</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {matched && isUsingDefaultParams && (
+                <div className="mb-4 flex items-start gap-3 rounded-xl border border-gray-200 bg-gray-100 p-4">
+                  <Info className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-gray-600">
+                      当前基于默认参数匹配。上传您的真实户型图可获得更精准的推荐结果
+                    </p>
+                    <button
+                      onClick={scrollToForm}
+                      className="mt-3 px-4 py-2 rounded-lg bg-gray-700 text-white text-sm font-medium hover:bg-gray-800 flex items-center gap-1.5 transition-colors"
+                    >
+                      <Upload className="w-4 h-4" />
+                      立即上传户型图
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {matched && (
+                <div className="mb-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-sm font-semibold text-gray-900">匹配条件</h3>
+                        {isUsingDefaultParams && (
+                          <span className="px-2 py-0.5 rounded-full bg-gray-200 text-gray-500 text-xs font-medium">
+                            默认参数
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600">
+                        匹配依据：{effectiveParams.layout} · {effectiveParams.area}㎡ · {effectiveParams.style} · {effectiveParams.budgetMin}-{effectiveParams.budgetMax}万预算
+                      </p>
+                      {uploaded && (
+                        <p className="mt-1 text-sm text-teal-600 flex items-center gap-1">
+                          <FileText className="w-4 h-4" />
+                          户型图已识别
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={scrollToForm}
+                      className="shrink-0 px-3 py-2 rounded-lg bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 hover:border-gray-300 flex items-center gap-1.5 transition-colors"
+                    >
+                      <Edit3 className="w-4 h-4" />
+                      修改参数
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {matched && (
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="rounded-xl bg-teal-50 p-3">
+                    <p className="text-xs text-teal-700">匹配案例</p>
+                    <p className="text-2xl font-bold text-teal-900 mt-1">{matchedCases.length}</p>
+                  </div>
+                  <div className="rounded-xl bg-orange-50 p-3">
+                    <p className="text-xs text-orange-700">平均相似度</p>
+                    <p className="text-2xl font-bold text-orange-700 mt-1">{avgSimilarity}%</p>
+                  </div>
+                  <div className="rounded-xl bg-blue-50 p-3">
+                    <p className="text-xs text-blue-700">可对比资料</p>
+                    <p className="text-2xl font-bold text-blue-700 mt-1">4类</p>
+                  </div>
+                </div>
+              )}
+
+              {hasLowSimilarity && (
+                <div className="mt-4 rounded-xl bg-orange-50 border border-orange-200 p-4">
+                  <div className="flex items-start gap-3">
+                    <AlertTriangle className="w-5 h-5 text-orange-500 mt-0.5 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-orange-800">匹配度较低，建议尝试以下调整：</p>
+                      <p className="text-sm text-orange-700 mt-1">
+                        ①扩大面积范围 ②放宽风格限制 ③调整预算区间
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <button
+                          onClick={() => {
+                            const currentArea = Number(effectiveParams.area) || 100;
+                            handleFormChange('area', String(Math.round(currentArea * 1.3)));
+                            setIsFormModified(true);
+                            scrollToForm();
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-orange-100 text-orange-700 text-xs font-medium hover:bg-orange-200 transition-colors"
+                        >
+                          面积扩大30%
+                        </button>
+                        <button
+                          onClick={() => {
+                            handleFormChange('style', '');
+                            setIsFormModified(true);
+                            scrollToForm();
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-orange-100 text-orange-700 text-xs font-medium hover:bg-orange-200 transition-colors"
+                        >
+                          不限风格
+                        </button>
+                        <button
+                          onClick={() => {
+                            handleFormChange('budgetMin', '5');
+                            handleFormChange('budgetMax', '100');
+                            setIsFormModified(true);
+                            scrollToForm();
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-orange-100 text-orange-700 text-xs font-medium hover:bg-orange-200 transition-colors"
+                        >
+                          放宽预算
+                        </button>
+                        <button
+                          onClick={scrollToForm}
+                          className="px-3 py-1.5 rounded-lg bg-white border border-orange-200 text-orange-600 text-xs font-medium hover:bg-orange-50 transition-colors"
+                        >
+                          手动调整
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
 
-            {matched && (
-              <>
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <Box className="w-5 h-5 text-teal-700" />
-                    3D户型方案
-                  </h3>
-                  <p className="text-sm text-gray-500 mb-3">
-                    支持 SketchUp / GLTF 导入，叠加推荐方案对比，沉浸式体验装修效果
-                  </p>
-                  <button
-                    onClick={() => {
-                      const topCase = matchedCases[0];
-                      if (topCase) navigate(`/cases/${topCase.id}/3d`);
-                    }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors"
-                  >
-                    <Box className="w-5 h-5" />
-                    3D方案预览
-                  </button>
-                </div>
-
-                <button
-                  onClick={() => {
-                    const topCase = matchedCases[0];
-                    if (topCase) navigate(`/pdf-delivery/${topCase.id}`);
-                  }}
-                  className="w-full py-3.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
-                >
-                  <FileText className="w-5 h-5" />
-                  生成PDF交付包
-                  <span className="text-white/70 text-sm">— 完成匹配→对比→预览→交付闭环</span>
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-
-        {matched && showCompare && selectedCases.length >= 2 && (
-          <div className="mt-8 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 animate-fade-in-up">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-teal-700" />
-                方案对比
-              </h2>
-              <button
-                onClick={() => setShowCompare(false)}
-                className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-sm font-semibold text-gray-700 mb-3">预算对比 (万元)</h3>
+            {showCompare && selectedCases.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-900 mb-4">预算对比</h3>
                 <div className="h-56">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={budgetChartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                      <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                      <YAxis tick={{ fontSize: 12 }} />
-                      <Tooltip
-                        formatter={(value: number) => [`${value}万`, '预算']}
-                        contentStyle={{ borderRadius: '8px', fontSize: '13px' }}
-                      />
-                      <Bar dataKey="预算" fill="#0f766e" radius={[4, 4, 0, 0]} />
+                    <BarChart data={budgetChartData}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                      <XAxis dataKey="name" tick={{ fontSize: 11 }} />
+                      <YAxis tick={{ fontSize: 11 }} />
+                      <Tooltip formatter={(value) => [`${value}万`, '预算']} />
+                      <Bar dataKey="预算" fill="#0f766e" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
+            )}
 
-              <div>
-                <h3 className="text-sm font-semibold text-gray-700 mb-3">面积 / 户型 / 风格对比</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-2 px-3 text-gray-500 font-medium">维度</th>
-                        {selectedCases.map((c) => (
-                          <th key={c.id} className="text-center py-2 px-3 text-gray-900 font-medium truncate max-w-[120px]">
-                            {c.title.length > 6 ? c.title.slice(0, 6) + '…' : c.title}
-                          </th>
+            {displayCases.length > 0 ? (
+              <div className="space-y-4">
+                {displayCases.map((item) => (
+                  <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div className="p-5">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            <RankBadge rank={item.rank} />
+                            <CompletenessBadge score={item.dataCompleteness} />
+                          </div>
+                          <h3 className="font-semibold text-gray-900 truncate">{item.title}</h3>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {item.city} · {item.area}㎡ · {item.houseType || item.layout} · {item.style}
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-center gap-1.5 shrink-0">
+                          <div className="relative w-14 h-14">
+                            <ScoreRing value={item.similarity} size={56} />
+                            <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-teal-700">
+                              {item.similarity}%
+                            </div>
+                          </div>
+                          <p className="text-[10px] text-gray-400 leading-tight text-center">
+                            得分组成：户型35% + 面积30% + 风格25% + 预算10%
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 space-y-2">
+                        <DimensionBar label="户型" value={item.layoutSimilarity} color="bg-teal-500" />
+                        <DimensionBar label="面积" value={item.areaCloseness} color="bg-blue-500" />
+                        <DimensionBar label="风格" value={item.styleMatch} color="bg-orange-400" />
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <span className="px-2 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-medium">
+                          户型 {item.layoutSimilarity}分
+                        </span>
+                        <span className="px-2 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium">
+                          面积 {item.areaCloseness}分
+                        </span>
+                        <span className="px-2 py-1 rounded-full bg-orange-50 text-orange-700 text-xs font-medium">
+                          风格 {item.styleMatch}分
+                        </span>
+                        {item.matchReasons.slice(3).map((reason) => (
+                          <span key={reason} className="px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                            {reason}
+                          </span>
                         ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-gray-100">
-                        <td className="py-2 px-3 text-gray-600 flex items-center gap-1">
-                          <Ruler className="w-3.5 h-3.5 text-teal-600" />面积
-                        </td>
-                        {selectedCases.map((c) => (
-                          <td key={c.id} className="text-center py-2 px-3 font-medium text-gray-800">
-                            {c.area}㎡
-                          </td>
-                        ))}
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="py-2 px-3 text-gray-600 flex items-center gap-1">
-                          <Home className="w-3.5 h-3.5 text-teal-600" />户型
-                        </td>
-                        {selectedCases.map((c) => (
-                          <td key={c.id} className="text-center py-2 px-3 text-gray-800">
-                            {c.houseType}
-                          </td>
-                        ))}
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="py-2 px-3 text-gray-600 flex items-center gap-1">
-                          <Sparkles className="w-3.5 h-3.5 text-orange-400" />风格
-                        </td>
-                        {selectedCases.map((c) => (
-                          <td key={c.id} className="text-center py-2 px-3">
-                            <span className="px-2 py-0.5 text-xs font-medium bg-teal-50 text-teal-700 rounded-full">
-                              {c.style}
-                            </span>
-                          </td>
-                        ))}
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="py-2 px-3 text-gray-600 flex items-center gap-1">
-                          <Wallet className="w-3.5 h-3.5 text-orange-400" />预算
-                        </td>
-                        {selectedCases.map((c) => (
-                          <td key={c.id} className="text-center py-2 px-3 font-medium text-orange-500">
-                            {formatBudget(c.budget)}
-                          </td>
-                        ))}
-                      </tr>
-                      <tr>
-                        <td className="py-2 px-3 text-gray-600 flex items-center gap-1">
-                          <Star className="w-3.5 h-3.5 text-yellow-400" />评分
-                        </td>
-                        {selectedCases.map((c) => (
-                          <td key={c.id} className="text-center py-2 px-3 font-medium text-gray-800">
-                            {c.qualityScore?.toFixed(1) || '4.8'}
-                          </td>
-                        ))}
-                      </tr>
-                    </tbody>
-                  </table>
+                      </div>
+
+                      <p className="mt-3 text-sm text-gray-600">{item.similarityExplanation}</p>
+
+                      <div className="mt-4 grid grid-cols-2 gap-2">
+                        <button
+                          onClick={() => toggleSelect(item.id)}
+                          className={`py-2 rounded-xl text-sm font-medium ${
+                            selectedIds.includes(item.id)
+                              ? 'bg-teal-700 text-white'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          {selectedIds.includes(item.id) ? '已加入对比' : '加入对比'}
+                        </button>
+                        <button
+                          onClick={() => navigate(`/cases/${item.id}/3d`)}
+                          className="py-2 rounded-xl bg-orange-500 text-white text-sm font-medium hover:bg-orange-600 flex items-center justify-center gap-1.5"
+                        >
+                          <Eye className="w-4 h-4" />
+                          3D预览
+                        </button>
+                        <button
+                          onClick={() => navigate(`/cases/${item.id}`)}
+                          className="py-2 rounded-xl bg-teal-50 text-teal-700 text-sm font-medium hover:bg-teal-100 flex items-center justify-center gap-1.5"
+                        >
+                          <FileText className="w-4 h-4" />
+                          查看详情
+                        </button>
+                        <button
+                          onClick={() => navigate(`/pdf-delivery/${item.id}`)}
+                          className="py-2 rounded-xl bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 flex items-center justify-center gap-1.5"
+                        >
+                          <FileOutput className="w-4 h-4" />
+                          PDF交付
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <h3 className="text-base font-semibold text-gray-900 mb-4">历史匹配样例</h3>
+                <div className="space-y-3">
+                  {HISTORY_EXAMPLES.map((item) => (
+                    <div key={item.id} className="flex items-center gap-3 rounded-xl bg-gray-50 p-3">
+                      <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold">
+                        {item.similarity}%
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">{item.title}</p>
+                        <p className="text-xs text-gray-500">
+                          {item.area}㎡ · {item.layout} · {item.style} · {item.budget}
+                        </p>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-gray-300 ml-auto" />
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-
-            <div className="mt-6">
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">建材品牌对比</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-2 px-3 text-gray-500 font-medium">品类</th>
-                      {selectedCases.map((c) => (
-                        <th key={c.id} className="text-center py-2 px-3 text-gray-900 font-medium truncate max-w-[120px]">
-                          {c.title.length > 6 ? c.title.slice(0, 6) + '…' : c.title}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {['瓷砖', '地板', '卫浴', '橱柜', '门窗', '乳胶漆'].map((cat) => (
-                      <tr key={cat} className="border-b border-gray-100">
-                        <td className="py-2 px-3 text-gray-600 font-medium">{cat}</td>
-                        {selectedCases.map((c) => {
-                          const mat = c.materials?.find((m) => m.name?.includes(cat) || m.brand);
-                          return (
-                            <td key={c.id} className="text-center py-2 px-3 text-gray-700">
-                              {mat ? (
-                                <span>
-                                  <span className="font-medium">{mat.brand}</span>
-                                  <span className="text-gray-400 ml-1">{mat.name}</span>
-                                </span>
-                              ) : (
-                                <span className="text-gray-300">—</span>
-                              )}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="mt-6 flex items-center justify-between pt-4 border-t border-gray-200">
-              <p className="text-sm text-gray-500">
-                已选 {selectedCases.length} 个方案进行对比（最多3个）
-              </p>
-              <button
-                onClick={() => {
-                  const topCase = selectedCases[0];
-                  if (topCase) navigate(`/pdf-delivery/${topCase.id}`);
-                }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors"
-              >
-                <FileText className="w-4 h-4" />
-                生成PDF交付包
-              </button>
-            </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

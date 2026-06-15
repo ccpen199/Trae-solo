@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Home,
   MapPin,
@@ -71,14 +71,21 @@ const acceptanceTabs: Array<{ id: AcceptanceTab; label: string }> = [
 export default function CaseDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const initialSection = searchParams.get('section') || searchParams.get('tab');
   const [caseData, setCaseData] = useState<Case | null>(null);
   const [designer, setDesigner] = useState<Designer | null>(null);
-  const [activeSection, setActiveSection] = useState<NavSection>('floorplan');
+  const [activeSection, setActiveSection] = useState<NavSection>(
+    ['floorplan', 'electric', 'photos', 'materials', 'data', 'evidence'].includes(initialSection || '')
+      ? (initialSection as NavSection)
+      : 'evidence'
+  );
   const [electricTab, setElectricTab] = useState<ElectricTab>('strong');
   const [acceptanceTab, setAcceptanceTab] = useState<AcceptanceTab>('concealed');
   const [floorPlanScale, setFloorPlanScale] = useState(1);
   const [lightboxImage, setLightboxImage] = useState<AcceptancePhoto | null>(null);
   const [isCollected, setIsCollected] = useState(false);
+  const [evidenceModal, setEvidenceModal] = useState<{ title: string; content: string; action: () => void; icon: typeof Home } | null>(null);
 
   useEffect(() => {
     const found = mockCases.find((c) => c.id === id) || mockCases[0];
@@ -88,6 +95,13 @@ export default function CaseDetail() {
       setDesigner(d);
     }
   }, [id]);
+
+  useEffect(() => {
+    const section = searchParams.get('section') || searchParams.get('tab');
+    if (section && ['floorplan', 'electric', 'photos', 'materials', 'data', 'evidence'].includes(section)) {
+      setActiveSection(section as NavSection);
+    }
+  }, [searchParams]);
 
   if (!caseData) {
     return (
@@ -521,6 +535,29 @@ export default function CaseDetail() {
                   </h2>
                   <p className="text-sm text-gray-500 mt-1">按施工流程串联各阶段关键证据，确保施工质量可追溯</p>
                 </div>
+                <div className="px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-primary-50/50 to-white">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-gray-700">施工进度</span>
+                        <span className="text-sm font-semibold text-primary-700">已完成 3/5 阶段</span>
+                      </div>
+                      <div className="h-2.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full" style={{ width: '60%' }} />
+                      </div>
+                    </div>
+                    <div className="flex gap-6 sm:gap-8">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-teal-600">13</div>
+                        <div className="text-xs text-gray-500 mt-0.5">已核验证据</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-green-600">100%</div>
+                        <div className="text-xs text-gray-500 mt-0.5">验收通过率</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div className="p-5">
                   <div className="relative">
                     <div className="absolute left-5 top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary-200 via-primary-300 to-primary-400" />
@@ -531,9 +568,20 @@ export default function CaseDetail() {
                         status: 'done',
                         desc: '户型设计与3D方案确认',
                         color: 'from-violet-500 to-indigo-600',
+                        evidenceCount: 2,
                         evidences: [
-                          { label: '户型图SVG', action: () => setActiveSection('floorplan'), icon: LayoutDashboard },
-                          { label: '3D预览入口', action: () => navigate(`/cases/${id}/3d`), icon: Box },
+                          {
+                            label: '户型图SVG',
+                            icon: LayoutDashboard,
+                            description: '原始户型图与平面布局方案，包含墙体、门窗、家具摆放等完整信息，支持100%缩放查看。所有尺寸与实际房屋一致，经设计师与业主双方确认。',
+                            action: () => setActiveSection('floorplan'),
+                          },
+                          {
+                            label: '3D预览入口',
+                            icon: Box,
+                            description: '基于户型图生成的3D全景效果预览，可沉浸式体验装修后的空间效果，支持720°旋转查看。',
+                            action: () => navigate(`/cases/${id}/3d`),
+                          },
                         ],
                       },
                       {
@@ -542,9 +590,32 @@ export default function CaseDetail() {
                         status: 'done',
                         desc: '水电点位定位与技术交底',
                         color: 'from-blue-500 to-cyan-600',
+                        evidenceCount: 4,
                         evidences: [
-                          { label: '水电点位图', action: () => setActiveSection('electric'), icon: Cable },
-                          { label: '隐蔽工程照片', action: () => { setActiveSection('photos'); setAcceptanceTab('concealed'); }, icon: Camera },
+                          {
+                            label: '强电点位图',
+                            icon: Lightbulb,
+                            description: '全屋强电插座、开关、灯具点位布置图，标明回路划分与线材规格，符合国家电气施工规范。',
+                            action: () => { setActiveSection('electric'); setElectricTab('strong'); },
+                          },
+                          {
+                            label: '弱电点位图',
+                            icon: Cable,
+                            description: '网络、电视、电话、安防等弱电点位布置图，包含网线类型与点位数量，满足智能化家居需求。',
+                            action: () => { setActiveSection('electric'); setElectricTab('weak'); },
+                          },
+                          {
+                            label: '给排水点位图',
+                            icon: Droplets,
+                            description: '给水、排水点位布置图，包含冷热水管走向、地漏位置、洁具接口等，防水处理有专项验收记录。',
+                            action: () => { setActiveSection('electric'); setElectricTab('water'); },
+                          },
+                          {
+                            label: '隐蔽工程照片',
+                            icon: Camera,
+                            description: '水电改造完成后的现场实拍照片，记录管线走向与固定方式，封槽前留存完整影像资料。',
+                            action: () => { setActiveSection('photos'); setAcceptanceTab('concealed'); },
+                          },
                         ],
                       },
                       {
@@ -553,9 +624,26 @@ export default function CaseDetail() {
                         status: 'done',
                         desc: '瓦工铺贴与木工制作',
                         color: 'from-orange-500 to-amber-600',
+                        evidenceCount: 3,
                         evidences: [
-                          { label: '泥木阶段验收照片', action: () => { setActiveSection('photos'); setAcceptanceTab('mud-wood'); }, icon: Camera },
-                          { label: '对应建材', action: () => setActiveSection('materials'), icon: Boxes },
+                          {
+                            label: '泥木验收照片',
+                            icon: Camera,
+                            description: '泥木工程完工后的现场验收照片，包括瓷砖铺贴效果、吊顶造型、柜体制作等关键工序实景记录。',
+                            action: () => { setActiveSection('photos'); setAcceptanceTab('mud-wood'); },
+                          },
+                          {
+                            label: '瓷砖建材',
+                            icon: Boxes,
+                            description: '厨房、卫生间、阳台等区域使用的瓷砖品牌型号与用量清单，可追溯采购来源与质检报告。',
+                            action: () => setActiveSection('materials'),
+                          },
+                          {
+                            label: '地板建材',
+                            icon: Boxes,
+                            description: '客厅、卧室等区域使用的地板品牌型号与用量清单，包含环保等级与耐磨参数信息。',
+                            action: () => setActiveSection('materials'),
+                          },
                         ],
                       },
                       {
@@ -564,9 +652,20 @@ export default function CaseDetail() {
                         status: 'current',
                         desc: '墙面处理与乳胶漆施工',
                         color: 'from-pink-500 to-rose-600',
+                        evidenceCount: 2,
                         evidences: [
-                          { label: '油漆阶段照片', action: () => { setActiveSection('photos'); setAcceptanceTab('paint'); }, icon: Camera },
-                          { label: '乳胶漆品牌', action: () => setActiveSection('materials'), icon: Boxes },
+                          {
+                            label: '油漆阶段照片',
+                            icon: Camera,
+                            description: '墙面腻子打磨、底漆面漆施工等关键节点的现场照片，记录施工工艺与完成效果。',
+                            action: () => { setActiveSection('photos'); setAcceptanceTab('paint'); },
+                          },
+                          {
+                            label: '乳胶漆品牌',
+                            icon: Boxes,
+                            description: '墙面乳胶漆的品牌型号与用量，环保等级达标，提供产品质检报告与环保认证。',
+                            action: () => setActiveSection('materials'),
+                          },
                         ],
                       },
                       {
@@ -575,9 +674,20 @@ export default function CaseDetail() {
                         status: 'pending',
                         desc: '整体验收与质量评分',
                         color: 'from-emerald-500 to-teal-600',
+                        evidenceCount: 2,
                         evidences: [
-                          { label: '各阶段验收记录', action: () => setActiveSection('data'), icon: ClipboardList },
-                          { label: '质量评分', action: () => setActiveSection('data'), icon: Star },
+                          {
+                            label: '各阶段验收记录',
+                            icon: ClipboardList,
+                            description: '隐蔽工程、防水、泥木、中期、竣工等各阶段监理验收记录，包含检查项数与问题整改情况。',
+                            action: () => setActiveSection('data'),
+                          },
+                          {
+                            label: '质量评分',
+                            icon: Star,
+                            description: '基于户型完整度、照片质量、数据准确性、设计复查等多维度综合评分，反映整体施工质量水平。',
+                            action: () => setActiveSection('data'),
+                          },
                         ],
                       },
                     ].map((stage, idx) => {
@@ -604,7 +714,7 @@ export default function CaseDetail() {
                             <div className="flex items-center gap-2 flex-wrap">
                               <span className="font-semibold text-gray-900 text-base">{stage.name}</span>
                               {stage.status === 'done' && (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs rounded-full font-medium">
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full font-medium">
                                   <CheckCircle className="w-3 h-3" />
                                   已完成
                                 </span>
@@ -620,6 +730,10 @@ export default function CaseDetail() {
                                   待开始
                                 </span>
                               )}
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary-50 text-primary-700 text-xs rounded-full font-medium">
+                                <FileText className="w-3 h-3" />
+                                {stage.evidenceCount}项证据
+                              </span>
                             </div>
                             <p className="text-sm text-gray-500 mt-1 mb-3">{stage.desc}</p>
                             <div className="flex flex-wrap gap-2">
@@ -628,7 +742,18 @@ export default function CaseDetail() {
                                 return (
                                   <button
                                     key={eIdx}
-                                    onClick={evidence.action}
+                                    onClick={() => {
+                                      if (idx < 3) {
+                                        setEvidenceModal({
+                                          title: evidence.label,
+                                          content: evidence.description,
+                                          action: evidence.action,
+                                          icon: evidence.icon,
+                                        });
+                                      } else {
+                                        evidence.action();
+                                      }
+                                    }}
                                     className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-primary-300 text-gray-700 hover:text-primary-600 text-xs font-medium rounded-lg transition-all"
                                   >
                                     <EvIcon className="w-3.5 h-3.5" />
@@ -843,6 +968,67 @@ export default function CaseDetail() {
           </main>
         </div>
       </div>
+
+      {/* 证据摘要弹窗 */}
+      {evidenceModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setEvidenceModal(null)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 py-5 border-b border-gray-100">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
+                    {(() => {
+                      const Icon = evidenceModal.icon;
+                      return <Icon className="w-6 h-6 text-primary-600" />;
+                    })()}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">{evidenceModal.title}</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">施工证据 · 可复核</p>
+                  </div>
+                </div>
+                <button
+                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+                  onClick={() => setEvidenceModal(null)}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+            <div className="px-6 py-5">
+              <p className="text-gray-600 text-sm leading-relaxed">{evidenceModal.content}</p>
+              <div className="mt-4 flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                <span className="text-xs text-gray-500">该证据已通过监理核验</span>
+              </div>
+            </div>
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex gap-3">
+              <button
+                className="flex-1 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-xl hover:bg-gray-50 transition-colors"
+                onClick={() => setEvidenceModal(null)}
+              >
+                关闭
+              </button>
+              <button
+                className="flex-1 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                onClick={() => {
+                  evidenceModal.action();
+                  setEvidenceModal(null);
+                }}
+              >
+                查看完整证据
+                <ExternalLink className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 照片灯箱 */}
       {lightboxImage && (
