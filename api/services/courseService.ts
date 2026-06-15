@@ -39,7 +39,9 @@ export function getCourses(params: {
   `).get(...values) as any).count;
 
   const rows = db.prepare(`
-    SELECT c.* FROM courses c
+    SELECT c.*, (
+      SELECT COUNT(*) FROM chapters ch WHERE ch.course_id = c.id
+    ) as chapter_count FROM courses c
     ${whereSql}
     ORDER BY c.created_at DESC
     LIMIT ? OFFSET ?
@@ -267,6 +269,7 @@ function mapCourse(row: any): Course {
     studentCount: row.student_count,
     rating: row.rating,
     reviewCount: row.review_count,
+    chapterCount: row.chapter_count || 0,
     status: row.status as 'draft' | 'reviewing' | 'published' | 'rejected',
     createdAt: row.created_at,
   };

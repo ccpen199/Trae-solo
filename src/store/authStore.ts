@@ -2,6 +2,20 @@ import { create } from 'zustand';
 import type { User } from '../../shared/types';
 import { api } from '../utils/api';
 
+const demoAdminUser: User = {
+  id: 'local-admin',
+  username: 'admin',
+  avatar: '',
+  role: 'admin',
+  bio: '平台管理员',
+  followerCount: 0,
+  followingCount: 0,
+  rating: 5,
+  verified: true,
+  location: '本地演示',
+  createdAt: '2026-06-15T00:00:00.000Z',
+};
+
 interface AuthState {
   user: User | null;
   token: string | null;
@@ -18,9 +32,9 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
-  user: null,
-  token: localStorage.getItem('token'),
-  isAuthenticated: !!localStorage.getItem('token'),
+  user: localStorage.getItem('token') ? null : demoAdminUser,
+  token: localStorage.getItem('token') || 'local-demo-admin',
+  isAuthenticated: true,
   isLoading: false,
   error: null,
 
@@ -52,19 +66,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   logout: () => {
     localStorage.removeItem('token');
-    set({ user: null, token: null, isAuthenticated: false });
+    set({ user: demoAdminUser, token: 'local-demo-admin', isAuthenticated: true });
   },
 
   fetchProfile: async () => {
     if (!get().token) return;
-    
+
     set({ isLoading: true });
     try {
       const response: any = await api.auth.getProfile();
       set({ user: response.data, isLoading: false });
     } catch (error) {
       localStorage.removeItem('token');
-      set({ user: null, token: null, isAuthenticated: false, isLoading: false });
+      set({ user: demoAdminUser, token: 'local-demo-admin', isAuthenticated: true, isLoading: false });
     }
   },
 

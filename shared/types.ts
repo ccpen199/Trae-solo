@@ -2,7 +2,7 @@ export interface User {
   id: string;
   username: string;
   avatar?: string;
-  role: 'user' | 'creator' | 'admin';
+  role: 'user' | 'creator' | 'admin' | 'requester';
   bio?: string;
   followerCount: number;
   followingCount: number;

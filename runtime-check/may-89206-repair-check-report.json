@@ -1,0 +1,2407 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T18:44:23.625Z",
+  "order": "may-89206",
+  "roundIndex": 99,
+  "captureId": "may-89206-repair-check",
+  "url": "http://127.0.0.1:49206/",
+  "initialUrl": "http://127.0.0.1:49206/",
+  "finalUrl": "http://127.0.0.1:49206/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-02-导航-S-SkillVerse.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-03-操作-查看更多.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-04-二层操作-查看更多-编程.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-05-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-06-二层操作-查看全部-发布需求.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在购买/商品入口，优先复验交易链路；页面存在我的/账号入口，优先复验个人中心链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "detail",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在购买/商品入口，优先复验交易链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在购买/商品入口，优先复验交易链路",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49206/feed"
+    },
+    {
+      "action": "click",
+      "label": "页面存在内容列表，优先复验详情链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在内容列表，优先复验详情链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49206/guarantee"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49206/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:S SkillVerse",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看更多:编程",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:发布需求",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "headings": [
+          "技能即服务",
+          "我是学习者",
+          "我是创作者",
+          "我有需求",
+          "快速入口",
+          "热门视频",
+          "精选课程",
+          "爵士舞入门到精通",
+          "吉他弹唱三月通",
+          "居家健身减脂计划",
+          "水彩风景绘画",
+          "定制订单广场"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 登录 注册",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录 注册",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "登录",
+          "注册",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "发布需求",
+          "查看全部",
+          "查看详情",
+          "立即接单",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场登录注册让每个人的技能都能创造价值技能即服务连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务我是学习者学习课程、购买服务浏览课程我是创作者发布课程、提供服务进入工作台我有需求发布订单、定制服务发布需求10,000+优质课程5,000+认证创作者50万+活跃用户98%好评率快速入口常用功能一键直达创作者工作台内容审核中心交易管理财务结算账号设置平台保障中心内容社区 · C端免费浏览 · UGC内容热门视频发现精彩内容查看更多 12:30舞蹈街舞基础入门教学3.4k015:45音乐钢琴零基础教程第一乐章2.1k020:00运动瑜伽晨间唤醒练习5.7k018:20绘画水彩画技法详解1.9k0课程市场 · 交易平台审核 · 交易保障精选课程高质量系统化学习查看更多 舞蹈已发布订阅制爵士舞入门到精通林舞蹈家4.81996¥199/ ¥59/月0 章节音乐已发布订阅制吉他弹唱三月通张吉他手4.91290¥149/ ¥44/月0 章节运动已发布订阅制居家健身减脂计划王健身教练4.71331¥99/ ¥29/月0 章节绘画已发布订阅制水彩风景绘画李画师4.8146¥129/ ¥38/月0 章节C 端内容 / B 端服务订单广场 · B端定制服务 · 定金托管定制订单广场找到适合你的专业服务发布需求查看全部 舞蹈已发布上门教爵士舞基础想学习爵士舞基础，每周2次，每次1小时¥300定金 ¥100朝阳区2026-07-09T15:32:53.516Z预计 60 天李画师6月14日 15:32平台保障查看详情立即接单创作者热门创作者关注你喜欢的创作者✓李画师4.94639 粉丝✓林舞蹈家4.93511 粉丝✓陈摄影师4.84830 粉丝✓张吉他手4.82801 粉丝✓王健身教练4.72887 粉丝平台保障六大保障体系全方位保障交易安全，让技能服务更放心98%双向评价好评率100%服务留痕过程可追溯50万保险覆盖最高保额100%资金托管安全保障了解完整保障体系准备好开始你的技能变现之旅了吗？加入我们，将你的专业技能转化为可持续的收入来源成为创作者了解平台保障SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 4647,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-repair-check-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49206/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-01-首屏.png",
+          "elementCount": 792,
+          "interactiveCount": 42,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "登录",
+            "注册",
+            "查看更多",
+            "3.4k",
+            "2.1k",
+            "5.7k",
+            "1.9k",
+            "发布需求",
+            "查看全部",
+            "查看详情",
+            "立即接单",
+            "了解完整保障体系",
+            "成为创作者",
+            "了解平台保障",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕",
+            "争议仲裁机制",
+            "保险对接接口",
+            "查看完整保障体系"
+          ]
+        }
+      },
+      {
+        "label": "导航:S SkillVerse",
+        "url": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "headings": [
+          "技能即服务",
+          "我是学习者",
+          "我是创作者",
+          "我有需求",
+          "快速入口",
+          "热门视频",
+          "精选课程",
+          "爵士舞入门到精通",
+          "吉他弹唱三月通",
+          "居家健身减脂计划",
+          "水彩风景绘画",
+          "定制订单广场"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 登录 注册",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录 注册",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "登录",
+          "注册",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "发布需求",
+          "查看全部",
+          "查看详情",
+          "立即接单",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场登录注册让每个人的技能都能创造价值技能即服务连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务我是学习者学习课程、购买服务浏览课程我是创作者发布课程、提供服务进入工作台我有需求发布订单、定制服务发布需求10,000+优质课程5,000+认证创作者50万+活跃用户98%好评率快速入口常用功能一键直达创作者工作台内容审核中心交易管理财务结算账号设置平台保障中心内容社区 · C端免费浏览 · UGC内容热门视频发现精彩内容查看更多 12:30舞蹈街舞基础入门教学3.4k015:45音乐钢琴零基础教程第一乐章2.1k020:00运动瑜伽晨间唤醒练习5.7k018:20绘画水彩画技法详解1.9k0课程市场 · 交易平台审核 · 交易保障精选课程高质量系统化学习查看更多 舞蹈已发布订阅制爵士舞入门到精通林舞蹈家4.81996¥199/ ¥59/月0 章节音乐已发布订阅制吉他弹唱三月通张吉他手4.91290¥149/ ¥44/月0 章节运动已发布订阅制居家健身减脂计划王健身教练4.71331¥99/ ¥29/月0 章节绘画已发布订阅制水彩风景绘画李画师4.8146¥129/ ¥38/月0 章节C 端内容 / B 端服务订单广场 · B端定制服务 · 定金托管定制订单广场找到适合你的专业服务发布需求查看全部 舞蹈已发布上门教爵士舞基础想学习爵士舞基础，每周2次，每次1小时¥300定金 ¥100朝阳区2026-07-09T15:32:53.516Z预计 60 天李画师6月14日 15:32平台保障查看详情立即接单创作者热门创作者关注你喜欢的创作者✓李画师4.94639 粉丝✓林舞蹈家4.93511 粉丝✓陈摄影师4.84830 粉丝✓张吉他手4.82801 粉丝✓王健身教练4.72887 粉丝平台保障六大保障体系全方位保障交易安全，让技能服务更放心98%双向评价好评率100%服务留痕过程可追溯50万保险覆盖最高保额100%资金托管安全保障了解完整保障体系准备好开始你的技能变现之旅了吗？加入我们，将你的专业技能转化为可持续的收入来源成为创作者了解平台保障SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 4797,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-repair-check-structure-02-导航-S-SkillVerse",
+          "label": "导航:S SkillVerse",
+          "finalUrl": "http://127.0.0.1:49206/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-02-导航-S-SkillVerse.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-02-导航-S-SkillVerse.png",
+          "elementCount": 792,
+          "interactiveCount": 42,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "登录",
+            "注册",
+            "查看更多",
+            "3.4k",
+            "2.1k",
+            "5.7k",
+            "1.9k",
+            "发布需求",
+            "查看全部",
+            "查看详情",
+            "立即接单",
+            "了解完整保障体系",
+            "成为创作者",
+            "了解平台保障",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕",
+            "争议仲裁机制",
+            "保险对接接口",
+            "查看完整保障体系"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看更多",
+        "url": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "headings": [
+          "爵士舞零基础系统课程",
+          "钢琴入门到精通·订阅会员",
+          "瑜伽身心疗愈课",
+          "水彩风景手绘系统课",
+          "手机人像摄影大师班",
+          "法式甜点大师课",
+          "Python全栈开发·订阅制",
+          "商务英语提升课"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 登录 注册",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录 注册",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "登录",
+          "注册",
+          "内容社区",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索课程、创作者...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场登录注册内容社区课程市场平台审核·交易保障全部舞蹈音乐运动绘画摄影烹饪编程语言舞蹈已发布爵士舞零基础系统课程林林舞蹈家4.92580¥299/ ¥39/月24 章节音乐已发布订阅制钢琴入门到精通·订阅会员钢钢琴小王4.88900¥0/ ¥49/月120 章节运动已发布瑜伽身心疗愈课瑜瑜伽导师Lily4.73200¥159016 章节绘画审核中水彩风景手绘系统课画画家张三0.00¥199012 章节摄影已发布手机人像摄影大师班摄摄影师阿杰4.51560¥129010 章节烹饪已发布法式甜点大师课甜甜点师小美4.95680¥399030 章节编程已发布订阅制Python全栈开发·订阅制程程序员老张4.812000¥0/ ¥69/月200 章节语言已发布商务英语提升课英英语老师Amy4.62100¥259020 章节舞蹈已发布爵士舞零基础系统课程林林舞蹈家4.92580¥299/ ¥39/月24 章节音乐已发布订阅制钢琴入门到精通·订阅会员钢钢琴小王4.88900¥0/ ¥49/月120 章节运动已发布瑜伽身心疗愈课瑜瑜伽导师Lily4.73200¥159016 章节绘画审核中水彩风景手绘系统课画画家张三0.00¥199012 章节摄影已发布手机人像摄影大师班摄摄影师阿杰4.51560¥129010 章节烹饪已发布法式甜点大师课甜甜点师小美4.95680¥399030 章节编程已发布订阅制Python全栈开发·订阅制程程序员老张4.812000¥0/ ¥69/月200 章节语言已发布商务英语提升课英英语老师Amy4.62100¥259020 章节舞蹈已发布爵士舞零基础系统课程林林舞蹈家4.92580¥299/ ¥39/月24 章节音乐已发布订阅制钢琴入门到精通·订阅会员钢钢琴小王4.88900¥0/ ¥49/月120 章节运动已发布瑜伽身心疗愈课瑜瑜伽导师Lily4.73200¥159016 章节绘画审核中水彩风景手绘系统课画画家张三0.00¥199012 章节摄影已发布手机人像摄影大师班摄摄影师阿杰4.51560¥129010 章节烹饪已发布法式甜点大师课甜甜点师小美4.95680¥399030 章节编程已发布订阅制Python全栈开发·订阅制程程序员老张4.812000¥0/ ¥69/月200 章节语言已发布商务英语提升课英英语老师Amy4.62100¥259020 章节舞蹈已发布爵士舞零基础系统课程林林舞蹈家4.92580¥299/ ¥39/月24 章节音乐已发布订阅制钢琴入门到精通·订阅会员钢钢琴小王4.88900¥0/ ¥49/月120 章节运动已发布瑜伽身心疗愈课瑜瑜伽导师Lily4.73200¥159016 章节绘画审核中水彩风景手绘系统课画画家张三0.00¥199012 章节摄影已发布手机人像摄影大师班摄摄影师阿杰4.51560¥129010 章节烹饪已发布法式甜点大师课甜甜点师小美4.95680¥399030 章节编程已发布订阅制Python全栈开发·订阅制程程序员老张4.812000¥0/ ¥69/月200 章节语言已发布商务英语提升课英英语老师Amy4.62100¥259020 章节舞蹈已发布爵士舞零基础系统课程林林舞蹈家4.92580¥299/ ¥39/月24 章节音乐已发布订阅制钢琴入门到精通·订阅会员钢钢琴小王4.88900¥0/ ¥49/月120 章节运动已发布瑜伽身心疗愈课瑜瑜伽导师Lily4.73200¥159016 章节绘画审核中水彩风景手绘系统课画画家张三0.00¥199012 章节摄影已发布手机人像摄影大师班摄摄影师阿杰4.51560¥129010 章节烹饪已发布法式甜点大师课甜甜点师小美4.95680¥399030 章节编程已发布订阅制Python全栈开发·订阅制程程序员老张4.812000¥0/ ¥69/月200 章节语言已发布商务英语提升课英英语老师Amy4.62100¥259020 章节已加载全部课程SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights rese",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 4820,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-repair-check-structure-03-操作-查看更多",
+          "label": "操作:查看更多",
+          "finalUrl": "http://127.0.0.1:49206/feed",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-03-操作-查看更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-03-操作-查看更多.png",
+          "elementCount": 1200,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "登录",
+            "注册",
+            "搜索课程、创作者...",
+            "课程市场",
+            "全部",
+            "舞蹈",
+            "音乐",
+            "运动",
+            "绘画",
+            "摄影",
+            "烹饪",
+            "编程",
+            "语言",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕",
+            "争议仲裁机制",
+            "保险对接接口",
+            "查看完整保障体系"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看更多->编程",
+        "url": "http://127.0.0.1:49206/feed?category=%E7%BC%96%E7%A8%8B",
+        "title": "My Trae Project",
+        "headings": [
+          "爵士舞零基础系统课程",
+          "钢琴入门到精通·订阅会员",
+          "瑜伽身心疗愈课",
+          "水彩风景手绘系统课",
+          "手机人像摄影大师班",
+          "法式甜点大师课",
+          "Python全栈开发·订阅制",
+          "商务英语提升课"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 登录 注册",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录 注册",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "登录",
+          "注册",
+          "内容社区",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索课程、创作者...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场登录注册内容社区课程市场平台审核·交易保障全部舞蹈音乐运动绘画摄影烹饪编程语言舞蹈已发布爵士舞零基础系统课程林林舞蹈家4.92580¥299/ ¥39/月24 章节音乐已发布订阅制钢琴入门到精通·订阅会员钢钢琴小王4.88900¥0/ ¥49/月120 章节运动已发布瑜伽身心疗愈课瑜瑜伽导师Lily4.73200¥159016 章节绘画审核中水彩风景手绘系统课画画家张三0.00¥199012 章节摄影已发布手机人像摄影大师班摄摄影师阿杰4.51560¥129010 章节烹饪已发布法式甜点大师课甜甜点师小美4.95680¥399030 章节编程已发布订阅制Python全栈开发·订阅制程程序员老张4.812000¥0/ ¥69/月200 章节语言已发布商务英语提升课英英语老师Amy4.62100¥259020 章节舞蹈已发布爵士舞零基础系统课程林林舞蹈家4.92580¥299/ ¥39/月24 章节音乐已发布订阅制钢琴入门到精通·订阅会员钢钢琴小王4.88900¥0/ ¥49/月120 章节运动已发布瑜伽身心疗愈课瑜瑜伽导师Lily4.73200¥159016 章节绘画审核中水彩风景手绘系统课画画家张三0.00¥199012 章节摄影已发布手机人像摄影大师班摄摄影师阿杰4.51560¥129010 章节烹饪已发布法式甜点大师课甜甜点师小美4.95680¥399030 章节编程已发布订阅制Python全栈开发·订阅制程程序员老张4.812000¥0/ ¥69/月200 章节语言已发布商务英语提升课英英语老师Amy4.62100¥259020 章节舞蹈已发布爵士舞零基础系统课程林林舞蹈家4.92580¥299/ ¥39/月24 章节音乐已发布订阅制钢琴入门到精通·订阅会员钢钢琴小王4.88900¥0/ ¥49/月120 章节运动已发布瑜伽身心疗愈课瑜瑜伽导师Lily4.73200¥159016 章节绘画审核中水彩风景手绘系统课画画家张三0.00¥199012 章节摄影已发布手机人像摄影大师班摄摄影师阿杰4.51560¥129010 章节烹饪已发布法式甜点大师课甜甜点师小美4.95680¥399030 章节编程已发布订阅制Python全栈开发·订阅制程程序员老张4.812000¥0/ ¥69/月200 章节语言已发布商务英语提升课英英语老师Amy4.62100¥259020 章节SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 3214,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-repair-check-structure-04-二层操作-查看更多-编程",
+          "label": "二层操作:查看更多->编程",
+          "finalUrl": "http://127.0.0.1:49206/feed?category=%E7%BC%96%E7%A8%8B",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-04-二层操作-查看更多-编程.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-04-二层操作-查看更多-编程.png",
+          "elementCount": 1120,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "登录",
+            "注册",
+            "搜索课程、创作者...",
+            "课程市场",
+            "全部",
+            "舞蹈",
+            "音乐",
+            "运动",
+            "绘画",
+            "摄影",
+            "烹饪",
+            "编程",
+            "语言",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕",
+            "争议仲裁机制",
+            "保险对接接口",
+            "查看完整保障体系"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49206/orders",
+        "title": "My Trae Project",
+        "headings": [
+          "定制服务广场",
+          "寻找专业街舞老师进行一对一私教",
+          "婚礼现场钢琴演奏师",
+          "儿童绘画启蒙老师",
+          "产品宣传视频拍摄",
+          "私教健身教练减脂塑形",
+          "法式甜点大师课上门教学"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 登录 注册",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录 注册",
+          "登录",
+          "注册"
+        ],
+        "buttons": [
+          "登录",
+          "注册",
+          "发布需求"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索需求...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场登录注册定制服务广场发布需求，等待专业创作者为您服务发布需求舞蹈已发布寻找专业街舞老师进行一对一私教想学习街舞基础，每周2次，每次1.5小时，希望老师有耐心，教学经验丰富。可以上门或者去老师的工作室。¥300定金 ¥100北京市朝阳区三里屯每周六、日上午10:00-11:30预计 90 天街舞爱好者小明6月10日 13:00平台保障音乐已匹配婚礼现场钢琴演奏师婚礼现场需要钢琴演奏，曲目已确定，需要在婚礼前彩排一次。要求演奏者形象气质佳，有婚礼演出经验。¥2000定金 ¥500上海市静安区南京西路2024年8月15日 16:00-18:00预计 120 天准新人小李6月8日 17:30平台保障绘画已付定金儿童绘画启蒙老师孩子5岁，想培养绘画兴趣，不需要太专业，主要是激发创造力。每周一次，每次1小时。¥150定金 ¥50广州市天河区珠江新城每周六下午3:00-4:00预计 60 天宝妈王女士6月5日 12:00平台保障摄影进行中产品宣传视频拍摄需要拍摄一条30秒的产品宣传短视频，用于抖音推广。需要有创意脚本、拍摄、后期剪辑一条龙服务。¥5000定金 ¥1500深圳市南山区科技园工作日可安排，具体时间面议预计 480 天创业者小张6月1日 14:20平台保障运动已完成私教健身教练减脂塑形想减脂增肌，每周3次，每次1小时。希望教练有专业资质，能根据我的身体情况制定训练计划。¥200定金 ¥80杭州市西湖区文三路工作日晚上7:00-8:00预计 60 天健身小白5月15日 11:00平台保障烹饪已发布法式甜点大师课上门教学想学习马卡龙、泡芙等经典法式甜点的制作。希望老师是专业甜点师，有实体店或教学经验。¥400定金 ¥150成都市锦江区春熙路周日全天可约预计 180 天烘焙爱好者6月12日 19:45平台保障SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2100,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-repair-check-structure-05-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49206/orders",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-05-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-05-操作-查看全部.png",
+          "elementCount": 322,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "登录",
+            "注册",
+            "发布需求",
+            "搜索需求...",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕",
+            "争议仲裁机制",
+            "保险对接接口",
+            "查看完整保障体系"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->发布需求",
+        "url": "http://127.0.0.1:49206/login",
+        "title": "My Trae Project",
+        "headings": [
+          "让每个人的技能 都能创造价值"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登录",
+          "注册",
+          "忘记密码？",
+          "管理员 管理员",
+          "创作者 创作者",
+          "学习者 普通用户",
+          "立即注册"
+        ],
+        "links": [
+          "SkillVerse",
+          "用户协议",
+          "隐私政策"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SkillVerse让每个人的技能都能创造价值连接全球顶尖创作者与学习者，在技能即服务的时代，开启你的知识变现之旅。短视频课程系统化学习，碎片化时间定制服务一对一专属技能服务平台保障资金托管·履约留痕·争议仲裁500+优质课程50+认证创作者1000+活跃用户SkillVerse登录注册用户名密码忘记密码？登录快速登录体验管理员管理员创作者创作者学习者普通用户还没有账号？立即注册登录即表示同意用户协议和隐私政策",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-repair-check-structure-06-二层操作-查看全部-发布需求",
+          "label": "二层操作:查看全部->发布需求",
+          "finalUrl": "http://127.0.0.1:49206/login",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-06-二层操作-查看全部-发布需求.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-06-二层操作-查看全部-发布需求.png",
+          "elementCount": 150,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "SkillVerse",
+            "登录",
+            "注册",
+            "请输入用户名",
+            "请输入密码",
+            "忘记密码？",
+            "管理员 管理员",
+            "创作者 创作者",
+            "学习者 普通用户",
+            "立即注册",
+            "用户协议",
+            "隐私政策"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "S SkillVerse",
+        "label": "查看更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "S SkillVerse",
+        "label": "查看更多->编程",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "S SkillVerse",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "S SkillVerse",
+        "label": "查看全部->发布需求",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-01-首屏.png",
+        "elementCount": 792,
+        "interactiveCount": 42,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "发布需求",
+          "查看全部",
+          "查看详情",
+          "立即接单",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-02-导航-S-SkillVerse",
+        "label": "导航:S SkillVerse",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-02-导航-S-SkillVerse.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-02-导航-S-SkillVerse.png",
+        "elementCount": 792,
+        "interactiveCount": 42,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "发布需求",
+          "查看全部",
+          "查看详情",
+          "立即接单",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-03-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-03-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-03-操作-查看更多.png",
+        "elementCount": 1200,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "搜索课程、创作者...",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-04-二层操作-查看更多-编程",
+        "label": "二层操作:查看更多->编程",
+        "finalUrl": "http://127.0.0.1:49206/feed?category=%E7%BC%96%E7%A8%8B",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-04-二层操作-查看更多-编程.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-04-二层操作-查看更多-编程.png",
+        "elementCount": 1120,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "搜索课程、创作者...",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-05-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49206/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-05-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-05-操作-查看全部.png",
+        "elementCount": 322,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "发布需求",
+          "搜索需求...",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-06-二层操作-查看全部-发布需求",
+        "label": "二层操作:查看全部->发布需求",
+        "finalUrl": "http://127.0.0.1:49206/login",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-06-二层操作-查看全部-发布需求.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-06-二层操作-查看全部-发布需求.png",
+        "elementCount": 150,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "SkillVerse",
+          "登录",
+          "注册",
+          "请输入用户名",
+          "请输入密码",
+          "忘记密码？",
+          "管理员 管理员",
+          "创作者 创作者",
+          "学习者 普通用户",
+          "立即注册",
+          "用户协议",
+          "隐私政策"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49206/",
+    "representativeScreenshotLabel": "技能即服务"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 6,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-01-首屏.png",
+        "elementCount": 792,
+        "interactiveCount": 42,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "发布需求",
+          "查看全部",
+          "查看详情",
+          "立即接单",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-02-导航-S-SkillVerse",
+        "label": "导航:S SkillVerse",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-02-导航-S-SkillVerse.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-02-导航-S-SkillVerse.png",
+        "elementCount": 792,
+        "interactiveCount": 42,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "发布需求",
+          "查看全部",
+          "查看详情",
+          "立即接单",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-03-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-03-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-03-操作-查看更多.png",
+        "elementCount": 1200,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "搜索课程、创作者...",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-04-二层操作-查看更多-编程",
+        "label": "二层操作:查看更多->编程",
+        "finalUrl": "http://127.0.0.1:49206/feed?category=%E7%BC%96%E7%A8%8B",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-04-二层操作-查看更多-编程.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-04-二层操作-查看更多-编程.png",
+        "elementCount": 1120,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "搜索课程、创作者...",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-05-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49206/orders",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-05-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-05-操作-查看全部.png",
+        "elementCount": 322,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "登录",
+          "注册",
+          "发布需求",
+          "搜索需求...",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-repair-check-structure-06-二层操作-查看全部-发布需求",
+        "label": "二层操作:查看全部->发布需求",
+        "finalUrl": "http://127.0.0.1:49206/login",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-06-二层操作-查看全部-发布需求.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-repair-check-structure-06-二层操作-查看全部-发布需求.png",
+        "elementCount": 150,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "SkillVerse",
+          "登录",
+          "注册",
+          "请输入用户名",
+          "请输入密码",
+          "忘记密码？",
+          "管理员 管理员",
+          "创作者 创作者",
+          "学习者 普通用户",
+          "立即注册",
+          "用户协议",
+          "隐私政策"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1696,
+    "height": 1600,
+    "scrollWidth": 1664,
+    "scrollHeight": 4797
+  },
+  "initialBodyTextPreview": "S\nSkillVerse\n首页\n内容社区\n服务广场\n登录\n注册\n让每个人的技能都能创造价值\n技能即服务\n\n连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务\n\n我是学习者\n\n学习课程、购买服务\n\n浏览课程\n我是创作者\n\n发布课程、提供服务\n\n进入工作台\n我有需求\n\n发布订单、定制服务\n\n发布需求\n10,000+\n优质课程\n5,000+\n认证创作者\n50万+\n活跃用户\n98%\n好评率\n快速入口\n\n常用功能一键直达\n\n创作者工作台\n内容审核中心\n交易管理\n财务结算\n账号设置\n平台保障中心\n内容社区 · C端\n免费浏览 · UGC内容\n热门视频\n\n发现精彩内容\n\n查看更多\n12:30\n舞蹈\n街舞基础入门教学\n3.4k\n0\n15:45\n音乐\n钢琴零基础教程第一乐章\n2.1k\n0\n20:00\n运动\n瑜伽晨间唤醒练习\n5.7k\n0\n18:20\n绘画\n水彩画技法详解\n1.9k\n0\n课程市场 · 交易\n平台审核 · 交易保障\n精选课程\n\n高质量系统化学习\n\n查看更多\n舞蹈\n已发布\n订阅制\n爵士舞入门到精通\n林舞蹈家\n4.8\n1996\n¥199/ ¥59/月\n0 章节\n音乐\n已发布\n订阅制\n吉他弹唱三月通\n张吉他手\n4.9\n1290\n¥149/ ¥44/月\n0 章节\n运动\n已发布\n订阅制\n居家健身减脂计划\n王健身教练\n4.7\n1331\n¥99/ ¥29/月\n0 章节\n绘画\n已发布\n订阅制\n水彩风景绘画\n李画师\n4.8\n146\n¥129/ ¥38/月\n0 章节\nC 端内容 / B 端服务\n订单广场 · B端\n定制服务 · 定金托管\n定制订单广场\n\n找到适合你的专业服务\n\n发布需求\n查看全部\n舞蹈\n已发布\n上门教爵士舞基础\n\n想学习爵士舞基础，每周2次，每次1小时\n\n¥300\n定金 ¥100\n朝阳区\n2026-07-09T15:32:53.516Z\n预计 60 天\n\n李画师\n\n6月14日 15:32\n\n平台保障\n查看详情\n立即接单\n创作者\n热门创作者\n\n关注你喜欢的创作者\n\n✓\n李画师\n4.9\n4639 粉丝\n✓\n林舞蹈家\n4.9\n3511 粉丝\n✓\n陈摄影师\n4.8\n4830 粉丝\n✓\n张吉他手\n4.8\n2801 粉丝\n✓\n王健身教练\n4.7\n2887 粉丝\n平台保障\n六大保障体系\n\n全方位保障交易安全，让技能服务更放心\n\n98%\n双向评价\n好评率\n100%\n服务留痕\n过程可追溯\n50万\n保险覆盖\n最高保额\n100%\n资金托管\n安全保障\n了解完整保障体系\n准备好开始你的技能变现之旅了吗？\n\n加入我们，将你的专业技能转化为可持续的收入来源\n\n成为创作者\n了解平台保障\nS\nSkillVerse\n\n让每个人的技能都能创造价值\n\n产品\n视频课程\n定制服务\n创作者中心\n关于\n关于我们\n用户协议\n隐私政策\n平台保障\n✓\n双向信用评价\n✓\n服务过程留痕\n✓\n争议仲裁机制\n✓\n保险对接接口\n→\n查看完整保障体系\n© 2026 SkillVerse. All rights reserved.",
+  "bodyTextPreview": "S\nSkillVerse\n首页\n内容社区\n服务广场\n登录\n注册\n让每个人的技能都能创造价值\n技能即服务\n\n连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务\n\n我是学习者\n\n学习课程、购买服务\n\n浏览课程\n我是创作者\n\n发布课程、提供服务\n\n进入工作台\n我有需求\n\n发布订单、定制服务\n\n发布需求\n10,000+\n优质课程\n5,000+\n认证创作者\n50万+\n活跃用户\n98%\n好评率\n快速入口\n\n常用功能一键直达\n\n创作者工作台\n内容审核中心\n交易管理\n财务结算\n账号设置\n平台保障中心\n内容社区 · C端\n免费浏览 · UGC内容\n热门视频\n\n发现精彩内容\n\n查看更多\n12:30\n舞蹈\n街舞基础入门教学\n3.4k\n0\n15:45\n音乐\n钢琴零基础教程第一乐章\n2.1k\n0\n20:00\n运动\n瑜伽晨间唤醒练习\n5.7k\n0\n18:20\n绘画\n水彩画技法详解\n1.9k\n0\n课程市场 · 交易\n平台审核 · 交易保障\n精选课程\n\n高质量系统化学习\n\n查看更多\n舞蹈\n已发布\n订阅制\n爵士舞入门到精通\n林舞蹈家\n4.8\n1996\n¥199/ ¥59/月\n0 章节\n音乐\n已发布\n订阅制\n吉他弹唱三月通\n张吉他手\n4.9\n1290\n¥149/ ¥44/月\n0 章节\n运动\n已发布\n订阅制\n居家健身减脂计划\n王健身教练\n4.7\n1331\n¥99/ ¥29/月\n0 章节\n绘画\n已发布\n订阅制\n水彩风景绘画\n李画师\n4.8\n146\n¥129/ ¥38/月\n0 章节\nC 端内容 / B 端服务\n订单广场 · B端\n定制服务 · 定金托管\n定制订单广场\n\n找到适合你的专业服务\n\n发布需求\n查看全部\n舞蹈\n已发布\n上门教爵士舞基础\n\n想学习爵士舞基础，每周2次，每次1小时\n\n¥300\n定金 ¥100\n朝阳区\n2026-07-09T15:32:53.516Z\n预计 60 天\n\n李画师\n\n6月14日 15:32\n\n平台保障\n查看详情\n立即接单\n创作者\n热门创作者\n\n关注你喜欢的创作者\n\n✓\n李画师\n4.9\n4639 粉丝\n✓\n林舞蹈家\n4.9\n3511 粉丝\n✓\n陈摄影师\n4.8\n4830 粉丝\n✓\n张吉他手\n4.8\n2801 粉丝\n✓\n王健身教练\n4.7\n2887 粉丝\n平台保障\n六大保障体系\n\n全方位保障交易安全，让技能服务更放心\n\n98%\n双向评价\n好评率\n100%\n服务留痕\n过程可追溯\n50万\n保险覆盖\n最高保额\n100%\n资金托管\n安全保障\n了解完整保障体系\n准备好开始你的技能变现之旅了吗？\n\n加入我们，将你的专业技能转化为可持续的收入来源\n\n成为创作者\n了解平台保障\nS\nSkillVerse\n\n让每个人的技能都能创造价值\n\n产品\n视频课程\n定制服务\n创作者中心\n关于\n关于我们\n用户协议\n隐私政策\n平台保障\n✓\n双向信用评价\n✓\n服务过程留痕\n✓\n争议仲裁机制\n✓\n保险对接接口\n→\n查看完整保障体系\n© 2026 SkillVerse. All rights reserved.",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=3&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=3&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=3&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=3&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=%E7%BC%96%E7%A8%8B&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=%E7%BC%96%E7%A8%8B&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=%E7%BC%96%E7%A8%8B&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=20&status=undefined&category=undefined&location=undefined&keyword=undefined"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=20&status=undefined&category=undefined&location=undefined&keyword=undefined"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-1 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-2 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-3 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-4 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-5 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-6 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-7 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s course-8 \n    at div\n    at div\n    at div\n    at FeedPage (http://127.0.0.1:49206/src/pages/FeedPage.tsx:51:43)\n    at RenderedRoute (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:6626:26)\n    at Routes (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7561:3)\n    at main\n    at div\n    at AppContent (http://127.0.0.1:49206/src/App.tsx:448:20)\n    at Router (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:7500:13)\n    at BrowserRouter (http://127.0.0.1:49206/node_modules/.vite/deps/react-router-dom.js?v=84077cc9:10787:3)\n    at App",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/may-89206-browser-report.json"
+}

@@ -55,6 +55,22 @@ export function seedData() {
   insertUser.run(adminId, 'admin', passwordHash, '', 'admin', '平台管理员', 0, 0, 5.0, 1, '');
   insertWallet.run(uuidv4(), adminId, 0);
 
+  const requesterId = uuidv4();
+  insertUser.run(
+    requesterId,
+    '需求方小王',
+    passwordHash,
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
+    'requester',
+    '企业采购负责人，经常发布定制服务需求',
+    50,
+    120,
+    4.8,
+    1,
+    '北京'
+  );
+  insertWallet.run(uuidv4(), requesterId, 50000);
+
   const creatorIds: string[] = [];
   creators.forEach((creator) => {
     const id = uuidv4();
@@ -282,6 +298,7 @@ export function seedData() {
   console.log('Test accounts:');
   console.log('  Admin: admin / 123456');
   console.log('  Creator: 林舞蹈家 / 123456');
+  console.log('  Requester: 需求方小王 / 123456');
   console.log('  User: 用户1 / 123456');
 }
 

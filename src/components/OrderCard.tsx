@@ -1,21 +1,38 @@
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Clock, User, Shield } from 'lucide-react';
+import { MapPin, Clock, User, Shield, AlertTriangle, CheckCircle, PlayCircle, DollarSign, Handshake } from 'lucide-react';
 import type { ServiceOrder } from '../../shared/types';
 import { cn } from '../lib/utils';
 import StatusBadge from './StatusBadge';
 import Badge from './Badge';
 import Button from './Button';
 
+type LoadingAction = 'accept' | 'payDeposit' | 'start' | 'complete' | 'dispute' | null;
+
 interface OrderCardProps {
   order: ServiceOrder;
   variant?: 'default' | 'compact';
   showActions?: boolean;
+  userRole?: string | null;
+  loadingAction?: LoadingAction;
   onAccept?: () => void;
+  onPayDeposit?: () => void;
+  onStart?: () => void;
+  onComplete?: () => void;
+  onDispute?: () => void;
   className?: string;
 }
 
-const OrderCard = ({ order, variant = 'default', showActions = true, onAccept, className }: OrderCardProps) => {
+const OrderCard = ({ order, variant = 'default', showActions = true, userRole, loadingAction, onAccept, onPayDeposit, onStart, onComplete, onDispute, className }: OrderCardProps) => {
   const navigate = useNavigate();
+
+  const isTerminalStatus = ['completed', 'cancelled', 'disputed'].includes(order.status);
+  const canAccept = userRole === 'creator' && order.status === 'published';
+  const canPayDeposit = userRole === 'user' && order.status === 'matched';
+  const canStart = userRole === 'creator' && order.status === 'deposit_paid';
+  const canComplete = order.status === 'in_progress';
+  const canDispute = !isTerminalStatus;
+
+  const hasAnyAction = canAccept || canPayDeposit || canStart || canComplete || canDispute;
 
   const handleClick = () => {
     navigate(`/orders/${order.id}`);
@@ -140,29 +157,78 @@ const OrderCard = ({ order, variant = 'default', showActions = true, onAccept, c
           </div>
         )}
 
-        {showActions && (
-          <div className="flex items-center gap-3 pt-4 border-t border-zinc-100">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="flex-1"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              查看详情
-            </Button>
-            {order.status === 'published' && (
+        {showActions && hasAnyAction && (
+          <div className="pt-4 border-t border-zinc-100">
+            <div className="flex flex-wrap gap-2 mb-3">
+              {canAccept && (
+                <Button
+                  variant="primary"
+                  size="sm"
+                  leftIcon={<Handshake className="w-4 h-4" />}
+                  isLoading={loadingAction === 'accept'}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAccept?.();
+                  }}
+                >
+                  立即接单
+                </Button>
+              )}
+              {canPayDeposit && (
+                <Button
+                  variant="accent"
+                  size="sm"
+                  leftIcon={<DollarSign className="w-4 h-4" />}
+                  isLoading={loadingAction === 'payDeposit'}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onPayDeposit?.();
+                  }}
+                >
+                  支付定金
+                </Button>
+              )}
+              {canStart && (
+                <Button
+                  variant="primary"
+                  size="sm"
+                  leftIcon={<PlayCircle className="w-4 h-4" />}
+                  isLoading={loadingAction === 'start'}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onStart?.();
+                  }}
+                >
+                  开始服务
+                </Button>
+              )}
+              {canComplete && (
+                <Button
+                  variant="accent"
+                  size="sm"
+                  leftIcon={<CheckCircle className="w-4 h-4" />}
+                  isLoading={loadingAction === 'complete'}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onComplete?.();
+                  }}
+                >
+                  完成服务
+                </Button>
+              )}
+            </div>
+            {canDispute && (
               <Button
-                variant="primary"
+                variant="ghost"
                 size="sm"
-                className="flex-1"
+                leftIcon={<AlertTriangle className="w-4 h-4" />}
+                isLoading={loadingAction === 'dispute'}
                 onClick={(e) => {
                   e.stopPropagation();
-                  onAccept?.();
+                  onDispute?.();
                 }}
               >
-                立即接单
+                申请仲裁
               </Button>
             )}
           </div>

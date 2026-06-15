@@ -6,7 +6,7 @@ import { cn } from '../lib/utils';
 import Button from '../components/Button';
 
 type TabType = 'login' | 'register';
-type RoleType = 'user' | 'creator' | 'admin';
+type RoleType = 'user' | 'creator' | 'admin' | 'requester';
 
 interface FormErrors {
   username?: string;
@@ -25,7 +25,7 @@ const floatingIcons = [
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, register, isLoading, error, isAuthenticated, clearError } = useAuthStore();
+  const { login, register, isLoading, error, isAuthenticated, clearError, user } = useAuthStore();
 
   const [activeTab, setActiveTab] = useState<TabType>('login');
   const [role, setRole] = useState<RoleType>('user');
@@ -36,8 +36,22 @@ export default function Login() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const from = (location.state as { from?: { pathname?: string } })?.from?.pathname || '/';
+  const from = (location.state as { from?: { pathname?: string } })?.from?.pathname || '';
   const registerTab = new URLSearchParams(location.search).get('tab') === 'register';
+
+  const getDefaultRedirect = (userRole: string): string => {
+    switch (userRole) {
+      case 'creator':
+        return '/workspace';
+      case 'requester':
+        return '/orders';
+      case 'admin':
+        return '/admin';
+      case 'user':
+      default:
+        return '/feed';
+    }
+  };
 
   useEffect(() => {
     if (registerTab) {
@@ -46,10 +60,11 @@ export default function Login() {
   }, [registerTab]);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate(from, { replace: true });
+    if (isAuthenticated && user) {
+      const redirectTo = from && from !== '/' ? from : getDefaultRedirect(user.role);
+      navigate(redirectTo, { replace: true });
     }
-  }, [isAuthenticated, navigate, from]);
+  }, [isAuthenticated, user, navigate, from]);
 
   useEffect(() => {
     return () => clearError();
@@ -126,11 +141,21 @@ export default function Login() {
       bgColor: 'bg-primary-50',
       borderColor: 'border-primary-500',
     },
+    {
+      value: 'requester' as RoleType,
+      label: '需求方',
+      desc: '发布定制需求、购买服务',
+      icon: Briefcase,
+      color: 'text-orange-500',
+      bgColor: 'bg-orange-50',
+      borderColor: 'border-orange-500',
+    },
   ];
 
   const quickLoginAccounts = [
     { label: '管理员', username: 'admin', password: '123456', role: '管理员' },
     { label: '创作者', username: '林舞蹈家', password: '123456', role: '创作者' },
+    { label: '需求方', username: '需求方小王', password: '123456', role: '需求方' },
     { label: '学习者', username: '用户1', password: '123456', role: '普通用户' },
   ];
 
@@ -256,7 +281,7 @@ export default function Login() {
                 <label className="block text-sm font-medium text-zinc-700 mb-3">
                   选择身份
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-3">
                   {roleOptions.map((opt) => (
                     <button
                       key={opt.value}
@@ -415,7 +440,7 @@ export default function Login() {
             {activeTab === 'login' && (
               <div className="mt-6 pt-6 border-t border-zinc-100">
                 <p className="text-center text-sm text-zinc-500 mb-4">快速登录体验</p>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-4 gap-2">
                   {quickLoginAccounts.map((account, i) => (
                     <button
                       key={i}

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Users, Play } from 'lucide-react';
+import { Users, Play, ShoppingCart } from 'lucide-react';
 import type { Course } from '../../shared/types';
 import { cn } from '../lib/utils';
 import RatingStars from './RatingStars';
@@ -19,6 +19,12 @@ const CourseCard = ({ course, variant = 'default', showStatus = false, className
   const handleClick = () => {
     navigate(`/courses/${course.id}`);
   };
+
+  const purchaseLabel = course.isSubscription && course.subscriptionPrice
+    ? '订阅课程'
+    : course.price > 0
+      ? '立即购买'
+      : '免费学习';
 
   if (variant === 'compact') {
     return (
@@ -50,9 +56,13 @@ const CourseCard = ({ course, variant = 'default', showStatus = false, className
             <RatingStars rating={course.rating} size="sm" showValue />
             <span className="text-xs text-zinc-500">({course.reviewCount})</span>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-3">
             <span className="text-accent-600 font-bold">
-              ¥{course.price}
+              {course.price > 0 ? `¥${course.price}` : '免费'}
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700">
+              <ShoppingCart className="w-3 h-3" />
+              {purchaseLabel}
             </span>
             {showStatus && <StatusBadge status={course.status} />}
           </div>
@@ -132,7 +142,7 @@ const CourseCard = ({ course, variant = 'default', showStatus = false, className
         <div className="flex items-center justify-between pt-3 border-t border-zinc-100">
           <div>
             <span className="text-xl font-bold text-accent-600">
-              ¥{course.price}
+              {course.price > 0 ? `¥${course.price}` : '免费'}
             </span>
             {course.subscriptionPrice && (
               <span className="text-xs text-zinc-500 ml-2">
@@ -143,6 +153,30 @@ const CourseCard = ({ course, variant = 'default', showStatus = false, className
           <span className="text-xs text-zinc-500">
             {course.chapterCount || course.chapters?.length || 0} 章节
           </span>
+        </div>
+
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              navigate(`/courses/${course.id}`);
+            }}
+            className="rounded-xl border border-zinc-200 px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700"
+          >
+            查看详情
+          </button>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              navigate(`/courses/${course.id}`);
+            }}
+            className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary-600 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-700"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            {purchaseLabel}
+          </button>
         </div>
       </div>
     </div>

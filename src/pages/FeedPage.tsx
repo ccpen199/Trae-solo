@@ -93,28 +93,56 @@ export default function FeedPage() {
         const data = (res as any).data;
         const items = data?.items || [];
         
-        if (isInitial) {
-          setCourses(items.length > 0 ? items : generateMockCourses());
+        if (items.length > 0) {
+          if (isInitial) {
+            setCourses(items);
+          } else {
+            setCourses((prev) => {
+              const existingIds = new Set(prev.map((c) => c.id));
+              const newItems = items.filter((c: Course) => !existingIds.has(c.id));
+              return [...prev, ...newItems];
+            });
+          }
+          setHasMore(items.length === pageSize);
         } else {
-          setCourses((prev) => [...prev, ...(items.length > 0 ? items : generateMockCourses().slice(0, pageSize))]);
+          const mockItems = generateMockCourses(category || '全部');
+          const start = (pageNum - 1) * pageSize;
+          const pageItems = mockItems.slice(start, start + pageSize);
+          if (isInitial) {
+            setCourses(pageItems);
+          } else {
+            setCourses((prev) => {
+              const existingIds = new Set(prev.map((c) => c.id));
+              const newItems = pageItems.filter((c: Course) => !existingIds.has(c.id));
+              return [...prev, ...newItems];
+            });
+          }
+          setHasMore(start + pageSize < mockItems.length);
         }
-        setHasMore(items.length === pageSize || pageNum < 3);
       } else {
+        const filteredVideos = category
+          ? mockContentVideos.filter((v) => v.category === category)
+          : mockContentVideos;
         const start = (pageNum - 1) * pageSize;
-        const videos = mockContentVideos.slice(start, start + pageSize);
+        const videos = filteredVideos.slice(start, start + pageSize);
         if (isInitial) {
           setContentVideos(videos);
         } else {
           setContentVideos((prev) => [...prev, ...videos]);
         }
-        setHasMore(start + pageSize < mockContentVideos.length);
+        setHasMore(start + pageSize < filteredVideos.length);
       }
     } catch (error) {
       console.error('Failed to load:', error);
       if (activeTab === 'courses' && isInitial) {
-        setCourses(generateMockCourses());
+        setCourses(generateMockCourses(activeCategory).slice(0, pageSize));
+        setHasMore(generateMockCourses(activeCategory).length > pageSize);
       } else if (isInitial) {
-        setContentVideos(mockContentVideos.slice(0, pageSize));
+        const filtered = activeCategory === '全部'
+          ? mockContentVideos
+          : mockContentVideos.filter((v) => v.category === activeCategory);
+        setContentVideos(filtered.slice(0, pageSize));
+        setHasMore(filtered.length > pageSize);
       }
     } finally {
       setLoading(false);
@@ -122,249 +150,72 @@ export default function FeedPage() {
     }
   };
 
-  const generateMockCourses = (): Course[] => {
-    return [
-      {
-        id: 'course-1',
-        creatorId: 'creator-1',
-        title: '爵士舞零基础系统课程',
-        description: '从基础步伐到成品舞，系统学习爵士舞',
-        category: '舞蹈',
-        price: 299,
-        isSubscription: false,
-        subscriptionPrice: 39,
-        coverImage: '',
-        status: 'published',
-        rating: 4.9,
-        reviewCount: 328,
-        studentCount: 2580,
-        chapterCount: 24,
-        totalDuration: 480,
-        createdAt: '2024-01-15T00:00:00Z',
-        creator: {
-          id: 'creator-1',
-          username: '林舞蹈家',
-          avatar: '',
-          role: 'creator',
-          verified: true,
-          followerCount: 12500,
-          followingCount: 0,
-          rating: 4.9,
-          createdAt: '2024-01-01T00:00:00Z',
-        },
-        chapters: [],
-      },
-      {
-        id: 'course-2',
-        creatorId: 'creator-2',
-        title: '钢琴入门到精通·订阅会员',
-        description: '订阅制会员，全部钢琴课程畅学',
-        category: '音乐',
-        price: 0,
-        isSubscription: true,
-        subscriptionPrice: 49,
-        coverImage: '',
-        status: 'published',
-        rating: 4.8,
-        reviewCount: 512,
-        studentCount: 8900,
-        chapterCount: 120,
-        totalDuration: 2400,
-        createdAt: '2024-02-01T00:00:00Z',
-        creator: {
-          id: 'creator-2',
-          username: '钢琴小王',
-          avatar: '',
-          role: 'creator',
-          verified: true,
-          followerCount: 28000,
-          followingCount: 0,
-          rating: 4.8,
-          createdAt: '2024-01-01T00:00:00Z',
-        },
-        chapters: [],
-      },
-      {
-        id: 'course-3',
-        creatorId: 'creator-3',
-        title: '瑜伽身心疗愈课',
-        description: '缓解压力，提升睡眠质量',
-        category: '运动',
-        price: 159,
-        isSubscription: false,
-        subscriptionPrice: 0,
-        coverImage: '',
-        status: 'published',
-        rating: 4.7,
-        reviewCount: 186,
-        studentCount: 3200,
-        chapterCount: 16,
-        totalDuration: 320,
-        createdAt: '2024-03-10T00:00:00Z',
-        creator: {
-          id: 'creator-3',
-          username: '瑜伽导师Lily',
-          avatar: '',
-          role: 'creator',
-          verified: false,
-          followerCount: 5600,
-          followingCount: 0,
-          rating: 4.7,
-          createdAt: '2024-01-01T00:00:00Z',
-        },
-        chapters: [],
-      },
-      {
-        id: 'course-4',
-        creatorId: 'creator-4',
-        title: '水彩风景手绘系统课',
-        description: '从零开始学水彩，12节课掌握风景手绘',
-        category: '绘画',
-        price: 199,
-        isSubscription: false,
-        subscriptionPrice: 0,
-        coverImage: '',
-        status: 'reviewing',
-        rating: 0,
-        reviewCount: 0,
-        studentCount: 0,
-        chapterCount: 12,
-        totalDuration: 360,
-        createdAt: '2024-06-01T00:00:00Z',
-        creator: {
-          id: 'creator-4',
-          username: '画家张三',
-          avatar: '',
-          role: 'creator',
-          verified: true,
-          followerCount: 8900,
-          followingCount: 0,
-          rating: 4.6,
-          createdAt: '2024-01-01T00:00:00Z',
-        },
-        chapters: [],
-      },
-      {
-        id: 'course-5',
-        creatorId: 'creator-5',
-        title: '手机人像摄影大师班',
-        description: '手机也能拍出大片感',
-        category: '摄影',
-        price: 129,
-        isSubscription: false,
-        subscriptionPrice: 0,
-        coverImage: '',
-        status: 'published',
-        rating: 4.5,
-        reviewCount: 94,
-        studentCount: 1560,
-        chapterCount: 10,
-        totalDuration: 200,
-        createdAt: '2024-04-20T00:00:00Z',
-        creator: {
-          id: 'creator-5',
-          username: '摄影师阿杰',
-          avatar: '',
-          role: 'creator',
-          verified: true,
-          followerCount: 15000,
-          followingCount: 0,
-          rating: 4.5,
-          createdAt: '2024-01-01T00:00:00Z',
-        },
-        chapters: [],
-      },
-      {
-        id: 'course-6',
-        creatorId: 'creator-6',
-        title: '法式甜点大师课',
-        description: '马卡龙、泡芙、慕斯一次学会',
-        category: '烹饪',
-        price: 399,
-        isSubscription: false,
-        subscriptionPrice: 0,
-        coverImage: '',
-        status: 'published',
-        rating: 4.9,
-        reviewCount: 421,
-        studentCount: 5680,
-        chapterCount: 30,
-        totalDuration: 720,
-        createdAt: '2024-02-15T00:00:00Z',
-        creator: {
-          id: 'creator-6',
-          username: '甜点师小美',
-          avatar: '',
-          role: 'creator',
-          verified: true,
-          followerCount: 32000,
-          followingCount: 0,
-          rating: 4.9,
-          createdAt: '2024-01-01T00:00:00Z',
-        },
-        chapters: [],
-      },
-      {
-        id: 'course-7',
-        creatorId: 'creator-7',
-        title: 'Python全栈开发·订阅制',
-        description: '订阅会员，全部编程课程畅学',
-        category: '编程',
-        price: 0,
-        isSubscription: true,
-        subscriptionPrice: 69,
-        coverImage: '',
-        status: 'published',
-        rating: 4.8,
-        reviewCount: 856,
-        studentCount: 12000,
-        chapterCount: 200,
-        totalDuration: 5000,
-        createdAt: '2024-01-01T00:00:00Z',
-        creator: {
-          id: 'creator-7',
-          username: '程序员老张',
-          avatar: '',
-          role: 'creator',
-          verified: true,
-          followerCount: 45000,
-          followingCount: 0,
-          rating: 4.8,
-          createdAt: '2024-01-01T00:00:00Z',
-        },
-        chapters: [],
-      },
-      {
-        id: 'course-8',
-        creatorId: 'creator-8',
-        title: '商务英语提升课',
-        description: '职场英语沟通技巧',
-        category: '语言',
-        price: 259,
-        isSubscription: false,
-        subscriptionPrice: 0,
-        coverImage: '',
-        status: 'published',
-        rating: 4.6,
-        reviewCount: 127,
-        studentCount: 2100,
-        chapterCount: 20,
-        totalDuration: 400,
-        createdAt: '2024-03-25T00:00:00Z',
-        creator: {
-          id: 'creator-8',
-          username: '英语老师Amy',
-          avatar: '',
-          role: 'creator',
-          verified: false,
-          followerCount: 6800,
-          followingCount: 0,
-          rating: 4.6,
-          createdAt: '2024-01-01T00:00:00Z',
-        },
-        chapters: [],
-      },
+  const generateMockCourses = (selectedCategory = '全部'): Course[] => {
+    const courseTemplates: Record<string, { titles: string[]; basePrice: number; chapters: number }> = {
+      '舞蹈': { titles: ['爵士舞零基础系统课', '街舞入门到精通', '古典舞身韵课', '拉丁舞初级教程', '现代舞编舞课', '中国舞考级课程'], basePrice: 299, chapters: 24 },
+      '音乐': { titles: ['钢琴入门到精通', '吉他弹唱速成班', '小提琴基础课', '声乐演唱技巧', '电子音乐制作', '古筝入门教程'], basePrice: 199, chapters: 36 },
+      '运动': { titles: ['瑜伽身心疗愈课', 'HIIT燃脂训练', '普拉提核心训练', '跑步姿势纠正', '力量增肌计划', '太极养生入门'], basePrice: 159, chapters: 16 },
+      '绘画': { titles: ['水彩风景手绘课', '素描零基础系统课', '油画入门教程', '插画设计实战', '国画山水课', '彩铅动物绘'], basePrice: 199, chapters: 12 },
+      '摄影': { titles: ['手机人像摄影大师班', '风光摄影技巧', '后期修图系统课', '商业人像布光', '短视频拍摄剪辑', '静物产品摄影'], basePrice: 129, chapters: 10 },
+      '烹饪': { titles: ['法式甜点大师课', '家常菜100道', '烘焙零基础课', '川菜烹饪教程', '日料入门制作', '咖啡拉花技巧'], basePrice: 299, chapters: 30 },
+      '编程': { titles: ['Python全栈开发·订阅', '前端工程师培养计划', 'Java后端架构课', '算法面试系统班', '移动端App开发', '人工智能入门'], basePrice: 0, chapters: 120 },
+      '语言': { titles: ['商务英语提升课', '日语入门到N2', '韩语零基础入门', '法语发音教程', '德语基础会话', '雅思听力突破'], basePrice: 259, chapters: 48 },
+    };
+
+    const creators = [
+      { name: '李老师', verified: true, rating: 4.9, followers: 12500 },
+      { name: '王导师', verified: true, rating: 4.8, followers: 8600 },
+      { name: '张教练', verified: false, rating: 4.7, followers: 5200 },
+      { name: '刘教授', verified: true, rating: 4.9, followers: 28000 },
+      { name: '陈老师', verified: true, rating: 4.6, followers: 3900 },
     ];
+
+    const categories = selectedCategory === '全部'
+      ? Object.keys(courseTemplates)
+      : [selectedCategory];
+
+    const courses: Course[] = [];
+    let id = 0;
+
+    categories.forEach((cat) => {
+      const template = courseTemplates[cat];
+      template.titles.forEach((title, idx) => {
+        const creator = creators[idx % creators.length];
+        const isSubscription = template.basePrice === 0;
+        courses.push({
+          id: `course-mock-${id++}`,
+          creatorId: `creator-${cat}-${idx}`,
+          title,
+          description: `${title}，专业导师带你系统学习`,
+          category: cat,
+          price: isSubscription ? 0 : template.basePrice + idx * 30,
+          isSubscription,
+          subscriptionPrice: isSubscription ? 49 + idx * 10 : 0,
+          coverImage: '',
+          status: 'published',
+          rating: 4.3 + Math.random() * 0.7,
+          reviewCount: Math.floor(80 + Math.random() * 500),
+          studentCount: Math.floor(500 + Math.random() * 10000),
+          chapterCount: template.chapters + idx * 4,
+          totalDuration: template.chapters * 20,
+          createdAt: new Date(Date.now() - idx * 86400000 * 30).toISOString(),
+          creator: {
+            id: `creator-${cat}-${idx}`,
+            username: creator.name,
+            avatar: '',
+            role: 'creator',
+            verified: creator.verified,
+            followerCount: creator.followers,
+            followingCount: 0,
+            rating: creator.rating,
+            createdAt: '2024-01-01T00:00:00Z',
+          },
+          chapters: [],
+        } as Course);
+      });
+    });
+
+    return courses.sort(() => Math.random() - 0.5);
   };
 
   const handleObserver = useCallback(

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 interface RouteGuardProps {
   children: React.ReactNode;
-  allowedRoles?: ('user' | 'creator' | 'admin')[];
+  allowedRoles?: ('user' | 'creator' | 'admin' | 'requester')[];
 }
 
 export default function RouteGuard({ children, allowedRoles = ['creator', 'admin'] }: RouteGuardProps) {

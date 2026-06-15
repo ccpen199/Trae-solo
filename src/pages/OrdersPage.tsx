@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Filter, MapPin, DollarSign, Clock, Calendar, X, Search, Tag, Shield, ChevronRight, FileText, AlertCircle } from 'lucide-react';
+import { Plus, Filter, MapPin, DollarSign, Clock, Calendar, X, Search, Tag, Shield, ChevronRight, FileText, AlertCircle, AlertTriangle } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
 import OrderCard from '../components/OrderCard';
@@ -10,6 +10,8 @@ import Button from '../components/Button';
 import Badge from '../components/Badge';
 import type { ServiceOrder } from '../../shared/types';
 import { cn } from '../lib/utils';
+
+type LoadingAction = 'accept' | 'payDeposit' | 'start' | 'complete' | 'dispute' | null;
 
 const categories = ['全部', '舞蹈', '音乐', '运动', '绘画', '摄影', '烹饪', '编程', '语言', '家政'];
 const priceRanges = [
@@ -276,7 +278,12 @@ export default function OrdersPage() {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('全部地区');
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [acceptingId, setAcceptingId] = useState<string | null>(null);
+  const [loadingOrderId, setLoadingOrderId] = useState<string | null>(null);
+  const [loadingAction, setLoadingAction] = useState<LoadingAction>(null);
+  const [showDisputeModal, setShowDisputeModal] = useState(false);
+  const [disputeOrderId, setDisputeOrderId] = useState<string | null>(null);
+  const [disputeReason, setDisputeReason] = useState('');
+  const [disputeSubmitting, setDisputeSubmitting] = useState(false);
   const [formData, setFormData] = useState<PublishFormData>(defaultFormData);
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof PublishFormData, string>>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -313,13 +320,23 @@ export default function OrdersPage() {
     }
   };
 
+  const setActionLoading = (orderId: string, action: LoadingAction) => {
+    setLoadingOrderId(orderId);
+    setLoadingAction(action);
+  };
+
+  const clearActionLoading = () => {
+    setLoadingOrderId(null);
+    setLoadingAction(null);
+  };
+
   const handleAcceptOrder = async (orderId: string) => {
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
 
-    setAcceptingId(orderId);
+    setActionLoading(orderId, 'accept');
     try {
       await api.orders.accept(orderId);
       alert('接单成功！请等待需求方确认');
@@ -327,7 +344,90 @@ export default function OrdersPage() {
     } catch (error: any) {
       alert(error.message || '接单失败');
     } finally {
-      setAcceptingId(null);
+      clearActionLoading();
+    }
+  };
+
+  const handlePayDeposit = async (orderId: string) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    setActionLoading(orderId, 'payDeposit');
+    try {
+      await api.orders.payDeposit(orderId);
+      alert('定金支付成功！等待创作者开始服务');
+      loadOrders();
+    } catch (error: any) {
+      alert(error.message || '支付失败');
+    } finally {
+      clearActionLoading();
+    }
+  };
+
+  const handleStartService = async (orderId: string) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    setActionLoading(orderId, 'start');
+    try {
+      await api.orders.start(orderId);
+      alert('服务已开始！请按时完成服务');
+      loadOrders();
+    } catch (error: any) {
+      alert(error.message || '开始服务失败');
+    } finally {
+      clearActionLoading();
+    }
+  };
+
+  const handleCompleteService = async (orderId: string) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    setActionLoading(orderId, 'complete');
+    try {
+      await api.orders.complete(orderId);
+      alert('服务已完成！请双方确认评价');
+      loadOrders();
+    } catch (error: any) {
+      alert(error.message || '完成服务失败');
+    } finally {
+      clearActionLoading();
+    }
+  };
+
+  const handleOpenDispute = (orderId: string) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    setDisputeOrderId(orderId);
+    setDisputeReason('');
+    setShowDisputeModal(true);
+  };
+
+  const handleSubmitDispute = async () => {
+    if (!disputeOrderId || !disputeReason.trim()) {
+      alert('请填写仲裁申请理由');
+      return;
+    }
+
+    setDisputeSubmitting(true);
+    try {
+      await api.orders.dispute(disputeOrderId, disputeReason.trim());
+      alert('仲裁申请已提交，平台将尽快处理');
+      setShowDisputeModal(false);
+      loadOrders();
+    } catch (error: any) {
+      alert(error.message || '申请仲裁失败');
+    } finally {
+      setDisputeSubmitting(false);
     }
   };
 
@@ -616,14 +716,15 @@ export default function OrdersPage() {
               >
                 <OrderCard
                   order={order}
-                  showActions={user?.role === 'creator'}
+                  showActions={true}
+                  userRole={user?.role}
+                  loadingAction={loadingOrderId === order.id ? loadingAction : null}
                   onAccept={() => handleAcceptOrder(order.id)}
+                  onPayDeposit={() => handlePayDeposit(order.id)}
+                  onStart={() => handleStartService(order.id)}
+                  onComplete={() => handleCompleteService(order.id)}
+                  onDispute={() => handleOpenDispute(order.id)}
                 />
-                {acceptingId === order.id && (
-                  <div className="mt-2 flex justify-center">
-                    <LoadingSpinner size="sm" />
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -997,6 +1098,76 @@ export default function OrdersPage() {
                   确认发布
                 </Button>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showDisputeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up">
+            <div className="p-6 border-b border-zinc-100">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
+                    <AlertTriangle className="w-5 h-5 text-amber-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-zinc-900">申请仲裁</h2>
+                    <p className="text-sm text-zinc-500">平台将在3个工作日内介入处理</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowDisputeModal(false)}
+                  className="p-2 rounded-full hover:bg-zinc-100 transition-colors"
+                >
+                  <X className="w-5 h-5 text-zinc-500" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-zinc-700 mb-2">
+                  仲裁理由 <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  value={disputeReason}
+                  onChange={(e) => setDisputeReason(e.target.value)}
+                  placeholder="请详细描述您的争议原因，包括相关情况和您的诉求..."
+                  rows={5}
+                  className="input-field resize-none"
+                />
+              </div>
+
+              <div className="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-amber-800">温馨提示</p>
+                    <p className="text-xs text-amber-600 mt-1">
+                      申请仲裁后，订单将进入争议处理状态。平台会根据双方提供的证据进行裁决，请确保您的描述真实有效。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-zinc-100 flex items-center justify-end gap-3">
+              <Button
+                variant="secondary"
+                onClick={() => setShowDisputeModal(false)}
+                disabled={disputeSubmitting}
+              >
+                取消
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleSubmitDispute}
+                isLoading={disputeSubmitting}
+              >
+                提交申请
+              </Button>
             </div>
           </div>
         </div>

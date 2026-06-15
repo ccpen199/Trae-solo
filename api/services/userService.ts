@@ -129,7 +129,7 @@ function mapUser(row: any): User {
     id: row.id,
     username: row.username,
     avatar: row.avatar || undefined,
-    role: row.role as 'user' | 'creator' | 'admin',
+    role: row.role as 'user' | 'creator' | 'admin' | 'requester',
     bio: row.bio || undefined,
     followerCount: row.follower_count,
     followingCount: row.following_count,

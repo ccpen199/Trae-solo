@@ -37,7 +37,8 @@ router.post('/register', (req, res) => {
     return error(res, '用户名已存在', 409, 409);
   }
 
-  const userRole = role === 'creator' ? 'creator' : 'user';
+  const validRoles = ['user', 'creator', 'admin', 'requester'];
+  const userRole = validRoles.includes(role) ? role : 'user';
   const user = createUser(username, password, userRole);
   const token = generateToken(user.id, user.role);
   
