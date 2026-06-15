@@ -1,0 +1,243 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #f0f2f5;
+  color: #333;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-layout {
+  min-height: 100vh;
+}
+
+.logo {
+  height: 32px;
+  margin: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  gap: 8px;
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.stat-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card .ant-statistic-title {
+  color: #666;
+  font-size: 14px;
+}
+
+.stat-card .ant-statistic-content-value {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.countdown-warning {
+  color: #faad14;
+}
+
+.countdown-danger {
+  color: #ff4d4f;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.platform-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.platform-item:hover {
+  background: #f0f5ff;
+}
+
+.platform-item.active {
+  background: #e6f4ff;
+  border: 1px solid #1677ff;
+}
+
+.platform-logo {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.price-card {
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+
+.price-card:hover {
+  border-color: #1677ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(22, 119, 255, 0.15);
+}
+
+.price-card.recommended {
+  border-color: #52c41a;
+  background: linear-gradient(135deg, #f6ffed 0%, #fff 100%);
+}
+
+.price-card .recommend-badge {
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  background: #52c41a;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.timeline-item {
+  padding-bottom: 16px;
+}
+
+.timeline-time {
+  color: #999;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.timeline-desc {
+  color: #333;
+  font-size: 14px;
+}
+
+.gauge-container {
+  position: relative;
+  width: 100%;
+  padding-top: 50%;
+}
+
+.gauge-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sla-card {
+  background: linear-gradient(135deg, #fff7e6 0%, #fff 100%);
+  border: 1px solid #ffd591;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.compensation-card {
+  background: linear-gradient(135deg, #f9f0ff 0%, #fff 100%);
+  border: 1px solid #d3adf7;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.settlement-card {
+  background: linear-gradient(135deg, #e6fffb 0%, #fff 100%);
+  border: 1px solid #87e8de;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status-pending { background: #fffbe6; color: #faad14; }
+.status-delivering { background: #e6f4ff; color: #1677ff; }
+.status-delivered { background: #f6ffed; color: #52c41a; }
+.status-cancelled { background: #f5f5f5; color: #999; }
+.status-exception { background: #fff1f0; color: #ff4d4f; }
+
+.page-container {
+  padding: 24px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.filter-bar {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
