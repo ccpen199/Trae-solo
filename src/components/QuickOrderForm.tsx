@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame } from 'lucide-react';
+import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAppStore, serviceTypeList } from '@/store';
@@ -94,20 +94,49 @@ export default function QuickOrderForm() {
     setSubmitting(true);
 
     const newOrderId = Date.now();
-    const newOrder = {
+    const policyNo = `JZ${dateStr.replace(/-/g, '')}${String(newOrderId).slice(-6)}`;
+    const startTimeStr = `${dateStr} ${time}`;
+
+    const genOrderNodes = (): import('@/types').ServiceNode[] => {
+      const d = dateStr;
+      const addMin = (t: string, min: number) => {
+        const [h, m] = t.split(':').map(Number);
+        const total = h * 60 + m + min;
+        const nh = Math.floor(total / 60) % 24;
+        const nm = total % 60;
+        return `${d} ${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
+      };
+      return [
+        { id: 1, order_id: newOrderId, node_type: 'order_created' as const, node_label: '订单创建', node_time: addMin(time, -1), remark: '3秒快速下单完成' },
+        { id: 2, order_id: newOrderId, node_type: 'assigned' as const, node_label: '系统派单', node_time: addMin(time, 2), remark: '热力图匹配1km内最优阿姨' },
+      ];
+    };
+
+    const newOrder: import('@/types').Order = {
       id: newOrderId,
       user_id: 1,
       service_type: serviceType,
       service_type_label: currentService.label,
       address: selectedAddress.detail,
+      address_name: selectedAddress.name,
       lng: selectedAddress.lng,
       lat: selectedAddress.lat,
-      start_time: `${dateStr} ${time}`,
+      start_time: startTimeStr,
       duration_hours: duration,
-      status: 'pending' as const,
-      status_label: '待派单',
+      status: 'assigned',
+      status_label: '待接单',
       amount: totalFee,
       created_at: new Date().toISOString().slice(0, 16).replace('T', ' '),
+      nodes: genOrderNodes(),
+      insurance: {
+        policy_no: policyNo,
+        product_name: '家政服务责任险',
+        coverage_amount: 500000,
+        premium: insuranceFee,
+        status: 'active',
+      },
+      worker_score: avgScore,
+      distance_km: dispatchInfo ? dispatchInfo.worker_distribution[0]?.count ? 0.5 : 1.0 : 0.8,
     };
 
     setTimeout(() => {
@@ -115,37 +144,108 @@ export default function QuickOrderForm() {
       setSubmitting(false);
       setOrderId(newOrderId);
       setOrderSuccess(true);
-    }, 800);
+    }, 1000);
   };
 
   if (orderSuccess) {
     return (
-      <div className="text-center py-8 animate-fade-up">
-        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5">
-          <CheckCircle className="w-10 h-10 text-green-500" />
-        </div>
-        <h3 className="text-2xl font-bold text-secondary-800 mb-2">下单成功！</h3>
-        <p className="text-secondary-500 mb-2">订单号 #{orderId}</p>
-        <div className="space-y-2 mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 text-primary-700 text-sm">
-            <Navigation className="w-4 h-4" />
-            正在匹配1km内阿姨，预计3分钟内派单
+      <div className="py-6 animate-fade-up">
+        <div className="text-center mb-5">
+          <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
+            <CheckCircle className="w-8 h-8 text-green-500" />
           </div>
-          <div className="flex flex-col gap-1 text-xs text-secondary-500 bg-secondary-50 rounded-xl p-3 max-w-xs mx-auto">
-            {timeline.map((node, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <span className="text-secondary-400 w-16 text-right">{node.time}</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-primary-400" />
-                <span>{node.label}</span>
+          <h3 className="text-xl font-bold text-secondary-800">下单成功！</h3>
+          <p className="text-xs text-secondary-500 mt-1">订单号 #{orderId}</p>
+        </div>
+
+        <div className="space-y-3 mb-5">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-primary-50 text-primary-700 text-xs mx-auto w-fit">
+            <Navigation className="w-3.5 h-3.5" />
+            正在匹配1km内阿姨 · 预计3分钟内派单
+          </div>
+
+          <div className="card p-4 bg-gradient-to-br from-green-50 to-blue-50 border-green-100">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield className="w-4 h-4 text-green-600" />
+              <span className="text-sm font-bold text-green-800">保险已自动承保</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-[11px]">
+              <div className="bg-white/80 rounded-lg p-2">
+                <p className="text-secondary-500">保单号</p>
+                <p className="font-mono text-secondary-800 font-medium truncate">
+                  JZ{dateStr.replace(/-/g, '')}{String(orderId).slice(-6)}
+                </p>
               </div>
-            ))}
+              <div className="bg-white/80 rounded-lg p-2">
+                <p className="text-secondary-500">保额</p>
+                <p className="font-bold text-green-700">50万元</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="card p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-4 h-4 text-orange-500" />
+              <span className="text-sm font-bold text-secondary-800">履约节点实时推送</span>
+            </div>
+            <div className="relative">
+              {timeline.slice(0, 4).map((node, i) => {
+                const NodeIcon = node.icon;
+                const isDone = i === 0;
+                return (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <div className="flex flex-col items-center">
+                      <div className={cn(
+                        'w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0',
+                        isDone ? 'bg-primary-500 text-white' : 'bg-gray-100 text-gray-400'
+                      )}>
+                        <NodeIcon className="w-3.5 h-3.5" />
+                      </div>
+                      {i < 3 && <div className={cn('w-0.5 h-6 mt-0.5', isDone ? 'bg-primary-300' : 'bg-gray-200')} />}
+                    </div>
+                    <div className="pb-2 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className={cn('text-xs font-medium', isDone ? 'text-secondary-800' : 'text-secondary-400')}>
+                          {node.label}
+                        </span>
+                        {isDone && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">已完成</span>}
+                      </div>
+                      <p className="text-[10px] text-secondary-400 mt-0.5">{node.time} · {node.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="card p-4 bg-gradient-to-r from-red-50 to-orange-50 border-red-100">
+            <div className="flex items-start gap-2">
+              <CircleDollarSign className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-bold text-red-800">爽约赔付保障已激活</p>
+                <p className="text-[11px] text-red-600 mt-0.5">
+                  阿姨迟到&gt;30分钟或未上门 → 全额退款 + 30元补偿券
+                </p>
+                <div className="flex items-center gap-3 mt-2 text-[10px] text-red-600">
+                  <span className="flex items-center gap-1">
+                    <Timer className="w-3 h-3" />
+                    24h自动到账
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Gift className="w-3 h-3" />
+                    平台先行垫付
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="flex gap-3 justify-center">
-          <button onClick={() => navigate(`/orders/${orderId}`)} className="btn-primary text-sm">
-            查看订单
+
+        <div className="flex gap-2">
+          <button onClick={() => navigate(`/orders/${orderId}`)} className="btn-primary text-sm flex-1">
+            追踪订单
           </button>
-          <button onClick={() => setOrderSuccess(false)} className="btn-secondary text-sm">
+          <button onClick={() => setOrderSuccess(false)} className="btn-secondary text-sm flex-1">
             继续下单
           </button>
         </div>

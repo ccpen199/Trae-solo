@@ -5,24 +5,19 @@ import {
   ArrowLeft, AlertTriangle, MessageCircle, ShieldCheck,
   FileText, Receipt, ChevronDown, Star, Zap, Award,
   Shield, FileCheck, Users, Timer, TrendingUp,
+  CheckCircle, CircleDollarSign, Gift, UserCheck,
+  Mic, BarChart3, Navigation, Eye, ThumbsUp, ThumbsDown,
+  Play, XCircle,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import OrderProgressBar from '@/components/OrderProgressBar';
 import { useAppStore } from '@/store';
-import type { Order, OrderStatus } from '@/types';
+import type { Order, OrderStatus, ServiceNode, CompensationRecord, QARecordDetail } from '@/types';
 import { cn } from '@/lib/utils';
-import { workerScores, sopDocuments, insurancePolicies, insuranceProducts, workers } from '@/mock/data';
 
 const serviceIconMap = {
   cleaning: Sparkles,
   babysitting: Baby,
   cooking: ChefHat,
-};
-
-const skillLabelMap: Record<string, string> = {
-  cleaning: '日常保洁',
-  babysitting: '育婴师',
-  cooking: '上门做饭',
 };
 
 function getStatusBadge(status: OrderStatus) {
@@ -40,14 +35,349 @@ function getStatusBadge(status: OrderStatus) {
   return map[status];
 }
 
-const compensationReasons = [
-  '阿姨迟到超过30分钟',
-  '服务质量不满意',
-  '阿姨未按约定时间上门',
-  '服务态度问题',
-  '物品损坏',
-  '其他原因',
-];
+const nodeIconMap: Record<string, typeof CheckCircle> = {
+  order_created: Zap,
+  assigned: Navigation,
+  accepted: UserCheck,
+  departing: MapPin,
+  arrived: Navigation,
+  servicing: Sparkles,
+  completed: CheckCircle,
+};
+
+function NodeTimelineSection({ nodes, status }: { nodes: ServiceNode[]; status: OrderStatus }) {
+  if (nodes.length === 0) return null;
+  const isFinished = status === 'completed' || status === 'compensated' || status === 'cancelled';
+
+  return (
+    <div className="card p-6 mb-6">
+      <h2 className="text-lg font-bold text-secondary-800 mb-5 flex items-center gap-2">
+        <Navigation className="w-5 h-5 text-primary-500" />
+        履约节点追踪
+        <span className="text-xs text-secondary-400 font-normal ml-1">{nodes.length}个节点</span>
+      </h2>
+      <div className="space-y-0">
+        {nodes.map((node, i) => {
+          const isDone = i < nodes.length - 1 || isFinished;
+          const isCurrent = !isDone;
+          const Icon = nodeIconMap[node.node_type] || CheckCircle;
+          return (
+            <div key={node.id} className="flex items-start gap-4">
+              <div className="flex flex-col items-center">
+                <div className={cn(
+                  'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all',
+                  isDone
+                    ? 'bg-primary-500 text-white shadow-soft'
+                    : isCurrent
+                      ? 'bg-primary-100 text-primary-600 ring-4 ring-primary-200 animate-pulse'
+                      : 'bg-gray-100 text-gray-400'
+                )}>
+                  <Icon className="w-5 h-5" />
+                </div>
+                {i < nodes.length - 1 && (
+                  <div className={cn('w-0.5 h-10', isDone ? 'bg-primary-300' : 'bg-gray-200')} />
+                )}
+              </div>
+              <div className="pb-6 flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className={cn(
+                      'font-bold text-sm',
+                      isDone ? 'text-secondary-800' : isCurrent ? 'text-primary-600' : 'text-gray-400'
+                    )}>
+                      {node.node_label}
+                    </span>
+                    {isCurrent && (
+                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-primary-100 text-primary-600 animate-pulse">
+                        当前节点
+                      </span>
+                    )}
+                  </div>
+                  <span className={cn(
+                    'text-sm font-medium',
+                    isDone ? 'text-primary-600' : isCurrent ? 'text-primary-500' : 'text-gray-400'
+                  )}>
+                    {node.node_time.slice(11, 16)}
+                  </span>
+                </div>
+                <p className={cn(
+                  'text-xs mt-0.5',
+                  isDone ? 'text-secondary-500' : 'text-secondary-400'
+                )}>
+                  {node.node_time.slice(0, 10)}
+                </p>
+                {node.remark && (
+                  <p className={cn(
+                    'text-xs mt-1 px-3 py-1.5 rounded-lg inline-block',
+                    isDone ? 'bg-secondary-50 text-secondary-600' : 'bg-primary-50 text-primary-600'
+                  )}>
+                    {node.remark}
+                  </p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function CompensationRecordSection({ compensation }: { compensation: CompensationRecord }) {
+  return (
+    <div className="card p-6 mb-6 border-l-4 border-l-red-400">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center">
+            <Gift className="w-6 h-6 text-red-500" />
+          </div>
+          <div>
+            <h2 className="text-lg font-bold text-secondary-800">赔付记录</h2>
+            <p className="text-xs text-secondary-500">
+              {compensation.trigger_type === 'auto' ? '系统自动触发' : '人工申请'}
+            </p>
+          </div>
+        </div>
+        <span className={cn(
+          'px-3 py-1 rounded-full text-xs font-medium',
+          compensation.status === 'paid' ? 'bg-green-100 text-green-700'
+            : compensation.status === 'approved' ? 'bg-blue-100 text-blue-700'
+              : 'bg-yellow-100 text-yellow-700'
+        )}>
+          {compensation.status === 'paid' ? '已到账' : compensation.status === 'approved' ? '审核通过' : '处理中'}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="bg-green-50 rounded-xl p-4 text-center border border-green-100">
+          <CircleDollarSign className="w-5 h-5 text-green-500 mx-auto mb-1" />
+          <p className="text-2xl font-bold text-green-600">¥{compensation.refund_amount}</p>
+          <p className="text-xs text-green-600 mt-0.5">全额退款</p>
+        </div>
+        <div className="bg-orange-50 rounded-xl p-4 text-center border border-orange-100">
+          <Gift className="w-5 h-5 text-orange-500 mx-auto mb-1" />
+          <p className="text-2xl font-bold text-orange-600">¥{compensation.coupon_amount}</p>
+          <p className="text-xs text-orange-600 mt-0.5">补偿券</p>
+        </div>
+      </div>
+
+      <div className="bg-secondary-50 rounded-xl p-4 space-y-2 mb-4">
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-secondary-500">赔付原因</span>
+          <span className="text-secondary-800 font-medium">{compensation.reason_category}</span>
+        </div>
+        <div className="flex items-start justify-between text-sm">
+          <span className="text-secondary-500 flex-shrink-0">详细说明</span>
+          <span className="text-secondary-700 text-right max-w-[65%]">{compensation.reason}</span>
+        </div>
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-secondary-500">补偿券码</span>
+          <span className="text-primary-600 font-mono font-bold">{compensation.coupon_code}</span>
+        </div>
+        {compensation.auditor && (
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-secondary-500">审核人</span>
+            <span className="text-secondary-700">{compensation.auditor}</span>
+          </div>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <p className="text-xs font-medium text-secondary-700 mb-1">赔付进度</p>
+        <div className="flex items-center gap-2">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <span className="text-xs text-secondary-600">申请提交</span>
+            </div>
+            <p className="text-xs text-secondary-400 pl-6">{compensation.created_at}</p>
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              {compensation.approved_at ? <CheckCircle className="w-4 h-4 text-green-500" /> : <Timer className="w-4 h-4 text-yellow-500" />}
+              <span className="text-xs text-secondary-600">审核通过</span>
+            </div>
+            {compensation.approved_at && <p className="text-xs text-secondary-400 pl-6">{compensation.approved_at}</p>}
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              {compensation.paid_at ? <CircleDollarSign className="w-4 h-4 text-green-500" /> : <Timer className="w-4 h-4 text-yellow-500" />}
+              <span className="text-xs text-secondary-600">到账完成</span>
+            </div>
+            {compensation.paid_at && <p className="text-xs text-green-600 font-medium pl-6">{compensation.paid_at} · 24小时内极速到账</p>}
+          </div>
+        </div>
+      </div>
+
+      {compensation.description && (
+        <div className="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+          <p className="text-xs text-yellow-800 leading-relaxed">{compensation.description}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function QARecordSection({ qa }: { qa: QARecordDetail }) {
+  const [showTranscript, setShowTranscript] = useState(false);
+
+  return (
+    <div className="card p-6 mb-6">
+      <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
+            <Mic className="w-6 h-6 text-blue-500" />
+          </div>
+          <div>
+            <h2 className="text-lg font-bold text-secondary-800">服务质检与回溯</h2>
+            <p className="text-xs text-secondary-500">录音转文字 · 差评根因 · 审计留痕</p>
+          </div>
+        </div>
+        <span className={cn(
+          'px-3 py-1 rounded-full text-xs font-medium',
+          qa.review_conclusion === 'pass' ? 'bg-green-100 text-green-700'
+            : qa.review_conclusion === 'warning' ? 'bg-yellow-100 text-yellow-700'
+              : 'bg-red-100 text-red-700'
+        )}>
+          质检{qa.review_conclusion === 'pass' ? '通过' : qa.review_conclusion === 'warning' ? '警告' : '不通过'}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3 mb-5">
+        <div className="bg-yellow-50 rounded-xl p-3 text-center border border-yellow-100">
+          <Star className="w-5 h-5 text-yellow-500 mx-auto mb-1 fill-yellow-500" />
+          <p className="text-xl font-bold text-yellow-700">{qa.rating}</p>
+          <p className="text-[10px] text-yellow-600">客户评分</p>
+        </div>
+        <div className="bg-green-50 rounded-xl p-3 text-center border border-green-100">
+          <CheckCircle className="w-5 h-5 text-green-500 mx-auto mb-1" />
+          <p className="text-xl font-bold text-green-700">{qa.compliance_rate}%</p>
+          <p className="text-[10px] text-green-600">质检合规率</p>
+        </div>
+        <div className="bg-blue-50 rounded-xl p-3 text-center border border-blue-100">
+          <Award className="w-5 h-5 text-blue-500 mx-auto mb-1" />
+          <p className="text-xl font-bold text-blue-700">{qa.complaint_count === 0 ? '0' : qa.complaint_count}</p>
+          <p className="text-[10px] text-blue-600">投诉次数</p>
+        </div>
+      </div>
+
+      <div className="bg-secondary-50 rounded-xl p-4 mb-4 space-y-2">
+        <div className="flex items-center gap-1.5 text-sm text-secondary-700 font-medium mb-2">
+          <BarChart3 className="w-4 h-4" />
+          差评根因分析
+        </div>
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-secondary-500">根因分类</span>
+            <span className={cn('font-medium', qa.complaint_count > 0 ? 'text-red-600' : 'text-green-600')}>
+              {qa.root_cause_category}
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-secondary-500">具体原因</span>
+            <span className="text-secondary-700 font-medium text-right max-w-[60%] truncate">{qa.root_cause}</span>
+          </div>
+        </div>
+        <p className="text-xs text-secondary-600 leading-relaxed pt-1 border-t border-secondary-200">
+          {qa.root_cause_detail}
+        </p>
+      </div>
+
+      {qa.keywords && qa.keywords.length > 0 && (
+        <div className="bg-primary-50 rounded-xl p-4 mb-4">
+          <div className="flex items-center gap-1.5 text-sm text-primary-700 font-medium mb-2">
+            <Eye className="w-4 h-4" />
+            关键词合规检测
+            <span className="text-xs text-primary-500 font-normal">· 命中{qa.keywords.filter(k => k.hit).length}/{qa.keywords.length}</span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {qa.keywords.map((kw, i) => (
+              <span
+                key={i}
+                className={cn(
+                  'text-xs px-2.5 py-1 rounded-full font-medium',
+                  kw.hit
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : 'bg-gray-100 text-gray-500 border border-gray-200'
+                )}
+              >
+                {kw.hit ? '✓' : '○'} {kw.text}
+                {kw.count > 0 && <span className="ml-1 opacity-70">({kw.count})</span>}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="bg-cream-100 rounded-xl p-4 mb-4">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-1.5 text-sm text-secondary-700 font-medium">
+            <Mic className="w-4 h-4" />
+            录音转文字
+            <span className="text-xs text-secondary-400 font-normal">
+              · 时长{Math.floor(qa.audio_duration / 60)}分{qa.audio_duration % 60}秒
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button className="flex items-center gap-1 px-3 py-1 bg-primary-50 text-primary-600 rounded-lg text-xs font-medium hover:bg-primary-100 transition-colors">
+              <Play className="w-3 h-3" />
+              播放录音
+            </button>
+            <button
+              onClick={() => setShowTranscript(!showTranscript)}
+              className="flex items-center gap-1 px-3 py-1 bg-secondary-50 text-secondary-600 rounded-lg text-xs font-medium hover:bg-secondary-100 transition-colors"
+            >
+              <FileText className="w-3 h-3" />
+              {showTranscript ? '收起' : '展开原文'}
+            </button>
+          </div>
+        </div>
+        <p className="text-sm text-secondary-600 leading-relaxed">{qa.transcript_summary}</p>
+        {showTranscript && (
+          <div className="mt-3 p-3 bg-white rounded-lg border border-secondary-200 text-xs text-secondary-600 leading-relaxed whitespace-pre-line animate-fade-up">
+            {qa.transcript_text}
+          </div>
+        )}
+      </div>
+
+      {qa.qa_status === 'completed' && (
+        <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
+          <div className="flex items-center gap-1.5 text-sm text-blue-700 font-medium mb-3">
+            <UserCheck className="w-4 h-4" />
+            质检审计留痕
+          </div>
+          <div className="grid grid-cols-2 gap-3 mb-2">
+            <div className="text-sm">
+              <span className="text-secondary-500">复查人：</span>
+              <span className="text-secondary-800 font-medium">{qa.reviewer}</span>
+            </div>
+            <div className="text-sm">
+              <span className="text-secondary-500">复查时间：</span>
+              <span className="text-secondary-800">{qa.review_time}</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-sm mb-2">
+            <span className="text-secondary-500">质检结论：</span>
+            <span className={cn(
+              'font-medium',
+              qa.review_conclusion === 'pass' ? 'text-green-600'
+                : qa.review_conclusion === 'warning' ? 'text-yellow-600'
+                  : 'text-red-600'
+            )}>
+              {qa.review_conclusion === 'pass' ? '通过' : qa.review_conclusion === 'warning' ? '警告' : '不通过'}
+            </span>
+          </div>
+          {qa.review_remark && (
+            <div className="text-sm bg-white/60 rounded-lg p-3 mt-2">
+              <span className="text-secondary-500">复查意见：</span>
+              <span className="text-secondary-700">{qa.review_remark}</span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function OrderDetail() {
   const { id } = useParams<{ id: string }>();
@@ -77,16 +407,9 @@ export default function OrderDetail() {
 
   const Icon = serviceIconMap[order.service_type];
   const badge = getStatusBadge(order.status);
-  const canCompensate = order.status === 'completed' || order.status === 'arrived' || order.status === 'servicing';
-
-  const worker = order.worker_id ? workers.find((w) => w.id === order.worker_id) : null;
-  const workerScore = order.worker_id ? workerScores.find((s) => s.worker_id === order.worker_id) : null;
-  const sopDoc = sopDocuments.find((s) => s.service_type === order.service_type);
-  const orderInsurances = insurancePolicies.filter((p) => p.order_id === order.id);
-
-  const nearbyWorkersCount = 5;
-  const dispatchDurationMinutes = 8;
-  const workerDistanceKm = 0.8;
+  const isOngoing = ['pending', 'assigned', 'accepted', 'departing', 'arrived', 'servicing'].includes(order.status);
+  const isCompleted = order.status === 'completed' || order.status === 'compensated';
+  const canCompensate = isCompleted || order.status === 'cancelled';
 
   const handleSubmitCompensation = () => {
     if (!selectedReason) return;
@@ -111,8 +434,8 @@ export default function OrderDetail() {
           返回订单列表
         </button>
 
-        <div className="card p-6 md:p-8 mb-6 animate-fade-up">
-          <div className="flex items-start justify-between mb-6">
+        <div className="card p-6 md:p-8 mb-6">
+          <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center">
                 <Icon className="w-7 h-7 text-primary-500" />
@@ -122,7 +445,7 @@ export default function OrderDetail() {
                   <h1 className="text-xl font-bold text-secondary-900">{order.service_type_label}</h1>
                   <span className={badge.className}>{badge.label}</span>
                 </div>
-                <p className="text-sm text-secondary-500 mt-1">订单号 #{order.id}</p>
+                <p className="text-sm text-secondary-500 mt-1">订单号 #{order.id} · {order.address_name || '自定义地址'}</p>
               </div>
             </div>
             <div className="text-right">
@@ -131,106 +454,102 @@ export default function OrderDetail() {
             </div>
           </div>
 
-          <OrderProgressBar status={order.status} orderCreatedAt={order.created_at} />
-
-          <div className="mt-4 p-4 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-xl border border-primary-100">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center flex-shrink-0">
-                <Zap className="w-4 h-4 text-primary-600" />
-              </div>
+          {order.is_overtime && (
+            <div className="flex items-center gap-2 px-4 py-3 bg-red-50 rounded-xl border border-red-100 mb-4">
+              <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0" />
               <div>
-                <p className="text-sm font-medium text-secondary-800">智能派单系统</p>
-                <p className="text-xs text-secondary-500 mt-0.5">
-                  基于地理位置热力图调度，优先匹配1km内评分最高的阿姨
+                <p className="text-sm font-bold text-red-700">超时{order.overtime_minutes}分钟 · 已触发自动赔付</p>
+                <p className="text-xs text-red-600">根据平台规则，阿姨迟到超30分钟将自动触发爽约赔付</p>
+              </div>
+            </div>
+          )}
+
+          {order.insurance && (
+            <div className="flex items-center gap-3 px-4 py-3 bg-green-50 rounded-xl border border-green-100 mb-4">
+              <Shield className="w-5 h-5 text-green-600 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium text-green-800">{order.insurance.product_name}</p>
+                  <span className={cn(
+                    'text-xs font-medium px-2 py-0.5 rounded-full',
+                    order.insurance.status === 'active' ? 'bg-green-200 text-green-800' : 'bg-gray-200 text-gray-600'
+                  )}>
+                    {order.insurance.status === 'active' ? '保障中' : order.insurance.status === 'claimed' ? '已理赔' : '已过期'}
+                  </span>
+                </div>
+                <p className="text-xs text-green-600 mt-0.5">
+                  保单号：{order.insurance.policy_no} · 保额¥{(order.insurance.coverage_amount / 10000).toFixed(0)}万 · 保费¥{order.insurance.premium}/单
                 </p>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {(order.status === 'pending' || order.status === 'assigned' || order.worker_name) && (
-          <div className="card p-6 mb-6 animate-fade-up stagger-1">
+        {order.nodes && order.nodes.length > 0 && (
+          <NodeTimelineSection nodes={order.nodes} status={order.status} />
+        )}
+
+        {order.worker_name && (
+          <div className="card p-6 mb-6">
             <h2 className="text-lg font-bold text-secondary-800 mb-4 flex items-center gap-2">
               <Users className="w-5 h-5 text-primary-500" />
-              派单进度追踪
+              服务阿姨
             </h2>
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div className="text-center p-3 bg-secondary-50 rounded-xl">
-                <p className="text-2xl font-bold text-secondary-700">{nearbyWorkersCount}</p>
-                <p className="text-xs text-secondary-500 mt-1">附近阿姨</p>
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
+                <User className="w-8 h-8 text-white" />
               </div>
-              <div className="text-center p-3 bg-primary-50 rounded-xl">
-                <p className="text-2xl font-bold text-primary-600">
-                  {workerScore ? workerScore.overall_score.toFixed(1) : '--'}
-                </p>
-                <p className="text-xs text-secondary-500 mt-1">当前评分</p>
-              </div>
-              <div className="text-center p-3 bg-secondary-50 rounded-xl">
-                <p className="text-2xl font-bold text-secondary-700">{dispatchDurationMinutes}</p>
-                <p className="text-xs text-secondary-500 mt-1">派单耗时(分)</p>
-              </div>
-            </div>
-
-            {order.worker_name && (
-              <div className="pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
-                    <User className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="font-bold text-secondary-800 text-lg">{order.worker_name}</p>
-                      {workerScore && (
-                        <div className="flex items-center gap-0.5">
-                          <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                          <span className="text-sm font-medium text-secondary-700">
-                            {workerScore.overall_score.toFixed(1)}
-                          </span>
-                        </div>
-                      )}
+              <div className="flex-1">
+                <div className="flex items-center gap-3">
+                  <p className="font-bold text-secondary-800 text-lg">{order.worker_name}</p>
+                  {order.worker_score && (
+                    <div className="flex items-center gap-1">
+                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                      <span className="text-sm font-medium text-secondary-700">{order.worker_score}</span>
                     </div>
-                    <p className="text-secondary-500 text-sm">{order.worker_phone}</p>
-                    <div className="flex items-center gap-3 mt-1">
-                      <div className="flex items-center gap-1">
-                        <ShieldCheck className="w-4 h-4 text-green-500" />
-                        <span className="text-xs text-green-600">已实名认证</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MapPin className="w-4 h-4 text-secondary-400" />
-                        <span className="text-xs text-secondary-500">{workerDistanceKm}km</span>
-                      </div>
-                    </div>
-                    {worker && worker.skills.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-2">
-                        {worker.skills.map((skill) => (
-                          <span
-                            key={skill}
-                            className="px-2 py-0.5 text-xs rounded-full bg-secondary-100 text-secondary-600"
-                          >
-                            {skillLabelMap[skill] || skill}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                  )}
+                  <Link
+                    to="/worker/profile"
+                    className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1 font-medium"
+                  >
+                    <ShieldCheck className="w-3 h-3" />
+                    查看三证
+                  </Link>
+                </div>
+                <p className="text-secondary-500 text-sm">{order.worker_phone}</p>
+                <div className="flex items-center gap-3 mt-1">
+                  <div className="flex items-center gap-1">
+                    <ShieldCheck className="w-4 h-4 text-green-500" />
+                    <span className="text-xs text-green-600">已实名认证</span>
                   </div>
-                  <div className="flex gap-2">
-                    <a
-                      href={`tel:${order.worker_phone}`}
-                      className="w-11 h-11 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center hover:bg-primary-100 transition-colors"
-                    >
-                      <Phone className="w-5 h-5" />
-                    </a>
-                    <button className="w-11 h-11 rounded-full bg-secondary-50 text-secondary-600 flex items-center justify-center hover:bg-secondary-100 transition-colors">
-                      <MessageCircle className="w-5 h-5" />
-                    </button>
+                  {order.distance_km && (
+                    <div className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4 text-secondary-400" />
+                      <span className="text-xs text-secondary-500">{order.distance_km}km</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-1">
+                    <Navigation className="w-4 h-4 text-primary-400" />
+                    <span className="text-xs text-primary-500">1km内优先派单</span>
                   </div>
                 </div>
               </div>
-            )}
+              <div className="flex gap-2">
+                <a
+                  href={`tel:${order.worker_phone}`}
+                  className="w-11 h-11 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center hover:bg-primary-100 transition-colors"
+                >
+                  <Phone className="w-5 h-5" />
+                </a>
+                <button className="w-11 h-11 rounded-full bg-secondary-50 text-secondary-600 flex items-center justify-center hover:bg-secondary-100 transition-colors">
+                  <MessageCircle className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
-        <div className="card p-6 mb-6 animate-fade-up stagger-2">
+        <div className="card p-6 mb-6">
           <h2 className="text-lg font-bold text-secondary-800 mb-4 flex items-center gap-2">
             <FileText className="w-5 h-5 text-primary-500" />
             服务信息
@@ -251,17 +570,6 @@ export default function OrderDetail() {
                 <p className="text-secondary-600 text-sm">服务时长 {order.duration_hours} 小时</p>
               </div>
             </div>
-            {sopDoc && (
-              <div className="flex items-start gap-3">
-                <FileCheck className="w-5 h-5 text-secondary-400 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm text-secondary-500">服务标准</p>
-                  <p className="text-secondary-800 font-medium">
-                    本次服务执行《{sopDoc.title} {sopDoc.version}》
-                  </p>
-                </div>
-              </div>
-            )}
             {order.remark && (
               <div className="flex items-start gap-3">
                 <FileText className="w-5 h-5 text-secondary-400 mt-0.5 flex-shrink-0" />
@@ -274,55 +582,15 @@ export default function OrderDetail() {
           </div>
         </div>
 
-        {orderInsurances.length > 0 && (
-          <div className="card p-6 mb-6 animate-fade-up stagger-3">
-            <h2 className="text-lg font-bold text-secondary-800 mb-4 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-primary-500" />
-              保险保障
-            </h2>
-            <div className="space-y-3">
-              {orderInsurances.map((policy) => {
-                const product = insuranceProducts.find((p) => p.id === policy.product_id);
-                return (
-                  <div
-                    key={policy.id}
-                    className="p-4 bg-gradient-to-r from-green-50 to-secondary-50 rounded-xl border border-green-100"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
-                          <ShieldCheck className="w-5 h-5 text-green-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-secondary-800">{policy.product_name}</p>
-                          <p className="text-xs text-secondary-500 mt-0.5">
-                            {product?.coverage}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-bold text-green-600">
-                          ¥{product ? (product.coverage_amount / 10000).toFixed(0) : '--'}万
-                        </p>
-                        <p className="text-xs text-secondary-400">保额</p>
-                      </div>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-green-100 flex items-center justify-between">
-                      <span className="text-xs text-secondary-500">
-                        保单号：{policy.policy_no}
-                      </span>
-                      <span className="text-xs text-green-600 font-medium">
-                        {policy.status === 'active' ? '保障中' : '已过期'}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+        {order.compensation && (
+          <CompensationRecordSection compensation={order.compensation} />
         )}
 
-        <div className="card p-6 mb-6 animate-fade-up stagger-4">
+        {order.qa_record && (
+          <QARecordSection qa={order.qa_record} />
+        )}
+
+        <div className="card p-6 mb-6">
           <h2 className="text-lg font-bold text-secondary-800 mb-4 flex items-center gap-2">
             <Receipt className="w-5 h-5 text-primary-500" />
             费用明细
@@ -330,17 +598,41 @@ export default function OrderDetail() {
           <div className="space-y-3">
             <div className="flex justify-between text-secondary-600">
               <span>{order.service_type_label} × {order.duration_hours}小时</span>
-              <span>¥{order.amount}</span>
+              <span>¥{order.amount - (order.insurance ? order.insurance.premium : 0)}</span>
             </div>
+            {order.insurance && (
+              <div className="flex justify-between text-secondary-600">
+                <span className="flex items-center gap-1">
+                  <Shield className="w-3.5 h-3.5 text-green-500" />
+                  {order.insurance.product_name}
+                </span>
+                <span>¥{order.insurance.premium}</span>
+              </div>
+            )}
+            {order.compensation && order.compensation.status === 'paid' && (
+              <div className="flex justify-between text-red-600 font-medium pt-2 border-t border-dashed border-red-200">
+                <span className="flex items-center gap-1">
+                  <CircleDollarSign className="w-3.5 h-3.5" />
+                  赔付退款
+                </span>
+                <span>-¥{order.compensation.refund_amount}</span>
+              </div>
+            )}
             <div className="flex justify-between pt-3 border-t border-gray-100">
-              <span className="font-medium text-secondary-800">实付金额</span>
-              <span className="text-xl font-bold text-primary-600">¥{order.amount}</span>
+              <span className="font-medium text-secondary-800">
+                {order.compensation && order.compensation.status === 'paid' ? '实付金额' : '订单金额'}
+              </span>
+              <span className="text-xl font-bold text-primary-600">
+                ¥{order.compensation && order.compensation.status === 'paid'
+                  ? order.amount - order.compensation.refund_amount
+                  : order.amount}
+              </span>
             </div>
           </div>
         </div>
 
-        {canCompensate && (
-          <div className="card p-6 mb-6 animate-fade-up stagger-5">
+        {canCompensate && !order.compensation && (
+          <div className="card p-6 mb-6">
             <button
               onClick={() => setShowCompensation(!showCompensation)}
               className="w-full flex items-center justify-between"
@@ -363,7 +655,13 @@ export default function OrderDetail() {
                   <div>
                     <label className="text-sm font-medium text-secondary-700 mb-2 block">赔付原因</label>
                     <div className="space-y-2">
-                      {compensationReasons.map((reason) => (
+                      {[
+                        '阿姨迟到超过30分钟',
+                        '服务质量不满意',
+                        '阿姨未按约定时间上门',
+                        '服务态度问题',
+                        '物品损坏',
+                      ].map((reason) => (
                         <button
                           key={reason}
                           onClick={() => setSelectedReason(reason)}
@@ -384,7 +682,7 @@ export default function OrderDetail() {
                     <textarea
                       value={compensationDesc}
                       onChange={(e) => setCompensationDesc(e.target.value)}
-                      placeholder="请描述具体情况，以便我们更好地为您处理"
+                      placeholder="请描述具体情况"
                       rows={3}
                       className="input-field resize-none"
                     />
@@ -394,9 +692,7 @@ export default function OrderDetail() {
                       <ShieldCheck className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
                       <div className="text-sm text-yellow-800">
                         <p className="font-medium">赔付保障说明</p>
-                        <p className="text-yellow-700 mt-1">
-                          我们将在24小时内审核您的申请，根据情况提供现金退款或服务券补偿。
-                        </p>
+                        <p className="text-yellow-700 mt-1">我们将在24小时内审核您的申请，根据情况提供现金退款或服务券补偿。爽约自动赔付无需申请。</p>
                       </div>
                     </div>
                   </div>
@@ -418,6 +714,37 @@ export default function OrderDetail() {
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {isOngoing && (
+          <div className="card p-4 mb-6 bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center">
+                <Zap className="w-5 h-5 text-primary-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-primary-800">实时追踪中</p>
+                <p className="text-xs text-primary-600">阿姨每个节点状态变更将实时推送通知，超时30分钟自动触发赔付</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {isCompleted && !order.qa_record && (
+          <div className="card p-4 mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                <Mic className="w-5 h-5 text-blue-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-blue-800">质检进行中</p>
+                <p className="text-xs text-blue-600">录音转文字与差评根因分析正在处理，完成后将展示详细质检报告</p>
+              </div>
+              <Link to="/admin/qa" className="text-xs text-blue-600 font-medium hover:text-blue-700">
+                质检中心 →
+              </Link>
+            </div>
           </div>
         )}
 

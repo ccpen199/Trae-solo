@@ -1,0 +1,14 @@
+{
+  "order": "may-89209",
+  "url": "http://127.0.0.1:49209/",
+  "status": 200,
+  "ok": true,
+  "title": "My Trae Project",
+  "textLength": 2121,
+  "sample": "暖 暖心到家 家政服务平台 首页 我的订单 用户端 张先生 138****8888 今日实时运营数据 · 2026-06-15 三证强管控 1km热力调度 基于地理位置热力图的智能派单系统，三证OCR+人工复核双重认证， 爽约自动赔付+全程保险保障，给您最可信赖的家政服务体验。 今日已派单 6单 ↑ 12% 较昨日 赔付到账率 100% 24h自动到账 保险承保率 43% 每单自动投保 1km平均到达 0.8km 热力优先调度 立即预约 我的订单 阿1 阿2 阿3 阿4 80",
+  "consoleErrors": [],
+  "failedRequests": [],
+  "responseErrors": [],
+  "error": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-smoke-may-89209.png"
+}

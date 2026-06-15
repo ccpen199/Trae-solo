@@ -28,6 +28,39 @@ export interface Worker {
   experience_years: number;
 }
 
+export interface OCRField {
+  label: string;
+  value: string;
+  confidence?: number;
+}
+
+export interface CertOCRResult {
+  id_card: {
+    fields: OCRField[];
+    ocr_time: string;
+    confidence: number;
+  };
+  health_cert: {
+    fields: OCRField[];
+    ocr_time: string;
+    confidence: number;
+  };
+  crime_record: {
+    fields: OCRField[];
+    ocr_time: string;
+    confidence: number;
+  };
+}
+
+export interface ReviewRecord {
+  id: number;
+  reviewer: string;
+  review_time: string;
+  result: 'pass' | 'reject' | 'pending';
+  remark: string;
+  type: 'ocr' | 'manual' | 'recheck';
+}
+
 export interface WorkerCert {
   id: number;
   worker_id: number;
@@ -35,8 +68,12 @@ export interface WorkerCert {
   health_cert_url: string;
   crime_record_url: string;
   ocr_result: string;
+  ocr_detail?: CertOCRResult;
   verify_status: 'pending' | 'ocr_done' | 'approved' | 'rejected';
   submitted_at: string;
+  ocr_completed_at?: string;
+  review_completed_at?: string;
+  review_history?: ReviewRecord[];
 }
 
 export interface WorkerScore {

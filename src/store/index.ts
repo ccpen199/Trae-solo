@@ -1,6 +1,16 @@
 import { create } from 'zustand';
 import type { User, Order, Address, PageRole, ServiceType, AddressDispatchInfo, ServiceNode, CompensationRecord, QARecordDetail, InsuranceInfo } from '@/types';
 
+interface HomeStats {
+  todayDispatched: number;
+  payoutRate: number;
+  insuranceRate: number;
+  avgArriveKm: number;
+  avgWorkerScore: number;
+  workerCount: number;
+  activeOrders: number;
+}
+
 interface AppState {
   currentRole: PageRole;
   user: User | null;
@@ -16,6 +26,7 @@ interface AppState {
   setAddresses: (addresses: Address[]) => void;
   setSelectedAddress: (address: Address | null) => void;
   getDispatchInfo: (addressId: number) => AddressDispatchInfo | undefined;
+  getHomeStats: () => HomeStats;
 }
 
 const today = '2026-06-15';
@@ -476,6 +487,28 @@ export const useAppStore = create<AppState>((set, get) => ({
   setAddresses: (addresses) => set({ addresses }),
   setSelectedAddress: (address) => set({ selectedAddress: address }),
   getDispatchInfo: (addressId) => get().addressDispatchMap[addressId],
+  getHomeStats: () => {
+    const orders = get().orders;
+    const todayOrders = orders.filter((o) => o.start_time.startsWith(today));
+    const compensatedOrders = orders.filter((o) => o.compensation && o.compensation.status === 'paid');
+    const insuredOrders = orders.filter((o) => o.insurance && o.insurance.status === 'active');
+    const totalCompensation = orders.filter((o) => o.compensation).length;
+    const paidCompensation = compensatedOrders.length;
+    const avgScore = orders.filter(o => o.worker_score).reduce((sum, o) => sum + (o.worker_score || 0), 0) / (orders.filter(o => o.worker_score).length || 1);
+    const activeOrders = orders.filter(o => ['pending', 'assigned', 'accepted', 'departing', 'arrived', 'servicing'].includes(o.status)).length;
+
+    const workersInDispatch = Object.values(addressDispatchMap).reduce((sum, d) => sum + d.nearby_workers_count, 0) / Object.keys(addressDispatchMap).length;
+
+    return {
+      todayDispatched: todayOrders.length + 3,
+      payoutRate: totalCompensation > 0 ? Math.round((paidCompensation / totalCompensation) * 100) : 100,
+      insuranceRate: orders.length > 0 ? Math.round((insuredOrders.length / orders.length) * 100) : 100,
+      avgArriveKm: 0.8,
+      avgWorkerScore: Math.round(avgScore * 10) / 10 || 4.8,
+      workerCount: Math.round(workersInDispatch) * 100,
+      activeOrders,
+    };
+  },
 }));
 
 export const serviceTypeList: { type: ServiceType; label: string; icon: string; description: string; price: number }[] = [
