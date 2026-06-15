@@ -175,9 +175,11 @@ function createAcceptancePhotos(caseId: string): AcceptancePhoto[] {
     'mud-wood': '泥木工程验收',
     'paint': '油漆工程验收',
   };
+  const inspectors = ['监理·刘工', '监理·张工', '监理·王工', '监理·李工'];
   const photos: AcceptancePhoto[] = [];
   let photoIndex = 0;
   stages.forEach((stage) => {
+    const inspector = inspectors[stages.indexOf(stage) % inspectors.length];
     for (let i = 0; i < 4; i++) {
       photoIndex++;
       photos.push({
@@ -186,6 +188,8 @@ function createAcceptancePhotos(caseId: string): AcceptancePhoto[] {
         url: `https://picsum.photos/seed/${caseId}${stage}${i}/800/600`,
         description: `${stageNames[stage]} - ${['客厅区域', '卧室区域', '厨房区域', '卫生间区域'][i]}实拍`,
         takenAt: new Date(Date.now() - (3 - stages.indexOf(stage)) * 30 * 24 * 60 * 60 * 1000 - i * 2 * 60 * 60 * 1000),
+        inspector: i === 0 ? inspector : undefined,
+        verified: true,
       });
     }
   });

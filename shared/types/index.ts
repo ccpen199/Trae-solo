@@ -37,6 +37,8 @@ export interface AcceptancePhoto {
   url: string;
   description: string;
   takenAt: Date | string;
+  inspector?: string;
+  verified?: boolean;
 }
 
 export interface CaseMaterial {

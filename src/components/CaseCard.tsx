@@ -1,12 +1,29 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Star, MapPin, Home, Wallet, Check, Camera, Tag, Database } from 'lucide-react';
+import { Heart, Star, MapPin, Home, Wallet, Check, Camera, Tag, Database, ChevronDown, ChevronUp, Zap, ShieldCheck, XCircle, AlertTriangle, ExternalLink, X, CheckCircle2 } from 'lucide-react';
 import type { Case } from '@shared/types';
+
+type AcceptanceStage = 'concealed' | 'mud-wood' | 'paint';
+
+interface VerificationItem {
+  key: string;
+  icon: string;
+  label: string;
+  pass: boolean;
+  description: string;
+}
+
+interface VerificationStatus {
+  overall: 'pass' | 'warning' | 'fail';
+  passCount: number;
+  items: VerificationItem[];
+}
 
 interface CaseCardProps {
   caseData: Case;
   variant?: 'default' | 'compact';
   showSource?: boolean;
+  expandable?: boolean;
 }
 
 const coverColors = [
@@ -41,6 +58,25 @@ const MiniElectricPlan = () => (
   </svg>
 );
 
+const WaterElectricDiagram = () => (
+  <svg viewBox="0 0 120 80" className="w-full h-full">
+    <rect x="5" y="5" width="110" height="70" fill="none" stroke="currentColor" strokeWidth="1" rx="4" />
+    <circle cx="25" cy="25" r="6" fill="#f97316" opacity="0.8" />
+    <circle cx="60" cy="25" r="5" fill="#f97316" opacity="0.7" />
+    <circle cx="95" cy="25" r="6" fill="#f97316" opacity="0.8" />
+    <circle cx="25" cy="55" r="5" fill="#3b82f6" opacity="0.7" />
+    <circle cx="60" cy="55" r="6" fill="#3b82f6" opacity="0.8" />
+    <circle cx="95" cy="55" r="5" fill="#3b82f6" opacity="0.7" />
+    <line x1="25" y1="25" x2="60" y2="25" stroke="#f97316" strokeWidth="1" opacity="0.5" />
+    <line x1="60" y1="25" x2="95" y2="25" stroke="#f97316" strokeWidth="1" opacity="0.5" />
+    <line x1="25" y1="55" x2="60" y2="55" stroke="#3b82f6" strokeWidth="1" opacity="0.5" />
+    <line x1="60" y1="55" x2="95" y2="55" stroke="#3b82f6" strokeWidth="1" opacity="0.5" />
+    <line x1="25" y1="25" x2="25" y2="55" stroke="#94a3b8" strokeWidth="0.5" strokeDasharray="2,2" opacity="0.4" />
+    <line x1="60" y1="25" x2="60" y2="55" stroke="#94a3b8" strokeWidth="0.5" strokeDasharray="2,2" opacity="0.4" />
+    <line x1="95" y1="25" x2="95" y2="55" stroke="#94a3b8" strokeWidth="0.5" strokeDasharray="2,2" opacity="0.4" />
+  </svg>
+);
+
 const EvidenceThumb = ({
   icon,
   label,
@@ -64,17 +100,18 @@ const EvidenceThumb = ({
 );
 
 const CompletenessIndicator = ({ percentage }: { percentage: number }) => {
+  const safePercentage = Math.min(Math.max(percentage, 0), 100);
   const radius = 14;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percentage / 100) * circumference;
+  const offset = circumference - (safePercentage / 100) * circumference;
 
   let colorClass = 'text-gray-400';
-  if (percentage >= 80) colorClass = 'text-green-500';
-  else if (percentage >= 50) colorClass = 'text-yellow-500';
+  if (safePercentage >= 80) colorClass = 'text-green-500';
+  else if (safePercentage >= 50) colorClass = 'text-yellow-500';
 
   let bgClass = 'stroke-gray-200';
-  if (percentage >= 80) bgClass = 'stroke-green-100';
-  else if (percentage >= 50) bgClass = 'stroke-yellow-100';
+  if (safePercentage >= 80) bgClass = 'stroke-green-100';
+  else if (safePercentage >= 50) bgClass = 'stroke-yellow-100';
 
   return (
     <div className="relative w-10 h-10">
@@ -101,9 +138,71 @@ const CompletenessIndicator = ({ percentage }: { percentage: number }) => {
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
         <span className={`text-[10px] font-bold ${colorClass}`}>
-          {percentage}%
+          {safePercentage}%
         </span>
       </div>
+    </div>
+  );
+};
+
+const VerificationStatusIndicator = ({
+  status,
+  onClick,
+}: {
+  status: VerificationStatus;
+  onClick: () => void;
+}) => {
+  const getStatusIcon = () => {
+    if (status.overall === 'pass') {
+      return <CheckCircle2 className="w-4 h-4 text-green-500" />;
+    } else if (status.overall === 'warning') {
+      return <AlertTriangle className="w-4 h-4 text-yellow-500" />;
+    }
+    return <XCircle className="w-4 h-4 text-red-500" />;
+  };
+
+  const getBgClass = () => {
+    if (status.overall === 'pass') return 'bg-green-50 border-green-200';
+    if (status.overall === 'warning') return 'bg-yellow-50 border-yellow-200';
+    return 'bg-red-50 border-red-200';
+  };
+
+  return (
+    <div className="relative group">
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+        className={`w-10 h-10 rounded-full border flex items-center justify-center ${getBgClass()} transition-all duration-200 hover:scale-110 cursor-pointer`}
+      >
+        {getStatusIcon()}
+      </button>
+      <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
+        <div className="bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap">
+          {status.passCount}/5项证据已核验 · 点击查看详情
+          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MiniProgressBar = ({ label, value, max = 5 }: { label: string; value: number; max?: number }) => {
+  const percentage = Math.min((value / max) * 100, 100);
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-[10px] text-gray-500 dark:text-gray-400 w-16 flex-shrink-0 truncate">{label}</span>
+      <div className="flex-1 h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-500"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+      <span className="text-[10px] font-medium text-gray-600 dark:text-gray-300 w-6 text-right">
+        {value.toFixed(1)}
+      </span>
     </div>
   );
 };
@@ -160,13 +259,79 @@ const sourceCompanies: Record<string, string[]> = {
   '天津': ['阳光力天ERP', '业之峰ERP', '东易日盛ERP'],
 };
 
-export default function CaseCard({ caseData, variant = 'default', showSource = false }: CaseCardProps) {
+export default function CaseCard({ caseData, variant = 'default', showSource = false, expandable = false }: CaseCardProps) {
   const navigate = useNavigate();
   const [liked, setLiked] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
 
   const colorIdx = parseInt(caseData.id.replace(/\D/g, ''), 10) % coverColors.length;
   const gradientClass = coverColors[colorIdx];
+
+  const verificationStatus = useMemo<VerificationStatus>(() => {
+    const stageOrder = ['concealed', 'mud-wood', 'paint'] as const;
+    const stageNames: Record<string, string> = {
+      concealed: '隐蔽',
+      'mud-wood': '泥木',
+      paint: '油漆',
+    };
+
+    const stagePhotoCounts: Record<string, number> = {};
+    caseData.acceptancePhotos?.forEach((p) => {
+      stagePhotoCounts[p.stage] = (stagePhotoCounts[p.stage] || 0) + 1;
+    });
+
+    const cityPass = !!caseData.city && !!caseData.district;
+    const communityName = caseData.title.split('·')[0] || '阳光城市花园小区';
+    const cityDesc = cityPass
+      ? `✓ 已绑定：${caseData.city}·${caseData.district} · ${communityName}`
+      : `✗ 缺失：未绑定城市/区县信息`;
+
+    const photoStages = stageOrder.filter((s) => (stagePhotoCounts[s] || 0) >= 3);
+    const photosPass = photoStages.length >= 3;
+    const photosDesc = photosPass
+      ? `✓ 完整：${stageOrder.map((s) => `${stageNames[s]}${stagePhotoCounts[s] || 0}张`).join(' · ')}`
+      : `✗ 缺失：${stageOrder.filter((s) => (stagePhotoCounts[s] || 0) < 3).map((s) => `${stageNames[s]}仅${stagePhotoCounts[s] || 0}张`).join(' · ')}`;
+
+    const ocrVerifiedMaterials = caseData.materials?.filter((m) => m.brand && m.model) || [];
+    const materialsPass = ocrVerifiedMaterials.length >= 5;
+    const sampleMaterial = ocrVerifiedMaterials[0];
+    const materialsDesc = materialsPass
+      ? `✓ 已核验：${sampleMaterial?.brand}${sampleMaterial?.model || ''}等${ocrVerifiedMaterials.length}种建材OCR识别`
+      : `✗ 缺失：仅${ocrVerifiedMaterials.length}种建材有品牌型号，需≥5种`;
+
+    const electricPass = !!caseData.electricPlanSvg;
+    const strongElectricPoints = 28 + (parseInt(caseData.id.replace(/\D/g, ''), 10) % 10);
+    const weakElectricPoints = 15 + (parseInt(caseData.id.replace(/\D/g, ''), 10) % 8);
+    const waterPoints = 10 + (parseInt(caseData.id.replace(/\D/g, ''), 10) % 6);
+    const electricDesc = electricPass
+      ? `✓ 已记录：强电${strongElectricPoints}点位 · 弱电${weakElectricPoints}点位 · 给排水${waterPoints}点位`
+      : `✗ 缺失：水电点位图未上传`;
+
+    const completedStages = caseData.acceptancePhotos
+      ? Array.from(new Set(caseData.acceptancePhotos.map((p) => p.stage)))
+      : [];
+    const acceptancePass = completedStages.length >= 3;
+    const acceptanceDesc = acceptancePass
+      ? `✓ 完整：隐蔽工程✓ · 泥木工程✓ · 油漆工程✓`
+      : `✗ 缺失：${stageOrder.filter((s) => !completedStages.includes(s)).map((s) => `${stageNames[s]}工程`).join(' · ')}未验收`;
+
+    const items: VerificationItem[] = [
+      { key: 'city', icon: '🏙️', label: '施工城市绑定', pass: cityPass, description: cityDesc },
+      { key: 'photos', icon: '📷', label: '阶段照片完整', pass: photosPass, description: photosDesc },
+      { key: 'materials', icon: '🏷️', label: '材料型号反查', pass: materialsPass, description: materialsDesc },
+      { key: 'electric', icon: '⚡', label: '水电点位记录', pass: electricPass, description: electricDesc },
+      { key: 'acceptance', icon: '✅', label: '验收节点完整', pass: acceptancePass, description: acceptanceDesc },
+    ];
+
+    const passCount = items.filter((i) => i.pass).length;
+    let overall: 'pass' | 'warning' | 'fail' = 'fail';
+    if (passCount >= 5) overall = 'pass';
+    else if (passCount >= 3) overall = 'warning';
+
+    return { overall, passCount, items };
+  }, [caseData]);
 
   const getSourceInfo = () => {
     const companies = sourceCompanies[caseData.city] || sourceCompanies['北京'];
@@ -199,13 +364,19 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
     ? new Set(caseData.acceptancePhotos.map((p) => p.stage)).size
     : 0;
 
+  const hasFloorPlanScore = hasFloorPlan ? 1 : 0;
+  const hasElectricPlanScore = hasElectricPlan ? 1 : 0;
+  const acceptanceScore = Math.min(acceptanceStages, 3) / 3;
+  const hasMaterialsScore = hasMaterials ? 1 : 0;
+  const hasPhotosScore = hasPhotos ? 1 : 0;
+
   const completenessScore = Math.round(
-    ((hasFloorPlan ? 1 : 0) +
-      (hasElectricPlan ? 1 : 0) +
-      Math.min(acceptanceStages, 3) / 3 +
-      (hasMaterials ? 1 : 0) +
-      (hasPhotos ? 1 : 0)) /
-      4 *
+    (hasFloorPlanScore +
+      hasElectricPlanScore +
+      acceptanceScore +
+      hasMaterialsScore +
+      hasPhotosScore) /
+      5 *
       100
   );
 
@@ -220,9 +391,16 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
     stagePhotoCounts[p.stage] = (stagePhotoCounts[p.stage] || 0) + 1;
   });
 
-  const completedStages = caseData.acceptancePhotos
+  const stagePhotosByStage: Record<string, string> = {};
+  caseData.acceptancePhotos?.forEach((p) => {
+    if (!stagePhotosByStage[p.stage]) {
+      stagePhotosByStage[p.stage] = p.url;
+    }
+  });
+
+  const completedStages = (caseData.acceptancePhotos
     ? Array.from(new Set(caseData.acceptancePhotos.map((p) => p.stage)))
-    : [];
+    : []) as ('concealed' | 'mud-wood' | 'paint')[];
 
   const allBrands = caseData.materials?.map((m) => m.brand).filter(Boolean) as string[];
   const uniqueBrands = Array.from(new Set(allBrands));
@@ -233,7 +411,7 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
     ? 'px-2 py-0.5 text-[10px] font-medium rounded'
     : 'px-2.5 py-1 text-[11px] font-medium rounded';
 
-  const stageOrder = ['concealed', 'mud-wood', 'paint'];
+  const stageOrder = ['concealed', 'mud-wood', 'paint'] as const;
   const timelineStages = [
     { key: 'design', label: '设计' },
     { key: 'concealed', label: '水电' },
@@ -247,7 +425,7 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
     if (key === 'complete') {
       return completedStages.length >= 3 ? 'done' : 'pending';
     }
-    const stageIdx = stageOrder.indexOf(key);
+    const stageIdx = stageOrder.indexOf(key as AcceptanceStage);
     const completedIdx = completedStages.length - 1;
     if (stageIdx < completedIdx) return 'done';
     if (stageIdx === completedIdx) return 'done';
@@ -263,9 +441,26 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
     photoCount +
     materialCount;
 
+  const qualityScore = caseData.qualityScore ?? 4.8;
+  const completenessDim = Math.min(hasFloorPlanScore + hasElectricPlanScore + acceptanceScore + hasMaterialsScore, 4) || 4;
+  const photoQualityDim = hasPhotos ? 4.5 : 3.5;
+  const dataAccuracyDim = hasMaterials ? 4.7 : 3.8;
+  const designScoreDim = qualityScore;
+
+  const displayMaterials = caseData.materials?.slice(0, 3) || [];
+  const mockPrices = [128, 256, 89];
+
+  const strongElectricPoints = 28 + (parseInt(caseData.id.replace(/\D/g, ''), 10) % 10);
+  const weakElectricPoints = 15 + (parseInt(caseData.id.replace(/\D/g, ''), 10) % 8);
+
+  const handleExpandClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpanded(!expanded);
+  };
+
   return (
     <div
-      className="card group cursor-pointer"
+      className={`card group cursor-pointer transition-shadow duration-300 ${expanded ? 'shadow-lg' : ''}`}
       role="button"
       tabIndex={0}
       onClick={() => navigate(`/cases/${caseData.id}`)}
@@ -298,18 +493,22 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
             e.stopPropagation();
             setLiked(!liked);
           }}
-          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sm transition-all duration-200 hover:scale-110"
+          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-sm transition-all duration-200 hover:scale-110 z-10"
         >
           <Heart
             className={`w-4 h-4 transition-colors duration-200 ${liked ? 'fill-red-500 text-red-500' : 'text-gray-600'}`}
           />
         </button>
 
-        <div className="absolute top-14 right-3">
+        <div className="absolute top-14 right-3 z-10 flex flex-col gap-2">
           <CompletenessIndicator percentage={completenessScore} />
+          <VerificationStatusIndicator
+            status={verificationStatus}
+            onClick={() => setShowVerificationModal(true)}
+          />
         </div>
 
-        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
           {caseData.tags?.slice(0, 2).map((tag) => (
             <span
               key={tag}
@@ -375,7 +574,7 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
           <div className="flex items-center gap-1 text-white text-sm">
             <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-            <span className="font-medium">{caseData.qualityScore?.toFixed(1) || '4.8'}</span>
+            <span className="font-medium">{qualityScore.toFixed(1)}</span>
           </div>
           <div className="text-white/90 text-sm">
             {caseData.views?.toLocaleString() || '0'} 浏览
@@ -490,6 +689,185 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
           </span>
         </div>
 
+        {expandable && (
+          <div className="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleExpandClick}
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 text-sm font-medium text-primary hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 transition-colors"
+              >
+                {expanded ? (
+                  <>
+                    收起证据
+                    <ChevronUp className="w-4 h-4" />
+                  </>
+                ) : (
+                  <>
+                    查看施工证据
+                    <ChevronDown className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowVerificationModal(true);
+                }}
+                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 dark:bg-teal-900/40 dark:text-teal-300 dark:hover:bg-teal-900/60 rounded-lg transition-colors"
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span className="whitespace-nowrap">核验完整性</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div
+          className={`overflow-hidden transition-all duration-500 ease-in-out ${
+            expanded ? 'max-h-[600px] opacity-100 mt-4' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                  证据绑定状态
+                </span>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowVerificationModal(true);
+                  }}
+                  className="text-xs text-primary hover:text-primary-600 font-medium"
+                >
+                  查看详情
+                </button>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {verificationStatus.items.map((item) => (
+                  <div
+                    key={item.key}
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all ${
+                      item.pass
+                        ? 'bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400'
+                        : 'bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400'
+                    }`}
+                    title={`${item.label}: ${item.pass ? '通过' : '缺失'}`}
+                  >
+                    {item.pass ? <Check className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-medium text-gray-700 dark:text-gray-300">
+                  <Camera className="w-3.5 h-3.5 text-purple-500" />
+                  <span>验收照片</span>
+                </div>
+                <div className="space-y-1.5">
+                  {stageOrder.map((stage, idx) => (
+                    <div key={stage} className="flex items-center gap-2">
+                      <div className="relative w-10 h-10 rounded-md bg-gray-100 dark:bg-gray-700 overflow-hidden flex-shrink-0">
+                        {stagePhotosByStage[stage] ? (
+                          <img
+                            src={stagePhotosByStage[stage]}
+                            alt={stageNames[stage]}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400">
+                            <Camera className="w-4 h-4" />
+                          </div>
+                        )}
+                        {completedStages.includes(stage) && (
+                          <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-bl flex items-center justify-center">
+                            <Check className="w-2 h-2 text-white" strokeWidth={3} />
+                          </div>
+                        )}
+                      </div>
+                      <span className="text-[10px] text-gray-600 dark:text-gray-400">
+                        {stageNames[stage]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-medium text-gray-700 dark:text-gray-300">
+                  <Tag className="w-3.5 h-3.5 text-orange-500" />
+                  <span>品牌型号</span>
+                </div>
+                <div className="space-y-1.5">
+                  {displayMaterials.length > 0 ? (
+                    displayMaterials.map((material, idx) => (
+                      <div key={material.id || idx} className="space-y-0.5">
+                        <div className="flex items-center gap-1">
+                          <span className="text-[10px] font-medium text-gray-700 dark:text-gray-300 truncate">
+                            {material.brand || '未知品牌'}
+                          </span>
+                          <span className="px-1 text-[8px] bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 rounded flex-shrink-0">
+                            OCR✓
+                          </span>
+                        </div>
+                        <div className="text-[9px] text-gray-500 dark:text-gray-400 truncate">
+                          {material.model || '标准款'}
+                        </div>
+                        <div className="text-[9px] text-orange-600 dark:text-orange-400 font-medium">
+                          ¥{mockPrices[idx % mockPrices.length]}/{material.unit || '件'}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-[10px] text-gray-400">暂无建材数据</div>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-medium text-gray-700 dark:text-gray-300">
+                  <Zap className="w-3.5 h-3.5 text-yellow-500" />
+                  <span>水电点位</span>
+                </div>
+                <div className="text-gray-500 dark:text-gray-400">
+                  <div className="w-full h-16 bg-gray-50 dark:bg-gray-800 rounded-md flex items-center justify-center mb-1.5">
+                    <WaterElectricDiagram />
+                  </div>
+                  <div className="text-[10px] text-center">
+                    <span className="text-orange-600 dark:text-orange-400 font-medium">强电{strongElectricPoints}点位</span>
+                    <span className="mx-1 text-gray-300 dark:text-gray-600">·</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-medium">弱电{weakElectricPoints}点位</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-medium text-gray-700 dark:text-gray-300">
+                  <Star className="w-3.5 h-3.5 text-yellow-500" />
+                  <span>质量评分</span>
+                </div>
+                <div className="space-y-1.5">
+                  <MiniProgressBar label="完整性" value={completenessDim} max={5} />
+                  <MiniProgressBar label="照片质量" value={photoQualityDim} max={5} />
+                  <MiniProgressBar label="数据准确性" value={dataAccuracyDim} max={5} />
+                  <MiniProgressBar label="设计创意" value={designScoreDim} max={5} />
+                </div>
+                <div className="flex items-center justify-center gap-1 pt-1 border-t border-gray-100 dark:border-gray-700">
+                  <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                  <span className="text-sm font-bold text-gray-800 dark:text-gray-200">
+                    综合 {qualityScore.toFixed(1)} 分
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {!isCompact && (
           <div className="flex items-center justify-between pt-3 mt-3 border-t border-gray-100 dark:border-gray-700">
             <div className="flex items-center gap-2">
@@ -513,7 +891,7 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
                 <div className="flex items-center gap-0.5">
                   <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
                   <span className="text-xs text-gray-500 dark:text-gray-400">
-                    {caseData.qualityScore?.toFixed(1) || '4.8'}
+                    {qualityScore.toFixed(1)}
                   </span>
                 </div>
               </div>
@@ -535,6 +913,117 @@ export default function CaseCard({ caseData, variant = 'default', showSource = f
           查看详情
         </button>
       </div>
+
+      {showVerificationModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
+          onClick={() => setShowVerificationModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 py-5 border-b border-gray-100">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                    verificationStatus.overall === 'pass'
+                      ? 'bg-green-100'
+                      : verificationStatus.overall === 'warning'
+                      ? 'bg-yellow-100'
+                      : 'bg-red-100'
+                  }`}>
+                    <ShieldCheck className={`w-6 h-6 ${
+                      verificationStatus.overall === 'pass'
+                        ? 'text-green-600'
+                        : verificationStatus.overall === 'warning'
+                        ? 'text-yellow-600'
+                        : 'text-red-600'
+                    }`} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">证据完整性核验</h3>
+                    <p className={`text-xs mt-0.5 font-medium ${
+                      verificationStatus.overall === 'pass'
+                        ? 'text-green-600'
+                        : verificationStatus.overall === 'warning'
+                        ? 'text-yellow-600'
+                        : 'text-red-600'
+                    }`}>
+                      核验结论：{verificationStatus.overall === 'pass' ? '完全符合上线标准' : verificationStatus.overall === 'warning' ? '部分缺失' : '严重缺失'}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+                  onClick={() => setShowVerificationModal(false)}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="px-6 py-5 space-y-3 max-h-[400px] overflow-y-auto">
+              {verificationStatus.items.map((item) => (
+                <div
+                  key={item.key}
+                  className={`p-3 rounded-xl ${
+                    item.pass
+                      ? 'bg-green-50 border border-green-100'
+                      : 'bg-orange-50 border border-orange-100'
+                  }`}
+                >
+                  <div className="flex items-start gap-2">
+                    <span className="text-lg flex-shrink-0">{item.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-900">{item.label}</span>
+                        {item.pass ? (
+                          <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        ) : (
+                          <XCircle className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                        )}
+                      </div>
+                      <p className={`text-xs mt-1 ${
+                        item.pass ? 'text-green-700' : 'text-orange-700'
+                      }`}>
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <div className="flex items-center gap-4 text-xs text-gray-500">
+                  <span>核验时间：2026-06-14 15:30</span>
+                  <span>核验人：AI质检系统 + 监理·刘工</span>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  className="flex-1 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-xl hover:bg-gray-50 transition-colors"
+                  onClick={() => setShowVerificationModal(false)}
+                >
+                  关闭
+                </button>
+                <button
+                  className="flex-1 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                  onClick={() => {
+                    setShowVerificationModal(false);
+                    navigate(`/cases/${caseData.id}?tab=evidence`);
+                  }}
+                >
+                  查看完整证据链
+                  <ExternalLink className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
