@@ -82,7 +82,7 @@ export default function Home() {
 
   const handleAIDiagnose = (resumeId?: string) => {
     if (resumeId) {
-      navigate(`/editor/${resumeId}?action=ai-diagnose`)
+      navigate(`/diagnosis/${resumeId}`)
       return
     }
     if (resumes.length === 0) {
@@ -90,7 +90,7 @@ export default function Home() {
       return
     }
     if (resumes.length === 1) {
-      navigate(`/editor/${resumes[0].id}?action=ai-diagnose`)
+      navigate(`/diagnosis/${resumes[0].id}`)
     } else {
       alert('请在下方列表中选择要诊断的简历')
     }
@@ -98,7 +98,7 @@ export default function Home() {
 
   const handleATSCheck = (resumeId?: string) => {
     if (resumeId) {
-      navigate(`/editor/${resumeId}?action=ats-check`)
+      navigate(`/ats-check/${resumeId}`)
       return
     }
     if (resumes.length === 0) {
@@ -106,7 +106,7 @@ export default function Home() {
       return
     }
     if (resumes.length === 1) {
-      navigate(`/editor/${resumes[0].id}?action=ats-check`)
+      navigate(`/ats-check/${resumes[0].id}`)
     } else {
       alert('请在下方列表中选择要检测的简历')
     }

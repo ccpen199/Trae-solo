@@ -4,11 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   Save, Undo2, Redo2, FileDown, Brain, ScanLine,
   Eye, EyeOff, GripVertical, Plus, Trash2,
-  X, Palette, Settings2, Upload, FileText, Eye as EyeIcon,
-  FileCheck, Shield, Lock,
+  X, Palette, Settings2, Upload, FileText,
+  Shield, Lock, AlertTriangle, CheckCircle2,
 } from 'lucide-react';
 import { DndContext, closestCenter, DragOverlay, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
-import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useResumeStore } from '../store/resumeStore';
 import type { ResumeModule, ModuleType, ResumeTheme } from '../types';
 import { exportResumeToWord } from '../utils/wordExport';
@@ -33,18 +33,23 @@ const COLOR_PRESETS = [
 function SortableItem({ module, onToggle, onDelete, onSelect, active }: {
   module: ResumeModule; onToggle: () => void; onDelete: () => void; onSelect: () => void; active: boolean;
 }) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: module.id });
-  const style = { transform: transform ? `translate3d(${transform.x}px,${transform.y}px,0)` : undefined, transition };
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: module.id });
+  const style = { transform: transform ? `translate3d(${transform.x}px,${transform.y}px,0)` : undefined, transition, opacity: isDragging ? 0.4 : 1 };
   return (
     <div ref={setNodeRef} style={style}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-all cursor-pointer
-        ${active ? 'border-gold-500 bg-gold-50' : 'border-navy-100 hover:border-navy-200 bg-white'}`}
+      className={cn(
+        'flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all cursor-pointer',
+        active ? 'border-gold-500 bg-gold-50 shadow-sm' : 'border-navy-100 hover:border-navy-300 bg-white',
+        !module.visible && 'opacity-50'
+      )}
       onClick={onSelect}>
-      <span {...attributes} {...listeners} className="cursor-grab text-navy-300 hover:text-navy-500">
+      <span {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-navy-300 hover:text-navy-500">
         <GripVertical className="w-4 h-4" />
       </span>
-      <span className="flex-1 text-sm text-navy-700 truncate">{MODULE_LABELS[module.type]}</span>
-      <button onClick={e => { e.stopPropagation(); onToggle(); }} className="p-1 text-navy-400 hover:text-navy-600">
+      <span className={cn('flex-1 text-sm truncate', module.visible ? 'text-navy-700' : 'text-navy-400 line-through')}>
+        {module.fields?.title ? String(module.fields.title) : MODULE_LABELS[module.type]}
+      </span>
+      <button onClick={e => { e.stopPropagation(); onToggle(); }} className={cn('p-1', module.visible ? 'text-navy-400 hover:text-navy-600' : 'text-navy-300')}>
         {module.visible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
       </button>
       <button onClick={e => { e.stopPropagation(); onDelete(); }} className="p-1 text-navy-300 hover:text-red-500">
@@ -78,14 +83,30 @@ function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
   const set = (key: string, val: any) => onUpdate({ ...f, [key]: val });
   const fieldVis = (f._fieldVisibility || {}) as Record<string, boolean>;
 
-  if (module.type === 'basic') {
-    const fieldLabels: Record<string, string> = { name: '姓名', title: '职位', phone: '电话', email: '邮箱', location: '地址', website: '网站' };
+  if (module.type === 'custom') {
     return (
       <div className="space-y-3">
-        {(['name', 'title', 'phone', 'email', 'location', 'website'] as const).map(k => (
+        <div>
+          <label className="text-xs text-navy-400 mb-1 block">模块名称</label>
+          <input className="input-field text-sm" value={f.title ?? ''} onChange={e => set('title', e.target.value)} placeholder="请输入模块名称" />
+        </div>
+        <div>
+          <label className="text-xs text-navy-400 mb-1 block">模块内容</label>
+          <textarea className="input-field text-sm" rows={6} value={f.content ?? ''} onChange={e => set('content', e.target.value)} placeholder="请输入模块内容" />
+        </div>
+      </div>
+    );
+  }
+
+  if (module.type === 'basic') {
+    const fieldLabels: Record<string, string> = { name: '姓名', title: '职位', phone: '电话', email: '邮箱', location: '地址', website: '网站', github: 'GitHub', portfolio: '作品集', dribbble: 'Dribbble', linkedin: 'LinkedIn' };
+    const fieldKeys = Object.keys(fieldLabels).filter(k => f[k] !== undefined || ['name', 'title', 'phone', 'email', 'location', 'website'].includes(k));
+    return (
+      <div className="space-y-3">
+        {fieldKeys.map(k => (
           <div key={k}>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs text-navy-400">{fieldLabels[k]}</label>
+              <label className="text-xs text-navy-400">{fieldLabels[k] || k}</label>
               {onToggleVisibility && (
                 <button onClick={() => onToggleVisibility(k)} className="p-0.5 text-navy-300 hover:text-navy-600">
                   {(fieldVis[k] ?? true) ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
@@ -146,21 +167,44 @@ function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
   if (module.type === 'project') {
     const items: any[] = f.items || [];
     const updateItem = (idx: number, item: any) => set('items', items.map((it: any, i: number) => i === idx ? item : it));
-    const addItem = () => set('items', [...items, { name: '', role: '', startDate: '', endDate: '', techStack: [], link: '', metrics: [], description: '' }]);
+    const addItem = () => set('items', [...items, { name: '', role: '', startDate: '', endDate: '', techStack: [], link: '', portfolioLink: '', metrics: [], achievements: [], tools: [], description: '' }]);
     const removeItem = (idx: number) => set('items', items.filter((_: any, i: number) => i !== idx));
+    const hasTechFields = items.some((it: any) => it.techStack?.length || it.metrics?.length);
+    const hasDesignFields = items.some((it: any) => it.portfolioLink || it.tools?.length);
+    const hasFuncFields = items.some((it: any) => it.achievements?.length || it.category);
     return (
       <div className="space-y-4">
         {items.map((item: any, idx: number) => (
           <div key={idx} className="p-3 border border-navy-100 rounded-lg space-y-2 relative">
             <button onClick={() => removeItem(idx)} className="absolute top-2 right-2 text-navy-300 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
-            {(['name', 'role', 'startDate', 'endDate', 'link'] as const).map(k => (
-              <div key={k}><label className="text-xs text-navy-400 mb-1 block">{k === 'name' ? '项目名' : k === 'role' ? '角色' : k === 'startDate' ? '开始时间' : k === 'endDate' ? '结束时间' : '链接'}</label>
+            {(['name', 'role', 'startDate', 'endDate'] as const).map(k => (
+              <div key={k}><label className="text-xs text-navy-400 mb-1 block">{k === 'name' ? '项目名' : k === 'role' ? '角色' : k === 'startDate' ? '开始时间' : '结束时间'}</label>
                 <input className="input-field text-sm" value={item[k] ?? ''} onChange={e => updateItem(idx, { ...item, [k]: e.target.value })} /></div>
             ))}
-            <div><label className="text-xs text-navy-400 mb-1 block">技术栈</label>
-              <TagInput value={item.techStack || []} onChange={v => updateItem(idx, { ...item, techStack: v })} /></div>
-            <div><label className="text-xs text-navy-400 mb-1 block">项目指标</label>
-              <TagInput value={item.metrics || []} onChange={v => updateItem(idx, { ...item, metrics: v })} /></div>
+            {(item.link || hasTechFields) && (
+              <div><label className="text-xs text-navy-400 mb-1 block">项目链接</label>
+                <input className="input-field text-sm" value={item.link ?? ''} onChange={e => updateItem(idx, { ...item, link: e.target.value })} /></div>
+            )}
+            {(item.portfolioLink || hasDesignFields) && (
+              <div><label className="text-xs text-navy-400 mb-1 block">作品集链接</label>
+                <input className="input-field text-sm" value={item.portfolioLink ?? ''} onChange={e => updateItem(idx, { ...item, portfolioLink: e.target.value })} placeholder="Behance / Dribbble / 个人站" /></div>
+            )}
+            {item.techStack?.length > 0 || hasTechFields ? (
+              <div><label className="text-xs text-navy-400 mb-1 block">技术栈</label>
+                <TagInput value={item.techStack || []} onChange={v => updateItem(idx, { ...item, techStack: v })} /></div>
+            ) : null}
+            {item.tools?.length > 0 || hasDesignFields ? (
+              <div><label className="text-xs text-navy-400 mb-1 block">设计工具</label>
+                <TagInput value={item.tools || []} onChange={v => updateItem(idx, { ...item, tools: v })} /></div>
+            ) : null}
+            {item.metrics?.length > 0 || hasTechFields ? (
+              <div><label className="text-xs text-navy-400 mb-1 block">项目指标</label>
+                <TagInput value={item.metrics || []} onChange={v => updateItem(idx, { ...item, metrics: v })} /></div>
+            ) : null}
+            {item.achievements?.length > 0 || hasFuncFields ? (
+              <div><label className="text-xs text-navy-400 mb-1 block">成果与指标</label>
+                <TagInput value={item.achievements || []} onChange={v => updateItem(idx, { ...item, achievements: v })} /></div>
+            ) : null}
             <div><label className="text-xs text-navy-400 mb-1 block">描述</label>
               <textarea className="input-field text-sm" rows={2} value={item.description ?? ''} onChange={e => updateItem(idx, { ...item, description: e.target.value })} /></div>
           </div>
@@ -209,18 +253,18 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
   const renderModule = (m: ResumeModule) => {
     const f = m.fields;
     const isActive = activeModuleId === m.id;
-    const moduleWrapperClass = `cursor-pointer transition-all rounded p-1 -m-1 ${isActive ? 'ring-2 ring-gold-500 ring-offset-1' : 'hover:ring-2 hover:ring-navy-300 hover:ring-offset-1'}`;
+    const cls = cn('cursor-pointer transition-all rounded p-1 -m-1', isActive ? 'ring-2 ring-gold-500 ring-offset-1' : 'hover:ring-2 hover:ring-navy-300 hover:ring-offset-1');
     if (m.type === 'basic') return (
-      <div className={moduleWrapperClass} onClick={() => onSelectModule(m.id)}>
+      <div className={cls} onClick={() => onSelectModule(m.id)}>
         <div className="text-center mb-6">
           {f.name && <h1 className="text-2xl font-bold" style={{ color: pc }}>{f.name}</h1>}
           {f.title && <p className="text-sm font-medium mt-1" style={{ color: pc }}>{f.title}</p>}
-          <p className="text-xs text-gray-500 mt-1">{[f.phone, f.email, f.location, f.website].filter(Boolean).join(' · ')}</p>
+          <p className="text-xs text-gray-500 mt-1">{[f.phone, f.email, f.location, f.website, f.github, f.portfolio, f.dribbble, f.linkedin].filter(Boolean).join(' · ')}</p>
         </div>
       </div>
     );
     if (m.type === 'education') return (
-      <div className={moduleWrapperClass} onClick={() => onSelectModule(m.id)}>
+      <div className={cls} onClick={() => onSelectModule(m.id)}>
         <div className="mb-4">
           <h2 className="text-sm font-bold border-b-2 pb-1 mb-2" style={{ borderColor: pc, color: pc }}>教育经历</h2>
           {(f.items || []).map((item: any, i: number) => (
@@ -234,7 +278,7 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
       </div>
     );
     if (m.type === 'experience') return (
-      <div className={moduleWrapperClass} onClick={() => onSelectModule(m.id)}>
+      <div className={cls} onClick={() => onSelectModule(m.id)}>
         <div className="mb-4">
           <h2 className="text-sm font-bold border-b-2 pb-1 mb-2" style={{ borderColor: pc, color: pc }}>工作经历</h2>
           {(f.items || []).map((item: any, i: number) => (
@@ -249,15 +293,19 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
       </div>
     );
     if (m.type === 'project') return (
-      <div className={moduleWrapperClass} onClick={() => onSelectModule(m.id)}>
+      <div className={cls} onClick={() => onSelectModule(m.id)}>
         <div className="mb-4">
           <h2 className="text-sm font-bold border-b-2 pb-1 mb-2" style={{ borderColor: pc, color: pc }}>项目经历</h2>
           {(f.items || []).map((item: any, i: number) => (
             <div key={i} className="mb-3">
               <div className="flex justify-between text-xs"><span className="font-semibold">{item.name}{item.role && ` · ${item.role}`}</span><span className="text-gray-400">{item.startDate} - {item.endDate}</span></div>
               {item.techStack?.length > 0 && <p className="text-xs text-gray-500 mt-0.5">技术栈: {item.techStack.join(' · ')}</p>}
+              {item.tools?.length > 0 && <p className="text-xs text-gray-500 mt-0.5">设计工具: {item.tools.join(' · ')}</p>}
               {(item.metrics || []).map((mt: string, j: number) => (
                 <p key={j} className="text-xs text-gray-600 ml-3 mt-0.5">• {mt}</p>
+              ))}
+              {(item.achievements || []).map((ac: string, j: number) => (
+                <p key={j} className="text-xs text-gray-600 ml-3 mt-0.5">• {ac}</p>
               ))}
               {item.description && <p className="text-xs text-gray-600 mt-1">{item.description}</p>}
             </div>
@@ -266,7 +314,7 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
       </div>
     );
     if (m.type === 'skills') return (
-      <div className={moduleWrapperClass} onClick={() => onSelectModule(m.id)}>
+      <div className={cls} onClick={() => onSelectModule(m.id)}>
         <div className="mb-4">
           <h2 className="text-sm font-bold border-b-2 pb-1 mb-2" style={{ borderColor: pc, color: pc }}>专业技能</h2>
           {(f.groups || []).map((g: any, i: number) => (
@@ -276,7 +324,7 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
       </div>
     );
     if (m.type === 'selfEvaluation') return (
-      <div className={moduleWrapperClass} onClick={() => onSelectModule(m.id)}>
+      <div className={cls} onClick={() => onSelectModule(m.id)}>
         <div className="mb-4">
           <h2 className="text-sm font-bold border-b-2 pb-1 mb-2" style={{ borderColor: pc, color: pc }}>自我评价</h2>
           <p className="text-xs text-gray-600 leading-relaxed">{f.content}</p>
@@ -284,7 +332,7 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
       </div>
     );
     if (m.type === 'custom') return (
-      <div className={moduleWrapperClass} onClick={() => onSelectModule(m.id)}>
+      <div className={cls} onClick={() => onSelectModule(m.id)}>
         <div className="mb-4">
           <h2 className="text-sm font-bold border-b-2 pb-1 mb-2" style={{ borderColor: pc, color: pc }}>{f.title || '自定义模块'}</h2>
           <p className="text-xs text-gray-600 leading-relaxed">{f.content}</p>
@@ -310,10 +358,12 @@ export default function Editor() {
   } = useResumeStore();
   const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
-  const [rendering, setRendering] = useState(false);
-  const [importStatus, setImportStatus] = useState('等待导入 .docx / .doc 文件');
+  const [importFileName, setImportFileName] = useState<string | null>(null);
+  const [atsPassed, setAtsPassed] = useState(false);
+  const [showAtsWarning, setShowAtsWarning] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
@@ -337,28 +387,41 @@ export default function Editor() {
     setActiveDragId(null);
     if (over && active.id !== over.id) {
       reorderModules(active.id, over.id);
-      setRendering(true);
-      setTimeout(() => setRendering(false), 300);
+      setSaved(false);
     }
   }, [reorderModules]);
 
   const handleSave = useCallback(async () => {
     setSaving(true);
-    try { await saveCurrentResume(); } finally { setSaving(false); }
+    try {
+      await saveCurrentResume();
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } finally {
+      setSaving(false);
+    }
   }, [saveCurrentResume]);
 
   const handleExport = useCallback(() => {
+    if (!atsPassed) {
+      setShowAtsWarning(true);
+      return;
+    }
     if (currentResume) {
-      setRendering(true);
-      setTimeout(() => {
-        exportResumeToWord(currentResume);
-        setRendering(false);
-      }, 500);
+      exportResumeToWord(currentResume);
+    }
+  }, [currentResume, atsPassed]);
+
+  const handleForceExport = useCallback(() => {
+    setShowAtsWarning(false);
+    if (currentResume) {
+      exportResumeToWord(currentResume);
     }
   }, [currentResume]);
 
   const handleFieldUpdate = useCallback((moduleId: string, fields: Record<string, any>) => {
     updateModule(moduleId, m => ({ ...m, fields }));
+    setSaved(false);
   }, [updateModule]);
 
   const handleImportClick = () => {
@@ -371,23 +434,23 @@ export default function Editor() {
       type: 'custom',
       visible: true,
       order: modules.length,
-      fields: { title: '自定义模块', content: '' },
+      fields: { title: '', content: '' },
     };
     addModule(newModule);
+    setSaved(false);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.name.endsWith('.docx') && !file.name.endsWith('.doc')) {
-      setImportStatus('导入失败：请选择 Word 文档（.docx / .doc）');
+      alert('请选择 Word 文档（.docx / .doc）');
       return;
     }
     setImporting(true);
-    setImportStatus(`正在解析 ${file.name} 的 Word 结构`);
     setTimeout(() => {
       setImporting(false);
-      setImportStatus(`已导入 ${file.name} · 原生段落结构已进入编辑复查`);
+      setImportFileName(file.name);
       if (fileInputRef.current) fileInputRef.current.value = '';
     }, 1500);
   };
@@ -398,81 +461,95 @@ export default function Editor() {
 
   const modules = currentResume?.modules || [];
   const theme = currentResume?.theme || { primaryColor: '#1e3a5f', secondaryColor: '#c9a24a', fontFamily: 'LXGW WenKai', fontSize: 14 };
-  const visibleCount = modules.filter(module => module.visible).length;
+  const visibleCount = modules.filter(m => m.visible).length;
   const hiddenCount = modules.length - visibleCount;
-  const linkCount = modules.reduce((count, module) => {
-    if (module.type !== 'basic' && module.type !== 'project') return count;
-    const fields = module.fields || {};
-    const basicLinks = [fields.website, fields.github, fields.portfolio, fields.linkedin].filter(Boolean).length;
-    const projectLinks = Array.isArray(fields.items) ? fields.items.filter((item: any) => item.link).length : 0;
+  const linkCount = modules.reduce((count, mod) => {
+    const fields = mod.fields || {};
+    const basicLinks = [fields.website, fields.github, fields.portfolio, fields.dribbble, fields.linkedin].filter(Boolean).length;
+    const projectLinks = Array.isArray(fields.items) ? fields.items.filter((item: any) => item.link || item.portfolioLink).length : 0;
     return count + basicLinks + projectLinks;
   }, 0);
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* 顶部工具栏 */}
       <header className="bg-white border-b border-navy-100 shadow-sm flex-shrink-0">
         <div className="flex items-center gap-2 px-4 py-2">
           <h1 className="text-sm font-semibold text-navy-700 mr-4 truncate max-w-[200px]">{currentResume?.title}</h1>
-          <button onClick={handleSave} disabled={saving || loading} className="btn-primary text-xs px-3 py-1.5 flex items-center gap-1 disabled:opacity-50">
-            <Save className="w-3.5 h-3.5" />{saving ? '保存中...' : '保存'}
+          <button onClick={handleSave} disabled={saving || loading} className={cn('btn-primary text-xs px-3 py-1.5 flex items-center gap-1 disabled:opacity-50', saved && '!bg-emerald-500')}>
+            {saved ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
+            {saving ? '保存中...' : saved ? '已保存' : '保存'}
           </button>
           <button onClick={undo} disabled={!canUndo} className="btn-ghost text-xs px-2 py-1.5 disabled:opacity-30"><Undo2 className="w-4 h-4" /></button>
           <button onClick={redo} disabled={!canRedo} className="btn-ghost text-xs px-2 py-1.5 disabled:opacity-30"><Redo2 className="w-4 h-4" /></button>
           <div className="h-5 w-px bg-navy-100 mx-1" />
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".docx,.doc"
-            className="hidden"
-            onChange={handleFileChange}
-          />
+          <input ref={fileInputRef} type="file" accept=".docx,.doc" className="hidden" onChange={handleFileChange} />
           <button onClick={handleImportClick} disabled={importing} className="btn-secondary text-xs px-3 py-1.5 flex items-center gap-1 disabled:opacity-50">
             <Upload className="w-3.5 h-3.5" />{importing ? '导入中...' : '导入Word'}
           </button>
           <button onClick={() => id && navigate(`/diagnosis/${id}`)} className="btn-ghost text-xs px-2 py-1.5 flex items-center gap-1">
             <Brain className="w-4 h-4" />AI诊断
           </button>
-          <button onClick={() => id && navigate(`/ats-check/${id}`)} className="btn-ghost text-xs px-2 py-1.5 flex items-center gap-1">
-            <ScanLine className="w-4 h-4" />ATS检测
+          <button onClick={() => id && navigate(`/ats-check/${id}`)} className={cn('btn-ghost text-xs px-2 py-1.5 flex items-center gap-1', atsPassed && 'text-emerald-600')}>
+            <ScanLine className="w-4 h-4" />{atsPassed ? 'ATS已通过' : 'ATS检测'}
           </button>
           <div className="flex-1" />
-          <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px] font-medium ${settings.privacyMode ? 'bg-emerald-50 text-emerald-700' : 'bg-navy-50 text-navy-500'}`}>
+          <span className={cn('inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px] font-medium', settings.privacyMode ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-600')}>
             {settings.privacyMode ? <Lock className="w-3.5 h-3.5" /> : <Shield className="w-3.5 h-3.5" />}
-            {settings.privacyMode ? '已加密' : '未加密'}
+            {settings.privacyMode ? 'AES加密 · 本地存储' : '未加密 · 前往设置'}
           </span>
-          <button onClick={handleExport} disabled={rendering} className="btn-secondary text-xs px-3 py-1.5 flex items-center gap-1 disabled:opacity-50">
-            <FileDown className="w-3.5 h-3.5" />{rendering ? '渲染中...' : '导出Word'}
+          <button onClick={handleExport} className={cn('text-xs px-3 py-1.5 flex items-center gap-1', atsPassed ? 'btn-primary' : 'btn-secondary')}>
+            <FileDown className="w-3.5 h-3.5" />导出Word
           </button>
         </div>
         <div className="px-4 pb-2 flex flex-wrap items-center gap-2 text-[11px] text-navy-500">
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-navy-50">
-            <FileText className="w-3 h-3" />
-            {importStatus}
-          </span>
+          {importFileName ? (
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-emerald-50 text-emerald-700">
+              <CheckCircle2 className="w-3 h-3" />已导入 {importFileName}
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-navy-50">
+              <Upload className="w-3 h-3" />点击"导入Word"上传 .docx
+            </span>
+          )}
           <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-emerald-50 text-emerald-700">
-            <EyeIcon className="w-3 h-3" />
-            实时预览：{rendering ? '正在重排模块' : 'Word 原生版式已渲染'}
+            <CheckCircle2 className="w-3 h-3" />实时预览就绪
           </span>
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-gold-50 text-gold-700">
-            <FileCheck className="w-3 h-3" />
-            导出前复查：字体嵌入、表格结构、{linkCount} 个超链接
+          <span className={cn('inline-flex items-center gap-1 px-2 py-1 rounded', atsPassed ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700')}>
+            {atsPassed ? <CheckCircle2 className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
+            {atsPassed ? 'ATS检测已通过' : '导出前需通过ATS检测'}
           </span>
           <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-navy-50">
-            <Shield className="w-3 h-3" />
-            字段显隐：{visibleCount} 个显示 / {hiddenCount} 个隐藏
+            字段：{visibleCount} 显示 / {hiddenCount} 隐藏 · {linkCount} 个链接
           </span>
           {settings.privacyMode && (
             <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-emerald-50 text-emerald-700">
-              <Lock className="w-3 h-3" />
-              AES 本地加密缓存
+              <Lock className="w-3 h-3" />云端已关闭 · 本地加密缓存
             </span>
           )}
         </div>
       </header>
 
+      {showAtsWarning && (
+        <div className="bg-amber-50 border-b border-amber-200 px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-amber-700 text-sm">
+            <AlertTriangle className="w-4 h-4" />
+            <span>简历尚未通过 ATS 兼容性检测，导出后可能无法被招聘系统正确解析。建议先完成检测。</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button onClick={() => id && navigate(`/ats-check/${id}`)} className="text-xs px-3 py-1.5 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700">
+              前往检测
+            </button>
+            <button onClick={handleForceExport} className="text-xs px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg font-medium hover:bg-amber-200">
+              仍然导出
+            </button>
+            <button onClick={() => setShowAtsWarning(false)} className="text-xs px-2 py-1.5 text-amber-600 hover:text-amber-800">
+              取消
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-1 overflow-hidden">
-        {/* 左侧面板 - 模块列表 */}
         <aside className="w-[240px] border-r border-navy-100 bg-white flex flex-col flex-shrink-0">
           <div className="p-3 border-b border-navy-100">
             <h2 className="text-xs font-semibold text-navy-500 uppercase tracking-wider">模块列表</h2>
@@ -483,13 +560,13 @@ export default function Editor() {
                 {modules.map(m => (
                   <SortableItem key={m.id} module={m} active={m.id === activeModuleId}
                     onSelect={() => setActiveModuleId(m.id)}
-                    onToggle={() => updateModule(m.id, mod => ({ ...mod, visible: !mod.visible }))}
-                    onDelete={() => { removeModule(m.id); if (activeModuleId === m.id) setActiveModuleId(null); }} />
+                    onToggle={() => { updateModule(m.id, mod => ({ ...mod, visible: !mod.visible })); setSaved(false); }}
+                    onDelete={() => { removeModule(m.id); if (activeModuleId === m.id) setActiveModuleId(null); setSaved(false); }} />
                 ))}
               </SortableContext>
               <DragOverlay>
                 {activeDragModule ? (
-                  <div className="opacity-60">
+                  <div className="opacity-60 shadow-lg">
                     <SortableItem module={activeDragModule} active={false}
                       onSelect={() => {}} onToggle={() => {}} onDelete={() => {}} />
                   </div>
@@ -499,38 +576,33 @@ export default function Editor() {
           </div>
           <div className="p-3 border-t border-navy-100">
             <button onClick={handleAddModule} className="btn-ghost text-xs w-full flex items-center justify-center gap-1 py-2">
-              <Plus className="w-4 h-4" />添加模块
+              <Plus className="w-4 h-4" />添加自定义模块
             </button>
           </div>
         </aside>
 
-        {/* 中间画布区 */}
         <main className="flex-1 overflow-y-auto bg-slate-100/50 flex flex-col">
-          <div className="flex-shrink-0 px-4 py-3 bg-white/80 backdrop-blur border-b border-navy-100 flex items-center gap-3">
+          <div className="flex-shrink-0 px-4 py-2 bg-white/80 backdrop-blur border-b border-navy-100 flex items-center gap-3">
             <div className="text-xs text-navy-500">
-              当前选中：<span className="font-medium text-navy-700">{activeModule ? MODULE_LABELS[activeModule.type] : '无'}</span>
+              当前选中：<span className="font-medium text-navy-700">{activeModule ? (activeModule.fields?.title ? String(activeModule.fields.title) : MODULE_LABELS[activeModule.type]) : '无'}</span>
             </div>
-            <div className="h-3 w-px bg-navy-200" />
-            <div className={`text-xs flex items-center gap-1 ${rendering ? 'text-gold-600' : 'text-emerald-600'}`}>
-              <FileCheck className="w-3.5 h-3.5" />
-              {rendering ? '正在渲染 Word 版式...' : 'Word 渲染就绪'}
-            </div>
+            {saved && <span className="text-xs text-emerald-600 flex items-center gap-1"><CheckCircle2 className="w-3 h-3" />已自动保存</span>}
+            {!saved && currentResume && <span className="text-xs text-amber-600">有未保存的修改</span>}
           </div>
           <div className="flex-1 overflow-y-auto py-8 px-4">
-            <div className={`transform scale-[0.6] origin-top transition-opacity ${rendering ? 'opacity-60 animate-pulse' : ''}`}>
+            <div className="transform scale-[0.6] origin-top">
               <A4Preview modules={modules} theme={theme} activeModuleId={activeModuleId} onSelectModule={setActiveModuleId} />
             </div>
           </div>
         </main>
 
-        {/* 右侧面板 */}
         <aside className="w-[280px] border-l border-navy-100 bg-white flex flex-col flex-shrink-0">
           <div className="flex border-b border-navy-100">
-            <button className={`flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1 ${!activeModule ? 'text-navy-700 border-b-2 border-gold-500' : 'text-navy-400'}`}
+            <button className={cn('flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1', !activeModule ? 'text-navy-700 border-b-2 border-gold-500' : 'text-navy-400')}
               onClick={() => setActiveModuleId(null)}>
               <Palette className="w-3.5 h-3.5" />主题
             </button>
-            <button className={`flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1 ${activeModule ? 'text-navy-700 border-b-2 border-gold-500' : 'text-navy-400'}`}
+            <button className={cn('flex-1 py-2 text-xs font-medium flex items-center justify-center gap-1', activeModule ? 'text-navy-700 border-b-2 border-gold-500' : 'text-navy-400')}
               onClick={() => activeModuleId || setActiveModuleId(modules[0]?.id ?? null)}>
               <Settings2 className="w-3.5 h-3.5" />编辑
             </button>
@@ -542,8 +614,8 @@ export default function Editor() {
                   <label className="text-xs text-navy-400 mb-1.5 block">预设配色</label>
                   <div className="grid grid-cols-3 gap-2">
                     {COLOR_PRESETS.map((p, i) => (
-                      <button key={i} onClick={() => updateTheme({ primaryColor: p.primary, secondaryColor: p.secondary })}
-                        className={`flex items-center gap-1.5 p-2 rounded-lg border transition-all ${theme.primaryColor === p.primary ? 'border-gold-500 bg-gold-50' : 'border-navy-100 hover:border-navy-200 bg-white'}`}>
+                      <button key={i} onClick={() => { updateTheme({ primaryColor: p.primary, secondaryColor: p.secondary }); setSaved(false); }}
+                        className={cn('flex items-center gap-1.5 p-2 rounded-lg border transition-all', theme.primaryColor === p.primary ? 'border-gold-500 bg-gold-50' : 'border-navy-100 hover:border-navy-200 bg-white')}>
                         <span className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ backgroundColor: p.primary }} />
                         <span className="text-[11px] text-navy-600">{p.name}</span>
                       </button>
@@ -553,31 +625,31 @@ export default function Editor() {
                 <div>
                   <label className="text-xs text-navy-400 mb-1.5 block">主色调</label>
                   <div className="flex items-center gap-2">
-                    <input type="color" value={theme.primaryColor} onChange={e => updateTheme({ primaryColor: e.target.value })}
+                    <input type="color" value={theme.primaryColor} onChange={e => { updateTheme({ primaryColor: e.target.value }); setSaved(false); }}
                       className="w-8 h-8 rounded border border-navy-200 cursor-pointer" />
                     <input className="input-field text-xs flex-1" value={theme.primaryColor}
-                      onChange={e => updateTheme({ primaryColor: e.target.value })} />
+                      onChange={e => { updateTheme({ primaryColor: e.target.value }); setSaved(false); }} />
                   </div>
                 </div>
                 <div>
                   <label className="text-xs text-navy-400 mb-1.5 block">辅助色</label>
                   <div className="flex items-center gap-2">
-                    <input type="color" value={theme.secondaryColor} onChange={e => updateTheme({ secondaryColor: e.target.value })}
+                    <input type="color" value={theme.secondaryColor} onChange={e => { updateTheme({ secondaryColor: e.target.value }); setSaved(false); }}
                       className="w-8 h-8 rounded border border-navy-200 cursor-pointer" />
                     <input className="input-field text-xs flex-1" value={theme.secondaryColor}
-                      onChange={e => updateTheme({ secondaryColor: e.target.value })} />
+                      onChange={e => { updateTheme({ secondaryColor: e.target.value }); setSaved(false); }} />
                   </div>
                 </div>
                 <div>
                   <label className="text-xs text-navy-400 mb-1.5 block">字体</label>
-                  <select className="input-field text-xs" value={theme.fontFamily} onChange={e => updateTheme({ fontFamily: e.target.value })}>
+                  <select className="input-field text-xs" value={theme.fontFamily} onChange={e => { updateTheme({ fontFamily: e.target.value }); setSaved(false); }}>
                     {FONT_OPTIONS.map(f => <option key={f} value={f}>{f}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="text-xs text-navy-400 mb-1.5 block">字号: {theme.fontSize}px</label>
                   <input type="range" min={10} max={18} step={1} value={theme.fontSize}
-                    onChange={e => updateTheme({ fontSize: Number(e.target.value) })}
+                    onChange={e => { updateTheme({ fontSize: Number(e.target.value) }); setSaved(false); }}
                     className="w-full accent-navy-600" />
                 </div>
               </div>

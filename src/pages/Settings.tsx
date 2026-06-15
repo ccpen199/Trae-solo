@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Shield, Download, Trash2, Info, CheckCircle2, XCircle } from 'lucide-react';
+import { Shield, Download, Trash2, Info, CheckCircle2, XCircle, Lock, CloudOff, Database, HardDrive } from 'lucide-react';
 import { useResumeStore } from '@/store/resumeStore';
+import { formatTime } from '../lib/utils';
 
 export default function Settings() {
   const { settings, updateSettings, loadSettings, clearData, resumes, loadAllResumes } = useResumeStore();
@@ -46,6 +47,9 @@ export default function Settings() {
     }
   };
 
+  const totalModules = resumes.reduce((sum, r) => sum + (r.modules?.length || 0), 0);
+  const encryptedCount = resumes.filter(r => (r as any)._encrypted).length;
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <div className="mb-10">
@@ -86,7 +90,7 @@ export default function Settings() {
               </div>
               <p className="text-sm text-navy-400">
                 {settings.privacyMode
-                  ? '所有数据已启用本地 AES 加密存储，不会上传到任何服务器'
+                  ? '所有数据已启用本地 AES-256-GCM 加密存储，不会上传到任何服务器'
                   : '数据以明文形式存储在本地，请确保设备安全'}
               </p>
             </div>
@@ -108,6 +112,93 @@ export default function Settings() {
 
           <div className="h-px bg-navy-100" />
 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 rounded-lg border border-navy-100 bg-navy-25/40">
+              <div className="flex items-center gap-2 mb-2">
+                <CloudOff className="w-4 h-4 text-emerald-500" />
+                <span className="text-xs font-medium text-navy-500">云端存储</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <span className="text-sm font-semibold text-emerald-600">已关闭</span>
+              </div>
+              <p className="text-xs text-navy-400 mt-1">数据不会上传到任何服务器</p>
+            </div>
+            <div className="p-4 rounded-lg border border-navy-100 bg-navy-25/40">
+              <div className="flex items-center gap-2 mb-2">
+                {settings.privacyMode ? <Lock className="w-4 h-4 text-emerald-500" /> : <Database className="w-4 h-4 text-amber-500" />}
+                <span className="text-xs font-medium text-navy-500">存储方式</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {settings.privacyMode ? (
+                  <>
+                    <Lock className="w-4 h-4 text-emerald-500" />
+                    <span className="text-sm font-semibold text-emerald-600">AES加密</span>
+                  </>
+                ) : (
+                  <>
+                    <Database className="w-4 h-4 text-amber-500" />
+                    <span className="text-sm font-semibold text-amber-600">明文</span>
+                  </>
+                )}
+              </div>
+              <p className="text-xs text-navy-400 mt-1">{settings.privacyMode ? 'PBKDF2 密钥派生 + AES-GCM' : '建议开启加密保护'}</p>
+            </div>
+            <div className="p-4 rounded-lg border border-navy-100 bg-navy-25/40">
+              <div className="flex items-center gap-2 mb-2">
+                <HardDrive className="w-4 h-4 text-navy-400" />
+                <span className="text-xs font-medium text-navy-500">缓存位置</span>
+              </div>
+              <div className="text-sm font-semibold text-navy-700">IndexedDB</div>
+              <p className="text-xs text-navy-400 mt-1">浏览器本地数据库</p>
+            </div>
+          </div>
+
+          <div className="h-px bg-navy-100" />
+
+          <div>
+            <h3 className="font-medium text-navy-700 mb-3">本地缓存记录</h3>
+            {resumes.length === 0 ? (
+              <div className="p-4 rounded-lg border border-dashed border-navy-200 text-center">
+                <p className="text-sm text-navy-400">暂无缓存数据</p>
+              </div>
+            ) : (
+              <div className="space-y-2 max-h-[240px] overflow-y-auto">
+                {resumes.map(resume => (
+                  <div key={resume.id} className="flex items-center justify-between p-3 rounded-lg border border-navy-100 bg-white">
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
+                      {settings.privacyMode && <Lock className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />}
+                      <span className="text-sm text-navy-700 truncate">{resume.title || '未命名简历'}</span>
+                    </div>
+                    <div className="flex items-center gap-3 ml-3">
+                      <span className="text-xs text-navy-400">{(resume.modules?.length || 0)} 个模块</span>
+                      <span className="text-xs text-navy-400">{formatTime(resume.updatedAt)}</span>
+                      {settings.privacyMode && (
+                        <span className="text-xs px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600">已加密</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <p className="text-xs text-navy-400 mt-2">
+              共 {resumes.length} 份简历 · {totalModules} 个模块 · {encryptedCount} 份已加密
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-10">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center">
+            <Database className="w-5 h-5 text-navy-600" />
+          </div>
+          <div>
+            <h2 className="section-title text-xl">数据管理</h2>
+          </div>
+        </div>
+
+        <div className="card p-6 space-y-6">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <h3 className="font-medium text-navy-700 mb-1">导出数据</h3>
@@ -137,7 +228,7 @@ export default function Settings() {
             <div className="flex-1">
               <h3 className="font-medium text-navy-700 mb-1">清空所有数据</h3>
               <p className="text-sm text-navy-400">
-                永久删除本地存储的所有简历和设置，此操作不可恢复
+                永久删除本地 IndexedDB 中的所有简历和设置，此操作不可恢复
               </p>
             </div>
             <button
@@ -185,10 +276,10 @@ export default function Settings() {
                 本应用高度重视您的隐私。所有简历数据均仅存储在您的本地设备中，不会上传至任何服务器。
               </p>
               <p>
-                当隐私保护模式开启时，数据采用 AES 加密算法进行加密存储，即使他人获取您的设备物理访问权限，也无法直接读取您的简历内容。
+                当隐私保护模式开启时，数据采用 AES-256-GCM 加密算法进行加密存储，通过 PBKDF2 派生密钥，即使他人获取您的设备物理访问权限，也无法直接读取您的简历内容。
               </p>
               <p>
-                本应用不会收集、存储或传输任何个人身份信息。您的全部数据完全由您掌控。
+                本应用不会收集、存储或传输任何个人身份信息。您的全部数据完全由您掌控。您可以随时导出或清空数据。
               </p>
             </div>
           </div>
@@ -209,7 +300,7 @@ export default function Settings() {
               <div>
                 <h3 className="font-semibold text-navy-700 text-lg">确认清空所有数据？</h3>
                 <p className="text-sm text-navy-400 mt-1">
-                  此操作将永久删除本地存储的所有简历和设置，且无法恢复。建议您先导出数据备份。
+                  此操作将永久删除本地 IndexedDB 中的所有 {resumes.length} 份简历和设置，且无法恢复。建议您先导出数据备份。
                 </p>
               </div>
             </div>
