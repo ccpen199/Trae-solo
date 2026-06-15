@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Table, Tag, Button, Select, Statistic, Modal, Drawer, Descriptions, message, Space, DatePicker, List, Progress, Alert, Steps, Checkbox, Form, Input, InputNumber, Radio } from 'antd'
+import { Row, Col, Card, Table, Tag, Button, Select, Statistic, Modal, Drawer, Descriptions, message, Space, DatePicker, List, Progress, Alert, Steps, Checkbox, Form, Input, InputNumber, Radio, Divider } from 'antd'
 import {
   MoneyCollectOutlined,
   FileTextOutlined,
@@ -23,6 +23,7 @@ import { useNavigate } from 'react-router-dom'
 const { Option } = Select
 const { RangePicker } = DatePicker
 const { Step } = Steps
+const { TextArea } = Input
 
 function Settlement() {
   const navigate = useNavigate()
@@ -592,8 +593,13 @@ function Settlement() {
               />
             )}
 
-            <div style={{ marginBottom: 8, fontWeight: 500 }}>
-              结算明细 ({currentSettlement.items?.length || 0} 条)
+            <div style={{ marginBottom: 8, fontWeight: 500, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>结算明细 - 按单抽佣 ({currentSettlement.items?.length || 0} 条)</span>
+              <Space>
+                <Tag color="blue">
+                  平台佣金率: {((currentSettlement.commission_amount / currentSettlement.total_amount) * 100).toFixed(1)}%
+                </Tag>
+              </Space>
             </div>
             <Table
               dataSource={currentSettlement.items}
@@ -605,19 +611,36 @@ function Settlement() {
                 {
                   title: '订单号',
                   dataIndex: 'order_no',
-                  render: t => <span style={{ fontFamily: 'monospace', fontSize: 12 }}>{t}</span>
+                  width: 130,
+                  render: t => <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{t}</span>
+                },
+                {
+                  title: '配送距离',
+                  dataIndex: 'distance',
+                  width: 80,
+                  render: v => v ? `${v}km` : '-'
                 },
                 {
                   title: '订单金额',
                   dataIndex: 'order_amount',
                   width: 100,
-                  render: v => `¥${v?.toFixed(2)}`
+                  render: v => <span style={{ color: '#1677ff' }}>¥{v?.toFixed(2)}</span>
                 },
                 {
-                  title: '佣金',
+                  title: '抽佣率',
+                  width: 70,
+                  render: (_, r) => <span style={{ color: '#722ed1' }}>{((r.commission_amount / r.order_amount) * 100).toFixed(1)}%</span>
+                },
+                {
+                  title: '平台佣金',
                   dataIndex: 'commission_amount',
-                  width: 80,
-                  render: v => `¥${v?.toFixed(2)}`
+                  width: 90,
+                  render: v => <span style={{ color: '#52c41a', fontWeight: 500 }}>¥{v?.toFixed(2)}</span>
+                },
+                {
+                  title: '应付平台',
+                  width: 100,
+                  render: (_, r) => <span style={{ color: '#fa8c16' }}>¥{(r.order_amount - r.commission_amount).toFixed(2)}</span>
                 }
               ]}
             />
@@ -626,46 +649,137 @@ function Settlement() {
       </Drawer>
 
       <Modal
-        title="对账确认"
+        title="对账确认 - 月结对账明细"
         open={reconcileModal}
         onCancel={() => setReconcileModal(false)}
         footer={null}
-        width={520}
+        width={650}
         destroyOnClose
       >
         {currentSettlement && (
           <div>
-            <Alert
-              message="对账信息"
-              description={
-                <div>
-                  <div>结算单号: {currentSettlement.settlement_no}</div>
-                  <div>平台: {currentSettlement.platform_logo} {currentSettlement.platform_name}</div>
-                  <div>周期: {currentSettlement.period}</div>
-                  <div>订单数: {currentSettlement.total_orders} 单</div>
-                  <div>应付金额: <span style={{ color: '#1677ff', fontWeight: 600 }}>¥{currentSettlement.settlement_amount?.toFixed(2)}</span></div>
-                </div>
-              }
-              type="info"
-              showIcon
-              style={{ marginBottom: 16 }}
-            />
+            <Descriptions column={2} size="small" bordered style={{ marginBottom: 16 }}>
+              <Descriptions.Item label="结算单号">{currentSettlement.settlement_no}</Descriptions.Item>
+              <Descriptions.Item label="承运平台">{currentSettlement.platform_logo} {currentSettlement.platform_name}</Descriptions.Item>
+              <Descriptions.Item label="结算周期">{currentSettlement.period}</Descriptions.Item>
+              <Descriptions.Item label="订单数">{currentSettlement.total_orders} 单</Descriptions.Item>
+              <Descriptions.Item label="订单总额">¥{currentSettlement.total_amount?.toFixed(2)}</Descriptions.Item>
+              <Descriptions.Item label="佣金收入">¥{currentSettlement.commission_amount?.toFixed(2)}</Descriptions.Item>
+              <Descriptions.Item label="应付平台" span={2}>
+                <span style={{ color: '#1677ff', fontSize: 18, fontWeight: 700 }}>
+                  ¥{currentSettlement.settlement_amount?.toFixed(2)}
+                </span>
+              </Descriptions.Item>
+            </Descriptions>
+
+            {(platformCompensations[currentSettlement.platform_id]?.length || 0) > 0 && (
+              <Alert
+                type="warning"
+                showIcon
+                style={{ marginBottom: 16 }}
+                message="SLA赔付异常差异提醒"
+                description={
+                  <div>
+                    <div>
+                      本周期内该平台发生 <b>{platformCompensations[currentSettlement.platform_id].length}</b> 笔SLA赔付，
+                      合计 <b style={{ color: '#ff4d4f' }}>¥{platformCompensations[currentSettlement.platform_id].reduce((s, c) => s + (c.amount || 0), 0).toFixed(2)}</b>
+                    </div>
+                    <div style={{ marginTop: 4 }}>
+                      建议在结算前复查赔付记录，确保异常处理闭环。
+                      <Button type="link" size="small" icon={<GiftOutlined />} onClick={() => navigate('/compensation')}>
+                        复查赔付记录
+                      </Button>
+                    </div>
+                  </div>
+                }
+              />
+            )}
+
+            <div style={{ marginBottom: 8, fontSize: 12, color: '#666' }}>
+              <strong>对账明细预览（前5条）：</strong>
+            </div>
+            <Table
+              dataSource={currentSettlement.items?.slice(0, 5)}
+              rowKey="id"
+              size="small"
+              pagination={false}
+              bordered
+            >
+              <Table.Column
+                title="订单号"
+                dataIndex="order_no"
+                width={130}
+                render={t => <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{t}</span>}
+              />
+              <Table.Column
+                title="配送距离"
+                dataIndex="distance"
+                width={70}
+                render={v => v ? `${v}km` : '-'}
+              />
+              <Table.Column
+                title="订单金额"
+                dataIndex="order_amount"
+                width={85}
+                render={v => `¥${v?.toFixed(2)}`}
+              />
+              <Table.Column
+                title="抽佣率"
+                width={65}
+                render={(_, r) => `${((r.commission_amount / r.order_amount) * 100).toFixed(1)}%`}
+              />
+              <Table.Column
+                title="佣金"
+                dataIndex="commission_amount"
+                width={75}
+                render={v => `¥${v?.toFixed(2)}`}
+              />
+              <Table.Column
+                title="应付平台"
+                width={85}
+                render={(_, r) => `¥{(r.order_amount - r.commission_amount).toFixed(2)}`}
+              />
+            </Table>
+            {currentSettlement.items?.length > 5 && (
+              <div style={{ textAlign: 'center', padding: '8px 0', color: '#999', fontSize: 12 }}>
+                ... 还有 {currentSettlement.items.length - 5} 条，详情请查看完整结算单
+              </div>
+            )}
+
+            <Divider style={{ margin: '16px 0' }} />
+
             <Form form={reconcileForm} layout="vertical" onFinish={submitReconcile}>
               <Form.Item name="matched" label="对账结果" rules={[{ required: true }]} initialValue={true}>
                 <Radio.Group>
-                  <Radio value={true}>账实一致，确认对账</Radio>
-                  <Radio value={false}>存在差异，标记待处理</Radio>
+                  <Radio value={true}>✅ 账实一致，确认对账</Radio>
+                  <Radio value={false}>⚠️ 存在差异，标记待处理</Radio>
                 </Radio.Group>
               </Form.Item>
               <Form.Item noStyle shouldUpdate={(prev, curr) => prev.matched !== curr.matched}>
                 {({ getFieldValue }) => !getFieldValue('matched') && (
-                  <Form.Item name="diff_amount" label="差异金额(元)" rules={[{ required: true }]}>
-                    <InputNumber step={0.01} style={{ width: '100%' }} placeholder="请输入差异金额" />
-                  </Form.Item>
+                  <>
+                    <Row gutter={16}>
+                      <Col span={12}>
+                        <Form.Item name="diff_type" label="差异类型" rules={[{ required: true }]}>
+                          <Select placeholder="请选择差异类型">
+                            <Option value="amount">金额差异</Option>
+                            <Option value="count">订单数差异</Option>
+                            <Option value="compensation">赔付金额差异</Option>
+                            <Option value="other">其他差异</Option>
+                          </Select>
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item name="diff_amount" label="差异金额(元)" rules={[{ required: true }]}>
+                          <InputNumber step={0.01} style={{ width: '100%' }} placeholder="请输入差异金额" />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </>
                 )}
               </Form.Item>
-              <Form.Item name="remark" label="备注">
-                <Input.TextArea rows={2} placeholder="备注说明（可选）" />
+              <Form.Item name="remark" label="备注说明">
+                <Input.TextArea rows={2} placeholder="请填写对账备注或差异原因（可选）" />
               </Form.Item>
               <div style={{ textAlign: 'right' }}>
                 <Button onClick={() => setReconcileModal(false)} style={{ marginRight: 8 }}>取消</Button>

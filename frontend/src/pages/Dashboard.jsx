@@ -34,6 +34,7 @@ function Dashboard() {
   const [summary, setSummary] = useState(null)
   const [platformStats, setPlatformStats] = useState([])
   const [recentOrders, setRecentOrders] = useState([])
+  const [orderRoutes, setOrderRoutes] = useState({})
   const [afterSalesList, setAfterSalesList] = useState([])
   const [compensationList, setCompensationList] = useState([])
   const [settlementList, setSettlementList] = useState([])
@@ -66,6 +67,24 @@ function Dashboard() {
         setCompensationList(res.data.compensation_list || [])
         setSettlementList(res.data.settlement_list || [])
         setAlertPlatforms(res.data.alert_platforms || [])
+        
+        const orders = res.data.recent_orders || []
+        const routes = {}
+        for (const order of orders.slice(0, 5)) {
+          try {
+            const routeRes = await orderApi.quote({
+              distance: order.distance || 5,
+              weight: order.goods_weight || 0,
+              urgency: order.urgency || 'normal'
+            })
+            if (routeRes.success) {
+              routes[order.id] = routeRes.data
+            }
+          } catch (e) {
+            console.error('加载路由失败', order.id, e)
+          }
+        }
+        setOrderRoutes(routes)
       }
     } catch (e) {
       console.error(e)
@@ -409,12 +428,32 @@ function Dashboard() {
                                 <Tag color="orange" style={{ fontSize: 10, padding: '0 4px' }}>
                                   {item.type === 'address_change' ? '改址' : item.type === 'cancel' ? '取消' : item.type === 'complaint' ? '投诉' : '退款'}
                                 </Tag>
+                                {item.platform_synced ? (
+                                  <Tag color="green" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    <CheckCircleOutlined /> 承运方已回执
+                                  </Tag>
+                                ) : (
+                                  <Tag color="default" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    <SyncOutlined spin /> 同步中
+                                  </Tag>
+                                )}
                               </Space>
                             }
                             description={
                               <div style={{ fontSize: 11, color: '#666' }}>
-                                <div>{item.platform_logo} {item.platform_name} · 同步结果: {item.platform_synced ? '已同步' : '同步中'}</div>
+                                <div>
+                                  {item.platform_logo} {item.platform_name} · 
+                                  商户同步: <span style={{ color: item.platform_synced ? '#52c41a' : '#faad14', fontWeight: 500 }}>{item.platform_synced ? '已同步' : '同步中'}</span>
+                                  {item.result && (
+                                    <span> · 结果: <span style={{ color: '#1677ff' }}>{item.result}</span></span>
+                                  )}
+                                </div>
                                 <div>提交: {dayjs(item.created_at).format('MM-DD HH:mm')}</div>
+                                {item.reason && (
+                                  <div style={{ color: '#999', marginTop: 2 }}>
+                                    原因: {item.reason.length > 25 ? item.reason.substring(0, 25) + '...' : item.reason}
+                                  </div>
+                                )}
                               </div>
                             }
                           />
@@ -460,12 +499,39 @@ function Dashboard() {
                                   {item.type === 'timeout' ? '超时' : item.type === 'loss' ? '丢件' : '投诉'}
                                 </Tag>
                                 <span style={{ color: '#f5222d', fontWeight: 600, fontSize: 12 }}>¥{item.amount?.toFixed(2)}</span>
+                                {item.coupon_code && (
+                                  <Tag color="green" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    <CheckCircleOutlined /> 已发券
+                                  </Tag>
+                                )}
                               </Space>
                             }
                             description={
                               <div style={{ fontSize: 11, color: '#666' }}>
-                                <div>{item.platform_logo} {item.platform_name} · 券码: {item.coupon_code || '待生成'}</div>
-                                <div>触发: {dayjs(item.triggered_at).format('MM-DD HH:mm')} · {item.status === 'pending' ? '待发放' : '处理中'}</div>
+                                <div>
+                                  {item.platform_logo} {item.platform_name} · 
+                                  券码: <span style={{ fontFamily: 'monospace', color: item.coupon_code ? '#52c41a' : '#faad14' }}>{item.coupon_code || '待生成'}</span>
+                                  {item.status === 'review_pending' && (
+                                    <span> · <Tag color="orange" style={{ margin: 0, padding: '0 4px' }}>待复查</Tag></span>
+                                  )}
+                                  {item.status === 'reviewed' && (
+                                    <span> · <Tag color="green" style={{ margin: 0, padding: '0 4px' }}>已复查</Tag></span>
+                                  )}
+                                </div>
+                                <div>
+                                  触发: {dayjs(item.triggered_at).format('MM-DD HH:mm')} · 
+                                  发放: <span style={{ color: item.coupon_code ? '#52c41a' : '#faad14', fontWeight: 500 }}>{item.coupon_code ? '已发放' : '待发放'}</span>
+                                </div>
+                                {item.review_result && (
+                                  <div style={{ color: '#1677ff', marginTop: 2 }}>
+                                    复查: {item.review_result.length > 25 ? item.review_result.substring(0, 25) + '...' : item.review_result}
+                                  </div>
+                                )}
+                                {item.reason && !item.review_result && (
+                                  <div style={{ color: '#999', marginTop: 2 }}>
+                                    原因: {item.reason.length > 25 ? item.reason.substring(0, 25) + '...' : item.reason}
+                                  </div>
+                                )}
                               </div>
                             }
                           />
@@ -650,6 +716,55 @@ function Dashboard() {
                   <Tag color={info.color}>
                     {info.icon} {info.text}
                   </Tag>
+                )
+              }
+            },
+            {
+              title: '候选承运方',
+              width: 180,
+              render: (_, record) => {
+                const route = orderRoutes[record.id]
+                if (!route || !route.optimal) return <span style={{ color: '#999' }}>计算中...</span>
+                return (
+                  <Space size={4} wrap>
+                    {route.optimal.slice(0, 3).map((r, idx) => (
+                      <Tooltip key={r.platform.id} title={`${r.platform.name} ¥${r.fee?.toFixed(2)}`}>
+                        <Tag
+                          color={r.platform.id === record.platform_id ? 'green' : idx === 0 ? 'blue' : 'default'}
+                          style={{ padding: '0 4px', margin: 0 }}
+                        >
+                          <span style={{ fontSize: 14 }}>{r.platform.logo}</span>
+                          <span style={{ fontSize: 10, marginLeft: 2 }}>¥{r.fee?.toFixed(0)}</span>
+                          {r.platform.id === record.platform_id && <CheckCircleOutlined style={{ fontSize: 10, marginLeft: 2 }} />}
+                        </Tag>
+                      </Tooltip>
+                    ))}
+                    {route.optimal.length > 3 && (
+                      <Tag color="default" style={{ padding: '0 4px', margin: 0 }}>
+                        +{route.optimal.length - 3}
+                      </Tag>
+                    )}
+                  </Space>
+                )
+              }
+            },
+            {
+              title: '最优选择理由',
+              width: 160,
+              ellipsis: true,
+              render: (_, record) => {
+                const route = orderRoutes[record.id]
+                if (!route || !route.optimal) return <span style={{ color: '#999' }}>-</span>
+                const selected = route.optimal.find(r => r.platform.id === record.platform_id) || route.optimal[0]
+                let reason = selected?.reason || route.reason || '综合最优'
+                if (reason.length > 20) reason = reason.substring(0, 20) + '...'
+                return (
+                  <Tooltip title={selected?.reason || route.reason || '综合评分最高'}>
+                    <span style={{ color: '#666', fontSize: 12 }}>
+                      <RobotOutlined style={{ marginRight: 4 }} />
+                      {reason}
+                    </span>
+                  </Tooltip>
                 )
               }
             },

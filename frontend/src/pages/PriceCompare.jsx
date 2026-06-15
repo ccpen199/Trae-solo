@@ -13,7 +13,8 @@ import {
   CheckSquareOutlined,
   InfoCircleOutlined,
   ArrowUpOutlined,
-  ArrowLeftOutlined
+  ArrowLeftOutlined,
+  RobotOutlined
 } from '@ant-design/icons'
 import { orderApi, platformApi } from '../api'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -494,40 +495,201 @@ function PriceCompare() {
           </Card>
 
           {quoteResult && (
-            <Card title="比价说明" style={{ marginTop: 16 }} size="small">
-              <Row gutter={[16, 16]}>
-                <Col span={8}>
-                  <Statistic
-                    title="参与比价平台"
-                    value={quoteResult.optimal?.length || 0}
-                    suffix="家"
-                    valueStyle={{ fontSize: 20 }}
+            <>
+              <Card 
+                title={
+                  <Space>
+                    <span>各平台报价对比</span>
+                    <Tag color="green">
+                      最低成本: {cheapest?.platform?.logo} {cheapest?.platform?.name} ¥{cheapest?.fee?.toFixed(2)}
+                    </Tag>
+                    <Tag color="blue">
+                      最快时效: {fastest?.platform?.logo} {fastest?.platform?.name} {fastest?.delivery_time}分钟
+                    </Tag>
+                  </Space>
+                } 
+                style={{ marginTop: 16 }} 
+                size="small"
+              >
+                <Table
+                  dataSource={getSortedResults()}
+                  rowKey="platform.id"
+                  size="small"
+                  pagination={false}
+                  scroll={{ x: 800 }}
+                >
+                  <Table.Column
+                    title="排序"
+                    key="rank"
+                    width={60}
+                    render={(_, __, idx) => (
+                      <Tag color={idx === 0 ? 'green' : idx === 1 ? 'blue' : 'default'}>
+                        #{idx + 1}
+                      </Tag>
+                    )}
                   />
-                </Col>
-                <Col span={8}>
-                  <Statistic
-                    title="最低价格"
-                    value={cheapest?.fee || 0}
-                    prefix="¥"
-                    valueStyle={{ fontSize: 20, color: '#fa8c16' }}
+                  <Table.Column
+                    title="承运平台"
+                    key="platform"
+                    width={140}
+                    render={(_, record) => (
+                      <Space>
+                        <span style={{ fontSize: 18 }}>{record.platform.logo}</span>
+                        <span>{record.platform.name}</span>
+                      </Space>
+                    )}
                   />
-                </Col>
-                <Col span={8}>
-                  <Statistic
-                    title="最快送达"
-                    value={fastest?.delivery_time || 0}
-                    suffix="分钟"
-                    valueStyle={{ fontSize: 20, color: '#1677ff' }}
+                  <Table.Column
+                    title="运费(元)"
+                    dataIndex="fee"
+                    key="fee"
+                    width={100}
+                    sorter={(a, b) => a.fee - b.fee}
+                    render={(val, record) => (
+                      <div style={{ textAlign: 'center' }}>
+                        <span style={{ 
+                          color: val === cheapest?.fee ? '#52c41a' : '#333', 
+                          fontWeight: val === cheapest?.fee ? 700 : 500,
+                          fontSize: val === cheapest?.fee ? 16 : 14
+                        }}>
+                          ¥{val?.toFixed(2)}
+                        </span>
+                        {val === cheapest?.fee && (
+                          <div style={{ fontSize: 10, color: '#52c41a' }}>最低</div>
+                        )}
+                        {val > cheapest?.fee && (
+                          <div style={{ fontSize: 10, color: '#ff4d4f' }}>
+                            +¥{(val - cheapest.fee).toFixed(2)}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   />
-                </Col>
-              </Row>
-              <div style={{ marginTop: 12, fontSize: 12, color: '#999', lineHeight: 1.8 }}>
-                <p>• 综合评分基于价格、时效、运力饱和度、历史履约率等多维度加权计算</p>
-                <p>• 价格包含基础费、里程费、重量费，实际费用以平台接单后为准</p>
-                <p>• 运力饱和度实时更新，高峰期部分平台可能溢价或拒单</p>
-                <p>• 勾选左侧复选框可选择多个平台进行详细对比</p>
-              </div>
-            </Card>
+                  <Table.Column
+                    title="时效(分钟)"
+                    dataIndex="delivery_time"
+                    key="time"
+                    width={110}
+                    sorter={(a, b) => a.delivery_time - b.delivery_time}
+                    render={(val, record) => (
+                      <div style={{ textAlign: 'center' }}>
+                        <span style={{ 
+                          color: val === fastest?.delivery_time ? '#1677ff' : '#333', 
+                          fontWeight: val === fastest?.delivery_time ? 700 : 500
+                        }}>
+                          {val}
+                        </span>
+                        {val === fastest?.delivery_time && (
+                          <div style={{ fontSize: 10, color: '#1677ff' }}>最快</div>
+                        )}
+                      </div>
+                    )}
+                  />
+                  <Table.Column
+                    title="综合评分"
+                    key="score"
+                    width={100}
+                    sorter={(a, b) => b.score - a.score}
+                    render={(_, record) => (
+                      <div style={{ textAlign: 'center' }}>
+                        <Progress
+                          percent={Math.round(record.score * 100)}
+                          size="small"
+                          format={(p) => <span style={{ fontSize: 11 }}>{p}分</span>}
+                          strokeColor={record.score >= 0.8 ? '#52c41a' : record.score >= 0.6 ? '#faad14' : '#ff4d4f'}
+                        />
+                      </div>
+                    )}
+                  />
+                  <Table.Column
+                    title="时效满足"
+                    key="deadline"
+                    width={90}
+                    render={(_, record) => (
+                      <Tag color={record.meets_deadline ? 'green' : 'orange'} style={{ width: '100%', textAlign: 'center' }}>
+                        {record.meets_deadline ? '✓ 满足' : '⚠ 可能超时'}
+                      </Tag>
+                    )}
+                  />
+                  <Table.Column
+                    title="最低成本依据"
+                    key="reason"
+                    render={(_, record) => (
+                      <div style={{ fontSize: 12, color: '#666' }}>
+                        {record.fee === cheapest?.fee ? (
+                          <span style={{ color: '#52c41a' }}>
+                            ✅ 基础费{(record.platform.base_price || 0).toFixed(2)} + 里程费{(record.platform.per_km_price || 0).toFixed(2)}/km × {(quoteResult.params?.distance || 0)}km
+                            {record.platform.per_kg_price > 0 && ` + 重量费${(record.platform.per_kg_price || 0).toFixed(2)}/kg × ${(quoteResult.params?.weight || 0)}kg`}
+                          </span>
+                        ) : (
+                          <span>
+                            基础费{(record.platform.base_price || 0).toFixed(2)} + 里程费{(record.platform.per_km_price || 0).toFixed(2)}/km
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  />
+                  <Table.Column
+                    title="操作"
+                    key="action"
+                    width={100}
+                    render={(_, record) => (
+                      <Button type="primary" size="small" icon={<ShoppingCartOutlined />} onClick={() => handleSelectPlatform(record)}>
+                        下单
+                      </Button>
+                    )}
+                  />
+                </Table>
+              </Card>
+
+              <Card 
+                title={
+                  <Space>
+                    <RobotOutlined style={{ color: '#722ed1' }} />
+                    <span>智能比价说明</span>
+                  </Space>
+                } 
+                style={{ marginTop: 16 }} 
+                size="small"
+              >
+                <Row gutter={[16, 16]}>
+                  <Col span={8}>
+                    <Statistic
+                      title="参与比价平台"
+                      value={quoteResult.optimal?.length || 0}
+                      suffix="家"
+                      valueStyle={{ fontSize: 20 }}
+                    />
+                  </Col>
+                  <Col span={8}>
+                    <Statistic
+                      title="最低价格"
+                      value={cheapest?.fee || 0}
+                      prefix="¥"
+                      valueStyle={{ fontSize: 20, color: '#52c41a' }}
+                    />
+                  </Col>
+                  <Col span={8}>
+                    <Statistic
+                      title="最快送达"
+                      value={fastest?.delivery_time || 0}
+                      suffix="分钟"
+                      valueStyle={{ fontSize: 20, color: '#1677ff' }}
+                    />
+                  </Col>
+                </Row>
+                <div style={{ marginTop: 12, fontSize: 12, color: '#666', lineHeight: 1.8 }}>
+                  <p><strong style={{ color: '#52c41a' }}>📊 最低成本选取依据：</strong></p>
+                  <p>• 运费 = 基础费 + 里程费 × 配送距离 + 重量费 × 物品重量（如有）</p>
+                  <p>• 当前配送参数：距离 {(quoteResult.params?.distance || 0)}km，重量 {(quoteResult.params?.weight || 0)}kg，时效 {(quoteResult.params?.urgency === 'urgent' ? '加急' : quoteResult.params?.urgency === 'economy' ? '经济' : '普通')}</p>
+                  <p>• 最低成本平台：{cheapest?.platform?.logo} {cheapest?.platform?.name}，运费 ¥{cheapest?.fee?.toFixed(2)}，相比最高价节省 ¥{((getSortedResults()[getSortedResults().length - 1]?.fee || 0) - (cheapest?.fee || 0)).toFixed(2)}</p>
+                  <p style={{ marginTop: 8 }}><strong style={{ color: '#722ed1' }}>🤖 综合评分算法：</strong></p>
+                  <p>• 价格权重 15-50%，时效权重 15-40%，服务质量权重 25%，运力饱和度权重 15%</p>
+                  <p>• 时效要求越高，时效权重越大；时效要求越低，价格权重越大</p>
+                  <p>• 运力饱和度超过 85% 的平台会被降级，避免高峰期拒单</p>
+                </div>
+              </Card>
+            </>
           )}
         </Col>
       </Row>
