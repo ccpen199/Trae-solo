@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Button, Tag, Select, Input, Modal, Form, InputNumber, Radio, Drawer, Descriptions, Timeline, message, Space, Row, Col, Progress } from 'antd'
-import { SearchOutlined, PlusOutlined, EyeOutlined, SyncOutlined, RobotOutlined, BarChartOutlined, ClockCircleOutlined, DollarOutlined, SafetyOutlined, ThunderboltOutlined } from '@ant-design/icons'
+import { Table, Button, Tag, Select, Input, Modal, Form, InputNumber, Radio, Drawer, Descriptions, Timeline, message, Space, Row, Col, Progress, Alert } from 'antd'
+import { SearchOutlined, PlusOutlined, EyeOutlined, SyncOutlined, RobotOutlined, BarChartOutlined, ClockCircleOutlined, DollarOutlined, SafetyOutlined, ThunderboltOutlined, WarningOutlined, ExclamationCircleOutlined, GiftOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
+import { useNavigate } from 'react-router-dom'
 import { orderApi, platformApi, merchantApi } from '../api'
 
 const { Option } = Select
 
 function Orders() {
+  const navigate = useNavigate()
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 })
@@ -217,6 +219,37 @@ function Orders() {
     { title: '收件电话', dataIndex: 'receiver_phone', width: 130 },
     { title: '配送地址', dataIndex: 'receiver_address', ellipsis: true },
     { title: '距离', dataIndex: 'distance', width: 80, render: v => v ? `${v}km` : '-' },
+    { title: '重量', dataIndex: 'goods_weight', width: 80, render: v => v ? `${v}kg` : '-' },
+    {
+      title: '时效',
+      dataIndex: 'urgency',
+      width: 80,
+      render: (v) => {
+        const map = {
+          urgent: { text: '加急', color: 'red', icon: <ThunderboltOutlined /> },
+          normal: { text: '普通', color: 'blue', icon: <ClockCircleOutlined /> },
+          economy: { text: '经济', color: 'green', icon: <DollarOutlined /> }
+        }
+        const item = map[v] || map.normal
+        return <Tag color={item.color}>{item.icon} {item.text}</Tag>
+      }
+    },
+    {
+      title: '异常预警',
+      width: 120,
+      render: (_, record) => {
+        const now = dayjs()
+        const eta = record.estimated_arrival_time ? dayjs(record.estimated_arrival_time) : null
+        const isTimeout = eta && now.isAfter(eta) && !['delivered', 'cancelled'].includes(record.delivery_status)
+        const isException = record.delivery_status === 'exception'
+        if (isException) return <Tag color="red"><ExclamationCircleOutlined /> 配送异常</Tag>
+        if (isTimeout) return <Tag color="orange"><WarningOutlined /> 已超时</Tag>
+        if (eta && now.diff(eta, 'minute') > -15 && now.diff(eta, 'minute') < 0 && !['delivered', 'cancelled'].includes(record.delivery_status)) {
+          return <Tag color="gold"><ClockCircleOutlined /> 即将超时</Tag>
+        }
+        return <Tag color="green">正常</Tag>
+      }
+    },
     {
       title: '费用',
       dataIndex: 'total_fee',
@@ -464,47 +497,82 @@ function Orders() {
       <Drawer
         title="订单详情"
         placement="right"
-        width={480}
+        width={520}
         open={detailDrawer}
         onClose={() => setDetailDrawer(false)}
+        destroyOnClose
       >
         {currentOrder && (
           <div>
-            <Descriptions title="基本信息" column={1} size="small" style={{ marginBottom: 16 }}>
-              <Descriptions.Item label="订单号">{currentOrder.order_no}</Descriptions.Item>
+            {(() => {
+              const now = dayjs()
+              const eta = currentOrder.estimated_arrival_time ? dayjs(currentOrder.estimated_arrival_time) : null
+              const isTimeout = eta && now.isAfter(eta) && !['delivered', 'cancelled'].includes(currentOrder.delivery_status)
+              const isException = currentOrder.delivery_status === 'exception'
+              const isSoon = eta && now.diff(eta, 'minute') > -15 && now.diff(eta, 'minute') < 0 && !['delivered', 'cancelled'].includes(currentOrder.delivery_status)
+              if (isException) return <Alert type="error" style={{ marginBottom: 16 }} message={<Space><ExclamationCircleOutlined /> 配送异常</Space>} description={currentOrder.cancel_reason || '当前订单存在配送异常，请及时处理'} showIcon />
+              if (isTimeout) return <Alert type="warning" style={{ marginBottom: 16 }} message={<Space><WarningOutlined /> 已超时 {Math.abs(now.diff(eta, 'minute'))} 分钟</Space>} description="建议立即联系骑手确认或发起SLA赔付流程" showIcon
+                action={<Button type="link" size="small" icon={<GiftOutlined />} onClick={() => {setDetailDrawer(false); navigate('/compensation')}}>申请赔付</Button>}
+              />
+              if (isSoon) return <Alert type="warning" style={{ marginBottom: 16 }} message={<Space><ClockCircleOutlined /> 即将超时</Space>} description={`预计 ${eta.format('HH:mm')} 送达，还剩 ${Math.abs(now.diff(eta, 'minute'))} 分钟`} showIcon />
+              return null
+            })()}
+
+            <Descriptions title="基本信息" column={1} size="small" style={{ marginBottom: 16 }} bordered>
+              <Descriptions.Item label="订单号" contentStyle={{ fontFamily: 'monospace' }}>{currentOrder.order_no}</Descriptions.Item>
               <Descriptions.Item label="商户">{currentOrder.merchant_name}</Descriptions.Item>
               <Descriptions.Item label="承运平台">
-                {currentOrder.platform_logo} {currentOrder.platform_name}
+                <Space>{currentOrder.platform_logo} {currentOrder.platform_name || '-'}</Space>
               </Descriptions.Item>
-              <Descriptions.Item label="平台单号">{currentOrder.platform_order_no || '-'}</Descriptions.Item>
+              <Descriptions.Item label="平台单号" contentStyle={{ fontFamily: 'monospace' }}>{currentOrder.platform_order_no || '-'}</Descriptions.Item>
               <Descriptions.Item label="订单状态">
                 <Tag color={statusColorMap[currentOrder.delivery_status]}>
                   {statusTextMap[currentOrder.delivery_status]}
                 </Tag>
               </Descriptions.Item>
-              <Descriptions.Item label="物品">{currentOrder.goods_name || '-'}</Descriptions.Item>
-              <Descriptions.Item label="重量">{currentOrder.goods_weight}kg</Descriptions.Item>
-              <Descriptions.Item label="距离">{currentOrder.distance}km</Descriptions.Item>
-              <Descriptions.Item label="费用">
-                <span style={{ color: '#1677ff', fontWeight: 500 }}>¥{currentOrder.total_fee?.toFixed(2)}</span>
+              <Descriptions.Item label="时效要求">
+                {(() => {
+                  const map = {
+                    urgent: { text: '加急单', color: 'red', icon: <ThunderboltOutlined /> },
+                    normal: { text: '普通单', color: 'blue', icon: <ClockCircleOutlined /> },
+                    economy: { text: '经济单', color: 'green', icon: <DollarOutlined /> }
+                  }
+                  const item = map[currentOrder.urgency] || map.normal
+                  return <Tag color={item.color}>{item.icon} {item.text}</Tag>
+                })()}
               </Descriptions.Item>
             </Descriptions>
 
-            <Descriptions title="收件信息" column={1} size="small" style={{ marginBottom: 16 }}>
+            <Descriptions title="物品与配送信息" column={1} size="small" style={{ marginBottom: 16 }} bordered>
+              <Descriptions.Item label="物品名称">{currentOrder.goods_name || '-'}</Descriptions.Item>
+              <Descriptions.Item label="物品重量"><SafetyOutlined style={{ color: '#52c41a' }} /> {currentOrder.goods_weight || 0} kg</Descriptions.Item>
+              <Descriptions.Item label="配送距离"><BarChartOutlined style={{ color: '#1677ff' }} /> {currentOrder.distance || 0} km</Descriptions.Item>
+              <Descriptions.Item label="预计送达">{currentOrder.estimated_arrival_time ? dayjs(currentOrder.estimated_arrival_time).format('YYYY-MM-DD HH:mm') : '-'}</Descriptions.Item>
+              <Descriptions.Item label="配送费用">
+                <span style={{ color: '#1677ff', fontSize: 16, fontWeight: 600 }}>¥{currentOrder.total_fee?.toFixed(2)}</span>
+              </Descriptions.Item>
+            </Descriptions>
+
+            <Descriptions title="收件信息" column={1} size="small" style={{ marginBottom: 16 }} bordered>
               <Descriptions.Item label="收件人">{currentOrder.receiver_name}</Descriptions.Item>
-              <Descriptions.Item label="电话">{currentOrder.receiver_phone}</Descriptions.Item>
-              <Descriptions.Item label="地址">{currentOrder.receiver_address}</Descriptions.Item>
+              <Descriptions.Item label="联系电话">{currentOrder.receiver_phone}</Descriptions.Item>
+              <Descriptions.Item label="收件地址">{currentOrder.receiver_address}</Descriptions.Item>
             </Descriptions>
 
             {currentOrder.rider_name && (
-              <Descriptions title="骑手信息" column={1} size="small" style={{ marginBottom: 16 }}>
+              <Descriptions title="骑手信息" column={1} size="small" style={{ marginBottom: 16 }} bordered>
                 <Descriptions.Item label="骑手姓名">{currentOrder.rider_name}</Descriptions.Item>
                 <Descriptions.Item label="联系电话">{currentOrder.rider_phone || '-'}</Descriptions.Item>
               </Descriptions>
             )}
 
             <div>
-              <div style={{ fontWeight: 500, marginBottom: 12 }}>配送轨迹</div>
+              <div style={{ fontWeight: 500, marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>配送轨迹</span>
+                <Button type="link" size="small" icon={<RobotOutlined />} onClick={() => { setRouteDetail({ order: currentOrder, allPlatforms: [], route: null, recommendation: '可前往运费比价引擎查看详细路由' }); setDetailDrawer(false); setRouteDrawer(true) }}>
+                  查看路由依据
+                </Button>
+              </div>
               <Timeline
                 items={currentOrder.tracks?.map(track => ({
                   color: track.status === 'delivered' ? 'green' : track.status === 'exception' ? 'red' : 'blue',
@@ -514,10 +582,10 @@ function Orders() {
                         {dayjs(track.created_at).format('YYYY-MM-DD HH:mm:ss')}
                       </div>
                       <div style={{ fontSize: 14 }}>{track.description}</div>
-                      {track.location && <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{track.location}</div>}
+                      {track.location && <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>📍 {track.location}</div>}
                     </div>
                   )
-                }))}
+                })) || [<div style={{ color: '#999' }}>暂无配送轨迹</div>]}
               />
             </div>
           </div>
