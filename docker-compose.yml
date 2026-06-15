@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nx-gov-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nx_city_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: nx_gov_2024_pwd
+      TZ: Asia/Shanghai
+    ports:
+      - "5432:5432"
+    volumes:
+      - nx_pg_data:/var/lib/postgresql/data
+      - ./scripts/postgres-init:/docker-entrypoint-initdb.d:ro
+    command: >
+      postgres
+      -c max_connections=100
+      -c shared_buffers=256MB
+      -c effective_cache_size=768MB
+      -c work_mem=4MB
+      -c log_statement=ddl
+      -c log_min_duration_statement=500
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d nx_city_service"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: nx-gov-redis
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    ports:
+      - "6379:6379"
+    volumes:
+      - nx_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  nx_pg_data:
+    name: nx-gov-pg-data
+  nx_redis_data:
+    name: nx-gov-redis-data
