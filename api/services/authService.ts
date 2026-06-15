@@ -16,13 +16,18 @@ export interface LoginResponse {
 }
 
 export class AuthService {
-  async login(request: LoginRequest): Promise<LoginResponse | null> {
+  async login(request: LoginRequest): Promise<LoginResponse | { error: string }> {
     const user = mockUsers.find(u => u.phone === request.phone);
-    if (!user) return null;
+    if (!user) {
+      return { error: 'ACCOUNT_NOT_FOUND' };
+    }
 
-    const isValidPassword = await bcrypt.compare(request.password, await bcrypt.hash('123456', 10));
-    if (!isValidPassword && request.password !== '123456' && request.password !== 'admin123') {
-      return null;
+    const validPasswords = user.role === 'admin' 
+      ? ['admin123', '123456'] 
+      : ['123456', 'admin123'];
+
+    if (!validPasswords.includes(request.password)) {
+      return { error: 'PASSWORD_ERROR' };
     }
 
     const token = jwt.sign(

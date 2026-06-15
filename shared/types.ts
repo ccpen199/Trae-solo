@@ -17,6 +17,11 @@ export interface UserIdentity {
   role: 'citizen' | 'enterprise' | 'admin' | 'clerk';
 }
 
+export interface LoginResponse {
+  token: string;
+  user: UserIdentity;
+}
+
 export type CertificateType = 'id_card' | 'social_security' | 'driving_license' | 'vehicle_license' | 'ebike_plate';
 
 export interface DigitalCertificate {

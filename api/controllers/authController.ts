@@ -15,13 +15,18 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const result = await authService.login({ phone, password });
-    if (!result) {
+    if ('error' in result) {
+      const messages: Record<string, string> = {
+        ACCOUNT_NOT_FOUND: '账号不存在，请检查手机号',
+        PASSWORD_ERROR: '密码错误，请重试',
+        INSUFFICIENT_PERMISSIONS: '权限不足，无法登录',
+      };
       return res.status(401).json({
         code: 401,
-        message: '手机号或密码错误',
-        data: null,
+        message: messages[result.error] || '登录失败，请重试',
+        data: { error: result.error },
         timestamp: Date.now(),
-      } as ApiResponse<null>);
+      } as ApiResponse<any>);
     }
 
     res.json({

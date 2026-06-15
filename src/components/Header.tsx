@@ -87,11 +87,28 @@ export default function Header({ onMenuToggle, sidebarOpen }: HeaderProps) {
             {user?.name?.charAt(0) || '用'}
           </div>
           <div className="hidden md:block">
-            <p className="text-sm font-medium text-gray-800">{user?.name || '用户'}</p>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-medium text-gray-800">{user?.name || '用户'}</p>
+              {user?.role === 'admin' && (
+                <span className="px-2 py-0.5 bg-warm-100 text-warm-700 text-xs font-medium rounded-full">
+                  管理员
+                </span>
+              )}
+              {user?.role === 'clerk' && (
+                <span className="px-2 py-0.5 bg-primary-100 text-primary-700 text-xs font-medium rounded-full">
+                  办事员
+                </span>
+              )}
+              {user?.role === 'citizen' && (
+                <span className="px-2 py-0.5 bg-eco-100 text-eco-700 text-xs font-medium rounded-full">
+                  市民
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-1 mt-0.5">
               <span className={cn(
                 'w-1.5 h-1.5 rounded-full',
-                user?.realNameVerified ? 'bg-green-500' : 'bg-yellow-500'
+                user?.realNameVerified ? 'bg-eco-500' : 'bg-warm-500'
               )}></span>
               <span className="text-xs text-gray-500">
                 {user?.realNameVerified ? '已实名认证' : '未实名认证'}
