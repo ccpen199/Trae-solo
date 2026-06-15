@@ -17,9 +17,15 @@ export class FaceRecognitionAdapter {
     this.apiKey = this.configService.get('FACE_RECOGNITION_API_KEY', '');
   }
 
-  async verify(faceImage: string, idCardNumber: string): Promise<{ verified: boolean; realName?: string; confidence?: number }> {
+  async verify(
+    faceImage: string,
+    idCardNumber: string,
+  ): Promise<{ verified: boolean; realName?: string; confidence?: number }> {
     try {
-      this.logger.log(`调用人脸识别服务验证: idCard=${idCardNumber.substring(0, 6)}***`, 'FaceRecognitionAdapter');
+      this.logger.log(
+        `调用人脸识别服务验证: idCard=${idCardNumber.substring(0, 6)}***`,
+        'FaceRecognitionAdapter',
+      );
       const response = await axios.post(
         `${this.baseUrl}/v1/verify`,
         {

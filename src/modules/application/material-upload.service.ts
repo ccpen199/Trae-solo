@@ -29,13 +29,17 @@ export class MaterialUploadService {
     templateId: string,
     file: Express.Multer.File,
   ) {
-    this.logger.log(`上传办件材料: app=${applicationId} template=${templateId}`, 'MaterialUploadService');
+    this.logger.log(
+      `上传办件材料: app=${applicationId} template=${templateId}`,
+      'MaterialUploadService',
+    );
     const application = await this.prisma.application.findUnique({
       where: { id: applicationId },
       include: { serviceItem: true },
     });
     if (!application) throw new NotFoundException('办件不存在');
-    if (application.userId !== user.userId) throw new BusinessException('无权操作', 'PERMISSION_DENIED');
+    if (application.userId !== user.userId)
+      throw new BusinessException('无权操作', 'PERMISSION_DENIED');
 
     const template = await this.prisma.materialTemplate.findUnique({ where: { id: templateId } });
     if (!template) throw new NotFoundException('材料模板不存在');

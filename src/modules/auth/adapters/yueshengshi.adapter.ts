@@ -15,12 +15,17 @@ export class YueShengshiAuthAdapter {
     private configService: ConfigService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
   ) {
-    this.baseUrl = this.configService.get('YUE_SHENGSHI_BASE_URL', 'https://api.yueshengshi.gov.cn');
+    this.baseUrl = this.configService.get(
+      'YUE_SHENGSHI_BASE_URL',
+      'https://api.yueshengshi.gov.cn',
+    );
     this.appId = this.configService.get('YUE_SHENGSHI_APP_ID', '');
     this.appSecret = this.configService.get('YUE_SHENGSHI_APP_SECRET', '');
   }
 
-  async authenticate(code: string): Promise<{ openId: string; realName?: string; idCardNumber?: string }> {
+  async authenticate(
+    code: string,
+  ): Promise<{ openId: string; realName?: string; idCardNumber?: string }> {
     try {
       this.logger.log(`调用粤省事认证: code=${code.substring(0, 10)}...`, 'YueShengshiAuthAdapter');
       const response = await axios.post(

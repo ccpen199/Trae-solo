@@ -25,7 +25,10 @@ export class NotificationService {
   ) {}
 
   async createNotification(options: CreateNotificationOptions) {
-    this.logger.log(`创建通知: user=${options.userId} title=${options.title}`, 'NotificationService');
+    this.logger.log(
+      `创建通知: user=${options.userId} title=${options.title}`,
+      'NotificationService',
+    );
 
     const notifications = [];
     for (const channel of options.channels) {
@@ -73,7 +76,11 @@ export class NotificationService {
     });
   }
 
-  async updateSendStatus(notificationId: string, status: NotificationStatus, failureReason?: string) {
+  async updateSendStatus(
+    notificationId: string,
+    status: NotificationStatus,
+    failureReason?: string,
+  ) {
     const data: any = { status };
     if (status === NotificationStatus.SENT) data.sentAt = new Date();
     if (failureReason) data.failureReason = failureReason;

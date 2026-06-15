@@ -39,7 +39,11 @@ export class ApprovalService {
     });
     if (!application) throw new NotFoundException('办件不存在');
 
-    if (!([ApplicationStatus.APPROVING, ApplicationStatus.PRE_REVIEW_PASSED] as ApplicationStatus[]).includes(application.status)) {
+    if (
+      !(
+        [ApplicationStatus.APPROVING, ApplicationStatus.PRE_REVIEW_PASSED] as ApplicationStatus[]
+      ).includes(application.status)
+    ) {
       throw new BusinessException('当前状态不允许审批', 'INVALID_STATUS');
     }
 

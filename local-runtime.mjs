@@ -164,6 +164,43 @@ const bottleneckReports = [
   { item: '营业执照设立登记', usage: 7540, materialFixRate: '22.8%', avgDepartmentHours: 21.5, bottleneck: '住所证明复核', action: '增加街镇协同审批提醒' },
 ];
 
+const profile = {
+  id: 'user-admin-001',
+  name: '政务平台管理员',
+  mobile: '13800000000',
+  roles: ['ADMIN', 'OPERATOR'],
+  department: '广州市政务服务数据管理局',
+  permissions: ['service-items.read', 'applications.trace', 'admin.dashboard', 'open-api.audit'],
+};
+
+const compatibilityResources = {
+  teachers: [
+    { id: 'agent-001', name: '智能预审坐席', specialty: '材料识别与政策问答', status: 'ONLINE' },
+    { id: 'agent-002', name: '综合受理专员', specialty: '事项导办与办件咨询', status: 'ONLINE' },
+  ],
+  courses: [
+    { id: 'guide-001', title: '居住证办理导办流程', itemCode: '114401000001', duration: '8 minutes' },
+    { id: 'guide-002', title: '社保卡申领材料准备', itemCode: '114401000002', duration: '6 minutes' },
+  ],
+  bookings: [
+    { id: 'booking-001', applicationId: 'app-20260614-001', window: '越秀区政务大厅 A12', time: '2026-06-15 14:30', status: 'RESERVED' },
+    { id: 'booking-002', applicationId: 'app-20260614-002', window: '线上智能受理', time: '2026-06-15 10:00', status: 'ONLINE' },
+  ],
+  products: [
+    { id: 'service-001', name: '居住证办理服务包', type: '政务事项', price: 0, status: 'AVAILABLE' },
+    { id: 'service-002', name: '社保卡申领服务包', type: '政务事项', price: 0, status: 'AVAILABLE' },
+  ],
+  cart: {
+    id: 'cart-demo',
+    owner: '政务平台管理员',
+    items: [
+      { itemCode: '114401000001', itemName: '居住证办理', quantity: 1, fee: 0 },
+    ],
+    totalFee: 0,
+    note: '政务服务事项不收取平台服务费',
+  },
+};
+
 function applicationFlow(applicationId) {
   return {
     applicationId,
@@ -194,7 +231,7 @@ function handleBackend(req, res) {
 
   if (path === '/api/search' || path === `${API_PREFIX}/search`) {
     const q = (url.searchParams.get('q') || '').trim();
-    const rows = [
+    const sourceRows = [
       ...serviceItems(),
       ...applications(),
       ...policies(),
@@ -204,10 +241,16 @@ function handleBackend(req, res) {
       ...openApiApps,
       ...bottleneckReports,
       ...timeoutAuditRecords,
-    ].filter((item) =>
-      JSON.stringify(item).includes(q),
-    );
-    return sendJson(res, 200, { success: true, query: q, results: rows });
+    ];
+    const rows = q
+      ? sourceRows.filter((item) => JSON.stringify(item).includes(q))
+      : sourceRows;
+    return sendJson(res, 200, {
+      success: true,
+      query: q,
+      matchMode: rows.length > 0 ? 'keyword' : 'demo-fallback',
+      results: rows.length > 0 ? rows : sourceRows.slice(0, 6),
+    });
   }
 
   if (path === `${API_PREFIX}/service-items` || path === '/api/service-items') {
@@ -259,6 +302,44 @@ function handleBackend(req, res) {
 
   if (path === `${API_PREFIX}/admin/bottleneck/report` || path === '/api/admin/bottleneck/report') {
     return sendJson(res, 200, { success: true, data: bottleneckReports });
+  }
+
+  if (path === `${API_PREFIX}/auth/me` || path === '/api/auth/me' || path === `${API_PREFIX}/users/profile` || path === '/api/users/profile' || path === `${API_PREFIX}/user/profile` || path === '/api/user/profile') {
+    return sendJson(res, 200, { success: true, data: profile });
+  }
+
+  if (path === `${API_PREFIX}/teachers` || path === '/api/teachers') {
+    return sendJson(res, 200, { success: true, data: compatibilityResources.teachers });
+  }
+
+  if (path === `${API_PREFIX}/courses` || path === '/api/courses') {
+    return sendJson(res, 200, { success: true, data: compatibilityResources.courses });
+  }
+
+  if (path === `${API_PREFIX}/bookings` || path === '/api/bookings') {
+    return sendJson(res, 200, { success: true, data: compatibilityResources.bookings });
+  }
+
+  if (path === `${API_PREFIX}/orders` || path === '/api/orders') {
+    return sendJson(res, 200, {
+      success: true,
+      data: applications().map((app) => ({
+        id: app.id,
+        applicant: app.applicant,
+        itemName: app.item_name,
+        status: app.status,
+        currentNode: app.current_node,
+        dueAt: app.due_at,
+      })),
+    });
+  }
+
+  if (path === `${API_PREFIX}/products` || path === '/api/products') {
+    return sendJson(res, 200, { success: true, data: compatibilityResources.products });
+  }
+
+  if (path === `${API_PREFIX}/cart` || path === '/api/cart') {
+    return sendJson(res, 200, { success: true, data: compatibilityResources.cart });
   }
 
   if (path === `${API_PREFIX}/open-api/apps` || path === '/api/open-api/apps') {

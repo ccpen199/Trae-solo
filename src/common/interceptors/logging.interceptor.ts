@@ -19,10 +19,7 @@ export class LoggingInterceptor implements NestInterceptor {
     const request = ctx.getRequest<Request>();
     const now = Date.now();
 
-    this.logger.log(
-      `[${request.method}] ${request.url} - IP: ${request.ip}`,
-      'LoggingInterceptor',
-    );
+    this.logger.log(`[${request.method}] ${request.url} - IP: ${request.ip}`, 'LoggingInterceptor');
 
     return next.handle().pipe(
       tap(() => {

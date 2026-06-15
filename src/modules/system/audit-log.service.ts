@@ -47,7 +47,12 @@ export class AuditLogService {
     }
 
     const [list, total] = await Promise.all([
-      this.prisma.auditLog.findMany({ where, skip, take: pageSize, orderBy: { createdAt: 'desc' } }),
+      this.prisma.auditLog.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { createdAt: 'desc' },
+      }),
       this.prisma.auditLog.count({ where }),
     ]);
     return { list, pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) } };

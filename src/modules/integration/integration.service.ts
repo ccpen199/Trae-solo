@@ -38,7 +38,9 @@ export class IntegrationService {
 
   async syncCertificateToAllPlatforms(certificateId: string) {
     this.logger.log(`开始全平台同步证照: ${certificateId}`, 'IntegrationService');
-    const cert = await this.prisma.electronicCertificate.findUnique({ where: { id: certificateId } });
+    const cert = await this.prisma.electronicCertificate.findUnique({
+      where: { id: certificateId },
+    });
     if (!cert) return { success: false, message: '证照不存在' };
 
     const [gdResult, nationalResult] = await Promise.all([
@@ -58,7 +60,13 @@ export class IntegrationService {
     this.logger.log('批量同步待同步办件', 'IntegrationService');
     const apps = await this.prisma.application.findMany({
       where: {
-        status: { in: [ApplicationStatus.APPROVED, ApplicationStatus.CERTIFICATE_ISSUED, ApplicationStatus.COMPLETED] },
+        status: {
+          in: [
+            ApplicationStatus.APPROVED,
+            ApplicationStatus.CERTIFICATE_ISSUED,
+            ApplicationStatus.COMPLETED,
+          ],
+        },
       },
       take: 50,
       include: { serviceItem: true },

@@ -15,15 +15,27 @@ export class NationalPlatformAdapter {
     private configService: ConfigService,
     @Inject(WINSTON_MODULE_NEST_PROVIDER) private readonly logger: LoggerService,
   ) {
-    this.baseUrl = this.configService.get('NATIONAL_PLATFORM_BASE_URL', 'https://api.gjzwfw.gov.cn');
+    this.baseUrl = this.configService.get(
+      'NATIONAL_PLATFORM_BASE_URL',
+      'https://api.gjzwfw.gov.cn',
+    );
     this.appKey = this.configService.get('NATIONAL_PLATFORM_APP_KEY', '');
     this.appSecret = this.configService.get('NATIONAL_PLATFORM_APP_SECRET', '');
   }
 
-  async submitApplication(application: any): Promise<{ success: boolean; nationalId?: string; message?: string }> {
-    this.logger.log(`上报办件到国家一体化平台: ${application.applicationNo}`, 'NationalPlatformAdapter');
+  async submitApplication(
+    application: any,
+  ): Promise<{ success: boolean; nationalId?: string; message?: string }> {
+    this.logger.log(
+      `上报办件到国家一体化平台: ${application.applicationNo}`,
+      'NationalPlatformAdapter',
+    );
     try {
-      return { success: true, nationalId: `NATIONAL-${application.applicationNo}`, message: '模拟上报成功' };
+      return {
+        success: true,
+        nationalId: `NATIONAL-${application.applicationNo}`,
+        message: '模拟上报成功',
+      };
     } catch (error: any) {
       this.logger.error(`国家平台上报失败: ${error.message}`, 'NationalPlatformAdapter');
       return { success: false, message: error.message };

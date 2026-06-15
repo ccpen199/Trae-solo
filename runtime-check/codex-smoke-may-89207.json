@@ -1,0 +1,14 @@
+{
+  "order": "may-89207",
+  "url": "http://127.0.0.1:49207/",
+  "status": 200,
+  "ok": true,
+  "title": "广州市统一政务服务移动端后端支撑平台",
+  "textLength": 1946,
+  "sample": "广州市统一政务服务移动端后端支撑平台 事项标准化管理 · 多源身份认证 · 全流程线上办件 · 电子证照签发 · 开放 API 搜索筛选 管理后台 管理后台数据概览：事项标准化、办件流转、身份认证、政策语料、开放接口与运营数据统一看板 标准化事项 3 事项编码/材料清单/电子表单模板 线上办件 3 预约、材料上传、智能预审、部门协同审批 政策语料 246 结构化字段与 AI 问答训练语料 开放接口调用 18,616 第三方小程序授权调用 办件连续流转工作台 预约、材料上传、智",
+  "consoleErrors": [],
+  "failedRequests": [],
+  "responseErrors": [],
+  "error": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-smoke-may-89207.png"
+}

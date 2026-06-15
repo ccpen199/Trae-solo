@@ -22,6 +22,12 @@ export interface TrainingCorpusLink {
   helpfulCount: number;
   isApproved: boolean;
   linkedAt: Date;
+  reviewStatus: 'PENDING' | 'APPROVED' | 'REJECTED';
+  reviewer: string;
+  reviewedAt: Date | null;
+  reviewComment: string;
+  publishStatus: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+  version: number;
 }
 
 export interface PolicyEnhancedDetail {
@@ -72,6 +78,70 @@ export interface PolicyEnhancedDetail {
   };
 }
 
+export interface PolicyQuickAction {
+  code: string;
+  name: string;
+  endpoint: string;
+  type: string;
+}
+
+export interface PolicyPublishRecord {
+  version: number;
+  publishedAt: Date;
+  publishedBy: string;
+  remark: string;
+}
+
+export interface TrainingVerification {
+  sampleVerifiedCount: number;
+  samplePendingCount: number;
+  samplePassRate: number;
+  recentVerifications: Array<{
+    sampleId: string;
+    question: string;
+    answer: string;
+    reviewer: string;
+    result: 'PASSED' | 'FAILED';
+    verifiedAt: Date;
+  }>;
+  trainingAccuracy: number;
+  publishVerified: boolean;
+  publishVerifier: string | null;
+  publishVerifiedAt: Date | null;
+}
+
+export interface PublishReviewIssue {
+  type: string;
+  description: string;
+  severity: 'low' | 'medium' | 'high';
+}
+
+export interface PublishReviewComment {
+  reviewer: string;
+  comment: string;
+  timestamp: Date;
+}
+
+export interface PrePublishChecklist {
+  structuredFieldsCompleted: boolean;
+  corpusQualityPassed: boolean;
+  accuracyVerified: boolean;
+  legalReviewPassed: boolean;
+  securityReviewPassed: boolean;
+}
+
+export interface PublishReviewInfo {
+  publishReviewed: boolean;
+  publishReviewStatus: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED';
+  publishReviewer: string | null;
+  publishReviewedAt: Date | null;
+  publishReviewScore: number;
+  publishReviewIssues: PublishReviewIssue[];
+  publishReviewComments: PublishReviewComment[];
+  prePublishChecklist: PrePublishChecklist;
+  publishReviewRequiredFields: string[];
+}
+
 export interface PolicyEnhancedList {
   list: Array<{
     id: string;
@@ -90,6 +160,26 @@ export interface PolicyEnhancedList {
     viewCount: number;
     createdAt: Date;
     updatedAt: Date;
+    corpusReviewStatus: 'PENDING' | 'APPROVED' | 'REJECTED';
+    corpusPublishStatus: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+    corpusVersion: number;
+    pendingReviewCount: number;
+    quickActions: PolicyQuickAction[];
+    structuredReviewStatus: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED';
+    structuredReviewer: string;
+    structuredReviewedAt: Date | null;
+    structuredReviewComment: string;
+    publishRecords: PolicyPublishRecord[];
+    trainingVerification: TrainingVerification;
+    publishReviewed: boolean;
+    publishReviewStatus: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED';
+    publishReviewer: string | null;
+    publishReviewedAt: Date | null;
+    publishReviewScore: number;
+    publishReviewIssues: PublishReviewIssue[];
+    publishReviewComments: PublishReviewComment[];
+    prePublishChecklist: PrePublishChecklist;
+    publishReviewRequiredFields: string[];
   }>;
   pagination: {
     page: number;
@@ -112,6 +202,12 @@ export class PolicyEnhancedService {
     issuingDept?: string;
     reviewStatus?: string;
     aiTrained?: boolean;
+    corpusReviewStatus?: 'PENDING' | 'APPROVED' | 'REJECTED';
+    corpusPublishStatus?: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+    structuredReviewStatus?: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED';
+    publishReviewStatus?: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED';
+    sampleVerified?: boolean;
+    trainingAccuracyMin?: number;
     page?: number;
     pageSize?: number;
   }): Promise<PolicyEnhancedList> {
@@ -134,26 +230,80 @@ export class PolicyEnhancedService {
     if (params.issuingDept) where.issuingDept = params.issuingDept as Department;
     if (params.aiTrained !== undefined) where.aiTrained = params.aiTrained;
 
-    const [policies, total] = await Promise.all([
+    let [policies, total] = await Promise.all([
       this.prisma.policyDocument.findMany({
         where,
-        skip,
-        take: pageSize,
         orderBy: { issueDate: 'desc' },
       }),
       this.prisma.policyDocument.count({ where }),
     ]);
 
-    const corporaCounts = await this.prisma.aiTrainingCorpus.groupBy({
-      by: ['sourceId'],
+    const allCorpora = await this.prisma.aiTrainingCorpus.findMany({
       where: { sourceId: { in: policies.map((p) => p.id) } },
-      _count: true,
     });
 
-    const corpusCountMap: Record<string, number> = {};
-    for (const cc of corporaCounts) {
-      if (cc.sourceId) corpusCountMap[cc.sourceId] = cc._count;
+    const policyCorporaMap: Record<string, any[]> = {};
+    for (const corpus of allCorpora) {
+      if (corpus.sourceId) {
+        if (!policyCorporaMap[corpus.sourceId]) policyCorporaMap[corpus.sourceId] = [];
+        policyCorporaMap[corpus.sourceId].push(corpus);
+      }
     }
+
+    if (params.corpusReviewStatus !== undefined) {
+      policies = policies.filter((policy) => {
+        const corpora = policyCorporaMap[policy.id] || [];
+        if (corpora.length === 0) return false;
+        const status = this.getOverallCorpusReviewStatus(corpora);
+        return status === params.corpusReviewStatus;
+      });
+    }
+
+    if (params.corpusPublishStatus !== undefined) {
+      policies = policies.filter((policy) => {
+        const corpora = policyCorporaMap[policy.id] || [];
+        if (corpora.length === 0) return false;
+        const status = this.getOverallCorpusPublishStatus(corpora);
+        return status === params.corpusPublishStatus;
+      });
+    }
+
+    if (params.structuredReviewStatus !== undefined) {
+      policies = policies.filter((policy) => {
+        const status = this.getStructuredReviewStatus(policy);
+        return status === params.structuredReviewStatus;
+      });
+    }
+
+    if (params.publishReviewStatus !== undefined) {
+      policies = policies.filter((policy) => {
+        const status = this.getPublishReviewStatus(policy);
+        return status === params.publishReviewStatus;
+      });
+    }
+
+    const trainingVerificationsMap = new Map<string, TrainingVerification>();
+    for (const policy of policies) {
+      const corpora = policyCorporaMap[policy.id] || [];
+      trainingVerificationsMap.set(policy.id, this.generateTrainingVerification(policy, corpora));
+    }
+
+    if (params.sampleVerified !== undefined) {
+      policies = policies.filter((policy) => {
+        const tv = trainingVerificationsMap.get(policy.id);
+        return params.sampleVerified ? tv?.sampleVerifiedCount > 0 : tv?.sampleVerifiedCount === 0;
+      });
+    }
+
+    if (params.trainingAccuracyMin !== undefined) {
+      policies = policies.filter((policy) => {
+        const tv = trainingVerificationsMap.get(policy.id);
+        return (tv?.trainingAccuracy || 0) >= params.trainingAccuracyMin;
+      });
+    }
+
+    total = policies.length;
+    const pagedPolicies = policies.slice(skip, skip + pageSize);
 
     const categoryLabels: Record<string, string> = {
       LAW: '法律',
@@ -178,24 +328,61 @@ export class PolicyEnhancedService {
     };
 
     return {
-      list: policies.map((policy) => ({
-        id: policy.id,
-        title: policy.title,
-        documentNo: policy.documentNo || '',
-        category: policy.category,
-        categoryLabel: categoryLabels[policy.category] || policy.category,
-        issuingDept: policy.issuingDept,
-        issuingDeptLabel: deptLabels[policy.issuingDept] || policy.issuingDept,
-        issueDate: policy.issueDate,
-        status: policy.status,
-        reviewStatus: this.getReviewStatus(policy),
-        aiTrained: policy.aiTrained,
-        structuredFieldCount: this.countStructuredFields(policy.structuredData),
-        corpusCount: corpusCountMap[policy.id] || 0,
-        viewCount: policy.viewCount,
-        createdAt: policy.createdAt,
-        updatedAt: policy.updatedAt,
-      })),
+      list: pagedPolicies.map((policy) => {
+        const corpora = policyCorporaMap[policy.id] || [];
+        const corpusReviewStatus = this.getOverallCorpusReviewStatus(corpora);
+        const corpusPublishStatus = this.getOverallCorpusPublishStatus(corpora);
+        const corpusVersion = this.getMaxCorpusVersion(corpora);
+        const pendingReviewCount = this.getPendingReviewCount(corpora);
+        const structuredReviewInfo = this.getStructuredReviewInfo(policy);
+        const publishRecords = this.getRecentPublishRecords(policy);
+        const publishReviewInfo = this.getPublishReviewInfo(policy);
+
+        return {
+          id: policy.id,
+          title: policy.title,
+          documentNo: policy.documentNo || '',
+          category: policy.category,
+          categoryLabel: categoryLabels[policy.category] || policy.category,
+          issuingDept: policy.issuingDept,
+          issuingDeptLabel: deptLabels[policy.issuingDept] || policy.issuingDept,
+          issueDate: policy.issueDate,
+          status: policy.status,
+          reviewStatus: this.getReviewStatus(policy),
+          aiTrained: policy.aiTrained,
+          structuredFieldCount: this.countStructuredFields(policy.structuredData),
+          corpusCount: corpora.length,
+          viewCount: policy.viewCount,
+          createdAt: policy.createdAt,
+          updatedAt: policy.updatedAt,
+          corpusReviewStatus,
+          corpusPublishStatus,
+          corpusVersion,
+          pendingReviewCount,
+          quickActions: this.buildPolicyQuickActions(
+            policy,
+            corpusReviewStatus,
+            corpusPublishStatus,
+          ),
+          structuredReviewStatus: structuredReviewInfo.status,
+          structuredReviewer: structuredReviewInfo.reviewer,
+          structuredReviewedAt: structuredReviewInfo.reviewedAt,
+          structuredReviewComment: structuredReviewInfo.comment,
+          publishRecords,
+          trainingVerification:
+            trainingVerificationsMap.get(policy.id) ||
+            this.generateTrainingVerification(policy, corpora),
+          publishReviewed: publishReviewInfo.publishReviewed,
+          publishReviewStatus: publishReviewInfo.publishReviewStatus,
+          publishReviewer: publishReviewInfo.publishReviewer,
+          publishReviewedAt: publishReviewInfo.publishReviewedAt,
+          publishReviewScore: publishReviewInfo.publishReviewScore,
+          publishReviewIssues: publishReviewInfo.publishReviewIssues,
+          publishReviewComments: publishReviewInfo.publishReviewComments,
+          prePublishChecklist: publishReviewInfo.prePublishChecklist,
+          publishReviewRequiredFields: publishReviewInfo.publishReviewRequiredFields,
+        };
+      }),
       pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
     };
   }
@@ -217,10 +404,7 @@ export class PolicyEnhancedService {
     const relatedItems = await this.prisma.serviceItem.findMany({
       where: {
         OR: policy.keywords.map((k) => ({
-          OR: [
-            { itemName: { contains: k } },
-            { description: { contains: k } },
-          ],
+          OR: [{ itemName: { contains: k } }, { description: { contains: k } }],
         })),
       },
       take: 5,
@@ -285,17 +469,33 @@ export class PolicyEnhancedService {
         updatedAt: policy.updatedAt,
       },
       structuredFields,
-      trainingCorpora: corpora.map((c) => ({
-        id: c.id,
-        question: c.question,
-        answer: c.answer,
-        category: c.category,
-        intent: c.intent,
-        usageCount: c.usageCount,
-        helpfulCount: c.helpfulCount,
-        isApproved: c.isApproved,
-        linkedAt: c.createdAt,
-      })),
+      trainingCorpora: corpora.map((c) => {
+        const meta = (c.entities as any) || {};
+        const corpusReviewStatus: 'PENDING' | 'APPROVED' | 'REJECTED' = c.isApproved
+          ? 'APPROVED'
+          : c.approvedAt
+            ? 'REJECTED'
+            : 'PENDING';
+        const corpusPublishStatus: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' =
+          meta.publishStatus || (c.isApproved ? 'PUBLISHED' : 'DRAFT');
+        return {
+          id: c.id,
+          question: c.question,
+          answer: c.answer,
+          category: c.category,
+          intent: c.intent,
+          usageCount: c.usageCount,
+          helpfulCount: c.helpfulCount,
+          isApproved: c.isApproved,
+          linkedAt: c.createdAt,
+          reviewStatus: corpusReviewStatus,
+          reviewer: c.approvedBy || '',
+          reviewedAt: c.approvedAt,
+          reviewComment: meta.reviewComment || '',
+          publishStatus: corpusPublishStatus,
+          version: c.version,
+        };
+      }),
       reviewHistory: [
         {
           reviewer: policy.createdBy || '系统',
@@ -308,9 +508,8 @@ export class PolicyEnhancedService {
       statistics: {
         viewTrend,
         topKeywords,
-        corpusUsageRate: corpora.length > 0
-          ? corpora.filter((c) => c.usageCount > 0).length / corpora.length
-          : 0,
+        corpusUsageRate:
+          corpora.length > 0 ? corpora.filter((c) => c.usageCount > 0).length / corpora.length : 0,
       },
     };
   }
@@ -422,7 +621,12 @@ export class PolicyEnhancedService {
         { fieldName: 'applyConditions', fieldType: 'string', value: '', description: '申请条件' },
         { fieldName: 'requiredMaterials', fieldType: 'string', value: '', description: '所需材料' },
         { fieldName: 'handlingProcess', fieldType: 'string', value: '', description: '办理流程' },
-        { fieldName: 'timeLimit', fieldType: 'number', value: policy.handlingTimeLimit || 0, description: '办理时限' },
+        {
+          fieldName: 'timeLimit',
+          fieldType: 'number',
+          value: policy.handlingTimeLimit || 0,
+          description: '办理时限',
+        },
         { fieldName: 'feeStandard', fieldType: 'string', value: '', description: '收费标准' },
       );
     }
@@ -444,5 +648,893 @@ export class PolicyEnhancedService {
     }
 
     return trend;
+  }
+
+  async reviewTrainingCorpus(
+    corpusId: string,
+    action: 'APPROVE' | 'REJECT',
+    reviewer: string,
+    comment: string,
+  ) {
+    const corpus = await this.prisma.aiTrainingCorpus.findUnique({ where: { id: corpusId } });
+    if (!corpus) throw new NotFoundException('训练语料不存在');
+
+    return this.prisma.aiTrainingCorpus.update({
+      where: { id: corpusId },
+      data: {
+        isApproved: action === 'APPROVE',
+        approvedBy: reviewer,
+        approvedAt: new Date(),
+        entities: {
+          ...((corpus.entities as any) || {}),
+          reviewComment: comment,
+          reviewedAt: new Date().toISOString(),
+        },
+      } as any,
+    });
+  }
+
+  async getTrainingCorpusReviewList(params: {
+    policyId?: string;
+    isApproved?: boolean;
+    page?: number;
+    pageSize?: number;
+  }) {
+    const page = Math.max(1, params.page || 1);
+    const pageSize = Math.min(100, Math.max(1, params.pageSize || 20));
+    const where: any = {};
+    if (params.policyId) where.sourceId = params.policyId;
+    if (params.isApproved !== undefined) where.isApproved = params.isApproved;
+
+    const [corpora, total] = await Promise.all([
+      this.prisma.aiTrainingCorpus.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.aiTrainingCorpus.count({ where }),
+    ]);
+
+    return {
+      list: corpora.map((c) => ({
+        id: c.id,
+        question: c.question,
+        answer: c.answer,
+        category: c.category,
+        intent: c.intent,
+        sourceId: c.sourceId,
+        sourceType: c.sourceType,
+        isApproved: c.isApproved,
+        approvedBy: c.approvedBy,
+        approvedAt: c.approvedAt,
+        usageCount: c.usageCount,
+        helpfulCount: c.helpfulCount,
+        difficulty: c.difficulty,
+        createdAt: c.createdAt,
+        reviewStatus: c.isApproved ? 'APPROVED' : c.approvedAt ? 'REJECTED' : 'PENDING',
+      })),
+      pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
+    };
+  }
+
+  async batchReviewCorpora(
+    corpusIds: string[],
+    action: 'APPROVE' | 'REJECT',
+    reviewer: string,
+    comment: string,
+  ) {
+    const results = [];
+    for (const id of corpusIds) {
+      try {
+        await this.reviewTrainingCorpus(id, action, reviewer, comment);
+        results.push({ id, success: true });
+      } catch (e) {
+        results.push({ id, success: false, error: (e as Error).message });
+      }
+    }
+    return {
+      total: corpusIds.length,
+      successCount: results.filter((r) => r.success).length,
+      failCount: results.filter((r) => !r.success).length,
+      results,
+    };
+  }
+
+  async reviewCorpusSample(
+    corpusId: string,
+    reviewer: string,
+    action: 'APPROVE' | 'REJECT',
+    comment: string,
+  ) {
+    this.logger.log(`复查训练样本: ${corpusId} ${action}`, 'PolicyEnhancedService');
+
+    const corpus = await this.prisma.aiTrainingCorpus.findUnique({ where: { id: corpusId } });
+    if (!corpus) throw new NotFoundException('训练语料不存在');
+
+    const existingMeta = (corpus.entities as any) || {};
+    const reviewRecord = {
+      reviewer,
+      action,
+      comment,
+      reviewedAt: new Date().toISOString(),
+    };
+    const reviewHistory = existingMeta.reviewHistory || [];
+    reviewHistory.push(reviewRecord);
+
+    return this.prisma.aiTrainingCorpus.update({
+      where: { id: corpusId },
+      data: {
+        isApproved: action === 'APPROVE',
+        approvedBy: reviewer,
+        approvedAt: new Date(),
+        entities: {
+          ...existingMeta,
+          reviewComment: comment,
+          reviewedAt: new Date().toISOString(),
+          reviewHistory,
+        },
+      } as any,
+    });
+  }
+
+  async updateCorpusPublishStatus(
+    corpusId: string,
+    publishStatus: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED',
+  ) {
+    this.logger.log(`更新语料发布状态: ${corpusId} -> ${publishStatus}`, 'PolicyEnhancedService');
+
+    const corpus = await this.prisma.aiTrainingCorpus.findUnique({ where: { id: corpusId } });
+    if (!corpus) throw new NotFoundException('训练语料不存在');
+
+    const existingMeta = (corpus.entities as any) || {};
+    const shouldIncrementVersion =
+      publishStatus === 'PUBLISHED' && existingMeta.publishStatus !== 'PUBLISHED';
+
+    return this.prisma.aiTrainingCorpus.update({
+      where: { id: corpusId },
+      data: {
+        ...(shouldIncrementVersion ? { version: { increment: 1 } } : {}),
+        entities: {
+          ...existingMeta,
+          publishStatus,
+          publishedAt:
+            publishStatus === 'PUBLISHED' ? new Date().toISOString() : existingMeta.publishedAt,
+          archivedAt:
+            publishStatus === 'ARCHIVED' ? new Date().toISOString() : existingMeta.archivedAt,
+        },
+      } as any,
+    });
+  }
+
+  async getCorpusReviewQueue(status?: 'PENDING' | 'APPROVED' | 'REJECTED') {
+    this.logger.log(`获取待复查语料队列, 状态过滤: ${status || '全部'}`, 'PolicyEnhancedService');
+
+    const where: any = { sourceType: 'policy' };
+    if (status === 'PENDING') {
+      where.isApproved = true;
+      where.approvedAt = null;
+    } else if (status === 'APPROVED') {
+      where.isApproved = true;
+      where.approvedAt = { not: null };
+    } else if (status === 'REJECTED') {
+      where.isApproved = false;
+      where.approvedAt = { not: null };
+    }
+
+    const corpora = await this.prisma.aiTrainingCorpus.findMany({
+      where,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return corpora.map((c) => {
+      const meta = (c.entities as any) || {};
+      const reviewStatus: 'PENDING' | 'APPROVED' | 'REJECTED' = c.isApproved
+        ? 'APPROVED'
+        : c.approvedAt
+          ? 'REJECTED'
+          : 'PENDING';
+      const publishStatus: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' =
+        meta.publishStatus || (c.isApproved ? 'PUBLISHED' : 'DRAFT');
+      return {
+        id: c.id,
+        question: c.question,
+        answer: c.answer,
+        category: c.category,
+        intent: c.intent,
+        sourceId: c.sourceId,
+        reviewStatus,
+        publishStatus,
+        version: c.version,
+        reviewer: c.approvedBy || '',
+        reviewedAt: c.approvedAt,
+        reviewComment: meta.reviewComment || '',
+        createdAt: c.createdAt,
+      };
+    });
+  }
+
+  async getCorpusVersionHistory(corpusId: string) {
+    this.logger.log(`获取语料版本历史: ${corpusId}`, 'PolicyEnhancedService');
+
+    const corpus = await this.prisma.aiTrainingCorpus.findUnique({ where: { id: corpusId } });
+    if (!corpus) throw new NotFoundException('训练语料不存在');
+
+    const meta = (corpus.entities as any) || {};
+    const reviewHistory: Array<{
+      reviewer: string;
+      action: string;
+      comment: string;
+      reviewedAt: string;
+    }> = meta.reviewHistory || [];
+    const publishStatus: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' =
+      meta.publishStatus || (corpus.isApproved ? 'PUBLISHED' : 'DRAFT');
+
+    return {
+      corpusId: corpus.id,
+      currentVersion: corpus.version,
+      currentPublishStatus: publishStatus,
+      currentReviewStatus: corpus.isApproved
+        ? ('APPROVED' as const)
+        : corpus.approvedAt
+          ? ('REJECTED' as const)
+          : ('PENDING' as const),
+      reviewHistory: reviewHistory.map((r) => ({
+        reviewer: r.reviewer,
+        action: r.action,
+        comment: r.comment,
+        reviewedAt: r.reviewedAt,
+      })),
+      publishTimeline: [
+        ...(meta.publishedAt
+          ? [{ action: 'PUBLISHED' as const, timestamp: meta.publishedAt }]
+          : []),
+        ...(meta.archivedAt ? [{ action: 'ARCHIVED' as const, timestamp: meta.archivedAt }] : []),
+      ].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()),
+      createdAt: corpus.createdAt,
+      updatedAt: corpus.updatedAt,
+    };
+  }
+
+  private getOverallCorpusReviewStatus(corpora: any[]): 'PENDING' | 'APPROVED' | 'REJECTED' {
+    if (corpora.length === 0) return 'PENDING';
+
+    const hasPending = corpora.some((c) => !c.isApproved && !c.approvedAt);
+    const hasRejected = corpora.some((c) => !c.isApproved && c.approvedAt);
+    const allApproved = corpora.every((c) => c.isApproved);
+
+    if (hasPending) return 'PENDING';
+    if (hasRejected && !allApproved) return 'REJECTED';
+    if (allApproved) return 'APPROVED';
+    return 'PENDING';
+  }
+
+  private getOverallCorpusPublishStatus(corpora: any[]): 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' {
+    if (corpora.length === 0) return 'DRAFT';
+
+    const statuses = corpora.map((c) => {
+      const meta = (c.entities as any) || {};
+      return meta.publishStatus || (c.isApproved ? 'PUBLISHED' : 'DRAFT');
+    });
+
+    if (statuses.some((s) => s === 'ARCHIVED')) return 'ARCHIVED';
+    if (statuses.some((s) => s === 'PUBLISHED')) return 'PUBLISHED';
+    return 'DRAFT';
+  }
+
+  private getMaxCorpusVersion(corpora: any[]): number {
+    if (corpora.length === 0) return 0;
+    return Math.max(...corpora.map((c) => c.version || 1));
+  }
+
+  private getPendingReviewCount(corpora: any[]): number {
+    return corpora.filter((c) => !c.isApproved && !c.approvedAt).length;
+  }
+
+  private getStructuredReviewStatus(
+    policy: any,
+  ): 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED' {
+    const structuredData = policy.structuredData as any;
+    if (!structuredData || !structuredData._structuredReview) {
+      return 'NOT_REVIEWED';
+    }
+    return structuredData._structuredReview.status || 'NOT_REVIEWED';
+  }
+
+  private getStructuredReviewInfo(policy: any): {
+    status: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED';
+    reviewer: string;
+    reviewedAt: Date | null;
+    comment: string;
+  } {
+    const structuredData = policy.structuredData as any;
+    if (!structuredData || !structuredData._structuredReview) {
+      return {
+        status: 'NOT_REVIEWED',
+        reviewer: '',
+        reviewedAt: null,
+        comment: '',
+      };
+    }
+    const review = structuredData._structuredReview;
+    return {
+      status: review.status || 'NOT_REVIEWED',
+      reviewer: review.reviewer || '',
+      reviewedAt: review.reviewedAt ? new Date(review.reviewedAt) : null,
+      comment: review.comment || '',
+    };
+  }
+
+  private getPublishReviewStatus(
+    policy: any,
+  ): 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED' {
+    const structuredData = policy.structuredData as any;
+    if (!structuredData || !structuredData._publishReview) {
+      return 'NOT_REVIEWED';
+    }
+    return structuredData._publishReview.status || 'NOT_REVIEWED';
+  }
+
+  private getPublishReviewInfo(policy: any): PublishReviewInfo {
+    const structuredData = policy.structuredData as any;
+    const defaultChecklist: PrePublishChecklist = {
+      structuredFieldsCompleted: false,
+      corpusQualityPassed: false,
+      accuracyVerified: false,
+      legalReviewPassed: false,
+      securityReviewPassed: false,
+    };
+    const defaultRequiredFields = [
+      'title',
+      'documentNo',
+      'category',
+      'issuingDept',
+      'issueDate',
+      'content',
+    ];
+
+    if (!structuredData || !structuredData._publishReview) {
+      return {
+        publishReviewed: false,
+        publishReviewStatus: 'NOT_REVIEWED',
+        publishReviewer: null,
+        publishReviewedAt: null,
+        publishReviewScore: 0,
+        publishReviewIssues: [],
+        publishReviewComments: [],
+        prePublishChecklist: defaultChecklist,
+        publishReviewRequiredFields: defaultRequiredFields,
+      };
+    }
+
+    const review = structuredData._publishReview;
+    return {
+      publishReviewed: review.reviewed || false,
+      publishReviewStatus: review.status || 'NOT_REVIEWED',
+      publishReviewer: review.reviewer || null,
+      publishReviewedAt: review.reviewedAt ? new Date(review.reviewedAt) : null,
+      publishReviewScore: review.score || 0,
+      publishReviewIssues: review.issues || [],
+      publishReviewComments: (review.comments || []).map((c: any) => ({
+        reviewer: c.reviewer,
+        comment: c.comment,
+        timestamp: new Date(c.timestamp),
+      })),
+      prePublishChecklist: { ...defaultChecklist, ...(review.checklist || {}) },
+      publishReviewRequiredFields: review.requiredFields || defaultRequiredFields,
+    };
+  }
+
+  private getRecentPublishRecords(policy: any): PolicyPublishRecord[] {
+    const structuredData = policy.structuredData as any;
+    if (
+      !structuredData ||
+      !structuredData._publishRecords ||
+      !Array.isArray(structuredData._publishRecords)
+    ) {
+      return [];
+    }
+    return structuredData._publishRecords
+      .slice(-5)
+      .reverse()
+      .map((r: any) => ({
+        version: r.version,
+        publishedAt: new Date(r.publishedAt),
+        publishedBy: r.publishedBy,
+        remark: r.remark || '',
+      }));
+  }
+
+  async reviewStructuredFields(
+    policyId: string,
+    reviewer: string,
+    action: 'PASS' | 'REJECT',
+    comment: string,
+  ) {
+    this.logger.log(`审核政策结构化字段: ${policyId} ${action}`, 'PolicyEnhancedService');
+
+    const policy = await this.prisma.policyDocument.findUnique({ where: { id: policyId } });
+    if (!policy) throw new NotFoundException('政策文件不存在');
+
+    const existingData = (policy.structuredData as any) || {};
+    const reviewedAt = new Date();
+    const status = action === 'PASS' ? 'PASSED' : 'REJECTED';
+
+    const updatedData = {
+      ...existingData,
+      _structuredReview: {
+        status,
+        reviewer,
+        reviewedAt: reviewedAt.toISOString(),
+        comment,
+      },
+    };
+
+    const updated = await this.prisma.policyDocument.update({
+      where: { id: policyId },
+      data: {
+        structuredData: updatedData,
+        updatedAt: reviewedAt,
+      },
+    });
+
+    return {
+      policyId: updated.id,
+      structuredReviewStatus: status,
+      structuredReviewer: reviewer,
+      structuredReviewedAt: reviewedAt,
+      structuredReviewComment: comment,
+    };
+  }
+
+  async publishPolicy(policyId: string, publisher: string, version: number, remark: string) {
+    this.logger.log(`发布政策: ${policyId} v${version}`, 'PolicyEnhancedService');
+
+    const policy = await this.prisma.policyDocument.findUnique({ where: { id: policyId } });
+    if (!policy) throw new NotFoundException('政策文件不存在');
+
+    const existingData = (policy.structuredData as any) || {};
+    const publishedAt = new Date();
+    const publishRecords = existingData._publishRecords || [];
+
+    const newRecord = {
+      version,
+      publishedAt: publishedAt.toISOString(),
+      publishedBy: publisher,
+      remark,
+    };
+
+    publishRecords.push(newRecord);
+
+    const updatedData = {
+      ...existingData,
+      _publishRecords: publishRecords,
+    };
+
+    const updated = await this.prisma.policyDocument.update({
+      where: { id: policyId },
+      data: {
+        status: 'published',
+        structuredData: updatedData,
+        updatedAt: publishedAt,
+      },
+    });
+
+    return {
+      policyId: updated.id,
+      status: updated.status,
+      version,
+      publishedAt,
+      publishedBy: publisher,
+      remark,
+    };
+  }
+
+  async getPublishHistory(policyId: string) {
+    this.logger.log(`获取政策发布历史: ${policyId}`, 'PolicyEnhancedService');
+
+    const policy = await this.prisma.policyDocument.findUnique({ where: { id: policyId } });
+    if (!policy) throw new NotFoundException('政策文件不存在');
+
+    const structuredData = policy.structuredData as any;
+    const publishRecords: any[] = structuredData?._publishRecords || [];
+
+    const sortedRecords = [...publishRecords]
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+      .map((r) => ({
+        version: r.version,
+        publishedAt: new Date(r.publishedAt),
+        publishedBy: r.publishedBy,
+        remark: r.remark || '',
+      }));
+
+    return {
+      policyId: policy.id,
+      title: policy.title,
+      totalPublishCount: sortedRecords.length,
+      publishRecords: sortedRecords,
+    };
+  }
+
+  private buildPolicyQuickActions(
+    policy: any,
+    reviewStatus: 'PENDING' | 'APPROVED' | 'REJECTED',
+    publishStatus: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED',
+  ): PolicyQuickAction[] {
+    const actions: PolicyQuickAction[] = [];
+
+    if (reviewStatus === 'PENDING') {
+      actions.push({
+        code: 'REVIEW',
+        name: '复查',
+        endpoint: `/admin/policies/${policy.id}/review`,
+        type: 'primary',
+      });
+    }
+
+    if (publishStatus !== 'PUBLISHED') {
+      actions.push({
+        code: 'PUBLISH',
+        name: '发布',
+        endpoint: `/admin/policies/${policy.id}/publish`,
+        type: 'success',
+      });
+    }
+
+    actions.push({
+      code: 'VIEW_HISTORY',
+      name: '查看历史',
+      endpoint: `/admin/policies/${policy.id}/corpus-history`,
+      type: 'default',
+    });
+
+    return actions;
+  }
+
+  private generateTrainingVerification(policy: any, corpora: any[]): TrainingVerification {
+    const reviewHistory: Array<{
+      reviewer: string;
+      action: string;
+      comment: string;
+      reviewedAt: string;
+    }> = [];
+
+    for (const corpus of corpora) {
+      const meta = (corpus.entities as any) || {};
+      if (meta.reviewHistory && Array.isArray(meta.reviewHistory)) {
+        reviewHistory.push(...meta.reviewHistory);
+      }
+    }
+
+    const sortedReviews = reviewHistory.sort(
+      (a, b) => new Date(b.reviewedAt).getTime() - new Date(a.reviewedAt).getTime(),
+    );
+
+    const sampleVerifiedCount = sortedReviews.filter((r) => r.action === 'APPROVE').length;
+    const samplePendingCount = corpora.filter((c) => !c.isApproved && !c.approvedAt).length;
+    const totalReviewed =
+      sampleVerifiedCount + sortedReviews.filter((r) => r.action === 'REJECT').length;
+    const samplePassRate = totalReviewed > 0 ? sampleVerifiedCount / totalReviewed : 0;
+
+    const recentVerifications = sortedReviews.slice(0, 10).map((r) => {
+      const corpus = corpora.find((c) => {
+        const meta = (c.entities as any) || {};
+        return meta.reviewHistory?.some((rh: any) => rh.reviewedAt === r.reviewedAt);
+      });
+      return {
+        sampleId: corpus?.id || `review-${r.reviewedAt}`,
+        question: corpus?.question || '已归档样本',
+        answer: corpus?.answer || '',
+        reviewer: r.reviewer,
+        result: (r.action === 'APPROVE' ? 'PASSED' : 'FAILED') as 'PASSED' | 'FAILED',
+        verifiedAt: new Date(r.reviewedAt),
+      };
+    });
+
+    const approvedCount = corpora.filter((c) => c.isApproved).length;
+    const trainingAccuracy = corpora.length > 0 ? approvedCount / corpora.length : 0;
+
+    const structuredData = policy.structuredData as any;
+    const publishVerification = structuredData?._publishVerification;
+
+    return {
+      sampleVerifiedCount,
+      samplePendingCount,
+      samplePassRate: Math.round(samplePassRate * 10000) / 10000,
+      recentVerifications,
+      trainingAccuracy: Math.round(trainingAccuracy * 10000) / 10000,
+      publishVerified: publishVerification?.verified || false,
+      publishVerifier: publishVerification?.verifier || null,
+      publishVerifiedAt: publishVerification?.verifiedAt
+        ? new Date(publishVerification.verifiedAt)
+        : null,
+    };
+  }
+
+  async reviewPublish(
+    policyId: string,
+    reviewer: string,
+    action: 'PASS' | 'REJECT' | 'REVIEWING',
+    comment?: string,
+    score?: number,
+    issues?: PublishReviewIssue[],
+  ): Promise<PublishReviewInfo> {
+    this.logger.log(`执行政策发布复查: ${policyId} ${action}`, 'PolicyEnhancedService');
+
+    const policy = await this.prisma.policyDocument.findUnique({ where: { id: policyId } });
+    if (!policy) throw new NotFoundException('政策文件不存在');
+
+    const existingData = (policy.structuredData as any) || {};
+    const existingReview = existingData._publishReview || {};
+    const reviewedAt = new Date();
+
+    let status: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED';
+    let reviewed: boolean;
+    if (action === 'PASS') {
+      status = 'PASSED';
+      reviewed = true;
+    } else if (action === 'REJECT') {
+      status = 'REJECTED';
+      reviewed = true;
+    } else {
+      status = 'REVIEWING';
+      reviewed = existingReview.reviewed || false;
+    }
+
+    const validScore =
+      score !== undefined ? Math.max(0, Math.min(100, score)) : existingReview.score || 0;
+    const existingComments = existingReview.comments || [];
+    const newComment = comment ? { reviewer, comment, timestamp: reviewedAt.toISOString() } : null;
+    const updatedComments = newComment ? [...existingComments, newComment] : existingComments;
+
+    const defaultChecklist: PrePublishChecklist = {
+      structuredFieldsCompleted: false,
+      corpusQualityPassed: false,
+      accuracyVerified: false,
+      legalReviewPassed: false,
+      securityReviewPassed: false,
+    };
+
+    const defaultRequiredFields = [
+      'title',
+      'documentNo',
+      'category',
+      'issuingDept',
+      'issueDate',
+      'content',
+    ];
+
+    const updatedData = {
+      ...existingData,
+      _publishReview: {
+        reviewed,
+        status,
+        reviewer,
+        reviewedAt: reviewed ? reviewedAt.toISOString() : existingReview.reviewedAt,
+        score: validScore,
+        issues: issues || existingReview.issues || [],
+        comments: updatedComments,
+        checklist: { ...defaultChecklist, ...(existingReview.checklist || {}) },
+        requiredFields: existingReview.requiredFields || defaultRequiredFields,
+      },
+    };
+
+    await this.prisma.policyDocument.update({
+      where: { id: policyId },
+      data: {
+        structuredData: updatedData,
+        updatedAt: reviewedAt,
+      },
+    });
+
+    return this.getPublishReviewInfo({ structuredData: updatedData });
+  }
+
+  async getPublishReviewQueue(status?: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED') {
+    this.logger.log(`获取发布复查队列, 状态过滤: ${status || '全部'}`, 'PolicyEnhancedService');
+
+    const policies = await this.prisma.policyDocument.findMany({
+      orderBy: { issueDate: 'desc' },
+    });
+
+    const allCorpora = await this.prisma.aiTrainingCorpus.findMany({
+      where: { sourceId: { in: policies.map((p) => p.id) } },
+    });
+
+    const policyCorporaMap: Record<string, any[]> = {};
+    for (const corpus of allCorpora) {
+      if (corpus.sourceId) {
+        if (!policyCorporaMap[corpus.sourceId]) policyCorporaMap[corpus.sourceId] = [];
+        policyCorporaMap[corpus.sourceId].push(corpus);
+      }
+    }
+
+    const categoryLabels: Record<string, string> = {
+      LAW: '法律',
+      REGULATION: '法规',
+      NOTICE: '通知',
+      OPINION: '意见',
+      GUIDE: '办事指南',
+      INTERPRETATION: '政策解读',
+    };
+
+    const result = policies.map((policy) => {
+      const publishReviewInfo = this.getPublishReviewInfo(policy);
+      const corpora = policyCorporaMap[policy.id] || [];
+      const pendingIssues = publishReviewInfo.publishReviewIssues.filter(
+        (i) => i.severity === 'high' || i.severity === 'medium',
+      );
+
+      const daysSinceIssue = Math.floor(
+        (Date.now() - new Date(policy.issueDate).getTime()) / (1000 * 60 * 60 * 24),
+      );
+      let urgency: 'low' | 'medium' | 'high' = 'low';
+      if (pendingIssues.length > 0 || daysSinceIssue > 30) {
+        urgency = 'high';
+      } else if (publishReviewInfo.publishReviewStatus === 'REVIEWING' || daysSinceIssue > 14) {
+        urgency = 'medium';
+      }
+
+      return {
+        id: policy.id,
+        title: policy.title,
+        documentNo: policy.documentNo || '',
+        category: policy.category,
+        categoryLabel: categoryLabels[policy.category] || policy.category,
+        issuingDept: policy.issuingDept,
+        issueDate: policy.issueDate,
+        status: policy.status,
+        publishReviewStatus: publishReviewInfo.publishReviewStatus,
+        publishReviewer: publishReviewInfo.publishReviewer,
+        publishReviewedAt: publishReviewInfo.publishReviewedAt,
+        publishReviewScore: publishReviewInfo.publishReviewScore,
+        pendingIssues,
+        corpusCount: corpora.length,
+        pendingCorpusReviewCount: corpora.filter((c) => !c.isApproved && !c.approvedAt).length,
+        urgency,
+        createdAt: policy.createdAt,
+        updatedAt: policy.updatedAt,
+      };
+    });
+
+    if (status !== undefined) {
+      return result.filter((item) => item.publishReviewStatus === status);
+    }
+
+    return result.sort((a, b) => {
+      const urgencyWeight = { high: 0, medium: 1, low: 2 };
+      if (urgencyWeight[a.urgency] !== urgencyWeight[b.urgency]) {
+        return urgencyWeight[a.urgency] - urgencyWeight[b.urgency];
+      }
+      return new Date(b.issueDate).getTime() - new Date(a.issueDate).getTime();
+    });
+  }
+
+  async runPrePublishCheck(policyId: string) {
+    this.logger.log(`执行政策发布前检查: ${policyId}`, 'PolicyEnhancedService');
+
+    const policy = await this.prisma.policyDocument.findUnique({ where: { id: policyId } });
+    if (!policy) throw new NotFoundException('政策文件不存在');
+
+    const corpora = await this.prisma.aiTrainingCorpus.findMany({
+      where: { sourceId: policyId },
+    });
+
+    const structuredFields = this.extractStructuredFields(policy);
+    const requiredFields = [
+      'title',
+      'documentNo',
+      'category',
+      'issuingDept',
+      'issueDate',
+      'content',
+    ];
+    const missingFields: string[] = [];
+
+    for (const field of requiredFields) {
+      const value = (policy as any)[field];
+      if (value === null || value === undefined || value === '') {
+        missingFields.push(field);
+      }
+    }
+
+    const structuredFieldsCompleted =
+      structuredFields.length > 0 &&
+      structuredFields.every((f) => f.value !== null && f.value !== undefined && f.value !== '');
+
+    const approvedCorpora = corpora.filter((c) => c.isApproved).length;
+    const corpusQualityPassed = corpora.length > 0 && approvedCorpora / corpora.length >= 0.8;
+
+    const tv = this.generateTrainingVerification(policy, corpora);
+    const accuracyVerified = tv.trainingAccuracy >= 0.8;
+
+    const structuredData = (policy.structuredData as any) || {};
+    const existingReview = structuredData._publishReview || {};
+    const legalReviewPassed = existingReview.checklist?.legalReviewPassed || false;
+    const securityReviewPassed = existingReview.checklist?.securityReviewPassed || false;
+
+    const checklist: PrePublishChecklist = {
+      structuredFieldsCompleted,
+      corpusQualityPassed,
+      accuracyVerified,
+      legalReviewPassed,
+      securityReviewPassed,
+    };
+
+    const failedItems: Array<{ key: string; label: string; reason: string }> = [];
+    if (!structuredFieldsCompleted) {
+      failedItems.push({
+        key: 'structuredFieldsCompleted',
+        label: '结构化字段完整性',
+        reason: '存在未填写的结构化字段',
+      });
+    }
+    if (!corpusQualityPassed) {
+      failedItems.push({
+        key: 'corpusQualityPassed',
+        label: '语料质量达标',
+        reason: corpora.length === 0 ? '暂无关联训练语料' : '已通过审核语料占比低于80%',
+      });
+    }
+    if (!accuracyVerified) {
+      failedItems.push({
+        key: 'accuracyVerified',
+        label: '准确率验证',
+        reason: '训练模型准确率低于80%',
+      });
+    }
+    if (!legalReviewPassed) {
+      failedItems.push({
+        key: 'legalReviewPassed',
+        label: '法务审核',
+        reason: '尚未完成法务审核',
+      });
+    }
+    if (!securityReviewPassed) {
+      failedItems.push({
+        key: 'securityReviewPassed',
+        label: '安全审核',
+        reason: '尚未完成安全审核',
+      });
+    }
+
+    const existingData = (policy.structuredData as any) || {};
+    const updatedData = {
+      ...existingData,
+      _publishReview: {
+        ...(existingReview || {}),
+        checklist,
+        requiredFields,
+      },
+    };
+
+    await this.prisma.policyDocument.update({
+      where: { id: policyId },
+      data: {
+        structuredData: updatedData,
+        updatedAt: new Date(),
+      },
+    });
+
+    const allPassed = Object.values(checklist).every((v) => v === true);
+
+    return {
+      policyId: policy.id,
+      title: policy.title,
+      allPassed,
+      checklist,
+      failedItems,
+      missingFields,
+      requiredFields,
+      corpusStatistics: {
+        total: corpora.length,
+        approved: approvedCorpora,
+        pending: corpora.filter((c) => !c.isApproved && !c.approvedAt).length,
+        rejected: corpora.filter((c) => !c.isApproved && c.approvedAt).length,
+        passRate: corpora.length > 0 ? approvedCorpora / corpora.length : 0,
+      },
+      trainingAccuracy: tv.trainingAccuracy,
+      checkedAt: new Date(),
+    };
   }
 }

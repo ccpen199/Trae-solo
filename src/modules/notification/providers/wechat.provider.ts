@@ -17,7 +17,11 @@ export class WechatProvider {
     this.appSecret = this.configService.get('WECHAT_APP_SECRET', '');
   }
 
-  async send(userId: string, title: string, content: string): Promise<{ success: boolean; message?: string }> {
+  async send(
+    userId: string,
+    title: string,
+    content: string,
+  ): Promise<{ success: boolean; message?: string }> {
     try {
       this.logger.log(`发送微信通知: user=${userId} title=${title}`, 'WechatProvider');
       return { success: true, message: '模拟发送成功' };

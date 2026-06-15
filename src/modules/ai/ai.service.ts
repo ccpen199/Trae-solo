@@ -27,14 +27,23 @@ export class AiService {
 
     const where: any = {};
     if (query.keyword) {
-      where.OR = [{ question: { contains: query.keyword } }, { answer: { contains: query.keyword } }, { intent: { contains: query.keyword } }];
+      where.OR = [
+        { question: { contains: query.keyword } },
+        { answer: { contains: query.keyword } },
+        { intent: { contains: query.keyword } },
+      ];
     }
     if (query.category) where.category = query.category;
     if (query.intent) where.intent = query.intent;
     if (query.isApproved !== undefined) where.isApproved = query.isApproved;
 
     const [list, total] = await Promise.all([
-      this.prisma.aiTrainingCorpus.findMany({ where, skip, take: pageSize, orderBy: { createdAt: 'desc' } }),
+      this.prisma.aiTrainingCorpus.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { createdAt: 'desc' },
+      }),
       this.prisma.aiTrainingCorpus.count({ where }),
     ]);
     return { list, pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) } };
@@ -43,7 +52,10 @@ export class AiService {
   async updateCorpus(id: string, dto: UpdateCorpusDto) {
     const corpus = await this.prisma.aiTrainingCorpus.findUnique({ where: { id } });
     if (!corpus) throw new NotFoundException('语料不存在');
-    return this.prisma.aiTrainingCorpus.update({ where: { id }, data: { ...dto, version: corpus.version + 1 } });
+    return this.prisma.aiTrainingCorpus.update({
+      where: { id },
+      data: { ...dto, version: corpus.version + 1 },
+    });
   }
 
   async deleteCorpus(id: string) {
@@ -83,7 +95,10 @@ export class AiService {
         answer: bestMatch.answer,
         matchedCorpusId: bestMatch.id,
         confidence: bestScore,
-        relatedQuestions: candidates.filter((c) => c.id !== bestMatch.id).slice(0, 3).map((c) => c.question),
+        relatedQuestions: candidates
+          .filter((c) => c.id !== bestMatch.id)
+          .slice(0, 3)
+          .map((c) => c.question),
         source: bestMatch.sourceType,
       };
     }
@@ -112,8 +127,55 @@ export class AiService {
   }
 
   private extractKeywords(question: string): string[] {
-    const stopWords = ['的', '了', '是', '在', '我', '有', '和', '就', '不', '人', '都', '一', '一个', '上', '也', '很', '到', '说', '要', '去', '你', '会', '着', '没有', '看', '好', '自己', '这', '吗', '呢', '啊', '请', '请问', '什么', '怎么', '如何', '为什么', '哪里', '哪些', '多少', '可以', '能够', '需要', '应该'];
-    const words = question.split(/[\s，。？、；：""''（）【】《》\?\.!,\(\)\[\]<>]+/).filter((w) => w.length >= 2 && !stopWords.includes(w));
+    const stopWords = [
+      '的',
+      '了',
+      '是',
+      '在',
+      '我',
+      '有',
+      '和',
+      '就',
+      '不',
+      '人',
+      '都',
+      '一',
+      '一个',
+      '上',
+      '也',
+      '很',
+      '到',
+      '说',
+      '要',
+      '去',
+      '你',
+      '会',
+      '着',
+      '没有',
+      '看',
+      '好',
+      '自己',
+      '这',
+      '吗',
+      '呢',
+      '啊',
+      '请',
+      '请问',
+      '什么',
+      '怎么',
+      '如何',
+      '为什么',
+      '哪里',
+      '哪些',
+      '多少',
+      '可以',
+      '能够',
+      '需要',
+      '应该',
+    ];
+    const words = question
+      .split(/[\s，。？、；：""''（）【】《》\?\.!,\(\)\[\]<>]+/)
+      .filter((w) => w.length >= 2 && !stopWords.includes(w));
     return [...new Set(words)].slice(0, 5);
   }
 

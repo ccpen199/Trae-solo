@@ -34,6 +34,10 @@ export class ApplicationConsumer extends WorkerHost {
 
   @OnWorkerEvent('failed')
   onFailed(job: Job | undefined, err: Error) {
-    this.logger.error(`办件任务失败: job=${job?.id} error=${err.message}`, err.stack, 'ApplicationConsumer');
+    this.logger.error(
+      `办件任务失败: job=${job?.id} error=${err.message}`,
+      err.stack,
+      'ApplicationConsumer',
+    );
   }
 }

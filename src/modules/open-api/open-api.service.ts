@@ -68,7 +68,13 @@ export class OpenApiService {
     return { list, pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) } };
   }
 
-  async validateSignature(appId: string, timestamp: string, nonce: string, signature: string, body: string): Promise<boolean> {
+  async validateSignature(
+    appId: string,
+    timestamp: string,
+    nonce: string,
+    signature: string,
+    body: string,
+  ): Promise<boolean> {
     const app = await this.prisma.thirdPartyApp.findUnique({ where: { appId } });
     if (!app || !app.isActive) return false;
     const payload = `${appId}${timestamp}${nonce}${body}${app.appSecret}`;

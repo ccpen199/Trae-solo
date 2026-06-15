@@ -63,7 +63,13 @@ export class AnalyticsService {
       rawData.map(async (r) => {
         const item = await this.prisma.serviceItem.findUnique({
           where: { id: r.serviceItemId },
-          select: { id: true, itemCode: true, itemName: true, category: true, handlingDepartment: true },
+          select: {
+            id: true,
+            itemCode: true,
+            itemName: true,
+            category: true,
+            handlingDepartment: true,
+          },
         });
         return { ...item, count: r._count.serviceItemId };
       }),
@@ -72,13 +78,19 @@ export class AnalyticsService {
   }
 
   async getApplicationTrend(days = 30) {
-    const startDate = dayjs().subtract(days - 1, 'day').startOf('day').toDate();
+    const startDate = dayjs()
+      .subtract(days - 1, 'day')
+      .startOf('day')
+      .toDate();
     const apps = await this.prisma.application.findMany({
       where: { createdAt: { gte: startDate } },
       select: { createdAt: true, status: true },
     });
 
-    const dailyData: Record<string, { date: string; total: number; completed: number; rejected: number; processing: number }> = {};
+    const dailyData: Record<
+      string,
+      { date: string; total: number; completed: number; rejected: number; processing: number }
+    > = {};
     for (let i = 0; i < days; i++) {
       const d = dayjs().subtract(i, 'day').format('YYYY-MM-DD');
       dailyData[d] = { date: d, total: 0, completed: 0, rejected: 0, processing: 0 };
@@ -88,9 +100,20 @@ export class AnalyticsService {
       const d = dayjs(app.createdAt).format('YYYY-MM-DD');
       if (!dailyData[d]) continue;
       dailyData[d].total++;
-      if (([ApplicationStatus.COMPLETED, ApplicationStatus.CERTIFICATE_ISSUED, ApplicationStatus.APPROVED] as ApplicationStatus[]).includes(app.status)) {
+      if (
+        (
+          [
+            ApplicationStatus.COMPLETED,
+            ApplicationStatus.CERTIFICATE_ISSUED,
+            ApplicationStatus.APPROVED,
+          ] as ApplicationStatus[]
+        ).includes(app.status)
+      ) {
         dailyData[d].completed++;
-      } else if (app.status === ApplicationStatus.REJECTED || app.status === ApplicationStatus.PRE_REVIEW_REJECTED) {
+      } else if (
+        app.status === ApplicationStatus.REJECTED ||
+        app.status === ApplicationStatus.PRE_REVIEW_REJECTED
+      ) {
         dailyData[d].rejected++;
       } else {
         dailyData[d].processing++;
@@ -115,7 +138,9 @@ export class AnalyticsService {
       if (t.department) deptTimeouts[t.department] = (deptTimeouts[t.department] || 0) + 1;
     }
 
-    const avgHandlingTime = await this.prisma.$queryRawUnsafe<Array<{ node_code: string; avg_duration: number }>>(`
+    const avgHandlingTime = await this.prisma.$queryRawUnsafe<
+      Array<{ node_code: string; avg_duration: number }>
+    >(`
       SELECT "nodeCode" as node_code, AVG("duration") as avg_duration
       FROM "ApplicationTimeline"
       WHERE "duration" IS NOT NULL
@@ -146,11 +171,19 @@ export class AnalyticsService {
         select: { status: true, createdAt: true, completedAt: true },
       });
       const completed = apps.filter((a) =>
-        ([ApplicationStatus.COMPLETED, ApplicationStatus.CERTIFICATE_ISSUED, ApplicationStatus.APPROVED] as ApplicationStatus[]).includes(a.status),
+        (
+          [
+            ApplicationStatus.COMPLETED,
+            ApplicationStatus.CERTIFICATE_ISSUED,
+            ApplicationStatus.APPROVED,
+          ] as ApplicationStatus[]
+        ).includes(a.status),
       ).length;
-      const avgTime = apps
-        .filter((a) => a.completedAt)
-        .reduce((sum, a) => sum + dayjs(a.completedAt).diff(dayjs(a.createdAt), 'hour'), 0) / (completed || 1);
+      const avgTime =
+        apps
+          .filter((a) => a.completedAt)
+          .reduce((sum, a) => sum + dayjs(a.completedAt).diff(dayjs(a.createdAt), 'hour'), 0) /
+        (completed || 1);
       result.push({
         department: d.currentDepartment,
         total: d._count.currentDepartment,

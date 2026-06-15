@@ -2,7 +2,11 @@ import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { ApplicationStatus, Department } from '@prisma/client';
 import { CurrentUserPayload } from '@/common/decorators/current-user.decorator';
-import { CreateApplicationDto, UpdateApplicationDto, ApplicationQueryDto } from './dto/application.dto';
+import {
+  CreateApplicationDto,
+  UpdateApplicationDto,
+  ApplicationQueryDto,
+} from './dto/application.dto';
 import { generateApplicationNo } from '@/common/utils/id-generator.util';
 import { BusinessException } from '@/common/exceptions/business.exception';
 import { ApplicationTimelineService } from './application-timeline.service';
@@ -85,14 +89,25 @@ export class ApplicationService {
       include: { serviceItem: true, materials: true },
     });
     if (!application) throw new NotFoundException('办件不存在');
-    if (application.userId !== user.userId) throw new BusinessException('无权操作此办件', 'PERMISSION_DENIED');
-    if (!([ApplicationStatus.DRAFT, ApplicationStatus.APPOINTED, ApplicationStatus.MATERIALS_UPLOADED] as ApplicationStatus[]).includes(application.status)) {
+    if (application.userId !== user.userId)
+      throw new BusinessException('无权操作此办件', 'PERMISSION_DENIED');
+    if (
+      !(
+        [
+          ApplicationStatus.DRAFT,
+          ApplicationStatus.APPOINTED,
+          ApplicationStatus.MATERIALS_UPLOADED,
+        ] as ApplicationStatus[]
+      ).includes(application.status)
+    ) {
       throw new BusinessException('当前状态不允许提交', 'INVALID_STATUS');
     }
 
-    const requiredMaterials = application.serviceItem ? await this.prisma.materialTemplate.findMany({
-      where: { serviceItemId: application.serviceItemId, isRequired: true },
-    }) : [];
+    const requiredMaterials = application.serviceItem
+      ? await this.prisma.materialTemplate.findMany({
+          where: { serviceItemId: application.serviceItemId, isRequired: true },
+        })
+      : [];
 
     const uploadedTemplateIds = application.materials.map((m) => m.templateId);
     const missingRequired = requiredMaterials.filter((m) => !uploadedTemplateIds.includes(m.id));
@@ -207,8 +222,18 @@ export class ApplicationService {
   async cancel(user: CurrentUserPayload, id: string, reason: string) {
     const application = await this.prisma.application.findUnique({ where: { id } });
     if (!application) throw new NotFoundException('办件不存在');
-    if (application.userId !== user.userId) throw new BusinessException('无权操作', 'PERMISSION_DENIED');
-    if (([ApplicationStatus.APPROVED, ApplicationStatus.COMPLETED, ApplicationStatus.CERTIFICATE_ISSUED, ApplicationStatus.CANCELLED] as ApplicationStatus[]).includes(application.status)) {
+    if (application.userId !== user.userId)
+      throw new BusinessException('无权操作', 'PERMISSION_DENIED');
+    if (
+      (
+        [
+          ApplicationStatus.APPROVED,
+          ApplicationStatus.COMPLETED,
+          ApplicationStatus.CERTIFICATE_ISSUED,
+          ApplicationStatus.CANCELLED,
+        ] as ApplicationStatus[]
+      ).includes(application.status)
+    ) {
       throw new BusinessException('当前状态无法取消', 'INVALID_STATUS');
     }
 

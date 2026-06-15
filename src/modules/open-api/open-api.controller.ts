@@ -105,12 +105,26 @@ export class OpenApiController {
       await this.logCall(req, `/open/v1/certificates/verify/${certNo}`, 'GET', 200, startTime);
       res.status(HttpStatus.OK).json({ success: true, code: 'SUCCESS', data: result });
     } catch (e: any) {
-      await this.logCall(req, `/open/v1/certificates/verify/${certNo}`, 'GET', 500, startTime, e.message);
+      await this.logCall(
+        req,
+        `/open/v1/certificates/verify/${certNo}`,
+        'GET',
+        500,
+        startTime,
+        e.message,
+      );
       throw e;
     }
   }
 
-  private async logCall(req: any, endpoint: string, method: string, statusCode: number, startTime: number, errorMessage?: string) {
+  private async logCall(
+    req: any,
+    endpoint: string,
+    method: string,
+    statusCode: number,
+    startTime: number,
+    errorMessage?: string,
+  ) {
     try {
       await this.openApiService.logApiCall({
         appId: req.headers['x-app-id'] || 'anonymous',

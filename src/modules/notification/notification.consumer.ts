@@ -36,10 +36,17 @@ export class NotificationConsumer extends WorkerHost {
       let result: { success: boolean; message?: string };
       switch (channel as NotificationChannel) {
         case NotificationChannel.SMS:
-          result = await this.smsProvider.send(notification.user.phoneNumber || '', notification.content);
+          result = await this.smsProvider.send(
+            notification.user.phoneNumber || '',
+            notification.content,
+          );
           break;
         case NotificationChannel.WECHAT:
-          result = await this.wechatProvider.send(notification.userId, notification.title, notification.content);
+          result = await this.wechatProvider.send(
+            notification.userId,
+            notification.title,
+            notification.content,
+          );
           break;
         case NotificationChannel.IN_APP:
           result = await this.inAppProvider.send(notification.userId, notification);

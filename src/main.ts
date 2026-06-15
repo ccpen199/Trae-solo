@@ -24,10 +24,7 @@ async function bootstrap() {
         filename: process.env.LOG_FILE || './logs/app.log',
         maxsize: 5242880,
         maxFiles: 5,
-        format: winston.format.combine(
-          winston.format.timestamp(),
-          winston.format.json(),
-        ),
+        format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
       }),
     ],
   });
@@ -60,10 +57,7 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new AllExceptionsFilter(logger));
-  app.useGlobalInterceptors(
-    new TransformInterceptor(),
-    new LoggingInterceptor(logger),
-  );
+  app.useGlobalInterceptors(new TransformInterceptor(), new LoggingInterceptor(logger));
 
   const config = new DocumentBuilder()
     .setTitle('广州市统一政务服务移动端后端支撑平台')
@@ -87,9 +81,10 @@ async function bootstrap() {
   SwaggerModule.setup(`${globalPrefix}/docs`, app, document);
 
   const port = process.env.PORT || 3000;
-  await app.listen(port);
-  logger.log(`政务服务平台已启动: http://localhost:${port}${globalPrefix}`);
-  logger.log(`API文档地址: http://localhost:${port}${globalPrefix}/docs`);
+  const host = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
+  await app.listen(port, host);
+  logger.log(`政务服务平台已启动: http://${host}:${port}${globalPrefix}`);
+  logger.log(`API文档地址: http://${host}:${port}${globalPrefix}/docs`);
 }
 
 bootstrap();

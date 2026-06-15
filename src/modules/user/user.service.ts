@@ -48,7 +48,10 @@ export class UserService {
     });
   }
 
-  async getMyApplications(user: CurrentUserPayload, params: { page?: number; pageSize?: number; status?: string }) {
+  async getMyApplications(
+    user: CurrentUserPayload,
+    params: { page?: number; pageSize?: number; status?: string },
+  ) {
     const { skip, take, page, pageSize } = this.getPagination(params);
     const where: any = { userId: user.userId };
     if (params.status) where.status = params.status;
@@ -91,7 +94,10 @@ export class UserService {
     };
   }
 
-  async getMyNotifications(user: CurrentUserPayload, params: { page?: number; pageSize?: number; unreadOnly?: boolean }) {
+  async getMyNotifications(
+    user: CurrentUserPayload,
+    params: { page?: number; pageSize?: number; unreadOnly?: boolean },
+  ) {
     const { skip, take, page, pageSize } = this.getPagination(params);
     const where: any = { userId: user.userId };
     if (params.unreadOnly) where.status = { not: 'READ' };

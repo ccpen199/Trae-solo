@@ -23,9 +23,7 @@ const ROLE_PERMISSIONS: RoleDefinition[] = [
     role: 'SUPER_ADMIN',
     roleName: '超级管理员',
     description: '系统最高权限，可访问所有功能',
-    permissions: [
-      { resource: '*', actions: ['*'] },
-    ],
+    permissions: [{ resource: '*', actions: ['*'] }],
   },
   {
     role: 'ADMIN',
@@ -118,7 +116,7 @@ export class PermissionRoleService {
     });
     if (!user) return ['USER'];
 
-    let roles: RoleType[] = ['USER'];
+    const roles: RoleType[] = ['USER'];
 
     if (user.id === 'admin') roles.push('ADMIN');
     if (user.authType?.includes('ADMIN')) roles.push('DEPARTMENT_ADMIN');

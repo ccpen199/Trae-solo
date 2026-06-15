@@ -24,7 +24,10 @@ export class ApplicationTimelineService {
   ) {}
 
   async addNode(applicationId: string, options: AddTimelineNodeOptions) {
-    this.logger.log(`添加办件节点: app=${applicationId} node=${options.nodeCode}`, 'ApplicationTimelineService');
+    this.logger.log(
+      `添加办件节点: app=${applicationId} node=${options.nodeCode}`,
+      'ApplicationTimelineService',
+    );
 
     const prevNode = await this.prisma.applicationTimeline.findFirst({
       where: { applicationId, endTime: null },

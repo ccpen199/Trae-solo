@@ -21,12 +21,20 @@ export class GuangdongCloudAdapter {
   }
 
   private generateSignature(params: Record<string, any>): string {
-    const sorted = Object.keys(params).sort().map((k) => `${k}=${params[k]}`).join('&');
+    const sorted = Object.keys(params)
+      .sort()
+      .map((k) => `${k}=${params[k]}`)
+      .join('&');
     return crypto.createHmac('sha256', this.appSecret).update(sorted).digest('hex');
   }
 
-  async syncApplicationToCloud(application: any): Promise<{ success: boolean; cloudId?: string; message?: string }> {
-    this.logger.log(`同步办件到广东省政务云: ${application.applicationNo}`, 'GuangdongCloudAdapter');
+  async syncApplicationToCloud(
+    application: any,
+  ): Promise<{ success: boolean; cloudId?: string; message?: string }> {
+    this.logger.log(
+      `同步办件到广东省政务云: ${application.applicationNo}`,
+      'GuangdongCloudAdapter',
+    );
     try {
       const timestamp = Date.now().toString();
       const payload = {
@@ -56,7 +64,10 @@ export class GuangdongCloudAdapter {
   }
 
   async queryCloudServiceItems(category?: string): Promise<any[]> {
-    this.logger.log(`从省政务云查询事项列表: category=${category || 'all'}`, 'GuangdongCloudAdapter');
+    this.logger.log(
+      `从省政务云查询事项列表: category=${category || 'all'}`,
+      'GuangdongCloudAdapter',
+    );
     return [
       { itemCode: 'GD001', itemName: '省级事项示例1', category: category || '民生服务' },
       { itemCode: 'GD002', itemName: '省级事项示例2', category: category || '民生服务' },

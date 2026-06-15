@@ -5,9 +5,7 @@ import { Queue } from 'bullmq';
 import { ScheduledTasks } from './scheduled.tasks';
 
 @Module({
-  imports: [
-    BullModule.registerQueue({ name: 'application' }, { name: 'notification' }),
-  ],
+  imports: [BullModule.registerQueue({ name: 'application' }, { name: 'notification' })],
   providers: [ScheduledTasks],
   exports: [ScheduledTasks],
 })

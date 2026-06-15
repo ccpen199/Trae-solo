@@ -36,7 +36,13 @@ export class PreReviewService {
     });
 
     if (!application) {
-      return { passed: false, score: 0, issues: ['办件不存在'], suggestions: [], autoApproveThreshold: 80 };
+      return {
+        passed: false,
+        score: 0,
+        issues: ['办件不存在'],
+        suggestions: [],
+        autoApproveThreshold: 80,
+      };
     }
 
     const issues: string[] = [];
@@ -70,7 +76,10 @@ export class PreReviewService {
 
     if (application.formData) {
       const fieldCount = Object.keys(application.formData).filter(
-        (k) => application.formData[k] !== null && application.formData[k] !== undefined && application.formData[k] !== '',
+        (k) =>
+          application.formData[k] !== null &&
+          application.formData[k] !== undefined &&
+          application.formData[k] !== '',
       ).length;
       if (fieldCount < 5) {
         suggestions.push('建议填写更多表单字段以提高审核通过率');

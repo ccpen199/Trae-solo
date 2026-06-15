@@ -20,7 +20,9 @@ export function generateCertNo(deptCode: string, type: string): string {
 }
 
 export function generateAppId(): string {
-  return 'gz_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36).substring(-6);
+  return (
+    'gz_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36).substring(-6)
+  );
 }
 
 export function generateAppSecret(): string {

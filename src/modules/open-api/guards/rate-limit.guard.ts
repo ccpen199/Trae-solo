@@ -1,4 +1,12 @@
-import { Injectable, CanActivate, ExecutionContext, Inject, LoggerService, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  Inject,
+  LoggerService,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { OpenApiService } from '../open-api.service';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 

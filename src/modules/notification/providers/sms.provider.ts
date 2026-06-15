@@ -19,10 +19,16 @@ export class SmsProvider {
     this.appSecret = this.configService.get('SMS_APP_SECRET', '');
   }
 
-  async send(phoneNumber: string, content: string): Promise<{ success: boolean; message?: string }> {
+  async send(
+    phoneNumber: string,
+    content: string,
+  ): Promise<{ success: boolean; message?: string }> {
     if (!phoneNumber) return { success: false, message: '手机号为空' };
     try {
-      this.logger.log(`发送短信: ${phoneNumber.substring(0, 3)}****${phoneNumber.substring(7)}`, 'SmsProvider');
+      this.logger.log(
+        `发送短信: ${phoneNumber.substring(0, 3)}****${phoneNumber.substring(7)}`,
+        'SmsProvider',
+      );
       return { success: true, message: '模拟发送成功' };
     } catch (error: any) {
       this.logger.error(`短信发送失败: ${error.message}`, 'SmsProvider');

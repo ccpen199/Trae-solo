@@ -32,14 +32,18 @@ export class CertificateService {
   ) {}
 
   async issueCertificate(options: IssueCertificateOptions) {
-    this.logger.log(`签发电子证照: app=${options.applicationId} type=${options.certType}`, 'CertificateService');
+    this.logger.log(
+      `签发电子证照: app=${options.applicationId} type=${options.certType}`,
+      'CertificateService',
+    );
 
     const application = await this.prisma.application.findUnique({
       where: { id: options.applicationId },
       include: { serviceItem: true, certificate: true },
     });
     if (!application) throw new NotFoundException('办件不存在');
-    if (application.certificate) throw new BusinessException('该办件已签发电子证照', 'CERT_ALREADY_ISSUED');
+    if (application.certificate)
+      throw new BusinessException('该办件已签发电子证照', 'CERT_ALREADY_ISSUED');
 
     const deptCode = options.issuerDept.substring(0, 3).toUpperCase();
     const certNo = generateCertNo(deptCode, options.certType);
@@ -92,13 +96,17 @@ export class CertificateService {
     return certificate;
   }
 
-  async findByUser(user: CurrentUserPayload, params: { page?: number; pageSize?: number; status?: string }) {
+  async findByUser(
+    user: CurrentUserPayload,
+    params: { page?: number; pageSize?: number; status?: string },
+  ) {
     const page = Math.max(1, params.page || 1);
     const pageSize = Math.min(100, Math.max(1, params.pageSize || 20));
     const skip = (page - 1) * pageSize;
 
     const userProfile = await this.prisma.user.findUnique({ where: { id: user.userId } });
-    if (!userProfile?.idCardNumber) return { list: [], pagination: { page, pageSize, total: 0, totalPages: 0 } };
+    if (!userProfile?.idCardNumber)
+      return { list: [], pagination: { page, pageSize, total: 0, totalPages: 0 } };
 
     const where: any = { holderIdCard: userProfile.idCardNumber };
     if (params.status) where.status = params.status;
@@ -132,7 +140,8 @@ export class CertificateService {
       include: { application: { include: { serviceItem: true } } },
     });
     if (!certificate) return { valid: false, message: '证照不存在' };
-    if (certificate.status !== 'valid') return { valid: false, message: `证照状态: ${certificate.status}` };
+    if (certificate.status !== 'valid')
+      return { valid: false, message: `证照状态: ${certificate.status}` };
     const now = new Date();
     if (now > certificate.validTo) return { valid: false, message: '证照已过期' };
 

@@ -1,7 +1,11 @@
 import { Injectable, Logger, Inject, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { Department } from '@prisma/client';
-import { CreateServiceItemDto, UpdateServiceItemDto, ServiceItemQueryDto } from './dto/service-item.dto';
+import {
+  CreateServiceItemDto,
+  UpdateServiceItemDto,
+  ServiceItemQueryDto,
+} from './dto/service-item.dto';
 import { generateItemCode } from '@/common/utils/id-generator.util';
 import { BusinessException } from '@/common/exceptions/business.exception';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';

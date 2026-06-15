@@ -18,7 +18,12 @@ export class ApiSignatureGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const { 'x-app-id': appId, 'x-timestamp': timestamp, 'x-nonce': nonce, 'x-signature': signature } = request.headers;
+    const {
+      'x-app-id': appId,
+      'x-timestamp': timestamp,
+      'x-nonce': nonce,
+      'x-signature': signature,
+    } = request.headers;
     if (!appId || !timestamp || !nonce || !signature) {
       throw new UnauthorizedException('缺少签名参数');
     }
@@ -27,7 +32,13 @@ export class ApiSignatureGuard implements CanActivate {
       throw new UnauthorizedException('请求已过期');
     }
     const bodyStr = JSON.stringify(request.body || {});
-    const valid = await this.openApiService.validateSignature(appId, timestamp, nonce, signature, bodyStr);
+    const valid = await this.openApiService.validateSignature(
+      appId,
+      timestamp,
+      nonce,
+      signature,
+      bodyStr,
+    );
     if (!valid) {
       this.logger.warn(`API签名验证失败: app=${appId}`, 'ApiSignatureGuard');
       throw new UnauthorizedException('签名验证失败');
