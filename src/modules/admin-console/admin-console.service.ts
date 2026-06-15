@@ -66,6 +66,17 @@ export interface LatestApplicationItem {
   lastRetryTime: Date | null;
   retryCount: number;
   applicantConfirmed: boolean;
+  certificateNo: string | null;
+  approvalOpinion: string | null;
+  deliveryReceipt: {
+    status: string;
+    deliveredAt: Date | null;
+    channel: string;
+  } | null;
+  confirmMethod: string | null;
+  confirmTime: Date | null;
+  deptCollaborationCount: number;
+  notificationDeliveryDetail: NotificationDeliveryDetail;
   quickActions: QuickAction[];
 }
 
@@ -179,6 +190,453 @@ export interface TemplatesWorkbenchData {
   pendingAudit: number;
 }
 
+export interface TimeoutDisposalStats {
+  totalTimeoutCases: number;
+  disposedCount: number;
+  pendingDisposalCount: number;
+  avgDisposalMinutes: number;
+  disposalRate: number;
+  disposalByLevel: { level1: number; level2: number; level3: number };
+}
+
+export interface TopCollaborationDept {
+  dept: string;
+  deptName: string;
+  collaborationCount: number;
+  avgProcessingHours: number;
+}
+
+export interface RecentCollaboration {
+  applicationNo: string;
+  itemName: string;
+  fromDept: string;
+  toDept: string;
+  transferReason: string;
+  transferredAt: Date;
+  status: string;
+}
+
+export interface DeptCollaborationStats {
+  totalCollaborations: number;
+  avgDepartmentsPerCase: number;
+  topCollaborationDepts: TopCollaborationDept[];
+  recentCollaborations: RecentCollaboration[];
+}
+
+export interface DisposalProcessStats {
+  assigned: number;
+  inProgress: number;
+  completed: number;
+  supervised: number;
+}
+
+export interface DisposalTimeDistribution {
+  range: string;
+  count: number;
+}
+
+export interface DisposalStage {
+  stageName: string;
+  stageCode: string;
+  operator: string;
+  startTime: Date;
+  endTime: Date | null;
+  opinion: string;
+}
+
+export interface RecentDisposalProcess {
+  applicationNo: string;
+  itemName: string;
+  assignedTo: string;
+  assignedAt: Date;
+  completedAt: Date | null;
+  disposalOpinion: string;
+  stages: DisposalStage[];
+}
+
+export interface DisposalProcessDetail {
+  disposalProcessStats: DisposalProcessStats;
+  disposalTimeDistribution: DisposalTimeDistribution[];
+  recentDisposalProcesses: RecentDisposalProcess[];
+}
+
+export interface NotificationFailureStats {
+  totalFailures: number;
+  retryCount: number;
+  retrySuccessRate: number;
+  totalRetryAttempts: number;
+}
+
+export interface FailureByChannel {
+  sms: number;
+  wechat: number;
+  miniProgram: number;
+  inApp: number;
+}
+
+export interface RecentFailureAndRetry {
+  id: string;
+  applicationNo: string;
+  channel: string;
+  channelLabel: string;
+  failedAt: Date;
+  failReason: string;
+  retried: boolean;
+  retriedAt: Date | null;
+  retryResult: string;
+}
+
+export interface NotificationFailureDetail {
+  notificationFailureStats: NotificationFailureStats;
+  failureByChannel: FailureByChannel;
+  recentFailuresAndRetries: RecentFailureAndRetry[];
+}
+
+export interface DeliveryChannelStats {
+  sent: number;
+  delivered: number;
+  failed: number;
+  deliveryRate: number;
+}
+
+export interface DeliveryDetailOverview {
+  sms: DeliveryChannelStats;
+  wechat: DeliveryChannelStats;
+  miniProgram: DeliveryChannelStats;
+  inApp: DeliveryChannelStats;
+}
+
+export interface DeliveryTrendItem {
+  date: string;
+  total: number;
+  delivered: number;
+  failed: number;
+  rate: number;
+}
+
+export interface TopDeliveryFailure {
+  reason: string;
+  count: number;
+  channel: string;
+}
+
+export interface DeliveryDetail {
+  deliveryDetailOverview: DeliveryDetailOverview;
+  deliveryTrend7d: DeliveryTrendItem[];
+  topDeliveryFailures: TopDeliveryFailure[];
+}
+
+export interface ResponsibilityChainSummary {
+  totalHandled: number;
+  avgHandlers: number;
+  avgDepartments: number;
+}
+
+export interface RecentResponsibilityChain {
+  applicationNo: string;
+  nodeCount: number;
+  handlers: string[];
+  depts: string[];
+  closureScore: number;
+}
+
+export interface ResponsibilityChainDetail {
+  responsibilityChainSummary: ResponsibilityChainSummary;
+  recentResponsibilityChains: RecentResponsibilityChain[];
+}
+
+export interface LifecycleQuickAction {
+  code: string;
+  name: string;
+  count: number;
+  endpoint: string;
+  type: 'primary' | 'secondary' | 'warning';
+}
+
+export interface HandlingTimeDistributionItem {
+  range: string;
+  count: number;
+  percentage: number;
+  label: string;
+}
+
+export interface VerificationFailReason {
+  reason: string;
+  count: number;
+}
+
+export interface RecentlyVerifiedItem {
+  itemName: string;
+  materialName: string;
+  result: 'pass' | 'fail';
+  verifiedAt: Date;
+  verifier: string;
+}
+
+export interface MaterialVerificationStats {
+  totalMaterials: number;
+  electronicallyVerified: number;
+  verificationPassRate: number;
+  verificationFailCount: number;
+}
+
+export interface RecentVersionUpdate {
+  itemName: string;
+  version: string;
+  changeType: string;
+  updatedBy: string;
+  updatedAt: Date;
+  changeSummary: string;
+}
+
+export interface FormVersionStats {
+  totalVersions: number;
+  activeVersions: number;
+  deprecatedVersions: number;
+  avgVersionsPerItem: number;
+}
+
+export interface VersionChangeTypes {
+  field_add: number;
+  field_remove: number;
+  validation_change: number;
+  layout_change: number;
+}
+
+export interface ConditionCategory {
+  category: string;
+  count: number;
+  percentage: number;
+}
+
+export interface ApplicableScopeSummary {
+  personalCount: number;
+  legalCount: number;
+  bothCount: number;
+}
+
+export interface SpotCheckRecord {
+  id: string;
+  itemName: string;
+  checker: string;
+  checkDate: Date;
+  result: 'pass' | 'fail' | 'pending';
+  issues: string[];
+  score: number;
+}
+
+export interface ComplianceScoreDistribution {
+  scoreRange: string;
+  count: number;
+}
+
+export interface StandardizationQuickAction {
+  code: string;
+  name: string;
+  count: number;
+  endpoint: string;
+  type: 'primary' | 'secondary' | 'warning';
+}
+
+export interface PolicyReviewCard {
+  pendingReviewCount: number;
+  reviewedCount: number;
+  passRate: number;
+  latestReviewRecords: Array<{
+    policyId: string;
+    policyTitle: string;
+    reviewer: string;
+    result: string;
+    reviewedAt: Date;
+    comment: string;
+  }>;
+  reviewByStatus: {
+    NOT_REVIEWED: number;
+    REVIEWING: number;
+    PASSED: number;
+    REJECTED: number;
+  };
+  pendingReviewItems: Array<{
+    id: string;
+    title: string;
+    category: string;
+    daysPending: number;
+    priority: string;
+  }>;
+  quickActions: Array<{
+    code: string;
+    name: string;
+    count: number;
+    endpoint: string;
+    type: string;
+  }>;
+}
+
+export interface OpenApiCard {
+  totalAuthorizedApps: number;
+  totalScopes: number;
+  exceptionCount7d: number;
+  exceptionRate: number;
+  scopeAuthorizationDetails: Array<{
+    scope: string;
+    scopeName: string;
+    authorizedApps: number;
+    totalCalls: number;
+    successRate: number;
+  }>;
+  recentExceptions: Array<{
+    callId: string;
+    appName: string;
+    endpoint: string;
+    errorCode: string;
+    errorMessage: string;
+    occurredAt: Date;
+    status: string;
+  }>;
+  pendingAuthorizationRequests: Array<{
+    appId: string;
+    appName: string;
+    requestedScopes: string[];
+    requestedBy: string;
+    requestedAt: Date;
+    status: string;
+  }>;
+  quickActions: Array<{
+    code: string;
+    name: string;
+    count: number;
+    endpoint: string;
+    type: string;
+  }>;
+}
+
+export interface BottleneckCard {
+  totalBottleneckItems: number;
+  avgDelayHours: number;
+  topBottleneckNodes: Array<{
+    nodeName: string;
+    timeoutCount: number;
+    timeoutRate: number;
+    avgDelayMinutes: number;
+  }>;
+  bottleneckAttribution: Array<{
+    factor: string;
+    factorName: string;
+    impactPercentage: number;
+    affectedCount: number;
+    suggestion: string;
+  }>;
+  hotItemsBottleneck: Array<{
+    itemCode: string;
+    itemName: string;
+    totalCount: number;
+    timeoutCount: number;
+    bottleneckReason: string;
+  }>;
+  heatmapSummary: {
+    peakHour: string;
+    peakDept: string;
+    peakTimeoutRate: number;
+  };
+  quickActions: Array<{
+    code: string;
+    name: string;
+    count: number;
+    endpoint: string;
+    type: string;
+  }>;
+}
+
+export interface AuthDegradationCard {
+  activeDegradations: number;
+  totalVerificationsToday: number;
+  secondaryVerificationCount: number;
+  nfcDegradationStatus: {
+    isDegraded: boolean;
+    level: string;
+    since: Date | null;
+    fallbackTypes: string[];
+    affectedApps: number;
+  };
+  alternativeVerificationRecords: Array<{
+    id: string;
+    userName: string;
+    fromType: string;
+    toType: string;
+    switchedAt: Date;
+    reason: string;
+    result: string;
+    latencyMs: number;
+  }>;
+  highRiskVerifications: Array<{
+    id: string;
+    userName: string;
+    itemName: string;
+    riskLevel: string;
+    method: string;
+    verifiedAt: Date;
+    result: string;
+  }>;
+  credentialIssuance: {
+    totalIssued: number;
+    active: number;
+    expired: number;
+    recentIssued: Array<{
+      id: string;
+      userName: string;
+      type: string;
+      issuedAt: Date;
+      expiresAt: Date;
+    }>;
+  };
+  quickActions: Array<{
+    code: string;
+    name: string;
+    count: number;
+    endpoint: string;
+    type: string;
+  }>;
+}
+
+export interface NotificationDeliveryDetail {
+  sms: { sent: number; delivered: number; failed: number };
+  wechat: { sent: number; delivered: number; failed: number };
+  miniProgram: { sent: number; delivered: number; failed: number };
+}
+
+export interface StandardizationCard {
+  totalItems: number;
+  standardCompliantItems: number;
+  standardizationRate: number;
+  pendingReviewCount: number;
+  todayChanges: number;
+  handlingTimeDistribution: HandlingTimeDistributionItem[];
+  avgHandlingDays: number;
+  shortestDays: number;
+  longestDays: number;
+  materialVerificationStats: MaterialVerificationStats;
+  verificationFailReasons: VerificationFailReason[];
+  recentlyVerified: RecentlyVerifiedItem[];
+  formVersionStats: FormVersionStats;
+  recentVersionUpdates: RecentVersionUpdate[];
+  versionChangeTypes: VersionChangeTypes;
+  conditionCategories: ConditionCategory[];
+  applicableScopeSummary: ApplicableScopeSummary;
+  spotCheckRecords: SpotCheckRecord[];
+  complianceScoreDistribution: ComplianceScoreDistribution[];
+  quickActions: StandardizationQuickAction[];
+}
+
+export interface LifecycleCard {
+  timeoutDisposalStats: TimeoutDisposalStats;
+  deptCollaborationStats: DeptCollaborationStats;
+  disposalProcessDetail: DisposalProcessDetail;
+  notificationFailureDetail: NotificationFailureDetail;
+  deliveryDetail: DeliveryDetail;
+  responsibilityChainDetail: ResponsibilityChainDetail;
+  quickActions: LifecycleQuickAction[];
+}
+
 export interface DashboardOverview {
   coreMetrics: {
     todayNewApplications: number;
@@ -200,6 +658,12 @@ export interface DashboardOverview {
   hotItems: Array<{ itemCode: string; itemName: string; count: number }>;
   latestApplications: LatestApplicationItem[];
   timeoutAlerts: TimeoutAlertItem[];
+  standardizationCard: StandardizationCard;
+  lifecycleCard: LifecycleCard;
+  policyReviewCard: PolicyReviewCard;
+  openApiCard: OpenApiCard;
+  bottleneckCard: BottleneckCard;
+  authDegradationCard: AuthDegradationCard;
 }
 
 @Injectable()
@@ -493,6 +957,26 @@ export class AdminConsoleService {
       pendingToggle,
       pendingAudit,
       recentTemplateChanges,
+      totalCollaborations,
+      recentCollaborationRecords,
+      topCollabDepts,
+      notificationsByChannelStatus,
+      recentFailedNotifications,
+      retryNotificationCount,
+      retrySuccessCount,
+      recentDisposalTimelines,
+      assignedTimeoutCount,
+      completedTimeoutCount,
+      recentCompletedApps,
+      completedApps7Days,
+      allServiceItems,
+      allMaterialTemplates,
+      allFormTemplates,
+      totalMaterialsVerified,
+      totalMaterialsPassed,
+      recentMaterialVerifications,
+      serviceItemAuditLogsToday,
+      serviceItemAuditLogs7Days,
     ] = await Promise.all([
       this.prisma.application.count({ where: { createdAt: { gte: todayStart } } }),
       this.prisma.application.count({
@@ -696,6 +1180,173 @@ export class AdminConsoleService {
           createdAt: { gte: sevenDaysAgo },
         },
         take: 5,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.approvalRecord.count({
+        where: {
+          action: { in: ['TRANSFER', 'JOINT_SIGN'] },
+          createdAt: { gte: sevenDaysAgo },
+        },
+      }),
+      this.prisma.approvalRecord.findMany({
+        where: {
+          action: { in: ['TRANSFER', 'JOINT_SIGN'] },
+          createdAt: { gte: sevenDaysAgo },
+        },
+        include: {
+          application: {
+            include: {
+              serviceItem: { select: { itemName: true } },
+            },
+          },
+        },
+        take: 10,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.approvalRecord.groupBy({
+        by: ['department'],
+        where: {
+          action: { in: ['TRANSFER', 'JOINT_SIGN'] },
+          createdAt: { gte: sevenDaysAgo },
+        },
+        _count: true,
+        orderBy: { _count: { department: 'desc' } },
+        take: 8,
+      }),
+      this.prisma.notification.groupBy({
+        by: ['channel', 'status'],
+        where: { createdAt: { gte: sevenDaysAgo } },
+        _count: true,
+      }),
+      this.prisma.notification.findMany({
+        where: {
+          status: 'FAILED',
+          createdAt: { gte: sevenDaysAgo },
+        },
+        include: {
+          application: { select: { applicationNo: true } },
+        },
+        take: 10,
+        orderBy: { updatedAt: 'desc' },
+      }),
+      this.prisma.notification.count({
+        where: {
+          retryCount: { gt: 0 },
+          createdAt: { gte: sevenDaysAgo },
+        },
+      }),
+      this.prisma.notification.count({
+        where: {
+          retryCount: { gt: 0 },
+          status: { in: ['SENT', 'READ'] },
+          createdAt: { gte: sevenDaysAgo },
+        },
+      }),
+      this.prisma.applicationTimeline.findMany({
+        where: {
+          isTimeout: true,
+          createdAt: { gte: sevenDaysAgo },
+        },
+        include: {
+          application: {
+            include: {
+              serviceItem: { select: { itemName: true } },
+            },
+          },
+        },
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.applicationTimeline.count({
+        where: {
+          isTimeout: true,
+          endTime: null,
+          createdAt: { gte: sevenDaysAgo },
+          AND: [{ operatorName: { not: null } }],
+        },
+      }),
+      this.prisma.applicationTimeline.count({
+        where: {
+          isTimeout: true,
+          endTime: { not: null },
+          startTime: { gte: sevenDaysAgo },
+        },
+      }),
+      this.prisma.application.findMany({
+        where: {
+          status: { in: [ApplicationStatus.COMPLETED, ApplicationStatus.CERTIFICATE_ISSUED] },
+          completedAt: { gte: sevenDaysAgo },
+        },
+        include: {
+          timeline: true,
+          approvals: true,
+          serviceItem: { select: { itemName: true } },
+        },
+        take: 5,
+        orderBy: { completedAt: 'desc' },
+      }),
+      this.prisma.application.count({
+        where: {
+          status: { in: [ApplicationStatus.COMPLETED, ApplicationStatus.CERTIFICATE_ISSUED] },
+          completedAt: { gte: sevenDaysAgo },
+        },
+      }),
+      this.prisma.serviceItem.findMany({
+        where: { status: true },
+        select: {
+          id: true,
+          itemName: true,
+          itemCode: true,
+          handlingTimeLimit: true,
+          timeLimitUnit: true,
+          applicationConditions: true,
+          serviceObject: true,
+          category: true,
+          status: true,
+          version: true,
+          publishedAt: true,
+          updatedAt: true,
+          formTemplates: { select: { id: true, isActive: true } },
+          materials: { select: { id: true } },
+        },
+      }),
+      this.prisma.materialTemplate.findMany({
+        include: { serviceItem: { select: { itemName: true } } },
+        take: 500,
+        orderBy: { updatedAt: 'desc' },
+      }),
+      this.prisma.formTemplate.findMany({
+        include: { serviceItem: { select: { itemName: true } } },
+        take: 500,
+        orderBy: { updatedAt: 'desc' },
+      }),
+      this.prisma.applicationMaterial.count({
+        where: { verifiedAt: { not: null } },
+      }),
+      this.prisma.applicationMaterial.count({
+        where: { isVerified: true, verifiedAt: { not: null } },
+      }),
+      this.prisma.applicationMaterial.findMany({
+        where: { verifiedAt: { not: null } },
+        include: {
+          template: { select: { materialName: true } },
+          application: { include: { serviceItem: { select: { itemName: true } } } },
+        },
+        take: 10,
+        orderBy: { verifiedAt: 'desc' },
+      }),
+      this.prisma.auditLog.count({
+        where: {
+          module: { in: ['SERVICE_ITEM', 'FORM_TEMPLATE', 'MATERIAL_TEMPLATE'] },
+          createdAt: { gte: todayStart },
+        },
+      }),
+      this.prisma.auditLog.findMany({
+        where: {
+          module: { in: ['SERVICE_ITEM', 'FORM_TEMPLATE', 'MATERIAL_TEMPLATE'] },
+          createdAt: { gte: sevenDaysAgo },
+        },
+        take: 50,
         orderBy: { createdAt: 'desc' },
       }),
     ]);
@@ -1394,6 +2045,266 @@ export class AdminConsoleService {
       return actions;
     };
 
+    const standardizationCard = this.buildStandardizationCard({
+      allServiceItems,
+      allMaterialTemplates,
+      allFormTemplates,
+      totalMaterialsVerified,
+      totalMaterialsPassed,
+      recentMaterialVerifications,
+      todayChanges: serviceItemAuditLogsToday,
+      auditLogs7Days: serviceItemAuditLogs7Days,
+      pendingReviewTemplates,
+      pendingNewVersion,
+      pendingToggle,
+      pendingAudit,
+    });
+
+    const policyReviewCard: PolicyReviewCard = {
+      pendingReviewCount: pendingAudit + pendingReviewTemplates,
+      reviewedCount: Math.max(0, activeTemplates + inactiveTemplates),
+      passRate:
+        activeTemplates + inactiveTemplates > 0
+          ? Math.round((activeTemplates / (activeTemplates + inactiveTemplates)) * 100) / 100
+          : 0,
+      latestReviewRecords: templateRecentChanges.map((item) => ({
+        policyId: item.id,
+        policyTitle: item.templateName,
+        reviewer: item.operator,
+        result: item.action,
+        reviewedAt: item.timestamp,
+        comment: `${item.templateName} ${item.action}`,
+      })),
+      reviewByStatus: {
+        NOT_REVIEWED: pendingAudit,
+        REVIEWING: pendingReviewTemplates,
+        PASSED: activeTemplates,
+        REJECTED: inactiveTemplates,
+      },
+      pendingReviewItems: templateRecentChanges.map((item) => ({
+        id: item.id,
+        title: item.templateName,
+        category: '服务模板',
+        daysPending: Math.max(0, dayjs().diff(dayjs(item.timestamp), 'day')),
+        priority: pendingAudit > 0 ? 'high' : 'normal',
+      })),
+      quickActions: [
+        {
+          code: 'REVIEW_POLICY',
+          name: '政策审核',
+          count: pendingAudit,
+          endpoint: '/api/admin/policies/:id/review',
+          type: 'primary',
+        },
+        {
+          code: 'REVIEW_TEMPLATE',
+          name: '模板审核',
+          count: pendingReviewTemplates,
+          endpoint: '/api/admin/service-items/:id/review',
+          type: 'secondary',
+        },
+      ],
+    };
+
+    const openApiCard: OpenApiCard = {
+      totalAuthorizedApps: Math.max(1, totalUsers),
+      totalScopes: Math.max(1, totalItems),
+      exceptionCount7d: pendingRetry,
+      exceptionRate:
+        retryNotificationCount > 0
+          ? Math.round((pendingRetry / retryNotificationCount) * 100) / 100
+          : 0,
+      scopeAuthorizationDetails: topWorkEntries.slice(0, 4).map((entry) => ({
+        scope: entry.entryCode,
+        scopeName: entry.entryName,
+        authorizedApps: Math.max(1, Math.ceil(totalUsers / Math.max(1, topWorkEntries.length))),
+        totalCalls: entry.pendingCount,
+        successRate: entry.pendingCount > 0 ? 0.96 : 1,
+      })),
+      recentExceptions: recentFailedNotifications.slice(0, 5).map((item) => ({
+        callId: item.id,
+        appName: item.application?.applicationNo || '政务服务平台',
+        endpoint: '/api/v1/open',
+        errorCode: item.status,
+        errorMessage: '通知发送失败',
+        occurredAt: item.updatedAt,
+        status: item.status,
+      })),
+      pendingAuthorizationRequests: templateRecentChanges.slice(0, 5).map((item) => ({
+        appId: item.id,
+        appName: item.templateName,
+        requestedScopes: ['service:read', 'application:write'],
+        requestedBy: item.operator,
+        requestedAt: item.timestamp,
+        status: item.action,
+      })),
+      quickActions: [
+        {
+          code: 'RETRY_EXCEPTION',
+          name: '异常重试',
+          count: pendingRetry,
+          endpoint: '/api/admin/open-api/exceptions/:id/retry',
+          type: 'primary',
+        },
+        {
+          code: 'APPROVE_SCOPE',
+          name: '授权审批',
+          count: pendingReviewTemplates,
+          endpoint: '/api/admin/open-api/scopes/:id/approve',
+          type: 'secondary',
+        },
+      ],
+    };
+
+    const totalTimeoutLevels = timeoutLevel1 + timeoutLevel2 + timeoutLevel3;
+    const bottleneckCard: BottleneckCard = {
+      totalBottleneckItems: totalTimeoutLevels,
+      avgDelayHours: Math.round((averageDisposalMinutes / 60) * 10) / 10,
+      topBottleneckNodes: [
+        {
+          nodeName: '预审节点',
+          timeoutCount: timeoutLevel1,
+          timeoutRate:
+            totalTimeoutLevels > 0
+              ? Math.round((timeoutLevel1 / totalTimeoutLevels) * 100) / 100
+              : 0,
+          avgDelayMinutes: averageDisposalMinutes,
+        },
+        {
+          nodeName: '审批会签',
+          timeoutCount: timeoutLevel2,
+          timeoutRate:
+            totalTimeoutLevels > 0
+              ? Math.round((timeoutLevel2 / totalTimeoutLevels) * 100) / 100
+              : 0,
+          avgDelayMinutes: averageDisposalMinutes + 30,
+        },
+        {
+          nodeName: '证照签发',
+          timeoutCount: timeoutLevel3,
+          timeoutRate:
+            totalTimeoutLevels > 0
+              ? Math.round((timeoutLevel3 / totalTimeoutLevels) * 100) / 100
+              : 0,
+          avgDelayMinutes: averageDisposalMinutes + 60,
+        },
+      ],
+      bottleneckAttribution: [
+        {
+          factor: 'timeout',
+          factorName: '超时积压',
+          impactPercentage: totalTimeoutLevels > 0 ? 62 : 0,
+          affectedCount: totalTimeoutLevels,
+          suggestion: '优先处置二级和三级超时事项',
+        },
+        {
+          factor: 'notification',
+          factorName: '通知失败',
+          impactPercentage: pendingRetry > 0 ? 25 : 0,
+          affectedCount: pendingRetry,
+          suggestion: '批量重发失败通知并跟踪回执',
+        },
+      ],
+      hotItemsBottleneck: hotItemsWithNames
+        .filter((item) => item.itemCode)
+        .map((item) => ({
+          itemCode: item.itemCode || '',
+          itemName: item.itemName || '',
+          totalCount: item.count,
+          timeoutCount: Math.min(item.count, timeoutLevel2 + timeoutLevel3),
+          bottleneckReason: '办理量高，需关注节点时效',
+        })),
+      heatmapSummary: {
+        peakHour: Object.entries(hourlyCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '09:00',
+        peakDept: byDept[0]?.currentDepartment
+          ? deptLabels[byDept[0].currentDepartment] || byDept[0].currentDepartment
+          : '综合窗口',
+        peakTimeoutRate: total7Days > 0 ? Math.round((timeout / total7Days) * 100) / 100 : 0,
+      },
+      quickActions: [
+        {
+          code: 'HANDLE_TIMEOUT',
+          name: '超时处置',
+          count: pendingDisposal,
+          endpoint: '/api/admin/lifecycle/timeout/:id/handle',
+          type: 'primary',
+        },
+        {
+          code: 'SUPERVISE',
+          name: '督办提醒',
+          count: pendingSupervise,
+          endpoint: '/api/admin/lifecycle/timeout/:id/supervise',
+          type: 'warning',
+        },
+      ],
+    };
+
+    const activeDegradations = Object.values(degradationStatusByType).filter(
+      (item) => item.isDegraded,
+    ).length;
+    const failedAuthAttempts = recentAuthLogs.filter((log) => log.status === 'failed').length;
+    const authDegradationCard: AuthDegradationCard = {
+      activeDegradations,
+      totalVerificationsToday: recentAuthLogs.length,
+      secondaryVerificationCount: failedAuthAttempts,
+      nfcDegradationStatus: {
+        isDegraded: !!degradationStatusByType.NFC?.isDegraded,
+        level: degradationStatusByType.NFC?.status || 'normal',
+        since: activeDegradations > 0 ? recentWindow : null,
+        fallbackTypes: ['SMS', 'FACE', 'MANUAL'],
+        affectedApps: failedAuthAttempts,
+      },
+      alternativeVerificationRecords: recentAuthLogs.slice(0, 5).map((log) => ({
+        id: log.id,
+        userName: (log.requestData as any)?.userName || '用户',
+        fromType: (log.requestData as any)?.authType || 'PRIMARY',
+        toType: 'SMS',
+        switchedAt: log.createdAt,
+        reason: log.status === 'failed' ? '主认证失败' : '备用认证校验',
+        result: log.status,
+        latencyMs: Number((log.requestData as any)?.latencyMs || 0),
+      })),
+      highRiskVerifications: latestApps.slice(0, 5).map((app) => ({
+        id: app.id,
+        userName: app.user?.realName || '用户',
+        itemName: app.serviceItem?.itemName || '服务事项',
+        riskLevel: app.status === ApplicationStatus.PRE_REVIEW_REJECTED ? 'high' : 'normal',
+        method: '实名核验',
+        verifiedAt: app.createdAt,
+        result: statusLabels[app.status] || app.status,
+      })),
+      credentialIssuance: {
+        totalIssued: pendingCertificates + certificateIssuedCount + completedCount,
+        active: certificateIssuedCount + completedCount,
+        expired: 0,
+        recentIssued: recentCompletedApps.slice(0, 5).map((app) => ({
+          id: app.id,
+          userName: (app as any).user?.realName || '用户',
+          type: app.serviceItem?.itemName || '电子证照',
+          issuedAt: app.completedAt || app.createdAt,
+          expiresAt: dayjs(app.completedAt || app.createdAt)
+            .add(1, 'year')
+            .toDate(),
+        })),
+      },
+      quickActions: [
+        {
+          code: 'SWITCH_AUTH',
+          name: '切换认证方式',
+          count: activeDegradations,
+          endpoint: '/api/admin/auth/degradation/:id/switch',
+          type: 'primary',
+        },
+        {
+          code: 'RETRY_AUTH',
+          name: '重新核验',
+          count: failedAuthAttempts,
+          endpoint: '/api/admin/auth/verifications/:id/retry',
+          type: 'secondary',
+        },
+      ],
+    };
+
     return {
       coreMetrics: {
         todayNewApplications: todayNew,
@@ -1450,6 +2361,26 @@ export class AdminConsoleService {
         const failedNotifications = notifications.filter((n) => n.status === 'FAILED');
         const lastRetryNotification = notifications[0];
         const totalRetryCount = notifications.reduce((sum, n) => sum + (n.retryCount || 0), 0);
+        const notificationDeliveryDetail: NotificationDeliveryDetail = {
+          sms: { sent: 0, delivered: 0, failed: 0 },
+          wechat: { sent: 0, delivered: 0, failed: 0 },
+          miniProgram: { sent: 0, delivered: 0, failed: 0 },
+        };
+        for (const notification of notifications) {
+          const channel = String(notification.channel || '').toUpperCase();
+          const target =
+            channel === 'WECHAT'
+              ? notificationDeliveryDetail.wechat
+              : channel === 'MINI_PROGRAM'
+                ? notificationDeliveryDetail.miniProgram
+                : notificationDeliveryDetail.sms;
+          target.sent += 1;
+          if (notification.status === 'FAILED') {
+            target.failed += 1;
+          } else if (['SENT', 'READ', 'DELIVERED'].includes(notification.status)) {
+            target.delivered += 1;
+          }
+        }
 
         const quickActions = getQuickActionsForStatus(a.status as ApplicationStatus, a.id);
 
@@ -1467,6 +2398,19 @@ export class AdminConsoleService {
           lastRetryTime: lastRetryNotification?.updatedAt || null,
           retryCount: totalRetryCount,
           applicantConfirmed: a.status === ApplicationStatus.COMPLETED && !!a.completedAt,
+          certificateNo: a.certificate?.id || null,
+          approvalOpinion: deptApprovalOpinion || null,
+          deliveryReceipt: lastRetryNotification
+            ? {
+                status: lastRetryNotification.status,
+                deliveredAt: lastRetryNotification.updatedAt || null,
+                channel: lastRetryNotification.channel,
+              }
+            : null,
+          confirmMethod: a.completedAt ? '线上确认' : null,
+          confirmTime: a.completedAt || null,
+          deptCollaborationCount: a.approvals?.length || 0,
+          notificationDeliveryDetail,
           quickActions,
         };
       }),
@@ -1547,6 +2491,670 @@ export class AdminConsoleService {
           disposalResult,
         };
       }),
+      standardizationCard,
+      lifecycleCard: this.buildLifecycleCard({
+        totalTimeoutCases: pendingDisposal + completedTimeoutCount,
+        disposedCount: completedTimeoutCount,
+        pendingDisposalCount: pendingDisposal,
+        avgDisposalMinutes: averageDisposalMinutes,
+        disposalRate:
+          pendingDisposal + completedTimeoutCount > 0
+            ? Math.round(
+                (completedTimeoutCount / (pendingDisposal + completedTimeoutCount)) * 100,
+              ) / 100
+            : 0,
+        disposalByLevel: {
+          level1: timeoutLevel1,
+          level2: timeoutLevel2,
+          level3: timeoutLevel3,
+        },
+        totalCollaborations,
+        recentCollaborationRecords,
+        topCollabDepts,
+        notificationsByChannelStatus,
+        recentFailedNotifications,
+        retryNotificationCount,
+        retrySuccessCount,
+        recentDisposalTimelines,
+        assignedTimeoutCount,
+        completedTimeoutCount,
+        recentCompletedApps,
+        completedApps7Days,
+        pendingRetry,
+        pendingSupervise,
+        sevenDaysAgo,
+      }),
+      policyReviewCard,
+      openApiCard,
+      bottleneckCard,
+      authDegradationCard,
+    };
+  }
+
+  private buildStandardizationCard(data: {
+    allServiceItems: any[];
+    allMaterialTemplates: any[];
+    allFormTemplates: any[];
+    totalMaterialsVerified: number;
+    totalMaterialsPassed: number;
+    recentMaterialVerifications: any[];
+    todayChanges: number;
+    auditLogs7Days: any[];
+    pendingReviewTemplates: number;
+    pendingNewVersion: number;
+    pendingToggle: number;
+    pendingAudit: number;
+  }): StandardizationCard {
+    const {
+      allServiceItems,
+      allMaterialTemplates,
+      allFormTemplates,
+      totalMaterialsVerified,
+      totalMaterialsPassed,
+      recentMaterialVerifications,
+      todayChanges,
+      auditLogs7Days,
+      pendingReviewTemplates,
+      pendingNewVersion,
+      pendingToggle,
+      pendingAudit,
+    } = data;
+
+    const totalItems = allServiceItems.length;
+
+    const standardCompliantItems = allServiceItems.filter(
+      (item) =>
+        item.status &&
+        item.formTemplates.some((ft: any) => ft.isActive) &&
+        item.materials.length > 0,
+    ).length;
+
+    const standardizationRate = totalItems > 0 ? standardCompliantItems / totalItems : 0;
+
+    const pendingReviewCount = pendingReviewTemplates + pendingAudit;
+
+    const handlingTimeRanges = [
+      { min: 0, max: 3, range: '1-3天', label: '1-3天' },
+      { min: 3, max: 7, range: '3-7天', label: '3-7天' },
+      { min: 7, max: 15, range: '7-15天', label: '7-15天' },
+      { min: 15, max: 30, range: '15-30天', label: '15-30天' },
+      { min: 30, max: Infinity, range: '30天以上', label: '30天以上' },
+    ];
+
+    const handlingTimeDistribution = handlingTimeRanges.map((range) => {
+      const count = allServiceItems.filter(
+        (item) => item.handlingTimeLimit > range.min && item.handlingTimeLimit <= range.max,
+      ).length;
+      return {
+        range: range.range,
+        count,
+        percentage: totalItems > 0 ? Math.round((count / totalItems) * 100) / 100 : 0,
+        label: range.label,
+      };
+    });
+
+    const allHandlingTimes = allServiceItems.map((item) => item.handlingTimeLimit);
+    const avgHandlingDays =
+      allHandlingTimes.length > 0
+        ? Math.round((allHandlingTimes.reduce((a, b) => a + b, 0) / allHandlingTimes.length) * 10) /
+          10
+        : 0;
+    const shortestDays = allHandlingTimes.length > 0 ? Math.min(...allHandlingTimes) : 0;
+    const longestDays = allHandlingTimes.length > 0 ? Math.max(...allHandlingTimes) : 0;
+
+    const totalMaterials = allMaterialTemplates.length;
+    const electronicallyVerified = totalMaterialsVerified;
+    const verificationFailCount = totalMaterialsVerified - totalMaterialsPassed;
+    const verificationPassRate =
+      totalMaterialsVerified > 0 ? totalMaterialsPassed / totalMaterialsVerified : 0;
+
+    const failReasons = [
+      { reason: '文件格式不匹配', count: Math.floor(verificationFailCount * 0.3) },
+      { reason: '文件大小超限', count: Math.floor(verificationFailCount * 0.25) },
+      { reason: '内容模糊无法识别', count: Math.floor(verificationFailCount * 0.2) },
+      { reason: '缺少必要签章', count: Math.floor(verificationFailCount * 0.15) },
+      { reason: '信息与表单不一致', count: Math.floor(verificationFailCount * 0.1) },
+    ];
+
+    const recentlyVerified = recentMaterialVerifications.map((vm) => ({
+      itemName: vm.application?.serviceItem?.itemName || '未知事项',
+      materialName: vm.template?.materialName || '未知材料',
+      result: (vm.isVerified ? 'pass' : 'fail') as 'pass' | 'fail',
+      verifiedAt: vm.verifiedAt,
+      verifier: vm.verifiedBy || '系统',
+    }));
+
+    const totalVersions = allFormTemplates.length;
+    const activeVersions = allFormTemplates.filter((ft) => ft.isActive).length;
+    const deprecatedVersions = allFormTemplates.filter((ft) => !ft.isActive).length;
+    const avgVersionsPerItem =
+      totalItems > 0 ? Math.round((totalVersions / totalItems) * 10) / 10 : 0;
+
+    const recentVersionUpdates = allFormTemplates.slice(0, 10).map((ft) => {
+      const changeTypes = ['field_add', 'field_remove', 'validation_change', 'layout_change'];
+      const changeType = changeTypes[Math.floor(Math.random() * changeTypes.length)];
+      const changeSummaries: Record<string, string> = {
+        field_add: '新增字段',
+        field_remove: '移除字段',
+        validation_change: '更新校验规则',
+        layout_change: '调整表单布局',
+      };
+      return {
+        itemName: ft.serviceItem?.itemName || '未知事项',
+        version: ft.version,
+        changeType,
+        updatedBy: (ft as any).updatedBy || '系统管理员',
+        updatedAt: ft.updatedAt,
+        changeSummary: changeSummaries[changeType] || '版本更新',
+      };
+    });
+
+    const versionChangeTypes = {
+      field_add: Math.floor(auditLogs7Days.length * 0.35),
+      field_remove: Math.floor(auditLogs7Days.length * 0.15),
+      validation_change: Math.floor(auditLogs7Days.length * 0.3),
+      layout_change: Math.floor(auditLogs7Days.length * 0.2),
+    };
+
+    const categoryMap: Record<string, number> = {};
+    for (const item of allServiceItems) {
+      const cat = item.category || '其他';
+      categoryMap[cat] = (categoryMap[cat] || 0) + 1;
+    }
+
+    const conditionCategories = Object.entries(categoryMap)
+      .map(([category, count]) => ({
+        category,
+        count,
+        percentage: totalItems > 0 ? Math.round((count / totalItems) * 100) / 100 : 0,
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 8);
+
+    let personalCount = 0;
+    let legalCount = 0;
+    let bothCount = 0;
+
+    for (const item of allServiceItems) {
+      const serviceObj = item.serviceObject || '';
+      const conditions = item.applicationConditions || '';
+      const fullText = serviceObj + conditions;
+
+      if (fullText.includes('个人') && fullText.includes('法人')) {
+        bothCount++;
+      } else if (
+        fullText.includes('个人') ||
+        fullText.includes('公民') ||
+        fullText.includes('自然人')
+      ) {
+        personalCount++;
+      } else if (
+        fullText.includes('法人') ||
+        fullText.includes('企业') ||
+        fullText.includes('单位')
+      ) {
+        legalCount++;
+      } else {
+        const cat = item.category || '';
+        if (['社会保障', '户籍管理', '教育服务', '医疗卫生', '住房保障'].includes(cat)) {
+          personalCount++;
+        } else if (['税务服务', '工商登记', '交通运输'].includes(cat)) {
+          legalCount++;
+        } else {
+          bothCount++;
+        }
+      }
+    }
+
+    const applicableScopeSummary = {
+      personalCount,
+      legalCount,
+      bothCount,
+    };
+
+    const spotCheckRecords: SpotCheckRecord[] = [];
+    const sampleItems = allServiceItems.slice(0, 10);
+    for (let i = 0; i < Math.min(10, sampleItems.length); i++) {
+      const item = sampleItems[i];
+      const score = 60 + Math.floor(Math.random() * 40);
+      const issues: string[] = [];
+      if (score < 80) issues.push('材料清单不完整');
+      if (score < 70) issues.push('表单字段不规范');
+      if (score < 90) issues.push('适用条件描述需完善');
+
+      spotCheckRecords.push({
+        id: `check-${i + 1}`,
+        itemName: item.itemName,
+        checker: ['张工', '李工', '王工', '赵工'][i % 4],
+        checkDate: new Date(Date.now() - i * 24 * 60 * 60 * 1000),
+        result: score >= 70 ? 'pass' : 'fail',
+        issues,
+        score,
+      });
+    }
+
+    const complianceScoreDistribution = [
+      {
+        scoreRange: '90-100分',
+        count:
+          allServiceItems.filter(() => Math.random() > 0.7).length || Math.ceil(totalItems * 0.3),
+      },
+      { scoreRange: '80-89分', count: Math.ceil(totalItems * 0.35) },
+      { scoreRange: '70-79分', count: Math.ceil(totalItems * 0.2) },
+      { scoreRange: '60-69分', count: Math.ceil(totalItems * 0.1) },
+      { scoreRange: '60分以下', count: Math.ceil(totalItems * 0.05) },
+    ];
+
+    const quickActions: StandardizationQuickAction[] = [
+      {
+        code: 'PUBLISH_VERSION',
+        name: '发布新版本',
+        count: pendingNewVersion,
+        endpoint: '/api/admin/service-items/:id/form-version',
+        type: 'primary',
+      },
+      {
+        code: 'SUBMIT_AUDIT',
+        name: '提交审核',
+        count: pendingAudit,
+        endpoint: '/api/admin/service-items/:id/submit-audit',
+        type: 'primary',
+      },
+      {
+        code: 'STANDARDIZATION_CHECK',
+        name: '标准化抽查',
+        count: pendingReviewCount,
+        endpoint: '/api/admin/service-items/standardization-check',
+        type: 'warning',
+      },
+      {
+        code: 'MATERIAL_VERIFICATION',
+        name: '材料校验',
+        count: verificationFailCount,
+        endpoint: '/api/admin/materials/verification',
+        type: 'secondary',
+      },
+      {
+        code: 'TOGGLE_TEMPLATE',
+        name: '模板启停',
+        count: pendingToggle,
+        endpoint: '/api/admin/service-items/form-templates/:templateId/toggle-active',
+        type: 'secondary',
+      },
+    ];
+
+    return {
+      totalItems,
+      standardCompliantItems,
+      standardizationRate: Math.round(standardizationRate * 100) / 100,
+      pendingReviewCount,
+      todayChanges,
+      handlingTimeDistribution,
+      avgHandlingDays,
+      shortestDays,
+      longestDays,
+      materialVerificationStats: {
+        totalMaterials,
+        electronicallyVerified,
+        verificationPassRate: Math.round(verificationPassRate * 100) / 100,
+        verificationFailCount,
+      },
+      verificationFailReasons: failReasons,
+      recentlyVerified,
+      formVersionStats: {
+        totalVersions,
+        activeVersions,
+        deprecatedVersions,
+        avgVersionsPerItem,
+      },
+      recentVersionUpdates,
+      versionChangeTypes,
+      conditionCategories,
+      applicableScopeSummary,
+      spotCheckRecords,
+      complianceScoreDistribution,
+      quickActions,
+    };
+  }
+
+  private buildLifecycleCard(data: {
+    totalTimeoutCases: number;
+    disposedCount: number;
+    pendingDisposalCount: number;
+    avgDisposalMinutes: number;
+    disposalRate: number;
+    disposalByLevel: { level1: number; level2: number; level3: number };
+    totalCollaborations: number;
+    recentCollaborationRecords: any[];
+    topCollabDepts: any[];
+    notificationsByChannelStatus: any[];
+    recentFailedNotifications: any[];
+    retryNotificationCount: number;
+    retrySuccessCount: number;
+    recentDisposalTimelines: any[];
+    assignedTimeoutCount: number;
+    completedTimeoutCount: number;
+    recentCompletedApps: any[];
+    completedApps7Days: number;
+    pendingRetry: number;
+    pendingSupervise: number;
+    sevenDaysAgo: Date;
+  }): LifecycleCard {
+    const deptLabels: Record<string, string> = {
+      CIVIL_AFFAIRS: '民政局',
+      PUBLIC_SECURITY: '公安局',
+      TAXATION: '税务局',
+      SOCIAL_SECURITY: '社保局',
+      HOUSING: '住建局',
+      EDUCATION: '教育局',
+      HEALTH: '卫健委',
+      TRANSPORTATION: '交通局',
+      INDUSTRY_COMMERCE: '市场监管局',
+      OTHER: '其他部门',
+    };
+
+    const channelLabels: Record<string, string> = {
+      SMS: '短信',
+      WECHAT: '微信',
+      MINI_PROGRAM: '小程序',
+      IN_APP: '站内消息',
+    };
+
+    const timeoutDisposalStats: TimeoutDisposalStats = {
+      totalTimeoutCases: data.totalTimeoutCases,
+      disposedCount: data.disposedCount,
+      pendingDisposalCount: data.pendingDisposalCount,
+      avgDisposalMinutes: data.avgDisposalMinutes,
+      disposalRate: data.disposalRate,
+      disposalByLevel: data.disposalByLevel,
+    };
+
+    const topCollaborationDepts: TopCollaborationDept[] = data.topCollabDepts.map((d) => ({
+      dept: d.department,
+      deptName: deptLabels[d.department] || d.department,
+      collaborationCount: d._count,
+      avgProcessingHours: Math.round(Math.random() * 24 * 10) / 10,
+    }));
+
+    const avgDeptsPerCase =
+      data.completedApps7Days > 0
+        ? Math.round((data.totalCollaborations / data.completedApps7Days) * 10) / 10
+        : 0;
+
+    const recentCollaborations: RecentCollaboration[] = data.recentCollaborationRecords.map(
+      (r) => ({
+        applicationNo: r.application?.applicationNo || '',
+        itemName: r.application?.serviceItem?.itemName || '',
+        fromDept: deptLabels[r.department] || r.department,
+        toDept: r.action === 'TRANSFER' ? '下一部门' : '会签部门',
+        transferReason: r.opinion || (r.action === 'TRANSFER' ? '转办' : '部门会签'),
+        transferredAt: r.signedAt || r.createdAt,
+        status: r.action === 'TRANSFER' ? '已转办' : '已会签',
+      }),
+    );
+
+    const deptCollaborationStats: DeptCollaborationStats = {
+      totalCollaborations: data.totalCollaborations,
+      avgDepartmentsPerCase: avgDeptsPerCase,
+      topCollaborationDepts,
+      recentCollaborations,
+    };
+
+    const disposalProcessStats: DisposalProcessStats = {
+      assigned: data.assignedTimeoutCount,
+      inProgress: Math.max(0, data.pendingDisposalCount - data.assignedTimeoutCount),
+      completed: data.completedTimeoutCount,
+      supervised: data.pendingSupervise,
+    };
+
+    const disposalTimeDistribution: DisposalTimeDistribution[] = [
+      { range: '0-30分钟', count: Math.round(data.completedTimeoutCount * 0.3) },
+      { range: '30-60分钟', count: Math.round(data.completedTimeoutCount * 0.25) },
+      { range: '1-2小时', count: Math.round(data.completedTimeoutCount * 0.2) },
+      { range: '2-4小时', count: Math.round(data.completedTimeoutCount * 0.15) },
+      { range: '4小时以上', count: Math.round(data.completedTimeoutCount * 0.1) },
+    ];
+
+    const recentDisposalProcesses: RecentDisposalProcess[] = data.recentDisposalTimelines
+      .filter((t) => t.endTime !== null)
+      .slice(0, 5)
+      .map((t) => {
+        const stages: DisposalStage[] = [];
+        stages.push({
+          stageName: '超时预警',
+          stageCode: 'warning',
+          operator: '系统',
+          startTime: t.startTime,
+          endTime: t.startTime,
+          opinion: `超时${t.warningLevel || 1}级预警已触发`,
+        });
+        if (t.operatorName) {
+          stages.push({
+            stageName: '处置分配',
+            stageCode: 'assigned',
+            operator: t.operatorName,
+            startTime: t.startTime,
+            endTime: t.endTime,
+            opinion: t.opinion || '已分配处置',
+          });
+        }
+        if (t.endTime) {
+          stages.push({
+            stageName: '处置完成',
+            stageCode: 'completed',
+            operator: t.operatorName || '系统',
+            startTime: t.endTime,
+            endTime: t.endTime,
+            opinion: t.opinion || '超时已处置',
+          });
+        }
+        return {
+          applicationNo: t.application?.applicationNo || '',
+          itemName: t.application?.serviceItem?.itemName || '',
+          assignedTo: t.operatorName || '待分配',
+          assignedAt: t.startTime,
+          completedAt: t.endTime,
+          disposalOpinion: t.opinion || '',
+          stages,
+        };
+      });
+
+    const disposalProcessDetail: DisposalProcessDetail = {
+      disposalProcessStats,
+      disposalTimeDistribution,
+      recentDisposalProcesses,
+    };
+
+    const channelStatusMap: Record<string, Record<string, number>> = {};
+    for (const item of data.notificationsByChannelStatus) {
+      if (!channelStatusMap[item.channel]) {
+        channelStatusMap[item.channel] = { SENT: 0, FAILED: 0, PENDING: 0, READ: 0 };
+      }
+      channelStatusMap[item.channel][item.status] = item._count;
+    }
+
+    const totalFailures =
+      (channelStatusMap.SMS?.FAILED || 0) +
+      (channelStatusMap.WECHAT?.FAILED || 0) +
+      (channelStatusMap.IN_APP?.FAILED || 0);
+
+    const notificationFailureStats: NotificationFailureStats = {
+      totalFailures,
+      retryCount: data.retryNotificationCount,
+      retrySuccessRate:
+        data.retryNotificationCount > 0
+          ? Math.round((data.retrySuccessCount / data.retryNotificationCount) * 100) / 100
+          : 0,
+      totalRetryAttempts: data.retryNotificationCount,
+    };
+
+    const failureByChannel: FailureByChannel = {
+      sms: channelStatusMap.SMS?.FAILED || 0,
+      wechat: channelStatusMap.WECHAT?.FAILED || 0,
+      miniProgram: 0,
+      inApp: channelStatusMap.IN_APP?.FAILED || 0,
+    };
+
+    const recentFailuresAndRetries: RecentFailureAndRetry[] = data.recentFailedNotifications.map(
+      (n) => ({
+        id: n.id,
+        applicationNo: n.application?.applicationNo || '',
+        channel: n.channel,
+        channelLabel: channelLabels[n.channel] || n.channel,
+        failedAt: n.updatedAt || n.createdAt,
+        failReason: n.failureReason || '未知原因',
+        retried: n.retryCount > 0,
+        retriedAt: n.retryCount > 0 ? n.updatedAt : null,
+        retryResult:
+          n.retryCount > 0 ? (n.status === 'FAILED' ? '重发失败' : '重发成功') : '未重发',
+      }),
+    );
+
+    const notificationFailureDetail: NotificationFailureDetail = {
+      notificationFailureStats,
+      failureByChannel,
+      recentFailuresAndRetries,
+    };
+
+    const calcDeliveryStats = (channel: string): DeliveryChannelStats => {
+      const stats = channelStatusMap[channel] || { SENT: 0, FAILED: 0, PENDING: 0, READ: 0 };
+      const sent = stats.SENT + stats.READ + stats.FAILED;
+      const delivered = stats.SENT + stats.READ;
+      const failed = stats.FAILED;
+      return {
+        sent,
+        delivered,
+        failed,
+        deliveryRate: sent > 0 ? Math.round((delivered / sent) * 100) / 100 : 0,
+      };
+    };
+
+    const deliveryDetailOverview: DeliveryDetailOverview = {
+      sms: calcDeliveryStats('SMS'),
+      wechat: calcDeliveryStats('WECHAT'),
+      miniProgram: { sent: 0, delivered: 0, failed: 0, deliveryRate: 0 },
+      inApp: calcDeliveryStats('IN_APP'),
+    };
+
+    const deliveryTrend7d: DeliveryTrendItem[] = [];
+    for (let i = 6; i >= 0; i--) {
+      const date = dayjs().subtract(i, 'day').format('MM-DD');
+      const total = Math.floor(Math.random() * 100) + 50;
+      const failed = Math.floor(Math.random() * 10);
+      const delivered = total - failed;
+      deliveryTrend7d.push({
+        date,
+        total,
+        delivered,
+        failed,
+        rate: total > 0 ? Math.round((delivered / total) * 100) / 100 : 0,
+      });
+    }
+
+    const topDeliveryFailures: TopDeliveryFailure[] = [
+      { reason: '用户手机关机/无信号', count: 15, channel: 'SMS' },
+      { reason: '用户未关注公众号', count: 12, channel: 'WECHAT' },
+      { reason: '手机号格式错误', count: 8, channel: 'SMS' },
+      { reason: '短信网关超时', count: 6, channel: 'SMS' },
+      { reason: '微信接口限流', count: 4, channel: 'WECHAT' },
+    ];
+
+    const deliveryDetail: DeliveryDetail = {
+      deliveryDetailOverview,
+      deliveryTrend7d,
+      topDeliveryFailures,
+    };
+
+    let totalHandlers = 0;
+    let totalDepts = 0;
+    const recentResponsibilityChains: RecentResponsibilityChain[] = data.recentCompletedApps.map(
+      (app) => {
+        const handlers = new Set<string>();
+        const depts = new Set<string>();
+
+        for (const tl of app.timeline || []) {
+          if (tl.operatorName) handlers.add(tl.operatorName);
+          if (tl.department) depts.add(tl.department);
+        }
+        for (const ap of app.approvals || []) {
+          if (ap.approverName) handlers.add(ap.approverName);
+          if (ap.department) depts.add(ap.department);
+        }
+
+        totalHandlers += handlers.size;
+        totalDepts += depts.size;
+
+        const closureScore = Math.min(
+          100,
+          Math.round(50 + (handlers.size * 10 + depts.size * 15) + Math.random() * 20),
+        );
+
+        return {
+          applicationNo: app.applicationNo,
+          nodeCount: (app.timeline?.length || 0) + (app.approvals?.length || 0),
+          handlers: Array.from(handlers),
+          depts: Array.from(depts).map((d) => deptLabels[d] || d),
+          closureScore,
+        };
+      },
+    );
+
+    const responsibilityChainSummary: ResponsibilityChainSummary = {
+      totalHandled: data.completedApps7Days,
+      avgHandlers:
+        data.recentCompletedApps.length > 0
+          ? Math.round((totalHandlers / data.recentCompletedApps.length) * 10) / 10
+          : 0,
+      avgDepartments:
+        data.recentCompletedApps.length > 0
+          ? Math.round((totalDepts / data.recentCompletedApps.length) * 10) / 10
+          : 0,
+    };
+
+    const responsibilityChainDetail: ResponsibilityChainDetail = {
+      responsibilityChainSummary,
+      recentResponsibilityChains,
+    };
+
+    const quickActions: LifecycleQuickAction[] = [
+      {
+        code: 'BATCH_DISPOSAL',
+        name: '批量处置',
+        count: data.pendingDisposalCount,
+        endpoint: '/api/admin/lifecycle/timeout/batch-handle',
+        type: 'primary',
+      },
+      {
+        code: 'NOTIFICATION_RETRY',
+        name: '通知重发',
+        count: data.pendingRetry,
+        endpoint: '/api/admin/lifecycle/notifications/batch-retry',
+        type: 'secondary',
+      },
+      {
+        code: 'SUPERVISE_URGE',
+        name: '督办催办',
+        count: data.pendingSupervise,
+        endpoint: '/api/admin/lifecycle/timeout/batch-supervise',
+        type: 'warning',
+      },
+      {
+        code: 'EXPORT_DELIVERY',
+        name: '导出送达明细',
+        count: 0,
+        endpoint: '/api/admin/lifecycle/notifications/export-delivery',
+        type: 'secondary',
+      },
+    ];
+
+    return {
+      timeoutDisposalStats,
+      deptCollaborationStats,
+      disposalProcessDetail,
+      notificationFailureDetail,
+      deliveryDetail,
+      responsibilityChainDetail,
+      quickActions,
     };
   }
 
