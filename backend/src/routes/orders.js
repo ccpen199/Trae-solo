@@ -134,27 +134,42 @@ router.post('/quote', (req, res) => {
   
   const optimal = getOptimalPlatform(distance, weight || 0, urgency || 'normal', expected_time);
   const cheapest = getCheapestPlatform(distance, weight || 0);
+  const normalizedDistance = Number(distance);
+  const normalizedWeight = Number(weight || 0);
+  const normalizedUrgency = urgency || 'normal';
+  const toQuoteItem = (r) => ({
+    platform: r.platform,
+    score: r.score,
+    fee: r.fee,
+    delivery_time: r.deliveryTime,
+    meets_deadline: r.meetsDeadline,
+    distance: normalizedDistance,
+    weight: normalizedWeight,
+    urgency: normalizedUrgency,
+    reason: r.reason,
+    score_detail: r.scoreDetail
+  });
   
   res.json({
     success: true,
     data: {
-      optimal: optimal.map(r => ({
-        platform: r.platform,
-        score: r.score,
-        fee: r.fee,
-        delivery_time: r.deliveryTime,
-        meets_deadline: r.meetsDeadline
-      })),
+      optimal: optimal.map(toQuoteItem),
       cheapest: cheapest.map(r => ({
         platform: r.platform,
         fee: r.fee,
-        delivery_time: r.deliveryTime
+        delivery_time: r.deliveryTime,
+        distance: normalizedDistance,
+        weight: normalizedWeight,
+        urgency: normalizedUrgency,
+        reason: `当前参数下总价最低，费用¥${r.fee.toFixed(2)}，预计${r.deliveryTime}分钟送达`
       })),
       recommendation: optimal[0] ? {
         platform: optimal[0].platform,
-        reason: optimal[0].meetsDeadline ? '综合评分最高且满足时效要求' : '综合评分最高',
+        reason: optimal[0].reason,
         fee: optimal[0].fee,
-        delivery_time: optimal[0].deliveryTime
+        delivery_time: optimal[0].deliveryTime,
+        score: optimal[0].score,
+        score_detail: optimal[0].scoreDetail
       } : null
     }
   });
@@ -165,7 +180,7 @@ router.post('/', (req, res) => {
     merchant_id, sender_name, sender_phone, sender_address, sender_lat, sender_lng,
     receiver_name, receiver_phone, receiver_address, receiver_lat, receiver_lng,
     goods_name, goods_weight, goods_value, distance, expected_delivery_time,
-    urgency, platform_id, auto_route = true
+    expected_time, urgency, platform_id, auto_route = true
   } = req.body;
   
   if (!merchant_id || !receiver_name || !receiver_phone || !receiver_address) {
@@ -184,9 +199,11 @@ router.post('/', (req, res) => {
   let selectedPlatformId = platform_id;
   let platformFee = 0;
   let deliveryTime = 60;
+  const requestedDeliveryTime = expected_delivery_time || expected_time;
+  const shouldAutoRoute = auto_route !== false && !platform_id;
   
-  if (auto_route || !platform_id) {
-    const optimal = getOptimalPlatform(actualDistance, actualWeight, urgency || 'normal', expected_delivery_time);
+  if (shouldAutoRoute) {
+    const optimal = getOptimalPlatform(actualDistance, actualWeight, urgency || 'normal', requestedDeliveryTime);
     if (optimal.length > 0) {
       selectedPlatformId = optimal[0].platform.id;
       platformFee = optimal[0].fee;
@@ -219,7 +236,7 @@ router.post('/', (req, res) => {
          sender_address || merchant.address, sender_lat || merchant.latitude, sender_lng || merchant.longitude,
          receiver_name, receiver_phone, receiver_address, receiver_lat, receiver_lng,
          goods_name || '', actualWeight, goods_value || 0, actualDistance,
-         expected_delivery_time || deliveryTime, urgency || 'normal',
+         requestedDeliveryTime || deliveryTime, urgency || 'normal',
          merchantFee, platformFee, selectedPlatformId, platformOrderNo,
          selectedPlatformId ? 'assigned' : 'pending', 'pending', estimatedArrival);
   
@@ -231,6 +248,8 @@ router.post('/', (req, res) => {
   if (selectedPlatformId) {
     db.prepare(`INSERT INTO order_tracks (order_id, status, description, location) VALUES (?, ?, ?, ?)`)
       .run(orderId, 'assigned', `已分配${platform.name}`, sender_address || merchant.address);
+    db.prepare(`INSERT INTO order_tracks (order_id, status, description, location) VALUES (?, ?, ?, ?)`)
+      .run(orderId, 'route_confirmed', `承运方确认：${platform.name}，平台单号 ${platformOrderNo}，预计${deliveryTime}分钟送达`, sender_address || merchant.address);
   }
   
   const order = db.prepare(`

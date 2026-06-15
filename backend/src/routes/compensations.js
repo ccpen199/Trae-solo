@@ -15,7 +15,9 @@ function generateCouponCode() {
 router.get('/', (req, res) => {
   const { merchant_id, platform_id, status, type, page = 1, pageSize = 20 } = req.query;
   
-  let query = 'SELECT c.*, o.order_no, m.name as merchant_name, p.name as platform_name FROM compensations c';
+  let query = `SELECT c.*, o.order_no, m.name as merchant_name, p.name as platform_name,
+    CASE WHEN c.reviewed_at IS NULL THEN 0 ELSE 1 END as reviewed
+    FROM compensations c`;
   query += ' LEFT JOIN orders o ON c.order_id = o.id';
   query += ' LEFT JOIN merchants m ON c.merchant_id = m.id';
   query += ' LEFT JOIN platforms p ON o.platform_id = p.id';
@@ -172,7 +174,8 @@ router.put('/:id/status', (req, res) => {
     .run(status, result || '', req.params.id);
   
   const updated = db.prepare(`
-    SELECT c.*, o.order_no, m.name as merchant_name, p.name as platform_name
+    SELECT c.*, o.order_no, m.name as merchant_name, p.name as platform_name,
+      CASE WHEN c.reviewed_at IS NULL THEN 0 ELSE 1 END as reviewed
     FROM compensations c
     LEFT JOIN orders o ON c.order_id = o.id
     LEFT JOIN merchants m ON c.merchant_id = m.id

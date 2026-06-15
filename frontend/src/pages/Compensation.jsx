@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Table, Tag, Button, Statistic, Modal, Form, Input, Select, message, Space, Drawer, Descriptions, List, Progress, Alert } from 'antd'
+import { Row, Col, Card, Table, Tag, Button, Statistic, Modal, Form, Input, Select, message, Space, Drawer, Descriptions, List, Progress, Alert, Radio } from 'antd'
 import {
   SafetyOutlined,
   GiftOutlined,
@@ -46,12 +46,7 @@ function Compensation() {
     try {
       const res = await platformApi.stats()
       if (res.success) {
-        const withCompensation = res.data.map(p => ({
-          ...p,
-          compensation_count: Math.floor(Math.random() * 10) + 1,
-          compensation_amount: Math.floor(Math.random() * 500) + 50
-        }))
-        setPlatformStats(withCompensation)
+        setPlatformStats(res.data)
       }
     } catch (e) { console.error(e) }
   }
@@ -103,8 +98,14 @@ function Compensation() {
 
   const submitReview = async (values) => {
     try {
+      const res = await compensationApi.updateStatus(currentItem.id, {
+        status: values.approved ? 'issued' : 'expired',
+        result: values.remark || (values.approved ? '复核通过，赔付合理' : '复核不通过，赔付撤销')
+      })
+      if (!res.success) throw new Error(res.message || '复核失败')
       message.success(values.approved ? '复核通过，赔付已确认' : '复核不通过，赔付已撤销')
       setReviewModal(false)
+      setDetailDrawer(false)
       loadList()
       loadStats()
     } catch (e) {
@@ -367,7 +368,7 @@ function Compensation() {
               renderItem={item => (
                 <List.Item
                   actions={[
-                    <Button type="link" size="small" onClick={() => navigate('/platform-monitor')}>
+                    <Button type="link" size="small" onClick={() => navigate('/platforms')}>
                       查看详情
                     </Button>
                   ]}

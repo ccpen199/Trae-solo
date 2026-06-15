@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Table, Tag, Button, Select, Statistic, Modal, Drawer, Descriptions, message, Space, DatePicker, List, Progress, Alert, Steps, Checkbox, Form, Input } from 'antd'
+import { Row, Col, Card, Table, Tag, Button, Select, Statistic, Modal, Drawer, Descriptions, message, Space, DatePicker, List, Progress, Alert, Steps, Checkbox, Form, Input, InputNumber, Radio } from 'antd'
 import {
   MoneyCollectOutlined,
   FileTextOutlined,
@@ -333,7 +333,7 @@ function Settlement() {
         <h2 className="page-title">多平台结算中心</h2>
         <Space>
           <Button icon={<SyncOutlined />} onClick={loadList}>刷新</Button>
-          <Button icon={<FileSearchOutlined />} onClick={() => navigate('/platform-monitor')}>
+          <Button icon={<FileSearchOutlined />} onClick={() => navigate('/platforms')}>
             运力监控
           </Button>
           <Button type="primary" icon={<MoneyCollectOutlined />} onClick={() => setGenerateModal(true)}>
@@ -607,7 +607,7 @@ function Settlement() {
               <Form.Item noStyle shouldUpdate={(prev, curr) => prev.matched !== curr.matched}>
                 {({ getFieldValue }) => !getFieldValue('matched') && (
                   <Form.Item name="diff_amount" label="差异金额(元)" rules={[{ required: true }]}>
-                    <Input.Number step={0.01} style={{ width: '100%' }} placeholder="请输入差异金额" />
+                    <InputNumber step={0.01} style={{ width: '100%' }} placeholder="请输入差异金额" />
                   </Form.Item>
                 )}
               </Form.Item>
@@ -645,7 +645,7 @@ function Settlement() {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item name="amount" label="开票金额(元)" rules={[{ required: true }]}>
-                  <Input.Number step={0.01} style={{ width: '100%' }} />
+                  <InputNumber step={0.01} style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
               <Col span={12}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Form, Input, InputNumber, Select, Button, Row, Col, Tag, Divider, List, Statistic, message, Radio, Checkbox, Modal, Table, Drawer, Space, Descriptions, Progress } from 'antd'
+import { Card, Form, Input, InputNumber, Select, Button, Row, Col, Tag, Divider, List, Statistic, message, Radio, Checkbox, Modal, Table, Drawer, Space, Descriptions, Progress, Alert } from 'antd'
 import {
   ThunderboltOutlined,
   DollarOutlined,
@@ -12,16 +12,19 @@ import {
   EyeOutlined,
   CheckSquareOutlined,
   InfoCircleOutlined,
-  ArrowUpOutlined
+  ArrowUpOutlined,
+  ArrowLeftOutlined
 } from '@ant-design/icons'
 import { orderApi, platformApi } from '../api'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
+import dayjs from 'dayjs'
 
 const { Option } = Select
 const { TextArea } = Input
 
 function PriceCompare() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [form] = Form.useForm()
   const [orderForm] = Form.useForm()
   const [loading, setLoading] = useState(false)
@@ -32,11 +35,19 @@ function PriceCompare() {
   const [orderModal, setOrderModal] = useState(false)
   const [compareDrawer, setCompareDrawer] = useState(false)
   const [selectedPlatform, setSelectedPlatform] = useState(null)
+  const [createdOrder, setCreatedOrder] = useState(null)
+  const [fromMerchant, setFromMerchant] = useState(false)
 
   useEffect(() => {
     loadPlatforms()
-    handleQuote()
-  }, [])
+    const state = location.state
+    if (state?.from === 'merchant') {
+      setFromMerchant(true)
+      if (state.merchantId) {
+        form.setFieldsValue({ merchant_id: state.merchantId })
+      }
+    }
+  }, [location])
 
   const loadPlatforms = async () => {
     try {
@@ -46,14 +57,14 @@ function PriceCompare() {
   }
 
   const handleQuote = async () => {
-    const values = form.getFieldsValue()
-    if (!values.distance || values.distance <= 0) {
-      message.warning('请输入有效的配送距离')
-      return
-    }
-
-    setLoading(true)
     try {
+      const values = await form.validateFields()
+      if (!values.distance || values.distance <= 0) {
+        message.warning('请输入有效的配送距离')
+        return
+      }
+
+      setLoading(true)
       const res = await orderApi.quote({
         distance: values.distance,
         weight: values.weight || 0,
@@ -63,10 +74,60 @@ function PriceCompare() {
       if (res.success) {
         setQuoteResult(res.data)
       }
-    } catch (e) {
-      message.error('获取报价失败')
+    } catch (err) {
+      if (err.errorFields) {
+        message.warning('请先填写完整的配送信息')
+      } else {
+        message.error('获取报价失败')
+      }
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleSelectPlatform = (item) => {
+    setSelectedPlatform(item)
+    setCreatedOrder(null)
+    orderForm.resetFields()
+    const formValues = form.getFieldsValue()
+    orderForm.setFieldsValue({
+      platform_id: item.platform.id,
+      distance: formValues.distance,
+      weight: formValues.weight,
+      urgency: formValues.urgency,
+      expected_time: formValues.expected_time,
+      expected_fee: item.fee,
+      goods_name: formValues.goods_name,
+      receiver_name: formValues.receiver_name,
+      receiver_phone: formValues.receiver_phone,
+      receiver_address: formValues.receiver_address
+    })
+    setOrderModal(true)
+  }
+
+  const submitOrder = async (values) => {
+    try {
+      const res = await orderApi.create({
+        merchant_id: 1,
+        platform_id: selectedPlatform.platform.id,
+        goods_name: values.goods_name,
+        goods_weight: values.weight,
+        distance: values.distance,
+        receiver_name: values.receiver_name,
+        receiver_phone: values.receiver_phone,
+        receiver_address: values.receiver_address,
+        urgency: values.urgency,
+        expected_delivery_time: values.expected_time,
+        expected_fee: values.expected_fee,
+        auto_route: false
+      })
+      if (res.success) {
+        setCreatedOrder(res.data)
+        message.success('订单创建成功，已通知' + selectedPlatform.platform.name + '接单')
+        loadPlatforms()
+      }
+    } catch (e) {
+      message.error(e.response?.data?.message || '下单失败')
     }
   }
 
@@ -87,45 +148,6 @@ function PriceCompare() {
   const cheapest = quoteResult?.cheapest?.[0]
   const fastest = quoteResult?.optimal?.slice().sort((a, b) => a.delivery_time - b.delivery_time)[0]
   const bestScore = quoteResult?.optimal?.[0]
-
-  const handleSelectPlatform = (item) => {
-    setSelectedPlatform(item)
-    orderForm.resetFields()
-    const formValues = form.getFieldsValue()
-    orderForm.setFieldsValue({
-      platform_id: item.platform.id,
-      distance: formValues.distance,
-      weight: formValues.weight,
-      urgency: formValues.urgency,
-      expected_fee: item.fee
-    })
-    setOrderModal(true)
-  }
-
-  const submitOrder = async (values) => {
-    try {
-      const res = await orderApi.create({
-        merchant_id: 1,
-        platform_id: selectedPlatform.platform.id,
-        goods_name: values.goods_name,
-        goods_weight: values.weight,
-        distance: values.distance,
-        receiver_name: values.receiver_name,
-        receiver_phone: values.receiver_phone,
-        receiver_address: values.receiver_address,
-        urgency: values.urgency,
-        expected_time: values.expected_time,
-        expected_fee: values.expected_fee
-      })
-      if (res.success) {
-        message.success('订单创建成功，已通知平台接单')
-        setOrderModal(false)
-        setTimeout(() => navigate('/orders'), 1000)
-      }
-    } catch (e) {
-      message.error(e.response?.data?.message || '下单失败')
-    }
-  }
 
   const toggleCompare = (platformId) => {
     const next = selectedPlatforms.includes(platformId)
@@ -179,15 +201,21 @@ function PriceCompare() {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-title">运费比价引擎</h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {fromMerchant && (
+            <Button type="text" icon={<ArrowLeftOutlined />} onClick={() => navigate('/merchant')}>
+              返回商户看板
+            </Button>
+          )}
+          <h2 className="page-title">运费比价引擎</h2>
+        </div>
         <Space>
-          <Checkbox 
-            checked={selectedPlatforms.length > 0} 
-            onChange={() => setSelectedPlatforms([])}
-            disabled={selectedPlatforms.length === 0}
-          >
-            已选 {selectedPlatforms.length} 个平台对比
-          </Checkbox>
+          <Tag color={selectedPlatforms.length > 0 ? 'blue' : 'default'}>
+            对比篮 {selectedPlatforms.length} 个平台
+          </Tag>
+          <Button size="small" disabled={selectedPlatforms.length === 0} onClick={() => setSelectedPlatforms([])}>
+            清空对比
+          </Button>
           <Button 
             icon={<BarChartOutlined />} 
             onClick={startCompare}
@@ -199,21 +227,47 @@ function PriceCompare() {
           <Button icon={<ShoppingCartOutlined />} onClick={() => navigate('/orders')}>
             订单管理
           </Button>
+          {fromMerchant && (
+            <Button type="primary" icon={<ArrowLeftOutlined />} onClick={() => navigate('/merchant')}>
+              回写商户看板
+            </Button>
+          )}
           <Tag color="blue">智能推荐 · 一键比价 · 多平台对比</Tag>
         </Space>
       </div>
 
       <Row gutter={[24, 24]}>
         <Col span={8}>
-          <Card title="配送参数" className="stat-card">
+          <Card title="配送信息" className="stat-card">
             <Form form={form} layout="vertical" initialValues={{ distance: 5, weight: 1, urgency: 'normal' }}>
-              <Form.Item name="distance" label="配送距离(公里)" rules={[{ required: true, message: '请输入配送距离' }]}>
-                <InputNumber min={0.1} step={0.5} style={{ width: '100%' }} placeholder="输入公里数" />
+              <div style={{ marginBottom: 8, fontSize: 13, color: '#666', fontWeight: 500 }}>收件人信息</div>
+              <Form.Item name="receiver_name" label="收件人姓名" rules={[{ required: true, message: '请输入收件人姓名' }]}>
+                <Input placeholder="请输入姓名" />
               </Form.Item>
-              <Form.Item name="weight" label="物品重量(公斤)">
-                <InputNumber min={0} step={0.5} style={{ width: '100%' }} placeholder="输入公斤数" />
+              <Form.Item name="receiver_phone" label="联系电话" rules={[{ required: true, message: '请输入联系电话' }]}>
+                <Input placeholder="请输入手机号码" />
               </Form.Item>
-              <Form.Item name="urgency" label="时效要求">
+              <Form.Item name="receiver_address" label="收件地址" rules={[{ required: true, message: '请输入收件地址' }]}>
+                <TextArea rows={2} placeholder="请输入详细收件地址" />
+              </Form.Item>
+              <div style={{ marginBottom: 8, fontSize: 13, color: '#666', fontWeight: 500 }}>物品信息</div>
+              <Form.Item name="goods_name" label="物品名称" rules={[{ required: true, message: '请输入物品名称' }]}>
+                <Input placeholder="如：奶茶、餐食、文件" />
+              </Form.Item>
+              <Row gutter={8}>
+                <Col span={12}>
+                  <Form.Item name="distance" label="配送距离(km)" rules={[{ required: true, message: '请输入距离' }]}>
+                    <InputNumber min={0.1} step={0.5} style={{ width: '100%' }} placeholder="公里数" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item name="weight" label="重量(kg)">
+                    <InputNumber min={0} step={0.5} style={{ width: '100%' }} placeholder="公斤数" />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <div style={{ marginBottom: 8, fontSize: 13, color: '#666', fontWeight: 500 }}>时效要求</div>
+              <Form.Item name="urgency" label="时效">
                 <Radio.Group>
                   <Radio value="economy">经济</Radio>
                   <Radio value="normal">普通</Radio>
@@ -231,9 +285,21 @@ function PriceCompare() {
 
           {quoteResult && (
             <>
-              <Card title="三档推荐" style={{ marginTop: 16 }}>
+              <Card title="三档推荐 · 一键下单" style={{ marginTop: 16 }}>
                 <List size="small">
-                  <List.Item>
+                  <List.Item
+                    actions={[
+                      <Button 
+                        key="order" 
+                        type="primary" 
+                        size="small" 
+                        icon={<ShoppingCartOutlined />}
+                        onClick={() => bestScore && handleSelectPlatform(bestScore)}
+                      >
+                        立即下单
+                      </Button>
+                    ]}
+                  >
                     <List.Item.Meta
                       avatar={<div style={{ fontSize: 24 }}>{bestScore?.platform?.logo}</div>}
                       title={
@@ -243,14 +309,28 @@ function PriceCompare() {
                         </div>
                       }
                       description={
-                        <div style={{ display: 'flex', gap: 12 }}>
-                          <span style={{ color: '#52c41a', fontWeight: 600 }}>¥{bestScore?.fee?.toFixed(2)}</span>
-                          <span>{bestScore?.delivery_time}分钟</span>
+                        <div>
+                          <div style={{ display: 'flex', gap: 12 }}>
+                            <span style={{ color: '#52c41a', fontWeight: 600 }}>¥{bestScore?.fee?.toFixed(2)}</span>
+                            <span>{bestScore?.delivery_time}分钟</span>
+                          </div>
+                          <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{bestScore?.reason}</div>
                         </div>
                       }
                     />
                   </List.Item>
-                  <List.Item>
+                  <List.Item
+                    actions={[
+                      <Button 
+                        key="order" 
+                        size="small" 
+                        icon={<ShoppingCartOutlined />}
+                        onClick={() => cheapest && handleSelectPlatform(cheapest)}
+                      >
+                        立即下单
+                      </Button>
+                    ]}
+                  >
                     <List.Item.Meta
                       avatar={<div style={{ fontSize: 24 }}>{cheapest?.platform?.logo}</div>}
                       title={
@@ -260,14 +340,28 @@ function PriceCompare() {
                         </div>
                       }
                       description={
-                        <div style={{ display: 'flex', gap: 12 }}>
-                          <span style={{ color: '#fa8c16', fontWeight: 600 }}>¥{cheapest?.fee?.toFixed(2)}</span>
-                          <span>{cheapest?.delivery_time}分钟</span>
+                        <div>
+                          <div style={{ display: 'flex', gap: 12 }}>
+                            <span style={{ color: '#fa8c16', fontWeight: 600 }}>¥{cheapest?.fee?.toFixed(2)}</span>
+                            <span>{cheapest?.delivery_time}分钟</span>
+                          </div>
+                          <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{cheapest?.reason}</div>
                         </div>
                       }
                     />
                   </List.Item>
-                  <List.Item>
+                  <List.Item
+                    actions={[
+                      <Button 
+                        key="order" 
+                        size="small" 
+                        icon={<ShoppingCartOutlined />}
+                        onClick={() => fastest && handleSelectPlatform(fastest)}
+                      >
+                        立即下单
+                      </Button>
+                    ]}
+                  >
                     <List.Item.Meta
                       avatar={<div style={{ fontSize: 24 }}>{fastest?.platform?.logo}</div>}
                       title={
@@ -277,9 +371,12 @@ function PriceCompare() {
                         </div>
                       }
                       description={
-                        <div style={{ display: 'flex', gap: 12 }}>
-                          <span>¥{fastest?.fee?.toFixed(2)}</span>
-                          <span style={{ color: '#1677ff', fontWeight: 600 }}>{fastest?.delivery_time}分钟</span>
+                        <div>
+                          <div style={{ display: 'flex', gap: 12 }}>
+                            <span>¥{fastest?.fee?.toFixed(2)}</span>
+                            <span style={{ color: '#1677ff', fontWeight: 600 }}>{fastest?.delivery_time}分钟</span>
+                          </div>
+                          <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{fastest?.reason}</div>
                         </div>
                       }
                     />
@@ -368,6 +465,11 @@ function PriceCompare() {
                         <Tag color="orange">可能超时</Tag>
                       )}
 
+                      <div style={{ marginTop: 10, minHeight: 54, fontSize: 12, color: '#666', lineHeight: 1.6 }}>
+                        <InfoCircleOutlined style={{ marginRight: 4, color: '#1677ff' }} />
+                        {item.reason}
+                      </div>
+
                       <Space style={{ marginTop: 12, width: '100%' }}>
                         <Button 
                           type="primary" 
@@ -446,13 +548,85 @@ function PriceCompare() {
                 <div>
                   <div>预计费用: <span style={{ color: '#f5222d', fontSize: 16, fontWeight: 600 }}>¥{selectedPlatform.fee.toFixed(2)}</span></div>
                   <div>预计时间: {selectedPlatform.delivery_time}分钟</div>
-                  <div>配送距离: {selectedPlatform.distance}km</div>
+                  <div>配送距离: {selectedPlatform.distance || form.getFieldValue('distance')}km</div>
+                  <div>推荐理由: {selectedPlatform.reason}</div>
                 </div>
               }
               type="info"
               showIcon
               style={{ marginBottom: 16 }}
             />
+            {createdOrder ? (
+              <div>
+                <Alert
+                  message="配送订单已创建成功"
+                  description={
+                    <div>
+                      <p>✅ 订单已同步至 <strong>{createdOrder.platform_name}</strong> 平台</p>
+                      <p>✅ 平台已确认接单，骑手正在赶来</p>
+                      <p>✅ 订单数据已回写商户看板，可实时追踪配送状态</p>
+                    </div>
+                  }
+                  type="success"
+                  showIcon
+                  style={{ marginBottom: 16 }}
+                />
+                <Descriptions column={1} size="small" bordered style={{ marginBottom: 16 }}>
+                  <Descriptions.Item label="订单号">
+                    <span style={{ fontFamily: 'monospace' }}>{createdOrder.order_no}</span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="承运平台">
+                    {createdOrder.platform_logo} {createdOrder.platform_name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="平台单号">
+                    <span style={{ fontFamily: 'monospace' }}>{createdOrder.platform_order_no || '同步中...'}</span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="配送状态">
+                    <Tag color="processing">{createdOrder.delivery_status === 'pending' ? '待分配' : '已分配'}</Tag>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="预计送达">
+                    {dayjs(createdOrder.estimated_arrival_time).format('YYYY-MM-DD HH:mm')}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="收件人">
+                    {createdOrder.receiver_name} ({createdOrder.receiver_phone})
+                  </Descriptions.Item>
+                  <Descriptions.Item label="收件地址">
+                    {createdOrder.receiver_address}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="物品">
+                    {createdOrder.goods_name || '-'} ({createdOrder.goods_weight}kg)
+                  </Descriptions.Item>
+                  <Descriptions.Item label="费用">
+                    <span style={{ color: '#f5222d', fontWeight: 600 }}>¥{createdOrder.total_fee?.toFixed(2)}</span>
+                  </Descriptions.Item>
+                </Descriptions>
+                <Alert
+                  message="智能路由选择说明"
+                  description={selectedPlatform.reason}
+                  type="info"
+                  showIcon
+                  style={{ marginBottom: 16 }}
+                />
+                <Space style={{ width: '100%', justifyContent: 'flex-end' }} wrap>
+                  <Button onClick={() => { setCreatedOrder(null); orderForm.resetFields(); }}>
+                    继续下单
+                  </Button>
+                  {fromMerchant && (
+                    <Button type="primary" icon={<ArrowLeftOutlined />} onClick={() => navigate('/merchant')}>
+                      返回商户看板
+                    </Button>
+                  )}
+                  <Button onClick={() => navigate('/orders')}>
+                    查看全部订单
+                  </Button>
+                  {fromMerchant && (
+                    <Button type="primary" icon={<CheckCircleOutlined />} onClick={() => navigate('/merchant')}>
+                      ✔ 回写商户看板
+                    </Button>
+                  )}
+                </Space>
+              </div>
+            ) : (
             <Form form={orderForm} layout="vertical" onFinish={submitOrder}>
               <Row gutter={16}>
                 <Col span={12}>
@@ -505,6 +679,7 @@ function PriceCompare() {
                 </Button>
               </div>
             </Form>
+            )}
           </div>
         )}
       </Modal>

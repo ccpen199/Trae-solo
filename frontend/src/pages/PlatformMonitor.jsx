@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Table, Tag, Progress, Button, List, Statistic, message, Modal, Form, InputNumber, Select, Drawer, Descriptions, Timeline, Alert, Badge, Space, Divider } from 'antd'
+import { Row, Col, Card, Table, Tag, Progress, Button, List, Statistic, message, Modal, Form, InputNumber, Select, Drawer, Descriptions, Timeline, Alert, Badge, Space, Divider, Input, Empty } from 'antd'
+const { Option } = Select
+const { TextArea } = Input
 import {
   SafetyOutlined,
   CheckCircleOutlined,
@@ -15,14 +17,13 @@ import {
   BellOutlined,
   FileSearchOutlined,
   EditOutlined,
-  FileTextOutlined
+  FileTextOutlined,
+  ClockCircleOutlined
 } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import dayjs from 'dayjs'
-import { platformApi, compensationApi, settlementApi, afterSalesApi } from '../api'
+import { platformApi, compensationApi, settlementApi, afterSalesApi, orderApi } from '../api'
 import { useNavigate } from 'react-router-dom'
-
-const { Option } = Select
 
 function PlatformMonitor() {
   const navigate = useNavigate()
@@ -34,6 +35,11 @@ function PlatformMonitor() {
   const [platformDetail, setPlatformDetail] = useState(null)
   const [alerts, setAlerts] = useState([])
   const [form] = Form.useForm()
+  const [alertForm] = Form.useForm()
+  const [alertModal, setAlertModal] = useState(false)
+  const [currentAlert, setCurrentAlert] = useState(null)
+  const [compensationDetail, setCompensationDetail] = useState(null)
+  const [compensationDrawer, setCompensationDrawer] = useState(false)
 
   useEffect(() => {
     loadData()
@@ -65,7 +71,11 @@ function PlatformMonitor() {
           content: `当前运力饱和度 ${(p.capacity_saturation * 100).toFixed(0)}%，建议分流订单`,
           platform_id: p.id,
           platform_name: p.name,
-          action: '查看运力'
+          action: '处理预警',
+          status: 'pending',
+          owner: '运营组-张工',
+          created_at: dayjs().subtract(Math.floor(Math.random() * 24), 'hour').format('YYYY-MM-DD HH:mm'),
+          closed_result: ''
         })
       }
       if (p.actual_on_time_rate < 0.92) {
@@ -76,7 +86,11 @@ function PlatformMonitor() {
           content: `近7天准时率 ${(p.actual_on_time_rate * 100).toFixed(1)}%，低于预警线92%`,
           platform_id: p.id,
           platform_name: p.name,
-          action: '联系平台'
+          action: '处理预警',
+          status: 'processing',
+          owner: '质控组-李工',
+          created_at: dayjs().subtract(Math.floor(Math.random() * 24), 'hour').format('YYYY-MM-DD HH:mm'),
+          closed_result: '已联系平台，承诺24小时内整改'
         })
       }
       if (p.loss_rate > 0.01) {
@@ -87,7 +101,11 @@ function PlatformMonitor() {
           content: `近7天丢件率 ${(p.loss_rate * 100).toFixed(2)}%，建议重点关注`,
           platform_id: p.id,
           platform_name: p.name,
-          action: '查看赔付'
+          action: '处理预警',
+          status: 'closed',
+          owner: '客服组-王工',
+          created_at: dayjs().subtract(Math.floor(Math.random() * 48), 'hour').format('YYYY-MM-DD HH:mm'),
+          closed_result: '已核查3笔丢件，全额赔付完毕'
         })
       }
       if (p.complaint_rate > 0.01) {
@@ -98,11 +116,48 @@ function PlatformMonitor() {
           content: `近7天投诉率 ${(p.complaint_rate * 100).toFixed(2)}%，建议启动复核`,
           platform_id: p.id,
           platform_name: p.name,
-          action: '处理投诉'
+          action: '处理预警',
+          status: 'pending',
+          owner: '运营组-赵工',
+          created_at: dayjs().subtract(Math.floor(Math.random() * 12), 'hour').format('YYYY-MM-DD HH:mm'),
+          closed_result: ''
         })
       }
     })
     setAlerts(newAlerts)
+  }
+
+  const handleAlertClick = (alert) => {
+    setCurrentAlert(alert)
+    alertForm.setFieldsValue({
+      status: alert.status,
+      owner: alert.owner,
+      closed_result: alert.closed_result
+    })
+    setAlertModal(true)
+  }
+
+  const handleAlertSubmit = (values) => {
+    const updated = alerts.map(a => a.id === currentAlert.id ? { ...a, ...values } : a)
+    setAlerts(updated)
+    setAlertModal(false)
+    message.success('预警处理已更新')
+  }
+
+  const handleViewCompensation = async (comp) => {
+    try {
+      const [orderRes] = await Promise.all([
+        orderApi.detail(comp.order_id)
+      ])
+      setCompensationDetail({
+        ...comp,
+        order: orderRes.success ? orderRes.data : null
+      })
+      setCompensationDrawer(true)
+    } catch (e) {
+      setCompensationDetail(comp)
+      setCompensationDrawer(true)
+    }
   }
 
   const handleViewDetail = async (platform) => {
@@ -306,30 +361,42 @@ function PlatformMonitor() {
       title: '近30天赔付',
       width: 120,
       render: (_, record) => {
-        const count = Math.floor(Math.random() * 8) + 1
-        const amount = Math.floor(Math.random() * 300) + 50
+        const count = record.compensation_count || 0
+        const amount = record.compensation_amount || 0
         return (
           <div>
             <div style={{ fontSize: 12, color: '#666' }}>{count} 笔</div>
-            <div style={{ color: '#f5222d', fontSize: 13, fontWeight: 500 }}>¥{amount}</div>
+            <div style={{ color: '#f5222d', fontSize: 13, fontWeight: 500 }}>¥{Number(amount).toFixed(2)}</div>
           </div>
         )
       }
     },
     {
       title: '异常预警',
-      width: 120,
+      width: 160,
       render: (_, record) => {
         const hasAlert = alerts.some(a => a.platform_id === record.id)
         if (!hasAlert) return <Tag color="success">正常</Tag>
         const platformAlerts = alerts.filter(a => a.platform_id === record.id)
         const maxLevel = platformAlerts.some(a => a.type === 'error') ? 'error' : 'warning'
+        const unprocessed = platformAlerts.filter(a => a.status !== 'closed').length
         return (
-          <Badge count={platformAlerts.length} color={maxLevel === 'error' ? '#ff4d4f' : '#faad14'}>
-            <Tag color={maxLevel === 'error' ? 'red' : 'orange'}>
-              {maxLevel === 'error' ? '高风险' : '关注'}
-            </Tag>
-          </Badge>
+          <Space>
+            <Badge count={platformAlerts.length} color={maxLevel === 'error' ? '#ff4d4f' : '#faad14'}>
+              <Tag color={maxLevel === 'error' ? 'red' : 'orange'}>
+                {maxLevel === 'error' ? '高风险' : '关注'}
+              </Tag>
+            </Badge>
+            {unprocessed > 0 && (
+              <Button 
+                type="link" 
+                size="small" 
+                onClick={() => handleAlertClick(platformAlerts[0])}
+              >
+                {unprocessed}条待处理
+              </Button>
+            )}
+          </Space>
         )
       }
     },
@@ -628,7 +695,13 @@ function PlatformMonitor() {
                 dataSource={platformDetail.compensations}
                 locale={{ emptyText: '暂无赔付记录' }}
                 renderItem={item => (
-                  <List.Item>
+                  <List.Item
+                    actions={[
+                      <Button key="detail" type="link" size="small" onClick={() => handleViewCompensation(item)}>
+                        查看详情
+                      </Button>
+                    ]}
+                  >
                     <List.Item.Meta
                       avatar={<GiftOutlined style={{ color: '#722ed1' }} />}
                       title={
@@ -738,6 +811,227 @@ function PlatformMonitor() {
           </div>
         )}
       </Drawer>
+
+      <Drawer
+        title={
+          <Space>
+            <GiftOutlined style={{ color: '#722ed1' }} />
+            <span>赔付详情 - {compensationDetail?.order_no}</span>
+          </Space>
+        }
+        placement="right"
+        width={600}
+        open={compensationDrawer}
+        onClose={() => setCompensationDrawer(false)}
+        destroyOnClose
+      >
+        {compensationDetail && (
+          <div>
+            <Alert
+              message={compensationDetail.type === 'timeout' ? '超时赔付' : compensationDetail.type === 'loss' ? '丢件赔付' : '投诉赔付'}
+              description={
+                <div>
+                  <p><strong>赔付原因:</strong> {compensationDetail.reason || '系统自动触发'}</p>
+                  <p><strong>赔付金额:</strong> <span style={{ color: '#f5222d', fontWeight: 600 }}>¥{compensationDetail.amount?.toFixed(2)}</span></p>
+                  <p><strong>补偿券码:</strong> <span style={{ fontFamily: 'monospace' }}>{compensationDetail.coupon_code || '生成中...'}</span></p>
+                </div>
+              }
+              type={compensationDetail.status === 'pending' ? 'warning' : 'success'}
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+
+            <Card title="违约订单明细" size="small" style={{ marginBottom: 16 }}>
+              {compensationDetail.order ? (
+                <Descriptions column={1} size="small" bordered>
+                  <Descriptions.Item label="订单号">
+                    <span style={{ fontFamily: 'monospace' }}>{compensationDetail.order.order_no}</span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="承运平台">
+                    {compensationDetail.order.platform_logo} {compensationDetail.order.platform_name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="配送状态">
+                    <Tag color="error">{compensationDetail.order.delivery_status}</Tag>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="下单时间">
+                    {dayjs(compensationDetail.order.created_at).format('YYYY-MM-DD HH:mm')}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="预计送达">
+                    {dayjs(compensationDetail.order.estimated_arrival_time).format('YYYY-MM-DD HH:mm')}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="实际送达">
+                    {compensationDetail.order.actual_arrival_time 
+                      ? dayjs(compensationDetail.order.actual_arrival_time).format('YYYY-MM-DD HH:mm')
+                      : <Tag color="warning">未送达</Tag>
+                    }
+                  </Descriptions.Item>
+                  <Descriptions.Item label="超时时间">
+                    {compensationDetail.order.estimated_arrival_time && (
+                      <span style={{ color: '#ff4d4f', fontWeight: 600 }}>
+                        {dayjs().diff(dayjs(compensationDetail.order.estimated_arrival_time), 'minute')} 分钟
+                      </span>
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="收件人">
+                    {compensationDetail.order.receiver_name} ({compensationDetail.order.receiver_phone})
+                  </Descriptions.Item>
+                  <Descriptions.Item label="收件地址">
+                    {compensationDetail.order.receiver_address}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="物品">
+                    {compensationDetail.order.goods_name || '-'} ({compensationDetail.order.goods_weight}kg)
+                  </Descriptions.Item>
+                  <Descriptions.Item label="配送距离">
+                    {compensationDetail.order.distance}km
+                  </Descriptions.Item>
+                </Descriptions>
+              ) : (
+                <Empty description="订单详情加载中" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              )}
+            </Card>
+
+            <Card title="补偿券发放状态" size="small" style={{ marginBottom: 16 }}>
+              <Descriptions column={1} size="small" bordered>
+                <Descriptions.Item label="补偿券码">
+                  <span style={{ fontFamily: 'monospace' }}>{compensationDetail.coupon_code || '待生成'}</span>
+                </Descriptions.Item>
+                <Descriptions.Item label="发放状态">
+                  <Tag color={statusMap[compensationDetail.status]?.color}>
+                    {statusMap[compensationDetail.status]?.text}
+                  </Tag>
+                </Descriptions.Item>
+                <Descriptions.Item label="触发时间">
+                  {dayjs(compensationDetail.triggered_at).format('YYYY-MM-DD HH:mm:ss')}
+                </Descriptions.Item>
+                <Descriptions.Item label="发放时间">
+                  {compensationDetail.status !== 'pending' && compensationDetail.triggered_at
+                    ? dayjs(compensationDetail.triggered_at).add(1, 'minute').format('YYYY-MM-DD HH:mm:ss')
+                    : '待发放'
+                  }
+                </Descriptions.Item>
+                <Descriptions.Item label="领取状态">
+                  {compensationDetail.status === 'pending' 
+                    ? <Tag color="default">待领取</Tag>
+                    : <Tag color="success">已发放</Tag>
+                  }
+                </Descriptions.Item>
+                <Descriptions.Item label="有效期">
+                  自发放之日起30天内有效
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+
+            <Card title="复查处理记录" size="small" style={{ marginBottom: 16 }}>
+              <Timeline size="small">
+                <Timeline.Item color="blue">
+                  <div><strong>赔付触发</strong></div>
+                  <div style={{ fontSize: 12, color: '#666' }}>
+                    {dayjs(compensationDetail.triggered_at).format('YYYY-MM-DD HH:mm:ss')}
+                  </div>
+                  <div style={{ fontSize: 12 }}>
+                    系统检测到订单异常，自动触发{compensationDetail.type === 'timeout' ? '超时' : compensationDetail.type === 'loss' ? '丢件' : '投诉'}赔付
+                  </div>
+                </Timeline.Item>
+                {compensationDetail.status !== 'pending' && (
+                  <Timeline.Item color="green">
+                    <div><strong>补偿券发放</strong></div>
+                    <div style={{ fontSize: 12, color: '#666' }}>
+                      {dayjs(compensationDetail.triggered_at).add(1, 'minute').format('YYYY-MM-DD HH:mm:ss')}
+                    </div>
+                    <div style={{ fontSize: 12 }}>
+                      补偿券 {compensationDetail.coupon_code} 已发放，金额 ¥{compensationDetail.amount?.toFixed(2)}
+                    </div>
+                  </Timeline.Item>
+                )}
+                {compensationDetail.status === 'review_pending' && (
+                  <Timeline.Item color="orange">
+                    <div><strong>待复核</strong></div>
+                    <div style={{ fontSize: 12, color: '#666' }}>等待运营人员复核</div>
+                  </Timeline.Item>
+                )}
+                {compensationDetail.status === 'reviewed' && (
+                  <Timeline.Item color="purple">
+                    <div><strong>复核完成</strong></div>
+                    <div style={{ fontSize: 12, color: '#666' }}>
+                      {compensationDetail.reviewed_at && dayjs(compensationDetail.reviewed_at).format('YYYY-MM-DD HH:mm:ss')}
+                    </div>
+                    <div style={{ fontSize: 12 }}>
+                      复核结果: {compensationDetail.review_result || '正常赔付'}
+                    </div>
+                  </Timeline.Item>
+                )}
+                {compensationDetail.status === 'pending' && (
+                  <Timeline.Item color="gray" dot={<ClockCircleOutlined />}>
+                    <div><strong>等待处理</strong></div>
+                    <div style={{ fontSize: 12 }}>运营人员将在24小时内完成审核</div>
+                  </Timeline.Item>
+                )}
+              </Timeline>
+            </Card>
+
+            <Card title="月结对账承接" size="small">
+              <Alert
+                message="对账说明"
+                description={`此笔赔付金额 ¥${compensationDetail.amount?.toFixed(2)} 将计入 ${dayjs(compensationDetail.triggered_at).format('YYYY年MM月')} 结算周期，在与 ${compensationDetail.platform_name || '对应平台'} 结算时自动抵扣应付佣金。`}
+                type="info"
+                showIcon
+              />
+              <Space style={{ marginTop: 12 }}>
+                <Button size="small" onClick={() => navigate('/settlement')}>
+                  查看结算单
+                </Button>
+                <Button size="small" type="primary" onClick={() => navigate('/compensation')}>
+                  全部赔付记录
+                </Button>
+              </Space>
+            </Card>
+          </div>
+        )}
+      </Drawer>
+
+      <Modal
+        title="异常预警处理"
+        open={alertModal}
+        onCancel={() => setAlertModal(false)}
+        onOk={() => alertForm.submit()}
+        width={600}
+        destroyOnClose
+      >
+        {currentAlert && (
+          <Form form={alertForm} layout="vertical" onFinish={handleAlertSubmit}>
+            <Alert
+              message={currentAlert.title}
+              description={currentAlert.content}
+              type={currentAlert.type === 'error' ? 'error' : 'warning'}
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+            <Descriptions column={2} size="small" bordered style={{ marginBottom: 16 }}>
+              <Descriptions.Item label="平台">{currentAlert.platform_name}</Descriptions.Item>
+              <Descriptions.Item label="创建时间">{currentAlert.created_at}</Descriptions.Item>
+              <Descriptions.Item label="责任人">{currentAlert.owner}</Descriptions.Item>
+              <Descriptions.Item label="当前状态">
+                <Tag color={currentAlert.status === 'pending' ? 'warning' : currentAlert.status === 'processing' ? 'processing' : 'success'}>
+                  {currentAlert.status === 'pending' ? '待处理' : currentAlert.status === 'processing' ? '处理中' : '已关闭'}
+                </Tag>
+              </Descriptions.Item>
+            </Descriptions>
+            <Form.Item name="status" label="处理状态" rules={[{ required: true, message: '请选择处理状态' }]}>
+              <Select>
+                <Option value="pending">待处理</Option>
+                <Option value="processing">处理中</Option>
+                <Option value="closed">已关闭</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item name="owner" label="责任人">
+              <Input placeholder="请输入责任人" />
+            </Form.Item>
+            <Form.Item name="closed_result" label="处理结果 / 关闭原因">
+              <TextArea rows={4} placeholder="请输入处理结果或关闭原因" />
+            </Form.Item>
+          </Form>
+        )}
+      </Modal>
     </div>
   )
 }
@@ -746,7 +1040,9 @@ const statusMap = {
   pending: { color: 'processing', text: '待发放' },
   issued: { color: 'success', text: '已发放' },
   used: { color: 'default', text: '已使用' },
-  expired: { color: 'default', text: '已过期' }
+  expired: { color: 'default', text: '已过期' },
+  review_pending: { color: 'warning', text: '待复核' },
+  reviewed: { color: 'purple', text: '已复核' }
 }
 
 const statusMap2 = {

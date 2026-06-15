@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Button, Tag, Select, Input, Modal, Form, InputNumber, Radio, Drawer, Descriptions, Timeline, message, Space, Row, Col } from 'antd'
-import { SearchOutlined, PlusOutlined, EyeOutlined, SyncOutlined } from '@ant-design/icons'
+import { Table, Button, Tag, Select, Input, Modal, Form, InputNumber, Radio, Drawer, Descriptions, Timeline, message, Space, Row, Col, Progress } from 'antd'
+import { SearchOutlined, PlusOutlined, EyeOutlined, SyncOutlined, RobotOutlined, BarChartOutlined, ClockCircleOutlined, DollarOutlined, SafetyOutlined, ThunderboltOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { orderApi, platformApi, merchantApi } from '../api'
 
@@ -19,6 +19,9 @@ function Orders() {
   const [quoteResult, setQuoteResult] = useState(null)
   const [form] = Form.useForm()
   const [selectedPlatform, setSelectedPlatform] = useState(null)
+  const [routeDrawer, setRouteDrawer] = useState(false)
+  const [routeDetail, setRouteDetail] = useState(null)
+  const [routeLoading, setRouteLoading] = useState(false)
 
   useEffect(() => {
     loadPlatforms()
@@ -116,6 +119,33 @@ function Orders() {
     }
   }
 
+  const handleViewRoute = async (order) => {
+    setRouteLoading(true)
+    try {
+      const res = await orderApi.quote({
+        distance: order.distance,
+        weight: order.goods_weight || 0,
+        urgency: order.urgency || 'normal'
+      })
+      if (res.success) {
+        const platformData = platforms.find(p => p.id === order.platform_id)
+        const routeData = res.data.optimal?.find(r => r.platform.id === order.platform_id) || res.data.optimal?.[0]
+        setRouteDetail({
+          order,
+          platform: platformData,
+          route: routeData,
+          allPlatforms: res.data.optimal || [],
+          recommendation: res.data.reason || ''
+        })
+        setRouteDrawer(true)
+      }
+    } catch (e) {
+      message.error('加载路由依据失败')
+    } finally {
+      setRouteLoading(false)
+    }
+  }
+
   const handleUpdateStatus = async (orderId, status) => {
     try {
       const res = await orderApi.updateStatus(orderId, { delivery_status: status })
@@ -209,13 +239,21 @@ function Orders() {
     },
     {
       title: '操作',
-      width: 180,
+      width: 280,
       render: (_, record) => (
-        <Space size="small">
+        <Space size="small" wrap>
           <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>
             详情
           </Button>
+          <Button type="link" size="small" icon={<RobotOutlined />} onClick={() => handleViewRoute(record)}>
+            路由依据
+          </Button>
           {record.delivery_status === 'pending' && (
+            <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'assigned')}>
+              分配
+            </Button>
+          )}
+          {record.delivery_status === 'assigned' && (
             <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'picked')}>
               取货
             </Button>
@@ -296,8 +334,20 @@ function Orders() {
         title="新建配送订单"
         open={createModal}
         onCancel={() => { setCreateModal(false); form.resetFields(); setQuoteResult(null); setSelectedPlatform(null) }}
+        onOk={() => { setCreateModal(false); form.resetFields(); setQuoteResult(null); setSelectedPlatform(null) }}
         width={700}
-        footer={null}
+        maskClosable={false}
+        destroyOnClose
+        cancelText="关闭"
+        okText="创建订单"
+        footer={[
+          <Button key="cancel" onClick={() => { setCreateModal(false); form.resetFields(); setQuoteResult(null); setSelectedPlatform(null) }}>
+            关闭
+          </Button>,
+          <Button key="submit" type="primary" onClick={() => form.submit()}>
+            创建订单
+          </Button>
+        ]}
       >
         <Form form={form} layout="vertical" onFinish={handleCreate}>
           <Row gutter={16}>
@@ -408,11 +458,6 @@ function Orders() {
               </Row>
             </div>
           )}
-
-          <div style={{ textAlign: 'right' }}>
-            <Button onClick={() => setCreateModal(false)} style={{ marginRight: 8 }}>取消</Button>
-            <Button type="primary" htmlType="submit">创建订单</Button>
-          </div>
         </Form>
       </Modal>
 
@@ -474,6 +519,193 @@ function Orders() {
                   )
                 }))}
               />
+            </div>
+          </div>
+        )}
+      </Drawer>
+
+      <Drawer
+        title={
+          <Space>
+            <RobotOutlined style={{ color: '#722ed1' }} />
+            <span>智能路由依据分析</span>
+          </Space>
+        }
+        placement="right"
+        width={650}
+        open={routeDrawer}
+        onClose={() => setRouteDrawer(false)}
+        destroyOnClose
+        loading={routeLoading}
+      >
+        {routeDetail && (
+          <div>
+            <Alert
+              message="智能路由推荐说明"
+              description={routeDetail.recommendation || '基于多维度加权评分模型，综合考虑价格、时效、服务质量和运力饱和度，为您选择最优承运方'}
+              type="info"
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+
+            <Card title="订单参数" size="small" style={{ marginBottom: 16 }}>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <div style={{ fontSize: 12, color: '#666', marginBottom: 4 }}>配送距离</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <BarChartOutlined style={{ color: '#1677ff' }} />
+                    <span style={{ fontSize: 16, fontWeight: 600 }}>{routeDetail.order.distance}km</span>
+                  </div>
+                </Col>
+                <Col span={8}>
+                  <div style={{ fontSize: 12, color: '#666', marginBottom: 4 }}>物品重量</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <SafetyOutlined style={{ color: '#52c41a' }} />
+                    <span style={{ fontSize: 16, fontWeight: 600 }}>{routeDetail.order.goods_weight || 0}kg</span>
+                  </div>
+                </Col>
+                <Col span={8}>
+                  <div style={{ fontSize: 12, color: '#666', marginBottom: 4 }}>时效要求</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <ClockCircleOutlined style={{ color: '#faad14' }} />
+                    <span style={{ fontSize: 16, fontWeight: 600 }}>
+                      {routeDetail.order.urgency === 'urgent' ? '加急' : routeDetail.order.urgency === 'normal' ? '普通' : '经济'}
+                    </span>
+                  </div>
+                </Col>
+              </Row>
+            </Card>
+
+            <Card title="当前承运方评分详情" size="small" style={{ marginBottom: 16 }}>
+              {routeDetail.route ? (
+                <div>
+                  <Space style={{ marginBottom: 16 }}>
+                    <span style={{ fontSize: 28 }}>{routeDetail.route.platform.logo}</span>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 600 }}>{routeDetail.route.platform.name}</div>
+                      <div style={{ fontSize: 12, color: '#666' }}>综合评分: {routeDetail.route.score?.toFixed(1)}分</div>
+                    </div>
+                  </Space>
+                  <Descriptions column={2} size="small" bordered>
+                    <Descriptions.Item label="运费成本">
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>¥{routeDetail.route.fee?.toFixed(2)}</span>
+                        <Progress 
+                          percent={routeDetail.route.price_score || 0} 
+                          size="small" 
+                          style={{ width: 100 }}
+                          strokeColor="#52c41a"
+                        />
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="预计时效">
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>{routeDetail.route.delivery_time}分钟</span>
+                        <Progress 
+                          percent={routeDetail.route.time_score || 0} 
+                          size="small" 
+                          style={{ width: 100 }}
+                          strokeColor="#1677ff"
+                        />
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="运力饱和度">
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>{((routeDetail.platform?.capacity_saturation || 0) * 100).toFixed(0)}%</span>
+                        <Progress 
+                          percent={routeDetail.route.capacity_score || 0} 
+                          size="small" 
+                          style={{ width: 100 }}
+                          strokeColor="#722ed1"
+                        />
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="历史履约率">
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>{((routeDetail.platform?.actual_on_time_rate || 0) * 100).toFixed(1)}%</span>
+                        <Progress 
+                          percent={routeDetail.route.quality_score || 0} 
+                          size="small" 
+                          style={{ width: 100 }}
+                          strokeColor="#fa8c16"
+                        />
+                      </div>
+                    </Descriptions.Item>
+                  </Descriptions>
+                  <Alert
+                    message="选择理由"
+                    description={routeDetail.route.reason || '综合评分最高，为最优选择'}
+                    type="success"
+                    showIcon
+                    style={{ marginTop: 12 }}
+                  />
+                </div>
+              ) : (
+                <div style={{ textAlign: 'center', padding: 20, color: '#999' }}>
+                  暂无当前承运方的评分数据
+                </div>
+              )}
+            </Card>
+
+            <Card title="全平台综合对比" size="small">
+              <Table
+                dataSource={routeDetail.allPlatforms}
+                rowKey="platform.id"
+                size="small"
+                pagination={false}
+                scroll={{ x: 600 }}
+                rowClassName={(record) => 
+                  record.platform.id === routeDetail.order.platform_id 
+                    ? 'table-row-selected' 
+                    : ''
+                }
+              >
+                <Table.Column 
+                  title="平台" 
+                  dataIndex="platform.name" 
+                  key="platform"
+                  render={(text, record) => (
+                    <Space>
+                      <span style={{ fontSize: 18 }}>{record.platform.logo}</span>
+                      {text}
+                      {record.platform.id === routeDetail.order.platform_id && (
+                        <Tag color="green">已选择</Tag>
+                      )}
+                    </Space>
+                  )}
+                />
+                <Table.Column 
+                  title="运费" 
+                  dataIndex="fee" 
+                  key="fee"
+                  render={(val) => <span style={{ color: '#52c41a' }}>¥{val?.toFixed(2)}</span>}
+                  sorter={(a, b) => a.fee - b.fee}
+                />
+                <Table.Column 
+                  title="时效(分)" 
+                  dataIndex="delivery_time" 
+                  key="time"
+                  sorter={(a, b) => a.delivery_time - b.delivery_time}
+                />
+                <Table.Column 
+                  title="综合评分" 
+                  dataIndex="score" 
+                  key="score"
+                  render={(val) => (
+                    <span style={{ fontWeight: 600, color: val >= 80 ? '#52c41a' : val >= 60 ? '#faad14' : '#ff4d4f' }}>
+                      {val?.toFixed(1)}
+                    </span>
+                  )}
+                  sorter={(a, b) => b.score - a.score}
+                />
+              </Table>
+            </Card>
+
+            <div style={{ marginTop: 16, fontSize: 12, color: '#999' }}>
+              <div><strong>评分权重说明：</strong></div>
+              <div>• 加急单：时效权重40%，价格权重20%，质量权重25%，运力权重15%</div>
+              <div>• 普通单：时效权重25%，价格权重35%，质量权重25%，运力权重15%</div>
+              <div>• 经济单：时效权重15%，价格权重50%，质量权重25%，运力权重15%</div>
             </div>
           </div>
         )}

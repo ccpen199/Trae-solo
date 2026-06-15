@@ -13,7 +13,8 @@ import {
   CustomerServiceOutlined,
   PhoneOutlined,
   DownOutlined,
-  MoreOutlined
+  MoreOutlined,
+  GiftOutlined
 } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { orderApi, merchantApi, afterSalesApi } from '../api'
@@ -216,6 +217,22 @@ function MerchantDashboard() {
     return map[urgency] || { color: 'default', text: urgency }
   }
 
+  const getTimeoutReason = (order) => {
+    if (order.delivery_status === 'pending') return '待分配运力'
+    if (order.delivery_status === 'assigned') return '骑手未取货'
+    if (order.delivery_status === 'picked') return '取货延迟'
+    if (order.delivery_status === 'delivering') return '配送途中延迟'
+    if (order.delivery_status === 'exception') return order.exception_reason || '配送异常'
+    return '系统原因'
+  }
+
+  const getSyncStatus = (order) => {
+    if (order.platform_synced) {
+      return { text: '已同步', color: 'success' }
+    }
+    return { text: '同步中', color: 'warning' }
+  }
+
   const activeOrders = orders.filter(o => !['delivered', 'cancelled'].includes(o.delivery_status))
   const warningOrders = orders.filter(o => {
     const cd = countdowns[o.id]
@@ -353,7 +370,9 @@ function MerchantDashboard() {
           </Select>
         </div>
         <Space>
-          <Button type="primary" icon={<EditOutlined />} onClick={() => navigate('/price-compare')}>
+          <Button type="primary" icon={<EditOutlined />} onClick={() => navigate('/price-compare', {
+            state: { from: 'merchant', merchantId: selectedMerchant }
+          })}>
             新建配送订单
           </Button>
           <Button icon={<CustomerServiceOutlined />} onClick={() => navigate('/after-sales')}>
@@ -461,6 +480,16 @@ function MerchantDashboard() {
               </div>
             }
             size="small"
+            extra={
+              <Space>
+                <Button size="small" type="link" icon={<GiftOutlined />} onClick={() => navigate('/compensation')}>
+                  赔付管理
+                </Button>
+                <Button size="small" type="link" icon={<CustomerServiceOutlined />} onClick={() => navigate('/after-sales')}>
+                  售后中心
+                </Button>
+              </Space>
+            }
           >
             {exceptionOrders.length === 0 ? (
               <Empty description="暂无异常订单" image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -468,29 +497,67 @@ function MerchantDashboard() {
               <List
                 size="small"
                 dataSource={exceptionOrders}
-                renderItem={order => (
-                  <List.Item style={{ background: '#fff1f0', borderRadius: 6, marginBottom: 6 }}>
-                    <List.Item.Meta
-                      title={
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#ff4d4f', fontWeight: 500 }}>
-                            {order.order_no}
-                          </span>
-                          <Tag color="red">已超时</Tag>
-                        </div>
-                      }
-                      description={
-                        <div style={{ display: 'flex', gap: 12, fontSize: 12 }}>
-                          <span>{order.platform_logo} {order.platform_name}</span>
-                          <span>{order.receiver_name}</span>
-                          <span style={{ color: '#999' }}>
-                            预计 {dayjs(order.estimated_arrival_time).format('HH:mm')}
-                          </span>
-                        </div>
-                      }
-                    />
-                  </List.Item>
-                )}
+                renderItem={order => {
+                  const timeoutSeconds = Math.abs(countdowns[order.id] || 0)
+                  const timeoutMins = Math.floor(timeoutSeconds / 60)
+                  const syncStatus = getSyncStatus(order)
+                  const timeoutReason = getTimeoutReason(order)
+                  return (
+                    <List.Item 
+                      style={{ background: '#fff1f0', borderRadius: 6, marginBottom: 6 }}
+                      actions={[
+                        <Button key="compensation" size="small" type="link" icon={<GiftOutlined />} onClick={() => {
+                          navigate('/compensation')
+                        }}>
+                          申请赔付
+                        </Button>,
+                        <Button key="aftersale" size="small" type="link" icon={<CustomerServiceOutlined />} onClick={() => {
+                          handleAfterSales(order)
+                        }}>
+                          发起售后
+                        </Button>
+                      ]}
+                    >
+                      <List.Item.Meta
+                        title={
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#ff4d4f', fontWeight: 500 }}>
+                                {order.order_no}
+                              </span>
+                              <Tag color="red">已超时 {timeoutMins}分钟</Tag>
+                              <Tag color={syncStatus.color}>{syncStatus.text}</Tag>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              <ClockCircleOutlined style={{ color: '#ff4d4f' }} />
+                              <span style={{ color: '#ff4d4f', fontWeight: 600, fontSize: 14 }}>
+                                {dayjs(order.estimated_arrival_time).format('HH:mm')}
+                              </span>
+                            </div>
+                          </div>
+                        }
+                        description={
+                          <div style={{ marginTop: 8 }}>
+                            <div style={{ display: 'flex', gap: 12, fontSize: 12, marginBottom: 6 }}>
+                              <span>{order.platform_logo} {order.platform_name || '待分配'}</span>
+                              <span>→ {order.receiver_name}</span>
+                              <span style={{ color: '#999' }}>费用: ¥{order.total_fee?.toFixed(2)}</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: 12, fontSize: 12 }}>
+                              <span style={{ color: '#faad14' }}>
+                                <WarningOutlined style={{ marginRight: 2 }} />
+                                超时原因: {timeoutReason}
+                              </span>
+                              <span style={{ color: '#666' }}>
+                                物品: {order.goods_name || '-'} ({order.goods_weight}kg)
+                              </span>
+                            </div>
+                          </div>
+                        }
+                      />
+                    </List.Item>
+                  )
+                }}
               />
             )}
           </Card>

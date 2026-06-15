@@ -267,7 +267,193 @@ function initDatabase() {
     }
   }
 
+  ensureDemoWorkflowData();
+
   console.log('Database initialized successfully');
+}
+
+function ensureDemoWorkflowData() {
+  const sampleOrders = db.prepare('SELECT COUNT(*) as count FROM orders WHERE id BETWEEN 1 AND 5').get().count;
+  if (sampleOrders >= 5) {
+    const snapshots = [
+      {
+        id: 1,
+        status: 'assigned',
+        deliveryStatus: 'delivering',
+        etaOffset: '+22 minutes',
+        pickedOffset: '-18 minutes',
+        riderName: '刘师傅',
+        riderPhone: '13810001001'
+      },
+      {
+        id: 2,
+        status: 'assigned',
+        deliveryStatus: 'picked',
+        etaOffset: '+8 minutes',
+        pickedOffset: '-12 minutes',
+        riderName: '陈师傅',
+        riderPhone: '13810001002'
+      },
+      {
+        id: 3,
+        status: 'pending',
+        deliveryStatus: 'pending',
+        etaOffset: '+45 minutes',
+        pickedOffset: null,
+        riderName: null,
+        riderPhone: null
+      },
+      {
+        id: 4,
+        status: 'assigned',
+        deliveryStatus: 'delivered',
+        etaOffset: '-90 minutes',
+        pickedOffset: '-160 minutes',
+        deliveredOffset: '-95 minutes',
+        riderName: '王师傅',
+        riderPhone: '13810001004'
+      },
+      {
+        id: 5,
+        status: 'assigned',
+        deliveryStatus: 'delivering',
+        etaOffset: '-12 minutes',
+        pickedOffset: '-55 minutes',
+        riderName: '赵师傅',
+        riderPhone: '13810001005'
+      }
+    ];
+
+    for (const item of snapshots) {
+      db.prepare(`
+        UPDATE orders
+        SET status = ?,
+            delivery_status = ?,
+            estimated_arrival_time = datetime('now', ?),
+            picked_up_at = CASE WHEN ? IS NULL THEN picked_up_at ELSE datetime('now', ?) END,
+            delivered_at = CASE WHEN ? IS NULL THEN delivered_at ELSE datetime('now', ?) END,
+            rider_name = ?,
+            rider_phone = ?,
+            updated_at = datetime('now')
+        WHERE id = ?
+      `).run(
+        item.status,
+        item.deliveryStatus,
+        item.etaOffset,
+        item.pickedOffset,
+        item.pickedOffset,
+        item.deliveredOffset || null,
+        item.deliveredOffset || null,
+        item.riderName,
+        item.riderPhone,
+        item.id
+      );
+    }
+  }
+
+  const afterSalesCount = db.prepare('SELECT COUNT(*) as count FROM after_sales').get().count;
+  if (afterSalesCount === 0) {
+    db.prepare(`
+      INSERT INTO after_sales (order_id, type, reason, status, platform_ack, result, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, datetime('now', ?))
+    `).run(5, 'complaint', '配送已超过预计送达时间，商户要求平台说明并触发SLA复核', 'accepted', 1, '平台已受理，预计30分钟内给出处置结果', '-10 minutes');
+
+    db.prepare(`
+      INSERT INTO after_sales (order_id, type, reason, new_address, status, platform_ack, result, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
+    `).run(2, 'address_change', '客户临时改到同小区北门', '北京市西城区西单北大街120号北门', 'processing', 0, '等待承运平台确认改址费用', '-4 minutes');
+  }
+
+  const compensationCount = db.prepare('SELECT COUNT(*) as count FROM compensations').get().count;
+  if (compensationCount === 0) {
+    const insertCompensation = db.prepare(`
+      INSERT INTO compensations (order_id, merchant_id, type, amount, coupon_code, reason, status, review_result, reviewed_at, triggered_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
+    `);
+
+    insertCompensation.run(
+      5,
+      2,
+      'timeout',
+      13.5,
+      'CPFAST1505',
+      '预计送达已超时12分钟，自动触发SLA补偿券',
+      'issued',
+      null,
+      null,
+      '-8 minutes'
+    );
+    insertCompensation.run(
+      4,
+      1,
+      'complaint',
+      10,
+      'CPREVIEW04',
+      '客户投诉骑手未提前电话联系，复核后确认补偿',
+      'issued',
+      '复核通过，补偿券已发放给商户账户',
+      new Date(Date.now() - 25 * 60 * 1000).toISOString(),
+      '-40 minutes'
+    );
+    insertCompensation.run(
+      2,
+      1,
+      'loss',
+      18,
+      'CPPENDING02',
+      '蛋糕外包装破损，等待运营复核后发放',
+      'pending',
+      null,
+      null,
+      '-3 minutes'
+    );
+  }
+
+  const settlementCount = db.prepare('SELECT COUNT(*) as count FROM settlements').get().count;
+  if (settlementCount === 0) {
+    const deliveredOrder = db.prepare('SELECT * FROM orders WHERE id = 4').get();
+    if (deliveredOrder) {
+      const period = new Date().toISOString().slice(0, 7);
+      const settlementAmount = deliveredOrder.platform_fee || deliveredOrder.total_fee;
+      const commissionAmount = (deliveredOrder.total_fee || 0) - (deliveredOrder.platform_fee || 0);
+      const result = db.prepare(`
+        INSERT INTO settlements (settlement_no, merchant_id, platform_id, period, total_orders, total_amount, commission_amount, settlement_amount, status, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', '-20 minutes'))
+      `).run(
+        `JS${period.replace('-', '')}0001`,
+        deliveredOrder.merchant_id,
+        deliveredOrder.platform_id,
+        period,
+        1,
+        deliveredOrder.total_fee,
+        commissionAmount,
+        settlementAmount,
+        'pending'
+      );
+
+      db.prepare(`
+        INSERT INTO settlement_items (settlement_id, order_id, order_amount, commission_amount)
+        VALUES (?, ?, ?, ?)
+      `).run(result.lastInsertRowid, deliveredOrder.id, settlementAmount, commissionAmount);
+    }
+  }
+
+  const ensureTrack = (orderId, status, description, location = null) => {
+    const exists = db.prepare(`
+      SELECT COUNT(*) as count FROM order_tracks
+      WHERE order_id = ? AND status = ? AND description = ?
+    `).get(orderId, status, description).count;
+
+    if (!exists) {
+      db.prepare(`
+        INSERT INTO order_tracks (order_id, status, description, location, created_at)
+        VALUES (?, ?, ?, ?, datetime('now'))
+      `).run(orderId, status, description, location);
+    }
+  };
+
+  ensureTrack(5, 'sla_warning', '预计送达已超时，系统已推送SLA赔付复核', '北京市朝阳区三里屯路19号');
+  ensureTrack(2, 'address_change', '客户提交改址申请，等待承运平台确认费用', '北京市西城区西单北大街120号北门');
 }
 
 initDatabase();
