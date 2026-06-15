@@ -1,0 +1,21 @@
+{
+  "name": "virtual-goods-platform",
+  "version": "1.0.0",
+  "description": "虚拟商品与本地生活服务聚合分发平台",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend-user",
+    "frontend-admin"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:user\" \"npm run dev:admin\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:user": "cd frontend-user && npm run dev",
+    "dev:admin": "cd frontend-admin && npm run dev",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend-user && npm install && cd ../frontend-admin && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
