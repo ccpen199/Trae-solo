@@ -1,0 +1,16 @@
+{
+  "order": "may-89213",
+  "url": "http://127.0.0.1:49213/",
+  "status": 200,
+  "ok": true,
+  "title": "宁夏自治区一网通办管理后台",
+  "textLength": 671,
+  "sample": "宁夏政务管理后台 工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理 工作台 5 管理员 晚上好，管理员超级管理员 2026年06月15日 Monday · 祝您工作愉快 消息中心 快速办件 今日办件量 128 件 受理 156 办结 105 在办 23 较昨日 +12.5% 电子证照调用量 3,846 次 今日 3,846 累计 125.8万 证照类 32类 较上周 +8.3% 12345工单满意度 98.6 % 待办工单 4",
+  "consoleErrors": [
+    "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead."
+  ],
+  "failedRequests": [],
+  "responseErrors": [],
+  "error": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/codex-smoke-may-89213.png"
+}
