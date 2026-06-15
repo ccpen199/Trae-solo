@@ -30,6 +30,7 @@ import {
   Hammer,
   Paintbrush,
   CheckCheck,
+  Calculator,
 } from 'lucide-react';
 import { mockCases } from '@/mock/data';
 
@@ -430,6 +431,8 @@ export default function Case3DView() {
   const [activeInfoTab, setActiveInfoTab] = useState<InfoTabKey>('basic');
   const [highlightedMaterial, setHighlightedMaterial] = useState<MaterialKey | null>(null);
   const [expandedOverlay, setExpandedOverlay] = useState<SchemeKey | null>(null);
+  const [imported, setImported] = useState(false);
+  const [showMaterialFormulas, setShowMaterialFormulas] = useState(true);
   const controlsRef = useRef<any>(null);
   const caseData = mockCases.find((c) => c.id === id) || mockCases[0];
 
@@ -611,8 +614,15 @@ export default function Case3DView() {
                     onClick={() => setScheme(key)}
                     className="w-full text-left p-3"
                   >
-                    <div className={`font-medium mb-2 ${isActive ? 'text-primary-400' : isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-                      {palette.name}
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className={`font-medium ${isActive ? 'text-primary-400' : isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                        {palette.name}
+                      </div>
+                      {imported && key !== 'current' && (
+                        <span className="px-1.5 py-0.5 text-[10px] font-medium rounded bg-primary-500/20 text-primary-400 border border-primary-500/30">
+                          叠加方案
+                        </span>
+                      )}
                     </div>
                     <div className="flex gap-1.5">
                       <div
@@ -784,37 +794,93 @@ export default function Case3DView() {
           )}
 
           {activeInfoTab === 'materials' && (
-            <div className="p-4 space-y-2.5">
-              {schemeMaterials[scheme].map((mat) => (
-                <div
-                  key={mat.key}
-                  className={`p-2.5 rounded-lg border-2 transition-all ${
-                    highlightedMaterial === mat.key
-                      ? 'border-primary-400 bg-primary-500/10'
-                      : isDark
-                      ? 'border-gray-700/50 bg-gray-700/30'
-                      : 'border-gray-200 bg-gray-50'
-                  }`}
+            <div className="p-4 space-y-3">
+              <div className={`rounded-lg overflow-hidden border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+                <button
+                  onClick={() => setShowMaterialFormulas(!showMaterialFormulas)}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'} transition-colors`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <div
-                      className="w-8 h-8 rounded-md border border-black/20 flex-shrink-0"
-                      style={{ backgroundColor: mat.color }}
-                    />
-                    <div className="flex-1 min-w-0">
-                      <div className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                        {mat.name}
-                      </div>
-                      <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                        {mat.brand} {mat.model}
-                      </div>
+                  <div className="flex items-center gap-2">
+                    <Calculator className="w-4 h-4 text-primary-400" />
+                    <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>用量计算依据</span>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 transition-transform ${showMaterialFormulas ? 'rotate-180' : ''} ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
+                </button>
+                {showMaterialFormulas && (
+                  <div className={`px-3 py-2.5 space-y-2 border-t ${isDark ? 'border-gray-700 bg-gray-800/50' : 'border-gray-200 bg-white'}`}>
+                    <div className={`flex items-start gap-2 text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <Info className="w-3.5 h-3.5 text-primary-400 flex-shrink-0 mt-0.5" />
+                      <span>墙面漆用量 = 墙面面积 × 0.33kg/㎡（两遍）</span>
                     </div>
-                    <div className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {mat.quantity}
+                    <div className={`flex items-start gap-2 text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <Info className="w-3.5 h-3.5 text-primary-400 flex-shrink-0 mt-0.5" />
+                      <span>地板用量 = 地面面积 × 1.05（含5%损耗）</span>
+                    </div>
+                    <div className={`flex items-start gap-2 text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <Info className="w-3.5 h-3.5 text-primary-400 flex-shrink-0 mt-0.5" />
+                      <span>瓷砖用量 = 铺贴面积 × 1.03（含3%损耗）</span>
+                    </div>
+                    <div className={`flex items-start gap-2 text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <Info className="w-3.5 h-3.5 text-primary-400 flex-shrink-0 mt-0.5" />
+                      <span>吊顶用量 = 吊顶面积 ÷ 2.88㎡/张</span>
                     </div>
                   </div>
-                </div>
-              ))}
+                )}
+              </div>
+
+              {schemeMaterials[scheme].map((mat) => {
+                const calcNote = (() => {
+                  switch (mat.key) {
+                    case 'wall':
+                      return '按115㎡墙面面积计算';
+                    case 'floor':
+                      return '按38㎡使用面积计算';
+                    case 'tile':
+                      return '按44㎡铺贴面积计算';
+                    case 'ceiling':
+                      return '按35㎡吊顶面积计算';
+                    case 'lamp':
+                      return '按空间照明需求配置';
+                    default:
+                      return '';
+                  }
+                })();
+                return (
+                  <div
+                    key={mat.key}
+                    className={`p-2.5 rounded-lg border-2 transition-all ${
+                      highlightedMaterial === mat.key
+                        ? 'border-primary-400 bg-primary-500/10'
+                        : isDark
+                        ? 'border-gray-700/50 bg-gray-700/30'
+                        : 'border-gray-200 bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className="w-8 h-8 rounded-md border border-black/20 flex-shrink-0"
+                        style={{ backgroundColor: mat.color }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                          {mat.name}
+                        </div>
+                        <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          {mat.brand} {mat.model}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          {mat.quantity}
+                        </div>
+                        <div className={`text-[10px] ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                          （{calcNote}）
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
               <div className={`pt-2 mt-2 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
                 <div className="flex items-center justify-between">
                   <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>预估材料费用</span>
@@ -908,6 +974,12 @@ export default function Case3DView() {
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary-400" />
               滚轮：缩放视图
             </div>
+            {imported && (
+              <div className="flex items-center gap-2 text-green-400 pt-1 border-t border-gray-700/50 mt-2">
+                <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>SketchUp模型已叠加</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -931,6 +1003,31 @@ export default function Case3DView() {
               施工注意事项
             </div>
           </div>
+          <div className={`mt-3 p-3 rounded-lg ${isDark ? 'bg-gray-700/50' : 'bg-gray-100'}`}>
+            <div className={`text-xs font-medium mb-2 flex items-center gap-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              <Eye className="w-3.5 h-3.5 text-primary-400" />
+              水印预览
+            </div>
+            <div className="relative w-full aspect-[4/3] bg-gray-500/30 rounded overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div
+                  className="text-gray-400/50 font-bold text-sm whitespace-nowrap"
+                  style={{ transform: 'rotate(-20deg)', textShadow: '0 0 1px rgba(0,0,0,0.1)' }}
+                >
+                  装修案例库 · 仅供参考
+                </div>
+              </div>
+              <div className="absolute bottom-1 left-0 right-0 text-center">
+                <div className={`text-[9px] ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                  PDF页面示意
+                </div>
+              </div>
+            </div>
+            <div className={`text-[10px] mt-2 ${isDark ? 'text-gray-500' : 'text-gray-400'} text-center`}>
+              带水印防伪 · 含业主信息+案例ID+交付日期
+            </div>
+          </div>
+
           <div className="flex gap-2 mt-3">
             <button
               onClick={() => navigate(`/pdf-delivery/${id}`)}
@@ -938,6 +1035,9 @@ export default function Case3DView() {
             >
               <FileDown className="w-3.5 h-3.5" />
               生成PDF交付包
+              <span className="px-1 py-0.5 text-[9px] bg-white/20 rounded font-medium">
+                ✓ 已包含水印
+              </span>
             </button>
             <button
               onClick={() => alert('截图已保存')}
@@ -985,6 +1085,40 @@ export default function Case3DView() {
                     living_room.skp 已导入 ✓
                   </div>
                 </div>
+
+                <div className={`rounded-xl p-4 ${isDark ? 'bg-gray-700/50' : 'bg-gray-100'}`}>
+                  <div className={`text-sm font-medium mb-3 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <Eye className="w-4 h-4 text-primary-400" />
+                    导入后效果预览
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex-1 flex flex-col items-center">
+                      <div className={`w-full aspect-video rounded-lg flex items-center justify-center ${isDark ? 'bg-gray-800 border border-gray-600' : 'bg-white border border-gray-300'}`}>
+                        <Box className={`w-8 h-8 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
+                      </div>
+                      <div className={`text-xs mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>当前3D场景</div>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <Layers className={`w-5 h-5 ${isDark ? 'text-primary-400' : 'text-primary-500'}`} />
+                    </div>
+                    <div className="flex-1 flex flex-col items-center">
+                      <div className={`w-full aspect-video rounded-lg flex items-center justify-center relative overflow-hidden ${isDark ? 'bg-gray-800 border border-primary-500/50' : 'bg-white border border-primary-400/50'}`}>
+                        <svg viewBox="0 0 100 70" className="w-full h-full p-2">
+                          <rect x="10" y="15" width="35" height="40" fill="none" stroke={isDark ? '#a3b5a0' : '#7d9076'} strokeWidth="1.5" strokeDasharray="3,2" />
+                          <rect x="55" y="10" width="35" height="50" fill="none" stroke={isDark ? '#a3b5a0' : '#7d9076'} strokeWidth="1.5" strokeDasharray="3,2" />
+                          <rect x="20" y="25" width="15" height="10" fill={isDark ? '#8b7355' : '#c4a882'} opacity="0.6" />
+                          <rect x="60" y="20" width="20" height="15" fill={isDark ? '#8b7355' : '#c4a882'} opacity="0.6" />
+                          <circle cx="45" cy="50" r="2" fill={isDark ? '#d4a574' : '#d4af37'} />
+                          <circle cx="75" cy="45" r="2" fill={isDark ? '#d4a574' : '#d4af37'} />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <CheckCircle2 className="w-6 h-6 text-green-400 opacity-80" />
+                        </div>
+                      </div>
+                      <div className={`text-xs mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>导入后效果</div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className={`px-6 py-4 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'} flex justify-end gap-3`}>
                 <button
@@ -996,6 +1130,7 @@ export default function Case3DView() {
                 <button
                   onClick={() => {
                     setShowImportModal(false);
+                    setImported(true);
                     alert('模型导入成功');
                   }}
                   className="px-4 py-2 rounded-lg text-sm bg-primary-500 hover:bg-primary-600 text-white font-medium transition-colors"

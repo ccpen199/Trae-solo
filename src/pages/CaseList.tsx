@@ -119,6 +119,66 @@ const defaultFilters: Filters = {
   acceptanceReview: '',
 };
 
+const numToChineseMap: Record<number, string> = {
+  1: '一', 2: '两', 3: '三', 4: '四', 5: '五',
+  6: '六', 7: '七', 8: '八', 9: '九', 10: '十',
+};
+
+function getPrimaryRoomCount(filters: Filters): number | null {
+  if (filters.rooms.length > 0) {
+    return filters.rooms[0];
+  }
+  if (filters.houseTypes.length > 0) {
+    for (const ht of filters.houseTypes) {
+      const count = extractRoomCount(ht);
+      if (count) return count;
+    }
+  }
+  return null;
+}
+
+function getResultDescription(filters: Filters, count: number): {
+  type: 'small' | 'few' | 'normal';
+  title: string;
+  description: string;
+} {
+  const primaryRoom = getPrimaryRoomCount(filters);
+  const hasSingleRoomType =
+    (filters.rooms.length === 1) ||
+    (filters.rooms.length === 0 && filters.houseTypes.length === 1 && !!extractRoomCount(filters.houseTypes[0]));
+
+  if (primaryRoom === 1 && hasSingleRoomType) {
+    return {
+      type: 'small',
+      title: '小户型精选',
+      description: `为您匹配 ${count} 个一居室真实施工案例。数据持续扩盘中，建议同时参考相近面积的两居室方案。`,
+    };
+  }
+
+  if (primaryRoom && hasSingleRoomType && primaryRoom >= 2 && primaryRoom <= 5) {
+    const chineseNum = numToChineseMap[primaryRoom] || `${primaryRoom}`;
+    return {
+      type: 'normal',
+      title: `${chineseNum}居精选`,
+      description: `为您匹配 ${count} 个${chineseNum}居室真实施工案例，均已通过质量审核。`,
+    };
+  }
+
+  if (count < 5) {
+    return {
+      type: 'few',
+      title: '匹配结果较少',
+      description: `当前筛选条件下匹配 ${count} 个案例。您可以：①放宽筛选条件 ②查看相似户型 ③扩大城市范围`,
+    };
+  }
+
+  return {
+    type: 'normal',
+    title: '筛选结果',
+    description: `为您找到 ${count} 个符合条件的真实装修案例，均已通过质量审核。`,
+  };
+}
+
 export default function CaseList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -265,11 +325,7 @@ export default function CaseList() {
   const paginatedCases = filteredCases.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   const similarCases = useMemo(() => {
-    const currentRoomCount = filters.rooms.length > 0
-      ? filters.rooms[0]
-      : (filters.houseTypes.length > 0
-        ? extractRoomCount(filters.houseTypes[0])
-        : null);
+    const currentRoomCount = getPrimaryRoomCount(filters);
 
     if (!currentRoomCount || filteredCases.length >= 3) return [];
 
@@ -282,7 +338,7 @@ export default function CaseList() {
     }).slice(0, 2);
 
     return similar;
-  }, [filteredCases, filters.rooms, filters.houseTypes]);
+  }, [filteredCases, filters]);
 
   const activeFilterCount =
     filters.cities.length +
@@ -854,7 +910,7 @@ export default function CaseList() {
           <main className="flex-1 min-w-0">
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 mb-6">
               <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-sm text-gray-500 dark:text-gray-400">
                     共找到
                   </span>
@@ -864,6 +920,19 @@ export default function CaseList() {
                   <span className="text-sm text-gray-500 dark:text-gray-400">
                     个案例
                   </span>
+                  {filters.rooms.length > 0 && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded-full ml-2">
+                      居室：{filters.rooms.map((r) => `${r}室`).join('、')}
+                    </span>
+                  )}
+                  {filters.houseTypes.length > 0 && filters.rooms.length === 0 && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded-full ml-2">
+                      户型：{filters.houseTypes.map((ht) => {
+                        const label = houseTypes.find((h) => h.value === ht)?.label || ht;
+                        return label;
+                      }).join('、')}
+                    </span>
+                  )}
                 </div>
 
                 <div className="w-full text-sm text-gray-500 dark:text-gray-400">
@@ -882,30 +951,36 @@ export default function CaseList() {
 
                 {filteredCases.length > 0 && (
                   <div className="w-full">
-                    {filters.rooms.includes(1) || filters.houseTypes.includes('一室') || filters.houseTypes.includes('一居') ? (
-                      <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800 rounded-xl">
-                        <Lightbulb className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-amber-800 dark:text-amber-200">
-                          <span className="font-medium">小户型精选：</span>
-                          为您匹配 {filteredCases.length} 个一居室真实施工案例。数据持续扩盘中，建议同时参考相近面积的两居室方案。
+                    {(() => {
+                      const resultDesc = getResultDescription(filters, filteredCases.length);
+                      const bgColorMap = {
+                        small: 'bg-amber-50 dark:bg-amber-900/20 border-amber-100 dark:border-amber-800',
+                        few: 'bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800',
+                        normal: 'bg-green-50 dark:bg-green-900/20 border-green-100 dark:border-green-800',
+                      };
+                      const textColorMap = {
+                        small: 'text-amber-800 dark:text-amber-200',
+                        few: 'text-blue-800 dark:text-blue-200',
+                        normal: 'text-green-800 dark:text-green-200',
+                      };
+                      const iconColorMap = {
+                        small: 'text-amber-500',
+                        few: 'text-blue-500',
+                        normal: 'text-green-500',
+                      };
+                      const IconComponent = resultDesc.type === 'small' ? Lightbulb :
+                        resultDesc.type === 'few' ? Info : CheckCircle2;
+
+                      return (
+                        <div className={`flex items-start gap-2 p-3 border rounded-xl ${bgColorMap[resultDesc.type]}`}>
+                          <IconComponent className={`w-5 h-5 flex-shrink-0 mt-0.5 ${iconColorMap[resultDesc.type]}`} />
+                          <div className={`text-sm ${textColorMap[resultDesc.type]}`}>
+                            <span className="font-medium">{resultDesc.title}：</span>
+                            {resultDesc.description}
+                          </div>
                         </div>
-                      </div>
-                    ) : filteredCases.length < 5 ? (
-                      <div className="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-xl">
-                        <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-blue-800 dark:text-blue-200">
-                          当前筛选条件下匹配 {filteredCases.length} 个案例。您可以：
-                          ①放宽筛选条件 ②查看相似户型 ③扩大城市范围
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex items-start gap-2 p-3 bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800 rounded-xl">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <div className="text-sm text-green-800 dark:text-green-200">
-                          为您找到 {filteredCases.length} 个符合条件的真实装修案例，均已通过质量审核。
-                        </div>
-                      </div>
-                    )}
+                      );
+                    })()}
                   </div>
                 )}
 

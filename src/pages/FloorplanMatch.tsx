@@ -365,6 +365,13 @@ export default function FloorplanMatch() {
     return () => clearAllTimers();
   }, []);
 
+  useEffect(() => {
+    if (phases.every(p => p.completed) && !matched && matchedCases.length > 0) {
+      setMatched(true);
+      setMatchPhase(5);
+    }
+  }, [phases, matched, matchedCases]);
+
   const handleUpload = () => setUploaded(true);
 
   const generateResults = (): MatchedCase[] => {
@@ -396,7 +403,7 @@ export default function FloorplanMatch() {
     }
   };
 
-  const handleMatch = async () => {
+  const handleMatch = () => {
     setValidationError('');
     clearAllTimers();
     setMatchPhase(0);
@@ -407,95 +414,79 @@ export default function FloorplanMatch() {
     setShowCompare(false);
     setPhases(PHASES.map(p => ({ ...p, completed: false, successText: '' })));
 
-    await new Promise<void>(resolve => setTimeout(resolve, 50));
+    phaseTimersRef.current.push(setTimeout(() => {
+      setMatchPhase(1);
+      setPhases(prev => {
+        const next = [...prev];
+        next[0] = { ...next[0], completed: true, successText: `已识别：${effectiveParams.layout} / ${effectiveParams.area}㎡ / ${effectiveParams.style}` };
+        return next;
+      });
 
-    setMatchPhase(1);
+      phaseTimersRef.current.push(setTimeout(() => {
+        setMatchPhase(2);
+        setPhases(prev => {
+          const next = [...prev];
+          next[1] = { ...next[1], completed: true, successText: `初筛命中${200 + Math.floor(Math.random() * 80)}个相似案例` };
+          return next;
+        });
 
-    timeoutRef.current = setTimeout(() => {
-      const finalResults = generateResults();
-      setMatchedCases(finalResults);
-      setMatchPhase(5);
-      setMatched(true);
-      setPhaseProgress(100);
-    }, 3500);
-
-    runPhase(1, () => {
-      const newPhases = [...phases];
-      newPhases[0] = {
-        ...newPhases[0],
-        completed: true,
-        successText: `已识别：${effectiveParams.layout} / ${effectiveParams.area}㎡ / ${effectiveParams.style}`,
-      };
-      setPhases(newPhases);
-
-      runPhase(2, () => {
-        const newPhases2 = [...newPhases];
-        newPhases2[1] = {
-          ...newPhases2[1],
-          completed: true,
-          successText: `初筛命中${200 + Math.floor(Math.random() * 80)}个相似案例`,
-        };
-        setPhases(newPhases2);
-
-        if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+        setPhaseProgress(0);
         let progress = 0;
-        progressTimerRef.current = setInterval(() => {
+        const progressTimer = setInterval(() => {
           progress += 3;
           if (progress >= 100) {
             progress = 100;
-            if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+            clearInterval(progressTimer);
           }
           setPhaseProgress(progress);
         }, 12);
+        progressTimerRef.current = progressTimer;
 
-        runPhase(3, () => {
-          const newPhases3 = [...newPhases2];
-          newPhases3[2] = {
-            ...newPhases3[2],
-            completed: true,
-            successText: '已计算相似度权重：户型35% / 面积30% / 风格25% / 预算10%',
-          };
-          setPhases(newPhases3);
+        phaseTimersRef.current.push(setTimeout(() => {
+          if (progressTimerRef.current) {
+            clearInterval(progressTimerRef.current);
+            progressTimerRef.current = null;
+          }
           setPhaseProgress(100);
+          setMatchPhase(3);
+          setPhases(prev => {
+            const next = [...prev];
+            next[2] = { ...next[2], completed: true, successText: '已计算相似度权重：户型35% / 面积30% / 风格25% / 预算10%' };
+            return next;
+          });
 
-          runPhase(4, () => {
-            const newPhases4 = [...newPhases3];
-            newPhases4[3] = {
-              ...newPhases4[3],
-              completed: true,
-              successText: '已为您匹配6个最相似装修案例',
-            };
-            setPhases(newPhases4);
-
+          phaseTimersRef.current.push(setTimeout(() => {
+            setMatchPhase(4);
             const results = generateResults();
             setMatchedCases(results);
-            setMatched(true);
-            setMatchPhase(5);
+            setPhases(prev => {
+              const next = [...prev];
+              next[3] = { ...next[3], completed: true, successText: `已为您匹配${results.length}个最相似装修案例` };
+              return next;
+            });
 
-            if (timeoutRef.current) {
-              clearTimeout(timeoutRef.current);
-              timeoutRef.current = null;
-            }
-            if (progressTimerRef.current) {
-              clearInterval(progressTimerRef.current);
-              progressTimerRef.current = null;
-            }
-          });
-        });
-      });
-    });
-  };
+            setTimeout(() => {
+              setMatched(true);
+              setMatchPhase(5);
 
-  const runPhase = (phaseNum: number, onComplete: () => void) => {
-    const duration = PHASES[phaseNum - 1]?.duration ?? 300;
-    setMatchPhase(phaseNum);
-    if (phaseNum === 3) {
-      setPhaseProgress(0);
-    }
-    const timer = setTimeout(() => {
-      onComplete();
-    }, duration);
-    phaseTimersRef.current.push(timer);
+              if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+              }
+            }, 50);
+          }, 200));
+        }, 400));
+      }, 300));
+    }, 200));
+
+    timeoutRef.current = setTimeout(() => {
+      const results = generateResults();
+      setMatchedCases(results);
+      setMatched(true);
+      setMatchPhase(5);
+      setPhaseProgress(100);
+      setPhases(prev => prev.map((p, i) => i < 4 ? { ...p, completed: true, successText: p.successText || '处理完成' } : p));
+    }, 3500);
   };
 
   const toggleSelect = (id: string) => {

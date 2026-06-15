@@ -540,15 +540,15 @@ export default function CaseDetail() {
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-medium text-gray-700">施工进度</span>
-                        <span className="text-sm font-semibold text-primary-700">已完成 3/5 阶段</span>
+                        <span className="text-sm font-semibold text-primary-700">已完成 5/5 阶段</span>
                       </div>
                       <div className="h-2.5 bg-gray-200 rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full" style={{ width: '60%' }} />
+                        <div className="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full" style={{ width: '100%' }} />
                       </div>
                     </div>
                     <div className="flex gap-6 sm:gap-8">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-teal-600">13</div>
+                        <div className="text-2xl font-bold text-teal-600">15</div>
                         <div className="text-xs text-gray-500 mt-0.5">已核验证据</div>
                       </div>
                       <div className="text-center">
@@ -649,7 +649,7 @@ export default function CaseDetail() {
                       {
                         name: '油漆工程',
                         icon: Paintbrush,
-                        status: 'current',
+                        status: 'done',
                         desc: '墙面处理与乳胶漆施工',
                         color: 'from-pink-500 to-rose-600',
                         evidenceCount: 2,
@@ -671,8 +671,8 @@ export default function CaseDetail() {
                       {
                         name: '竣工验收',
                         icon: Award,
-                        status: 'pending',
-                        desc: '整体验收与质量评分',
+                        status: 'done',
+                        desc: '整体验收通过，交付业主',
                         color: 'from-emerald-500 to-teal-600',
                         evidenceCount: 2,
                         evidences: [
@@ -790,9 +790,9 @@ export default function CaseDetail() {
                         { name: '开工交底', date: '第1天', status: 'done', desc: '现场交底、材料进场' },
                         { name: '隐蔽工程', date: '第1-20天', status: 'done', desc: '水电改造、防水施工' },
                         { name: '泥木工程', date: '第21-55天', status: 'done', desc: '瓦工、木工施工' },
-                        { name: '油漆工程', date: '第56-80天', status: 'current', desc: '墙面处理、乳胶漆' },
-                        { name: '安装阶段', date: '第81-88天', status: 'pending', desc: '橱柜、地板、门窗安装' },
-                        { name: '竣工验收', date: '第89-90天', status: 'pending', desc: '整体验收、交付' },
+                        { name: '油漆工程', date: '第56-80天', status: 'done', desc: '墙面处理、乳胶漆' },
+                        { name: '安装阶段', date: '第81-88天', status: 'done', desc: '橱柜、地板、门窗安装' },
+                        { name: '竣工验收', date: '第89-90天', status: 'done', desc: '整体验收、交付' },
                       ].map((stage, idx) => (
                         <div key={idx} className="relative flex gap-4 pb-5 last:pb-0">
                           <div
