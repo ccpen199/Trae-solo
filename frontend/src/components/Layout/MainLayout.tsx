@@ -13,6 +13,7 @@ import {
   DashboardOutlined,
   FileTextOutlined,
   PlusOutlined,
+  SearchOutlined,
 } from '@ant-design/icons';
 import { useAuth } from '../../context/AuthContext';
 
@@ -28,6 +29,8 @@ function MainLayout() {
     setSelectedKey(e.key);
     if (e.key === 'home') {
       navigate('/');
+    } else if (e.key === 'search-filter') {
+      navigate('/labor');
     } else {
       navigate(`/${e.key}`);
     }
@@ -69,10 +72,12 @@ function MainLayout() {
     { key: 'labor', icon: <ShopOutlined />, label: '用工服务' },
     { key: 'delivery', icon: <CarOutlined />, label: '找车服务' },
     { key: 'moving', icon: <CarryOutOutlined />, label: '搬家服务' },
+    { key: 'search-filter', icon: <SearchOutlined />, label: '搜索筛选' },
+    { key: 'admin', icon: <DashboardOutlined />, label: '管理后台' },
   ];
 
   if (user?.role === 'admin') {
-    menuItems.push({
+    menuItems.splice(menuItems.length - 1, 1, {
       key: 'admin',
       icon: <DashboardOutlined />,
       label: '管理后台',

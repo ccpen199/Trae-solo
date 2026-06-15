@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Statistic, Button } from 'antd';
+import { Card, Row, Col, Statistic, Button, Space, Tag } from 'antd';
 import { 
   ShopOutlined, 
   CarOutlined, 
@@ -8,6 +8,8 @@ import {
   ClockCircleOutlined,
   StarOutlined,
   ArrowRightOutlined,
+  SearchOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -58,6 +60,12 @@ function Home() {
           <Button size="large" style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white' }} onClick={() => navigate('/delivery')}>
             找车运货
           </Button>
+          <Button size="large" icon={<SearchOutlined />} onClick={() => navigate('/labor')}>
+            搜索筛选
+          </Button>
+          <Button size="large" icon={<DashboardOutlined />} onClick={() => navigate('/admin')}>
+            管理后台
+          </Button>
         </div>
       </div>
 
@@ -94,6 +102,41 @@ function Home() {
               </Card>
             </Col>
           ))}
+        </Row>
+
+        <Row gutter={16} style={{ marginBottom: 40 }}>
+          <Col span={12}>
+            <Card
+              title="搜索筛选中心"
+              extra={<Button type="link" onClick={() => navigate('/labor')}>进入筛选</Button>}
+            >
+              <p style={{ color: '#595959', marginBottom: 12 }}>
+                支持按工种分类、订单状态、关键词搜索筛选同城用工需求，也可切换到找车服务和搬家服务列表继续筛选。
+              </p>
+              <Space wrap>
+                <Tag color="blue">关键词搜索</Tag>
+                <Tag color="green">工种分类</Tag>
+                <Tag color="orange">订单状态筛选</Tag>
+                <Tag>分页查询</Tag>
+              </Space>
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card
+              title="后台管理入口"
+              extra={<Button type="link" onClick={() => navigate('/admin')}>进入后台</Button>}
+            >
+              <p style={{ color: '#595959', marginBottom: 12 }}>
+                管理后台覆盖数据概览、运力热力、价格监控、纠纷仲裁、订单管理、用户管理和质检规则配置。
+              </p>
+              <Space wrap>
+                <Tag color="purple">管理后台</Tag>
+                <Tag color="red">价格预警</Tag>
+                <Tag color="cyan">订单管理</Tag>
+                <Tag>用户管理</Tag>
+              </Space>
+            </Card>
+          </Col>
         </Row>
 
         <Row gutter={16} style={{ marginBottom: 40 }}>

@@ -87,6 +87,14 @@ function AdminPrices() {
     }
   };
 
+  const getWarningTypeText = (type: string) => {
+    switch (type) {
+      case 'price_surge': return '价格上涨';
+      case 'price_drop': return '价格下跌';
+      default: return '运力预警';
+    }
+  };
+
   return (
     <div className="page-container">
       <h2 style={{ marginBottom: 16 }}>📈 价格波动监控</h2>
@@ -173,17 +181,19 @@ function AdminPrices() {
               <List.Item.Meta
                 avatar={
                   <div style={{
-                  width: 40, height: 40, borderRadius: '50%',
-                  background: item.severity === 'warning' ? '#fff7e6' : '#f0f5ff',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 18,
-                }}>
-                  <WarningOutlined style={{ color: item.severity === 'warning' ? '#fa8c16' : '#1890ff' }} />
-                </div>
+                    width: 40, height: 40, borderRadius: '50%',
+                    background: item.severity === 'warning' ? '#fff7e6' : '#f0f5ff',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 18,
+                  }}>
+                    <WarningOutlined style={{ color: item.severity === 'warning' ? '#fa8c16' : '#1890ff' }} />
+                  </div>
+                }
                 title={
                   <Space>
                     <span>{item.message}</span>
-                    <Tag color={getSeverityColor(item.severity)}>{item.type === 'price_surge' ? '价格上涨' : item.type === 'price_drop' ? '价格下跌' : '运力预警'}
+                    <Tag color={getSeverityColor(item.severity)}>
+                      {getWarningTypeText(item.type)}
                     </Tag>
                   </Space>
                 }
