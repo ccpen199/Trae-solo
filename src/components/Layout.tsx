@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, FileText, LayoutTemplate, Shield, Settings, Brain } from 'lucide-react';
+import { Home, FileText, LayoutTemplate, Shield, Settings, UserCircle, Gauge } from 'lucide-react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -7,6 +7,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navItems = [
     { path: '/', icon: Home, label: '工作台' },
     { path: '/templates', icon: LayoutTemplate, label: '模板库' },
+    { path: '/profile', icon: UserCircle, label: '个人中心' },
+    { path: '/admin', icon: Gauge, label: '管理后台' },
   ];
 
   const isActive = (path: string) => {

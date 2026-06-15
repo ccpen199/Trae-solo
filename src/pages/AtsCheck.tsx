@@ -277,7 +277,7 @@ export default function AtsCheck() {
 
   useEffect(() => {
     if (currentResume) {
-      const check = checkAtsCompatibility(currentResume, currentResume.fontFamily);
+      const check = checkAtsCompatibility(currentResume, currentResume.theme?.fontFamily);
       setResult(check);
     }
   }, [currentResume]);

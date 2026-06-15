@@ -6,6 +6,7 @@ import type {
   LinkValidityIssue,
   KeywordDensityResult,
 } from '../types';
+import { normalizeResumeForChecks } from './resumeNormalize';
 
 const ATS_SAFE_FONTS = ['Arial', 'Calibri', 'Georgia', 'Times New Roman', 'Helvetica', 'Garamond'];
 const URL_REGEX = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
@@ -230,10 +231,11 @@ function checkKeywordDensity(resume: Resume): KeywordDensityResult[] {
 }
 
 export function checkAtsCompatibility(resume: Resume, fontFamily?: string): AtsCheckResult {
-  const fontSafety = checkFontSafety(fontFamily);
-  const tableStructure = checkTableStructure(resume);
-  const linkValidity = checkLinkValidity(resume);
-  const keywordDensity = checkKeywordDensity(resume);
+  const normalizedResume = normalizeResumeForChecks(resume);
+  const fontSafety = checkFontSafety(fontFamily || normalizedResume.fontFamily || normalizedResume.theme?.fontFamily);
+  const tableStructure = checkTableStructure(normalizedResume);
+  const linkValidity = checkLinkValidity(normalizedResume);
+  const keywordDensity = checkKeywordDensity(normalizedResume);
 
   let score = 100;
 

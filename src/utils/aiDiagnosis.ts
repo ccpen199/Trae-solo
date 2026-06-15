@@ -6,6 +6,7 @@ import type {
   TimelineConflict,
   MissingKeywordIssue,
 } from '../types';
+import { normalizeResumeForChecks } from './resumeNormalize';
 
 const WEAK_VERBS = ['负责', '参与', '协助', '做了', '完成', '跟进', '处理', '进行', '支持', '配合'];
 
@@ -217,9 +218,10 @@ function detectMissingKeywords(resume: Resume, templateCategory: TemplateCategor
 }
 
 export function diagnoseResume(resume: Resume, templateCategory: TemplateCategory = 'tech'): DiagnosisResult {
-  const emptyPhraseIssues = detectEmptyPhrases(resume);
-  const timelineConflicts = detectTimelineConflicts(resume);
-  const missingKeywordIssues = detectMissingKeywords(resume, templateCategory);
+  const normalizedResume = normalizeResumeForChecks(resume);
+  const emptyPhraseIssues = detectEmptyPhrases(normalizedResume);
+  const timelineConflicts = detectTimelineConflicts(normalizedResume);
+  const missingKeywordIssues = detectMissingKeywords(normalizedResume, templateCategory);
 
   let score = 100;
 

@@ -6,6 +6,8 @@ import Editor from '@/pages/Editor';
 import Diagnosis from '@/pages/Diagnosis';
 import AtsCheck from '@/pages/AtsCheck';
 import Settings from '@/pages/Settings';
+import Profile from '@/pages/Profile';
+import Admin from '@/pages/Admin';
 
 export default function App() {
   return (
@@ -21,6 +23,8 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/templates" element={<Templates />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </Layout>

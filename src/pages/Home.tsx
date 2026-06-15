@@ -1,62 +1,119 @@
-import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   FileText,
-  Sparkles,
+  Plus,
   Brain,
-  GripVertical,
   ScanLine,
   Shield,
+  Lock,
   Clock,
   Edit3,
   Trash2,
-  Plus,
-  ChevronRight,
+  FileDown,
+  ArrowRight,
   Code2,
   Palette,
-  Briefcase
+  Briefcase,
+  CheckCircle2,
+  FileCheck
 } from 'lucide-react'
 import { useResumeStore } from '../store/resumeStore'
-import { resumeTemplates } from '../data/templates'
+import { resumeTemplates, blankTemplate } from '../data/templates'
 import { formatTime, cn } from '../lib/utils'
 
-const features = [
-  { icon: FileText, title: 'Word原生导出', description: '一键导出标准Word格式，排版完美还原' },
-  { icon: Sparkles, title: '行业语义模板', description: '覆盖技术、设计、职能等热门岗位' },
-  { icon: Brain, title: 'AI智能诊断', description: '深度分析简历内容，提供专业优化建议' },
-  { icon: GripVertical, title: '拖拽编辑器', description: '所见即所得，自由调整模块顺序' },
-  { icon: ScanLine, title: 'ATS检测', description: '智能检测简历兼容性，提升通过率' },
-  { icon: Shield, title: '隐私保护', description: 'AES加密存储，数据仅保存在本地' }
-]
-
-const categoryConfig: Record<string, { icon: typeof Code2; borderColor: string; iconBg: string; iconColor: string }> = {
-  tech: { icon: Code2, borderColor: 'border-navy-400', iconBg: 'bg-navy-50', iconColor: 'text-navy-600' },
-  design: { icon: Palette, borderColor: 'border-mint-400', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600' },
-  function: { icon: Briefcase, borderColor: 'border-gold-400', iconBg: 'bg-gold-50', iconColor: 'text-gold-600' }
+const categoryConfig: Record<string, { icon: typeof Code2; borderColor: string; iconBg: string; iconColor: string; features: string[] }> = {
+  tech: {
+    icon: Code2,
+    borderColor: 'border-t-navy-600',
+    iconBg: 'bg-navy-50',
+    iconColor: 'text-navy-600',
+    features: ['项目指标', '技术栈标签', '开源贡献']
+  },
+  design: {
+    icon: Palette,
+    borderColor: 'border-t-mint-400',
+    iconBg: 'bg-emerald-50',
+    iconColor: 'text-emerald-600',
+    features: ['作品集链接', '设计工具', '视觉规范']
+  },
+  function: {
+    icon: Briefcase,
+    borderColor: 'border-t-gold-500',
+    iconBg: 'bg-gold-50',
+    iconColor: 'text-gold-600',
+    features: ['流程优化', '供应商管理', '预算控制']
+  }
 }
 
 export default function Home() {
   const navigate = useNavigate()
-  const resumesRef = useRef<HTMLDivElement>(null)
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
 
-  const { resumes, loadAllResumes, loadSettings, deleteResumeById, createAndSaveResume } = useResumeStore()
+  const {
+    resumes,
+    settings,
+    loadAllResumes,
+    loadSettings,
+    deleteResumeById,
+    createAndSaveResume
+  } = useResumeStore()
 
   useEffect(() => {
     loadAllResumes()
     loadSettings()
   }, [loadAllResumes, loadSettings])
 
-  const scrollToResumes = () => {
-    resumesRef.current?.scrollIntoView({ behavior: 'smooth' })
+  const handleCreateBlank = async () => {
+    const resume = await createAndSaveResume(
+      blankTemplate.id,
+      'tech',
+      blankTemplate.modules,
+      blankTemplate.theme
+    )
+    if (resume) {
+      navigate(`/editor/${resume.id}`)
+    }
   }
 
-  const handleUseTemplate = async (templateId: string) => {
-    const template = resumeTemplates.find(t => t.id === templateId)
-    if (!template) return
-    const cat = template.category === 'blank' ? 'tech' : template.category as 'tech' | 'design' | 'function'
-    const resume = await createAndSaveResume(template.id, cat, template.modules, template.theme)
-    if (resume) navigate(`/editor/${resume.id}`)
+  const handleUseTemplate = () => {
+    navigate('/templates')
+  }
+
+  const handleAIDiagnose = (resumeId?: string) => {
+    if (resumeId) {
+      navigate(`/editor/${resumeId}?action=ai-diagnose`)
+      return
+    }
+    if (resumes.length === 0) {
+      alert('请先创建一份简历')
+      return
+    }
+    if (resumes.length === 1) {
+      navigate(`/editor/${resumes[0].id}?action=ai-diagnose`)
+    } else {
+      alert('请在下方列表中选择要诊断的简历')
+    }
+  }
+
+  const handleATSCheck = (resumeId?: string) => {
+    if (resumeId) {
+      navigate(`/editor/${resumeId}?action=ats-check`)
+      return
+    }
+    if (resumes.length === 0) {
+      alert('请先创建一份简历')
+      return
+    }
+    if (resumes.length === 1) {
+      navigate(`/editor/${resumes[0].id}?action=ats-check`)
+    } else {
+      alert('请在下方列表中选择要检测的简历')
+    }
+  }
+
+  const handleGoSettings = () => {
+    navigate('/settings')
   }
 
   const handleEdit = (id: string) => {
@@ -78,83 +135,216 @@ export default function Home() {
     setDeleteConfirmId(null)
   }
 
-  const featuredTemplates = resumeTemplates.filter(t => t.category !== 'blank')
+  const handleCategoryTemplate = (category: 'tech' | 'design' | 'function') => {
+    const template = resumeTemplates.find(t => t.category === category)
+    if (template) {
+      navigate(`/templates?category=${category}`)
+    }
+  }
+
+  const getTemplateLabel = (templateId: string) => {
+    const template = resumeTemplates.find(t => t.id === templateId)
+    return template?.name || '自定义模板'
+  }
+
+  const categoryTemplates = resumeTemplates.filter(t => t.category !== 'blank')
 
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative overflow-hidden py-16 md:py-24 px-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-50 via-white to-gold-50 opacity-80" />
-        <div className="absolute top-20 left-10 w-72 h-72 bg-gold-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-navy-200/20 rounded-full blur-3xl" />
+    <div className="min-h-screen pb-16">
+      {/* 顶部状态条 */}
+      <div className="bg-white border-b border-navy-100">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {settings.privacyMode ? (
+              <>
+                <Shield className="w-4 h-4 text-emerald-500" />
+                <span className="text-sm text-emerald-600 font-medium">已加密</span>
+              </>
+            ) : (
+              <>
+                <Lock className="w-4 h-4 text-coral-500" />
+                <span className="text-sm text-coral-600 font-medium">未加密</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 text-sm text-navy-500">
+              <FileText className="w-4 h-4" />
+              <span>共 <span className="font-semibold text-navy-700">{resumes.length}</span> 份简历</span>
+            </div>
+            <button
+              onClick={handleUseTemplate}
+              className="btn-ghost text-sm flex items-center gap-1"
+            >
+              <FileCheck className="w-4 h-4" />
+              模板库
+            </button>
+            <button
+              onClick={handleGoSettings}
+              className="btn-ghost text-sm flex items-center gap-1"
+            >
+              <Shield className="w-4 h-4" />
+              设置
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <div className="relative max-w-5xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-6xl font-bold text-navy-700 mb-6 animate-fade-in">
-            让你的简历<span className="text-gold-500">脱颖而出</span>
+      {/* Hero区 */}
+      <section className="relative overflow-hidden py-12 md:py-16 px-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-50 via-white to-gold-50 opacity-80" />
+        <div className="absolute top-10 left-10 w-64 h-64 bg-gold-200/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-10 w-80 h-80 bg-navy-200/20 rounded-full blur-3xl" />
+
+        <div className="relative max-w-4xl mx-auto text-center">
+          <h1 className="font-serif text-3xl md:text-5xl font-bold text-navy-700 mb-4">
+            开始创建你的简历
           </h1>
-          <p className="text-lg md:text-xl text-navy-500 mb-10 max-w-2xl mx-auto animate-slide-up">
-            AI智能诊断 · ATS兼容 · 本地加密存储
+          <p className="text-base md:text-lg text-navy-500 mb-8 max-w-xl mx-auto">
+            专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
-            <Link to="/templates" className="btn-primary inline-flex items-center justify-center gap-2">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={handleCreateBlank}
+              className="btn-primary inline-flex items-center justify-center gap-2"
+            >
               <Plus className="w-5 h-5" />
-              开始创建
-            </Link>
-            <button onClick={scrollToResumes} className="btn-secondary inline-flex items-center justify-center gap-2">
-              <FileText className="w-5 h-5" />
-              我的简历
+              空白简历
+            </button>
+            <button
+              onClick={handleUseTemplate}
+              className="btn-secondary inline-flex items-center justify-center gap-2"
+            >
+              <FileCheck className="w-5 h-5" />
+              使用行业模板
             </button>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="section-title text-center mb-12">核心功能</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="card card-hover p-6">
-                <div className="w-12 h-12 rounded-lg bg-navy-50 flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-navy-600" />
+      {/* 快捷功能区 */}
+      <section className="px-4 mb-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="card card-hover p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-navy-500 to-navy-700 flex items-center justify-center flex-shrink-0">
+                  <Brain className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-navy-700 mb-2">{title}</h3>
-                <p className="text-sm text-navy-400 leading-relaxed">{description}</p>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-navy-700 mb-1">AI智能诊断</h3>
+                  <p className="text-sm text-navy-400 mb-4">深度分析简历内容，提供专业优化建议，提升简历竞争力</p>
+                  <button
+                    onClick={() => handleAIDiagnose()}
+                    className="inline-flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-gold-500 transition-colors"
+                  >
+                    立即检测
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-            ))}
+            </div>
+
+            <div className="card card-hover p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center flex-shrink-0">
+                  <ScanLine className="w-7 h-7 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-navy-700 mb-1">ATS兼容性检测</h3>
+                  <p className="text-sm text-navy-400 mb-4">智能检测简历与招聘系统的兼容性，提升通过率</p>
+                  <button
+                    onClick={() => handleATSCheck()}
+                    className="inline-flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-gold-500 transition-colors"
+                  >
+                    立即检测
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card card-hover p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gold-500 to-gold-700 flex items-center justify-center flex-shrink-0">
+                  <FileDown className="w-7 h-7 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-navy-700 mb-1">Word原生导出</h3>
+                  <p className="text-sm text-navy-400">一键导出标准Word格式，排版完美还原，可直接投递</p>
+                  <div className="flex items-center gap-1 mt-3">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                    <span className="text-xs text-emerald-600">格式保真</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="card card-hover p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center flex-shrink-0">
+                  <Lock className="w-7 h-7 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-navy-700 mb-1">AES加密存储</h3>
+                  <p className="text-sm text-navy-400 mb-4">银行级AES加密，数据仅保存在本地，隐私安全有保障</p>
+                  <button
+                    onClick={handleGoSettings}
+                    className="inline-flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-gold-500 transition-colors"
+                  >
+                    前往设置
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Templates */}
-      <section className="py-16 px-4 bg-gradient-to-b from-transparent via-gold-50/30 to-transparent">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="section-title text-center mb-12">行业模板推荐</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredTemplates.map(template => {
-              const config = categoryConfig[template.category]
-              if (!config) return null
+      {/* 行业模板入口 */}
+      <section className="px-4 mb-12">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="section-title mb-6">行业模板</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {(['tech', 'design', 'function'] as const).map(category => {
+              const config = categoryConfig[category]
               const Icon = config.icon
+              const template = categoryTemplates.find(t => t.category === category)
               return (
                 <div
-                  key={template.id}
+                  key={category}
                   className={cn(
-                    'card card-hover p-6 border-t-4',
+                    'card card-hover p-6 border-t-4 cursor-pointer',
                     config.borderColor
                   )}
+                  onClick={() => handleCategoryTemplate(category)}
                 >
                   <div className={cn('w-12 h-12 rounded-lg flex items-center justify-center mb-4', config.iconBg)}>
                     <Icon className={cn('w-6 h-6', config.iconColor)} />
                   </div>
-                  <h3 className="text-lg font-semibold text-navy-700 mb-2">{template.name}</h3>
-                  <p className="text-sm text-navy-400 leading-relaxed mb-6">{template.description}</p>
-                  <button
-                    onClick={() => handleUseTemplate(template.id)}
-                    className="inline-flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-gold-500 transition-colors"
-                  >
-                    使用此模板
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                  <h3 className="text-lg font-semibold text-navy-700 mb-2">
+                    {category === 'tech' ? '技术岗' : category === 'design' ? '设计岗' : '职能岗'}
+                  </h3>
+                  <p className="text-sm text-navy-400 mb-4">{template?.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {config.features.map(feature => (
+                      <span
+                        key={feature}
+                        className={cn(
+                          'px-2.5 py-1 text-xs rounded-full',
+                          config.iconBg,
+                          config.iconColor
+                        )}
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-5 flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-gold-500 transition-colors">
+                    查看模板
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
                 </div>
               )
             })}
@@ -162,19 +352,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Recent Resumes */}
-      <section ref={resumesRef} className="py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="section-title mb-8">最近简历</h2>
+      {/* 最近简历列表 */}
+      <section className="px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="section-title">最近简历</h2>
+            <button
+              onClick={handleCreateBlank}
+              className="btn-ghost text-sm flex items-center gap-1"
+            >
+              <Plus className="w-4 h-4" />
+              新建
+            </button>
+          </div>
 
           {resumes.length === 0 ? (
-            <div className="card p-12 text-center">
-              <FileText className="w-12 h-12 text-navy-200 mx-auto mb-4" />
-              <p className="text-navy-400 mb-4">还没有简历，开始创建吧</p>
-              <Link to="/templates" className="btn-primary inline-flex items-center gap-2">
-                <Plus className="w-5 h-5" />
-                创建简历
-              </Link>
+            <div className="card p-16 text-center">
+              <FileText className="w-16 h-16 text-navy-200 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-navy-600 mb-2">还没有简历</h3>
+              <p className="text-navy-400 mb-6">创建你的第一份简历，开启求职之旅</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={handleCreateBlank}
+                  className="btn-primary inline-flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  创建空白简历
+                </button>
+                <button
+                  onClick={handleUseTemplate}
+                  className="btn-secondary inline-flex items-center justify-center gap-2"
+                >
+                  <FileCheck className="w-5 h-5" />
+                  选择行业模板
+                </button>
+              </div>
             </div>
           ) : (
             <div className="space-y-3">
@@ -184,12 +396,22 @@ export default function Home() {
                   className="card card-hover p-4 flex items-center justify-between"
                 >
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-medium text-navy-700 truncate">
-                      {resume.title || '未命名简历'}
-                    </h3>
-                    <div className="flex items-center gap-1 mt-1 text-sm text-navy-400">
-                      <Clock className="w-3.5 h-3.5" />
-                      <span>{formatTime(resume.updatedAt)}</span>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-medium text-navy-700 truncate">
+                        {resume.title || '未命名简历'}
+                      </h3>
+                      {settings.privacyMode && (
+                        <Shield className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-navy-400">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>{formatTime(resume.updatedAt)}</span>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full bg-navy-50 text-navy-500 text-xs">
+                        {getTemplateLabel(resume.templateId)}
+                      </span>
                     </div>
                   </div>
 
@@ -210,16 +432,32 @@ export default function Home() {
                       </button>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2 ml-4">
+                    <div className="flex items-center gap-1 ml-4">
                       <button
                         onClick={() => handleEdit(resume.id)}
                         className="p-2 text-navy-400 hover:text-navy-600 hover:bg-navy-50 rounded-lg transition-colors"
+                        title="编辑"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button
+                        onClick={() => handleAIDiagnose(resume.id)}
+                        className="p-2 text-navy-400 hover:text-navy-600 hover:bg-navy-50 rounded-lg transition-colors"
+                        title="AI诊断"
+                      >
+                        <Brain className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleATSCheck(resume.id)}
+                        className="p-2 text-navy-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                        title="ATS检测"
+                      >
+                        <ScanLine className="w-4 h-4" />
+                      </button>
+                      <button
                         onClick={() => handleDelete(resume.id)}
                         className="p-2 text-navy-400 hover:text-coral-500 hover:bg-coral-500/5 rounded-lg transition-colors"
+                        title="删除"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
