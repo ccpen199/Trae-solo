@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Statistic, Table, Tag, Progress, List, Avatar, Button, Drawer, Descriptions, Timeline, Space, Badge, Modal, message } from 'antd'
+import { Row, Col, Card, Statistic, Table, Tag, Progress, List, Avatar, Button, Drawer, Descriptions, Timeline, Space, Badge, Modal, message, Alert, Empty, Tooltip } from 'antd'
 import {
   ShoppingCartOutlined,
   RocketOutlined,
@@ -13,7 +13,17 @@ import {
   RightOutlined,
   SafetyOutlined,
   MoneyCollectOutlined,
-  CustomerServiceOutlined
+  CustomerServiceOutlined,
+  RobotOutlined,
+  BarChartOutlined,
+  ClockCircleOutlined,
+  DollarOutlined,
+  ThunderboltOutlined,
+  SyncOutlined,
+  EditOutlined,
+  ReloadOutlined,
+  FileTextOutlined,
+  SwapOutlined
 } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
@@ -24,10 +34,20 @@ function Dashboard() {
   const [summary, setSummary] = useState(null)
   const [platformStats, setPlatformStats] = useState([])
   const [recentOrders, setRecentOrders] = useState([])
+  const [afterSalesList, setAfterSalesList] = useState([])
+  const [compensationList, setCompensationList] = useState([])
+  const [settlementList, setSettlementList] = useState([])
+  const [alertPlatforms, setAlertPlatforms] = useState([])
   const [loading, setLoading] = useState(true)
   const [orderDetail, setOrderDetail] = useState(null)
   const [detailDrawer, setDetailDrawer] = useState(false)
   const [routeInfo, setRouteInfo] = useState(null)
+  const [routeDrawer, setRouteDrawer] = useState(false)
+  const [routeDetail, setRouteDetail] = useState(null)
+  const [routeLoading, setRouteLoading] = useState(false)
+  const [platformAlertDrawer, setPlatformAlertDrawer] = useState(false)
+  const [currentAlertPlatform, setCurrentAlertPlatform] = useState(null)
+  const [platformAlertOrders, setPlatformAlertOrders] = useState([])
 
   useEffect(() => {
     loadData()
@@ -42,12 +62,51 @@ function Dashboard() {
         setSummary(res.data)
         setPlatformStats(res.data.platform_stats || [])
         setRecentOrders(res.data.recent_orders || [])
+        setAfterSalesList(res.data.after_sales_list || [])
+        setCompensationList(res.data.compensation_list || [])
+        setSettlementList(res.data.settlement_list || [])
+        setAlertPlatforms(res.data.alert_platforms || [])
       }
     } catch (e) {
       console.error(e)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleViewRoute = async (order) => {
+    setRouteLoading(true)
+    try {
+      const res = await orderApi.quote({
+        distance: order.distance || 5,
+        weight: order.goods_weight || 0,
+        urgency: order.urgency || 'normal'
+      })
+      if (res.success) {
+        setRouteDetail({
+          order,
+          allPlatforms: res.data.optimal || [],
+          route: res.data.optimal?.find(r => r.platform.id === order.platform_id) || res.data.optimal?.[0],
+          recommendation: res.data.reason || ''
+        })
+        setRouteDrawer(true)
+      }
+    } catch (e) {
+      message.error('加载路由依据失败')
+    } finally {
+      setRouteLoading(false)
+    }
+  }
+
+  const handleViewPlatformAlert = async (platform) => {
+    try {
+      const ordersRes = await orderApi.list({ platform_id: platform.id, pageSize: 10 })
+      setPlatformAlertOrders(ordersRes.success ? (ordersRes.data || []) : [])
+    } catch (e) {
+      setPlatformAlertOrders([])
+    }
+    setCurrentAlertPlatform(platform)
+    setPlatformAlertDrawer(true)
   }
 
   const handleViewOrder = async (order) => {
@@ -155,31 +214,70 @@ function Dashboard() {
 
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         <Col span={12}>
-          <Card 
+          <Card
             title={
               <Space>
                 <TruckOutlined />
                 运力平台状态
+                {alertPlatforms.length > 0 && (
+                  <Badge count={alertPlatforms.length} color="#ff4d4f" />
+                )}
               </Space>
-            } 
+            }
             extra={
               <Button type="link" size="small" onClick={() => navigate('/platforms')}>
                 查看全部 <RightOutlined />
               </Button>
             }
           >
+            {alertPlatforms.length > 0 && (
+              <Alert
+                message={`检测到 ${alertPlatforms.length} 个平台存在异常`}
+                description={
+                  <Space wrap>
+                    {alertPlatforms.map(p => (
+                      <Tag key={p.id} color="error" style={{ cursor: 'pointer' }} onClick={() => handleViewPlatformAlert(p)}>
+                        <WarningOutlined /> {p.logo} {p.name}: {p.alert_message}
+                      </Tag>
+                    ))}
+                  </Space>
+                }
+                type="warning"
+                showIcon
+                style={{ marginBottom: 12 }}
+                action={
+                  <Button size="small" type="primary" ghost onClick={() => navigate('/platforms')}>
+                    批量处理
+                  </Button>
+                }
+              />
+            )}
             <List
               dataSource={platformStats}
               renderItem={item => {
                 const hasWarning = item.capacity_saturation > 0.8 || item.complaint_rate > 0.02 || item.on_time_rate < 0.9
                 return (
-                  <List.Item 
-                    style={{ 
+                  <List.Item
+                    style={{
                       background: hasWarning ? '#fffbe6' : 'transparent',
                       borderRadius: 8,
                       padding: '8px 12px',
                       marginBottom: 8
                     }}
+                    actions={hasWarning ? [
+                      <Button key="orders" type="link" size="small" onClick={() => handleViewPlatformAlert(item)}>
+                        异常订单
+                      </Button>,
+                      <Button key="aftersales" type="link" size="small" onClick={() => navigate('/after-sales')}>
+                        投诉处理
+                      </Button>,
+                      <Button key="compensation" type="link" size="small" onClick={() => navigate('/compensation')}>
+                        赔付触发
+                      </Button>,
+                      <Button key="reassign" type="link" size="small" onClick={() => navigate('/orders')}>
+                        订单改派
+                      </Button>
+                    ] : []}
                   >
                     <List.Item.Meta
                       avatar={
@@ -199,6 +297,11 @@ function Dashboard() {
                                 <WarningOutlined /> 异常预警
                               </Tag>
                             )}
+                            {item.exception_orders > 0 && (
+                              <Tag color="error" size="small">
+                                异常订单 {item.exception_orders}
+                              </Tag>
+                            )}
                           </Space>
                           <Tag color={item.capacity_saturation < 0.7 ? 'green' : item.capacity_saturation < 0.85 ? 'orange' : 'red'}>
                             饱和度 {(item.capacity_saturation * 100).toFixed(0)}%
@@ -207,8 +310,8 @@ function Dashboard() {
                       }
                       description={
                         <div>
-                          <Progress 
-                            percent={item.capacity_saturation * 100} 
+                          <Progress
+                            percent={item.capacity_saturation * 100}
                             showInfo={false}
                             strokeColor={getSaturationColor(item.capacity_saturation)}
                             size="small"
@@ -231,6 +334,16 @@ function Dashboard() {
                               </span>
                             </span>
                             <span style={{ color: '#999' }}>今日 {item.today_orders || 0} 单</span>
+                            {item.pending_aftersales_count > 0 && (
+                              <Tag color="orange" style={{ margin: 0 }}>
+                                售后待处理 {item.pending_aftersales_count}
+                              </Tag>
+                            )}
+                            {item.pending_compensation_count > 0 && (
+                              <Tag color="purple" style={{ margin: 0 }}>
+                                待赔付 {item.pending_compensation_count}
+                              </Tag>
+                            )}
                           </div>
                         </div>
                       }
@@ -242,90 +355,223 @@ function Dashboard() {
           </Card>
         </Col>
         <Col span={12}>
-          <Card 
+          <Card
             title={
               <Space>
                 <ExclamationCircleOutlined />
                 待处理事项
               </Space>
             }
+            extra={
+              <Space>
+                <Button type="link" size="small" icon={<ShoppingCartOutlined />} onClick={() => navigate('/price-compare')}>
+                  新建订单
+                </Button>
+                <Button type="link" size="small" icon={<ShopOutlined />} onClick={() => navigate('/merchant')}>
+                  商户看板
+                </Button>
+              </Space>
+            }
           >
             <Row gutter={[16, 16]}>
               <Col span={12}>
-                <div className="sla-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/after-sales')}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <CustomerServiceOutlined style={{ fontSize: 24, color: '#faad14' }} />
-                      <div>
-                        <div style={{ fontSize: 20, fontWeight: 600, color: '#faad14' }}>
-                          {summary?.pending_after_sales || 0}
-                        </div>
-                        <div style={{ fontSize: 13, color: '#666' }}>待处理售后</div>
-                      </div>
-                    </div>
-                    <RightOutlined style={{ color: '#ccc' }} />
-                  </div>
-                  <Button type="link" size="small" style={{ padding: 0, marginTop: 8 }} onClick={() => navigate('/after-sales')}>
-                    前往处理
-                  </Button>
-                </div>
+                <Card
+                  size="small"
+                  className="sla-card"
+                  style={{ cursor: 'pointer', height: '100%' }}
+                  onClick={() => navigate('/after-sales')}
+                  title={
+                    <Space>
+                      <CustomerServiceOutlined style={{ color: '#faad14' }} />
+                      <span>售后协同</span>
+                      <Badge count={summary?.pending_after_sales || 0} color="#faad14" />
+                    </Space>
+                  }
+                  extra={
+                    <Button type="link" size="small">
+                      全部 <RightOutlined />
+                    </Button>
+                  }
+                >
+                  {afterSalesList.length === 0 ? (
+                    <Empty description="暂无待处理售后" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  ) : (
+                    <List
+                      size="small"
+                      dataSource={afterSalesList}
+                      renderItem={item => (
+                        <List.Item size="small" style={{ padding: '4px 0' }}>
+                          <List.Item.Meta
+                            avatar={<CustomerServiceOutlined style={{ color: '#faad14' }} />}
+                            title={
+                              <Space size={4}>
+                                <span style={{ fontSize: 12 }}>{item.order_no}</span>
+                                <Tag color="orange" style={{ fontSize: 10, padding: '0 4px' }}>
+                                  {item.type === 'address_change' ? '改址' : item.type === 'cancel' ? '取消' : item.type === 'complaint' ? '投诉' : '退款'}
+                                </Tag>
+                              </Space>
+                            }
+                            description={
+                              <div style={{ fontSize: 11, color: '#666' }}>
+                                <div>{item.platform_logo} {item.platform_name} · 同步结果: {item.platform_synced ? '已同步' : '同步中'}</div>
+                                <div>提交: {dayjs(item.created_at).format('MM-DD HH:mm')}</div>
+                              </div>
+                            }
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  )}
+                </Card>
               </Col>
               <Col span={12}>
-                <div className="compensation-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/compensation')}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <GiftOutlined style={{ fontSize: 24, color: '#722ed1' }} />
-                      <div>
-                        <div style={{ fontSize: 20, fontWeight: 600, color: '#722ed1' }}>
-                          {summary?.pending_compensations || 0}
-                        </div>
-                        <div style={{ fontSize: 13, color: '#666' }}>待赔付申请</div>
-                      </div>
-                    </div>
-                    <RightOutlined style={{ color: '#ccc' }} />
-                  </div>
-                  <Button type="link" size="small" style={{ padding: 0, marginTop: 8 }} onClick={() => navigate('/compensation')}>
-                    前往处理
-                  </Button>
-                </div>
+                <Card
+                  size="small"
+                  className="compensation-card"
+                  style={{ cursor: 'pointer', height: '100%' }}
+                  onClick={() => navigate('/compensation')}
+                  title={
+                    <Space>
+                      <GiftOutlined style={{ color: '#722ed1' }} />
+                      <span>SLA赔付</span>
+                      <Badge count={summary?.pending_compensations || 0} color="#722ed1" />
+                    </Space>
+                  }
+                  extra={
+                    <Button type="link" size="small">
+                      全部 <RightOutlined />
+                    </Button>
+                  }
+                >
+                  {compensationList.length === 0 ? (
+                    <Empty description="暂无待赔付" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  ) : (
+                    <List
+                      size="small"
+                      dataSource={compensationList}
+                      renderItem={item => (
+                        <List.Item size="small" style={{ padding: '4px 0' }}>
+                          <List.Item.Meta
+                            avatar={<GiftOutlined style={{ color: '#722ed1' }} />}
+                            title={
+                              <Space size={4}>
+                                <span style={{ fontSize: 12 }}>{item.order_no}</span>
+                                <Tag color="purple" style={{ fontSize: 10, padding: '0 4px' }}>
+                                  {item.type === 'timeout' ? '超时' : item.type === 'loss' ? '丢件' : '投诉'}
+                                </Tag>
+                                <span style={{ color: '#f5222d', fontWeight: 600, fontSize: 12 }}>¥{item.amount?.toFixed(2)}</span>
+                              </Space>
+                            }
+                            description={
+                              <div style={{ fontSize: 11, color: '#666' }}>
+                                <div>{item.platform_logo} {item.platform_name} · 券码: {item.coupon_code || '待生成'}</div>
+                                <div>触发: {dayjs(item.triggered_at).format('MM-DD HH:mm')} · {item.status === 'pending' ? '待发放' : '处理中'}</div>
+                              </div>
+                            }
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  )}
+                </Card>
               </Col>
               <Col span={12}>
-                <div className="settlement-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/settlement')}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <MoneyCollectOutlined style={{ fontSize: 24, color: '#13c2c2' }} />
-                      <div>
-                        <div style={{ fontSize: 20, fontWeight: 600, color: '#13c2c2' }}>
-                          {summary?.active_platforms || 0}
-                        </div>
-                        <div style={{ fontSize: 13, color: '#666' }}>待月结平台</div>
-                      </div>
-                    </div>
-                    <RightOutlined style={{ color: '#ccc' }} />
-                  </div>
-                  <Button type="link" size="small" style={{ padding: 0, marginTop: 8 }} onClick={() => navigate('/settlement')}>
-                    生成结算单
-                  </Button>
-                </div>
+                <Card
+                  size="small"
+                  className="settlement-card"
+                  style={{ cursor: 'pointer', height: '100%' }}
+                  onClick={() => navigate('/settlement')}
+                  title={
+                    <Space>
+                      <MoneyCollectOutlined style={{ color: '#13c2c2' }} />
+                      <span>多平台结算</span>
+                    </Space>
+                  }
+                  extra={
+                    <Button type="link" size="small">
+                      全部 <RightOutlined />
+                    </Button>
+                  }
+                >
+                  {settlementList.length === 0 ? (
+                    <Empty description="暂无待结算" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  ) : (
+                    <List
+                      size="small"
+                      dataSource={settlementList}
+                      renderItem={item => (
+                        <List.Item size="small" style={{ padding: '4px 0' }}>
+                          <List.Item.Meta
+                            avatar={<FileTextOutlined style={{ color: '#13c2c2' }} />}
+                            title={
+                              <Space size={4}>
+                                <span style={{ fontSize: 12 }}>{item.period}</span>
+                                <Tag color="cyan" style={{ fontSize: 10, padding: '0 4px' }}>
+                                  {item.platform_logo} {item.platform_name}
+                                </Tag>
+                              </Space>
+                            }
+                            description={
+                              <div style={{ fontSize: 11, color: '#666' }}>
+                                <div>{item.order_count || 0}单 · 总额 ¥{Number(item.total_amount || 0).toFixed(2)}</div>
+                                <div>抽佣 ¥{Number(item.commission_amount || 0).toFixed(2)} · 应付 ¥{Number(item.settlement_amount || 0).toFixed(2)}</div>
+                              </div>
+                            }
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  )}
+                </Card>
               </Col>
               <Col span={12}>
-                <div style={{ background: 'linear-gradient(135deg, #e6f4ff 0%, #fff 100%)', border: '1px solid #91caff', borderRadius: 8, padding: 16, cursor: 'pointer' }} onClick={() => navigate('/merchant')}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <ShopOutlined style={{ fontSize: 24, color: '#1677ff' }} />
-                      <div>
-                        <div style={{ fontSize: 20, fontWeight: 600, color: '#1677ff' }}>
-                          {summary?.active_merchants || 0}
-                        </div>
-                        <div style={{ fontSize: 13, color: '#666' }}>商户看板</div>
-                      </div>
+                <Card
+                  size="small"
+                  style={{ background: 'linear-gradient(135deg, #e6f4ff 0%, #fff 100%)', border: '1px solid #91caff', height: '100%', cursor: 'pointer' }}
+                  onClick={() => navigate('/price-compare')}
+                  title={
+                    <Space>
+                      <RobotOutlined style={{ color: '#1677ff' }} />
+                      <span>智能比价下单</span>
+                    </Space>
+                  }
+                  extra={
+                    <Button type="primary" size="small" icon={<EditOutlined />}>
+                      新建订单
+                    </Button>
+                  }
+                >
+                  <div style={{ padding: '8px 0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>当前接入运力平台</span>
+                      <span style={{ fontWeight: 600, color: '#1677ff' }}>{platformStats.length} 家</span>
                     </div>
-                    <RightOutlined style={{ color: '#ccc' }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>平均准时率</span>
+                      <span style={{ fontWeight: 600, color: '#52c41a' }}>
+                        {platformStats.length ? (platformStats.reduce((s, p) => s + p.on_time_rate, 0) / platformStats.length * 100).toFixed(1) : 0}%
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>平均运费(5km)</span>
+                      <span style={{ fontWeight: 600, color: '#f5222d' }}>¥{platformStats.length ? (platformStats.reduce((s, p) => s + (p.base_price || 0) + (p.per_km_price || 0) * 5, 0) / platformStats.length).toFixed(2) : '0.00'}</span>
+                    </div>
+                    <Space style={{ marginTop: 8 }} wrap>
+                      {platformStats.slice(0, 6).map(p => (
+                        <Tooltip key={p.id} title={`${p.name} 饱和度${(p.capacity_saturation * 100).toFixed(0)}%`}>
+                          <Tag color={p.capacity_saturation < 0.7 ? 'green' : p.capacity_saturation < 0.85 ? 'orange' : 'red'} style={{ margin: 0 }}>
+                            {p.logo}
+                          </Tag>
+                        </Tooltip>
+                      ))}
+                    </Space>
+                    <div style={{ marginTop: 12 }}>
+                      <Button type="primary" block size="small" icon={<SwapOutlined />} onClick={(e) => { e.stopPropagation(); navigate('/price-compare') }}>
+                        一键比价下单 →
+                      </Button>
+                    </div>
                   </div>
-                  <Button type="link" size="small" style={{ padding: 0, marginTop: 8 }} onClick={() => navigate('/merchant')}>
-                    查看配送看板
-                  </Button>
-                </div>
+                </Card>
               </Col>
             </Row>
           </Card>
@@ -363,11 +609,21 @@ function Dashboard() {
             {
               title: '平台',
               dataIndex: 'platform_name',
-              width: 110,
+              width: 130,
               render: (text, record) => (
-                <span>
-                  {record.platform_logo} {text}
-                </span>
+                <div>
+                  <Space size={4}>
+                    <span>{record.platform_logo}</span>
+                    <span>{text}</span>
+                  </Space>
+                  {record.platform_capacity !== undefined && (
+                    <div style={{ fontSize: 10, color: '#666', marginTop: 2 }}>
+                      运力 {record.platform_capacity !== undefined ? (record.platform_capacity * 100).toFixed(0) : '-'}%
+                      <span style={{ margin: '0 4px' }}>|</span>
+                      履约 {record.platform_ontime_rate !== undefined ? (record.platform_ontime_rate * 100).toFixed(1) : '-'}%
+                    </div>
+                  )}
+                </div>
               )
             },
             { title: '收件人', dataIndex: 'receiver_name', width: 80 },
@@ -419,12 +675,17 @@ function Dashboard() {
             },
             {
               title: '操作',
-              width: 80,
+              width: 160,
               fixed: 'right',
               render: (_, record) => (
-                <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewOrder(record)}>
-                  详情
-                </Button>
+                <Space size="small" wrap>
+                  <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewOrder(record)}>
+                    详情
+                  </Button>
+                  <Button type="link" size="small" icon={<RobotOutlined />} onClick={() => handleViewRoute(record)}>
+                    路由依据
+                  </Button>
+                </Space>
               )
             }
           ]}
@@ -556,6 +817,321 @@ function Dashboard() {
                 }))}
               />
             </div>
+          </div>
+        )}
+      </Drawer>
+
+      <Drawer
+        title={
+          <Space>
+            <RobotOutlined style={{ color: '#722ed1' }} />
+            <span>智能路由依据分析</span>
+          </Space>
+        }
+        placement="right"
+        width={650}
+        open={routeDrawer}
+        onClose={() => setRouteDrawer(false)}
+        destroyOnClose
+        loading={routeLoading}
+      >
+        {routeDetail && (
+          <div>
+            <Alert
+              message="智能路由推荐说明"
+              description={routeDetail.recommendation || '基于多维度加权评分模型，综合考虑价格、时效、服务质量和运力饱和度，为您选择最优承运方'}
+              type="info"
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+
+            <Card title="订单参数" size="small" style={{ marginBottom: 16 }}>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <div style={{ fontSize: 12, color: '#666', marginBottom: 4 }}>配送距离</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <BarChartOutlined style={{ color: '#1677ff' }} />
+                    <span style={{ fontSize: 16, fontWeight: 600 }}>{routeDetail.order.distance}km</span>
+                  </div>
+                </Col>
+                <Col span={8}>
+                  <div style={{ fontSize: 12, color: '#666', marginBottom: 4 }}>物品重量</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <SafetyOutlined style={{ color: '#52c41a' }} />
+                    <span style={{ fontSize: 16, fontWeight: 600 }}>{routeDetail.order.goods_weight || 0}kg</span>
+                  </div>
+                </Col>
+                <Col span={8}>
+                  <div style={{ fontSize: 12, color: '#666', marginBottom: 4 }}>时效要求</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <ClockCircleOutlined style={{ color: '#faad14' }} />
+                    <span style={{ fontSize: 16, fontWeight: 600 }}>
+                      {routeDetail.order.urgency === 'urgent' ? '加急' : routeDetail.order.urgency === 'normal' ? '普通' : '经济'}
+                    </span>
+                  </div>
+                </Col>
+              </Row>
+            </Card>
+
+            <Card title="当前承运方评分详情" size="small" style={{ marginBottom: 16 }}>
+              {routeDetail.route ? (
+                <div>
+                  <Space style={{ marginBottom: 16 }}>
+                    <span style={{ fontSize: 28 }}>{routeDetail.route.platform.logo}</span>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 600 }}>{routeDetail.route.platform.name}</div>
+                      <div style={{ fontSize: 12, color: '#666' }}>综合评分: {routeDetail.route.score ? (routeDetail.route.score * 100).toFixed(1) : '-'}分</div>
+                    </div>
+                  </Space>
+                  <Descriptions column={2} size="small" bordered>
+                    <Descriptions.Item label="运费成本">
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>¥{routeDetail.route.fee?.toFixed(2)}</span>
+                        <Progress
+                          percent={Math.round((routeDetail.route.score_detail?.price_score || 0) * 100)}
+                          size="small"
+                          style={{ width: 100 }}
+                          strokeColor="#52c41a"
+                        />
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="预计时效">
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>{routeDetail.route.delivery_time}分钟</span>
+                        <Progress
+                          percent={Math.round((routeDetail.route.score_detail?.time_score || 0) * 100)}
+                          size="small"
+                          style={{ width: 100 }}
+                          strokeColor="#1677ff"
+                        />
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="运力饱和度">
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>{((routeDetail.route.platform?.capacity_saturation || 0) * 100).toFixed(0)}%</span>
+                        <Progress
+                          percent={Math.round((routeDetail.route.score_detail?.saturation_score || 0) * 100)}
+                          size="small"
+                          style={{ width: 100 }}
+                          strokeColor="#722ed1"
+                        />
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="历史履约率">
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>{((routeDetail.route.platform?.on_time_rate || 0) * 100).toFixed(1)}%</span>
+                        <Progress
+                          percent={Math.round((routeDetail.route.score_detail?.quality_score || 0) * 100)}
+                          size="small"
+                          style={{ width: 100 }}
+                          strokeColor="#fa8c16"
+                        />
+                      </div>
+                    </Descriptions.Item>
+                  </Descriptions>
+                  <Alert
+                    message="选择理由"
+                    description={routeDetail.route.reason || '综合评分最高，为最优选择'}
+                    type="success"
+                    showIcon
+                    style={{ marginTop: 12 }}
+                  />
+                </div>
+              ) : (
+                <div style={{ textAlign: 'center', padding: 20, color: '#999' }}>
+                  暂无当前承运方的评分数据
+                </div>
+              )}
+            </Card>
+
+            <Card title="候选承运方（全平台综合对比）" size="small">
+              <Table
+                dataSource={routeDetail.allPlatforms}
+                rowKey="platform.id"
+                size="small"
+                pagination={false}
+                scroll={{ x: 600 }}
+                rowClassName={(record) =>
+                  record.platform.id === routeDetail.order.platform_id
+                    ? 'table-row-selected'
+                    : ''
+                }
+              >
+                <Table.Column
+                  title="平台"
+                  dataIndex="platform.name"
+                  key="platform"
+                  render={(text, record) => (
+                    <Space>
+                      <span style={{ fontSize: 18 }}>{record.platform.logo}</span>
+                      {text}
+                      {record.platform.id === routeDetail.order.platform_id && (
+                        <Tag color="green">已选择</Tag>
+                      )}
+                    </Space>
+                  )}
+                />
+                <Table.Column
+                  title="运费"
+                  dataIndex="fee"
+                  key="fee"
+                  render={(val) => <span style={{ color: '#52c41a' }}>¥{val?.toFixed(2)}</span>}
+                  sorter={(a, b) => a.fee - b.fee}
+                />
+                <Table.Column
+                  title="时效(分)"
+                  dataIndex="delivery_time"
+                  key="time"
+                  sorter={(a, b) => a.delivery_time - b.delivery_time}
+                />
+                <Table.Column
+                  title="综合评分"
+                  dataIndex="score"
+                  key="score"
+                  render={(val) => (
+                    <span style={{ fontWeight: 600, color: val >= 0.8 ? '#52c41a' : val >= 0.6 ? '#faad14' : '#ff4d4f' }}>
+                      {(val * 100).toFixed(1)}
+                    </span>
+                  )}
+                  sorter={(a, b) => b.score - a.score}
+                />
+              </Table>
+            </Card>
+
+            <div style={{ marginTop: 16, fontSize: 12, color: '#999' }}>
+              <div><strong>评分权重说明：</strong></div>
+              <div>• 加急单：时效权重40%，价格权重20%，质量权重25%，运力权重15%</div>
+              <div>• 普通单：时效权重25%，价格权重35%，质量权重25%，运力权重15%</div>
+              <div>• 经济单：时效权重15%，价格权重50%，质量权重25%，运力权重15%</div>
+            </div>
+          </div>
+        )}
+      </Drawer>
+
+      <Drawer
+        title={
+          <Space>
+            <WarningOutlined style={{ color: '#ff4d4f' }} />
+            <span>异常平台处理 - {currentAlertPlatform?.logo} {currentAlertPlatform?.name}</span>
+          </Space>
+        }
+        placement="right"
+        width={600}
+        open={platformAlertDrawer}
+        onClose={() => setPlatformAlertDrawer(false)}
+        destroyOnClose
+      >
+        {currentAlertPlatform && (
+          <div>
+            <Alert
+              message="平台异常预警"
+              description={currentAlertPlatform.alert_message || '该平台存在异常指标，请及时处理'}
+              type={currentAlertPlatform.alert_type === 'capacity' ? 'warning' : currentAlertPlatform.alert_type === 'complaint' ? 'error' : 'warning'}
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+
+            <Card title="异常指标详情" size="small" style={{ marginBottom: 16 }}>
+              <Descriptions column={2} size="small" bordered>
+                <Descriptions.Item label="运力饱和度">
+                  <Progress
+                    percent={(currentAlertPlatform.capacity_saturation * 100).toFixed(0)}
+                    showInfo
+                    strokeColor={currentAlertPlatform.capacity_saturation > 0.85 ? '#ff4d4f' : '#faad14'}
+                  />
+                </Descriptions.Item>
+                <Descriptions.Item label="准时率">
+                  <span style={{ color: currentAlertPlatform.on_time_rate < 0.9 ? '#ff4d4f' : '#52c41a', fontWeight: 600 }}>
+                    {(currentAlertPlatform.on_time_rate * 100).toFixed(1)}%
+                  </span>
+                </Descriptions.Item>
+                <Descriptions.Item label="丢件率">
+                  <span style={{ color: currentAlertPlatform.loss_rate > 0.01 ? '#ff4d4f' : '#52c41a', fontWeight: 600 }}>
+                    {(currentAlertPlatform.loss_rate * 100).toFixed(2)}%
+                  </span>
+                </Descriptions.Item>
+                <Descriptions.Item label="投诉率">
+                  <span style={{ color: currentAlertPlatform.complaint_rate > 0.02 ? '#ff4d4f' : '#52c41a', fontWeight: 600 }}>
+                    {(currentAlertPlatform.complaint_rate * 100).toFixed(2)}%
+                  </span>
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+
+            <Card title="关联订单列表" size="small" style={{ marginBottom: 16 }}>
+              {platformAlertOrders.length === 0 ? (
+                <Empty description="暂无该平台的订单" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              ) : (
+                <Table
+                  dataSource={platformAlertOrders}
+                  rowKey="id"
+                  size="small"
+                  pagination={{ pageSize: 5 }}
+                  columns={[
+                    {
+                      title: '订单号',
+                      dataIndex: 'order_no',
+                      width: 130,
+                      render: (t) => <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{t}</span>
+                    },
+                    { title: '收件人', dataIndex: 'receiver_name', width: 70 },
+                    {
+                      title: '状态',
+                      dataIndex: 'delivery_status',
+                      width: 80,
+                      render: (s) => <Tag color={statusColorMap[s]}>{statusTextMap[s] || s}</Tag>
+                    },
+                    {
+                      title: '距离/重量',
+                      width: 100,
+                      render: (_, r) => (
+                        <div style={{ fontSize: 11 }}>
+                          <div>{r.distance}km</div>
+                          <div style={{ color: '#999' }}>{r.goods_weight}kg</div>
+                        </div>
+                      )
+                    },
+                    {
+                      title: '操作',
+                      width: 150,
+                      render: (_, r) => (
+                        <Space size={4} wrap>
+                          <Button size="small" type="link" onClick={() => navigate('/orders')}>
+                            改派
+                          </Button>
+                          <Button size="small" type="link" onClick={() => navigate('/after-sales')}>
+                            投诉
+                          </Button>
+                          <Button size="small" type="link" onClick={() => navigate('/compensation')}>
+                            赔付
+                          </Button>
+                        </Space>
+                      )
+                    }
+                  ]}
+                />
+              )}
+            </Card>
+
+            <Card title="快捷操作" size="small">
+              <Space wrap>
+                <Button type="primary" icon={<ReloadOutlined />} onClick={() => navigate('/platforms')}>
+                  调整运力饱和度
+                </Button>
+                <Button icon={<SwapOutlined />} onClick={() => navigate('/orders')}>
+                  批量改派订单
+                </Button>
+                <Button icon={<CustomerServiceOutlined />} onClick={() => navigate('/after-sales')}>
+                  投诉处理中心
+                </Button>
+                <Button icon={<GiftOutlined />} onClick={() => navigate('/compensation')}>
+                  触发批量赔付
+                </Button>
+                <Button icon={<MoneyCollectOutlined />} onClick={() => navigate('/settlement')}>
+                  查看月结影响
+                </Button>
+              </Space>
+            </Card>
           </div>
         )}
       </Drawer>

@@ -54,31 +54,86 @@ app.get('/api/dashboard/summary', (req, res) => {
       (SELECT COUNT(*) FROM platforms WHERE status = 'active') as active_platforms,
       (SELECT COUNT(*) FROM merchants WHERE status = 'active') as active_merchants
   `).get();
-  
-  const platformStats = db.prepare(`
-    SELECT p.id, p.name, p.logo, p.code, p.capacity_saturation, p.on_time_rate, p.loss_rate, p.complaint_rate,
-      (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND DATE(o.created_at) = DATE('now')) as today_orders,
-      (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND o.delivery_status = 'delivered') as total_delivered
-    FROM platforms p
-    WHERE p.status = 'active'
-    ORDER BY p.id
-  `).all();
-  
+
   const recentOrders = db.prepare(`
-    SELECT o.*, p.name as platform_name, p.logo as platform_logo, m.name as merchant_name
+    SELECT o.*, p.name as platform_name, p.logo as platform_logo, 
+      p.capacity_saturation as platform_capacity, 
+      p.on_time_rate as platform_ontime_rate,
+      m.name as merchant_name
     FROM orders o
     LEFT JOIN platforms p ON o.platform_id = p.id
     LEFT JOIN merchants m ON o.merchant_id = m.id
     ORDER BY o.id DESC
     LIMIT 10
   `).all();
-  
+
+  const afterSalesList = db.prepare(`
+    SELECT a.*, o.order_no, o.platform_id, p.name as platform_name, p.logo as platform_logo, m.name as merchant_name,
+      CASE WHEN a.platform_ack = 1 THEN 1 ELSE 0 END as platform_synced
+    FROM after_sales a
+    LEFT JOIN orders o ON a.order_id = o.id
+    LEFT JOIN platforms p ON o.platform_id = p.id
+    LEFT JOIN merchants m ON o.merchant_id = m.id
+    WHERE a.status = 'processing' OR a.status = 'accepted'
+    ORDER BY a.id DESC
+    LIMIT 5
+  `).all();
+
+  const compensationList = db.prepare(`
+    SELECT c.*, o.order_no, o.platform_id, p.name as platform_name, p.logo as platform_logo
+    FROM compensations c
+    LEFT JOIN orders o ON c.order_id = o.id
+    LEFT JOIN platforms p ON o.platform_id = p.id
+    WHERE c.status = 'pending' OR c.status = 'review_pending'
+    ORDER BY c.id DESC
+    LIMIT 5
+  `).all();
+
+  const settlementList = db.prepare(`
+    SELECT s.*, p.name as platform_name, p.logo as platform_logo,
+      (SELECT COUNT(*) FROM orders o WHERE o.platform_id = s.platform_id AND DATE(o.created_at) >= DATE('now', '-30 days')) as order_count,
+      (SELECT COALESCE(SUM(o.total_fee), 0) FROM orders o WHERE o.platform_id = s.platform_id AND DATE(o.created_at) >= DATE('now', '-30 days')) as total_amount
+    FROM settlements s
+    LEFT JOIN platforms p ON s.platform_id = p.id
+    WHERE s.status = 'pending'
+    ORDER BY s.id DESC
+    LIMIT 5
+  `).all();
+
+  const platformStats = db.prepare(`
+    SELECT p.id, p.name, p.logo, p.code, p.capacity_saturation, p.on_time_rate, p.loss_rate, p.complaint_rate,
+      (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND DATE(o.created_at) = DATE('now')) as today_orders,
+      (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND o.delivery_status = 'delivered') as total_delivered,
+      (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND o.delivery_status = 'exception') as exception_orders,
+      (SELECT COUNT(*) FROM after_sales a LEFT JOIN orders o ON a.order_id = o.id WHERE o.platform_id = p.id AND a.status IN ('processing', 'accepted')) as pending_aftersales_count,
+      (SELECT COUNT(*) FROM compensations c LEFT JOIN orders o ON c.order_id = o.id WHERE o.platform_id = p.id AND c.status IN ('pending', 'review_pending')) as pending_compensation_count
+    FROM platforms p
+    WHERE p.status = 'active'
+    ORDER BY p.id
+  `).all();
+
+  const alertPlatforms = platformStats.filter(p =>
+    p.capacity_saturation > 0.85 || p.complaint_rate > 0.02 || p.on_time_rate < 0.9
+  ).map(p => ({
+    ...p,
+    alert_type: p.capacity_saturation > 0.85 ? 'capacity' : p.complaint_rate > 0.02 ? 'complaint' : 'ontime',
+    alert_message: p.capacity_saturation > 0.85
+      ? `运力饱和度达${(p.capacity_saturation * 100).toFixed(0)}%，超过预警线85%`
+      : p.complaint_rate > 0.02
+        ? `投诉率达${(p.complaint_rate * 100).toFixed(2)}%，超过预警线2%`
+        : `准时率仅${(p.on_time_rate * 100).toFixed(1)}%，低于预警线90%`
+  }));
+
   res.json({
     success: true,
     data: {
       ...stats,
       platform_stats: platformStats,
-      recent_orders: recentOrders
+      recent_orders: recentOrders,
+      after_sales_list: afterSalesList,
+      compensation_list: compensationList,
+      settlement_list: settlementList,
+      alert_platforms: alertPlatforms
     }
   });
 });
