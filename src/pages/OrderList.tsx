@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Baby, ChefHat, MapPin, Clock, Phone, ChevronLeft, ArrowLeft } from 'lucide-react';
+import { Sparkles, Baby, ChefHat, MapPin, Clock, Phone, ChevronLeft, ArrowLeft, Navigation } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Empty from '@/components/Empty';
 import { useAppStore } from '@/store';
@@ -37,6 +37,46 @@ function getStatusBadge(status: OrderStatus) {
 }
 
 const ongoingStatuses: OrderStatus[] = ['pending', 'assigned', 'accepted', 'departing', 'arrived', 'servicing'];
+
+function MiniStatusHint({ status }: { status: OrderStatus }) {
+  const hints: Partial<Record<OrderStatus, { icon: typeof Navigation; text: string; cls: string }>> = {
+    pending: { icon: Navigation, text: '正在匹配1km内阿姨...', cls: 'text-primary-600 bg-primary-50' },
+    assigned: { icon: Navigation, text: '等待阿姨接单确认', cls: 'text-blue-600 bg-blue-50' },
+    accepted: { icon: Navigation, text: '阿姨已接单，请保持畅通', cls: 'text-blue-600 bg-blue-50' },
+    departing: { icon: Navigation, text: '阿姨已出发，正在赶来', cls: 'text-orange-600 bg-orange-50' },
+    arrived: { icon: Navigation, text: '阿姨已到达服务地址', cls: 'text-orange-600 bg-orange-50' },
+    servicing: { icon: Navigation, text: '服务进行中', cls: 'text-orange-600 bg-orange-50' },
+  };
+  const hint = hints[status];
+  if (!hint) return null;
+  const Icon = hint.icon;
+  return (
+    <div className={cn('flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full mt-3 w-fit', hint.cls)}>
+      <Icon className="w-3 h-3" />
+      {hint.text}
+    </div>
+  );
+}
+
+function MiniProgressBar({ status }: { status: OrderStatus }) {
+  const statusOrder: Record<string, number> = {
+    pending: 0, assigned: 1, accepted: 2, departing: 3, arrived: 4, servicing: 5, completed: 6, compensated: 6, cancelled: 0,
+  };
+  const total = 6;
+  const current = statusOrder[status] ?? 0;
+  const pct = status === 'cancelled' ? 0 : Math.min(100, (current / total) * 100);
+  return (
+    <div className="mt-3">
+      <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-700"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <p className="text-[10px] text-secondary-400 mt-1">进度 {Math.round(pct)}%</p>
+    </div>
+  );
+}
 
 export default function OrderList() {
   const orders = useAppStore((state) => state.orders);
@@ -136,6 +176,9 @@ export default function OrderList() {
                       </div>
                     )}
                   </div>
+
+                  <MiniStatusHint status={order.status} />
+                  <MiniProgressBar status={order.status} />
 
                   <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
                     <div>

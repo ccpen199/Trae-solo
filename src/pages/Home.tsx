@@ -1,7 +1,6 @@
-import { ArrowRight, ShieldCheck, Clock, Star, Sparkles, Baby, ChefHat, ClipboardList, MapPin, Phone } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Clock, Star, Sparkles, Baby, ChefHat, ClipboardList, MapPin, Phone, Zap, Shield, BadgeCheck, CircleDollarSign, Timer, Navigation, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
-import ServiceCard from '@/components/ServiceCard';
 import QuickOrderForm from '@/components/QuickOrderForm';
 import { useAppStore, serviceTypeList } from '@/store';
 import type { Order } from '@/types';
@@ -19,7 +18,7 @@ function getStatusBadge(status: Order['status']) {
     assigned: { className: 'badge-blue', label: '待接单' },
     accepted: { className: 'badge-blue', label: '已接单' },
     departing: { className: 'badge-orange', label: '已出发' },
-    arrived: { className: 'badge-orange', label: '服务中' },
+    arrived: { className: 'badge-orange', label: '已到达' },
     servicing: { className: 'badge-orange', label: '服务中' },
     completed: { className: 'badge-green', label: '已完成' },
     cancelled: { className: 'badge-gray', label: '已取消' },
@@ -28,14 +27,57 @@ function getStatusBadge(status: Order['status']) {
   return map[status];
 }
 
+function MiniProgress({ status }: { status: Order['status'] }) {
+  const steps = ['pending', 'assigned', 'departing', 'arrived', 'servicing', 'completed'];
+  const statusOrder: Record<string, number> = {
+    pending: 0, assigned: 1, accepted: 1, departing: 2, arrived: 3, servicing: 4, completed: 5, cancelled: -1, compensated: 5,
+  };
+  const idx = statusOrder[status] ?? 0;
+  const pct = status === 'cancelled' ? 0 : Math.min(100, (idx / 5) * 100);
+  const labels: Record<string, string> = {
+    pending: '正在匹配1km内阿姨...',
+    assigned: '等待阿姨接单',
+    accepted: '阿姨已接单',
+    departing: '阿姨出发中',
+    arrived: '阿姨已到达',
+    servicing: '服务进行中',
+    completed: '服务已完成',
+    cancelled: '订单已取消',
+    compensated: '已赔付',
+  };
+
+  return (
+    <div className="mt-3">
+      <div className="flex items-center justify-between text-xs mb-1.5">
+        <span className="text-primary-600 font-medium">{labels[status]}</span>
+        <span className="text-secondary-400">{Math.round(pct)}%</span>
+      </div>
+      <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-700"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const orders = useAppStore((state) => state.orders);
-  const recentOrders = orders.slice(0, 2);
+  const recentOrders = orders.slice(0, 3);
 
-  const features = [
-    { icon: ShieldCheck, title: '实名认证', desc: '所有阿姨均经过严格身份核验' },
-    { icon: Clock, title: '准时到达', desc: '迟到赔付，保障您的时间' },
-    { icon: Star, title: '品质保障', desc: '不满意可申请重服务或退款' },
+  const guarantees = [
+    { icon: BadgeCheck, title: '三证实名认证', desc: '身份证+健康证+无犯罪记录，OCR自动识别+人工复核双重保障', tag: '强管控' },
+    { icon: CircleDollarSign, title: '爽约全额赔付', desc: '阿姨迟到超30分钟或未上门，全额返现+30元补偿券，24小时自动到账', tag: '零风险' },
+    { icon: Navigation, title: '1km智能派单', desc: '基于地理位置热力图调度，1km内优先派单，评分最高阿姨优先', tag: '极速匹配' },
+    { icon: Shield, title: '全程保险保障', desc: '每单投保家政服务责任险，人身+财产双重保障，最高赔付50万元', tag: '安心服务' },
+  ];
+
+  const compensationRules = [
+    { condition: '阿姨迟到超过30分钟', refund: '100%全额退款', coupon: '+30元补偿券' },
+    { condition: '阿姨未按约定上门', refund: '100%全额退款', coupon: '+30元补偿券' },
+    { condition: '服务质量不达标', refund: '免费重新服务或退款', coupon: '+20元补偿券' },
+    { condition: '服务过程造成损失', refund: '保险理赔', coupon: '最高50万元' },
   ];
 
   return (
@@ -43,6 +85,7 @@ export default function Home() {
       <Navbar />
 
       <section className="relative overflow-hidden gradient-mesh">
+        <div className="absolute inset-0 opacity-[0.03] noise-bg pointer-events-none" />
         <div className="container mx-auto px-4 py-12 md:py-20">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="space-y-6 animate-fade-up stagger-1">
@@ -57,10 +100,22 @@ export default function Home() {
               </h1>
               <p className="text-lg text-secondary-600 leading-relaxed">
                 专业阿姨上门服务，保洁、育婴、做饭一站式解决。
-                实名认证、品质保障、准时赔付，给您最贴心的家政体验。
+                三证审核、1km派单、爽约赔付，给您最贴心的家政体验。
               </p>
-              <div className="flex flex-wrap gap-4">
-                <a href="#services" className="btn-primary inline-flex items-center gap-2">
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { icon: Zap, text: '3秒极速下单' },
+                  { icon: CircleDollarSign, text: '爽约全额赔付' },
+                  { icon: Navigation, text: '1km智能派单' },
+                ].map((item) => (
+                  <span key={item.text} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-primary-200 text-primary-700 text-sm font-medium">
+                    <item.icon className="w-4 h-4" />
+                    {item.text}
+                  </span>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <a href="#quick-order" className="btn-primary inline-flex items-center gap-2 animate-pulse-slow">
                   立即预约
                   <ArrowRight className="w-5 h-5" />
                 </a>
@@ -81,12 +136,16 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+              <p className="text-xs text-secondary-400 flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                想体验阿姨端/管理端/企业端？点击右上角角色切换即可
+              </p>
             </div>
 
-            <div className="relative animate-fade-up stagger-2">
+            <div id="quick-order" className="relative animate-fade-up stagger-2">
               <div className="absolute -top-8 -left-8 w-40 h-40 bg-primary-200 rounded-full blur-3xl opacity-40 animate-float" />
               <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary-200 rounded-full blur-3xl opacity-40 animate-float" style={{ animationDelay: '2s' }} />
-              <div className="relative card p-6 md:p-8">
+              <div className="relative card p-6 md:p-8 border-2 border-primary-100">
                 <QuickOrderForm />
               </div>
             </div>
@@ -94,34 +153,53 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="services" className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-secondary-900 mb-3">选择您需要的服务</h2>
           <p className="text-secondary-500">三大核心服务，满足您的家庭需求</p>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
-          {serviceTypeList.map((service, index) => (
-            <div key={service.type} className={cn('animate-fade-up', `stagger-${index + 1}`)}>
-              <ServiceCard {...service} />
-            </div>
-          ))}
+          {serviceTypeList.map((service, index) => {
+            const Icon = serviceIconMap[service.type];
+            return (
+              <div key={service.type} className={cn('card-hover p-8 animate-fade-up', `stagger-${index + 1}`)}>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-50 flex items-center justify-center mb-5">
+                  <Icon className="w-8 h-8 text-primary-500" />
+                </div>
+                <h3 className="text-xl font-bold text-secondary-800 mb-2">{service.label}</h3>
+                <p className="text-secondary-500 mb-4">{service.description}</p>
+                <div className="flex items-end justify-between">
+                  <div>
+                    <span className="text-2xl font-bold text-primary-600">¥{service.price}</span>
+                    <span className="text-sm text-secondary-400">/小时</span>
+                  </div>
+                  <a href="#quick-order" className="text-primary-600 font-medium text-sm flex items-center gap-1 hover:text-primary-700">
+                    立即预约 <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-3">四重服务保障</h2>
+            <p className="text-secondary-500">每一单都让您安心、放心</p>
+          </div>
+          <div className="grid md:grid-cols-4 gap-6">
+            {guarantees.map((item, index) => {
+              const Icon = item.icon;
               return (
-                <div key={feature.title} className={cn('flex items-start gap-4 animate-fade-up', `stagger-${index + 1}`)}>
-                  <div className="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center flex-shrink-0">
+                <div key={item.title} className={cn('card p-6 text-center animate-fade-up', `stagger-${index + 1}`)}>
+                  <div className="w-14 h-14 rounded-2xl bg-primary-50 flex items-center justify-center mx-auto mb-4">
                     <Icon className="w-7 h-7 text-primary-500" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-secondary-800 mb-1">{feature.title}</h3>
-                    <p className="text-secondary-500">{feature.desc}</p>
-                  </div>
+                  <span className="badge-orange text-xs mb-2 inline-block">{item.tag}</span>
+                  <h3 className="text-lg font-bold text-secondary-800 mb-2">{item.title}</h3>
+                  <p className="text-secondary-500 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               );
             })}
@@ -130,10 +208,64 @@ export default function Home() {
       </section>
 
       <section className="container mx-auto px-4 py-16">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 text-red-700 text-sm font-medium mb-4">
+            <CircleDollarSign className="w-4 h-4" />
+            爽约自动赔付
+          </div>
+          <h2 className="text-3xl font-bold text-secondary-900 mb-3">不满意？全额赔付</h2>
+          <p className="text-secondary-500 max-w-2xl mx-auto">平台承诺爽约自动赔付，全额返现+补偿券，24小时内自动到账，让您下单零风险</p>
+        </div>
+        <div className="max-w-3xl mx-auto">
+          <div className="card overflow-hidden">
+            <div className="bg-gradient-to-r from-primary-500 to-primary-600 p-6 text-white">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-xl font-bold mb-1">赔付保障计划</h3>
+                  <p className="text-primary-100 text-sm">平台先行垫付，保障您的每一分钱</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-primary-100">最高赔付</p>
+                  <p className="text-3xl font-bold">50万</p>
+                </div>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                {compensationRules.map((rule, index) => (
+                  <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-cream-100 hover:bg-primary-50 transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-secondary-800">{rule.condition}</p>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-primary-600 font-bold">{rule.refund}</p>
+                      <p className="text-xs text-secondary-500">{rule.coupon}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 p-4 bg-yellow-50 rounded-xl border border-yellow-100">
+                <div className="flex items-start gap-3">
+                  <Timer className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-yellow-800 text-sm">赔付时效</p>
+                    <p className="text-yellow-700 text-sm mt-1">申请提交后24小时内自动审核到账，无需人工跟进。平台先行垫付，保障您的权益。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-16">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold text-secondary-900">我的订单</h2>
-            <p className="text-secondary-500 mt-1">查看您最近的服务订单</p>
+            <p className="text-secondary-500 mt-1">实时追踪服务进度，全程可视化</p>
           </div>
           <Link to="/orders" className="text-primary-600 font-medium hover:text-primary-700 inline-flex items-center gap-1">
             查看全部
@@ -142,11 +274,15 @@ export default function Home() {
         </div>
 
         {recentOrders.length === 0 ? (
-          <div className="card p-8">
-            <p className="text-center text-secondary-500">暂无订单，快去下单吧~</p>
+          <div className="card p-8 text-center">
+            <p className="text-secondary-500 mb-4">暂无订单，快去下单吧~</p>
+            <a href="#quick-order" className="btn-primary inline-flex items-center gap-2">
+              立即下单
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {recentOrders.map((order) => {
               const Icon = serviceIconMap[order.service_type];
               const badge = getStatusBadge(order.status);
@@ -156,45 +292,60 @@ export default function Home() {
                   to={`/orders/${order.id}`}
                   className="card-hover p-6 block"
                 >
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-primary-500" />
+                      <div className="w-11 h-11 rounded-xl bg-primary-50 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-primary-500" />
                       </div>
                       <div>
                         <h3 className="font-bold text-secondary-800">{order.service_type_label}</h3>
-                        <p className="text-sm text-secondary-500">订单号 #{order.id}</p>
+                        <p className="text-xs text-secondary-400">#{order.id}</p>
                       </div>
                     </div>
                     <span className={badge.className}>{badge.label}</span>
                   </div>
 
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-1.5 text-sm">
                     <div className="flex items-center gap-2 text-secondary-600">
-                      <MapPin className="w-4 h-4 text-secondary-400" />
+                      <MapPin className="w-3.5 h-3.5 text-secondary-400" />
                       <span className="truncate">{order.address}</span>
                     </div>
                     <div className="flex items-center gap-2 text-secondary-600">
-                      <Clock className="w-4 h-4 text-secondary-400" />
-                      <span>{order.start_time} · {order.duration_hours}小时</span>
+                      <Clock className="w-3.5 h-3.5 text-secondary-400" />
+                      <span>{order.start_time} · {order.duration_hours}h</span>
                     </div>
                     {order.worker_name && (
                       <div className="flex items-center gap-2 text-secondary-600">
-                        <Phone className="w-4 h-4 text-secondary-400" />
-                        <span>{order.worker_name} · {order.worker_phone}</span>
+                        <Phone className="w-3.5 h-3.5 text-secondary-400" />
+                        <span>{order.worker_name}</span>
                       </div>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                    <p className="text-2xl font-bold text-primary-600">¥{order.amount}</p>
-                    <span className="text-sm text-secondary-400">点击查看详情 →</span>
+                  <MiniProgress status={order.status} />
+
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                    <p className="text-xl font-bold text-primary-600">¥{order.amount}</p>
+                    <span className="text-xs text-primary-600 font-medium flex items-center gap-0.5">
+                      详情 <ChevronRight className="w-3 h-3" />
+                    </span>
                   </div>
                 </Link>
               );
             })}
           </div>
         )}
+      </section>
+
+      <section className="bg-gradient-to-r from-primary-500 to-primary-600 py-16">
+        <div className="container mx-auto px-4 text-center text-white">
+          <h2 className="text-3xl font-bold mb-4">3秒完成预约</h2>
+          <p className="text-primary-100 mb-8 max-w-xl mx-auto">选服务、选地址、选时间，三步即可完成下单。爽约全额赔付，让您无忧体验。</p>
+          <a href="#quick-order" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-full font-bold text-lg hover:bg-primary-50 hover:shadow-lg transition-all active:scale-95">
+            <Zap className="w-5 h-5" />
+            立即下单体验
+          </a>
+        </div>
       </section>
 
       <footer className="bg-secondary-800 text-white py-12">
