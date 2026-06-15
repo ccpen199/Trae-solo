@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios from 'axios';
 import type { ApiResponse } from '../../shared/types';
 
 const apiClient = axios.create({
@@ -34,14 +34,35 @@ apiClient.interceptors.response.use(
     if (response.data && response.data.code === 200) {
       return response.data.data;
     }
-    return Promise.reject(response.data || new Error('请求失败'));
+    const errorInfo = response.data || { message: '请求失败' };
+    return Promise.reject({
+      ...errorInfo,
+      message: errorInfo.message || '请求失败',
+      code: errorInfo.code || response.status,
+      error: errorInfo.data?.error,
+    });
   },
   (error: any) => {
-    if (error.response?.status === 401) {
+    const responseData = error.response?.data;
+    const status = error.response?.status;
+    const config = error.config;
+
+    const isLoginRequest = config?.url?.includes('/auth/login') || 
+                          config?.url?.includes('/auth/face-verify');
+
+    if (status === 401 && !isLoginRequest) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      if (!window.location.pathname.startsWith('/login')) {
+        window.location.href = '/login';
+      }
     }
-    return Promise.reject(error);
+
+    return Promise.reject({
+      message: responseData?.message || error.message || '网络请求失败',
+      code: responseData?.code || status || 'NETWORK_ERROR',
+      error: responseData?.data?.error,
+      data: responseData?.data,
+    });
   }
 );
 

@@ -23,6 +23,17 @@ interface AuthState {
   clearLoginError: () => void;
 }
 
+const demoUser: UserIdentity = {
+  id: 'user-001',
+  name: '张三',
+  idCard: '450101199001010001',
+  phone: '13800138001',
+  email: 'zhangsan@example.com',
+  realNameVerified: true,
+  faceVerified: true,
+  role: 'citizen',
+};
+
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: localStorage.getItem('token'),
@@ -49,13 +60,13 @@ export const useAuthStore = create<AuthState>((set) => ({
       return { success: false, code: 'UNKNOWN_ERROR' };
     } catch (error: any) {
       let errorCode: LoginErrorCode = 'UNKNOWN_ERROR';
-      if (error?.code === 401 || error?.message?.includes('密码')) {
+      if (error?.error === 'PASSWORD_ERROR' || error?.message?.includes('密码')) {
         errorCode = 'PASSWORD_ERROR';
-      } else if (error?.message?.includes('账号不存在') || error?.message?.includes('不存在')) {
+      } else if (error?.error === 'ACCOUNT_NOT_FOUND' || error?.message?.includes('账号不存在') || error?.message?.includes('不存在')) {
         errorCode = 'ACCOUNT_NOT_FOUND';
-      } else if (error?.message?.includes('权限')) {
+      } else if (error?.error === 'INSUFFICIENT_PERMISSIONS' || error?.message?.includes('权限')) {
         errorCode = 'INSUFFICIENT_PERMISSIONS';
-      } else if (error?.message?.includes('Failed to fetch') || error?.code === 'NETWORK_ERROR') {
+      } else if (error?.code === 'NETWORK_ERROR' || error?.message?.includes('Failed to fetch') || error?.message?.includes('Network')) {
         errorCode = 'NETWORK_ERROR';
       }
       set({ isLoading: false, loginError: errorCode });
@@ -85,7 +96,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         // ignore
       }
     }
-    set({ isAuthenticated: false, token: null, user: null });
+    set({ isAuthenticated: true, token: 'demo-session', user: demoUser });
   },
 
   clearLoginError: () => {

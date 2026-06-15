@@ -1,28 +1,84 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Phone, Lock, Shield, Smartphone, Eye, EyeOff, Fingerprint, AlertCircle, CheckCircle, Info } from 'lucide-react';
+import { 
+  Phone, Lock, Shield, Smartphone, Eye, EyeOff, Fingerprint, AlertCircle, CheckCircle, Info, UserCog, LogIn, Check, ArrowRight
+} from 'lucide-react';
 import { useAuthStore, LoginErrorCode } from '@/store/useAuthStore';
 import { api } from '@/api/client';
 import { cn } from '@/lib/utils';
 
-const errorMessages: Record<LoginErrorCode, { title: string; message: string; type: 'error' | 'warning' | 'info' }> = {
-  SUCCESS: { title: '登录成功', message: '正在跳转...', type: 'info' },
-  ACCOUNT_NOT_FOUND: { title: '账号不存在', message: '该手机号未注册，请检查手机号或联系管理员', type: 'error' },
-  PASSWORD_ERROR: { title: '密码错误', message: '您输入的密码不正确，请重试或点击忘记密码', type: 'error' },
-  INSUFFICIENT_PERMISSIONS: { title: '权限不足', message: '您的账号没有权限访问该系统', type: 'warning' },
-  NETWORK_ERROR: { title: '网络错误', message: '无法连接服务器，请检查网络连接', type: 'error' },
-  UNKNOWN_ERROR: { title: '登录失败', message: '发生未知错误，请稍后重试', type: 'error' },
+const errorMessages: Record<LoginErrorCode, {
+  title: string;
+  message: string;
+  type: 'error' | 'warning' | 'info';
+  statusCode?: string;
+}> = {
+  SUCCESS: { title: '登录成功', message: '身份核验通过，正在跳转至对应工作台...', type: 'info' },
+  ACCOUNT_NOT_FOUND: { 
+    title: '账号不存在', 
+    message: '该手机号尚未在南宁城市服务平台注册', 
+    type: 'error',
+    statusCode: 'ACCOUNT_NOT_FOUND'
+  },
+  PASSWORD_ERROR: { 
+    title: '密码校验未通过', 
+    message: '您输入的密码不正确，请检查后重试', 
+    type: 'error',
+    statusCode: 'PASSWORD_ERROR'
+  },
+  INSUFFICIENT_PERMISSIONS: { 
+    title: '权限不足', 
+    message: '该账号角色无系统访问权限', 
+    type: 'warning',
+    statusCode: 'INSUFFICIENT_PERMISSIONS'
+  },
+  NETWORK_ERROR: { 
+    title: '网络连接异常', 
+    message: '无法连接城市服务网关，请检查网络', 
+    type: 'error',
+    statusCode: 'NETWORK_ERROR'
+  },
+  UNKNOWN_ERROR: { 
+    title: '身份校验失败', 
+    message: '认证服务暂不可用，请稍后重试', 
+    type: 'error',
+    statusCode: 'UNKNOWN_ERROR'
+  },
 };
 
-const demoAccounts = [
-  { phone: '13800138001', password: '123456', role: '市民', desc: '完整市民端功能体验' },
-  { phone: '13900139000', password: 'admin123', role: '管理员', desc: '含城市体征、服务编排等后台权限' },
+const demoAccounts: Array<{
+  phone: string;
+  password: string;
+  role: string;
+  roleLabel: string;
+  desc: string;
+  color: string;
+}> = [
+  { 
+    phone: '13800138001', 
+    password: '123456', 
+    role: 'citizen', 
+    roleLabel: '市民端',
+    desc: '完整民生服务：BRT乘车、挂号缴费、入学报名、违章查询、智慧停车、12345诉求、政策查阅',
+    color: 'eco'
+  },
+  { 
+    phone: '13900139000', 
+    password: 'admin123', 
+    role: 'admin', 
+    roleLabel: '管理端',
+    desc: '城市体征监测、服务编排引擎、工单分拨调度、政策AI解读、数据大屏',
+    color: 'warm'
+  },
 ];
+
+const NON_DIGIT_REGEX = new RegExp('[^0-9]', 'g');
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isLoading, isAuthenticated, user, loginError, clearLoginError } = useAuthStore();
+  const { login, isLoading, isAuthenticated, user, loginError, clearLoginError, checkAuth } = useAuthStore();
+
   const [phone, setPhone] = useState('13800138001');
   const [password, setPassword] = useState('123456');
   const [showPassword, setShowPassword] = useState(false);
@@ -30,26 +86,50 @@ export default function Login() {
   const [smsCode, setSmsCode] = useState('');
   const [countdown, setCountdown] = useState(0);
   const [faceScanning, setFaceScanning] = useState(false);
-  const [showDemoAccounts, setShowDemoAccounts] = useState(false);
+  const [showDemoAccounts, setShowDemoAccounts] = useState(true);
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginAuditInfo, setLoginAuditInfo] = useState<{
+  label: string;
+  status: string;
+  role?: string;
+} | null>(null);
 
   const from = (location.state as any)?.from?.pathname || null;
+
+  const navigateByRole = useCallback((role: string) => {
+    if (from) {
+      navigate(from, { replace: true });
+    } else if (role === 'admin' || role === 'clerk') {
+      navigate('/dashboard', { replace: true });
+    } else {
+      navigate('/', { replace: true });
+    }
+  }, [from, navigate]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
       setLoginSuccess(true);
+      setLoginAuditInfo({
+        label: '身份核验结果',
+        status: '通过',
+        role: user.role === 'admin' ? '管理端权限' : user.role === 'clerk' ? '办事员权限' : '市民端权限',
+      });
       const timer = setTimeout(() => {
-        if (from) {
-          navigate(from, { replace: true });
-        } else if (user.role === 'admin' || user.role === 'clerk') {
-          navigate('/dashboard', { replace: true });
-        } else {
-          navigate('/', { replace: true });
-        }
-      }, 800);
+        navigateByRole(user.role);
+      }, 1200);
       return () => clearTimeout(timer);
     }
-  }, [isAuthenticated, user, navigate, from]);
+  }, [isAuthenticated, user, navigateByRole]);
+
+  useEffect(() => {
+    if (loginError && loginError !== 'SUCCESS') {
+      setLoginAuditInfo({
+        label: '身份核验结果',
+        status: '未通过',
+        role: errorMessages[loginError]?.statusCode,
+      });
+    }
+  }, [loginError]);
 
   useEffect(() => {
     if (countdown > 0) {
@@ -58,49 +138,89 @@ export default function Login() {
     }
   }, [countdown]);
 
+  useEffect(() => {
+    const init = async () => {
+      await checkAuth();
+    };
+    init();
+  }, [checkAuth]);
+
   const handleSendSms = () => {
     if (phone.length === 11 && countdown === 0) {
       setCountdown(60);
     }
   };
 
+  const handlePhoneChange = (val: string) => {
+    setPhone(val.replace(NON_DIGIT_REGEX, ''));
+    clearLoginError();
+    setLoginAuditInfo(null);
+  };
+
+  const handlePasswordChange = (val: string) => {
+    setPassword(val);
+    clearLoginError();
+    setLoginAuditInfo(null);
+  };
+
+  const handleSmsCodeChange = (val: string) => {
+    setSmsCode(val.replace(NON_DIGIT_REGEX, ''));
+    clearLoginError();
+    setLoginAuditInfo(null);
+  };
+
+  const handleLoginComplete = (success: boolean, roleHint?: string) => {
+    if (success) {
+    }
+  };
+
   const handleFaceLogin = async () => {
     setFaceScanning(true);
     clearLoginError();
-    try {
-      const result = await api.auth.faceVerify('mock_face_image_base64') as any;
-      if (result.verified) {
-        const { success, code } = await login(phone, 'face_login');
-        if (!success) {
+    setLoginAuditInfo({ label: '身份核验中', status: '处理中' });
+    setTimeout(async () => {
+      try {
+        const result = await api.auth.faceVerify('mock_face_image_base64') as any;
+        if (result && result.verified) {
+          const { success, code } = await login(phone, 'face_login');
+          handleLoginComplete(success, '人脸识别');
+          if (!success) {
+            setFaceScanning(false);
+          }
+        } else {
           setFaceScanning(false);
+          setLoginAuditInfo({ label: '人脸核验结果', status: '未通过' });
         }
-      } else {
+      } catch (e: any) {
         setFaceScanning(false);
+        setLoginAuditInfo({ label: '人脸核验异常', status: '失败', role: e?.message });
       }
-    } catch (e) {
-      setFaceScanning(false);
-    }
+    }, 1500);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearLoginError();
+    setLoginAuditInfo({ label: '身份核验中', status: '处理中' });
 
     if (!phone || phone.length !== 11) {
+      setLoginAuditInfo({ label: '手机号校验', status: '失败', role: '请输入11位手机号' });
       return;
     }
 
     if (loginType === 'password' && !password) {
+      setLoginAuditInfo({ label: '密码校验', status: '失败', role: '请输入密码' });
       return;
     }
 
     if (loginType === 'sms' && !smsCode) {
+      setLoginAuditInfo({ label: '验证码校验', status: '失败', role: '请输入验证码' });
       return;
     }
 
-    const { success } = await login(phone, loginType === 'password' ? password : smsCode);
-    if (success) {
-    }
+    const passCode = loginType === 'password' ? password : smsCode;
+    const { success, code } = await login(phone, passCode);
+    handleLoginComplete(success, loginType === 'password' ? '密码登录' : '验证码登录');
   };
 
   const fillDemoAccount = (account: typeof demoAccounts[0]) => {
@@ -108,15 +228,17 @@ export default function Login() {
     setPassword(account.password);
     setLoginType('password');
     clearLoginError();
-    setShowDemoAccounts(false);
+    setLoginAuditInfo(null);
   };
 
   const getErrorDisplay = () => {
     if (loginSuccess) {
-      return { ...errorMessages.SUCCESS, Icon: CheckCircle };
+      const info = errorMessages.SUCCESS;
+      return { ...info, Icon: CheckCircle };
     }
     if (!loginError) return null;
     const error = errorMessages[loginError];
+    if (!error) return null;
     const Icon = error.type === 'error' ? AlertCircle : error.type === 'warning' ? AlertCircle : Info;
     return { ...error, Icon };
   };
@@ -138,10 +260,10 @@ export default function Login() {
               邕
             </div>
             <h1 className="text-5xl font-bold mb-4">南宁城市服务</h1>
-            <p className="text-xl text-white/80 font-light">智慧城市·山水南宁</p>
+            <p className="text-xl text-white/80 font-light">智慧城市 · 山水南宁</p>
           </div>
           
-          <div className="space-y-8">
+          <div className="space-y-6">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
                 <Shield className="w-6 h-6" />
@@ -156,30 +278,41 @@ export default function Login() {
                 <Smartphone className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-1">一网通办</h3>
+                <h3 className="text-lg font-semibold mb-1">一网通办 · 一码通行</h3>
                 <p className="text-white/70">交通、医疗、教育、政务、城管，一站式服务</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-6 h-6" />
+                <UserCog className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-1">角色区分</h3>
-                <p className="text-white/70">市民端/管理员端自动识别，定向推送工作台</p>
+                <h3 className="text-lg font-semibold mb-1">角色智能识别</h3>
+                <p className="text-white/70">市民端 / 管理员端 / 办事员端，系统自动识别角色权限定向工作台</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-12 p-6 bg-white/10 backdrop-blur rounded-2xl">
-            <h4 className="text-sm font-semibold text-white/90 mb-3 flex items-center gap-2">
-              <Info className="w-4 h-4" /> 演示账号
+          <div className="mt-10 space-y-3">
+            <h4 className="text-sm font-semibold text-white/90 flex items-center gap-2">
+              <CheckCircle className="w-4 h-4" /> 角色权限说明
             </h4>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {demoAccounts.map((acc, i) => (
-                <div key={i} className="flex justify-between text-sm">
-                  <span className="text-white/70">{acc.role}：</span>
-                  <span className="font-mono text-white">{acc.phone} / {acc.password}</span>
+                <div
+                  key={i}
+                  className={cn(
+                    'p-4 rounded-2xl backdrop-blur border transition-all',
+                    acc.color === 'eco' ? 'bg-eco-400/20 border-eco-300/30' : 'bg-warm-400/20 border-warm-300/30'
+                  )}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-semibold">{acc.roleLabel}</span>
+                    <span className="text-xs font-mono bg-white/20 px-2 py-0.5 rounded-full">
+                      {acc.phone} / {acc.password}
+                    </span>
+                  </div>
+                  <p className="text-xs text-white/80 leading-relaxed">{acc.desc}</p>
                 </div>
               ))}
             </div>
@@ -193,54 +326,70 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-8">
         <div className="w-full max-w-md">
-          <div className="lg:hidden text-center mb-8">
+          <div className="lg:hidden text-center mb-6">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-2xl font-bold text-white mx-auto mb-4 shadow-glow">
               邕
             </div>
             <h1 className="text-2xl font-bold text-gray-800">南宁城市服务</h1>
-            <p className="text-gray-500">智慧城市·山水南宁</p>
+            <p className="text-gray-500">智慧城市 · 山水南宁</p>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-card p-8">
-            <div className="flex items-center justify-between mb-8">
+          <div className="bg-white rounded-3xl shadow-card p-6 lg:p-8">
+            <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-gray-800">欢迎回来</h2>
-                <p className="text-gray-500">请登录您的账号以使用城市服务</p>
+                <h2 className="text-2xl font-bold text-gray-800">统一身份认证</h2>
+                <p className="text-gray-500 text-sm mt-1">南宁城市服务 · 一网通办入口</p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowDemoAccounts(!showDemoAccounts)}
-                className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
-                title="查看演示账号"
+                className={cn(
+                  'p-2 rounded-lg transition-colors',
+                  showDemoAccounts ? 'bg-primary-100 text-primary-600' : 'text-gray-400 hover:bg-gray-100'
+                )}
+                title="快速选择演示账号"
               >
                 <Info className="w-5 h-5" />
               </button>
             </div>
 
             {showDemoAccounts && (
-              <div className="mb-6 p-4 bg-primary-50 rounded-2xl border border-primary-100">
-                <h4 className="text-sm font-semibold text-primary-800 mb-3">快速选择演示账号：</h4>
-                <div className="space-y-2">
-                  {demoAccounts.map((acc, i) => (
-                    <button
-                      key={i}
-                      onClick={() => fillDemoAccount(acc)}
-                      className="w-full p-3 text-left bg-white rounded-xl hover:bg-primary-50/50 transition-colors border border-primary-100 flex items-center justify-between"
-                    >
-                      <div>
-                        <span className="font-medium text-gray-800">{acc.role}</span>
-                        <span className="text-xs text-gray-500 ml-2">{acc.desc}</span>
+              <div className="mb-6 space-y-2">
+                <h4 className="text-xs font-semibold text-gray-500 mb-2">快速登录（点击自动填充）：</h4>
+                {demoAccounts.map((acc, i) => (
+                  <button
+                    key={i}
+                    onClick={() => fillDemoAccount(acc)}
+                    className={cn(
+                      'w-full p-3 text-left rounded-xl transition-all border hover:shadow-md flex items-center gap-3',
+                      phone === acc.phone 
+                        ? 'border-primary-300 bg-primary-50 shadow-sm'
+                        : 'border-gray-100 bg-gray-50 hover:border-primary-200 hover:bg-white'
+                    )}
+                  >
+                    <div className={cn(
+                      'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
+                      acc.color === 'eco' && 'bg-eco-100 text-eco-600',
+                      acc.color === 'warm' && 'bg-warm-100 text-warm-600'
+                    )}>
+                      {acc.role === 'citizen' ? <UserCog className="w-5 h-5" /> : <LogIn className="w-5 h-5" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-gray-800 text-sm">{acc.roleLabel}</span>
+                        {phone === acc.phone && <Check className="w-4 h-4 text-primary-500" />}
                       </div>
-                      <span className="text-xs font-mono text-primary-600">{acc.phone}</span>
-                    </button>
-                  ))}
-                </div>
+                      <p className="text-xs text-gray-500 truncate">{acc.phone}</p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-gray-300" />
+                  </button>
+                ))}
               </div>
             )}
 
-            <div className="flex gap-2 mb-8">
+            <div className="flex gap-2 mb-6 bg-gray-50 p-1 rounded-xl">
               {[
                 { key: 'password', label: '密码登录', icon: Lock },
                 { key: 'sms', label: '验证码', icon: Smartphone },
@@ -248,12 +397,12 @@ export default function Login() {
               ].map((tab) => (
                 <button
                   key={tab.key}
-                  onClick={() => { setLoginType(tab.key as any); clearLoginError(); }}
+                  onClick={() => { setLoginType(tab.key as any); clearLoginError(); setLoginAuditInfo(null); }}
                   className={cn(
-                    'flex-1 py-2.5 px-4 rounded-xl text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1.5',
+                    'flex-1 py-2.5 px-3 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1.5',
                     loginType === tab.key
-                      ? 'bg-primary-500 text-white shadow-glow'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-white text-primary-600 shadow-sm'
+                      : 'text-gray-500 hover:text-gray-700'
                   )}
                 >
                   <tab.icon className="w-4 h-4" />
@@ -263,9 +412,9 @@ export default function Login() {
             </div>
 
             {loginType === 'face' ? (
-              <div className="text-center py-8">
+              <div className="text-center py-6">
                 <div className={cn(
-                  'w-40 h-40 rounded-full mx-auto mb-6 flex items-center justify-center transition-all duration-500',
+                  'w-36 h-36 rounded-full mx-auto mb-5 flex items-center justify-center transition-all duration-500 relative',
                   faceScanning
                     ? 'bg-gradient-to-br from-primary-400 to-eco-400 animate-pulse-slow'
                     : loginSuccess
@@ -273,17 +422,20 @@ export default function Login() {
                     : 'bg-gray-100'
                 )}>
                   {loginSuccess ? (
-                    <CheckCircle className="w-16 h-16 text-white" />
+                    <CheckCircle className="w-14 h-14 text-white" />
                   ) : faceScanning ? (
-                    <div className="w-32 h-32 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
-                      <div className="w-24 h-24 rounded-full border-4 border-white/50 border-t-white animate-spin"></div>
+                    <div className="w-28 h-28 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                      <div className="w-20 h-20 rounded-full border-4 border-white/60 border-t-white animate-spin"></div>
                     </div>
                   ) : (
-                    <Fingerprint className="w-16 h-16 text-gray-400" />
+                    <Fingerprint className="w-14 h-14 text-gray-400" />
+                  )}
+                  {faceScanning && (
+                    <div className="absolute inset-0 rounded-full border-2 border-primary-300 animate-ping opacity-50"></div>
                   )}
                 </div>
-                <p className="text-gray-600 mb-6">
-                  {loginSuccess ? '登录成功，正在跳转...' : faceScanning ? '正在识别面部特征...' : '请将面部对准摄像头'}
+                <p className="text-gray-700 mb-5 font-medium">
+                  {loginSuccess ? '登录成功，正在跳转...' : faceScanning ? '正在识别面部特征，请保持面部在取景框内...' : '请将面部对准摄像头'}
                 </p>
                 <button
                   onClick={handleFaceLogin}
@@ -292,22 +444,23 @@ export default function Login() {
                 >
                   {faceScanning ? '识别中...' : loginSuccess ? '登录成功' : '开始人脸识别'}
                 </button>
+                <p className="text-xs text-gray-400 mt-4">人脸识别成功后将自动完成身份核验</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">手机号码</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">手机号 <span className="text-gray-400 text-xs">（已实名认证手机号）</span></label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
                       type="tel"
                       value={phone}
-                      onChange={(e) => { setPhone(e.target.value.replace(/\D/g, '')); clearLoginError(); }}
-                      placeholder="请输入手机号"
+                      onChange={(e) => handlePhoneChange(e.target.value)}
+                      placeholder="请输入11位手机号"
                       maxLength={11}
                       className={cn(
-                        'w-full pl-12 pr-4 py-3.5 border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none transition-all duration-200',
-                        loginError && loginError !== 'SUCCESS'
+                        'w-full pl-12 pr-4 py-3 border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none transition-all duration-200 text-sm',
+                        loginError && loginError !== 'SUCCESS' && loginError === 'ACCOUNT_NOT_FOUND'
                           ? 'bg-red-50 border-red-200 focus:ring-2 focus:ring-red-500/20 focus:border-red-500'
                           : 'bg-gray-50 border-gray-200 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500'
                       )}
@@ -317,17 +470,17 @@ export default function Login() {
 
                 {loginType === 'password' ? (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">登录密码</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">登录密码</label>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                       <input
                         type={showPassword ? 'text' : 'password'}
                         value={password}
-                        onChange={(e) => { setPassword(e.target.value); clearLoginError(); }}
-                        placeholder="请输入密码"
+                        onChange={(e) => handlePasswordChange(e.target.value)}
+                        placeholder="请输入登录密码"
                         className={cn(
-                          'w-full pl-12 pr-12 py-3.5 border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none transition-all duration-200',
-                          loginError && loginError !== 'SUCCESS'
+                          'w-full pl-12 pr-12 py-3 border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none transition-all duration-200 text-sm',
+                          loginError && loginError !== 'SUCCESS' && loginError === 'PASSWORD_ERROR'
                             ? 'bg-red-50 border-red-200 focus:ring-2 focus:ring-red-500/20 focus:border-red-500'
                             : 'bg-gray-50 border-gray-200 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500'
                         )}
@@ -343,17 +496,17 @@ export default function Login() {
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">短信验证码</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">短信验证码</label>
                     <div className="flex gap-3">
                       <div className="relative flex-1">
                         <Shield className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <input
                           type="text"
                           value={smsCode}
-                          onChange={(e) => { setSmsCode(e.target.value.replace(/\D/g, '')); clearLoginError(); }}
-                          placeholder="6位验证码"
+                          onChange={(e) => handleSmsCodeChange(e.target.value)}
+                          placeholder="6位数字验证码"
                           maxLength={6}
-                          className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-200"
+                          className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-200 text-sm"
                         />
                       </div>
                       <button
@@ -361,19 +514,60 @@ export default function Login() {
                         onClick={handleSendSms}
                         disabled={countdown > 0 || phone.length !== 11}
                         className={cn(
-                          'px-6 py-3.5 rounded-xl font-medium text-sm whitespace-nowrap transition-all duration-200',
+                          'px-5 py-3 rounded-xl font-medium text-sm whitespace-nowrap transition-all duration-200',
                           countdown > 0 || phone.length !== 11
                             ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                             : 'bg-primary-50 text-primary-600 hover:bg-primary-100'
                         )}
                       >
-                        {countdown > 0 ? `${countdown}s后重发` : '获取验证码'}
+                        {countdown > 0 ? `${countdown}s 后重发` : '获取验证码'}
                       </button>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-2">演示模式下，任意6位数字均可完成验证码登录</p>
+                  </div>
+                )}
+
+                {loginAuditInfo && (
+                  <div className={cn(
+                    'p-3 rounded-xl flex items-start gap-2.5',
+                    loginAuditInfo.status === '通过' ? 'bg-eco-50 border border-eco-100' :
+                    loginAuditInfo.status === '处理中' ? 'bg-primary-50 border border-primary-100' :
+                    'bg-warm-50 border border-warm-100'
+                  )}>
+                    {loginAuditInfo.status === '通过' ? (
+                      <CheckCircle className={cn('w-5 h-5 mt-0.5 flex-shrink-0', 'text-eco-500')} />
+                    ) : loginAuditInfo.status === '处理中' ? (
+                      <div className="w-5 h-5 mt-0.5 flex-shrink-0 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <AlertCircle className={cn('w-5 h-5 mt-0.5 flex-shrink-0', 'text-warm-500')} />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-800">{loginAuditInfo.label}</span>
+                        <span className={cn(
+                          'text-xs px-1.5 py-0.5 rounded font-medium',
+                          loginAuditInfo.status === '通过' ? 'bg-eco-100 text-eco-700' :
+                          loginAuditInfo.status === '处理中' ? 'bg-primary-100 text-primary-700' :
+                          'bg-warm-100 text-warm-700'
+                        )}>
+                          {loginAuditInfo.status}
+                        </span>
+                      </div>
+                      {loginAuditInfo.role && (
+                        <p className={cn(
+                          'text-xs mt-1',
+                          loginAuditInfo.status === '通过' ? 'text-eco-600' :
+                          loginAuditInfo.status === '处理中' ? 'text-primary-600' :
+                          'text-warm-600'
+                        )}>
+                          {loginAuditInfo.role}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
 
-                {errorDisplay && (
+                {errorDisplay && loginAuditInfo && loginAuditInfo.status !== '处理中' && (
                   <div className={cn(
                     'p-4 rounded-xl flex items-start gap-3 animate-in fade-in slide-in-from-top-2 duration-300',
                     errorDisplay.type === 'error' && 'bg-red-50 border border-red-100',
@@ -386,15 +580,20 @@ export default function Login() {
                       errorDisplay.type === 'warning' && 'text-warm-500',
                       errorDisplay.type === 'info' && 'text-eco-500'
                     )} />
-                    <div>
-                      <p className={cn(
-                        'text-sm font-medium',
-                        errorDisplay.type === 'error' && 'text-red-800',
-                        errorDisplay.type === 'warning' && 'text-warm-800',
-                        errorDisplay.type === 'info' && 'text-eco-800'
-                      )}>
-                        {errorDisplay.title}
-                      </p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <p className={cn(
+                          'text-sm font-semibold',
+                          errorDisplay.type === 'error' && 'text-red-800',
+                          errorDisplay.type === 'warning' && 'text-warm-800',
+                          errorDisplay.type === 'info' && 'text-eco-800'
+                        )}>
+                          {errorDisplay.title}
+                        </p>
+                        {errorDisplay.statusCode && (
+                          <span className="text-xs font-mono text-gray-400">#{errorDisplay.statusCode}</span>
+                        )}
+                      </div>
                       <p className={cn(
                         'text-sm mt-0.5',
                         errorDisplay.type === 'error' && 'text-red-600',
@@ -407,10 +606,10 @@ export default function Login() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between text-sm">
-                  <label className="flex items-center gap-2 cursor-pointer">
+                <div className="flex items-center justify-between text-xs">
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
                     <input type="checkbox" defaultChecked className="w-4 h-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500" />
-                    <span className="text-gray-600">记住登录状态</span>
+                    <span className="text-gray-600">保持登录状态 24 小时</span>
                   </label>
                   <button type="button" className="text-primary-600 hover:text-primary-700 font-medium">
                     忘记密码?
@@ -420,33 +619,72 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={isLoading || loginSuccess}
-                  className="w-full py-3.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-glow transition-all duration-200 disabled:opacity-60 flex items-center justify-center gap-2"
+                  className={cn(
+                    'w-full py-3.5 text-white rounded-xl font-semibold transition-all duration-200 disabled:opacity-60 flex items-center justify-center gap-2',
+                    loginSuccess
+                      ? 'bg-gradient-to-r from-eco-500 to-eco-600'
+                      : 'bg-gradient-to-r from-primary-500 to-primary-600 hover:shadow-lg hover:shadow-glow'
+                  )}
                 >
                   {loginSuccess ? (
                     <>
                       <CheckCircle className="w-5 h-5" />
-                      登录成功，正在跳转...
+                      认证通过 · 进入工作台
                     </>
                   ) : isLoading ? (
                     <>
                       <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                      登录中...
+                      身份核验中...
                     </>
-                  ) : (
-                    '登 录'
-                  )}
+                  ) : loginType === 'sms' ? '验证码登录' : '密码登录'}
                 </button>
               </form>
             )}
 
-            <div className="mt-6 text-center text-sm text-gray-500">
-              还没有账号? <button className="text-primary-600 hover:text-primary-700 font-medium ml-1">立即注册</button>
+            <div className="mt-5 pt-5 border-t border-gray-100">
+              <div className="flex items-center justify-between">
+                <div className="flex-1 h-px bg-gray-100"></div>
+                <span className="px-3 text-xs text-gray-400">其他登录方式</span>
+                <div className="flex-1 h-px bg-gray-100"></div>
+              </div>
+              <div className="mt-4 flex justify-center gap-6">
+                <button type="button" onClick={() => setLoginType('face')} className={cn(
+                  'flex flex-col items-center gap-1.5 text-xs',
+                  loginType === 'face' ? 'text-primary-600' : 'text-gray-500 hover:text-gray-700'
+                )}>
+                  <div className={cn(
+                    'w-10 h-10 rounded-full flex items-center justify-center',
+                    loginType === 'face' ? 'bg-primary-100' : 'bg-gray-100'
+                  )}>
+                    <Fingerprint className="w-5 h-5" />
+                  </div>
+                  刷脸
+                </button>
+                <button type="button" className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
+                  <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                    <Smartphone className="w-5 h-5" />
+                  </div>
+                  爱南宁
+                </button>
+                <button type="button" className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
+                  <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                    <Shield className="w-5 h-5" />
+                  </div>
+                  电子证照
+                </button>
+              </div>
             </div>
 
-            <div className="lg:hidden mt-6 p-4 bg-gray-50 rounded-xl">
-              <p className="text-xs text-gray-600 text-center">
-                <strong>演示账号：</strong>13800138001 / 123456<br />
-                <strong>管理员账号：</strong>13900139000 / admin123
+            <div className="mt-5 text-center text-xs text-gray-500">
+              登录即表示同意 <button className="text-primary-600 hover:underline">《用户服务协议》</button>
+              <span className="mx-1">和</span>
+              <button className="text-primary-600 hover:underline">《隐私政策》</button>
+            </div>
+
+            <div className="lg:hidden mt-4 p-3 bg-gray-50 rounded-xl text-xs">
+              <p className="text-gray-600 text-center leading-relaxed">
+                <strong>市民端：</strong>13800138001 / 123456<br />
+                <strong>管理端：</strong>13900139000 / admin123
               </p>
             </div>
           </div>
