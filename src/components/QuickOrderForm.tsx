@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone } from 'lucide-react';
+import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAppStore, serviceTypeList } from '@/store';
@@ -41,6 +41,7 @@ export default function QuickOrderForm() {
   const addresses = useAppStore((state) => state.addresses);
   const selectedAddress = useAppStore((state) => state.selectedAddress);
   const setSelectedAddress = useAppStore((state) => state.setSelectedAddress);
+  const getDispatchInfo = useAppStore((state) => state.getDispatchInfo);
   const addOrder = useAppStore((state) => state.addOrder);
   const navigate = useNavigate();
 
@@ -62,16 +63,31 @@ export default function QuickOrderForm() {
   const insuranceFee = 2;
   const totalFee = baseFee + insuranceFee;
 
-  const nearbyWorkers = 7;
-  const avgScore = 4.8;
+  const dispatchInfo = selectedAddress ? getDispatchInfo(selectedAddress.id) : undefined;
+  const nearbyWorkers = dispatchInfo?.nearby_workers_count ?? 7;
+  const avgScore = dispatchInfo?.avg_score ?? 4.8;
+  const avgArriveMinutes = dispatchInfo?.avg_arrive_minutes ?? 25;
+  const heatLevel = dispatchInfo?.heat_level ?? 'medium';
+  const workerDistribution = dispatchInfo?.worker_distribution ?? [
+    { distance: '500m内', count: 2 },
+    { distance: '1km内', count: 3 },
+    { distance: '2km内', count: 1 },
+    { distance: '3km内', count: 1 },
+  ];
+
+  const heatLevelLabel = {
+    high: { text: '高热力区', cls: 'text-red-600 bg-red-50' },
+    medium: { text: '中热力区', cls: 'text-orange-600 bg-orange-50' },
+    low: { text: '低热力区', cls: 'text-blue-600 bg-blue-50' },
+  };
 
   const timeline = useMemo(() => [
-    { label: '预计派单', time: addMinutes(time, 3), desc: `1km内${nearbyWorkers}位可派阿姨`, icon: Navigation },
-    { label: '预计接单', time: addMinutes(time, 8), desc: '阿姨确认接单', icon: CheckCircle },
+    { label: '预计派单', time: addMinutes(time, 3), desc: `${nearbyWorkers}位阿姨待命中`, icon: Navigation },
+    { label: '预计接单', time: addMinutes(time, 8), desc: '平均5分钟内接单', icon: CheckCircle },
     { label: '预计出发', time: addMinutes(time, 15), desc: '阿姨从服务点出发', icon: MapPin },
-    { label: '预计到达', time: addMinutes(time, 35), desc: '阿姨到达服务地址', icon: Users },
-    { label: '服务结束', time: addMinutes(time, 35 + duration * 60), desc: `服务${duration}小时后完成`, icon: Star },
-  ], [time, duration, nearbyWorkers]);
+    { label: '预计到达', time: addMinutes(time, 15 + avgArriveMinutes), desc: `平均${avgArriveMinutes}分钟到达`, icon: Users },
+    { label: '服务结束', time: addMinutes(time, 15 + avgArriveMinutes + duration * 60), desc: `服务${duration}小时后完成`, icon: Star },
+  ], [time, duration, nearbyWorkers, avgArriveMinutes]);
 
   const handleSubmit = () => {
     if (!selectedAddress) return;
@@ -309,16 +325,50 @@ export default function QuickOrderForm() {
                 <div className="bg-white rounded-lg p-2.5 border border-primary-100">
                   <div className="flex items-center gap-1.5 mb-1">
                     <Navigation className="w-3.5 h-3.5 text-primary-500" />
-                    <span className="text-[10px] text-secondary-500">1km可派阿姨</span>
+                    <span className="text-[10px] text-secondary-500">可派阿姨</span>
                   </div>
-                  <p className="text-lg font-bold text-primary-600">{nearbyWorkers}<span className="text-xs text-secondary-400 font-normal ml-0.5">人</span></p>
+                  <div className="flex items-end gap-1">
+                    <p className="text-lg font-bold text-primary-600">{nearbyWorkers}<span className="text-xs text-secondary-400 font-normal ml-0.5">人</span></p>
+                    <span className={cn('text-[9px] px-1.5 py-0.5 rounded-full mb-0.5', heatLevelLabel[heatLevel].cls)}>
+                      {heatLevelLabel[heatLevel].text}
+                    </span>
+                  </div>
                 </div>
                 <div className="bg-white rounded-lg p-2.5 border border-primary-100">
                   <div className="flex items-center gap-1.5 mb-1">
                     <Star className="w-3.5 h-3.5 text-yellow-500" />
                     <span className="text-[10px] text-secondary-500">平均评分</span>
                   </div>
-                  <p className="text-lg font-bold text-yellow-600">{avgScore}<span className="text-xs text-secondary-400 font-normal ml-0.5">/5</span></p>
+                  <div className="flex items-end gap-1">
+                    <p className="text-lg font-bold text-yellow-600">{avgScore.toFixed(1)}<span className="text-xs text-secondary-400 font-normal ml-0.5">/5</span></p>
+                    <span className="text-[9px] text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full mb-0.5">
+                      动态加权
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-2.5 border border-primary-100">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-1.5">
+                    <Flame className="w-3.5 h-3.5 text-orange-500" />
+                    <span className="text-[10px] text-secondary-500">阿姨距离分布</span>
+                  </div>
+                  <span className="text-[10px] text-secondary-400">1km内优先派单</span>
+                </div>
+                <div className="space-y-1">
+                  {workerDistribution.map((item, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <span className="text-[10px] text-secondary-500 w-12">{item.distance}</span>
+                      <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-primary-400 to-primary-500 rounded-full transition-all"
+                          style={{ width: `${(item.count / nearbyWorkers) * 100}%` }}
+                        />
+                      </div>
+                      <span className="text-[10px] text-secondary-600 font-medium w-6 text-right">{item.count}人</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 

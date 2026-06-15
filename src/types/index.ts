@@ -70,6 +70,7 @@ export interface Order {
   service_type: ServiceType;
   service_type_label: string;
   address: string;
+  address_name?: string;
   lng: number;
   lat: number;
   start_time: string;
@@ -81,7 +82,71 @@ export interface Order {
   worker_name?: string;
   worker_avatar?: string;
   worker_phone?: string;
+  worker_score?: number;
+  distance_km?: number;
   created_at: string;
+  nodes?: ServiceNode[];
+  compensation?: CompensationRecord;
+  qa_record?: QARecordDetail;
+  insurance?: InsuranceInfo;
+  is_overtime?: boolean;
+  overtime_minutes?: number;
+}
+
+export interface InsuranceInfo {
+  policy_no: string;
+  product_name: string;
+  coverage_amount: number;
+  premium: number;
+  status: 'active' | 'expired' | 'claimed';
+}
+
+export interface CompensationRecord {
+  id: number;
+  order_id: number;
+  reason: string;
+  reason_category: string;
+  refund_amount: number;
+  coupon_amount: number;
+  coupon_code: string;
+  status: 'pending' | 'approved' | 'rejected' | 'paid';
+  trigger_type: 'auto' | 'manual';
+  created_at: string;
+  approved_at?: string;
+  paid_at?: string;
+  auditor?: string;
+  description?: string;
+}
+
+export interface QARecordDetail {
+  id: number;
+  order_id: number;
+  audio_url: string;
+  audio_duration: number;
+  transcript_text: string;
+  transcript_summary: string;
+  keywords: { text: string; hit: boolean; count: number }[];
+  compliance_rate: number;
+  root_cause: string;
+  root_cause_category: string;
+  root_cause_detail: string;
+  rating: number;
+  complaint_count: number;
+  reviewer: string;
+  review_time: string;
+  review_conclusion: 'pass' | 'warning' | 'fail';
+  review_remark: string;
+  created_at: string;
+  qa_status: 'pending' | 'completed';
+}
+
+export interface AddressDispatchInfo {
+  address_id: number;
+  nearby_workers_count: number;
+  avg_score: number;
+  avg_arrive_minutes: number;
+  heat_level: 'high' | 'medium' | 'low';
+  worker_distribution: { distance: string; count: number }[];
 }
 
 export type NodeType = 'order_created' | 'assigned' | 'accepted' | 'departing' | 'arrived' | 'servicing' | 'completed';
