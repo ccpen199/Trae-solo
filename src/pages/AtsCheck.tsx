@@ -10,6 +10,7 @@ import {
 import { useResumeStore } from '../store/resumeStore';
 import { checkAtsCompatibility } from '../utils/atsCheck';
 import { exportResumeToWord } from '../utils/wordExport';
+import { addAuditLog } from '../utils/audit';
 import type { AtsCheckResult } from '../types';
 
 function ScoreBar({ score }: { score: number }) {
@@ -265,7 +266,7 @@ function KeywordDensityCard({ keywords }: { keywords: AtsCheckResult['keywordDen
 export default function AtsCheck() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { currentResume, loadResume } = useResumeStore();
+  const { currentResume, loadResume, setAtsPassed } = useResumeStore();
   const [result, setResult] = useState<AtsCheckResult | null>(null);
   const [exporting, setExporting] = useState(false);
 
@@ -279,13 +280,17 @@ export default function AtsCheck() {
     if (currentResume) {
       const check = checkAtsCompatibility(currentResume, currentResume.theme?.fontFamily);
       setResult(check);
+      const passed = check.score >= 85;
+      setAtsPassed(id, passed);
+      addAuditLog('ats.check', { resumeId: id, score: check.score, title: currentResume.title, passed });
     }
-  }, [currentResume]);
+  }, [currentResume, id, setAtsPassed]);
 
   const handleExportWord = async () => {
     if (!currentResume) return;
     setExporting(true);
     try {
+      await addAuditLog('resume.export', { resumeId: id, title: currentResume.title, format: 'docx', fromAtsCheck: true });
       await exportResumeToWord(currentResume);
     } finally {
       setExporting(false);

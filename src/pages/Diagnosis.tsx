@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useResumeStore } from '../store/resumeStore';
 import { diagnoseResume } from '../utils/aiDiagnosis';
+import { addAuditLog } from '../utils/audit';
 import type { DiagnosisResult, EmptyPhraseIssue, TimelineConflict } from '../types';
 
 function ScoreRing({ score }: { score: number }) {
@@ -187,13 +188,15 @@ export default function Diagnosis() {
     if (currentResume) {
       const diagnosis = diagnoseResume(currentResume, (String(currentResume.templateId).split('-')[0] as any) || 'tech');
       setResult(diagnosis);
+      addAuditLog('ai.diagnosis', { resumeId: id, score: diagnosis.score, title: currentResume.title });
     }
-  }, [currentResume]);
+  }, [currentResume, id]);
 
   const handleRerun = () => {
     if (currentResume) {
       const diagnosis = diagnoseResume(currentResume, (String(currentResume.templateId).split('-')[0] as any) || 'tech');
       setResult(diagnosis);
+      addAuditLog('ai.diagnosis', { resumeId: id, score: diagnosis.score, title: currentResume.title, rerun: true });
     }
   };
 

@@ -10,6 +10,7 @@ interface ResumeStore {
   history: Resume[];
   historyIndex: number;
   loading: boolean;
+  atsPassed: Record<string, boolean>;
   setCurrentResume: (resume: Resume | null) => void;
   updateResume: (updater: (resume: Resume) => Resume) => void;
   updateModule: (moduleId: string, updater: (module: ResumeModule) => ResumeModule) => void;
@@ -25,6 +26,7 @@ interface ResumeStore {
   updateSettings: (settings: Partial<AppSettings>) => Promise<void>;
   createNewResume: (templateId: string, category: TemplateCategory, modules: ResumeModule[], theme: ResumeTheme) => void;
   createAndSaveResume: (templateId: string, category: TemplateCategory, modules: ResumeModule[], theme: ResumeTheme) => Promise<Resume | null>;
+  setAtsPassed: (resumeId: string, passed: boolean) => void;
   clearData: () => Promise<void>;
   undo: () => void;
   redo: () => void;
@@ -66,6 +68,7 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
   history: [],
   historyIndex: -1,
   loading: false,
+  atsPassed: {},
   canUndo: false,
   canRedo: false,
 
@@ -271,6 +274,12 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
       console.error('Failed to save new resume', e);
       return null;
     }
+  },
+
+  setAtsPassed: (resumeId, passed) => {
+    set(state => ({
+      atsPassed: { ...state.atsPassed, [resumeId]: passed },
+    }));
   },
 
   clearData: async () => {

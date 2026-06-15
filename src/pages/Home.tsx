@@ -16,10 +16,12 @@ import {
   Palette,
   Briefcase,
   CheckCircle2,
-  FileCheck
+  FileCheck,
+  ChevronRight,
 } from 'lucide-react'
 import { useResumeStore } from '../store/resumeStore'
 import { resumeTemplates, blankTemplate } from '../data/templates'
+import { addAuditLog } from '../utils/audit';
 import { formatTime, cn } from '../lib/utils'
 
 const categoryConfig: Record<string, { icon: typeof Code2; borderColor: string; iconBg: string; iconColor: string; features: string[] }> = {
@@ -72,6 +74,7 @@ export default function Home() {
       blankTemplate.theme
     )
     if (resume) {
+      await addAuditLog('resume.create', { templateId: blankTemplate.id, templateName: blankTemplate.name, resumeId: resume.id })
       navigate(`/editor/${resume.id}`)
     }
   }
@@ -135,10 +138,19 @@ export default function Home() {
     setDeleteConfirmId(null)
   }
 
-  const handleCategoryTemplate = (category: 'tech' | 'design' | 'function') => {
+  const handleCategoryTemplate = async (category: 'tech' | 'design' | 'function') => {
     const template = resumeTemplates.find(t => t.category === category)
     if (template) {
-      navigate(`/templates?category=${category}`)
+      const resume = await createAndSaveResume(
+        template.id,
+        category,
+        template.modules,
+        template.theme
+      )
+      if (resume) {
+        await addAuditLog('template.use', { templateId: template.id, templateName: template.name, resumeId: resume.id })
+        navigate(`/editor/${resume.id}`)
+      }
     }
   }
 
@@ -342,8 +354,8 @@ export default function Home() {
                     ))}
                   </div>
                   <div className="mt-5 flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-gold-500 transition-colors">
-                    查看模板
-                    <ArrowRight className="w-4 h-4" />
+                    使用此模板
+                    <ChevronRight className="w-4 h-4" />
                   </div>
                 </div>
               )

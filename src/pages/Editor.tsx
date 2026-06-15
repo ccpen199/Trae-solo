@@ -13,6 +13,11 @@ import { useResumeStore } from '../store/resumeStore';
 import type { ResumeModule, ModuleType, ResumeTheme } from '../types';
 import { exportResumeToWord } from '../utils/wordExport';
 import { cn } from '../lib/utils';
+import { addAuditLog } from '../utils/audit';
+
+function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
 
 const MODULE_LABELS: Record<ModuleType, string> = {
   basic: '基本信息', education: '教育经历', experience: '工作经历',
@@ -84,16 +89,80 @@ function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
   const fieldVis = (f._fieldVisibility || {}) as Record<string, boolean>;
 
   if (module.type === 'custom') {
+    const customFields = (f.customFields || []) as Array<{ key: string; label: string; value: string; visible: boolean }>;
     return (
       <div className="space-y-3">
         <div>
           <label className="text-xs text-navy-400 mb-1 block">模块名称</label>
           <input className="input-field text-sm" value={f.title ?? ''} onChange={e => set('title', e.target.value)} placeholder="请输入模块名称" />
         </div>
-        <div>
-          <label className="text-xs text-navy-400 mb-1 block">模块内容</label>
-          <textarea className="input-field text-sm" rows={6} value={f.content ?? ''} onChange={e => set('content', e.target.value)} placeholder="请输入模块内容" />
+        <div className="space-y-2">
+          <div className="flex items-center justify-between mb-1">
+            <label className="text-xs text-navy-400">模块内容</label>
+          </div>
+          <textarea className="input-field text-sm" rows={3} value={f.content ?? ''} onChange={e => set('content', e.target.value)} placeholder="请输入模块主要内容" />
         </div>
+        {customFields.length > 0 && (
+          <div className="space-y-2 pt-2 border-t border-navy-100">
+            <label className="text-xs text-navy-400 mb-1 block">自定义字段</label>
+            {customFields.map((field, idx) => (
+              <div key={field.key || idx} className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <input
+                    className="input-field text-xs flex-1"
+                    value={field.label}
+                    onChange={e => {
+                      const newFields = [...customFields];
+                      newFields[idx] = { ...field, label: e.target.value };
+                      set('customFields', newFields);
+                    }}
+                    placeholder="字段名"
+                  />
+                  {onToggleVisibility && (
+                    <button
+                      onClick={() => {
+                        const newFields = [...customFields];
+                        newFields[idx] = { ...field, visible: !field.visible };
+                        set('customFields', newFields);
+                      }}
+                      className="p-1 text-navy-300 hover:text-navy-600"
+                    >
+                      {field.visible ?? true ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      const newFields = customFields.filter((_, i) => i !== idx);
+                      set('customFields', newFields);
+                    }}
+                    className="p-1 text-navy-300 hover:text-red-500"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+                <input
+                  className="input-field text-sm"
+                  value={field.value}
+                  onChange={e => {
+                    const newFields = [...customFields];
+                    newFields[idx] = { ...field, value: e.target.value };
+                    set('customFields', newFields);
+                  }}
+                  placeholder="字段值"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+        <button
+          onClick={() => {
+            const newFields = [...customFields, { key: generateId(), label: '', value: '', visible: true }];
+            set('customFields', newFields);
+          }}
+          className="btn-ghost text-xs w-full flex items-center justify-center gap-1 py-2"
+        >
+          <Plus className="w-3.5 h-3.5" />添加自定义字段
+        </button>
       </div>
     );
   }
@@ -331,14 +400,28 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
         </div>
       </div>
     );
-    if (m.type === 'custom') return (
-      <div className={cls} onClick={() => onSelectModule(m.id)}>
-        <div className="mb-4">
-          <h2 className="text-sm font-bold border-b-2 pb-1 mb-2" style={{ borderColor: pc, color: pc }}>{f.title || '自定义模块'}</h2>
-          <p className="text-xs text-gray-600 leading-relaxed">{f.content}</p>
+    if (m.type === 'custom') {
+      const customFields = (f.customFields || []) as Array<{ key: string; label: string; value: string; visible: boolean }>;
+      const visibleFields = customFields.filter(field => field.visible ?? true);
+      return (
+        <div className={cls} onClick={() => onSelectModule(m.id)}>
+          <div className="mb-4">
+            <h2 className="text-sm font-bold border-b-2 pb-1 mb-2" style={{ borderColor: pc, color: pc }}>{f.title || '自定义模块'}</h2>
+            {f.content && <p className="text-xs text-gray-600 leading-relaxed mb-2">{f.content}</p>}
+            {visibleFields.length > 0 && (
+              <div className="space-y-1">
+                {visibleFields.map((field, idx) => (
+                  <div key={field.key || idx} className="text-xs">
+                    {field.label && <span className="font-semibold text-gray-700">{field.label}：</span>}
+                    <span className="text-gray-600">{field.value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
     return null;
   };
   return (
@@ -352,7 +435,7 @@ export default function Editor() {
   const navigate = useNavigate();
   const { id = '' } = useParams();
   const {
-    currentResume, loading, canUndo, canRedo, settings,
+    currentResume, loading, canUndo, canRedo, settings, atsPassed,
     loadResume, updateModule, removeModule, reorderModules,
     updateTheme, saveCurrentResume, undo, redo, addModule,
   } = useResumeStore();
@@ -362,7 +445,6 @@ export default function Editor() {
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
   const [importFileName, setImportFileName] = useState<string | null>(null);
-  const [atsPassed, setAtsPassed] = useState(false);
   const [showAtsWarning, setShowAtsWarning] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
@@ -377,6 +459,7 @@ export default function Editor() {
 
   const activeModule = currentResume?.modules.find(m => m.id === activeModuleId) || null;
   const activeDragModule = currentResume?.modules.find(m => m.id === activeDragId) || null;
+  const atsIsPassed = atsPassed[id] || false;
 
   const handleDragStart = useCallback((event: any) => {
     setActiveDragId(event.active.id);
@@ -387,37 +470,41 @@ export default function Editor() {
     setActiveDragId(null);
     if (over && active.id !== over.id) {
       reorderModules(active.id, over.id);
+      addAuditLog('module.reorder', { resumeId: id, activeId: active.id, overId: over.id });
       setSaved(false);
     }
-  }, [reorderModules]);
+  }, [reorderModules, id]);
 
   const handleSave = useCallback(async () => {
     setSaving(true);
     try {
       await saveCurrentResume();
       setSaved(true);
+      await addAuditLog('resume.save', { resumeId: id, title: currentResume?.title });
       setTimeout(() => setSaved(false), 2000);
     } finally {
       setSaving(false);
     }
-  }, [saveCurrentResume]);
+  }, [saveCurrentResume, id, currentResume?.title]);
 
   const handleExport = useCallback(() => {
-    if (!atsPassed) {
+    if (!atsIsPassed) {
       setShowAtsWarning(true);
       return;
     }
     if (currentResume) {
+      addAuditLog('resume.export', { resumeId: id, title: currentResume.title, format: 'docx' });
       exportResumeToWord(currentResume);
     }
-  }, [currentResume, atsPassed]);
+  }, [currentResume, atsIsPassed, id]);
 
   const handleForceExport = useCallback(() => {
     setShowAtsWarning(false);
     if (currentResume) {
+      addAuditLog('resume.export', { resumeId: id, title: currentResume.title, format: 'docx', atsSkipped: true });
       exportResumeToWord(currentResume);
     }
-  }, [currentResume]);
+  }, [currentResume, id]);
 
   const handleFieldUpdate = useCallback((moduleId: string, fields: Record<string, any>) => {
     updateModule(moduleId, m => ({ ...m, fields }));
@@ -434,9 +521,10 @@ export default function Editor() {
       type: 'custom',
       visible: true,
       order: modules.length,
-      fields: { title: '', content: '' },
+      fields: { title: '', content: '', customFields: [] },
     };
     addModule(newModule);
+    addAuditLog('module.add', { resumeId: id, moduleType: 'custom' });
     setSaved(false);
   };
 
@@ -448,6 +536,7 @@ export default function Editor() {
       return;
     }
     setImporting(true);
+    addAuditLog('resume.import', { resumeId: id, fileName: file.name, fileSize: file.size });
     setTimeout(() => {
       setImporting(false);
       setImportFileName(file.name);
@@ -489,15 +578,15 @@ export default function Editor() {
           <button onClick={() => id && navigate(`/diagnosis/${id}`)} className="btn-ghost text-xs px-2 py-1.5 flex items-center gap-1">
             <Brain className="w-4 h-4" />AI诊断
           </button>
-          <button onClick={() => id && navigate(`/ats-check/${id}`)} className={cn('btn-ghost text-xs px-2 py-1.5 flex items-center gap-1', atsPassed && 'text-emerald-600')}>
-            <ScanLine className="w-4 h-4" />{atsPassed ? 'ATS已通过' : 'ATS检测'}
+          <button onClick={() => id && navigate(`/ats-check/${id}`)} className={cn('btn-ghost text-xs px-2 py-1.5 flex items-center gap-1', atsIsPassed && 'text-emerald-600')}>
+            <ScanLine className="w-4 h-4" />{atsIsPassed ? 'ATS已通过' : 'ATS检测'}
           </button>
           <div className="flex-1" />
           <span className={cn('inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px] font-medium', settings.privacyMode ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-600')}>
             {settings.privacyMode ? <Lock className="w-3.5 h-3.5" /> : <Shield className="w-3.5 h-3.5" />}
             {settings.privacyMode ? 'AES加密 · 本地存储' : '未加密 · 前往设置'}
           </span>
-          <button onClick={handleExport} className={cn('text-xs px-3 py-1.5 flex items-center gap-1', atsPassed ? 'btn-primary' : 'btn-secondary')}>
+          <button onClick={handleExport} className={cn('text-xs px-3 py-1.5 flex items-center gap-1', atsIsPassed ? 'btn-primary' : 'btn-secondary')}>
             <FileDown className="w-3.5 h-3.5" />导出Word
           </button>
         </div>
@@ -514,9 +603,9 @@ export default function Editor() {
           <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-emerald-50 text-emerald-700">
             <CheckCircle2 className="w-3 h-3" />实时预览就绪
           </span>
-          <span className={cn('inline-flex items-center gap-1 px-2 py-1 rounded', atsPassed ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700')}>
-            {atsPassed ? <CheckCircle2 className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
-            {atsPassed ? 'ATS检测已通过' : '导出前需通过ATS检测'}
+          <span className={cn('inline-flex items-center gap-1 px-2 py-1 rounded text-[11px] font-medium', atsIsPassed ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700')}>
+            {atsIsPassed ? <CheckCircle2 className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
+            {atsIsPassed ? 'ATS检测已通过' : '导出前需通过ATS检测'}
           </span>
           <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-navy-50">
             字段：{visibleCount} 显示 / {hiddenCount} 隐藏 · {linkCount} 个链接
@@ -561,7 +650,12 @@ export default function Editor() {
                   <SortableItem key={m.id} module={m} active={m.id === activeModuleId}
                     onSelect={() => setActiveModuleId(m.id)}
                     onToggle={() => { updateModule(m.id, mod => ({ ...mod, visible: !mod.visible })); setSaved(false); }}
-                    onDelete={() => { removeModule(m.id); if (activeModuleId === m.id) setActiveModuleId(null); setSaved(false); }} />
+                    onDelete={() => {
+                      removeModule(m.id);
+                      addAuditLog('module.remove', { resumeId: id, moduleType: m.type, moduleName: m.fields?.title || MODULE_LABELS[m.type] });
+                      if (activeModuleId === m.id) setActiveModuleId(null);
+                      setSaved(false);
+                    }} />
                 ))}
               </SortableContext>
               <DragOverlay>

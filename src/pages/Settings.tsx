@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Shield, Download, Trash2, Info, CheckCircle2, XCircle, Lock, CloudOff, Database, HardDrive } from 'lucide-react';
+import { Shield, Download, Trash2, Info, CheckCircle2, XCircle, Lock, CloudOff, Database, HardDrive, Clock, List, RotateCcw } from 'lucide-react';
 import { useResumeStore } from '@/store/resumeStore';
+import { getAuditLogs, clearAuditLogs, addAuditLog, type AuditLogEntry } from '../utils/audit';
 import { formatTime } from '../lib/utils';
 
 export default function Settings() {
@@ -8,14 +9,25 @@ export default function Settings() {
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [clearing, setClearing] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
+  const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
+  const [showAuditLogs, setShowAuditLogs] = useState(false);
+  const [clearingAudit, setClearingAudit] = useState(false);
 
   useEffect(() => {
     loadSettings();
     loadAllResumes();
+    loadAuditLogs();
   }, [loadSettings, loadAllResumes]);
+
+  const loadAuditLogs = async () => {
+    const logs = await getAuditLogs();
+    setAuditLogs(logs);
+  };
 
   const handlePrivacyToggle = async (checked: boolean) => {
     await updateSettings({ privacyMode: checked });
+    await addAuditLog('privacy.toggle', { enabled: checked });
+    await loadAuditLogs();
   };
 
   const handleExportData = () => {
@@ -34,16 +46,29 @@ export default function Settings() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     setExportSuccess(true);
+    addAuditLog('data.export', { resumeCount: resumes.length });
+    loadAuditLogs();
     setTimeout(() => setExportSuccess(false), 2000);
   };
 
   const handleClearData = async () => {
     setClearing(true);
     try {
+      await addAuditLog('data.clear', { resumeCount: resumes.length });
       await clearData();
     } finally {
       setClearing(false);
       setShowClearDialog(false);
+    }
+  };
+
+  const handleClearAuditLogs = async () => {
+    setClearingAudit(true);
+    try {
+      await clearAuditLogs();
+      await loadAuditLogs();
+    } finally {
+      setClearingAudit(false);
     }
   };
 
@@ -239,6 +264,90 @@ export default function Settings() {
               清空数据
             </button>
           </div>
+        </div>
+      </section>
+
+      <section className="mb-10">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center">
+            <List className="w-5 h-5 text-navy-600" />
+          </div>
+          <div>
+            <h2 className="section-title text-xl">操作审计</h2>
+          </div>
+        </div>
+
+        <div className="card p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-medium text-navy-700 mb-1">事件审计记录</h3>
+              <p className="text-sm text-navy-400">
+                记录您的所有关键操作，共 {auditLogs.length} 条（保留最近100条）
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={loadAuditLogs}
+                className="btn-ghost text-sm inline-flex items-center gap-1"
+              >
+                <RotateCcw className="w-4 h-4" />
+                刷新
+              </button>
+              <button
+                onClick={() => setShowAuditLogs(!showAuditLogs)}
+                className="btn-secondary text-sm inline-flex items-center gap-1"
+              >
+                <List className="w-4 h-4" />
+                {showAuditLogs ? '收起' : '查看全部'}
+              </button>
+            </div>
+          </div>
+
+          {showAuditLogs && (
+            <div className="space-y-3 mt-4 pt-4 border-t border-navy-100">
+              {auditLogs.length === 0 ? (
+                <div className="p-8 text-center border border-dashed border-navy-200 rounded-lg">
+                  <Clock className="w-12 h-12 text-navy-200 mx-auto mb-3" />
+                  <p className="text-sm text-navy-400">暂无操作记录</p>
+                  <p className="text-xs text-navy-300 mt-1">创建或编辑简历后，操作记录将显示在这里</p>
+                </div>
+              ) : (
+                <>
+                  <div className="max-h-[400px] overflow-y-auto space-y-2">
+                    {auditLogs.map((log) => (
+                      <div key={log.id} className="flex items-start gap-3 p-3 rounded-lg bg-navy-25/40 border border-navy-100">
+                        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center flex-shrink-0">
+                          <Clock className="w-4 h-4 text-navy-400" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <span className="text-sm font-medium text-navy-700">{log.action}</span>
+                            <span className="text-xs text-navy-300">{formatTime(log.timestamp)}</span>
+                          </div>
+                          <div className="text-xs text-navy-400 font-mono bg-white/60 px-2 py-1 rounded mt-1 break-all">
+                            {JSON.stringify(log.details)}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-end pt-3 border-t border-navy-100">
+                    <button
+                      onClick={handleClearAuditLogs}
+                      disabled={clearingAudit}
+                      className="text-xs text-navy-400 hover:text-red-500 flex items-center gap-1 disabled:opacity-50"
+                    >
+                      {clearingAudit && (
+                        <span className="w-3 h-3 border border-navy-300 border-t-navy-600 rounded-full animate-spin" />
+                      )}
+                      <Trash2 className="w-3 h-3" />
+                      清空审计记录
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </div>
       </section>
 

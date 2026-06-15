@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Code2,
   Palette,
@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useResumeStore } from '../store/resumeStore';
 import { resumeTemplates } from '../data/templates';
+import { addAuditLog } from '../utils/audit';
 import type { ResumeTemplate, TemplateCategory } from '../types';
 import { cn } from '../lib/utils';
 
@@ -39,9 +40,27 @@ const filterCategories: { key: FilterCategory; label: string }[] = [
 ];
 
 export default function Templates() {
-  const [activeCategory, setActiveCategory] = useState<FilterCategory>('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlCategory = searchParams.get('category') as FilterCategory | null;
+  const [activeCategory, setActiveCategory] = useState<FilterCategory>(urlCategory || 'all');
   const navigate = useNavigate();
   const createAndSaveResume = useResumeStore((state) => state.createAndSaveResume);
+
+  useEffect(() => {
+    if (urlCategory) {
+      setActiveCategory(urlCategory);
+    }
+  }, [urlCategory]);
+
+  const handleFilterChange = (category: FilterCategory) => {
+    setActiveCategory(category);
+    if (category === 'all') {
+      searchParams.delete('category');
+      setSearchParams(searchParams);
+    } else {
+      setSearchParams({ category });
+    }
+  };
 
   const filteredTemplates =
     activeCategory === 'all'
@@ -57,7 +76,10 @@ export default function Templates() {
       template.modules,
       template.theme,
     );
-    if (resume) navigate(`/editor/${resume.id}`);
+    if (resume) {
+      await addAuditLog('template.use', { templateId: template.id, templateName: template.name, resumeId: resume.id });
+      navigate(`/editor/${resume.id}`);
+    }
   };
 
   const renderPreview = (template: ResumeTemplate) => {
@@ -142,7 +164,7 @@ export default function Templates() {
             return (
               <button
                 key={cat.key}
-                onClick={() => setActiveCategory(cat.key)}
+                onClick={() => handleFilterChange(cat.key)}
                 className={cn(
                   'px-5 py-2.5 rounded-full font-medium transition-all duration-300',
                   isActive

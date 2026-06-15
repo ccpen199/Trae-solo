@@ -65,6 +65,23 @@ const server = http.createServer((req, res) => {
     });
   }
 
+  if (
+    req.method === 'GET' &&
+    ['/api/auth/me', '/api/users/profile', '/api/user/profile'].includes(requestUrl.pathname)
+  ) {
+    const totalEvents = db.prepare('SELECT COUNT(*) AS count FROM resume_events').get();
+    return sendJson(res, 200, {
+      id: 'local-user',
+      name: '本地简历用户',
+      role: 'user',
+      accountMode: 'local-only',
+      privacyMode: 'AES local encryption',
+      frontendUrl,
+      resumeEventCount: totalEvents.count,
+      capabilities: ['profile-overview', 'local-resume-cache', 'privacy-settings'],
+    });
+  }
+
   if (req.method === 'GET' && (requestUrl.pathname === '/api/admin/stats' || requestUrl.pathname === '/api/admin/dashboard')) {
     const totalEvents = db.prepare('SELECT COUNT(*) AS count FROM resume_events').get();
     return sendJson(res, 200, {
