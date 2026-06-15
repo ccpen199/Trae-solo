@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: '"LXGW WenKai"', '"PingFang SC"', '"Microsoft YaHei"', system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #1e3a5f;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-2.5 bg-navy-600 text-white rounded-lg font-medium 
+           border border-gold-500/50 shadow-md hover:bg-navy-700 
+           hover:shadow-glow transition-all duration-300 active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply px-6 py-2.5 bg-white text-navy-600 rounded-lg font-medium 
+           border border-navy-200 shadow-card hover:border-gold-500/60 
+           hover:shadow-card-hover transition-all duration-300;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-navy-500 rounded-lg hover:bg-navy-50 
+           transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-card border border-navy-100/50
+           transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 rounded-lg border border-navy-100 bg-white
+           focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500
+           transition-all duration-200;
+  }
+
+  .section-title {
+    @apply font-serif text-2xl font-semibold text-navy-700;
+  }
+
+  .nav-link {
+    @apply px-4 py-2 rounded-lg text-navy-500 hover:text-navy-700 
+           hover:bg-gold-50 transition-all duration-200;
+  }
+
+  .nav-link-active {
+    @apply bg-navy-600 text-white hover:bg-navy-700 hover:text-white;
+  }
+}
+
+/* A4 Paper */
+.a4-paper {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  box-shadow: 0 4px 24px rgba(30, 58, 95, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
+  padding: 20mm 18mm;
+  position: relative;
+}
+
+@media print {
+  .a4-paper {
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Drag overlay */
+.drag-overlay {
+  cursor: grabbing;
+  opacity: 0.9;
+  transform: scale(1.02);
+}
