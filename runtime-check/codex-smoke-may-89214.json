@@ -1,0 +1,14 @@
+{
+  "order": "may-89214",
+  "url": "http://127.0.0.1:50214/",
+  "status": 200,
+  "ok": true,
+  "title": "配送调度中台",
+  "textLength": 1628,
+  "sample": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运营总览 管理员 A 运营总览 今日 2026年06月15日 今日订单 5 配送中 2 已完成 1 累计营收 ¥52.00 运力平台状态 4 查看全部 检测到 4 个平台存在异常 🍔 美团众包: 投诉率达2.50%，超过预警线2% 🐦 蜂鸟即配: 投诉率达2.20%，超过预警线2% 🐰 极兔速递: 投诉率达3.00%，超",
+  "consoleErrors": [],
+  "failedRequests": [],
+  "responseErrors": [],
+  "error": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-smoke-may-89214.png"
+}

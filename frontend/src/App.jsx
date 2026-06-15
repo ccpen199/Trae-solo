@@ -124,6 +124,7 @@ function App() {
               {menuItems.find(item => item.key === location.pathname)?.label || '配送调度中台'}
             </h2>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span style={{ color: '#0f766e', fontSize: 13, fontWeight: 500 }}>已登录</span>
               <span style={{ color: '#666' }}>管理员</span>
               <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#1677ff', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 A

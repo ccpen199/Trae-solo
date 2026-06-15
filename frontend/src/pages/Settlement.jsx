@@ -11,11 +11,13 @@ import {
   FileDoneOutlined,
   PayCircleOutlined,
   ReconciliationOutlined,
-  PrinterOutlined
+  PrinterOutlined,
+  GiftOutlined,
+  ExclamationCircleOutlined
 } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import dayjs from 'dayjs'
-import { settlementApi, platformApi } from '../api'
+import { settlementApi, platformApi, compensationApi } from '../api'
 import { useNavigate } from 'react-router-dom'
 
 const { Option } = Select
@@ -27,6 +29,7 @@ function Settlement() {
   const [list, setList] = useState([])
   const [monthlySummary, setMonthlySummary] = useState([])
   const [platforms, setPlatforms] = useState([])
+  const [platformCompensations, setPlatformCompensations] = useState({})
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 })
   const [filters, setFilters] = useState({ platform_id: '', status: '' })
@@ -45,7 +48,22 @@ function Settlement() {
     loadPlatforms()
     loadMonthlySummary()
     loadList()
+    loadPlatformCompensations()
   }, [pagination.current, pagination.pageSize])
+
+  const loadPlatformCompensations = async () => {
+    try {
+      const res = await compensationApi.list({ pageSize: 100 })
+      if (res.success) {
+        const compMap = {}
+        ;(res.data || []).forEach(c => {
+          if (!compMap[c.platform_id]) compMap[c.platform_id] = []
+          compMap[c.platform_id].push(c)
+        })
+        setPlatformCompensations(compMap)
+      }
+    } catch (e) { console.error(e) }
+  }
 
   const loadPlatforms = async () => {
     try {
@@ -392,17 +410,30 @@ function Settlement() {
           <Card><ReactECharts option={chartOption} style={{ height: 320 }} /></Card>
         </Col>
         <Col span={8}>
-          <Card title="各平台结算占比">
+          <Card
+            title="各平台结算与赔付"
+            extra={<Button type="link" size="small" icon={<GiftOutlined />} onClick={() => navigate('/compensation')}>赔付管理</Button>}
+          >
             {platforms.map(platform => {
               const platformTotal = monthlySummary
                 .filter(m => m.platform_id === platform.id)
                 .reduce((s, m) => s + (m.total_amount || 0), 0)
               const percent = totalAmount > 0 ? (platformTotal / totalAmount * 100).toFixed(1) : 0
+              const platCompensations = platformCompensations[platform.id] || []
+              const compTotal = platCompensations.reduce((s, c) => s + (c.amount || 0), 0)
+              const compCount = platCompensations.length
               return (
                 <div key={platform.id} style={{ marginBottom: 12 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, alignItems: 'center' }}>
                     <span>{platform.logo} {platform.name}</span>
-                    <span style={{ color: '#666' }}>¥{platformTotal.toFixed(2)} ({percent}%)</span>
+                    <Space size={8} wrap>
+                      {compCount > 0 && (
+                        <Tag color="purple" style={{ margin: 0 }} onClick={() => navigate('/compensation')}>
+                          <GiftOutlined /> {compCount}笔 ¥{compTotal.toFixed(2)}
+                        </Tag>
+                      )}
+                      <span style={{ color: '#666', fontSize: 12 }}>¥{platformTotal.toFixed(2)} ({percent}%)</span>
+                    </Space>
                   </div>
                   <div style={{ height: 6, background: '#f0f0f0', borderRadius: 3, overflow: 'hidden' }}>
                     <div 
@@ -537,7 +568,29 @@ function Settlement() {
                   导出结算单
                 </Button>
               )}
+              <Button icon={<GiftOutlined />} onClick={() => navigate('/compensation')}>
+                查看赔付记录
+              </Button>
             </Space>
+
+            {(platformCompensations[currentSettlement.platform_id]?.length || 0) > 0 && (
+              <Alert
+                type="warning"
+                showIcon
+                style={{ marginBottom: 16 }}
+                message="SLA赔付关联"
+                description={
+                  <div>
+                    <div>本周期内该平台发生 {platformCompensations[currentSettlement.platform_id].length} 笔赔付，合计 ¥{platformCompensations[currentSettlement.platform_id].reduce((s, c) => s + (c.amount || 0), 0).toFixed(2)}</div>
+                    <div style={{ marginTop: 4 }}>
+                      <Button type="link" size="small" icon={<GiftOutlined />} onClick={() => navigate('/compensation')}>
+                        复查赔付记录
+                      </Button>
+                    </div>
+                  </div>
+                }
+              />
+            )}
 
             <div style={{ marginBottom: 8, fontWeight: 500 }}>
               结算明细 ({currentSettlement.items?.length || 0} 条)
