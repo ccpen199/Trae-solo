@@ -393,6 +393,89 @@ export interface MatchDimension {
 }
 
 /**
+ * 简历解析结果
+ */
+export interface ResumeParseResult {
+  yearsOfExperience: number;
+  education: string;
+  location: string;
+  targetSalary: [number, number];
+  skills: string[];
+  certificates: string[];
+}
+
+/**
+ * JD语义匹配维度
+ */
+export interface JDMatchDimension {
+  score: number;
+  label: string;
+  reason: string;
+}
+
+/**
+ * JD语义匹配结果
+ */
+export interface JDMatchResult {
+  experience: JDMatchDimension;
+  education: JDMatchDimension;
+  location: JDMatchDimension;
+  salary: JDMatchDimension;
+}
+
+/**
+ * 技能对齐项
+ */
+export interface SkillAlignmentItem {
+  name: string;
+  level?: string;
+  required?: string;
+  suggestion?: string;
+  bonus?: string;
+}
+
+/**
+ * 技能图谱对齐结果
+ */
+export interface SkillAlignmentResult {
+  matched: SkillAlignmentItem[];
+  missing: SkillAlignmentItem[];
+  related: SkillAlignmentItem[];
+}
+
+/**
+ * 差异化匹配类型
+ */
+export type DifferentiationType = 'skilled' | 'blue_collar' | 'graduate';
+
+/**
+ * 差异化匹配依据
+ */
+export interface DifferentiationResult {
+  type: DifferentiationType;
+  typeLabel: string;
+  highlights: string[];
+}
+
+/**
+ * 完整匹配详情
+ */
+export interface MatchDetails {
+  resumeParse: ResumeParseResult;
+  jdMatch: JDMatchResult;
+  skillAlignment: SkillAlignmentResult;
+  differentiation: DifferentiationResult;
+}
+
+/**
+ * 带匹配详情的职位
+ */
+export interface JobWithMatch extends JobPosition {
+  matchScore: number;
+  matchDetails: MatchDetails;
+}
+
+/**
  * 差距分析
  */
 export interface GapAnalysis {

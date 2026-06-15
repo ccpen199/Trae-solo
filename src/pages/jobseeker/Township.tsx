@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   MapPin,
   Building2,
@@ -10,8 +11,14 @@ import {
   TrendingUp,
   ChevronRight,
   Flame,
+  Filter,
+  ShieldCheck,
+  ShieldX,
+  DollarSign,
+  Clock,
+  BookOpen,
 } from 'lucide-react';
-import { Card, Tag, Button, Tooltip } from 'antd';
+import { Card, Tag, Button, Tooltip, Tabs, Select, Checkbox, Modal, List } from 'antd';
 import { motion } from 'framer-motion';
 import {
   PieChart,
@@ -23,8 +30,10 @@ import {
 } from 'recharts';
 import { generateMockData } from '@/mock/data';
 import { TOWNSHIPS, TownshipData } from '@/mock/townships';
-import { IndustryTag, TownshipCode } from '@shared/types';
+import { IndustryTag, TownshipCode, Enterprise, JobPosition } from '@shared/types';
 import StatsCard from '@/components/common/StatsCard';
+import EnterpriseCard from '@/components/common/EnterpriseCard';
+import JobCard from '@/components/common/JobCard';
 import { cn } from '@/lib/utils';
 
 const INDUSTRY_COLORS: Record<IndustryTag, string> = {
@@ -82,8 +91,100 @@ const TOWNSHIP_LIFESTYLE: Record<TownshipCode, { housing: string; traffic: strin
 };
 
 function Township() {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const mockData = useMemo(() => generateMockData(), []);
   const [hoveredTownship, setHoveredTownship] = useState<TownshipCode | null>(null);
+  const [selectedTownship, setSelectedTownship] = useState<TownshipCode | null>(null);
+  const [highlightedTownship, setHighlightedTownship] = useState<TownshipCode | null>(null);
+  const [activeTab, setActiveTab] = useState<'jobs' | 'enterprises'>('jobs');
+  const [expandedTownship, setExpandedTownship] = useState<TownshipCode | null>(null);
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [selectedEnterprise, setSelectedEnterprise] = useState<Enterprise | null>(null);
+
+  const [scaleFilter, setScaleFilter] = useState<string>('全部');
+  const [verifiedFilter, setVerifiedFilter] = useState<string>('全部');
+  const [industryFilters, setIndustryFilters] = useState<IndustryTag[]>([]);
+
+  const [salaryFilter, setSalaryFilter] = useState<string>('全部');
+  const [experienceFilter, setExperienceFilter] = useState<string>('全部');
+  const [educationFilter, setEducationFilter] = useState<string>('全部');
+
+  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const urlTownship = searchParams.get('township') as TownshipCode | null;
+
+  useEffect(() => {
+    if (urlTownship) {
+      setSelectedTownship(urlTownship);
+      setHighlightedTownship(urlTownship);
+      setExpandedTownship(urlTownship);
+      setActiveTab('jobs');
+
+      setTimeout(() => {
+        const cardEl = cardRefs.current[urlTownship];
+        if (cardEl) {
+          cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+
+      setTimeout(() => {
+        setHighlightedTownship(null);
+      }, 3000);
+    }
+  }, [urlTownship]);
+
+  const getTownshipEnterprises = useCallback((townshipCode: TownshipCode) => {
+    return mockData.enterprises.filter((e) => e.township === townshipCode);
+  }, [mockData.enterprises]);
+
+  const getTownshipPositions = useCallback((townshipCode: TownshipCode) => {
+    return mockData.positions.filter((p) => p.township === townshipCode);
+  }, [mockData.positions]);
+
+  const filterEnterprises = useCallback((enterprises: Enterprise[]) => {
+    return enterprises.filter((e) => {
+      if (scaleFilter !== '全部' && e.scale !== scaleFilter) return false;
+      if (verifiedFilter === '已认证' && !e.verified) return false;
+      if (verifiedFilter === '未认证' && e.verified) return false;
+      if (industryFilters.length > 0 && !industryFilters.includes(e.industry)) return false;
+      return true;
+    });
+  }, [scaleFilter, verifiedFilter, industryFilters]);
+
+  const filterPositions = useCallback((positions: JobPosition[]) => {
+    return positions.filter((p) => {
+      if (salaryFilter !== '全部') {
+        const [minStr, maxStr] = salaryFilter.split('-');
+        const min = parseInt(minStr);
+        const max = maxStr ? parseInt(maxStr) : Infinity;
+        if (p.salaryMax < min || p.salaryMin > max) return false;
+      }
+      if (experienceFilter !== '全部' && p.experience !== experienceFilter) return false;
+      if (educationFilter !== '全部' && p.education !== educationFilter) return false;
+      return true;
+    });
+  }, [salaryFilter, experienceFilter, educationFilter]);
+
+  const handleTownshipClick = (township: TownshipData) => {
+    setSelectedTownship(township.code);
+    setExpandedTownship(expandedTownship === township.code ? null : township.code);
+    setSearchParams({ township: township.code });
+  };
+
+  const handleAuthClick = (enterprise: Enterprise) => {
+    setSelectedEnterprise(enterprise);
+    setAuthModalVisible(true);
+  };
+
+  const clearAllFilters = () => {
+    setScaleFilter('全部');
+    setVerifiedFilter('全部');
+    setIndustryFilters([]);
+    setSalaryFilter('全部');
+    setExperienceFilter('全部');
+    setEducationFilter('全部');
+  };
 
   const townshipJobCounts = useMemo(() => {
     const counts: Record<string, { enterprises: number; jobs: number }> = {};
@@ -167,10 +268,6 @@ function Township() {
     const totalPopulation = TOWNSHIPS.reduce((s, t) => s + t.population, 0);
     return { totalJobs, totalEnterprises, totalPopulation };
   }, [townshipJobCounts]);
-
-  const handleTownshipClick = (township: TownshipData) => {
-    console.log('进入镇街详情:', township.name);
-  };
 
   return (
     <div className="space-y-6">
@@ -401,16 +498,32 @@ function Township() {
               const counts = townshipJobCounts[township.code];
               const lifestyle = TOWNSHIP_LIFESTYLE[township.code];
               const leaders = leadingEnterprises[township.code] || [];
+              const isExpanded = expandedTownship === township.code;
+              const isHighlighted = highlightedTownship === township.code;
+              const townshipEnterprises = getTownshipEnterprises(township.code);
+              const townshipPositions = getTownshipPositions(township.code);
+              const filteredEnterprises = filterEnterprises(townshipEnterprises);
+              const filteredPositions = filterPositions(townshipPositions);
+
               return (
                 <motion.div
                   key={township.code}
+                  ref={(el) => { cardRefs.current[township.code] = el; }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.03 }}
                   whileHover={{ y: -5 }}
+                  className={cn(
+                    'transition-all duration-500',
+                    isHighlighted && 'ring-4 ring-industrial-blue-400 ring-opacity-60 rounded-2xl animate-pulse'
+                  )}
                 >
                   <Card
-                    className="h-full rounded-xl hover:shadow-industrial-md transition-all duration-300 cursor-pointer border border-gray-100"
+                    className={cn(
+                      'h-full rounded-xl hover:shadow-industrial-md transition-all duration-300 cursor-pointer border',
+                      isExpanded ? 'border-industrial-blue-400 shadow-industrial-md' : 'border-gray-100',
+                      isHighlighted && 'bg-industrial-blue-50/30'
+                    )}
                     onClick={() => handleTownshipClick(township)}
                     styles={{ body: { padding: 0 } }}
                   >
@@ -427,6 +540,11 @@ function Township() {
                             >
                               {heat.level}热度
                             </Tag>
+                            {isHighlighted && (
+                              <Tag color="blue" className="!mr-0">
+                                定位中
+                              </Tag>
+                            )}
                           </div>
                           <p className="text-xs text-gray-500 line-clamp-2">{township.description}</p>
                         </div>
@@ -513,9 +631,223 @@ function Township() {
                           handleTownshipClick(township);
                         }}
                       >
-                        查看镇街职位
+                        {isExpanded ? '收起详情' : '查看镇街职位'}
                       </Button>
                     </div>
+
+                    {isExpanded && (
+                      <div className="border-t border-gray-100" onClick={(e) => e.stopPropagation()}>
+                        <div className="p-4 bg-gray-50/50 border-b border-gray-100">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-2">
+                              <Filter size={16} className="text-industrial-blue-600" />
+                              <span className="text-sm font-medium text-gray-700">筛选条件</span>
+                            </div>
+                            <Button
+                              type="link"
+                              size="small"
+                              className="!text-xs !text-gray-500"
+                              onClick={clearAllFilters}
+                            >
+                              重置
+                            </Button>
+                          </div>
+                          <Tabs
+                            activeKey={activeTab}
+                            onChange={(key) => setActiveTab(key as 'jobs' | 'enterprises')}
+                            items={[
+                              {
+                                key: 'jobs',
+                                label: (
+                                  <span className="text-sm">
+                                    <Briefcase size={14} className="inline mr-1" />
+                                    在招职位 ({filteredPositions.length})
+                                  </span>
+                                ),
+                              },
+                              {
+                                key: 'enterprises',
+                                label: (
+                                  <span className="text-sm">
+                                    <Building2 size={14} className="inline mr-1" />
+                                    入驻企业 ({filteredEnterprises.length})
+                                  </span>
+                                ),
+                              },
+                            ]}
+                          />
+                        </div>
+
+                        {activeTab === 'enterprises' && (
+                          <div className="p-4 space-y-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                              <div>
+                                <label className="text-xs text-gray-500 mb-1 block">企业规模</label>
+                                <Select
+                                  value={scaleFilter}
+                                  onChange={setScaleFilter}
+                                  size="small"
+                                  className="w-full"
+                                >
+                                  <Select.Option value="全部">全部</Select.Option>
+                                  <Select.Option value="20人以下">20人以下</Select.Option>
+                                  <Select.Option value="20-99人">20-99人</Select.Option>
+                                  <Select.Option value="100-499人">100-499人</Select.Option>
+                                  <Select.Option value="500-999人">500-999人</Select.Option>
+                                  <Select.Option value="1000-9999人">1000-9999人</Select.Option>
+                                  <Select.Option value="10000人以上">10000人以上</Select.Option>
+                                </Select>
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500 mb-1 block">属地认证</label>
+                                <Select
+                                  value={verifiedFilter}
+                                  onChange={setVerifiedFilter}
+                                  size="small"
+                                  className="w-full"
+                                >
+                                  <Select.Option value="全部">全部</Select.Option>
+                                  <Select.Option value="已认证">
+                                    <span className="inline-flex items-center gap-1">
+                                      <ShieldCheck size={12} className="text-success-500" />
+                                      已认证
+                                    </span>
+                                  </Select.Option>
+                                  <Select.Option value="未认证">
+                                    <span className="inline-flex items-center gap-1">
+                                      <ShieldX size={12} className="text-gray-400" />
+                                      未认证
+                                    </span>
+                                  </Select.Option>
+                                </Select>
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500 mb-1 block">行业筛选</label>
+                                <Select
+                                  mode="multiple"
+                                  value={industryFilters}
+                                  onChange={(val) => setIndustryFilters(val as IndustryTag[])}
+                                  placeholder="选择行业"
+                                  size="small"
+                                  className="w-full"
+                                  maxTagCount={2}
+                                >
+                                  {Object.values(IndustryTag).map((tag) => (
+                                    <Select.Option key={tag} value={tag}>
+                                      <span className="inline-flex items-center gap-1">
+                                        {INDUSTRY_ICONS[tag]}
+                                        {tag}
+                                      </span>
+                                    </Select.Option>
+                                  ))}
+                                </Select>
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                              {filteredEnterprises.length > 0 ? (
+                                filteredEnterprises.slice(0, 6).map((enterprise) => (
+                                  <EnterpriseCard
+                                    key={enterprise.id}
+                                    enterprise={enterprise}
+                                    onClick={() => handleAuthClick(enterprise)}
+                                  />
+                                ))
+                              ) : (
+                                <div className="col-span-full py-8 text-center text-gray-400">
+                                  <Building2 size={32} className="mx-auto mb-2 opacity-40" />
+                                  <p>暂无符合条件的企业</p>
+                                </div>
+                              )}
+                            </div>
+                            {filteredEnterprises.length > 6 && (
+                              <div className="text-center mt-2">
+                                <Button type="link" size="small">
+                                  查看全部 {filteredEnterprises.length} 家企业 <ChevronRight size={12} />
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {activeTab === 'jobs' && (
+                          <div className="p-4 space-y-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                              <div>
+                                <label className="text-xs text-gray-500 mb-1 block">薪资范围</label>
+                                <Select
+                                  value={salaryFilter}
+                                  onChange={setSalaryFilter}
+                                  size="small"
+                                  className="w-full"
+                                >
+                                  <Select.Option value="全部">全部</Select.Option>
+                                  <Select.Option value="4-6">4K-6K</Select.Option>
+                                  <Select.Option value="6-8">6K-8K</Select.Option>
+                                  <Select.Option value="8-10">8K-10K</Select.Option>
+                                  <Select.Option value="10-15">10K-15K</Select.Option>
+                                  <Select.Option value="15-999">15K以上</Select.Option>
+                                </Select>
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500 mb-1 block">经验要求</label>
+                                <Select
+                                  value={experienceFilter}
+                                  onChange={setExperienceFilter}
+                                  size="small"
+                                  className="w-full"
+                                >
+                                  <Select.Option value="全部">全部</Select.Option>
+                                  <Select.Option value="不限">不限</Select.Option>
+                                  <Select.Option value="应届生">应届生</Select.Option>
+                                  <Select.Option value="1-3年">1-3年</Select.Option>
+                                  <Select.Option value="3-5年">3-5年</Select.Option>
+                                  <Select.Option value="5-10年">5-10年</Select.Option>
+                                  <Select.Option value="10年以上">10年以上</Select.Option>
+                                </Select>
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500 mb-1 block">学历要求</label>
+                                <Select
+                                  value={educationFilter}
+                                  onChange={setEducationFilter}
+                                  size="small"
+                                  className="w-full"
+                                >
+                                  <Select.Option value="全部">全部</Select.Option>
+                                  <Select.Option value="不限">不限</Select.Option>
+                                  <Select.Option value="高中">高中</Select.Option>
+                                  <Select.Option value="中专">中专</Select.Option>
+                                  <Select.Option value="大专">大专</Select.Option>
+                                  <Select.Option value="本科">本科</Select.Option>
+                                  <Select.Option value="硕士">硕士</Select.Option>
+                                </Select>
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                              {filteredPositions.length > 0 ? (
+                                filteredPositions.slice(0, 6).map((position) => (
+                                  <JobCard key={position.id} job={position} />
+                                ))
+                              ) : (
+                                <div className="col-span-full py-8 text-center text-gray-400">
+                                  <Briefcase size={32} className="mx-auto mb-2 opacity-40" />
+                                  <p>暂无符合条件的职位</p>
+                                </div>
+                              )}
+                            </div>
+                            {filteredPositions.length > 6 && (
+                              <div className="text-center mt-2">
+                                <Button type="link" size="small">
+                                  查看全部 {filteredPositions.length} 个职位 <ChevronRight size={12} />
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </Card>
                 </motion.div>
               );
@@ -523,6 +855,95 @@ function Township() {
           </div>
         </Card>
       </motion.div>
+
+      <Modal
+        title={
+          <div className="flex items-center gap-2">
+            {selectedEnterprise?.verified ? (
+              <ShieldCheck size={20} className="text-success-500" />
+            ) : (
+              <ShieldX size={20} className="text-gray-400" />
+            )}
+            <span>企业属地认证信息</span>
+          </div>
+        }
+        open={authModalVisible}
+        onCancel={() => setAuthModalVisible(false)}
+        footer={[
+          <Button key="close" onClick={() => setAuthModalVisible(false)}>
+            关闭
+          </Button>,
+        ]}
+      >
+        {selectedEnterprise && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-4 pb-4 border-b border-gray-100">
+              <div className="w-16 h-16 rounded-xl bg-industrial-gradient flex items-center justify-center text-white text-2xl font-bold">
+                {selectedEnterprise.name.charAt(0)}
+              </div>
+              <div>
+                <h3 className="font-bold text-gray-900 text-lg">{selectedEnterprise.name}</h3>
+                <div className="flex items-center gap-2 mt-1">
+                  {selectedEnterprise.verified ? (
+                    <Tag color="success" icon={<ShieldCheck size={12} />}>
+                      已通过属地认证
+                    </Tag>
+                  ) : (
+                    <Tag color="default" icon={<ShieldX size={12} />}>
+                      待认证
+                    </Tag>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <List
+              size="small"
+              dataSource={[
+                { label: '营业执照编号', value: selectedEnterprise.licenseNo },
+                { label: '法定代表人', value: selectedEnterprise.legalRepresentative },
+                { label: '成立年份', value: `${selectedEnterprise.establishedYear}年` },
+                { label: '注册资本', value: selectedEnterprise.registeredCapital ? `${selectedEnterprise.registeredCapital}万元` : '未披露' },
+                { label: '企业规模', value: selectedEnterprise.scale },
+                { label: '所属行业', value: selectedEnterprise.industry },
+                { label: '所在镇街', value: TOWNSHIPS.find(t => t.code === selectedEnterprise.township)?.name || selectedEnterprise.township },
+                { label: '认证时间', value: selectedEnterprise.verifiedAt ? new Date(selectedEnterprise.verifiedAt).toLocaleDateString() : '未认证' },
+                { label: '入驻时间', value: new Date(selectedEnterprise.createdAt).toLocaleDateString() },
+              ]}
+              renderItem={(item) => (
+                <List.Item className="px-0">
+                  <span className="text-gray-500 text-sm w-28 flex-shrink-0">{item.label}</span>
+                  <span className="text-gray-800 text-sm font-mono-num">{item.value}</span>
+                </List.Item>
+              )}
+            />
+
+            {!selectedEnterprise.verified && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-700">
+                <div className="flex items-center gap-2 font-medium mb-1">
+                  <span>⚠️</span>
+                  <span>认证说明</span>
+                </div>
+                <p className="text-xs text-amber-600">
+                  该企业尚未完成属地认证，建议求职时谨慎核实企业信息。认证企业需提供营业执照、法人身份证明等材料，经平台审核通过后方可获得认证标识。
+                </p>
+              </div>
+            )}
+
+            {selectedEnterprise.verified && (
+              <div className="bg-success-50 border border-success-200 rounded-lg p-3 text-sm text-success-700">
+                <div className="flex items-center gap-2 font-medium mb-1">
+                  <ShieldCheck size={16} />
+                  <span>认证保障</span>
+                </div>
+                <p className="text-xs text-success-600">
+                  该企业已通过中山市人社局属地认证，信息真实可靠。求职过程中如遇问题，可向平台投诉维权。
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

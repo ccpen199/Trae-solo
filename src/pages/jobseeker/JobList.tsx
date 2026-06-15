@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Search,
   MapPin,
@@ -10,7 +11,16 @@ import {
   Users,
   Award,
   ChevronDown,
+  ChevronUp,
   X,
+  FileText,
+  Target,
+  Wrench,
+  User,
+  CheckCircle,
+  AlertCircle,
+  Lightbulb,
+  Sparkles,
 } from 'lucide-react';
 import {
   Input,
@@ -23,11 +33,14 @@ import {
   Space,
   Divider,
   Empty,
+  Progress,
+  Descriptions,
+  Tooltip,
 } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
 import { generateMockData } from '@/mock/data';
 import { TOWNSHIPS } from '@/mock/townships';
-import { TownshipCode, JobPosition, JobSeekerType, IndustryTag } from '@shared/types';
+import { TownshipCode, JobPosition, JobSeekerType, IndustryTag, JobWithMatch, MatchDetails } from '@shared/types';
 import JobCard from '@/components/common/JobCard';
 import MatchScoreRing from '@/components/common/MatchScoreRing';
 import TownshipTag from '@/components/common/TownshipTag';
@@ -72,7 +85,32 @@ const SKILL_TAGS = [
   '注塑工艺', '表面处理', 'SMT操作', 'PCB设计', '品质管理',
 ];
 
+const DIFF_TYPE_CONFIG = {
+  blue_collar: {
+    color: 'blue',
+    bgColor: 'bg-blue-50',
+    textColor: 'text-blue-600',
+    borderColor: 'border-blue-200',
+    icon: '🔵',
+  },
+  skilled: {
+    color: 'orange',
+    bgColor: 'bg-orange-50',
+    textColor: 'text-orange-600',
+    borderColor: 'border-orange-200',
+    icon: '🟠',
+  },
+  graduate: {
+    color: 'green',
+    bgColor: 'bg-green-50',
+    textColor: 'text-green-600',
+    borderColor: 'border-green-200',
+    icon: '🟢',
+  },
+};
+
 function JobList() {
+  const navigate = useNavigate();
   const mockData = useMemo(() => generateMockData(), []);
   const [searchText, setSearchText] = useState('');
   const [selectedTownships, setSelectedTownships] = useState<TownshipCode[]>([]);
@@ -83,13 +121,15 @@ function JobList() {
   const [selectedScales, setSelectedScales] = useState<string[]>([]);
   const [sortType, setSortType] = useState<SortType>('match');
   const [showMoreTownships, setShowMoreTownships] = useState(false);
+  const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const jobsWithMatch = useMemo(() => {
-    return mockData.positions.map((job) => ({
+    return mockData.jobsWithMatch.map((job) => ({
       ...job,
-      matchScore: Math.floor(60 + Math.random() * 38),
+      enterpriseName: mockData.enterprises.find((e) => e.id === job.enterpriseId)?.name || job.enterpriseName,
     }));
-  }, [mockData.positions]);
+  }, [mockData.jobsWithMatch, mockData.enterprises]);
 
   const filteredJobs = useMemo(() => {
     let result = [...jobsWithMatch];
@@ -164,6 +204,16 @@ function JobList() {
     mockData.enterprises,
   ]);
 
+  useEffect(() => {
+    if (hasSearched && filteredJobs.length > 0) {
+      setExpandedJobId(filteredJobs[0].id);
+    }
+  }, [hasSearched, filteredJobs]);
+
+  const handleSearch = () => {
+    setHasSearched(true);
+  };
+
   const formatSalary = (min: number, max: number) => {
     if (!min && !max) return '面议';
     if (min === max) return `${min}K`;
@@ -188,6 +238,12 @@ function JobList() {
     setSelectedEducation('不限');
     setSelectedSkills([]);
     setSelectedScales([]);
+    setExpandedJobId(null);
+    setHasSearched(false);
+  };
+
+  const toggleExpand = (jobId: string) => {
+    setExpandedJobId(expandedJobId === jobId ? null : jobId);
   };
 
   const activeFilterCount =
@@ -201,487 +257,381 @@ function JobList() {
 
   const displayedTownships = showMoreTownships ? TOWNSHIPS : TOWNSHIPS.slice(0, 10);
 
-  return (
-    <div className="space-y-4">
+  const renderMatchDetails = (matchDetails: MatchDetails) => {
+    const { resumeParse, jdMatch, skillAlignment, differentiation } = matchDetails;
+    const diffConfig = DIFF_TYPE_CONFIG[differentiation.type];
+
+    return (
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="bg-white rounded-xl border border-gray-100 p-4"
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: 'auto' }}
+        exit={{ opacity: 0, height: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-gray-50 border-t border-gray-100 mt-4 pt-4"
       >
-        <div className="flex flex-col md:flex-row gap-3">
-          <div className="flex-1 flex items-center gap-2 px-3 bg-gray-50 rounded-lg">
-            <Search size={18} className="text-gray-400" />
-            <Input
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              placeholder="搜索职位、企业、技能关键词"
-              className="!border-none !shadow-none !bg-transparent"
-              allowClear
-            />
-          </div>
-          <Select
-            mode="multiple"
-            value={selectedTownships}
-            onChange={(v) => setSelectedTownships(v as TownshipCode[])}
-            placeholder="选择镇街"
-            className="!w-full md:!w-64"
-            suffixIcon={<MapPin size={16} />}
-            maxTagCount={3}
-          >
-            {TOWNSHIPS.map((t) => (
-              <Option key={t.code} value={t.code}>
-                {t.name}
-              </Option>
-            ))}
-          </Select>
-          <Button
-            type="primary"
-            icon={<Search size={16} />}
-            className="!px-6"
-          >
-            搜索
-          </Button>
-        </div>
-
-        {activeFilterCount > 0 && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            className="mt-3 pt-3 border-t border-gray-100 flex flex-wrap items-center gap-2"
-          >
-            <span className="text-sm text-gray-500">已选条件：</span>
-
-            {searchText && (
-              <Tag
-                closable
-                onClose={() => setSearchText('')}
-                className="!bg-industrial-blue-50 !text-industrial-blue-600 !border-industrial-blue-100"
-              >
-                关键词: {searchText}
-              </Tag>
-            )}
-
-            {selectedTownships.map((code) => {
-              const t = TOWNSHIPS.find((x) => x.code === code);
-              return (
-                <Tag
-                  key={code}
-                  closable
-                  onClose={() => setSelectedTownships(selectedTownships.filter((c) => c !== code))}
-                  className="!bg-industrial-blue-50 !text-industrial-blue-600 !border-industrial-blue-100"
-                >
-                  {t?.name}
-                </Tag>
-              );
-            })}
-
-            {(salaryRange[0] !== 0 || salaryRange[1] !== 30) && (
-              <Tag
-                closable
-                onClose={() => setSalaryRange([0, 30])}
-                className="!bg-vital-orange-50 !text-vital-orange-600 !border-vital-orange-100"
-              >
-                薪资: {salaryRange[0]}K-{salaryRange[1]}K
-              </Tag>
-            )}
-
-            {selectedExperience !== '不限' && (
-              <Tag
-                closable
-                onClose={() => setSelectedExperience('不限')}
-                className="!bg-emerald-50 !text-emerald-600 !border-emerald-100"
-              >
-                经验: {selectedExperience}
-              </Tag>
-            )}
-
-            {selectedEducation !== '不限' && (
-              <Tag
-                closable
-                onClose={() => setSelectedEducation('不限')}
-                className="!bg-purple-50 !text-purple-600 !border-purple-100"
-              >
-                学历: {selectedEducation}
-              </Tag>
-            )}
-
-            {selectedSkills.map((s) => (
-              <Tag
-                key={s}
-                closable
-                onClose={() => setSelectedSkills(selectedSkills.filter((x) => x !== s))}
-                className="!bg-cyan-50 !text-cyan-600 !border-cyan-100"
-              >
-                {s}
-              </Tag>
-            ))}
-
-            {selectedScales.map((s) => (
-              <Tag
-                key={s}
-                closable
-                onClose={() => setSelectedScales(selectedScales.filter((x) => x !== s))}
-                className="!bg-amber-50 !text-amber-600 !border-amber-100"
-              >
-                规模: {s}
-              </Tag>
-            ))}
-
-            <Button
-              size="small"
-              type="text"
-              icon={<X size={12} />}
-              onClick={resetFilters}
-              className="!text-gray-500 !text-xs"
-            >
-              清空全部
-            </Button>
-          </motion.div>
-        )}
-      </motion.div>
-
-      <div className="flex gap-4">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="w-64 flex-shrink-0 hidden lg:block"
-        >
-          <div className="bg-white rounded-xl border border-gray-100 p-5 sticky top-4 space-y-5">
-            <div className="flex items-center justify-between">
-              <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                <SlidersHorizontal size={16} className="text-industrial-blue-500" />
-                高级筛选
-              </h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="bg-white rounded-lg border border-gray-100 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <FileText size={18} className="text-industrial-blue-500" />
+              <h4 className="font-semibold text-gray-800">📄 简历解析结果</h4>
             </div>
+            <Descriptions column={2} size="small" className="text-sm">
+              <Descriptions.Item label="工作经验">{resumeParse.yearsOfExperience}年</Descriptions.Item>
+              <Descriptions.Item label="学历">{resumeParse.education}</Descriptions.Item>
+              <Descriptions.Item label="期望地点">{resumeParse.location}</Descriptions.Item>
+              <Descriptions.Item label="期望薪资">{resumeParse.targetSalary[0]}-{resumeParse.targetSalary[1]}K</Descriptions.Item>
+            </Descriptions>
+            <div className="mt-3">
+              <div className="text-xs text-gray-500 mb-1">技能标签</div>
+              <div className="flex flex-wrap gap-1">
+                {resumeParse.skills.map((skill, idx) => (
+                  <Tag key={idx} color="blue" className="!text-xs">{skill}</Tag>
+                ))}
+              </div>
+            </div>
+            {resumeParse.certificates.length > 0 && (
+              <div className="mt-3">
+                <div className="text-xs text-gray-500 mb-1">持有证书</div>
+                <div className="flex flex-wrap gap-1">
+                  {resumeParse.certificates.map((cert, idx) => (
+                    <Tag key={idx} color="gold" className="!text-xs">{cert}</Tag>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="text-sm font-semibold text-gray-800 flex items-center gap-1">
-                  <MapPin size={14} /> 工作镇街
-                </h4>
-                {selectedTownships.length > 0 && (
-                  <span className="text-xs text-industrial-blue-600">已选 {selectedTownships.length}</span>
+          <div className="bg-white rounded-lg border border-gray-100 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Target size={18} className="text-vital-orange-500" />
+              <h4 className="font-semibold text-gray-800">🎯 JD语义匹配</h4>
+            </div>
+            <div className="space-y-3">
+              {Object.entries(jdMatch).map(([key, value]) => (
+                <div key={key}>
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-xs text-gray-600">{value.label}</span>
+                    <span className="text-xs font-semibold text-gray-700">{value.score}%</span>
+                  </div>
+                  <Progress
+                    percent={value.score}
+                    size="small"
+                    strokeColor={value.score >= 80 ? '#52c41a' : value.score >= 60 ? '#faad14' : '#ff4d4f'}
+                    showInfo={false}
+                  />
+                  <Tooltip title={value.reason}>
+                    <p className="text-xs text-gray-500 mt-0.5 truncate cursor-help">{value.reason}</p>
+                  </Tooltip>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg border border-gray-100 p-4 lg:col-span-2">
+            <div className="flex items-center gap-2 mb-3">
+              <Wrench size={18} className="text-purple-500" />
+              <h4 className="font-semibold text-gray-800">🔧 技能图谱对齐</h4>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <div className="text-xs font-semibold text-green-600 mb-2 flex items-center gap-1">
+                  <CheckCircle size={12} /> 已匹配技能
+                </div>
+                {skillAlignment.matched.length > 0 ? (
+                  <div className="space-y-2">
+                    {skillAlignment.matched.map((item, idx) => (
+                      <div key={idx} className="bg-green-50 border border-green-100 rounded p-2 text-xs">
+                        <div className="font-medium text-green-700">{item.name}</div>
+                        <div className="text-green-600 mt-0.5">掌握: {item.level} / 要求: {item.required}</div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-xs text-gray-400">暂无匹配技能</div>
                 )}
               </div>
-              <div className="space-y-1.5 max-h-40 overflow-y-auto">
-                <CheckboxGroup
-                  value={selectedTownships}
-                  onChange={(v) => setSelectedTownships(v as TownshipCode[])}
-                  className="flex flex-col !gap-1"
-                >
-                  {displayedTownships.map((t) => (
-                    <Checkbox key={t.code} value={t.code} className="!text-xs">
-                      {t.name}
-                    </Checkbox>
-                  ))}
-                </CheckboxGroup>
+              <div>
+                <div className="text-xs font-semibold text-blue-600 mb-2 flex items-center gap-1">
+                  <Sparkles size={12} /> 相关技能
+                </div>
+                {skillAlignment.related.length > 0 ? (
+                  <div className="space-y-2">
+                    {skillAlignment.related.map((item, idx) => (
+                      <div key={idx} className="bg-blue-50 border border-blue-100 rounded p-2 text-xs">
+                        <div className="font-medium text-blue-700 flex items-center justify-between">
+                          <span>{item.name}</span>
+                          <span className="text-blue-500">加分 {item.bonus}</span>
+                        </div>
+                        <div className="text-blue-600 mt-0.5">掌握: {item.level}</div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-xs text-gray-400">暂无相关技能</div>
+                )}
               </div>
-              {TOWNSHIPS.length > 10 && (
-                <Button
-                  type="link"
-                  size="small"
-                  onClick={() => setShowMoreTownships(!showMoreTownships)}
-                  className="!text-xs !text-industrial-blue-600 !px-0 !h-6"
-                >
-                  {showMoreTownships ? '收起' : `展开全部${TOWNSHIPS.length}个镇街`}
-                  <ChevronDown size={12} className={cn('inline transition-transform', showMoreTownships && 'rotate-180')} />
-                </Button>
-              )}
+              <div>
+                <div className="text-xs font-semibold text-red-600 mb-2 flex items-center gap-1">
+                  <AlertCircle size={12} /> 待补技能
+                </div>
+                {skillAlignment.missing.length > 0 ? (
+                  <div className="space-y-2">
+                    {skillAlignment.missing.map((item, idx) => (
+                      <div key={idx} className="bg-red-50 border border-red-100 rounded p-2 text-xs">
+                        <div className="font-medium text-red-700">{item.name}</div>
+                        <div className="text-red-600 mt-0.5">{item.suggestion || `建议补充${item.name}经验`}</div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-xs text-gray-400">暂无明显短板</div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className={cn('bg-white rounded-lg border p-4 lg:col-span-2', diffConfig.bgColor, diffConfig.borderColor)}>
+            <div className="flex items-center gap-2 mb-3">
+              <Lightbulb size={18} className={diffConfig.textColor} />
+              <h4 className="font-semibold text-gray-800">
+                {diffConfig.icon} {differentiation.typeLabel || '差异化匹配建议'}
+              </h4>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {differentiation.highlights.map((item, idx) => (
+                <div key={idx} className="text-sm text-gray-700 bg-white/70 rounded px-3 py-2">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
+  const townshipOptions = displayedTownships.map((township) => ({
+    label: township.name,
+    value: township.code,
+  }));
+
+  return (
+    <div className="space-y-5">
+      <div className="bg-white border border-gray-100 rounded-xl p-5">
+        <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-industrial-blue-600 font-semibold">
+              <Search size={18} />
+              职位搜索
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mt-1">智能岗位匹配</h1>
+            <p className="text-sm text-gray-500 mt-1">按镇街、薪资、经验和技能快速筛选中山制造业岗位。</p>
+          </div>
+          <div className="flex items-center gap-2">
+            {activeFilterCount > 0 && (
+              <Tag color="blue">已选 {activeFilterCount} 项筛选</Tag>
+            )}
+            <Button icon={<X size={14} />} onClick={resetFilters}>
+              重置筛选
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-5">
+          <div className="lg:col-span-5">
+            <Input
+              size="large"
+              value={searchText}
+              onChange={(event) => setSearchText(event.target.value)}
+              onPressEnter={handleSearch}
+              placeholder="搜索职位名称、企业名称或技能"
+              prefix={<Search size={16} className="text-gray-400" />}
+            />
+          </div>
+          <div className="lg:col-span-3">
+            <Select
+              className="w-full"
+              size="large"
+              value={selectedExperience}
+              onChange={setSelectedExperience}
+              suffixIcon={<Briefcase size={16} />}
+            >
+              {EXPERIENCE_OPTIONS.map((item) => (
+                <Option key={item.value} value={item.value}>
+                  {item.label}
+                </Option>
+              ))}
+            </Select>
+          </div>
+          <div className="lg:col-span-3">
+            <Select
+              className="w-full"
+              size="large"
+              value={selectedEducation}
+              onChange={setSelectedEducation}
+              suffixIcon={<GraduationCap size={16} />}
+            >
+              {EDUCATION_OPTIONS.map((item) => (
+                <Option key={item.value} value={item.value}>
+                  {item.label}
+                </Option>
+              ))}
+            </Select>
+          </div>
+          <div className="lg:col-span-1">
+            <Button type="primary" size="large" block icon={<Search size={16} />} onClick={handleSearch}>
+              搜索
+            </Button>
+          </div>
+        </div>
+
+        <Divider className="!my-5" />
+
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-5">
+          <div className="xl:col-span-1 space-y-5">
+            <div>
+              <div className="flex items-center gap-2 font-medium text-gray-800 mb-3">
+                <MapPin size={16} /> 镇街
+              </div>
+              <CheckboxGroup
+                className="grid grid-cols-2 xl:grid-cols-1 gap-2"
+                value={selectedTownships}
+                options={townshipOptions}
+                onChange={(values) => setSelectedTownships(values as TownshipCode[])}
+              />
+              <Button
+                type="link"
+                size="small"
+                className="!px-0 mt-2"
+                onClick={() => setShowMoreTownships(!showMoreTownships)}
+                icon={showMoreTownships ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+              >
+                {showMoreTownships ? '收起镇街' : '查看全部镇街'}
+              </Button>
             </div>
 
-            <Divider className="!my-0" />
-
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="text-sm font-semibold text-gray-800">薪资范围</h4>
-                <span className="text-xs text-vital-orange-600 font-semibold font-mono-num">
-                  {salaryRange[0]}K - {salaryRange[1] >= 30 ? '30K+' : `${salaryRange[1]}K`}
-                </span>
+              <div className="flex items-center gap-2 font-medium text-gray-800 mb-3">
+                <SlidersHorizontal size={16} /> 月薪范围
               </div>
               <Slider
                 range
                 min={0}
                 max={30}
-                step={1}
                 value={salaryRange}
-                onChange={(v) => setSalaryRange(v as [number, number])}
-                marks={{
-                  0: '0',
-                  10: '10K',
-                  20: '20K',
-                  30: '30K+',
-                }}
-                tooltip={{ formatter: (v) => `${v}K` }}
+                onChange={(value) => setSalaryRange(value as [number, number])}
+                tooltip={{ formatter: (value) => `${value}K` }}
+              />
+              <div className="text-xs text-gray-500">{formatSalary(salaryRange[0], salaryRange[1])}</div>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2 font-medium text-gray-800 mb-3">
+                <Building2 size={16} /> 企业规模
+              </div>
+              <CheckboxGroup
+                className="grid grid-cols-1 gap-2"
+                value={selectedScales}
+                options={SCALE_OPTIONS}
+                onChange={(values) => setSelectedScales(values as string[])}
               />
             </div>
 
-            <Divider className="!my-0" />
-
             <div>
-              <h4 className="text-sm font-semibold text-gray-800 flex items-center gap-1 mb-2">
-                <Briefcase size={14} /> 经验要求
-              </h4>
-              <RadioGroup
-                value={selectedExperience}
-                onChange={(e) => setSelectedExperience(e.target.value)}
-                className="flex flex-col !gap-1"
-              >
-                {EXPERIENCE_OPTIONS.map((opt) => (
-                  <Radio key={opt.value} value={opt.value} className="!text-xs">
-                    {opt.label}
-                  </Radio>
-                ))}
-              </RadioGroup>
-            </div>
-
-            <Divider className="!my-0" />
-
-            <div>
-              <h4 className="text-sm font-semibold text-gray-800 flex items-center gap-1 mb-2">
-                <GraduationCap size={14} /> 学历要求
-              </h4>
-              <RadioGroup
-                value={selectedEducation}
-                onChange={(e) => setSelectedEducation(e.target.value)}
-                className="flex flex-col !gap-1"
-              >
-                {EDUCATION_OPTIONS.map((opt) => (
-                  <Radio key={opt.value} value={opt.value} className="!text-xs">
-                    {opt.label}
-                  </Radio>
-                ))}
-              </RadioGroup>
-            </div>
-
-            <Divider className="!my-0" />
-
-            <div>
-              <h4 className="text-sm font-semibold text-gray-800 mb-2">技能标签</h4>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex items-center gap-2 font-medium text-gray-800 mb-3">
+                <Award size={16} /> 技能标签
+              </div>
+              <Space wrap size={[6, 6]}>
                 {SKILL_TAGS.map((skill) => {
-                  const selected = selectedSkills.includes(skill);
+                  const active = selectedSkills.includes(skill);
                   return (
-                    <div
+                    <Tag.CheckableTag
                       key={skill}
-                      onClick={() => {
-                        if (selected) {
-                          setSelectedSkills(selectedSkills.filter((s) => s !== skill));
-                        } else {
-                          setSelectedSkills([...selectedSkills, skill]);
-                        }
-                      }}
-                      className={cn(
-                        'cursor-pointer text-xs m-0 rounded border px-2 py-0.5 transition-all',
-                        selected
-                          ? 'bg-industrial-blue-500 text-white border-industrial-blue-500'
-                          : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-industrial-blue-300 hover:text-industrial-blue-600'
-                      )}
+                      checked={active}
+                      onChange={(checked) =>
+                        setSelectedSkills((current) =>
+                          checked ? [...current, skill] : current.filter((item) => item !== skill)
+                        )
+                      }
                     >
                       {skill}
-                    </div>
+                    </Tag.CheckableTag>
                   );
                 })}
-              </div>
-            </div>
-
-            <Divider className="!my-0" />
-
-            <div>
-              <h4 className="text-sm font-semibold text-gray-800 flex items-center gap-1 mb-2">
-                <Users size={14} /> 企业规模
-              </h4>
-              <CheckboxGroup
-                value={selectedScales}
-                onChange={(v) => setSelectedScales(v as string[])}
-                className="flex flex-col !gap-1"
-              >
-                {SCALE_OPTIONS.map((opt) => (
-                  <Checkbox key={opt.value} value={opt.value} className="!text-xs">
-                    {opt.label}
-                  </Checkbox>
-                ))}
-              </CheckboxGroup>
-            </div>
-
-            <div className="pt-2">
-              <Button block onClick={resetFilters} className="!border-gray-200">
-                重置筛选
-              </Button>
+              </Space>
             </div>
           </div>
-        </motion.div>
 
-        <div className="flex-1 min-w-0">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-            className="bg-white rounded-xl border border-gray-100 px-5 py-3 mb-4 flex flex-wrap items-center justify-between gap-3"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600">
-                共找到 <span className="font-bold text-industrial-blue-600 font-mono-num">{filteredJobs.length}</span> 个职位
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500">排序：</span>
+          <div className="xl:col-span-3 space-y-4">
+            <div className="bg-gray-50 rounded-lg p-3 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+              <div className="text-sm text-gray-600">
+                共找到 <span className="font-semibold text-gray-900">{filteredJobs.length}</span> 个岗位
+                {hasSearched && filteredJobs[0] && (
+                  <span className="ml-2 text-industrial-blue-600">已展开最高匹配岗位</span>
+                )}
+              </div>
               <RadioGroup
                 value={sortType}
-                onChange={(e) => setSortType(e.target.value)}
+                onChange={(event) => setSortType(event.target.value)}
                 optionType="button"
                 buttonStyle="solid"
                 size="small"
               >
-                <Radio.Button value="match">匹配度</Radio.Button>
-                <Radio.Button value="latest">最新发布</Radio.Button>
-                <Radio.Button value="salary">薪资最高</Radio.Button>
-                <Radio.Button value="distance">距离最近</Radio.Button>
+                <Radio value="match">匹配度</Radio>
+                <Radio value="latest">最新</Radio>
+                <Radio value="salary">薪资</Radio>
+                <Radio value="distance">距离</Radio>
               </RadioGroup>
             </div>
-          </motion.div>
 
-          {filteredJobs.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="bg-white rounded-xl border border-gray-100 p-12"
-            >
-              <Empty
-                description={
-                  <div className="text-center">
-                    <p className="text-gray-600 mb-2">未找到匹配的职位</p>
-                    <Button type="link" onClick={resetFilters}>
-                      清除筛选条件重新搜索
-                    </Button>
-                  </div>
-                }
-              />
-            </motion.div>
-          ) : (
-            <div className="space-y-3">
-              <AnimatePresence>
-                {filteredJobs.slice(0, 20).map((job, idx) => {
-                  const enterprise = mockData.enterprises.find((e) => e.id === job.enterpriseId);
-                  return (
-                    <motion.div
-                      key={job.id}
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ delay: idx * 0.03, duration: 0.35 }}
-                      layout
-                    >
-                      <div className="bg-white rounded-xl border border-gray-100 p-5 cursor-pointer transition-all duration-300 hover:shadow-card-hover hover:border-industrial-blue-200 hover:-translate-y-0.5 group">
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0">
-                            <MatchScoreRing score={job.matchScore} size="lg" />
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-3 mb-2">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-industrial-blue-600 transition-colors">
-                                  {job.title}
-                                </h3>
-                                {job.urgent && (
-                                  <Tag color="red" className="!text-xs">急招</Tag>
-                                )}
-                                <Tag color="orange" className="!text-xs">
-                                  {job.type}
-                                </Tag>
-                              </div>
-                              <div className="text-right flex-shrink-0">
-                                <div className="text-xl font-bold text-vital-orange-500">
-                                  {formatSalary(job.salaryMin, job.salaryMax)}
-                                </div>
-                                <div className="text-xs text-gray-400">{job.salaryType}</div>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-2 mb-3 flex-wrap">
-                              <span className="flex items-center gap-1 text-sm text-gray-700">
-                                <Building2 size={14} className="text-gray-400" />
-                                {job.enterpriseName}
-                              </span>
-                              {enterprise?.verified && (
-                                <span className="inline-flex items-center gap-0.5 text-xs text-success-600 bg-success-50 px-1.5 py-0.5 rounded">
-                                  <Award size={10} /> 属地认证
-                                </span>
-                              )}
-                            </div>
-
-                            <div className="flex items-center gap-3 mb-3 flex-wrap">
-                              <TownshipTag code={job.township as TownshipCode} size="sm" />
-                              <span className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
-                                <Briefcase size={10} /> {job.experience}
-                              </span>
-                              <span className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
-                                <GraduationCap size={10} /> {job.education}
-                              </span>
-                              <span className="inline-flex items-center gap-1 text-xs text-gray-500">
-                                <Users size={10} /> 招{job.hiringCount}人
-                              </span>
-                              <span className="inline-flex items-center gap-1 text-xs text-gray-400">
-                                <Clock size={10} /> {formatDate(job.publishedAt)}
-                              </span>
-                            </div>
-
-                            {job.benefits?.length > 0 && (
-                              <div className="flex flex-wrap gap-1.5">
-                                {job.benefits.slice(0, 5).map((b, i) => (
-                                  <span
-                                    key={i}
-                                    className="text-xs px-2 py-0.5 bg-industrial-blue-50 text-industrial-blue-600 rounded"
-                                  >
-                                    {b}
-                                  </span>
-                                ))}
-                                {job.benefits.length > 5 && (
-                                  <span className="text-xs text-gray-400">+{job.benefits.length - 5}</span>
-                                )}
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="flex-shrink-0 flex flex-col items-center justify-center gap-2">
-                            <Button
-                              type="primary"
-                              className="!opacity-0 group-hover:!opacity-100 transition-opacity"
-                              size="small"
-                            >
-                              查看详情
-                            </Button>
-                            <Button
-                              type="default"
-                              className="!opacity-0 group-hover:!opacity-100 transition-opacity"
-                              size="small"
-                            >
-                              一键投递
-                            </Button>
-                          </div>
+            {filteredJobs.length === 0 ? (
+              <div className="bg-white rounded-xl border border-gray-100 py-16">
+                <Empty description="暂无符合条件的职位" />
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredJobs.slice(0, 30).map((job: JobWithMatch) => (
+                  <div key={job.id} className="bg-white rounded-lg border border-gray-100 overflow-hidden">
+                    <div className="flex items-start gap-4 p-4">
+                      <div className="pt-1">
+                        <MatchScoreRing score={job.matchScore} size="md" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <JobCard
+                          job={job}
+                          matchScore={job.matchScore}
+                          className="!border-0 !p-0 !shadow-none"
+                          onViewDetail={() => navigate(`/jobseeker/jobs/${job.id}`)}
+                        />
+                        <div className="flex flex-wrap items-center gap-2 px-1 pb-1 text-xs text-gray-500">
+                          <TownshipTag code={job.township as TownshipCode} size="sm" />
+                          <span className="inline-flex items-center gap-1">
+                            <Clock size={12} /> {formatDate(job.publishedAt)}
+                          </span>
+                          <span className="inline-flex items-center gap-1">
+                            <Users size={12} /> 招{job.hiringCount}人
+                          </span>
+                        </div>
+                        <div className="px-1 pb-3">
+                          <Button
+                            size="small"
+                            type="link"
+                            className="!px-0"
+                            onClick={() => toggleExpand(job.id)}
+                          >
+                            {expandedJobId === job.id ? '收起匹配分析' : '查看匹配分析'}
+                          </Button>
                         </div>
                       </div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-
-              {filteredJobs.length > 20 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-4"
-                >
-                  <Button type="primary" ghost>
-                    加载更多职位
-                  </Button>
-                </motion.div>
-              )}
-            </div>
-          )}
+                    </div>
+                    <AnimatePresence>
+                      {expandedJobId === job.id && renderMatchDetails(job.matchDetails)}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

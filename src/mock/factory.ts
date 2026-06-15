@@ -23,7 +23,14 @@ import {
   Application,
   ChannelROI,
   SubsidyApplication,
-  AuditStep
+  AuditStep,
+  MatchDetails,
+  ResumeParseResult,
+  JDMatchResult,
+  SkillAlignmentResult,
+  DifferentiationResult,
+  DifferentiationType,
+  JobWithMatch,
 } from '../../shared/types';
 import { TOWNSHIPS } from './townships';
 
@@ -748,4 +755,168 @@ export const createSubsidyApplication = (id: string, idx: string, enterprises: E
     createdAt,
     materials: randomPicks(['营业执照', '法人身份证', '社保缴纳证明', '工资发放记录', '招聘简章', '劳动合同', '培训结业证书', '稳岗证明'], randomInt(3, 5))
   } as any;
+};
+
+const SKILL_LEVELS = ['了解', '熟练', '精通'];
+const CERTIFICATES_POOL = ['数控车工高级证', '电工证', '焊工证', '叉车证', 'CAD绘图师证', 'PLC编程工程师证', '模具设计师证', '数控机床操作证', '钳工高级证', '焊接技师证'];
+
+export const createResumeParse = (type: JobSeekerType, township: TownshipCode, workYears: number, education: string): ResumeParseResult => {
+  const townshipData = TOWNSHIPS.find(t => t.code === township);
+  const skillsCount = type === JobSeekerType.SKILLED ? randomInt(3, 6) : type === JobSeekerType.BLUECOLLAR ? randomInt(2, 4) : randomInt(2, 5);
+  const skills = randomPicks(COMMON_SKILLS[type], skillsCount);
+  const certCount = type === JobSeekerType.SKILLED ? randomInt(1, 3) : type === JobSeekerType.BLUECOLLAR ? randomInt(0, 2) : randomInt(0, 1);
+  const certificates = certCount > 0 ? randomPicks(CERTIFICATES_POOL, certCount) : [];
+  const salaryRange = randomSalaryRange(type);
+
+  return {
+    yearsOfExperience: workYears,
+    education,
+    location: townshipData?.name || '中山市',
+    targetSalary: [Math.floor(salaryRange.min / 1000), Math.floor(salaryRange.max / 1000)],
+    skills,
+    certificates,
+  };
+};
+
+export const createJDMatch = (job: JobPosition, resumeParse: ResumeParseResult): JDMatchResult => {
+  const expScore = randomInt(70, 98);
+  const eduScore = randomInt(65, 95);
+  const locScore = randomInt(75, 98);
+  const salScore = randomInt(70, 95);
+
+  const expReasons = [
+    `要求${job.experience}，您有${resumeParse.yearsOfExperience}年，超出要求`,
+    `要求${job.experience}，您有${resumeParse.yearsOfExperience}年，基本匹配`,
+    `经验要求${job.experience}，您的${resumeParse.yearsOfExperience}年经验符合要求`,
+  ];
+  const eduReasons = [
+    `要求${job.education}，您是${resumeParse.education}，超出要求`,
+    `要求${job.education}，您是${resumeParse.education}，符合要求`,
+    `学历要求${job.education}，您的${resumeParse.education}学历达标`,
+  ];
+  const locReasons = [
+    `职位在${resumeParse.location}，您期望在${resumeParse.location}工作`,
+    `工作地点${resumeParse.location}，与您期望地点一致`,
+    `职位位于${resumeParse.location}，通勤方便`,
+  ];
+  const salReasons = [
+    `薪资${job.salaryMin}-${job.salaryMax}，您期望${resumeParse.targetSalary[0]}-${resumeParse.targetSalary[1]}K，匹配度高`,
+    `薪资范围${job.salaryMin}-${job.salaryMax}K，与您的期望${resumeParse.targetSalary[0]}-${resumeParse.targetSalary[1]}K吻合`,
+    `岗位预算${job.salaryMin}-${job.salaryMax}K，符合您的薪资期望`,
+  ];
+
+  return {
+    experience: { score: expScore, label: '经验匹配', reason: randomPick(expReasons) },
+    education: { score: eduScore, label: '学历匹配', reason: randomPick(eduReasons) },
+    location: { score: locScore, label: '地域匹配', reason: randomPick(locReasons) },
+    salary: { score: salScore, label: '薪酬匹配', reason: randomPick(salReasons) },
+  };
+};
+
+export const createSkillAlignment = (jobSkills: RequiredSkill[], resumeSkills: string[], type: JobSeekerType): SkillAlignmentResult => {
+  const matched: SkillAlignmentResult['matched'] = [];
+  const missing: SkillAlignmentResult['missing'] = [];
+  const related: SkillAlignmentResult['related'] = [];
+
+  const jobSkillNames = jobSkills.map(s => s.name);
+  const matchCount = Math.min(jobSkills.length, randomInt(1, jobSkills.length));
+
+  for (let i = 0; i < matchCount; i++) {
+    const skill = jobSkills[i];
+    matched.push({
+      name: skill.name,
+      level: randomPick(SKILL_LEVELS),
+      required: skill.required ? '熟练' : '了解',
+    });
+  }
+
+  for (let i = matchCount; i < jobSkills.length; i++) {
+    const skill = jobSkills[i];
+    if (Math.random() > 0.4) {
+      missing.push({
+        name: skill.name,
+        required: skill.required ? '熟练' : '了解',
+        suggestion: `可通过学习${skill.name}基础课程补上`,
+      });
+    }
+  }
+
+  const relatedSkills = resumeSkills.filter(s => !jobSkillNames.includes(s)).slice(0, randomInt(0, 3));
+  for (const skill of relatedSkills) {
+    related.push({
+      name: skill,
+      level: randomPick(SKILL_LEVELS),
+      bonus: `+${randomInt(3, 8)}%`,
+    });
+  }
+
+  return { matched, missing, related };
+};
+
+export const createDifferentiation = (type: JobSeekerType, resumeParse: ResumeParseResult, jdMatch: JDMatchResult): DifferentiationResult => {
+  const typeValue = String(type);
+  const typeInfo: { type: DifferentiationType; label: string } =
+    typeValue === JobSeekerType.SKILLED
+      ? { type: 'skilled', label: '技工' }
+      : typeValue === JobSeekerType.GRADUATE
+        ? { type: 'graduate', label: '应届生' }
+        : { type: 'blue_collar', label: '蓝领' };
+
+  const blueCollarHighlights = [
+    '✅ 包吃包住，符合您的住宿需求',
+    '✅ 加班补贴丰厚，多劳多得',
+    '✅ 稳岗补贴政策适用，工作稳定有保障',
+    '✅ 厂区直招，无中介费',
+    '💡 建议申请技能培训补贴，提升职业等级',
+  ];
+
+  const skilledHighlights = [
+    `✅ 持${resumeParse.certificates[0] || '高级技能等级证书'}，符合技工岗位优先条件`,
+    `✅ ${resumeParse.yearsOfExperience}年行业经验，匹配度 +${randomInt(10, 20)}%`,
+    '✅ 期望薪资与岗位预算高度吻合',
+    `💡 建议补充${randomPick(['UG编程', 'PLC高级应用', '三维建模'])}技能，可提升至技术组长岗`,
+  ];
+
+  const graduateHighlights = [
+    `✅ ${resumeParse.education}学历，专业对口`,
+    '✅ 有相关实习经历，基础扎实',
+    '✅ 公司提供完善的应届生培养体系，成长空间大',
+    '✅ 可申请高校毕业生就业补贴',
+    '💡 建议参加公司的管培生计划，加速职业发展',
+  ];
+
+  const highlightsPool = typeInfo.type === 'blue_collar' ? blueCollarHighlights
+    : typeInfo.type === 'skilled' ? skilledHighlights
+    : graduateHighlights;
+
+  return {
+    type: typeInfo.type,
+    typeLabel: typeInfo.label,
+    highlights: randomPicks(highlightsPool, randomInt(3, 4)),
+  };
+};
+
+export const createMatchDetails = (job: JobPosition, jobSeeker: JobSeeker, resume: Resume): MatchDetails => {
+  const resumeParse = createResumeParse(job.type, jobSeeker.township, jobSeeker.workYears, jobSeeker.highestDegree);
+  const jdMatch = createJDMatch(job, resumeParse);
+  const skillAlignment = createSkillAlignment(job.requiredSkills, resumeParse.skills, job.type);
+  const differentiation = createDifferentiation(job.type, resumeParse, jdMatch);
+
+  return {
+    resumeParse,
+    jdMatch,
+    skillAlignment,
+    differentiation,
+  };
+};
+
+export const createJobWithMatch = (job: JobPosition, jobSeeker: JobSeeker, resume: Resume): JobWithMatch => {
+  const matchScore = randomInt(60, 98);
+  const matchDetails = createMatchDetails(job, jobSeeker, resume);
+
+  return {
+    ...job,
+    matchScore,
+    matchDetails,
+  };
 };

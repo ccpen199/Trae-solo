@@ -8,7 +8,6 @@ import {
   FileText,
   Edit3,
   Plus,
-  Trash2,
   Upload,
   File,
   X,
@@ -25,37 +24,29 @@ import {
   MapPin,
   Phone,
   Mail,
-  Calendar,
   Sparkles,
 } from 'lucide-react';
 import {
   Tabs,
   Button,
   Input,
-  DatePicker,
   Select,
   Tag,
-  Upload as AntdUpload,
   Progress,
-  Card,
   Divider,
   Rate,
-  Slider,
   Avatar,
   Tooltip,
   message,
-  Popconfirm,
   Empty,
+  InputNumber,
 } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ResponsiveContainer } from 'recharts';
 import { generateMockData } from '@/mock/data';
 import {
   TownshipCode,
   SkillItem,
-  EducationItem,
   WorkItem,
-  ProjectItem,
   CertificateItem,
   Resume,
 } from '@shared/types';
@@ -64,9 +55,7 @@ import MatchScoreRing from '@/components/common/MatchScoreRing';
 import StatsCard from '@/components/common/StatsCard';
 import { cn } from '@/lib/utils';
 
-const { RangePicker } = DatePicker;
 const { Option } = Select;
-const { TextArea } = Input;
 
 type TabKey = 'online' | 'parser' | 'skillmap';
 
@@ -80,11 +69,7 @@ interface SkillNode {
   r?: number;
 }
 
-interface SkillLink {
-  source: string;
-  target: string;
-  value: number;
-}
+
 
 const SKILL_CATEGORIES: Record<string, { color: string; bg: string }> = {
   '机械制造': { color: '#165DFF', bg: 'bg-industrial-blue-500' },
@@ -97,9 +82,8 @@ const SKILL_CATEGORIES: Record<string, { color: string; bg: string }> = {
 function ResumePage() {
   const mockData = useMemo(() => generateMockData(), []);
   const [activeTab, setActiveTab] = useState<TabKey>('online');
-  const [editingSection, setEditingSection] = useState<string | null>(null);
 
-  const resume = useMemo<Resume>(() => {
+  const [resume, setResume] = useState<Resume>(() => {
     if (mockData.resumes.length > 0) return mockData.resumes[0];
     return {
       id: 'res_demo',
@@ -191,7 +175,35 @@ function ResumePage() {
       selfEvaluation: '5年以上机械制造行业工作经验，熟练掌握CNC加工中心操作，具备扎实的机械制图和工艺优化能力。工作认真负责，学习能力强，善于团队协作，具备良好的质量意识和安全意识。',
       updatedAt: new Date().toISOString(),
     };
-  }, [mockData.resumes]);
+  });
+
+  const [addingWork, setAddingWork] = useState(false);
+  const [addingSkill, setAddingSkill] = useState(false);
+  const [addingCert, setAddingCert] = useState(false);
+  const [editingWorkId, setEditingWorkId] = useState<string | null>(null);
+
+  const [workForm, setWorkForm] = useState({
+    company: '',
+    position: '',
+    startDate: '',
+    endDate: '',
+    salary: '',
+    highlights: [''],
+    skillsUsed: [] as string[],
+  });
+
+  const [skillForm, setSkillForm] = useState({
+    name: '',
+    proficiency: 3 as 1 | 2 | 3 | 4 | 5,
+    category: '机械制造',
+    years: 1,
+  });
+
+  const [certForm, setCertForm] = useState({
+    name: '',
+    issuer: '',
+    date: '',
+  });
 
   const [uploadState, setUploadState] = useState<{
     status: 'idle' | 'uploading' | 'parsing' | 'done' | 'error';
@@ -246,7 +258,221 @@ function ResumePage() {
     setUploadState({ status: 'idle', progress: 0, fileName: '', fileSize: 0 });
   };
 
-  const { skillNodes, skillLinks } = useMemo(() => {
+  const calculateCompleteness = (r: Resume): number => {
+    let score = 0;
+    if (r.basicInfo?.name) score += 15;
+    if (r.basicInfo?.phone) score += 10;
+    if (r.basicInfo?.email) score += 5;
+    if (r.basicInfo?.expectPosition) score += 10;
+    if (r.basicInfo?.education) score += 5;
+    score += Math.min(r.skills.length * 3, 15);
+    score += Math.min(r.workList.length * 10, 30);
+    if (r.educationList.length > 0) score += 10;
+    score += Math.min(r.certificates.length * 2, 10);
+    if (r.selfEvaluation && r.selfEvaluation.trim().length > 0) score += 5;
+    return Math.min(100, score);
+  };
+
+  const completeness = useMemo(() => calculateCompleteness(resume), [resume]);
+
+  const resetWorkForm = () => {
+    setWorkForm({
+      company: '',
+      position: '',
+      startDate: '',
+      endDate: '',
+      salary: '',
+      highlights: [''],
+      skillsUsed: [],
+    });
+  };
+
+  const resetSkillForm = () => {
+    setSkillForm({
+      name: '',
+      proficiency: 3,
+      category: '机械制造',
+      years: 1,
+    });
+  };
+
+  const resetCertForm = () => {
+    setCertForm({
+      name: '',
+      issuer: '',
+      date: '',
+    });
+  };
+
+  const handleAddWork = () => {
+    setEditingWorkId(null);
+    resetWorkForm();
+    setAddingWork(true);
+  };
+
+  const handleEditWork = (work: WorkItem) => {
+    setEditingWorkId(work.id);
+    setWorkForm({
+      company: work.company,
+      position: work.position,
+      startDate: work.startDate,
+      endDate: work.endDate,
+      salary: String(work.salary || ''),
+      highlights: work.highlights.length > 0 ? [...work.highlights] : [''],
+      skillsUsed: work.skillsUsed ? [...work.skillsUsed] : [],
+    });
+    setAddingWork(false);
+  };
+
+  const handleSaveWork = () => {
+    if (!workForm.company || !workForm.position || !workForm.startDate) {
+      message.error('请填写必填项：公司名称、职位、开始日期');
+      return;
+    }
+
+    const oldScore = calculateCompleteness(resume);
+
+    if (editingWorkId) {
+      setResume((prev) => ({
+        ...prev,
+        workList: prev.workList.map((w) =>
+          w.id === editingWorkId
+            ? {
+                ...w,
+                company: workForm.company,
+                position: workForm.position,
+                startDate: workForm.startDate,
+                endDate: workForm.endDate || '至今',
+                salary: workForm.salary ? Number(workForm.salary) : undefined,
+                highlights: workForm.highlights.filter((h) => h.trim() !== ''),
+                skillsUsed: workForm.skillsUsed,
+              }
+            : w
+        ),
+        updatedAt: new Date().toISOString(),
+      }));
+      message.success('工作经历已更新！');
+    } else {
+      const newWork: WorkItem = {
+        id: `w_${Date.now()}`,
+        company: workForm.company,
+        position: workForm.position,
+        startDate: workForm.startDate,
+        endDate: workForm.endDate || '至今',
+        salary: workForm.salary ? Number(workForm.salary) : undefined,
+        highlights: workForm.highlights.filter((h) => h.trim() !== ''),
+        skillsUsed: workForm.skillsUsed,
+      };
+      setResume((prev) => ({
+        ...prev,
+        workList: [...prev.workList, newWork],
+        updatedAt: new Date().toISOString(),
+      }));
+      const newScore = calculateCompleteness({ ...resume, workList: [...resume.workList, newWork] });
+      const increase = newScore - oldScore;
+      message.success(`工作经历已保存！${increase > 0 ? `完整度 +${increase}%` : ''}`);
+    }
+
+    setAddingWork(false);
+    setEditingWorkId(null);
+    resetWorkForm();
+  };
+
+  const handleCancelWork = () => {
+    setAddingWork(false);
+    setEditingWorkId(null);
+    resetWorkForm();
+  };
+
+  const handleSaveSkill = () => {
+    if (!skillForm.name) {
+      message.error('请填写技能名称');
+      return;
+    }
+
+    const oldScore = calculateCompleteness(resume);
+    const newSkill: SkillItem = {
+      id: `s_${Date.now()}`,
+      name: skillForm.name,
+      proficiency: skillForm.proficiency,
+      category: skillForm.category,
+      years: skillForm.years,
+    };
+
+    setResume((prev) => ({
+      ...prev,
+      skills: [...prev.skills, newSkill],
+      updatedAt: new Date().toISOString(),
+    }));
+
+    const newScore = calculateCompleteness({ ...resume, skills: [...resume.skills, newSkill] });
+    const increase = newScore - oldScore;
+    message.success(`技能已保存！${increase > 0 ? `完整度 +${increase}%` : ''}`);
+
+    setAddingSkill(false);
+    resetSkillForm();
+  };
+
+  const handleCancelSkill = () => {
+    setAddingSkill(false);
+    resetSkillForm();
+  };
+
+  const handleSaveCert = () => {
+    if (!certForm.name || !certForm.issuer || !certForm.date) {
+      message.error('请填写必填项：证书名称、颁发机构、获得日期');
+      return;
+    }
+
+    const oldScore = calculateCompleteness(resume);
+    const newCert: CertificateItem = {
+      id: `c_${Date.now()}`,
+      name: certForm.name,
+      issuer: certForm.issuer,
+      date: certForm.date,
+    };
+
+    setResume((prev) => ({
+      ...prev,
+      certificates: [...prev.certificates, newCert],
+      updatedAt: new Date().toISOString(),
+    }));
+
+    const newScore = calculateCompleteness({ ...resume, certificates: [...resume.certificates, newCert] });
+    const increase = newScore - oldScore;
+    message.success(`证书已保存！${increase > 0 ? `完整度 +${increase}%` : ''}`);
+
+    setAddingCert(false);
+    resetCertForm();
+  };
+
+  const handleCancelCert = () => {
+    setAddingCert(false);
+    resetCertForm();
+  };
+
+  const addHighlight = () => {
+    setWorkForm((prev) => ({
+      ...prev,
+      highlights: [...prev.highlights, ''],
+    }));
+  };
+
+  const removeHighlight = (index: number) => {
+    setWorkForm((prev) => ({
+      ...prev,
+      highlights: prev.highlights.filter((_, i) => i !== index),
+    }));
+  };
+
+  const updateHighlight = (index: number, value: string) => {
+    setWorkForm((prev) => ({
+      ...prev,
+      highlights: prev.highlights.map((h, i) => (i === index ? value : h)),
+    }));
+  };
+
+  const { skillNodes } = useMemo(() => {
     const nodes: SkillNode[] = resume.skills.map((s) => ({
       id: s.id,
       name: s.name,
@@ -254,23 +480,7 @@ function ResumePage() {
       proficiency: s.proficiency,
     }));
 
-    const links: SkillLink[] = [];
-    const categories = Array.from(new Set(nodes.map((n) => n.category)));
-
-    categories.forEach((cat) => {
-      const catNodes = nodes.filter((n) => n.category === cat);
-      for (let i = 0; i < catNodes.length; i++) {
-        for (let j = i + 1; j < catNodes.length; j++) {
-          links.push({
-            source: catNodes[i].id,
-            target: catNodes[j].id,
-            value: 0.5 + Math.random() * 0.5,
-          });
-        }
-      }
-    });
-
-    return { skillNodes: nodes, skillLinks: links };
+    return { skillNodes: nodes };
   }, [resume.skills]);
 
   const recommendedPaths = useMemo(() => [
@@ -372,7 +582,7 @@ function ResumePage() {
           </div>
           <div className="flex-shrink-0 flex flex-col items-center justify-center">
             <span className="text-xs text-gray-500 mb-1">简历完整度</span>
-            <MatchScoreRing score={92} size="md" label="完整度" />
+            <MatchScoreRing score={completeness} size="md" label="完整度" />
           </div>
         </motion.div>
       </div>
@@ -389,9 +599,11 @@ function ResumePage() {
             <Award size={18} className="text-industrial-blue-500" />
             技能证书
           </h3>
-          <Button type="link" icon={<Plus size={14} />} className="!text-industrial-blue-600">
-            添加技能
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button type="link" icon={<Plus size={14} />} className="!text-industrial-blue-600" onClick={() => setAddingSkill(true)}>
+              添加技能
+            </Button>
+          </div>
         </div>
 
         <div className="mb-5">
@@ -434,8 +646,72 @@ function ResumePage() {
           </div>
         </div>
 
+        <AnimatePresence>
+          {addingSkill && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden mb-5"
+            >
+              <div className="p-4 bg-industrial-blue-50/30 rounded-lg border border-industrial-blue-200">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">添加新技能</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">技能名称 *</label>
+                    <Input
+                      placeholder="如：焊接技术"
+                      value={skillForm.name}
+                      onChange={(e) => setSkillForm((prev) => ({ ...prev, name: e.target.value }))}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">技能分类</label>
+                    <Select
+                      value={skillForm.category}
+                      onChange={(val) => setSkillForm((prev) => ({ ...prev, category: val }))}
+                      className="w-full"
+                    >
+                      {Object.keys(SKILL_CATEGORIES).map((cat) => (
+                        <Option key={cat} value={cat}>{cat}</Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">熟练度</label>
+                    <Rate
+                      value={skillForm.proficiency}
+                      onChange={(val) => setSkillForm((prev) => ({ ...prev, proficiency: val as 1 | 2 | 3 | 4 | 5 }))}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">使用年限</label>
+                    <InputNumber
+                      min={0}
+                      max={50}
+                      value={skillForm.years}
+                      onChange={(val) => setSkillForm((prev) => ({ ...prev, years: val || 0 }))}
+                      className="w-full"
+                      suffix="年"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end gap-2 mt-4">
+                  <Button onClick={handleCancelSkill}>取消</Button>
+                  <Button type="primary" onClick={handleSaveSkill}>保存技能</Button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">资格证书</h4>
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-sm font-semibold text-gray-700">资格证书</h4>
+            <Button type="link" size="small" icon={<Plus size={12} />} className="!text-vital-orange-600" onClick={() => setAddingCert(true)}>
+              添加证书
+            </Button>
+          </div>
           {resume.certificates.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {resume.certificates.map((cert) => (
@@ -457,6 +733,51 @@ function ResumePage() {
           ) : (
             <Empty description="暂无证书" />
           )}
+
+          <AnimatePresence>
+            {addingCert && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="overflow-hidden mt-4"
+              >
+                <div className="p-4 bg-vital-orange-50/30 rounded-lg border border-vital-orange-200">
+                  <h4 className="text-sm font-semibold text-gray-700 mb-3">添加新证书</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs text-gray-500 mb-1">证书名称 *</label>
+                      <Input
+                        placeholder="如：焊工高级技能证书"
+                        value={certForm.name}
+                        onChange={(e) => setCertForm((prev) => ({ ...prev, name: e.target.value }))}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-500 mb-1">颁发机构 *</label>
+                      <Input
+                        placeholder="如：中山市人力资源和社会保障局"
+                        value={certForm.issuer}
+                        onChange={(e) => setCertForm((prev) => ({ ...prev, issuer: e.target.value }))}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-500 mb-1">获得日期 *</label>
+                      <Input
+                        placeholder="如：2023-06"
+                        value={certForm.date}
+                        onChange={(e) => setCertForm((prev) => ({ ...prev, date: e.target.value }))}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-2 mt-4">
+                    <Button onClick={handleCancelCert}>取消</Button>
+                    <Button type="primary" onClick={handleSaveCert}>保存证书</Button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </motion.div>
 
@@ -472,7 +793,7 @@ function ResumePage() {
             <Briefcase size={18} className="text-vital-orange-500" />
             工作经历
           </h3>
-          <Button type="link" icon={<Plus size={14} />} className="!text-vital-orange-600">
+          <Button type="link" icon={<Plus size={14} />} className="!text-vital-orange-600" onClick={handleAddWork}>
             添加工作经历
           </Button>
         </div>
@@ -497,13 +818,22 @@ function ResumePage() {
                       <h4 className="text-base font-semibold text-gray-900">{work.position}</h4>
                       <p className="text-sm text-gray-600">{work.company}</p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm text-vital-orange-500 font-semibold">
-                        {work.salary}K/月
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {work.startDate} - {work.endDate}
-                      </p>
+                    <div className="flex items-start gap-2">
+                      <Button
+                        type="text"
+                        size="small"
+                        icon={<Edit3 size={14} />}
+                        onClick={() => handleEditWork(work)}
+                        className="!text-gray-400 hover:!text-vital-orange-600 !h-6 !px-1"
+                      />
+                      <div className="text-right">
+                        <p className="text-sm text-vital-orange-500 font-semibold">
+                          {work.salary}K/月
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {work.startDate} - {work.endDate}
+                        </p>
+                      </div>
                     </div>
                   </div>
                   {work.highlights.length > 0 && (
@@ -530,6 +860,116 @@ function ResumePage() {
             ))}
           </div>
         </div>
+
+        <AnimatePresence>
+          {(addingWork || editingWorkId) && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden mt-5"
+            >
+              <div className="p-4 bg-vital-orange-50/30 rounded-lg border border-vital-orange-200">
+                <h4 className="text-sm font-semibold text-gray-700 mb-4">
+                  {editingWorkId ? '编辑工作经历' : '添加新工作经历'}
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">公司名称 *</label>
+                    <Input
+                      placeholder="请输入公司名称"
+                      value={workForm.company}
+                      onChange={(e) => setWorkForm((prev) => ({ ...prev, company: e.target.value }))}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">职位 *</label>
+                    <Input
+                      placeholder="请输入职位名称"
+                      value={workForm.position}
+                      onChange={(e) => setWorkForm((prev) => ({ ...prev, position: e.target.value }))}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">开始日期 *</label>
+                    <Input
+                      placeholder="如：2023-01"
+                      value={workForm.startDate}
+                      onChange={(e) => setWorkForm((prev) => ({ ...prev, startDate: e.target.value }))}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">结束日期</label>
+                    <Input
+                      placeholder="如：至今 或 2024-06"
+                      value={workForm.endDate}
+                      onChange={(e) => setWorkForm((prev) => ({ ...prev, endDate: e.target.value }))}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">薪资（K/月）</label>
+                    <InputNumber
+                      min={0}
+                      max={100}
+                      value={workForm.salary ? Number(workForm.salary) : undefined}
+                      onChange={(val) => setWorkForm((prev) => ({ ...prev, salary: String(val || '') }))}
+                      className="w-full"
+                      placeholder="请输入月薪"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">使用技能</label>
+                    <Select
+                      mode="multiple"
+                      placeholder="请选择或输入使用的技能"
+                      value={workForm.skillsUsed}
+                      onChange={(val) => setWorkForm((prev) => ({ ...prev, skillsUsed: val }))}
+                      className="w-full"
+                      options={resume.skills.map((s) => ({ label: s.name, value: s.name }))}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-xs text-gray-500">工作亮点</label>
+                    <Button type="link" size="small" icon={<Plus size={12} />} onClick={addHighlight}>
+                      添加亮点
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    {workForm.highlights.map((highlight, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <Check size={12} className="text-success-500 flex-shrink-0" />
+                        <Input
+                          placeholder="请输入工作亮点描述"
+                          value={highlight}
+                          onChange={(e) => updateHighlight(idx, e.target.value)}
+                        />
+                        {workForm.highlights.length > 1 && (
+                          <Button
+                            type="text"
+                            size="small"
+                            icon={<X size={14} />}
+                            onClick={() => removeHighlight(idx)}
+                            className="!text-gray-400 hover:!text-danger-500"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-2 mt-5">
+                  <Button onClick={handleCancelWork}>取消</Button>
+                  <Button type="primary" onClick={handleSaveWork}>
+                    {editingWorkId ? '更新' : '保存'}
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
 
       <motion.div

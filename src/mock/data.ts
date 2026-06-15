@@ -21,7 +21,8 @@ import {
   AIQuestion,
   AIScoreReport,
   MatchDimension,
-  CourseType
+  CourseType,
+  JobWithMatch,
 } from '../../shared/types';
 import { TOWNSHIPS } from './townships';
 import {
@@ -34,6 +35,7 @@ import {
   createChannelROI,
   createSubsidyApplication,
   createMatchResult,
+  createJobWithMatch,
   randomInt,
   randomPick,
   randomPicks,
@@ -65,6 +67,7 @@ export type MockDataset = {
   retentionAnalyses: RetentionAnalysis[];
   campusSessions: CampusSession[];
   educationCourses: EducationCourse[];
+  jobsWithMatch: JobWithMatch[];
 };
 
 export const generateMockData = (): MockDataset => {
@@ -369,6 +372,13 @@ export const generateMockData = (): MockDataset => {
     } as EducationCourse);
   }
 
+  const jobsWithMatch: JobWithMatch[] = [];
+  const sampleJobSeeker = jobSeekers[0];
+  const sampleResume = resumes.find(r => r.jobSeekerId === sampleJobSeeker.id) || resumes[0];
+  for (const pos of positions) {
+    jobsWithMatch.push(createJobWithMatch(pos, sampleJobSeeker, sampleResume));
+  }
+
   return {
     enterprises,
     positions,
@@ -382,7 +392,8 @@ export const generateMockData = (): MockDataset => {
     funnelMetrics,
     retentionAnalyses,
     campusSessions,
-    educationCourses
+    educationCourses,
+    jobsWithMatch,
   };
 };
 
@@ -401,7 +412,8 @@ export const datasetSummary = {
   funnelMetrics: mockData.funnelMetrics.length,
   retentionAnalyses: mockData.retentionAnalyses.length,
   campusSessions: mockData.campusSessions.length,
-  educationCourses: mockData.educationCourses.length
+  educationCourses: mockData.educationCourses.length,
+  jobsWithMatch: mockData.jobsWithMatch.length,
 };
 
 export default mockData;

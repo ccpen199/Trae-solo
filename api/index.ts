@@ -1,23 +1,24 @@
 /**
  * Express API server entry point
- * - Local development: starts HTTP server on PORT (default: 4000)
+ * - Local development: starts HTTP server on BACKEND_PORT/PORT
  * - Vercel serverless: exports default handler (detected by VERCEL env)
  */
 import { isMainThread } from 'worker_threads';
 import type { Request, Response } from 'express';
 import app from './app.js';
 
-const PORT = process.env.PORT || 4000;
+const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59210);
 
 const isVercelEnv = typeof process.env.VERCEL !== 'undefined';
 
 if (!isVercelEnv && isMainThread) {
-  const server = app.listen(PORT, () => {
-    console.log(`🚀 Server ready on port ${PORT}`);
-    console.log(`   Health:    http://localhost:${PORT}/api/health`);
-    console.log(`   Jobs:      http://localhost:${PORT}/api/jobs`);
-    console.log(`   Townships: http://localhost:${PORT}/api/townships`);
-    console.log(`   Analytics: http://localhost:${PORT}/api/analytics/overview`);
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`🚀 Server ready on http://${HOST}:${PORT}`);
+    console.log(`   Health:    http://${HOST}:${PORT}/api/health`);
+    console.log(`   Jobs:      http://${HOST}:${PORT}/api/jobs`);
+    console.log(`   Townships: http://${HOST}:${PORT}/api/townships`);
+    console.log(`   Analytics: http://${HOST}:${PORT}/api/analytics/overview`);
   });
 
   process.on('SIGTERM', () => {

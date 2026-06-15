@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Search,
   Filter,
@@ -105,6 +106,7 @@ const INDUSTRY_ICONS: Record<IndustryTag, React.ReactNode> = {
 };
 
 function Home() {
+  const navigate = useNavigate();
   const mockData = useMemo(() => generateMockData(), []);
   const [searchText, setSearchText] = useState('');
   const [selectedTownship, setSelectedTownship] = useState<TownshipCode | undefined>();
@@ -352,7 +354,11 @@ function Home() {
             </h2>
             <p className="text-sm text-gray-500 mt-1">中山市25个镇街产业集群招聘</p>
           </div>
-          <Button type="link" className="!text-industrial-blue-600 !font-medium">
+          <Button
+            type="link"
+            className="!text-industrial-blue-600 !font-medium"
+            onClick={() => navigate('/jobseeker/township')}
+          >
             查看全部镇街 <ChevronRight size={14} />
           </Button>
         </div>
@@ -368,6 +374,7 @@ function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 + idx * 0.03, duration: 0.4 }}
                 whileHover={{ y: -3, scale: 1.02 }}
+                onClick={() => navigate(`/jobseeker/township?township=${township.code}`)}
                 className="bg-white rounded-xl p-4 border border-gray-100 cursor-pointer transition-all duration-300 hover:shadow-card-hover hover:border-industrial-blue-200 group relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-industrial-blue-50 to-transparent rounded-bl-full opacity-60 group-hover:opacity-100 transition-opacity" />
@@ -430,7 +437,11 @@ function Home() {
               </h2>
               <p className="text-sm text-gray-500 mt-1">基于您的简历和偏好为您匹配</p>
             </div>
-            <Button type="link" className="!text-industrial-blue-600 !font-medium">
+            <Button
+              type="link"
+              className="!text-industrial-blue-600 !font-medium"
+              onClick={() => navigate('/jobseeker/jobs')}
+            >
               查看更多 <ChevronRight size={14} />
             </Button>
           </div>
