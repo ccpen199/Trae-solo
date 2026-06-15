@@ -61,6 +61,12 @@ export interface ServiceOrder {
   insurancePolicy?: string;
   insuranceRequired?: boolean;
   requirements?: string;
+  contactPhone?: string;
+  bookingNo?: string;
+  checkInTime?: string;
+  checkOutTime?: string;
+  actualDuration?: number;
+  gpsDistance?: number;
   createdAt: string;
 }
 
@@ -82,6 +88,8 @@ export interface Review {
   user?: User;
   rating: number;
   content?: string;
+  tags?: string[];
+  images?: string[];
   createdAt: string;
 }
 

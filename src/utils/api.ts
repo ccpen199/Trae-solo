@@ -4,6 +4,16 @@ const API_BASE = (
   '/api'
 ).replace(/\/$/, '');
 
+function buildQuery(params?: Record<string, unknown>): string {
+  const query = new URLSearchParams();
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value === undefined || value === null || value === '') return;
+    query.set(key, String(value));
+  });
+  const text = query.toString();
+  return text ? `?${text}` : '';
+}
+
 interface RequestOptions extends RequestInit {
   headers?: Record<string, string>;
   requireAuth?: boolean;
@@ -21,7 +31,7 @@ async function request<T>(
   };
 
   if (requireAuth) {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || 'local-demo-admin';
     if (token) {
       authHeaders['Authorization'] = `Bearer ${token}`;
     }
@@ -61,8 +71,7 @@ export const api = {
   users: {
     getById: (id: string) => request(`/users/${id}`),
     getCreators: (params?: { page?: number; pageSize?: number; category?: string }) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/users/creators${query ? `?${query}` : ''}`);
+      return request(`/users/creators${buildQuery(params as any)}`);
     },
     updateProfile: (data: any) =>
       request('/users/profile', {
@@ -85,12 +94,10 @@ export const api = {
       creatorId?: string;
       status?: string;
     }) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/courses${query ? `?${query}` : ''}`);
+      return request(`/courses${buildQuery(params as any)}`);
     },
     getMy: (params?: { page?: number; pageSize?: number }) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/courses/my${query ? `?${query}` : ''}`);
+      return request(`/courses/my${buildQuery(params as any)}`);
     },
     getById: (id: string) => request(`/courses/${id}`),
     create: (data: any) =>
@@ -119,8 +126,7 @@ export const api = {
     deleteChapter: (chapterId: string) =>
       request(`/courses/chapters/${chapterId}`, { method: 'DELETE' }),
     getReviews: (courseId: string, params?: { page?: number; pageSize?: number }) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/courses/${courseId}/reviews${query ? `?${query}` : ''}`);
+      return request(`/courses/${courseId}/reviews${buildQuery(params as any)}`);
     },
     addReview: (courseId: string, rating: number, content: string) =>
       request(`/courses/${courseId}/reviews`, {
@@ -146,8 +152,7 @@ export const api = {
       creatorId?: string;
       requesterId?: string;
     }) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/orders${query ? `?${query}` : ''}`);
+      return request(`/orders${buildQuery(params as any)}`);
     },
     getMy: (role?: string) => {
       const query = role ? `?role=${role}` : '';
@@ -192,8 +197,7 @@ export const api = {
   payment: {
     getWallet: () => request('/payment/wallet'),
     getTransactions: (params?: { page?: number; pageSize?: number; type?: string; status?: string }) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/payment/transactions${query ? `?${query}` : ''}`);
+      return request(`/payment/transactions${buildQuery(params as any)}`);
     },
     getSettlement: (period = 'month') => request(`/payment/settlement?period=${period}`),
     withdraw: (amount: number) =>
@@ -205,8 +209,7 @@ export const api = {
 
   review: {
     list: (params?: { page?: number; pageSize?: number; status?: string; contentType?: string }) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/review${query ? `?${query}` : ''}`);
+      return request(`/review${buildQuery(params as any)}`);
     },
     getStats: () => request('/review/stats'),
     getById: (id: string) => request(`/review/${id}`),
@@ -221,21 +224,17 @@ export const api = {
   admin: {
     getDashboard: () => request('/admin/dashboard'),
     getCourses: (params?: any) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/admin/courses${query ? `?${query}` : ''}`);
+      return request(`/admin/courses${buildQuery(params as any)}`);
     },
     getOrders: (params?: any) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/admin/orders${query ? `?${query}` : ''}`);
+      return request(`/admin/orders${buildQuery(params as any)}`);
     },
     getTransactions: (params?: any) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/admin/transactions${query ? `?${query}` : ''}`);
+      return request(`/admin/transactions${buildQuery(params as any)}`);
     },
     getFinance: () => request('/admin/finance'),
     getUsers: (params?: any) => {
-      const query = new URLSearchParams(params as any).toString();
-      return request(`/admin/users${query ? `?${query}` : ''}`);
+      return request(`/admin/users${buildQuery(params as any)}`);
     },
     arbitrate: (orderId: string, decision: string, reason: string) =>
       request(`/admin/orders/${orderId}/arbitrate`, {

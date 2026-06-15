@@ -16,6 +16,34 @@ const demoAdminUser: User = {
   createdAt: '2026-06-15T00:00:00.000Z',
 };
 
+function loadUserFromStorage(): User | null {
+  try {
+    const stored = localStorage.getItem('user');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed as User;
+    }
+  } catch (e) {
+    console.warn('Failed to parse user from localStorage:', e);
+  }
+  return null;
+}
+
+function saveUserToStorage(user: User | null): void {
+  try {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  } catch (e) {
+    console.warn('Failed to save user to localStorage:', e);
+  }
+}
+
+const storedToken = localStorage.getItem('token');
+const storedUser = loadUserFromStorage();
+
 interface AuthState {
   user: User | null;
   token: string | null;
@@ -29,14 +57,22 @@ interface AuthState {
   fetchProfile: () => Promise<void>;
   setUser: (user: User | null) => void;
   clearError: () => void;
+  init: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
-  user: localStorage.getItem('token') ? null : demoAdminUser,
-  token: localStorage.getItem('token') || 'local-demo-admin',
-  isAuthenticated: true,
+  user: storedToken ? (storedUser ?? null) : demoAdminUser,
+  token: storedToken || 'local-demo-admin',
+  isAuthenticated: !!(storedToken || true),
   isLoading: false,
   error: null,
+
+  init: async () => {
+    const { token, user } = get();
+    if (token && !user) {
+      await get().fetchProfile();
+    }
+  },
 
   login: async (username: string, password: string) => {
     set({ isLoading: true, error: null });
@@ -44,6 +80,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const response: any = await api.auth.login(username, password);
       const { token, user } = response.data;
       localStorage.setItem('token', token);
+      saveUserToStorage(user);
       set({ user, token, isAuthenticated: true, isLoading: false });
     } catch (error: any) {
       set({ error: error.message, isLoading: false });
@@ -57,6 +94,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const response: any = await api.auth.register(username, password, role);
       const { token, user } = response.data;
       localStorage.setItem('token', token);
+      saveUserToStorage(user);
       set({ user, token, isAuthenticated: true, isLoading: false });
     } catch (error: any) {
       set({ error: error.message, isLoading: false });
@@ -66,6 +104,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   logout: () => {
     localStorage.removeItem('token');
+    saveUserToStorage(null);
     set({ user: demoAdminUser, token: 'local-demo-admin', isAuthenticated: true });
   },
 
@@ -75,14 +114,20 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true });
     try {
       const response: any = await api.auth.getProfile();
-      set({ user: response.data, isLoading: false });
+      const user = response.data;
+      saveUserToStorage(user);
+      set({ user, isAuthenticated: true, isLoading: false });
     } catch (error) {
       localStorage.removeItem('token');
+      saveUserToStorage(null);
       set({ user: demoAdminUser, token: 'local-demo-admin', isAuthenticated: true, isLoading: false });
     }
   },
 
-  setUser: (user) => set({ user }),
+  setUser: (user) => {
+    saveUserToStorage(user);
+    set({ user });
+  },
   
   clearError: () => set({ error: null }),
 }));

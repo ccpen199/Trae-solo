@@ -1,9 +1,128 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Search, Home, BookOpen, ShoppingBag, User, LogOut, Settings, Bell, ChevronDown, Menu, X } from 'lucide-react';
+import { Search, Home, BookOpen, ShoppingBag, User as UserIcon, LogOut, Settings, Bell, ChevronDown, Menu, X, ShieldCheck, Briefcase, FileText, ClipboardCheck, DollarSign } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useAuthStore } from '../store/authStore';
 import Button from './Button';
+import type { User } from '../../shared/types';
+
+const ROLE_LABELS: Record<string, string> = {
+  admin: '管理员',
+  creator: '创作者',
+  requester: '需求方',
+  user: '学习者',
+};
+
+function getRoleLabel(role?: string): string {
+  return ROLE_LABELS[role || 'user'] || '学习者';
+}
+
+function getNavLinks(role?: string) {
+  const baseLinks = [
+    { to: '/', label: '首页', icon: Home },
+    { to: '/feed', label: '内容社区', icon: BookOpen },
+    { to: '/orders', label: '订单广场', icon: ShoppingBag },
+    { to: '/guarantee', label: '保障中心', icon: ShieldCheck },
+  ];
+
+  const r = role || 'user';
+
+  if (r === 'admin') {
+    return [
+      ...baseLinks.slice(0, 3),
+      { to: '/workspace', label: '工作台', icon: Briefcase },
+      { to: '/orders/my', label: '我的需求', icon: FileText },
+      ...baseLinks.slice(3),
+      { to: '/admin/review', label: '审核中心', icon: ClipboardCheck },
+      { to: '/admin/finance', label: '财务管理', icon: DollarSign },
+    ];
+  }
+
+  if (r === 'creator') {
+    return [
+      ...baseLinks.slice(0, 2),
+      { to: '/workspace', label: '工作台入口', icon: Briefcase },
+      ...baseLinks.slice(2),
+    ];
+  }
+
+  if (r === 'requester') {
+    return [
+      ...baseLinks.slice(0, 3),
+      { to: '/orders/my', label: '我的需求', icon: FileText },
+      ...baseLinks.slice(3),
+    ];
+  }
+
+  return baseLinks;
+}
+
+function getUserMenuItems(role: string | undefined, navigate: (to: string) => void, user: User | null, closeMenu: () => void) {
+  const items: { label: string; icon: any; onClick: () => void; danger?: boolean }[] = [
+    {
+      label: '个人主页',
+      icon: UserIcon,
+      onClick: () => {
+        navigate(`/users/${user?.id}`);
+        closeMenu();
+      },
+    },
+  ];
+
+  const r = role || 'user';
+
+  if (r === 'creator' || r === 'admin') {
+    items.push({
+      label: '创作者工作台',
+      icon: Briefcase,
+      onClick: () => {
+        navigate('/workspace');
+        closeMenu();
+      },
+    });
+  }
+
+  if (r === 'admin') {
+    items.push({
+      label: '审核中心',
+      icon: ClipboardCheck,
+      onClick: () => {
+        navigate('/admin/review');
+        closeMenu();
+      },
+    });
+    items.push({
+      label: '财务管理',
+      icon: DollarSign,
+      onClick: () => {
+        navigate('/admin/finance');
+        closeMenu();
+      },
+    });
+  }
+
+  if (r === 'requester' || r === 'admin') {
+    items.push({
+      label: '我的需求',
+      icon: FileText,
+      onClick: () => {
+        navigate('/orders/my');
+        closeMenu();
+      },
+    });
+  }
+
+  items.push({
+    label: '设置',
+    icon: Settings,
+    onClick: () => {
+      navigate('/settings');
+      closeMenu();
+    },
+  });
+
+  return items;
+}
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -11,6 +130,14 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  const navLinks = useMemo(() => getNavLinks(user?.role), [user?.role]);
+  const userMenuItems = useMemo(
+    () => getUserMenuItems(user?.role, navigate, user, () => setShowUserMenu(false)),
+    [user?.role, user, navigate]
+  );
+
+  const roleLabel = useMemo(() => getRoleLabel(user?.role), [user?.role]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,12 +151,6 @@ const Navbar = () => {
     setShowUserMenu(false);
     navigate('/');
   };
-
-  const navLinks = [
-    { to: '/', label: '首页', icon: Home },
-    { to: '/courses', label: '课程', icon: BookOpen },
-    { to: '/orders', label: '订单广场', icon: ShoppingBag },
-  ];
 
   return (
     <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-zinc-100">
@@ -118,29 +239,19 @@ const Navbar = () => {
                         <div className="px-4 py-3 border-b border-zinc-100">
                           <p className="font-medium text-zinc-900">{user?.username}</p>
                           <p className="text-xs text-zinc-500">
-                            {user?.role === 'creator' ? '创作者' : user?.role === 'admin' ? '管理员' : '普通用户'}
+                            {roleLabel}
                           </p>
                         </div>
-                        <button
-                          onClick={() => {
-                            navigate(`/users/${user?.id}`);
-                            setShowUserMenu(false);
-                          }}
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
-                        >
-                          <User className="w-4 h-4" />
-                          个人主页
-                        </button>
-                        <button
-                          onClick={() => {
-                            navigate('/settings');
-                            setShowUserMenu(false);
-                          }}
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
-                        >
-                          <Settings className="w-4 h-4" />
-                          设置
-                        </button>
+                        {userMenuItems.map((item, index) => (
+                          <button
+                            key={index}
+                            onClick={item.onClick}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
+                          >
+                            <item.icon className="w-4 h-4" />
+                            {item.label}
+                          </button>
+                        ))}
                         <div className="border-t border-zinc-100 mt-2 pt-2">
                           <button
                             onClick={handleLogout}

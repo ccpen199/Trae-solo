@@ -1,0 +1,2350 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T21:10:31.018Z",
+  "order": "may-89206",
+  "roundIndex": 3,
+  "captureId": "may-89206-codex-cycle19",
+  "url": "http://127.0.0.1:49206/",
+  "initialUrl": "http://127.0.0.1:49206/",
+  "finalUrl": "http://127.0.0.1:49206/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-02-导航-S-SkillVerse.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-03-操作-账号设置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-05-操作-查看更多.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-07-导航-S.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-08-操作-查看更多.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在购买/商品入口，优先复验交易链路；页面存在我的/账号入口，优先复验个人中心链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49206/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49206/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:S SkillVerse",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:账号设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:账号设置:添加技能",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看更多:查看详情#5",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 26
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:S",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "headings": [
+          "技能即服务",
+          "我是学习者",
+          "我是创作者",
+          "我有需求",
+          "快速入口",
+          "热门视频",
+          "精选课程",
+          "爵士舞入门到精通",
+          "吉他弹唱三月通",
+          "居家健身减脂计划",
+          "水彩风景绘画",
+          "定制订单广场"
+        ],
+        "navLabels": [
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员 admin 管理员 个人主页 管理后台 账号设置 退出登录",
+          "admin 管理员",
+          "个人主页",
+          "管理后台",
+          "账号设置",
+          "退出登录"
+        ],
+        "buttons": [
+          "admin 管理员",
+          "个人主页",
+          "管理后台",
+          "账号设置",
+          "退出登录",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场admin管理员admin管理员 个人主页 管理后台 账号设置退出登录让每个人的技能都能创造价值技能即服务连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务我是学习者学习课程、购买服务浏览课程我是创作者发布课程、提供服务进入工作台我有需求发布订单、定制服务发布需求10,000+优质课程5,000+认证创作者50万+活跃用户98%好评率快速入口常用功能一键直达创作者工作台内容审核中心交易管理财务结算账号设置平台保障中心内容社区 · C端免费浏览 · UGC内容热门视频发现精彩内容查看更多 12:30舞蹈街舞基础入门教学3.4k015:45音乐钢琴零基础教程第一乐章2.1k020:00运动瑜伽晨间唤醒练习5.7k018:20绘画水彩画技法详解1.9k0课程市场 · 交易平台审核 · 交易保障精选课程高质量系统化学习查看更多 舞蹈已发布订阅制爵士舞入门到精通林舞蹈家4.81996¥199/ ¥59/月8 章节查看详情订阅课程音乐已发布订阅制吉他弹唱三月通张吉他手4.91290¥149/ ¥44/月12 章节查看详情订阅课程运动已发布订阅制居家健身减脂计划王健身教练4.71331¥99/ ¥29/月15 章节查看详情订阅课程绘画已发布订阅制水彩风景绘画李画师4.8146¥129/ ¥38/月10 章节查看详情订阅课程C 端内容 / B 端服务订单广场 · B端定制服务 · 定金托管定制订单广场找到适合你的专业服务发布需求查看全部 舞蹈已发布上门教爵士舞基础想学习爵士舞基础，每周2次，每次1小时¥300定金 ¥100朝阳区2026-07-09T15:32:53.516Z预计 60 天李画师6月14日 15:32平台保障申请仲裁创作者热门创作者关注你喜欢的创作者✓李画师4.94639 粉丝✓林舞蹈家4.93511 粉丝✓陈摄影师4.84830 粉丝✓张吉他手4.82801 粉丝✓王健身教练4.72887 粉丝平台保障六大保障体系全方位保障交易安全，让技能服务更放心98%双向评价好评率100%服务留痕过程可追溯50万保险覆盖最高保额100%资金托管安全保障了解完整保障体系准备好开始你的技能变现之旅了吗？加入我们，将你的专业技能转化为可持续的收入来源成为创作者了解平台保障SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 4709,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-cycle19-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49206/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-01-首屏.png",
+          "elementCount": 848,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "admin 管理员",
+            "个人主页",
+            "管理后台",
+            "账号设置",
+            "退出登录",
+            "查看更多",
+            "3.4k",
+            "2.1k",
+            "5.7k",
+            "1.9k",
+            "查看详情",
+            "订阅课程",
+            "发布需求",
+            "查看全部",
+            "申请仲裁",
+            "了解完整保障体系",
+            "成为创作者",
+            "了解平台保障",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕"
+          ]
+        }
+      },
+      {
+        "label": "导航:S SkillVerse",
+        "url": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "headings": [
+          "技能即服务",
+          "我是学习者",
+          "我是创作者",
+          "我有需求",
+          "快速入口",
+          "热门视频",
+          "精选课程",
+          "爵士舞入门到精通",
+          "吉他弹唱三月通",
+          "居家健身减脂计划",
+          "水彩风景绘画",
+          "定制订单广场"
+        ],
+        "navLabels": [
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员 admin 管理员 个人主页 管理后台 账号设置 退出登录",
+          "admin 管理员",
+          "个人主页",
+          "管理后台",
+          "账号设置",
+          "退出登录"
+        ],
+        "buttons": [
+          "admin 管理员",
+          "个人主页",
+          "管理后台",
+          "账号设置",
+          "退出登录",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场admin管理员admin管理员 个人主页 管理后台 账号设置退出登录让每个人的技能都能创造价值技能即服务连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务我是学习者学习课程、购买服务浏览课程我是创作者发布课程、提供服务进入工作台我有需求发布订单、定制服务发布需求10,000+优质课程5,000+认证创作者50万+活跃用户98%好评率快速入口常用功能一键直达创作者工作台内容审核中心交易管理财务结算账号设置平台保障中心内容社区 · C端免费浏览 · UGC内容热门视频发现精彩内容查看更多 12:30舞蹈街舞基础入门教学3.4k015:45音乐钢琴零基础教程第一乐章2.1k020:00运动瑜伽晨间唤醒练习5.7k018:20绘画水彩画技法详解1.9k0课程市场 · 交易平台审核 · 交易保障精选课程高质量系统化学习查看更多 舞蹈已发布订阅制爵士舞入门到精通林舞蹈家4.81996¥199/ ¥59/月8 章节查看详情订阅课程音乐已发布订阅制吉他弹唱三月通张吉他手4.91290¥149/ ¥44/月12 章节查看详情订阅课程运动已发布订阅制居家健身减脂计划王健身教练4.71331¥99/ ¥29/月15 章节查看详情订阅课程绘画已发布订阅制水彩风景绘画李画师4.8146¥129/ ¥38/月10 章节查看详情订阅课程C 端内容 / B 端服务订单广场 · B端定制服务 · 定金托管定制订单广场找到适合你的专业服务发布需求查看全部 舞蹈已发布上门教爵士舞基础想学习爵士舞基础，每周2次，每次1小时¥300定金 ¥100朝阳区2026-07-09T15:32:53.516Z预计 60 天李画师6月14日 15:32平台保障申请仲裁创作者热门创作者关注你喜欢的创作者✓李画师4.94639 粉丝✓林舞蹈家4.93511 粉丝✓陈摄影师4.84830 粉丝✓张吉他手4.82801 粉丝✓王健身教练4.72887 粉丝平台保障六大保障体系全方位保障交易安全，让技能服务更放心98%双向评价好评率100%服务留痕过程可追溯50万保险覆盖最高保额100%资金托管安全保障了解完整保障体系准备好开始你的技能变现之旅了吗？加入我们，将你的专业技能转化为可持续的收入来源成为创作者了解平台保障SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 4859,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-cycle19-structure-02-导航-S-SkillVerse",
+          "label": "导航:S SkillVerse",
+          "finalUrl": "http://127.0.0.1:49206/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-02-导航-S-SkillVerse.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-02-导航-S-SkillVerse.png",
+          "elementCount": 848,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "admin 管理员",
+            "个人主页",
+            "管理后台",
+            "账号设置",
+            "退出登录",
+            "查看更多",
+            "3.4k",
+            "2.1k",
+            "5.7k",
+            "1.9k",
+            "查看详情",
+            "订阅课程",
+            "发布需求",
+            "查看全部",
+            "申请仲裁",
+            "了解完整保障体系",
+            "成为创作者",
+            "了解平台保障",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕"
+          ]
+        }
+      },
+      {
+        "label": "操作:账号设置",
+        "url": "http://127.0.0.1:49206/settings",
+        "title": "My Trae Project",
+        "headings": [
+          "基本资料",
+          "擅长领域"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 admin 管理员",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员"
+        ],
+        "buttons": [
+          "admin 管理员",
+          "本地演示",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "家政",
+          "添加技能",
+          "保存设置"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "介绍一下自己，让学员更好地了解你...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场admin管理员基本资料Aadmin已认证创作者加入于 2026/6/15用户名 *个人简介平台管理员服务地域本地演示本地演示擅长领域擅长分类（可多选，最多5个）舞蹈音乐运动绘画摄影烹饪编程语言家政技能标签（可多选，最多10个）添加技能保存设置SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-cycle19-structure-03-操作-账号设置",
+          "label": "操作:账号设置",
+          "finalUrl": "http://127.0.0.1:49206/settings",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-03-操作-账号设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-03-操作-账号设置.png",
+          "elementCount": 137,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "admin 管理员",
+            "admin",
+            "平台管理员",
+            "本地演示",
+            "舞蹈",
+            "音乐",
+            "运动",
+            "绘画",
+            "摄影",
+            "烹饪",
+            "编程",
+            "语言",
+            "家政",
+            "添加技能",
+            "保存设置",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕",
+            "争议仲裁机制",
+            "保险对接接口",
+            "查看完整保障体系"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:账号设置->添加技能",
+        "url": "http://127.0.0.1:49206/settings",
+        "title": "My Trae Project",
+        "headings": [
+          "基本资料",
+          "擅长领域",
+          "选择技能标签"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 admin 管理员",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员"
+        ],
+        "buttons": [
+          "admin 管理员",
+          "本地演示",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "家政",
+          "添加技能",
+          "保存设置",
+          "视频剪辑",
+          "平面设计",
+          "UI设计",
+          "编程开发",
+          "音乐制作",
+          "文案写作",
+          "配音",
+          "动画制作",
+          "3D建模",
+          "数据分析",
+          "营销策划"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "介绍一下自己，让学员更好地了解你...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场admin管理员基本资料Aadmin已认证创作者加入于 2026/6/15用户名 *个人简介平台管理员服务地域本地演示本地演示擅长领域擅长分类（可多选，最多5个）舞蹈音乐运动绘画摄影烹饪编程语言家政技能标签（可多选，最多10个）添加技能保存设置选择技能标签视频剪辑摄影平面设计UI设计编程开发音乐制作文案写作配音动画制作3D建模数据分析营销策划直播运营电商运营心理咨询确定SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能",
+          "label": "二层操作:账号设置->添加技能",
+          "finalUrl": "http://127.0.0.1:49206/settings",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能.png",
+          "elementCount": 164,
+          "interactiveCount": 49,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "admin 管理员",
+            "admin",
+            "平台管理员",
+            "本地演示",
+            "舞蹈",
+            "音乐",
+            "运动",
+            "绘画",
+            "摄影",
+            "烹饪",
+            "编程",
+            "语言",
+            "家政",
+            "添加技能",
+            "保存设置",
+            "视频剪辑",
+            "平面设计",
+            "UI设计",
+            "编程开发",
+            "音乐制作",
+            "文案写作",
+            "配音",
+            "动画制作",
+            "3D建模",
+            "数据分析",
+            "营销策划"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看更多",
+        "url": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "headings": [
+          "水彩风景手绘课",
+          "小提琴基础课",
+          "古典舞身韵课",
+          "HIIT燃脂训练",
+          "移动端App开发",
+          "后期修图系统课",
+          "Java后端架构课",
+          "韩语零基础入门",
+          "川菜烹饪教程",
+          "Python全栈开发·订阅",
+          "钢琴入门到精通",
+          "法式甜点大师课"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 admin 管理员",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员"
+        ],
+        "buttons": [
+          "admin 管理员",
+          "内容社区",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "查看详情",
+          "立即购买",
+          "订阅课程"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索课程、创作者...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场admin管理员内容社区课程市场平台审核·交易保障全部舞蹈音乐运动绘画摄影烹饪编程语言绘画已发布水彩风景手绘课李李老师4.63243¥199012 章节查看详情立即购买音乐已发布小提琴基础课张张教练4.56276¥259044 章节查看详情立即购买舞蹈已发布古典舞身韵课张张教练4.56252¥359032 章节查看详情立即购买运动已发布HIIT燃脂训练王王导师4.7945¥189020 章节查看详情立即购买编程已发布订阅制移动端App开发陈陈老师4.58432免费/ ¥89/月136 章节查看详情订阅课程摄影已发布后期修图系统课张张教练4.95802¥189018 章节查看详情立即购买编程已发布订阅制Java后端架构课张张教练4.87901免费/ ¥69/月128 章节查看详情订阅课程语言已发布韩语零基础入门张张教练4.32240¥319056 章节查看详情立即购买烹饪已发布川菜烹饪教程刘刘教授4.84207¥389042 章节查看详情立即购买编程已发布订阅制Python全栈开发·订阅李李老师4.46991免费/ ¥49/月120 章节查看详情订阅课程音乐已发布钢琴入门到精通李李老师4.87461¥199036 章节查看详情立即购买烹饪已发布法式甜点大师课李李老师4.41137¥299030 章节查看详情立即购买舞蹈已发布街舞入门到精通王王导师4.910363¥329028 章节查看详情立即购买绘画已发布国画山水课陈陈老师4.76447¥319028 章节查看详情立即购买烹饪已发布咖啡拉花技巧李李老师4.32706¥449050 章节查看详情立即购买音乐已发布吉他弹唱速成班王王导师4.63035¥229040 章节查看详情立即购买摄影已发布商业人像布光刘刘教授4.710295¥219022 章节查看详情立即购买运动已发布跑步姿势纠正刘刘教授4.88819¥249028 章节查看详情立即购买绘画已发布素描零基础系统课王王导师4.94440¥229016 章节查看详情立即购买音乐已发布古筝入门教程李李老师4.34453¥349056 章节查看详情立即购买音乐已发布电子音乐制作陈陈老师4.49189¥319052 章节查看详情立即购买舞蹈已发布爵士舞零基础系统课李李老师4.47221¥299024 章节查看详情立即购买摄影已发布风光摄影技巧王王导师4.44837¥159014 章节查看详情立即购买运动已发布普拉提核心训练张张教练4.91290¥219024 章节查看详情立即购买运动已发布瑜伽身心疗愈课李李老师4.84485¥159016 章节查看详情立即购买舞蹈已发布拉丁舞初级教程刘刘教授4.49058¥389036 章节查看详情立即购买SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 3988,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-cycle19-structure-05-操作-查看更多",
+          "label": "操作:查看更多",
+          "finalUrl": "http://127.0.0.1:49206/feed",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-05-操作-查看更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-05-操作-查看更多.png",
+          "elementCount": 1200,
+          "interactiveCount": 83,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "admin 管理员",
+            "搜索课程、创作者...",
+            "课程市场",
+            "全部",
+            "舞蹈",
+            "音乐",
+            "运动",
+            "绘画",
+            "摄影",
+            "烹饪",
+            "编程",
+            "语言",
+            "查看详情",
+            "立即购买",
+            "订阅课程",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看更多->查看详情",
+        "url": "http://127.0.0.1:49206/courses/course-mock-40",
+        "title": "My Trae Project",
+        "headings": [
+          "街舞基础入门教学",
+          "课程章节",
+          "课程介绍与准备",
+          "基础站姿与身体控制",
+          "节奏感训练",
+          "基础步伐组合",
+          "上肢动作配合",
+          "简单套路练习",
+          "学员评价",
+          "讲师介绍",
+          "购买须知"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 admin 管理员",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员"
+        ],
+        "buttons": [
+          "admin 管理员",
+          "←",
+          "订阅",
+          "立即购买",
+          "关注"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场admin管理员←可免费试看¥199或 ¥29/月订阅已有 1234 人购买订阅立即购买街舞基础入门教学4.8(256 评价)1234 人学习6 章节 · 115 分钟本课程从零基础开始，系统讲解街舞的基本动作、节奏感和表现力。适合想要学习街舞但没有任何基础的学员。课程包含12个章节，由浅入深，让你轻松掌握街舞技巧。课程章节第1节免费课程介绍与准备5 分钟第2节免费基础站姿与身体控制15 分钟第3节节奏感训练20 分钟第4节基础步伐组合25 分钟第5节上肢动作配合20 分钟第6节简单套路练习30 分钟学员评价4.8256 条评价学员小王老师讲得非常详细，零基础也能跟上，强烈推荐！2024/1/15舞蹈爱好者课程内容很充实，就是节奏稍快，需要反复观看。2024/1/10讲师介绍舞蹈老师李明✓5000 粉丝4.9评分5000粉丝12课程关注购买须知购买后永久有效，可随时观看支持手机、平板、电脑多端同步7天内不满意可申请退款专属学习社群答疑SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2987,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情",
+          "label": "二层操作:查看更多->查看详情",
+          "finalUrl": "http://127.0.0.1:49206/courses/course-mock-40",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情.png",
+          "elementCount": 297,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "admin 管理员",
+            "订阅",
+            "立即购买",
+            "关注",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕",
+            "争议仲裁机制",
+            "保险对接接口",
+            "查看完整保障体系"
+          ]
+        }
+      },
+      {
+        "label": "导航:S",
+        "url": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "headings": [
+          "技能即服务",
+          "我是学习者",
+          "我是创作者",
+          "我有需求",
+          "快速入口",
+          "热门视频",
+          "精选课程",
+          "爵士舞入门到精通",
+          "吉他弹唱三月通",
+          "居家健身减脂计划",
+          "水彩风景绘画",
+          "定制订单广场"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 admin 管理员",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员"
+        ],
+        "buttons": [
+          "admin 管理员",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场admin管理员让每个人的技能都能创造价值技能即服务连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务我是学习者学习课程、购买服务浏览课程我是创作者发布课程、提供服务进入工作台我有需求发布订单、定制服务发布需求10,000+优质课程5,000+认证创作者50万+活跃用户98%好评率快速入口常用功能一键直达创作者工作台内容审核中心交易管理财务结算账号设置平台保障中心内容社区 · C端免费浏览 · UGC内容热门视频发现精彩内容查看更多 12:30舞蹈街舞基础入门教学3.4k015:45音乐钢琴零基础教程第一乐章2.1k020:00运动瑜伽晨间唤醒练习5.7k018:20绘画水彩画技法详解1.9k0课程市场 · 交易平台审核 · 交易保障精选课程高质量系统化学习查看更多 舞蹈已发布订阅制爵士舞入门到精通林舞蹈家4.81996¥199/ ¥59/月8 章节查看详情订阅课程音乐已发布订阅制吉他弹唱三月通张吉他手4.91290¥149/ ¥44/月12 章节查看详情订阅课程运动已发布订阅制居家健身减脂计划王健身教练4.71331¥99/ ¥29/月15 章节查看详情订阅课程绘画已发布订阅制水彩风景绘画李画师4.8146¥129/ ¥38/月10 章节查看详情订阅课程C 端内容 / B 端服务订单广场 · B端定制服务 · 定金托管定制订单广场找到适合你的专业服务发布需求查看全部 舞蹈已发布上门教爵士舞基础想学习爵士舞基础，每周2次，每次1小时¥300定金 ¥100朝阳区2026-07-09T15:32:53.516Z预计 60 天李画师6月14日 15:32平台保障申请仲裁创作者热门创作者关注你喜欢的创作者✓李画师4.94639 粉丝✓林舞蹈家4.93511 粉丝✓陈摄影师4.84830 粉丝✓张吉他手4.82801 粉丝✓王健身教练4.72887 粉丝平台保障六大保障体系全方位保障交易安全，让技能服务更放心98%双向评价好评率100%服务留痕过程可追溯50万保险覆盖最高保额100%资金托管安全保障了解完整保障体系准备好开始你的技能变现之旅了吗？加入我们，将你的专业技能转化为可持续的收入来源成为创作者了解平台保障SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 4859,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-cycle19-structure-07-导航-S",
+          "label": "导航:S",
+          "finalUrl": "http://127.0.0.1:49206/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-07-导航-S.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-07-导航-S.png",
+          "elementCount": 830,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "admin 管理员",
+            "查看更多",
+            "3.4k",
+            "2.1k",
+            "5.7k",
+            "1.9k",
+            "查看详情",
+            "订阅课程",
+            "发布需求",
+            "查看全部",
+            "申请仲裁",
+            "了解完整保障体系",
+            "成为创作者",
+            "了解平台保障",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们",
+            "用户协议",
+            "隐私政策",
+            "双向信用评价",
+            "服务过程留痕",
+            "争议仲裁机制",
+            "保险对接接口",
+            "查看完整保障体系"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看更多",
+        "url": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "headings": [
+          "拉丁舞初级教程",
+          "普拉提核心训练",
+          "后期修图系统课",
+          "Python全栈开发·订阅",
+          "古典舞身韵课",
+          "咖啡拉花技巧",
+          "钢琴入门到精通",
+          "现代舞编舞课",
+          "法语发音教程",
+          "力量增肌计划",
+          "太极养生入门",
+          "日料入门制作"
+        ],
+        "navLabels": [
+          "S SkillVerse 首页 内容社区 服务广场 admin 管理员",
+          "S SkillVerse",
+          "S",
+          "首页 内容社区 服务广场",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员"
+        ],
+        "buttons": [
+          "admin 管理员",
+          "内容社区",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "查看详情",
+          "立即购买",
+          "订阅课程"
+        ],
+        "links": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "✓ 双向信用评价",
+          "✓ 服务过程留痕",
+          "✓ 争议仲裁机制",
+          "✓ 保险对接接口",
+          "→ 查看完整保障体系"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索课程、创作者...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "SSkillVerse首页内容社区服务广场admin管理员内容社区课程市场平台审核·交易保障全部舞蹈音乐运动绘画摄影烹饪编程语言舞蹈已发布拉丁舞初级教程刘刘教授5.07275¥389036 章节查看详情立即购买运动已发布普拉提核心训练张张教练4.36465¥219024 章节查看详情立即购买摄影已发布后期修图系统课张张教练4.69725¥189018 章节查看详情立即购买编程已发布订阅制Python全栈开发·订阅李李老师4.74083免费/ ¥49/月120 章节查看详情订阅课程舞蹈已发布古典舞身韵课张张教练4.71390¥359032 章节查看详情立即购买烹饪已发布咖啡拉花技巧李李老师4.64486¥449050 章节查看详情立即购买音乐已发布钢琴入门到精通李李老师4.510200¥199036 章节查看详情立即购买舞蹈已发布现代舞编舞课陈陈老师4.4569¥419040 章节查看详情立即购买语言已发布法语发音教程刘刘教授4.96132¥349060 章节查看详情立即购买运动已发布力量增肌计划陈陈老师4.45681¥279032 章节查看详情立即购买运动已发布太极养生入门李李老师4.58131¥309036 章节查看详情立即购买烹饪已发布日料入门制作陈陈老师4.64428¥419046 章节查看详情立即购买编程已发布订阅制人工智能入门李李老师4.63083免费/ ¥99/月140 章节查看详情订阅课程运动已发布HIIT燃脂训练王王导师4.710129¥189020 章节查看详情立即购买语言已发布商务英语提升课李李老师4.5774¥259048 章节查看详情立即购买编程已发布订阅制算法面试系统班刘刘教授4.99721免费/ ¥79/月132 章节查看详情订阅课程摄影已发布手机人像摄影大师班李李老师4.32347¥129010 章节查看详情立即购买语言已发布韩语零基础入门张张教练4.77889¥319056 章节查看详情立即购买摄影已发布静物产品摄影李李老师4.91963¥279030 章节查看详情立即购买编程已发布订阅制移动端App开发陈陈老师4.78451免费/ ¥89/月136 章节查看详情订阅课程舞蹈已发布爵士舞零基础系统课李李老师4.57947¥299024 章节查看详情立即购买语言已发布雅思听力突破李李老师4.59510¥409068 章节查看详情立即购买绘画已发布水彩风景手绘课李李老师4.84413¥199012 章节查看详情立即购买舞蹈已发布中国舞考级课程李李老师4.91868¥449044 章节查看详情立即购买烹饪已发布法式甜点大师课李李老师4.59868¥299030 章节查看详情立即购买音乐已发布声乐演唱技巧刘刘教授4.43093¥289048 章节查看详情立即购买音乐已发布古筝入门教程李李老师4.95312¥349056 章节查看详情立即购买绘画已发布素描零基础系统课王王导师4.79644¥229016 章节查看详情立即购买SSkillVerse让每个人的技能都能创造价值产品视频课程定制服务创作者中心关于关于我们用户协议隐私政策平台保障✓双向信用评价✓服务过程留痕✓争议仲裁机制✓保险对接接口→查看完整保障体系© 2026 SkillVerse. All rights reserved.",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 3988,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-cycle19-structure-08-操作-查看更多",
+          "label": "操作:查看更多",
+          "finalUrl": "http://127.0.0.1:49206/feed",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-08-操作-查看更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-08-操作-查看更多.png",
+          "elementCount": 1200,
+          "interactiveCount": 87,
+          "interactiveLabels": [
+            "S SkillVerse",
+            "首页",
+            "内容社区",
+            "服务广场",
+            "admin 管理员",
+            "搜索课程、创作者...",
+            "课程市场",
+            "全部",
+            "舞蹈",
+            "音乐",
+            "运动",
+            "绘画",
+            "摄影",
+            "烹饪",
+            "编程",
+            "语言",
+            "查看详情",
+            "立即购买",
+            "订阅课程",
+            "视频课程",
+            "定制服务",
+            "创作者中心",
+            "关于我们"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/auth/profile 返回 HTTP 401，对应业务模块无法完成数据读取。",
+      "接口 /api/courses/course-mock-40 返回 HTTP 404，对应业务模块无法完成数据读取。",
+      "接口 /api/courses/course-mock-40/access 返回 HTTP 401，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "补齐 /api/auth/profile 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/courses/course-mock-40 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/courses/course-mock-40/access 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/profile",
+      "/api/courses/course-mock-40",
+      "/api/courses/course-mock-40/access"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "S SkillVerse",
+        "label": "账号设置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "S SkillVerse",
+        "label": "账号设置->添加技能",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "S SkillVerse",
+        "label": "查看更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "S SkillVerse",
+        "label": "查看更多->查看详情",
+        "ordinal": 4,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "S",
+        "label": "查看更多",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-01-首屏.png",
+        "elementCount": 848,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "个人主页",
+          "管理后台",
+          "账号设置",
+          "退出登录",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-02-导航-S-SkillVerse",
+        "label": "导航:S SkillVerse",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-02-导航-S-SkillVerse.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-02-导航-S-SkillVerse.png",
+        "elementCount": 848,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "个人主页",
+          "管理后台",
+          "账号设置",
+          "退出登录",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-03-操作-账号设置",
+        "label": "操作:账号设置",
+        "finalUrl": "http://127.0.0.1:49206/settings",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-03-操作-账号设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-03-操作-账号设置.png",
+        "elementCount": 137,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "admin",
+          "平台管理员",
+          "本地演示",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "家政",
+          "添加技能",
+          "保存设置",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能",
+        "label": "二层操作:账号设置->添加技能",
+        "finalUrl": "http://127.0.0.1:49206/settings",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能.png",
+        "elementCount": 164,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "admin",
+          "平台管理员",
+          "本地演示",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "家政",
+          "添加技能",
+          "保存设置",
+          "视频剪辑",
+          "平面设计",
+          "UI设计",
+          "编程开发",
+          "音乐制作",
+          "文案写作",
+          "配音",
+          "动画制作",
+          "3D建模",
+          "数据分析",
+          "营销策划"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-05-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-05-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-05-操作-查看更多.png",
+        "elementCount": 1200,
+        "interactiveCount": 83,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "搜索课程、创作者...",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "查看详情",
+          "立即购买",
+          "订阅课程",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情",
+        "label": "二层操作:查看更多->查看详情",
+        "finalUrl": "http://127.0.0.1:49206/courses/course-mock-40",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情.png",
+        "elementCount": 297,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "订阅",
+          "立即购买",
+          "关注",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-07-导航-S",
+        "label": "导航:S",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-07-导航-S.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-07-导航-S.png",
+        "elementCount": 830,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-08-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-08-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-08-操作-查看更多.png",
+        "elementCount": 1200,
+        "interactiveCount": 87,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "搜索课程、创作者...",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "查看详情",
+          "立即购买",
+          "订阅课程",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49206/",
+    "representativeScreenshotLabel": "技能即服务"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 8,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-01-首屏.png",
+        "elementCount": 848,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "个人主页",
+          "管理后台",
+          "账号设置",
+          "退出登录",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-02-导航-S-SkillVerse",
+        "label": "导航:S SkillVerse",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-02-导航-S-SkillVerse.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-02-导航-S-SkillVerse.png",
+        "elementCount": 848,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "个人主页",
+          "管理后台",
+          "账号设置",
+          "退出登录",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-03-操作-账号设置",
+        "label": "操作:账号设置",
+        "finalUrl": "http://127.0.0.1:49206/settings",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-03-操作-账号设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-03-操作-账号设置.png",
+        "elementCount": 137,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "admin",
+          "平台管理员",
+          "本地演示",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "家政",
+          "添加技能",
+          "保存设置",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能",
+        "label": "二层操作:账号设置->添加技能",
+        "finalUrl": "http://127.0.0.1:49206/settings",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-04-二层操作-账号设置-添加技能.png",
+        "elementCount": 164,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "admin",
+          "平台管理员",
+          "本地演示",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "家政",
+          "添加技能",
+          "保存设置",
+          "视频剪辑",
+          "平面设计",
+          "UI设计",
+          "编程开发",
+          "音乐制作",
+          "文案写作",
+          "配音",
+          "动画制作",
+          "3D建模",
+          "数据分析",
+          "营销策划"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-05-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-05-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-05-操作-查看更多.png",
+        "elementCount": 1200,
+        "interactiveCount": 83,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "搜索课程、创作者...",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "查看详情",
+          "立即购买",
+          "订阅课程",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情",
+        "label": "二层操作:查看更多->查看详情",
+        "finalUrl": "http://127.0.0.1:49206/courses/course-mock-40",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-06-二层操作-查看更多-查看详情.png",
+        "elementCount": 297,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "订阅",
+          "立即购买",
+          "关注",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-07-导航-S",
+        "label": "导航:S",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-07-导航-S.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-07-导航-S.png",
+        "elementCount": 830,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "查看更多",
+          "3.4k",
+          "2.1k",
+          "5.7k",
+          "1.9k",
+          "查看详情",
+          "订阅课程",
+          "发布需求",
+          "查看全部",
+          "申请仲裁",
+          "了解完整保障体系",
+          "成为创作者",
+          "了解平台保障",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们",
+          "用户协议",
+          "隐私政策",
+          "双向信用评价",
+          "服务过程留痕",
+          "争议仲裁机制",
+          "保险对接接口",
+          "查看完整保障体系"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-cycle19-structure-08-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49206/feed",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-08-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-cycle19/may-89206-codex-cycle19-structure-08-操作-查看更多.png",
+        "elementCount": 1200,
+        "interactiveCount": 87,
+        "interactiveLabels": [
+          "S SkillVerse",
+          "首页",
+          "内容社区",
+          "服务广场",
+          "admin 管理员",
+          "搜索课程、创作者...",
+          "课程市场",
+          "全部",
+          "舞蹈",
+          "音乐",
+          "运动",
+          "绘画",
+          "摄影",
+          "烹饪",
+          "编程",
+          "语言",
+          "查看详情",
+          "立即购买",
+          "订阅课程",
+          "视频课程",
+          "定制服务",
+          "创作者中心",
+          "关于我们"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1760,
+    "height": 1600,
+    "scrollWidth": 1728,
+    "scrollHeight": 2100
+  },
+  "initialBodyTextPreview": "S\nSkillVerse\n首页\n内容社区\n服务广场\n\nadmin\n\n管理员\n\n让每个人的技能都能创造价值\n技能即服务\n\n连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务\n\n我是学习者\n\n学习课程、购买服务\n\n浏览课程\n我是创作者\n\n发布课程、提供服务\n\n进入工作台\n我有需求\n\n发布订单、定制服务\n\n发布需求\n10,000+\n优质课程\n5,000+\n认证创作者\n50万+\n活跃用户\n98%\n好评率\n快速入口\n\n常用功能一键直达\n\n创作者工作台\n内容审核中心\n交易管理\n财务结算\n账号设置\n平台保障中心\n内容社区 · C端\n免费浏览 · UGC内容\n热门视频\n\n发现精彩内容\n\n查看更多\n12:30\n舞蹈\n街舞基础入门教学\n3.4k\n0\n15:45\n音乐\n钢琴零基础教程第一乐章\n2.1k\n0\n20:00\n运动\n瑜伽晨间唤醒练习\n5.7k\n0\n18:20\n绘画\n水彩画技法详解\n1.9k\n0\n课程市场 · 交易\n平台审核 · 交易保障\n精选课程\n\n高质量系统化学习\n\n查看更多\n舞蹈\n已发布\n订阅制\n爵士舞入门到精通\n林舞蹈家\n4.8\n1996\n¥199/ ¥59/月\n8 章节\n查看详情\n订阅课程\n音乐\n已发布\n订阅制\n吉他弹唱三月通\n张吉他手\n4.9\n1290\n¥149/ ¥44/月\n12 章节\n查看详情\n订阅课程\n运动\n已发布\n订阅制\n居家健身减脂计划\n王健身教练\n4.7\n1331\n¥99/ ¥29/月\n15 章节\n查看详情\n订阅课程\n绘画\n已发布\n订阅制\n水彩风景绘画\n李画师\n4.8\n146\n¥129/ ¥38/月\n10 章节\n查看详情\n订阅课程\nC 端内容 / B 端服务\n订单广场 · B端\n定制服务 · 定金托管\n定制订单广场\n\n找到适合你的专业服务\n\n发布需求\n查看全部\n舞蹈\n已发布\n上门教爵士舞基础\n\n想学习爵士舞基础，每周2次，每次1小时\n\n¥300\n定金 ¥100\n朝阳区\n2026-07-09T15:32:53.516Z\n预计 60 天\n\n李画师\n\n6月14日 15:32\n\n平台保障\n申请仲裁\n创作者\n热门创作者\n\n关注你喜欢的创作者\n\n✓\n李画师\n4.9\n4639 粉丝\n✓\n林舞蹈家\n4.9\n3511 粉丝\n✓\n陈摄影师\n4.8\n4830 粉丝\n✓\n张吉他手\n4.8\n2801 粉丝\n✓\n王健身教练\n4.7\n2887 粉丝\n平台保障\n六大保障体系\n\n全方位保障交易安全，让技能服务更放心\n\n98%\n双向评价\n好评率\n100%\n服务留痕\n过程可追溯\n50万\n保险覆盖\n最高保额\n100%\n资金托管\n安全保障\n了解完整保障体系\n准备好开始你的技能变现之旅了吗？\n\n加入我们，将你的专业技能转化为可持续的收入来源\n\n成为创作者\n了解平台保障\nS\nSkillVerse\n\n让每个人的技能都能创造价值\n\n产品\n视频课程\n定制服务\n创作者中心\n关于\n关于我们\n用户协议\n隐私政策\n平台保障\n✓\n双向信用评价\n✓\n服务过程留痕\n✓\n争议仲裁机制\n✓\n保险对接接口\n→\n查看完整保障体系\n© 2026 SkillVerse. All rights reserved.",
+  "bodyTextPreview": "S\nSkillVerse\n首页\n内容社区\n服务广场\n\nadmin\n\n管理员\n\nS\nSkillVerse\n\n让每个人的技能都能创造价值\n\n产品\n视频课程\n定制服务\n创作者中心\n关于\n关于我们\n用户协议\n隐私政策\n平台保障\n✓\n双向信用评价\n✓\n服务过程留痕\n✓\n争议仲裁机制\n✓\n保险对接接口\n→\n查看完整保障体系\n© 2026 SkillVerse. All rights reserved.",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40/chapters"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40/reviews?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40/access"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40/chapters"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40/reviews?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40/access"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=1&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?page=2&pageSize=12&category=undefined&keyword=undefined&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/courses?pageSize=4&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/orders?pageSize=3&status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/users/creators?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49206/api/config"
+    },
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/auth/profile",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/auth/profile",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/auth/profile",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/auth/profile",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/courses/course-mock-40",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load course: Error: 课程不存在\n    at request (http://127.0.0.1:49206/src/utils/api.ts:24:11)\n    at async Promise.all (index 0)\n    at async loadCourseData (http://127.0.0.1:49206/src/pages/CourseDetail.tsx?t=1781554500517:49:63)",
+      "location": {
+        "url": "http://127.0.0.1:49206/src/pages/CourseDetail.tsx?t=1781554500517",
+        "lineNumber": 61,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/courses/course-mock-40/access",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/courses/course-mock-40",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load course: Error: 课程不存在\n    at request (http://127.0.0.1:49206/src/utils/api.ts:24:11)\n    at async Promise.all (index 0)\n    at async loadCourseData (http://127.0.0.1:49206/src/pages/CourseDetail.tsx?t=1781554500517:49:63)",
+      "location": {
+        "url": "http://127.0.0.1:49206/src/pages/CourseDetail.tsx?t=1781554500517",
+        "lineNumber": 61,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/courses/course-mock-40/access",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/auth/profile",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/auth/profile",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49206/node_modules/.vite/deps/chunk-NXESFFTV.js?v=84077cc9",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/auth/profile",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49206/api/auth/profile",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40/access"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/courses/course-mock-40/access"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49206/api/auth/profile"
+    }
+  ]
+}

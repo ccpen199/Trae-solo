@@ -8,14 +8,12 @@ interface RouteGuardProps {
 }
 
 export default function RouteGuard({ children, allowedRoles = ['creator', 'admin'] }: RouteGuardProps) {
-  const { user, isAuthenticated, isLoading, fetchProfile } = useAuthStore();
+  const { user, isAuthenticated, isLoading, init } = useAuthStore();
   const location = useLocation();
 
   useEffect(() => {
-    if (!user && isAuthenticated) {
-      fetchProfile();
-    }
-  }, [user, isAuthenticated, fetchProfile]);
+    init();
+  }, [init]);
 
   if (isLoading) {
     return (
@@ -30,7 +28,7 @@ export default function RouteGuard({ children, allowedRoles = ['creator', 'admin
   }
 
   if (user && allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/forbidden" replace />;
   }
 
   return <>{children}</>;

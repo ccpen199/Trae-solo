@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Home as HomeIcon, AlertTriangle, Bell, Search, User, Settings as SettingsIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Home as HomeIcon, AlertTriangle, Bell, Search, User, Settings as SettingsIcon, ShieldCheck, Briefcase, FileText, ClipboardCheck, DollarSign, Lock } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import FeedPage from "@/pages/FeedPage";
@@ -26,6 +26,82 @@ import { useAuthStore, useAppStore } from "@/store/authStore";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import Button from "@/components/Button";
+import type { User as UserType } from "../shared/types";
+
+const ROLE_LABELS: Record<string, string> = {
+  admin: '管理员',
+  creator: '创作者',
+  requester: '需求方',
+  user: '学习者',
+};
+
+function getRoleLabel(role?: string): string {
+  return ROLE_LABELS[role || 'user'] || '学习者';
+}
+
+function getNavItemsForApp(role?: string) {
+  const baseItems = [
+    { path: '/', label: '首页', icon: HomeIcon },
+    { path: '/feed', label: '内容社区', icon: Search },
+    { path: '/orders', label: '订单广场', icon: Bell },
+    { path: '/guarantee', label: '保障中心', icon: ShieldCheck },
+  ];
+
+  const r = role || 'user';
+
+  if (r === 'admin') {
+    return [
+      ...baseItems.slice(0, 3),
+      { path: '/workspace', label: '工作台', icon: Briefcase },
+      { path: '/orders/my', label: '我的需求', icon: FileText },
+      ...baseItems.slice(3),
+      { path: '/admin/review', label: '审核中心', icon: ClipboardCheck },
+      { path: '/admin/finance', label: '财务管理', icon: DollarSign },
+    ];
+  }
+
+  if (r === 'creator') {
+    return [
+      ...baseItems.slice(0, 2),
+      { path: '/workspace', label: '工作台入口', icon: Briefcase },
+      ...baseItems.slice(2),
+    ];
+  }
+
+  if (r === 'requester') {
+    return [
+      ...baseItems.slice(0, 3),
+      { path: '/orders/my', label: '我的需求', icon: FileText },
+      ...baseItems.slice(3),
+    ];
+  }
+
+  return baseItems;
+}
+
+function ForbiddenPage() {
+  const navigate = useNavigate();
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-zinc-50 to-white p-8">
+      <div className="text-center animate-fade-in-up">
+        <div className="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Lock className="w-12 h-12 text-red-500" />
+        </div>
+        <h1 className="text-4xl font-bold text-zinc-900 mb-4">权限不足</h1>
+        <p className="text-lg text-zinc-500 mb-8">抱歉，您没有权限访问该页面</p>
+        <div className="flex items-center justify-center gap-3">
+          <Button onClick={() => navigate(-1)} variant="ghost" className="inline-flex items-center gap-2">
+            返回上一页
+          </Button>
+          <Button onClick={() => navigate('/')} variant="primary" className="inline-flex items-center gap-2">
+            <HomeIcon className="w-4 h-4" />
+            返回首页
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function NotFound() {
   return (
@@ -65,11 +141,20 @@ function Navbar() {
   
   if (isWorkspace || isAdmin) return null;
 
-  const navItems = [
-    { path: '/', label: '首页', icon: HomeIcon },
-    { path: '/feed', label: '内容社区', icon: Search },
-    { path: '/orders', label: '服务广场', icon: Bell },
-  ];
+  const navItems = useMemo(() => getNavItemsForApp(user?.role), [user?.role]);
+  const roleLabel = useMemo(() => getRoleLabel(user?.role), [user?.role]);
+  const userRole = user?.role || 'user';
+
+  const handleUserMenuNav = (path: string) => {
+    navigate(path);
+    setShowUserMenu(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setShowUserMenu(false);
+    navigate('/');
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-zinc-100">
@@ -88,12 +173,13 @@ function Navbar() {
                 key={item.path}
                 to={item.path}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-sm font-medium transition-all",
+                  "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all",
                   location.pathname === item.path
                     ? "bg-primary-100 text-primary-700"
                     : "text-zinc-600 hover:text-primary-600 hover:bg-primary-50"
                 )}
               >
+                <item.icon className="w-4 h-4" />
                 {item.label}
               </Link>
             ))}
@@ -114,7 +200,7 @@ function Navbar() {
                   <div className="hidden md:block text-right mr-2">
                     <p className="text-sm font-medium text-zinc-900">{user?.username}</p>
                     <p className="text-xs text-zinc-500">
-                      {user?.role === 'creator' ? '创作者' : user?.role === 'admin' ? '管理员' : '普通用户'}
+                      {roleLabel}
                     </p>
                   </div>
                   {user?.avatar ? (
@@ -130,39 +216,55 @@ function Navbar() {
                   <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-lg border border-zinc-100 overflow-hidden animate-fade-in">
                     <div className="p-3 border-b border-zinc-100">
                       <p className="font-medium text-zinc-900">{user?.username}</p>
-                      <p className="text-sm text-zinc-500">{user?.role === 'creator' ? '创作者' : user?.role === 'admin' ? '管理员' : '普通用户'}</p>
+                      <p className="text-sm text-zinc-500">{roleLabel}</p>
                     </div>
                     <div className="p-2">
                       <button
-                        onClick={() => { navigate(`/creator/${user?.id}`); setShowUserMenu(false); }}
+                        onClick={() => handleUserMenuNav(`/users/${user?.id}`)}
                         className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
                       >
                         <User className="w-4 h-4" /> 个人主页
                       </button>
-                      {user?.role === 'creator' && (
+                      {(userRole === 'creator' || userRole === 'admin') && (
                         <button
-                          onClick={() => { navigate('/workspace'); setShowUserMenu(false); }}
+                          onClick={() => handleUserMenuNav('/workspace')}
                           className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
                         >
-                          <SettingsIcon className="w-4 h-4" /> 创作者工作台
+                          <Briefcase className="w-4 h-4" /> 创作者工作台
                         </button>
                       )}
-                      {user?.role === 'admin' && (
+                      {userRole === 'admin' && (
+                        <>
+                          <button
+                            onClick={() => handleUserMenuNav('/admin/review')}
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
+                          >
+                            <ClipboardCheck className="w-4 h-4" /> 审核中心
+                          </button>
+                          <button
+                            onClick={() => handleUserMenuNav('/admin/finance')}
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
+                          >
+                            <DollarSign className="w-4 h-4" /> 财务管理
+                          </button>
+                        </>
+                      )}
+                      {(userRole === 'requester' || userRole === 'admin') && (
                         <button
-                          onClick={() => { navigate('/admin'); setShowUserMenu(false); }}
+                          onClick={() => handleUserMenuNav('/orders/my')}
                           className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
                         >
-                          <SettingsIcon className="w-4 h-4" /> 管理后台
+                          <FileText className="w-4 h-4" /> 我的需求
                         </button>
                       )}
                       <button
-                        onClick={() => { navigate('/settings'); setShowUserMenu(false); }}
+                        onClick={() => handleUserMenuNav('/settings')}
                         className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
                       >
                         <SettingsIcon className="w-4 h-4" /> 账号设置
                       </button>
                       <button
-                        onClick={() => { logout(); setShowUserMenu(false); navigate('/'); }}
+                        onClick={handleLogout}
                         className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-red-600 hover:bg-red-50 transition-colors mt-1"
                       >
                         退出登录
@@ -186,21 +288,20 @@ function AppContent() {
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
   
   const initConfig = useAppStore((state) => state.initConfig);
-  const fetchProfile = useAuthStore((state) => state.fetchProfile);
+  const initAuth = useAuthStore((state) => state.init);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   useEffect(() => {
     initConfig();
-    if (isAuthenticated) {
-      fetchProfile();
-    }
-  }, [initConfig, fetchProfile, isAuthenticated]);
+    initAuth();
+  }, [initConfig, initAuth]);
 
   if (isAuthPage || isWorkspace || isAdmin) {
     return (
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Login />} />
+        <Route path="/forbidden" element={<ForbiddenPage />} />
         
         <Route 
           path="/workspace/*" 
@@ -251,9 +352,20 @@ function AppContent() {
           <Route path="/search" element={<FeedPage />} />
           <Route path="/course/:id" element={<CourseDetail />} />
           <Route path="/courses/:id" element={<CourseDetail />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/orders/publish" element={<OrdersPage />} />
-          <Route path="/orders/:id" element={<OrderDetail />} />
+          <Route path="/forbidden" element={<ForbiddenPage />} />
+          <Route 
+            path="/orders/*" 
+            element={
+              <RouteGuard allowedRoles={[]}>
+                <Routes>
+                  <Route path="" element={<OrdersPage />} />
+                  <Route path="publish" element={<OrdersPage />} />
+                  <Route path="my" element={<OrdersPage />} />
+                  <Route path=":id" element={<OrderDetail />} />
+                </Routes>
+              </RouteGuard>
+            } 
+          />
           <Route path="/guarantee" element={<GuaranteeCenter />} />
           <Route path="/creator/:id" element={<CreatorProfile />} />
           <Route path="/creators/:id" element={<CreatorProfile />} />

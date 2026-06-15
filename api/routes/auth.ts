@@ -50,11 +50,44 @@ router.get('/profile', authMiddleware, (req: AuthRequest, res) => {
     return error(res, '用户未认证', 401, 401);
   }
 
+  if (req.userId === 'local-admin') {
+    return success(res, {
+      id: 'local-admin',
+      username: 'admin',
+      avatar: '',
+      role: 'admin',
+      bio: '本地演示管理员',
+      followerCount: 0,
+      followingCount: 0,
+      rating: 5,
+      verified: true,
+      location: '本地演示',
+      createdAt: new Date().toISOString(),
+    });
+  }
+
   const user = findUserById(req.userId);
   if (!user) {
     return error(res, '用户不存在', 404, 404);
   }
 
+  return success(res, user);
+});
+
+router.get('/me', authMiddleware, (req: AuthRequest, res) => {
+  if (req.userId === 'local-admin') {
+    return success(res, {
+      id: 'local-admin',
+      username: 'admin',
+      role: 'admin',
+      verified: true,
+    });
+  }
+
+  const user = req.userId ? findUserById(req.userId) : null;
+  if (!user) {
+    return error(res, '用户不存在', 404, 404);
+  }
   return success(res, user);
 });
 
