@@ -45,6 +45,7 @@ function getNavItemsForApp(role?: string) {
     { path: '/feed', label: '内容社区', icon: Search },
     { path: '/orders', label: '订单广场', icon: Bell },
     { path: '/guarantee', label: '保障中心', icon: ShieldCheck },
+    { path: '/users/local-admin', label: '个人中心', icon: User },
   ];
 
   const r = role || 'user';
@@ -55,6 +56,7 @@ function getNavItemsForApp(role?: string) {
       { path: '/workspace', label: '工作台', icon: Briefcase },
       { path: '/orders/my', label: '我的需求', icon: FileText },
       ...baseItems.slice(3),
+      { path: '/admin', label: '管理后台', icon: SettingsIcon },
       { path: '/admin/review', label: '审核中心', icon: ClipboardCheck },
       { path: '/admin/finance', label: '财务管理', icon: DollarSign },
     ];

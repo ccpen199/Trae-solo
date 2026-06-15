@@ -4,23 +4,32 @@ import { db } from './index.ts';
 
 const categories = ['舞蹈', '音乐', '运动', '绘画', '摄影', '烹饪', '编程', '语言'];
 
+function svgDataUri(label: string, bg = '#4f46e5', fg = '#ffffff') {
+  const text = label.slice(0, 4);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360"><rect width="640" height="360" rx="28" fill="${bg}"/><circle cx="520" cy="70" r="90" fill="${fg}" opacity=".14"/><circle cx="90" cy="300" r="120" fill="${fg}" opacity=".10"/><text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" font-family="Arial,'PingFang SC',sans-serif" font-size="58" font-weight="700" fill="${fg}">${text}</text></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+const avatar = (label: string) => svgDataUri(label, '#2563eb');
+const cover = (label: string, bg: string) => svgDataUri(label, bg);
+
 const creators = [
-  { username: '林舞蹈家', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200', bio: '爵士舞/现代舞导师，10年教学经验', location: '北京', rating: 4.9 },
-  { username: '张吉他手', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200', bio: '民谣/电吉他教学，音乐制作人', location: '上海', rating: 4.8 },
-  { username: '王健身教练', avatar: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200', bio: '健身/瑜伽/普拉提认证教练', location: '深圳', rating: 4.7 },
-  { username: '李画师', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200', bio: '水彩/油画/数字绘画', location: '杭州', rating: 4.9 },
-  { username: '陈摄影师', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200', bio: '人像/风光/商业摄影', location: '广州', rating: 4.8 },
+  { username: '林舞蹈家', avatar: avatar('舞蹈'), bio: '爵士舞/现代舞导师，10年教学经验', location: '北京', rating: 4.9 },
+  { username: '张吉他手', avatar: avatar('吉他'), bio: '民谣/电吉他教学，音乐制作人', location: '上海', rating: 4.8 },
+  { username: '王健身教练', avatar: avatar('健身'), bio: '健身/瑜伽/普拉提认证教练', location: '深圳', rating: 4.7 },
+  { username: '李画师', avatar: avatar('绘画'), bio: '水彩/油画/数字绘画', location: '杭州', rating: 4.9 },
+  { username: '陈摄影师', avatar: avatar('摄影'), bio: '人像/风光/商业摄影', location: '广州', rating: 4.8 },
 ];
 
 const courses = [
-  { title: '爵士舞入门到精通', description: '从零开始学习爵士舞，基础步伐到成品舞', category: '舞蹈', price: 199, cover: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600', chapters: 8 },
-  { title: '吉他弹唱三月通', description: '零基础吉他教学，轻松学会弹唱', category: '音乐', price: 149, cover: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600', chapters: 12 },
-  { title: '居家健身减脂计划', description: '科学减脂，30天蜕变', category: '运动', price: 99, cover: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600', chapters: 15 },
-  { title: '水彩风景绘画', description: '掌握水彩技法，画出美丽风景', category: '绘画', price: 129, cover: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600', chapters: 10 },
-  { title: '人像摄影入门', description: '拍出专业级人像照片', category: '摄影', price: 169, cover: 'https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=600', chapters: 8 },
-  { title: '法式甜点烘焙', description: '在家也能做出专业甜点', category: '烹饪', price: 89, cover: 'https://images.unsplash.com/photo-1486427944544-d2c5fe6d1f4a?w=600', chapters: 10 },
-  { title: 'Web前端开发实战', description: 'React+TypeScript全栈开发', category: '编程', price: 299, cover: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600', chapters: 20 },
-  { title: '商务英语口语', description: '职场英语轻松应对', category: '语言', price: 179, cover: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600', chapters: 16 },
+  { title: '爵士舞入门到精通', description: '从零开始学习爵士舞，基础步伐到成品舞', category: '舞蹈', price: 199, cover: cover('爵士舞', '#7c3aed'), chapters: 8 },
+  { title: '吉他弹唱三月通', description: '零基础吉他教学，轻松学会弹唱', category: '音乐', price: 149, cover: cover('吉他弹唱', '#0f766e'), chapters: 12 },
+  { title: '居家健身减脂计划', description: '科学减脂，30天蜕变', category: '运动', price: 99, cover: cover('健身减脂', '#dc2626'), chapters: 15 },
+  { title: '水彩风景绘画', description: '掌握水彩技法，画出美丽风景', category: '绘画', price: 129, cover: cover('水彩绘画', '#0284c7'), chapters: 10 },
+  { title: '人像摄影入门', description: '拍出专业级人像照片', category: '摄影', price: 169, cover: cover('人像摄影', '#334155'), chapters: 8 },
+  { title: '法式甜点烘焙', description: '在家也能做出专业甜点', category: '烹饪', price: 89, cover: cover('甜点烘焙', '#c2410c'), chapters: 10 },
+  { title: 'Web前端开发实战', description: 'React+TypeScript全栈开发', category: '编程', price: 299, cover: cover('前端开发', '#1d4ed8'), chapters: 20 },
+  { title: '商务英语口语', description: '职场英语轻松应对', category: '语言', price: 179, cover: cover('商务英语', '#9333ea'), chapters: 16 },
 ];
 
 const serviceOrders = [
@@ -60,7 +69,7 @@ export function seedData() {
     requesterId,
     '需求方小王',
     passwordHash,
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
+    avatar('需求方'),
     'requester',
     '企业采购负责人，经常发布定制服务需求',
     50,
@@ -97,7 +106,7 @@ export function seedData() {
       id,
       `用户${i}`,
       passwordHash,
-      `https://picsum.photos/seed/user${i}/200/200`,
+      avatar(`用户${i}`),
       'user',
       `这是用户${i}的简介`,
       Math.floor(Math.random() * 500),
