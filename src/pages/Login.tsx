@@ -13,8 +13,16 @@ import { useAuthStore, type LoginResult } from '@/store/authStore';
 import { roleConfig } from '@/mock/data';
 import type { LoginErrorCode } from '@/mock/data';
 
+const roleButtonGradients: Record<RoleKey, string> = {
+  citizen: 'linear-gradient(135deg, #165DFF 0%, #4088FF 100%)',
+  enterprise: 'linear-gradient(135deg, #0FC6C2 0%, #36CFC9 100%)',
+  staff: 'linear-gradient(135deg, #3478F6 0%, #597EF7 100%)',
+  platform: 'linear-gradient(135deg, #F77234 0%, #FF9A6C 100%)',
+  ops: 'linear-gradient(135deg, #7B61FF 0%, #B37FEB 100%)',
+  admin: 'linear-gradient(135deg, #F5222D 0%, #FF7875 100%)',
+};
+
 const { Password } = Input;
-const { TabPane } = Tabs;
 
 interface LoginFormValues {
   username: string;
@@ -57,11 +65,15 @@ export default function Login() {
     countdown: number;
   } | null>(null);
   const [showPwd, setShowPwd] = useState(false);
-  const [showTestAccounts, setShowTestAccounts] = useState(false);
+  const [showTestAccounts, setShowTestAccounts] = useState(true);
 
   useEffect(() => {
     clearLastError();
-  }, [selectedRole, clearLastError]);
+    const acc = testAccounts[selectedRole]?.[0];
+    if (acc) {
+      form.setFieldsValue({ username: acc.username, password: acc.password });
+    }
+  }, [selectedRole, clearLastError, form]);
 
   useEffect(() => {
     if (loginSuccessInfo && loginSuccessInfo.countdown > 0) {
@@ -398,8 +410,14 @@ export default function Login() {
               <div className="bg-gradient-to-r from-primary-50 to-transparent rounded-xl p-4 border border-primary-100 flex items-start gap-3">
                 {roleIcons[selectedRole]}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gov-gray-700 mb-1">{currentRoleCfg?.description}</p>
-                  <div className="flex flex-wrap gap-1.5 mt-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="text-sm font-semibold text-gov-gray-700">{currentRoleCfg?.label}</p>
+                    <Tag color={selectedRole === 'admin' ? 'red' : selectedRole === 'platform' ? 'orange' : selectedRole === 'ops' ? 'purple' : 'blue'} className="m-0 text-xs">
+                      {currentRoleCfg?.defaultRoute === '/' ? '掌上办事首页' : currentRoleCfg?.defaultRoute}
+                    </Tag>
+                  </div>
+                  <p className="text-xs text-gov-gray-500 mb-2">{currentRoleCfg?.description}</p>
+                  <div className="flex flex-wrap gap-1.5">
                     {currentRoleCfg?.tips.map((tip, i) => (
                       <span key={i} className="inline-flex items-center gap-1 text-xs text-primary-600 bg-white px-2 py-0.5 rounded-full border border-primary-200">
                         <span className="w-1 h-1 rounded-full bg-primary-500"></span>
@@ -481,21 +499,29 @@ export default function Login() {
                   htmlType="submit"
                   loading={isLoading}
                   block
-                  className="h-12 rounded-xl text-base font-medium gov-btn-primary"
+                  className="h-14 rounded-xl text-base font-medium"
                   style={{
-                    backgroundImage: 'linear-gradient(135deg, #165DFF 0%, #4088FF 100%)',
+                    backgroundImage: roleButtonGradients[selectedRole],
                     border: 'none',
+                    boxShadow: `0 4px 14px 0 ${
+                      selectedRole === 'admin' ? '#F5222D44' :
+                      selectedRole === 'platform' ? '#F7723444' :
+                      selectedRole === 'ops' ? '#7B61FF44' :
+                      '#165DFF44'
+                    }`,
                   }}
                 >
                   {isLoading ? (
                     <span className="flex items-center gap-2">
                       <Spin size="small" />
-                      认证校验中...
+                      统一认证校验中...
                     </span>
                   ) : (
-                    <span className="flex items-center gap-2">
-                      <SafetyCertificateOutlined />
-                      安全登录 → 进入{currentRoleCfg?.label}工作台
+                    <span className="flex flex-col items-center leading-tight">
+                      <span>安全登录 → 进入{currentRoleCfg?.label}工作台</span>
+                      <span className="text-[11px] opacity-80 font-normal">
+                        {currentRoleCfg?.defaultRoute === '/' ? '掌上办事首页' : `跳转至 ${currentRoleCfg?.defaultRoute}`}
+                      </span>
                     </span>
                   )}
                 </Button>
@@ -541,9 +567,9 @@ export default function Login() {
                 className="flex items-center justify-between cursor-pointer group"
                 onClick={() => setShowTestAccounts(!showTestAccounts)}
               >
-                <span className="text-sm text-gov-gray-500 flex items-center gap-2">
-                  <InfoCircleOutlined />
-                  测试账号速查（开发环境演示用）
+                <span className="text-sm font-medium text-primary-600 flex items-center gap-2">
+                  <KeyOutlined />
+                  测试账号（点击自动填充，切换角色Tab自动切换账号）
                 </span>
                 <span className={`text-primary-500 text-xs transition-transform ${showTestAccounts ? 'rotate-180' : ''}`}>
                   ▼
@@ -551,24 +577,24 @@ export default function Login() {
               </div>
 
               {showTestAccounts && (
-                <div className="mt-4 bg-gov-gray-50 rounded-xl p-4 space-y-2 animate-slide-down">
+                <div className="mt-3 bg-primary-50/50 rounded-xl p-3 border border-primary-100 animate-slide-down">
                   {testAccounts[selectedRole]?.map((acc, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between p-3 bg-white rounded-lg border border-gov-gray-200 hover:border-primary-300 hover:shadow-sm transition-all cursor-pointer group"
+                      className="flex items-center justify-between p-3 bg-white rounded-lg border border-primary-200 hover:border-primary-400 hover:shadow-sm transition-all cursor-pointer group mb-2 last:mb-0"
                       onClick={() => form.setFieldsValue({ username: acc.username, password: acc.password })}
                     >
                       <div>
                         <div className="text-sm font-medium text-gov-gray-700">{acc.desc}</div>
-                        <div className="text-xs text-gov-gray-400 mt-0.5 font-mono">
-                          账号: <span className="text-primary-600">{acc.username}</span>
-                          <span className="mx-2">/</span>
-                          密码: <span className="text-primary-600">{acc.password}</span>
+                        <div className="text-xs text-gov-gray-500 mt-1 font-mono">
+                          账号: <span className="text-primary-600 font-semibold">{acc.username}</span>
+                          <span className="mx-2 text-gov-gray-300">|</span>
+                          密码: <span className="text-primary-600 font-semibold">{acc.password}</span>
                         </div>
                       </div>
-                      <span className="text-xs text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                        点击填充 →
-                      </span>
+                      <Tag color="blue" className="m-0 group-hover:bg-primary-100 transition-colors">
+                        点击填充
+                      </Tag>
                     </div>
                   ))}
                 </div>

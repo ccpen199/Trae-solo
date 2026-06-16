@@ -118,7 +118,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         const result: LoginResult = {
           success: false,
           errorCode: errCode,
-          errorInfo: loginErrorMessages[errCode],
+          errorInfo: {
+            ...loginErrorMessages[errCode],
+            detail: `用户名「${username}」在系统中未找到。请检查输入是否正确，注意区分大小写。`,
+          },
         };
         log.errorCode = errCode;
         set({
@@ -168,7 +171,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         const result: LoginResult = {
           success: false,
           errorCode: errCode,
-          errorInfo: loginErrorMessages[errCode],
+          errorInfo: {
+            ...loginErrorMessages[errCode],
+            detail: `账号「${username}」已找到，但输入的密码不匹配。该账号可登录角色：${account.roles.map(r => roleConfig[r]?.label || r).join('、')}。请确认密码后重试。`,
+          },
           remainingAttempts: Math.max(0, remaining),
         };
         log.errorCode = errCode;
@@ -189,7 +195,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         const result: LoginResult = {
           success: false,
           errorCode: errCode,
-          errorInfo: loginErrorMessages[errCode],
+          errorInfo: {
+            ...loginErrorMessages[errCode],
+            detail: `账号「${username}」可登录角色为「${account.roles.map(r => roleConfig[r]?.label || r).join('、')}」，不包含「${roleConfig[role]?.label || role}」入口。请切换到正确的角色Tab后重新登录。`,
+          },
           availableRoles: account.roles,
         };
         log.errorCode = errCode;
