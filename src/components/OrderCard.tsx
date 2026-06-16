@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Clock, User, Shield, AlertTriangle, CheckCircle, PlayCircle, DollarSign, Handshake, MessageCircle, Target } from 'lucide-react';
+import { MapPin, Clock, User, Shield, AlertTriangle, CheckCircle, PlayCircle, DollarSign, Handshake, MessageCircle, Target, Users, ChevronRight } from 'lucide-react';
 import type { ServiceOrder } from '../../shared/types';
 import { cn } from '../lib/utils';
 import StatusBadge from './StatusBadge';
@@ -19,10 +19,11 @@ interface OrderCardProps {
   onStart?: () => void;
   onComplete?: () => void;
   onDispute?: () => void;
+  onViewMatches?: () => void;
   className?: string;
 }
 
-const OrderCard = ({ order, variant = 'default', showActions = true, userRole, loadingAction, onAccept, onPayDeposit, onStart, onComplete, onDispute, className }: OrderCardProps) => {
+const OrderCard = ({ order, variant = 'default', showActions = true, userRole, loadingAction, onAccept, onPayDeposit, onStart, onComplete, onDispute, onViewMatches, className }: OrderCardProps) => {
   const navigate = useNavigate();
 
   const matchScore = order.matchScore ?? Math.floor(70 + Math.random() * 25);
@@ -50,14 +51,15 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
   const isTerminalStatus = ['completed', 'cancelled', 'disputed'].includes(order.status);
   const canAccept = userRole === 'creator' && order.status === 'published';
   const canPayDeposit = userRole === 'user' && order.status === 'matched';
+  const canViewMatches = userRole === 'user' && order.status === 'matched';
   const canStart = userRole === 'creator' && order.status === 'deposit_paid';
   const canComplete = order.status === 'in_progress';
   const canDispute = !isTerminalStatus;
 
-  const hasAnyAction = canAccept || canPayDeposit || canStart || canComplete || canDispute;
+  const hasAnyAction = canAccept || canPayDeposit || canStart || canComplete || canDispute || canViewMatches;
 
   const handleClick = () => {
-    navigate(`/orders/${order.id}`);
+    navigate(`/order/${order.id}`);
   };
 
   const formatDate = (dateStr: string) => {
@@ -110,7 +112,10 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
                   {order.category}
                 </Badge>
               )}
-              <StatusBadge status={order.status} />
+              <div className="relative">
+                <StatusBadge status={order.status} />
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              </div>
             </div>
             <h3 className="font-semibold text-zinc-900 text-lg line-clamp-2 mb-2">
               {order.title}
@@ -125,8 +130,14 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
             <div className="text-2xl font-bold text-accent-600">
               ¥{order.price}
             </div>
-            <div className="text-xs text-zinc-500 mt-1">
-              定金 ¥{order.deposit}
+            <div className="flex items-center justify-end gap-1.5 mt-1">
+              <span className="text-xs text-zinc-500">定金 ¥{order.deposit}</span>
+              {order.depositPaid && (
+                <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-green-100 text-green-600 rounded text-[10px] font-medium">
+                  <CheckCircle className="w-3 h-3" />
+                  已托管
+                </span>
+              )}
             </div>
             <div className="mt-3">
               <div className="flex items-center justify-between mb-1">
@@ -279,6 +290,31 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
 
         {showActions && hasAnyAction && (
           <div className="pt-4 border-t border-zinc-100">
+            {canViewMatches && (
+              <div className="mb-3 p-3 bg-gradient-to-r from-primary-50 to-accent-50 rounded-xl border border-primary-100">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                      <Users className="w-4 h-4 text-primary-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-zinc-800">已匹配 3 位创作者</p>
+                      <p className="text-xs text-zinc-500">选择心仪的创作者确认接单</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onViewMatches?.();
+                    }}
+                    className="flex items-center gap-1 text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors"
+                  >
+                    查看
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
             <div className="flex flex-wrap gap-2 mb-3">
               {canAccept && (
                 <Button
@@ -353,6 +389,19 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
             )}
           </div>
         )}
+
+        <div className="pt-4 border-t border-zinc-100">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick();
+            }}
+            className="w-full py-2.5 text-sm font-medium text-primary-600 bg-primary-50 hover:bg-primary-100 rounded-xl transition-colors flex items-center justify-center gap-2 group"
+          >
+            查看订单详情
+            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
       </div>
     </div>
   );

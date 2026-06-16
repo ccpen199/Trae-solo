@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Filter, MapPin, DollarSign, Clock, Calendar, X, Search, Tag, Shield, ChevronRight, FileText, AlertCircle, AlertTriangle, CheckCircle, Info, Home } from 'lucide-react';
+import { Plus, Filter, MapPin, DollarSign, Clock, Calendar, X, Search, Tag, Shield, ChevronRight, FileText, AlertCircle, AlertTriangle, CheckCircle, Info, Home, User, CreditCard, Smartphone, Check, Star, Users, Zap, ArrowRight } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
 import OrderCard from '../components/OrderCard';
@@ -8,7 +8,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import Empty from '../components/Empty';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
-import type { ServiceOrder } from '../../shared/types';
+import StatusBadge from '../components/StatusBadge';
+import type { ServiceOrder, User as UserType } from '../../shared/types';
 import { cn } from '../lib/utils';
 
 type LoadingAction = 'accept' | 'payDeposit' | 'start' | 'complete' | 'dispute' | null;
@@ -379,10 +380,56 @@ export default function OrdersPage() {
   const [publishStep, setPublishStep] = useState(1);
   const [publishSuccess, setPublishSuccess] = useState(false);
   const [publishedOrderId, setPublishedOrderId] = useState('');
+  const [activeTab, setActiveTab] = useState<'all' | 'my'>('all');
+  const [showPayModal, setShowPayModal] = useState(false);
+  const [payOrderId, setPayOrderId] = useState<string | null>(null);
+  const [paying, setPaying] = useState(false);
+  const [showMatchModal, setShowMatchModal] = useState(false);
+  const [matchOrderId, setMatchOrderId] = useState<string | null>(null);
+  const [confirmingCreator, setConfirmingCreator] = useState<string | null>(null);
+
+  const mockMatchedCreators: (UserType & { matchScore: number })[] = [
+    {
+      id: 'creator-1',
+      username: '舞蹈大师Linda',
+      avatar: '',
+      role: 'creator',
+      followerCount: 12500,
+      followingCount: 89,
+      rating: 4.9,
+      verified: true,
+      createdAt: '2023-06-15T00:00:00Z',
+      matchScore: 95,
+    },
+    {
+      id: 'creator-2',
+      username: '街舞阿King',
+      avatar: '',
+      role: 'creator',
+      followerCount: 8900,
+      followingCount: 156,
+      rating: 4.7,
+      verified: true,
+      createdAt: '2023-09-20T00:00:00Z',
+      matchScore: 88,
+    },
+    {
+      id: 'creator-3',
+      username: '爵士舞老师Mia',
+      avatar: '',
+      role: 'creator',
+      followerCount: 5600,
+      followingCount: 234,
+      rating: 4.8,
+      verified: false,
+      createdAt: '2024-01-10T00:00:00Z',
+      matchScore: 82,
+    },
+  ];
 
   useEffect(() => {
     loadOrders();
-  }, [selectedCategory, selectedPrice, selectedStatus, selectedLocation, searchKeyword]);
+  }, [selectedCategory, selectedPrice, selectedStatus, selectedLocation, searchKeyword, activeTab]);
 
   const fillOrderDefaults = (order: ServiceOrder): ServiceOrder => {
     const category = order.category || '';
@@ -438,15 +485,25 @@ export default function OrdersPage() {
       const res = await api.orders.list(params);
       const data = (res as any).data?.items || [];
 
+      let orderList: ServiceOrder[] = [];
       if (data.length > 0) {
-        const filledOrders = data.map((order: ServiceOrder) => fillOrderDefaults(order));
-        setOrders(filledOrders);
+        orderList = data.map((order: ServiceOrder) => fillOrderDefaults(order));
       } else {
-        setOrders(mockOrders);
+        orderList = mockOrders;
       }
+
+      if (activeTab === 'my' && user) {
+        orderList = orderList.filter(order => order.requesterId === user.id);
+      }
+
+      setOrders(orderList);
     } catch (error) {
       console.error('Failed to load orders:', error);
-      setOrders(mockOrders);
+      let orderList = mockOrders;
+      if (activeTab === 'my' && user) {
+        orderList = orderList.filter(order => order.requesterId === user.id);
+      }
+      setOrders(orderList);
     } finally {
       setLoading(false);
     }
@@ -480,21 +537,54 @@ export default function OrdersPage() {
     }
   };
 
-  const handlePayDeposit = async (orderId: string) => {
+  const handlePayDeposit = (orderId: string) => {
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
+    setPayOrderId(orderId);
+    setShowPayModal(true);
+  };
 
-    setActionLoading(orderId, 'payDeposit');
+  const handleConfirmPay = async () => {
+    if (!payOrderId) return;
+
+    setPaying(true);
     try {
-      await api.orders.payDeposit(orderId);
-      alert('定金支付成功！等待创作者开始服务');
+      await api.orders.payDeposit(payOrderId);
+      setShowPayModal(false);
+      setPayOrderId(null);
       loadOrders();
     } catch (error: any) {
       alert(error.message || '支付失败');
     } finally {
-      clearActionLoading();
+      setPaying(false);
+    }
+  };
+
+  const getCurrentPayOrder = () => {
+    return orders.find(o => o.id === payOrderId);
+  };
+
+  const handleViewMatches = (orderId: string) => {
+    setMatchOrderId(orderId);
+    setShowMatchModal(true);
+  };
+
+  const handleConfirmCreator = async (creatorId: string) => {
+    if (!matchOrderId) return;
+
+    setConfirmingCreator(creatorId);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setShowMatchModal(false);
+      setMatchOrderId(null);
+      loadOrders();
+      alert('已确认创作者，等待创作者接单');
+    } catch (error: any) {
+      alert(error.message || '确认失败');
+    } finally {
+      setConfirmingCreator(null);
     }
   };
 
@@ -663,7 +753,12 @@ export default function OrdersPage() {
     }
   };
 
-  const handleViewOrder = () => {
+  const handleViewMyOrders = () => {
+    setShowPublishModal(false);
+    setActiveTab('my');
+  };
+
+  const handleViewOrderDetail = () => {
     setShowPublishModal(false);
     if (publishedOrderId) {
       navigate(`/orders/${publishedOrderId}`);
@@ -718,6 +813,38 @@ export default function OrdersPage() {
               <Plus className="w-5 h-5" />
               发布需求
             </Button>
+          </div>
+
+          <div className="flex items-center gap-1 mb-4 bg-zinc-100 rounded-full p-1 w-fit">
+            <button
+              onClick={() => setActiveTab('all')}
+              className={cn(
+                'px-5 py-2 rounded-full text-sm font-medium transition-all duration-300',
+                activeTab === 'all'
+                  ? 'bg-white text-zinc-900 shadow-sm'
+                  : 'text-zinc-500 hover:text-zinc-700'
+              )}
+            >
+              全部需求
+            </button>
+            <button
+              onClick={() => {
+                if (!isAuthenticated) {
+                  navigate('/login');
+                  return;
+                }
+                setActiveTab('my');
+              }}
+              className={cn(
+                'px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2',
+                activeTab === 'my'
+                  ? 'bg-white text-zinc-900 shadow-sm'
+                  : 'text-zinc-500 hover:text-zinc-700'
+              )}
+            >
+              <User className="w-4 h-4" />
+              我的需求
+            </button>
           </div>
 
           <div className="flex items-center gap-3">
@@ -901,6 +1028,7 @@ export default function OrdersPage() {
                   onStart={() => handleStartService(order.id)}
                   onComplete={() => handleCompleteService(order.id)}
                   onDispute={() => handleOpenDispute(order.id)}
+                  onViewMatches={() => handleViewMatches(order.id)}
                 />
               </div>
             ))}
@@ -912,37 +1040,88 @@ export default function OrdersPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
           <div className="w-full max-w-2xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up flex flex-col">
             {publishSuccess ? (
-              <div className="p-8 flex flex-col items-center justify-center text-center animate-fade-in">
-                <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-500/30">
-                  <CheckCircle className="w-14 h-14 text-white" />
+              <div className="p-8 flex flex-col items-center justify-center text-center animate-fade-in overflow-y-auto">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-5 shadow-lg shadow-green-500/30">
+                  <CheckCircle className="w-12 h-12 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-zinc-900 mb-2">发布成功！</h2>
-                <p className="text-zinc-500 mb-6">您的需求已成功发布到服务广场</p>
+                <h2 className="text-2xl font-bold text-zinc-900 mb-1">需求已发布</h2>
+                <p className="text-zinc-500 mb-6">我们正在为您匹配合适的创作者</p>
 
                 <div className="w-full bg-gradient-to-r from-primary-50 to-accent-50 rounded-2xl p-5 mb-6 border border-primary-100">
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-3">
                     <span className="text-sm text-zinc-500">订单编号</span>
-                    <span className="font-mono font-semibold text-primary-600">{publishedOrderId}</span>
+                    <span className="font-mono font-semibold text-primary-600 text-sm">{publishedOrderId}</span>
+                  </div>
+                  <div className="text-left mb-4 pb-4 border-b border-primary-100">
+                    <p className="font-semibold text-zinc-800 text-left mb-1">{formData.title}</p>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="primary" size="sm">待接单</Badge>
+                      <span className="text-sm text-zinc-500">预计 24 小时内匹配</span>
+                    </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-5 h-5 text-blue-600" />
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Zap className="w-4 h-4 text-blue-600" />
                     </div>
                     <div className="text-left">
-                      <p className="font-medium text-zinc-800">系统正在匹配创作者</p>
-                      <p className="text-sm text-zinc-500 mt-0.5">将在24小时内为您匹配3位优质创作者</p>
+                      <p className="text-sm font-medium text-zinc-800">智能匹配中</p>
+                      <p className="text-xs text-zinc-500 mt-0.5">系统正在根据您的需求筛选优质创作者</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="w-full space-y-3 mb-8">
-                  <div className="flex items-start gap-3 p-3 bg-zinc-50 rounded-xl">
+                <div className="w-full mb-6">
+                  <p className="text-sm font-medium text-zinc-700 mb-4 text-left">匹配进度</p>
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-2">
+                      {[
+                        { label: '发布成功', icon: CheckCircle, active: true },
+                        { label: '系统匹配', icon: Zap, active: true },
+                        { label: '创作者接单', icon: User, active: false },
+                        { label: '定金支付', icon: DollarSign, active: false },
+                      ].map((step, idx) => {
+                        const StepIcon = step.icon;
+                        return (
+                          <div key={idx} className="flex flex-col items-center flex-1 relative">
+                            <div
+                              className={cn(
+                                'w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-500',
+                                step.active
+                                  ? 'bg-gradient-to-br from-green-400 to-green-600 text-white shadow-md shadow-green-500/30'
+                                  : 'bg-zinc-100 text-zinc-400'
+                              )}
+                            >
+                              <StepIcon className="w-5 h-5" />
+                            </div>
+                            <span className={cn(
+                              'text-xs mt-2 font-medium',
+                              step.active ? 'text-green-600' : 'text-zinc-400'
+                            )}>
+                              {step.label}
+                            </span>
+                            {idx < 3 && (
+                              <div
+                                className={cn(
+                                  'absolute top-5 left-[60%] w-[80%] h-0.5 -translate-y-1/2',
+                                  idx < 1 ? 'bg-gradient-to-r from-green-500 to-green-400' : 'bg-zinc-200'
+                                )}
+                              />
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full p-4 bg-zinc-50 rounded-2xl mb-6">
+                  <div className="flex items-start gap-3">
                     <Info className="w-5 h-5 text-zinc-400 flex-shrink-0 mt-0.5" />
                     <div className="text-left text-sm text-zinc-600">
-                      <p className="font-medium text-zinc-700 mb-1">下一步说明</p>
-                      <ul className="space-y-1 text-zinc-500">
+                      <p className="font-medium text-zinc-700 mb-1">温馨提示</p>
+                      <ul className="space-y-1 text-zinc-500 text-xs">
                         <li>• 匹配成功后将通过站内消息通知您</li>
-                        <li>• 您可以选择心仪的创作者并确认</li>
+                        <li>• 您可以选择心仪的创作者并确认接单</li>
                         <li>• 支付定金后，创作者将开始服务</li>
                       </ul>
                     </div>
@@ -950,12 +1129,12 @@ export default function OrdersPage() {
                 </div>
 
                 <div className="w-full flex gap-3">
-                  <Button variant="secondary" onClick={handleContinuePublish} fullWidth>
-                    继续发布需求
+                  <Button variant="secondary" onClick={handleViewMyOrders} fullWidth>
+                    查看我的需求
                   </Button>
-                  <Button variant="primary" onClick={handleViewOrder} fullWidth>
-                    查看订单详情
-                    <ChevronRight className="w-4 h-4" />
+                  <Button variant="primary" onClick={handleContinuePublish} fullWidth>
+                    继续发布
+                    <Plus className="w-4 h-4" />
                   </Button>
                 </div>
               </div>
@@ -1394,7 +1573,7 @@ export default function OrdersPage() {
                       isLoading={submitting}
                       className="px-8"
                     >
-                      确认发布
+                      提交发布
                     </Button>
                   )}
                 </div>
@@ -1469,6 +1648,224 @@ export default function OrdersPage() {
               >
                 提交申请
               </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showPayModal && getCurrentPayOrder() && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up">
+            <div className="p-6 border-b border-zinc-100">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center">
+                    <DollarSign className="w-5 h-5 text-accent-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-zinc-900">支付定金</h2>
+                    <p className="text-sm text-zinc-500">确认支付信息后完成支付</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowPayModal(false)}
+                  className="p-2 rounded-full hover:bg-zinc-100 transition-colors"
+                >
+                  <X className="w-5 h-5 text-zinc-500" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-5">
+              <div className="bg-gradient-to-r from-accent-50 to-primary-50 rounded-2xl p-5 border border-accent-100">
+                <p className="text-sm text-zinc-500 mb-2">{getCurrentPayOrder()?.title}</p>
+                <div className="flex items-end justify-between">
+                  <div>
+                    <p className="text-sm text-zinc-500">服务总价</p>
+                    <p className="text-xl font-bold text-zinc-800">¥{getCurrentPayOrder()?.price}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-zinc-500">定金 (30%)</p>
+                    <p className="text-2xl font-bold text-accent-600">¥{getCurrentPayOrder()?.deposit}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-medium text-zinc-700 mb-3">支付方式</p>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between p-4 border-2 border-primary-500 bg-primary-50 rounded-xl cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                        <Smartphone className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-zinc-800">微信支付</p>
+                        <p className="text-xs text-zinc-500">推荐使用</p>
+                      </div>
+                    </div>
+                    <div className="w-5 h-5 rounded-full bg-primary-500 flex items-center justify-center">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-4 border-2 border-zinc-200 rounded-xl cursor-pointer hover:border-zinc-300 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
+                        <CreditCard className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-zinc-800">支付宝</p>
+                        <p className="text-xs text-zinc-500">支持花呗、信用卡</p>
+                      </div>
+                    </div>
+                    <div className="w-5 h-5 rounded-full border-2 border-zinc-300" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                <div className="flex items-start gap-3">
+                  <Shield className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-blue-800">平台资金保障</p>
+                    <p className="text-xs text-blue-600 mt-1">
+                      定金由平台托管，服务确认完成后结算给创作者。如遇纠纷，平台将介入保障您的权益。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-zinc-100">
+              <Button
+                variant="accent"
+                size="lg"
+                fullWidth
+                onClick={handleConfirmPay}
+                isLoading={paying}
+              >
+                确认支付 ¥{getCurrentPayOrder()?.deposit}
+              </Button>
+              <p className="text-xs text-zinc-400 text-center mt-3">
+                点击支付即表示同意《服务协议》和《支付条款》
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showMatchModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-lg max-h-[85vh] bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up flex flex-col">
+            <div className="p-6 border-b border-zinc-100 flex-shrink-0">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
+                    <Users className="w-5 h-5 text-primary-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-zinc-900">匹配创作者</h2>
+                    <p className="text-sm text-zinc-500">已为您匹配到 {mockMatchedCreators.length} 位创作者</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowMatchModal(false)}
+                  className="p-2 rounded-full hover:bg-zinc-100 transition-colors"
+                >
+                  <X className="w-5 h-5 text-zinc-500" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 overflow-y-auto flex-1 space-y-4">
+              {mockMatchedCreators.map((creator, index) => (
+                <div
+                  key={creator.id}
+                  className={`p-4 border-2 rounded-2xl transition-all animate-fade-in-up-delay-${index + 1}`}
+                  style={{
+                    animationFillMode: 'backwards',
+                    borderColor: 'rgb(228, 228, 231)',
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    {creator.avatar ? (
+                      <img
+                        src={creator.avatar}
+                        alt={creator.username}
+                        className="w-14 h-14 rounded-full object-cover flex-shrink-0"
+                      />
+                    ) : (
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center flex-shrink-0">
+                        <User className="w-7 h-7 text-white" />
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-zinc-900 truncate">{creator.username}</h3>
+                        {creator.verified && (
+                          <Badge variant="primary" size="sm">认证</Badge>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3 text-sm text-zinc-500 mb-2">
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                          <span className="text-zinc-700 font-medium">{creator.rating.toFixed(1)}</span>
+                        </div>
+                        <span>{creator.followerCount.toLocaleString()} 粉丝</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-zinc-500">匹配度</span>
+                        <div className="flex-1 h-2 bg-zinc-100 rounded-full overflow-hidden max-w-[120px]">
+                          <div
+                            className={cn(
+                              'h-full rounded-full transition-all duration-500',
+                              creator.matchScore >= 90 ? 'bg-gradient-to-r from-green-400 to-green-500' :
+                              creator.matchScore >= 70 ? 'bg-gradient-to-r from-amber-400 to-amber-500' :
+                              'bg-gradient-to-r from-red-400 to-red-500'
+                            )}
+                            style={{ width: `${creator.matchScore}%` }}
+                          />
+                        </div>
+                        <span className={cn(
+                          'text-sm font-bold',
+                          creator.matchScore >= 90 ? 'text-green-600' :
+                          creator.matchScore >= 70 ? 'text-amber-600' :
+                          'text-red-600'
+                        )}>
+                          {creator.matchScore}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-4 flex gap-2">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      fullWidth
+                      onClick={() => navigate(`/creator/${creator.id}`)}
+                    >
+                      查看主页
+                    </Button>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      fullWidth
+                      isLoading={confirmingCreator === creator.id}
+                      onClick={() => handleConfirmCreator(creator.id)}
+                    >
+                      确认接单
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-6 border-t border-zinc-100 flex-shrink-0">
+              <p className="text-xs text-zinc-500 text-center">
+                <Info className="w-4 h-4 inline mr-1 -mt-0.5" />
+                确认后创作者将收到通知，支付定金后开始服务
+              </p>
             </div>
           </div>
         </div>

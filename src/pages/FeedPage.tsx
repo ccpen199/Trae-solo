@@ -1,61 +1,169 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Search, Filter, Grid3X3, LayoutList, Play, Users, ShieldCheck, Clock, Star, Zap, Crown } from 'lucide-react';
+import {
+  Search,
+  Filter,
+  Grid3X3,
+  LayoutList,
+  Play,
+  Users,
+  ShieldCheck,
+  Zap,
+  Crown,
+  Heart,
+  Bookmark,
+  Share2,
+  MessageCircle,
+  X,
+  User,
+  BadgeCheck,
+  ChevronRight,
+  Send,
+  ThumbsUp,
+} from 'lucide-react';
 import { api } from '../utils/api';
-import { useAuthStore } from '../store/authStore';
 import VideoCard from '../components/VideoCard';
 import CourseCard from '../components/CourseCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Empty from '../components/Empty';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
-import type { Course } from '../../shared/types';
+import RatingStars from '../components/RatingStars';
+import type { Course, PaginatedResponse, ApiResponse } from '../../shared/types';
 import { cn } from '../lib/utils';
 
 const categories = ['全部', '舞蹈', '音乐', '运动', '绘画', '摄影', '烹饪', '编程', '语言'];
 
 type FeedTab = 'content' | 'courses';
 
-const mockContentVideos = Array.from({ length: 20 }, (_, i) => ({
-  id: `content-${i}`,
-  title: [
-    '30秒学会一个街舞小动作',
-    '钢琴演奏片段欣赏',
-    '晨间瑜伽5分钟跟练',
-    '水彩画入门小技巧',
-    '手机摄影构图分享',
-    '快手甜点制作教程',
-    'Python一行代码技巧',
-    '英语口语每日一句',
-    '吉他弹唱片段',
-    '健身动作纠正',
-  ][i % 10] + ` #干货分享`,
-  creatorName: ['小明老师', '音乐达人', '瑜伽教练', '画家小王', '摄影师阿杰', '美食博主', '程序员老张', '英语老师', '吉他手', '健身教练'][i % 10],
-  views: Math.floor(Math.random() * 50000) + 5000,
-  likes: Math.floor(Math.random() * 5000) + 200,
-  duration: `${Math.floor(Math.random() * 5) + 1}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
-  category: ['舞蹈', '音乐', '运动', '绘画', '摄影', '烹饪', '编程', '语言'][i % 8],
-  collection: i % 4 === 0 ? {
-    name: ['街舞入门系列', '钢琴名曲集', '瑜伽晨练系列', '水彩基础课'][i % 4],
-    totalCount: 6 + (i % 5) * 3,
-  } : undefined,
-  price: i % 3 === 0 ? 0 : (i % 5 === 0 ? 29 + (i % 10) * 10 : undefined),
-  audited: i % 2 === 0,
-  creatorVerified: i % 3 === 0,
-  type: i % 5 === 0 ? 'course' : 'video',
-}));
+interface Comment {
+  id: string;
+  user: {
+    id: string;
+    name: string;
+    avatar?: string;
+  };
+  content: string;
+  likes: number;
+  createdAt: string;
+}
+
+interface ContentVideo {
+  id: string;
+  title: string;
+  creatorName: string;
+  creatorId: string;
+  creatorVerified: boolean;
+  views: number;
+  likes: number;
+  commentCount: number;
+  duration: string;
+  category: string;
+  collection?: {
+    name: string;
+    totalCount: number;
+  };
+  price?: number;
+  audited: boolean;
+  type: 'video' | 'course';
+  courseId?: string;
+  comments?: Comment[];
+}
+
+const mockComments: Comment[] = [
+  {
+    id: 'comment-1',
+    user: { id: 'u1', name: '学习小能手', avatar: '' },
+    content: '这个技巧太实用了！跟着练了一遍，感觉进步很大～',
+    likes: 128,
+    createdAt: '2小时前',
+  },
+  {
+    id: 'comment-2',
+    user: { id: 'u2', name: '艺术爱好者', avatar: '' },
+    content: '老师讲得好细致，期待更多教程！',
+    likes: 56,
+    createdAt: '5小时前',
+  },
+  {
+    id: 'comment-3',
+    user: { id: 'u3', name: '初学者小白', avatar: '' },
+    content: '请问有没有完整的系统课程呀？想深入学习一下',
+    likes: 23,
+    createdAt: '1天前',
+  },
+  {
+    id: 'comment-4',
+    user: { id: 'u4', name: '资深学员', avatar: '' },
+    content: '已购买完整课程，内容超值！推荐大家也去看看',
+    likes: 89,
+    createdAt: '2天前',
+  },
+  {
+    id: 'comment-5',
+    user: { id: 'u5', name: '路人甲', avatar: '' },
+    content: '第一次看这个老师的视频，讲得真不错，关注了',
+    likes: 34,
+    createdAt: '3天前',
+  },
+];
+
+const generateMockComments = (videoId: string): Comment[] => {
+  const count = 3 + (parseInt(videoId.replace('content-', '')) % 3);
+  return mockComments.slice(0, count).map((c, i) => ({
+    ...c,
+    id: `${videoId}-comment-${i}`,
+  }));
+};
+
+const mockContentVideos: ContentVideo[] = Array.from({ length: 20 }, (_, i) => {
+  const creatorIndex = i % 10;
+  const courseId = `course-mock-${creatorIndex * 6 + (i % 6)}`;
+  return {
+    id: `content-${i}`,
+    title: [
+      '30秒学会一个街舞小动作',
+      '钢琴演奏片段欣赏',
+      '晨间瑜伽5分钟跟练',
+      '水彩画入门小技巧',
+      '手机摄影构图分享',
+      '快手甜点制作教程',
+      'Python一行代码技巧',
+      '英语口语每日一句',
+      '吉他弹唱片段',
+      '健身动作纠正',
+    ][i % 10] + ` #干货分享`,
+    creatorName: ['小明老师', '音乐达人', '瑜伽教练', '画家小王', '摄影师阿杰', '美食博主', '程序员老张', '英语老师', '吉他手', '健身教练'][i % 10],
+    creatorId: `creator-${['舞蹈', '音乐', '运动', '绘画', '摄影', '烹饪', '编程', '语言', '音乐', '运动'][i % 10]}-${i % 6}`,
+    creatorVerified: i % 3 === 0,
+    views: Math.floor(Math.random() * 50000) + 5000,
+    likes: Math.floor(Math.random() * 5000) + 200,
+    commentCount: Math.floor(Math.random() * 500) + 20,
+    duration: `${Math.floor(Math.random() * 5) + 1}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
+    category: ['舞蹈', '音乐', '运动', '绘画', '摄影', '烹饪', '编程', '语言'][i % 8],
+    collection: i % 4 === 0 ? {
+      name: ['街舞入门系列', '钢琴名曲集', '瑜伽晨练系列', '水彩基础课'][i % 4],
+      totalCount: 6 + (i % 5) * 3,
+    } : undefined,
+    price: i % 3 === 0 ? 0 : (i % 5 === 0 ? 29 + (i % 10) * 10 : undefined),
+    audited: i % 2 === 0,
+    type: i % 5 === 0 ? 'course' : 'video',
+    courseId,
+    comments: generateMockComments(`content-${i}`),
+  };
+});
 
 export default function FeedPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthStore();
   const [activeTab, setActiveTab] = useState<FeedTab>(
-    (searchParams.get('tab') as FeedTab) || 'courses'
+    (searchParams.get('tab') as FeedTab) || 'content'
   );
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [courses, setCourses] = useState<Course[]>([]);
-  const [contentVideos, setContentVideos] = useState<any[]>([]);
+  const [contentVideos, setContentVideos] = useState<ContentVideo[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -63,6 +171,10 @@ export default function FeedPage() {
   const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || '全部');
   const [priceFilter, setPriceFilter] = useState<string>('');
   const [showPriceFilter, setShowPriceFilter] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<ContentVideo | null>(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [commentInput, setCommentInput] = useState('');
   const observerRef = useRef<HTMLDivElement>(null);
   const pageSize = 12;
 
@@ -81,6 +193,7 @@ export default function FeedPage() {
     setContentVideos([]);
     setHasMore(true);
     loadData(1, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategory, searchKeyword, activeTab, priceFilter]);
 
   const loadData = async (pageNum: number, isInitial = false) => {
@@ -98,7 +211,8 @@ export default function FeedPage() {
           keyword: searchKeyword || undefined,
           status: 'published',
         });
-        const data = (res as any).data;
+        const apiRes = res as ApiResponse<PaginatedResponse<Course>>;
+        const data = apiRes?.data;
         const items = data?.items || [];
         
         if (items.length > 0) {
@@ -237,6 +351,7 @@ export default function FeedPage() {
         });
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [hasMore, loadingMore, loading]
   );
 
@@ -276,13 +391,40 @@ export default function FeedPage() {
     return count.toString();
   };
 
-  const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    if (mins >= 60) {
-      const hours = Math.floor(mins / 60);
-      return `${hours}小时${mins % 60}分`;
-    }
-    return `${mins}分钟`;
+  const handleVideoClick = (video: ContentVideo) => {
+    setSelectedVideo(video);
+    setIsLiked(false);
+    setIsBookmarked(false);
+    setCommentInput('');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const handleCloseModal = () => {
+    setSelectedVideo(null);
+    document.body.style.overflow = '';
+  };
+
+  const getCreatorOtherVideos = (video: ContentVideo) => {
+    return mockContentVideos
+      .filter((v) => v.creatorId === video.creatorId && v.id !== video.id)
+      .slice(0, 4);
+  };
+
+  const getCreatorCourse = (video: ContentVideo) => {
+    const allCourses = generateMockCourses(video.category);
+    return allCourses.find(
+      (c) => c.creator?.username === video.creatorName
+    ) || allCourses[0];
+  };
+
+  const handleCourseClick = (courseId: string) => {
+    handleCloseModal();
+    navigate(`/courses/${courseId}`);
+  };
+
+  const handleCreatorClick = (creatorId: string) => {
+    handleCloseModal();
+    navigate(`/creator/${creatorId}`);
   };
 
   if (loading && ((activeTab === 'courses' && courses.length === 0) || (activeTab === 'content' && contentVideos.length === 0))) {
@@ -294,31 +436,63 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className={cn(
+      'min-h-screen transition-colors duration-500',
+      activeTab === 'content' ? 'bg-green-50/50' : 'bg-purple-50/50'
+    )}>
       <div className={cn(
-        'sticky top-0 backdrop-blur-lg z-40 border-b transition-colors duration-300',
+        'sticky top-0 backdrop-blur-lg z-40 border-b transition-all duration-500',
         activeTab === 'content'
-          ? 'bg-green-50/80 border-green-100'
-          : 'bg-purple-50/80 border-purple-100'
+          ? 'bg-green-50/90 border-green-200'
+          : 'bg-purple-50/90 border-purple-200'
       )}>
         <div className="container mx-auto px-4 py-4">
           <div className={cn(
-            'mb-4 px-4 py-3 rounded-xl flex items-center gap-2',
+            'mb-4 px-5 py-4 rounded-2xl flex items-center justify-between',
             activeTab === 'content'
-              ? 'bg-green-100/60 text-green-700'
-              : 'bg-purple-100/60 text-purple-700'
+              ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/20'
+              : 'bg-gradient-to-r from-purple-500 to-violet-500 text-white shadow-lg shadow-purple-500/20'
           )}>
-            {activeTab === 'content' ? (
-              <>
-                <Zap className="w-5 h-5" />
-                <span className="text-sm font-medium">免费UGC内容 · 创作者自发分享</span>
-              </>
-            ) : (
-              <>
-                <ShieldCheck className="w-5 h-5" />
-                <span className="text-sm font-medium">平台审核·交易保障 · 优质系统课程</span>
-              </>
-            )}
+            <div className="flex items-center gap-3">
+              {activeTab === 'content' ? (
+                <Zap className="w-6 h-6" />
+              ) : (
+                <ShieldCheck className="w-6 h-6" />
+              )}
+              <div>
+                <h2 className="text-lg font-bold">
+                  {activeTab === 'content' ? '内容社区 · UGC短视频' : '课程市场 · 系统付费课'}
+                </h2>
+                <p className="text-sm opacity-90">
+                  {activeTab === 'content' ? '免费浏览·创作者自发分享' : '平台审核·交易保障·资金托管'}
+                </p>
+              </div>
+            </div>
+            <div className="hidden sm:flex items-center gap-2">
+              {activeTab === 'content' ? (
+                <>
+                  <Badge variant="accent" className="bg-white/20 text-white border-white/30">
+                    <Users className="w-3.5 h-3.5 mr-1" />
+                    10w+ 创作者
+                  </Badge>
+                  <Badge variant="accent" className="bg-white/20 text-white border-white/30">
+                    <Play className="w-3.5 h-3.5 mr-1" />
+                    50w+ 视频
+                  </Badge>
+                </>
+              ) : (
+                <>
+                  <Badge variant="accent" className="bg-white/20 text-white border-white/30">
+                    <ShieldCheck className="w-3.5 h-3.5 mr-1" />
+                    平台审核
+                  </Badge>
+                  <Badge variant="accent" className="bg-white/20 text-white border-white/30">
+                    <Crown className="w-3.5 h-3.5 mr-1" />
+                    品质保障
+                  </Badge>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center gap-4 mb-4">
@@ -336,7 +510,7 @@ export default function FeedPage() {
               className={cn(
                 'p-3 rounded-full transition-colors',
                 showPriceFilter && activeTab === 'courses'
-                  ? 'bg-primary-500 text-white'
+                  ? 'bg-purple-500 text-white'
                   : 'bg-white/80 text-zinc-600 hover:bg-white'
               )}
               onClick={() => setShowPriceFilter(!showPriceFilter)}
@@ -370,25 +544,25 @@ export default function FeedPage() {
               <button
                 onClick={() => handleTabChange('content')}
                 className={cn(
-                  'px-5 py-2 rounded-xl text-sm font-medium transition-all duration-300',
+                  'px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-1.5',
                   activeTab === 'content'
                     ? 'bg-green-500 text-white shadow-md shadow-green-500/30'
                     : 'text-zinc-500 hover:text-zinc-700 hover:bg-white/80'
                 )}
               >
-                <Play className="w-4 h-4 inline mr-1.5" />
+                <Play className="w-4 h-4" />
                 内容社区
               </button>
               <button
                 onClick={() => handleTabChange('courses')}
                 className={cn(
-                  'px-5 py-2 rounded-xl text-sm font-medium transition-all duration-300',
+                  'px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-1.5',
                   activeTab === 'courses'
                     ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30'
                     : 'text-zinc-500 hover:text-zinc-700 hover:bg-white/80'
                 )}
               >
-                <Crown className="w-4 h-4 inline mr-1.5" />
+                <Crown className="w-4 h-4" />
                 课程市场
               </button>
             </div>
@@ -414,7 +588,7 @@ export default function FeedPage() {
           </div>
 
           {showPriceFilter && activeTab === 'courses' && (
-            <div className="flex items-center gap-2 pt-3 border-t border-purple-100 mt-2 animate-fade-in">
+            <div className="flex items-center gap-2 pt-3 border-t border-purple-200 mt-2 animate-fade-in">
               <span className="text-sm text-zinc-500 whitespace-nowrap">价格：</span>
               {priceOptions.map((opt) => (
                 <button
@@ -444,10 +618,10 @@ export default function FeedPage() {
               <>
                 <div
                   className={cn(
-                    'grid gap-4 animate-fade-in-up',
+                    'grid gap-5 animate-fade-in-up',
                     viewMode === 'grid'
                       ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-                      : 'grid-cols-1 max-w-3xl mx-auto'
+                      : 'grid-cols-1 max-w-3xl mx-auto gap-4'
                   )}
                 >
                   {contentVideos.map((video, index) => (
@@ -455,10 +629,14 @@ export default function FeedPage() {
                       key={video.id}
                       className={cn('animate-fade-in-up-delay-', (index % 5) + 1)}
                       style={{ animationFillMode: 'backwards' }}
+                      onClick={() => handleVideoClick(video)}
                     >
                       <VideoCard
                         video={video}
-                        className={viewMode === 'list' ? 'flex' : ''}
+                        className={cn(
+                          viewMode === 'list' ? 'flex' : '',
+                          'hover:scale-[1.02] transition-transform'
+                        )}
                       />
                     </div>
                   ))}
@@ -506,6 +684,290 @@ export default function FeedPage() {
           </>
         )}
       </div>
+
+      {selectedVideo && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm animate-fade-in"
+            onClick={handleCloseModal}
+          />
+
+          <div className="relative w-full h-full md:h-auto md:max-h-[90vh] md:max-w-6xl md:mx-4 bg-zinc-900 md:rounded-2xl overflow-hidden animate-slide-up">
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="h-full flex flex-col lg:flex-row">
+              <div className="flex-1 flex flex-col min-h-0">
+                <div className="relative aspect-video bg-black flex-shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-600/30 via-zinc-800 to-zinc-900 flex items-center justify-center">
+                    <button className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors group">
+                      <Play className="w-10 h-10 text-white ml-1 group-hover:scale-110 transition-transform" />
+                    </button>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                    <Badge variant="primary" className="bg-green-500/90 text-white border-0">
+                      {selectedVideo?.category}
+                    </Badge>
+                    <span className="text-white/80 text-sm bg-black/50 px-2 py-1 rounded">
+                      {selectedVideo?.duration}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex-1 overflow-y-auto bg-white p-6 min-h-0">
+                  <h1 className="text-xl font-bold text-zinc-900 mb-4">
+                    {selectedVideo?.title}
+                  </h1>
+
+                  <div
+                    className="flex items-center gap-3 mb-6 pb-6 border-b border-zinc-100 cursor-pointer hover:bg-zinc-50 -mx-2 px-2 py-2 rounded-xl transition-colors"
+                    onClick={() => handleCreatorClick(selectedVideo?.creatorId || '')}
+                  >
+                    <div className="relative">
+                      {selectedVideo?.creatorVerified ? (
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-bold text-lg">
+                          {selectedVideo?.creatorName?.charAt(0)}
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-600 font-bold text-lg">
+                          {selectedVideo?.creatorName?.charAt(0)}
+                        </div>
+                      )}
+                      {selectedVideo?.creatorVerified && (
+                        <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center border-2 border-white">
+                          <BadgeCheck className="w-3.5 h-3.5 text-white" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-zinc-900">{selectedVideo?.creatorName}</span>
+                      </div>
+                      <p className="text-sm text-zinc-500">{formatCount(selectedVideo?.views || 0)} 次观看</p>
+                    </div>
+                    <Button size="sm" variant="primary" className="bg-green-500 hover:bg-green-600">
+                      + 关注
+                    </Button>
+                  </div>
+
+                  <div className="flex items-center gap-2 mb-6">
+                    <button
+                      onClick={() => setIsLiked(!isLiked)}
+                      className={cn(
+                        'flex items-center gap-2 px-4 py-2 rounded-full transition-all',
+                        isLiked
+                          ? 'bg-red-50 text-red-500'
+                          : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                      )}
+                    >
+                      <Heart className={cn('w-5 h-5', isLiked && 'fill-red-500')} />
+                      <span className="text-sm font-medium">
+                        {formatCount((selectedVideo?.likes || 0) + (isLiked ? 1 : 0))}
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => setIsBookmarked(!isBookmarked)}
+                      className={cn(
+                        'flex items-center gap-2 px-4 py-2 rounded-full transition-all',
+                        isBookmarked
+                          ? 'bg-green-50 text-green-500'
+                          : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                      )}
+                    >
+                      <Bookmark className={cn('w-5 h-5', isBookmarked && 'fill-green-500')} />
+                      <span className="text-sm font-medium">收藏</span>
+                    </button>
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 text-zinc-600 hover:bg-zinc-200 transition-all">
+                      <Share2 className="w-5 h-5" />
+                      <span className="text-sm font-medium">分享</span>
+                    </button>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 text-zinc-600">
+                      <MessageCircle className="w-5 h-5" />
+                      <span className="text-sm font-medium">
+                        {formatCount(selectedVideo?.commentCount || 0)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-zinc-900 mb-4 flex items-center gap-2">
+                      <MessageCircle className="w-5 h-5 text-green-500" />
+                      评论 ({selectedVideo?.comments?.length || 0})
+                    </h3>
+
+                    <div className="flex gap-3 mb-6">
+                      <div className="w-9 h-9 rounded-full bg-zinc-200 flex items-center justify-center flex-shrink-0">
+                        <User className="w-5 h-5 text-zinc-500" />
+                      </div>
+                      <div className="flex-1 flex gap-2">
+                        <input
+                          type="text"
+                          value={commentInput}
+                          onChange={(e) => setCommentInput(e.target.value)}
+                          placeholder="说点什么..."
+                          className="flex-1 px-4 py-2 rounded-full bg-zinc-100 text-sm outline-none focus:ring-2 focus:ring-green-500/30 focus:bg-white transition-all"
+                        />
+                        <button
+                          className={cn(
+                            'p-2.5 rounded-full transition-all',
+                            commentInput.trim()
+                              ? 'bg-green-500 text-white hover:bg-green-600'
+                              : 'bg-zinc-200 text-zinc-400 cursor-not-allowed'
+                          )}
+                          disabled={!commentInput.trim()}
+                        >
+                          <Send className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      {selectedVideo?.comments?.map((comment) => (
+                        <div key={comment.id} className="flex gap-3">
+                          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-zinc-300 to-zinc-400 flex items-center justify-center flex-shrink-0">
+                            <span className="text-white text-sm font-medium">
+                              {comment.user.name.charAt(0)}
+                            </span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-sm font-medium text-zinc-900">
+                                {comment.user.name}
+                              </span>
+                              <span className="text-xs text-zinc-400">{comment.createdAt}</span>
+                            </div>
+                            <p className="text-sm text-zinc-700 mb-2">{comment.content}</p>
+                            <button className="flex items-center gap-1 text-xs text-zinc-500 hover:text-green-500 transition-colors">
+                              <ThumbsUp className="w-3.5 h-3.5" />
+                              <span>{comment.likes}</span>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full lg:w-80 bg-zinc-50 border-t lg:border-t-0 lg:border-l border-zinc-200 overflow-y-auto max-h-80 lg:max-h-none">
+                <div className="p-4">
+                  <h3 className="font-semibold text-zinc-900 mb-3 flex items-center gap-2">
+                    <Play className="w-4 h-4 text-green-500" />
+                    创作者其他视频
+                  </h3>
+                  <div className="space-y-3">
+                    {getCreatorOtherVideos(selectedVideo).map((video) => (
+                      <div
+                        key={video.id}
+                        className="flex gap-3 cursor-pointer group"
+                        onClick={() => {
+                          setSelectedVideo(video);
+                          setIsLiked(false);
+                          setIsBookmarked(false);
+                        }}
+                      >
+                        <div className="relative w-24 h-16 rounded-lg overflow-hidden bg-zinc-200 flex-shrink-0">
+                          <div className="absolute inset-0 bg-gradient-to-br from-green-400/30 to-zinc-300 flex items-center justify-center">
+                            <Play className="w-6 h-6 text-white/80" />
+                          </div>
+                          <span className="absolute bottom-1 right-1 text-xs text-white bg-black/60 px-1 rounded">
+                            {video.duration}
+                          </span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-medium text-zinc-900 line-clamp-2 group-hover:text-green-600 transition-colors">
+                            {video.title}
+                          </h4>
+                          <p className="text-xs text-zinc-500 mt-1">
+                            {formatCount(video.views)} 次观看
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-4 border-t border-zinc-200">
+                  <h3 className="font-semibold text-zinc-900 mb-3 flex items-center gap-2">
+                    <Crown className="w-4 h-4 text-amber-500" />
+                    TA 的完整课程
+                  </h3>
+                  {(() => {
+                    const course = getCreatorCourse(selectedVideo);
+                    return (
+                      <div
+                        className="bg-white rounded-xl overflow-hidden shadow-sm border border-zinc-200 cursor-pointer hover:shadow-md transition-shadow group"
+                        onClick={() => handleCourseClick(course?.id || '')}
+                      >
+                        <div className="relative aspect-video bg-gradient-to-br from-purple-400 to-violet-500">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Play className="w-10 h-10 text-white/60" />
+                          </div>
+                          <div className="absolute top-2 left-2">
+                            <Badge variant="accent" size="sm" className="bg-amber-500 text-white border-0">
+                              <Crown className="w-3 h-3 mr-0.5" />
+                              系统课
+                            </Badge>
+                          </div>
+                        </div>
+                        <div className="p-3">
+                          <h4 className="text-sm font-semibold text-zinc-900 line-clamp-2 mb-2 group-hover:text-purple-600 transition-colors">
+                            {course?.title}
+                          </h4>
+                          <div className="flex items-center gap-2 mb-2">
+                            <RatingStars rating={course?.rating || 4.8} size="sm" showValue />
+                            <span className="text-xs text-zinc-500">
+                              ({course?.reviewCount || 0}评价)
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <span className="text-lg font-bold text-purple-600">
+                                {course?.price === 0
+                                  ? course?.isSubscription && course?.subscriptionPrice
+                                    ? `¥${course.subscriptionPrice}/月`
+                                    : '免费'
+                                  : `¥${course?.price}`}
+                              </span>
+                            </div>
+                            <span className="text-xs text-zinc-500">
+                              {course?.chapterCount || 0} 章节
+                            </span>
+                          </div>
+                          <button className="w-full mt-3 py-2 bg-gradient-to-r from-purple-500 to-violet-500 text-white text-sm font-medium rounded-lg hover:from-purple-600 hover:to-violet-600 transition-all">
+                            查看课程详情
+                            <ChevronRight className="w-4 h-4 inline ml-0.5" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes slide-up {
+          from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        .animate-slide-up {
+          animation: slide-up 0.3s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 }

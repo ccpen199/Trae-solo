@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MapPin, Clock, DollarSign, Calendar, Shield, Star, CheckCircle, AlertCircle, MessageSquare, User, ChevronRight, FileText, Scale, AlertTriangle, Receipt, PiggyBank, ArrowRight, X, Phone, Download, Image, File, Tag, ClipboardCheck, Timer, Navigation, Building2, Hash, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { MapPin, Clock, DollarSign, Calendar, Shield, Star, CheckCircle, AlertCircle, MessageSquare, User, ChevronRight, FileText, Scale, AlertTriangle, Receipt, PiggyBank, ArrowRight, X, Phone, Download, Image, File, Tag, ClipboardCheck, Timer, Navigation, Building2, Hash, ThumbsUp, ThumbsDown, Send } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -58,6 +58,17 @@ export default function OrderDetail() {
   const [creatorReviewContent, setCreatorReviewContent] = useState('');
   const [reviewImages, setReviewImages] = useState<string[]>([]);
   const [creatorReviewSubmitted, setCreatorReviewSubmitted] = useState(true);
+  const [disputeImages, setDisputeImages] = useState<string[]>([]);
+  const [showArbitrationTimeline, setShowArbitrationTimeline] = useState(false);
+  const [chatInput, setChatInput] = useState('');
+  const [chatMessagesList, setChatMessagesList] = useState<any[]>([]);
+  const [markedMessages, setMarkedMessages] = useState<string[]>([]);
+  const [showExportTip, setShowExportTip] = useState(false);
+  const [showInsuranceConfirm, setShowInsuranceConfirm] = useState(false);
+  const [reviewTags, setReviewTags] = useState<string[]>([]);
+  const [creatorReviewTags, setCreatorReviewTags] = useState<string[]>([]);
+  const [showReviewSyncTip, setShowReviewSyncTip] = useState(false);
+  const [showPolicyModal, setShowPolicyModal] = useState(false);
 
   const chatMessages = [
     {
@@ -192,11 +203,73 @@ export default function OrderDetail() {
     '其他原因',
   ];
 
+  const arbitrationSteps = [
+    { id: 'applied', label: '已申请', icon: FileText, description: '您的仲裁申请已提交' },
+    { id: 'accepted', label: '平台受理', icon: ClipboardCheck, description: '平台专员已受理，正在核实情况' },
+    { id: 'evidence', label: '双方举证', icon: Image, description: '请双方上传相关凭证' },
+    { id: 'verdict', label: '仲裁裁决', icon: Scale, description: '平台根据双方举证作出裁决' },
+    { id: 'execution', label: '结果执行', icon: CheckCircle, description: '裁决结果已执行，资金已结算' },
+  ];
+
+  const reviewTagOptions = [
+    '清洁到位', '准时到达', '态度友好', '专业细致',
+    '沟通顺畅', '环境整洁', '准时守约', '爽快结账',
+    '价格合理', '超出预期', '服务周到', '值得推荐',
+  ];
+
+  const arbitrationTimeline = [
+    {
+      id: 'step1',
+      step: '已申请',
+      time: '2024-06-12 10:30',
+      handler: '王先生（需求方）',
+      description: '提交仲裁申请，原因：服务质量不符合预期',
+      completed: true,
+    },
+    {
+      id: 'step2',
+      step: '平台受理',
+      time: '2024-06-12 11:00',
+      handler: '平台专员 李主管',
+      description: '已受理您的申请，正在调取服务留痕记录',
+      completed: true,
+    },
+    {
+      id: 'step3',
+      step: '双方举证',
+      time: '进行中',
+      handler: '双方当事人',
+      description: '请在24小时内上传相关凭证',
+      completed: false,
+      current: true,
+    },
+    {
+      id: 'step4',
+      step: '仲裁裁决',
+      time: '预计24小时内',
+      handler: '平台仲裁委员会',
+      description: '根据双方举证作出公正裁决',
+      completed: false,
+    },
+    {
+      id: 'step5',
+      step: '结果执行',
+      time: '裁决后立即执行',
+      handler: '系统自动执行',
+      description: '资金结算及信用分调整',
+      completed: false,
+    },
+  ];
+
   useEffect(() => {
     if (id) {
       loadOrderData();
     }
   }, [id]);
+
+  useEffect(() => {
+    setChatMessagesList(chatMessages);
+  }, []);
 
   const loadOrderData = async () => {
     if (!id) return;
@@ -408,14 +481,17 @@ export default function OrderDetail() {
           await api.orders.confirm(id);
           break;
         case 'payDeposit':
-          await api.orders.payDeposit(id);
-          break;
+          handlePayDepositWithInsurance();
+          return;
         case 'start':
           await api.orders.start(id);
           break;
         case 'complete':
           await api.orders.complete(id);
           break;
+        case 'review':
+          setShowReviewForm(true);
+          return;
       }
       alert('操作成功！');
       loadOrderData();
@@ -434,6 +510,10 @@ export default function OrderDetail() {
       setShowReviewForm(false);
       setReviewRating(5);
       setReviewContent('');
+      setReviewTags([]);
+      setReviewImages([]);
+      setShowReviewSyncTip(true);
+      setTimeout(() => setShowReviewSyncTip(false), 3000);
       loadOrderData();
     } catch (error: any) {
       alert(error.message || '评价失败');
@@ -450,16 +530,76 @@ export default function OrderDetail() {
         ? `${disputeReason} - ${disputeDescription}`
         : disputeReason;
       await api.orders.dispute(id, fullReason);
-      alert('争议已提交，平台将在24小时内介入处理');
       setShowDisputeModal(false);
+      setShowArbitrationTimeline(true);
       setDisputeReason('');
       setDisputeDescription('');
+      setDisputeImages([]);
+      alert('仲裁申请已提交，平台将在24小时内介入处理');
       loadOrderData();
     } catch (error: any) {
       alert(error.message || '提交失败');
     } finally {
       setActionLoading(null);
     }
+  };
+
+  const handleSendMessage = () => {
+    if (!chatInput.trim()) return;
+    const newMsg = {
+      id: 'msg' + Date.now(),
+      sender: user?.id || 'user1',
+      senderName: user?.username || '王先生',
+      senderAvatar: user?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=wang',
+      type: 'text',
+      content: chatInput,
+      time: new Date().toLocaleString(),
+      role: 'requester',
+    };
+    setChatMessagesList([...chatMessagesList, newMsg]);
+    setChatInput('');
+  };
+
+  const toggleMarkMessage = (msgId: string) => {
+    if (markedMessages.includes(msgId)) {
+      setMarkedMessages(markedMessages.filter(id => id !== msgId));
+    } else {
+      setMarkedMessages([...markedMessages, msgId]);
+    }
+  };
+
+  const handleExportChat = () => {
+    setShowExportTip(true);
+    setTimeout(() => setShowExportTip(false), 3000);
+  };
+
+  const toggleReviewTag = (tag: string) => {
+    if (reviewTags.includes(tag)) {
+      setReviewTags(reviewTags.filter(t => t !== tag));
+    } else {
+      setReviewTags([...reviewTags, tag]);
+    }
+  };
+
+  const toggleCreatorReviewTag = (tag: string) => {
+    if (creatorReviewTags.includes(tag)) {
+      setCreatorReviewTags(creatorReviewTags.filter(t => t !== tag));
+    } else {
+      setCreatorReviewTags([...creatorReviewTags, tag]);
+    }
+  };
+
+  const handlePayDepositWithInsurance = () => {
+    if (order?.category === '家政' || order?.category === '护理' || (order as any)?.insuranceRequired) {
+      setShowInsuranceConfirm(true);
+    } else {
+      handleAction('payDeposit');
+    }
+  };
+
+  const confirmInsuranceAndPay = () => {
+    setShowInsuranceConfirm(false);
+    handleAction('payDeposit');
   };
 
   if (loading) {
@@ -499,6 +639,9 @@ export default function OrderDetail() {
     }
     if (order.status === 'in_progress' && (isRequester || isCreator)) {
       actions.push({ key: 'complete', label: '完成服务', primary: true });
+    }
+    if (order.status === 'completed' && isRequester && !review) {
+      actions.push({ key: 'review', label: '去评价', primary: true });
     }
     if (order.status !== 'cancelled' && order.status !== 'disputed' && order.status !== 'completed' && (isRequester || isCreator)) {
       actions.push({ key: 'dispute', label: '申请仲裁', danger: true });
@@ -668,6 +811,123 @@ export default function OrderDetail() {
               </div>
             </div>
 
+            {(order.status === 'disputed' || showArbitrationTimeline) && (
+              <div className="card p-6 animate-fade-in-up-delay-1 border-2 border-red-100">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+                      <Scale className="w-5 h-5 text-red-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-zinc-900">仲裁进度追踪</h2>
+                      <p className="text-sm text-zinc-500">平台将在24小时内响应</p>
+                    </div>
+                  </div>
+                  <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">
+                    仲裁中
+                  </span>
+                </div>
+
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-4">
+                    {arbitrationSteps.map((step, index) => {
+                      const Icon = step.icon;
+                      const isCompleted = index < 2;
+                      const isCurrent = index === 2;
+                      return (
+                        <div key={step.id} className="flex flex-col items-center flex-1">
+                          <div
+                            className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all ${
+                              isCompleted
+                                ? 'bg-green-500 text-white'
+                                : isCurrent
+                                ? 'bg-red-500 text-white animate-pulse'
+                                : 'bg-zinc-200 text-zinc-500'
+                            }`}
+                          >
+                            {isCompleted ? (
+                              <CheckCircle className="w-5 h-5" />
+                            ) : (
+                              <Icon className="w-5 h-5" />
+                            )}
+                          </div>
+                          <span
+                            className={`text-xs text-center font-medium ${
+                              isCompleted
+                                ? 'text-green-600'
+                                : isCurrent
+                                ? 'text-red-600'
+                                : 'text-zinc-400'
+                            }`}
+                          >
+                            {step.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="relative h-1 bg-zinc-200 rounded-full">
+                    <div
+                      className="absolute left-0 top-0 h-full bg-gradient-to-r from-green-500 to-red-500 rounded-full transition-all duration-500"
+                      style={{ width: '40%' }}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {arbitrationTimeline.map((item, index) => (
+                    <div key={item.id} className="flex gap-4">
+                      <div className="relative">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                          item.completed
+                            ? 'bg-green-100'
+                            : item.current
+                            ? 'bg-red-100'
+                            : 'bg-zinc-100'
+                        }`}>
+                          {item.completed ? (
+                            <CheckCircle className="w-5 h-5 text-green-600" />
+                          ) : item.current ? (
+                            <AlertTriangle className="w-5 h-5 text-red-600" />
+                          ) : (
+                            <Clock className="w-5 h-5 text-zinc-400" />
+                          )}
+                        </div>
+                        {index < arbitrationTimeline.length - 1 && (
+                          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-0.5 h-full bg-zinc-200" />
+                        )}
+                      </div>
+                      <div className="flex-1 pb-6">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className={`font-medium ${
+                            item.current ? 'text-red-600' : 'text-zinc-900'
+                          }`}>
+                            {item.step}
+                          </span>
+                          <span className="text-xs text-zinc-500">{item.time}</span>
+                        </div>
+                        <p className="text-sm text-zinc-600 mb-1">{item.description}</p>
+                        <div className="text-xs text-zinc-400 flex items-center gap-1">
+                          <User className="w-3 h-3" />
+                          {item.handler}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4 p-4 bg-amber-50 rounded-xl border border-amber-100">
+                  <div className="flex items-start gap-3">
+                    <Clock className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm text-amber-700">
+                      <p className="font-medium">预计处理时间</p>
+                      <p className="text-xs mt-1">平台专员将在24小时内介入处理，复杂案件可能需要3-5个工作日</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="card p-6 animate-fade-in-up-delay-2">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
@@ -802,20 +1062,28 @@ export default function OrderDetail() {
                     <p className="text-sm text-zinc-500">双向沟通消息已加密留痕</p>
                   </div>
                 </div>
-                <button
-                  onClick={() => alert('聊天记录已导出为PDF文件')}
-                  className="px-4 py-2 text-sm bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl transition-colors flex items-center gap-2"
-                >
-                  <FileText className="w-4 h-4" />
-                  导出聊天
-                </button>
+                <div className="flex items-center gap-2">
+                  {showExportTip && (
+                    <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-lg text-xs font-medium flex items-center gap-1 animate-fade-in">
+                      <CheckCircle className="w-3 h-3" />
+                      已生成留痕记录，可用于仲裁举证
+                    </span>
+                  )}
+                  <button
+                    onClick={handleExportChat}
+                    className="px-4 py-2 text-sm bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl transition-colors flex items-center gap-2"
+                  >
+                    <FileText className="w-4 h-4" />
+                    导出聊天
+                  </button>
+                </div>
               </div>
 
-              <div className="space-y-4">
-                {chatMessages.map((msg, index) => (
+              <div className="space-y-4 mb-4 max-h-96 overflow-y-auto pr-2">
+                {chatMessagesList.map((msg, index) => (
                   <div
                     key={msg.id}
-                    className={`flex gap-3 animate-fade-in ${
+                    className={`flex gap-3 animate-fade-in group relative ${
                       msg.role === 'requester' ? 'flex-row' : 'flex-row-reverse'
                     }`}
                     style={{ animationDelay: `${index * 0.05}s` }}
@@ -836,6 +1104,17 @@ export default function OrderDetail() {
                           {msg.role === 'requester' ? '需求方' : '服务方'}
                         </span>
                         <span className="text-xs text-zinc-400">{msg.time}</span>
+                        <button
+                          onClick={() => toggleMarkMessage(msg.id)}
+                          className={`opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded ${
+                            markedMessages.includes(msg.id)
+                              ? 'text-amber-500 opacity-100'
+                              : 'text-zinc-400 hover:text-amber-500'
+                          }`}
+                          title={markedMessages.includes(msg.id) ? '取消标记' : '标记为关键节点'}
+                        >
+                          <Star className={`w-3.5 h-3.5 ${markedMessages.includes(msg.id) ? 'fill-current' : ''}`} />
+                        </button>
                       </div>
                       {msg.type === 'text' && (
                         <div className={`p-3 rounded-2xl ${
@@ -880,11 +1159,51 @@ export default function OrderDetail() {
                   </div>
                 ))}
               </div>
+
+              <div className="border-t border-zinc-100 pt-4">
+                <div className="flex items-end gap-3">
+                  <div className="flex-1">
+                    <textarea
+                      value={chatInput}
+                      onChange={(e) => setChatInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSendMessage();
+                        }
+                      }}
+                      placeholder="发送消息，沟通记录将自动留痕..."
+                      className="input-field resize-none text-sm"
+                      rows={2}
+                    />
+                  </div>
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={!chatInput.trim()}
+                    className="px-4 py-2.5 bg-primary-500 hover:bg-primary-600 disabled:bg-zinc-300 text-white rounded-xl transition-colors flex items-center gap-2 text-sm font-medium"
+                  >
+                    <Send className="w-4 h-4" />
+                    发送
+                  </button>
+                </div>
+                <p className="text-xs text-zinc-400 mt-2 flex items-center gap-1">
+                  <Shield className="w-3 h-3" />
+                  消息已加密存储，可作为仲裁举证凭证
+                </p>
+              </div>
             </div>
 
             {order.status === 'completed' && (
               <div className="card p-6 animate-fade-in-up-delay-2">
-                <h2 className="text-xl font-semibold text-zinc-900 mb-6">双向评价</h2>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-zinc-900">双向评价</h2>
+                  {showReviewSyncTip && (
+                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium flex items-center gap-1 animate-fade-in">
+                      <CheckCircle className="w-3 h-3" />
+                      评价已同步至信用档案
+                    </span>
+                  )}
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="border border-zinc-200 rounded-xl overflow-hidden">
@@ -989,7 +1308,28 @@ export default function OrderDetail() {
                               />
                             </div>
                             <div>
-                              <div className="text-sm font-medium text-zinc-700 mb-2">上传图片凭证（可选）</div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">服务标签</div>
+                              <div className="flex flex-wrap gap-2">
+                                {reviewTagOptions.slice(0, 6).map((tag) => (
+                                  <button
+                                    key={tag}
+                                    type="button"
+                                    onClick={() => toggleReviewTag(tag)}
+                                    className={cn(
+                                      'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
+                                      reviewTags.includes(tag)
+                                        ? 'bg-primary-100 text-primary-700 border-primary-300'
+                                        : 'bg-zinc-50 text-zinc-600 border-zinc-200 hover:border-zinc-300'
+                                    )}
+                                  >
+                                    {reviewTags.includes(tag) && <CheckCircle className="w-3 h-3 inline mr-1" />}
+                                    {tag}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">上传图片凭证（可选，最多4张）</div>
                               <div className="grid grid-cols-4 gap-2">
                                 {reviewImages.map((img, idx) => (
                                   <div key={idx} className="aspect-square rounded-lg overflow-hidden border border-zinc-200 relative">
@@ -1139,13 +1479,38 @@ export default function OrderDetail() {
                                 rows={4}
                               />
                             </div>
+                            <div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">印象标签</div>
+                              <div className="flex flex-wrap gap-2">
+                                {reviewTagOptions.slice(6, 12).map((tag) => (
+                                  <button
+                                    key={tag}
+                                    type="button"
+                                    onClick={() => toggleCreatorReviewTag(tag)}
+                                    className={cn(
+                                      'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
+                                      creatorReviewTags.includes(tag)
+                                        ? 'bg-orange-100 text-orange-700 border-orange-300'
+                                        : 'bg-zinc-50 text-zinc-600 border-zinc-200 hover:border-zinc-300'
+                                    )}
+                                  >
+                                    {creatorReviewTags.includes(tag) && <CheckCircle className="w-3 h-3 inline mr-1" />}
+                                    {tag}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
                             <div className="flex gap-3">
                               <button
                                 className="btn-primary flex-1"
                                 onClick={() => {
                                   setCreatorReviewSubmitted(true);
                                   setShowCreatorReviewForm(false);
-                                  alert('评价提交成功！');
+                                  setCreatorReviewRating(5);
+                                  setCreatorReviewContent('');
+                                  setCreatorReviewTags([]);
+                                  setShowReviewSyncTip(true);
+                                  setTimeout(() => setShowReviewSyncTip(false), 3000);
                                 }}
                               >
                                 提交评价
@@ -1264,17 +1629,39 @@ export default function OrderDetail() {
           <div className="space-y-6">
             <div className="card p-6 animate-fade-in-up-delay-1">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-zinc-900">支付信息</h3>
-                {order.status === 'completed' && (
+                <h3 className="text-lg font-semibold text-zinc-900">
+                  {order.status === 'completed' ? '资金分账' : '支付信息'}
+                </h3>
+                {(order.status === 'completed' || order.status === 'in_progress' || order.status === 'deposit_paid') && (
                   <button
                     onClick={() => setShowSettlementDetail(!showSettlementDetail)}
                     className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1"
                   >
                     <Receipt className="w-3.5 h-3.5" />
-                    分账明细
+                    {showSettlementDetail ? '收起明细' : '分账明细'}
                   </button>
                 )}
               </div>
+
+              {(order.status === 'in_progress' || order.status === 'deposit_paid') && (
+                <div className="mb-4 p-4 bg-amber-50 rounded-xl border border-amber-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-amber-800">定金已托管</span>
+                    <span className="text-lg font-bold text-amber-600">¥{order.deposit}</span>
+                  </div>
+                  <div className="relative h-2 bg-amber-200 rounded-full overflow-hidden">
+                    <div
+                      className="absolute left-0 top-0 h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full transition-all duration-500"
+                      style={{ width: order.status === 'in_progress' ? '60%' : '30%' }}
+                    />
+                  </div>
+                  <div className="flex justify-between mt-2 text-xs text-amber-600">
+                    <span>已支付定金</span>
+                    <span>{order.status === 'in_progress' ? '服务进行中' : '等待服务开始'}</span>
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-zinc-500">服务费用</span>
@@ -1289,37 +1676,65 @@ export default function OrderDetail() {
                   <span className="font-medium">¥{order.price - order.deposit}</span>
                 </div>
 
-                {showSettlementDetail && order.status === 'completed' && (
-                  <div className="mt-4 p-4 bg-zinc-50 rounded-xl space-y-3 animate-fade-in">
+                {showSettlementDetail && (
+                  <div className="mt-4 p-4 bg-zinc-50 rounded-xl space-y-4 animate-fade-in">
                     <div className="text-sm font-medium text-zinc-700 mb-2 flex items-center gap-2">
                       <PiggyBank className="w-4 h-4 text-primary-500" />
                       资金分账明细
                     </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-zinc-500">订单总金额</span>
-                      <span className="font-medium">¥{order.price}</span>
+
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-zinc-500">订单总金额</span>
+                        <span className="font-medium">¥{order.price}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-zinc-500">平台服务费 (15%)</span>
+                        <span className="text-red-500">-¥{(order.price * 0.15).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-zinc-500">创作者实际收入</span>
+                        <span className="font-medium text-green-600">¥{(order.price * 0.85).toFixed(2)}</span>
+                      </div>
                     </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-zinc-500">平台服务费 (15%)</span>
-                      <span className="text-red-500">-¥{(order.price * 0.15).toFixed(2)}</span>
+
+                    <div className="h-px bg-zinc-200" />
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-500">结算状态</span>
+                        <span className={cn(
+                          'font-medium',
+                          order.status === 'completed' ? 'text-green-600' : 'text-amber-600'
+                        )}>
+                          {order.status === 'completed' ? '已结算' : '待结算'}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-500">结算时间</span>
+                        <span className="text-zinc-700">
+                          {order.status === 'completed'
+                            ? new Date().toLocaleDateString()
+                            : '服务完成后 T+1 工作日'}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-500">交易单号</span>
+                        <span className="font-mono text-zinc-700">TXN{order.id?.slice(0, 8).toUpperCase()}</span>
+                      </div>
                     </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-zinc-500">创作者实际收入</span>
-                      <span className="font-medium text-green-600">¥{(order.price * 0.85).toFixed(2)}</span>
-                    </div>
-                    <div className="h-px bg-zinc-200 my-2" />
-                    <div className="flex justify-between text-xs text-zinc-400">
-                      <span>结算状态</span>
-                      <span className="text-green-500">已结算</span>
-                    </div>
-                    <div className="flex justify-between text-xs text-zinc-400">
-                      <span>结算时间</span>
-                      <span>{new Date().toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex justify-between text-xs text-zinc-400">
-                      <span>交易单号</span>
-                      <span className="font-mono">TXN{order.id?.slice(0, 8).toUpperCase()}</span>
-                    </div>
+
+                    {order.status !== 'completed' && (
+                      <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
+                        <div className="flex items-start gap-2">
+                          <Clock className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                          <div className="text-xs text-blue-700">
+                            <p className="font-medium">结算规则</p>
+                            <p className="mt-0.5">服务完成确认后，T+1 工作日自动结算至创作者账户</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -1390,7 +1805,13 @@ export default function OrderDetail() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-zinc-900">家政服务责任险</h3>
-                    <p className="text-xs text-zinc-500">保单已生效 · 全程保障</p>
+                    <p className="text-xs text-zinc-500">
+                      {order.status === 'completed'
+                        ? '保障有效 · 30天追溯期'
+                        : order.status === 'cancelled'
+                        ? '保障已终止'
+                        : '保单已生效 · 全程保障'}
+                    </p>
                   </div>
                 </div>
 
@@ -1402,7 +1823,10 @@ export default function OrderDetail() {
                     </div>
                     <div className="p-3 bg-white rounded-xl border border-blue-100">
                       <div className="text-xs text-zinc-500 mb-1">保费</div>
-                      <div className="font-semibold text-blue-600">¥{insuranceInfo.premium}</div>
+                      <div className="font-semibold text-blue-600">
+                        ¥{insuranceInfo.premium}
+                        <span className="text-xs text-green-600 ml-1">平台承担</span>
+                      </div>
                     </div>
                   </div>
 
@@ -1437,11 +1861,11 @@ export default function OrderDetail() {
                   </div>
 
                   <button
-                    onClick={() => alert('保单详情页（模拟跳转）')}
+                    onClick={() => setShowPolicyModal(true)}
                     className="w-full py-2.5 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-xl transition-colors flex items-center justify-center gap-1"
                   >
                     <FileText className="w-4 h-4" />
-                    查看完整保单
+                    查看电子保单
                   </button>
                 </div>
               </div>
@@ -1695,6 +2119,42 @@ export default function OrderDetail() {
                 </p>
               </div>
 
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">
+                  上传凭证（最多4张）
+                </label>
+                <div className="grid grid-cols-4 gap-2">
+                  {disputeImages.map((img, idx) => (
+                    <div key={idx} className="aspect-square rounded-lg overflow-hidden border border-zinc-200 relative">
+                      <img src={img} alt="" className="w-full h-full object-cover" />
+                      <button
+                        onClick={() => setDisputeImages(disputeImages.filter((_, i) => i !== idx))}
+                        className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/50 text-white flex items-center justify-center text-xs"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                  {disputeImages.length < 4 && (
+                    <button
+                      onClick={() => {
+                        const mockImages = [
+                          'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop',
+                          'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=400&h=300&fit=crop',
+                        ];
+                        if (disputeImages.length < mockImages.length) {
+                          setDisputeImages([...disputeImages, mockImages[disputeImages.length]]);
+                        }
+                      }}
+                      className="aspect-square rounded-lg border-2 border-dashed border-zinc-200 hover:border-red-300 hover:bg-red-50 flex flex-col items-center justify-center text-zinc-400 hover:text-red-500 transition-colors"
+                    >
+                      <Image className="w-6 h-6 mb-1" />
+                      <span className="text-xs">添加</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+
               <div className="p-4 bg-zinc-50 rounded-xl">
                 <div className="text-sm font-medium text-zinc-700 mb-2">涉及金额</div>
                 <div className="flex items-center justify-between">
@@ -1705,6 +2165,13 @@ export default function OrderDetail() {
                   <span className="text-zinc-500">已付定金</span>
                   <span className="text-green-600">¥{order?.deposit || 0}</span>
                 </div>
+              </div>
+
+              <div className="p-3 bg-blue-50 rounded-xl border border-blue-100 flex items-center gap-2">
+                <Clock className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                <span className="text-xs text-blue-700">
+                  预计处理时间：平台将在 <strong>24小时内</strong> 响应您的申请
+                </span>
               </div>
             </div>
 
@@ -1724,6 +2191,166 @@ export default function OrderDetail() {
               >
                 提交仲裁申请
               </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showPolicyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up max-h-[80vh] overflow-y-auto">
+            <div className="p-6 border-b border-zinc-100 bg-gradient-to-r from-blue-500 to-indigo-500">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">电子保单</h2>
+                    <p className="text-sm text-blue-100">家政服务责任险</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowPolicyModal(false)}
+                  className="p-2 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-5">
+              <div className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100">
+                <div className="text-center">
+                  <div className="text-sm text-zinc-500 mb-1">累计保额</div>
+                  <div className="text-4xl font-bold text-blue-600">¥500,000</div>
+                  <div className="text-xs text-zinc-500 mt-1">人身伤害 + 财产损失 双重保障</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3 bg-zinc-50 rounded-xl">
+                  <div className="text-xs text-zinc-500 mb-1">保单号</div>
+                  <div className="font-mono text-sm font-medium text-zinc-800">{insuranceInfo.policyNo}</div>
+                </div>
+                <div className="p-3 bg-zinc-50 rounded-xl">
+                  <div className="text-xs text-zinc-500 mb-1">保费</div>
+                  <div className="font-semibold text-green-600">¥{insuranceInfo.premium} <span className="text-xs">平台承担</span></div>
+                </div>
+              </div>
+
+              <div className="p-4 bg-zinc-50 rounded-xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <Building2 className="w-4 h-4 text-blue-500" />
+                  <span className="text-sm font-medium text-zinc-700">承保公司</span>
+                </div>
+                <div className="font-medium text-zinc-900">{insuranceInfo.company}</div>
+              </div>
+
+              <div>
+                <div className="text-sm font-medium text-zinc-700 mb-3">保障范围</div>
+                <div className="space-y-2">
+                  {insuranceInfo.range.map((item) => (
+                    <div key={item} className="flex items-center gap-3 p-3 bg-zinc-50 rounded-xl">
+                      <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-600" />
+                      </div>
+                      <span className="text-sm text-zinc-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-sm text-amber-700">
+                    <p className="font-medium mb-1">特别说明</p>
+                    <ul className="space-y-1 text-xs">
+                      <li>• 保障期限：服务开始至服务完成后30天追溯期</li>
+                      <li>• 本保单由平台统一投保，保费由平台承担</li>
+                      <li>• 理赔事宜请联系平台客服协助办理</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-zinc-100">
+              <button
+                onClick={() => setShowPolicyModal(false)}
+                className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-colors"
+              >
+                我知道了
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showInsuranceConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up">
+            <div className="p-6 border-b border-zinc-100 bg-gradient-to-r from-blue-500 to-indigo-500">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-white">保险投保确认</h2>
+                  <p className="text-sm text-blue-100">家政服务强制投保</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-5">
+              <div className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100">
+                <div className="text-center">
+                  <div className="text-sm text-zinc-500 mb-1">保障额度</div>
+                  <div className="text-3xl font-bold text-blue-600">¥50万</div>
+                  <div className="text-xs text-zinc-500 mt-1">人身伤害 + 财产损失</div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-zinc-500">保费</span>
+                  <span className="font-medium text-green-600">¥{insuranceInfo.premium}（平台承担）</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-zinc-500">承保公司</span>
+                  <span className="font-medium text-zinc-900">{insuranceInfo.company}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-zinc-500">保障期限</span>
+                  <span className="font-medium text-zinc-900">服务全程 + 30天追溯期</span>
+                </div>
+              </div>
+
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-100">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-amber-700">
+                    根据平台规则，家政/护理类服务订单强制投保家政服务责任险，保障您的服务安全。保费由平台承担，无需您额外支付。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-zinc-100 flex gap-3">
+              <button
+                onClick={() => setShowInsuranceConfirm(false)}
+                className="flex-1 py-3 border border-zinc-200 text-zinc-700 rounded-xl font-medium hover:bg-zinc-50 transition-colors"
+              >
+                取消
+              </button>
+              <button
+                onClick={confirmInsuranceAndPay}
+                className="flex-1 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                <CheckCircle className="w-4 h-4" />
+                确认投保并支付
+              </button>
             </div>
           </div>
         </div>

@@ -5,7 +5,9 @@ import {
   Heart, MoreHorizontal, Lock, User, Shield, FileCheck, Eye,
   AlertCircle, Info, FileText, Receipt, Landmark, RefreshCw,
   BadgeCheck, Crown, XCircle, AlertTriangle, CreditCard, Percent,
-  ArrowLeft, Search, HelpCircle, CircleDot, Wallet
+  ArrowLeft, Search, HelpCircle, CircleDot, Wallet, CheckCircle2,
+  Calendar, Hash, ExternalLink, Sparkles, Zap, BookOpen, Award,
+  MessageCircle, Download, Clock3, Coins, TrendingUp, X, ChevronRight
 } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
@@ -35,12 +37,27 @@ export default function CourseDetail() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showRefundModal, setShowRefundModal] = useState(false);
   const [refundReason, setRefundReason] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showLockedModal, setShowLockedModal] = useState(false);
+  const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
+  const [showSettlementInfo, setShowSettlementInfo] = useState(false);
+  const [lastWatchedChapter, setLastWatchedChapter] = useState<string | null>(null);
+  const [watchedFreeChapters, setWatchedFreeChapters] = useState<string[]>([]);
+  const [hoveredChapter, setHoveredChapter] = useState<string | null>(null);
   const [accessInfo, setAccessInfo] = useState<{
     type: 'none' | 'one_time' | 'subscription';
     purchaseDate?: string;
     expiresAt?: string;
     progress?: number;
+    lastChapterId?: string;
+    lastChapterTitle?: string;
   }>({ type: 'none' });
+  const [orderInfo, setOrderInfo] = useState<{
+    orderNo: string;
+    payTime: string;
+    payMethod: string;
+    amount: number;
+  } | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -223,25 +240,59 @@ export default function CourseDetail() {
   };
 
   const confirmPurchase = async () => {
-    if (!id || !purchaseType) return;
+    if (!id || !purchaseType || !course) return;
     setPurchasing(true);
     try {
       await api.courses.purchase(id, purchaseType);
       setHasAccess(true);
+      const now = new Date();
+      const orderNo = 'ORD' + now.getTime().toString().slice(-12) + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+      const amount = purchaseType === 'subscription' ? (course.subscriptionPrice || 0) : course.price;
+      
       setAccessInfo({
         type: purchaseType,
-        purchaseDate: new Date().toLocaleDateString(),
+        purchaseDate: now.toLocaleDateString(),
         expiresAt: purchaseType === 'subscription'
           ? new Date(Date.now() + 30 * 86400000).toLocaleDateString()
           : undefined,
         progress: 0,
+        lastChapterId: chapters[0]?.id,
+        lastChapterTitle: chapters[0]?.title,
       });
+      
+      setOrderInfo({
+        orderNo,
+        payTime: now.toLocaleString(),
+        payMethod: '微信支付',
+        amount,
+      });
+      
+      setLastWatchedChapter(chapters[0]?.id || null);
       setShowPaymentModal(false);
-      alert(`购买成功！${purchaseType === 'subscription' ? '会员有效期30天' : '永久有效'}`);
+      setShowSuccessModal(true);
     } catch (error: any) {
       alert(error.message || '购买失败，请重试');
     } finally {
       setPurchasing(false);
+    }
+  };
+
+  const handleChapterClick = (chapter: Chapter, index: number) => {
+    if (hasAccess || chapter.isFree) {
+      setActiveChapter(activeChapter === index ? null : index);
+      if (hasAccess) {
+        setLastWatchedChapter(chapter.id);
+        setAccessInfo(prev => ({
+          ...prev,
+          lastChapterId: chapter.id,
+          lastChapterTitle: chapter.title,
+        }));
+      }
+      if (chapter.isFree && !hasAccess && !watchedFreeChapters.includes(chapter.id)) {
+        setWatchedFreeChapters(prev => [...prev, chapter.id]);
+      }
+    } else {
+      setShowLockedModal(true);
     }
   };
 
@@ -325,40 +376,72 @@ export default function CourseDetail() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1 flex items-center gap-6">
-              <div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-primary-600">
-                    {course.price > 0 ? `¥${course.price}` : course.isSubscription ? '订阅制' : '免费'}
-                  </span>
-                  {course.isSubscription && course.subscriptionPrice && (
-                    <span className="text-sm text-zinc-500">或 ¥{course.subscriptionPrice}/月</span>
+              {hasAccess ? (
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl">
+                    <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
+                      <BadgeCheck className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-green-800">
+                        {accessInfo.type === 'subscription' ? '会员生效中' : '已购买，永久有效'}
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-green-600">
+                        <span className="flex items-center gap-1">
+                          <BookOpen className="w-3 h-3" />
+                          学习进度 {accessInfo.progress || 0}%
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Award className="w-3 h-3" />
+                          {accessInfo.type === 'subscription' ? '会员期内有效' : '永久有效'}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Receipt className="w-3 h-3" />
+                          可开发票
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {accessInfo.lastChapterTitle && (
+                    <button
+                      className="flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-xl hover:bg-amber-100 transition-colors"
+                      onClick={() => {
+                        const idx = chapters.findIndex(c => c.id === accessInfo.lastChapterId);
+                        if (idx !== -1) setActiveChapter(idx);
+                      }}
+                    >
+                      <Play className="w-4 h-4 text-amber-600" fill="currentColor" />
+                      <div className="text-left">
+                        <div className="text-xs text-amber-500">继续学习</div>
+                        <div className="text-sm font-medium text-amber-800 truncate max-w-[200px]">
+                          {accessInfo.lastChapterTitle}
+                        </div>
+                      </div>
+                    </button>
                   )}
                 </div>
-                <div className="text-sm text-zinc-500">
-                  已有 {course.studentCount} 人购买
-                </div>
-              </div>
-
-              {hasAccess ? (
-                <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-xl">
-                  <BadgeCheck className="w-5 h-5 text-green-600" />
-                  <div className="text-sm">
-                    <span className="font-medium text-green-700">
-                      {accessInfo.type === 'subscription' ? '订阅会员生效中' : '已购买，永久有效'}
+              ) : (
+                <div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-bold text-primary-600">
+                      {course.price > 0 ? `¥${course.price}` : course.isSubscription ? '订阅制' : '免费'}
                     </span>
-                    {accessInfo.expiresAt && (
-                      <span className="text-green-600 ml-2">到期: {accessInfo.expiresAt}</span>
-                    )}
-                    {accessInfo.progress !== undefined && (
-                      <span className="text-green-600 ml-2">学习进度: {accessInfo.progress}%</span>
+                    {course.isSubscription && course.subscriptionPrice && (
+                      <span className="text-sm text-zinc-500">或 ¥{course.subscriptionPrice}/月</span>
                     )}
                   </div>
+                  <div className="text-sm text-zinc-500">
+                    已有 {course.studentCount} 人购买
+                  </div>
                 </div>
-              ) : (
+              )}
+
+              {!hasAccess && (
                 <div className="flex items-center gap-2 text-xs text-zinc-500">
                   <span className="px-2 py-1 bg-amber-50 text-amber-600 rounded-md flex items-center gap-1">
                     <Eye className="w-3 h-3" />
-                    可试看 {freeChaptersCount}/{chapters.length} 节
+                    已试看 {watchedFreeChapters.length}/{freeChaptersCount} 节
                   </span>
                   {!isAuthenticated && (
                     <span className="px-2 py-1 bg-red-50 text-red-600 rounded-md flex items-center gap-1">
@@ -382,8 +465,8 @@ export default function CourseDetail() {
                       申请退款
                     </button>
                   )}
-                  <button className="btn-primary px-8 py-3">
-                    <Play className="w-5 h-5 mr-2" />
+                  <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-green-500/30 hover:scale-[1.02] transition-all duration-300 flex items-center gap-2">
+                    <Play className="w-5 h-5" fill="white" />
                     开始学习
                   </button>
                 </>
@@ -478,12 +561,14 @@ export default function CourseDetail() {
                   {chapters.map((chapter, index) => (
                     <div
                       key={chapter.id}
-                      className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all ${
+                      className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all relative group ${
                         activeChapter === index
                           ? 'bg-primary-50 border-2 border-primary-200'
                           : 'hover:bg-zinc-50 border-2 border-transparent'
-                      }`}
-                      onClick={() => setActiveChapter(activeChapter === index ? null : index)}
+                      } ${!chapter.isFree && !hasAccess ? 'opacity-90' : ''}`}
+                      onClick={() => handleChapterClick(chapter, index)}
+                      onMouseEnter={() => setHoveredChapter(chapter.id)}
+                      onMouseLeave={() => setHoveredChapter(null)}
                     >
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                         chapter.isFree || hasAccess
@@ -501,15 +586,39 @@ export default function CourseDetail() {
                         <div className="flex items-center gap-2">
                           <span className="text-zinc-400 text-sm">第{chapter.order}节</span>
                           {chapter.isFree && (
-                            <span className="px-2 py-0.5 bg-green-100 text-green-600 text-xs rounded-full">
-                              免费
-                            </span>
+                            <Badge variant="success" size="sm">
+                              <Play className="w-3 h-3 mr-0.5" fill="currentColor" />
+                              试看
+                            </Badge>
+                          )}
+                          {!chapter.isFree && !hasAccess && (
+                            <Badge variant="default" size="sm">
+                              <Lock className="w-3 h-3 mr-0.5" />
+                              锁定
+                            </Badge>
+                          )}
+                          {hasAccess && lastWatchedChapter === chapter.id && (
+                            <Badge variant="primary" size="sm">
+                              <Clock3 className="w-3 h-3 mr-0.5" />
+                              上次观看
+                            </Badge>
                           )}
                         </div>
-                        <h3 className="font-medium text-zinc-900">{chapter.title}</h3>
+                        <h3 className={`font-medium ${
+                          !chapter.isFree && !hasAccess ? 'text-zinc-500' : 'text-zinc-900'
+                        }`}>
+                          {chapter.title}
+                        </h3>
                       </div>
 
                       <div className="text-sm text-zinc-500">{chapter.duration} 分钟</div>
+
+                      {!chapter.isFree && !hasAccess && hoveredChapter === chapter.id && (
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-zinc-800 text-white text-xs rounded-lg whitespace-nowrap z-10 animate-fade-in">
+                          购买后观看
+                          <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-zinc-800 rotate-45" />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -704,96 +813,322 @@ export default function CourseDetail() {
               </div>
             </div>
 
-            {course.isSubscription && (
-              <div className="card p-6 animate-fade-in-up-delay-2 relative overflow-hidden bg-gradient-to-br from-amber-50 to-primary-50 border-amber-100">
-                <div className="absolute top-3 right-3">
-                  <Badge variant="accent" size="sm">
-                    <Crown className="w-3 h-3 mr-1" />
-                    会员权益
-                  </Badge>
-                </div>
-                <h3 className="text-base font-semibold text-zinc-900 mb-1">
-                  订阅会员权益边界
-                </h3>
-                <p className="text-xs text-zinc-500 mb-4">
-                  ¥{course.subscriptionPrice}/月，解锁全部权益
-                </p>
-                <div className="grid grid-cols-2 gap-2.5">
-                  {subscriptionBenefits.map((item, i) => (
-                    <div
-                      key={i}
-                      className="p-2.5 bg-white rounded-xl border border-zinc-100 hover:shadow-sm transition-shadow"
-                    >
-                      <item.icon className="w-4 h-4 text-primary-600 mb-1.5" />
-                      <div className="text-xs font-medium text-zinc-800">{item.title}</div>
-                      <div className="text-[10px] text-zinc-500 mt-0.5 leading-tight">
-                        {item.desc}
-                      </div>
+            {hasAccess && orderInfo && (
+              <div className="card p-6 animate-fade-in-up-delay-2">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center">
+                      <FileText className="w-5 h-5 text-blue-600" />
                     </div>
-                  ))}
+                    <div>
+                      <h3 className="text-base font-semibold text-zinc-900">订单信息</h3>
+                      <p className="text-xs text-zinc-500">购买凭证与交易记录</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowOrderDetailModal(true)}
+                    className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1"
+                  >
+                    查看详情
+                    <ExternalLink className="w-3 h-3" />
+                  </button>
                 </div>
-                <div className="mt-4 pt-3 border-t border-amber-100">
-                  <div className="flex items-center gap-2 text-xs text-zinc-600">
-                    <Info className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
-                    <span>
-                      永久购买仅包含本课程内容；<br />
-                      订阅会员可畅学全站10,000+课程
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500 flex items-center gap-2">
+                      <Hash className="w-4 h-4" />
+                      订单号
+                    </span>
+                    <span className="font-mono font-medium text-zinc-800 text-xs">
+                      {orderInfo.orderNo}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500 flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      支付时间
+                    </span>
+                    <span className="font-medium text-zinc-800 text-xs">
+                      {orderInfo.payTime}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500 flex items-center gap-2">
+                      <CreditCard className="w-4 h-4" />
+                      支付方式
+                    </span>
+                    <span className="font-medium text-zinc-800 text-xs">
+                      {orderInfo.payMethod}
+                    </span>
+                  </div>
+                  <div className="h-px bg-zinc-100 my-1" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-700 font-medium">实付金额</span>
+                    <span className="font-bold text-primary-600">
+                      ¥{orderInfo.amount.toFixed(2)}
                     </span>
                   </div>
                 </div>
               </div>
             )}
 
+            {!hasAccess && course.isSubscription && course.subscriptionPrice && (
+              <div className="card p-6 animate-fade-in-up-delay-2 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-amber-100/50 to-transparent rounded-bl-full" />
+                <div className="relative">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Crown className="w-5 h-5 text-amber-500" />
+                    <h3 className="text-base font-semibold text-zinc-900">
+                      买断 vs 订阅
+                    </h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className={`p-3 rounded-xl border-2 transition-all ${
+                      purchaseType === 'one_time' || !purchaseType
+                        ? 'border-primary-500 bg-primary-50'
+                        : 'border-zinc-200 bg-white hover:border-zinc-300'
+                    }`}>
+                      <div className="text-sm font-bold text-zinc-900 mb-1">买断</div>
+                      <div className="text-xl font-bold text-primary-600 mb-2">
+                        ¥{course.price}
+                      </div>
+                      <div className="text-xs text-zinc-500 mb-3">
+                        一次购买，永久有效
+                      </div>
+                      <ul className="space-y-1.5">
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-600">
+                          <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                          本课程全部内容
+                        </li>
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-600">
+                          <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                          永久观看权限
+                        </li>
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-600">
+                          <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                          资料下载
+                        </li>
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-400">
+                          <XCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                          全站课程
+                        </li>
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-400">
+                          <XCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                          新课免费
+                        </li>
+                      </ul>
+                    </div>
+                    
+                    <div className={`p-3 rounded-xl border-2 relative overflow-hidden transition-all ${
+                      purchaseType === 'subscription'
+                        ? 'border-amber-500 bg-amber-50'
+                        : 'border-amber-200 bg-gradient-to-br from-amber-50/50 to-orange-50/50 hover:border-amber-300'
+                    }`}>
+                      <div className="absolute top-0 right-0">
+                        <div className="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-bl-lg font-medium">
+                          推荐
+                        </div>
+                      </div>
+                      <div className="text-sm font-bold text-zinc-900 mb-1 flex items-center gap-1">
+                        <Crown className="w-4 h-4 text-amber-500" />
+                        订阅会员
+                      </div>
+                      <div className="text-xl font-bold text-amber-600 mb-2">
+                        ¥{course.subscriptionPrice}
+                        <span className="text-xs font-normal text-amber-500">/月</span>
+                      </div>
+                      <div className="text-xs text-zinc-500 mb-3">
+                        全站畅学，新课免费
+                      </div>
+                      <ul className="space-y-1.5">
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-600">
+                          <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                          全站 10,000+ 课程
+                        </li>
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-600">
+                          <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                          新课免费更新
+                        </li>
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-600">
+                          <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                          社群答疑
+                        </li>
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-600">
+                          <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                          专属证书
+                        </li>
+                        <li className="flex items-center gap-1.5 text-xs text-zinc-600">
+                          <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                          资料下载
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                        purchaseType === 'one_time'
+                          ? 'bg-primary-500 text-white'
+                          : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'
+                      }`}
+                      onClick={() => handlePurchase('one_time')}
+                    >
+                      立即买断
+                    </button>
+                    <button
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                        purchaseType === 'subscription'
+                          ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                          : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                      }`}
+                      onClick={() => handlePurchase('subscription')}
+                    >
+                      <Crown className="w-4 h-4 inline mr-1" />
+                      开通会员
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {hasAccess && accessInfo.type === 'subscription' && (
+              <div className="card p-6 animate-fade-in-up-delay-2 relative overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+                <div className="absolute top-3 right-3">
+                  <Badge variant="accent" size="sm">
+                    <Crown className="w-3 h-3 mr-1" />
+                    会员中
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+                    <Crown className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-zinc-900">订阅会员</h3>
+                    <p className="text-xs text-amber-600">全站课程免费学</p>
+                  </div>
+                </div>
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-zinc-600">到期时间</span>
+                    <span className="font-medium text-zinc-900">{accessInfo.expiresAt}</span>
+                  </div>
+                  <div className="h-2 bg-amber-200 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"
+                      style={{ width: '70%' }}
+                    />
+                  </div>
+                  <div className="text-xs text-amber-600 text-right">
+                    剩余约 21 天
+                  </div>
+                </div>
+                <div className="p-3 bg-white/60 rounded-xl mb-4">
+                  <div className="flex items-center gap-2 text-sm text-amber-700">
+                    <Sparkles className="w-4 h-4" />
+                    <span className="font-medium">续费优惠</span>
+                  </div>
+                  <p className="text-xs text-amber-600 mt-1">
+                    现在续费立享 8 折优惠，再送 7 天会员
+                  </p>
+                </div>
+                <button className="w-full py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:shadow-lg hover:shadow-amber-500/30 transition-all">
+                  立即续费
+                </button>
+              </div>
+            )}
+
             <div className="card p-6 animate-fade-in-up-delay-3">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center">
-                  <Landmark className="w-5 h-5 text-purple-600" />
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center">
+                    <Landmark className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold text-zinc-900">资金结算透明</h3>
+                    <p className="text-xs text-zinc-500">平台抽佣 + 创作者收入</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-semibold text-zinc-900">资金结算透明</h3>
-                  <p className="text-xs text-zinc-500">平台抽佣 + 创作者收入</p>
-                </div>
+                {hasAccess && (
+                  <button
+                    onClick={() => setShowSettlementInfo(!showSettlementInfo)}
+                    className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1"
+                  >
+                    <Info className="w-3 h-3" />
+                    结算说明
+                  </button>
+                )}
               </div>
 
               {hasAccess ? (
-                <div className="space-y-2.5 text-sm">
-                  <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
-                    <span className="text-zinc-500 flex items-center gap-2">
-                      <CreditCard className="w-4 h-4" />
-                      实付金额
-                    </span>
-                    <span className="font-semibold text-zinc-800">
-                      ¥{accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price}
-                    </span>
+                <div className="space-y-3">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
+                      <span className="text-zinc-500 flex items-center gap-2">
+                        <CreditCard className="w-4 h-4" />
+                        实付金额
+                      </span>
+                      <span className="font-semibold text-zinc-800">
+                        ¥{(orderInfo?.amount || (accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price))?.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between p-2.5 bg-red-50 rounded-lg">
+                      <span className="text-zinc-500 flex items-center gap-2">
+                        <Percent className="w-4 h-4" />
+                        平台服务费 (15%)
+                      </span>
+                      <span className="font-semibold text-red-600">
+                        -¥{((orderInfo?.amount || (accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price)) * 0.15).toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
+                      <span className="text-zinc-500 flex items-center gap-2">
+                        <Receipt className="w-4 h-4" />
+                        税务代缴 (6%预估)
+                      </span>
+                      <span className="font-semibold text-zinc-600">
+                        -¥{((orderInfo?.amount || (accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price)) * 0.85 * 0.06).toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="h-px bg-zinc-100 my-1" />
+                    <div className="flex items-center justify-between p-2.5 bg-green-50 rounded-lg">
+                      <span className="text-zinc-700 font-medium flex items-center gap-2">
+                        <Wallet className="w-4 h-4 text-green-600" />
+                        创作者实际收入
+                      </span>
+                      <span className="font-bold text-green-700 text-lg">
+                        ¥{((orderInfo?.amount || (accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price)) * 0.85 * 0.94).toFixed(2)}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between p-2.5 bg-red-50 rounded-lg">
-                    <span className="text-zinc-500 flex items-center gap-2">
-                      <Percent className="w-4 h-4" />
-                      平台服务费 (15%)
-                    </span>
-                    <span className="font-semibold text-red-600">
-                      -¥{((accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price) * 0.15).toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
-                    <span className="text-zinc-500 flex items-center gap-2">
-                      <Receipt className="w-4 h-4" />
-                      税务代缴 (预估)
-                    </span>
-                    <span className="font-semibold text-zinc-600">
-                      -¥{((accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price) * 0.85 * 0.06).toFixed(2)}
-                    </span>
-                  </div>
-                  <div className="h-px bg-zinc-100 my-1" />
-                  <div className="flex items-center justify-between p-2.5 bg-green-50 rounded-lg">
-                    <span className="text-zinc-700 font-medium flex items-center gap-2">
-                      <Wallet className="w-4 h-4 text-green-600" />
-                      创作者实际收入
-                    </span>
-                    <span className="font-bold text-green-700 text-lg">
-                      ¥{((accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price) * 0.85 * 0.94).toFixed(2)}
-                    </span>
-                  </div>
+
+                  {showSettlementInfo && (
+                    <div className="p-3 bg-purple-50 rounded-xl border border-purple-100 space-y-2 animate-fade-in">
+                      <div className="flex items-start gap-2">
+                        <Clock3 className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-xs font-medium text-purple-800">T+1 结算</p>
+                          <p className="text-xs text-purple-600">购买确认后次日结算至创作者钱包</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <TrendingUp className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-xs font-medium text-purple-800">提现规则</p>
+                          <p className="text-xs text-purple-600">满100元可提现，每月1-3号为提现日</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <FileText className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-xs font-medium text-purple-800">开票说明</p>
+                          <p className="text-xs text-purple-600">如需发票，请至「我的-发票」申请</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="space-y-2.5 text-sm">
@@ -1036,6 +1371,264 @@ export default function CourseDetail() {
                   disabled={!refundReason.trim()}
                 >
                   提交退款申请
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+            <div className="relative bg-gradient-to-br from-green-500 to-emerald-600 p-8 text-center">
+              <div className="w-20 h-20 mx-auto mb-4 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center animate-bounce-in">
+                <CheckCircle2 className="w-12 h-12 text-white" strokeWidth={2} />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">支付成功！</h3>
+              <p className="text-green-100 text-sm">
+                {accessInfo.type === 'subscription' ? '会员已开通，立即享受全站课程' : '购买成功，立即开始学习吧'}
+              </p>
+            </div>
+            
+            <div className="p-6 space-y-4">
+              <div className="p-4 bg-green-50 rounded-xl border border-green-100">
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <div className="text-lg font-bold text-green-700">{chapters.length}</div>
+                    <div className="text-xs text-green-600">章节解锁</div>
+                  </div>
+                  <div className="w-px bg-green-200" />
+                  <div>
+                    <div className="text-lg font-bold text-green-700">永久</div>
+                    <div className="text-xs text-green-600">有效观看</div>
+                  </div>
+                  <div className="w-px bg-green-200" />
+                  <div>
+                    <div className="text-lg font-bold text-green-700">支持</div>
+                    <div className="text-xs text-green-600">开发票</div>
+                  </div>
+                </div>
+              </div>
+
+              {orderInfo && (
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500">订单号</span>
+                    <span className="font-mono text-zinc-700 text-xs">{orderInfo.orderNo}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500">支付金额</span>
+                    <span className="font-bold text-primary-600">¥{orderInfo.amount.toFixed(2)}</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="space-y-2 pt-2">
+                <button
+                  className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/30 transition-all"
+                  onClick={() => setShowSuccessModal(false)}
+                >
+                  <Play className="w-5 h-5 inline mr-2" fill="white" />
+                  开始学习
+                </button>
+                <button
+                  className="w-full py-2.5 text-sm text-zinc-500 hover:text-zinc-700 transition-colors"
+                  onClick={() => {
+                    setShowSuccessModal(false);
+                    setShowOrderDetailModal(true);
+                  }}
+                >
+                  查看订单详情
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showLockedModal && (
+        <div className="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+            <div className="relative bg-gradient-to-br from-primary-500 to-purple-600 p-6 text-center">
+              <button
+                onClick={() => setShowLockedModal(false)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <div className="w-16 h-16 mx-auto mb-3 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <Lock className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-1">开通会员解锁全部内容</h3>
+              <p className="text-primary-100 text-sm">
+                已观看 {watchedFreeChapters.length}/{freeChaptersCount} 节试看内容
+              </p>
+            </div>
+            
+            <div className="p-6 space-y-5">
+              <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <Crown className="w-6 h-6 text-amber-500" />
+                  <div>
+                    <div className="font-bold text-zinc-900">解锁后可获得</div>
+                  </div>
+                </div>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-sm text-zinc-700">
+                    <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span>全部 {chapters.length} 章节高清视频</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-zinc-700">
+                    <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span>课程配套资料下载</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-zinc-700">
+                    <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span>专属学习社群答疑</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-zinc-700">
+                    <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span>结业后颁发电子证书</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  className="py-3 rounded-xl border-2 border-primary-500 text-primary-600 font-semibold hover:bg-primary-50 transition-colors"
+                  onClick={() => {
+                    setShowLockedModal(false);
+                    handlePurchase('one_time');
+                  }}
+                >
+                  <div className="text-sm">买断课程</div>
+                  <div className="text-xs text-primary-500">¥{course?.price}</div>
+                </button>
+                <button
+                  className="py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold hover:shadow-lg hover:shadow-amber-500/30 transition-all relative overflow-hidden"
+                  onClick={() => {
+                    setShowLockedModal(false);
+                    handlePurchase('subscription');
+                  }}
+                >
+                  <div className="absolute top-0 right-0 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-bl-lg">
+                    推荐
+                  </div>
+                  <div className="text-sm">订阅会员</div>
+                  <div className="text-xs text-amber-100">¥{course?.subscriptionPrice}/月</div>
+                </button>
+              </div>
+
+              <p className="text-center text-xs text-zinc-400">
+                支持7天无理由退款 · 平台资金托管保障
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showOrderDetailModal && orderInfo && (
+        <div className="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-zinc-100 flex items-center justify-between sticky top-0 bg-white z-10">
+              <h3 className="text-xl font-bold text-zinc-900">订单详情</h3>
+              <button
+                onClick={() => setShowOrderDetailModal(false)}
+                className="w-9 h-9 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center transition-colors"
+              >
+                <X className="w-5 h-5 text-zinc-500" />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              <div className="p-4 bg-green-50 rounded-xl border border-green-200 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle2 className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold text-green-800">支付成功</div>
+                  <div className="text-xs text-green-600">{orderInfo.payTime}</div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-medium text-zinc-900 text-sm">商品信息</h4>
+                <div className="p-3 bg-zinc-50 rounded-xl flex items-center gap-3">
+                  <img
+                    src={course?.coverImage || `https://picsum.photos/80/80?random=${course?.id}`}
+                    alt=""
+                    className="w-12 h-12 rounded-lg object-cover"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-zinc-900 text-sm truncate">{course?.title}</div>
+                    <div className="text-xs text-zinc-500">
+                      {accessInfo.type === 'subscription' ? '月度会员' : '永久课程'}
+                    </div>
+                  </div>
+                  <div className="font-bold text-primary-600">
+                    ¥{orderInfo.amount.toFixed(2)}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-medium text-zinc-900 text-sm">订单信息</h4>
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500">订单编号</span>
+                    <span className="font-mono text-zinc-700 text-xs">{orderInfo.orderNo}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500">创建时间</span>
+                    <span className="text-zinc-700">{orderInfo.payTime}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500">支付方式</span>
+                    <span className="text-zinc-700">{orderInfo.payMethod}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500">订单类型</span>
+                    <span className="text-zinc-700">
+                      {accessInfo.type === 'subscription' ? '订阅会员' : '课程购买'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-medium text-zinc-900 text-sm">金额明细</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500">商品金额</span>
+                    <span className="text-zinc-700">¥{orderInfo.amount.toFixed(2)}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-500">优惠金额</span>
+                    <span className="text-green-600">-¥0.00</span>
+                  </div>
+                  <div className="h-px bg-zinc-100 my-1" />
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-zinc-900">实付金额</span>
+                    <span className="text-lg font-bold text-primary-600">¥{orderInfo.amount.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  className="flex-1 py-2.5 rounded-xl border border-zinc-200 text-zinc-700 text-sm font-medium hover:bg-zinc-50 transition-colors flex items-center justify-center gap-2"
+                  onClick={() => alert('发票功能开发中，敬请期待')}
+                >
+                  <Receipt className="w-4 h-4" />
+                  申请发票
+                </button>
+                <button
+                  className="flex-1 py-2.5 rounded-xl border border-zinc-200 text-zinc-700 text-sm font-medium hover:bg-zinc-50 transition-colors flex items-center justify-center gap-2"
+                  onClick={() => navigate('/orders')}
+                >
+                  <FileText className="w-4 h-4" />
+                  全部订单
                 </button>
               </div>
             </div>
