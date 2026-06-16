@@ -77,6 +77,7 @@ const Dashboard: React.FC = () => {
   const [selectedServiceItem, setSelectedServiceItem] = useState<any>(null)
   const [guideAnswers, setGuideAnswers] = useState<Record<number, string>>({})
   const [exportAuditModalVisible, setExportAuditModalVisible] = useState(false)
+  const [reviewScopeChecked, setReviewScopeChecked] = useState<string[]>(['login', 'approval', 'data', 'config'])
 
   const today = dayjs().format('YYYY年MM月DD日 dddd')
   const greeting = useMemo(() => {
@@ -1525,6 +1526,74 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         <Divider style={{ margin: '16px 0' }} />
+        <div style={{ marginBottom: 16 }}>
+          <Text strong>关键操作复查范围</Text>
+          <div style={{ marginTop: 8 }}>
+            <Checkbox.Group
+              value={reviewScopeChecked}
+              onChange={(checkedValues) => setReviewScopeChecked(checkedValues as string[])}
+              style={{ width: '100%' }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <Checkbox value="login">登录类操作（异地登录/非工作时间登录/异常设备登录）</Checkbox>
+                <Checkbox value="approval">审批类操作（事项审批/权限审批/证照审批）</Checkbox>
+                <Checkbox value="data">数据类操作（批量导出/跨部门共享/敏感数据访问）</Checkbox>
+                <Checkbox value="config">配置类操作（系统配置/安全策略/角色权限）</Checkbox>
+              </div>
+            </Checkbox.Group>
+            <div style={{ marginTop: 8 }}>
+              <Text type="secondary">已选择 {reviewScopeChecked.length} 项</Text>
+            </div>
+          </div>
+        </div>
+        <Divider style={{ margin: '16px 0' }} />
+        <div style={{ marginBottom: 16 }}>
+          <Text strong>风险处置状态</Text>
+          <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#fff1f0', borderRadius: 4 }}>
+              <span>待处置风险事件</span>
+              <Tag color="red">2项</Tag>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#fff7e6', borderRadius: 4 }}>
+              <span>处置中风险事件</span>
+              <Tag color="orange">3项</Tag>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#f6ffed', borderRadius: 4 }}>
+              <span>已闭环风险事件</span>
+              <Tag color="green">15项</Tag>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#e6f7ff', borderRadius: 4 }}>
+              <span>本月处置完成率</span>
+              <Tag color="blue">88.2%</Tag>
+            </div>
+          </div>
+          <div style={{ marginTop: 8 }}>
+            <Text type="secondary" style={{ fontSize: 12 }}>导出范围内所有风险事件均关联处置责任人</Text>
+          </div>
+        </div>
+        <Divider style={{ margin: '16px 0' }} />
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ padding: 12, background: '#fafafa', borderRadius: 4, border: '1px solid #f0f0f0' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Text type="secondary">追溯周期：</Text>
+                <Text>2026-03-18 至 2026-06-16（共90天）</Text>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Text type="secondary">操作记录总数：</Text>
+                <Text>45,860 条</Text>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Text type="secondary">关键操作记录数：</Text>
+                <Text>2,158 条</Text>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Text type="secondary">复查覆盖率：</Text>
+                <Text>100%</Text>
+              </div>
+            </div>
+          </div>
+        </div>
         <div>
           <Text strong>90天追溯校验</Text>
           <Text type="secondary" style={{ display: 'block', margin: '8px 0 12px' }}>根据等保三级要求，系统已对近90天内所有关键操作进行追溯校验</Text>

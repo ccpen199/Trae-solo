@@ -44,7 +44,8 @@ import {
   WarningOutlined,
   ExclamationCircleOutlined,
   SafetyCertificateOutlined,
-  AuditOutlined
+  AuditOutlined,
+  SafetyOutlined
 } from '@ant-design/icons'
 import type { DataNode } from 'antd/es/tree'
 import ReactECharts from 'echarts-for-react'
@@ -169,7 +170,7 @@ const generateDepartmentData = (): Department[] => {
       totalCalls: generateRandomInt(500000, 15000000),
       avgResponseTime: isOffline || isMaintenance ? 0 : generateRandomInt(50, 180),
       successRate: isOffline || isMaintenance ? 0 : parseFloat((97 + Math.random() * 3).toFixed(1)),
-      lastSyncTime: isOffline ? '2024-01-13 14:30:00' : isMaintenance ? '2024-01-14 18:00:00' : '2024-01-15 09:30:00',
+      lastSyncTime: isOffline ? '2026-06-14 14:30:00' : isMaintenance ? '2026-06-15 18:00:00' : '2026-06-16 09:30:00',
       description: `负责${template.name.replace('宁夏回族自治区', '全区')}相关工作`,
       leader: ['张局长', '李厅长', '王主任', '刘局长', '陈厅长', '赵主任', '周局长'][index % 7],
       phone: `0951-${generateRandomInt(1000000, 9999999)}`,
@@ -581,11 +582,11 @@ const Departments: React.FC = () => {
               }
             ]}
             dataSource={[
-              { key: 'e1', time: '2024-01-15 08:30:12', interface: '基础信息查询', errorType: '连接超时', scope: '全部接口', status: 'recovered' },
-              { key: 'e2', time: '2024-01-15 07:15:33', interface: '业务办理查询', errorType: '数据格式错误', scope: '查询接口', status: 'processing' },
-              { key: 'e3', time: '2024-01-14 22:45:18', interface: '数据统计接口', errorType: '权限拒绝', scope: '统计接口', status: 'pending' },
-              { key: 'e4', time: '2024-01-14 18:20:05', interface: '基础信息查询', errorType: '响应超时', scope: '查询接口', status: 'recovered' },
-              { key: 'e5', time: '2024-01-14 10:10:42', interface: '业务办理查询', errorType: '证书过期', scope: '全部接口', status: 'processing' }
+              { key: 'e1', time: '2026-06-16 08:30:12', interface: '基础信息查询', errorType: '连接超时', scope: '全部接口', status: 'recovered' },
+              { key: 'e2', time: '2026-06-16 07:15:33', interface: '业务办理查询', errorType: '数据格式错误', scope: '查询接口', status: 'processing' },
+              { key: 'e3', time: '2026-06-15 22:45:18', interface: '数据统计接口', errorType: '权限拒绝', scope: '统计接口', status: 'pending' },
+              { key: 'e4', time: '2026-06-15 18:20:05', interface: '基础信息查询', errorType: '响应超时', scope: '查询接口', status: 'recovered' },
+              { key: 'e5', time: '2026-06-15 10:10:42', interface: '业务办理查询', errorType: '证书过期', scope: '全部接口', status: 'processing' }
             ]}
             rowKey="key"
             size="small"
@@ -615,7 +616,7 @@ const Departments: React.FC = () => {
                 children: (
                   <div>
                     <div style={{ fontWeight: 500 }}>系统升级完成 <Tag color="green">已闭环</Tag></div>
-                    <Text type="secondary">2024-01-15 09:00 - 处置人：王主任</Text>
+                    <Text type="secondary">2026-06-16 09:00 - 处置人：王主任</Text>
                     <div>完成系统升级，所有接口恢复正常服务，平均响应时间恢复至120ms以内</div>
                   </div>
                 )
@@ -625,7 +626,7 @@ const Departments: React.FC = () => {
                 children: (
                   <div>
                     <div style={{ fontWeight: 500 }}>网络故障排查 <Tag color="blue">处置中</Tag></div>
-                    <Text type="secondary">2024-01-14 15:30 - 处置人：张局长</Text>
+                    <Text type="secondary">2026-06-15 15:30 - 处置人：张局长</Text>
                     <div>已定位网络故障原因，正在协调运营商进行线路切换</div>
                   </div>
                 )
@@ -635,7 +636,7 @@ const Departments: React.FC = () => {
                 children: (
                   <div>
                     <div style={{ fontWeight: 500 }}>安全漏洞修复 <Tag color="orange">待确认</Tag></div>
-                    <Text type="secondary">2024-01-14 10:15 - 处置人：李厅长</Text>
+                    <Text type="secondary">2026-06-15 10:15 - 处置人：李厅长</Text>
                     <div>发现接口安全漏洞，已提交修复方案，等待确认后实施</div>
                   </div>
                 )
@@ -645,7 +646,7 @@ const Departments: React.FC = () => {
                 children: (
                   <div>
                     <div style={{ fontWeight: 500 }}>数据同步异常处理 <Tag color="blue">处置中</Tag></div>
-                    <Text type="secondary">2024-01-13 16:45 - 处置人：赵主任</Text>
+                    <Text type="secondary">2026-06-14 16:45 - 处置人：赵主任</Text>
                     <div>数据同步出现格式异常，正在与数据源单位协调解决</div>
                   </div>
                 )
@@ -655,7 +656,7 @@ const Departments: React.FC = () => {
                 children: (
                   <div>
                     <div style={{ fontWeight: 500 }}>恢复验证中 <Tag color="blue">验证中</Tag></div>
-                    <Text type="secondary">2024-01-15 11:00 - 验证人：王主任</Text>
+                    <Text type="secondary">2026-06-16 11:00 - 验证人：王主任</Text>
                     <div>对连接超时恢复结果进行验证，确认服务可用性达标</div>
                   </div>
                 )
@@ -665,7 +666,7 @@ const Departments: React.FC = () => {
                 children: (
                   <div>
                     <div style={{ fontWeight: 500 }}>恢复复核完成 <Tag color="green">已通过</Tag></div>
-                    <Text type="secondary">2024-01-15 12:00 - 复核人：张局长</Text>
+                    <Text type="secondary">2026-06-16 12:00 - 复核人：张局长</Text>
                     <div>确认系统升级后所有异常已消除，恢复正式服务</div>
                   </div>
                 )
@@ -703,10 +704,10 @@ const Departments: React.FC = () => {
               { title: '备注', dataIndex: 'remark', key: 'remark' }
             ]}
             dataSource={[
-              { key: 'r1', reviewTime: '2024-01-15 10:30', reviewer: '安全审核组-刘工', reviewType: '接口安全复核', result: 'passed', remark: '接口安全策略符合规范要求' },
-              { key: 'r2', reviewTime: '2024-01-14 14:00', reviewer: '数据审核组-陈工', reviewType: '数据合规复核', result: 'conditional', remark: '数据传输加密需升级至SM4国密标准' },
-              { key: 'r3', reviewTime: '2024-01-13 09:30', reviewer: '权限审核组-周工', reviewType: '权限变更复核', result: 'passed', remark: '权限变更符合最小权限原则' },
-              { key: 'r4', reviewTime: '2024-01-12 16:00', reviewer: '运维审核组-吴工', reviewType: '系统升级复核', result: 'failed', remark: '系统升级方案缺少回滚预案，需补充后重新提交' }
+              { key: 'r1', reviewTime: '2026-06-16 10:30', reviewer: '安全审核组-刘工', reviewType: '接口安全复核', result: 'passed', remark: '接口安全策略符合规范要求' },
+              { key: 'r2', reviewTime: '2026-06-15 14:00', reviewer: '数据审核组-陈工', reviewType: '数据合规复核', result: 'conditional', remark: '数据传输加密需升级至SM4国密标准' },
+              { key: 'r3', reviewTime: '2026-06-14 09:30', reviewer: '权限审核组-周工', reviewType: '权限变更复核', result: 'passed', remark: '权限变更符合最小权限原则' },
+              { key: 'r4', reviewTime: '2026-06-13 16:00', reviewer: '运维审核组-吴工', reviewType: '系统升级复核', result: 'failed', remark: '系统升级方案缺少回滚预案，需补充后重新提交' }
             ]}
             rowKey="key"
             size="small"
@@ -767,43 +768,43 @@ const Departments: React.FC = () => {
             dataSource={[
               {
                 key: 'rr1',
-                reviewTime: '2024-01-15 10:00',
+                reviewTime: '2026-06-16 10:00',
                 reviewer: '运维组-王工',
                 errorDesc: '连接超时',
                 recoveryPlan: '重启服务并优化连接池配置',
                 result: 'confirmed',
-                confirmTime: '2024-01-15 12:00',
+                confirmTime: '2026-06-16 12:00',
                 step1: '检测服务状态，确认超时原因',
                 step2: '重启服务并调整连接池参数为200',
                 step3: '验证服务可用性，确认响应时间达标'
               },
               {
                 key: 'rr2',
-                reviewTime: '2024-01-15 09:00',
+                reviewTime: '2026-06-16 09:00',
                 reviewer: '安全组-刘工',
                 errorDesc: '证书过期',
                 recoveryPlan: '更新SSL证书并重新部署',
                 result: 'pending',
-                confirmTime: '预计2024-01-16 09:00',
+                confirmTime: '预计2026-06-17 09:00',
                 step1: '申请新证书并完成CA签发',
                 step2: '部署新证书到服务节点',
                 step3: '验证证书链完整性（待执行）'
               },
               {
                 key: 'rr3',
-                reviewTime: '2024-01-14 16:00',
+                reviewTime: '2026-06-15 16:00',
                 reviewer: '数据组-陈工',
                 errorDesc: '数据格式异常',
                 recoveryPlan: '修复数据解析模块并补充校验规则',
                 result: 'partial',
-                confirmTime: '2024-01-15 10:30',
+                confirmTime: '2026-06-16 10:30',
                 step1: '定位数据格式异常字段',
                 step2: '修复解析模块并增加容错处理',
                 step3: '部分接口数据格式仍有偏差，继续排查'
               },
               {
                 key: 'rr4',
-                reviewTime: '2024-01-14 11:00',
+                reviewTime: '2026-06-15 11:00',
                 reviewer: '权限组-周工',
                 errorDesc: '权限拒绝',
                 recoveryPlan: '重新配置接口访问权限',
@@ -869,7 +870,7 @@ const Departments: React.FC = () => {
                 dataType: '人口基础信息',
                 syncMode: '实时同步',
                 frequency: '每日',
-                lastSyncTime: '2024-01-15 08:00',
+                lastSyncTime: '2026-06-16 08:00',
                 status: 'normal'
               },
               {
@@ -878,7 +879,7 @@ const Departments: React.FC = () => {
                 dataType: '社保参保信息',
                 syncMode: '批量同步',
                 frequency: '每周',
-                lastSyncTime: '2024-01-14 22:00',
+                lastSyncTime: '2026-06-15 22:00',
                 status: 'normal'
               },
               {
@@ -887,12 +888,12 @@ const Departments: React.FC = () => {
                 dataType: '医保结算数据',
                 syncMode: '实时同步',
                 frequency: '每日',
-                lastSyncTime: '2024-01-15 07:30',
+                lastSyncTime: '2026-06-16 07:30',
                 status: 'error',
                 errorReason: '数据格式不匹配，字段类型变更未同步更新',
                 affectedData: '3条结算记录',
                 measure: '已通知医保局数据部门，正在协调更新数据映射规则',
-                estimatedRecovery: '2024-01-16 10:00'
+                estimatedRecovery: '2026-06-17 10:00'
               },
               {
                 key: 'cds4',
@@ -909,12 +910,12 @@ const Departments: React.FC = () => {
                 dataType: '婚姻登记信息',
                 syncMode: '批量同步',
                 frequency: '每周',
-                lastSyncTime: '2024-01-13 22:00',
+                lastSyncTime: '2026-06-14 22:00',
                 status: 'delayed',
                 errorReason: '源系统批量导出任务排队，导致数据延迟推送',
                 affectedData: '约200条登记记录',
                 measure: '已协调民政厅优化导出任务调度，增加并发通道',
-                estimatedRecovery: '2024-01-15 14:00'
+                estimatedRecovery: '2026-06-16 14:00'
               }
             ]}
             rowKey="key"
@@ -926,6 +927,232 @@ const Departments: React.FC = () => {
             <Text strong>跨部门同步总体健康度</Text>
             <Progress percent={85} style={{ flex: 1 }} />
           </div>
+        </div>
+      )
+    },
+    {
+      key: 'responsibility-boundary',
+      label: '接口责任边界',
+      icon: <SafetyOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Descriptions title="接口责任人信息" bordered column={2} size="small" style={{ marginBottom: 24 }}>
+            <Descriptions.Item label="接口总负责人">{selectedDepartment.leader}</Descriptions.Item>
+            <Descriptions.Item label="技术对接人">李工程师（分机：8001）</Descriptions.Item>
+            <Descriptions.Item label="业务对接人">王专员（分机：8002）</Descriptions.Item>
+            <Descriptions.Item label="运维值班人">张运维（7x24值班电话：138****0001）</Descriptions.Item>
+            <Descriptions.Item label="安全责任人">刘安全（安全专线：0951-****110）</Descriptions.Item>
+            <Descriptions.Item label="应急联系人">赵应急（应急电话：139****0002）</Descriptions.Item>
+          </Descriptions>
+          <Divider />
+          <Title level={5}>接口责任矩阵表</Title>
+          <Table
+            columns={[
+              { title: '接口名称', dataIndex: 'name', key: 'name' },
+              { title: '责任部门', dataIndex: 'dept', key: 'dept' },
+              { title: '责任人', dataIndex: 'owner', key: 'owner' },
+              { title: 'SLA响应时间', dataIndex: 'sla', key: 'sla' },
+              { title: '升级路径', dataIndex: 'path', key: 'path' },
+              { title: '升级时限', dataIndex: 'limit', key: 'limit' }
+            ]}
+            dataSource={[
+              { key: 'rb1', name: '基础信息查询', dept: selectedDepartment.name, owner: '李工程师', sla: '5分钟', path: '一线→二线→三线→总监→分管厅长', limit: '15分钟' },
+              { key: 'rb2', name: '业务办理提交', dept: selectedDepartment.name, owner: '王专员', sla: '10分钟', path: '一线→二线→三线→总监→分管厅长', limit: '30分钟' },
+              { key: 'rb3', name: '数据同步上报', dept: selectedDepartment.name, owner: '张运维', sla: '15分钟', path: '一线→二线→三线→总监→分管厅长', limit: '1小时' },
+              { key: 'rb4', name: '证照共享调用', dept: selectedDepartment.name, owner: '刘安全', sla: '30分钟', path: '一线→二线→三线→总监→分管厅长', limit: '2小时' },
+              { key: 'rb5', name: '统计报表导出', dept: selectedDepartment.name, owner: '赵应急', sla: '30分钟', path: '一线→二线→三线→总监→分管厅长', limit: '2小时' }
+            ]}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+        </div>
+      )
+    },
+    {
+      key: 'exception-summary',
+      label: '异常处理汇总',
+      icon: <WarningOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+            <Col span={6}>
+              <Card>
+                <Statistic
+                  title="本月异常总数"
+                  value={128}
+                  suffix="次"
+                  valueStyle={{ color: '#ff4d4f' }}
+                />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic
+                  title="已恢复"
+                  value={112}
+                  suffix="次（87.5%）"
+                  valueStyle={{ color: '#52c41a' }}
+                />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic
+                  title="处理中"
+                  value={12}
+                  suffix="次"
+                  valueStyle={{ color: '#faad14' }}
+                />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic
+                  title="MTTR平均恢复时间"
+                  value={28}
+                  suffix="分钟"
+                  valueStyle={{ color: '#1890ff' }}
+                />
+              </Card>
+            </Col>
+          </Row>
+          <Divider />
+          <Title level={5}>异常类型分布</Title>
+          <Table
+            style={{ marginBottom: 24 }}
+            columns={[
+              { title: '异常类型', dataIndex: 'type', key: 'type' },
+              { title: '发生次数', dataIndex: 'count', key: 'count' },
+              { title: '占比', dataIndex: 'ratio', key: 'ratio' },
+              { title: '平均恢复时长', dataIndex: 'avgTime', key: 'avgTime' },
+              { title: '改进措施', dataIndex: 'measure', key: 'measure' }
+            ]}
+            dataSource={[
+              { key: 'et1', type: '连接超时', count: 34, ratio: '26.6%', avgTime: '35分钟', measure: '增加连接池' },
+              { key: 'et2', type: '证书过期', count: 24, ratio: '18.8%', avgTime: '45分钟', measure: '证书自动续期脚本' },
+              { key: 'et3', type: '权限拒绝', count: 20, ratio: '15.6%', avgTime: '20分钟', measure: '权限审计' },
+              { key: 'et4', type: '数据格式', count: 26, ratio: '20.3%', avgTime: '22分钟', measure: '数据校验规则优化' },
+              { key: 'et5', type: '响应超时', count: 24, ratio: '18.7%', avgTime: '18分钟', measure: '接口性能优化' }
+            ]}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+          <Divider />
+          <Title level={5}>TOP10异常接口</Title>
+          <div>
+            {[
+              { name: '基础信息查询', count: 32, lastTime: '2026-06-15 14:28:15', status: 'recovered' },
+              { name: '业务办理提交', count: 28, lastTime: '2026-06-15 11:15:33', status: 'processing' },
+              { name: '数据同步上报', count: 22, lastTime: '2026-06-14 22:45:18', status: 'recovered' },
+              { name: '证照共享调用', count: 18, lastTime: '2026-06-14 18:20:05', status: 'recovered' },
+              { name: '统计报表导出', count: 15, lastTime: '2026-06-14 10:10:42', status: 'processing' }
+            ].map((item, idx) => {
+              const statusConfig: Record<string, { color: string; text: string }> = {
+                recovered: { color: 'green', text: '已恢复' },
+                processing: { color: 'orange', text: '处理中' }
+              }
+              const sc = statusConfig[item.status] || { color: 'default', text: item.status }
+              return (
+                <Card key={idx} size="small" style={{ marginBottom: 8 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div>
+                      <Space>
+                        <Badge count={idx + 1} style={{ backgroundColor: idx < 3 ? '#ff4d4f' : '#faad14' }} />
+                        <Text strong>{item.name}</Text>
+                        <Tag color="red">发生{item.count}次</Tag>
+                      </Space>
+                    </div>
+                    <Space>
+                      <Text type="secondary" style={{ fontSize: 12 }}>最后发生：{item.lastTime}</Text>
+                      <Tag color={sc.color}>{sc.text}</Tag>
+                    </Space>
+                  </div>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
+      )
+    },
+    {
+      key: 'compliance-check',
+      label: '等保国密验收',
+      icon: <AuditOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Title level={5}>等保三级合规检查清单</Title>
+          <Table
+            style={{ marginBottom: 24 }}
+            columns={[
+              { title: '检查项', dataIndex: 'item', key: 'item' },
+              {
+                title: '检查结果',
+                dataIndex: 'result',
+                key: 'result',
+                render: (r: string) => {
+                  const config: Record<string, { color: string; text: string }> = {
+                    passed: { color: 'green', text: '通过' },
+                    conditional: { color: 'orange', text: '有条件通过' },
+                    failed: { color: 'red', text: '未通过' }
+                  }
+                  const item = config[r] || { color: 'default', text: r }
+                  return <Tag color={item.color}>{item.text}</Tag>
+                }
+              },
+              { title: '检查时间', dataIndex: 'time', key: 'time', width: 160 },
+              { title: '检查人', dataIndex: 'inspector', key: 'inspector' },
+              { title: '备注', dataIndex: 'remark', key: 'remark' }
+            ]}
+            dataSource={[
+              { key: 'cc1', item: '物理安全-机房环境监控', result: 'passed', time: '2026-06-10 09:30', inspector: '等保测评中心-马工', remark: '温湿度、门禁、视频监控均符合要求' },
+              { key: 'cc2', item: '物理安全-防火防水设施', result: 'passed', time: '2026-06-10 10:15', inspector: '等保测评中心-马工', remark: '消防系统、防水检测设备正常' },
+              { key: 'cc3', item: '网络安全-边界访问控制', result: 'passed', time: '2026-06-10 14:00', inspector: '等保测评中心-杨工', remark: '防火墙策略配置合规' },
+              { key: 'cc4', item: '网络安全-入侵检测防范', result: 'passed', time: '2026-06-10 15:30', inspector: '等保测评中心-杨工', remark: 'IDS/IPS规则库已更新至最新版本' },
+              { key: 'cc5', item: '主机安全-身份鉴别机制', result: 'passed', time: '2026-06-11 09:00', inspector: '等保测评中心-王工', remark: '双因素认证已全面部署' },
+              { key: 'cc6', item: '主机安全-恶意代码防范', result: 'passed', time: '2026-06-11 10:30', inspector: '等保测评中心-王工', remark: '防病毒软件病毒库已更新' },
+              { key: 'cc7', item: '应用安全-身份鉴别', result: 'passed', time: '2026-06-11 14:00', inspector: '等保测评中心-李工', remark: '密码复杂度、登录失败处理均符合要求' },
+              { key: 'cc8', item: '应用安全-访问控制', result: 'passed', time: '2026-06-11 15:30', inspector: '等保测评中心-李工', remark: '最小权限原则落实到位' },
+              { key: 'cc9', item: '应用安全-通信完整性保密性', result: 'conditional', time: '2026-06-12 09:30', inspector: '等保测评中心-李工', remark: '数据备份恢复演练频率需提升至每月' },
+              { key: 'cc10', item: '数据安全-数据保密性', result: 'passed', time: '2026-06-12 11:00', inspector: '等保测评中心-张工', remark: '敏感数据加密存储符合要求' },
+              { key: 'cc11', item: '数据安全-数据完整性', result: 'passed', time: '2026-06-12 14:00', inspector: '等保测评中心-张工', remark: '数据校验机制完善' },
+              { key: 'cc12', item: '数据安全-备份恢复', result: 'conditional', time: '2026-06-12 15:30', inspector: '等保测评中心-张工', remark: '异地备份网络带宽需优化，建议升级至1Gbps' }
+            ]}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+          <Divider />
+          <Title level={5}>国密算法传输验收</Title>
+          <Descriptions bordered column={2} size="small" style={{ marginBottom: 24 }}>
+            <Descriptions.Item label="SM4传输加密">已启用，AES-256兼容</Descriptions.Item>
+            <Descriptions.Item label="SM3签名验签">全量接口强制开启</Descriptions.Item>
+            <Descriptions.Item label="SM2身份认证">管理员接口必选，普通用户可选</Descriptions.Item>
+            <Descriptions.Item label="SM9邮件加密">已部署，待推广</Descriptions.Item>
+            <Descriptions.Item label="SSL证书国密化">双证书（SM2+RSA）已部署</Descriptions.Item>
+            <Descriptions.Item label="国密改造完成度">
+              <Progress percent={92} status="active" />
+            </Descriptions.Item>
+          </Descriptions>
+          <Divider />
+          <Title level={5}>验收结论</Title>
+          <Card>
+            <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+              <div>
+                <Space wrap>
+                  <Tag color="blue" style={{ fontSize: 14, padding: '4px 12px' }}>验收通过</Tag>
+                  <Tag color="green" style={{ fontSize: 14, padding: '4px 12px' }}>等保三级</Tag>
+                  <Tag color="purple" style={{ fontSize: 14, padding: '4px 12px' }}>国密SMx全栈</Tag>
+                </Space>
+              </div>
+              <Descriptions bordered column={1} size="small">
+                <Descriptions.Item label="验收有效期">2026-01-15 至 2027-01-14</Descriptions.Item>
+                <Descriptions.Item label="下次复测时间">2026-12-15</Descriptions.Item>
+                <Descriptions.Item label="验收机构">宁夏自治区等保测评中心 + 国密应用试点认证联合工作组</Descriptions.Item>
+              </Descriptions>
+            </Space>
+          </Card>
         </div>
       )
     }
@@ -1020,9 +1247,9 @@ const Departments: React.FC = () => {
               <div>
                 <p style={{ marginBottom: 8 }}>以下3个委办局当前未接入平台，请及时跟进：</p>
                 <ul style={{ marginBottom: 0, paddingLeft: 20 }}>
-                  <li><Text strong>宁夏回族自治区中医药管理局</Text> — <Tag color="error">离线</Tag> 原因：网络连接中断，预计恢复时间：2024-01-16 10:00</li>
-                  <li><Text strong>宁夏回族自治区应急管理厅</Text> — <Tag color="error">离线</Tag> 原因：服务器故障，预计恢复时间：2024-01-17 18:00</li>
-                  <li><Text strong>宁夏回族自治区农业农村厅</Text> — <Tag color="warning">维护中</Tag> 原因：系统升级维护，预计恢复时间：2024-01-15 20:00</li>
+                  <li><Text strong>宁夏回族自治区中医药管理局</Text> — <Tag color="error">离线</Tag> 原因：网络连接中断，预计恢复时间：2026-06-17 10:00</li>
+                  <li><Text strong>宁夏回族自治区应急管理厅</Text> — <Tag color="error">离线</Tag> 原因：服务器故障，预计恢复时间：2026-06-18 18:00</li>
+                  <li><Text strong>宁夏回族自治区农业农村厅</Text> — <Tag color="warning">维护中</Tag> 原因：系统升级维护，预计恢复时间：2026-06-16 20:00</li>
                 </ul>
               </div>
             }

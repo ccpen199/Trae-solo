@@ -19,7 +19,8 @@ import {
   Timeline,
   Alert,
   Badge,
-  Avatar
+  Avatar,
+  List
 } from 'antd'
 import {
   DatabaseOutlined,
@@ -471,6 +472,34 @@ const DataAssetsOverview: React.FC = () => {
           </Col>
         ))}
       </Row>
+      <Card title={<Space><DatabaseOutlined />个人数据资产全景</Space>} style={{ marginBottom: 16 }}>
+        <List
+          dataSource={[
+            { name: '社会保障类', source: '人力资源社会保障厅', frequency: '实时同步', lastUpdate: '2026-06-16 08:30', status: '正常', icon: <SafetyOutlined style={{ fontSize: 24, color: '#52c41a' }} /> },
+            { name: '住房公积金类', source: '住房和城乡建设厅', frequency: '每日同步', lastUpdate: '2026-06-16 02:00', status: '正常', icon: <HomeOutlined style={{ fontSize: 24, color: '#faad14' }} /> },
+            { name: '医疗保障类', source: '医疗保障局', frequency: '实时同步', lastUpdate: '2026-06-16 08:15', status: '正常', icon: <MedicineBoxOutlined style={{ fontSize: 24, color: '#eb2f96' }} /> },
+            { name: '税务类', source: '税务局', frequency: '每日同步', lastUpdate: '2026-06-15 23:30', status: '待更新', icon: <AuditOutlined style={{ fontSize: 24, color: '#13c2c2' }} /> },
+            { name: '证照类', source: '公安厅', frequency: '实时同步', lastUpdate: '2026-06-16 07:45', status: '正常', icon: <FileTextOutlined style={{ fontSize: 24, color: '#0958d9' }} /> },
+            { name: '教育类', source: '教育厅', frequency: '每周同步', lastUpdate: '2026-06-10 03:00', status: '正常', icon: <ReadOutlined style={{ fontSize: 24, color: '#722ed1' }} /> },
+            { name: '交通出行类', source: '交通运输厅', frequency: '每小时同步', lastUpdate: '2026-06-16 08:00', status: '正常', icon: <CarOutlined style={{ fontSize: 24, color: '#fa541c' }} /> }
+          ]}
+          renderItem={(item) => (
+            <List.Item key={item.name}>
+              <List.Item.Meta
+                avatar={item.icon}
+                title={<Space size={12}><span style={{ fontWeight: 500, fontSize: 15 }}>{item.name}</span><Tag color={item.status === '正常' ? 'green' : 'orange'}>{item.status}</Tag></Space>}
+                description={
+                  <Space size={24} wrap style={{ marginTop: 4 }}>
+                    <span style={{ color: '#666' }}><SafetyOutlined style={{ marginRight: 4, color: '#999' }} />数据来源机构：{item.source}</span>
+                    <span style={{ color: '#666' }}><SyncOutlined style={{ marginRight: 4, color: '#999' }} />更新频率：{item.frequency}</span>
+                    <span style={{ color: '#666' }}><ClockCircleOutlined style={{ marginRight: 4, color: '#999' }} />最近更新：{item.lastUpdate}</span>
+                  </Space>
+                }
+              />
+            </List.Item>
+          )}
+        />
+      </Card>
       <Card title="7大数据资产类型" style={{ marginBottom: 16 }}>
         <Row gutter={[16, 16]}>
           {assetCategories.map((item, index) => (
@@ -521,6 +550,14 @@ const DataAssetsOverview: React.FC = () => {
         icon={<KeyOutlined />}
         style={{ marginBottom: 16, borderRadius: 8 }}
       />
+      <Alert
+        message="授权审批流程说明"
+        description="申请提交 → 部门初审（1个工作日）→ 数据主管部门审核（2个工作日）→ 用户知情同意（短信确认）→ 授权生效。紧急审批可走绿色通道，2小时内完成。"
+        type="info"
+        showIcon
+        icon={<AuditOutlined />}
+        style={{ marginBottom: 16, borderRadius: 8 }}
+      />
       <Row gutter={16} style={{ marginBottom: 16 }}>
         <Col span={4}><Card><Statistic title="生效中授权" value={assetAuthorizations.filter(a => a.authStatus === 'active').length} prefix={<UnlockOutlined style={{ color: '#52c41a' }} />} valueStyle={{ color: '#52c41a' }} /></Card></Col>
         <Col span={4}><Card><Statistic title="待审批授权" value={assetAuthorizations.filter(a => a.authStatus === 'pending').length} prefix={<ClockCircleOutlined style={{ color: '#0958d9' }} />} valueStyle={{ color: '#0958d9' }} /></Card></Col>
@@ -529,7 +566,7 @@ const DataAssetsOverview: React.FC = () => {
         <Col span={4}><Card><Statistic title="累计授权次数" value={12856} precision={0} prefix={<ApiOutlined style={{ color: '#722ed1' }} />} valueStyle={{ color: '#722ed1' }} /></Card></Col>
         <Col span={4}><Card><Statistic title="授权合规率" value={98.6} precision={1} suffix="%" prefix={<SafetyOutlined style={{ color: '#13c2c2' }} />} valueStyle={{ color: '#13c2c2' }} /></Card></Col>
       </Row>
-      <Card style={{ borderRadius: 8 }} title={
+      <Card style={{ borderRadius: 8, marginBottom: 16 }} title={
         <Space>
           <Button type="primary" icon={<PlusOutlined />}>新增授权</Button>
           <Button icon={<SyncOutlined />}>刷新</Button>
@@ -557,6 +594,15 @@ const DataAssetsOverview: React.FC = () => {
             )
           }} />
       </Card>
+      <Card title={<Space><SafetyOutlined />授权合规性统计</Space>} style={{ borderRadius: 8 }}>
+        <Descriptions bordered column={2} size="small">
+          <Descriptions.Item label="活跃授权数"><span style={{ color: '#52c41a', fontWeight: 500 }}>{assetAuthorizations.filter(a => a.authStatus === 'active').length} 项</span></Descriptions.Item>
+          <Descriptions.Item label="即将到期（30天内）"><span style={{ color: '#faad14', fontWeight: 500 }}>2 项</span></Descriptions.Item>
+          <Descriptions.Item label="已撤销授权"><span style={{ color: '#ff4d4f', fontWeight: 500 }}>{assetAuthorizations.filter(a => a.authStatus === 'revoked').length} 项</span></Descriptions.Item>
+          <Descriptions.Item label="待审批授权"><span style={{ color: '#0958d9', fontWeight: 500 }}>{assetAuthorizations.filter(a => a.authStatus === 'pending').length} 项</span></Descriptions.Item>
+          <Descriptions.Item label="合规率" span={2}><Progress percent={98.5} size="small" strokeColor="#52c41a" format={(p) => <span style={{ color: '#52c41a', fontWeight: 500 }}>{p}%</span>} /></Descriptions.Item>
+        </Descriptions>
+      </Card>
     </div>
   )
 
@@ -578,7 +624,13 @@ const DataAssetsOverview: React.FC = () => {
         <Col span={4}><Card><Statistic title="平均响应时间" value={85} suffix="ms" prefix={<ClockCircleOutlined style={{ color: '#faad14' }} />} valueStyle={{ color: '#faad14' }} /></Card></Col>
         <Col span={4}><Card><Statistic title="累计调用量" value={89650} precision={0} prefix={<DatabaseOutlined style={{ color: '#722ed1' }} />} valueStyle={{ color: '#722ed1' }} /></Card></Col>
       </Row>
-      <Card style={{ borderRadius: 8 }} title={
+      <Row gutter={16} style={{ marginBottom: 16 }}>
+        <Col span={6}><Card><Statistic title="今日调用次数" value={12568} suffix="次" prefix={<ApiOutlined style={{ color: '#0958d9' }} />} valueStyle={{ color: '#0958d9', fontSize: 22 }} /></Card></Col>
+        <Col span={6}><Card><Statistic title="累计调用次数" value={89650} suffix="次" prefix={<DatabaseOutlined style={{ color: '#722ed1' }} />} valueStyle={{ color: '#722ed1', fontSize: 22 }} /></Card></Col>
+        <Col span={6}><Card><Statistic title="成功率" value={99.3} precision={1} suffix="%" prefix={<CheckCircleOutlined style={{ color: '#52c41a' }} />} valueStyle={{ color: '#52c41a', fontSize: 22 }} /></Card></Col>
+        <Col span={6}><Card><Statistic title="异常调用数" value={82} suffix="次" prefix={<WarningOutlined style={{ color: '#ff4d4f' }} />} valueStyle={{ color: '#ff4d4f', fontSize: 22 }} /></Card></Col>
+      </Row>
+      <Card style={{ borderRadius: 8, marginBottom: 16 }} title={
         <Space>
           <Select placeholder="调用方类型" style={{ width: 120 }} allowClear>
             <Option value="user">用户</Option>
@@ -598,13 +650,52 @@ const DataAssetsOverview: React.FC = () => {
         <Table columns={callTraceColumns} dataSource={callTraces} pagination={{ pageSize: 10, showTotal: (t) => `共 ${t} 条调用记录` }} size="small"
           expandable={{
             expandedRowRender: (record) => (
-              <Descriptions column={2} size="small" bordered>
-                <Descriptions.Item label="Request ID"><span style={{ fontFamily: 'monospace', fontSize: 12 }}>{record.requestId}</span></Descriptions.Item>
-                <Descriptions.Item label="IP地址"><span style={{ fontFamily: 'monospace', fontSize: 12 }}>{record.ipAddress}</span></Descriptions.Item>
-              </Descriptions>
+              <div>
+                <Descriptions column={2} size="small" bordered style={{ marginBottom: 16 }}>
+                  <Descriptions.Item label="Request ID"><span style={{ fontFamily: 'monospace', fontSize: 12 }}>{record.requestId}</span></Descriptions.Item>
+                  <Descriptions.Item label="IP地址"><span style={{ fontFamily: 'monospace', fontSize: 12 }}>{record.ipAddress}</span></Descriptions.Item>
+                </Descriptions>
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{ fontWeight: 500, marginBottom: 8 }}><Space><EyeOutlined />数据完整性校验</Space></div>
+                  <Space wrap>
+                    <Tag color="green" icon={<CheckCircleOutlined />}>数据完整性校验通过</Tag>
+                    <Tag color="green" icon={<CheckCircleOutlined />}>签名验签通过</Tag>
+                    <Tag color="blue">SHA-256 哈希校验匹配</Tag>
+                    <Tag color="blue">传输加密：TLS 1.3</Tag>
+                  </Space>
+                </div>
+                <div>
+                  <div style={{ fontWeight: 500, marginBottom: 8 }}><Space><HistoryOutlined />完整调用溯源链</Space></div>
+                  <Timeline mode="left">
+                    <Timeline.Item label="08:32:15.001" color="blue">
+                      <b>请求发起</b>：{record.caller}（{record.ipAddress}）→ 生成 Request ID: {record.requestId}
+                    </Timeline.Item>
+                    <Timeline.Item label="08:32:15.012" color="blue">
+                      <b>API网关层</b>：统一身份认证通过 → 限流检查通过 → 路由至 {record.assetType} 服务
+                    </Timeline.Item>
+                    <Timeline.Item label="08:32:15.045" color="purple">
+                      <b>业务接口层</b>：{record.assetName} 接口 → 授权校验：{record.callResult === 'success' ? '通过' : '拒绝'} → 参数合法性校验
+                    </Timeline.Item>
+                    <Timeline.Item label="08:32:15.078" color="orange">
+                      <b>数据访问层</b>：查询主库 db_{record.assetType.toLowerCase()} → 命中缓存 → 数据脱敏处理
+                    </Timeline.Item>
+                    <Timeline.Item label="08:32:15.095" color="green">
+                      <b>响应返回</b>：HTTP {record.callResult === 'success' ? 200 : 500} → 数据量 {record.dataSize} → 总耗时 {record.responseTime}ms
+                    </Timeline.Item>
+                  </Timeline>
+                </div>
+              </div>
             )
           }} />
       </Card>
+      <Alert
+        message="留痕合规性说明"
+        description="本系统调用留痕机制严格符合《中华人民共和国数据安全法》第四十二条、《中华人民共和国个人信息保护法》第五十五条及第五十八条要求。所有调用日志加密存储，保存周期90天，支持审计追溯与司法取证。日志包含：请求唯一标识、调用方身份、时间戳、数据范围、操作结果、IP地址等要素。"
+        type="success"
+        showIcon
+        icon={<SafetyOutlined />}
+        style={{ borderRadius: 8 }}
+      />
     </div>
   )
 
@@ -626,18 +717,139 @@ const DataAssetsOverview: React.FC = () => {
         <Col span={4}><Card><Statistic title="参与部门数" value={28} suffix="个" prefix={<TeamOutlined style={{ color: '#722ed1' }} />} valueStyle={{ color: '#722ed1' }} /></Card></Col>
         <Col span={4}><Card><Statistic title="共享合规率" value={98.2} precision={1} suffix="%" prefix={<SafetyOutlined style={{ color: '#13c2c2' }} />} valueStyle={{ color: '#13c2c2' }} /></Card></Col>
       </Row>
-      <Card style={{ borderRadius: 8 }}>
+      <Card title={<Space><SafetyOutlined />共享健康度</Space>} style={{ marginBottom: 16, borderRadius: 8 }}>
+        <Row gutter={24} align="middle">
+          <Col span={12}>
+            <Progress
+              percent={85}
+              size={160}
+              strokeColor={{
+                '0%': '#52c41a',
+                '100%': '#13c2c2'
+              }}
+              format={(p) => <span style={{ fontSize: 20, fontWeight: 'bold', color: '#52c41a' }}>{p}%</span>}
+            />
+          </Col>
+          <Col span={12}>
+            <Descriptions column={1} size="small">
+              <Descriptions.Item label="通道可用率"><Tag color="green">98.5%</Tag></Descriptions.Item>
+              <Descriptions.Item label="数据时效性"><Tag color="green">达标</Tag></Descriptions.Item>
+              <Descriptions.Item label="异常告警数"><Tag color="orange">3 条待处理</Tag></Descriptions.Item>
+              <Descriptions.Item label="综合评分"><span style={{ fontSize: 18, fontWeight: 500, color: '#0958d9' }}>优秀</span></Descriptions.Item>
+            </Descriptions>
+          </Col>
+        </Row>
+      </Card>
+      <Card style={{ borderRadius: 8, marginBottom: 16 }}>
         <Table columns={crossDeptShareColumns} dataSource={crossDeptShares} pagination={{ pageSize: 10 }} size="small"
           expandable={{
-            expandedRowRender: (record) => (
-              <Descriptions column={3} size="small" bordered>
-                <Descriptions.Item label="上次同步时间">{record.lastSyncTime}</Descriptions.Item>
-                <Descriptions.Item label="下次同步时间">{record.nextSyncTime}</Descriptions.Item>
-                <Descriptions.Item label="授权文号">{record.authorizationDoc}</Descriptions.Item>
-                <Descriptions.Item label="授权人">{record.authorizedBy}</Descriptions.Item>
-              </Descriptions>
-            )
+            expandedRowRender: (record) => {
+              const fieldMap: Record<string, string[]> = {
+                '户籍人口基本信息': ['姓名', '身份证号', '性别', '出生日期', '户籍地址', '民族', '婚姻状态', '户主关系'],
+                '参保人员基本信息': ['姓名', '身份证号', '参保状态', '缴费基数', '参保单位', '首次参保日期', '累计缴费月数'],
+                '不动产登记信息': ['权利人姓名', '身份证号', '不动产坐落', '不动产类型', '建筑面积', '登记日期', '抵押状态', '查封状态'],
+                '学生学籍信息': ['姓名', '身份证号', '学籍号', '学校名称', '年级', '班级', '入学日期', '学籍状态'],
+                '医疗机构诊疗信息': ['患者姓名', '身份证号', '就诊日期', '就诊科室', '诊断结果', '处方药品', '费用金额', '医保结算状态'],
+                '个人完税信息': ['姓名', '身份证号', '税款所属期', '收入总额', '应纳税所得额', '已缴税额', '申报日期']
+              }
+              const fields = fieldMap[record.assetName] || ['姓名', '身份证号', '数据状态', '更新时间']
+              const trendOption = {
+                grid: { left: '5%', right: '5%', top: '10%', bottom: '15%', containLabel: true },
+                tooltip: { trigger: 'axis' },
+                xAxis: { type: 'category', data: ['6-10', '6-11', '6-12', '6-13', '6-14', '6-15', '6-16'], axisLabel: { fontSize: 10 } },
+                yAxis: { type: 'value', axisLabel: { fontSize: 10 } },
+                series: [{
+                  type: 'bar',
+                  data: [
+                    120 + record.id * 15,
+                    145 + record.id * 18,
+                    132 + record.id * 12,
+                    168 + record.id * 20,
+                    155 + record.id * 16,
+                    180 + record.id * 22,
+                    172 + record.id * 19
+                  ],
+                  itemStyle: {
+                    color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: '#0958d9' }, { offset: 1, color: '#69b1ff' }] },
+                    borderRadius: [3, 3, 0, 0]
+                  },
+                  barWidth: '50%'
+                }]
+              }
+              return (
+                <div>
+                  <Descriptions column={3} size="small" bordered style={{ marginBottom: 16 }}>
+                    <Descriptions.Item label="上次同步时间">{record.lastSyncTime}</Descriptions.Item>
+                    <Descriptions.Item label="下次同步时间">{record.nextSyncTime}</Descriptions.Item>
+                    <Descriptions.Item label="数据共享授权文号"><span style={{ fontFamily: 'monospace', color: '#0958d9', fontWeight: 500 }}>宁数共享〔2026〕第00{record.id}号</span></Descriptions.Item>
+                    <Descriptions.Item label="授权人">{record.authorizedBy}</Descriptions.Item>
+                    <Descriptions.Item label="协议编号">NXY-GX-2026-0{record.id.toString().padStart(2, '0')}</Descriptions.Item>
+                    <Descriptions.Item label="签署日期">2026-01-{10 + record.id}</Descriptions.Item>
+                  </Descriptions>
+                  <Row gutter={16}>
+                    <Col xs={24} lg={10}>
+                      <Card title={<Space size={4}><FileTextOutlined />共享数据字段清单（共{fields.length}个字段）</Space>} size="small" style={{ marginBottom: 16 }}>
+                        <Space wrap>
+                          {fields.map((f, i) => <Tag key={i} color={i < 3 ? 'red' : i < 6 ? 'orange' : 'blue'}>{f}</Tag>)}
+                        </Space>
+                        <div style={{ marginTop: 12, fontSize: 12, color: '#666' }}>
+                          <Tag color="red">敏感字段</Tag>
+                          <Tag color="orange">受限字段</Tag>
+                          <Tag color="blue">普通字段</Tag>
+                          <span style={{ marginLeft: 8 }}>所有字段传输前已按规则脱敏处理</span>
+                        </div>
+                      </Card>
+                    </Col>
+                    <Col xs={24} lg={14}>
+                      <Card title={<Space size={4}><RiseOutlined />最近7天调用趋势</Space>} size="small">
+                        <ReactECharts option={trendOption} style={{ height: 180 }} />
+                      </Card>
+                    </Col>
+                  </Row>
+                </div>
+              )
+            }
           }} />
+      </Card>
+      <Card title={<Space><SafetyOutlined />共享合规性</Space>} style={{ borderRadius: 8 }}>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Card type="inner" bordered={false}>
+              <Statistic
+                title="共享协议签署率"
+                value={100}
+                suffix="%"
+                prefix={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
+                valueStyle={{ color: '#52c41a' }}
+              />
+              <div style={{ marginTop: 8, fontSize: 12, color: '#666' }}>28个委办局共享协议全部签署完毕</div>
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card type="inner" bordered={false}>
+              <Statistic
+                title="数据脱敏规则执行率"
+                value={100}
+                suffix="%"
+                prefix={<SafetyOutlined style={{ color: '#13c2c2' }} />}
+                valueStyle={{ color: '#13c2c2' }}
+              />
+              <div style={{ marginTop: 8, fontSize: 12, color: '#666' }}>身份证/手机号/地址等字段全部脱敏</div>
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card type="inner" bordered={false}>
+              <Statistic
+                title="审计日志同步率"
+                value={100}
+                suffix="%"
+                prefix={<HistoryOutlined style={{ color: '#0958d9' }} />}
+                valueStyle={{ color: '#0958d9' }}
+              />
+              <div style={{ marginTop: 8, fontSize: 12, color: '#666' }}>共享操作日志实时同步至审计平台</div>
+            </Card>
+          </Col>
+        </Row>
       </Card>
     </div>
   )
@@ -660,8 +872,155 @@ const DataAssetsOverview: React.FC = () => {
         <Col span={4}><Card><Statistic title="推荐采纳率" value={43.8} precision={1} suffix="%" prefix={<RiseOutlined style={{ color: '#faad14' }} />} valueStyle={{ color: '#faad14' }} /></Card></Col>
         <Col span={4}><Card><Statistic title="平均置信度" value={90.2} precision={1} suffix="%" prefix={<SafetyOutlined style={{ color: '#722ed1' }} />} valueStyle={{ color: '#722ed1' }} /></Card></Col>
       </Row>
+      <Card title={<Space><RiseOutlined />推荐效果统计</Space>} style={{ marginBottom: 16, borderRadius: 8 }}>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Card type="inner" bordered={false}>
+              <Statistic
+                title="推荐点击率"
+                value={32.5}
+                precision={1}
+                suffix="%"
+                prefix={<EyeOutlined style={{ color: '#0958d9' }} />}
+                valueStyle={{ color: '#0958d9' }}
+              />
+              <Progress percent={32.5} size="small" strokeColor="#0958d9" style={{ marginTop: 12 }} />
+              <div style={{ marginTop: 8, fontSize: 12, color: '#666' }}>本周较上周提升 3.2%</div>
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card type="inner" bordered={false}>
+              <Statistic
+                title="实际办理转化率"
+                value={18.2}
+                precision={1}
+                suffix="%"
+                prefix={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
+                valueStyle={{ color: '#52c41a' }}
+              />
+              <Progress percent={18.2} size="small" strokeColor="#52c41a" style={{ marginTop: 12 }} />
+              <div style={{ marginTop: 8, fontSize: 12, color: '#666' }}>高于行业平均水平 5.6%</div>
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card type="inner" bordered={false}>
+              <Statistic
+                title="用户满意度"
+                value={4.6}
+                precision={1}
+                suffix="/5.0"
+                prefix={<SafetyOutlined style={{ color: '#faad14' }} />}
+                valueStyle={{ color: '#faad14' }}
+              />
+              <Progress percent={92} size="small" strokeColor="#faad14" style={{ marginTop: 12 }} />
+              <div style={{ marginTop: 8, fontSize: 12, color: '#666' }}>基于 2,680 份有效评价</div>
+            </Card>
+          </Col>
+        </Row>
+      </Card>
       <Card style={{ borderRadius: 8 }}>
-        <Table columns={recommendationColumns} dataSource={recommendationSources} pagination={{ pageSize: 10 }} size="small" />
+        <Table columns={recommendationColumns} dataSource={recommendationSources} pagination={{ pageSize: 10 }} size="small"
+          expandable={{
+            expandedRowRender: (record) => {
+              const explainMap: Record<number, { trigger: string; weights: { label: string; weight: number }[]; path: string[] }> = {
+                1: {
+                  trigger: '用户近7天社保查询5次 + 年龄63岁 + 生日提醒触发',
+                  weights: [
+                    { label: '退休人员标签', weight: 0.45 },
+                    { label: '社保查询行为', weight: 0.35 },
+                    { label: '年龄>60岁', weight: 0.20 }
+                  ],
+                  path: ['首页', '消息中心', '社保提醒通知', '社保详情页', '待遇资格认证入口']
+                },
+                2: {
+                  trigger: '用户近7天搜索"公积金"8次 + 查看"购房"事项3次 + 公积金缴存满2年',
+                  weights: [
+                    { label: '购房意图', weight: 0.65 },
+                    { label: '有房用户', weight: 0.25 },
+                    { label: '年龄30-40岁', weight: 0.10 }
+                  ],
+                  path: ['首页', '服务查询', '公积金中心', '公积金详情页', '购房政策专区']
+                },
+                3: {
+                  trigger: '用户流动人口登记已达6个月 + 社保连续缴纳满6个月 + 非本地户籍',
+                  weights: [
+                    { label: '非本地户籍', weight: 0.40 },
+                    { label: '社保缴纳>6个月', weight: 0.35 },
+                    { label: '流动人口登记', weight: 0.25 }
+                  ],
+                  path: ['首页', '个人中心', '我的证件', '流动人口登记页', '政策推荐']
+                },
+                4: {
+                  trigger: '用户近30天异地就医记录2次 + 医保参保状态正常 + 常住外地标签',
+                  weights: [
+                    { label: '异地就医记录', weight: 0.50 },
+                    { label: '常住外地标签', weight: 0.30 },
+                    { label: '医保参保状态', weight: 0.20 }
+                  ],
+                  path: ['首页', '医保服务', '就医记录查询', '异地医院列表', '备案政策提示']
+                },
+                5: {
+                  trigger: '用户有1名子女在读小学 + 低收入家庭标签 + 教育补贴政策匹配',
+                  weights: [
+                    { label: '有子女上学', weight: 0.45 },
+                    { label: '低收入标签', weight: 0.35 },
+                    { label: '政策匹配度', weight: 0.20 }
+                  ],
+                  path: ['首页', '教育服务', '子女学籍信息', '补贴政策专区', '申请条件匹配']
+                }
+              }
+              const explain = explainMap[record.id]
+              return (
+                <div>
+                  <Descriptions column={1} size="small" bordered style={{ marginBottom: 16 }}>
+                    <Descriptions.Item label={<Space><AuditOutlined />触发条件</Space>}>
+                      <span style={{ color: '#333' }}>{explain?.trigger}</span>
+                    </Descriptions.Item>
+                  </Descriptions>
+                  <Row gutter={16} style={{ marginBottom: 16 }}>
+                    <Col xs={24} lg={12}>
+                      <Card title={<Space size={4}><SafetyOutlined />匹配标签权重分析</Space>} size="small" style={{ height: '100%' }}>
+                        <div style={{ marginBottom: 12 }}>
+                          {explain?.weights.map((w, i) => (
+                            <div key={i} style={{ marginBottom: 10 }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 13 }}>
+                                <span>{w.label}</span>
+                                <span style={{ fontWeight: 500, color: ['#0958d9', '#52c41a', '#faad14'][i] }}>{(w.weight * 100).toFixed(0)}%</span>
+                              </div>
+                              <Progress
+                                percent={w.weight * 100}
+                                size="small"
+                                showInfo={false}
+                                strokeColor={['#0958d9', '#52c41a', '#faad14'][i]}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                        <div style={{ fontSize: 12, color: '#999', borderTop: '1px dashed #eee', paddingTop: 8 }}>
+                          综合置信度：<span style={{ color: '#722ed1', fontWeight: 500 }}>{record.confidence}%</span>
+                        </div>
+                      </Card>
+                    </Col>
+                    <Col xs={24} lg={12}>
+                      <Card title={<Space size={4}><HistoryOutlined />用户行为路径</Space>} size="small" style={{ height: '100%' }}>
+                        <Timeline mode="left" style={{ padding: '8px 0' }}>
+                          {explain?.path.map((p, i) => (
+                            <Timeline.Item
+                              key={i}
+                              color={i === (explain?.path.length ?? 0) - 1 ? 'green' : 'blue'}
+                              label={`步骤 ${i + 1}`}
+                            >
+                              <span style={{ fontSize: 13, color: i === (explain?.path.length ?? 0) - 1 ? '#52c41a' : '#333' }}>{p}</span>
+                            </Timeline.Item>
+                          ))}
+                        </Timeline>
+                      </Card>
+                    </Col>
+                  </Row>
+                </div>
+              )
+            }
+          }} />
       </Card>
     </div>
   )
@@ -690,10 +1049,20 @@ const DataAssetsOverview: React.FC = () => {
           selectedAuth?.authStatus === 'pending' && <Button key="reject" danger>审批驳回</Button>,
           selectedAuth?.authStatus === 'active' && <Button key="revoke" danger>撤销授权</Button>
         ]}
-        width={700}
+        width={820}
       >
         {selectedAuth && (
           <div>
+            {selectedAuth.authStatus === 'active' && (
+              <Alert
+                message="到期提醒"
+                description={`该授权将于 ${selectedAuth.expireTime} 到期，距离到期还有 ${Math.ceil((new Date(selectedAuth.expireTime).getTime() - new Date('2026-06-16').getTime()) / (1000 * 60 * 60 * 24))} 天。建议提前15天提交续期申请。`}
+                type="warning"
+                showIcon
+                icon={<ClockCircleOutlined />}
+                style={{ marginBottom: 16, borderRadius: 8 }}
+              />
+            )}
             <Descriptions title="基本信息" bordered column={2} size="small" style={{ marginBottom: 16 }}>
               <Descriptions.Item label="资产类型"><Tag color="blue">{selectedAuth.assetType}</Tag></Descriptions.Item>
               <Descriptions.Item label="资产名称">{selectedAuth.assetName}</Descriptions.Item>
@@ -713,6 +1082,47 @@ const DataAssetsOverview: React.FC = () => {
               <Descriptions.Item label="到期时间">{selectedAuth.expireTime}</Descriptions.Item>
               <Descriptions.Item label="创建人">{selectedAuth.createdBy}</Descriptions.Item>
             </Descriptions>
+            <Card title={<Space><ApiOutlined />最近5次授权调用记录</Space>} size="small" style={{ marginBottom: 16 }} bodyStyle={{ padding: 0 }}>
+              <Table
+                size="small"
+                pagination={false}
+                columns={[
+                  { title: '调用时间', dataIndex: 'callTime', key: 'callTime', width: 160 },
+                  { title: '调用方', dataIndex: 'caller', key: 'caller', width: 140 },
+                  { title: '调用结果', dataIndex: 'result', key: 'result', width: 80, render: (r: string) => <Badge status={r === '成功' ? 'success' : 'error'} text={r} /> },
+                  { title: '耗时(ms)', dataIndex: 'duration', key: 'duration', width: 90 }
+                ]}
+                dataSource={[
+                  { key: '1', callTime: '2026-06-16 08:32:15', caller: selectedAuth.authorizedUser, result: '成功', duration: 85 },
+                  { key: '2', callTime: '2026-06-16 08:15:42', caller: selectedAuth.authorizedUser, result: '成功', duration: 72 },
+                  { key: '3', callTime: '2026-06-15 16:45:30', caller: selectedAuth.authorizedUser, result: '成功', duration: 91 },
+                  { key: '4', callTime: '2026-06-15 14:20:18', caller: selectedAuth.authorizedUser, result: '失败', duration: 3200 },
+                  { key: '5', callTime: '2026-06-15 10:08:55', caller: selectedAuth.authorizedUser, result: '成功', duration: 68 }
+                ]}
+              />
+            </Card>
+            <Card title={<Space><ShareAltOutlined />关联的跨部门共享通道</Space>} size="small" style={{ marginBottom: 16 }}>
+              <Descriptions bordered column={1} size="small">
+                <Descriptions.Item label="通道名称">
+                  {
+                    (() => {
+                      const deptMap: Record<string, string> = {
+                        '证照类': '公安厅',
+                        '社会保障类': '人力资源和社会保障厅',
+                        '住房公积金类': '住房和城乡建设厅',
+                        '医疗保障类': '医疗保障局',
+                        '税务类': '税务局',
+                        '教育类': '教育厅'
+                      }
+                      return `${deptMap[selectedAuth.assetType] || '数据主管部门'} → ${selectedAuth.authorizedDept} 数据共享通道`
+                    })()
+                  }
+                </Descriptions.Item>
+                <Descriptions.Item label="共享授权文号">宁数共享〔2026〕第0{selectedAuth.id}号</Descriptions.Item>
+                <Descriptions.Item label="协议签署状态"><Tag color="green">已签署</Tag></Descriptions.Item>
+                <Descriptions.Item label="数据脱敏规则"><Tag color="blue">已启用</Tag> 身份证号脱敏、手机号脱敏</Descriptions.Item>
+              </Descriptions>
+            </Card>
             {selectedAuth.authStatus === 'pending' && (
               <Form layout="vertical">
                 <Form.Item label="审批意见" required>
