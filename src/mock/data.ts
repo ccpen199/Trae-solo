@@ -23,6 +23,258 @@ export const mockUser: User = {
   createdAt: new Date('2024-01-01'),
 };
 
+export interface AccountCredential {
+  username: string;
+  password: string;
+  user: User;
+  accountStatus: 'active' | 'locked' | 'pending';
+  lastLogin?: Date;
+  loginFailCount: number;
+  deptId?: string;
+}
+
+export const userAccounts: AccountCredential[] = [
+  {
+    username: 'citizen',
+    password: '123456',
+    user: {
+      id: '1',
+      name: '张三',
+      idCard: '110101199001011234',
+      phone: '138****8001',
+      userType: 'citizen',
+      authLevel: 2,
+      avatar: '',
+      createdAt: new Date('2024-01-01'),
+    },
+    accountStatus: 'active',
+    loginFailCount: 0,
+    lastLogin: new Date('2026-06-15'),
+  },
+  {
+    username: 'admin',
+    password: 'admin123',
+    user: {
+      id: '2',
+      name: '王系统管理员',
+      idCard: '110101198501011234',
+      phone: '139****9001',
+      userType: 'admin',
+      authLevel: 9,
+      avatar: '',
+      createdAt: new Date('2023-06-01'),
+    },
+    accountStatus: 'active',
+    loginFailCount: 0,
+    lastLogin: new Date('2026-06-15'),
+  },
+  {
+    username: 'staff',
+    password: 'staff123',
+    user: {
+      id: '3',
+      name: '李办事员',
+      idCard: '110101198802022345',
+      phone: '139****9002',
+      userType: 'staff',
+      authLevel: 5,
+      avatar: '',
+      createdAt: new Date('2023-08-15'),
+    },
+    accountStatus: 'active',
+    loginFailCount: 0,
+    lastLogin: new Date('2026-06-14'),
+    deptId: '1',
+  },
+  {
+    username: 'platform',
+    password: 'platform123',
+    user: {
+      id: '4',
+      name: '赵平台运维',
+      idCard: '110101198703033456',
+      phone: '139****9003',
+      userType: 'staff',
+      authLevel: 7,
+      avatar: '',
+      createdAt: new Date('2023-03-20'),
+    },
+    accountStatus: 'active',
+    loginFailCount: 0,
+    lastLogin: new Date('2026-06-15'),
+  },
+  {
+    username: 'ops',
+    password: 'ops123',
+    user: {
+      id: '5',
+      name: '陈协同部门',
+      idCard: '110101198604044567',
+      phone: '139****9004',
+      userType: 'staff',
+      authLevel: 4,
+      avatar: '',
+      createdAt: new Date('2024-02-10'),
+    },
+    accountStatus: 'active',
+    loginFailCount: 0,
+    lastLogin: new Date('2026-06-13'),
+    deptId: '5',
+  },
+  {
+    username: 'enterprise',
+    password: 'enterprise123',
+    user: {
+      id: '6',
+      name: '北京科技有限公司',
+      idCard: '91110105MA01234567',
+      phone: '138****8008',
+      userType: 'enterprise',
+      authLevel: 3,
+      avatar: '',
+      createdAt: new Date('2024-05-01'),
+    },
+    accountStatus: 'active',
+    loginFailCount: 0,
+    lastLogin: new Date('2026-06-12'),
+  },
+  {
+    username: 'locked_user',
+    password: 'locked123',
+    user: {
+      id: '7',
+      name: '锁定测试用户',
+      idCard: '110101199001019999',
+      phone: '138****9999',
+      userType: 'citizen',
+      authLevel: 1,
+      avatar: '',
+      createdAt: new Date('2024-01-01'),
+    },
+    accountStatus: 'locked',
+    loginFailCount: 5,
+  },
+];
+
+export const roleConfig: Record<string, {
+  label: string;
+  description: string;
+  defaultRoute: string;
+  icon: string;
+  tips: string[];
+}> = {
+  citizen: {
+    label: '办事群众',
+    description: '个人用户办理政务服务事项',
+    defaultRoute: '/',
+    icon: 'UserCircle',
+    tips: ['掌上办事、智能导办、跨域协同', '电子证照管理、办件进度查询'],
+  },
+  enterprise: {
+    label: '企业法人',
+    description: '企业办理工商、税务、资质等事项',
+    defaultRoute: '/',
+    icon: 'Building2',
+    tips: ['企业开办一网通办', '资质办理、年报公示'],
+  },
+  staff: {
+    label: '办事人员',
+    description: '政务大厅窗口人员、审核人员',
+    defaultRoute: '/admin/dashboard',
+    icon: 'UserCheck',
+    tips: ['办件受理与审核', '服务效能监测'],
+  },
+  platform: {
+    label: '平台运维',
+    description: '技术运维、系统管理',
+    defaultRoute: '/admin/disaster-recovery',
+    icon: 'Server',
+    tips: ['系统监控与容灾管理', '运维配置、日志审计'],
+  },
+  ops: {
+    label: '协同部门',
+    description: '各委办局业务协同人员',
+    defaultRoute: '/admin/dashboard',
+    icon: 'Users',
+    tips: ['跨部门事项联办', '业务数据共享'],
+  },
+  admin: {
+    label: '超级管理员',
+    description: '系统最高权限管理员',
+    defaultRoute: '/admin/dashboard',
+    icon: 'Shield',
+    tips: ['全局权限管理', '政策配置、系统设置'],
+  },
+};
+
+export type LoginErrorCode =
+  | 'ACCOUNT_NOT_FOUND'
+  | 'PASSWORD_ERROR'
+  | 'ACCOUNT_LOCKED'
+  | 'ACCOUNT_PENDING'
+  | 'NO_ROLE_PERMISSION'
+  | 'AUTH_LINK_ERROR'
+  | 'CA_VERIFY_FAILED'
+  | 'SYSTEM_ERROR'
+  | 'TOO_MANY_ATTEMPTS';
+
+export const loginErrorMessages: Record<LoginErrorCode, { title: string; detail: string; suggestion: string; severity: 'error' | 'warning' | 'info' }> = {
+  ACCOUNT_NOT_FOUND: {
+    title: '账号不存在',
+    detail: '您输入的账号在系统中未找到，请确认账号是否正确',
+    suggestion: '请检查账号输入，或联系系统管理员确认账号是否已开通',
+    severity: 'error',
+  },
+  PASSWORD_ERROR: {
+    title: '密码错误',
+    detail: '您输入的密码与账号不匹配',
+    suggestion: '请确认密码是否正确，注意区分大小写；连续错误5次账号将被锁定',
+    severity: 'error',
+  },
+  ACCOUNT_LOCKED: {
+    title: '账号已被锁定',
+    detail: '该账号因多次密码错误或安全策略已被临时锁定',
+    suggestion: '请联系省大数据中心服务热线12345-9申请解锁，或30分钟后自动解锁',
+    severity: 'error',
+  },
+  ACCOUNT_PENDING: {
+    title: '账号待审核',
+    detail: '您的账号正在审核中，尚未开通系统访问权限',
+    suggestion: '请耐心等待管理员审核，一般1-2个工作日内完成',
+    severity: 'warning',
+  },
+  NO_ROLE_PERMISSION: {
+    title: '无角色访问权限',
+    detail: '您的账号未分配当前入口所需的角色权限',
+    suggestion: '请选择正确的登录入口，或联系管理员开通对应角色权限',
+    severity: 'error',
+  },
+  AUTH_LINK_ERROR: {
+    title: '统一认证链路异常',
+    detail: '省政务云统一身份认证服务暂时无法访问',
+    suggestion: '请稍后重试，或拨打技术支持电话010-XXXXXXXX咨询',
+    severity: 'warning',
+  },
+  CA_VERIFY_FAILED: {
+    title: 'CA证书验证失败',
+    detail: '您的数字证书未能通过验证，可能已过期或被吊销',
+    suggestion: '请检查证书是否在有效期内，或联系CA机构确认证书状态',
+    severity: 'error',
+  },
+  SYSTEM_ERROR: {
+    title: '系统异常',
+    detail: '登录过程中发生未知错误，错误已自动记录',
+    suggestion: '请稍后重试，若多次出现请联系技术支持',
+    severity: 'error',
+  },
+  TOO_MANY_ATTEMPTS: {
+    title: '登录尝试过于频繁',
+    detail: '短时间内登录失败次数过多，为保护账号安全已被限制',
+    suggestion: '请等待5分钟后再尝试登录',
+    severity: 'warning',
+  },
+};
+
 export const mockDepartments: Department[] = [
   { id: '1', name: '人力资源和社会保障厅', code: 'RS001', contact: '张主任', phone: '12333' },
   { id: '2', name: '公安厅', code: 'GA001', contact: '李主任', phone: '110' },

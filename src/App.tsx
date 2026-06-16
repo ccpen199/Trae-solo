@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
@@ -46,8 +46,33 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+const RoleHomeRedirect = () => {
+  const { getDefaultRoute, user } = useAuthStore();
+  const defaultRoute = getDefaultRoute();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (defaultRoute !== '/') {
+      navigate(defaultRoute, { replace: true });
+    }
+  }, [defaultRoute, navigate]);
+
+  if (defaultRoute === '/') {
+    return <Home />;
+  }
+
+  return (
+    <div className="h-screen flex items-center justify-center bg-gov-gray-50">
+      <div className="text-center">
+        <LoadingSpinner size="lg" />
+        <p className="mt-4 text-gov-gray-400">正在进入{user?.name}的工作台...</p>
+      </div>
+    </div>
+  );
+};
+
 const AdminRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, isAuthenticated, isLoading } = useAuthStore();
+  const { user, isAuthenticated, isLoading, loginRole, getDefaultRoute } = useAuthStore();
   const location = useLocation();
 
   if (isLoading) {
@@ -58,8 +83,13 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (!isAuthenticated || (user?.userType !== 'staff' && user?.userType !== 'admin')) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+  const effectiveRole = loginRole || user?.userType;
+  const adminAllowedRoles = ['staff', 'admin', 'platform', 'ops'];
+  const isAdminAllowed = isAuthenticated && effectiveRole && adminAllowedRoles.includes(effectiveRole);
+
+  if (!isAdminAllowed) {
+    const defaultRoute = getDefaultRoute();
+    return <Navigate to={defaultRoute} state={{ from: location }} replace />;
   }
 
   return <>{children}</>;
@@ -155,7 +185,7 @@ export default function App() {
               <Layout />
             </ProtectedRoute>
           }>
-            <Route index element={<Home />} />
+            <Route index element={<RoleHomeRedirect />} />
             <Route path="services" element={<Services />} />
             <Route path="services/:id" element={<ServiceDetail />} />
             <Route path="services/:id/apply" element={<ServiceApply />} />
