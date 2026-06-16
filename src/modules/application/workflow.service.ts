@@ -56,6 +56,29 @@ export interface JointSignRecord {
   status: 'PENDING' | 'SIGNED' | 'REJECTED';
 }
 
+export interface WorkflowBranchAuditTrail {
+  action: string;
+  operator: string;
+  timestamp: Date;
+  remark: string;
+}
+
+export interface WorkflowBranch {
+  branchId: string;
+  branchType: 'SUPPLEMENT' | 'RETURN' | 'JOINT_SIGN' | 'RECEIPT' | 'RESCHEDULE';
+  branchTypeLabel: string;
+  sourceNode: string;
+  targetNode: string;
+  initiator: string;
+  initiatorDept: string;
+  createdAt: Date;
+  status: 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+  completedAt: Date | null;
+  branchOpinion: string;
+  branchData: any;
+  auditTrail: WorkflowBranchAuditTrail[];
+}
+
 export interface ApplicationConfirmInfo {
   confirmed: boolean;
   confirmedAt?: Date;
@@ -1168,5 +1191,219 @@ export class WorkflowService {
       signedAt: approval.signedAt || approval.createdAt,
       status: 'SIGNED' as const,
     }));
+  }
+
+  private readonly BRANCH_TYPE_MAP: Record<
+    string,
+    { type: WorkflowBranch['branchType']; label: string; sourceNode: string; targetNode: string }
+  > = {
+    supplement_materials: {
+      type: 'SUPPLEMENT',
+      label: '材料补正',
+      sourceNode: 'pre_review',
+      targetNode: 'material_supplement',
+    },
+    return_to_applicant: {
+      type: 'RETURN',
+      label: '预审退回',
+      sourceNode: 'pre_review',
+      targetNode: 'pre_review_rejected',
+    },
+    joint_sign: {
+      type: 'JOINT_SIGN',
+      label: '部门会签',
+      sourceNode: 'approving',
+      targetNode: 'approving',
+    },
+    confirm_certificate: {
+      type: 'RECEIPT',
+      label: '证照签发回执',
+      sourceNode: 'certificate_issued',
+      targetNode: 'completed',
+    },
+    applicant_confirm: {
+      type: 'RECEIPT',
+      label: '申请人确认回执',
+      sourceNode: 'completed',
+      targetNode: 'completed',
+    },
+    reschedule_appointment: {
+      type: 'RESCHEDULE',
+      label: '预约改期',
+      sourceNode: 'appointed',
+      targetNode: 'appointed',
+    },
+  };
+
+  async getBranchList(applicationId: string): Promise<WorkflowBranch[]> {
+    this.logger.log(`获取办件分支列表: ${applicationId}`, 'WorkflowService');
+
+    const app = await this.prisma.application.findUnique({
+      where: { id: applicationId },
+      include: {
+        timeline: { orderBy: { createdAt: 'asc' } },
+        approvals: { orderBy: { createdAt: 'asc' } },
+      },
+    });
+    if (!app) throw new NotFoundException('办件不存在');
+
+    const branches: WorkflowBranch[] = [];
+
+    for (const node of app.timeline) {
+      const branchConfig = this.BRANCH_TYPE_MAP[node.nodeCode];
+      if (branchConfig) {
+        const auditTrail: WorkflowBranchAuditTrail[] = this.buildBranchAuditTrail(
+          node,
+          app.timeline,
+          app.approvals,
+        );
+
+        const branch: WorkflowBranch = {
+          branchId: `branch-${node.id}`,
+          branchType: branchConfig.type,
+          branchTypeLabel: branchConfig.label,
+          sourceNode: branchConfig.sourceNode,
+          targetNode: branchConfig.targetNode,
+          initiator: node.operatorName || '系统',
+          initiatorDept: node.department || '系统',
+          createdAt: node.createdAt,
+          status: this.mapNodeStatusToBranchStatus(node.status),
+          completedAt: node.endTime || null,
+          branchOpinion: node.opinion || '',
+          branchData: {
+            nodeCode: node.nodeCode,
+            nodeName: node.nodeName,
+            metadata: node.metadata,
+          },
+          auditTrail,
+        };
+        branches.push(branch);
+      }
+    }
+
+    return branches.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+  }
+
+  async getBranchDetail(applicationId: string, branchId: string): Promise<WorkflowBranch> {
+    this.logger.log(`获取分支详情: ${applicationId} - ${branchId}`, 'WorkflowService');
+
+    const branches = await this.getBranchList(applicationId);
+    const branch = branches.find((b) => b.branchId === branchId);
+
+    if (!branch) {
+      throw new NotFoundException('分支不存在');
+    }
+
+    return branch;
+  }
+
+  async getBranchTypesSummary(
+    applicationId: string,
+  ): Promise<Array<{ type: string; count: number; lastBranchedAt: Date | null }>> {
+    this.logger.log(`获取分支类型统计: ${applicationId}`, 'WorkflowService');
+
+    const branches = await this.getBranchList(applicationId);
+    const typeMap = new Map<string, { count: number; lastBranchedAt: Date | null }>();
+
+    const allTypes: WorkflowBranch['branchType'][] = [
+      'SUPPLEMENT',
+      'RETURN',
+      'JOINT_SIGN',
+      'RECEIPT',
+      'RESCHEDULE',
+    ];
+    const typeLabels: Record<WorkflowBranch['branchType'], string> = {
+      SUPPLEMENT: '补正',
+      RETURN: '退回',
+      JOINT_SIGN: '会签',
+      RECEIPT: '回执',
+      RESCHEDULE: '改期',
+    };
+
+    for (const type of allTypes) {
+      typeMap.set(type, { count: 0, lastBranchedAt: null });
+    }
+
+    for (const branch of branches) {
+      const current = typeMap.get(branch.branchType);
+      if (current) {
+        current.count++;
+        if (!current.lastBranchedAt || branch.createdAt > current.lastBranchedAt) {
+          current.lastBranchedAt = branch.createdAt;
+        }
+      }
+    }
+
+    return Array.from(typeMap.entries()).map(([type, data]) => ({
+      type: typeLabels[type as WorkflowBranch['branchType']],
+      count: data.count,
+      lastBranchedAt: data.lastBranchedAt,
+    }));
+  }
+
+  private mapNodeStatusToBranchStatus(nodeStatus: string): WorkflowBranch['status'] {
+    switch (nodeStatus) {
+      case 'completed':
+        return 'COMPLETED';
+      case 'processing':
+      case 'pending':
+        return 'IN_PROGRESS';
+      case 'cancelled':
+        return 'CANCELLED';
+      default:
+        return 'IN_PROGRESS';
+    }
+  }
+
+  private buildBranchAuditTrail(
+    branchNode: any,
+    timeline: any[],
+    approvals: any[],
+  ): WorkflowBranchAuditTrail[] {
+    const auditTrail: WorkflowBranchAuditTrail[] = [];
+
+    auditTrail.push({
+      action: '发起',
+      operator: branchNode.operatorName || '系统',
+      timestamp: branchNode.startTime || branchNode.createdAt,
+      remark: branchNode.opinion || `发起${branchNode.nodeName}`,
+    });
+
+    const branchIndex = timeline.findIndex((t) => t.id === branchNode.id);
+
+    if (branchNode.endTime) {
+      auditTrail.push({
+        action: '完成',
+        operator: branchNode.operatorName || '系统',
+        timestamp: branchNode.endTime,
+        remark: `${branchNode.nodeName}完成`,
+      });
+    }
+
+    if (branchNode.nodeCode === 'joint_sign') {
+      const jointSignApprovals = approvals.filter((a) => a.action === 'JOINT_SIGN');
+      for (const approval of jointSignApprovals) {
+        auditTrail.push({
+          action: '会签',
+          operator: approval.approverName,
+          timestamp: approval.signedAt || approval.createdAt,
+          remark: `${approval.department} - ${approval.opinion || '已会签'}`,
+        });
+      }
+    }
+
+    if (branchIndex >= 0 && branchIndex < timeline.length - 1) {
+      const nextNode = timeline[branchIndex + 1];
+      if (nextNode.nodeCode !== branchNode.nodeCode) {
+        auditTrail.push({
+          action: '流转',
+          operator: nextNode.operatorName || '系统',
+          timestamp: nextNode.startTime || nextNode.createdAt,
+          remark: `流转至${nextNode.nodeName}`,
+        });
+      }
+    }
+
+    return auditTrail.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   }
 }

@@ -238,6 +238,98 @@ export interface ClosureStatus {
   closureScore: number;
 }
 
+export interface WorkflowBranchAuditTrail {
+  action: string;
+  operator: string;
+  timestamp: Date;
+  remark: string;
+}
+
+export interface WorkflowBranch {
+  branchId: string;
+  branchType: 'SUPPLEMENT' | 'RETURN' | 'JOINT_SIGN' | 'RECEIPT' | 'RESCHEDULE';
+  branchTypeLabel: string;
+  sourceNode: string;
+  targetNode: string;
+  initiator: string;
+  initiatorDept: string;
+  createdAt: Date;
+  status: 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+  completedAt: Date | null;
+  branchOpinion: string;
+  branchData: any;
+  auditTrail: WorkflowBranchAuditTrail[];
+}
+
+export interface BranchSummaryByType {
+  supplement: number;
+  return: number;
+  jointSign: number;
+  receipt: number;
+  reschedule: number;
+}
+
+export interface LatestBranchInfo {
+  branchId: string;
+  branchType: string;
+  branchTypeLabel: string;
+  createdAt: Date;
+  status: string;
+}
+
+export interface RiskDetail {
+  riskType: 'TIMEOUT' | 'NOTIFICATION_FAIL' | 'MATERIAL_MISSING' | 'APPROVAL_STALL';
+  riskLevel: 1 | 2 | 3;
+  riskLevelLabel: string;
+  description: string;
+  detectedAt: Date;
+  ageHours: number;
+  owner: string | null;
+  ownerDept: string | null;
+  status: 'PENDING' | 'HANDLING' | 'RESOLVED';
+  resolvedAt: Date | null;
+  resolution: string | null;
+  actionItems: Array<{ code: string; name: string; endpoint: string; type: 'primary' | 'secondary' | 'warning' }>;
+}
+
+export interface SupervisionRecord {
+  supervisionId: string;
+  supervisor: string;
+  supervisorDept: string;
+  supervisedDept: string;
+  supervisedNode: string;
+  supervisedAt: Date;
+  supervisionLevel: 'NORMAL' | 'URGENT' | 'SUPREME';
+  supervisionContent: string;
+  responseStatus: 'PENDING' | 'RESPONDED' | 'RESOLVED';
+  responder: string | null;
+  responseAt: Date | null;
+  responseContent: string | null;
+  followUpCount: number;
+  lastFollowUpAt: Date | null;
+}
+
+export interface NotificationRetryTrace {
+  notificationId: string;
+  channel: string;
+  channelLabel: string;
+  originalSentAt: Date;
+  originalFailureReason: string;
+  retryCount: number;
+  retryRecords: Array<{ attempt: number; sentAt: Date; result: string; failureReason: string | null; operator: string | null }>;
+  lastRetryAt: Date | null;
+  lastRetryResult: string | null;
+  finalStatus: 'PENDING' | 'DELIVERED' | 'FAILED';
+  canRetry: boolean;
+  retryEndpoint: string;
+}
+
+export interface BranchSummary {
+  totalBranches: number;
+  byType: BranchSummaryByType;
+  latestBranch: LatestBranchInfo | null;
+}
+
 export interface LifecycleTraceListItem {
   id: string;
   applicationNo: string;
@@ -292,6 +384,10 @@ export interface LifecycleTraceListItem {
   workflowNodeStatus: WorkflowNodeStatus;
   responsibilitySummary: ResponsibilitySummary;
   closureStatus: ClosureStatus;
+  branchSummary: BranchSummary;
+  riskDetails: RiskDetail[];
+  supervisionRecords: SupervisionRecord[];
+  notificationRetryTraces: NotificationRetryTrace[];
 }
 
 export interface LifecycleTraceDetail {
@@ -393,6 +489,7 @@ export interface LifecycleTraceDetail {
   timeoutHandlingInfo: TimeoutHandlingInfo[];
   fullTimeline: LifecycleNode[];
   timeoutDisposalChain: TimeoutDisposalChainNode[];
+  branchTrail: WorkflowBranch[];
 }
 
 const STATUS_LABELS: Record<string, string> = {
@@ -456,6 +553,351 @@ const WARNING_LEVEL_LABEL: Record<number, string> = {
   2: '二级',
   3: '三级',
 };
+
+const BRANCH_TYPE_MAP: Record<
+  string,
+  { type: WorkflowBranch['branchType']; label: string; sourceNode: string; targetNode: string }
+> = {
+  supplement_materials: {
+    type: 'SUPPLEMENT',
+    label: '材料补正',
+    sourceNode: 'pre_review',
+    targetNode: 'material_supplement',
+  },
+  return_to_applicant: {
+    type: 'RETURN',
+    label: '预审退回',
+    sourceNode: 'pre_review',
+    targetNode: 'pre_review_rejected',
+  },
+  joint_sign: {
+    type: 'JOINT_SIGN',
+    label: '部门会签',
+    sourceNode: 'approving',
+    targetNode: 'approving',
+  },
+  confirm_certificate: {
+    type: 'RECEIPT',
+    label: '证照签发回执',
+    sourceNode: 'certificate_issued',
+    targetNode: 'completed',
+  },
+  applicant_confirm: {
+    type: 'RECEIPT',
+    label: '申请人确认回执',
+    sourceNode: 'completed',
+    targetNode: 'completed',
+  },
+  reschedule_appointment: {
+    type: 'RESCHEDULE',
+    label: '预约改期',
+    sourceNode: 'appointed',
+    targetNode: 'appointed',
+  },
+};
+
+function buildBranchList(timeline: any[], approvals: any[]): WorkflowBranch[] {
+  const branches: WorkflowBranch[] = [];
+
+  for (const node of timeline) {
+    const branchConfig = BRANCH_TYPE_MAP[node.nodeCode];
+    if (branchConfig) {
+      const auditTrail: WorkflowBranchAuditTrail[] = buildBranchAuditTrail(
+        node,
+        timeline,
+        approvals,
+      );
+
+      const branch: WorkflowBranch = {
+        branchId: `branch-${node.id}`,
+        branchType: branchConfig.type,
+        branchTypeLabel: branchConfig.label,
+        sourceNode: branchConfig.sourceNode,
+        targetNode: branchConfig.targetNode,
+        initiator: node.operatorName || '系统',
+        initiatorDept: node.department ? DEPT_LABELS[node.department] || node.department : '系统',
+        createdAt: node.createdAt,
+        status: mapNodeStatusToBranchStatus(node.status),
+        completedAt: node.endTime || null,
+        branchOpinion: node.opinion || '',
+        branchData: {
+          nodeCode: node.nodeCode,
+          nodeName: node.nodeName,
+          metadata: node.metadata,
+        },
+        auditTrail,
+      };
+      branches.push(branch);
+    }
+  }
+
+  return branches.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+}
+
+function mapNodeStatusToBranchStatus(nodeStatus: string): WorkflowBranch['status'] {
+  switch (nodeStatus) {
+    case 'completed':
+      return 'COMPLETED';
+    case 'processing':
+    case 'pending':
+      return 'IN_PROGRESS';
+    case 'cancelled':
+      return 'CANCELLED';
+    default:
+      return 'IN_PROGRESS';
+  }
+}
+
+function buildBranchAuditTrail(
+  branchNode: any,
+  timeline: any[],
+  approvals: any[],
+): WorkflowBranchAuditTrail[] {
+  const auditTrail: WorkflowBranchAuditTrail[] = [];
+
+  auditTrail.push({
+    action: '发起',
+    operator: branchNode.operatorName || '系统',
+    timestamp: branchNode.startTime || branchNode.createdAt,
+    remark: branchNode.opinion || `发起${branchNode.nodeName}`,
+  });
+
+  const branchIndex = timeline.findIndex((t: any) => t.id === branchNode.id);
+
+  if (branchNode.endTime) {
+    auditTrail.push({
+      action: '完成',
+      operator: branchNode.operatorName || '系统',
+      timestamp: branchNode.endTime,
+      remark: `${branchNode.nodeName}完成`,
+    });
+  }
+
+  if (branchNode.nodeCode === 'joint_sign') {
+    const jointSignApprovals = approvals.filter((a: any) => a.action === 'JOINT_SIGN');
+    for (const approval of jointSignApprovals) {
+      auditTrail.push({
+        action: '会签',
+        operator: approval.approverName,
+        timestamp: approval.signedAt || approval.createdAt,
+        remark: `${DEPT_LABELS[approval.department] || approval.department} - ${approval.opinion || '已会签'}`,
+      });
+    }
+  }
+
+  if (branchIndex >= 0 && branchIndex < timeline.length - 1) {
+    const nextNode = timeline[branchIndex + 1];
+    if (nextNode.nodeCode !== branchNode.nodeCode) {
+      auditTrail.push({
+        action: '流转',
+        operator: nextNode.operatorName || '系统',
+        timestamp: nextNode.startTime || nextNode.createdAt,
+        remark: `流转至${nextNode.nodeName}`,
+      });
+    }
+  }
+
+  return auditTrail.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+}
+
+function buildBranchSummary(branches: WorkflowBranch[]): BranchSummary {
+  const byType: BranchSummaryByType = {
+    supplement: 0,
+    return: 0,
+    jointSign: 0,
+    receipt: 0,
+    reschedule: 0,
+  };
+
+  for (const branch of branches) {
+    switch (branch.branchType) {
+      case 'SUPPLEMENT':
+        byType.supplement++;
+        break;
+      case 'RETURN':
+        byType.return++;
+        break;
+      case 'JOINT_SIGN':
+        byType.jointSign++;
+        break;
+      case 'RECEIPT':
+        byType.receipt++;
+        break;
+      case 'RESCHEDULE':
+        byType.reschedule++;
+        break;
+    }
+  }
+
+  const latestBranch =
+    branches.length > 0
+      ? branches.reduce((latest, branch) => (branch.createdAt > latest.createdAt ? branch : latest))
+      : null;
+
+  return {
+    totalBranches: branches.length,
+    byType,
+    latestBranch: latestBranch
+      ? {
+          branchId: latestBranch.branchId,
+          branchType: latestBranch.branchType,
+          branchTypeLabel: latestBranch.branchTypeLabel,
+          createdAt: latestBranch.createdAt,
+          status: latestBranch.status,
+        }
+      : null,
+  };
+}
+
+function buildRiskDetails(
+  app: any,
+  timeline: any[],
+  notifications: any[],
+  approvals: any[],
+): RiskDetail[] {
+  const risks: RiskDetail[] = [];
+  const now = new Date();
+
+  const timeoutNodes = timeline.filter((t) => t.isTimeout && t.endTime === null);
+  for (const node of timeoutNodes) {
+    const detectedAt = node.expectedEndTime || node.createdAt;
+    const ageHours = Math.max(0, (now.getTime() - detectedAt.getTime()) / (1000 * 60 * 60));
+    const level = ageHours >= 48 ? 3 : ageHours >= 18 ? 2 : 1;
+    risks.push({
+      riskType: 'TIMEOUT',
+      riskLevel: level as 1 | 2 | 3,
+      riskLevelLabel: level === 3 ? '三级' : level === 2 ? '二级' : '一级',
+      description: `节点「${node.nodeName}」已超时 ${ageHours.toFixed(1)} 小时`,
+      detectedAt,
+      ageHours,
+      owner: node.operatorName || null,
+      ownerDept: node.department || null,
+      status: 'PENDING',
+      resolvedAt: null,
+      resolution: null,
+      actionItems: [
+        {
+          code: 'HANDLE_TIMEOUT',
+          name: '处理超时',
+          endpoint: `/admin/lifecycle/timeout/${app.id}/handle`,
+          type: 'warning' as const,
+        },
+        {
+          code: 'SUPERVISE',
+          name: '督办催办',
+          endpoint: `/applications/${app.id}/supervise`,
+          type: 'primary' as const,
+        },
+      ],
+    });
+  }
+
+  const failedNotifications = notifications.filter((n) => n.status === 'FAILED');
+  for (const notif of failedNotifications) {
+    const detectedAt = notif.createdAt;
+    const ageHours = Math.max(0, (now.getTime() - detectedAt.getTime()) / (1000 * 60 * 60));
+    risks.push({
+      riskType: 'NOTIFICATION_FAIL',
+      riskLevel: ageHours >= 24 ? 2 : 1,
+      riskLevelLabel: ageHours >= 24 ? '二级' : '一级',
+      description: `${notif.channel} 通知发送失败`,
+      detectedAt,
+      ageHours,
+      owner: null,
+      ownerDept: null,
+      status: 'PENDING',
+      resolvedAt: null,
+      resolution: null,
+      actionItems: [
+        {
+          code: 'RETRY_NOTIFICATION',
+          name: '重发通知',
+          endpoint: `/admin/lifecycle/${app.id}/notifications/${notif.id}/retry`,
+          type: 'primary' as const,
+        },
+      ],
+    });
+  }
+
+  return risks;
+}
+
+function buildSupervisionRecords(auditLogs: any[], timeline: any[]): SupervisionRecord[] {
+  const records: SupervisionRecord[] = [];
+
+  const supervisionLogs = auditLogs.filter(
+    (log) => log.action === 'SUPERVISION' || log.description?.includes('督办'),
+  );
+
+  for (let i = 0; i < supervisionLogs.length; i++) {
+    const log = supervisionLogs[i];
+    records.push({
+      supervisionId: `SPV-${log.id || Date.now()}-${i}`,
+      supervisor: log.user?.realName || '系统管理员',
+      supervisorDept: '政务督办中心',
+      supervisedDept: timeline[0]?.department || '未知部门',
+      supervisedNode: timeline[0]?.nodeName || '未知节点',
+      supervisedAt: log.createdAt,
+      supervisionLevel: 'NORMAL',
+      supervisionContent: log.description || '督办提醒',
+      responseStatus: 'PENDING',
+      responder: null,
+      responseAt: null,
+      responseContent: null,
+      followUpCount: 0,
+      lastFollowUpAt: null,
+    });
+  }
+
+  return records;
+}
+
+function buildNotificationRetryTraces(notifications: any[]): NotificationRetryTrace[] {
+  const traces: NotificationRetryTrace[] = [];
+  const CHANNEL_LABELS: Record<string, string> = {
+    SMS: '短信',
+    WECHAT: '微信',
+    IN_APP: '站内消息',
+    EMAIL: '邮件',
+    MINI_PROGRAM: '小程序',
+  };
+
+  for (const notif of notifications) {
+    if (notif.status !== 'FAILED' && notif.status !== 'DELIVERED') continue;
+
+    const metadata = (notif.metadata as Record<string, any>) || {};
+    const retryRecords: Array<{ attempt: number; sentAt: Date; result: string; failureReason: string | null; operator: string | null }> = [];
+
+    if (metadata.retryCount && metadata.retryCount > 0) {
+      for (let i = 1; i <= metadata.retryCount; i++) {
+        retryRecords.push({
+          attempt: i,
+          sentAt: metadata[`retry${i}At`] || notif.createdAt,
+          result: metadata[`retry${i}Result`] || 'FAILED',
+          failureReason: metadata[`retry${i}Reason`] || null,
+          operator: metadata[`retry${i}Operator`] || null,
+        });
+      }
+    }
+
+    traces.push({
+      notificationId: notif.id,
+      channel: notif.channel,
+      channelLabel: CHANNEL_LABELS[notif.channel] || notif.channel,
+      originalSentAt: notif.createdAt,
+      originalFailureReason: metadata.failReason || notif.errorMessage || '未知原因',
+      retryCount: metadata.retryCount || 0,
+      retryRecords,
+      lastRetryAt: metadata.lastRetryAt || null,
+      lastRetryResult: metadata.lastRetryResult || null,
+      finalStatus: notif.status === 'DELIVERED' ? 'DELIVERED' : notif.status === 'FAILED' ? 'FAILED' : 'PENDING',
+      canRetry: notif.status === 'FAILED',
+      retryEndpoint: `/admin/lifecycle/${notif.applicationId}/notifications/${notif.id}/retry`,
+    });
+  }
+
+  return traces;
+}
 
 function buildTransferChain(
   approvals: any[],
@@ -1459,6 +1901,8 @@ export class LifecycleTraceService {
       application.approvals,
     );
 
+    const branchTrail = buildBranchList(application.timeline, application.approvals);
+
     const timeoutNodes = application.timeline.filter((t) => t.isTimeout);
     const timeoutHandlingInfo: TimeoutHandlingInfo[] = timeoutNodes.map((node) => {
       const metadata = (node.metadata as Record<string, any>) || {};
@@ -1545,6 +1989,7 @@ export class LifecycleTraceService {
       timeoutHandlingInfo,
       fullTimeline,
       timeoutDisposalChain,
+      branchTrail,
     };
   }
 
@@ -1901,6 +2346,11 @@ export class LifecycleTraceService {
         const closureStatus = buildClosureStatus(app, allTimeline, app.approvals);
         const timeoutWarning = buildTimeoutWarning(app, allTimeline, app.notifications);
         const applicantConfirmation = buildApplicantConfirmation(allTimeline, app.certificate, app);
+        const branchList = buildBranchList(allTimeline, app.approvals);
+        const branchSummary = buildBranchSummary(branchList);
+        const riskDetails = buildRiskDetails(app, allTimeline, app.notifications, app.approvals);
+        const supervisionRecords = buildSupervisionRecords(app.auditLogs, allTimeline);
+        const notificationRetryTraces = buildNotificationRetryTraces(app.notifications);
 
         return {
           id: app.id,
@@ -1958,6 +2408,10 @@ export class LifecycleTraceService {
           closureStatus,
           timeoutWarning,
           applicantConfirmation,
+          branchSummary,
+          riskDetails,
+          supervisionRecords,
+          notificationRetryTraces,
         };
       }),
       pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
@@ -2161,5 +2615,65 @@ export class LifecycleTraceService {
       responsibilitySummary,
       closureStatus,
     };
+  }
+
+  async getRiskDetails(applicationId: string): Promise<RiskDetail[]> {
+    this.logger.log(`获取风险详情: ${applicationId}`, 'LifecycleTraceService');
+
+    const app = await this.prisma.application.findUnique({
+      where: { id: applicationId },
+      include: {
+        timeline: { orderBy: { createdAt: 'desc' } },
+        notifications: { orderBy: { createdAt: 'desc' } },
+        approvals: { orderBy: { createdAt: 'desc' } },
+      },
+    });
+    if (!app) throw new NotFoundException('办件不存在');
+
+    return buildRiskDetails(app, app.timeline, app.notifications, app.approvals);
+  }
+
+  async getSupervisionRecords(applicationId: string): Promise<SupervisionRecord[]> {
+    this.logger.log(`获取部门催办记录: ${applicationId}`, 'LifecycleTraceService');
+
+    const app = await this.prisma.application.findUnique({
+      where: { id: applicationId },
+      include: {
+        auditLogs: {
+          orderBy: { createdAt: 'desc' },
+          include: { user: { select: { realName: true } } },
+        },
+        timeline: { orderBy: { createdAt: 'desc' } },
+      },
+    });
+    if (!app) throw new NotFoundException('办件不存在');
+
+    return buildSupervisionRecords(app.auditLogs, app.timeline);
+  }
+
+  async getNotificationRetryTraces(applicationId: string): Promise<NotificationRetryTrace[]> {
+    this.logger.log(`获取通知重发追溯: ${applicationId}`, 'LifecycleTraceService');
+
+    const notifications = await this.prisma.notification.findMany({
+      where: { applicationId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return buildNotificationRetryTraces(notifications);
+  }
+
+  async getBranchList(applicationId: string): Promise<WorkflowBranch[]> {
+    this.logger.log(`获取办件分支追溯: ${applicationId}`, 'LifecycleTraceService');
+
+    const app = await this.prisma.application.findUnique({
+      where: { id: applicationId },
+      include: {
+        timeline: { orderBy: { createdAt: 'asc' } },
+        approvals: { orderBy: { createdAt: 'asc' } },
+      },
+    });
+    if (!app) throw new NotFoundException('办件不存在');
+
+    return buildBranchList(app.timeline, app.approvals);
   }
 }

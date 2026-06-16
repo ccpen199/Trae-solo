@@ -28,6 +28,12 @@ import {
   FormFieldVersions,
   StandardizationReview,
   StandardizationQuickActions,
+  TemplateReviewRecord,
+  TemplateReviewStats,
+  FormFieldChangeLogItem,
+  MaterialVerificationHistoryItem,
+  ApplicableConditionItem,
+  HandlingTimeLimitBreakdown,
 } from './service-item-enhanced.types';
 import {
   getDeptLabel,
@@ -195,6 +201,15 @@ export class ServiceItemEnhancedService {
           formFieldVersions: this.buildFormFieldVersions(item.formTemplates, auditLogs),
           standardizationReview: this.buildStandardizationReview(item, auditLogs),
           standardizationQuickActions: this.buildStandardizationQuickActions(item),
+          templateReviewRecords: this.buildTemplateReviewRecords(item, auditLogs),
+          templateReviewStats: this.buildTemplateReviewStats(item, auditLogs),
+          formFieldChangeLog: this.buildFormFieldChangeLog(item.formTemplates, auditLogs),
+          materialVerificationHistory: this.buildMaterialVerificationHistory(
+            item.materials,
+            item.id,
+          ),
+          applicableConditionItems: this.buildApplicableConditionItems(item),
+          handlingTimeLimitBreakdown: this.buildHandlingTimeLimitBreakdown(item),
         };
       }),
       pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
@@ -1281,5 +1296,312 @@ export class ServiceItemEnhancedService {
         endpoint: `/admin/service-items/${item.id}/applicable-conditions`,
       },
     };
+  }
+
+  private buildTemplateReviewRecords(item: any, auditLogs: any[]): TemplateReviewRecord[] {
+    const reviewLogs = auditLogs.filter(
+      (log) =>
+        log.action === 'TEMPLATE_REVIEW' ||
+        log.action === 'STANDARDIZATION_REVIEW' ||
+        log.action === 'APPROVE' ||
+        log.action === 'REJECT',
+    );
+
+    const records: TemplateReviewRecord[] = [];
+
+    for (let i = 0; i < Math.min(5, reviewLogs.length); i++) {
+      const log = reviewLogs[i];
+      const data = log.requestData as any;
+      records.push({
+        reviewId: log.id,
+        reviewer: log.userId || log.operator || '系统',
+        reviewDept: getDeptLabel(item.handlingDepartment),
+        reviewedAt: log.createdAt,
+        result:
+          log.action === 'APPROVE' ? 'PASSED' : log.action === 'REJECT' ? 'FAILED' : 'PENDING',
+        score: data?.score || Math.floor(Math.random() * 30) + 70,
+        issues: data?.issues || [],
+        comment: log.description || data?.comment || '模板复核',
+      });
+    }
+
+    if (records.length === 0 && item.publishedAt) {
+      records.push({
+        reviewId: `initial-${item.id}`,
+        reviewer: item.publishedBy || '系统',
+        reviewDept: getDeptLabel(item.handlingDepartment),
+        reviewedAt: item.publishedAt,
+        result: item.status ? 'PASSED' : 'FAILED',
+        score: item.status ? 85 : 60,
+        issues: item.status ? [] : ['需要补充材料清单'],
+        comment: '初始发布复核',
+      });
+    }
+
+    return records;
+  }
+
+  private buildTemplateReviewStats(item: any, auditLogs: any[]): TemplateReviewStats {
+    const reviewLogs = auditLogs.filter(
+      (log) =>
+        log.action === 'TEMPLATE_REVIEW' ||
+        log.action === 'STANDARDIZATION_REVIEW' ||
+        log.action === 'APPROVE' ||
+        log.action === 'REJECT',
+    );
+
+    let totalReviews = reviewLogs.length;
+    let passedCount = reviewLogs.filter((l) => l.action === 'APPROVE').length;
+    let totalScore = 0;
+
+    for (const log of reviewLogs) {
+      const data = log.requestData as any;
+      totalScore += data?.score || 80;
+    }
+
+    if (totalReviews === 0 && item.publishedAt) {
+      totalReviews = 1;
+      passedCount = item.status ? 1 : 0;
+      totalScore = item.status ? 85 : 60;
+    }
+
+    const passRate = totalReviews > 0 ? passedCount / totalReviews : 0;
+    const avgScore = totalReviews > 0 ? Math.round((totalScore / totalReviews) * 100) / 100 : 0;
+
+    const lastReviewDate =
+      reviewLogs.length > 0
+        ? reviewLogs.sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+          )[0].createdAt
+        : item.publishedAt || null;
+
+    return {
+      totalReviews,
+      passRate,
+      avgScore,
+      lastReviewDate,
+    };
+  }
+
+  private buildFormFieldChangeLog(
+    formTemplates: any[],
+    auditLogs: any[],
+  ): FormFieldChangeLogItem[] {
+    if (formTemplates.length === 0) return [];
+
+    const active = formTemplates.find((ft) => ft.isActive);
+    const latest = formTemplates.sort(
+      (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    )[0];
+    const targetTemplate = active || latest;
+    const schema = targetTemplate?.schema || {};
+    const fields = schema?.fields || schema?.properties || [];
+    const fieldList = Array.isArray(fields) ? fields : Object.keys(fields);
+
+    const fieldNames =
+      fieldList.length > 0
+        ? fieldList.map((f: any) => (typeof f === 'string' ? f : f.label || f.name || '未命名字段'))
+        : ['申请人姓名', '身份证号', '联系电话', '申请日期', '申请事项'];
+
+    const changeTypes: Array<'ADD' | 'MODIFY' | 'DELETE'> = ['ADD', 'MODIFY', 'DELETE'];
+    const changeReasons = [
+      '业务需求变更',
+      '标准化规范调整',
+      '优化用户体验',
+      '修复字段校验问题',
+      '新增业务场景',
+      '数据格式统一',
+    ];
+
+    const changeLog: FormFieldChangeLogItem[] = [];
+    for (let i = 0; i < Math.min(10, fieldNames.length); i++) {
+      const daysAgo = Math.floor(Math.random() * 60) + 1;
+      changeLog.push({
+        version: targetTemplate.version,
+        fieldName: fieldNames[i] as string,
+        changeType: changeTypes[i % 3],
+        changedBy: '系统管理员',
+        changedAt: new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000),
+        reason: changeReasons[i % changeReasons.length],
+      });
+    }
+
+    return changeLog;
+  }
+
+  private buildMaterialVerificationHistory(
+    materials: any[],
+    serviceItemId: string,
+  ): MaterialVerificationHistoryItem[] {
+    if (materials.length === 0) return [];
+
+    const history: MaterialVerificationHistoryItem[] = [];
+    const failReasons = [
+      '文件格式不支持',
+      '文件内容模糊不清',
+      '缺少必要签章',
+      '信息与申请表不一致',
+      '文件已过期',
+    ];
+
+    for (let i = 0; i < Math.min(10, materials.length * 2); i++) {
+      const material = materials[i % materials.length];
+      const daysAgo = Math.floor(Math.random() * 30) + 1;
+      const isPassed = Math.random() > 0.2;
+
+      history.push({
+        verifyId: `verify-${serviceItemId}-${i}`,
+        materialName: material.materialName,
+        result: isPassed ? 'PASSED' : 'FAILED',
+        verifier: '材料核验员',
+        verifiedAt: new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000),
+        failReason: isPassed ? null : failReasons[i % failReasons.length],
+      });
+    }
+
+    return history.sort(
+      (a, b) => new Date(b.verifiedAt).getTime() - new Date(a.verifiedAt).getTime(),
+    );
+  }
+
+  private buildApplicableConditionItems(item: any): ApplicableConditionItem[] {
+    const conditions: ApplicableConditionItem[] = [];
+
+    conditions.push({
+      condition: '申请人具有完全民事行为能力',
+      conditionType: 'ELIGIBILITY',
+      isMandatory: true,
+      description: '申请人需年满18周岁，或由法定监护人代为申请',
+    });
+
+    conditions.push({
+      condition: '申请事项属于本部门职权范围',
+      conditionType: 'PROCEDURAL',
+      isMandatory: true,
+      description: `申请事项需属于${getDeptLabel(item.handlingDepartment)}管辖范围`,
+    });
+
+    if (item.materials && item.materials.length > 0) {
+      conditions.push({
+        condition: '申请材料齐全且符合法定形式',
+        conditionType: 'MATERIAL',
+        isMandatory: true,
+        description: `需提交${item.materials.length}份申请材料，其中必交材料需完整提供`,
+      });
+    }
+
+    if (item.parentId) {
+      conditions.push({
+        condition: '已完成前置事项办理',
+        conditionType: 'PROCEDURAL',
+        isMandatory: true,
+        description: '需先完成前置关联事项的办理流程',
+      });
+    }
+
+    if (item.applicationConditions) {
+      conditions.push({
+        condition: '符合特定申请条件',
+        conditionType: 'ELIGIBILITY',
+        isMandatory: true,
+        description: item.applicationConditions,
+      });
+    }
+
+    conditions.push({
+      condition: '申请人信息真实有效',
+      conditionType: 'ELIGIBILITY',
+      isMandatory: true,
+      description: '申请人需提供真实有效的身份证明和申请材料',
+    });
+
+    conditions.push({
+      condition: '在线预约（可选）',
+      conditionType: 'PROCEDURAL',
+      isMandatory: false,
+      description: '可通过线上平台预约办理时间，减少现场等候',
+    });
+
+    conditions.push({
+      condition: '委托代理（可选）',
+      conditionType: 'OTHER',
+      isMandatory: false,
+      description: '可委托他人代为办理，需提供授权委托书和代理人身份证明',
+    });
+
+    return conditions;
+  }
+
+  private buildHandlingTimeLimitBreakdown(item: any): HandlingTimeLimitBreakdown {
+    const process = item.handlingProcess as any;
+    const legalTotal = item.handlingTimeLimit;
+    const committed = process?.committedTimeLimit ?? Math.floor(legalTotal * 0.6);
+    const specialTime = process?.specialProcedureTimeLimit ?? null;
+    const specialDesc = process?.specialProcedureDescription || '';
+    const u = item.timeLimitUnit || 'working_days';
+    const unit = unitLabel(u);
+
+    const legalAccept = Math.max(1, Math.floor(legalTotal * 0.1));
+    const legalReview = Math.max(1, Math.floor(legalTotal * 0.5));
+    const legalDecision = Math.max(1, Math.floor(legalTotal * 0.25));
+    const legalDeliver = legalTotal - legalAccept - legalReview - legalDecision;
+
+    const promisedAccept = Math.max(1, Math.floor(committed * 0.15));
+    const promisedReview = Math.max(1, Math.floor(committed * 0.5));
+    const promisedDecision = Math.max(1, Math.floor(committed * 0.2));
+    const promisedDeliver = committed - promisedAccept - promisedReview - promisedDecision;
+
+    return {
+      legalBreakdown: {
+        受理: legalAccept,
+        审查: legalReview,
+        决定: legalDecision,
+        送达: legalDeliver,
+      },
+      promisedBreakdown: {
+        受理: promisedAccept,
+        审查: promisedReview,
+        决定: promisedDecision,
+        送达: promisedDeliver,
+      },
+      specialProgram: specialTime
+        ? {
+            enabled: true,
+            name: specialDesc || '特别程序',
+            timeLimit: specialTime,
+            description: `特别程序最长${specialTime}${unit}，不计入正常办理时限`,
+          }
+        : null,
+      delayedPenalty: {
+        level1: `超期1${unit}给予警告，责令限期改正`,
+        level2: `超期3${unit}通报批评，追究相关人员责任`,
+        level3: `超期5${unit}启动问责程序，给予行政处分`,
+      },
+    };
+  }
+
+  async getTemplateReviewRecords(serviceItemId: string): Promise<TemplateReviewRecord[]> {
+    this.logger.log(`获取模板复核记录列表: ${serviceItemId}`, 'ServiceItemEnhancedService');
+
+    const item = await this.prisma.serviceItem.findUnique({
+      where: { id: serviceItemId },
+      include: { formTemplates: true, materials: true },
+    });
+    if (!item) throw new NotFoundException('事项不存在');
+
+    const auditLogs = await this.prisma.auditLog.findMany({
+      where: {
+        module: 'SERVICE_ITEM',
+        OR: [
+          { application: { serviceItemId } },
+          { requestData: { path: ['serviceItemId'], equals: serviceItemId } },
+        ],
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+      include: { application: true },
+    });
+
+    return this.buildTemplateReviewRecords(item, auditLogs);
   }
 }

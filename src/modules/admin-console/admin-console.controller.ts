@@ -310,6 +310,9 @@ export class AdminConsoleController {
   @ApiQuery({ name: 'publishReviewStatus', required: false })
   @ApiQuery({ name: 'sampleVerified', required: false, type: Boolean })
   @ApiQuery({ name: 'trainingAccuracyMin', required: false, type: Number })
+  @ApiQuery({ name: 'auditStatus', required: false })
+  @ApiQuery({ name: 'qaQualityMin', required: false, type: Number })
+  @ApiQuery({ name: 'sourceType', required: false })
   async getPolicyEnhancedList(
     @Query('keyword') keyword?: string,
     @Query('category') category?: string,
@@ -322,6 +325,9 @@ export class AdminConsoleController {
     @Query('publishReviewStatus') publishReviewStatus?: string,
     @Query('sampleVerified') sampleVerified?: string,
     @Query('trainingAccuracyMin') trainingAccuracyMin?: string,
+    @Query('auditStatus') auditStatus?: string,
+    @Query('qaQualityMin') qaQualityMin?: string,
+    @Query('sourceType') sourceType?: string,
     @Query('page') page?: number,
     @Query('pageSize') pageSize?: number,
   ) {
@@ -338,6 +344,9 @@ export class AdminConsoleController {
       sampleVerified: sampleVerified !== undefined ? sampleVerified === 'true' : undefined,
       trainingAccuracyMin:
         trainingAccuracyMin !== undefined ? parseFloat(trainingAccuracyMin) : undefined,
+      auditStatus: auditStatus as any,
+      qaQualityMin: qaQualityMin !== undefined ? parseFloat(qaQualityMin) : undefined,
+      sourceType: sourceType as any,
       page,
       pageSize,
     });
@@ -688,5 +697,54 @@ export class AdminConsoleController {
       verifiableHeatmap: (heatmap as any).verifiableHeatmap,
       verifiableAttribution: (heatmap as any).verifiableAttribution,
     };
+  }
+
+  @Get('lifecycle/:id/risks')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '【办件追踪】获取风险详情（展开单列）' })
+  async getRiskDetails(@Param('id') applicationId: string) {
+    return this.lifecycleTrace.getRiskDetails(applicationId);
+  }
+
+  @Get('lifecycle/:id/supervision-records')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '【办件追踪】获取部门催办记录' })
+  async getSupervisionRecords(@Param('id') applicationId: string) {
+    return this.lifecycleTrace.getSupervisionRecords(applicationId);
+  }
+
+  @Get('lifecycle/:id/notification-retry-traces')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '【办件追踪】获取通知重发追溯' })
+  async getNotificationRetryTraces(@Param('id') applicationId: string) {
+    return this.lifecycleTrace.getNotificationRetryTraces(applicationId);
+  }
+
+  @Get('service-items/:id/template-review-records')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '【事项标准化】获取模板复核记录' })
+  async getTemplateReviewRecords(@Param('id') serviceItemId: string) {
+    return this.serviceItemEnhanced.getTemplateReviewRecords(serviceItemId);
+  }
+
+  @Get('policies/:id/publish-audit')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '【政策文件】获取发布审核详情' })
+  async getPublishAuditDetail(@Param('id') policyId: string) {
+    return this.policyEnhanced.getPublishAuditDetail(policyId);
+  }
+
+  @Get('policies/:id/quality-reviews')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '【政策文件】获取问答质量复查记录' })
+  async getQualityReviewRecords(@Param('id') policyId: string) {
+    return this.policyEnhanced.getQualityReviewRecords(policyId);
+  }
+
+  @Get('applications/:id/branches')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '【办件流转】获取办件分支追溯列表' })
+  async getApplicationBranchList(@Param('id') applicationId: string) {
+    return this.lifecycleTrace.getBranchList(applicationId);
   }
 }

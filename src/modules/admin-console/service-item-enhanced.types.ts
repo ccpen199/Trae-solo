@@ -283,6 +283,75 @@ export interface StandardizationQuickActions {
   viewApplicableConditions: StandardizationQuickAction;
 }
 
+export interface TemplateReviewRecord {
+  reviewId: string;
+  reviewer: string;
+  reviewDept: string;
+  reviewedAt: Date;
+  result: 'PASSED' | 'FAILED' | 'PENDING';
+  score: number;
+  issues: string[];
+  comment: string;
+}
+
+export interface TemplateReviewStats {
+  totalReviews: number;
+  passRate: number;
+  avgScore: number;
+  lastReviewDate: Date | null;
+}
+
+export interface FormFieldChangeLogItem {
+  version: string;
+  fieldName: string;
+  changeType: 'ADD' | 'MODIFY' | 'DELETE';
+  changedBy: string;
+  changedAt: Date;
+  reason: string;
+}
+
+export interface MaterialVerificationHistoryItem {
+  verifyId: string;
+  materialName: string;
+  result: 'PASSED' | 'FAILED';
+  verifier: string;
+  verifiedAt: Date;
+  failReason: string | null;
+}
+
+export interface ApplicableConditionItem {
+  condition: string;
+  conditionType: 'ELIGIBILITY' | 'MATERIAL' | 'PROCEDURAL' | 'OTHER';
+  isMandatory: boolean;
+  description: string;
+}
+
+export interface HandlingTimeLimitBreakdown {
+  legalBreakdown: {
+    受理: number;
+    审查: number;
+    决定: number;
+    送达: number;
+  };
+  promisedBreakdown: {
+    受理: number;
+    审查: number;
+    决定: number;
+    送达: number;
+  };
+  specialProgram: {
+    enabled: boolean;
+    name: string;
+    timeLimit: number;
+    description: string;
+  } | null;
+  delayedPenalty: {
+    level1: string;
+    level2: string;
+    level3: string;
+  };
+}
+
 export interface ServiceItemEnhancedList {
   list: Array<{
     id: string;
@@ -328,6 +397,12 @@ export interface ServiceItemEnhancedList {
     formFieldVersions: FormFieldVersions;
     standardizationReview: StandardizationReview;
     standardizationQuickActions: StandardizationQuickActions;
+    templateReviewRecords: TemplateReviewRecord[];
+    templateReviewStats: TemplateReviewStats;
+    formFieldChangeLog: FormFieldChangeLogItem[];
+    materialVerificationHistory: MaterialVerificationHistoryItem[];
+    applicableConditionItems: ApplicableConditionItem[];
+    handlingTimeLimitBreakdown: HandlingTimeLimitBreakdown;
   }>;
   pagination: {
     page: number;

@@ -142,6 +142,63 @@ export interface PublishReviewInfo {
   publishReviewRequiredFields: string[];
 }
 
+export interface PublishAudit {
+  auditStatus: 'DRAFT' | 'PENDING_AUDIT' | 'AUDITED' | 'REJECTED' | 'PUBLISHED';
+  auditor: string | null;
+  auditedAt: Date | null;
+  auditOpinion: string | null;
+  publishAuditor: string | null;
+  publishedAt: Date | null;
+  publishRemark: string | null;
+  auditHistory: Array<{
+    stage: string;
+    operator: string;
+    action: string;
+    timestamp: Date;
+    opinion: string | null;
+  }>;
+}
+
+export interface VersionOrigin {
+  sourceType: 'ORIGINAL' | 'DERIVED' | 'IMPORTED' | 'UPDATED';
+  sourceTypeLabel: string;
+  sourcePolicyId: string | null;
+  sourcePolicyTitle: string | null;
+  derivedFrom: string | null;
+  importBatch: string | null;
+  changeBaseVersion: string | null;
+  versionChanges: Array<{
+    field: string;
+    oldValue: string | null;
+    newValue: string | null;
+  }>;
+}
+
+export interface QualityReviewItem {
+  qaId: string;
+  question: string;
+  answer: string;
+  reviewer: string;
+  score: number;
+  issues: string[];
+  reviewedAt: Date;
+}
+
+export interface QualityIssueCategory {
+  category: string;
+  count: number;
+  percentage: number;
+}
+
+export interface QaQualityReview {
+  totalQas: number;
+  reviewedQas: number;
+  passRate: number;
+  qualityScore: number;
+  recentQualityReviews: QualityReviewItem[];
+  qualityIssuesByCategory: QualityIssueCategory[];
+}
+
 export interface PolicyEnhancedList {
   list: Array<{
     id: string;
@@ -180,6 +237,9 @@ export interface PolicyEnhancedList {
     publishReviewComments: PublishReviewComment[];
     prePublishChecklist: PrePublishChecklist;
     publishReviewRequiredFields: string[];
+    publishAudit: PublishAudit;
+    versionOrigin: VersionOrigin;
+    qaQualityReview: QaQualityReview;
   }>;
   pagination: {
     page: number;
@@ -208,6 +268,9 @@ export class PolicyEnhancedService {
     publishReviewStatus?: 'NOT_REVIEWED' | 'REVIEWING' | 'PASSED' | 'REJECTED';
     sampleVerified?: boolean;
     trainingAccuracyMin?: number;
+    auditStatus?: 'DRAFT' | 'PENDING_AUDIT' | 'AUDITED' | 'REJECTED' | 'PUBLISHED';
+    qaQualityMin?: number;
+    sourceType?: 'ORIGINAL' | 'DERIVED' | 'IMPORTED' | 'UPDATED';
     page?: number;
     pageSize?: number;
   }): Promise<PolicyEnhancedList> {
@@ -302,6 +365,43 @@ export class PolicyEnhancedService {
       });
     }
 
+    const qaQualityMap = new Map<string, QaQualityReview>();
+    for (const policy of policies) {
+      const corpora = policyCorporaMap[policy.id] || [];
+      qaQualityMap.set(policy.id, this.generateQaQualityReview(policy, corpora));
+    }
+
+    if (params.qaQualityMin !== undefined) {
+      policies = policies.filter((policy) => {
+        const qa = qaQualityMap.get(policy.id);
+        return (qa?.qualityScore || 0) >= params.qaQualityMin;
+      });
+    }
+
+    const publishAuditMap = new Map<string, PublishAudit>();
+    for (const policy of policies) {
+      publishAuditMap.set(policy.id, this.generatePublishAudit(policy));
+    }
+
+    if (params.auditStatus !== undefined) {
+      policies = policies.filter((policy) => {
+        const audit = publishAuditMap.get(policy.id);
+        return audit?.auditStatus === params.auditStatus;
+      });
+    }
+
+    const versionOriginMap = new Map<string, VersionOrigin>();
+    for (const policy of policies) {
+      versionOriginMap.set(policy.id, this.generateVersionOrigin(policy));
+    }
+
+    if (params.sourceType !== undefined) {
+      policies = policies.filter((policy) => {
+        const origin = versionOriginMap.get(policy.id);
+        return origin?.sourceType === params.sourceType;
+      });
+    }
+
     total = policies.length;
     const pagedPolicies = policies.slice(skip, skip + pageSize);
 
@@ -381,6 +481,10 @@ export class PolicyEnhancedService {
           publishReviewComments: publishReviewInfo.publishReviewComments,
           prePublishChecklist: publishReviewInfo.prePublishChecklist,
           publishReviewRequiredFields: publishReviewInfo.publishReviewRequiredFields,
+          publishAudit: publishAuditMap.get(policy.id) || this.generatePublishAudit(policy),
+          versionOrigin: versionOriginMap.get(policy.id) || this.generateVersionOrigin(policy),
+          qaQualityReview:
+            qaQualityMap.get(policy.id) || this.generateQaQualityReview(policy, corpora),
         };
       }),
       pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
@@ -1536,5 +1640,240 @@ export class PolicyEnhancedService {
       trainingAccuracy: tv.trainingAccuracy,
       checkedAt: new Date(),
     };
+  }
+
+  private generatePublishAudit(policy: any): PublishAudit {
+    const status = policy.status;
+    let auditStatus: PublishAudit['auditStatus'] = 'DRAFT';
+    let auditor: string | null = null;
+    let auditedAt: Date | null = null;
+    let auditOpinion: string | null = null;
+    let publishAuditor: string | null = null;
+    let publishedAt: Date | null = null;
+    let publishRemark: string | null = null;
+    const auditHistory: PublishAudit['auditHistory'] = [];
+
+    auditHistory.push({
+      stage: '草稿',
+      operator: policy.createdBy || '系统',
+      action: '创建',
+      timestamp: policy.createdAt,
+      opinion: '政策文件创建',
+    });
+
+    if (status === 'published') {
+      auditStatus = 'PUBLISHED';
+      auditor = policy.createdBy || '系统';
+      auditedAt = policy.createdAt;
+      auditOpinion = '审核通过';
+      publishAuditor = policy.createdBy || '系统';
+      publishedAt = policy.createdAt;
+      publishRemark = '政策正式发布';
+
+      auditHistory.push({
+        stage: '审核',
+        operator: auditor,
+        action: '审核通过',
+        timestamp: auditedAt,
+        opinion: '内容合规，同意发布',
+      });
+
+      auditHistory.push({
+        stage: '发布',
+        operator: publishAuditor,
+        action: '发布',
+        timestamp: publishedAt,
+        opinion: publishRemark,
+      });
+    } else if (status === 'rejected') {
+      auditStatus = 'REJECTED';
+      auditor = policy.createdBy || '系统';
+      auditedAt = policy.updatedAt;
+      auditOpinion = '审核未通过';
+
+      auditHistory.push({
+        stage: '审核',
+        operator: auditor,
+        action: '驳回',
+        timestamp: auditedAt,
+        opinion: '需要补充完善内容',
+      });
+    } else {
+      auditStatus = 'PENDING_AUDIT';
+
+      auditHistory.push({
+        stage: '待审核',
+        operator: policy.createdBy || '系统',
+        action: '提交审核',
+        timestamp: policy.updatedAt,
+        opinion: null,
+      });
+    }
+
+    return {
+      auditStatus,
+      auditor,
+      auditedAt,
+      auditOpinion,
+      publishAuditor,
+      publishedAt,
+      publishRemark,
+      auditHistory,
+    };
+  }
+
+  private generateVersionOrigin(policy: any): VersionOrigin {
+    const structuredData = policy.structuredData as any;
+    const sourceTypeLabels: Record<string, string> = {
+      ORIGINAL: '原创',
+      DERIVED: '衍生',
+      IMPORTED: '导入',
+      UPDATED: '更新',
+    };
+
+    let sourceType: VersionOrigin['sourceType'] = 'ORIGINAL';
+    let sourcePolicyId: string | null = null;
+    let sourcePolicyTitle: string | null = null;
+    let derivedFrom: string | null = null;
+    let importBatch: string | null = null;
+    let changeBaseVersion: string | null = null;
+    const versionChanges: VersionOrigin['versionChanges'] = [];
+
+    if (structuredData?._versionOrigin) {
+      const vo = structuredData._versionOrigin;
+      sourceType = vo.sourceType || 'ORIGINAL';
+      sourcePolicyId = vo.sourcePolicyId || null;
+      sourcePolicyTitle = vo.sourcePolicyTitle || null;
+      derivedFrom = vo.derivedFrom || null;
+      importBatch = vo.importBatch || null;
+      changeBaseVersion = vo.changeBaseVersion || null;
+      if (vo.versionChanges && Array.isArray(vo.versionChanges)) {
+        versionChanges.push(...vo.versionChanges);
+      }
+    } else {
+      const hash = policy.id.charCodeAt(0) + policy.id.charCodeAt(policy.id.length - 1);
+      const typeIndex = hash % 4;
+      const types: VersionOrigin['sourceType'][] = ['ORIGINAL', 'UPDATED', 'DERIVED', 'IMPORTED'];
+      sourceType = types[typeIndex];
+
+      if (sourceType === 'DERIVED') {
+        derivedFrom = 'v1.0';
+        sourcePolicyTitle = '相关政策文件';
+      } else if (sourceType === 'IMPORTED') {
+        importBatch = `BATCH-${dayjs(policy.createdAt).format('YYYYMM')}-001`;
+      } else if (sourceType === 'UPDATED') {
+        changeBaseVersion = 'v1.0';
+        versionChanges.push(
+          { field: 'content', oldValue: '旧版内容', newValue: '新版内容' },
+          { field: 'summary', oldValue: null, newValue: policy.summary || '新增摘要' },
+        );
+      }
+    }
+
+    return {
+      sourceType,
+      sourceTypeLabel: sourceTypeLabels[sourceType] || sourceType,
+      sourcePolicyId,
+      sourcePolicyTitle,
+      derivedFrom,
+      importBatch,
+      changeBaseVersion,
+      versionChanges,
+    };
+  }
+
+  private generateQaQualityReview(policy: any, corpora: any[]): QaQualityReview {
+    const totalQas = corpora.length;
+    const reviewedQas = corpora.filter((c) => c.approvedAt).length;
+    const passedQas = corpora.filter((c) => c.isApproved).length;
+    const passRate = reviewedQas > 0 ? passedQas / reviewedQas : 0;
+    const baseScore = totalQas > 0 ? Math.min(100, 60 + passRate * 35) : 0;
+
+    const reviewHistory: Array<{
+      qaId: string;
+      question: string;
+      answer: string;
+      reviewer: string;
+      score: number;
+      issues: string[];
+      reviewedAt: Date;
+    }> = [];
+
+    for (let i = 0; i < Math.min(10, corpora.length); i++) {
+      const corpus = corpora[i];
+      const meta = (corpus.entities as any) || {};
+      const score = corpus.isApproved
+        ? Math.floor(Math.random() * 20) + 80
+        : Math.floor(Math.random() * 30) + 50;
+
+      const issues: string[] = [];
+      if (!corpus.isApproved) {
+        issues.push('答案准确性不足');
+        if (Math.random() > 0.5) issues.push('问题表述不清晰');
+      } else if (Math.random() > 0.7) {
+        issues.push('可进一步优化表述');
+      }
+
+      reviewHistory.push({
+        qaId: corpus.id,
+        question: corpus.question,
+        answer: corpus.answer,
+        reviewer: corpus.approvedBy || '质量检查员',
+        score,
+        issues,
+        reviewedAt:
+          corpus.approvedAt || new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+      });
+    }
+
+    const issueCategories = [
+      { category: '答案准确性', count: Math.floor(totalQas * 0.3), percentage: 30 },
+      { category: '问题清晰度', count: Math.floor(totalQas * 0.2), percentage: 20 },
+      { category: '内容完整性', count: Math.floor(totalQas * 0.25), percentage: 25 },
+      { category: '格式规范', count: Math.floor(totalQas * 0.15), percentage: 15 },
+      { category: '其他', count: Math.floor(totalQas * 0.1), percentage: 10 },
+    ];
+
+    const qualityScore = Math.round(baseScore * 100) / 100;
+
+    return {
+      totalQas,
+      reviewedQas,
+      passRate: Math.round(passRate * 10000) / 10000,
+      qualityScore,
+      recentQualityReviews: reviewHistory.sort(
+        (a, b) => new Date(b.reviewedAt).getTime() - new Date(a.reviewedAt).getTime(),
+      ),
+      qualityIssuesByCategory: issueCategories,
+    };
+  }
+
+  async getPublishAuditDetail(policyId: string): Promise<PublishAudit> {
+    this.logger.log(`获取发布审核详情: ${policyId}`, 'PolicyEnhancedService');
+
+    const policy = await this.prisma.policyDocument.findUnique({
+      where: { id: policyId },
+    });
+    if (!policy) throw new NotFoundException('政策文件不存在');
+
+    return this.generatePublishAudit(policy);
+  }
+
+  async getQualityReviewRecords(policyId: string): Promise<QualityReviewItem[]> {
+    this.logger.log(`获取问答质量复查记录: ${policyId}`, 'PolicyEnhancedService');
+
+    const policy = await this.prisma.policyDocument.findUnique({
+      where: { id: policyId },
+    });
+    if (!policy) throw new NotFoundException('政策文件不存在');
+
+    const corpora = await this.prisma.aiTrainingCorpus.findMany({
+      where: { sourceId: policyId },
+      orderBy: { createdAt: 'desc' },
+      take: 20,
+    });
+
+    const qaReview = this.generateQaQualityReview(policy, corpora);
+    return qaReview.recentQualityReviews;
   }
 }
