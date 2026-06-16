@@ -21,6 +21,7 @@ import {
   X,
   User,
   FileEdit,
+  Zap,
 } from 'lucide-react'
 import { useResumeStore } from '../store/resumeStore'
 import { resumeTemplates, blankTemplate, gradTemplate, techTemplate, designTemplate, functionTemplate } from '../data/templates'
@@ -307,6 +308,47 @@ export default function Home() {
         <div className="absolute top-10 left-10 w-64 h-64 bg-gold-200/30 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-10 w-80 h-80 bg-navy-200/20 rounded-full blur-3xl" />
 
+        {/* 诊断测试条 */}
+        <div className="relative max-w-4xl mx-auto mb-6">
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm">
+            <p className="font-medium text-amber-700 mb-2">🧪 诊断测试区（如果按钮都点不动，请先测这些）</p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => alert('✅ 测试1：原生alert正常！')}
+                className="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-700 rounded-lg text-xs font-medium"
+              >
+                测试1：Alert弹窗
+              </button>
+              <button
+                type="button"
+                onClick={() => { console.log('✅ 测试2：console.log正常！'); alert('✅ 测试2：控制台日志正常！请按F12查看Console'); }}
+                className="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-700 rounded-lg text-xs font-medium"
+              >
+                测试2：控制台日志
+              </button>
+              <a
+                href="/editor/diagnostic-test"
+                onClick={(e) => { alert('🔗 测试3：原生链接跳转！'); }}
+                className="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-700 rounded-lg text-xs font-medium"
+              >
+                测试3：原生链接跳转
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  const url = `${window.location.origin}/editor/direct-hard-test`;
+                  alert(`🧭 测试4：硬跳转到 ${url}`);
+                  window.location.href = url;
+                }}
+                className="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-700 rounded-lg text-xs font-medium"
+              >
+                测试4：window.location硬跳转
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div className="relative max-w-4xl mx-auto text-center">
           <h1 className="font-serif text-3xl md:text-5xl font-bold text-navy-700 mb-4">
             开始创建你的简历
@@ -322,6 +364,29 @@ export default function Home() {
               <Plus className="w-5 h-5" />
               创建简历
             </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log('[TEST] 快速创建按钮被点击');
+                alert('🧪 测试按钮点击成功！正在快速创建空白简历...');
+                createResumeFromTemplate(blankTemplate, 'blank');
+              }}
+              className="btn-secondary inline-flex items-center justify-center gap-2"
+            >
+              <Zap className="w-5 h-5" />
+              快速创建（测试）
+            </button>
+            <a
+              href="/editor/test-direct-link"
+              onClick={(e) => {
+                console.log('[TEST] 原生链接被点击');
+                alert('🔗 原生链接点击成功！即将跳转编辑器...');
+              }}
+              className="btn-secondary inline-flex items-center justify-center gap-2"
+            >
+              <ArrowRight className="w-5 h-5" />
+              直接跳转测试
+            </a>
             <button
               onClick={handleUseTemplate}
               className="btn-secondary inline-flex items-center justify-center gap-2"
@@ -729,7 +794,7 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-navy-700">创建简历</h3>
                 <p className="text-sm text-navy-400 mt-1">选择起点和岗位方向</p>
               </div>
-              <button onClick={closeCreateModal} className="p-2 hover:bg-navy-50 rounded-lg transition-colors">
+              <button type="button" onClick={(e) => { e.stopPropagation(); alert('X按钮点击成功！'); closeCreateModal(); }} className="p-2 hover:bg-navy-50 rounded-lg transition-colors z-[9999] relative">
                 <X className="w-5 h-5 text-navy-400" />
               </button>
             </div>
