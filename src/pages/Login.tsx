@@ -6,6 +6,7 @@ import {
 import { useAuthStore, LoginErrorCode } from '@/store/useAuthStore';
 import { api } from '@/api/client';
 import { cn } from '@/lib/utils';
+import type { UserIdentity } from '../../shared/types';
 
 const errorMessages: Record<LoginErrorCode, {
   title: string;
@@ -232,27 +233,44 @@ export default function Login() {
     setLoginAuditInfo({ label: '身份核验中', status: '处理中', detail: '正在采集面部特征...' });
 
     try {
-      const result = await loginByFace('mock_face_image_base64');
-      if (result.success && result.user) {
+      const res = await api.auth.loginByFace('mock_face_image_base64') as any;
+      const user = res?.user;
+      const token = res?.token;
+      
+      if (user && token) {
+        localStorage.setItem('token', token);
+        useAuthStore.setState({ user, token, isAuthenticated: true, isLoading: false, loginError: null });
+
         setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
-        const roleName = result.user.role === 'admin' ? '管理员' : result.user.role === 'clerk' ? '办事员' : '市民';
+        const roleName = user.role === 'admin' ? '管理员' : user.role === 'clerk' ? '办事员' : '市民';
+        const target = user.role === 'admin' ? '/admin-workbench' : user.role === 'clerk' ? '/ticket-dispatch' : '/';
+
         setLoginAuditInfo({
           label: '人脸核验通过',
           status: '通过',
-          role: `${roleName}（${result.user.name}）`,
+          role: `${roleName}（${user.name}）`,
           detail: `面部特征匹配成功，正在跳转至${roleName}工作台...`,
         });
         setLoginSuccess(true);
-        setTimeout(() => navigateByRole(result.user.role), 300);
+
+        setTimeout(() => {
+          window.location.replace(target);
+        }, 400);
       } else {
-        setFaceScanning(false);
+        throw new Error('FACE_VERIFY_FAILED');
+      }
+    } catch (e: any) {
+      const errorCode = e?.error || e?.data?.error || 'FACE_VERIFY_FAILED';
+      setFaceScanning(false);
+      useAuthStore.setState({ isLoading: false, loginError: errorCode as LoginErrorCode });
+      
+      if (errorCode === 'ACCOUNT_NOT_FOUND') {
+        setVerifySteps({ accountValid: 'fail', credentialValid: 'pending', roleMatched: 'pending' });
+        setLoginAuditInfo({ label: '账号校验', status: '未通过', detail: '未找到匹配的面部身份档案' });
+      } else {
         setVerifySteps({ accountValid: 'pass', credentialValid: 'fail', roleMatched: 'pending' });
         setLoginAuditInfo({ label: '人脸核验', status: '未通过', detail: '面部特征匹配度不足，请调整光线和角度后重试' });
       }
-    } catch (e: any) {
-      setFaceScanning(false);
-      setVerifySteps({ accountValid: 'fail', credentialValid: 'fail', roleMatched: 'pending' });
-      setLoginAuditInfo({ label: '人脸核验异常', status: '未通过', detail: e?.message || '识别服务异常' });
     }
   };
 
@@ -283,31 +301,49 @@ export default function Login() {
     setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pending' });
     setLoginAuditInfo({ label: '身份核验中', status: '处理中', detail: '正在验证凭据并识别角色...' });
 
-    let result: { success: boolean; code: LoginErrorCode; user?: any };
-    if (loginType === 'password') {
-      result = await login(phone, password);
-    } else if (loginType === 'sms') {
-      result = await loginBySms(phone, smsCode);
-    } else {
-      return;
-    }
+    try {
+      let user: UserIdentity | undefined;
+      let token: string | undefined;
 
-    if (result.success && result.user) {
-      setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
-      const roleName = result.user.role === 'admin' ? '管理员' : result.user.role === 'clerk' ? '办事员' : '市民';
-      setLoginAuditInfo({
-        label: '身份核验通过',
-        status: '通过',
-        role: `${roleName}（${result.user.name}）`,
-        detail: `账号有效 · 凭据校验通过 · 角色权限已匹配，正在跳转至${roleName}工作台...`,
-      });
-      setLoginSuccess(true);
-      setTimeout(() => navigateByRole(result.user.role), 300);
-    } else {
-      const errorCode = result.code;
+      if (loginType === 'password') {
+        const res = await api.auth.login(phone, password) as any;
+        user = res?.user;
+        token = res?.token;
+      } else if (loginType === 'sms') {
+        const res = await api.auth.loginBySms(phone, smsCode) as any;
+        user = res?.user;
+        token = res?.token;
+      }
+
+      if (user && token) {
+        localStorage.setItem('token', token);
+        useAuthStore.setState({ user, token, isAuthenticated: true, isLoading: false, loginError: null });
+
+        setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
+        const roleName = user.role === 'admin' ? '管理员' : user.role === 'clerk' ? '办事员' : '市民';
+        const target = user.role === 'admin' ? '/admin-workbench' : user.role === 'clerk' ? '/ticket-dispatch' : '/';
+
+        setLoginAuditInfo({
+          label: '身份核验通过',
+          status: '通过',
+          role: `${roleName}（${user.name}）`,
+          detail: `账号有效 · 凭据校验通过 · 角色权限已匹配，正在跳转至${roleName}工作台...`,
+        });
+        setLoginSuccess(true);
+
+        setTimeout(() => {
+          window.location.replace(target);
+        }, 400);
+      } else {
+        throw new Error('UNKNOWN_ERROR');
+      }
+    } catch (error: any) {
+      const errorCode = error?.error || error?.data?.error || 'UNKNOWN_ERROR';
       const accountFound = demoAccounts.some(a => a.phone === phone);
       const matchedAcc = demoAccounts.find(a => a.phone === phone);
       const expectedRole = matchedAcc ? (matchedAcc.role === 'admin' ? '管理员' : matchedAcc.role === 'clerk' ? '办事员' : '市民') : null;
+
+      useAuthStore.setState({ isLoading: false, loginError: errorCode as LoginErrorCode });
 
       if (errorCode === 'ACCOUNT_NOT_FOUND') {
         setVerifySteps({ accountValid: 'fail', credentialValid: 'pending', roleMatched: 'pending' });
@@ -332,14 +368,6 @@ export default function Login() {
           role: expectedRole ? `识别角色：${expectedRole}` : '识别账号：已注册',
           detail: `账号有效（已识别为${expectedRole || '市民'}角色），但验证码错误或已过期`,
         });
-      } else if (errorCode === 'FACE_VERIFY_FAILED') {
-        setVerifySteps({ accountValid: accountFound ? 'pass' : 'pending', credentialValid: 'fail', roleMatched: 'pending' });
-        setLoginAuditInfo({
-          label: '人脸核验',
-          status: '未通过',
-          role: expectedRole ? `检测角色：${expectedRole}` : undefined,
-          detail: `面部特征匹配度不足（<92%），身份核验未通过`,
-        });
       } else if (errorCode === 'INSUFFICIENT_PERMISSIONS') {
         setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'fail' });
         setLoginAuditInfo({
@@ -352,7 +380,7 @@ export default function Login() {
         setLoginAuditInfo({
           label: '身份核验',
           status: '未通过',
-          detail: errorCode === 'NETWORK_ERROR' ? '网络连接异常，请检查网络后重试' : '认证服务异常，请稍后重试',
+          detail: error?.message?.includes('Network') || error?.message?.includes('Failed') ? '网络连接异常，请检查网络后重试' : '认证服务异常，请稍后重试',
         });
       }
     }
@@ -880,25 +908,35 @@ export default function Login() {
                 <button
                   type="button"
                   disabled={isLoading || loginSuccess}
-                  onClick={() => {
+                  onClick={async () => {
                     const acc = demoAccounts[0];
                     fillDemoAccount(acc);
-                    setTimeout(() => {
-                      useAuthStore.getState().login(acc.phone, acc.password).then(res => {
-                        if (res.success && res.user) {
-                          const roleName = res.user.role === 'admin' ? '管理员' : res.user.role === 'clerk' ? '办事员' : '市民';
-                          setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
-                          setLoginAuditInfo({
-                            label: '爱南宁快捷登录',
-                            status: '通过',
-                            role: `${roleName}（${res.user.name}）`,
-                            detail: `通过爱南宁APP一键授权完成身份核验，正在跳转至${roleName}工作台...`,
-                          });
-                          setLoginSuccess(true);
-                          setTimeout(() => navigateByRole(res.user.role), 300);
-                        }
-                      });
-                    }, 100);
+                    setVerifySteps({ accountValid: 'pending', credentialValid: 'pending', roleMatched: 'pending' });
+                    setLoginAuditInfo({ label: '爱南宁授权中', status: '处理中', detail: '正在跳转爱南宁获取授权...' });
+
+                    try {
+                      const res = await api.auth.login(acc.phone, acc.password) as any;
+                      const user = res?.user;
+                      const token = res?.token;
+                      if (user && token) {
+                        localStorage.setItem('token', token);
+                        useAuthStore.setState({ user, token, isAuthenticated: true, isLoading: false, loginError: null });
+                        setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
+                        setLoginAuditInfo({
+                          label: '爱南宁快捷登录',
+                          status: '通过',
+                          role: `市民（${user.name}）`,
+                          detail: '通过爱南宁APP一键授权完成身份核验，正在跳转至市民工作台...',
+                        });
+                        setLoginSuccess(true);
+                        setTimeout(() => { window.location.replace('/'); }, 400);
+                      }
+                    } catch (e: any) {
+                      const errorCode = e?.error || e?.data?.error || 'UNKNOWN_ERROR';
+                      useAuthStore.setState({ isLoading: false, loginError: errorCode as LoginErrorCode });
+                      setVerifySteps({ accountValid: 'fail', credentialValid: 'pending', roleMatched: 'pending' });
+                      setLoginAuditInfo({ label: '爱南宁授权失败', status: '未通过', detail: '授权失败，请重试或使用其他方式登录' });
+                    }
                   }}
                   className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 disabled:opacity-50"
                 >
@@ -910,27 +948,37 @@ export default function Login() {
                 <button
                   type="button"
                   disabled={isLoading || loginSuccess}
-                  onClick={() => {
+                  onClick={async () => {
                     const acc = demoAccounts[0];
                     setLoginType('sms');
                     fillDemoAccount(acc);
                     setSmsCode('123456');
-                    setTimeout(() => {
-                      useAuthStore.getState().loginBySms(acc.phone, '123456').then(res => {
-                        if (res.success && res.user) {
-                          const roleName = res.user.role === 'admin' ? '管理员' : res.user.role === 'clerk' ? '办事员' : '市民';
-                          setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
-                          setLoginAuditInfo({
-                            label: '电子证照核验',
-                            status: '通过',
-                            role: `${roleName}（${res.user.name}）`,
-                            detail: `通过电子证照完成身份核验（身份证已验证），正在跳转至${roleName}工作台...`,
-                          });
-                          setLoginSuccess(true);
-                          setTimeout(() => navigateByRole(res.user.role), 300);
-                        }
-                      });
-                    }, 100);
+                    setVerifySteps({ accountValid: 'pending', credentialValid: 'pending', roleMatched: 'pending' });
+                    setLoginAuditInfo({ label: '电子证照核验中', status: '处理中', detail: '正在读取电子身份证信息...' });
+
+                    try {
+                      const res = await api.auth.loginBySms(acc.phone, '123456') as any;
+                      const user = res?.user;
+                      const token = res?.token;
+                      if (user && token) {
+                        localStorage.setItem('token', token);
+                        useAuthStore.setState({ user, token, isAuthenticated: true, isLoading: false, loginError: null });
+                        setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
+                        setLoginAuditInfo({
+                          label: '电子证照核验',
+                          status: '通过',
+                          role: `市民（${user.name}）`,
+                          detail: '通过电子证照完成身份核验（身份证已验证），正在跳转至市民工作台...',
+                        });
+                        setLoginSuccess(true);
+                        setTimeout(() => { window.location.replace('/'); }, 400);
+                      }
+                    } catch (e: any) {
+                      const errorCode = e?.error || e?.data?.error || 'UNKNOWN_ERROR';
+                      useAuthStore.setState({ isLoading: false, loginError: errorCode as LoginErrorCode });
+                      setVerifySteps({ accountValid: 'pass', credentialValid: 'fail', roleMatched: 'pending' });
+                      setLoginAuditInfo({ label: '电子证照核验', status: '未通过', detail: '证照核验失败，请重试或使用其他方式登录' });
+                    }
                   }}
                   className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 disabled:opacity-50"
                 >
