@@ -53,7 +53,7 @@ const testAccounts: Record<RoleKey, { username: string; password: string; desc: 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation() as { state?: { from?: { pathname: string } } };
-  const { login, caLogin, isLoading, lastLoginResult, clearLastError, getDefaultRoute } = useAuthStore();
+  const { login, caLogin, isLoading, lastLoginResult, clearLastError, getDefaultRoute, isAuthenticated, user, loginRole } = useAuthStore();
   const [form] = Form.useForm<LoginFormValues>();
   const [caLoading, setCaLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState<RoleKey>('citizen');
@@ -581,10 +581,9 @@ export default function Login() {
                   {testAccounts[selectedRole]?.map((acc, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between p-3 bg-white rounded-lg border border-primary-200 hover:border-primary-400 hover:shadow-sm transition-all cursor-pointer group mb-2 last:mb-0"
-                      onClick={() => form.setFieldsValue({ username: acc.username, password: acc.password })}
+                      className="flex items-center justify-between p-3 bg-white rounded-lg border border-primary-200 hover:border-primary-400 hover:shadow-sm transition-all mb-2 last:mb-0"
                     >
-                      <div>
+                      <div onClick={() => form.setFieldsValue({ username: acc.username, password: acc.password })} className="flex-1 cursor-pointer">
                         <div className="text-sm font-medium text-gov-gray-700">{acc.desc}</div>
                         <div className="text-xs text-gov-gray-500 mt-1 font-mono">
                           账号: <span className="text-primary-600 font-semibold">{acc.username}</span>
@@ -592,9 +591,35 @@ export default function Login() {
                           密码: <span className="text-primary-600 font-semibold">{acc.password}</span>
                         </div>
                       </div>
-                      <Tag color="blue" className="m-0 group-hover:bg-primary-100 transition-colors">
-                        点击填充
-                      </Tag>
+                      <Button
+                        type="primary"
+                        size="small"
+                        loading={isLoading}
+                        onClick={async () => {
+                          clearLastError();
+                          const result = await login(acc.username, acc.password, selectedRole);
+                          if (result.success && result.user && result.redirectRoute) {
+                            setShowSuccessAnim(true);
+                            const userType = result.user.userType as RoleKey;
+                            const roleLabel = roleConfig[selectedRole]?.label
+                              || roleConfig[userType]?.label
+                              || result.user.userType;
+                            setLoginSuccessInfo({
+                              name: result.user.name,
+                              role: roleLabel,
+                              redirectRoute: result.redirectRoute,
+                              countdown: 3,
+                            });
+                          }
+                        }}
+                        className="h-8 px-4 text-xs rounded-lg"
+                        style={{
+                          backgroundImage: roleButtonGradients[selectedRole],
+                          border: 'none',
+                        }}
+                      >
+                        一键登录
+                      </Button>
                     </div>
                   ))}
                 </div>
@@ -610,6 +635,29 @@ export default function Login() {
                 <span className="mx-2">·</span>
                 技术支持：<span className="font-mono text-gov-gray-600">010-XXXXXXXX</span>
               </p>
+            </div>
+
+            <div className="mt-4 p-3 bg-gov-gray-50 rounded-xl border border-gov-gray-200 text-xs font-mono">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-gov-gray-500">🔍 认证状态</span>
+                <span className={isAuthenticated ? 'text-gov-green font-semibold' : 'text-gov-red font-semibold'}>
+                  {isAuthenticated ? '已认证' : '未认证'}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-gov-gray-500">
+                <div>loginRole: <span className="text-gov-gray-700">{loginRole || '-'}</span></div>
+                <div>user: <span className="text-gov-gray-700">{user?.name || '-'}</span></div>
+                <div>isLoading: <span className="text-gov-gray-700">{String(isLoading)}</span></div>
+                <div>defaultRoute: <span className="text-gov-gray-700">{getDefaultRoute()}</span></div>
+              </div>
+              {lastLoginResult && (
+                <div className="mt-2 pt-2 border-t border-gov-gray-200">
+                  <div className="text-gov-gray-500 mb-1">lastLoginResult:</div>
+                  <pre className="text-[10px] text-gov-gray-600 overflow-x-auto whitespace-pre-wrap break-all">
+{JSON.stringify(lastLoginResult, null, 2)}
+                  </pre>
+                </div>
+              )}
             </div>
           </div>
         </div>

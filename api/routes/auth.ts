@@ -291,12 +291,16 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
       createdAt: new Date(),
     };
 
+    const userType = userData.userType || 'citizen';
+
     const newAccount: AccountCredential = {
       username: userData.username || userData.phone,
       password: userData.password || '123456',
       user: newUser,
       accountStatus: 'pending',
       loginFailCount: 0,
+      roles: [userType],
+      defaultRole: userType,
     };
 
     userAccounts.push(newAccount);
