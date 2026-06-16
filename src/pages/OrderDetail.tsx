@@ -164,39 +164,65 @@ function WorkerCertSection({ order }: { order: Order }) {
         <div className="animate-fade-up space-y-4">
           <div className="flex gap-1 p-1 bg-secondary-50 rounded-lg">
             <button onClick={() => setActiveCertTab('ocr')} className={cn('flex-1 text-center py-1.5 rounded-md text-xs font-medium transition-all', activeCertTab === 'ocr' ? 'bg-white text-primary-600 shadow-sm' : 'text-secondary-600')}>
-              <ScanLine className="w-3 h-3 inline mr-1" />OCR识别结果
+              <ScanLine className="w-3 h-3 inline mr-1" />OCR逐证识别
             </button>
             <button onClick={() => setActiveCertTab('review')} className={cn('flex-1 text-center py-1.5 rounded-md text-xs font-medium transition-all', activeCertTab === 'review' ? 'bg-white text-primary-600 shadow-sm' : 'text-secondary-600')}>
-              <History className="w-3 h-3 inline mr-1" />人工复核记录
+              <History className="w-3 h-3 inline mr-1" />复核结论与留痕
             </button>
           </div>
 
           {activeCertTab === 'ocr' && cert.ocr_detail && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            <div className="space-y-3">
               {certConfig.map((item) => {
                 const certData = cert.ocr_detail![item.key];
                 if (!certData) return null;
                 const Icon = item.icon;
+                const lowFields = certData.fields.filter(f => f.confidence !== undefined && f.confidence < 80);
+                const overallOk = certData.confidence >= 95;
                 return (
                   <div key={item.key} className="rounded-xl border border-gray-100 overflow-hidden">
-                    <div className={cn('px-3 py-2 flex items-center justify-between', item.bg)}>
+                    <div className={cn('px-3 py-2.5 flex items-center justify-between', item.bg)}>
                       <div className="flex items-center gap-1.5">
                         <Icon className={cn('w-4 h-4', item.color)} />
                         <span className="text-xs font-bold text-secondary-800">{item.label}</span>
+                        <span className={cn(
+                          'text-[9px] px-1.5 py-0.5 rounded-full font-medium',
+                          overallOk ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                        )}>
+                          {overallOk ? '识别完整' : '存在低置信字段'}
+                        </span>
                       </div>
-                      <ConfidenceTag confidence={certData.confidence} />
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] text-secondary-500">综合置信度</span>
+                        <ConfidenceTag confidence={certData.confidence} />
+                      </div>
                     </div>
-                    <div className="p-2.5 space-y-1">
-                      {certData.fields.map((field, fi) => (
-                        <div key={fi} className="flex items-start justify-between text-[10px] py-0.5 border-b border-dashed border-gray-50 last:border-b-0">
-                          <span className="text-secondary-400 flex-shrink-0">{field.label}</span>
-                          <div className="text-right min-w-0 ml-1">
-                            <span className="text-secondary-800 font-medium">{field.value}</span>
-                            {field.confidence !== undefined && <ConfidenceTag confidence={field.confidence} />}
+                    <div className="p-3">
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                        {certData.fields.map((field, fi) => (
+                          <div key={fi} className={cn(
+                            'flex items-center justify-between text-[10px] py-1 px-2 rounded-md',
+                            field.confidence !== undefined && field.confidence < 80
+                              ? 'bg-red-50 border border-red-100'
+                              : 'bg-secondary-50'
+                          )}>
+                            <span className="text-secondary-500 flex-shrink-0 mr-2">{field.label}</span>
+                            <div className="flex items-center gap-1 min-w-0">
+                              <span className="text-secondary-800 font-medium truncate">{field.value}</span>
+                              {field.confidence !== undefined && <ConfidenceTag confidence={field.confidence} />}
+                            </div>
                           </div>
+                        ))}
+                      </div>
+                      {lowFields.length > 0 && (
+                        <div className="mt-2 p-2 bg-red-50 rounded-lg border border-red-100">
+                          <p className="text-[9px] text-red-700 font-medium">
+                            <AlertCircle className="w-3 h-3 inline mr-1" />
+                            以下字段置信度低于80%，需人工复核：{lowFields.map(f => f.label).join('、')}
+                          </p>
                         </div>
-                      ))}
-                      <p className="text-[8px] text-secondary-300 mt-1">识别时间：{new Date(certData.ocr_time).toLocaleString('zh-CN')}</p>
+                      )}
+                      <p className="text-[8px] text-secondary-300 mt-2 text-right">OCR识别时间：{new Date(certData.ocr_time).toLocaleString('zh-CN')}</p>
                     </div>
                   </div>
                 );
@@ -205,32 +231,72 @@ function WorkerCertSection({ order }: { order: Order }) {
           )}
 
           {activeCertTab === 'review' && cert.review_history && (
-            <div className="space-y-0">
-              {cert.review_history.map((record, ri) => {
-                const isLast = ri === cert.review_history!.length - 1;
-                const typeLabel: Record<string, string> = { ocr: 'OCR识别', manual: '人工复核', recheck: '复查' };
-                return (
-                  <div key={record.id} className="flex items-start gap-3">
-                    <div className="flex flex-col items-center">
-                      <div className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', record.result === 'pass' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600')}>
-                        {record.result === 'pass' ? <CheckCircle className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
-                      </div>
-                      {!isLast && <div className="w-0.5 h-6 mt-0.5 bg-gray-200" />}
-                    </div>
-                    <div className="pb-3 flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs font-bold text-secondary-800">{record.reviewer}</span>
-                        <span className="text-[8px] px-1 py-0.5 rounded-full bg-secondary-100 text-secondary-600">{typeLabel[record.type] || record.type}</span>
-                        <span className={cn('text-[8px] px-1 py-0.5 rounded-full', record.result === 'pass' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')}>
-                          {record.result === 'pass' ? '通过' : '驳回'}
-                        </span>
-                      </div>
-                      <p className="text-[9px] text-secondary-400 mt-0.5">{new Date(record.review_time).toLocaleString('zh-CN')}</p>
-                      <p className="text-[10px] mt-1 text-secondary-600 leading-relaxed bg-cream-100 rounded-lg p-2">{record.remark}</p>
-                    </div>
+            <div className="space-y-3">
+              <div className={cn(
+                'rounded-xl p-3 border-2',
+                cert.verify_status === 'approved' ? 'bg-green-50 border-green-200' : cert.verify_status === 'rejected' ? 'bg-red-50 border-red-200' : 'bg-yellow-50 border-yellow-200'
+              )}>
+                <div className="flex items-center gap-2 mb-2">
+                  <UserCheck className="w-4 h-4" />
+                  <span className="text-xs font-bold text-secondary-800">复核结论</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="text-[10px]">
+                    <span className="text-secondary-500">当前状态：</span>
+                    <span className={cn(
+                      'font-bold',
+                      cert.verify_status === 'approved' ? 'text-green-700' : cert.verify_status === 'rejected' ? 'text-red-700' : 'text-yellow-700'
+                    )}>
+                      {cert.verify_status === 'approved' ? '✓ 审核通过' : cert.verify_status === 'rejected' ? '✗ 审核驳回' : '⏳ 待复核'}
+                    </span>
                   </div>
-                );
-              })}
+                  <div className="text-[10px]">
+                    <span className="text-secondary-500">OCR完成：</span>
+                    <span className="text-secondary-700">{cert.ocr_completed_at ? new Date(cert.ocr_completed_at).toLocaleString('zh-CN') : '—'}</span>
+                  </div>
+                  <div className="text-[10px]">
+                    <span className="text-secondary-500">复核完成：</span>
+                    <span className="text-secondary-700">{cert.review_completed_at ? new Date(cert.review_completed_at).toLocaleString('zh-CN') : '—'}</span>
+                  </div>
+                  <div className="text-[10px]">
+                    <span className="text-secondary-500">提交时间：</span>
+                    <span className="text-secondary-700">{new Date(cert.submitted_at).toLocaleString('zh-CN')}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-0">
+                <p className="text-[10px] text-secondary-500 font-medium mb-2">复核留痕时间线</p>
+                {cert.review_history.map((record, ri) => {
+                  const isLast = ri === cert.review_history!.length - 1;
+                  const certTypeLabel: Record<string, string> = { ocr: 'OCR自动识别', manual: '人工复核', recheck: '季度复查' };
+                  const isReject = record.result === 'reject';
+                  return (
+                    <div key={record.id} className="flex items-start gap-3">
+                      <div className="flex flex-col items-center">
+                        <div className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', isReject ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600')}>
+                          {isReject ? <XCircle className="w-3.5 h-3.5" /> : <CheckCircle className="w-3.5 h-3.5" />}
+                        </div>
+                        {!isLast && <div className={cn('w-0.5 h-8 mt-0.5', isReject ? 'bg-red-200' : 'bg-green-200')} />}
+                      </div>
+                      <div className="pb-4 flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-xs font-bold text-secondary-800">{record.reviewer}</span>
+                          <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-secondary-100 text-secondary-600">{certTypeLabel[record.type] || record.type}</span>
+                          <span className={cn('text-[8px] px-1.5 py-0.5 rounded-full font-bold', isReject ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700')}>
+                            {isReject ? '✗ 驳回' : '✓ 通过'}
+                          </span>
+                        </div>
+                        <p className="text-[9px] text-secondary-400 mt-0.5 flex items-center gap-1">
+                          <Clock className="w-2.5 h-2.5" />
+                          留痕时间：{new Date(record.review_time).toLocaleString('zh-CN')}
+                        </p>
+                        <p className="text-[10px] mt-1 text-secondary-600 leading-relaxed bg-cream-100 rounded-lg p-2">{record.remark}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
@@ -317,7 +383,7 @@ function NodeTimelineSection({ nodes, status }: { nodes: ServiceNode[]; status: 
   );
 }
 
-function DispatchRecordSection({ records }: { records: DispatchRecord[] }) {
+function DispatchRecordSection({ records, onReassign }: { records: DispatchRecord[]; onReassign: () => void }) {
   if (!records || records.length === 0) return null;
 
   const actionConfig = {
@@ -327,6 +393,9 @@ function DispatchRecordSection({ records }: { records: DispatchRecord[] }) {
     dispatch_audit: { icon: UserCheck, label: '调度复核', color: 'bg-purple-100 text-purple-600', line: 'bg-purple-200' },
   };
 
+  const hasReassign = records.some(r => r.action === 'manual_reassign');
+  const latestRec = records[records.length - 1];
+
   return (
     <div className="card p-6 mb-6 border-l-4 border-l-blue-400">
       <div className="flex items-center justify-between mb-4">
@@ -334,9 +403,19 @@ function DispatchRecordSection({ records }: { records: DispatchRecord[] }) {
           <Navigation className="w-5 h-5 text-blue-500" />
           调度记录 · 1km优先派单 + 动态加权
         </h3>
-        <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">
-          共{records.length}条记录
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">
+            共{records.length}条记录
+          </span>
+          {!hasReassign && (
+            <button
+              onClick={onReassign}
+              className="text-[10px] px-2 py-1 rounded-md bg-orange-50 text-orange-600 font-medium hover:bg-orange-100 transition-colors flex items-center gap-1"
+            >
+              <Users className="w-3 h-3" />改派阿姨
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="space-y-0">
@@ -375,7 +454,7 @@ function DispatchRecordSection({ records }: { records: DispatchRecord[] }) {
                     <UserCheck className="w-3 h-3" />操作人：{rec.operator}
                   </span>
                   {rec.weighted_score !== undefined && (
-                    <span className="px-1.5 py-0.5 rounded bg-orange-50 text-orange-600">综合{rec.weighted_score.toFixed(1)}</span>
+                    <span className="px-1.5 py-0.5 rounded bg-orange-50 text-orange-600 font-medium">综合{rec.weighted_score.toFixed(1)}</span>
                   )}
                   {rec.distance_km !== undefined && (
                     <span className="px-1.5 py-0.5 rounded bg-blue-50 text-blue-600">距离{rec.distance_km}km</span>
@@ -398,6 +477,18 @@ function DispatchRecordSection({ records }: { records: DispatchRecord[] }) {
         })}
       </div>
 
+      {hasReassign && latestRec && (
+        <div className="mt-2 p-2.5 bg-orange-50 rounded-lg border border-orange-100">
+          <div className="flex items-center gap-1.5 text-[10px] text-orange-700 font-medium mb-1">
+            <Users className="w-3 h-3" />
+            已完成改派闭环
+          </div>
+          <div className="text-[9px] text-orange-600">
+            原阿姨已释放 → 新阿姨{latestRec.worker_name}已确认接单 → 调度复核已通过 → 订单状态已同步推进
+          </div>
+        </div>
+      )}
+
       <div className="mt-2 pt-3 border-t border-dashed border-gray-200 grid grid-cols-3 gap-1.5 text-[9px]">
         <div className="text-center px-1.5 py-1 rounded-md bg-blue-50">
           <p className="text-blue-600 font-bold text-[11px]">40%</p>
@@ -411,6 +502,133 @@ function DispatchRecordSection({ records }: { records: DispatchRecord[] }) {
           <p className="text-red-600 font-bold text-[11px]">10%</p>
           <p className="text-secondary-500">投诉权重</p>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function ReassignPanel({ order, currentWorkerId, onReassign, onClose, reassignReason, setReassignReason }: {
+  order: Order;
+  currentWorkerId: number;
+  onReassign: (newWorkerId: number, reason: string) => void;
+  onClose: () => void;
+  reassignReason: string;
+  setReassignReason: (v: string) => void;
+}) {
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const getDispatchQueue = useAppStore((state) => state.getDispatchQueue);
+  const workers = getDispatchQueue(order.address?.includes('朝阳') ? 1 : 2, order.service_type).filter(w => w.id !== currentWorkerId);
+  const getCertByWorkerId = useWorkerStore((s) => s.getCertByWorkerId);
+  const getScoreByWorkerId = useWorkerStore((s) => s.getScoreByWorkerId);
+
+  const handleConfirm = () => {
+    if (!selectedId) return;
+    setSubmitting(true);
+    setTimeout(() => {
+      onReassign(selectedId, reassignReason || '用户主动改派');
+      setSubmitting(false);
+    }, 600);
+  };
+
+  return (
+    <div className="card p-6 mb-6 border-l-4 border-l-orange-400 animate-fade-up">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-bold text-secondary-800 flex items-center gap-2">
+          <Users className="w-5 h-5 text-orange-500" />
+          改派阿姨 · 动态加权重排
+        </h3>
+        <button onClick={onClose} className="text-secondary-400 hover:text-secondary-600">
+          <XCircle className="w-5 h-5" />
+        </button>
+      </div>
+
+      <div className="mb-3 p-2.5 bg-yellow-50 rounded-lg border border-yellow-100">
+        <p className="text-[10px] text-yellow-700">
+          <AlertTriangle className="w-3 h-3 inline mr-1" />
+          当前阿姨：{order.worker_name}（ID:{currentWorkerId}）→ 改派后原阿姨释放，新阿姨按1km优先+动态加权重新匹配
+        </p>
+      </div>
+
+      <div className="space-y-1.5 mb-3 max-h-48 overflow-y-auto">
+        {workers.slice(0, 5).map((w, i) => {
+          const cert = getCertByWorkerId(w.id);
+          const score = getScoreByWorkerId(w.id);
+          const isCurrent = selectedId === w.id;
+          const certOk = cert?.verify_status === 'approved';
+          return (
+            <button
+              key={w.id}
+              onClick={() => setSelectedId(w.id)}
+              className={cn(
+                'w-full flex items-center gap-2.5 p-2.5 rounded-xl transition-all text-left',
+                isCurrent ? 'bg-primary-50 border-2 border-primary-300 ring-2 ring-primary-100' : 'bg-cream-100 border border-transparent hover:border-gray-200'
+              )}
+            >
+              <div className="relative flex-shrink-0">
+                <img src={w.avatar} alt={w.real_name} className="w-9 h-9 rounded-full bg-secondary-100" />
+                <div className={cn(
+                  'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white',
+                  isCurrent ? 'bg-primary-500' : i === 0 ? 'bg-orange-500' : 'bg-gray-400'
+                )}>
+                  {isCurrent ? '✓' : i + 1}
+                </div>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-semibold text-secondary-800">{w.real_name}</span>
+                  <span className={cn('text-[8px] px-1 py-0 rounded', certOk ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700')}>
+                    {certOk ? '三证齐全' : '审核中'}
+                  </span>
+                  <span className="text-[9px] text-secondary-400">·{w.experience_years}年</span>
+                </div>
+                <div className="flex items-center gap-2 mt-0.5 text-[9px]">
+                  <span className="text-blue-600">{w.distance_km}km</span>
+                  <span className="text-secondary-300">|</span>
+                  <span className="text-green-600">好评{w.satisfaction_rate}%</span>
+                  <span className="text-secondary-300">|</span>
+                  <span className="text-red-600">投诉{w.complaint_rate}%</span>
+                </div>
+              </div>
+              <div className="text-right flex-shrink-0">
+                <p className="text-xs font-bold text-orange-600">{(w.weighted_score || 90).toFixed(1)}</p>
+                <p className="text-[8px] text-secondary-400">综合分</p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mb-3">
+        <label className="text-[10px] text-secondary-500 mb-1 block">改派原因（选填）</label>
+        <input
+          type="text"
+          value={reassignReason}
+          onChange={(e) => setReassignReason(e.target.value)}
+          placeholder="如：阿姨迟到、服务质量不满意等"
+          className="w-full input-field text-xs py-2"
+        />
+      </div>
+
+      <div className="flex items-center gap-2">
+        <button
+          onClick={handleConfirm}
+          disabled={!selectedId || submitting}
+          className={cn(
+            'flex-1 py-2 rounded-xl text-xs font-medium transition-colors',
+            selectedId && !submitting ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+          )}
+        >
+          {submitting ? (
+            <span className="flex items-center justify-center gap-1">
+              <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              改派中...
+            </span>
+          ) : '确认改派并推进状态'}
+        </button>
+        <button onClick={onClose} className="px-4 py-2 rounded-xl text-xs text-secondary-600 bg-secondary-50 hover:bg-secondary-100 transition-colors">
+          取消
+        </button>
       </div>
     </div>
   );
@@ -677,6 +895,7 @@ export default function OrderDetail() {
   const navigate = useNavigate();
   const orders = useAppStore((state) => state.orders);
   const advanceOrderStatus = useAppStore((state) => state.advanceOrderStatus);
+  const reassignWorker = useAppStore((state) => state.reassignWorker);
   const order = orders.find((o) => o.id === Number(id)) as Order | undefined;
 
   const [showCompensation, setShowCompensation] = useState(false);
@@ -684,6 +903,8 @@ export default function OrderDetail() {
   const [compensationDesc, setCompensationDesc] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [advancing, setAdvancing] = useState(false);
+  const [showReassign, setShowReassign] = useState(false);
+  const [reassignReason, setReassignReason] = useState('');
 
   if (!order) {
     return (
@@ -807,7 +1028,7 @@ export default function OrderDetail() {
         )}
 
         {order.dispatch_records && order.dispatch_records.length > 0 && (
-          <DispatchRecordSection records={order.dispatch_records} />
+          <DispatchRecordSection records={order.dispatch_records} onReassign={() => setShowReassign(true)} />
         )}
 
         {canAdvance && (
@@ -876,6 +1097,21 @@ export default function OrderDetail() {
 
         {order.worker_name && (
           <WorkerCertSection order={order} />
+        )}
+
+        {showReassign && (
+          <ReassignPanel
+            order={order}
+            currentWorkerId={order.worker_id || 0}
+            onReassign={(newWorkerId, reason) => {
+              reassignWorker(order.id, newWorkerId, reason || reassignReason || '用户主动改派');
+              setShowReassign(false);
+              setReassignReason('');
+            }}
+            onClose={() => { setShowReassign(false); setReassignReason(''); }}
+            reassignReason={reassignReason}
+            setReassignReason={setReassignReason}
+          />
         )}
 
         <div className="card p-6 mb-6">

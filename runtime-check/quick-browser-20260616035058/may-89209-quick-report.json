@@ -1,0 +1,36 @@
+{
+  "order": "may-89209",
+  "frontendUrl": "http://127.0.0.1:49209/",
+  "backendUrl": "http://127.0.0.1:59209",
+  "status": 200,
+  "frontendOk": true,
+  "backendHealth": {
+    "url": "http://127.0.0.1:59209/api/health",
+    "status": 200,
+    "ok": true,
+    "ms": 50,
+    "preview": "{\"success\":true,\"message\":\"ok\"}"
+  },
+  "login": {
+    "attempted": false
+  },
+  "finalUrl": "http://127.0.0.1:49209/",
+  "title": "My Trae Project",
+  "markerHits": {
+    "家政": true,
+    "三证": true,
+    "质检": true,
+    "调度": true,
+    "保险": true
+  },
+  "markerHitCount": 5,
+  "consoleErrorCount": 0,
+  "requestFailureCount": 0,
+  "apiResponseErrorCount": 0,
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "bodyPreview": "暖 暖心到家 家政服务平台 首页 我的订单 用户端 张先生 138****8888 今日实时运营数据 · 2026-06-16 三证强管控 1km热力调度 基于地理位置热力图的智能派单系统，三证OCR+人工复核双重认证， 爽约自动赔付+全程保险保障，给您最可信赖的家政服务体验。 今日已派单 6单 ↑ 12% 较昨日 赔付到账率 100% 24h自动到账 保险承保率 43% 每单自动投保 1km平均到达 0.8km 热力优先调度 立即预约 我的订单 阿1 阿2 阿3 阿4 800+认证阿姨 平均评分 4.5分 3秒快速下单 选服务 → 选时间 → 确认下单 ① 选择服务类型 日常保洁 ¥60/h 育婴师 ¥80/h 上门做饭 ¥50/h ② 服务地址 家 默认 北京市朝阳区建国路88号SOHO现代城A座1201室 ③ 服务时间 今天 明天 后天 🌅上午 ☀️下午 🌙晚上 2026-06-17 09:00 服务时长：3 小时 1h 4h 8h 下单确认信息 可派阿姨 12人 高热力区 平均评分 4.8/5 动态加权 阿姨距离分布 1km内优先派单 500m内 3人 1km内 5人 2k",
+  "navError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/quick-browser-20260616035058/may-89209.png"
+}

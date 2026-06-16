@@ -667,6 +667,63 @@ export const useAppStore = create<AppState>((set, get) => ({
       overtime_minutes,
     };
 
+    if (nextStep.status === 'completed' && !order.qa_record) {
+      const isOver = is_overtime;
+      const now = new Date().toISOString().slice(0, 16).replace('T', ' ');
+      const qid = 4000 + order.id;
+      const workerN = order.worker_name || '服务阿姨';
+      const compliance = isOver ? 42 + Math.floor(Math.random() * 15) : 92 + Math.floor(Math.random() * 8);
+      const passRate = compliance >= 80;
+      updatedOrder.qa_record = {
+        id: qid,
+        order_id: order.id,
+        audio_url: `/mock/audio/${order.id}.mp3`,
+        audio_duration: (order.duration_hours || 3) * 3600,
+        transcript_text: isOver
+          ? `客户：你怎么迟到了？${workerN}：抱歉，路上堵车。客户：厨房擦得不干净。${workerN}：我再擦一下。客户：不用了，我要投诉。`
+          : `客户：您好，麻烦重点打扫一下。${workerN}：好的，我会仔细做。客户：打扫得很干净，辛苦了。${workerN}：不客气，这是我应该做的。`,
+        transcript_summary: isOver
+          ? `${workerN}迟到超时，服务质量不达标，客户不满。`
+          : `${workerN}准时到达，服务态度良好，客户表示满意。`,
+        transcript_full: isOver
+          ? `客户：你怎么迟到了这么久？\n${workerN}：不好意思，路上堵车。\n客户：我都等了快30分钟了。\n${workerN}：真的很抱歉。\n客户：算了，你赶紧做吧。\n（服务中）\n客户：这擦得也太敷衍了吧。\n${workerN}：我再擦一下。\n客户：不用了，就这样吧。\n（服务结束）\n客户：服务太不满意了，我要投诉。`
+          : `客户：您好，麻烦重点打扫一下厨房和卫生间。\n${workerN}：好的，我先从厨房开始，油烟机和灶台都会仔细擦的。\n客户：好的，谢谢。\n（30分钟后）\n${workerN}：厨房打扫完了，您看一下。\n客户：挺干净的，不错。\n${workerN}：接下来打扫卫生间。\n（1小时后）\n${workerN}：都打扫完了，您检查一下。\n客户：打扫得很干净，辛苦了。\n${workerN}：不客气，这是我应该做的。`,
+        keywords: isOver
+          ? [
+              { text: '迟到', hit: true, count: 2 },
+              { text: '服务质量', hit: true, count: 1 },
+              { text: '投诉', hit: true, count: 1 },
+              { text: '不满意', hit: true, count: 1 },
+              { text: '标准话术', hit: false, count: 0 },
+              { text: '好评', hit: false, count: 0 },
+            ]
+          : [
+              { text: '准时到达', hit: true, count: 1 },
+              { text: '服务态度', hit: true, count: 2 },
+              { text: '清洁彻底', hit: true, count: 1 },
+              { text: '标准话术', hit: true, count: 1 },
+              { text: '投诉', hit: false, count: 0 },
+              { text: '迟到', hit: false, count: 0 },
+            ],
+        compliance_rate: compliance,
+        root_cause: isOver ? '迟到超时+服务质量不达标' : '无',
+        root_cause_category: isOver ? '服务质量' : '好评订单',
+        root_cause_detail: isOver
+          ? `${workerN}迟到超时，服务质量不达标，客户不满并投诉`
+          : `${workerN}准时到达，服务态度良好，客户表示满意，无差评或投诉记录`,
+        rating: isOver ? 2 : 5,
+        complaint_count: isOver ? 1 : 0,
+        reviewer: isOver ? '质检组长-李建国' : '质检专员-王晓梅',
+        review_time: now,
+        review_conclusion: passRate ? 'pass' : 'fail',
+        review_remark: passRate
+          ? '服务流程规范，态度良好，质量达标，建议保持。'
+          : '存在质量问题，建议对阿姨进行再培训。',
+        created_at: now,
+        qa_status: 'completed',
+      };
+    }
+
     set((state) => ({
       orders: state.orders.map((o) => (o.id === orderId ? updatedOrder : o)),
     }));

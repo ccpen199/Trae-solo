@@ -781,6 +781,32 @@ function OrderSuccessView({
         <p className="text-[10px] text-secondary-500 mt-0.5">订单号 #{orderId}</p>
       </div>
 
+      <div className="mb-4 p-3 bg-gradient-to-r from-primary-50 via-green-50 to-blue-50 rounded-xl border border-primary-100">
+        <p className="text-[10px] font-bold text-primary-700 mb-2 text-center">订单闭环链路</p>
+        <div className="flex items-center justify-between">
+          {[
+            { label: '订单生成', icon: Zap, done: true, color: 'text-primary-600 bg-primary-100' },
+            { label: '保险承保', icon: Shield, done: !!displayInsurance, color: 'text-green-600 bg-green-100' },
+            { label: '节点提醒', icon: Navigation, done: displayNodes.length >= 2, color: 'text-blue-600 bg-blue-100' },
+            { label: '赔付触发', icon: CircleDollarSign, done: displayStatus === 'completed', color: 'text-red-600 bg-red-100' },
+          ].map((step, si) => {
+            const StepIcon = step.icon;
+            return (
+              <div key={si} className="flex-1 flex flex-col items-center relative">
+                {si > 0 && (
+                  <div className={cn('absolute top-3 right-1/2 w-full h-0.5', step.done ? 'bg-green-300' : 'bg-gray-200')} style={{ zIndex: 0 }} />
+                )}
+                <div className={cn('w-6 h-6 rounded-full flex items-center justify-center relative z-10', step.done ? step.color : 'bg-gray-100 text-gray-400')}>
+                  <StepIcon className="w-3 h-3" />
+                </div>
+                <span className={cn('text-[8px] mt-1 font-medium', step.done ? 'text-secondary-700' : 'text-gray-400')}>{step.label}</span>
+                {step.done && <span className="text-[7px] text-green-600">✓</span>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="space-y-3 mb-4">
         <div className={cn(
           'flex items-center gap-2 px-3 py-2 rounded-full text-xs mx-auto w-fit',
