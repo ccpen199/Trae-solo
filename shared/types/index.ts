@@ -314,6 +314,26 @@ export interface Resume {
   [key: string]: any;
 }
 
+export type VerificationStatus = 'verified' | 'pending' | 'unverified';
+
+export interface VerificationDetail {
+  licenseNo: string;
+  legalRepresentative: string;
+  establishedYear: number;
+  registeredCapital?: number;
+  verificationNo: string;
+  validUntil: string;
+}
+
+export interface TownshipPositionVerification {
+  registrationAddress: boolean;
+  taxRegistration: boolean;
+  socialInsurance: boolean;
+  workLocation: boolean;
+  overallResult: boolean;
+  subsidyEligible: boolean;
+}
+
 /**
  * 企业
  */
@@ -336,6 +356,8 @@ export interface Enterprise {
   contactPhone: string;
   contactEmail: string;
   verified: boolean;
+  verificationStatus: VerificationStatus;
+  verificationDetail?: VerificationDetail;
   creditRating?: string;
   employeeCount: number;
   openPositionCount: number;
@@ -376,6 +398,7 @@ export interface JobPosition {
   viewCount: number;
   applicationCount: number;
   channel: string;
+  townshipVerification?: TownshipPositionVerification;
   [key: string]: any;
 }
 

@@ -21,6 +21,7 @@ import {
   NodeIndexOutlined,
   SafetyOutlined,
   ToolOutlined,
+  WalletOutlined,
 } from '@ant-design/icons';
 import type { UserRole } from '@/store/authStore';
 
@@ -40,6 +41,7 @@ export const jobseekerMenu: MenuItemConfig[] = [
   { key: 'js-campus', path: '/jobseeker/campus', label: '校园招聘', icon: <BankOutlined /> },
   { key: 'js-education', path: '/jobseeker/education', label: '学历提升', icon: <ReadOutlined /> },
   { key: 'js-applications', path: '/jobseeker/applications', label: '投递记录', icon: <HistoryOutlined /> },
+  { key: 'js-subsidy', path: '/jobseeker/subsidy', label: '就业补贴', icon: <WalletOutlined /> },
   { key: 'js-profile', path: '/jobseeker/profile', label: '个人中心', icon: <UserOutlined /> },
 ];
 

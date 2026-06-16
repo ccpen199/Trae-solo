@@ -14,9 +14,13 @@ import {
   Building2,
   ChevronRight,
   Factory,
+  Clock,
+  Users,
+  History,
+  Gift,
 } from 'lucide-react';
 import { Input, Select, Tag, Button, Tooltip, Badge } from 'antd';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   LineChart,
   Line,
@@ -30,12 +34,14 @@ import {
 } from 'recharts';
 import { generateMockData } from '@/mock/data';
 import { TOWNSHIPS, getTownshipByCode } from '@/mock/townships';
-import { getCampusHomeBadge, getEducationHomeBadge } from '@/mock/progress';
-import { TownshipCode, IndustryTag, JobSeekerType } from '@shared/types';
+import { getCampusHomeBadge, getEducationHomeBadge, getApplicationsHomeBadge, getSubsidyHomeBadge } from '@/mock/progress';
+import { createMatchDetails } from '@/mock/factory';
+import { TownshipCode, IndustryTag, JobSeekerType, JobWithMatch, MatchDetails } from '@shared/types';
 import JobCard from '@/components/common/JobCard';
 import StatsCard from '@/components/common/StatsCard';
 import TownshipTag from '@/components/common/TownshipTag';
 import MatchScoreRing from '@/components/common/MatchScoreRing';
+import MatchDetailsPanel, { DIFF_TYPE_CONFIG } from '@/components/common/MatchDetailsPanel';
 import { cn } from '@/lib/utils';
 
 const { Option } = Select;
@@ -70,6 +76,28 @@ const QUICK_ENTRIES = [
     bg: 'bg-emerald-50',
     iconBg: 'bg-emerald-100',
     iconColor: 'text-emerald-600',
+  },
+  {
+    key: 'applications',
+    title: '投递记录',
+    desc: '实时追踪进度',
+    icon: <History size={28} />,
+    color: 'from-pink-500 to-pink-600',
+    bg: 'bg-pink-50',
+    iconBg: 'bg-pink-100',
+    iconColor: 'text-pink-600',
+    progressBadge: getApplicationsHomeBadge(),
+  },
+  {
+    key: 'subsidy',
+    title: '就业补贴',
+    desc: '政策补贴申领',
+    icon: <Gift size={28} />,
+    color: 'from-yellow-500 to-yellow-600',
+    bg: 'bg-yellow-50',
+    iconBg: 'bg-yellow-100',
+    iconColor: 'text-yellow-600',
+    progressBadge: getSubsidyHomeBadge(),
   },
   {
     key: 'education',
@@ -114,6 +142,29 @@ function Home() {
   const [searchText, setSearchText] = useState('');
   const [selectedTownship, setSelectedTownship] = useState<TownshipCode | undefined>();
   const [selectedJobType, setSelectedJobType] = useState<JobSeekerType | undefined>();
+  const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
+
+  const currentJobSeeker = useMemo(() => {
+    return mockData.jobSeekers[0];
+  }, [mockData.jobSeekers]);
+
+  const currentResume = useMemo(() => {
+    return mockData.resumes.find((r) => r.jobSeekerId === currentJobSeeker.id) || mockData.resumes[0];
+  }, [mockData.resumes, currentJobSeeker]);
+
+  const toggleExpand = (jobId: string) => {
+    setExpandedJobId(expandedJobId === jobId ? null : jobId);
+  };
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diff = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    if (diff === 0) return '今天发布';
+    if (diff === 1) return '昨天发布';
+    if (diff < 7) return `${diff}天前发布`;
+    return `${date.getMonth() + 1}月${date.getDate()}日`;
+  };
 
   const townshipJobCounts = useMemo(() => {
     const counts: Record<string, { enterprises: number; jobs: number }> = {};
@@ -128,11 +179,16 @@ function Home() {
 
   const recommendedJobs = useMemo(() => {
     const shuffled = [...mockData.positions].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 9).map((job) => ({
-      ...job,
-      matchScore: Math.floor(70 + Math.random() * 28),
-    }));
-  }, [mockData.positions]);
+    return shuffled.slice(0, 9).map((job) => {
+      const matchScore = Math.floor(70 + Math.random() * 28);
+      const matchDetails = createMatchDetails(job, currentJobSeeker, currentResume);
+      return {
+        ...job,
+        matchScore,
+        matchDetails,
+      } as JobWithMatch;
+    });
+  }, [mockData.positions, currentJobSeeker, currentResume]);
 
   const trendData = useMemo(() => {
     const months = ['1月', '2月', '3月', '4月', '5月', '6月'];
@@ -326,14 +382,25 @@ function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {QUICK_ENTRIES.map((entry, idx) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+          {QUICK_ENTRIES.map((entry, idx) => {
+            const handleQuickEntryClick = () => {
+              if (entry.key === 'applications') navigate('/jobseeker/applications');
+              else if (entry.key === 'subsidy') navigate('/jobseeker/subsidy');
+              else if (entry.key === 'education') navigate('/jobseeker/education');
+              else if (entry.key === 'campus') navigate('/jobseeker/campus');
+              else if (entry.key === 'skilled') navigate('/jobseeker/jobs?type=skilled');
+              else if (entry.key === 'graduate') navigate('/jobseeker/jobs?type=graduate');
+              else if (entry.key === 'bluecollar') navigate('/jobseeker/jobs?type=bluecollar');
+            };
+            return (
             <motion.div
               key={entry.key}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + idx * 0.08, duration: 0.4 }}
               whileHover={{ y: -4, scale: 1.02 }}
+              onClick={handleQuickEntryClick}
               className={cn(
                 'relative bg-white rounded-xl p-5 cursor-pointer border border-gray-100',
                 'transition-all duration-300 hover:shadow-card-hover hover:border-industrial-blue-200 group',
@@ -369,7 +436,8 @@ function Home() {
                 查看详情 <ChevronRight size={12} />
               </span>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </motion.div>
 
@@ -479,16 +547,127 @@ function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {recommendedJobs.slice(0, 6).map((job, idx) => (
-              <motion.div
-                key={job.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45 + idx * 0.06, duration: 0.4 }}
-              >
-                <JobCard job={job} matchScore={job.matchScore} />
-              </motion.div>
-            ))}
+            {recommendedJobs.slice(0, 6).map((job, idx) => {
+              const isExpanded = expandedJobId === job.id;
+              const diffConfig = DIFF_TYPE_CONFIG[job.matchDetails.differentiation.type];
+              const enterpriseName = mockData.enterprises.find((e) => e.id === job.enterpriseId)?.name || '';
+
+              return (
+                <motion.div
+                  key={job.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45 + idx * 0.06, duration: 0.4 }}
+                  className={cn(
+                    'bg-white rounded-lg border overflow-hidden transition-all duration-300',
+                    isExpanded
+                      ? 'border-industrial-blue-400 shadow-lg shadow-industrial-blue-100'
+                      : 'border-gray-100 hover:border-industrial-blue-200 hover:shadow-card-hover'
+                  )}
+                >
+                  <div className="flex items-start gap-4 p-5">
+                    <div className="pt-1 flex-shrink-0">
+                      <MatchScoreRing score={job.matchScore} size="md" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3
+                            className={cn(
+                              'text-base font-semibold text-gray-900 truncate',
+                              'hover:text-industrial-blue-600 transition-colors cursor-pointer'
+                            )}
+                            onClick={() => navigate(`/jobseeker/jobs/${job.id}`)}
+                          >
+                            {job.title}
+                          </h3>
+                          <Tag
+                            className={cn(
+                              '!m-0 !text-xs !px-2 !py-0.5',
+                              diffConfig.bgColor,
+                              diffConfig.textColor,
+                              diffConfig.borderColor
+                            )}
+                          >
+                            {diffConfig.icon} {job.matchDetails.differentiation.typeLabel}
+                          </Tag>
+                          {job.urgent && (
+                            <Tag color="red" className="!m-0 !text-xs">
+                              急招
+                            </Tag>
+                          )}
+                        </div>
+                      </div>
+
+                      <p className="text-sm text-gray-500 mb-3 truncate">
+                        {enterpriseName}
+                      </p>
+
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="text-xl font-bold text-vital-orange-500">
+                          {job.salaryMin === job.salaryMax ? `${job.salaryMin}K` : `${job.salaryMin}-${job.salaryMax}K`}
+                        </span>
+                        <span className="text-xs text-gray-400">{job.salaryType || '月薪'}</span>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2 mb-3">
+                        {job.township && (
+                          <TownshipTag code={job.township as TownshipCode} size="sm" />
+                        )}
+                        {job.experience && (
+                          <span className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
+                            <Briefcase size={10} />
+                            {job.experience}
+                          </span>
+                        )}
+                        {job.education && (
+                          <span className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
+                            <GraduationCap size={10} />
+                            {job.education}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2 px-1 pb-1 text-xs text-gray-500">
+                        <span className="inline-flex items-center gap-1">
+                          <Clock size={12} /> {formatDate(job.publishedAt)}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <Users size={12} /> 招{job.hiringCount}人
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between px-1">
+                        <Button
+                          size="small"
+                          type="link"
+                          className="!px-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleExpand(job.id);
+                          }}
+                        >
+                          {isExpanded ? '收起匹配分析' : '查看匹配分析'}
+                        </Button>
+                        <Button
+                          type="primary"
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/jobseeker/jobs/${job.id}`);
+                          }}
+                        >
+                          查看详情
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  <AnimatePresence>
+                    {isExpanded && <MatchDetailsPanel matchDetails={job.matchDetails} />}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
 

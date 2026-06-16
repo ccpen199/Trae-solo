@@ -9,6 +9,7 @@ import {
   JSCampus,
   JSEducation,
   JSApplications,
+  JSSubsidy,
   JSProfile,
   ENDashboard,
   ENJobManage,
@@ -42,6 +43,7 @@ export default function AppRouter() {
         <Route path="/jobseeker/campus" element={<JSCampus />} />
         <Route path="/jobseeker/education" element={<JSEducation />} />
         <Route path="/jobseeker/applications" element={<JSApplications />} />
+        <Route path="/jobseeker/subsidy" element={<JSSubsidy />} />
         <Route path="/jobseeker/profile" element={<JSProfile />} />
         <Route path="/jobseeker/*" element={<Placeholder title="求职者端页面" />} />
 

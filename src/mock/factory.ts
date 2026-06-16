@@ -12,7 +12,6 @@ import {
   SkillItem,
   EducationItem,
   WorkItem,
-  ProjectItem,
   Enterprise,
   JobPosition,
   RequiredSkill,
@@ -31,6 +30,9 @@ import {
   DifferentiationResult,
   DifferentiationType,
   JobWithMatch,
+  VerificationStatus,
+  VerificationDetail,
+  TownshipPositionVerification,
 } from '../../shared/types';
 import { TOWNSHIPS } from './townships';
 
@@ -364,6 +366,48 @@ export const createResume = (id: string, jobSeeker: JobSeeker): Resume => {
   } as any;
 };
 
+const TOWNSHIP_VERIFICATION_RATES: Record<TownshipCode, { verified: number; pending: number }> = {
+  [TownshipCode.SQ]: { verified: 0.82, pending: 0.10 },
+  [TownshipCode.DQ]: { verified: 0.88, pending: 0.08 },
+  [TownshipCode.XQ]: { verified: 0.75, pending: 0.12 },
+  [TownshipCode.NQ]: { verified: 0.70, pending: 0.15 },
+  [TownshipCode.WGS]: { verified: 0.60, pending: 0.18 },
+  [TownshipCode.XL]: { verified: 0.85, pending: 0.08 },
+  [TownshipCode.GZ]: { verified: 0.83, pending: 0.10 },
+  [TownshipCode.DS]: { verified: 0.72, pending: 0.15 },
+  [TownshipCode.DF]: { verified: 0.78, pending: 0.12 },
+  [TownshipCode.FS]: { verified: 0.65, pending: 0.18 },
+  [TownshipCode.HP]: { verified: 0.74, pending: 0.14 },
+  [TownshipCode.NT]: { verified: 0.80, pending: 0.10 },
+  [TownshipCode.SJ]: { verified: 0.76, pending: 0.12 },
+  [TownshipCode.MZ]: { verified: 0.62, pending: 0.20 },
+  [TownshipCode.NL]: { verified: 0.70, pending: 0.15 },
+  [TownshipCode.GK]: { verified: 0.73, pending: 0.14 },
+  [TownshipCode.SX]: { verified: 0.79, pending: 0.11 },
+  [TownshipCode.DC]: { verified: 0.71, pending: 0.16 },
+  [TownshipCode.BF]: { verified: 0.68, pending: 0.17 },
+  [TownshipCode.SX2]: { verified: 0.75, pending: 0.13 },
+  [TownshipCode.TZ]: { verified: 0.77, pending: 0.12 },
+  [TownshipCode.SW]: { verified: 0.58, pending: 0.22 },
+  [TownshipCode.HL]: { verified: 0.74, pending: 0.14 },
+  [TownshipCode.ZG]: { verified: 0.90, pending: 0.06 },
+  [TownshipCode.CH]: { verified: 0.86, pending: 0.08 },
+};
+
+const maskLicenseNo = (licenseNo: string): string => {
+  if (licenseNo.length <= 10) return licenseNo;
+  return licenseNo.slice(0, 8) + '********' + licenseNo.slice(-2);
+};
+
+const maskLegalName = (name: string): string => {
+  if (name.length <= 1) return name;
+  return name.charAt(0) + '*' + (name.length > 2 ? name.slice(-1) : '');
+};
+
+const generateVerificationNo = (townshipCode: TownshipCode, year: number, index: number): string => {
+  return `ZS-${townshipCode}-${year}-${index.toString().padStart(4, '0')}`;
+};
+
 export const createEnterprise = (id: string): Enterprise => {
   const industry = weightedPick<IndustryTag>([
     { value: IndustryTag.HARDWARE, weight: 18 },
@@ -382,28 +426,82 @@ export const createEnterprise = (id: string): Enterprise => {
   const names = randomEnterpriseName(industry);
   const employeeCount = randomInt(15, 3500);
   const welfareCount = randomInt(5, 10);
+
+  const rates = TOWNSHIP_VERIFICATION_RATES[township];
+  const rand = seededRandom(id + '_verification');
+  let verificationStatus: VerificationStatus;
+  if (rand < rates.verified) {
+    verificationStatus = 'verified';
+  } else if (rand < rates.verified + rates.pending) {
+    verificationStatus = 'pending';
+  } else {
+    verificationStatus = 'unverified';
+  }
+
+  const establishedYear = randomInt(1998, 2022);
+  const registeredCapital = randomInt(50, 5000);
+  const legalName = randomChineseName();
+  const licenseNo = `91442000${randomInt(1000000000, 9999999999).toString()}X`;
+
+  let verificationDetail: VerificationDetail | undefined;
+  if (verificationStatus === 'verified') {
+    verificationDetail = {
+      licenseNo: maskLicenseNo(licenseNo),
+      legalRepresentative: maskLegalName(legalName),
+      establishedYear,
+      registeredCapital,
+      verificationNo: generateVerificationNo(township, 2024, randomInt(1, 9999)),
+      validUntil: `2026-${randomInt(1, 12).toString().padStart(2, '0')}-${randomInt(1, 28).toString().padStart(2, '0')}`,
+    };
+  }
+
   return {
     id,
     name: names.full,
     shortName: names.short,
-    licenseNo: `91442000${randomInt(1000000000, 9999999999).toString()}X`,
-    legalRepresentative: randomChineseName(),
+    licenseNo,
+    legalRepresentative: legalName,
     industry,
     township,
     address: `中山市${townshipData.name}${randomPick(['工业大道', '兴业路', '创业路', '科技路', '工业园', '工业区', '同乐路', '万福路', '朝阳路', '建设路'])}${randomInt(1, 200)}号`,
     scale: randomEnterpriseScale(employeeCount),
-    registeredCapital: randomInt(50, 5000),
-    establishedYear: randomInt(1998, 2022),
-    description: `成立于${randomInt(1998, 2022)}年，位于中山市${townshipData.name}，专业从事${industry}相关产品的研发、生产和销售。公司拥有先进的生产设备和专业的技术团队，产品远销国内外市场，在行业内享有良好的声誉。`,
+    registeredCapital,
+    establishedYear,
+    description: `成立于${establishedYear}年，位于中山市${townshipData.name}，专业从事${industry}相关产品的研发、生产和销售。公司拥有先进的生产设备和专业的技术团队，产品远销国内外市场，在行业内享有良好的声誉。`,
     welfare: randomPicks(WELFARE_OPTIONS, welfareCount),
     contactName: randomChineseName(),
     contactPhone: randomPhone(),
     contactEmail: `hr${randomInt(100, 999)}@${names.short.toLowerCase()}${randomPick(['.com', '.cn', '.com.cn'])}`,
-    verified: seededRandom(id + '_verified') > 0.28,
+    verified: verificationStatus === 'verified',
+    verificationStatus,
+    verificationDetail,
     employeeCount,
     openPositionCount: randomInt(1, 25),
-    createdAt: randomDate(new Date(2020, 0, 1), new Date(2024, 1, 1))
+    createdAt: randomDate(new Date(2020, 0, 1), new Date(2024, 1, 1)),
+    verifiedAt: verificationStatus === 'verified' ? randomDate(new Date(2023, 0, 1), new Date(2024, 6, 1)) : undefined,
   } as any;
+};
+
+const generateTownshipVerification = (enterprise: Enterprise): TownshipPositionVerification => {
+  const isVerifiedEnterprise = enterprise.verificationStatus === 'verified';
+  const baseRand = seededRandom(enterprise.id + '_verification');
+  
+  const registrationAddress = isVerifiedEnterprise || baseRand > 0.15;
+  const taxRegistration = isVerifiedEnterprise || baseRand > 0.12;
+  const socialInsurance = isVerifiedEnterprise || baseRand > 0.18;
+  const workLocation = isVerifiedEnterprise || baseRand > 0.08;
+  
+  const overallResult = registrationAddress && taxRegistration && socialInsurance && workLocation;
+  const subsidyEligible = overallResult && isVerifiedEnterprise;
+  
+  return {
+    registrationAddress,
+    taxRegistration,
+    socialInsurance,
+    workLocation,
+    overallResult,
+    subsidyEligible,
+  };
 };
 
 export const createJobPosition = (id: string, enterprise: Enterprise): JobPosition => {
@@ -427,13 +525,18 @@ export const createJobPosition = (id: string, enterprise: Enterprise): JobPositi
   }));
   const township = TOWNSHIPS.find(t => t.code === enterprise.township)!;
   const skilledType = (type as string) === '技工';
+  
+  const townshipVerification = generateTownshipVerification(enterprise);
+  
   return {
     id,
     enterpriseId: enterprise.id,
+    enterpriseName: enterprise.name,
     title,
     department,
     industry: enterprise.industry,
     township: enterprise.township,
+    townshipName: township.name,
     address: `${township.name}${enterprise.address.split(township.name)[1] || ''}`,
     type,
     salaryMin: salary.min,
@@ -465,7 +568,8 @@ export const createJobPosition = (id: string, enterprise: Enterprise): JobPositi
     deadline: '2024-12-31',
     viewCount: randomInt(50, 3000),
     applicationCount: randomInt(3, 80),
-    channel: randomPick(['BOSS直聘', '智联招聘', '前程无忧', '58同城', '本地招聘网', '厂区直招', '员工推荐'])
+    channel: randomPick(['BOSS直聘', '智联招聘', '前程无忧', '58同城', '本地招聘网', '厂区直招', '员工推荐']),
+    townshipVerification,
   } as any;
 };
 

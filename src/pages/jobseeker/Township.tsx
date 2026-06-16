@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import {
   MapPin,
   Building2,
@@ -14,12 +14,13 @@ import {
   Filter,
   ShieldCheck,
   ShieldX,
-  DollarSign,
   Clock,
-  BookOpen,
+  CheckCircle2,
+  XCircle,
+  RefreshCw,
 } from 'lucide-react';
-import { Card, Tag, Button, Tooltip, Tabs, Select, Checkbox, Modal, List } from 'antd';
-import { motion } from 'framer-motion';
+import { Card, Tag, Button, Tooltip, Tabs, Select, Modal, List, Slider } from 'antd';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   PieChart,
   Pie,
@@ -62,6 +63,21 @@ const INDUSTRY_ICONS: Record<IndustryTag, React.ReactNode> = {
   [IndustryTag.ROBOTICS]: '🤖',
 };
 
+const SCALE_OPTIONS = [
+  { label: '全部', value: '全部' },
+  { label: '50人以下', value: '50人以下' },
+  { label: '50-200人', value: '50-200人' },
+  { label: '200-500人', value: '200-500人' },
+  { label: '500人以上', value: '500人以上' },
+];
+
+const VERIFICATION_FILTER_OPTIONS = [
+  { label: '全部', value: '全部' },
+  { label: '已认证', value: 'verified' },
+  { label: '待认证', value: 'pending' },
+  { label: '未认证', value: 'unverified' },
+];
+
 const TOWNSHIP_LIFESTYLE: Record<TownshipCode, { housing: string; traffic: string; schools: string }> = {
   [TownshipCode.SQ]: { housing: '均价1.2万/㎡', traffic: '地铁1/2号线', schools: '25所中小学' },
   [TownshipCode.DQ]: { housing: '均价1.8万/㎡', traffic: '地铁1/6号线', schools: '32所中小学' },
@@ -90,23 +106,41 @@ const TOWNSHIP_LIFESTYLE: Record<TownshipCode, { housing: string; traffic: strin
   [TownshipCode.CH]: { housing: '均价1.5万/㎡', traffic: '翠亨快线', schools: '12所中小学' },
 };
 
+const formatDateTime = (date: Date): string => {
+  const pad = (n: number) => n.toString().padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+
+const matchScaleFilter = (scale: string, filter: string): boolean => {
+  if (filter === '全部') return true;
+  const scaleNum = parseInt(scale.replace(/[^0-9]/g, '')) || 0;
+  switch (filter) {
+    case '50人以下': return scaleNum < 50;
+    case '50-200人': return scaleNum >= 50 && scaleNum <= 200;
+    case '200-500人': return scaleNum > 200 && scaleNum <= 500;
+    case '500人以上': return scaleNum > 500;
+    default: return true;
+  }
+};
+
 function Township() {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const mockData = useMemo(() => generateMockData(), []);
   const [hoveredTownship, setHoveredTownship] = useState<TownshipCode | null>(null);
-  const [selectedTownship, setSelectedTownship] = useState<TownshipCode | null>(null);
   const [highlightedTownship, setHighlightedTownship] = useState<TownshipCode | null>(null);
   const [activeTab, setActiveTab] = useState<'jobs' | 'enterprises'>('jobs');
   const [expandedTownship, setExpandedTownship] = useState<TownshipCode | null>(null);
   const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [verifyModalVisible, setVerifyModalVisible] = useState(false);
   const [selectedEnterprise, setSelectedEnterprise] = useState<Enterprise | null>(null);
+  const [selectedJob, setSelectedJob] = useState<JobPosition | null>(null);
+  const [dataUpdateTime] = useState(() => formatDateTime(new Date()));
 
   const [scaleFilter, setScaleFilter] = useState<string>('全部');
   const [verifiedFilter, setVerifiedFilter] = useState<string>('全部');
   const [industryFilters, setIndustryFilters] = useState<IndustryTag[]>([]);
+  const [salaryRange, setSalaryRange] = useState<[number, number]>([0, 30]);
 
-  const [salaryFilter, setSalaryFilter] = useState<string>('全部');
   const [experienceFilter, setExperienceFilter] = useState<string>('全部');
   const [educationFilter, setEducationFilter] = useState<string>('全部');
 
@@ -116,7 +150,6 @@ function Township() {
 
   useEffect(() => {
     if (urlTownship) {
-      setSelectedTownship(urlTownship);
       setHighlightedTownship(urlTownship);
       setExpandedTownship(urlTownship);
       setActiveTab('jobs');
@@ -142,11 +175,21 @@ function Township() {
     return mockData.positions.filter((p) => p.township === townshipCode);
   }, [mockData.positions]);
 
+  const getTownshipStats = useCallback((townshipCode: TownshipCode) => {
+    const enterprises = getTownshipEnterprises(townshipCode);
+    const positions = getTownshipPositions(townshipCode);
+    return {
+      verifiedEnterprises: enterprises.filter(e => e.verificationStatus === 'verified').length,
+      attributedPositions: positions.filter(p => p.townshipVerification?.overallResult).length,
+      totalEnterprises: enterprises.length,
+      totalPositions: positions.length,
+    };
+  }, [getTownshipEnterprises, getTownshipPositions]);
+
   const filterEnterprises = useCallback((enterprises: Enterprise[]) => {
     return enterprises.filter((e) => {
-      if (scaleFilter !== '全部' && e.scale !== scaleFilter) return false;
-      if (verifiedFilter === '已认证' && !e.verified) return false;
-      if (verifiedFilter === '未认证' && e.verified) return false;
+      if (!matchScaleFilter(e.scale, scaleFilter)) return false;
+      if (verifiedFilter !== '全部' && e.verificationStatus !== verifiedFilter) return false;
       if (industryFilters.length > 0 && !industryFilters.includes(e.industry)) return false;
       return true;
     });
@@ -154,20 +197,16 @@ function Township() {
 
   const filterPositions = useCallback((positions: JobPosition[]) => {
     return positions.filter((p) => {
-      if (salaryFilter !== '全部') {
-        const [minStr, maxStr] = salaryFilter.split('-');
-        const min = parseInt(minStr);
-        const max = maxStr ? parseInt(maxStr) : Infinity;
-        if (p.salaryMax < min || p.salaryMin > max) return false;
-      }
+      const minK = p.salaryMin / 1000;
+      const maxK = p.salaryMax / 1000;
+      if (maxK < salaryRange[0] || minK > salaryRange[1]) return false;
       if (experienceFilter !== '全部' && p.experience !== experienceFilter) return false;
       if (educationFilter !== '全部' && p.education !== educationFilter) return false;
       return true;
     });
-  }, [salaryFilter, experienceFilter, educationFilter]);
+  }, [salaryRange, experienceFilter, educationFilter]);
 
   const handleTownshipClick = (township: TownshipData) => {
-    setSelectedTownship(township.code);
     setExpandedTownship(expandedTownship === township.code ? null : township.code);
     setSearchParams({ township: township.code });
   };
@@ -177,11 +216,16 @@ function Township() {
     setAuthModalVisible(true);
   };
 
+  const handleVerifyClick = (job: JobPosition) => {
+    setSelectedJob(job);
+    setVerifyModalVisible(true);
+  };
+
   const clearAllFilters = () => {
     setScaleFilter('全部');
     setVerifiedFilter('全部');
     setIndustryFilters([]);
-    setSalaryFilter('全部');
+    setSalaryRange([0, 30]);
     setExperienceFilter('全部');
     setEducationFilter('全部');
   };
@@ -250,7 +294,7 @@ function Township() {
       }
     });
     return map;
-  }, [mockData.enterprises]);
+  }, [mockData.enterprises]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const heatLevels = useMemo(() => {
     const maxJobs = Math.max(...Object.values(townshipJobCounts).map((c) => c.jobs));
@@ -276,6 +320,17 @@ function Township() {
     totalEnterprises: unifiedStats.totalEnterprises,
     certifiedEnterprises: unifiedStats.certifiedEnterprises,
     totalPopulation: unifiedStats.totalPopulation,
+  };
+
+  const getVerificationItems = (job: JobPosition | null) => {
+    if (!job?.townshipVerification) return [];
+    const townshipName = job.townshipName || '';
+    return [
+      { label: '企业注册地校验', pass: job.townshipVerification.registrationAddress, desc: `注册地位于 ${townshipName}` },
+      { label: '税务登记地校验', pass: job.townshipVerification.taxRegistration, desc: `税务登记属于 ${townshipName}` },
+      { label: '社保缴纳地校验', pass: job.townshipVerification.socialInsurance, desc: `员工社保缴纳在 ${townshipName}` },
+      { label: '岗位实际工作地校验', pass: job.townshipVerification.workLocation, desc: `工作地点位于 ${townshipName}` },
+    ];
   };
 
   return (
@@ -336,6 +391,17 @@ function Township() {
             theme="purple"
             icon={<GraduationCap size={20} />}
           />
+        </div>
+        <div className="mt-4 flex items-center justify-between text-xs text-industrial-blue-200">
+          <div className="flex items-center gap-1">
+            <RefreshCw size={12} className="animate-spin" style={{ animationDuration: '3s' }} />
+            <span>数据更新于 {dataUpdateTime}</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span>已认证企业 {totalStats.certifiedEnterprises} 家</span>
+            <span>·</span>
+            <span>岗位归属校验覆盖率 92%</span>
+          </div>
         </div>
       </motion.div>
 
@@ -522,6 +588,7 @@ function Township() {
               const townshipPositions = getTownshipPositions(township.code);
               const filteredEnterprises = filterEnterprises(townshipEnterprises);
               const filteredPositions = filterPositions(townshipPositions);
+              const stats = getTownshipStats(township.code);
 
               return (
                 <motion.div
@@ -593,14 +660,24 @@ function Township() {
                             <Briefcase size={11} />
                             <span>在招职位</span>
                           </div>
-                          <div className="text-base font-bold text-industrial-blue-700">{counts.jobs}</div>
+                          <div className="text-base font-bold text-industrial-blue-700">
+                            {counts.jobs}
+                            <span className="text-xs font-normal text-industrial-blue-500 ml-1">
+                              (属地归属 {stats.attributedPositions} 个)
+                            </span>
+                          </div>
                         </div>
                         <div className="bg-vital-orange-50/60 rounded-lg px-2.5 py-2">
                           <div className="flex items-center gap-1 text-vital-orange-600 text-xs mb-0.5">
                             <Building2 size={11} />
                             <span>在招企业</span>
                           </div>
-                          <div className="text-base font-bold text-vital-orange-700">{counts.enterprises}</div>
+                          <div className="text-base font-bold text-vital-orange-700">
+                            {counts.enterprises}
+                            <span className="text-xs font-normal text-vital-orange-500 ml-1">
+                              (已认证 {stats.verifiedEnterprises} 家)
+                            </span>
+                          </div>
                         </div>
                       </div>
 
@@ -636,6 +713,13 @@ function Township() {
                           <GraduationCap size={12} className="text-gray-400" />
                           <span className="text-gray-500 w-10">教育</span>
                           <span className="font-medium">{lifestyle.schools}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between mt-2 text-xs text-gray-400">
+                        <div className="flex items-center gap-1">
+                          <RefreshCw size={10} />
+                          <span>更新于 {dataUpdateTime}</span>
                         </div>
                       </div>
 
@@ -697,7 +781,11 @@ function Township() {
                         </div>
 
                         {activeTab === 'enterprises' && (
-                          <div className="p-4 space-y-3">
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="p-4 space-y-3"
+                          >
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                               <div>
                                 <label className="text-xs text-gray-500 mb-1 block">企业规模</label>
@@ -707,13 +795,9 @@ function Township() {
                                   size="small"
                                   className="w-full"
                                 >
-                                  <Select.Option value="全部">全部</Select.Option>
-                                  <Select.Option value="20人以下">20人以下</Select.Option>
-                                  <Select.Option value="20-99人">20-99人</Select.Option>
-                                  <Select.Option value="100-499人">100-499人</Select.Option>
-                                  <Select.Option value="500-999人">500-999人</Select.Option>
-                                  <Select.Option value="1000-9999人">1000-9999人</Select.Option>
-                                  <Select.Option value="10000人以上">10000人以上</Select.Option>
+                                  {SCALE_OPTIONS.map(opt => (
+                                    <Select.Option key={opt.value} value={opt.value}>{opt.label}</Select.Option>
+                                  ))}
                                 </Select>
                               </div>
                               <div>
@@ -724,19 +808,16 @@ function Township() {
                                   size="small"
                                   className="w-full"
                                 >
-                                  <Select.Option value="全部">全部</Select.Option>
-                                  <Select.Option value="已认证">
-                                    <span className="inline-flex items-center gap-1">
-                                      <ShieldCheck size={12} className="text-success-500" />
-                                      已认证
-                                    </span>
-                                  </Select.Option>
-                                  <Select.Option value="未认证">
-                                    <span className="inline-flex items-center gap-1">
-                                      <ShieldX size={12} className="text-gray-400" />
-                                      未认证
-                                    </span>
-                                  </Select.Option>
+                                  {VERIFICATION_FILTER_OPTIONS.map(opt => (
+                                    <Select.Option key={opt.value} value={opt.value}>
+                                      <span className="inline-flex items-center gap-1">
+                                        {opt.value === 'verified' && <ShieldCheck size={12} className="text-success-500" />}
+                                        {opt.value === 'pending' && <Clock size={12} className="text-gray-400" />}
+                                        {opt.value === 'unverified' && <ShieldX size={12} className="text-gray-400" />}
+                                        {opt.label}
+                                      </span>
+                                    </Select.Option>
+                                  ))}
                                 </Select>
                               </div>
                               <div>
@@ -763,20 +844,36 @@ function Township() {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                              {filteredEnterprises.length > 0 ? (
-                                filteredEnterprises.slice(0, 6).map((enterprise) => (
-                                  <EnterpriseCard
-                                    key={enterprise.id}
-                                    enterprise={enterprise}
-                                    onClick={() => handleAuthClick(enterprise)}
-                                  />
-                                ))
-                              ) : (
-                                <div className="col-span-full py-8 text-center text-gray-400">
-                                  <Building2 size={32} className="mx-auto mb-2 opacity-40" />
-                                  <p>暂无符合条件的企业</p>
-                                </div>
-                              )}
+                              <AnimatePresence mode="popLayout">
+                                {filteredEnterprises.length > 0 ? (
+                                  filteredEnterprises.slice(0, 6).map((enterprise, idx) => (
+                                    <motion.div
+                                      key={enterprise.id}
+                                      initial={{ opacity: 0, y: 10 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, scale: 0.95 }}
+                                      transition={{ delay: idx * 0.05 }}
+                                      layout
+                                    >
+                                      <EnterpriseCard
+                                        key={enterprise.id}
+                                        enterprise={enterprise}
+                                        onClick={() => handleAuthClick(enterprise)}
+                                        onAuthClick={handleAuthClick}
+                                      />
+                                    </motion.div>
+                                  ))
+                                ) : (
+                                  <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="col-span-full py-8 text-center text-gray-400"
+                                  >
+                                    <Building2 size={32} className="mx-auto mb-2 opacity-40" />
+                                    <p>暂无符合条件的企业</p>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
                             </div>
                             {filteredEnterprises.length > 6 && (
                               <div className="text-center mt-2">
@@ -785,27 +882,43 @@ function Township() {
                                 </Button>
                               </div>
                             )}
-                          </div>
+                          </motion.div>
                         )}
 
                         {activeTab === 'jobs' && (
-                          <div className="p-4 space-y-3">
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="p-4 space-y-3"
+                          >
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                              <div>
-                                <label className="text-xs text-gray-500 mb-1 block">薪资范围</label>
-                                <Select
-                                  value={salaryFilter}
-                                  onChange={setSalaryFilter}
-                                  size="small"
-                                  className="w-full"
-                                >
-                                  <Select.Option value="全部">全部</Select.Option>
-                                  <Select.Option value="4-6">4K-6K</Select.Option>
-                                  <Select.Option value="6-8">6K-8K</Select.Option>
-                                  <Select.Option value="8-10">8K-10K</Select.Option>
-                                  <Select.Option value="10-15">10K-15K</Select.Option>
-                                  <Select.Option value="15-999">15K以上</Select.Option>
-                                </Select>
+                              <div className="sm:col-span-3">
+                                <label className="text-xs text-gray-500 mb-1 block flex items-center justify-between">
+                                  <span>薪资范围</span>
+                                  <span className="text-industrial-blue-600 font-medium">
+                                    {salaryRange[0]}K - {salaryRange[1] >= 30 ? '30K+' : `${salaryRange[1]}K`}
+                                  </span>
+                                </label>
+                                <Slider
+                                  range
+                                  min={0}
+                                  max={30}
+                                  step={1}
+                                  value={salaryRange}
+                                  onChange={(val) => setSalaryRange(val as [number, number])}
+                                  tooltip={{
+                                    formatter: (val) => `${val}K`,
+                                  }}
+                                  marks={{
+                                    0: '0K',
+                                    5: '5K',
+                                    10: '10K',
+                                    15: '15K',
+                                    20: '20K',
+                                    25: '25K',
+                                    30: '30K+',
+                                  }}
+                                />
                               </div>
                               <div>
                                 <label className="text-xs text-gray-500 mb-1 block">经验要求</label>
@@ -844,16 +957,35 @@ function Township() {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                              {filteredPositions.length > 0 ? (
-                                filteredPositions.slice(0, 6).map((position) => (
-                                  <JobCard key={position.id} job={position} />
-                                ))
-                              ) : (
-                                <div className="col-span-full py-8 text-center text-gray-400">
-                                  <Briefcase size={32} className="mx-auto mb-2 opacity-40" />
-                                  <p>暂无符合条件的职位</p>
-                                </div>
-                              )}
+                              <AnimatePresence mode="popLayout">
+                                {filteredPositions.length > 0 ? (
+                                  filteredPositions.slice(0, 6).map((position, idx) => (
+                                    <motion.div
+                                      key={position.id}
+                                      initial={{ opacity: 0, y: 10 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, scale: 0.95 }}
+                                      transition={{ delay: idx * 0.05 }}
+                                      layout
+                                    >
+                                      <JobCard
+                                        key={position.id}
+                                        job={position}
+                                        onVerifyClick={handleVerifyClick}
+                                      />
+                                    </motion.div>
+                                  ))
+                                ) : (
+                                  <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="col-span-full py-8 text-center text-gray-400"
+                                  >
+                                    <Briefcase size={32} className="mx-auto mb-2 opacity-40" />
+                                    <p>暂无符合条件的职位</p>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
                             </div>
                             {filteredPositions.length > 6 && (
                               <div className="text-center mt-2">
@@ -862,7 +994,7 @@ function Township() {
                                 </Button>
                               </div>
                             )}
-                          </div>
+                          </motion.div>
                         )}
                       </div>
                     )}
@@ -874,94 +1006,261 @@ function Township() {
         </Card>
       </motion.div>
 
-      <Modal
-        title={
-          <div className="flex items-center gap-2">
-            {selectedEnterprise?.verified ? (
-              <ShieldCheck size={20} className="text-success-500" />
-            ) : (
-              <ShieldX size={20} className="text-gray-400" />
-            )}
-            <span>企业属地认证信息</span>
-          </div>
-        }
-        open={authModalVisible}
-        onCancel={() => setAuthModalVisible(false)}
-        footer={[
-          <Button key="close" onClick={() => setAuthModalVisible(false)}>
-            关闭
-          </Button>,
-        ]}
-      >
-        {selectedEnterprise && (
-          <div className="space-y-4">
-            <div className="flex items-center gap-4 pb-4 border-b border-gray-100">
-              <div className="w-16 h-16 rounded-xl bg-industrial-gradient flex items-center justify-center text-white text-2xl font-bold">
-                {selectedEnterprise.name.charAt(0)}
+      <AnimatePresence>
+        {authModalVisible && selectedEnterprise && (
+          <Modal
+            title={
+              <div className="flex items-center gap-2">
+                {selectedEnterprise.verificationStatus === 'verified' ? (
+                  <ShieldCheck size={20} className="text-success-500" />
+                ) : selectedEnterprise.verificationStatus === 'pending' ? (
+                  <Clock size={20} className="text-gray-400" />
+                ) : (
+                  <ShieldX size={20} className="text-gray-400" />
+                )}
+                <span>企业属地认证信息</span>
               </div>
-              <div>
-                <h3 className="font-bold text-gray-900 text-lg">{selectedEnterprise.name}</h3>
-                <div className="flex items-center gap-2 mt-1">
-                  {selectedEnterprise.verified ? (
-                    <Tag color="success" icon={<ShieldCheck size={12} />}>
-                      已通过属地认证
+            }
+            open={authModalVisible}
+            onCancel={() => setAuthModalVisible(false)}
+            footer={[
+              <Button key="close" onClick={() => setAuthModalVisible(false)}>
+                关闭
+              </Button>,
+            ]}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-4"
+            >
+              <div className="flex items-center gap-4 pb-4 border-b border-gray-100">
+                <motion.div
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  className="w-16 h-16 rounded-xl bg-industrial-gradient flex items-center justify-center text-white text-2xl font-bold"
+                >
+                  {selectedEnterprise.name.charAt(0)}
+                </motion.div>
+                <div>
+                  <h3 className="font-bold text-gray-900 text-lg">{selectedEnterprise.name}</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Tag
+                      color={selectedEnterprise.verificationStatus === 'verified' ? 'success' : 'default'}
+                      icon={selectedEnterprise.verificationStatus === 'verified' ? <ShieldCheck size={12} /> : selectedEnterprise.verificationStatus === 'pending' ? <Clock size={12} /> : <ShieldX size={12} />}
+                    >
+                      {selectedEnterprise.verificationStatus === 'verified' ? '已通过属地认证' : selectedEnterprise.verificationStatus === 'pending' ? '认证审核中' : '未认证'}
                     </Tag>
-                  ) : (
-                    <Tag color="default" icon={<ShieldX size={12} />}>
-                      待认证
-                    </Tag>
-                  )}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <List
-              size="small"
-              dataSource={[
-                { label: '营业执照编号', value: selectedEnterprise.licenseNo },
-                { label: '法定代表人', value: selectedEnterprise.legalRepresentative },
-                { label: '成立年份', value: `${selectedEnterprise.establishedYear}年` },
-                { label: '注册资本', value: selectedEnterprise.registeredCapital ? `${selectedEnterprise.registeredCapital}万元` : '未披露' },
-                { label: '企业规模', value: selectedEnterprise.scale },
-                { label: '所属行业', value: selectedEnterprise.industry },
-                { label: '所在镇街', value: TOWNSHIPS.find(t => t.code === selectedEnterprise.township)?.name || selectedEnterprise.township },
-                { label: '认证时间', value: selectedEnterprise.verifiedAt ? new Date(selectedEnterprise.verifiedAt).toLocaleDateString() : '未认证' },
-                { label: '入驻时间', value: new Date(selectedEnterprise.createdAt).toLocaleDateString() },
-              ]}
-              renderItem={(item) => (
-                <List.Item className="px-0">
-                  <span className="text-gray-500 text-sm w-28 flex-shrink-0">{item.label}</span>
-                  <span className="text-gray-800 text-sm font-mono-num">{item.value}</span>
-                </List.Item>
+              <List
+                size="small"
+                dataSource={[
+                  { label: '营业执照编号', value: selectedEnterprise.verificationDetail?.licenseNo || selectedEnterprise.licenseNo },
+                  { label: '法定代表人', value: selectedEnterprise.verificationDetail?.legalRepresentative || selectedEnterprise.legalRepresentative },
+                  { label: '成立年份', value: `${selectedEnterprise.establishedYear}年` },
+                  { label: '注册资本', value: selectedEnterprise.registeredCapital ? `${selectedEnterprise.registeredCapital}万元` : '未披露' },
+                  ...(selectedEnterprise.verificationDetail ? [
+                    { label: '属地认证编号', value: selectedEnterprise.verificationDetail.verificationNo },
+                    { label: '认证有效期', value: selectedEnterprise.verificationDetail.validUntil },
+                  ] : []),
+                  { label: '企业规模', value: selectedEnterprise.scale },
+                  { label: '所属行业', value: selectedEnterprise.industry },
+                  { label: '所在镇街', value: TOWNSHIPS.find(t => t.code === selectedEnterprise.township)?.name || selectedEnterprise.township },
+                  { label: '认证时间', value: selectedEnterprise.verifiedAt ? new Date(selectedEnterprise.verifiedAt).toLocaleDateString() : '未认证' },
+                  { label: '入驻时间', value: new Date(selectedEnterprise.createdAt).toLocaleDateString() },
+                ]}
+                renderItem={(item, index) => (
+                  <motion.div
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <List.Item className="px-0">
+                      <span className="text-gray-500 text-sm w-28 flex-shrink-0">{item.label}</span>
+                      <span className="text-gray-800 text-sm font-mono-num">{item.value}</span>
+                    </List.Item>
+                  </motion.div>
+                )}
+              />
+
+              {selectedEnterprise.verificationStatus === 'unverified' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-700"
+                >
+                  <div className="flex items-center gap-2 font-medium mb-1">
+                    <XCircle size={16} className="text-amber-500" />
+                    <span>认证说明</span>
+                  </div>
+                  <p className="text-xs text-amber-600">
+                    该企业尚未完成属地认证，建议求职时谨慎核实企业信息。认证企业需提供营业执照、法人身份证明等材料，经平台审核通过后方可获得认证标识。
+                  </p>
+                </motion.div>
               )}
-            />
 
-            {!selectedEnterprise.verified && (
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-700">
-                <div className="flex items-center gap-2 font-medium mb-1">
-                  <span>⚠️</span>
-                  <span>认证说明</span>
-                </div>
-                <p className="text-xs text-amber-600">
-                  该企业尚未完成属地认证，建议求职时谨慎核实企业信息。认证企业需提供营业执照、法人身份证明等材料，经平台审核通过后方可获得认证标识。
-                </p>
-              </div>
-            )}
+              {selectedEnterprise.verificationStatus === 'pending' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-700"
+                >
+                  <div className="flex items-center gap-2 font-medium mb-1">
+                    <Clock size={16} className="text-blue-500" />
+                    <span>认证审核中</span>
+                  </div>
+                  <p className="text-xs text-blue-600">
+                    该企业已提交认证申请，正在审核中。审核通过后将获得属地认证标识，招聘信息将被标记为可信。
+                  </p>
+                </motion.div>
+              )}
 
-            {selectedEnterprise.verified && (
-              <div className="bg-success-50 border border-success-200 rounded-lg p-3 text-sm text-success-700">
-                <div className="flex items-center gap-2 font-medium mb-1">
-                  <ShieldCheck size={16} />
-                  <span>认证保障</span>
-                </div>
-                <p className="text-xs text-success-600">
-                  该企业已通过中山市人社局属地认证，信息真实可靠。求职过程中如遇问题，可向平台投诉维权。
-                </p>
-              </div>
-            )}
-          </div>
+              {selectedEnterprise.verificationStatus === 'verified' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-success-50 border border-success-200 rounded-lg p-3 text-sm text-success-700"
+                >
+                  <div className="flex items-center gap-2 font-medium mb-1">
+                    <CheckCircle2 size={16} className="text-success-500" />
+                    <span>认证保障</span>
+                  </div>
+                  <p className="text-xs text-success-600">
+                    该企业已通过中山市人力资源和社会保障局属地认证，招聘信息真实可信。求职过程中如遇问题，可向平台投诉维权。
+                  </p>
+                </motion.div>
+              )}
+            </motion.div>
+          </Modal>
         )}
-      </Modal>
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {verifyModalVisible && selectedJob && (
+          <Modal
+            title={
+              <div className="flex items-center gap-2">
+                {selectedJob.townshipVerification?.overallResult ? (
+                  <ShieldCheck size={20} className="text-success-500" />
+                ) : (
+                  <ShieldX size={20} className="text-gray-400" />
+                )}
+                <span>岗位归属镇街校验</span>
+              </div>
+            }
+            open={verifyModalVisible}
+            onCancel={() => setVerifyModalVisible(false)}
+            footer={[
+              <Button key="close" onClick={() => setVerifyModalVisible(false)}>
+                关闭
+              </Button>,
+            ]}
+            width={520}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-4"
+            >
+              <div className="flex items-center gap-4 pb-4 border-b border-gray-100">
+                <motion.div
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  className="w-12 h-12 rounded-xl bg-industrial-gradient flex items-center justify-center text-white text-xl font-bold"
+                >
+                  {selectedJob.title.charAt(0)}
+                </motion.div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-gray-900 truncate">{selectedJob.title}</h3>
+                  <p className="text-sm text-gray-500 truncate">{selectedJob.enterpriseName}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Tag
+                      color={selectedJob.townshipVerification?.overallResult ? 'success' : 'default'}
+                      icon={selectedJob.townshipVerification?.overallResult ? <ShieldCheck size={12} /> : <ShieldX size={12} />}
+                      className="!mb-0"
+                    >
+                      {selectedJob.townshipName}属地岗位
+                    </Tag>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                {getVerificationItems(selectedJob).map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.08 }}
+                    className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex-shrink-0 mt-0.5">
+                      {item.pass ? (
+                        <CheckCircle2 size={18} className="text-success-500" />
+                      ) : (
+                        <XCircle size={18} className="text-danger-500" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-800">{item.label}</span>
+                        {item.pass ? (
+                          <span className="text-xs text-success-600">✅ {item.desc}</span>
+                        ) : (
+                          <span className="text-xs text-danger-600">❌ {item.desc.replace('位于', '不位于').replace('属于', '不属于').replace('在', '不在')}</span>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className={cn(
+                  'rounded-lg p-4 text-sm',
+                  selectedJob.townshipVerification?.overallResult
+                    ? 'bg-success-50 border border-success-200 text-success-700'
+                    : 'bg-amber-50 border border-amber-200 text-amber-700'
+                )}
+              >
+                <div className="flex items-center gap-2 font-medium mb-1">
+                  {selectedJob.townshipVerification?.overallResult ? (
+                    <CheckCircle2 size={18} className="text-success-500" />
+                  ) : (
+                    <XCircle size={18} className="text-amber-500" />
+                  )}
+                  <span>综合校验结果</span>
+                </div>
+                <p className={cn('text-xs', selectedJob.townshipVerification?.overallResult ? 'text-success-600' : 'text-amber-600')}>
+                  {selectedJob.townshipVerification?.overallResult
+                    ? `✅ 该岗位归属 ${selectedJob.townshipName}，可享受镇街就业补贴政策`
+                    : `⚠️ 该岗位不完全归属 ${selectedJob.townshipName}，需进一步核实岗位信息`}
+                </p>
+                {selectedJob.townshipVerification?.subsidyEligible && (
+                  <p className="text-xs text-success-600 mt-1">
+                    💰 企业可申请镇街吸纳就业补贴、社保补贴等政策支持
+                  </p>
+                )}
+              </motion.div>
+
+              <div className="text-xs text-gray-400 text-center pt-2 border-t border-gray-100">
+                数据来源：中山市人力资源和社会保障局 · 镇街人社分局
+              </div>
+            </motion.div>
+          </Modal>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

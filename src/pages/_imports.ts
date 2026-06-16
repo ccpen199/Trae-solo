@@ -8,6 +8,7 @@ export { default as JSTownship } from './jobseeker/Township';
 export { default as JSCampus } from './jobseeker/Campus';
 export { default as JSEducation } from './jobseeker/Education';
 export { default as JSApplications } from './jobseeker/Applications';
+export { default as JSSubsidy } from './jobseeker/Subsidy';
 export { default as JSProfile } from './jobseeker/Profile';
 
 export { default as ENDashboard } from './enterprise/Dashboard';
