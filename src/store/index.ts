@@ -743,44 +743,111 @@ export const useAppStore = create<AppState>((set, get) => ({
     const score = getScoreByWorkerId(newWorkerId);
     if (!worker) return null;
 
-    const nowTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
-    const newDispatchRecord: DispatchRecord = {
-      id: (order.dispatch_records?.length || 0) + 1,
+    const nowTime = new Date();
+    const addMin = (base: Date, mins: number) => {
+      const d = new Date(base.getTime() + mins * 60000);
+      return d.toISOString().slice(0, 16).replace('T', ' ');
+    };
+    const fmtTime = (d: Date) => d.toISOString().slice(0, 16).replace('T', ' ');
+
+    const baseId = order.dispatch_records?.length || 0;
+    const baseNodeId = order.nodes?.length || 0;
+    const dist = parseFloat((Math.random() * 1.5 + 0.3).toFixed(2));
+    const wScore = score?.overall_score || 90;
+
+    const reassignRecord: DispatchRecord = {
+      id: baseId + 1,
       order_id: orderId,
       worker_id: newWorkerId,
       worker_name: worker.real_name,
       action: 'manual_reassign',
       action_label: '人工改派',
-      action_time: nowTime,
+      action_time: fmtTime(nowTime),
       operator,
       reason: reason || '用户选择其他阿姨',
       dispatch_method: 'manual',
-      weighted_score: score?.overall_score,
+      weighted_score: wScore,
+      distance_km: dist,
       satisfaction_rate: score?.satisfaction_rate,
       complaint_rate: score?.complaint_rate,
     };
 
-    const assignNode: ServiceNode = {
-      id: (order.nodes?.length || 0) + 1,
+    const auditRecord: DispatchRecord = {
+      id: baseId + 2,
+      order_id: orderId,
+      worker_id: newWorkerId,
+      worker_name: worker.real_name,
+      action: 'dispatch_audit',
+      action_label: '调度复核',
+      action_time: addMin(nowTime, 1),
+      operator: '调度组长-周志强',
+      reason: '改派申请复核通过：1km内优先+综合评分达标+三证齐全',
+      dispatch_method: 'weighted_score',
+      weighted_score: wScore,
+      distance_km: dist,
+      satisfaction_rate: score?.satisfaction_rate,
+      complaint_rate: score?.complaint_rate,
+    };
+
+    const acceptRecord: DispatchRecord = {
+      id: baseId + 3,
+      order_id: orderId,
+      worker_id: newWorkerId,
+      worker_name: worker.real_name,
+      action: 'worker_accept',
+      action_label: '阿姨接单',
+      action_time: addMin(nowTime, 3),
+      operator: worker.real_name,
+      reason: '阿姨已确认接单，预计准时到达',
+      dispatch_method: 'manual',
+      weighted_score: wScore,
+      distance_km: dist,
+      satisfaction_rate: score?.satisfaction_rate,
+      complaint_rate: score?.complaint_rate,
+    };
+
+    const newNodes: ServiceNode[] = [];
+    newNodes.push({
+      id: baseNodeId + 1,
       order_id: orderId,
       node_type: 'assigned',
       node_label: '阿姨改派',
-      node_time: nowTime,
+      node_time: fmtTime(nowTime),
       remark: `由${operator}改派至${worker.real_name}（${reason || '用户选择其他阿姨'}）`,
-    };
+    });
+    newNodes.push({
+      id: baseNodeId + 2,
+      order_id: orderId,
+      node_type: 'assigned',
+      node_label: '调度复核通过',
+      node_time: addMin(nowTime, 1),
+      remark: '调度组长复核：1km内优先派单+动态加权评分达标，同意改派',
+    });
+
+    const isBeforeAccepted = ['pending', 'assigned'].includes(order.status);
+    if (isBeforeAccepted) {
+      newNodes.push({
+        id: baseNodeId + 3,
+        order_id: orderId,
+        node_type: 'accepted',
+        node_label: '阿姨已接单',
+        node_time: addMin(nowTime, 3),
+        remark: `${worker.real_name}已确认接单，将准时上门服务`,
+      });
+    }
 
     const updatedOrder: Order = {
       ...order,
       worker_id: newWorkerId,
       worker_name: worker.real_name,
       worker_phone: worker.phone,
-      worker_score: score?.overall_score,
+      worker_score: wScore,
       worker_avatar: worker.avatar,
-      status: order.status === 'pending' ? 'assigned' : order.status,
-      status_label: order.status === 'pending' ? '待接单' : order.status_label,
-      nodes: [...(order.nodes || []), assignNode],
-      dispatch_records: [...(order.dispatch_records || []), newDispatchRecord],
-      distance_km: Math.random() * 1.5 + 0.3,
+      status: isBeforeAccepted ? 'accepted' : order.status,
+      status_label: isBeforeAccepted ? '已接单' : order.status_label,
+      nodes: [...(order.nodes || []), ...newNodes],
+      dispatch_records: [...(order.dispatch_records || []), reassignRecord, auditRecord, acceptRecord],
+      distance_km: dist,
     };
 
     set((s) => ({

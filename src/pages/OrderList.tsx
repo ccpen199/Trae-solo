@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Baby, ChefHat, MapPin, Clock, Phone, ChevronLeft, ArrowLeft, Navigation, AlertTriangle, Star, Shield, FileText, Mic, BarChart3, Users, CheckCircle, CircleDollarSign, Gift, UserCheck, CalendarDays, Award, MessageSquare, TrendingUp, ThumbsUp, ThumbsDown, XCircle, Timer } from 'lucide-react';
+import { Sparkles, Baby, ChefHat, MapPin, Clock, Phone, ChevronLeft, ArrowLeft, Navigation, AlertTriangle, Star, Shield, FileText, Mic, BarChart3, Users, CheckCircle, CircleDollarSign, Gift, UserCheck, CalendarDays, Award, MessageSquare, TrendingUp, ThumbsUp, ThumbsDown, XCircle, Timer, Info } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Empty from '@/components/Empty';
 import { useAppStore } from '@/store';
@@ -211,30 +211,55 @@ function CompletedOrderDetail({ order }: { order: Order }) {
   if (!qa) return null;
 
   const conclusionLabel = qa.review_conclusion === 'pass' ? '质检通过' : qa.review_conclusion === 'warning' ? '质检警告' : '质检不通过';
-  const conclusionCls = qa.review_conclusion === 'pass' ? 'bg-green-100 text-green-700 border-green-200' : qa.review_conclusion === 'warning' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : 'bg-red-100 text-red-700 border-red-200';
+  const conclusionCls = qa.review_conclusion === 'pass'
+    ? 'bg-green-500 text-white shadow-green-100 border-green-600 hover:bg-green-600'
+    : qa.review_conclusion === 'warning'
+      ? 'bg-yellow-500 text-white shadow-yellow-100 border-yellow-600 hover:bg-yellow-600'
+      : 'bg-red-500 text-white shadow-red-100 border-red-600 hover:bg-red-600';
+  const badgeCls = qa.review_conclusion === 'pass'
+    ? 'bg-green-100 text-green-700 border border-green-200'
+    : qa.review_conclusion === 'warning'
+      ? 'bg-yellow-100 text-yellow-700 border border-yellow-200'
+      : 'bg-red-100 text-red-700 border border-red-200';
 
   return (
     <div className="mt-3 border-t border-gray-100 pt-3">
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setExpanded(!expanded);
-        }}
-        className={cn(
-          'w-full flex items-center justify-between px-3 py-2 rounded-xl border transition-colors',
-          conclusionCls,
-          !expanded && 'hover:opacity-80'
-        )}
-      >
-        <span className="flex items-center gap-2 text-xs font-bold">
-          {qa.review_conclusion === 'pass' ? <CheckCircle className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
-          服务评分与质量回溯
-          <span className="font-normal text-[10px]">{conclusionLabel}</span>
-          <span className="font-normal text-[10px]">合规{qa.compliance_rate}%</span>
-        </span>
-        <ChevronLeft className={cn('w-3.5 h-3.5 transition-transform', expanded && 'rotate-180')} />
-      </button>
+      <div className="flex items-stretch gap-1.5">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setExpanded(!expanded);
+          }}
+          className={cn(
+            'flex-1 flex items-center justify-between px-3 py-2.5 rounded-xl border-2 transition-all font-medium text-white shadow-sm',
+            conclusionCls
+          )}
+        >
+          <span className="flex items-center gap-2 text-xs">
+            {qa.review_conclusion === 'pass' ? <CheckCircle className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
+            服务评分与质量回溯
+            <span className="bg-white/20 px-1.5 py-0.5 rounded-full text-[9px] font-bold">
+              {conclusionLabel} · 合规{qa.compliance_rate}%
+            </span>
+          </span>
+          <ChevronLeft className={cn('w-4 h-4 transition-transform', expanded && 'rotate-180')} />
+        </button>
+        <Link
+          to={`/orders/${order.id}#qa-record`}
+          onClick={(e) => e.stopPropagation()}
+          className="px-2.5 py-2.5 rounded-xl border-2 border-secondary-200 bg-white text-secondary-600 text-[10px] font-medium hover:bg-secondary-50 hover:border-secondary-300 transition-colors flex items-center gap-1 whitespace-nowrap"
+        >
+          <FileText className="w-3.5 h-3.5" />
+          详情
+        </Link>
+      </div>
+      {!expanded && (
+        <p className="text-[9px] text-secondary-400 mt-1.5 ml-1">
+          <Info className="w-2.5 h-2.5 inline mr-0.5" />
+          点击左侧按钮展开查看：录音转文字 / 差评根因 / 质检处置 / 复查记录
+        </p>
+      )}
 
       {expanded && (
         <div className="mt-2 space-y-2.5 animate-fade-up">

@@ -622,45 +622,73 @@ export default function QuickOrderForm() {
           </div>
         )}
 
-        <div className="rounded-xl bg-cream-100 p-4 space-y-2">
+        <div className="rounded-xl bg-gradient-to-r from-primary-50 via-orange-50 to-primary-50 p-4 border border-primary-100">
           <div
-            className="flex items-center justify-between cursor-pointer"
+            className="flex items-center justify-between cursor-pointer mb-2"
             onClick={() => setShowFeeDetail(!showFeeDetail)}
           >
-            <span className="text-xs text-secondary-500">费用明细</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs text-secondary-600 font-medium">费用明细</span>
+              <span className="text-[9px] text-primary-600 bg-primary-100 px-1.5 py-0.5 rounded-full">
+                含50万家政责任险
+              </span>
+            </div>
             <ChevronDown className={cn('w-4 h-4 text-secondary-400 transition-transform', showFeeDetail && 'rotate-180')} />
           </div>
-          <div className="flex items-end justify-between">
+          <div className="flex items-end justify-between mb-2">
             <div>
               <span className="text-2xl font-bold text-primary-600">¥{totalFee}</span>
               <span className="text-xs text-secondary-400 ml-1">含保险</span>
             </div>
-            <button
-              onClick={handleSubmit}
-              disabled={submitting || !selectedAddress}
-              className={cn(
-                'btn-primary text-sm min-w-28 flex items-center justify-center gap-2',
-                submitting && 'opacity-70 cursor-not-allowed'
-              )}
-            >
-              {submitting ? (
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <><Zap className="w-4 h-4" />立即下单</>
-              )}
-            </button>
           </div>
+
+          <div className="flex items-center justify-between gap-2 mb-2.5 text-[9px] text-secondary-500">
+            <span className="flex items-center gap-0.5"><Zap className="w-2.5 h-2.5 text-primary-500" />订单生成</span>
+            <span className="flex-1 h-px bg-gradient-to-r from-primary-200 to-green-200" />
+            <span className="flex items-center gap-0.5"><Shield className="w-2.5 h-2.5 text-green-500" />保险承保</span>
+            <span className="flex-1 h-px bg-gradient-to-r from-green-200 to-blue-200" />
+            <span className="flex items-center gap-0.5"><Navigation className="w-2.5 h-2.5 text-blue-500" />节点提醒</span>
+            <span className="flex-1 h-px bg-gradient-to-r from-blue-200 to-red-200" />
+            <span className="flex items-center gap-0.5"><CircleDollarSign className="w-2.5 h-2.5 text-red-500" />赔付触发</span>
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            disabled={submitting || !selectedAddress}
+            className={cn(
+              'w-full py-3.5 rounded-xl text-sm font-bold text-white shadow-lg shadow-primary-200 transition-all flex items-center justify-center gap-2',
+              submitting || !selectedAddress
+                ? 'bg-gray-300 shadow-gray-100 cursor-not-allowed'
+                : 'bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 hover:shadow-xl hover:shadow-primary-300 hover:-translate-y-0.5 active:translate-y-0'
+            )}
+          >
+            {submitting ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                生成履约单中...
+              </>
+            ) : (
+              <>
+                <Zap className="w-4 h-4" />
+                3秒下单 · 生成完整履约单
+              </>
+            )}
+          </button>
+          <p className="text-[9px] text-secondary-400 text-center mt-1.5">
+            点击后自动完成：派单匹配 → 保险承保 → 节点通知 → 爽约赔付保障
+          </p>
+
           {showFeeDetail && (
-            <div className="pt-2 border-t border-gray-200 space-y-1.5 text-xs animate-fade-up">
+            <div className="pt-3 mt-3 border-t border-primary-100 space-y-1.5 text-[11px] animate-fade-up">
               <div className="flex justify-between text-secondary-600">
                 <span>{currentService.label} × {duration}小时</span>
                 <span>¥{baseFee}</span>
               </div>
               <div className="flex justify-between text-secondary-600">
-                <span>家政服务责任险</span>
+                <span>家政服务责任险（50万保额）</span>
                 <span>¥{insuranceFee}</span>
               </div>
-              <div className="flex justify-between font-bold text-secondary-800 pt-1.5 border-t border-gray-200">
+              <div className="flex justify-between font-bold text-secondary-800 pt-1.5 border-t border-primary-100">
                 <span>合计</span>
                 <span>¥{totalFee}</span>
               </div>

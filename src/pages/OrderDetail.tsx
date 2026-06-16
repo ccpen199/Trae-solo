@@ -63,7 +63,6 @@ function WorkerCertSection({ order }: { order: Order }) {
   const cert = order.worker_id ? getCertByWorkerId(order.worker_id) : undefined;
   const score = order.worker_id ? getScoreByWorkerId(order.worker_id) : undefined;
   const [showCertDetail, setShowCertDetail] = useState(false);
-  const [activeCertTab, setActiveCertTab] = useState<'ocr' | 'review'>('ocr');
 
   const distanceWeight = 0.4;
   const satisfactionWeight = 0.5;
@@ -162,143 +161,147 @@ function WorkerCertSection({ order }: { order: Order }) {
 
       {showCertDetail && cert && (
         <div className="animate-fade-up space-y-4">
-          <div className="flex gap-1 p-1 bg-secondary-50 rounded-lg">
-            <button onClick={() => setActiveCertTab('ocr')} className={cn('flex-1 text-center py-1.5 rounded-md text-xs font-medium transition-all', activeCertTab === 'ocr' ? 'bg-white text-primary-600 shadow-sm' : 'text-secondary-600')}>
-              <ScanLine className="w-3 h-3 inline mr-1" />OCR逐证识别
-            </button>
-            <button onClick={() => setActiveCertTab('review')} className={cn('flex-1 text-center py-1.5 rounded-md text-xs font-medium transition-all', activeCertTab === 'review' ? 'bg-white text-primary-600 shadow-sm' : 'text-secondary-600')}>
-              <History className="w-3 h-3 inline mr-1" />复核结论与留痕
-            </button>
+          <div className="flex items-center gap-2 mb-3">
+            <ScanLine className="w-4 h-4 text-primary-600" />
+            <h3 className="text-sm font-bold text-secondary-800">① 三证逐证OCR识别结果</h3>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary-50 text-primary-600">
+              21项字段 · 置信度标注
+            </span>
           </div>
 
-          {activeCertTab === 'ocr' && cert.ocr_detail && (
-            <div className="space-y-3">
-              {certConfig.map((item) => {
-                const certData = cert.ocr_detail![item.key];
-                if (!certData) return null;
-                const Icon = item.icon;
-                const lowFields = certData.fields.filter(f => f.confidence !== undefined && f.confidence < 80);
-                const overallOk = certData.confidence >= 95;
-                return (
-                  <div key={item.key} className="rounded-xl border border-gray-100 overflow-hidden">
-                    <div className={cn('px-3 py-2.5 flex items-center justify-between', item.bg)}>
-                      <div className="flex items-center gap-1.5">
-                        <Icon className={cn('w-4 h-4', item.color)} />
-                        <span className="text-xs font-bold text-secondary-800">{item.label}</span>
-                        <span className={cn(
-                          'text-[9px] px-1.5 py-0.5 rounded-full font-medium',
-                          overallOk ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+          <div className="space-y-3">
+            {certConfig.map((item) => {
+              const certData = cert.ocr_detail?.[item.key];
+              if (!certData) return null;
+              const Icon = item.icon;
+              const lowFields = certData.fields.filter(f => f.confidence !== undefined && f.confidence < 80);
+              const overallOk = certData.confidence >= 95;
+              return (
+                <div key={item.key} className="rounded-xl border border-gray-100 overflow-hidden">
+                  <div className={cn('px-3 py-2.5 flex items-center justify-between', item.bg)}>
+                    <div className="flex items-center gap-1.5">
+                      <Icon className={cn('w-4 h-4', item.color)} />
+                      <span className="text-xs font-bold text-secondary-800">{item.label}</span>
+                      <span className={cn(
+                        'text-[9px] px-1.5 py-0.5 rounded-full font-medium',
+                        overallOk ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                      )}>
+                        {overallOk ? '识别完整' : '存在低置信字段'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] text-secondary-500">置信度</span>
+                      <ConfidenceTag confidence={certData.confidence} />
+                    </div>
+                  </div>
+                  <div className="p-3">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                      {certData.fields.map((field, fi) => (
+                        <div key={fi} className={cn(
+                          'flex items-center justify-between text-[10px] py-1 px-2 rounded-md',
+                          field.confidence !== undefined && field.confidence < 80
+                            ? 'bg-red-50 border border-red-100'
+                            : 'bg-secondary-50'
                         )}>
-                          {overallOk ? '识别完整' : '存在低置信字段'}
+                          <span className="text-secondary-500 flex-shrink-0 mr-2">{field.label}</span>
+                          <div className="flex items-center gap-1 min-w-0">
+                            <span className="text-secondary-800 font-medium truncate">{field.value}</span>
+                            {field.confidence !== undefined && <ConfidenceTag confidence={field.confidence} />}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {lowFields.length > 0 && (
+                      <div className="mt-2 p-2 bg-red-50 rounded-lg border border-red-100">
+                        <p className="text-[9px] text-red-700 font-medium">
+                          <AlertCircle className="w-3 h-3 inline mr-1" />
+                          低置信字段需人工复核：{lowFields.map(f => f.label).join('、')}
+                        </p>
+                      </div>
+                    )}
+                    <p className="text-[8px] text-secondary-300 mt-2 text-right">OCR识别时间：{new Date(certData.ocr_time).toLocaleString('zh-CN')}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="border-t border-dashed border-gray-200 pt-4">
+            <div className="flex items-center gap-2 mb-3">
+              <History className="w-4 h-4 text-purple-600" />
+              <h3 className="text-sm font-bold text-secondary-800">② 复核结论与留痕时间线</h3>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-50 text-purple-600">
+                审核通过 · 留痕{cert.review_history?.length || 0}条
+              </span>
+            </div>
+
+            <div className={cn(
+              'rounded-xl p-3 border-2 mb-3',
+              cert.verify_status === 'approved' ? 'bg-green-50 border-green-200' : cert.verify_status === 'rejected' ? 'bg-red-50 border-red-200' : 'bg-yellow-50 border-yellow-200'
+            )}>
+              <div className="flex items-center gap-2 mb-2">
+                <UserCheck className="w-4 h-4" />
+                <span className="text-xs font-bold text-secondary-800">复核结论</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="text-[10px]">
+                  <span className="text-secondary-500">当前状态：</span>
+                  <span className={cn(
+                    'font-bold',
+                    cert.verify_status === 'approved' ? 'text-green-700' : cert.verify_status === 'rejected' ? 'text-red-700' : 'text-yellow-700'
+                  )}>
+                    {cert.verify_status === 'approved' ? '✓ 审核通过' : cert.verify_status === 'rejected' ? '✗ 审核驳回' : '⏳ 待复核'}
+                  </span>
+                </div>
+                <div className="text-[10px]">
+                  <span className="text-secondary-500">复核人：</span>
+                  <span className="text-secondary-700 font-medium">
+                    {cert.review_history?.find(r => r.type === 'recheck')?.reviewer || '初审专员-刘芳'}
+                  </span>
+                </div>
+                <div className="text-[10px]">
+                  <span className="text-secondary-500">OCR完成：</span>
+                  <span className="text-secondary-700">{cert.ocr_completed_at ? new Date(cert.ocr_completed_at).toLocaleString('zh-CN') : '—'}</span>
+                </div>
+                <div className="text-[10px]">
+                  <span className="text-secondary-500">留痕完成：</span>
+                  <span className="text-secondary-700">{cert.review_completed_at ? new Date(cert.review_completed_at).toLocaleString('zh-CN') : '—'}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-0">
+              {cert.review_history?.map((record, ri) => {
+                const isLast = ri === cert.review_history!.length - 1;
+                const certTypeLabel: Record<string, string> = { ocr: 'OCR自动识别', manual: '人工复核', recheck: '季度复查' };
+                const isReject = record.result === 'reject';
+                return (
+                  <div key={record.id} className="flex items-start gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', isReject ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600')}>
+                        {isReject ? <XCircle className="w-3.5 h-3.5" /> : <CheckCircle className="w-3.5 h-3.5" />}
+                      </div>
+                      {!isLast && <div className={cn('w-0.5 h-8 mt-0.5', isReject ? 'bg-red-200' : 'bg-green-200')} />}
+                    </div>
+                    <div className="pb-4 flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs font-bold text-secondary-800">{record.reviewer}</span>
+                        <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-secondary-100 text-secondary-600">{certTypeLabel[record.type] || record.type}</span>
+                        <span className={cn('text-[8px] px-1.5 py-0.5 rounded-full font-bold', isReject ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700')}>
+                          {isReject ? '✗ 驳回' : '✓ 通过'}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] text-secondary-500">综合置信度</span>
-                        <ConfidenceTag confidence={certData.confidence} />
-                      </div>
-                    </div>
-                    <div className="p-3">
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-                        {certData.fields.map((field, fi) => (
-                          <div key={fi} className={cn(
-                            'flex items-center justify-between text-[10px] py-1 px-2 rounded-md',
-                            field.confidence !== undefined && field.confidence < 80
-                              ? 'bg-red-50 border border-red-100'
-                              : 'bg-secondary-50'
-                          )}>
-                            <span className="text-secondary-500 flex-shrink-0 mr-2">{field.label}</span>
-                            <div className="flex items-center gap-1 min-w-0">
-                              <span className="text-secondary-800 font-medium truncate">{field.value}</span>
-                              {field.confidence !== undefined && <ConfidenceTag confidence={field.confidence} />}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      {lowFields.length > 0 && (
-                        <div className="mt-2 p-2 bg-red-50 rounded-lg border border-red-100">
-                          <p className="text-[9px] text-red-700 font-medium">
-                            <AlertCircle className="w-3 h-3 inline mr-1" />
-                            以下字段置信度低于80%，需人工复核：{lowFields.map(f => f.label).join('、')}
-                          </p>
-                        </div>
-                      )}
-                      <p className="text-[8px] text-secondary-300 mt-2 text-right">OCR识别时间：{new Date(certData.ocr_time).toLocaleString('zh-CN')}</p>
+                      <p className="text-[9px] text-secondary-400 mt-0.5 flex items-center gap-1">
+                        <Clock className="w-2.5 h-2.5" />
+                        留痕时间：{new Date(record.review_time).toLocaleString('zh-CN')}
+                      </p>
+                      <p className="text-[10px] mt-1 text-secondary-600 leading-relaxed bg-cream-100 rounded-lg p-2">{record.remark}</p>
                     </div>
                   </div>
                 );
               })}
             </div>
-          )}
-
-          {activeCertTab === 'review' && cert.review_history && (
-            <div className="space-y-3">
-              <div className={cn(
-                'rounded-xl p-3 border-2',
-                cert.verify_status === 'approved' ? 'bg-green-50 border-green-200' : cert.verify_status === 'rejected' ? 'bg-red-50 border-red-200' : 'bg-yellow-50 border-yellow-200'
-              )}>
-                <div className="flex items-center gap-2 mb-2">
-                  <UserCheck className="w-4 h-4" />
-                  <span className="text-xs font-bold text-secondary-800">复核结论</span>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="text-[10px]">
-                    <span className="text-secondary-500">当前状态：</span>
-                    <span className={cn(
-                      'font-bold',
-                      cert.verify_status === 'approved' ? 'text-green-700' : cert.verify_status === 'rejected' ? 'text-red-700' : 'text-yellow-700'
-                    )}>
-                      {cert.verify_status === 'approved' ? '✓ 审核通过' : cert.verify_status === 'rejected' ? '✗ 审核驳回' : '⏳ 待复核'}
-                    </span>
-                  </div>
-                  <div className="text-[10px]">
-                    <span className="text-secondary-500">OCR完成：</span>
-                    <span className="text-secondary-700">{cert.ocr_completed_at ? new Date(cert.ocr_completed_at).toLocaleString('zh-CN') : '—'}</span>
-                  </div>
-                  <div className="text-[10px]">
-                    <span className="text-secondary-500">复核完成：</span>
-                    <span className="text-secondary-700">{cert.review_completed_at ? new Date(cert.review_completed_at).toLocaleString('zh-CN') : '—'}</span>
-                  </div>
-                  <div className="text-[10px]">
-                    <span className="text-secondary-500">提交时间：</span>
-                    <span className="text-secondary-700">{new Date(cert.submitted_at).toLocaleString('zh-CN')}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-0">
-                <p className="text-[10px] text-secondary-500 font-medium mb-2">复核留痕时间线</p>
-                {cert.review_history.map((record, ri) => {
-                  const isLast = ri === cert.review_history!.length - 1;
-                  const certTypeLabel: Record<string, string> = { ocr: 'OCR自动识别', manual: '人工复核', recheck: '季度复查' };
-                  const isReject = record.result === 'reject';
-                  return (
-                    <div key={record.id} className="flex items-start gap-3">
-                      <div className="flex flex-col items-center">
-                        <div className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', isReject ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600')}>
-                          {isReject ? <XCircle className="w-3.5 h-3.5" /> : <CheckCircle className="w-3.5 h-3.5" />}
-                        </div>
-                        {!isLast && <div className={cn('w-0.5 h-8 mt-0.5', isReject ? 'bg-red-200' : 'bg-green-200')} />}
-                      </div>
-                      <div className="pb-4 flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-xs font-bold text-secondary-800">{record.reviewer}</span>
-                          <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-secondary-100 text-secondary-600">{certTypeLabel[record.type] || record.type}</span>
-                          <span className={cn('text-[8px] px-1.5 py-0.5 rounded-full font-bold', isReject ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700')}>
-                            {isReject ? '✗ 驳回' : '✓ 通过'}
-                          </span>
-                        </div>
-                        <p className="text-[9px] text-secondary-400 mt-0.5 flex items-center gap-1">
-                          <Clock className="w-2.5 h-2.5" />
-                          留痕时间：{new Date(record.review_time).toLocaleString('zh-CN')}
-                        </p>
-                        <p className="text-[10px] mt-1 text-secondary-600 leading-relaxed bg-cream-100 rounded-lg p-2">{record.remark}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
+          </div>
         </div>
       )}
     </div>
