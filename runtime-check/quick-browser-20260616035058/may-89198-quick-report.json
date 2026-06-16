@@ -1,0 +1,36 @@
+{
+  "order": "may-89198",
+  "frontendUrl": "http://127.0.0.1:49198/",
+  "backendUrl": "http://127.0.0.1:59198",
+  "status": 200,
+  "frontendOk": true,
+  "backendHealth": {
+    "url": "http://127.0.0.1:59198/api/health",
+    "status": 200,
+    "ok": true,
+    "ms": 25,
+    "preview": "{\"status\":\"ok\",\"service\":\"resume-workbench-backend\",\"frontendUrl\":\"http://127.0.0.1:49198\",\"database\":\"data/app.sqlite\",\"updatedAt\":\"2026-06-15 23:41:06\"}"
+  },
+  "login": {
+    "attempted": false
+  },
+  "finalUrl": "http://127.0.0.1:49198/",
+  "title": "My Trae Project",
+  "markerHits": {
+    "创建简历": true,
+    "模板库": true,
+    "个人中心": true,
+    "管理后台": true,
+    "ATS": true
+  },
+  "markerHitCount": 5,
+  "consoleErrorCount": 0,
+  "requestFailureCount": 0,
+  "apiResponseErrorCount": 0,
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "bodyPreview": "智能简历工作台 Resume Workbench 工作台 模板库 个人中心 管理后台 设置 已加密 共 0 份简历 模板库 设置 开始创建你的简历 专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储 创建简历 使用行业模板 AI智能诊断 深度分析简历内容，提供专业优化建议，提升简历竞争力 立即检测 ATS兼容性检测 智能检测简历与招聘系统的兼容性，提升通过率 立即检测 Word原生导出 一键导出标准Word格式，排版完美还原，可直接投递 格式保真 AES加密存储 银行级AES加密，数据仅保存在本地，隐私安全有保障 前往设置 行业模板 技术岗 技术岗专用，突出项目指标与技术栈，适合前端开发工程师 项目指标 技术栈标签 开源贡献 使用此模板 设计岗 设计岗专用，强化作品集链接与设计成果展示 作品集链接 设计工具 视觉规范 使用此模板 职能岗 职能岗专用，侧重流程优化与管理成果 流程优化 供应商管理 预算控制 使用此模板 最近简历 新建 还没有简历 创建你的第一份简历，开启求职之旅 创建简历 选择行业模板 隐私保护模式 · 数据仅存本地 · AES加密存储 © 2025 智能",
+  "navError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/quick-browser-20260616035058/may-89198.png"
+}

@@ -1,9 +1,9 @@
 {
   "ok": true,
-  "generatedAt": "2026-06-16T02:52:14.356Z",
+  "generatedAt": "2026-06-16T03:06:28.322Z",
   "order": "may-89198",
-  "roundIndex": 12,
-  "captureId": "codex-final-may-89198",
+  "roundIndex": 99,
+  "captureId": "may-89198-codex-current",
   "url": "http://127.0.0.1:49198/",
   "initialUrl": "http://127.0.0.1:49198/",
   "finalUrl": "http://127.0.0.1:49198/",
@@ -11,16 +11,16 @@
   "title": "My Trae Project",
   "initialTitle": "My Trae Project",
   "navigationError": "",
-  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-frontend.png",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-frontend.png",
   "screenshotPaths": [
-    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-01-首屏.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-02-导航-工作台.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-03-操作-创建简历.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-04-二层操作-创建简历-创建简历.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-05-操作-新建.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-06-二层操作-新建-创建简历.png"
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-03-操作-创建简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-04-二层操作-创建简历-创建简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-05-操作-新建.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-06-二层操作-新建-创建简历.png"
   ],
-  "issueTextPreview": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "issueTextPreview": "后台入口、个人中心链路、运行态确认",
   "targetReason": "个人中心/我的相关问题；后台管理相关问题",
   "targetKind": "personal",
   "targetMatched": true,
@@ -129,6 +129,24 @@
         "label": "导航:个人中心",
         "ok": false,
         "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:管理后台",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*管理后台\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/admin\" data-discover=\"true\" class=\"nav-link flex items"
+      },
+      {
+        "action": "click",
+        "label": "导航:管理后台",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:管理后台",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
       }
     ],
     "snapshots": [
@@ -186,12 +204,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89198-structure-01-首屏",
+          "runId": "may-89198-codex-current-structure-01-首屏",
           "label": "首屏",
           "finalUrl": "http://127.0.0.1:49198/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-01-首屏.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-01-首屏.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-01-首屏.png",
           "elementCount": 269,
           "interactiveCount": 19,
           "interactiveLabels": [
@@ -263,12 +281,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89198-structure-02-导航-工作台",
+          "runId": "may-89198-codex-current-structure-02-导航-工作台",
           "label": "导航:工作台",
           "finalUrl": "http://127.0.0.1:49198/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-02-导航-工作台.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-02-导航-工作台.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-02-导航-工作台.png",
           "elementCount": 269,
           "interactiveCount": 19,
           "interactiveLabels": [
@@ -345,12 +363,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89198-structure-03-操作-创建简历",
+          "runId": "may-89198-codex-current-structure-03-操作-创建简历",
           "label": "操作:创建简历",
           "finalUrl": "http://127.0.0.1:49198/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-03-操作-创建简历.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-03-操作-创建简历.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-03-操作-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-03-操作-创建简历.png",
           "elementCount": 348,
           "interactiveCount": 25,
           "interactiveLabels": [
@@ -432,12 +450,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89198-structure-04-二层操作-创建简历-创建简历",
+          "runId": "may-89198-codex-current-structure-04-二层操作-创建简历-创建简历",
           "label": "二层操作:创建简历->创建简历",
           "finalUrl": "http://127.0.0.1:49198/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-04-二层操作-创建简历-创建简历.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-04-二层操作-创建简历-创建简历.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-04-二层操作-创建简历-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-04-二层操作-创建简历-创建简历.png",
           "elementCount": 348,
           "interactiveCount": 25,
           "interactiveLabels": [
@@ -519,12 +537,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89198-structure-05-操作-新建",
+          "runId": "may-89198-codex-current-structure-05-操作-新建",
           "label": "操作:新建",
           "finalUrl": "http://127.0.0.1:49198/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-05-操作-新建.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-05-操作-新建.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-05-操作-新建.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-05-操作-新建.png",
           "elementCount": 348,
           "interactiveCount": 25,
           "interactiveLabels": [
@@ -606,12 +624,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89198-structure-06-二层操作-新建-创建简历",
+          "runId": "may-89198-codex-current-structure-06-二层操作-新建-创建简历",
           "label": "二层操作:新建->创建简历",
           "finalUrl": "http://127.0.0.1:49198/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-06-二层操作-新建-创建简历.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-06-二层操作-新建-创建简历.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-06-二层操作-新建-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-06-二层操作-新建-创建简历.png",
           "elementCount": 348,
           "interactiveCount": 25,
           "interactiveLabels": [
@@ -674,12 +692,12 @@
     "structureCaptures": [
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-01-首屏",
+        "runId": "may-89198-codex-current-structure-01-首屏",
         "label": "首屏",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-01-首屏.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-01-首屏.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-01-首屏.png",
         "elementCount": 269,
         "interactiveCount": 19,
         "interactiveLabels": [
@@ -698,12 +716,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-02-导航-工作台",
+        "runId": "may-89198-codex-current-structure-02-导航-工作台",
         "label": "导航:工作台",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-02-导航-工作台.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-02-导航-工作台.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-02-导航-工作台.png",
         "elementCount": 269,
         "interactiveCount": 19,
         "interactiveLabels": [
@@ -722,12 +740,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-03-操作-创建简历",
+        "runId": "may-89198-codex-current-structure-03-操作-创建简历",
         "label": "操作:创建简历",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-03-操作-创建简历.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-03-操作-创建简历.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-03-操作-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-03-操作-创建简历.png",
         "elementCount": 348,
         "interactiveCount": 25,
         "interactiveLabels": [
@@ -751,12 +769,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-04-二层操作-创建简历-创建简历",
+        "runId": "may-89198-codex-current-structure-04-二层操作-创建简历-创建简历",
         "label": "二层操作:创建简历->创建简历",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-04-二层操作-创建简历-创建简历.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-04-二层操作-创建简历-创建简历.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-04-二层操作-创建简历-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-04-二层操作-创建简历-创建简历.png",
         "elementCount": 348,
         "interactiveCount": 25,
         "interactiveLabels": [
@@ -780,12 +798,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-05-操作-新建",
+        "runId": "may-89198-codex-current-structure-05-操作-新建",
         "label": "操作:新建",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-05-操作-新建.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-05-操作-新建.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-05-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-05-操作-新建.png",
         "elementCount": 348,
         "interactiveCount": 25,
         "interactiveLabels": [
@@ -809,12 +827,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-06-二层操作-新建-创建简历",
+        "runId": "may-89198-codex-current-structure-06-二层操作-新建-创建简历",
         "label": "二层操作:新建->创建简历",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-06-二层操作-新建-创建简历.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-06-二层操作-新建-创建简历.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-06-二层操作-新建-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-06-二层操作-新建-创建简历.png",
         "elementCount": 348,
         "interactiveCount": 25,
         "interactiveLabels": [
@@ -846,12 +864,12 @@
     "captures": [
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-01-首屏",
+        "runId": "may-89198-codex-current-structure-01-首屏",
         "label": "首屏",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-01-首屏.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-01-首屏.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-01-首屏.png",
         "elementCount": 269,
         "interactiveCount": 19,
         "interactiveLabels": [
@@ -870,12 +888,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-02-导航-工作台",
+        "runId": "may-89198-codex-current-structure-02-导航-工作台",
         "label": "导航:工作台",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-02-导航-工作台.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-02-导航-工作台.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-02-导航-工作台.png",
         "elementCount": 269,
         "interactiveCount": 19,
         "interactiveLabels": [
@@ -894,12 +912,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-03-操作-创建简历",
+        "runId": "may-89198-codex-current-structure-03-操作-创建简历",
         "label": "操作:创建简历",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-03-操作-创建简历.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-03-操作-创建简历.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-03-操作-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-03-操作-创建简历.png",
         "elementCount": 348,
         "interactiveCount": 25,
         "interactiveLabels": [
@@ -923,12 +941,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-04-二层操作-创建简历-创建简历",
+        "runId": "may-89198-codex-current-structure-04-二层操作-创建简历-创建简历",
         "label": "二层操作:创建简历->创建简历",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-04-二层操作-创建简历-创建简历.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-04-二层操作-创建简历-创建简历.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-04-二层操作-创建简历-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-04-二层操作-创建简历-创建简历.png",
         "elementCount": 348,
         "interactiveCount": 25,
         "interactiveLabels": [
@@ -952,12 +970,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-05-操作-新建",
+        "runId": "may-89198-codex-current-structure-05-操作-新建",
         "label": "操作:新建",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-05-操作-新建.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-05-操作-新建.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-05-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-05-操作-新建.png",
         "elementCount": 348,
         "interactiveCount": 25,
         "interactiveLabels": [
@@ -981,12 +999,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89198-structure-06-二层操作-新建-创建简历",
+        "runId": "may-89198-codex-current-structure-06-二层操作-新建-创建简历",
         "label": "二层操作:新建->创建简历",
         "finalUrl": "http://127.0.0.1:49198/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-06-二层操作-新建-创建简历.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-final-may-89198-structure-06-二层操作-新建-创建简历.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-06-二层操作-新建-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-codex-current-structure-06-二层操作-新建-创建简历.png",
         "elementCount": 348,
         "interactiveCount": 25,
         "interactiveLabels": [
@@ -1129,5 +1147,6 @@
     }
   ],
   "requestFailures": [],
-  "responseErrors": []
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-current/may-89198-browser-report.json"
 }

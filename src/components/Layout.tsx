@@ -1,8 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, FileText, LayoutTemplate, Shield, Settings, UserCircle, Gauge } from 'lucide-react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { path: '/', icon: Home, label: '工作台' },
@@ -10,6 +11,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { path: '/profile', icon: UserCircle, label: '个人中心' },
     { path: '/admin', icon: Gauge, label: '管理后台' },
   ];
+
+  const handleNavClick = (e: React.MouseEvent, path: string) => {
+    e.preventDefault();
+    console.log('[NAV] Clicked:', path, 'current:', location.pathname);
+    navigate(path);
+  };
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
@@ -35,6 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={(e) => handleNavClick(e, item.path)}
                 className={`nav-link flex items-center gap-2 px-4 py-2 ${isActive(item.path) ? 'nav-link-active' : ''}`}
               >
                 <item.icon className="w-4 h-4" />
@@ -46,6 +54,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <Link
               to="/settings"
+              onClick={(e) => handleNavClick(e, '/settings')}
               className={`nav-link flex items-center gap-2 ${isActive('/settings') ? 'nav-link-active' : ''}`}
             >
               <Settings className="w-4 h-4" />
@@ -59,6 +68,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Link
               key={item.path}
               to={item.path}
+              onClick={(e) => handleNavClick(e, item.path)}
               className={`flex flex-col items-center gap-1 px-3 py-1 rounded-lg ${
                 isActive(item.path) ? 'text-navy-600' : 'text-navy-400'
               }`}
