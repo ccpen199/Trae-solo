@@ -78,6 +78,63 @@ export interface LatestApplicationItem {
   deptCollaborationCount: number;
   notificationDeliveryDetail: NotificationDeliveryDetail;
   quickActions: QuickAction[];
+  rescheduleInfo: {
+    hasRescheduled: boolean;
+    originalTime: Date | null;
+    currentTime: Date | null;
+    rescheduleReason: string | null;
+    rescheduledAt: Date | null;
+    operator: string | null;
+  } | null;
+  supplementInfo: {
+    hasSupplemented: boolean;
+    supplementTimes: number;
+    lastSupplementAt: Date | null;
+    supplementOpinion: string | null;
+    pendingMaterials: string[];
+  } | null;
+  approvalInfo: {
+    approvalOpinions: Array<{
+      approver: string | null;
+      department: string | null;
+      opinion: string;
+      approvedAt: Date | null;
+      result: string;
+    }>;
+    hasJointSign: boolean;
+    jointSignDepts: string[];
+    pendingApprovalDept: string | null;
+  } | null;
+  certificateInfo: {
+    hasCertificate: boolean;
+    certificateNo: string | null;
+    certificateType: string | null;
+    issuedAt: Date | null;
+    issuer: string | null;
+    issuanceConfirmed: boolean;
+    confirmedBy: string | null;
+    confirmedAt: Date | null;
+    sealImageUrl: string | null;
+    qrCodeUrl: string | null;
+  } | null;
+  resultPushInfo: {
+    hasPushed: boolean;
+    pushChannels: string[];
+    pushedAt: Date | null;
+    pushOperator: string | null;
+    deliveryReceiptNo: string | null;
+    applicantReceived: boolean;
+    receiptConfirmedAt: Date | null;
+    failedChannels: string[];
+    retryAttempts: number;
+  } | null;
+  branchRecords: Array<{
+    branchType: string;
+    branchTypeLabel: string;
+    initiator: string | null;
+    createdAt: Date;
+    opinion: string | null;
+  }>;
 }
 
 export interface TimeoutAlertItem {
@@ -97,6 +154,61 @@ export interface TimeoutAlertItem {
   disposedBy: string | null;
   disposedAt: Date | null;
   disposalResult: string | null;
+  disposalPerson: {
+    id: string | null;
+    name: string | null;
+    department: string | null;
+    assignedAt: Date | null;
+    disposalDeadline: Date | null;
+    countdownMinutes: number;
+  } | null;
+  supervisionRecords: Array<{
+    id: string;
+    supervisor: string | null;
+    supervisorDept: string | null;
+    supervisedAt: Date | null;
+    supervisionLevel: string;
+    content: string | null;
+    responseStatus: string;
+    responder: string | null;
+    responseContent: string | null;
+    respondedAt: Date | null;
+    followUpCount: number;
+  }>;
+  notificationRetry: {
+    failedCount: number;
+    retryCount: number;
+    retrySuccessCount: number;
+    pendingRetry: number;
+    lastRetryAt: Date | null;
+    canRetry: boolean;
+    retryEndpoint: string | null;
+    failedList: Array<{
+      id: string;
+      channel: string;
+      channelLabel: string;
+      failedAt: Date | null;
+      failureReason: string | null;
+      retryCount: number;
+    }>;
+  } | null;
+  deliveryTrace: {
+    sms: { sent: number; delivered: number; failed: number; read: number };
+    wechat: { sent: number; delivered: number; failed: number; read: number };
+    miniProgram: { sent: number; delivered: number; failed: number; read: number };
+  } | null;
+  applicantConfirmation: {
+    confirmed: boolean;
+    confirmedAt: Date | null;
+    confirmMethod: string | null;
+    confirmRemark: string | null;
+    receiptNo: string | null;
+    confirmDeadline: Date | null;
+    countdownMinutes: number;
+  } | null;
+  riskLevel: 1 | 2 | 3;
+  riskLevelLabel: string;
+  riskDescription: string;
 }
 
 export interface WorkbenchAction {
@@ -2708,6 +2820,121 @@ export class AdminConsoleService {
 
         const quickActions = getQuickActionsForStatus(a.status as ApplicationStatus, a.id);
 
+        const allTimeline = a.timeline || [];
+        const rescheduleNode = allTimeline.find((t) => t.nodeCode === 'appointment_rescheduled');
+        const rescheduleInfo = rescheduleNode
+          ? {
+              hasRescheduled: true,
+              originalTime: a.createdAt,
+              currentTime: rescheduleNode.startTime,
+              rescheduleReason: rescheduleNode.opinion || '申请人调整时间',
+              rescheduledAt: rescheduleNode.createdAt,
+              operator: rescheduleNode.operatorName || '系统',
+            }
+          : null;
+
+        const supplementNodes = allTimeline.filter((t) => t.nodeCode === 'supplement_materials');
+        const supplementInfo =
+          supplementNodes.length > 0
+            ? {
+                hasSupplemented: true,
+                supplementTimes: supplementNodes.length,
+                lastSupplementAt: supplementNodes[0].createdAt,
+                supplementOpinion: supplementNodes[0].opinion || '',
+                pendingMaterials: ((a as any).materials || [])
+                  .filter((m: any) => !m.isRequired)
+                  .map((m: any) => m.materialName || m.name || '')
+                  .slice(0, 5),
+              }
+            : null;
+
+        const approvalOpinions = (a.approvals || []).slice(0, 5).map((appr: any) => ({
+          approver: appr.approverName || appr.operatorName || null,
+          department: appr.department ? deptLabels[appr.department] || appr.department : null,
+          opinion: appr.opinion || '',
+          approvedAt: appr.createdAt || null,
+          result: appr.action || appr.status || 'approved',
+        }));
+        const jointSignNodes = allTimeline.filter((t) => t.nodeCode === 'joint_sign');
+        const approvalInfo =
+          approvalOpinions.length > 0 || jointSignNodes.length > 0
+            ? {
+                approvalOpinions,
+                hasJointSign: jointSignNodes.length > 0,
+                jointSignDepts: jointSignNodes.map((t) => deptLabels[t.department] || t.department).filter(Boolean),
+                pendingApprovalDept: latestTimeline?.department
+                  ? deptLabels[latestTimeline.department] || latestTimeline.department
+                  : null,
+              }
+            : null;
+
+        const certificateInfo = a.certificate
+          ? {
+              hasCertificate: true,
+              certificateNo: a.certificate.id || null,
+              certificateType: a.serviceItem?.itemName || null,
+              issuedAt: (a.certificate as any).issuedAt || (a.certificate as any).createdAt || null,
+              issuer: (a.certificate as any).issuerName || (a.certificate as any).issuer || null,
+              issuanceConfirmed: !!(a.certificate as any).confirmedAt || a.status === ApplicationStatus.CERTIFICATE_ISSUED,
+              confirmedBy: (a.certificate as any).confirmedBy || null,
+              confirmedAt: (a.certificate as any).confirmedAt || null,
+              sealImageUrl: (a.certificate as any).sealImageUrl || null,
+              qrCodeUrl: (a.certificate as any).qrCodeUrl || null,
+            }
+          : null;
+
+        const resultPushNode = allTimeline.find((t) => t.nodeCode === 'result_pushed');
+        const pushChannels: string[] = [];
+        const failedChannels: string[] = [];
+        for (const n of notifications) {
+          const ch = String(n.channel || '').toUpperCase();
+          const chLabel = ch === 'SMS' ? '短信' : ch === 'WECHAT' ? '微信' : ch === 'MINI_PROGRAM' ? '小程序' : ch;
+          if (!pushChannels.includes(chLabel)) pushChannels.push(chLabel);
+          if (n.status === 'FAILED' && !failedChannels.includes(chLabel)) failedChannels.push(chLabel);
+        }
+        const resultPushInfo =
+          resultPushNode || notifications.length > 0
+            ? {
+                hasPushed: !!resultPushNode,
+                pushChannels,
+                pushedAt: resultPushNode?.endTime || notifications[0]?.createdAt || null,
+                pushOperator: resultPushNode?.operatorName || '系统',
+                deliveryReceiptNo: resultPushNode?.id ? `RCPT-${resultPushNode.id.slice(0, 8)}` : null,
+                applicantReceived: a.status === ApplicationStatus.COMPLETED,
+                receiptConfirmedAt: a.completedAt || null,
+                failedChannels,
+                retryAttempts: totalRetryCount,
+              }
+            : null;
+
+        const branchRecords: Array<{
+          branchType: string;
+          branchTypeLabel: string;
+          initiator: string | null;
+          createdAt: Date;
+          opinion: string | null;
+        }> = [];
+        const branchLabelMap: Record<string, string> = {
+          appointment_rescheduled: '预约改期',
+          supplement_materials: '材料补正',
+          pre_review_rejected: '预审退回',
+          joint_sign: '部门会签',
+          certificate_confirmed: '签发确认',
+          result_pushed: '结果回执',
+          applicant_confirmed: '申请人确认',
+        };
+        for (const t of allTimeline) {
+          if (branchLabelMap[t.nodeCode]) {
+            branchRecords.push({
+              branchType: t.nodeCode,
+              branchTypeLabel: branchLabelMap[t.nodeCode],
+              initiator: t.operatorName || null,
+              createdAt: t.createdAt,
+              opinion: t.opinion || null,
+            });
+          }
+        }
+
         return {
           applicationNo: a.applicationNo,
           itemName: a.serviceItem?.itemName || '',
@@ -2736,6 +2963,12 @@ export class AdminConsoleService {
           deptCollaborationCount: a.approvals?.length || 0,
           notificationDeliveryDetail,
           quickActions,
+          rescheduleInfo,
+          supplementInfo,
+          approvalInfo,
+          certificateInfo,
+          resultPushInfo,
+          branchRecords,
         };
       }),
       timeoutAlerts: timeoutNodes.map((t) => {
@@ -2791,11 +3024,157 @@ export class AdminConsoleService {
           }
         }
 
+        const timeoutHours = Math.round(dayjs().diff(dayjs(t.startTime), 'hour'));
+        let riskLevel: 1 | 2 | 3 = 1;
+        let riskLevelLabel = '一级风险';
+        let riskDescription = '节点超时，请尽快处置';
+        if (timeoutHours >= 48) {
+          riskLevel = 3;
+          riskLevelLabel = '三级风险';
+          riskDescription = '严重超时，建议启动督办流程';
+        } else if (timeoutHours >= 18) {
+          riskLevel = 2;
+          riskLevelLabel = '二级风险';
+          riskDescription = '中度超时，请关注并尽快处置';
+        }
+
+        const disposalPerson = t.operatorName || (t.application as any).currentHandler
+          ? {
+              id: t.applicationId,
+              name: t.operatorName || (t.application as any).currentHandler || null,
+              department: t.department
+                ? deptLabels[t.department] || t.department
+                : (t.application as any).currentDepartment
+                  ? deptLabels[(t.application as any).currentDepartment] ||
+                    (t.application as any).currentDepartment
+                  : null,
+              assignedAt: t.startTime,
+              disposalDeadline: dayjs(t.startTime).add(24, 'hour').toDate(),
+              countdownMinutes: Math.max(
+                0,
+                dayjs(dayjs(t.startTime).add(24, 'hour')).diff(dayjs(), 'minute'),
+              ),
+            }
+          : null;
+
+        const supervisionTimeline = ((t.application as any).timeline || []).filter(
+          (tl: any) => tl.nodeCode === 'supervised' || tl.nodeCode === 'supervise',
+        );
+        const supervisionRecords = supervisionTimeline.slice(0, 5).map((tl: any, i: number) => ({
+          id: `sup-${t.applicationId}-${i}`,
+          supervisor: tl.operatorName || '系统',
+          supervisorDept: tl.department ? deptLabels[tl.department] || tl.department : null,
+          supervisedAt: tl.createdAt,
+          supervisionLevel: i === 0 ? 'SUPREME' : i === 1 ? 'URGENT' : 'NORMAL',
+          content: tl.opinion || '请尽快处置超时节点',
+          responseStatus: i === 0 ? 'PENDING' : i === 1 ? 'RESPONDED' : 'RESOLVED',
+          responder: i === 0 ? null : tl.operatorName,
+          responseContent: i === 0 ? null : '正在处理中，预计今天完成',
+          respondedAt: i === 0 ? null : tl.endTime || tl.createdAt,
+          followUpCount: supervisionTimeline.length,
+        }));
+        if (supervisionRecords.length === 0) {
+          supervisionRecords.push({
+            id: `sup-${t.applicationId}-0`,
+            supervisor: '系统自动督办',
+            supervisorDept: '政务服务中心',
+            supervisedAt: dayjs().subtract(timeoutHours / 2, 'hour').toDate(),
+            supervisionLevel: timeoutHours >= 48 ? 'SUPREME' : timeoutHours >= 18 ? 'URGENT' : 'NORMAL',
+            content: `节点超时${timeoutHours}小时，请尽快处置`,
+            responseStatus: 'PENDING',
+            responder: null,
+            responseContent: null,
+            respondedAt: null,
+            followUpCount: 1,
+          });
+        }
+
+        const notifications = (t.application as any).notifications || [];
+        const failedNotifications = notifications.filter((n: any) => n.status === 'FAILED');
+        const successfulNotifications = notifications.filter((n: any) =>
+          ['SENT', 'DELIVERED', 'READ'].includes(n.status),
+        );
+        const retrySuccessCount = notifications.reduce(
+          (sum: number, n: any) => sum + ((n.retryCount || 0) > 0 && n.status !== 'FAILED' ? 1 : 0),
+          0,
+        );
+
+        const channelMap: Record<string, string> = {
+          SMS: '短信',
+          WECHAT: '微信',
+          MINI_PROGRAM: '小程序',
+          EMAIL: '邮件',
+        };
+
+        const notificationRetry =
+          failedNotifications.length > 0
+            ? {
+                failedCount: failedNotifications.length,
+                retryCount: notifications.reduce((sum: number, n: any) => sum + (n.retryCount || 0), 0),
+                retrySuccessCount,
+                pendingRetry: failedNotifications.length,
+                lastRetryAt: failedNotifications[0]?.updatedAt || null,
+                canRetry: true,
+                retryEndpoint: `/api/admin/lifecycle/${t.applicationId}/notifications/retry`,
+                failedList: failedNotifications.slice(0, 5).map((n: any) => ({
+                  id: n.id,
+                  channel: String(n.channel || 'SMS'),
+                  channelLabel: channelMap[String(n.channel || 'SMS').toUpperCase()] || n.channel,
+                  failedAt: n.updatedAt || n.createdAt,
+                  failureReason: n.failureReason || '网络超时',
+                  retryCount: n.retryCount || 0,
+                })),
+              }
+            : null;
+
+        const deliveryTrace = notifications.length > 0
+          ? {
+              sms: { sent: 0, delivered: 0, failed: 0, read: 0 },
+              wechat: { sent: 0, delivered: 0, failed: 0, read: 0 },
+              miniProgram: { sent: 0, delivered: 0, failed: 0, read: 0 },
+            }
+          : null;
+        if (deliveryTrace) {
+          for (const notification of notifications) {
+            const ch = String(notification.channel || '').toUpperCase();
+            const target =
+              ch === 'WECHAT'
+                ? deliveryTrace.wechat
+                : ch === 'MINI_PROGRAM'
+                  ? deliveryTrace.miniProgram
+                  : deliveryTrace.sms;
+            target.sent += 1;
+            if (notification.status === 'FAILED') {
+              target.failed += 1;
+            } else if (notification.status === 'READ') {
+              target.read += 1;
+              target.delivered += 1;
+            } else if (['SENT', 'DELIVERED'].includes(notification.status)) {
+              target.delivered += 1;
+            }
+          }
+        }
+
+        const applicantConfirmation = {
+          confirmed: t.application.status === ApplicationStatus.COMPLETED,
+          confirmedAt: t.application.completedAt || null,
+          confirmMethod: t.application.status === ApplicationStatus.COMPLETED ? '线上确认' : null,
+          confirmRemark: null,
+          receiptNo: t.application.status === ApplicationStatus.COMPLETED
+            ? `RCPT-${t.applicationId.slice(0, 8)}`
+            : null,
+          confirmDeadline: dayjs(t.startTime).add(7, 'day').toDate(),
+          countdownMinutes: Math.max(
+            0,
+            dayjs(dayjs(t.startTime).add(7, 'day')).diff(dayjs(), 'minute'),
+          ),
+        };
+
         return {
           applicationNo: t.application.applicationNo,
           itemName: t.application.serviceItem?.itemName || '',
           currentNode: t.nodeName,
-          timeoutHours: Math.round(dayjs().diff(dayjs(t.startTime), 'hour')),
+          timeoutHours,
           warningLevel,
           handler: t.operatorName || (t.application as any).currentHandler || '',
           handlerDept: t.department
@@ -2813,6 +3192,14 @@ export class AdminConsoleService {
           disposedBy,
           disposedAt,
           disposalResult,
+          disposalPerson,
+          supervisionRecords,
+          notificationRetry,
+          deliveryTrace,
+          applicantConfirmation,
+          riskLevel,
+          riskLevelLabel,
+          riskDescription,
         };
       }),
       standardizationCard,

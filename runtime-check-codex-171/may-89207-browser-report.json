@@ -1,0 +1,313 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T19:02:19.569Z",
+  "order": "may-89207",
+  "roundIndex": 171,
+  "captureId": "codex-171-may-89207",
+  "url": "http://127.0.0.1:49207/",
+  "initialUrl": "http://127.0.0.1:49207/",
+  "finalUrl": "http://127.0.0.1:49207/#api-response",
+  "status": 200,
+  "title": "广州市统一政务服务移动端后端支撑平台",
+  "initialTitle": "广州市统一政务服务移动端后端支撑平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check-codex-171/codex-171-may-89207-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check-codex-171/codex-171-may-89207-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49207/#admin-dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49207/#api-response",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49207/#api-response",
+        "title": "广州市统一政务服务移动端后端支撑平台",
+        "headings": [
+          "广州市统一政务服务移动端后端支撑平台",
+          "办件连续流转工作台",
+          "办件全生命周期追踪",
+          "身份认证接入状态",
+          "事项标准化操作区",
+          "政策文件结构化入库与 AI 问答训练",
+          "第三方小程序授权调用",
+          "超时预警与通知留痕",
+          "高频事项堵点报表明细",
+          "接口验证",
+          "接口响应 / 健康检查"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "搜索筛选",
+          "管理后台",
+          "查看流转 API",
+          "超时通知留痕",
+          "电子表单模板 API",
+          "查看模板",
+          "语料管理 API",
+          "开放平台 API",
+          "通知记录 API",
+          "堵点报表 API",
+          "检查 /api/health",
+          "办件流转",
+          "认证链路",
+          "堵点分析"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索事项编码、办件、政策文件、后台报表...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件号",
+              "申请人",
+              "事项",
+              "当前节点",
+              "状态",
+              "到期",
+              "超时判定",
+              "通知审计"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "办件号 申请人 事项 当前节点 状态 到期 超时判定 通知审计 app-20260614-003 李先生 营业执照设立登记 电子证照签发 CERTIFICATE_ISSUED 2026-06-14 正常 短信/微信/小程序留痕 app-20260614-001 陈女士 居住证办理 智能预审 PRE_REVIEWING 2026-06-17 18小时后超时 短信/微信/小程序留痕 app-20260614-002 广州政务小程序 社保卡申领 部门协同审批 APPROVING 2026-06-18 正常 短信/微信/小程序留痕"
+          },
+          {
+            "headers": [
+              "事项编码",
+              "事项名称",
+              "部门",
+              "材料清单",
+              "电子表单模板",
+              "操作"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "事项编码 事项名称 部门 材料清单 电子表单模板 操作 114401000001 居住证办理 公安局 身份证、居住证明、电子照片 居住证办理电子表单 查看模板 114401000002 社保卡申领 人社局 身份证、社保缴费记录 社保卡申领电子表单 查看模板 114401000003 营业执照设立登记 市场监管局 电子表单、住所证明、经营者身份信息 营业执照设立登记表 查看模板"
+          },
+          {
+            "headers": [
+              "政策文件",
+              "分类",
+              "结构化字段",
+              "切片数",
+              "问答对",
+              "训练状态"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "政策文件 分类 结构化字段 切片数 问答对 训练状态 广州市政务服务事项标准化指引 办事指南 事项编码规则 36 128 已训练 电子证照跨部门调用规范 政策文件 电子证照调用边界 24 76 已训练 移动端实名核验与粤省事对接说明 接口规范 实名核验问答语料 19 42 待训练"
+          },
+          {
+            "headers": [
+              "AppID",
+              "应用",
+              "授权范围",
+              "今日调用",
+              "状态"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "AppID 应用 授权范围 今日调用 状态 mini-gz-001 广州政务小程序 service-items,applications,certificates 12,860 AUTHORIZED street-portal-018 街镇综合受理端 applications,notifications 4,820 AUTHORIZED bank-verify-006 银行证照核验插件 certificates.read 936 LIMITED"
+          },
+          {
+            "headers": [
+              "办件号",
+              "渠道",
+              "接收方",
+              "内容",
+              "时间",
+              "审计"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "办件号 渠道 接收方 内容 时间 审计 app-20260614-001 微信服务通知 陈女士 智能预审需补充居住证明 2026-06-15 09:12 自动触发+后台留痕 app-20260614-002 短信 广州政务小程序 部门协同审批剩余 18 小时 2026-06-15 10:03 超时预警规则 R-2024-07 app-20260614-003 小程序订阅消息 李先生 电子证照已签发，可下载 2026-06-14 16:30 证照签发回调"
+          },
+          {
+            "headers": [
+              "事项",
+              "使用量",
+              "材料补正率",
+              "部门协同耗时",
+              "堵点",
+              "处置动作"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "事项 使用量 材料补正率 部门协同耗时 堵点 处置动作 居住证办理 12,860 18.2% 14.6h 居住证明补正 上线材料样例与OCR预检 社保卡申领 9,820 9.4% 10.2h 身份核验重试 NFC降级到身份证联网核查 营业执照设立登记 7,540 22.8% 21.5h 住所证明复核 增加街镇协同审批提醒"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "广州市统一政务服务移动端后端支撑平台 事项标准化管理 · 多源身份认证 · 全流程线上办件 · 电子证照签发 · 开放 API 搜索筛选 管理后台 管理后台数据概览：事项标准化、办件流转、身份认证、政策语料、开放接口与运营数据统一看板 标准化事项3事项编码/材料清单/电子表单模板 线上办件3预约、材料上传、智能预审、部门协同审批 政策语料246结构化字段与 AI 问答训练语料 开放接口调用18,616第三方小程序授权调用 办件连续流转工作台 预约、材料上传、智能预审、部门协同审批、电子证照签发、结果推送完整串联 查看流转 API 超时通知留痕 DONE 预约取号 移动端 预约号 GZYY-240614-1088 DONE 材料上传 申请人 身份证/居住证明/电子照片已验真 DONE 智能预审 AI预审 OCR字段通过率 98.6% RUNNING 部门协同审批 公安局/人社局/市场监管局 跨部门核验 3/4 完成 WAITING 电子证照签发 电子证照库 待审批通过后签发 WAITING 结果推送 短信/微信/小程序 模板已配置 办件全生命周期追踪 办件号申请人事项当前节点状态到期超时判定通知审计 app-20260614-003李先生营业执照设立登记电子证照签发CERTIFICATE_ISSUED2026-06-14正常短信/微信/小程序留痕app-20260614-001陈女士居住证办理智能预审PRE_REVIEWING2026-06-1718小时后超时短信/微信/小程序留痕app-20260614-002广州政务小程序社保卡申领部门协同审批APPROVING2026-06-18正常短信/微信/小程序留痕 身份认证接入状态 粤省事统一认证ONLINE实名登录/授权 · 延迟 86ms · 成功率 99.92%人脸识别活体检测ONLINE高风险事项二次核验 · 延迟 142ms · 成功率 98.70%社保卡 NFCDEGRADED社保卡申领/补换卡 · 延迟 320ms · 成功率 96.40%身份证联网核查ONLINE基础身份校验 · 延迟 103ms · 成功率 99.10% 事项标准化操作区 电子表单模板 API 事项编码事项名称部门材料清单电子表单模板操作 114401000001居住证办理公安局身份证、居住证明、电子照片居住证办理电子表单查看模板114401000002社保卡申领人社局身份证、社保缴费记录社保卡申领电子表单查看模板114401000003营业执照设立登记市场监管局电子表单、住所证明、经营者身份信息营业执照设立登记表查看模板 政策文件结构化入库与 AI 问答训练 语料管理 API 政策文件分类结构化字段切片数问答对训练状态 广州市政务服务事项标准化指引办事指南事项编码规则36128已训练电子证照跨部门调用规范政策文件电子证照调用边界2476已训练移动端实名核验与粤省事对接说明接口规范实名核验问答语料1942待训练 第三方小程序授权调用 开放平台 API AppID应用授权范围今日调用状态 mini-gz-001广州政务小程序service-items,applications,certificates12,860AUTHORIZEDstreet-portal-018街镇综合受理端applications,notifications4,820AUTHORIZEDbank-verify-006银行证照核验插件certificates.read936LIMITED 超时预警与通知留痕 通知记录 API 办件号渠道接收方内容时间审计 app-20260614-001微信服务通知陈女士智能预审需补充居住证明2026-06-15 09:12自动触发+后台留痕app-20260614-002短信广州政务小程序部门协同审批剩余 18 小时2026-06-15 10:03超时预警规则 R-2024-07app-20260614-003小程序订阅消息李先生电子证照已签发，可下载2026-06-14 16:30证照签发回调 高频事项堵点报表明细 堵点报表 API 事项使用量材料补正率部门协同耗时堵点处置动作 居住证办理12,86018.2%14.6h居住证明补正上线材料样例与OCR预检社保卡申领9,8209.4%10.2h身份核",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2562,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-171-may-89207-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49207/#api-response",
+          "title": "广州市统一政务服务移动端后端支撑平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check-codex-171/codex-171-may-89207-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check-codex-171/codex-171-may-89207-structure-01-首屏.png",
+          "elementCount": 326,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "搜索事项编码、办件、政策文件、后台报表...",
+            "搜索筛选",
+            "管理后台",
+            "查看流转 API",
+            "超时通知留痕",
+            "电子表单模板 API",
+            "查看模板",
+            "语料管理 API",
+            "开放平台 API",
+            "通知记录 API",
+            "堵点报表 API",
+            "检查 /api/health",
+            "办件流转",
+            "认证链路",
+            "堵点分析"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-171-may-89207-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49207/#api-response",
+        "title": "广州市统一政务服务移动端后端支撑平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check-codex-171/codex-171-may-89207-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check-codex-171/codex-171-may-89207-structure-01-首屏.png",
+        "elementCount": 326,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "搜索事项编码、办件、政策文件、后台报表...",
+          "搜索筛选",
+          "管理后台",
+          "查看流转 API",
+          "超时通知留痕",
+          "电子表单模板 API",
+          "查看模板",
+          "语料管理 API",
+          "开放平台 API",
+          "通知记录 API",
+          "堵点报表 API",
+          "检查 /api/health",
+          "办件流转",
+          "认证链路",
+          "堵点分析"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49207/#api-response",
+    "representativeScreenshotLabel": "广州市统一政务服务移动端后端支撑平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-171-may-89207-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49207/#api-response",
+        "title": "广州市统一政务服务移动端后端支撑平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check-codex-171/codex-171-may-89207-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check-codex-171/codex-171-may-89207-structure-01-首屏.png",
+        "elementCount": 326,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "搜索事项编码、办件、政策文件、后台报表...",
+          "搜索筛选",
+          "管理后台",
+          "查看流转 API",
+          "超时通知留痕",
+          "电子表单模板 API",
+          "查看模板",
+          "语料管理 API",
+          "开放平台 API",
+          "通知记录 API",
+          "堵点报表 API",
+          "检查 /api/health",
+          "办件流转",
+          "认证链路",
+          "堵点分析"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 2562
+  },
+  "initialBodyTextPreview": "广州市统一政务服务移动端后端支撑平台\n事项标准化管理 · 多源身份认证 · 全流程线上办件 · 电子证照签发 · 开放 API\n搜索筛选\n管理后台\n管理后台数据概览：事项标准化、办件流转、身份认证、政策语料、开放接口与运营数据统一看板\n标准化事项\n3\n事项编码/材料清单/电子表单模板\n线上办件\n3\n预约、材料上传、智能预审、部门协同审批\n政策语料\n246\n结构化字段与 AI 问答训练语料\n开放接口调用\n18,616\n第三方小程序授权调用\n办件连续流转工作台\n预约、材料上传、智能预审、部门协同审批、电子证照签发、结果推送完整串联\n查看流转 API\n超时通知留痕\nDONE\n预约取号\n移动端\n\n预约号 GZYY-240614-1088\n\nDONE\n材料上传\n申请人\n\n身份证/居住证明/电子照片已验真\n\nDONE\n智能预审\nAI预审\n\nOCR字段通过率 98.6%\n\nRUNNING\n部门协同审批\n公安局/人社局/市场监管局\n\n跨部门核验 3/4 完成\n\nWAITING\n电子证照签发\n电子证照库\n\n待审批通过后签发\n\nWAITING\n结果推送\n短信/微信/小程序\n\n模板已配置\n\n办件全生命周期追踪\n办件号\t申请人\t事项\t当前节点\t状态\t到期\t超时判定\t通知审计\napp-20260614-003\t李先生\t营业执照设立登记\t电子证照签发\tCERTIFICATE_ISSUED\t2026-06-14\t正常\t短信/微信/小程序留痕\napp-20260614-001\t陈女士\t居住证办理\t智能预审\tPRE_REVIEWING\t2026-06-17\t18小时后超时\t短信/微信/小程序留痕\napp-20260614-002\t广州政务小程序\t社保卡申领\t部门协同审批\tAPPROVING\t2026-06-18\t正常\t短信/微信/小程序留痕\n身份认证接入状态\n粤省事统一认证ONLINE\n\n实名登录/授权 · 延迟 86ms · 成功率 99.92%\n\n人脸识别活体检测ONLINE\n\n高风险事项二次核验 · 延迟 142ms · 成功率 98.70%\n\n社保卡 NFCDEGRADED\n\n社保卡申领/补换卡 · 延迟 320ms · 成功率 96.40%\n\n身份证联网核查ONLINE\n\n基础身份校验 · 延迟 103ms · 成功率 99.10%\n\n事项标准化操作区\n电子表单模板 API\n事项编码\t事项名称\t部门\t材料清单\t电子表单模板\t操作\n114401000001\t居住证办理\t公安局\t身份证、居住证明、电子照片\t居住证办理电子表单\t查看模板\n114401000002\t社保卡申领\t人社局\t身份证、社保缴费记录\t社保卡申领电子表单\t查看模板\n114401000003\t营业执照设立登记\t市场监管局\t电子表单、住所证明、经营者身份信息\t营业执照设立登记表\t查看模板\n政策文件结构化入库与 AI 问答训练\n语料管理 API\n政策文件\t分类\t结构化字段\t切片数\t问答对\t训练状态\n广州市政务服务事项标准化指引\t办事指南\t事项编码规则\t36\t128\t已训练\n电子证照跨部门调用规范\t政策文件\t电子证照调用边界\t24\t76\t已训练\n移动端实名核验与粤省事对接说明\t接口规范\t实名核验问答语料\t19\t42\t待训练\n第三方小程序授权调用\n开放平台 API\nAppID\t应用\t授权范围\t今日调用\t状态\nmini-gz-001\t广州政务小程序\tservice-items,applications,certificates\t12,860\tAUTHORIZED\nstreet-portal-018\t街镇综合受理端\tapplications,notifications\t4,820\tAUTHORIZED\nbank-verify-006\t银行证照核验插件\tcertificates.read\t936\tLIMITED\n超时预",
+  "bodyTextPreview": "广州市统一政务服务移动端后端支撑平台\n事项标准化管理 · 多源身份认证 · 全流程线上办件 · 电子证照签发 · 开放 API\n搜索筛选\n管理后台\n管理后台数据概览：事项标准化、办件流转、身份认证、政策语料、开放接口与运营数据统一看板\n标准化事项\n3\n事项编码/材料清单/电子表单模板\n线上办件\n3\n预约、材料上传、智能预审、部门协同审批\n政策语料\n246\n结构化字段与 AI 问答训练语料\n开放接口调用\n18,616\n第三方小程序授权调用\n办件连续流转工作台\n预约、材料上传、智能预审、部门协同审批、电子证照签发、结果推送完整串联\n查看流转 API\n超时通知留痕\nDONE\n预约取号\n移动端\n\n预约号 GZYY-240614-1088\n\nDONE\n材料上传\n申请人\n\n身份证/居住证明/电子照片已验真\n\nDONE\n智能预审\nAI预审\n\nOCR字段通过率 98.6%\n\nRUNNING\n部门协同审批\n公安局/人社局/市场监管局\n\n跨部门核验 3/4 完成\n\nWAITING\n电子证照签发\n电子证照库\n\n待审批通过后签发\n\nWAITING\n结果推送\n短信/微信/小程序\n\n模板已配置\n\n办件全生命周期追踪\n办件号\t申请人\t事项\t当前节点\t状态\t到期\t超时判定\t通知审计\napp-20260614-003\t李先生\t营业执照设立登记\t电子证照签发\tCERTIFICATE_ISSUED\t2026-06-14\t正常\t短信/微信/小程序留痕\napp-20260614-001\t陈女士\t居住证办理\t智能预审\tPRE_REVIEWING\t2026-06-17\t18小时后超时\t短信/微信/小程序留痕\napp-20260614-002\t广州政务小程序\t社保卡申领\t部门协同审批\tAPPROVING\t2026-06-18\t正常\t短信/微信/小程序留痕\n身份认证接入状态\n粤省事统一认证ONLINE\n\n实名登录/授权 · 延迟 86ms · 成功率 99.92%\n\n人脸识别活体检测ONLINE\n\n高风险事项二次核验 · 延迟 142ms · 成功率 98.70%\n\n社保卡 NFCDEGRADED\n\n社保卡申领/补换卡 · 延迟 320ms · 成功率 96.40%\n\n身份证联网核查ONLINE\n\n基础身份校验 · 延迟 103ms · 成功率 99.10%\n\n事项标准化操作区\n电子表单模板 API\n事项编码\t事项名称\t部门\t材料清单\t电子表单模板\t操作\n114401000001\t居住证办理\t公安局\t身份证、居住证明、电子照片\t居住证办理电子表单\t查看模板\n114401000002\t社保卡申领\t人社局\t身份证、社保缴费记录\t社保卡申领电子表单\t查看模板\n114401000003\t营业执照设立登记\t市场监管局\t电子表单、住所证明、经营者身份信息\t营业执照设立登记表\t查看模板\n政策文件结构化入库与 AI 问答训练\n语料管理 API\n政策文件\t分类\t结构化字段\t切片数\t问答对\t训练状态\n广州市政务服务事项标准化指引\t办事指南\t事项编码规则\t36\t128\t已训练\n电子证照跨部门调用规范\t政策文件\t电子证照调用边界\t24\t76\t已训练\n移动端实名核验与粤省事对接说明\t接口规范\t实名核验问答语料\t19\t42\t待训练\n第三方小程序授权调用\n开放平台 API\nAppID\t应用\t授权范围\t今日调用\t状态\nmini-gz-001\t广州政务小程序\tservice-items,applications,certificates\t12,860\tAUTHORIZED\nstreet-portal-018\t街镇综合受理端\tapplications,notifications\t4,820\tAUTHORIZED\nbank-verify-006\t银行证照核验插件\tcertificates.read\t936\tLIMITED\n超时预警与通知留痕\n通知记录 API\n办件号\t渠道\t接收方\t内容\t时间\t审计\napp-20260614-001\t微信服务通知\t陈女士\t智能预审需补充居住证明\t2026-06-15 09:12\t自动触发+后台留痕\napp-20260614-002\t短信\t广州政务小程序\t部门协同审批剩余 18 小时\t2026-06-15 10:03\t超时预警规则 R-2024-07\napp-20260614-003\t小程序订阅消息\t李先生\t电子证照已签发，可下载\t2026-06-14 16:30\t证照签发回调\n高频事项堵点报表明细\n堵点报表 API\n事项\t使用量\t材料补正率\t部门协同耗时\t堵点\t处置动作\n居住证办理\t12,860\t18.2%\t14.6h\t居住证明补正\t上线材料样例与OCR预检\n社保卡申领\t9,820\t9.4%\t10.2h\t身份核验重试\tNFC降级到身份证联网核查\n营业执照设立登记\t7,540\t22.8%\t21.5h\t住所证明复核\t增加街镇协同审批提醒\n接口验证\n检查 /api/health\n办件流转\n认证链路\n堵点分析\n接口响应 / 健康检查\n{\n  \"success\": true,\n  \"status\": \"ok\",\n  \"service\": \"gz-government-service-local\",\n  \"database\": \"sqlite\",\n  \"frontendUrl\": \"http://127.0.0.1:49207/\",\n  \"backendUrl\": \"http://127.0.0.1:59207\"\n}",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59207/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59207/api/health"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [],
+  "responseErrors": []
+}
