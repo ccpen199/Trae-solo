@@ -48,7 +48,7 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
     { label: '待结算' },
   ];
 
-  const isTerminalStatus = ['completed', 'cancelled', 'disputed'].includes(order.status);
+  const isTerminalStatus = ['completed', 'cancelled', 'disputed', 'arbitrated'].includes(order.status);
   const canAccept = userRole === 'creator' && order.status === 'published';
   const canPayDeposit = userRole === 'user' && order.status === 'matched';
   const canViewMatches = userRole === 'user' && order.status === 'matched';

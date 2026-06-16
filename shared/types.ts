@@ -57,7 +57,7 @@ export interface ServiceOrder {
   location?: string;
   serviceTime?: string;
   duration: number;
-  status: 'published' | 'matched' | 'confirmed' | 'deposit_paid' | 'in_progress' | 'completed' | 'cancelled' | 'disputed';
+  status: 'published' | 'matched' | 'confirmed' | 'deposit_paid' | 'in_progress' | 'completed' | 'cancelled' | 'disputed' | 'arbitrated';
   insurancePolicy?: string;
   insuranceRequired?: boolean;
   requirements?: string;

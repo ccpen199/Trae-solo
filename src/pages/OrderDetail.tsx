@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MapPin, Clock, DollarSign, Calendar, Shield, Star, CheckCircle, AlertCircle, MessageSquare, User, ChevronRight, FileText, Scale, AlertTriangle, Receipt, PiggyBank, ArrowRight, X, Phone, Download, Image, File, Tag, ClipboardCheck, Timer, Navigation, Building2, Hash, ThumbsUp, ThumbsDown, Send } from 'lucide-react';
+import { MapPin, Clock, DollarSign, Calendar, Shield, Star, CheckCircle, AlertCircle, MessageSquare, User, ChevronRight, FileText, Scale, AlertTriangle, Receipt, PiggyBank, ArrowRight, X, Phone, Download, Image, File, Tag, ClipboardCheck, Timer, Navigation, Building2, Hash, ThumbsUp, ThumbsDown, Send, CircleCheck, Landmark, Wallet, CreditCard, CheckSquare, Eye, FileCheck, Award, BadgeCheck } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -19,6 +19,7 @@ const statusConfig: Record<string, { label: string; color: string; step: number 
   completed: { label: '已完成', color: 'status-completed', step: 5 },
   cancelled: { label: '已取消', color: 'status-cancelled', step: -1 },
   disputed: { label: '有争议', color: 'status-disputed', step: -1 },
+  arbitrated: { label: '已仲裁', color: 'status-disputed', step: -1 },
 };
 
 const timelineLabels = ['发布订单', '匹配创作者', '双方确认', '支付定金', '服务进行', '服务完成'];
@@ -299,6 +300,10 @@ export default function OrderDetail() {
   const [creatorReviewTags, setCreatorReviewTags] = useState<string[]>([]);
   const [showReviewSyncTip, setShowReviewSyncTip] = useState(false);
   const [showPolicyModal, setShowPolicyModal] = useState(false);
+  const [showSettlementDetailModal, setShowSettlementDetailModal] = useState(false);
+  const [creatorReviewImages, setCreatorReviewImages] = useState<string[]>([]);
+  const [showInsuranceDetailModal, setShowInsuranceDetailModal] = useState(false);
+  const [showUpgradeConfirmModal, setShowUpgradeConfirmModal] = useState(false);
 
   const chatMessages = [
     {
@@ -387,12 +392,58 @@ export default function OrderDetail() {
     },
   };
 
+  const timestamp = Date.now();
   const insuranceInfo = {
-    policyNo: 'PICC20240610051288',
+    policyNo: `PICC${timestamp}`,
+    receiptNo: `RC${timestamp}`,
     company: '中国人民财产保险',
     coverage: 500000,
     premium: 12,
-    range: ['第三者财产损失', '服务人员意外伤害', '家政服务过失责任', '盗抢损失保障'],
+    range: [
+      { label: '财产损失', icon: Building2 },
+      { label: '人身意外', icon: User },
+      { label: '服务过失', icon: FileCheck },
+      { label: '盗抢损失', icon: BadgeCheck },
+    ],
+    period: '服务开始前 2 小时至服务结束后 30 天',
+    hasUpgraded: false,
+    upgradedCoverage: 1000000,
+    upgradePremium: 19.9,
+    upgradeItems: ['宠物伤害保障', '钥匙丢失保障', '高空作业保障', '精神损害赔偿'],
+  };
+
+  const insuranceDockingSteps = [
+    {
+      step: 1,
+      title: '平台发起投保',
+      status: 'done',
+      time: new Date(timestamp - 3600000).toLocaleString(),
+      icon: Shield,
+    },
+    {
+      step: 2,
+      title: '保险公司承保',
+      status: 'done',
+      time: new Date(timestamp - 1800000).toLocaleString(),
+      policyNo: `PICC${timestamp}`,
+      icon: FileCheck,
+    },
+    {
+      step: 3,
+      title: '保单生效',
+      status: 'done',
+      time: new Date(timestamp - 600000).toLocaleString(),
+      icon: CheckCircle,
+    },
+  ];
+
+  const upgradeAuditRecord = {
+    applied: true,
+    content: '基础版 → 升级版（保额从50万→100万，增加宠物伤害/钥匙丢失等）',
+    status: '已通过',
+    auditor: '平台运营 张主管',
+    auditTime: new Date(timestamp - 86400000).toLocaleString(),
+    upgradeFee: 19.9,
   };
 
   const reviewRecords = [
@@ -824,6 +875,7 @@ export default function OrderDetail() {
   const availableActions = getAvailableActions();
 
   return (
+    <>
     <div className="min-h-screen bg-zinc-50 pb-32">
       <div className="container mx-auto px-4 py-6">
         <button
@@ -1006,79 +1058,237 @@ export default function OrderDetail() {
               )}
             </div>
 
-            <div className="card p-6 animate-fade-in-up-delay-1">
-              <h2 className="text-xl font-semibold text-zinc-900 mb-6">服务留痕时间线</h2>
+            {order.status === 'completed' ? (
+              <div className="card p-6 animate-fade-in-up-delay-1">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-xl font-semibold text-zinc-900">履约全链路时间线</h2>
+                    <p className="text-sm text-zinc-500 mt-1">订单完整履约记录，每一步均可追溯</p>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                    <CheckCircle className="w-4 h-4" />
+                    全流程已完成
+                  </span>
+                </div>
 
-              {status.step >= 0 && (
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-4">
-                    {timelineLabels.map((label, index) => (
-                      <div key={index} className="flex flex-col items-center flex-1">
-                        <div
-                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium mb-2 ${
-                            index <= status.step
-                              ? 'bg-primary-500 text-white'
-                              : 'bg-zinc-200 text-zinc-500'
-                          }`}
-                        >
-                          {index <= status.step ? <CheckCircle className="w-5 h-5" /> : index + 1}
+                    {[
+                      { label: '需求发布', icon: FileText },
+                      { label: '创作者接单', icon: User },
+                      { label: '定金支付', icon: CreditCard },
+                      { label: '服务进行中', icon: Timer },
+                      { label: '服务完成', icon: CheckSquare },
+                      { label: '资金结算', icon: Landmark },
+                    ].map((step, index) => {
+                      const Icon = step.icon;
+                      return (
+                        <div key={index} className="flex flex-col items-center flex-1">
+                          <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center mb-2 shadow-lg shadow-green-500/20">
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          <span className="text-xs text-center text-green-600 font-medium">{step.label}</span>
+                          <span className="text-[10px] text-green-500 mt-0.5">✓</span>
                         </div>
-                        <span
-                          className={`text-xs text-center ${
-                            index <= status.step ? 'text-primary-600 font-medium' : 'text-zinc-400'
-                          }`}
-                        >
-                          {label}
-                        </span>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
-                  <div className="relative h-1 bg-zinc-200 rounded-full">
-                    <div
-                      className="absolute left-0 top-0 h-full bg-primary-500 rounded-full transition-all duration-500"
-                      style={{ width: `${(status.step / 5) * 100}%` }}
-                    />
+                  <div className="relative h-1 bg-green-200 rounded-full">
+                    <div className="absolute left-0 top-0 h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full" style={{ width: '100%' }} />
                   </div>
                 </div>
-              )}
 
-              <div className="space-y-4">
-                {traces.map((trace, index) => (
-                  <div key={trace.id} className="flex gap-4 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <div className="relative">
-                      <div className="w-10 h-10 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0">
-                        {trace.type === 'message' ? (
-                          <MessageSquare className="w-5 h-5 text-zinc-500" />
-                        ) : (
-                          <CheckCircle className="w-5 h-5 text-green-500" />
-                        )}
+                <div className="space-y-1">
+                  {[
+                    {
+                      title: '需求发布',
+                      description: '订单需求已发布至平台，等待创作者接单',
+                      operator: order?.requester?.username || '需求方',
+                      operatorRole: 'requester',
+                      time: order?.createdAt,
+                      icon: FileText,
+                      color: 'blue',
+                    },
+                    {
+                      title: '创作者接单',
+                      description: `${order?.creator?.username || '创作者'} 已确认接单，双方达成服务意向`,
+                      operator: order?.creator?.username || '创作者',
+                      operatorRole: 'creator',
+                      time: traces?.[2]?.createdAt || new Date(Date.now() - 5 * 86400000).toISOString(),
+                      icon: User,
+                      color: 'orange',
+                    },
+                    {
+                      title: '定金支付',
+                      description: `定金 ¥${order?.deposit || 0} 已支付，由平台第三方托管`,
+                      operator: order?.requester?.username || '需求方',
+                      operatorRole: 'requester',
+                      time: traces?.[3]?.createdAt || new Date(Date.now() - 4 * 86400000).toISOString(),
+                      icon: CreditCard,
+                      color: 'purple',
+                    },
+                    {
+                      title: '服务进行中',
+                      description: `签到：${(order as any)?.checkInTime ? new Date((order as any).checkInTime).toLocaleString() : '---'} ｜ 签出：${(order as any)?.checkOutTime ? new Date((order as any).checkOutTime).toLocaleString() : '---'}`,
+                      operator: order?.creator?.username || '创作者',
+                      operatorRole: 'creator',
+                      time: (order as any)?.checkInTime || traces?.[4]?.createdAt,
+                      icon: Timer,
+                      color: 'cyan',
+                      extra: `实际服务 ${Math.floor(((order as any)?.actualDuration || order?.duration || 240) / 60)}小时${((order as any)?.actualDuration || order?.duration || 240) % 60}分钟`,
+                    },
+                    {
+                      title: '服务完成',
+                      description: '双方确认服务完成，服务品质符合约定标准',
+                      operator: order?.requester?.username || '需求方',
+                      operatorRole: 'requester',
+                      time: traces?.[5]?.createdAt || (order as any)?.checkOutTime,
+                      icon: CheckSquare,
+                      color: 'teal',
+                    },
+                    {
+                      title: '资金结算',
+                      description: 'T+1 结算周期已完成，资金已到账创作者账户',
+                      operator: '系统自动结算',
+                      operatorRole: 'system',
+                      time: new Date(Date.now() - 1 * 86400000).toISOString(),
+                      icon: Landmark,
+                      color: 'green',
+                      extra: `创作者实收 ¥${((order?.price || 0) * 0.85).toFixed(2)}`,
+                      isLast: true,
+                    },
+                  ].map((step, index) => {
+                    const Icon = step.icon;
+                    const colorMap: Record<string, string> = {
+                      blue: 'bg-blue-100 text-blue-600',
+                      orange: 'bg-orange-100 text-orange-600',
+                      purple: 'bg-purple-100 text-purple-600',
+                      cyan: 'bg-cyan-100 text-cyan-600',
+                      teal: 'bg-teal-100 text-teal-600',
+                      green: 'bg-green-100 text-green-600',
+                    };
+                    return (
+                      <div key={index} className="flex gap-4 animate-fade-in-up" style={{ animationDelay: `${index * 0.08}s` }}>
+                        <div className="relative">
+                          <div className={`w-10 h-10 rounded-full ${colorMap[step.color]} flex items-center justify-center flex-shrink-0`}>
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          {!step.isLast && (
+                            <div className="absolute top-10 left-1/2 -translate-x-1/2 w-0.5 h-full bg-zinc-200" />
+                          )}
+                        </div>
+                        <div className={`flex-1 ${!step.isLast ? 'pb-6' : ''}`}>
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-semibold text-zinc-900">{step.title}</span>
+                              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                                step.operatorRole === 'requester'
+                                  ? 'bg-blue-50 text-blue-600'
+                                  : step.operatorRole === 'creator'
+                                  ? 'bg-orange-50 text-orange-600'
+                                  : 'bg-zinc-100 text-zinc-600'
+                              }`}>
+                                {step.operatorRole === 'requester' ? '需求方' : step.operatorRole === 'creator' ? '服务方' : '系统'}
+                              </span>
+                            </div>
+                            <span className="text-xs text-zinc-400 flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {step.time ? new Date(step.time).toLocaleString() : '---'}
+                            </span>
+                          </div>
+                          <p className="text-sm text-zinc-600 mb-1">{step.description}</p>
+                          <div className="flex items-center gap-3 text-xs text-zinc-500">
+                            <span className="flex items-center gap-1">
+                              <User className="w-3 h-3" />
+                              {step.operator}
+                            </span>
+                            {step.extra && (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-600 rounded-full font-medium">
+                                {step.extra}
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                      {index < traces.length - 1 && (
-                        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-0.5 h-full bg-zinc-200" />
-                      )}
-                    </div>
-                    <div className="flex-1 pb-6">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-medium text-zinc-900">
-                          {traceTypeLabels[trace.type] || trace.type}
-                        </span>
-                        {trace.operator && (
-                          <span className="text-sm text-zinc-500">
-                            by {trace.operator.username}
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <div className="card p-6 animate-fade-in-up-delay-1">
+                <h2 className="text-xl font-semibold text-zinc-900 mb-6">服务留痕时间线</h2>
+
+                {status.step >= 0 && (
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between mb-4">
+                      {timelineLabels.map((label, index) => (
+                        <div key={index} className="flex flex-col items-center flex-1">
+                          <div
+                            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium mb-2 ${
+                              index <= status.step
+                                ? 'bg-primary-500 text-white'
+                                : 'bg-zinc-200 text-zinc-500'
+                            }`}
+                          >
+                            {index <= status.step ? <CheckCircle className="w-5 h-5" /> : index + 1}
+                          </div>
+                          <span
+                            className={`text-xs text-center ${
+                              index <= status.step ? 'text-primary-600 font-medium' : 'text-zinc-400'
+                            }`}
+                          >
+                            {label}
                           </span>
-                        )}
-                      </div>
-                      {trace.content && (
-                        <p className="text-zinc-600 mb-1">{trace.content}</p>
-                      )}
-                      <div className="text-xs text-zinc-400">
-                        {new Date(trace.createdAt).toLocaleString()}
-                      </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="relative h-1 bg-zinc-200 rounded-full">
+                      <div
+                        className="absolute left-0 top-0 h-full bg-primary-500 rounded-full transition-all duration-500"
+                        style={{ width: `${(status.step / 5) * 100}%` }}
+                      />
                     </div>
                   </div>
-                ))}
+                )}
+
+                <div className="space-y-4">
+                  {traces.map((trace, index) => (
+                    <div key={trace.id} className="flex gap-4 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                      <div className="relative">
+                        <div className="w-10 h-10 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0">
+                          {trace.type === 'message' ? (
+                            <MessageSquare className="w-5 h-5 text-zinc-500" />
+                          ) : (
+                            <CheckCircle className="w-5 h-5 text-green-500" />
+                          )}
+                        </div>
+                        {index < traces.length - 1 && (
+                          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-0.5 h-full bg-zinc-200" />
+                        )}
+                      </div>
+                      <div className="flex-1 pb-6">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-medium text-zinc-900">
+                            {traceTypeLabels[trace.type] || trace.type}
+                          </span>
+                          {trace.operator && (
+                            <span className="text-sm text-zinc-500">
+                              by {trace.operator.username}
+                            </span>
+                          )}
+                        </div>
+                        {trace.content && (
+                          <p className="text-zinc-600 mb-1">{trace.content}</p>
+                        )}
+                        <div className="text-xs text-zinc-400">
+                          {new Date(trace.createdAt).toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {(order.status === 'disputed' || showArbitrationTimeline) && (
               <div className="card p-6 animate-fade-in-up-delay-1 border-2 border-red-100">
@@ -1494,7 +1704,10 @@ export default function OrderDetail() {
             {order.status === 'completed' && (
               <div className="card p-6 animate-fade-in-up-delay-2">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-zinc-900">双向评价</h2>
+                  <div>
+                    <h2 className="text-xl font-semibold text-zinc-900">双向评价</h2>
+                    <p className="text-sm text-zinc-500 mt-1">双方互评，共建诚信服务生态</p>
+                  </div>
                   {showReviewSyncTip && (
                     <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium flex items-center gap-1 animate-fade-in">
                       <CheckCircle className="w-3 h-3" />
@@ -1508,15 +1721,18 @@ export default function OrderDetail() {
                     <div className="px-4 py-3 bg-blue-50 border-b border-blue-100 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">需</div>
-                        <span className="font-medium text-blue-800">需求方对服务方评价</span>
+                        <span className="font-medium text-blue-800">需求方 → 服务方</span>
                       </div>
                       {review ? (
                         <span className="text-xs text-green-600 flex items-center gap-1">
-                          <CheckCircle className="w-3.5 h-3.5" />
+                          <BadgeCheck className="w-3.5 h-3.5" />
                           已完成
                         </span>
                       ) : (
-                        <span className="text-xs text-zinc-400">待评价</span>
+                        <span className="text-xs text-amber-500 flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          待评价
+                        </span>
                       )}
                     </div>
                     <div className="p-4">
@@ -1526,7 +1742,7 @@ export default function OrderDetail() {
                             <img
                               src={review.user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${review.userId}`}
                               alt={review.user?.username}
-                              className="w-10 h-10 rounded-full"
+                              className="w-10 h-10 rounded-full ring-2 ring-blue-100"
                             />
                             <div className="flex-1">
                               <div className="font-medium text-zinc-900">{review.user?.username || '用户'}</div>
@@ -1544,11 +1760,11 @@ export default function OrderDetail() {
                           </div>
                           <p className="text-zinc-700 text-sm leading-relaxed">{review.content}</p>
                           {(review as any).tags && (review as any).tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1.5">
                               {(review as any).tags.map((tag: string) => (
                                 <span
                                   key={tag}
-                                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-primary-50 text-primary-700 text-xs rounded-full"
+                                  className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-lg"
                                 >
                                   <Tag className="w-3 h-3" />
                                   {tag}
@@ -1558,55 +1774,49 @@ export default function OrderDetail() {
                           )}
                           {(review as any).images && (review as any).images.length > 0 && (
                             <div>
-                              <div className="text-xs text-zinc-500 mb-2">图片凭证</div>
-                              <div className="grid grid-cols-2 gap-2">
+                              <div className="text-xs text-zinc-500 mb-2 flex items-center gap-1">
+                                <Image className="w-3 h-3" />
+                                服务图片 ({(review as any).images.length})
+                              </div>
+                              <div className="grid grid-cols-4 gap-2">
                                 {(review as any).images.map((img: string, idx: number) => (
-                                  <div key={idx} className="aspect-video rounded-lg overflow-hidden border border-zinc-200">
-                                    <img src={img} alt={`凭证${idx + 1}`} className="w-full h-full object-cover" />
+                                  <div key={idx} className="aspect-square rounded-lg overflow-hidden border border-zinc-200 hover:ring-2 hover:ring-blue-200 transition-all cursor-pointer">
+                                    <img src={img} alt={`评价图片${idx + 1}`} className="w-full h-full object-cover" />
                                   </div>
                                 ))}
                               </div>
                             </div>
                           )}
-                          <div className="text-xs text-zinc-400 pt-2 border-t border-zinc-100">
-                            评价时间：{new Date(review.createdAt).toLocaleString()}
+                          <div className="text-xs text-zinc-400 pt-2 border-t border-zinc-100 flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {new Date(review.createdAt).toLocaleString()}
                           </div>
                         </div>
                       ) : isRequester ? (
                         showReviewForm ? (
                           <div className="space-y-4">
                             <div>
-                              <div className="text-sm font-medium text-zinc-700 mb-2">服务评分</div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">服务评分 <span className="text-red-500">*</span></div>
                               <div className="flex items-center gap-2">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                   <button
                                     key={star}
-                                    className="focus:outline-none"
+                                    className="focus:outline-none transition-transform hover:scale-125"
                                     onClick={() => setReviewRating(star)}
                                   >
                                     <Star
-                                      className={`w-7 h-7 transition-transform hover:scale-110 ${
+                                      className={`w-8 h-8 ${
                                         star <= reviewRating ? 'text-amber-500' : 'text-zinc-200'
                                       }`}
                                       fill="currentColor"
                                     />
                                   </button>
                                 ))}
-                                <span className="ml-2 text-sm text-zinc-500">{reviewRating}.0 分</span>
+                                <span className="ml-2 text-base font-semibold text-zinc-700">{reviewRating}.0 分</span>
                               </div>
                             </div>
                             <div>
-                              <div className="text-sm font-medium text-zinc-700 mb-2">评价内容</div>
-                              <textarea
-                                value={reviewContent}
-                                onChange={(e) => setReviewContent(e.target.value)}
-                                placeholder="分享您的服务体验，帮助其他用户选择..."
-                                className="input-field"
-                                rows={4}
-                              />
-                            </div>
-                            <div>
-                              <div className="text-sm font-medium text-zinc-700 mb-2">服务标签</div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">服务标签（可多选）</div>
                               <div className="flex flex-wrap gap-2">
                                 {reviewTagOptions.slice(0, 6).map((tag) => (
                                   <button
@@ -1614,10 +1824,10 @@ export default function OrderDetail() {
                                     type="button"
                                     onClick={() => toggleReviewTag(tag)}
                                     className={cn(
-                                      'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
+                                      'px-3 py-1.5 rounded-xl text-xs font-medium transition-all border',
                                       reviewTags.includes(tag)
-                                        ? 'bg-primary-100 text-primary-700 border-primary-300'
-                                        : 'bg-zinc-50 text-zinc-600 border-zinc-200 hover:border-zinc-300'
+                                        ? 'bg-blue-100 text-blue-700 border-blue-300 shadow-sm'
+                                        : 'bg-white text-zinc-600 border-zinc-200 hover:border-blue-200 hover:bg-blue-50'
                                     )}
                                   >
                                     {reviewTags.includes(tag) && <CheckCircle className="w-3 h-3 inline mr-1" />}
@@ -1627,40 +1837,59 @@ export default function OrderDetail() {
                               </div>
                             </div>
                             <div>
-                              <div className="text-sm font-medium text-zinc-700 mb-2">上传图片凭证（可选，最多4张）</div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">评价内容 <span className="text-red-500">*</span></div>
+                              <textarea
+                                value={reviewContent}
+                                onChange={(e) => setReviewContent(e.target.value)}
+                                placeholder="分享您的真实服务体验，帮助其他用户做出选择..."
+                                className="input-field resize-none"
+                                rows={4}
+                              />
+                              <div className="text-xs text-zinc-400 mt-1 text-right">{reviewContent.length}/500</div>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">上传图片（可选，最多4张）</div>
                               <div className="grid grid-cols-4 gap-2">
                                 {reviewImages.map((img, idx) => (
-                                  <div key={idx} className="aspect-square rounded-lg overflow-hidden border border-zinc-200 relative">
+                                  <div key={idx} className="aspect-square rounded-xl overflow-hidden border border-zinc-200 relative group">
                                     <img src={img} alt="" className="w-full h-full object-cover" />
                                     <button
                                       onClick={() => setReviewImages(reviewImages.filter((_, i) => i !== idx))}
-                                      className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/50 text-white flex items-center justify-center text-xs"
+                                      className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
                                     >
-                                      ×
+                                      <X className="w-3 h-3" />
                                     </button>
                                   </div>
                                 ))}
                                 {reviewImages.length < 4 && (
                                   <button
-                                    onClick={() => alert('模拟选择图片上传')}
-                                    className="aspect-square rounded-lg border-2 border-dashed border-zinc-200 hover:border-primary-300 hover:bg-primary-50 flex flex-col items-center justify-center text-zinc-400 hover:text-primary-500 transition-colors"
+                                    onClick={() => {
+                                      const mockImages = [
+                                        'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300&h=300&fit=crop',
+                                        'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=300&h=300&fit=crop',
+                                      ];
+                                      if (reviewImages.length < mockImages.length) {
+                                        setReviewImages([...reviewImages, mockImages[reviewImages.length]]);
+                                      }
+                                    }}
+                                    className="aspect-square rounded-xl border-2 border-dashed border-zinc-200 hover:border-blue-300 hover:bg-blue-50 flex flex-col items-center justify-center text-zinc-400 hover:text-blue-500 transition-colors"
                                   >
                                     <Image className="w-6 h-6 mb-1" />
-                                    <span className="text-xs">添加</span>
+                                    <span className="text-xs">添加图片</span>
                                   </button>
                                 )}
                               </div>
                             </div>
-                            <div className="flex gap-3">
+                            <div className="flex gap-3 pt-2">
                               <button
-                                className="btn-primary flex-1"
+                                className="btn-primary flex-1 py-2.5"
                                 onClick={handleSubmitReview}
                                 disabled={actionLoading === 'review'}
                               >
                                 {actionLoading === 'review' ? <LoadingSpinner size="sm" /> : '提交评价'}
                               </button>
                               <button
-                                className="btn-secondary"
+                                className="btn-secondary py-2.5"
                                 onClick={() => setShowReviewForm(false)}
                               >
                                 取消
@@ -1669,20 +1898,23 @@ export default function OrderDetail() {
                           </div>
                         ) : (
                           <button
-                            className="w-full py-8 border-2 border-dashed border-zinc-200 rounded-xl text-zinc-500 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50/50 transition-colors flex flex-col items-center gap-2"
+                            className="w-full py-10 border-2 border-dashed border-blue-200 rounded-xl text-blue-500 hover:border-blue-400 hover:bg-blue-50/50 transition-all flex flex-col items-center gap-2 group"
                             onClick={() => setShowReviewForm(true)}
                           >
-                            <Star className="w-8 h-8" />
-                            <span className="font-medium">立即评价</span>
-                            <span className="text-xs">评价后可提升您的信用等级</span>
+                            <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
+                              <Star className="w-7 h-7" fill="currentColor" />
+                            </div>
+                            <span className="font-semibold text-lg">去评价</span>
+                            <span className="text-xs text-zinc-500">评价将同步至您的信用档案</span>
                           </button>
                         )
                       ) : (
                         <div className="py-10 text-center">
-                          <div className="w-16 h-16 rounded-full bg-zinc-100 flex items-center justify-center mx-auto mb-3">
-                            <Clock className="w-8 h-8 text-zinc-400" />
+                          <div className="w-14 h-14 rounded-full bg-zinc-100 flex items-center justify-center mx-auto mb-3">
+                            <Clock className="w-7 h-7 text-zinc-400" />
                           </div>
-                          <p className="text-zinc-500 text-sm">等待需求方完成评价</p>
+                          <p className="text-zinc-600 text-sm font-medium">等待需求方完成评价</p>
+                          <p className="text-zinc-400 text-xs mt-1">完成后双方评价将同时展示</p>
                         </div>
                       )}
                     </div>
@@ -1692,15 +1924,18 @@ export default function OrderDetail() {
                     <div className="px-4 py-3 bg-orange-50 border-b border-orange-100 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs font-bold">服</div>
-                        <span className="font-medium text-orange-800">服务方对需求方评价</span>
+                        <span className="font-medium text-orange-800">服务方 → 需求方</span>
                       </div>
                       {creatorReviewSubmitted || creatorReview ? (
                         <span className="text-xs text-green-600 flex items-center gap-1">
-                          <CheckCircle className="w-3.5 h-3.5" />
+                          <BadgeCheck className="w-3.5 h-3.5" />
                           已完成
                         </span>
                       ) : (
-                        <span className="text-xs text-zinc-400">待评价</span>
+                        <span className="text-xs text-amber-500 flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          待评价
+                        </span>
                       )}
                     </div>
                     <div className="p-4">
@@ -1708,31 +1943,31 @@ export default function OrderDetail() {
                         <div className="space-y-4">
                           <div className="flex items-center gap-3">
                             <img
-                              src={creatorReview.user.avatar}
-                              alt={creatorReview.user.username}
-                              className="w-10 h-10 rounded-full"
+                              src={creatorReview?.user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${order.creatorId}`}
+                              alt={creatorReview?.user?.username || '服务者'}
+                              className="w-10 h-10 rounded-full ring-2 ring-orange-100"
                             />
                             <div className="flex-1">
-                              <div className="font-medium text-zinc-900">{creatorReview.user.username}</div>
+                              <div className="font-medium text-zinc-900">{creatorReview?.user?.username || '服务者'}</div>
                               <div className="flex items-center gap-1 mt-0.5">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                   <Star
                                     key={star}
-                                    className={`w-4 h-4 ${star <= creatorReview.rating ? 'text-amber-500' : 'text-zinc-200'}`}
+                                    className={`w-4 h-4 ${star <= (creatorReview?.rating || 5) ? 'text-amber-500' : 'text-zinc-200'}`}
                                     fill="currentColor"
                                   />
                                 ))}
-                                <span className="ml-1 text-sm text-zinc-500">{creatorReview.rating}.0</span>
+                                <span className="ml-1 text-sm text-zinc-500">{creatorReview?.rating || 5}.0</span>
                               </div>
                             </div>
                           </div>
-                          <p className="text-zinc-700 text-sm leading-relaxed">{creatorReview.content}</p>
-                          {creatorReview.tags && creatorReview.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2">
+                          <p className="text-zinc-700 text-sm leading-relaxed">{creatorReview?.content}</p>
+                          {creatorReview?.tags && creatorReview.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5">
                               {creatorReview.tags.map((tag) => (
                                 <span
                                   key={tag}
-                                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-orange-50 text-orange-700 text-xs rounded-full"
+                                  className="inline-flex items-center gap-1 px-2 py-1 bg-orange-50 text-orange-700 text-xs rounded-lg"
                                 >
                                   <Tag className="w-3 h-3" />
                                   {tag}
@@ -1740,45 +1975,51 @@ export default function OrderDetail() {
                               ))}
                             </div>
                           )}
-                          <div className="text-xs text-zinc-400 pt-2 border-t border-zinc-100">
-                            评价时间：{new Date(creatorReview.createdAt).toLocaleString()}
+                          {(creatorReview as any)?.images && (creatorReview as any).images.length > 0 && (
+                            <div>
+                              <div className="text-xs text-zinc-500 mb-2 flex items-center gap-1">
+                                <Image className="w-3 h-3" />
+                                现场图片 ({(creatorReview as any).images.length})
+                              </div>
+                              <div className="grid grid-cols-4 gap-2">
+                                {(creatorReview as any).images.map((img: string, idx: number) => (
+                                  <div key={idx} className="aspect-square rounded-lg overflow-hidden border border-zinc-200 hover:ring-2 hover:ring-orange-200 transition-all cursor-pointer">
+                                    <img src={img} alt={`评价图片${idx + 1}`} className="w-full h-full object-cover" />
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          <div className="text-xs text-zinc-400 pt-2 border-t border-zinc-100 flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {new Date(creatorReview?.createdAt || Date.now()).toLocaleString()}
                           </div>
                         </div>
                       ) : isCreator ? (
                         showCreatorReviewForm ? (
                           <div className="space-y-4">
                             <div>
-                              <div className="text-sm font-medium text-zinc-700 mb-2">需求方评分</div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">需求方评分 <span className="text-red-500">*</span></div>
                               <div className="flex items-center gap-2">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                   <button
                                     key={star}
-                                    className="focus:outline-none"
+                                    className="focus:outline-none transition-transform hover:scale-125"
                                     onClick={() => setCreatorReviewRating(star)}
                                   >
                                     <Star
-                                      className={`w-7 h-7 transition-transform hover:scale-110 ${
+                                      className={`w-8 h-8 ${
                                         star <= creatorReviewRating ? 'text-amber-500' : 'text-zinc-200'
                                       }`}
                                       fill="currentColor"
                                     />
                                   </button>
                                 ))}
-                                <span className="ml-2 text-sm text-zinc-500">{creatorReviewRating}.0 分</span>
+                                <span className="ml-2 text-base font-semibold text-zinc-700">{creatorReviewRating}.0 分</span>
                               </div>
                             </div>
                             <div>
-                              <div className="text-sm font-medium text-zinc-700 mb-2">评价内容</div>
-                              <textarea
-                                value={creatorReviewContent}
-                                onChange={(e) => setCreatorReviewContent(e.target.value)}
-                                placeholder="评价本次合作体验..."
-                                className="input-field"
-                                rows={4}
-                              />
-                            </div>
-                            <div>
-                              <div className="text-sm font-medium text-zinc-700 mb-2">印象标签</div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">印象标签（可多选）</div>
                               <div className="flex flex-wrap gap-2">
                                 {reviewTagOptions.slice(6, 12).map((tag) => (
                                   <button
@@ -1786,10 +2027,10 @@ export default function OrderDetail() {
                                     type="button"
                                     onClick={() => toggleCreatorReviewTag(tag)}
                                     className={cn(
-                                      'px-3 py-1.5 rounded-full text-xs font-medium transition-all border',
+                                      'px-3 py-1.5 rounded-xl text-xs font-medium transition-all border',
                                       creatorReviewTags.includes(tag)
-                                        ? 'bg-orange-100 text-orange-700 border-orange-300'
-                                        : 'bg-zinc-50 text-zinc-600 border-zinc-200 hover:border-zinc-300'
+                                        ? 'bg-orange-100 text-orange-700 border-orange-300 shadow-sm'
+                                        : 'bg-white text-zinc-600 border-zinc-200 hover:border-orange-200 hover:bg-orange-50'
                                     )}
                                   >
                                     {creatorReviewTags.includes(tag) && <CheckCircle className="w-3 h-3 inline mr-1" />}
@@ -1798,15 +2039,60 @@ export default function OrderDetail() {
                                 ))}
                               </div>
                             </div>
-                            <div className="flex gap-3">
+                            <div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">评价内容 <span className="text-red-500">*</span></div>
+                              <textarea
+                                value={creatorReviewContent}
+                                onChange={(e) => setCreatorReviewContent(e.target.value)}
+                                placeholder="评价本次合作体验，帮助其他服务者了解需求方..."
+                                className="input-field resize-none"
+                                rows={4}
+                              />
+                              <div className="text-xs text-zinc-400 mt-1 text-right">{creatorReviewContent.length}/500</div>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium text-zinc-700 mb-2">上传图片（可选，最多4张）</div>
+                              <div className="grid grid-cols-4 gap-2">
+                                {creatorReviewImages.map((img, idx) => (
+                                  <div key={idx} className="aspect-square rounded-xl overflow-hidden border border-zinc-200 relative group">
+                                    <img src={img} alt="" className="w-full h-full object-cover" />
+                                    <button
+                                      onClick={() => setCreatorReviewImages(creatorReviewImages.filter((_, i) => i !== idx))}
+                                      className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >
+                                      <X className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                ))}
+                                {creatorReviewImages.length < 4 && (
+                                  <button
+                                    onClick={() => {
+                                      const mockImages = [
+                                        'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=300&fit=crop',
+                                        'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300&h=300&fit=crop',
+                                      ];
+                                      if (creatorReviewImages.length < mockImages.length) {
+                                        setCreatorReviewImages([...creatorReviewImages, mockImages[creatorReviewImages.length]]);
+                                      }
+                                    }}
+                                    className="aspect-square rounded-xl border-2 border-dashed border-zinc-200 hover:border-orange-300 hover:bg-orange-50 flex flex-col items-center justify-center text-zinc-400 hover:text-orange-500 transition-colors"
+                                  >
+                                    <Image className="w-6 h-6 mb-1" />
+                                    <span className="text-xs">添加图片</span>
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex gap-3 pt-2">
                               <button
-                                className="btn-primary flex-1"
+                                className="btn-primary flex-1 py-2.5"
                                 onClick={() => {
                                   setCreatorReviewSubmitted(true);
                                   setShowCreatorReviewForm(false);
                                   setCreatorReviewRating(5);
                                   setCreatorReviewContent('');
                                   setCreatorReviewTags([]);
+                                  setCreatorReviewImages([]);
                                   setShowReviewSyncTip(true);
                                   setTimeout(() => setShowReviewSyncTip(false), 3000);
                                 }}
@@ -1814,7 +2100,7 @@ export default function OrderDetail() {
                                 提交评价
                               </button>
                               <button
-                                className="btn-secondary"
+                                className="btn-secondary py-2.5"
                                 onClick={() => setShowCreatorReviewForm(false)}
                               >
                                 取消
@@ -1823,103 +2109,296 @@ export default function OrderDetail() {
                           </div>
                         ) : (
                           <button
-                            className="w-full py-8 border-2 border-dashed border-zinc-200 rounded-xl text-zinc-500 hover:border-orange-300 hover:text-orange-600 hover:bg-orange-50/50 transition-colors flex flex-col items-center gap-2"
+                            className="w-full py-10 border-2 border-dashed border-orange-200 rounded-xl text-orange-500 hover:border-orange-400 hover:bg-orange-50/50 transition-all flex flex-col items-center gap-2 group"
                             onClick={() => setShowCreatorReviewForm(true)}
                           >
-                            <Star className="w-8 h-8" />
-                            <span className="font-medium">立即评价</span>
-                            <span className="text-xs">评价将影响需求方信用分</span>
+                            <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all">
+                              <Star className="w-7 h-7" fill="currentColor" />
+                            </div>
+                            <span className="font-semibold text-lg">去评价</span>
+                            <span className="text-xs text-zinc-500">评价将影响需求方信用评级</span>
                           </button>
                         )
                       ) : (
                         <div className="py-10 text-center">
-                          <div className="w-16 h-16 rounded-full bg-zinc-100 flex items-center justify-center mx-auto mb-3">
-                            <Clock className="w-8 h-8 text-zinc-400" />
+                          <div className="w-14 h-14 rounded-full bg-zinc-100 flex items-center justify-center mx-auto mb-3">
+                            <Clock className="w-7 h-7 text-zinc-400" />
                           </div>
-                          <p className="text-zinc-500 text-sm">等待服务方完成评价</p>
+                          <p className="text-zinc-600 text-sm font-medium">等待服务方完成评价</p>
+                          <p className="text-zinc-400 text-xs mt-1">完成后双方评价将同时展示</p>
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
+
+                {(review && (creatorReviewSubmitted || creatorReview)) && (
+                  <div className="mt-6 p-4 bg-gradient-to-r from-green-50 via-emerald-50 to-teal-50 rounded-xl border border-green-200 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center shadow-lg shadow-green-500/20">
+                        <BadgeCheck className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-green-800">评价已同步至双方信用档案</div>
+                        <div className="text-xs text-green-600">真实评价将影响双方平台信用评级</div>
+                      </div>
+                    </div>
+                    <Award className="w-6 h-6 text-green-500" />
+                  </div>
+                )}
               </div>
             )}
 
-            {order.status === 'completed' && (
+            {(order.status === 'completed' || order.status === 'disputed' || order.status === 'arbitrated') && (
               <div className="card p-6 animate-fade-in-up-delay-3">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-teal-100 flex items-center justify-center">
-                    <ClipboardCheck className="w-5 h-5 text-teal-600" />
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-teal-100 flex items-center justify-center">
+                      <ClipboardCheck className="w-5 h-5 text-teal-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-zinc-900">平台复查记录</h2>
+                      <p className="text-sm text-zinc-500">全流程品质保障追踪</p>
+                    </div>
                   </div>
-                  <div>
-                    <h2 className="text-xl font-semibold text-zinc-900">服务复查记录</h2>
-                    <p className="text-sm text-zinc-500">平台品质保障追踪</p>
-                  </div>
+                  {order.status === 'completed' && (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                      <BadgeCheck className="w-4 h-4" />
+                      全流程复查通过
+                    </span>
+                  )}
+                  {(order.status === 'disputed' || order.status === 'arbitrated') && (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium">
+                      <AlertTriangle className="w-4 h-4" />
+                      仲裁中
+                    </span>
+                  )}
                 </div>
 
-                <div className="space-y-4">
-                  {reviewRecords.map((record, index) => (
-                    <div
-                      key={record.id}
-                      className="flex gap-4 animate-fade-in"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="relative flex-shrink-0">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          record.resultType === 'pass'
-                            ? 'bg-green-100'
-                            : 'bg-red-100'
-                        }`}>
-                          {record.resultType === 'pass' ? (
-                            <CheckCircle className="w-5 h-5 text-green-600" />
-                          ) : (
-                            <ThumbsDown className="w-5 h-5 text-red-600" />
-                          )}
+                {(order.status === 'disputed' || order.status === 'arbitrated') && (
+                  <div className="mb-6 p-4 bg-red-50 rounded-xl border border-red-200">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+                          <Scale className="w-5 h-5 text-red-600" />
                         </div>
-                        {index < reviewRecords.length - 1 && (
-                          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-0.5 h-full bg-zinc-200" />
-                        )}
+                        <div>
+                          <h3 className="font-semibold text-zinc-900">仲裁进度追踪</h3>
+                          <p className="text-xs text-zinc-500">平台专员正在处理中</p>
+                        </div>
                       </div>
-                      <div className="flex-1 pb-6">
-                        <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-semibold text-zinc-900">{record.type}</span>
-                              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                                record.resultType === 'pass'
-                                  ? 'bg-green-100 text-green-700'
-                                  : 'bg-red-100 text-red-700'
-                              }`}>
-                                {record.result}
+                      <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
+                        仲裁中
+                      </span>
+                    </div>
+
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between mb-3">
+                        {arbitrationSteps.map((step, index) => {
+                          const Icon = step.icon;
+                          const isCompleted = order.status === 'arbitrated' ? true : index < 2;
+                          const isCurrent = order.status === 'arbitrated' ? false : index === 2;
+                          return (
+                            <div key={step.id} className="flex flex-col items-center flex-1">
+                              <div
+                                className={`w-9 h-9 rounded-full flex items-center justify-center mb-1.5 transition-all ${
+                                  isCompleted
+                                    ? 'bg-green-500 text-white'
+                                    : isCurrent
+                                    ? 'bg-red-500 text-white animate-pulse'
+                                    : 'bg-zinc-200 text-zinc-500'
+                                }`}
+                              >
+                                {isCompleted ? (
+                                  <CheckCircle className="w-4 h-4" />
+                                ) : (
+                                  <Icon className="w-4 h-4" />
+                                )}
+                              </div>
+                              <span
+                                className={`text-[11px] text-center font-medium ${
+                                  isCompleted
+                                    ? 'text-green-600'
+                                    : isCurrent
+                                    ? 'text-red-600'
+                                    : 'text-zinc-400'
+                                }`}
+                              >
+                                {step.label}
                               </span>
                             </div>
-                            <p className="text-sm text-zinc-600 leading-relaxed">{record.detail}</p>
-                            <div className="mt-2 flex items-center gap-4 text-xs text-zinc-400">
-                              <span className="flex items-center gap-1">
+                          );
+                        })}
+                      </div>
+                      <div className="relative h-1 bg-zinc-200 rounded-full">
+                        <div
+                          className="absolute left-0 top-0 h-full bg-gradient-to-r from-green-500 to-red-500 rounded-full transition-all duration-500"
+                          style={{ width: order.status === 'arbitrated' ? '100%' : '40%' }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      {arbitrationTimeline.map((item, index) => {
+                        const isCompleted = order.status === 'arbitrated' ? true : item.completed;
+                        const isCurrent = order.status === 'arbitrated' ? false : item.current;
+                        return (
+                          <div key={item.id} className="flex gap-3">
+                            <div className="relative flex-shrink-0">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                                isCompleted
+                                  ? 'bg-green-100'
+                                  : isCurrent
+                                  ? 'bg-red-100'
+                                  : 'bg-zinc-100'
+                              }`}>
+                                {isCompleted ? (
+                                  <CheckCircle className="w-4 h-4 text-green-600" />
+                                ) : isCurrent ? (
+                                  <AlertTriangle className="w-4 h-4 text-red-600" />
+                                ) : (
+                                  <Clock className="w-4 h-4 text-zinc-400" />
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-0.5">
+                                <span className={`text-sm font-medium ${
+                                  isCurrent ? 'text-red-600' : 'text-zinc-900'
+                                }`}>
+                                  {item.step}
+                                </span>
+                                <span className="text-xs text-zinc-400">{item.time}</span>
+                              </div>
+                              <p className="text-xs text-zinc-600">{item.description}</p>
+                              <div className="text-[11px] text-zinc-400 flex items-center gap-1 mt-0.5">
                                 <User className="w-3 h-3" />
-                                {record.reviewer}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
-                                {record.time}
-                              </span>
+                                {item.handler}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {order.status === 'arbitrated' && (
+                      <div className="mt-4 p-3 bg-blue-50 rounded-xl border border-blue-200">
+                        <div className="flex items-start gap-2">
+                          <FileCheck className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                          <div className="text-xs text-blue-700">
+                            <p className="font-medium">仲裁裁决结果</p>
+                            <p className="mt-0.5">根据双方举证及服务留痕，平台裁定：服务方履约符合标准，尾款全额支付给服务方。</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  {[
+                    {
+                      id: 'rr1',
+                      type: '服务留痕复查',
+                      reviewer: '系统自动核验',
+                      result: '通过',
+                      resultType: 'pass',
+                      detail: '签到/签出GPS定位、服务时长、沟通记录等全链路留痕完整，无异常。',
+                      time: new Date(Date.now() - 2 * 86400000 + 3600000).toLocaleString().slice(0, 16),
+                      icon: Eye,
+                      iconBg: 'bg-blue-100',
+                      iconColor: 'text-blue-600',
+                    },
+                    {
+                      id: 'rr2',
+                      type: '评价真实性复核',
+                      reviewer: order.status === 'disputed' || order.status === 'arbitrated' ? '平台运营 李主管' : '平台运营抽检',
+                      result: order.status === 'disputed' || order.status === 'arbitrated' ? '仲裁中' : '通过',
+                      resultType: order.status === 'disputed' || order.status === 'arbitrated' ? 'pending' : 'pass',
+                      detail: order.status === 'disputed' || order.status === 'arbitrated'
+                        ? '正在核实双方评价内容真实性，结合聊天记录及服务留痕综合判定。'
+                        : '电话回访需求方，确认服务质量与评价内容一致，无刷单刷评行为。',
+                      time: new Date(Date.now() - 1 * 86400000 + 3600000).toLocaleString().slice(0, 16),
+                      icon: FileCheck,
+                      iconBg: 'bg-purple-100',
+                      iconColor: 'text-purple-600',
+                    },
+                    {
+                      id: 'rr3',
+                      type: '交易合规检查',
+                      reviewer: '系统自动核验',
+                      result: '通过',
+                      resultType: 'pass',
+                      detail: '资金流向合规，无异常交易行为，税费计算准确，符合平台交易规则。',
+                      time: new Date(Date.now() - 1 * 86400000).toLocaleString().slice(0, 16),
+                      icon: Shield,
+                      iconBg: 'bg-green-100',
+                      iconColor: 'text-green-600',
+                    },
+                  ].map((record, index) => {
+                    const Icon = record.icon;
+                    return (
+                      <div
+                        key={record.id}
+                        className="flex gap-4 animate-fade-in"
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        <div className="relative flex-shrink-0">
+                          <div className={`w-10 h-10 rounded-full ${record.iconBg} flex items-center justify-center`}>
+                            <Icon className={`w-5 h-5 ${record.iconColor}`} />
+                          </div>
+                          {index < 2 && (
+                            <div className="absolute top-10 left-1/2 -translate-x-1/2 w-0.5 h-full bg-zinc-200" />
+                          )}
+                        </div>
+                        <div className={`flex-1 ${index < 2 ? 'pb-5' : ''}`}>
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-semibold text-zinc-900 text-sm">{record.type}</span>
+                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                                  record.resultType === 'pass'
+                                    ? 'bg-green-100 text-green-700'
+                                    : record.resultType === 'pending'
+                                    ? 'bg-amber-100 text-amber-700'
+                                    : 'bg-red-100 text-red-700'
+                                }`}>
+                                  {record.result}
+                                </span>
+                              </div>
+                              <p className="text-sm text-zinc-600 leading-relaxed">{record.detail}</p>
+                              <div className="mt-1.5 flex items-center gap-4 text-xs text-zinc-400">
+                                <span className="flex items-center gap-1">
+                                  <User className="w-3 h-3" />
+                                  {record.reviewer}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  {record.time}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
-                <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-teal-50 rounded-xl border border-green-200 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-4 h-4 text-white" />
+                {order.status === 'completed' && (
+                  <div className="mt-5 p-4 bg-gradient-to-r from-green-50 via-emerald-50 to-teal-50 rounded-xl border border-green-200 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-green-500/20">
+                        <Shield className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-green-800">全流程复查通过 · 无异常</div>
+                        <div className="text-xs text-green-600">服务留痕 / 评价复核 / 交易合规 三项检查全部通过</div>
+                      </div>
+                    </div>
+                    <BadgeCheck className="w-7 h-7 text-green-500" />
                   </div>
-                  <div>
-                    <div className="font-medium text-green-800">全流程通过 · 平台认证</div>
-                    <div className="text-xs text-green-600">签到核验 / 时长核对 / 评价抽样 三项均通过</div>
-                  </div>
-                </div>
+                )}
               </div>
             )}
           </div>
@@ -1927,20 +2406,136 @@ export default function OrderDetail() {
           <div className="space-y-6">
             <div className="card p-6 animate-fade-in-up-delay-1">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-zinc-900">
-                  {order.status === 'completed' ? '资金分账' :
-                   order.status === 'disputed' ? '争议处理' : '支付信息'}
-                </h3>
-                {(order.status === 'completed' || order.status === 'in_progress' || order.status === 'deposit_paid') && (
+                <div>
+                  <h3 className="text-lg font-semibold text-zinc-900">
+                    {order.status === 'completed' ? '资金结算' :
+                     order.status === 'disputed' || order.status === 'arbitrated' ? '争议处理' : '支付信息'}
+                  </h3>
+                  {(order.status === 'completed' || order.status === 'disputed' || order.status === 'arbitrated') && (
+                    <div className="flex items-center gap-1.5 mt-1">
+                      <span className={cn(
+                        'inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium',
+                        order.status === 'completed'
+                          ? 'bg-green-100 text-green-700'
+                          : order.status === 'disputed' || order.status === 'arbitrated'
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-zinc-100 text-zinc-600'
+                      )}>
+                        {order.status === 'completed' ? '已结算' :
+                         order.status === 'disputed' || order.status === 'arbitrated' ? '资金冻结' : '待结算'}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                {order.status === 'completed' && (
                   <button
-                    onClick={() => setShowSettlementDetail(!showSettlementDetail)}
-                    className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1"
+                    onClick={() => setShowSettlementDetailModal(true)}
+                    className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1 px-2.5 py-1.5 rounded-lg hover:bg-primary-50 transition-colors"
                   >
                     <Receipt className="w-3.5 h-3.5" />
-                    {showSettlementDetail ? '收起明细' : '分账明细'}
+                    结算明细
                   </button>
                 )}
               </div>
+
+              {order.status === 'completed' && (
+                <>
+                  <div className="mb-5 space-y-3">
+                    {[
+                      {
+                        step: 1,
+                        title: '订单金额',
+                        amount: `¥${order.price}`,
+                        desc: '服务总费用',
+                        icon: DollarSign,
+                        iconBg: 'bg-zinc-100',
+                        iconColor: 'text-zinc-600',
+                        status: 'done',
+                      },
+                      {
+                        step: 2,
+                        title: '定金托管',
+                        amount: `¥${order.deposit}`,
+                        desc: '已支付 · 平台托管',
+                        icon: PiggyBank,
+                        iconBg: 'bg-blue-100',
+                        iconColor: 'text-blue-600',
+                        status: 'done',
+                      },
+                      {
+                        step: 3,
+                        title: '尾款支付',
+                        amount: `¥${order.price - order.deposit}`,
+                        desc: '已完成支付',
+                        icon: Wallet,
+                        iconBg: 'bg-purple-100',
+                        iconColor: 'text-purple-600',
+                        status: 'done',
+                      },
+                      {
+                        step: 4,
+                        title: '平台服务费 15%',
+                        amount: `-¥${(order.price * 0.15).toFixed(2)}`,
+                        desc: `创作者实收 ¥${(order.price * 0.85).toFixed(2)}`,
+                        icon: Landmark,
+                        iconBg: 'bg-green-100',
+                        iconColor: 'text-green-600',
+                        status: 'done',
+                        isLast: true,
+                      },
+                    ].map((item: any, index) => {
+                      const Icon = item.icon;
+                      return (
+                        <div key={item.step} className="flex gap-3">
+                          <div className="relative flex-shrink-0">
+                            <div className={`w-9 h-9 rounded-full ${item.iconBg} flex items-center justify-center`}>
+                              <Icon className={`w-4.5 h-4.5 ${item.iconColor}`} />
+                            </div>
+                            {!item.isLast && (
+                              <div className="absolute top-9 left-1/2 -translate-x-1/2 w-0.5 h-[calc(100%+12px)] bg-green-200" />
+                            )}
+                          </div>
+                          <div className={`flex-1 ${!item.isLast ? 'pb-4' : ''}`}>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-medium text-zinc-900">{item.title}</span>
+                                {item.status === 'done' && (
+                                  <CheckCircle className="w-3.5 h-3.5 text-green-500" />
+                                )}
+                              </div>
+                              <span className={cn(
+                                'text-sm font-semibold',
+                                item.amount.startsWith('-') ? 'text-red-500' : 'text-zinc-900'
+                              )}>
+                                {item.amount}
+                              </span>
+                            </div>
+                            <p className="text-xs text-zinc-500 mt-0.5">{item.desc}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200 mb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center shadow-lg shadow-green-500/20">
+                          <BadgeCheck className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-green-800 text-sm">T+1 已到账</div>
+                          <div className="text-xs text-green-600">资金已结算至创作者账户</div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-green-600">创作者实收</div>
+                        <div className="text-xl font-bold text-green-700">¥{(order.price * 0.85).toFixed(2)}</div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
 
               {order.status === 'deposit_paid' && (
                 <div className="mb-4 p-4 bg-green-50 rounded-xl border border-green-200">
@@ -1990,42 +2585,22 @@ export default function OrderDetail() {
                 </div>
               )}
 
-              {order.status === 'completed' && (
-                <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-teal-50 rounded-xl border border-green-200">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                        <CheckCircle className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="font-semibold text-green-800">已完成 · 待结算</span>
-                    </div>
-                    <span className="text-xl font-bold text-green-600">¥{order.price}</span>
-                  </div>
-                  <div className="relative h-2 bg-green-200 rounded-full overflow-hidden">
-                    <div
-                      className="absolute left-0 top-0 h-full bg-gradient-to-r from-green-400 to-teal-500 rounded-full transition-all duration-500"
-                      style={{ width: '100%' }}
-                    />
-                  </div>
-                  <div className="flex justify-between mt-2 text-xs text-green-600">
-                    <span>第3步 · 服务完成</span>
-                    <span>T+1 自动结算</span>
-                  </div>
-                </div>
-              )}
-
-              {order.status === 'disputed' && (
+              {(order.status === 'disputed' || order.status === 'arbitrated') && (
                 <div className="mb-4 p-4 bg-red-50 rounded-xl border border-red-200">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center animate-pulse">
                         <AlertTriangle className="w-4 h-4 text-white" />
                       </div>
-                      <span className="font-semibold text-red-800">仲裁中</span>
+                      <span className="font-semibold text-red-800">
+                        {order.status === 'arbitrated' ? '仲裁已完成' : '仲裁中'}
+                      </span>
                     </div>
                     <span className="text-xl font-bold text-red-600">¥{order.price}</span>
                   </div>
-                  <p className="text-xs text-red-600 mb-2">资金已冻结，待仲裁结果</p>
+                  <p className="text-xs text-red-600 mb-2">
+                    {order.status === 'arbitrated' ? '仲裁已完成，按裁决结果结算' : '资金已冻结，待仲裁结果'}
+                  </p>
                   <button
                     onClick={() => setShowArbitrationTimeline(true)}
                     className="text-xs text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
@@ -2036,69 +2611,104 @@ export default function OrderDetail() {
                 </div>
               )}
 
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-zinc-500">服务费用</span>
-                  <span className="font-medium">¥{order.price}</span>
+              <div className="space-y-2.5">
+                <div className="flex justify-between items-center">
+                  <span className="text-zinc-500 text-sm">服务费用</span>
+                  <span className="font-semibold text-zinc-900">¥{order.price}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-500">定金（已付）</span>
-                  <span className="font-medium text-green-600">¥{order.deposit}</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-zinc-500 text-sm">定金（已付）</span>
+                  <span className="font-semibold text-green-600">¥{order.deposit}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-500">尾款</span>
-                  <span className="font-medium">¥{order.price - order.deposit}</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-zinc-500 text-sm">尾款</span>
+                  <span className="font-semibold text-zinc-900">¥{order.price - order.deposit}</span>
                 </div>
 
-                {showSettlementDetail && (
-                  <div className="mt-4 p-4 bg-zinc-50 rounded-xl space-y-4 animate-fade-in">
-                    <div className="text-sm font-medium text-zinc-700 mb-2 flex items-center gap-2">
-                      <PiggyBank className="w-4 h-4 text-primary-500" />
-                      资金分账明细
+                {order.status === 'completed' && (
+                  <>
+                    <div className="h-px bg-zinc-100 my-2" />
+                    <div className="flex justify-between items-center pt-1">
+                      <span className="text-zinc-500 text-sm flex items-center gap-1">
+                        <Hash className="w-3.5 h-3.5" />
+                        交易单号
+                      </span>
+                      <span className="font-mono text-xs text-zinc-700">TXN{order.id?.slice(0, 10).toUpperCase()}</span>
                     </div>
-
-                    <div className="space-y-3">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-zinc-500">订单总金额</span>
-                        <span className="font-medium">¥{order.price}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-zinc-500">平台服务费 (15%)</span>
-                        <span className="text-red-500">-¥{(order.price * 0.15).toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-zinc-500">创作者实际收入</span>
-                        <span className="font-medium text-green-600">¥{(order.price * 0.85).toFixed(2)}</span>
-                      </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-zinc-500 text-sm flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5" />
+                        结算时间
+                      </span>
+                      <span className="text-sm text-zinc-700">{new Date(Date.now() - 1 * 86400000).toLocaleDateString()}</span>
                     </div>
-
-                    <div className="h-px bg-zinc-200" />
-
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-500">结算状态</span>
-                        <span className={cn(
-                          'font-medium',
-                          order.status === 'completed' ? 'text-green-600' : 'text-amber-600'
-                        )}>
-                          {order.status === 'completed' ? '已结算' : '待结算'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-500">结算时间</span>
-                        <span className="text-zinc-700">
-                          {order.status === 'completed'
-                            ? new Date().toLocaleDateString()
-                            : '服务完成后 T+1 工作日'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-500">交易单号</span>
-                        <span className="font-mono text-zinc-700">TXN{order.id?.slice(0, 8).toUpperCase()}</span>
-                      </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-zinc-500 text-sm flex items-center gap-1">
+                        <Landmark className="w-3.5 h-3.5" />
+                        到账时间
+                      </span>
+                      <span className="text-sm text-green-600 font-medium">T+1 已到账</span>
                     </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-zinc-500 text-sm flex items-center gap-1">
+                        <CreditCard className="w-3.5 h-3.5" />
+                        支付方式
+                      </span>
+                      <span className="text-sm text-zinc-700">微信支付</span>
+                    </div>
+                  </>
+                )}
+              </div>
 
-                    {order.status !== 'completed' && (
+              {showSettlementDetail && (
+                <div className="mt-4 p-4 bg-zinc-50 rounded-xl space-y-4 animate-fade-in">
+                  <div className="text-sm font-medium text-zinc-700 mb-2 flex items-center gap-2">
+                    <PiggyBank className="w-4 h-4 text-primary-500" />
+                    资金分账明细
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-zinc-500">订单总金额</span>
+                      <span className="font-medium">¥{order.price}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-zinc-500">平台服务费 (15%)</span>
+                      <span className="text-red-500">-¥{(order.price * 0.15).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-zinc-500">创作者实际收入</span>
+                      <span className="font-medium text-green-600">¥{(order.price * 0.85).toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-zinc-200" />
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-zinc-500">结算状态</span>
+                      <span className={cn(
+                        'font-medium',
+                        order.status === 'completed' ? 'text-green-600' : 'text-amber-600'
+                      )}>
+                        {order.status === 'completed' ? '已结算' : '待结算'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-zinc-500">结算时间</span>
+                      <span className="text-zinc-700">
+                        {order.status === 'completed'
+                          ? new Date().toLocaleDateString()
+                          : '服务完成后 T+1 工作日'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-zinc-500">交易单号</span>
+                      <span className="font-mono text-zinc-700">TXN{order.id?.slice(0, 8).toUpperCase()}</span>
+                    </div>
+                  </div>
+
+                  {order.status !== 'completed' && (
                       <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
                         <div className="flex items-start gap-2">
                           <Clock className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
@@ -2168,140 +2778,336 @@ export default function OrderDetail() {
               </div>
             </div>
 
-            {order.category === '家政' || order.category === '护理' || (order as any).insuranceRequired ? (
-              <div className={`card p-6 animate-fade-in-up-delay-2 border-2 overflow-hidden relative ${
-                order.status === 'deposit_paid' || order.status === 'in_progress'
-                  ? 'border-green-200 bg-gradient-to-br from-green-50/50 to-transparent'
-                  : order.status === 'completed'
-                  ? 'border-teal-200 bg-gradient-to-br from-teal-50/50 to-transparent'
-                  : 'border-amber-200 bg-gradient-to-br from-amber-50/50 to-transparent'
-              }`}>
-                <div className={`absolute top-0 right-0 px-3 py-1 text-white text-xs font-medium rounded-bl-xl ${
+            {(order?.category === '家政' || order?.category === '护理' || (order as any)?.insuranceRequired) && (
+              <div className="space-y-4">
+                <div className={`card p-4 animate-fade-in-up-delay-2 border-2 overflow-hidden relative ${
                   order.status === 'deposit_paid' || order.status === 'in_progress'
-                    ? 'bg-green-500'
+                    ? 'border-green-300 bg-gradient-to-r from-green-50 to-emerald-50'
                     : order.status === 'completed'
-                    ? 'bg-teal-500'
-                    : 'bg-amber-500'
+                    ? 'border-teal-300 bg-gradient-to-r from-teal-50 to-cyan-50'
+                    : 'border-amber-300 bg-gradient-to-r from-amber-50 to-yellow-50'
                 }`}>
-                  {order.status === 'deposit_paid' || order.status === 'in_progress'
-                    ? '保障中'
-                    : order.status === 'completed'
-                    ? '保障有效'
-                    : '待投保'}
-                </div>
-                <div className="flex items-center gap-2 mb-5">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                    order.status === 'deposit_paid' || order.status === 'in_progress'
-                      ? 'bg-green-100'
-                      : order.status === 'completed'
-                      ? 'bg-teal-100'
-                      : 'bg-amber-100'
-                  }`}>
-                    <Shield className={`w-5 h-5 ${
+                  <div className="flex items-center gap-3">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
                       order.status === 'deposit_paid' || order.status === 'in_progress'
-                        ? 'text-green-600'
+                        ? 'bg-green-500'
                         : order.status === 'completed'
-                        ? 'text-teal-600'
-                        : 'text-amber-600'
-                    }`} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-zinc-900">家政服务责任险</h3>
-                    <p className={`text-xs ${
-                      order.status === 'deposit_paid' || order.status === 'in_progress'
-                        ? 'text-green-600 font-medium'
-                        : order.status === 'completed'
-                        ? 'text-teal-600 font-medium'
-                        : 'text-amber-600 font-medium'
+                        ? 'bg-teal-500'
+                        : 'bg-amber-500'
                     }`}>
-                      {order.status === 'completed'
-                        ? '保障有效 · 30天追溯期'
-                        : order.status === 'cancelled'
-                        ? '保障已终止'
-                        : order.status === 'deposit_paid' || order.status === 'in_progress'
-                        ? '保障中 · 50万保额'
-                        : '待投保 · 支付后自动生效'}
-                    </p>
+                      <Shield className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`text-base font-bold ${
+                          order.status === 'deposit_paid' || order.status === 'in_progress'
+                            ? 'text-green-700'
+                            : order.status === 'completed'
+                            ? 'text-teal-700'
+                            : 'text-amber-700'
+                        }`}>
+                          投保状态：{order.status === 'deposit_paid' || order.status === 'in_progress'
+                            ? '保障中'
+                            : order.status === 'completed'
+                            ? '保障有效（30天追溯期）'
+                            : order.status === 'cancelled'
+                            ? '已终止'
+                            : '待投保'}
+                        </span>
+                        {order.status === 'deposit_paid' || order.status === 'in_progress' || order.status === 'completed' ? (
+                          <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full font-medium flex items-center gap-1">
+                            <CheckCircle className="w-3 h-3" />
+                            已承保
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className={`text-xs ${
+                        order.status === 'deposit_paid' || order.status === 'in_progress'
+                          ? 'text-green-600'
+                          : order.status === 'completed'
+                          ? 'text-teal-600'
+                          : 'text-amber-600'
+                      }`}>
+                        {order.status === 'published' || order.status === 'matched' || order.status === 'confirmed'
+                          ? '支付定金后自动为您投保家政服务责任险'
+                          : `保障期限：${insuranceInfo.period}`}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 bg-white rounded-xl border border-blue-100">
-                      <div className="text-xs text-zinc-500 mb-1">保单号</div>
-                      <div className="font-mono text-xs font-medium text-zinc-800 break-all">{insuranceInfo.policyNo}</div>
+                <div className="card p-6 animate-fade-in-up-delay-2 border border-green-100 overflow-hidden relative">
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                      <BadgeCheck className="w-5 h-5 text-green-600" />
                     </div>
-                    <div className="p-3 bg-white rounded-xl border border-blue-100">
-                      <div className="text-xs text-zinc-500 mb-1">保费</div>
-                      <div className="font-semibold text-blue-600">
-                        ¥{insuranceInfo.premium}
-                        <span className="text-xs text-green-600 ml-1">平台承担</span>
+                    <div>
+                      <h3 className="text-lg font-semibold text-zinc-900">保单信息</h3>
+                      <p className="text-xs text-zinc-500">家政服务责任险</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-100">
+                        <div className="text-xs text-zinc-500 mb-1">保单号</div>
+                        <div className="font-mono text-sm font-medium text-zinc-900 break-all tracking-tight">
+                          {insuranceInfo.policyNo}
+                        </div>
+                      </div>
+                      <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-100">
+                        <div className="text-xs text-zinc-500 mb-1">保险公司</div>
+                        <div className="font-medium text-zinc-900 flex items-center gap-1">
+                          <Building2 className="w-3.5 h-3.5 text-blue-500" />
+                          {insuranceInfo.company}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="p-3 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-200">
+                        <div className="text-xs text-green-700 mb-1">累计保额</div>
+                        <div className="text-3xl font-bold text-green-700">
+                          ¥{insuranceInfo.coverage.toLocaleString()}
+                        </div>
+                        {insuranceInfo.hasUpgraded && (
+                          <span className="text-xs text-green-600">已升级至 {insuranceInfo.upgradedCoverage.toLocaleString()} 元</span>
+                        )}
+                      </div>
+                      <div className="p-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
+                        <div className="text-xs text-blue-700 mb-1">保费</div>
+                        <div className="text-xl font-bold text-blue-700 flex items-baseline gap-1">
+                          ¥{insuranceInfo.premium.toFixed(2)}
+                        </div>
+                        <span className="text-xs text-green-600 font-medium flex items-center gap-1 mt-1">
+                          <CheckCircle className="w-3 h-3" />
+                          已由平台垫付
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-100">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Clock className="w-3.5 h-3.5 text-blue-500" />
+                        <span className="text-xs text-zinc-500">保障期限</span>
+                      </div>
+                      <div className="font-medium text-sm text-zinc-900">{insuranceInfo.period}</div>
+                    </div>
+
+                    <div>
+                      <div className="text-sm font-medium text-zinc-700 mb-3 flex items-center gap-2">
+                        <FileCheck className="w-4 h-4 text-green-600" />
+                        保障范围
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        {insuranceInfo.range?.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <div key={item.label} className="flex items-center gap-2 p-2.5 bg-zinc-50 rounded-lg">
+                              <div className="w-7 h-7 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                                <Icon className="w-3.5 h-3.5 text-green-600" />
+                              </div>
+                              <span className="text-sm text-zinc-700 font-medium">{item.label}</span>
+                            </div>
+                          );
+                        })}
+                        {insuranceInfo.hasUpgraded && insuranceInfo.upgradeItems?.map((item) => (
+                          <div key={item} className="flex items-center gap-2 p-2.5 bg-amber-50 rounded-lg">
+                            <div className="w-7 h-7 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+                              <BadgeCheck className="w-3.5 h-3.5 text-amber-600" />
+                            </div>
+                            <span className="text-sm text-amber-700 font-medium">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card p-6 animate-fade-in-up-delay-2 border border-blue-100">
+                  <div className="flex items-center gap-2 mb-5">
+                    <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                      <FileCheck className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-zinc-900">保险对接结果</h3>
+                      <p className="text-xs text-zinc-500">投保全流程已完成</p>
+                    </div>
+                  </div>
+
+                  <div className="relative mb-6">
+                    <div className="absolute left-5 top-6 bottom-6 w-0.5 bg-green-200" />
+                    <div className="space-y-4">
+                      {insuranceDockingSteps?.map((step, index) => {
+                        const StepIcon = step.icon;
+                        const isLast = index === insuranceDockingSteps.length - 1;
+                        return (
+                          <div key={step.step} className="relative flex gap-4">
+                            <div className={cn(
+                              'w-10 h-10 rounded-full flex items-center justify-center z-10 flex-shrink-0',
+                              step.status === 'done' ? 'bg-green-500 text-white' : 'bg-zinc-200 text-zinc-500'
+                            )}>
+                              {step.status === 'done' ? (
+                                <CheckCircle className="w-5 h-5" />
+                              ) : (
+                                <StepIcon className="w-5 h-5" />
+                              )}
+                            </div>
+                            <div className="flex-1 pb-1">
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm font-medium text-zinc-900">
+                                  {step.step}. {step.title}
+                                </span>
+                                <span className="text-xs text-zinc-400">{step.time}</span>
+                              </div>
+                              {step.policyNo && (
+                                <p className="text-xs text-zinc-500 mt-0.5 font-mono">
+                                  保单号：{step.policyNo}
+                                </p>
+                              )}
+                              {isLast && (
+                                <p className="text-xs text-green-600 mt-0.5 flex items-center gap-1">
+                                  <CheckCircle className="w-3 h-3" />
+                                  保单已正式生效
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-100">
+                      <div className="text-xs text-zinc-500 mb-1">保险公司回执单号</div>
+                      <div className="font-mono text-sm font-medium text-zinc-900 break-all">
+                        {insuranceInfo.receiptNo}
+                      </div>
+                    </div>
+                    <div className="p-3 bg-zinc-50 rounded-xl border border-zinc-100">
+                      <div className="text-xs text-zinc-500 mb-1">投保确认时间</div>
+                      <div className="font-medium text-sm text-zinc-900">
+                        {insuranceDockingSteps?.[0]?.time}
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-3 bg-white rounded-xl border border-blue-100">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Building2 className="w-4 h-4 text-blue-500" />
-                      <span className="text-xs text-zinc-500">承保公司</span>
-                    </div>
-                    <div className="font-medium text-zinc-900">{insuranceInfo.company}</div>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => {
+                        setShowInsuranceDetailModal(true);
+                      }}
+                      className="flex-1 py-2.5 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <FileText className="w-4 h-4" />
+                      保单详情
+                    </button>
+                    <button
+                      onClick={() => {
+                        alert('电子保单已生成，可用于理赔');
+                      }}
+                      className="flex-1 py-2.5 text-sm bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <Download className="w-4 h-4" />
+                      电子保单下载
+                    </button>
                   </div>
-
-                  <div className={`p-4 rounded-xl text-white ${
-                    order.status === 'deposit_paid' || order.status === 'in_progress'
-                      ? 'bg-gradient-to-r from-green-500 to-emerald-500'
-                      : order.status === 'completed'
-                      ? 'bg-gradient-to-r from-teal-500 to-cyan-500'
-                      : 'bg-gradient-to-r from-amber-400 to-orange-400'
-                  }`}>
-                    <div className={`text-xs mb-1 ${
-                      order.status === 'deposit_paid' || order.status === 'in_progress'
-                        ? 'text-green-100'
-                        : order.status === 'completed'
-                        ? 'text-teal-100'
-                        : 'text-amber-100'
-                    }`}>累计保额</div>
-                    <div className="text-3xl font-bold">
-                      ¥{(insuranceInfo.coverage / 10000).toFixed(0)}万
-                    </div>
-                    <div className={`text-xs mt-1 ${
-                      order.status === 'deposit_paid' || order.status === 'in_progress'
-                        ? 'text-green-100'
-                        : order.status === 'completed'
-                        ? 'text-teal-100'
-                        : 'text-amber-100'
-                    }`}>
-                      {order.status === 'published' || order.status === 'matched' || order.status === 'confirmed'
-                        ? '支付定金后自动生效'
-                        : '人身伤害 + 财产损失 双重保障'}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="text-xs font-medium text-zinc-700 mb-2">保障范围</div>
-                    <div className="space-y-2">
-                      {insuranceInfo.range.map((item) => (
-                        <div key={item} className="flex items-center gap-2">
-                          <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                            <CheckCircle className="w-3 h-3 text-blue-600" />
-                          </div>
-                          <span className="text-sm text-zinc-700">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => setShowPolicyModal(true)}
-                    className="w-full py-2.5 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded-xl transition-colors flex items-center justify-center gap-1"
-                  >
-                    <FileText className="w-4 h-4" />
-                    查看电子保单
-                  </button>
                 </div>
+
+                {insuranceInfo.hasUpgraded ? (
+                  <div className="card p-6 animate-fade-in-up-delay-2 border-2 border-amber-200 bg-gradient-to-br from-amber-50/50 to-transparent overflow-hidden relative">
+                    <div className="absolute top-0 right-0 px-3 py-1 bg-amber-500 text-white text-xs font-medium rounded-bl-xl">
+                      已升级
+                    </div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                        <BadgeCheck className="w-5 h-5 text-amber-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-zinc-900">保障升级申请</h3>
+                        <p className="text-xs text-amber-600 font-medium">{upgradeAuditRecord.status} · 平台运营审核</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <div className="p-3 bg-white rounded-xl border border-amber-100">
+                        <div className="text-xs text-zinc-500 mb-1">升级内容</div>
+                        <div className="font-medium text-sm text-zinc-900">{upgradeAuditRecord.content}</div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 bg-white rounded-xl border border-amber-100">
+                          <div className="text-xs text-zinc-500 mb-1">审核人</div>
+                          <div className="font-medium text-sm text-zinc-900">{upgradeAuditRecord.auditor}</div>
+                        </div>
+                        <div className="p-3 bg-white rounded-xl border border-amber-100">
+                          <div className="text-xs text-zinc-500 mb-1">审核时间</div>
+                          <div className="font-medium text-sm text-zinc-900">{upgradeAuditRecord.auditTime}</div>
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200 flex items-center justify-between">
+                        <div>
+                          <div className="text-xs text-amber-700 mb-0.5">升级费用</div>
+                          <div className="text-xl font-bold text-amber-600">¥{upgradeAuditRecord.upgradeFee.toFixed(2)}</div>
+                        </div>
+                        <span className="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full font-medium flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" />
+                          审核通过
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="card p-6 animate-fade-in-up-delay-2 border-2 border-dashed border-amber-200 overflow-hidden relative">
+                    <div className="absolute top-0 right-0 px-3 py-1 bg-amber-100 text-amber-700 text-xs font-medium rounded-bl-xl">
+                      可升级保障
+                    </div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                        <Shield className="w-5 h-5 text-amber-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-zinc-900">升级保障方案</h3>
+                        <p className="text-xs text-zinc-500">保额提升至 100 万，额外保障更全面</p>
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200 mb-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <div className="text-xs text-zinc-500 mb-0.5">升级后保额</div>
+                          <div className="text-2xl font-bold text-amber-600">¥{insuranceInfo.upgradedCoverage.toLocaleString()}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-xs text-zinc-500 mb-0.5">升级保费</div>
+                          <div className="text-2xl font-bold text-zinc-900">¥{insuranceInfo.upgradePremium.toFixed(2)}</div>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        {insuranceInfo.upgradeItems?.map((item) => (
+                          <div key={item} className="flex items-center gap-1.5 text-xs text-zinc-700">
+                            <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => setShowUpgradeConfirmModal(true)}
+                      className="w-full py-2.5 text-sm text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <BadgeCheck className="w-4 h-4" />
+                      立即升级保障（¥{insuranceInfo.upgradePremium.toFixed(2)}）
+                    </button>
+                  </div>
+                )}
               </div>
-            ) : (
+            )}
+
+            {(order?.category !== '家政' && order?.category !== '护理' && !(order as any)?.insuranceRequired) && (
               <div className="card p-6 animate-fade-in-up-delay-2 border-2 border-dashed border-zinc-200 overflow-hidden relative">
                 <div className="absolute top-0 right-0 px-3 py-1 bg-amber-100 text-amber-700 text-xs font-medium rounded-bl-xl">
                   可选升级
@@ -2682,14 +3488,17 @@ export default function OrderDetail() {
               <div>
                 <div className="text-sm font-medium text-zinc-700 mb-3">保障范围</div>
                 <div className="space-y-2">
-                  {insuranceInfo.range.map((item) => (
-                    <div key={item} className="flex items-center gap-3 p-3 bg-zinc-50 rounded-xl">
-                      <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle className="w-3.5 h-3.5 text-green-600" />
+                  {insuranceInfo.range.map((item) => {
+                    const ItemIcon = item.icon;
+                    return (
+                      <div key={item.label} className="flex items-center gap-3 p-3 bg-zinc-50 rounded-xl">
+                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                          <ItemIcon className="w-3.5 h-3.5 text-green-600" />
+                        </div>
+                        <span className="text-sm text-zinc-700">{item.label}</span>
                       </div>
-                      <span className="text-sm text-zinc-700">{item}</span>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
@@ -2715,6 +3524,150 @@ export default function OrderDetail() {
               >
                 我知道了
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showSettlementDetailModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up max-h-[85vh] overflow-y-auto">
+            <div className="p-6 border-b border-zinc-100 bg-gradient-to-r from-green-500 to-emerald-500">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                    <Receipt className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">结算明细</h2>
+                    <p className="text-sm text-green-100">资金分账详情</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowSettlementDetailModal(false)}
+                  className="p-2 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+            </div>
+            <div className="p-6 space-y-6">
+              <div className="p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-xs text-green-600 mb-1">订单总金额</div>
+                    <div className="text-3xl font-bold text-green-700">¥{order?.price || 0}</div>
+                  </div>
+                  <div className="w-14 h-14 rounded-full bg-green-500 flex items-center justify-center shadow-lg shadow-green-500/30">
+                    <BadgeCheck className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-green-200 flex items-center justify-between text-xs">
+                  <span className="text-green-700">交易单号</span>
+                  <span className="font-mono text-green-800">TXN{order?.id?.slice(0, 12).toUpperCase()}</span>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="text-sm font-semibold text-zinc-900 flex items-center gap-2">
+                  <Landmark className="w-4 h-4 text-zinc-500" />
+                  资金流向
+                </div>
+                <div className="space-y-0">
+                  {[
+                    { label: '订单金额', value: `¥${order?.price || 0}`, type: 'neutral', desc: '需求方支付' },
+                    { label: '定金托管', value: `¥${order?.deposit || 0}`, type: 'positive', desc: '已支付 · 平台托管' },
+                    { label: '尾款支付', value: `¥${(order?.price || 0) - (order?.deposit || 0)}`, type: 'positive', desc: '服务完成后支付' },
+                    { label: '平台服务费 (15%)', value: `-¥${((order?.price || 0) * 0.15).toFixed(2)}`, type: 'negative', desc: '平台技术服务费', divider: true },
+                    { label: '创作者实收', value: `¥${((order?.price || 0) * 0.85).toFixed(2)}`, type: 'success', desc: 'T+1 已到账', highlight: true },
+                  ].map((item: any, index) => (
+                    <div key={index} className="relative">
+                      <div className={`flex items-center justify-between py-3 ${item.divider ? 'border-t border-zinc-200 mt-2 pt-4' : ''} ${item.highlight ? 'mt-2' : ''}`}>
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                            item.type === 'positive' ? 'bg-green-100' :
+                            item.type === 'negative' ? 'bg-red-100' :
+                            item.type === 'success' ? 'bg-emerald-100' :
+                            'bg-zinc-100'
+                          }`}>
+                            {item.type === 'positive' ? (
+                              <CheckCircle className="w-4 h-4 text-green-600" />
+                            ) : item.type === 'negative' ? (
+                              <DollarSign className="w-4 h-4 text-red-600" />
+                            ) : item.type === 'success' ? (
+                              <Wallet className="w-4 h-4 text-emerald-600" />
+                            ) : (
+                              <DollarSign className="w-4 h-4 text-zinc-600" />
+                            )}
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-zinc-900">{item.label}</div>
+                            <div className="text-xs text-zinc-500">{item.desc}</div>
+                          </div>
+                        </div>
+                        <span className={cn(
+                          'text-sm font-semibold',
+                          item.type === 'negative' ? 'text-red-500' :
+                          item.type === 'success' ? 'text-green-600' :
+                          'text-zinc-900'
+                        )}>
+                          {item.value}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 bg-zinc-50 rounded-2xl space-y-3">
+                <div className="text-sm font-semibold text-zinc-900 flex items-center gap-2 mb-1">
+                  <FileText className="w-4 h-4 text-zinc-500" />
+                  结算信息
+                </div>
+                {[
+                  { label: '结算状态', value: '已结算', valueClass: 'text-green-600', icon: BadgeCheck },
+                  { label: '结算时间', value: new Date(Date.now() - 1 * 86400000).toLocaleString(), icon: Clock },
+                  { label: '到账时间', value: 'T+1 已到账', valueClass: 'text-green-600', icon: Landmark },
+                  { label: '支付方式', value: '微信支付', icon: CreditCard },
+                  { label: '收款账户', value: `${order?.creator?.username || '创作者'} · 尾号****`, icon: Wallet },
+                ].map((item: any, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={index} className="flex items-center justify-between py-1.5">
+                      <span className="text-xs text-zinc-500 flex items-center gap-1.5">
+                        <Icon className="w-3.5 h-3.5" />
+                        {item.label}
+                      </span>
+                      <span className={cn('text-xs font-medium text-zinc-800', item.valueClass)}>
+                        {item.value}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                <div className="flex items-start gap-2">
+                  <Shield className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-xs text-blue-700">
+                    <p className="font-medium">结算规则说明</p>
+                    <p className="mt-0.5 leading-relaxed">
+                      平台采用 T+1 结算机制，服务完成确认后，次日自动结算至创作者账户。
+                      如遇争议，资金将冻结至仲裁结束后按裁决结果分配。
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => setShowSettlementDetailModal(false)}
+                  className="flex-1 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  我知道了
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -2787,6 +3740,236 @@ export default function OrderDetail() {
           </div>
         </div>
       )}
-    </div>
+
+      {showInsuranceDetailModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up max-h-[80vh] overflow-y-auto">
+            <div className="p-6 border-b border-zinc-100 bg-gradient-to-r from-green-500 to-emerald-600">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                    <BadgeCheck className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">保单详情</h2>
+                    <p className="text-sm text-green-100">家政服务责任险</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowInsuranceDetailModal(false)}
+                  className="p-2 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-5">
+              <div className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100">
+                <div className="text-center">
+                  <div className="text-sm text-zinc-500 mb-1">累计保额</div>
+                  <div className="text-4xl font-bold text-green-600">¥{insuranceInfo.coverage.toLocaleString()}</div>
+                  <div className="text-xs text-zinc-500 mt-1">人身伤害 + 财产损失 双重保障</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3 bg-zinc-50 rounded-xl">
+                  <div className="text-xs text-zinc-500 mb-1">保单号</div>
+                  <div className="font-mono text-sm font-medium text-zinc-800 break-all">{insuranceInfo.policyNo}</div>
+                </div>
+                <div className="p-3 bg-zinc-50 rounded-xl">
+                  <div className="text-xs text-zinc-500 mb-1">回执单号</div>
+                  <div className="font-mono text-sm font-medium text-zinc-800 break-all">{insuranceInfo.receiptNo}</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3 bg-zinc-50 rounded-xl">
+                  <div className="text-xs text-zinc-500 mb-1">保费</div>
+                  <div className="font-semibold text-green-600">¥{insuranceInfo.premium.toFixed(2)} <span className="text-xs">平台承担</span></div>
+                </div>
+                <div className="p-3 bg-zinc-50 rounded-xl">
+                  <div className="text-xs text-zinc-500 mb-1">保障期限</div>
+                  <div className="font-medium text-sm text-zinc-800">{insuranceInfo.period}</div>
+                </div>
+              </div>
+
+              <div className="p-4 bg-zinc-50 rounded-xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <Building2 className="w-4 h-4 text-blue-500" />
+                  <span className="text-sm font-medium text-zinc-700">承保公司</span>
+                </div>
+                <div className="font-medium text-zinc-900">{insuranceInfo.company}</div>
+              </div>
+
+              <div>
+                <div className="text-sm font-medium text-zinc-700 mb-3">保障范围</div>
+                <div className="space-y-2">
+                  {insuranceInfo.range?.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.label} className="flex items-center gap-3 p-3 bg-zinc-50 rounded-xl">
+                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                          <Icon className="w-3.5 h-3.5 text-green-600" />
+                        </div>
+                        <span className="text-sm text-zinc-700">{item.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <div className="text-sm font-medium text-zinc-700 mb-3">投保对接流程</div>
+                <div className="space-y-3">
+                  {insuranceDockingSteps?.map((step) => {
+                    const StepIcon = step.icon;
+                    return (
+                      <div key={step.step} className="flex items-start gap-3 p-3 bg-blue-50 rounded-xl">
+                        <div className="w-7 h-7 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-medium text-zinc-900">{step.step}. {step.title}</div>
+                          <div className="text-xs text-zinc-500 mt-0.5">{step.time}</div>
+                          {step.policyNo && (
+                            <div className="text-xs text-blue-600 mt-0.5 font-mono">保单号：{step.policyNo}</div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-sm text-amber-700">
+                    <p className="font-medium mb-1">特别说明</p>
+                    <ul className="space-y-1 text-xs">
+                      <li>• 本保单由平台统一投保，保费由平台承担</li>
+                      <li>• 理赔事宜请联系平台客服协助办理</li>
+                      <li>• 电子保单已生成，可用于理赔举证</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-zinc-100 flex gap-3">
+              <button
+                onClick={() => {
+                  setShowInsuranceDetailModal(false);
+                  alert('电子保单已生成，可用于理赔');
+                }}
+                className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                下载电子保单
+              </button>
+              <button
+                onClick={() => setShowInsuranceDetailModal(false)}
+                className="flex-1 py-3 border border-zinc-200 text-zinc-700 rounded-xl font-medium hover:bg-zinc-50 transition-colors"
+              >
+                关闭
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showUpgradeConfirmModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up">
+            <div className="p-6 border-b border-zinc-100 bg-gradient-to-r from-amber-500 to-orange-500">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <BadgeCheck className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">升级保障确认</h2>
+                    <p className="text-sm text-orange-100">保额提升至 100 万</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowUpgradeConfirmModal(false)}
+                  className="p-2 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-5">
+              <div className="p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl border border-amber-200">
+                <div className="text-center">
+                  <div className="text-sm text-zinc-500 mb-1">升级后保额</div>
+                  <div className="text-4xl font-bold text-amber-600">¥{insuranceInfo.upgradedCoverage.toLocaleString()}</div>
+                  <div className="text-xs text-zinc-500 mt-1">基础版 → 升级版</div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-zinc-500">升级保费</span>
+                  <span className="font-bold text-zinc-900 text-lg">¥{insuranceInfo.upgradePremium.toFixed(2)}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-zinc-500">基础保额</span>
+                  <span className="font-medium text-zinc-900">¥{insuranceInfo.coverage.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-zinc-500">承保公司</span>
+                  <span className="font-medium text-zinc-900">{insuranceInfo.company}</span>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-sm font-medium text-zinc-700 mb-2">新增保障项目</div>
+                <div className="space-y-2">
+                  {insuranceInfo.upgradeItems?.map((item) => (
+                    <div key={item} className="flex items-center gap-2 text-sm text-zinc-700">
+                      <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-3 bg-blue-50 rounded-xl border border-blue-100">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-blue-700">
+                    升级后保障立即生效，升级费用需用户自行承担。审核通过后保单自动更新。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-zinc-100 flex gap-3">
+              <button
+                onClick={() => setShowUpgradeConfirmModal(false)}
+                className="flex-1 py-3 border border-zinc-200 text-zinc-700 rounded-xl font-medium hover:bg-zinc-50 transition-colors"
+              >
+                暂不升级
+              </button>
+              <button
+                onClick={() => {
+                  setShowUpgradeConfirmModal(false);
+                  alert('保障升级申请已提交，平台将在24小时内审核');
+                }}
+                className="flex-1 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                <BadgeCheck className="w-4 h-4" />
+                确认升级（¥{insuranceInfo.upgradePremium.toFixed(2)}）
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

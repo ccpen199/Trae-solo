@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Search, Home, BookOpen, ShoppingBag, User as UserIcon, LogOut, Settings, Bell, ChevronDown, Menu, X, ShieldCheck, Briefcase, FileText, ClipboardCheck, DollarSign } from 'lucide-react';
+import { Search, Home, BookOpen, ShoppingBag, User as UserIcon, LogOut, Settings, Bell, ChevronDown, Menu, X, ShieldCheck, Briefcase, FileText, ClipboardCheck, DollarSign, LayoutDashboard, History, BookMarked, AlertCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useAuthStore } from '../store/authStore';
 import Button from './Button';
+import Badge from './Badge';
 import type { User } from '../../shared/types';
 
 const ROLE_LABELS: Record<string, string> = {
@@ -13,76 +14,111 @@ const ROLE_LABELS: Record<string, string> = {
   user: '学习者',
 };
 
+const Toast = ({ message, onClose }: { message: string; onClose: () => void }) => (
+  <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
+    <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900 text-white rounded-xl shadow-lg">
+      <AlertCircle className="w-4 h-4 text-amber-400" />
+      <span className="text-sm font-medium">{message}</span>
+      <button onClick={onClose} className="ml-2 text-zinc-400 hover:text-white">
+        ×
+      </button>
+    </div>
+  </div>
+);
+
 function getRoleLabel(role?: string): string {
   return ROLE_LABELS[role || 'user'] || '学习者';
 }
 
-function getNavLinks(role?: string) {
-  const baseLinks = [
-    { to: '/', label: '首页', icon: Home },
-    { to: '/feed', label: '内容社区', icon: BookOpen },
-    { to: '/orders', label: '订单广场', icon: ShoppingBag },
-    { to: '/guarantee', label: '保障中心', icon: ShieldCheck },
-  ];
-
-  const r = role || 'user';
-
-  if (r === 'admin') {
-    return [
-      ...baseLinks.slice(0, 3),
-      { to: '/workspace', label: '工作台', icon: Briefcase },
-      { to: '/orders/my', label: '我的需求', icon: FileText },
-      ...baseLinks.slice(3),
-      { to: '/admin/review', label: '审核中心', icon: ClipboardCheck },
-      { to: '/admin/finance', label: '财务管理', icon: DollarSign },
-    ];
-  }
-
-  if (r === 'creator') {
-    return [
-      ...baseLinks.slice(0, 2),
-      { to: '/workspace', label: '工作台入口', icon: Briefcase },
-      ...baseLinks.slice(2),
-    ];
-  }
-
-  if (r === 'requester') {
-    return [
-      ...baseLinks.slice(0, 3),
-      { to: '/orders/my', label: '我的需求', icon: FileText },
-      ...baseLinks.slice(3),
-    ];
-  }
-
-  return baseLinks;
+interface NavLinkItem {
+  to: string;
+  label: string;
+  icon: any;
+  adminOnly?: boolean;
 }
 
-function getUserMenuItems(role: string | undefined, navigate: (to: string) => void, user: User | null, closeMenu: () => void) {
-  const items: { label: string; icon: any; onClick: () => void; danger?: boolean }[] = [
-    {
-      label: '个人主页',
-      icon: UserIcon,
-      onClick: () => {
-        navigate(`/users/${user?.id}`);
-        closeMenu();
-      },
-    },
+function getNavLinks(role: string | undefined, isAuthenticated: boolean): NavLinkItem[] {
+  const baseLinks: NavLinkItem[] = [
+    { to: '/', label: '首页', icon: Home },
+    { to: '/feed', label: '内容社区', icon: BookOpen },
+    { to: '/courses', label: '课程市场', icon: ShoppingBag },
+    { to: '/guarantee', label: '平台保障', icon: ShieldCheck },
   ];
 
-  const r = role || 'user';
+  if (!isAuthenticated) {
+    return baseLinks;
+  }
 
-  if (r === 'creator' || r === 'admin') {
-    items.push({
-      label: '创作者工作台',
-      icon: Briefcase,
-      onClick: () => {
-        navigate('/workspace');
-        closeMenu();
-      },
-    });
+  const r = role || 'user';
+  const links: NavLinkItem[] = [...baseLinks];
+
+  if (r === 'admin' || r === 'creator') {
+    links.splice(2, 0, { to: '/workspace', label: '创作者工作台', icon: Briefcase });
+  }
+
+  if (r === 'requester' || r === 'user') {
+    const insertIndex = links.findIndex(l => l.to === '/courses') + 1;
+    links.splice(insertIndex, 0, { to: '/orders/my', label: '我的订单', icon: FileText });
   }
 
   if (r === 'admin') {
+    links.push({ to: '/admin/review', label: '审核中心', icon: ClipboardCheck, adminOnly: true });
+    links.push({ to: '/admin/finance', label: '财务管理', icon: DollarSign, adminOnly: true });
+  }
+
+  return links;
+}
+
+interface UserMenuItem {
+  label: string;
+  icon: any;
+  onClick: () => void;
+  danger?: boolean;
+  adminOnly?: boolean;
+}
+
+function getUserMenuItems(
+  role: string | undefined,
+  isAuthenticated: boolean,
+  navigate: (to: string) => void,
+  user: User | null,
+  closeMenu: () => void,
+  showToast: (msg: string) => void
+): UserMenuItem[] {
+  if (!isAuthenticated) {
+    return [
+      {
+        label: '登录',
+        icon: UserIcon,
+        onClick: () => {
+          navigate('/login');
+          closeMenu();
+        },
+      },
+      {
+        label: '注册',
+        icon: UserIcon,
+        onClick: () => {
+          navigate('/register');
+          closeMenu();
+        },
+      },
+    ];
+  }
+
+  const items: UserMenuItem[] = [];
+  const r = role || 'user';
+
+  if (r === 'admin') {
+    items.push({
+      label: '管理后台',
+      icon: LayoutDashboard,
+      onClick: () => {
+        navigate('/admin/dashboard');
+        closeMenu();
+      },
+      adminOnly: true,
+    });
     items.push({
       label: '审核中心',
       icon: ClipboardCheck,
@@ -90,6 +126,7 @@ function getUserMenuItems(role: string | undefined, navigate: (to: string) => vo
         navigate('/admin/review');
         closeMenu();
       },
+      adminOnly: true,
     });
     items.push({
       label: '财务管理',
@@ -98,10 +135,46 @@ function getUserMenuItems(role: string | undefined, navigate: (to: string) => vo
         navigate('/admin/finance');
         closeMenu();
       },
+      adminOnly: true,
     });
   }
 
-  if (r === 'requester' || r === 'admin') {
+  if (r === 'creator') {
+    items.push({
+      label: '工作台',
+      icon: Briefcase,
+      onClick: () => {
+        navigate('/workspace');
+        closeMenu();
+      },
+    });
+    items.push({
+      label: '我的课程',
+      icon: BookMarked,
+      onClick: () => {
+        navigate('/courses/my');
+        closeMenu();
+      },
+    });
+    items.push({
+      label: '财务结算',
+      icon: DollarSign,
+      onClick: () => {
+        navigate('/finance');
+        closeMenu();
+      },
+    });
+    items.push({
+      label: '账号设置',
+      icon: Settings,
+      onClick: () => {
+        navigate('/settings');
+        closeMenu();
+      },
+    });
+  }
+
+  if (r === 'requester') {
     items.push({
       label: '我的需求',
       icon: FileText,
@@ -110,15 +183,48 @@ function getUserMenuItems(role: string | undefined, navigate: (to: string) => vo
         closeMenu();
       },
     });
+    items.push({
+      label: '账号设置',
+      icon: Settings,
+      onClick: () => {
+        navigate('/settings');
+        closeMenu();
+      },
+    });
+  }
+
+  if (r === 'user') {
+    items.push({
+      label: '我的课程',
+      icon: BookMarked,
+      onClick: () => {
+        navigate('/courses/my');
+        closeMenu();
+      },
+    });
+    items.push({
+      label: '学习记录',
+      icon: History,
+      onClick: () => {
+        navigate('/study/history');
+        closeMenu();
+      },
+    });
+    items.push({
+      label: '账号设置',
+      icon: Settings,
+      onClick: () => {
+        navigate('/settings');
+        closeMenu();
+      },
+    });
   }
 
   items.push({
-    label: '设置',
-    icon: Settings,
-    onClick: () => {
-      navigate('/settings');
-      closeMenu();
-    },
+    label: '退出登录',
+    icon: LogOut,
+    onClick: () => {},
+    danger: true,
   });
 
   return items;
@@ -130,14 +236,23 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
 
-  const navLinks = useMemo(() => getNavLinks(user?.role), [user?.role]);
+  const showToast = (message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  const userRole = user?.role;
+  const isAdmin = userRole === 'admin';
+
+  const navLinks = useMemo(() => getNavLinks(userRole, isAuthenticated), [userRole, isAuthenticated]);
   const userMenuItems = useMemo(
-    () => getUserMenuItems(user?.role, navigate, user, () => setShowUserMenu(false)),
-    [user?.role, user, navigate]
+    () => getUserMenuItems(userRole, isAuthenticated, navigate, user, () => setShowUserMenu(false), showToast),
+    [userRole, isAuthenticated, navigate, user]
   );
 
-  const roleLabel = useMemo(() => getRoleLabel(user?.role), [user?.role]);
+  const roleLabel = useMemo(() => getRoleLabel(userRole), [userRole]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -152,8 +267,29 @@ const Navbar = () => {
     navigate('/');
   };
 
+  const handleNavLinkClick = (link: NavLinkItem) => {
+    if (link.adminOnly && !isAdmin) {
+      showToast('您没有管理员权限');
+      return false;
+    }
+    return true;
+  };
+
+  const handleUserMenuClick = (item: UserMenuItem) => {
+    if (item.label === '退出登录') {
+      handleLogout();
+      return;
+    }
+    if (item.adminOnly && !isAdmin) {
+      showToast('您没有管理员权限');
+      return;
+    }
+    item.onClick();
+  };
+
   return (
     <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-zinc-100">
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
@@ -168,23 +304,33 @@ const Navbar = () => {
 
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  end
-                  className={({ isActive }) =>
-                    cn(
-                      'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
-                      isActive
-                        ? 'bg-primary-100 text-primary-700'
-                        : 'text-zinc-600 hover:text-primary-600 hover:bg-primary-50'
-                    )
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end
+                className={({ isActive }) =>
+                  cn(
+                    'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 relative',
+                    isActive
+                      ? 'bg-primary-100 text-primary-700'
+                      : 'text-zinc-600 hover:text-primary-600 hover:bg-primary-50'
+                  )
+                }
+                onClick={(e) => {
+                  if (!handleNavLinkClick(link)) {
+                    e.preventDefault();
                   }
-                >
-                  <link.icon className="w-4 h-4" />
-                  {link.label}
-                </NavLink>
-              ))}
+                }}
+              >
+                <link.icon className="w-4 h-4" />
+                {link.label}
+                {link.adminOnly && (
+                  <Badge variant="error" size="sm" className="absolute -top-1 -right-1">
+                    管
+                  </Badge>
+                )}
+              </NavLink>
+            ))}
             </div>
           </div>
 
@@ -245,22 +391,23 @@ const Navbar = () => {
                         {userMenuItems.map((item, index) => (
                           <button
                             key={index}
-                            onClick={item.onClick}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
+                            onClick={() => handleUserMenuClick(item)}
+                            className={cn(
+                              'w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors relative',
+                              item.danger
+                                ? 'text-red-600 hover:bg-red-50'
+                                : 'text-zinc-700 hover:bg-zinc-50'
+                            )}
                           >
                             <item.icon className="w-4 h-4" />
                             {item.label}
+                            {item.adminOnly && (
+                              <Badge variant="error" size="sm" className="ml-auto">
+                                管理员
+                              </Badge>
+                            )}
                           </button>
                         ))}
-                        <div className="border-t border-zinc-100 mt-2 pt-2">
-                          <button
-                            onClick={handleLogout}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                          >
-                            <LogOut className="w-4 h-4" />
-                            退出登录
-                          </button>
-                        </div>
                       </div>
                     </>
                   )}
@@ -316,10 +463,16 @@ const Navbar = () => {
                   key={link.to}
                   to={link.to}
                   end
-                  onClick={() => setShowMobileMenu(false)}
+                  onClick={(e) => {
+                    if (!handleNavLinkClick(link)) {
+                      e.preventDefault();
+                    } else {
+                      setShowMobileMenu(false);
+                    }
+                  }}
                   className={({ isActive }) =>
                     cn(
-                      'flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-colors',
+                      'flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-colors relative',
                       isActive
                         ? 'bg-primary-100 text-primary-700'
                         : 'text-zinc-600 hover:bg-zinc-50'
@@ -328,6 +481,11 @@ const Navbar = () => {
                 >
                   <link.icon className="w-5 h-5" />
                   {link.label}
+                  {link.adminOnly && (
+                    <Badge variant="error" size="sm">
+                      管理员
+                    </Badge>
+                  )}
                 </NavLink>
               ))}
             </div>

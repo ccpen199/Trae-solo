@@ -4,7 +4,8 @@ import {
   Search, TrendingUp, Users, BookOpen, Sparkles, ChevronRight, Plus,
   Briefcase, GraduationCap, ShoppingCart, Shield, Star, Clock, MapPin,
   UserCheck, Zap, BarChart3, Settings, LayoutDashboard, FileCheck, PiggyBank,
-  ArrowRight
+  ArrowRight, AlertCircle, UserCog, LineChart, ClipboardList, CreditCard,
+  History, BookMarked
 } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
@@ -24,14 +25,39 @@ const mockVideos = [
   { id: '4', title: '水彩画技法详解', creatorName: '画家张三', views: 6700, likes: 1890, duration: '18:20', category: '绘画' },
 ];
 
+const Toast = ({ message, onClose }: { message: string; onClose: () => void }) => (
+  <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-fade-in">
+    <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900 text-white rounded-xl shadow-lg">
+      <AlertCircle className="w-4 h-4 text-amber-400" />
+      <span className="text-sm font-medium">{message}</span>
+      <button onClick={onClose} className="ml-2 text-zinc-400 hover:text-white">
+        ×
+      </button>
+    </div>
+  </div>
+);
+
 export default function Home() {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [courses, setCourses] = useState<Course[]>([]);
   const [orders, setOrders] = useState<ServiceOrder[]>([]);
   const [creators, setCreators] = useState<User[]>([]);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const userRole = user?.role || 'guest';
+  const isAdmin = userRole === 'admin';
+  const isCreator = userRole === 'creator';
+  const isRequester = userRole === 'requester';
+  const isUser = userRole === 'user';
+  const isGuest = !isAuthenticated || userRole === 'guest';
+
+  const showToast = (message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   useEffect(() => {
     loadData();
@@ -63,13 +89,13 @@ export default function Home() {
     navigate('/orders');
   };
 
-  const roleEntries = [
+  const roleEntries = isGuest ? [
     {
       key: 'learner',
       icon: GraduationCap,
       title: '我是学习者',
       desc: '学习课程、购买服务',
-      color: 'from-primary-400 to-primary-600',
+      color: 'from-blue-400 to-blue-600',
       action: '浏览课程',
       onClick: () => navigate('/feed'),
     },
@@ -80,33 +106,120 @@ export default function Home() {
       desc: '发布课程、提供服务',
       color: 'from-accent-400 to-accent-600',
       action: '进入工作台',
-      onClick: () => {
-        if (!isAuthenticated) {
-          navigate('/login');
-        } else {
-          navigate('/workspace');
-        }
-      },
+      onClick: () => navigate('/login'),
     },
     {
       key: 'requester',
       icon: ShoppingCart,
       title: '我有需求',
       desc: '发布订单、定制服务',
-      color: 'from-green-400 to-green-600',
+      color: 'from-orange-400 to-orange-600',
       action: '发布需求',
-      onClick: handlePublishOrder,
+      onClick: () => navigate('/login'),
     },
+  ] : [];
+
+  const getRoleHeroCard = () => {
+    if (isAdmin) {
+      return {
+        icon: Shield,
+        title: '平台管理员',
+        desc: '管理平台运营，维护平台秩序',
+        color: 'from-red-500 to-red-700',
+        bgColor: 'bg-red-50',
+        iconBg: 'bg-red-100',
+        iconColor: 'text-red-600',
+        stats: [
+          { label: '审核中心待处理', value: '12 条', icon: FileCheck },
+          { label: '财务待结算', value: '8 笔', icon: PiggyBank },
+        ],
+      };
+    }
+    if (isCreator) {
+      return {
+        icon: Briefcase,
+        title: '创作者工作台',
+        desc: '管理你的课程与服务订单',
+        color: 'from-accent-400 to-accent-600',
+        bgColor: 'bg-accent-50',
+        iconBg: 'bg-accent-100',
+        iconColor: 'text-accent-600',
+        stats: [
+          { label: '今日收入', value: '¥ 328.50', icon: CreditCard },
+          { label: '待服务订单', value: '5 个', icon: ClipboardList },
+        ],
+      };
+    }
+    if (isRequester) {
+      return {
+        icon: ShoppingCart,
+        title: '需求方用户',
+        desc: '发布需求，找到专业服务',
+        color: 'from-orange-400 to-orange-600',
+        bgColor: 'bg-orange-50',
+        iconBg: 'bg-orange-100',
+        iconColor: 'text-orange-600',
+        stats: [
+          { label: '我的需求', value: '3 个', icon: ClipboardList },
+          { label: '待支付', value: '2 笔', icon: CreditCard },
+        ],
+      };
+    }
+    if (isUser || isGuest) {
+      return {
+        icon: GraduationCap,
+        title: '学习者',
+        desc: '探索优质课程，提升自我',
+        color: 'from-blue-400 to-blue-600',
+        bgColor: 'bg-blue-50',
+        iconBg: 'bg-blue-100',
+        iconColor: 'text-blue-600',
+        stats: [
+          { label: '热门课程', value: '10,000+', icon: BookOpen },
+          { label: '优质创作者', value: '5,000+', icon: Users },
+        ],
+      };
+    }
+    return null;
+  };
+
+  const heroCard = getRoleHeroCard();
+
+  const allQuickEntries = [
+    { icon: LayoutDashboard, label: '创作者工作台', path: '/workspace', roles: ['admin', 'creator'], adminOnly: false },
+    { icon: FileCheck, label: '内容审核中心', path: '/admin/review', roles: ['admin'], adminOnly: true },
+    { icon: BarChart3, label: '交易管理', path: '/admin/orders', roles: ['admin'], adminOnly: true },
+    { icon: PiggyBank, label: '财务结算', path: '/admin/finance', roles: ['admin', 'creator'], adminOnly: false },
+    { icon: Settings, label: '账号设置', path: '/settings', roles: ['admin', 'creator', 'requester', 'user'], adminOnly: false },
+    { icon: Shield, label: '平台保障中心', path: '/guarantee', roles: ['admin', 'creator', 'requester', 'user', 'guest'], adminOnly: false },
+    { icon: UserCog, label: '用户管理', path: '/admin/users', roles: ['admin'], adminOnly: true },
+    { icon: LineChart, label: '数据看板', path: '/admin/dashboard', roles: ['admin'], adminOnly: true },
+    { icon: ClipboardList, label: '我的需求', path: '/orders/my', roles: ['requester'], adminOnly: false },
+    { icon: BookMarked, label: '我的课程', path: '/courses/my', roles: ['user', 'creator'], adminOnly: false },
+    { icon: History, label: '学习记录', path: '/study/history', roles: ['user'], adminOnly: false },
+    { icon: BookOpen, label: '内容社区', path: '/feed', roles: ['guest', 'admin', 'creator', 'requester', 'user'], adminOnly: false },
+    { icon: ShoppingCart, label: '课程市场', path: '/courses', roles: ['guest', 'admin', 'creator', 'requester', 'user'], adminOnly: false },
+    { icon: Briefcase, label: '订单广场', path: '/orders', roles: ['guest', 'admin', 'creator', 'requester', 'user'], adminOnly: false },
   ];
 
-  const quickEntries = [
-    { icon: LayoutDashboard, label: '创作者工作台', path: '/workspace', role: 'creator' },
-    { icon: FileCheck, label: '内容审核中心', path: '/admin/review', role: 'admin' },
-    { icon: BarChart3, label: '交易管理', path: '/admin/orders', role: 'admin' },
-    { icon: PiggyBank, label: '财务结算', path: '/admin/finance', role: 'admin' },
-    { icon: Settings, label: '账号设置', path: '/settings', role: 'all' },
-    { icon: Shield, label: '平台保障中心', path: '/guarantee', role: 'all' },
-  ];
+  const quickEntries = allQuickEntries.filter(entry => {
+    if (isGuest) {
+      return entry.roles.includes('guest');
+    }
+    return entry.roles.includes(userRole);
+  });
+
+  const handleQuickEntryClick = (entry: typeof allQuickEntries[0]) => {
+    if (entry.adminOnly && !isAdmin) {
+      showToast('您没有管理员权限');
+      return;
+    }
+    if (!isAuthenticated && !entry.roles.includes('guest')) {
+      navigate('/login');
+      return;
+    }
+    navigate(entry.path);
+  };
 
   const guaranteeStats = [
     { icon: Star, label: '双向评价', value: '98%', desc: '好评率', tab: 'reviews', color: 'text-amber-500', bg: 'bg-amber-50' },
@@ -125,6 +238,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
+
       <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 py-16 md:py-20">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary-200/30 rounded-full blur-3xl" />
@@ -146,25 +261,59 @@ export default function Home() {
               连接专业技能创作者与需求方，提供高质量在线课程与定制化一对一服务
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12">
-              {roleEntries.map((role, index) => (
-                <div
-                  key={role.key}
-                  className={`card p-5 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 animate-fade-in-up-delay-${index + 1} group`}
-                  onClick={role.onClick}
-                >
-                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${role.color} flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform`}>
-                    <role.icon className="w-6 h-6 text-white" />
+            {isGuest ? (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12">
+                {roleEntries.map((role, index) => (
+                  <div
+                    key={role.key}
+                    className={`card p-5 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 animate-fade-in-up-delay-${index + 1} group`}
+                    onClick={role.onClick}
+                  >
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${role.color} flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform`}>
+                      <role.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-zinc-900 mb-1">{role.title}</h3>
+                    <p className="text-sm text-zinc-500 mb-3">{role.desc}</p>
+                    <span className="text-sm text-primary-600 font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                      {role.action}
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
                   </div>
-                  <h3 className="font-semibold text-zinc-900 mb-1">{role.title}</h3>
-                  <p className="text-sm text-zinc-500 mb-3">{role.desc}</p>
-                  <span className="text-sm text-primary-600 font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                    {role.action}
-                    <ChevronRight className="w-4 h-4" />
-                  </span>
+                ))}
+              </div>
+            ) : (
+              heroCard && (
+                <div className={`card p-6 md:p-8 max-w-2xl mx-auto mb-12 text-left animate-fade-in-up ${heroCard.bgColor} border border-white/50`}>
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className={`w-14 h-14 rounded-2xl ${heroCard.iconBg} flex items-center justify-center flex-shrink-0`}>
+                      <heroCard.icon className={`w-7 h-7 ${heroCard.iconColor}`} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-xl font-bold text-zinc-900">{heroCard.title}</h3>
+                        {isAdmin && (
+                          <Badge variant="error" size="sm">
+                            管理员专属
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-zinc-600">{heroCard.desc}</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {heroCard.stats.map((stat, index) => (
+                      <div key={index} className="bg-white/70 backdrop-blur-sm rounded-xl p-4">
+                        <div className="flex items-center gap-2 mb-1">
+                          <stat.icon className={`w-4 h-4 ${heroCard.iconColor}`} />
+                          <span className="text-xs text-zinc-500">{stat.label}</span>
+                        </div>
+                        <div className={`text-lg font-bold ${heroCard.iconColor}`}>{stat.value}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
+              )
+            )}
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
               <div className="text-center animate-fade-in-up-delay-1">
@@ -199,22 +348,21 @@ export default function Home() {
               <p className="text-sm text-zinc-500 mt-1">常用功能一键直达</p>
             </div>
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
             {quickEntries.map((entry, index) => (
               <div
                 key={entry.label}
-                className="card p-4 text-center cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5"
+                className="card p-4 text-center cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 relative"
                 style={{ animationDelay: `${index * 0.05}s` }}
-                onClick={() => {
-                  if (entry.role !== 'all' && !isAuthenticated) {
-                    navigate('/login');
-                  } else {
-                    navigate(entry.path);
-                  }
-                }}
+                onClick={() => handleQuickEntryClick(entry)}
               >
-                <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center mx-auto mb-2">
-                  <entry.icon className="w-5 h-5 text-primary-600" />
+                {entry.adminOnly && (
+                  <span className="absolute top-2 right-2 px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-medium rounded-full">
+                    管理员
+                  </span>
+                )}
+                <div className={`w-10 h-10 rounded-xl ${entry.adminOnly ? 'bg-red-50' : 'bg-primary-50'} flex items-center justify-center mx-auto mb-2`}>
+                  <entry.icon className={`w-5 h-5 ${entry.adminOnly ? 'text-red-600' : 'text-primary-600'}`} />
                 </div>
                 <span className="text-xs font-medium text-zinc-700">{entry.label}</span>
               </div>
@@ -229,9 +377,10 @@ export default function Home() {
 
       <section className="py-10">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-6 flex-wrap">
             <div className="w-1 h-6 bg-primary-500 rounded-full" />
             <Badge variant="primary" size="sm">内容社区 · C端</Badge>
+            <Badge variant="info" size="sm">公共浏览区</Badge>
             <span className="text-xs text-zinc-400">免费浏览 · UGC内容</span>
           </div>
           <div className="flex items-center justify-between mb-6 animate-fade-in-up">
@@ -262,9 +411,10 @@ export default function Home() {
 
       <section className="py-10 bg-zinc-50">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-6 flex-wrap">
             <div className="w-1 h-6 bg-accent-500 rounded-full" />
             <Badge variant="accent" size="sm">课程市场 · 交易</Badge>
+            {!isAuthenticated && <Badge variant="warning" size="sm">登录后购买</Badge>}
             <span className="text-xs text-zinc-400">平台审核 · 交易保障</span>
           </div>
           <div className="flex items-center justify-between mb-6 animate-fade-in-up">
@@ -311,9 +461,10 @@ export default function Home() {
 
       <section className="py-10 bg-gradient-to-br from-accent-50/50 to-primary-50/50">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-6 flex-wrap">
             <div className="w-1 h-6 bg-green-500 rounded-full" />
             <Badge variant="success" size="sm">订单广场 · B端</Badge>
+            {!isAuthenticated && <Badge variant="warning" size="sm">登录后发布需求</Badge>}
             <span className="text-xs text-zinc-400">定制服务 · 定金托管</span>
           </div>
           <div className="flex items-center justify-between mb-6 animate-fade-in-up">

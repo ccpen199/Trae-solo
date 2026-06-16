@@ -1,0 +1,187 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T15:41:13.631Z",
+  "order": "may-89206",
+  "roundIndex": 3,
+  "captureId": "may-89206-codex-service-repair",
+  "url": "http://127.0.0.1:49206/",
+  "initialUrl": "http://127.0.0.1:49206/",
+  "finalUrl": "http://127.0.0.1:49206/",
+  "status": 200,
+  "title": "SkillVerse 技能课程交易平台",
+  "initialTitle": "SkillVerse 技能课程交易平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-service-repair/may-89206-codex-service-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-service-repair/may-89206-codex-service-repair-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49206/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49206/",
+        "title": "SkillVerse 技能课程交易平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-service-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49206/",
+          "title": "SkillVerse 技能课程交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-service-repair/may-89206-codex-service-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-service-repair/may-89206-codex-service-repair-structure-01-首屏.png",
+          "elementCount": 9,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "SkillVerse 技能课程交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-service-repair/may-89206-codex-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-service-repair/may-89206-codex-service-repair-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49206/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "SkillVerse 技能课程交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-service-repair/may-89206-codex-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-service-repair/may-89206-codex-service-repair-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49206/src/pages/OrderDetail.tsx?t=1781624440691",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89206/src/pages/OrderDetail.tsx: Unexpected token, expected \",\" (3249:6)\n\n  3247 |       </div>\n  3248 |\n> 3249 |       {availableActions.length > 0 && (\n       |       ^\n  3250 |         <div className=\"fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-zinc-200 z-50\">\n  3251 |           <div className=\"container mx-auto px-4 py-4\">\n  3252 |             <div className=\"flex items-center justify-between\">\n3247|        </div>\n3248|  \n3249|        {availableActions.length > 0 && (\n   |        ^\n3250|          <div className=\"fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-zinc-200 z-50\">\n3251|            <div className=\"container mx-auto px-4 py-4\">",
+      "location": {
+        "url": "http://127.0.0.1:49206/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49206/src/pages/OrderDetail.tsx?t=1781624440691",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49206/src/pages/OrderDetail.tsx?t=1781624440691"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { cn } from '../lib/utils';
 
-type OrderStatus = 'published' | 'matched' | 'confirmed' | 'deposit_paid' | 'in_progress' | 'completed' | 'cancelled' | 'disputed';
+type OrderStatus = 'published' | 'matched' | 'confirmed' | 'deposit_paid' | 'in_progress' | 'completed' | 'cancelled' | 'disputed' | 'arbitrated';
 type CourseStatus = 'draft' | 'reviewing' | 'published' | 'rejected';
 type ReviewStatus = 'pending' | 'approved' | 'rejected';
 type TransactionStatus = 'success' | 'failed';
@@ -20,6 +20,7 @@ const statusConfig: Record<string, { label: string; className: string }> = {
   completed: { label: '已完成', className: 'status-completed' },
   cancelled: { label: '已取消', className: 'status-cancelled' },
   disputed: { label: '有争议', className: 'status-disputed' },
+  arbitrated: { label: '已仲裁', className: 'status-disputed' },
   draft: { label: '草稿', className: 'status-draft' },
   reviewing: { label: '审核中', className: 'status-reviewing' },
   rejected: { label: '已拒绝', className: 'status-rejected' },

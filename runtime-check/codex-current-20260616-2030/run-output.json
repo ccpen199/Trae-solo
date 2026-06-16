@@ -1,0 +1,304 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T17:31:36.572Z",
+  "order": "may-89206",
+  "roundIndex": 3,
+  "captureId": "may-89206-codex-current",
+  "url": "http://127.0.0.1:49206/",
+  "initialUrl": "http://127.0.0.1:49206/",
+  "finalUrl": "http://127.0.0.1:49206/",
+  "status": 200,
+  "title": "SkillVerse 技能课程交易平台",
+  "initialTitle": "SkillVerse 技能课程交易平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-codex-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-codex-current-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetKind": "personal",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "详情/内容页相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "详情/内容页相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49206/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49206/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49206/",
+        "title": "SkillVerse 技能课程交易平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89206-codex-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49206/",
+          "title": "SkillVerse 技能课程交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-codex-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-codex-current-structure-01-首屏.png",
+          "elementCount": 9,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "SkillVerse 技能课程交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-codex-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-codex-current-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49206/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89206-codex-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49206/",
+        "title": "SkillVerse 技能课程交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-codex-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-codex-current-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59206",
+  "businessGoalPreview": "预备说明：本提示词不是业务需求本体，而是在正式首轮项目提示词之前单独发送的项目落地准备指令。收到本提示词后，请先建立后续项目的运行、端口、启动、验收和进程隔离约定；正式业务范围以后续首轮提示词为准，不要把本提示词当作业务功能清单。\n\n网址探测准备要求：正式生成项目时，必须把可探测地址写清楚并落到项目 `.env` 中，至少包含 `FRONTEND_PORT`、`BACKEND_PORT`、单服务项目的 `APP_PORT`、`FRONTEND_URL`、`BACKEND_URL`、`API_BASE_URL` 或 `VITE_API_URL`。这些值必须和实际前端启动端口、后端监听端口、CORS、代理和回调地址保持一致，便于后续自动化按不同序号精准探测前端网址和后端健康接口。",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"SkillVerse API is running\",\"timestamp\":\"2026-06-16T17:31:35.102Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"API not found\",\"data\":null}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/courses",
+      "path": "/api/courses",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"items\":[{\"id\":\"cdc29e4b-1df0-4082-b408-1d1ce6d10cfe\",\"creatorId\":\"43418cfc-1e1f-4bee-8390-39191df96578\",\"title\":\"爵士舞入门到精通\",\"description\":\"从零开始学习爵士舞，基础步伐到成品舞\",\"coverImage\":\"data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22640%22%20height%3D%22360%22%20viewBox%3D%220%200%20640%20360%22%3E%3Crect%20width%3D%22640%22%20height%3D%22360%22%20rx%3D%2228%22%20fill%3D%22%237c3aed%22%2F%3E%3Ccircle%20cx%3D%22520%22%20cy"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"API not found\",\"data\":null}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"items\":[{\"id\":\"40c5de70-0449-4d7e-812d-f31ee9801294\",\"requesterId\":\"4445950e-07c4-4a7c-aa17-d32eeafde857\",\"title\":\"上门教爵士舞基础\",\"description\":\"想学习爵士舞基础，每周2次，每次1小时\",\"category\":\"舞蹈\",\"price\":300,\"deposit\":100,\"location\":\"朝阳区\",\"address\":\"朝阳区XX商业广场XX座XX层\",\"serviceTime\":\"2026-07-09T15:32:53.516Z\",\"duration\":60,\"status\":\"published\",\"insuranceRequired\":false,\"depositPaid\":false,\"matchScore\":85,\"latestMessage\":{\"sender\":\"系统\",\"time\":\"刚刚\",\"content\":\"订单已创建，等待创作者接单\"},\"requ"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"id\":\"local-admin\",\"username\":\"admin\",\"role\":\"admin\",\"avatar\":\"\",\"bio\":\"SkillVerse 本地演示管理员\",\"followerCount\":0,\"followingCount\":0,\"rating\":5,\"verified\":true,\"location\":\"本地演示\",\"createdAt\":\"2026-06-16T15:39:35.724Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"id\":\"local-admin\",\"username\":\"admin\",\"role\":\"admin\",\"avatar\":\"\",\"bio\":\"SkillVerse 本地演示管理员\",\"followerCount\":0,\"followingCount\":0,\"rating\":5,\"verified\":true,\"location\":\"本地演示\",\"createdAt\":\"2026-06-16T15:39:35.724Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"id\":\"local-admin\",\"username\":\"admin\",\"role\":\"admin\",\"avatar\":\"\",\"bio\":\"SkillVerse 本地演示管理员\",\"followerCount\":0,\"followingCount\":0,\"rating\":5,\"verified\":true,\"location\":\"本地演示\",\"createdAt\":\"2026-06-16T15:39:35.724Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"query\":\"测试\",\"courses\":[],\"orders\":[],\"creators\":[{\"id\":\"4445950e-07c4-4a7c-aa17-d32eeafde857\",\"username\":\"李画师\",\"avatar\":\"data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22640%22%20height%3D%22360%22%20viewBox%3D%220%200%20640%20360%22%3E%3Crect%20width%3D%22640%22%20height%3D%22360%22%20rx%3D%2228%22%20fill%3D%22%232563eb%22%2F%3E%3Ccircle%20cx%3D%22520%22%20cy%3D%2270%22%20r%3D%2290%22%20fill%3D%22%23fff%22%20"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"totalCourses\":8,\"totalOrders\":6,\"totalCreators\":5,\"transactionCount\":10,\"publishedCourses\":8,\"completedOrders\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"totalCourses\":8,\"totalOrders\":6,\"totalCreators\":5,\"transactionCount\":10,\"publishedCourses\":8,\"completedOrders\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"items\":[{\"id\":\"cdc29e4b-1df0-4082-b408-1d1ce6d10cfe\",\"creatorId\":\"43418cfc-1e1f-4bee-8390-39191df96578\",\"title\":\"爵士舞入门到精通\",\"description\":\"从零开始学习爵士舞，基础步伐到成品舞\",\"coverImage\":\"data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22640%22%20height%3D%22360%22%20viewBox%3D%220%200%20640%20360%22%3E%3Crect%20width%3D%22640%22%20height%3D%22360%22%20rx%3D%2228%22%20fill%3D%22%237c3aed%22%2F%3E%3Ccircle%20cx%3D%22520%22%20cy"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59206/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"id\":\"skillverse-demo-cart\",\"items\":[{\"id\":\"cdc29e4b-1df0-4082-b408-1d1ce6d10cfe\",\"name\":\"爵士舞入门到精通\",\"price\":199,\"quantity\":1}],\"total\":199}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49206/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89206/src/pages/OrderDetail.tsx: Unexpected token, expected \",\" (3246:6)\n\n  3244 |       </div>\n  3245 |\n> 3246 |       {availableActions.length > 0 && (\n       |       ^\n  3247 |         <div className=\"fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-zinc-200 z-50\">\n  3248 |           <div className=\"container mx-auto px-4 py-4\">\n  3249 |             <div className=\"flex items-center justify-between\">\n3244|        </div>\n3245|  \n3246|        {availableActions.length > 0 && (\n   |        ^\n3247|          <div className=\"fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-zinc-200 z-50\">\n3248|            <div className=\"container mx-auto px-4 py-4\">",
+      "location": {
+        "url": "http://127.0.0.1:49206/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49206/src/pages/OrderDetail.tsx?t=1781630434876",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49206/src/pages/OrderDetail.tsx?t=1781630434876",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49206/__open-in-editor?file=%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89206%2Fsrc%2Fpages%2FOrderDetail.tsx%3A3246%3A6",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49206/src/pages/OrderDetail.tsx?t=1781630434876"
+    }
+  ],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89206/runtime-check/codex-current-20260616-2030/may-89206-browser-report.json"
+}

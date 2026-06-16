@@ -7,7 +7,8 @@ import {
   BadgeCheck, Crown, XCircle, AlertTriangle, CreditCard, Percent,
   ArrowLeft, Search, HelpCircle, CircleDot, Wallet, CheckCircle2,
   Calendar, Hash, ExternalLink, Sparkles, Zap, BookOpen, Award,
-  MessageCircle, Download, Clock3, Coins, TrendingUp, X, ChevronRight
+  MessageCircle, Download, Clock3, Coins, TrendingUp, X, ChevronRight,
+  Copy, CheckCircle, Check as CheckIcon
 } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
@@ -311,6 +312,10 @@ export default function CourseDetail() {
     transactionId: string;
   } | null>(null);
   const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [copiedOrderNo, setCopiedOrderNo] = useState(false);
+  const [showReceiptModal, setShowReceiptModal] = useState(false);
+  const [showTaxDetails, setShowTaxDetails] = useState(false);
+  const [tradeChainStep, setTradeChainStep] = useState(0);
 
   useEffect(() => {
     if (normalizedId) {
@@ -558,7 +563,8 @@ export default function CourseDetail() {
       await api.courses.purchase(normalizedId, purchaseType).catch(() => {});
       setHasAccess(true);
       const now = new Date();
-      const orderNo = `SV${Date.now()}`;
+      const timestamp = Date.now();
+      const orderNo = generateSkillOrderNo(timestamp);
       const amount = purchaseType === 'subscription' ? (course.subscriptionPrice || 0) : (course.price || 0);
       const payMethods = ['微信支付', '支付宝'];
       const payMethod = payMethods[Math.floor(Math.random() * payMethods.length)];
@@ -607,12 +613,49 @@ export default function CourseDetail() {
       
       setLastWatchedChapter(chapters[0]?.id || null);
       setShowPaymentModal(false);
+      setTradeChainStep(0);
       setShowSuccessModal(true);
+      
+      const steps = [400, 800, 1200, 1600, 2000];
+      steps.forEach((delay, idx) => {
+        setTimeout(() => {
+          setTradeChainStep(idx + 1);
+        }, delay);
+      });
     } catch (error: any) {
       alert(error?.message || '购买失败，请重试');
     } finally {
       setPurchasing(false);
     }
+  };
+
+  const generateSkillOrderNo = (timestamp?: number): string => {
+    const ts = timestamp || Date.now();
+    return `SKILL${ts}`;
+  };
+
+  const copyOrderNoToClipboard = async (orderNo: string) => {
+    try {
+      await navigator.clipboard.writeText(orderNo);
+      setCopiedOrderNo(true);
+      setTimeout(() => setCopiedOrderNo(false), 2000);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = orderNo;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopiedOrderNo(true);
+      setTimeout(() => setCopiedOrderNo(false), 2000);
+    }
+  };
+
+  const getPayMethodIcon = (method: string) => {
+    if (method.includes('微信')) return { bg: 'bg-green-100', color: 'text-green-600', label: '微信支付' };
+    if (method.includes('支付宝')) return { bg: 'bg-blue-100', color: 'text-blue-600', label: '支付宝' };
+    if (method.includes('银行')) return { bg: 'bg-purple-100', color: 'text-purple-600', label: '银行卡' };
+    return { bg: 'bg-zinc-100', color: 'text-zinc-600', label: method };
   };
 
   const handleChapterClick = (chapter: Chapter, index: number) => {
@@ -768,12 +811,18 @@ export default function CourseDetail() {
           </div>
         </div>
 
-        <div className="absolute bottom-4 left-4 flex items-center gap-2">
+        <div className="absolute bottom-4 left-4 flex flex-wrap items-center gap-2">
           {hasAccess ? (
-            <div className="px-3 py-1 bg-green-500 text-white text-sm rounded-full flex items-center gap-1.5">
-              <BadgeCheck className="w-4 h-4" />
-              {accessInfo.type === 'subscription' ? '会员 · 剩余约21天' : '已购买 · 永久有效'}
-            </div>
+            <>
+              <div className="px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm rounded-full flex items-center gap-1.5 shadow-lg shadow-green-500/30">
+                <CheckCircle className="w-4 h-4" />
+                交易已完成
+              </div>
+              <div className="px-3 py-1 bg-green-500/90 text-white text-sm rounded-full flex items-center gap-1.5">
+                <BadgeCheck className="w-4 h-4" />
+                {accessInfo.type === 'subscription' ? '会员 · 剩余约21天' : '已购买 · 永久有效'}
+              </div>
+            </>
           ) : chapters[0]?.isFree ? (
             <div className="px-3 py-1 bg-green-500 text-white text-sm rounded-full">
               可免费试看
@@ -787,49 +836,51 @@ export default function CourseDetail() {
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1 flex items-center gap-6">
               {hasAccess ? (
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl">
-                    <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
-                      <BadgeCheck className="w-6 h-6 text-white" />
+                <div className="flex-1 flex items-center gap-4">
+                  <div className="flex-1 px-5 py-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl">
+                    <div className="flex items-center justify-between mb-2.5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                          <BookOpen className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="font-semibold text-green-800">学习进度卡</span>
+                      </div>
+                      <span className="text-sm font-medium text-green-700">
+                        已学 {Math.round(((accessInfo.progress || 0) / 100) * chapters.length)}/{chapters.length} 节
+                      </span>
                     </div>
-                    <div>
-                      <div className="font-semibold text-green-800">
-                        {accessInfo.type === 'subscription' ? '会员生效中' : '已购买，永久有效'}
-                      </div>
-                      <div className="flex items-center gap-3 text-xs text-green-600">
-                        <span className="flex items-center gap-1">
-                          <BookOpen className="w-3 h-3" />
-                          学习进度 {accessInfo.progress || 0}%
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Award className="w-3 h-3" />
-                          {accessInfo.type === 'subscription' ? '会员期内有效' : '永久有效'}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Receipt className="w-3 h-3" />
-                          可开发票
-                        </span>
-                      </div>
+                    <div className="h-2.5 bg-green-200/60 rounded-full overflow-hidden mb-2">
+                      <div
+                        className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full transition-all duration-500"
+                        style={{ width: `${accessInfo.progress || 0}%` }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-green-600">
+                      <span>进度 {accessInfo.progress || 0}%</span>
+                      <span className="flex items-center gap-1">
+                        <Award className="w-3 h-3" />
+                        {accessInfo.type === 'subscription' ? '会员期内有效' : '永久有效'}
+                      </span>
                     </div>
                   </div>
                   
-                  {accessInfo.lastChapterTitle && (
-                    <button
-                      className="flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-xl hover:bg-amber-100 transition-colors"
-                      onClick={() => {
-                        const idx = chapters.findIndex(c => c.id === accessInfo.lastChapterId);
-                        if (idx !== -1) setActiveChapter(idx);
-                      }}
-                    >
-                      <Play className="w-4 h-4 text-amber-600" fill="currentColor" />
-                      <div className="text-left">
-                        <div className="text-xs text-amber-500">继续学习</div>
-                        <div className="text-sm font-medium text-amber-800 truncate max-w-[200px]">
-                          {accessInfo.lastChapterTitle}
-                        </div>
+                  <button
+                    className="flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-2xl hover:shadow-lg hover:shadow-green-500/30 hover:scale-[1.02] transition-all duration-300 font-semibold"
+                    onClick={() => {
+                      const idx = accessInfo.lastChapterId
+                        ? chapters.findIndex(c => c.id === accessInfo.lastChapterId)
+                        : 0;
+                      setActiveChapter(idx >= 0 ? idx : 0);
+                    }}
+                  >
+                    <Play className="w-5 h-5" fill="white" />
+                    <div className="text-left">
+                      <div className="text-xs text-green-100">继续学习</div>
+                      <div className="text-sm font-medium truncate max-w-[180px]">
+                        {accessInfo.lastChapterTitle || chapters[0]?.title || '开始学习'}
                       </div>
-                    </button>
-                  )}
+                    </div>
+                  </button>
                 </div>
               ) : (
                 <div>
@@ -865,7 +916,7 @@ export default function CourseDetail() {
 
             <div className="flex items-center gap-3">
               {hasAccess ? (
-                <>
+                <div className="flex items-center gap-2">
                   {accessInfo.type !== 'subscription' && (
                     <button
                       className="btn-secondary text-sm"
@@ -875,11 +926,14 @@ export default function CourseDetail() {
                       申请退款
                     </button>
                   )}
-                  <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:shadow-green-500/30 hover:scale-[1.02] transition-all duration-300 flex items-center gap-2">
-                    <Play className="w-5 h-5" fill="white" />
-                    开始学习
+                  <button
+                    className="btn-secondary text-sm"
+                    onClick={() => setShowOrderDetailModal(true)}
+                  >
+                    <FileText className="w-4 h-4 mr-2" />
+                    订单详情
                   </button>
-                </>
+                </div>
               ) : (
                 <>
                   {course.isSubscription && course.subscriptionPrice && (
@@ -1223,6 +1277,72 @@ export default function CourseDetail() {
               </div>
             </div>
 
+            {hasAccess && (
+              <div className="card p-6 animate-fade-in-up-delay-2 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-green-100/60 to-transparent rounded-bl-full" />
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center">
+                        <Shield className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold text-zinc-900 flex items-center gap-1.5">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          权益已生效
+                        </h3>
+                        <p className="text-xs text-zinc-500">
+                          生效时间：{accessInfo.purchaseDate || new Date().toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <div className="flex items-center gap-3 p-3 bg-green-50 rounded-xl border border-green-100">
+                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                        <CheckIcon className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-medium text-green-800 text-sm">永久有效</div>
+                        <div className="text-xs text-green-600">课程内容终身可观看，支持多端同步</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 bg-green-50 rounded-xl border border-green-100">
+                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                        <CheckIcon className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-medium text-green-800 text-sm">可开发票</div>
+                        <div className="text-xs text-green-600">支持电子普通发票和增值税专票</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 bg-green-50 rounded-xl border border-green-100">
+                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                        <CheckIcon className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-medium text-green-800 text-sm">学习进度</div>
+                        <div className="text-xs text-green-600">云端自动保存学习进度，随时续接</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 bg-green-50 rounded-xl border border-green-100">
+                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                        <CheckIcon className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-medium text-green-800 text-sm">答疑支持</div>
+                        <div className="text-xs text-green-600">专属学习社群，讲师在线答疑</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {hasAccess && orderInfo && (
               <div className="card p-6 animate-fade-in-up-delay-2">
                 <div className="flex items-center justify-between mb-4">
@@ -1231,7 +1351,13 @@ export default function CourseDetail() {
                       <FileText className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                      <h3 className="text-base font-semibold text-zinc-900">订单信息</h3>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-base font-semibold text-zinc-900">订单信息</h3>
+                        <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" />
+                          已完成
+                        </span>
+                      </div>
                       <p className="text-xs text-zinc-500">购买凭证与交易记录</p>
                     </div>
                   </div>
@@ -1243,15 +1369,28 @@ export default function CourseDetail() {
                     <ExternalLink className="w-3 h-3" />
                   </button>
                 </div>
-                <div className="space-y-2.5 text-sm">
+                <div className="space-y-3 text-sm">
                   <div className="flex items-center justify-between">
                     <span className="text-zinc-500 flex items-center gap-2">
                       <Hash className="w-4 h-4" />
-                      订单号
+                      交易单号
                     </span>
-                    <span className="font-mono font-medium text-zinc-800 text-xs">
-                      {orderInfo.orderNo}
-                    </span>
+                    <button
+                      onClick={() => copyOrderNoToClipboard(orderInfo.orderNo)}
+                      className="flex items-center gap-1.5 px-2 py-1 rounded-md hover:bg-zinc-100 transition-colors group"
+                    >
+                      <span className="font-mono font-medium text-zinc-800 text-xs">
+                        {orderInfo.orderNo}
+                      </span>
+                      {copiedOrderNo ? (
+                        <CheckIcon className="w-3.5 h-3.5 text-green-500" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5 text-zinc-400 group-hover:text-zinc-600" />
+                      )}
+                      {copiedOrderNo && (
+                        <span className="text-xs text-green-600 font-medium">已复制</span>
+                      )}
+                    </button>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-zinc-500 flex items-center gap-2">
@@ -1267,8 +1406,9 @@ export default function CourseDetail() {
                       <CreditCard className="w-4 h-4" />
                       支付方式
                     </span>
-                    <span className="font-medium text-zinc-800 text-xs">
-                      {orderInfo.payMethod}
+                    <span className={`flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium ${getPayMethodIcon(orderInfo.payMethod).bg} ${getPayMethodIcon(orderInfo.payMethod).color}`}>
+                      <Wallet className="w-3.5 h-3.5" />
+                      {getPayMethodIcon(orderInfo.payMethod).label}
                     </span>
                   </div>
                   <div className="h-px bg-zinc-100 my-1" />
@@ -1278,6 +1418,13 @@ export default function CourseDetail() {
                       ¥{orderInfo.amount.toFixed(2)}
                     </span>
                   </div>
+                  <button
+                    onClick={() => setShowReceiptModal(true)}
+                    className="w-full mt-2 py-2.5 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 text-blue-700 rounded-xl text-sm font-medium hover:from-blue-100 hover:to-indigo-100 transition-all flex items-center justify-center gap-2"
+                  >
+                    <Receipt className="w-4 h-4" />
+                    查看电子凭证
+                  </button>
                 </div>
               </div>
             )}
@@ -1452,32 +1599,163 @@ export default function CourseDetail() {
 
             {hasAccess && settlementInfo && (
               <div className="card p-6 animate-fade-in-up-delay-3">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2">
                     <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center">
                       <Landmark className="w-5 h-5 text-purple-600" />
                     </div>
                     <div>
-                      <h3 className="text-base font-semibold text-zinc-900">实际资金结算</h3>
-                      <p className="text-xs text-zinc-500">交易单号：{settlementInfo.transactionId}</p>
+                      <h3 className="text-base font-semibold text-zinc-900">创作者结算与税务</h3>
+                      <p className="text-xs text-zinc-500">全链路可视化 · 单号：{settlementInfo.transactionId}</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => setShowSettlementInfo(!showSettlementInfo)}
-                    className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1"
-                  >
-                    <Info className="w-3 h-3" />
-                    结算说明
-                  </button>
                 </div>
 
-                <div className="mb-4 p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-center gap-3">
-                  <Clock3 className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="text-sm font-medium text-amber-800">结算状态：待结算（T+1）</div>
-                    <div className="text-xs text-amber-600">购买确认后次日结算至创作者钱包</div>
+                <div className="space-y-1 mb-5">
+                  <div className="relative pl-10 pb-5">
+                    <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center z-10">
+                      <CheckCircle className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="absolute left-3.5 top-8 bottom-0 w-px bg-green-200" />
+                    <div className="pt-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-green-800">Step 1 · 交易完成</span>
+                          <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">已完成</span>
+                        </div>
+                        <span className="text-xs text-zinc-500">{orderInfo?.payTime || '刚刚'}</span>
+                      </div>
+                      <p className="text-xs text-zinc-600 mt-1">用户支付成功，资金进入平台托管账户</p>
+                      <p className="text-xs text-green-700 font-medium mt-1">
+                        <Coins className="w-3 h-3 inline mr-1" />
+                        交易金额：¥{settlementInfo.orderAmount.toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="relative pl-10 pb-5">
+                    <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center z-10">
+                      <CheckCircle className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="absolute left-3.5 top-8 bottom-0 w-px bg-blue-200" />
+                    <div className="pt-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-green-800">Step 2 · 平台服务费扣除</span>
+                          <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">已完成</span>
+                        </div>
+                        <span className="text-xs text-zinc-500">实时扣除</span>
+                      </div>
+                      <p className="text-xs text-zinc-600 mt-1">平台技术服务与运营成本（费率 15%）</p>
+                      <p className="text-xs text-red-600 font-medium mt-1">
+                        <Percent className="w-3 h-3 inline mr-1" />
+                        扣除金额：-¥{settlementInfo.platformFee.toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="relative pl-10 pb-5">
+                    <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center z-10">
+                      <Clock className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="absolute left-3.5 top-8 bottom-0 w-px bg-zinc-200" />
+                    <div className="pt-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-blue-800">Step 3 · 税务代缴准备</span>
+                          <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">进行中</span>
+                        </div>
+                        <span className="text-xs text-zinc-500">预计次月15日前</span>
+                      </div>
+                      <p className="text-xs text-zinc-600 mt-1">平台按国家法规代缴创作者税费（增值税预征 6%）</p>
+                      <p className="text-xs text-amber-700 font-medium mt-1">
+                        <Receipt className="w-3 h-3 inline mr-1" />
+                        预计税额：¥{settlementInfo.taxAmount.toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="relative pl-10">
+                    <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-zinc-400 flex items-center justify-center z-10">
+                      <Clock className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="pt-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-zinc-700">Step 4 · 创作者结算</span>
+                          <span className="px-2 py-0.5 bg-zinc-100 text-zinc-600 text-xs font-medium rounded-full">待处理</span>
+                        </div>
+                        <span className="text-xs text-zinc-500">T+1 工作日</span>
+                      </div>
+                      <p className="text-xs text-zinc-600 mt-1">结算至创作者可提现余额，支持多渠道提现</p>
+                      <p className="text-xs text-green-700 font-medium mt-1">
+                        <Wallet className="w-3 h-3 inline mr-1" />
+                        预计到账：¥{settlementInfo.creatorNet.toFixed(2)}
+                      </p>
+                    </div>
                   </div>
                 </div>
+
+                <button
+                  onClick={() => setShowTaxDetails(!showTaxDetails)}
+                  className="w-full py-2.5 mb-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-sm font-medium hover:bg-amber-100 transition-all flex items-center justify-center gap-2"
+                >
+                  <FileCheck className="w-4 h-4" />
+                  {showTaxDetails ? '收起税务代缴明细' : '展开税务代缴明细'}
+                  <ChevronDown className={`w-4 h-4 transition-transform ${showTaxDetails ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showTaxDetails && (
+                  <div className="mb-4 p-4 bg-amber-50 rounded-xl border border-amber-100 space-y-3 animate-fade-in">
+                    <div className="flex items-start gap-2">
+                      <FileText className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-amber-800">应纳税所得额计算</p>
+                        <p className="text-xs text-amber-600 mt-0.5">
+                          订单金额 ¥{settlementInfo.orderAmount.toFixed(2)} - 平台服务费 ¥{settlementInfo.platformFee.toFixed(2)}
+                          = <span className="font-medium">¥{(settlementInfo.orderAmount - settlementInfo.platformFee).toFixed(2)}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Percent className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-amber-800">适用税率（增值税预征）</p>
+                        <p className="text-xs text-amber-600 mt-0.5">
+                          按照国家税务总局规定，个人提供服务适用 <span className="font-medium">6% 增值税预征率</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Coins className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-amber-800">预计个税金额</p>
+                        <p className="text-xs text-amber-600 mt-0.5">
+                          应纳税所得额 × 6% = <span className="font-bold text-amber-700">¥{settlementInfo.taxAmount.toFixed(2)}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Calendar className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-amber-800">申报时间说明</p>
+                        <p className="text-xs text-amber-600 mt-0.5">
+                          平台将于 <span className="font-medium">次月 15 日前</span> 代为完成税务申报，并提供完税凭证
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <BadgeCheck className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-amber-800">开票信息</p>
+                        <p className="text-xs text-amber-600 mt-0.5">
+                          平台已代扣代缴相关税费，<span className="font-medium">创作者无需自行申报</span>。
+                          如需发票，可在订单详情中申请开具电子普通发票。
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
@@ -1501,10 +1779,7 @@ export default function CourseDetail() {
                   <div className="flex items-center justify-between p-2.5 bg-amber-50 rounded-lg">
                     <span className="text-zinc-600 flex items-center gap-2">
                       <Receipt className="w-4 h-4 text-amber-600" />
-                      <span>
-                        预估税务代缴
-                        <span className="text-xs text-amber-500 ml-1">(创作者收入 × 6%)</span>
-                      </span>
+                      预估税务代缴
                     </span>
                     <span className="font-semibold text-amber-700">
                       -¥{settlementInfo.taxAmount.toFixed(2)}
@@ -1522,36 +1797,21 @@ export default function CourseDetail() {
                   </div>
                 </div>
 
-                <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <FileCheck className="w-4 h-4 text-amber-600" />
-                      <span className="text-sm font-medium text-amber-800">税务准备状态</span>
-                    </div>
-                    <Badge variant="accent" size="sm" className="bg-amber-100 text-amber-700 border-amber-200">
-                      已预估代缴 ¥{settlementInfo.taxAmount.toFixed(2)}
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-amber-600 mb-3">
-                    平台将按国家法规代缴创作者个人所得税，结算后15个工作日内代为申报。
-                    如需发票，可在订单详情中申请开具。
-                  </p>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setShowInvoiceModal(true)}
-                      className="flex-1 py-2 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 transition-colors flex items-center justify-center gap-1.5"
-                    >
-                      <Receipt className="w-4 h-4" />
-                      申请开票
-                    </button>
-                    <button
-                      onClick={() => setShowOrderDetailModal(true)}
-                      className="flex-1 py-2 bg-white border border-amber-200 text-amber-700 text-sm font-medium rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center gap-1.5"
-                    >
-                      <FileText className="w-4 h-4" />
-                      订单详情
-                    </button>
-                  </div>
+                <div className="mt-4 flex gap-2">
+                  <button
+                    onClick={() => setShowInvoiceModal(true)}
+                    className="flex-1 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-medium rounded-xl hover:shadow-lg hover:shadow-amber-500/30 transition-all flex items-center justify-center gap-1.5"
+                  >
+                    <Receipt className="w-4 h-4" />
+                    申请开票
+                  </button>
+                  <button
+                    onClick={() => setShowOrderDetailModal(true)}
+                    className="flex-1 py-2.5 bg-white border border-zinc-200 text-zinc-700 text-sm font-medium rounded-xl hover:bg-zinc-50 transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <FileText className="w-4 h-4" />
+                    订单详情
+                  </button>
                 </div>
 
                 {showSettlementInfo && (
@@ -1562,7 +1822,6 @@ export default function CourseDetail() {
                         <p className="text-sm font-semibold text-purple-800">T+1 结算规则</p>
                         <p className="text-xs text-purple-600 mt-0.5">
                           用户支付成功后，资金进入平台托管账户。次日（T+1）自动结算至创作者可提现余额。
-                          如遇退款纠纷，资金将冻结直至纠纷解决。
                         </p>
                       </div>
                     </div>
@@ -1571,20 +1830,7 @@ export default function CourseDetail() {
                       <div>
                         <p className="text-sm font-semibold text-purple-800">提现方式</p>
                         <p className="text-xs text-purple-600 mt-0.5">
-                          支持支付宝、微信钱包、银行卡提现。单笔最低提现金额 100 元，每月 1-3 日为集中提现日，
-                          T+1 工作日到账。
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <FileText className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
-                      <div>
-                        <p className="text-sm font-semibold text-purple-800">开票流程说明</p>
-                        <p className="text-xs text-purple-600 mt-0.5">
-                          1. 点击「申请开票」按钮填写发票信息<br />
-                          2. 支持电子普通发票（增值税）和纸质发票<br />
-                          3. 电子发票 1-3 个工作日发送至邮箱，纸质发票 5-7 个工作日邮寄<br />
-                          4. 开票金额以实际支付金额为准
+                          支持支付宝、微信钱包、银行卡提现。单笔最低提现金额 100 元。
                         </p>
                       </div>
                     </div>
@@ -1932,46 +2178,81 @@ export default function CourseDetail() {
               <div className="w-20 h-20 mx-auto mb-4 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center animate-bounce-in">
                 <CheckCircle2 className="w-12 h-12 text-white" strokeWidth={2} />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">支付成功！</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">交易全链路已承接</h3>
               <p className="text-green-100 text-sm">
-                {accessInfo.type === 'subscription' ? '会员已开通，立即享受全站课程' : '购买成功，立即开始学习吧'}
+                {accessInfo.type === 'subscription' ? '会员已开通，所有权益即刻生效' : '购买成功，课程权益即刻生效'}
               </p>
             </div>
             
-            <div className="p-6 space-y-4">
-              <div className="p-4 bg-green-50 rounded-xl border border-green-100">
-                <div className="grid grid-cols-3 gap-3 text-center">
-                  <div>
-                    <div className="text-lg font-bold text-green-700">{chapters.length}</div>
-                    <div className="text-xs text-green-600">章节解锁</div>
-                  </div>
-                  <div className="w-px bg-green-200" />
-                  <div>
-                    <div className="text-lg font-bold text-green-700">永久</div>
-                    <div className="text-xs text-green-600">有效观看</div>
-                  </div>
-                  <div className="w-px bg-green-200" />
-                  <div>
-                    <div className="text-lg font-bold text-green-700">支持</div>
-                    <div className="text-xs text-green-600">开发票</div>
-                  </div>
-                </div>
+            <div className="p-6 space-y-5">
+              <div className="space-y-3">
+                {[
+                  { step: 1, title: '订单创建', icon: FileText },
+                  { step: 2, title: '资金托管', icon: Landmark },
+                  { step: 3, title: '权益生效', icon: Shield },
+                  { step: 4, title: '服务费扣除', icon: Percent },
+                  { step: 5, title: '创作者结算登记', icon: Wallet },
+                ].map((item) => {
+                  const IconComp = item.icon;
+                  const isDone = tradeChainStep >= item.step;
+                  const isCurrent = tradeChainStep === item.step - 1;
+                  return (
+                    <div key={item.step} className="flex items-center gap-3">
+                      <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                        isDone
+                          ? 'bg-green-500 text-white'
+                          : isCurrent
+                          ? 'bg-blue-100 text-blue-600 animate-pulse'
+                          : 'bg-zinc-100 text-zinc-400'
+                      }`}>
+                        {isDone ? (
+                          <CheckIcon className="w-5 h-5" />
+                        ) : (
+                          <IconComp className="w-4.5 h-4.5" />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <span className={`font-medium text-sm ${
+                          isDone ? 'text-green-700' : isCurrent ? 'text-blue-700' : 'text-zinc-400'
+                        }`}>
+                          {item.step}. {item.title}
+                        </span>
+                      </div>
+                      {isDone && (
+                        <span className="text-xs text-green-600 font-medium">✓ 已完成</span>
+                      )}
+                      {isCurrent && (
+                        <span className="text-xs text-blue-600 font-medium">处理中...</span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
-              {orderInfo && (
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="text-zinc-500">订单号</span>
+              {tradeChainStep >= 5 && orderInfo && (
+                <div className="p-4 bg-green-50 rounded-xl border border-green-100 space-y-2 animate-fade-in">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-zinc-500">交易单号</span>
                     <span className="font-mono text-zinc-700 text-xs">{orderInfo.orderNo}</span>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between text-sm">
                     <span className="text-zinc-500">支付金额</span>
                     <span className="font-bold text-primary-600">¥{orderInfo.amount.toFixed(2)}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-zinc-500">支付方式</span>
+                    <span className="text-zinc-700 text-xs">{orderInfo.payMethod}</span>
                   </div>
                 </div>
               )}
 
-              <div className="space-y-2 pt-2">
+              <div className="p-3 bg-blue-50 rounded-xl border border-blue-100">
+                <p className="text-xs text-blue-700 text-center">
+                  您可以随时在订单详情中查看交易进度
+                </p>
+              </div>
+
+              <div className="space-y-2 pt-1">
                 <button
                   className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/30 transition-all"
                   onClick={() => setShowSuccessModal(false)}
@@ -1980,12 +2261,13 @@ export default function CourseDetail() {
                   开始学习
                 </button>
                 <button
-                  className="w-full py-2.5 text-sm text-zinc-500 hover:text-zinc-700 transition-colors"
+                  className="w-full py-2.5 text-sm text-zinc-600 bg-zinc-50 hover:bg-zinc-100 rounded-xl transition-colors flex items-center justify-center gap-2"
                   onClick={() => {
                     setShowSuccessModal(false);
                     setShowOrderDetailModal(true);
                   }}
                 >
+                  <FileText className="w-4 h-4" />
                   查看订单详情
                 </button>
               </div>
@@ -2179,6 +2461,129 @@ export default function CourseDetail() {
                 >
                   <FileText className="w-4 h-4" />
                   全部订单
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showReceiptModal && orderInfo && (
+        <div className="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-zinc-100 flex items-center justify-between sticky top-0 bg-white z-10">
+              <div>
+                <h3 className="text-xl font-bold text-zinc-900 flex items-center gap-2">
+                  <Receipt className="w-5 h-5 text-blue-600" />
+                  电子凭证预览
+                </h3>
+                <p className="text-sm text-zinc-500 mt-0.5">交易收据 · 可用于报销</p>
+              </div>
+              <button
+                onClick={() => setShowReceiptModal(false)}
+                className="w-9 h-9 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center transition-colors"
+              >
+                <X className="w-5 h-5 text-zinc-500" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-5">
+              <div className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100 overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-transparent rounded-bl-full" />
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center">
+                        <BadgeCheck className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-zinc-900">SkillVerse 交易凭证</div>
+                        <div className="text-xs text-zinc-500">电子收据 · 具有同等法律效力</div>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" />
+                      交易完成
+                    </span>
+                  </div>
+
+                  <div className="space-y-2.5 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-zinc-500">交易单号</span>
+                      <button
+                        onClick={() => copyOrderNoToClipboard(orderInfo.orderNo)}
+                        className="flex items-center gap-1 hover:bg-white/60 px-2 py-0.5 rounded transition-colors"
+                      >
+                        <span className="font-mono text-zinc-800 font-medium text-xs">{orderInfo.orderNo}</span>
+                        {copiedOrderNo ? (
+                          <CheckIcon className="w-3 h-3 text-green-500" />
+                        ) : (
+                          <Copy className="w-3 h-3 text-zinc-400" />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-zinc-500">商品名称</span>
+                      <span className="text-zinc-800 font-medium max-w-[200px] truncate text-right">{course?.title}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-zinc-500">购买类型</span>
+                      <span className="text-zinc-800 font-medium">
+                        {accessInfo.type === 'subscription' ? '月度会员订阅' : '课程永久购买'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-zinc-500">支付方式</span>
+                      <span className={`flex items-center gap-1 px-2 py-0.5 rounded ${getPayMethodIcon(orderInfo.payMethod).bg} ${getPayMethodIcon(orderInfo.payMethod).color} text-xs font-medium`}>
+                        <Wallet className="w-3 h-3" />
+                        {getPayMethodIcon(orderInfo.payMethod).label}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-zinc-500">支付时间</span>
+                      <span className="text-zinc-800 text-xs">{orderInfo.payTime}</span>
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-blue-200/50 my-4 border-t border-dashed border-blue-300/50" />
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-700 font-semibold">实付金额</span>
+                    <span className="text-2xl font-bold text-blue-600">¥{orderInfo.amount.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 bg-zinc-50 rounded-xl space-y-2 text-xs text-zinc-600">
+                <div className="flex items-start gap-2">
+                  <Info className="w-4 h-4 text-zinc-400 flex-shrink-0 mt-0.5" />
+                  <p>本电子凭证由 SkillVerse 平台自动生成，可作为交易凭证使用。</p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <FileText className="w-4 h-4 text-zinc-400 flex-shrink-0 mt-0.5" />
+                  <p>如需开具正式发票，请点击下方「申请开票」按钮，支持电子普通发票和增值税专用发票。</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <button
+                  className="py-2.5 rounded-xl border border-zinc-200 text-zinc-700 text-sm font-medium hover:bg-zinc-50 transition-colors flex items-center justify-center gap-2"
+                  onClick={() => {
+                    alert('凭证已下载');
+                  }}
+                >
+                  <Download className="w-4 h-4" />
+                  下载凭证
+                </button>
+                <button
+                  className="py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-medium hover:shadow-lg hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-2"
+                  onClick={() => {
+                    setShowReceiptModal(false);
+                    setShowInvoiceModal(true);
+                  }}
+                >
+                  <Receipt className="w-4 h-4" />
+                  申请开票
                 </button>
               </div>
             </div>
