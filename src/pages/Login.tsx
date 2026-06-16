@@ -139,14 +139,24 @@ export default function Login() {
         : role === 'clerk'
           ? '/ticket-dispatch'
           : '/';
-    navigate(target, { replace: true });
+    const token = localStorage.getItem('token');
+    const hasAuth = useAuthStore.getState().isAuthenticated;
+    if (hasAuth || token) {
+      try {
+        window.location.replace(target);
+      } catch {
+        navigate(target, { replace: true });
+      }
+    } else {
+      setTimeout(() => navigateByRole(role), 100);
+    }
   }, [from, navigate]);
 
   useEffect(() => {
     if (isAuthenticated && user && loginSuccess) {
       const timer = setTimeout(() => {
         navigateByRole(user.role);
-      }, 800);
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [isAuthenticated, user, loginSuccess, navigateByRole]);
@@ -233,7 +243,7 @@ export default function Login() {
           detail: `面部特征匹配成功，正在跳转至${roleName}工作台...`,
         });
         setLoginSuccess(true);
-        setTimeout(() => navigateByRole(result.user.role), 800);
+        setTimeout(() => navigateByRole(result.user.role), 300);
       } else {
         setFaceScanning(false);
         setVerifySteps({ accountValid: 'pass', credentialValid: 'fail', roleMatched: 'pending' });
@@ -292,18 +302,58 @@ export default function Login() {
         detail: `账号有效 · 凭据校验通过 · 角色权限已匹配，正在跳转至${roleName}工作台...`,
       });
       setLoginSuccess(true);
-      setTimeout(() => navigateByRole(result.user.role), 800);
+      setTimeout(() => navigateByRole(result.user.role), 300);
     } else {
       const errorCode = result.code;
+      const accountFound = demoAccounts.some(a => a.phone === phone);
+      const matchedAcc = demoAccounts.find(a => a.phone === phone);
+      const expectedRole = matchedAcc ? (matchedAcc.role === 'admin' ? '管理员' : matchedAcc.role === 'clerk' ? '办事员' : '市民') : null;
+
       if (errorCode === 'ACCOUNT_NOT_FOUND') {
         setVerifySteps({ accountValid: 'fail', credentialValid: 'pending', roleMatched: 'pending' });
-        setLoginAuditInfo({ label: '账号校验', status: '未通过', detail: '该手机号未注册，账号不存在' });
-      } else if (errorCode === 'PASSWORD_ERROR' || errorCode === 'VERIFY_CODE_ERROR' || errorCode === 'FACE_VERIFY_FAILED') {
+        setLoginAuditInfo({
+          label: '账号校验',
+          status: '未通过',
+          detail: `该手机号未在南宁城市服务平台注册（账号无效），无法进行角色匹配`,
+        });
+      } else if (errorCode === 'PASSWORD_ERROR') {
         setVerifySteps({ accountValid: 'pass', credentialValid: 'fail', roleMatched: 'pending' });
-        setLoginAuditInfo({ label: '凭据校验', status: '未通过', detail: '账号有效，但凭据校验未通过' });
+        setLoginAuditInfo({
+          label: '凭据校验',
+          status: '未通过',
+          role: expectedRole ? `识别角色：${expectedRole}` : '识别账号：已注册',
+          detail: `账号有效（已识别为${expectedRole || '市民'}角色），但密码校验未通过`,
+        });
+      } else if (errorCode === 'VERIFY_CODE_ERROR') {
+        setVerifySteps({ accountValid: 'pass', credentialValid: 'fail', roleMatched: 'pending' });
+        setLoginAuditInfo({
+          label: '凭据校验',
+          status: '未通过',
+          role: expectedRole ? `识别角色：${expectedRole}` : '识别账号：已注册',
+          detail: `账号有效（已识别为${expectedRole || '市民'}角色），但验证码错误或已过期`,
+        });
+      } else if (errorCode === 'FACE_VERIFY_FAILED') {
+        setVerifySteps({ accountValid: accountFound ? 'pass' : 'pending', credentialValid: 'fail', roleMatched: 'pending' });
+        setLoginAuditInfo({
+          label: '人脸核验',
+          status: '未通过',
+          role: expectedRole ? `检测角色：${expectedRole}` : undefined,
+          detail: `面部特征匹配度不足（<92%），身份核验未通过`,
+        });
+      } else if (errorCode === 'INSUFFICIENT_PERMISSIONS') {
+        setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'fail' });
+        setLoginAuditInfo({
+          label: '角色匹配',
+          status: '未通过',
+          detail: `账号和凭据均有效，但该账号无系统访问权限（角色不匹配）`,
+        });
       } else {
-        setVerifySteps({ accountValid: 'fail', credentialValid: 'fail', roleMatched: 'pending' });
-        setLoginAuditInfo({ label: '身份核验', status: '未通过', detail: '认证服务异常，请稍后重试' });
+        setVerifySteps({ accountValid: accountFound ? 'pass' : 'pending', credentialValid: 'pending', roleMatched: 'pending' });
+        setLoginAuditInfo({
+          label: '身份核验',
+          status: '未通过',
+          detail: errorCode === 'NETWORK_ERROR' ? '网络连接异常，请检查网络后重试' : '认证服务异常，请稍后重试',
+        });
       }
     }
   };
@@ -827,13 +877,63 @@ export default function Login() {
                   </div>
                   刷脸
                 </button>
-                <button type="button" onClick={() => fillDemoAccount(demoAccounts[0])} className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
+                <button
+                  type="button"
+                  disabled={isLoading || loginSuccess}
+                  onClick={() => {
+                    const acc = demoAccounts[0];
+                    fillDemoAccount(acc);
+                    setTimeout(() => {
+                      useAuthStore.getState().login(acc.phone, acc.password).then(res => {
+                        if (res.success && res.user) {
+                          const roleName = res.user.role === 'admin' ? '管理员' : res.user.role === 'clerk' ? '办事员' : '市民';
+                          setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
+                          setLoginAuditInfo({
+                            label: '爱南宁快捷登录',
+                            status: '通过',
+                            role: `${roleName}（${res.user.name}）`,
+                            detail: `通过爱南宁APP一键授权完成身份核验，正在跳转至${roleName}工作台...`,
+                          });
+                          setLoginSuccess(true);
+                          setTimeout(() => navigateByRole(res.user.role), 300);
+                        }
+                      });
+                    }, 100);
+                  }}
+                  className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 disabled:opacity-50"
+                >
                   <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
                     <Smartphone className="w-5 h-5" />
                   </div>
                   爱南宁
                 </button>
-                <button type="button" onClick={() => { setLoginType('sms'); fillDemoAccount(demoAccounts[0]); }} className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
+                <button
+                  type="button"
+                  disabled={isLoading || loginSuccess}
+                  onClick={() => {
+                    const acc = demoAccounts[0];
+                    setLoginType('sms');
+                    fillDemoAccount(acc);
+                    setSmsCode('123456');
+                    setTimeout(() => {
+                      useAuthStore.getState().loginBySms(acc.phone, '123456').then(res => {
+                        if (res.success && res.user) {
+                          const roleName = res.user.role === 'admin' ? '管理员' : res.user.role === 'clerk' ? '办事员' : '市民';
+                          setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
+                          setLoginAuditInfo({
+                            label: '电子证照核验',
+                            status: '通过',
+                            role: `${roleName}（${res.user.name}）`,
+                            detail: `通过电子证照完成身份核验（身份证已验证），正在跳转至${roleName}工作台...`,
+                          });
+                          setLoginSuccess(true);
+                          setTimeout(() => navigateByRole(res.user.role), 300);
+                        }
+                      });
+                    }, 100);
+                  }}
+                  className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 disabled:opacity-50"
+                >
                   <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
                     <Shield className="w-5 h-5" />
                   </div>
