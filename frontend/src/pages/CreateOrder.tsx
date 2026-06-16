@@ -1,0 +1,383 @@
+import { useState } from 'react';
+import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, App, Steps, Alert, Divider, Statistic, Radio, List, Progress, Modal } from 'antd';
+import { SendOutlined, SafetyOutlined, BulbOutlined, WarningOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { api } from '../api';
+import ReactECharts from 'echarts-for-react';
+
+const cities = ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '西安', '南京', '重庆', '天津', '苏州', '青岛', '长沙', '郑州'];
+
+export default function CreateOrder() {
+  const { message, modal } = App.useApp();
+  const [form] = Form.useForm();
+  const [step, setStep] = useState(0);
+  const [priceResult, setPriceResult] = useState<any>(null);
+  const [selectedBrand, setSelectedBrand] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [orderResult, setOrderResult] = useState<any>(null);
+  const [sortBy, setSortBy] = useState('composite');
+  const [alertVisible, setAlertVisible] = useState(true);
+
+  const onPriceCompare = async () => {
+    try {
+      const vals = await form.validateFields(['sender_city', 'receiver_city', 'weight', 'length', 'width', 'height', 'priority', 'goods_type']);
+      setLoading(true);
+      const r: any = await api.price.compare(vals);
+      setPriceResult(r);
+      setStep(1);
+      message.success('比价完成，共匹配 ' + r.summary.brand_count + ' 个品牌');
+    } catch (e: any) {
+      if (e.message) message.error(e.message);
+    } finally { setLoading(false); }
+  };
+
+  const addressCheck = () => {
+    const addr = form.getFieldValue('receiver_address') || '';
+    const fakeKeywords = ['虚构路', '假小区', '不存在街', '测试地址', 'xxx路xxx号', '无名氏'];
+    return fakeKeywords.some(k => addr.includes(k));
+  };
+
+  const onSubmit = async () => {
+    try {
+      const vals = await form.validateFields();
+      if (!selectedBrand) { message.warning('请选择快递品牌'); return; }
+
+      const hasFake = addressCheck();
+      if (hasFake) {
+        modal.confirm({
+          title: <><WarningOutlined style={{ color: '#ff4d4f' }} /> 检测到异常收货地址</>,
+          content: '该地址疑似虚构/不存在，继续下单可能导致包裹无法送达，是否仍然提交？',
+          okText: '仍然提交',
+          okButtonProps: { danger: true },
+          cancelText: '修改地址',
+          onOk: async () => doSubmit(vals, true)
+        });
+        return;
+      }
+      doSubmit(vals, false);
+    } catch (e: any) {
+      if (e.message) message.error(e.message);
+    }
+  };
+
+  const doSubmit = async (vals: any, forced: boolean) => {
+    setLoading(true);
+    try {
+      const brand = priceResult.list.find((b: any) => b.brand_id === selectedBrand);
+      const r: any = await api.orders.create({
+        ...vals,
+        brand_id: selectedBrand,
+        brand_name: brand?.brand_name,
+        force_ignore_address: forced,
+        estimated_price: brand?.price,
+        estimated_hours: brand?.estimated_hours
+      });
+      setOrderResult(r);
+      setStep(2);
+      message.success(r.suspicious_address ? '运单已创建，异常地址已标记并通知人工审核' : '运单创建成功');
+    } catch (e: any) { message.error(e.message); }
+    finally { setLoading(false); }
+  };
+
+  const priceChartOpt = priceResult ? {
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { data: ['价格(元)', '时效(小时)'] },
+    grid: { left: 50, right: 50, top: 40, bottom: 80 },
+    xAxis: { type: 'category', data: priceResult.list.slice(0, 10).map((r: any) => r.brand_name), axisLabel: { rotate: 30, fontSize: 11 } },
+    yAxis: [{ type: 'value', name: '元' }, { type: 'value', name: '小时' }],
+    series: [
+      { name: '价格(元)', type: 'bar', data: priceResult.list.slice(0, 10).map((r: any) => r.price), itemStyle: { color: '#1677ff' } },
+      { name: '时效(小时)', type: 'line', yAxisIndex: 1, data: priceResult.list.slice(0, 10).map((r: any) => r.estimated_hours), smooth: true, itemStyle: { color: '#fa8c16' }, lineStyle: { width: 3 } }
+    ]
+  } : {};
+
+  if (orderResult) {
+    return (
+      <Card>
+        <Steps
+          current={2}
+          items={[
+            { title: '填写信息', icon: <UserOutlined /> },
+            { title: '智能比价', icon: <BulbOutlined /> },
+            { title: '下单完成', icon: <SafetyOutlined /> }
+          ]}
+        />
+        <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+          <div style={{ fontSize: 64, marginBottom: 16 }}>🎉</div>
+          <h2 style={{ marginBottom: 8 }}>运单创建成功</h2>
+          <p style={{ color: '#8c8c8c', marginBottom: 24 }}>运单号：<b style={{ color: '#1677ff', fontSize: 18 }}>{orderResult.order_no}</b></p>
+          {orderResult.suspicious_address && (
+            <Alert
+              message={<><WarningOutlined /> 异常地址预警</>}
+              description="该地址疑似虚构/不存在，系统已自动标记并生成异常事件，快递员派件前将二次核验。"
+              type="warning"
+              showIcon
+              style={{ marginBottom: 20, textAlign: 'left', maxWidth: 600, margin: '0 auto 20px' }}
+            />
+          )}
+          <Row gutter={[16, 16]} style={{ maxWidth: 700, margin: '0 auto' }}>
+            <Col xs={12}>
+              <Card styles={{ body: { padding: 14 } }}>
+                <Statistic title="快递品牌" value={orderResult.brand_name} valueStyle={{ fontSize: 16 }} />
+              </Card>
+            </Col>
+            <Col xs={12}>
+              <Card styles={{ body: { padding: 14 } }}>
+                <Statistic title="预估运费" value={orderResult.price} prefix="¥" valueStyle={{ color: '#ff4d4f', fontSize: 20 }} />
+              </Card>
+            </Col>
+            <Col xs={12}>
+              <Card styles={{ body: { padding: 14 } }}>
+                <Statistic title="预计送达" value={orderResult.estimated_hours} suffix="小时" valueStyle={{ color: '#fa8c16', fontSize: 18 }} />
+              </Card>
+            </Col>
+            <Col xs={12}>
+              <Card styles={{ body: { padding: 14 } }}>
+                <Statistic title="收件人" value={orderResult.receiver_name} valueStyle={{ fontSize: 16 }} />
+              </Card>
+            </Col>
+          </Row>
+          <div style={{ marginTop: 32 }}>
+            <Space>
+              <Button type="primary" onClick={() => { setOrderResult(null); setStep(0); setPriceResult(null); setSelectedBrand(null); form.resetFields(); }}>再寄一单</Button>
+              <Button onClick={() => location.hash = '#/packages/' + orderResult.id}>查看运单详情</Button>
+            </Space>
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <Card title={<><SendOutlined /> 智能发件 · 创建运单</>}>
+        <Steps
+          current={step}
+          items={[
+            { title: '填写信息', icon: <UserOutlined /> },
+            { title: '智能比价', icon: <BulbOutlined /> },
+            { title: '确认下单', icon: <SafetyOutlined /> }
+          ]}
+        />
+      </Card>
+
+      {alertVisible && step === 0 && (
+        <Alert
+          type="info"
+          showIcon
+          closable
+          onClose={() => setAlertVisible(false)}
+          message="💡 下单小贴士"
+          description={
+            <div>
+              <div>• 系统将根据「价格35% + 时效30% + 覆盖度20% + 服务评分15%」自动推荐最优快递品牌</div>
+              <div>• 签收前需人脸识别二次确认，防止错收误收</div>
+              <div>• 异常地址（虚构路/假小区/不存在街）将被自动拦截并预警</div>
+            </div>
+          }
+        />
+      )}
+
+      <Card title={<><UserOutlined /> 寄件人信息</>}>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} md={8}>
+            <Form.Item form={form} name="sender_name" label="寄件人" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+              <Input prefix={<UserOutlined />} placeholder="姓名" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={8}>
+            <Form.Item form={form} name="sender_phone" label="手机号" rules={[{ required: true, pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
+              <Input prefix={<PhoneOutlined />} placeholder="11位手机号" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={8}>
+            <Form.Item form={form} name="sender_city" label="寄件城市" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+              <Select options={cities.map(c => ({ value: c, label: c }))} placeholder="选择城市" />
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item form={form} name="sender_address" label="详细地址" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+              <Input prefix={<EnvironmentOutlined />} placeholder="街道门牌号" />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Card>
+
+      <Card title={<><ShoppingOutlined /> 收件人信息</>}>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} md={8}>
+            <Form.Item form={form} name="receiver_name" label="收件人" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+              <Input prefix={<UserOutlined />} placeholder="姓名" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={8}>
+            <Form.Item form={form} name="receiver_phone" label="手机号" rules={[{ required: true, pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
+              <Input prefix={<PhoneOutlined />} placeholder="11位手机号" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={8}>
+            <Form.Item form={form} name="receiver_city" label="收件城市" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+              <Select options={cities.map(c => ({ value: c, label: c }))} placeholder="选择城市" />
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item form={form} name="receiver_address" label="详细地址" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+              <Input prefix={<EnvironmentOutlined />} placeholder="街道门牌号（如含'虚构路/假小区'将触发异常拦截）" />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Card>
+
+      <Card title={<><BulbOutlined /> 物品与偏好设置</>}>
+        <Row gutter={[16, 16]}>
+          <Col xs={12} md={6}>
+            <Form.Item form={form} name="weight" label="重量(kg)" initialValue={1} rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+              <InputNumber min={0.1} max={100} step={0.1} style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+          <Col xs={8} md={4}>
+            <Form.Item form={form} name="length" label="长(cm)" initialValue={30} style={{ marginBottom: 0 }}>
+              <InputNumber min={1} style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+          <Col xs={8} md={4}>
+            <Form.Item form={form} name="width" label="宽(cm)" initialValue={20} style={{ marginBottom: 0 }}>
+              <InputNumber min={1} style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+          <Col xs={8} md={4}>
+            <Form.Item form={form} name="height" label="高(cm)" initialValue={15} style={{ marginBottom: 0 }}>
+              <InputNumber min={1} style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+          <Col xs={12} md={6}>
+            <Form.Item form={form} name="priority" label="优先级" initialValue="normal" style={{ marginBottom: 0 }}>
+              <Radio.Group options={[{ value: 'normal', label: '标准' }, { value: 'urgent', label: '加急' }]} />
+            </Form.Item>
+          </Col>
+          <Col xs={12} md={6}>
+            <Form.Item form={form} name="goods_type" label="物品类型" initialValue="standard" style={{ marginBottom: 0 }}>
+              <Select style={{ width: '100%' }} options={[
+                { value: 'standard', label: '标准件' },
+                { value: 'fragile', label: '易碎品' },
+                { value: 'cold', label: '冷链' },
+                { value: 'document', label: '文件' }
+              ]} />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Card>
+
+      {step >= 1 && priceResult && (
+        <>
+          <Card>
+            <Steps
+              size="small"
+              current={-1}
+              items={[
+                { title: '📦 参数', description: `${priceResult.params.sender_city} → ${priceResult.params.receiver_city} · ${priceResult.params.weight}kg · 计费重${priceResult.params.bill_weight}kg`, icon: <SafetyOutlined /> },
+                { title: '📍 距离', description: `${priceResult.params.distance}km · ${priceResult.params.same_city ? '同城' : '异地'}`, icon: <SafetyOutlined /> },
+                { title: '💡 方案', description: `${priceResult.summary.brand_count} 个品牌 · ¥${priceResult.summary.price_range[0]} ~ ¥${priceResult.summary.price_range[1]}`, icon: <BulbOutlined /> },
+              ]}
+            />
+          </Card>
+
+          <Card title="📊 价格与时效对比（TOP 10）">
+            <ReactECharts option={priceChartOpt} style={{ height: 320 }} />
+          </Card>
+
+          <Card title="📋 选择快递品牌" extra={
+            <Radio.Group value={sortBy} onChange={e => setSortBy(e.target.value)}>
+              <Radio.Button value="composite">综合评分</Radio.Button>
+              <Radio.Button value="price">价格从低</Radio.Button>
+              <Radio.Button value="time">时效最快</Radio.Button>
+              <Radio.Button value="rating">评分最高</Radio.Button>
+            </Radio.Group>
+          }>
+            <List
+              dataSource={priceResult.list.slice().sort((a: any, b: any) =>
+                sortBy === 'price' ? a.price - b.price :
+                sortBy === 'time' ? a.estimated_hours - b.estimated_hours :
+                sortBy === 'rating' ? b.rating - a.rating : b.composite_score - a.composite_score
+              )}
+              renderItem={(r: any, i: number) => (
+                <List.Item
+                  key={r.brand_id}
+                  style={{
+                    padding: '14px 16px',
+                    border: selectedBrand === r.brand_id ? '2px solid #1677ff' : '1px solid #f0f0f0',
+                    borderRadius: 8,
+                    marginBottom: 8,
+                    background: selectedBrand === r.brand_id ? '#e6f4ff' : '#fff',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setSelectedBrand(r.brand_id)}
+                >
+                  <List.Item.Meta
+                    avatar={
+                      <div style={{ width: 48, height: 48, borderRadius: 10, background: i < 3 ? 'linear-gradient(135deg, #fa8c16, #faad14)' : '#e6f4ff', color: i < 3 ? '#fff' : '#1677ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+                        {i + 1}
+                      </div>
+                    }
+                    title={
+                      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: 16, fontWeight: 600 }}>{r.brand_name}</span>
+                        <Tag color="blue">{r.brand_code}</Tag>
+                        {r.tags.map((t: string, k: number) => <Tag key={k} color={k === 0 ? 'purple' : k === 1 ? 'cyan' : k === 2 ? 'orange' : 'green'}>{t}</Tag>)}
+                      </div>
+                    }
+                    description={
+                      <Row gutter={[12, 8]} style={{ marginTop: 6 }}>
+                        <Col xs={8} sm={6} md={4}>
+                          <span style={{ color: '#8c8c8c', fontSize: 12 }}>运费</span>
+                          <div style={{ fontSize: 20, fontWeight: 700, color: '#ff4d4f' }}>¥{r.price}</div>
+                        </Col>
+                        <Col xs={8} sm={6} md={4}>
+                          <span style={{ color: '#8c8c8c', fontSize: 12 }}>时效</span>
+                          <div><b>{r.estimated_hours}h</b> ({r.estimated_days}天)</div>
+                        </Col>
+                        <Col xs={8} sm={6} md={4}>
+                          <span style={{ color: '#8c8c8c', fontSize: 12 }}>覆盖度</span>
+                          <div><Progress percent={r.coverage_score} size="small" showInfo={false} style={{ width: 80 }} /> {r.coverage_score}%</div>
+                        </Col>
+                        <Col xs={8} sm={6} md={4}>
+                          <span style={{ color: '#8c8c8c', fontSize: 12 }}>服务评分</span>
+                          <div style={{ color: '#fa8c16', fontWeight: 600 }}>★ {r.rating}</div>
+                        </Col>
+                        <Col xs={24} md={8}>
+                          <span style={{ color: '#8c8c8c', fontSize: 12 }}>综合评分</span>
+                          <Progress percent={r.composite_score} size="small" strokeColor={{ '0%': '#1677ff', '100%': '#52c41a' }} />
+                        </Col>
+                      </Row>
+                    }
+                  />
+                  <Button type={selectedBrand === r.brand_id ? 'primary' : 'default'} onClick={(e) => { e.stopPropagation(); setSelectedBrand(r.brand_id); }}>
+                    {selectedBrand === r.brand_id ? '✓ 已选' : '选择'}
+                  </Button>
+                </List.Item>
+              )}
+            />
+          </Card>
+        </>
+      )}
+
+      <Card>
+        <Space>
+          {step === 0 && (
+            <Button type="primary" onClick={onPriceCompare} loading={loading} icon={<BulbOutlined />}>
+              下一步：智能比价
+            </Button>
+          )}
+          {step === 1 && (
+            <>
+              <Button onClick={() => setStep(0)}>上一步</Button>
+              <Button type="primary" onClick={onSubmit} loading={loading} disabled={!selectedBrand} icon={<SendOutlined />}>
+                确认下单
+              </Button>
+              {selectedBrand && <Tag color="blue">已选：{priceResult.list.find((b: any) => b.brand_id === selectedBrand)?.brand_name}</Tag>}
+            </>
+          )}
+        </Space>
+      </Card>
+    </div>
+  );
+}
