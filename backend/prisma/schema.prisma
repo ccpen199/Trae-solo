@@ -1,0 +1,284 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  phone         String   @unique
+  nickname      String
+  avatar        String?
+  passwordHash  String
+  role          String   @default("CITIZEN")
+  interestTags  String?
+  latitude      Float?
+  longitude     Float?
+  locationName  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  isVerified    Boolean  @default(false)
+  creditScore   Int      @default(100)
+
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  coupons       UserCoupon[]
+  helpRequests  HelpRequest[]
+  helpResponses HelpResponse[]
+  messages      Message[]
+  merchants     Merchant[]
+  auditLogs     AuditLog[]
+  subscriptions Subscription[]
+}
+
+model Merchant {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  businessName        String
+  businessLicense     String
+  licenseVerified     Boolean  @default(false)
+  category            String
+  address             String
+  latitude            Float
+  longitude           Float
+  phone               String
+  description         String?
+  logo                String?
+  images              String?
+  rating              Float    @default(5.0)
+  reviewCount         Int      @default(0)
+  createdAt           DateTime @default(now())
+  status              String   @default("PENDING")
+
+  user                User     @relation(fields: [userId], references: [id])
+  coupons             Coupon[]
+  posts               Post[]
+}
+
+model Coupon {
+  id              String        @id @default(cuid())
+  merchantId      String
+  title           String
+  description     String
+  discountType    String
+  discountValue   Float
+  minSpend        Float         @default(0)
+  totalQuantity   Int
+  claimedQuantity Int           @default(0)
+  startDate       DateTime
+  endDate         DateTime
+  createdAt       DateTime      @default(now())
+  isActive        Boolean       @default(true)
+
+  merchant        Merchant      @relation(fields: [merchantId], references: [id])
+  userCoupons     UserCoupon[]
+}
+
+model UserCoupon {
+  id          String   @id @default(cuid())
+  userId      String
+  couponId    String
+  claimedAt   DateTime @default(now())
+  usedAt      DateTime?
+  status      String   @default("AVAILABLE")
+
+  user        User     @relation(fields: [userId], references: [id])
+  coupon      Coupon   @relation(fields: [couponId], references: [id])
+
+  @@unique([userId, couponId])
+}
+
+model Post {
+  id            String      @id @default(cuid())
+  userId        String
+  merchantId    String?
+  type          String
+  title         String
+  content       String
+  images        String?
+  videoUrl      String?
+  latitude      Float?
+  longitude     Float?
+  locationName  String?
+  priceAnchor   Float?
+  hasProof      Boolean     @default(false)
+  isPitfall     Boolean     @default(false)
+  hotScore      Float       @default(0)
+  viewCount     Int         @default(0)
+  likeCount     Int         @default(0)
+  commentCount  Int         @default(0)
+  shareCount    Int         @default(0)
+  status        String      @default("PENDING")
+  auditNote     String?
+  sourceLevel   String      @default("ORDINARY")
+  sourceOrg     String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  expireAt      DateTime?
+
+  user          User        @relation(fields: [userId], references: [id])
+  merchant      Merchant?   @relation(fields: [merchantId], references: [id])
+  comments      Comment[]
+  likes         Like[]
+  topics        PostTopic[]
+  auditLogs     AuditLog[]
+}
+
+model Topic {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  coverImage  String?
+  postCount   Int      @default(0)
+  heatScore   Float    @default(0)
+  isHot       Boolean  @default(false)
+  category    String?
+  createdAt   DateTime @default(now())
+
+  posts       PostTopic[]
+}
+
+model PostTopic {
+  postId  String
+  topicId String
+
+  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([postId, topicId])
+}
+
+model Comment {
+  id         String      @id @default(cuid())
+  postId     String
+  userId     String
+  content    String
+  parentId   String?
+  isTop      Boolean     @default(false)
+  likeCount  Int         @default(0)
+  status     String      @default("NORMAL")
+  createdAt  DateTime    @default(now())
+
+  post       Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user       User        @relation(fields: [userId], references: [id])
+  parent     Comment?    @relation("CommentReplies", fields: [parentId], references: [id])
+  children   Comment[]   @relation("CommentReplies")
+  likes      Like[]
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String?
+  commentId String?
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
+}
+
+model HelpRequest {
+  id            String        @id @default(cuid())
+  userId        String
+  type          String
+  title         String
+  content       String
+  images        String?
+  latitude      Float
+  longitude     Float
+  locationName  String
+  radiusMeters  Int           @default(1000)
+  urgency       Int           @default(1)
+  status        String        @default("OPEN")
+  createdAt     DateTime      @default(now())
+  closedAt      DateTime?
+  acceptedBy    String?
+
+  user          User          @relation(fields: [userId], references: [id])
+  responses     HelpResponse[]
+  messages      Message[]
+}
+
+model HelpResponse {
+  id            String      @id @default(cuid())
+  requestId     String
+  userId        String
+  content       String
+  images        String?
+  isAccepted    Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+
+  request       HelpRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id           String      @id @default(cuid())
+  helpRequestId String
+  senderId     String
+  content      String
+  isRead       Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+
+  helpRequest  HelpRequest @relation(fields: [helpRequestId], references: [id], onDelete: Cascade)
+  sender       User        @relation(fields: [senderId], references: [id])
+}
+
+model AuditLog {
+  id               String       @id @default(cuid())
+  postId           String
+  auditorId        String
+  action           String
+  reason           String?
+  riskLevel        String
+  aiScore          Float?
+  matchedKeywords  String?
+  createdAt        DateTime     @default(now())
+
+  post        Post         @relation(fields: [postId], references: [id])
+  auditor     User         @relation(fields: [auditorId], references: [id])
+}
+
+model UtilityService {
+  id            String          @id @default(cuid())
+  type          String
+  name          String
+  provider      String
+  status        String          @default("ACTIVE")
+  lastUpdated   DateTime        @default(now())
+  data          String
+
+  updates       UtilityUpdate[]
+}
+
+model UtilityUpdate {
+  id              String        @id @default(cuid())
+  serviceId       String
+  title           String
+  content         String
+  locationScope   String
+  startTime       DateTime?
+  endTime         DateTime?
+  severity        Int           @default(1)
+  createdAt       DateTime      @default(now())
+
+  service         UtilityService @relation(fields: [serviceId], references: [id])
+}
+
+model Subscription {
+  id        String      @id @default(cuid())
+  userId    String
+  type      String
+  targetId  String?
+  notify    Boolean     @default(true)
+  createdAt DateTime    @default(now())
+
+  user      User        @relation(fields: [userId], references: [id])
+
+  @@unique([userId, type, targetId])
+}

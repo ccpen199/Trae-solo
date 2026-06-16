@@ -1,0 +1,288 @@
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { postApi, merchantApi } from '../api';
+import { useAuthStore } from '../store/auth';
+import { Button, Card, Badge } from '../components/ui';
+import type { Merchant } from '../types';
+import { getPostTypeLabel } from '../utils/format';
+
+const CreatePostPage: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, location: userLocation } = useAuthStore();
+  const state = location.state as any;
+
+  const [form, setForm] = useState({
+    type: state?.defaultType || 'NEWS',
+    title: '',
+    content: '',
+    merchantId: '',
+    priceAnchor: '',
+    hasProof: false,
+    isPitfall: false,
+    topics: '' as string,
+    latitude: userLocation?.latitude,
+    longitude: userLocation?.longitude,
+    locationName: userLocation?.locationName || '',
+  });
+  const [merchants, setMerchants] = useState<Merchant[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (userLocation?.latitude && userLocation?.longitude) {
+      loadMerchants();
+    }
+  }, []);
+
+  const loadMerchants = async () => {
+    try {
+      const res = await merchantApi.nearby({
+        latitude: userLocation?.latitude,
+        longitude: userLocation?.longitude,
+        radius: 5000,
+      });
+      setMerchants(res.merchants || []);
+    } catch {}
+  };
+
+  const update = (k: string, v: any) => setForm({ ...form, [k]: v });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.title.trim() || !form.content.trim()) {
+      setError('标题和内容不能为空');
+      return;
+    }
+    setSubmitting(true);
+    setError('');
+    try {
+      const topics = form.topics
+        ? form.topics.split(/[,，\s]+/).map(t => (t.startsWith('#') ? t : `#${t}`)).filter(Boolean)
+        : undefined;
+
+      const res = await postApi.create({
+        ...form,
+        priceAnchor: form.priceAnchor ? parseFloat(form.priceAnchor) : undefined,
+        topics,
+      });
+      navigate(`/posts/${res.post.id}`);
+    } catch (err: any) {
+      setError(err.response?.data?.error || '发布失败');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const types = [
+    { v: 'NEWS', l: '本地资讯', icon: '📰', desc: '分享社区新鲜事' },
+    { v: 'REVIEW', l: '探店笔记', icon: '🍜', desc: '消费体验分享' },
+    { v: 'ACTIVITY', l: '活动召集', icon: '🎉', desc: '组织社区活动' },
+    { v: 'INFO', l: '便民信息', icon: 'ℹ️', desc: '实用信息共享' },
+  ];
+
+  return (
+    <div className="max-w-3xl mx-auto">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">发布新内容</h1>
+        <p className="text-gray-500">分享你的发现，连接更多邻里</p>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        {/* Type Selection */}
+        <Card className="p-6 mb-6">
+          <label className="block text-sm font-semibold text-gray-700 mb-4">选择内容类型</label>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {types.map((t) => (
+              <button
+                type="button"
+                key={t.v}
+                onClick={() => update('type', t.v)}
+                className={`p-4 rounded-xl border-2 transition-all text-left ${
+                  form.type === t.v
+                    ? 'border-primary-500 bg-primary-50 shadow-md'
+                    : 'border-gray-100 bg-gray-50 hover:border-gray-200'
+                }`}
+              >
+                <div className="text-3xl mb-2">{t.icon}</div>
+                <div className="font-semibold text-gray-800">{t.l}</div>
+                <div className="text-xs text-gray-500 mt-1">{t.desc}</div>
+              </button>
+            ))}
+          </div>
+        </Card>
+
+        {/* Title */}
+        <Card className="p-6 mb-6">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">标题 *</label>
+          <input
+            type="text"
+            value={form.title}
+            onChange={(e) => update('title', e.target.value)}
+            placeholder={`起个吸引人的标题...（当前类型：${getPostTypeLabel(form.type)}）`}
+            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-lg"
+            maxLength={100}
+          />
+          <div className="text-right text-xs text-gray-400 mt-1">{form.title.length}/100</div>
+        </Card>
+
+        {/* Content */}
+        <Card className="p-6 mb-6">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">正文内容 *</label>
+          <textarea
+            value={form.content}
+            onChange={(e) => update('content', e.target.value)}
+            placeholder="详细描述你想分享的内容，图文并茂更容易获得关注哦~"
+            rows={10}
+            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none resize-none leading-relaxed"
+          />
+          <div className="mt-3 flex items-center gap-4 text-sm text-gray-500">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="file"
+                multiple
+                className="hidden"
+              />
+              <span className="px-3 py-1.5 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer">
+                📷 添加图片
+              </span>
+            </label>
+            <span className="text-xs">(演示版本：图片为模拟占位)</span>
+          </div>
+        </Card>
+
+        {/* Review Specific */}
+        {form.type === 'REVIEW' && (
+          <Card className="p-6 mb-6 space-y-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-gray-800">探店专属设置</h3>
+                <p className="text-sm text-gray-500">让你的分享更有参考价值</p>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">关联商户</label>
+              <select
+                value={form.merchantId}
+                onChange={(e) => update('merchantId', e.target.value)}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+              >
+                <option value="">-- 选择商户（可选）--</option>
+                {merchants.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.businessName}（{m.category}）
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                💰 人均消费（元）
+              </label>
+              <input
+                type="number"
+                value={form.priceAnchor}
+                onChange={(e) => update('priceAnchor', e.target.value)}
+                placeholder="例如：75"
+                className="w-full md:w-64 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+              />
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={form.hasProof}
+                  onChange={(e) => update('hasProof', e.target.checked)}
+                  className="w-4 h-4 text-primary-600 rounded"
+                />
+                <Badge className="bg-green-50 text-green-700">✅ 有真实消费凭证</Badge>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={form.isPitfall}
+                  onChange={(e) => update('isPitfall', e.target.checked)}
+                  className="w-4 h-4 text-red-600 rounded"
+                />
+                <Badge className="bg-red-50 text-red-700">⚠️ 避坑提醒（置顶）</Badge>
+              </label>
+            </div>
+          </Card>
+        )}
+
+        {/* Location & Topics */}
+        <Card className="p-6 mb-6 space-y-5">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              📍 位置信息
+            </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <input
+                type="text"
+                value={form.locationName || ''}
+                onChange={(e) => update('locationName', e.target.value)}
+                placeholder="地点名称（如：望京SOHO）"
+                className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+              />
+              <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 rounded-xl text-sm text-gray-500">
+                <span>🌐</span>
+                <span>
+                  {form.latitude?.toFixed(4)}, {form.longitude?.toFixed(4) || '定位中...'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              🏷️ 话题标签
+            </label>
+            <input
+              type="text"
+              value={form.topics}
+              onChange={(e) => update('topics', e.target.value)}
+              placeholder="多个话题用逗号分隔，如：望京美食探店, 周末好去处"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              热门推荐：#望京美食探店 #今日望京新鲜事 #邻里互助
+            </p>
+          </div>
+        </Card>
+
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-600">
+            {error}
+          </div>
+        )}
+
+        {/* Submit */}
+        <div className="sticky bottom-0 bg-gray-50/95 backdrop-blur -mx-4 px-4 py-4 border-t border-gray-100 rounded-t-2xl">
+          <div className="flex items-center justify-between gap-4 max-w-3xl mx-auto">
+            <div className="text-sm text-gray-500 hidden md:block">
+              <span className="text-yellow-500">🔒</span>
+              发布后将经过AI审核，违规内容将被拦截
+            </div>
+            <div className="flex gap-3 ml-auto">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => navigate(-1)}
+              >
+                取消
+              </Button>
+              <Button type="submit" size="lg" disabled={submitting}>
+                {submitting ? '发布中...' : '🚀 立即发布'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default CreatePostPage;
