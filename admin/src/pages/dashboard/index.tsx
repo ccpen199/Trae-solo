@@ -23,7 +23,8 @@ import {
   Radio,
   Checkbox,
   Select,
-  DatePicker
+  DatePicker,
+  Alert
 } from 'antd'
 import {
   AppstoreOutlined,
@@ -99,11 +100,11 @@ const Dashboard: React.FC = () => {
   }, [userInfo?.roles])
 
   const roleConfig: Record<string, { title: string; tagColor: string; tagText: string; desc: string }> = {
-    admin: { title: '管理总控台', tagColor: 'blue', tagText: '超级管理员', desc: '全局管理 · 系统配置 · 数据总览' },
-    dept_admin: { title: '部门工作台', tagColor: 'green', tagText: '委办局管理员', desc: '本部门待办 · 事项审批 · 数据查看' },
-    clerk: { title: '窗口服务台', tagColor: 'orange', tagText: '窗口办事员', desc: '办件处理 · 证照核验 · 工单受理' },
-    auditor: { title: '合规审计台', tagColor: 'purple', tagText: '审计员', desc: '审计告警 · 操作追溯 · 合规验收' },
-    default: { title: '工作台', tagColor: 'default', tagText: '普通用户', desc: '服务查看 · 信息查询' }
+    admin: { title: '管理总控台', tagColor: 'blue', tagText: '超级管理员', desc: '全局管理 · 系统配置 · 数据总览 · 安全审计' },
+    dept_admin: { title: '部门工作台', tagColor: 'green', tagText: '委办局管理员', desc: '本部门待办 · 事项审批 · 数据查看 · 接口管理' },
+    clerk: { title: '窗口服务台', tagColor: 'orange', tagText: '窗口办事员', desc: '办件处理 · 证照核验 · 工单受理 · 服务引导' },
+    auditor: { title: '合规审计台', tagColor: 'purple', tagText: '审计员', desc: '审计告警 · 操作追溯 · 合规验收 · 风险处置' },
+    default: { title: '工作台', tagColor: 'default', tagText: '普通用户', desc: '个人服务 · 信息查询 · 办件进度 · 证照查看' }
   }
 
   const currentRoleConfig = roleConfig[currentRole]
@@ -118,9 +119,9 @@ const Dashboard: React.FC = () => {
     ],
     dept_admin: [
       { key: 'services', icon: <AppstoreOutlined />, title: '本部门事项', desc: '部门事项管理', color: '#0958d9' },
-      { key: 'tickets', icon: <CustomerServiceOutlined />, title: '工单处理', desc: '部门工单办理', color: '#faad14' },
-      { key: 'certificates', icon: <SafetyCertificateOutlined />, title: '证照审核', desc: '电子证照核验', color: '#52c41a' },
-      { key: 'audit-logs', icon: <AuditOutlined />, title: '操作记录', desc: '本部门操作日志', color: '#722ed1' }
+      { key: 'dept-tickets', icon: <CustomerServiceOutlined />, title: '部门工单', desc: '部门工单办理', color: '#faad14' },
+      { key: 'interface-monitor', icon: <DesktopOutlined />, title: '接口监控', desc: '接口运行监控', color: '#722ed1' },
+      { key: 'certificate-verify', icon: <SafetyCertificateOutlined />, title: '证照核验', desc: '电子证照核验', color: '#52c41a' }
     ],
     clerk: [
       { key: 'ticket-handle', icon: <FileTextOutlined />, title: '办件处理', desc: '当前窗口办件', color: '#faad14' },
@@ -128,28 +129,27 @@ const Dashboard: React.FC = () => {
       { key: 'ticket-create', icon: <CustomerServiceOutlined />, title: '工单受理', desc: '12345工单受理', color: '#0958d9' }
     ],
     auditor: [
-      { key: 'audit-logs', icon: <AuditOutlined />, title: '审计日志', desc: '全量操作审计', color: '#722ed1' },
+      { key: 'audit-logs', icon: <AuditOutlined />, title: '审计查询', desc: '全量操作审计', color: '#722ed1' },
       { key: 'compliance', icon: <SafetyOutlined />, title: '合规验收', desc: '合规性检查', color: '#0958d9' },
-      { key: 'alert-center', icon: <WarningOutlined />, title: '告警中心', desc: '异常操作告警', color: '#ff4d4f' },
-      { key: 'data-export', icon: <ExportOutlined />, title: '审计导出', desc: '审计数据导出', color: '#52c41a' }
+      { key: 'alert-center', icon: <WarningOutlined />, title: '告警处置', desc: '异常操作告警', color: '#ff4d4f' }
     ],
     default: [
-      { key: 'services', icon: <AppstoreOutlined />, title: '服务查询', desc: '政务服务查询', color: '#0958d9' },
+      { key: 'my-tickets', icon: <FileTextOutlined />, title: '我的办件', desc: '个人办件进度', color: '#0958d9' },
       { key: 'certificates', icon: <SafetyCertificateOutlined />, title: '证照查询', desc: '电子证照查看', color: '#52c41a' }
     ]
   }
 
   const auditTrailData = [
-    { key: '1', time: '2024-12-15 14:32:18', operator: '自治区管理员', type: '登录', content: '账号密码登录系统', ip: '192.168.1.100' },
-    { key: '2', time: '2024-12-15 14:15:06', operator: '部门管理员', type: '审批', content: '审批通过社保缴费证明开具事项', ip: '10.0.5.23' },
-    { key: '3', time: '2024-12-15 13:48:22', operator: '窗口办事员', type: '数据导出', content: '导出本日办件统计报表', ip: '172.16.8.45' },
-    { key: '4', time: '2024-12-15 11:20:35', operator: '自治区管理员', type: '配置修改', content: '修改身份证办理事项审批流程', ip: '192.168.1.100' },
-    { key: '5', time: '2024-12-15 10:55:42', operator: '审计专员', type: '登录', content: '宁夏政务SSO登录系统', ip: '10.0.5.88' },
-    { key: '6', time: '2024-12-15 09:30:11', operator: '自治区管理员', type: '权限变更', content: '调整人力资源社会保障厅数据查看权限', ip: '192.168.1.100' },
-    { key: '7', time: '2024-12-14 17:45:29', operator: '部门管理员', type: '删除', content: '删除过期临时文件3份', ip: '172.16.8.12' },
-    { key: '8', time: '2024-12-14 16:22:07', operator: '窗口办事员', type: '审批', content: '审批通过营业执照变更申请', ip: '192.168.10.56' },
-    { key: '9', time: '2024-12-14 15:08:33', operator: '审计专员', type: '数据导出', content: '导出90天审计日志报告', ip: '10.0.5.88' },
-    { key: '10', time: '2024-12-14 14:01:18', operator: '自治区管理员', type: '配置修改', content: '更新系统安全策略配置', ip: '192.168.1.100' }
+    { key: '1', time: '2026-06-16 14:32:18', operator: '自治区管理员', type: '登录', content: '账号密码登录系统', ip: '192.168.1.100' },
+    { key: '2', time: '2026-06-16 14:15:06', operator: '部门管理员', type: '审批', content: '审批通过社保缴费证明开具事项', ip: '10.0.5.23' },
+    { key: '3', time: '2026-06-16 13:48:22', operator: '窗口办事员', type: '数据导出', content: '导出本日办件统计报表', ip: '172.16.8.45' },
+    { key: '4', time: '2026-06-16 11:20:35', operator: '自治区管理员', type: '配置修改', content: '修改身份证办理事项审批流程', ip: '192.168.1.100' },
+    { key: '5', time: '2026-06-16 10:55:42', operator: '审计专员', type: '登录', content: '宁夏政务SSO登录系统', ip: '10.0.5.88' },
+    { key: '6', time: '2026-06-16 09:30:11', operator: '自治区管理员', type: '权限变更', content: '调整人力资源社会保障厅数据查看权限', ip: '192.168.1.100' },
+    { key: '7', time: '2026-06-15 17:45:29', operator: '部门管理员', type: '删除', content: '删除过期临时文件3份', ip: '172.16.8.12' },
+    { key: '8', time: '2026-06-15 16:22:07', operator: '窗口办事员', type: '审批', content: '审批通过营业执照变更申请', ip: '192.168.10.56' },
+    { key: '9', time: '2026-06-15 15:08:33', operator: '审计专员', type: '数据导出', content: '导出90天审计日志报告', ip: '10.0.5.88' },
+    { key: '10', time: '2026-06-15 14:01:18', operator: '自治区管理员', type: '配置修改', content: '更新系统安全策略配置', ip: '192.168.1.100' }
   ]
 
   const auditTrailColumns = [
@@ -180,7 +180,10 @@ const Dashboard: React.FC = () => {
     'ticket-create': '/tickets',
     'compliance': '/audit-logs',
     'alert-center': '/audit-logs',
-    'data-export': '/audit-logs'
+    'data-export': '/audit-logs',
+    'dept-tickets': '/tickets',
+    'interface-monitor': '/departments',
+    'my-tickets': '/tickets'
   }
 
   const hotServices = [
@@ -193,17 +196,17 @@ const Dashboard: React.FC = () => {
   ]
 
   const systemMessages = [
-    { key: '1', title: '关于2024年政务服务能力提升培训的通知', content: '各委办局：为提升政务服务能力，定于2024年1月20日举办政务服务能力提升培训班，请各单位派人参训。', time: '今天 09:30', type: '通知', read: false },
-    { key: '2', title: '系统升级维护公告（本周五晚）', content: '为优化系统性能，定于2024年1月19日22:00-次日06:00进行系统升级维护，期间部分功能将暂停使用。', time: '昨天 16:45', type: '公告', read: false },
-    { key: '3', title: '一季度政务服务质量考核结果通报', content: '现将2024年一季度政务服务质量考核结果通报如下，请各单位针对问题进行整改。', time: '3天前', type: '通报', read: true },
-    { key: '4', title: '新版电子证照系统上线试运行通知', content: '新版电子证照系统将于2024年1月25日上线试运行，请各单位组织学习新系统操作。', time: '5天前', type: '通知', read: true },
+    { key: '1', title: '关于2026年6月政务服务能力提升培训的通知', content: '各委办局：为提升政务服务能力，定于2026年6月20日举办政务服务能力提升培训班，请各单位派人参训。', time: '今天 09:30', type: '通知', read: false },
+    { key: '2', title: '系统升级维护公告（本周五晚）', content: '为优化系统性能，定于2026年6月19日22:00-次日06:00进行系统升级维护，期间部分功能将暂停使用。', time: '昨天 16:45', type: '公告', read: false },
+    { key: '3', title: '二季度政务服务质量考核结果通报', content: '现将2026年二季度政务服务质量考核结果通报如下，请各单位针对问题进行整改。', time: '3天前', type: '通报', read: true },
+    { key: '4', title: '新版电子证照系统上线试运行通知', content: '新版电子证照系统将于2026年6月25日上线试运行，请各单位组织学习新系统操作。', time: '5天前', type: '通知', read: true },
     { key: '5', title: '关于加强数据安全管理的通知', content: '根据等保三级要求，各单位需加强数据安全管理，落实数据访问审批制度。', time: '7天前', type: '通知', read: true }
   ]
 
   const ticketReminders = [
     { key: '1', title: '身份证办理审核通过', content: '您申请的身份证补办已审核通过，预计7个工作日内完成制证。', time: '2小时前', type: '审核通过', status: 'success' },
     { key: '2', title: '营业执照变更需补正材料', content: '您提交的营业执照变更申请缺少公司章程，请于3个工作日内补正。', time: '4小时前', type: '材料补正', status: 'warning' },
-    { key: '3', title: '社保缴费证明即将到期', content: '您开具的社保缴费证明将于2024年1月25日到期，请及时使用或重新开具。', time: '1天前', type: '即将到期', status: 'warning' }
+    { key: '3', title: '社保缴费证明即将到期', content: '您开具的社保缴费证明将于2026年6月25日到期，请及时使用或重新开具。', time: '1天前', type: '即将到期', status: 'warning' }
   ]
 
   const auditAlerts = [
@@ -494,20 +497,20 @@ const Dashboard: React.FC = () => {
   ]
 
   const noticeList = [
-    { id: 1, title: '关于2024年政务服务能力提升培训的通知', time: '今天 09:30', type: '通知' },
+    { id: 1, title: '关于2026年6月政务服务能力提升培训的通知', time: '今天 09:30', type: '通知' },
     { id: 2, title: '系统升级维护公告（本周五晚）', time: '昨天 16:45', type: '公告' },
-    { id: 3, title: '一季度政务服务质量考核结果通报', time: '3天前', type: '通报' },
+    { id: 3, title: '二季度政务服务质量考核结果通报', time: '3天前', type: '通报' },
     { id: 4, title: '新版电子证照系统上线试运行通知', time: '5天前', type: '通知' }
   ]
 
   const dataAssets = [
-    { name: '社保', icon: <FundOutlined />, count: '1,258万', color: '#0958d9' },
-    { name: '公积金', icon: <BankOutlined />, count: '896万', color: '#52c41a' },
-    { name: '医保', icon: <SafetyCertificateOutlined />, count: '1,432万', color: '#eb2f96' },
-    { name: '税务', icon: <FileTextOutlined />, count: '768万', color: '#fa8c16' },
-    { name: '证照', icon: <FileDoneOutlined />, count: '3,256万', color: '#722ed1' },
-    { name: '教育', icon: <ReadOutlined />, count: '520万', color: '#13c2c2' },
-    { name: '交通', icon: <ThunderboltOutlined />, count: '680万', color: '#1890ff' }
+    { name: '社保', icon: <FundOutlined />, count: '1,258万', color: '#0958d9', source: '人力资源社会保障厅', authStatus: '已授权', shareCount: 5, callCount: '12,580', lastCall: '2026-06-16 08:30', tabKey: 'authorization' },
+    { name: '公积金', icon: <BankOutlined />, count: '896万', color: '#52c41a', source: '住房公积金管理中心', authStatus: '已授权', shareCount: 3, callCount: '8,960', lastCall: '2026-06-16 07:45', tabKey: 'authorization' },
+    { name: '医保', icon: <SafetyCertificateOutlined />, count: '1,432万', color: '#eb2f96', source: '医疗保障局', authStatus: '已授权', shareCount: 4, callCount: '14,320', lastCall: '2026-06-16 08:15', tabKey: 'share' },
+    { name: '税务', icon: <FileTextOutlined />, count: '768万', color: '#fa8c16', source: '税务局', authStatus: '待续期', shareCount: 2, callCount: '7,680', lastCall: '2026-06-15 22:00', tabKey: 'trace' },
+    { name: '证照', icon: <FileDoneOutlined />, count: '3,256万', color: '#722ed1', source: '公安厅/民政厅', authStatus: '已授权', shareCount: 6, callCount: '32,560', lastCall: '2026-06-16 09:00', tabKey: 'share' },
+    { name: '教育', icon: <ReadOutlined />, count: '520万', color: '#13c2c2', source: '教育厅', authStatus: '已授权', shareCount: 2, callCount: '5,200', lastCall: '2026-06-15 18:30', tabKey: 'recommend' },
+    { name: '交通', icon: <ThunderboltOutlined />, count: '680万', color: '#1890ff', source: '交通运输厅', authStatus: '已授权', shareCount: 3, callCount: '6,800', lastCall: '2026-06-16 07:00', tabKey: 'trace' }
   ]
 
   const getPriorityColor = (priority: string) => {
@@ -544,7 +547,7 @@ const Dashboard: React.FC = () => {
             <Title level={3} className="welcome-title">
               {greeting}，{userInfo?.name || '管理员'}
               <Tag color={currentRoleConfig.tagColor} className="role-tag">
-                {currentRoleConfig.tagText}
+                {currentRole === 'admin' ? '超级管理员 · 管理总控台' : currentRole === 'default' ? '普通用户 · 服务查看' : currentRoleConfig.tagText}
               </Tag>
             </Title>
             <Text type="secondary" className="welcome-date">
@@ -563,6 +566,32 @@ const Dashboard: React.FC = () => {
           </Space>
         </div>
       </div>
+
+      {currentRole === 'admin' && (
+        <Alert type="info" showIcon style={{ marginBottom: 16 }}
+          message="当前为超级管理员权限，可访问全部管理功能。所有关键操作均已记录并纳入90天审计追溯。"
+        />
+      )}
+      {currentRole === 'dept_admin' && (
+        <Alert type="success" showIcon style={{ marginBottom: 16 }}
+          message="当前为委办局管理员权限，仅可管理本部门事项、工单和接口配置。"
+        />
+      )}
+      {currentRole === 'clerk' && (
+        <Alert type="warning" showIcon style={{ marginBottom: 16 }}
+          message="当前为窗口办事员权限，仅可办理窗口业务、核验证照和受理工单。"
+        />
+      )}
+      {currentRole === 'auditor' && (
+        <Alert style={{ marginBottom: 16, borderColor: '#d3adf7', backgroundColor: '#f9f0ff' }} showIcon
+          message="当前为审计员权限，仅可查看审计日志、告警处置和合规验收，不可修改业务数据。"
+        />
+      )}
+      {currentRole === 'default' && (
+        <Alert type="info" showIcon style={{ marginBottom: 16 }}
+          message="当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。"
+        />
+      )}
 
       {currentRole === 'dept_admin' && (
         <Card bordered={false} style={{ marginBottom: 16, background: 'linear-gradient(135deg, #f6ffed 0%, #e6f7ff 100%)' }}>
@@ -966,7 +995,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="data-assets-grid">
           {dataAssets.map((asset, index) => (
-            <div key={index} className="data-asset-item" onClick={() => navigate('/city-data-secretary')} style={{ cursor: 'pointer' }}>
+            <div key={index} className="data-asset-item" onClick={() => navigate('/city-data-secretary?tab=' + asset.tabKey)} style={{ cursor: 'pointer' }}>
               <div className="asset-icon" style={{ background: `${asset.color}15`, color: asset.color }}>
                 {asset.icon}
               </div>
@@ -977,11 +1006,97 @@ const Dashboard: React.FC = () => {
                 <Text className="asset-count" style={{ color: asset.color }}>
                   {asset.count}
                 </Text>
+                <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>{asset.source}</Text>
+                <div style={{ marginTop: 4, display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                  <Tag color={asset.authStatus === '已授权' ? 'green' : 'orange'} style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>{asset.authStatus}</Tag>
+                  <Tag color="blue" style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>{asset.shareCount}条共享</Tag>
+                  <Tag color="cyan" style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>调用{asset.callCount}次</Tag>
+                  <Tag color={asset.tabKey === 'recommend' ? 'purple' : 'default'} style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>{asset.tabKey === 'recommend' ? '有推荐' : '无推荐'}</Tag>
+                </div>
               </div>
             </div>
           ))}
         </div>
-        <Text type="secondary" style={{ display: 'block', textAlign: 'center', marginTop: 8, fontSize: 12 }}>点击查看个人授权、推荐来源、共享状态、调用留痕</Text>
+        <Text type="secondary" style={{ display: 'block', textAlign: 'center', marginTop: 8, fontSize: 12 }}>每个数据资产均关联个人授权记录、调用留痕、跨部门共享状态和推荐来源，点击进入城市数据秘书查看完整链路</Text>
+      </Card>
+
+      <Card bordered={false} style={{ marginTop: 16 }}>
+        <div className="card-header">
+          <Title level={5} className="card-title">
+            <BankOutlined className="title-icon" /> 委办局核心系统状态
+          </Title>
+          <Button type="link" onClick={() => navigate('/departments')}>查看全部38个委办局 <ArrowRightOutlined /></Button>
+        </div>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={12} md={8} lg={4}>
+            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <Text strong>公安厅</Text>
+                <Tag color="green">在线</Tag>
+              </div>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接口12个</Text>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接入状态：在线运行</Text>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>异常处置：0项待处理</Text>
+              <Tag color="purple" style={{ fontSize: 11, marginBottom: 4 }}>SM4+SM2已启用</Tag>
+              <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>最后同步：2026-06-16 08:30</Text>
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} md={8} lg={4}>
+            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <Text strong>人力资源社会保障厅</Text>
+                <Tag color="green">在线</Tag>
+              </div>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接口15个</Text>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接入状态：在线运行</Text>
+              <div style={{ marginBottom: 4 }}><Tag color="orange" style={{ fontSize: 11 }}>1项处理中</Tag></div>
+              <Tag color="purple" style={{ fontSize: 11, marginBottom: 4 }}>SM4+SM2已启用</Tag>
+              <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>最后同步：2026-06-16 09:00</Text>
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} md={8} lg={4}>
+            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <Text strong>医疗保障局</Text>
+                <Tag color="green">在线</Tag>
+              </div>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接口10个</Text>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接入状态：在线运行</Text>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>异常处置：0项待处理</Text>
+              <Tag color="purple" style={{ fontSize: 11, marginBottom: 4 }}>SM4+SM3已启用</Tag>
+              <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>最后同步：2026-06-16 07:30</Text>
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} md={8} lg={4}>
+            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <Text strong>住建厅</Text>
+                <Tag color="green">在线</Tag>
+              </div>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接口8个</Text>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接入状态：在线运行</Text>
+              <div style={{ marginBottom: 4 }}><Tag color="red" style={{ fontSize: 11 }}>2项待处理</Tag></div>
+              <Tag color="purple" style={{ fontSize: 11, marginBottom: 4 }}>SM4已启用</Tag>
+              <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>最后同步：2026-06-15 22:00</Text>
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} md={8} lg={4}>
+            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <Text strong>民政厅</Text>
+                <Tag color="green">在线</Tag>
+              </div>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接口7个</Text>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>接入状态：在线运行</Text>
+              <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>异常处置：0项待处理</Text>
+              <Tag color="purple" style={{ fontSize: 11, marginBottom: 4 }}>SM4+SM2已启用</Tag>
+              <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>最后同步：2026-06-16 08:00</Text>
+            </Card>
+          </Col>
+        </Row>
+        <div style={{ marginTop: 12, textAlign: 'center' }}>
+          <Text type="secondary" style={{ fontSize: 12 }}>35/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过</Text>
+        </div>
       </Card>
 
       <Card bordered={false} style={{ marginTop: 16 }}>
@@ -1193,7 +1308,7 @@ const Dashboard: React.FC = () => {
             <CheckCircleOutlined style={{ fontSize: 64, color: '#52c41a', marginBottom: 16 }} />
             <Title level={4} style={{ color: '#52c41a', marginBottom: 24 }}>申请已受理</Title>
             <Descriptions bordered column={1} size="small" style={{ marginBottom: 24, textAlign: 'left' }}>
-              <Descriptions.Item label="受理编号">NX20240115001258</Descriptions.Item>
+              <Descriptions.Item label="受理编号">NX20260616001258</Descriptions.Item>
               <Descriptions.Item label="受理时间">{dayjs().format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
               <Descriptions.Item label="预计办结">{dayjs().add(7, 'day').format('YYYY-MM-DD')}</Descriptions.Item>
             </Descriptions>
@@ -1354,8 +1469,8 @@ const Dashboard: React.FC = () => {
                 <Descriptions bordered column={2} size="small">
                   <Descriptions.Item label="申报人">张三</Descriptions.Item>
                   <Descriptions.Item label="身份证号">6401**********0012</Descriptions.Item>
-                  <Descriptions.Item label="申报时间">2024-01-15 10:30:00</Descriptions.Item>
-                  <Descriptions.Item label="办件编号">NX20240115001258</Descriptions.Item>
+                  <Descriptions.Item label="申报时间">2026-06-16 10:30:00</Descriptions.Item>
+                  <Descriptions.Item label="办件编号">NX20260616001258</Descriptions.Item>
                 </Descriptions>
                 <Divider style={{ margin: '12px 0' }} />
                 <Title level={5}>材料清单</Title>
@@ -1375,8 +1490,8 @@ const Dashboard: React.FC = () => {
                 <Divider style={{ margin: '12px 0' }} />
                 <Title level={5}>办理进度</Title>
                 <Timeline>
-                  <Timeline.Item color="green">提交申请 · 2024-01-15 10:30</Timeline.Item>
-                  <Timeline.Item color="green">材料核验通过 · 2024-01-15 11:00</Timeline.Item>
+                  <Timeline.Item color="green">提交申请 · 2026-06-16 10:30</Timeline.Item>
+                  <Timeline.Item color="green">材料核验通过 · 2026-06-16 11:00</Timeline.Item>
                   <Timeline.Item color="blue">待审核 <Badge status="processing" text="当前节点" /></Timeline.Item>
                   <Timeline.Item>领导审批</Timeline.Item>
                   <Timeline.Item>办结出证</Timeline.Item>
@@ -1387,7 +1502,7 @@ const Dashboard: React.FC = () => {
             {selectedTodo.type.includes('工单') && (
               <Card title="工单信息" size="small" style={{ marginBottom: 16 }}>
                 <Descriptions bordered column={2} size="small">
-                  <Descriptions.Item label="工单编号">12345NX202401150008</Descriptions.Item>
+                  <Descriptions.Item label="工单编号">12345NX202606160008</Descriptions.Item>
                   <Descriptions.Item label="工单来源">12345热线</Descriptions.Item>
                   <Descriptions.Item label="诉求人">李四</Descriptions.Item>
                   <Descriptions.Item label="联系电话">138****5678</Descriptions.Item>

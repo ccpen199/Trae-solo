@@ -1,0 +1,38 @@
+{
+  "order": "may-89213",
+  "frontendUrl": "http://127.0.0.1:49213/",
+  "backendUrl": "http://127.0.0.1:59213",
+  "status": 200,
+  "frontendOk": true,
+  "backendHealth": {
+    "url": "http://127.0.0.1:59213/api/health",
+    "status": 200,
+    "ok": true,
+    "ms": 111,
+    "preview": "{\"success\":true,\"status\":\"ok\",\"service\":\"nx-city-service-gateway\",\"mode\":\"local-smoke\",\"timestamp\":\"2026-06-16T03:51:51.628Z\"}"
+  },
+  "login": {
+    "attempted": false
+  },
+  "finalUrl": "http://127.0.0.1:49213/dashboard",
+  "title": "宁夏自治区一网通办管理后台",
+  "markerHits": {
+    "宁夏": true,
+    "工作台": true,
+    "委办局": true,
+    "城市数据秘书": true,
+    "审计": true
+  },
+  "markerHitCount": 5,
+  "consoleErrorCount": 1,
+  "requestFailureCount": 0,
+  "apiResponseErrorCount": 0,
+  "consoleErrors": [
+    "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead."
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "bodyPreview": "宁夏政务管理后台 工作台 委办局管理 服务事项中枢 电子证照库 12345工单系统 审计日志 城市数据秘书 系统管理 工作台 5 管理员 早上好，管理员普通用户 2026年06月16日 Tuesday · 工作台 · 个人服务 · 信息查询 · 办件进度 · 证照查看 消息中心 5 快速办件 今日办件量 128 件 受理 156 办结 105 在办 23 较昨日 +12.5% 电子证照调用量 3,846 次 今日 3,846 累计 125.8万 证照类 32类 较上周 +8.3% 12345工单满意度 98.6 % 待办工单 47 已办工单 1,256 按时办结率 99.2% 较上月 +1.2% 90天审计告警 23 条 异常操作 23 总操作数 45,860 风险等级 低风险 较上周期 -15.3% 快捷入口 更多 我的办件 个人办件进度 证照查询 电子证照查看 我的待办 5 全部 关于优化营商环境的提案 紧急 投诉工单 10分钟前 身份证办理进度查询 重要 咨询工单 30分钟前 营业执照变更申请 一般 办件事项 1小时前 社保缴费证明打印 一般 办件事项 2小时前 社区便民服务中心",
+  "navError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89213/runtime-check/quick-browser-20260616035058/may-89213.png"
+}
