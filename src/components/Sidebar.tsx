@@ -21,12 +21,18 @@ import {
   MessageSquare,
   ChevronDown,
   ChevronRight,
+  Sparkles,
+  ClipboardList,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/lib/utils';
 
 const menuItems = [
-  { path: '/', icon: Home, label: '首页', color: 'primary' },
+  { path: '/admin-workbench', icon: Sparkles, label: '管理工作台', color: 'primary', admin: true },
+  { path: '/dashboard', icon: LayoutDashboard, label: '城市体征', color: 'primary', admin: true },
+  { path: '/orchestration', icon: Workflow, label: '服务编排', color: 'eco', admin: true },
+  { path: '/ticket-dispatch', icon: ClipboardList, label: '工单分拨调度', color: 'warm', admin: true },
+  { path: '/', icon: Home, label: '市民首页', color: 'primary' },
   { path: '/identity', icon: User, label: '数字身份', color: 'primary' },
   {
     path: '/transportation',
@@ -76,8 +82,6 @@ const menuItems = [
       { path: '/urban/complaint', icon: MessageSquare, label: '12345诉求' },
     ],
   },
-  { path: '/dashboard', icon: LayoutDashboard, label: '城市体征', color: 'primary', admin: true },
-  { path: '/orchestration', icon: Workflow, label: '服务编排', color: 'eco', admin: true },
   { path: '/profile', icon: Settings, label: '个人中心', color: 'primary' },
 ];
 

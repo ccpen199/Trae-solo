@@ -76,7 +76,9 @@ export const faceVerify = async (req: Request, res: Response) => {
 
 export const getCurrentUser = async (req: Request, res: Response) => {
   try {
-    const user = authService.getCurrentUser();
+    const authHeader = req.headers.authorization || '';
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
+    const user = authService.getCurrentUser(token);
     res.json({
       code: 200,
       message: '获取成功',

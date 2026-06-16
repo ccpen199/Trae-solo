@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   CreditCard,
   IdCard,
@@ -13,6 +13,8 @@ import {
   Eye,
   RefreshCw,
   Fingerprint,
+  X,
+  Loader2,
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { api } from '@/api/client';
@@ -28,12 +30,15 @@ export default function IdentityCenter() {
   const [showQR, setShowQR] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const [activeTab, setActiveTab] = useState<'all' | 'valid' | 'expired'>('all');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [verifyMessage, setVerifyMessage] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [qrCountdown, setQrCountdown] = useState(60);
+  const [qrToken, setQrToken] = useState<string>('');
 
-  useEffect(() => {
-    loadCertificates();
-  }, []);
-
-  const loadCertificates = async () => {
+  const loadCertificates = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
       const data = await api.identity.getCertificates();
       const certs = Array.isArray(data) ? data : [];
@@ -41,10 +46,39 @@ export default function IdentityCenter() {
       if (certs.length > 0 && !selectedCert) {
         setSelectedCert(certs[0]);
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error('Failed to load certificates:', e);
+      setError(e.message || '加载证照列表失败，请稍后重试');
+    } finally {
+      setLoading(false);
     }
+  }, [selectedCert]);
+
+  useEffect(() => {
+    loadCertificates();
+  }, [loadCertificates]);
+
+  useEffect(() => {
+    if (showQR && qrCountdown > 0) {
+      const timer = setTimeout(() => setQrCountdown(qrCountdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (showQR && qrCountdown === 0) {
+      generateQRToken();
+    }
+  }, [showQR, qrCountdown]);
+
+  const generateQRToken = () => {
+    if (!selectedCert) return;
+    const token = `${selectedCert.number}|${selectedCert.id}|${Date.now()}|${Math.random().toString(36).substring(2, 10)}`;
+    setQrToken(token);
+    setQrCountdown(60);
   };
+
+  useEffect(() => {
+    if (showQR && selectedCert) {
+      generateQRToken();
+    }
+  }, [showQR, selectedCert?.id]);
 
   const getCertIcon = (type: string) => {
     switch (type) {
@@ -82,14 +116,22 @@ export default function IdentityCenter() {
 
   const handleVerify = async (certId: string) => {
     setVerifying(true);
+    setVerifyMessage(null);
     try {
-      await api.identity.verifyCertificate(certId);
+      const result = await api.identity.verifyCertificate(certId);
+      if (result?.valid) {
+        setVerifyMessage({ type: 'success', message: '证照验证通过，状态有效' });
+      } else {
+        setVerifyMessage({ type: 'error', message: result?.message || '证照验证失败' });
+      }
       loadCertificates();
-    } catch (e) {
+    } catch (e: any) {
       console.error('Verification failed:', e);
+      setVerifyMessage({ type: 'error', message: e.message || '验证失败，请稍后重试' });
     } finally {
       setVerifying(false);
     }
+    setTimeout(() => setVerifyMessage(null), 3000);
   };
 
   const filteredCerts = certificates.filter(cert => {
@@ -101,6 +143,15 @@ export default function IdentityCenter() {
   const maskNumber = (number: string) => {
     if (number.length <= 8) return number;
     return number.slice(0, 4) + '********' + number.slice(-4);
+  };
+
+  const handleToggleQR = () => {
+    if (showQR) {
+      setShowQR(false);
+      setQrCountdown(60);
+    } else {
+      setShowQR(true);
+    }
   };
 
   return (
@@ -119,6 +170,44 @@ export default function IdentityCenter() {
           </div>
         </div>
       </div>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-red-700 font-medium">加载失败</p>
+            <p className="text-red-600 text-sm mt-1">{error}</p>
+          </div>
+          <button
+            onClick={loadCertificates}
+            className="text-red-600 hover:text-red-700 text-sm font-medium flex items-center gap-1"
+          >
+            <RefreshCw className="w-4 h-4" />
+            重试
+          </button>
+        </div>
+      )}
+
+      {verifyMessage && (
+        <div className={cn(
+          'rounded-2xl p-4 flex items-start gap-3 transition-all',
+          verifyMessage.type === 'success'
+            ? 'bg-eco-50 border border-eco-200'
+            : 'bg-red-50 border border-red-200'
+        )}>
+          {verifyMessage.type === 'success' ? (
+            <CheckCircle className="w-5 h-5 text-eco-500 flex-shrink-0 mt-0.5" />
+          ) : (
+            <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+          )}
+          <p className={cn(
+            'font-medium',
+            verifyMessage.type === 'success' ? 'text-eco-700' : 'text-red-700'
+          )}>
+            {verifyMessage.message}
+          </p>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-4">
@@ -148,51 +237,66 @@ export default function IdentityCenter() {
             </div>
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
-              {filteredCerts.map((cert, index) => {
-                const typeInfo = CERTIFICATE_TYPE_MAP[cert.type];
-                const Icon = getCertIcon(cert.type);
-                return (
-                  <div
-                    key={cert.id}
-                    onClick={() => setSelectedCert(cert)}
-                    className={cn(
-                      'p-4 rounded-xl cursor-pointer transition-all duration-200 border-2',
-                      selectedCert?.id === cert.id
-                        ? 'border-primary-500 bg-primary-50 shadow-md'
-                        : 'border-transparent bg-gray-50 hover:bg-gray-100'
-                    )}
-                    style={{ animationDelay: `${index * 50}ms` }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={cn(
-                          'w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center text-white',
-                          getCertGradient(cert.type)
-                        )}
-                      >
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-medium text-gray-800">{typeInfo.name}</h4>
-                          {cert.status === 'active' ? (
-                            <span className="flex items-center gap-1 text-xs text-eco-600">
-                              <CheckCircle className="w-3 h-3" /> 有效
-                            </span>
-                          ) : (
-                            <span className="flex items-center gap-1 text-xs text-red-600">
-                              <AlertTriangle className="w-3 h-3" /> {cert.status === 'expired' ? '已过期' : '已吊销'}
-                            </span>
+              {loading ? (
+                <div className="py-8 text-center">
+                  <Loader2 className="w-8 h-8 text-primary-500 animate-spin mx-auto mb-3" />
+                  <p className="text-gray-500 text-sm">加载证照中...</p>
+                </div>
+              ) : filteredCerts.length > 0 ? (
+                filteredCerts.map((cert, index) => {
+                  const typeInfo = CERTIFICATE_TYPE_MAP[cert.type];
+                  const Icon = getCertIcon(cert.type);
+                  return (
+                    <div
+                      key={cert.id}
+                      onClick={() => {
+                        setSelectedCert(cert);
+                        setShowQR(false);
+                      }}
+                      className={cn(
+                        'p-4 rounded-xl cursor-pointer transition-all duration-200 border-2',
+                        selectedCert?.id === cert.id
+                          ? 'border-primary-500 bg-primary-50 shadow-md'
+                          : 'border-transparent bg-gray-50 hover:bg-gray-100'
+                      )}
+                      style={{ animationDelay: `${index * 50}ms` }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={cn(
+                            'w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center text-white',
+                            getCertGradient(cert.type)
                           )}
+                        >
+                          <Icon className="w-6 h-6" />
                         </div>
-                        <p className="text-sm text-gray-500 font-mono mt-0.5">
-                          {maskNumber(cert.number)}
-                        </p>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-medium text-gray-800">{typeInfo.name}</h4>
+                            {cert.status === 'active' ? (
+                              <span className="flex items-center gap-1 text-xs text-eco-600">
+                                <CheckCircle className="w-3 h-3" /> 有效
+                              </span>
+                            ) : (
+                              <span className="flex items-center gap-1 text-xs text-red-600">
+                                <AlertTriangle className="w-3 h-3" /> {cert.status === 'expired' ? '已过期' : '已吊销'}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-500 font-mono mt-0.5">
+                            {maskNumber(cert.number)}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              ) : (
+                <div className="py-8 text-center">
+                  <IdCard className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-500 text-sm">暂无相关证照</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -217,7 +321,7 @@ export default function IdentityCenter() {
                 {user?.realNameVerified ? (
                   <CheckCircle className="w-5 h-5 text-eco-500" />
                 ) : (
-                  <button className="text-xs text-primary-600 font-medium">去认证</button>
+                  <button className="text-xs text-primary-600 font-medium hover:text-primary-700">去认证</button>
                 )}
               </div>
 
@@ -239,7 +343,7 @@ export default function IdentityCenter() {
                 {user?.faceVerified ? (
                   <CheckCircle className="w-5 h-5 text-eco-500" />
                 ) : (
-                  <button className="text-xs text-primary-600 font-medium">去录入</button>
+                  <button className="text-xs text-primary-600 font-medium hover:text-primary-700">去录入</button>
                 )}
               </div>
             </div>
@@ -247,7 +351,12 @@ export default function IdentityCenter() {
         </div>
 
         <div className="lg:col-span-2">
-          {selectedCert ? (
+          {loading ? (
+            <div className="bg-white rounded-2xl p-12 shadow-card text-center">
+              <Loader2 className="w-12 h-12 text-primary-500 animate-spin mx-auto mb-4" />
+              <p className="text-gray-500">正在加载证照详情...</p>
+            </div>
+          ) : selectedCert ? (
             <div className="bg-white rounded-2xl shadow-card overflow-hidden">
               <div className={cn('p-8 bg-gradient-to-br', getCertGradient(selectedCert.type))}>
                 <div className="flex items-start justify-between mb-8">
@@ -304,26 +413,41 @@ export default function IdentityCenter() {
               </div>
 
               <div className="p-6">
-                {showQR && (
+                {showQR && qrToken && (
                   <div className="mb-6 flex justify-center">
-                    <div className="bg-white p-6 rounded-2xl shadow-lg border-4 border-primary-100">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg border-4 border-primary-100 relative">
+                      <button
+                        onClick={handleToggleQR}
+                        className="absolute -top-2 -right-2 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                      >
+                        <X className="w-4 h-4 text-gray-500" />
+                      </button>
                       <QRCodeSVG
-                        value={selectedCert.number + '|' + selectedCert.id + '|' + Date.now()}
+                        value={qrToken}
                         size={180}
                         level="H"
                         includeMargin
                       />
-                      <p className="text-center text-xs text-gray-500 mt-3">
-                        动态二维码，{Math.floor(Math.random() * 30 + 30)}秒后自动刷新
-                      </p>
+                      <div className="text-center mt-3">
+                        <p className="text-xs text-gray-500">
+                          动态二维码，{qrCountdown}秒后自动刷新
+                        </p>
+                        <div className="mt-2 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full transition-all duration-1000 ease-linear"
+                            style={{ width: `${(qrCountdown / 60) * 100}%` }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
 
                 <div className="grid grid-cols-3 gap-3">
                   <button
-                    onClick={() => setShowQR(!showQR)}
-                    className="flex flex-col items-center gap-2 p-4 rounded-xl bg-primary-50 hover:bg-primary-100 text-primary-600 transition-all duration-200 group"
+                    onClick={handleToggleQR}
+                    disabled={selectedCert.status !== 'active'}
+                    className="flex flex-col items-center gap-2 p-4 rounded-xl bg-primary-50 hover:bg-primary-100 text-primary-600 transition-all duration-200 group disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
                       <QrCode className="w-6 h-6" />
@@ -366,9 +490,9 @@ export default function IdentityCenter() {
                       {Object.entries(selectedCert.metadata).map(([key, value]) => (
                         <div key={key} className="p-3 bg-gray-50 rounded-xl">
                           <p className="text-xs text-gray-500 mb-1">
-                            {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                            {key}
                           </p>
-                          <p className="font-medium text-gray-800">{String(value)}</p>
+                          <p className="font-medium text-gray-800 text-sm">{String(value)}</p>
                         </div>
                       ))}
                     </div>

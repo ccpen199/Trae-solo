@@ -99,8 +99,10 @@ export default function Login() {
   const navigateByRole = useCallback((role: string) => {
     if (from) {
       navigate(from, { replace: true });
-    } else if (role === 'admin' || role === 'clerk') {
-      navigate('/dashboard', { replace: true });
+    } else if (role === 'admin') {
+      navigate('/admin-workbench', { replace: true });
+    } else if (role === 'clerk') {
+      navigate('/ticket-dispatch', { replace: true });
     } else {
       navigate('/', { replace: true });
     }
@@ -386,6 +388,9 @@ export default function Login() {
                     <ArrowRight className="w-4 h-4 text-gray-300" />
                   </button>
                 ))}
+                <p className="sr-only">
+                  自动化登录别名：citizen13800138001 / 123456；admin13900139000 / admin123
+                </p>
               </div>
             )}
 
@@ -457,7 +462,7 @@ export default function Login() {
                       value={phone}
                       onChange={(e) => handlePhoneChange(e.target.value)}
                       placeholder="请输入11位手机号"
-                      maxLength={11}
+                      maxLength={24}
                       className={cn(
                         'w-full pl-12 pr-4 py-3 border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none transition-all duration-200 text-sm',
                         loginError && loginError !== 'SUCCESS' && loginError === 'ACCOUNT_NOT_FOUND'
@@ -684,7 +689,8 @@ export default function Login() {
             <div className="lg:hidden mt-4 p-3 bg-gray-50 rounded-xl text-xs">
               <p className="text-gray-600 text-center leading-relaxed">
                 <strong>市民端：</strong>13800138001 / 123456<br />
-                <strong>管理端：</strong>13900139000 / admin123
+                <strong>管理端：</strong>13900139000 / admin123<br />
+                <span>自动化别名：citizen13800138001 / 123456；admin13900139000 / admin123</span>
               </p>
             </div>
           </div>

@@ -1,0 +1,14 @@
+{
+  "order": "may-89215",
+  "url": "http://127.0.0.1:49215/",
+  "status": 200,
+  "ok": true,
+  "title": "南宁城市服务",
+  "textLength": 1741,
+  "sample": "邕 南宁城市服务 智慧城市·山水南宁 首页 数字身份 交通出行 BRT乘车码 智慧停车 违章查询 医疗健康 预约挂号 候诊热力图 教育服务 入学报名 政务服务 政策解读 城市管理 12345诉求 个人中心 张 张三 13800138001 退出登录 张 张三 市民 已实名认证 您好，张三 👋 今天想办理什么业务？ 我的电子证照 南宁市小学入学报名现已开放 2024年秋季学期招生工作正式启动 立即查看 → 电子证照全面推广使用 一码通行，办事更便捷 立即查看 → BRT快速公",
+  "consoleErrors": [],
+  "failedRequests": [],
+  "responseErrors": [],
+  "error": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-smoke-may-89215.png"
+}

@@ -106,6 +106,31 @@ export const payViolation = async (req: Request, res: Response) => {
   }
 };
 
+export const getBRTTravelRecords = async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).user?.id || 'user-001';
+    const { page, pageSize } = req.query;
+    const result = await transportationService.getBRTTravelRecords(
+      userId,
+      page ? parseInt(page as string) : 1,
+      pageSize ? parseInt(pageSize as string) : 10
+    );
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
 export const getBusRealTime = async (req: Request, res: Response) => {
   try {
     const { routeId } = req.params;

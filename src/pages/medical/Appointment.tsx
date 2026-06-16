@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Building, Stethoscope, Calendar, Clock, User, Check, ChevronDown, ChevronRight, MapPin, Star, AlertCircle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Building, Stethoscope, Calendar, Clock, User, Check, ChevronDown, ChevronRight, MapPin, Star, AlertCircle, CheckCircle, List, XCircle, FileText } from 'lucide-react';
 import { api } from '@/api/client';
-import type { Hospital, Department, Doctor } from '../../../shared/types';
+import type { Hospital, Department, Doctor, AppointmentRecord } from '../../../shared/types';
 import { cn } from '@/lib/utils';
 
 type Step = 'hospital' | 'department' | 'datetime' | 'doctor' | 'confirm';
+type Tab = 'appointment' | 'records';
 
 interface TimeSlot {
   time: string;
@@ -20,12 +21,21 @@ interface SelectedInfo {
   doctor: Doctor | null;
 }
 
+const appointmentStatusMap: Record<string, { label: string; color: string; bgColor: string }> = {
+  pending: { label: '待就诊', color: 'text-eco-600', bgColor: 'bg-eco-100' },
+  completed: { label: '已完成', color: 'text-gray-600', bgColor: 'bg-gray-100' },
+  cancelled: { label: '已取消', color: 'text-red-600', bgColor: 'bg-red-100' },
+  no_show: { label: '已爽约', color: 'text-warm-600', bgColor: 'bg-warm-100' },
+};
+
 export default function Appointment() {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<Tab>('appointment');
   const [currentStep, setCurrentStep] = useState<Step>('hospital');
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
   const [expandedHospitalId, setExpandedHospitalId] = useState<string | null>(null);
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedInfo, setSelectedInfo] = useState<SelectedInfo>({
     hospital: null,
     department: null,
@@ -36,6 +46,9 @@ export default function Appointment() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [appointments, setAppointments] = useState<AppointmentRecord[]>([]);
+  const [appointmentsLoading, setAppointmentsLoading] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<AppointmentRecord | null>(null);
 
   const steps = [
     { key: 'hospital', label: '选择医院', icon: Building },
@@ -74,6 +87,12 @@ export default function Appointment() {
     loadHospitals();
   }, []);
 
+  useEffect(() => {
+    if (activeTab === 'records') {
+      loadAppointments();
+    }
+  }, [activeTab]);
+
   const loadHospitals = async () => {
     try {
       const data = await api.medical.getHospitals();
@@ -94,8 +113,30 @@ export default function Appointment() {
     }
   };
 
+  const loadDoctors = async (hospitalId: string, departmentId: string) => {
+    try {
+      const data = await api.medical.getDoctors(hospitalId, departmentId);
+      setDoctors(Array.isArray(data) ? data : []);
+    } catch (e) {
+      console.error('Failed to load doctors:', e);
+    }
+  };
+
+  const loadAppointments = async () => {
+    setAppointmentsLoading(true);
+    try {
+      const data = await api.medical.getAppointments();
+      setAppointments(Array.isArray(data) ? data : []);
+    } catch (e) {
+      console.error('Failed to load appointments:', e);
+    } finally {
+      setAppointmentsLoading(false);
+    }
+  };
+
   const handleHospitalSelect = (hospital: Hospital) => {
     setSelectedInfo((prev) => ({ ...prev, hospital, department: null, doctor: null }));
+    setDoctors([]);
     if (expandedHospitalId === hospital.id) {
       setExpandedHospitalId(null);
     } else {
@@ -106,6 +147,9 @@ export default function Appointment() {
 
   const handleDepartmentSelect = (department: Department) => {
     setSelectedInfo((prev) => ({ ...prev, department, doctor: null }));
+    if (selectedInfo.hospital) {
+      loadDoctors(selectedInfo.hospital.id, department.id);
+    }
     setCurrentStep('datetime');
   };
 
@@ -142,6 +186,15 @@ export default function Appointment() {
     }
   };
 
+  const handleCancelAppointment = async (id: string) => {
+    try {
+      await api.medical.cancelAppointment(id);
+      loadAppointments();
+    } catch (e) {
+      console.error('Failed to cancel appointment:', e);
+    }
+  };
+
   const handlePrev = () => {
     const stepOrder: Step[] = ['hospital', 'department', 'datetime', 'doctor', 'confirm'];
     const currentIndex = stepOrder.indexOf(currentStep);
@@ -152,27 +205,23 @@ export default function Appointment() {
     }
   };
 
+  const resetForm = () => {
+    setSuccess(false);
+    setCurrentStep('hospital');
+    setSelectedInfo({ hospital: null, department: null, date: '', time: '', doctor: null });
+    setExpandedHospitalId(null);
+    setDepartments([]);
+    setDoctors([]);
+  };
+
   const isStepCompleted = (step: Step) => {
     const stepOrder: Step[] = ['hospital', 'department', 'datetime', 'doctor', 'confirm'];
     return stepOrder.indexOf(step) < stepOrder.indexOf(currentStep);
   };
 
-  if (success) {
-    return (
-      <div className="space-y-6 animate-fade-in">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate('/medical')}
-            className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">预约成功</h1>
-            <p className="text-gray-500 mt-1">您的挂号预约已提交</p>
-          </div>
-        </div>
-
+  const renderAppointmentForm = () => {
+    if (success) {
+      return (
         <div className="bg-white rounded-2xl p-8 shadow-card text-center">
           <div className="w-20 h-20 rounded-full bg-eco-100 flex items-center justify-center mx-auto mb-6 animate-bounce">
             <CheckCircle className="w-10 h-10 text-eco-500" />
@@ -201,26 +250,568 @@ export default function Appointment() {
 
           <div className="flex gap-4 mt-8 justify-center">
             <button
-              onClick={() => navigate('/medical')}
-              className="px-8 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+              onClick={() => setActiveTab('records')}
+              className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
             >
-              返回首页
+              查看预约
             </button>
             <button
-              onClick={() => {
-                setSuccess(false);
-                setCurrentStep('hospital');
-                setSelectedInfo({ hospital: null, department: null, date: '', time: '', doctor: null });
-              }}
-              className="px-8 py-3 bg-gradient-to-r from-eco-500 to-eco-600 text-white rounded-xl font-medium hover:from-eco-600 hover:to-eco-700 transition-all shadow-lg hover:shadow-glow-green"
+              onClick={resetForm}
+              className="px-6 py-3 bg-gradient-to-r from-eco-500 to-eco-600 text-white rounded-xl font-medium hover:from-eco-600 hover:to-eco-700 transition-all shadow-lg hover:shadow-glow-green"
             >
               继续预约
             </button>
           </div>
         </div>
-      </div>
+      );
+    }
+
+    return (
+      <>
+        <div className="bg-white rounded-2xl p-6 shadow-card">
+          <div className="flex items-center justify-between">
+            {steps.map((step, index) => {
+              const StepIcon = step.icon;
+              const isActive = currentStep === step.key;
+              const isCompleted = isStepCompleted(step.key as Step);
+              return (
+                <div key={step.key} className="flex items-center flex-1">
+                  <div className="flex flex-col items-center">
+                    <div
+                      className={cn(
+                        'w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300',
+                        isActive && 'bg-gradient-to-br from-eco-500 to-eco-600 text-white shadow-lg shadow-glow-green',
+                        isCompleted && 'bg-eco-100 text-eco-600',
+                        !isActive && !isCompleted && 'bg-gray-100 text-gray-400'
+                      )}
+                    >
+                      {isCompleted ? <Check className="w-5 h-5" /> : <StepIcon className="w-5 h-5" />}
+                    </div>
+                    <span className={cn('text-xs mt-2 font-medium', isActive ? 'text-eco-600' : isCompleted ? 'text-eco-500' : 'text-gray-400')}>
+                      {step.label}
+                    </span>
+                  </div>
+                  {index < steps.length - 1 && (
+                    <div className={cn('flex-1 h-1 mx-2 rounded-full transition-colors', isCompleted ? 'bg-eco-500' : 'bg-gray-200')} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {currentStep === 'hospital' && (
+          <div className="bg-white rounded-2xl p-6 shadow-card">
+            <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+              <Building className="w-5 h-5 text-eco-500" />
+              选择就诊医院
+            </h3>
+            <div className="space-y-4">
+              {loading ? (
+                [1, 2, 3].map((i) => (
+                  <div key={i} className="animate-pulse p-4 bg-gray-50 rounded-xl">
+                    <div className="h-5 bg-gray-200 rounded w-1/2 mb-2" />
+                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                  </div>
+                ))
+              ) : hospitals.length > 0 ? (
+                hospitals.map((hospital) => (
+                  <div key={hospital.id} className="border border-gray-100 rounded-xl overflow-hidden transition-all">
+                    <div
+                      className={cn(
+                        'flex items-center justify-between p-4 cursor-pointer transition-colors',
+                        selectedInfo.hospital?.id === hospital.id ? 'bg-eco-50' : 'bg-gray-50 hover:bg-gray-100'
+                      )}
+                      onClick={() => handleHospitalSelect(hospital)}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-eco-100 to-eco-200 flex items-center justify-center">
+                          <Building className="w-6 h-6 text-eco-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-800">{hospital.name}</h4>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="px-2 py-0.5 bg-eco-100 text-eco-600 text-xs font-medium rounded-full">
+                              {hospital.level}
+                            </span>
+                            <span className="text-xs text-gray-500 flex items-center gap-1">
+                              <MapPin className="w-3 h-3" />
+                              {hospital.address}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-500">{hospital.departments?.length || 0}个科室</span>
+                        {expandedHospitalId === hospital.id ? (
+                          <ChevronDown className="w-5 h-5 text-eco-500" />
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-gray-400" />
+                        )}
+                      </div>
+                    </div>
+
+                    {expandedHospitalId === hospital.id && departments.length > 0 && (
+                      <div className="border-t border-gray-100 p-4 bg-white">
+                        <p className="text-sm text-gray-500 mb-3">选择科室：</p>
+                        <div className="grid grid-cols-2 gap-2">
+                          {departments.map((dept) => (
+                            <button
+                              key={dept.id}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDepartmentSelect(dept);
+                              }}
+                              className={cn(
+                                'p-3 rounded-xl text-left transition-all',
+                                selectedInfo.department?.id === dept.id
+                                  ? 'bg-eco-500 text-white shadow-lg'
+                                  : 'bg-gray-50 hover:bg-eco-50 text-gray-700'
+                              )}
+                            >
+                              <div className="font-medium text-sm">{dept.name}</div>
+                              <div className={cn('text-xs mt-1', selectedInfo.department?.id === dept.id ? 'text-eco-100' : 'text-gray-400')}>
+                                候诊约 {dept.waitTime} 分钟
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-8 text-gray-400">暂无医院数据</div>
+              )}
+            </div>
+
+            {selectedInfo.hospital && (
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => setCurrentStep('department')}
+                  className="px-8 py-3 bg-gradient-to-r from-eco-500 to-eco-600 text-white rounded-xl font-medium hover:from-eco-600 hover:to-eco-700 transition-all shadow-lg hover:shadow-glow-green"
+                >
+                  下一步
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {currentStep === 'department' && (
+          <div className="bg-white rounded-2xl p-6 shadow-card">
+            <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+              <Stethoscope className="w-5 h-5 text-eco-500" />
+              选择就诊科室
+            </h3>
+            <div className="mb-6 p-4 bg-eco-50 rounded-xl">
+              <p className="text-sm text-eco-600">已选择医院：<span className="font-medium">{selectedInfo.hospital?.name}</span></p>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+              {departments.map((dept) => (
+                <button
+                  key={dept.id}
+                  onClick={() => handleDepartmentSelect(dept)}
+                  className={cn(
+                    'p-5 rounded-2xl text-left transition-all',
+                    selectedInfo.department?.id === dept.id
+                      ? 'bg-gradient-to-br from-eco-500 to-eco-600 text-white shadow-lg shadow-glow-green'
+                      : 'bg-gray-50 hover:bg-eco-50 text-gray-700 border-2 border-transparent hover:border-eco-200'
+                  )}
+                >
+                  <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-3">
+                    <Stethoscope className={cn('w-5 h-5', selectedInfo.department?.id === dept.id ? 'text-white' : 'text-eco-500')} />
+                  </div>
+                  <h4 className="font-semibold text-lg">{dept.name}</h4>
+                  <div className={cn('text-sm mt-2', selectedInfo.department?.id === dept.id ? 'text-eco-100' : 'text-gray-500')}>
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      候诊约 {dept.waitTime} 分钟
+                    </div>
+                    <div className="mt-1">
+                      {dept.doctors?.length || 0} 位医生
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {currentStep === 'datetime' && (
+          <div className="space-y-6">
+            <div className="bg-white rounded-2xl p-6 shadow-card">
+              <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-eco-500" />
+                选择就诊日期
+              </h3>
+              <div className="mb-4 p-4 bg-eco-50 rounded-xl">
+                <p className="text-sm text-eco-600">
+                  已选择：{selectedInfo.hospital?.name} - {selectedInfo.department?.name}
+                </p>
+              </div>
+              <div className="grid grid-cols-4 lg:grid-cols-7 gap-3">
+                {dates.map((date) => (
+                  <button
+                    key={date.value}
+                    onClick={() => handleDateSelect(date.value)}
+                    className={cn(
+                      'p-4 rounded-xl text-center transition-all',
+                      selectedInfo.date === date.value
+                        ? 'bg-gradient-to-br from-eco-500 to-eco-600 text-white shadow-lg'
+                        : 'bg-gray-50 hover:bg-eco-50'
+                    )}
+                  >
+                    <div className={cn('text-sm', selectedInfo.date === date.value ? 'text-eco-100' : 'text-gray-500')}>
+                      {date.weekday}
+                    </div>
+                    <div className={cn('font-semibold text-lg mt-1', selectedInfo.date === date.value ? 'text-white' : 'text-gray-800')}>
+                      {date.label}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {selectedInfo.date && (
+              <div className="bg-white rounded-2xl p-6 shadow-card">
+                <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-eco-500" />
+                  选择就诊时间
+                </h3>
+                <div className="grid grid-cols-4 lg:grid-cols-6 gap-3">
+                  {timeSlots.map((slot) => (
+                    <button
+                      key={slot.time}
+                      disabled={!slot.available}
+                      onClick={() => handleTimeSelect(slot.time)}
+                      className={cn(
+                        'py-3 px-4 rounded-xl text-center font-medium transition-all',
+                        !slot.available && 'bg-gray-100 text-gray-300 cursor-not-allowed line-through',
+                        slot.available && selectedInfo.time === slot.time && 'bg-gradient-to-r from-eco-500 to-eco-600 text-white shadow-lg',
+                        slot.available && selectedInfo.time !== slot.time && 'bg-gray-50 hover:bg-eco-50 text-gray-700'
+                      )}
+                    >
+                      {slot.time}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {currentStep === 'doctor' && (
+          <div className="bg-white rounded-2xl p-6 shadow-card">
+            <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+              <User className="w-5 h-5 text-eco-500" />
+              选择就诊医生
+            </h3>
+            <div className="mb-6 p-4 bg-eco-50 rounded-xl">
+              <p className="text-sm text-eco-600">
+                已选择：{selectedInfo.hospital?.name} - {selectedInfo.department?.name} - {selectedInfo.date} {selectedInfo.time}
+              </p>
+            </div>
+            <div className="space-y-4">
+              {(doctors.length > 0 ? doctors : selectedInfo.department?.doctors || []).map((doctor) => (
+                <button
+                  key={doctor.id}
+                  disabled={!doctor.available}
+                  onClick={() => handleDoctorSelect(doctor)}
+                  className={cn(
+                    'w-full flex items-center justify-between p-5 rounded-2xl text-left transition-all',
+                    !doctor.available && 'bg-gray-50 opacity-60 cursor-not-allowed',
+                    doctor.available && selectedInfo.doctor?.id === doctor.id
+                      ? 'bg-gradient-to-r from-eco-50 to-eco-100 border-2 border-eco-500 shadow-lg'
+                      : doctor.available && 'bg-gray-50 hover:bg-eco-50 border-2 border-transparent'
+                  )}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={cn(
+                      'w-14 h-14 rounded-full flex items-center justify-center',
+                      doctor.available ? 'bg-gradient-to-br from-eco-100 to-eco-200' : 'bg-gray-200'
+                    )}>
+                      <User className={cn('w-7 h-7', doctor.available ? 'text-eco-600' : 'text-gray-400')} />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800 text-lg">{doctor.name}</h4>
+                      <p className="text-sm text-gray-500 mt-1">{doctor.title}</p>
+                      {doctor.specialty && (
+                        <p className="text-xs text-gray-400 mt-1">擅长：{doctor.specialty}</p>
+                      )}
+                      <div className="flex items-center gap-2 mt-2">
+                        <div className="flex items-center gap-1 text-yellow-500">
+                          <Star className="w-4 h-4 fill-current" />
+                          <span className="text-xs font-medium">{doctor.rating || 4.9}</span>
+                        </div>
+                        <span className="text-xs text-gray-400">|</span>
+                        <span className="text-xs text-gray-500">接诊 {doctor.consultationCount || 2000}+ 次</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    {doctor.available ? (
+                      <span className="px-4 py-2 bg-eco-100 text-eco-600 text-sm font-medium rounded-full">
+                        可预约
+                      </span>
+                    ) : (
+                      <span className="px-4 py-2 bg-red-100 text-red-600 text-sm font-medium rounded-full flex items-center gap-1">
+                        <AlertCircle className="w-4 h-4" />
+                        已约满
+                      </span>
+                    )}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {currentStep === 'confirm' && (
+          <div className="bg-white rounded-2xl p-6 shadow-card">
+            <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+              <Check className="w-5 h-5 text-eco-500" />
+              确认预约信息
+            </h3>
+
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-gradient-to-br from-eco-500 to-eco-600 rounded-2xl p-6 text-white mb-6">
+                <h4 className="text-xl font-bold mb-4">预约信息</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-eco-100">就诊医院</span>
+                    <span className="font-medium">{selectedInfo.hospital?.name}</span>
+                  </div>
+                  <div className="h-px bg-white/20" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-eco-100">就诊科室</span>
+                    <span className="font-medium">{selectedInfo.department?.name}</span>
+                  </div>
+                  <div className="h-px bg-white/20" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-eco-100">就诊医生</span>
+                    <span className="font-medium">{selectedInfo.doctor?.name} ({selectedInfo.doctor?.title})</span>
+                  </div>
+                  <div className="h-px bg-white/20" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-eco-100">就诊时间</span>
+                    <span className="font-medium">{selectedInfo.date} {selectedInfo.time}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-warm-50 border border-warm-200 rounded-xl p-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-warm-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-warm-700">温馨提示</p>
+                    <p className="text-sm text-warm-600 mt-1">
+                      1. 请提前15分钟到达医院取号；
+                      <br />
+                      2. 如需取消预约，请提前2小时操作；
+                      <br />
+                      3. 就诊时请携带有效身份证件和医保卡。
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setCurrentStep('doctor')}
+                  className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+                >
+                  返回修改
+                </button>
+                <button
+                  onClick={handleSubmit}
+                  disabled={submitting}
+                  className="flex-1 py-3 bg-gradient-to-r from-eco-500 to-eco-600 text-white rounded-xl font-medium hover:from-eco-600 hover:to-eco-700 transition-all shadow-lg hover:shadow-glow-green disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {submitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      提交中...
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-5 h-5" />
+                      确认预约
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     );
-  }
+  };
+
+  const renderRecords = () => (
+    <div className="space-y-4">
+      {appointmentsLoading ? (
+        <div className="bg-white rounded-2xl p-12 shadow-card text-center">
+          <div className="animate-spin w-8 h-8 border-2 border-eco-500 border-t-transparent rounded-full mx-auto mb-4" />
+          <p className="text-gray-500">加载中...</p>
+        </div>
+      ) : appointments.length > 0 ? (
+        appointments.map((appt) => {
+          const statusInfo = appointmentStatusMap[appt.status];
+          return (
+            <div
+              key={appt.id}
+              className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-shadow"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-eco-100 to-eco-200 flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-eco-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-800">{appt.hospitalName}</h4>
+                    <p className="text-sm text-gray-500">{appt.departmentName} · {appt.doctorName} {appt.doctorTitle}</p>
+                  </div>
+                </div>
+                <span className={cn('px-3 py-1 rounded-full text-sm font-medium', statusInfo.bgColor, statusInfo.color)}>
+                  {statusInfo.label}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
+                <div>
+                  <span className="text-gray-500">就诊日期</span>
+                  <p className="font-medium text-gray-800 mt-1">{appt.date}</p>
+                </div>
+                <div>
+                  <span className="text-gray-500">就诊时间</span>
+                  <p className="font-medium text-gray-800 mt-1">{appt.time}</p>
+                </div>
+                <div>
+                  <span className="text-gray-500">预约号</span>
+                  <p className="font-mono text-gray-800 mt-1">{appt.appointmentNo}</p>
+                </div>
+                <div>
+                  <span className="text-gray-500">预约时间</span>
+                  <p className="text-gray-800 mt-1">{new Date(appt.createdAt).toLocaleDateString('zh-CN')}</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4 border-t border-gray-100">
+                <button
+                  onClick={() => setSelectedAppointment(appt)}
+                  className="px-4 py-2 bg-eco-50 text-eco-600 rounded-lg text-sm font-medium hover:bg-eco-100 transition-colors"
+                >
+                  查看详情
+                </button>
+                {appt.status === 'pending' && (
+                  <button
+                    onClick={() => handleCancelAppointment(appt.id)}
+                    className="px-4 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors flex items-center gap-1"
+                  >
+                    <XCircle className="w-4 h-4" />
+                    取消预约
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <div className="bg-white rounded-2xl p-12 shadow-card text-center">
+          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+            <List className="w-8 h-8 text-gray-400" />
+          </div>
+          <p className="text-gray-500 mb-2">暂无预约记录</p>
+          <p className="text-sm text-gray-400 mb-6">点击"预约挂号"开始您的第一次预约</p>
+          <button
+            onClick={() => setActiveTab('appointment')}
+            className="px-6 py-2 bg-eco-500 text-white rounded-xl font-medium hover:bg-eco-600 transition-colors"
+          >
+            立即预约
+          </button>
+        </div>
+      )}
+
+      {selectedAppointment && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedAppointment(null)}
+        >
+          <div
+            className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-eco-500 to-eco-600 text-white">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-bold">预约详情</h3>
+                  <p className="text-sm text-eco-100 mt-1">{selectedAppointment.appointmentNo}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedAppointment(null)}
+                  className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                >
+                  <XCircle className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">就诊医院</span>
+                <span className="font-medium text-gray-800">{selectedAppointment.hospitalName}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">就诊科室</span>
+                <span className="font-medium text-gray-800">{selectedAppointment.departmentName}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">就诊医生</span>
+                <span className="font-medium text-gray-800">{selectedAppointment.doctorName} {selectedAppointment.doctorTitle}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">就诊日期</span>
+                <span className="font-medium text-gray-800">{selectedAppointment.date}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">就诊时间</span>
+                <span className="font-medium text-gray-800">{selectedAppointment.time}</span>
+              </div>
+              <div className="flex justify-between py-2">
+                <span className="text-gray-500">预约状态</span>
+                <span className={cn('px-3 py-1 rounded-full text-sm font-medium', appointmentStatusMap[selectedAppointment.status].bgColor, appointmentStatusMap[selectedAppointment.status].color)}>
+                  {appointmentStatusMap[selectedAppointment.status].label}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-6 bg-gray-50">
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setSelectedAppointment(null)}
+                  className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+                >
+                  关闭
+                </button>
+                {selectedAppointment.status === 'pending' && (
+                  <button
+                    onClick={() => {
+                      handleCancelAppointment(selectedAppointment.id);
+                      setSelectedAppointment(null);
+                    }}
+                    className="flex-1 py-3 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600 transition-colors"
+                  >
+                    取消预约
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -237,379 +828,39 @@ export default function Appointment() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl p-6 shadow-card">
-        <div className="flex items-center justify-between">
-          {steps.map((step, index) => {
-            const StepIcon = step.icon;
-            const isActive = currentStep === step.key;
-            const isCompleted = isStepCompleted(step.key as Step);
-            return (
-              <div key={step.key} className="flex items-center flex-1">
-                <div className="flex flex-col items-center">
-                  <div
-                    className={cn(
-                      'w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300',
-                      isActive && 'bg-gradient-to-br from-eco-500 to-eco-600 text-white shadow-lg shadow-glow-green',
-                      isCompleted && 'bg-eco-100 text-eco-600',
-                      !isActive && !isCompleted && 'bg-gray-100 text-gray-400'
-                    )}
-                  >
-                    {isCompleted ? <Check className="w-5 h-5" /> : <StepIcon className="w-5 h-5" />}
-                  </div>
-                  <span className={cn('text-xs mt-2 font-medium', isActive ? 'text-eco-600' : isCompleted ? 'text-eco-500' : 'text-gray-400')}>
-                    {step.label}
-                  </span>
-                </div>
-                {index < steps.length - 1 && (
-                  <div className={cn('flex-1 h-1 mx-2 rounded-full transition-colors', isCompleted ? 'bg-eco-500' : 'bg-gray-200')} />
-                )}
-              </div>
-            );
-          })}
-        </div>
+      <div className="flex gap-2">
+        <button
+          onClick={() => setActiveTab('appointment')}
+          className={cn(
+            'px-6 py-3 rounded-xl font-medium transition-all flex items-center gap-2',
+            activeTab === 'appointment'
+              ? 'bg-gradient-to-r from-eco-500 to-eco-600 text-white shadow-lg shadow-glow-green'
+              : 'bg-white text-gray-600 hover:bg-gray-50 shadow-card'
+          )}
+        >
+          <Calendar className="w-4 h-4" />
+          预约挂号
+        </button>
+        <button
+          onClick={() => setActiveTab('records')}
+          className={cn(
+            'px-6 py-3 rounded-xl font-medium transition-all flex items-center gap-2',
+            activeTab === 'records'
+              ? 'bg-gradient-to-r from-eco-500 to-eco-600 text-white shadow-lg shadow-glow-green'
+              : 'bg-white text-gray-600 hover:bg-gray-50 shadow-card'
+          )}
+        >
+          <List className="w-4 h-4" />
+          我的预约
+          {appointments.length > 0 && (
+            <span className="px-2 py-0.5 bg-white/20 rounded-full text-xs">
+              {appointments.length}
+            </span>
+          )}
+        </button>
       </div>
 
-      {currentStep === 'hospital' && (
-        <div className="bg-white rounded-2xl p-6 shadow-card">
-          <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-            <Building className="w-5 h-5 text-eco-500" />
-            选择就诊医院
-          </h3>
-          <div className="space-y-4">
-            {loading ? (
-              [1, 2, 3].map((i) => (
-                <div key={i} className="animate-pulse p-4 bg-gray-50 rounded-xl">
-                  <div className="h-5 bg-gray-200 rounded w-1/2 mb-2" />
-                  <div className="h-4 bg-gray-200 rounded w-3/4" />
-                </div>
-              ))
-            ) : hospitals.length > 0 ? (
-              hospitals.map((hospital) => (
-                <div key={hospital.id} className="border border-gray-100 rounded-xl overflow-hidden transition-all">
-                  <div
-                    className={cn(
-                      'flex items-center justify-between p-4 cursor-pointer transition-colors',
-                      selectedInfo.hospital?.id === hospital.id ? 'bg-eco-50' : 'bg-gray-50 hover:bg-gray-100'
-                    )}
-                    onClick={() => handleHospitalSelect(hospital)}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-eco-100 to-eco-200 flex items-center justify-center">
-                        <Building className="w-6 h-6 text-eco-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-gray-800">{hospital.name}</h4>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="px-2 py-0.5 bg-eco-100 text-eco-600 text-xs font-medium rounded-full">
-                            {hospital.level}
-                          </span>
-                          <span className="text-xs text-gray-500 flex items-center gap-1">
-                            <MapPin className="w-3 h-3" />
-                            {hospital.address}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm text-gray-500">{hospital.departments?.length || 0}个科室</span>
-                      {expandedHospitalId === hospital.id ? (
-                        <ChevronDown className="w-5 h-5 text-eco-500" />
-                      ) : (
-                        <ChevronRight className="w-5 h-5 text-gray-400" />
-                      )}
-                    </div>
-                  </div>
-
-                  {expandedHospitalId === hospital.id && departments.length > 0 && (
-                    <div className="border-t border-gray-100 p-4 bg-white">
-                      <p className="text-sm text-gray-500 mb-3">选择科室：</p>
-                      <div className="grid grid-cols-2 gap-2">
-                        {departments.map((dept) => (
-                          <button
-                            key={dept.id}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDepartmentSelect(dept);
-                            }}
-                            className={cn(
-                              'p-3 rounded-xl text-left transition-all',
-                              selectedInfo.department?.id === dept.id
-                                ? 'bg-eco-500 text-white shadow-lg'
-                                : 'bg-gray-50 hover:bg-eco-50 text-gray-700'
-                            )}
-                          >
-                            <div className="font-medium text-sm">{dept.name}</div>
-                            <div className={cn('text-xs mt-1', selectedInfo.department?.id === dept.id ? 'text-eco-100' : 'text-gray-400')}>
-                              候诊约 {dept.waitTime} 分钟
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))
-            ) : (
-              <div className="text-center py-8 text-gray-400">暂无医院数据</div>
-            )}
-          </div>
-
-          {selectedInfo.hospital && (
-            <div className="mt-6 flex justify-end">
-              <button
-                onClick={() => setCurrentStep('department')}
-                className="px-8 py-3 bg-gradient-to-r from-eco-500 to-eco-600 text-white rounded-xl font-medium hover:from-eco-600 hover:to-eco-700 transition-all shadow-lg hover:shadow-glow-green"
-              >
-                下一步
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {currentStep === 'department' && (
-        <div className="bg-white rounded-2xl p-6 shadow-card">
-          <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-            <Stethoscope className="w-5 h-5 text-eco-500" />
-            选择就诊科室
-          </h3>
-          <div className="mb-6 p-4 bg-eco-50 rounded-xl">
-            <p className="text-sm text-eco-600">已选择医院：<span className="font-medium">{selectedInfo.hospital?.name}</span></p>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-            {departments.map((dept) => (
-              <button
-                key={dept.id}
-                onClick={() => handleDepartmentSelect(dept)}
-                className={cn(
-                  'p-5 rounded-2xl text-left transition-all',
-                  selectedInfo.department?.id === dept.id
-                    ? 'bg-gradient-to-br from-eco-500 to-eco-600 text-white shadow-lg shadow-glow-green'
-                    : 'bg-gray-50 hover:bg-eco-50 text-gray-700 border-2 border-transparent hover:border-eco-200'
-                )}
-              >
-                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-3">
-                  <Stethoscope className={cn('w-5 h-5', selectedInfo.department?.id === dept.id ? 'text-white' : 'text-eco-500')} />
-                </div>
-                <h4 className="font-semibold text-lg">{dept.name}</h4>
-                <div className={cn('text-sm mt-2', selectedInfo.department?.id === dept.id ? 'text-eco-100' : 'text-gray-500')}>
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    候诊约 {dept.waitTime} 分钟
-                  </div>
-                  <div className="mt-1">
-                    {dept.doctors?.length || 0} 位医生
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {currentStep === 'datetime' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 shadow-card">
-            <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-eco-500" />
-              选择就诊日期
-            </h3>
-            <div className="mb-4 p-4 bg-eco-50 rounded-xl">
-              <p className="text-sm text-eco-600">
-                已选择：{selectedInfo.hospital?.name} - {selectedInfo.department?.name}
-              </p>
-            </div>
-            <div className="grid grid-cols-4 lg:grid-cols-7 gap-3">
-              {dates.map((date) => (
-                <button
-                  key={date.value}
-                  onClick={() => handleDateSelect(date.value)}
-                  className={cn(
-                    'p-4 rounded-xl text-center transition-all',
-                    selectedInfo.date === date.value
-                      ? 'bg-gradient-to-br from-eco-500 to-eco-600 text-white shadow-lg'
-                      : 'bg-gray-50 hover:bg-eco-50'
-                  )}
-                >
-                  <div className={cn('text-sm', selectedInfo.date === date.value ? 'text-eco-100' : 'text-gray-500')}>
-                    {date.weekday}
-                  </div>
-                  <div className={cn('font-semibold text-lg mt-1', selectedInfo.date === date.value ? 'text-white' : 'text-gray-800')}>
-                    {date.label}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {selectedInfo.date && (
-            <div className="bg-white rounded-2xl p-6 shadow-card">
-              <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-eco-500" />
-                选择就诊时间
-              </h3>
-              <div className="grid grid-cols-4 lg:grid-cols-6 gap-3">
-                {timeSlots.map((slot) => (
-                  <button
-                    key={slot.time}
-                    disabled={!slot.available}
-                    onClick={() => handleTimeSelect(slot.time)}
-                    className={cn(
-                      'py-3 px-4 rounded-xl text-center font-medium transition-all',
-                      !slot.available && 'bg-gray-100 text-gray-300 cursor-not-allowed line-through',
-                      slot.available && selectedInfo.time === slot.time && 'bg-gradient-to-r from-eco-500 to-eco-600 text-white shadow-lg',
-                      slot.available && selectedInfo.time !== slot.time && 'bg-gray-50 hover:bg-eco-50 text-gray-700'
-                    )}
-                  >
-                    {slot.time}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {currentStep === 'doctor' && (
-        <div className="bg-white rounded-2xl p-6 shadow-card">
-          <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-            <User className="w-5 h-5 text-eco-500" />
-            选择就诊医生
-          </h3>
-          <div className="mb-6 p-4 bg-eco-50 rounded-xl">
-            <p className="text-sm text-eco-600">
-              已选择：{selectedInfo.hospital?.name} - {selectedInfo.department?.name} - {selectedInfo.date} {selectedInfo.time}
-            </p>
-          </div>
-          <div className="space-y-4">
-            {selectedInfo.department?.doctors?.map((doctor) => (
-              <button
-                key={doctor.id}
-                disabled={!doctor.available}
-                onClick={() => handleDoctorSelect(doctor)}
-                className={cn(
-                  'w-full flex items-center justify-between p-5 rounded-2xl text-left transition-all',
-                  !doctor.available && 'bg-gray-50 opacity-60 cursor-not-allowed',
-                  doctor.available && selectedInfo.doctor?.id === doctor.id
-                    ? 'bg-gradient-to-r from-eco-50 to-eco-100 border-2 border-eco-500 shadow-lg'
-                    : doctor.available && 'bg-gray-50 hover:bg-eco-50 border-2 border-transparent'
-                )}
-              >
-                <div className="flex items-center gap-4">
-                  <div className={cn(
-                    'w-14 h-14 rounded-full flex items-center justify-center',
-                    doctor.available ? 'bg-gradient-to-br from-eco-100 to-eco-200' : 'bg-gray-200'
-                  )}>
-                    <User className={cn('w-7 h-7', doctor.available ? 'text-eco-600' : 'text-gray-400')} />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800 text-lg">{doctor.name}</h4>
-                    <p className="text-sm text-gray-500 mt-1">{doctor.title}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <div className="flex items-center gap-1 text-yellow-500">
-                        <Star className="w-4 h-4 fill-current" />
-                        <span className="text-xs font-medium">4.9</span>
-                      </div>
-                      <span className="text-xs text-gray-400">|</span>
-                      <span className="text-xs text-gray-500">接诊 2000+ 次</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  {doctor.available ? (
-                    <span className="px-4 py-2 bg-eco-100 text-eco-600 text-sm font-medium rounded-full">
-                      可预约
-                    </span>
-                  ) : (
-                    <span className="px-4 py-2 bg-red-100 text-red-600 text-sm font-medium rounded-full flex items-center gap-1">
-                      <AlertCircle className="w-4 h-4" />
-                      已约满
-                    </span>
-                  )}
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {currentStep === 'confirm' && (
-        <div className="bg-white rounded-2xl p-6 shadow-card">
-          <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-            <Check className="w-5 h-5 text-eco-500" />
-            确认预约信息
-          </h3>
-
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-gradient-to-br from-eco-500 to-eco-600 rounded-2xl p-6 text-white mb-6">
-              <h4 className="text-xl font-bold mb-4">预约信息</h4>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-eco-100">就诊医院</span>
-                  <span className="font-medium">{selectedInfo.hospital?.name}</span>
-                </div>
-                <div className="h-px bg-white/20" />
-                <div className="flex items-center justify-between">
-                  <span className="text-eco-100">就诊科室</span>
-                  <span className="font-medium">{selectedInfo.department?.name}</span>
-                </div>
-                <div className="h-px bg-white/20" />
-                <div className="flex items-center justify-between">
-                  <span className="text-eco-100">就诊医生</span>
-                  <span className="font-medium">{selectedInfo.doctor?.name} ({selectedInfo.doctor?.title})</span>
-                </div>
-                <div className="h-px bg-white/20" />
-                <div className="flex items-center justify-between">
-                  <span className="text-eco-100">就诊时间</span>
-                  <span className="font-medium">{selectedInfo.date} {selectedInfo.time}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-warm-50 border border-warm-200 rounded-xl p-4 mb-6">
-              <div className="flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-warm-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium text-warm-700">温馨提示</p>
-                  <p className="text-sm text-warm-600 mt-1">
-                    1. 请提前15分钟到达医院取号；
-                    <br />
-                    2. 如需取消预约，请提前2小时操作；
-                    <br />
-                    3. 就诊时请携带有效身份证件和医保卡。
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                onClick={() => setCurrentStep('doctor')}
-                className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
-              >
-                返回修改
-              </button>
-              <button
-                onClick={handleSubmit}
-                disabled={submitting}
-                className="flex-1 py-3 bg-gradient-to-r from-eco-500 to-eco-600 text-white rounded-xl font-medium hover:from-eco-600 hover:to-eco-700 transition-all shadow-lg hover:shadow-glow-green disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {submitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    提交中...
-                  </>
-                ) : (
-                  <>
-                    <Check className="w-5 h-5" />
-                    确认预约
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {activeTab === 'appointment' ? renderAppointmentForm() : renderRecords()}
     </div>
   );
 }

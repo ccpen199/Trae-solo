@@ -18,10 +18,14 @@ import {
   X,
   Check,
   Clock,
-  Info
+  Info,
+  Search,
+  Building2,
+  XCircle,
+  Star
 } from 'lucide-react';
 import { api } from '@/api/client';
-import type { School, EnrollmentApplication } from '../../../shared/types';
+import type { School, EnrollmentApplication, SchoolDistrictResult } from '../../../shared/types';
 import { cn } from '@/lib/utils';
 
 const steps = [
@@ -53,6 +57,7 @@ interface FormData {
     propertyProof: File | null;
     socialSecurity: File | null;
     vaccination: File | null;
+    birthCertificate: File | null;
   };
 }
 
@@ -71,11 +76,15 @@ const initialFormData: FormData = {
     propertyProof: null,
     socialSecurity: null,
     vaccination: null,
+    birthCertificate: null,
   },
 };
 
+type Tab = 'district' | 'form' | 'records' | 'guide';
+
 export default function Enrollment() {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<Tab>('district');
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -93,7 +102,11 @@ export default function Enrollment() {
     applicationId: string;
     estimatedReviewDate: string;
   } | null>(null);
-  const [activeTab, setActiveTab] = useState<'form' | 'records'>('form');
+  const [selectedRecord, setSelectedRecord] = useState<EnrollmentApplication | null>(null);
+
+  const [districtAddress, setDistrictAddress] = useState('');
+  const [districtResult, setDistrictResult] = useState<SchoolDistrictResult | null>(null);
+  const [districtSearching, setDistrictSearching] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -114,6 +127,19 @@ export default function Enrollment() {
       console.error('Failed to load enrollment data:', e);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDistrictSearch = async () => {
+    if (!districtAddress.trim()) return;
+    setDistrictSearching(true);
+    try {
+      const data = await api.education.getSchoolByAddress(districtAddress);
+      setDistrictResult(data as SchoolDistrictResult);
+    } catch (e) {
+      console.error('Failed to search district:', e);
+    } finally {
+      setDistrictSearching(false);
     }
   };
 
@@ -186,6 +212,8 @@ export default function Enrollment() {
           householdRegister: formData.documents.householdRegister?.name || '',
           propertyProof: formData.documents.propertyProof?.name || '',
           socialSecurity: formData.documents.socialSecurity?.name || '',
+          vaccination: formData.documents.vaccination?.name || '',
+          birthCertificate: formData.documents.birthCertificate?.name || '',
         },
       };
       const result = await api.education.submitEnrollment(submitData);
@@ -232,6 +260,14 @@ export default function Enrollment() {
     setErrors({});
   };
 
+  const handleUseDistrictResult = () => {
+    if (districtResult) {
+      handleInputChange('address', districtAddress);
+      handleInputChange('schoolId', districtResult.schoolId);
+      setActiveTab('form');
+    }
+  };
+
   const renderStepIndicator = () => (
     <div className="flex items-center justify-center mb-8">
       {steps.map((step, index) => (
@@ -272,6 +308,110 @@ export default function Enrollment() {
           )}
         </div>
       ))}
+    </div>
+  );
+
+  const renderDistrictSearch = () => (
+    <div className="space-y-6 animate-fade-in">
+      <div className="bg-white rounded-2xl p-6 shadow-card">
+        <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+          <MapPin className="w-5 h-5 text-primary-500" />
+          学区查询
+        </h3>
+        <p className="text-gray-500 text-sm mb-6">
+          输入您的家庭住址，系统将为您匹配对应的学区学校
+        </p>
+        <div className="flex gap-3">
+          <div className="flex-1 relative">
+            <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              value={districtAddress}
+              onChange={(e) => setDistrictAddress(e.target.value)}
+              placeholder="请输入家庭详细住址，如：南宁市青秀区滨湖路66号"
+              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+              onKeyPress={(e) => e.key === 'Enter' && handleDistrictSearch()}
+            />
+          </div>
+          <button
+            onClick={handleDistrictSearch}
+            disabled={districtSearching || !districtAddress.trim()}
+            className={cn(
+              'px-6 py-3 rounded-xl font-medium transition-all flex items-center gap-2',
+              districtSearching || !districtAddress.trim()
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                : 'bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 shadow-lg hover:shadow-glow'
+            )}
+          >
+            {districtSearching ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                查询中
+              </>
+            ) : (
+              <>
+                <Search className="w-5 h-5" />
+                查询学区
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {districtResult && (
+        <div className="bg-white rounded-2xl p-6 shadow-card animate-slide-up">
+          <div className="flex items-start gap-4">
+            <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center flex-shrink-0">
+              <SchoolIcon className="w-8 h-8 text-primary-600" />
+            </div>
+            <div className="flex-1">
+              <h4 className="text-xl font-bold text-gray-800 mb-2">{districtResult.schoolName}</h4>
+              <div className="space-y-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-gray-400" />
+                  <span>{districtResult.address}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-gray-400" />
+                  <span>{districtResult.district}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Star className="w-4 h-4 text-warm-500" />
+                  <span>距离约 {districtResult.distance} 公里</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-gray-400" />
+                  <span>今年招生名额：{districtResult.enrollmentQuota} 人</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 flex gap-3">
+            <button
+              onClick={handleUseDistrictResult}
+              className="flex-1 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium hover:from-primary-600 hover:to-primary-700 transition-all shadow-lg hover:shadow-glow"
+            >
+              使用此学校报名
+            </button>
+            <button
+              onClick={() => setActiveTab('guide')}
+              className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+            >
+              查看报名指南
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!districtResult && !districtSearching && (
+        <div className="bg-white rounded-2xl p-8 shadow-card text-center">
+          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+            <MapPin className="w-8 h-8 text-gray-400" />
+          </div>
+          <p className="text-gray-500 mb-2">输入地址查询您的学区</p>
+          <p className="text-sm text-gray-400">系统将根据您的住址自动匹配最近的公立学校</p>
+        </div>
+      )}
     </div>
   );
 
@@ -538,6 +678,7 @@ export default function Enrollment() {
     const fileFields = [
       { key: 'householdRegister', name: '户口本', required: true, desc: '父母及子女户口本页扫描件' },
       { key: 'propertyProof', name: '房产证明', required: true, desc: '房产证或购房合同扫描件' },
+      { key: 'birthCertificate', name: '出生医学证明', required: false, desc: '儿童出生医学证明扫描件' },
       { key: 'socialSecurity', name: '社保证明', required: false, desc: '近一年社保缴费证明（非本市户籍需提供）' },
       { key: 'vaccination', name: '预防接种证', required: false, desc: '儿童预防接种证扫描件' },
     ];
@@ -688,7 +829,13 @@ export default function Enrollment() {
                 file && (
                   <div key={key} className="flex items-center gap-2 py-2 text-gray-700">
                     <CheckCircle className="w-4 h-4 text-eco-500" />
-                    <span>{key === 'householdRegister' ? '户口本' : key === 'propertyProof' ? '房产证明' : key === 'socialSecurity' ? '社保证明' : '预防接种证'}</span>
+                    <span>
+                      {key === 'householdRegister' ? '户口本' : 
+                       key === 'propertyProof' ? '房产证明' : 
+                       key === 'socialSecurity' ? '社保证明' : 
+                       key === 'vaccination' ? '预防接种证' :
+                       key === 'birthCertificate' ? '出生医学证明' : key}
+                    </span>
                   </div>
                 )
               ))}
@@ -753,119 +900,293 @@ export default function Enrollment() {
   );
 
   const renderRecords = () => (
-    <div className="space-y-6 animate-fade-in">
-      <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-        <FileText className="w-5 h-5 text-primary-500" />
-        我的报名记录
-      </h3>
+    <div className="space-y-4 animate-fade-in">
       {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
+        <div className="bg-white rounded-2xl p-12 shadow-card text-center">
+          <div className="animate-spin w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full mx-auto mb-4" />
+          <p className="text-gray-500">加载中...</p>
         </div>
       ) : enrollments.length > 0 ? (
-        <div className="space-y-4">
-          {enrollments.map((record) => {
-            const school = schools.find((s) => s.id === record.schoolId);
-            const status = enrollmentStatusMap[record.status];
-            return (
-              <div
-                key={record.id}
-                className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-shadow"
-              >
-                <div className="flex items-start justify-between mb-4">
+        enrollments.map((record) => {
+          const school = schools.find((s) => s.id === record.schoolId);
+          const status = enrollmentStatusMap[record.status];
+          return (
+            <div
+              key={record.id}
+              className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-shadow cursor-pointer"
+              onClick={() => setSelectedRecord(record)}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-primary-600" />
+                  </div>
                   <div>
                     <h4 className="font-semibold text-gray-800">{record.childName}</h4>
                     <p className="text-sm text-gray-500 mt-1">{school?.name}</p>
                   </div>
-                  <span className={cn('px-3 py-1 rounded-full text-sm font-medium', status.bgColor, status.color)}>
-                    {status.name}
-                  </span>
                 </div>
-                <div className="grid md:grid-cols-3 gap-4 text-sm mb-4">
-                  <div>
-                    <span className="text-gray-500">身份证号</span>
-                    <p className="font-medium text-gray-800 mt-1">{record.childIdCard}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">申请编号</span>
-                    <p className="font-mono text-gray-800 mt-1">{record.id}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">申请时间</span>
-                    <p className="text-gray-800 mt-1">{new Date(record.createdAt).toLocaleDateString('zh-CN')}</p>
-                  </div>
+                <span className={cn('px-3 py-1 rounded-full text-sm font-medium', status.bgColor, status.color)}>
+                  {status.name}
+                </span>
+              </div>
+              <div className="grid md:grid-cols-3 gap-4 text-sm mb-4">
+                <div>
+                  <span className="text-gray-500">身份证号</span>
+                  <p className="font-medium text-gray-800 mt-1">{record.childIdCard}</p>
                 </div>
-                {record.reviewComment && (
-                  <div className="bg-gray-50 rounded-lg p-3 text-sm">
-                    <span className="text-gray-500">审核意见：</span>
-                    <span className="text-gray-700">{record.reviewComment}</span>
-                  </div>
-                )}
-                <div className="flex gap-3 mt-4">
-                  <button className="px-4 py-2 bg-primary-50 text-primary-600 rounded-lg text-sm font-medium hover:bg-primary-100 transition-colors">
-                    查看详情
-                  </button>
-                  {record.status === 'pending' && (
-                    <button className="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
-                      撤销申请
-                    </button>
-                  )}
+                <div>
+                  <span className="text-gray-500">申请编号</span>
+                  <p className="font-mono text-gray-800 mt-1">{record.id}</p>
+                </div>
+                <div>
+                  <span className="text-gray-500">申请时间</span>
+                  <p className="text-gray-800 mt-1">{new Date(record.createdAt).toLocaleDateString('zh-CN')}</p>
                 </div>
               </div>
-            );
-          })}
-        </div>
+              {record.reviewComment && (
+                <div className="bg-gray-50 rounded-lg p-3 text-sm">
+                  <span className="text-gray-500">审核意见：</span>
+                  <span className="text-gray-700">{record.reviewComment}</span>
+                </div>
+              )}
+              <div className="flex gap-3 mt-4">
+                <button className="px-4 py-2 bg-primary-50 text-primary-600 rounded-lg text-sm font-medium hover:bg-primary-100 transition-colors">
+                  查看详情
+                </button>
+                {record.status === 'pending' && (
+                  <button className="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+                    撤销申请
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })
       ) : (
-        <div className="text-center py-12">
+        <div className="bg-white rounded-2xl p-12 shadow-card text-center">
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
             <FileText className="w-8 h-8 text-gray-400" />
           </div>
           <p className="text-gray-500 mb-2">暂无报名记录</p>
-          <p className="text-sm text-gray-400">点击"新建报名"开始您的第一次报名</p>
+          <p className="text-sm text-gray-400 mb-6">点击"立即报名"开始您的第一次报名</p>
+          <button
+            onClick={() => setActiveTab('form')}
+            className="px-6 py-2 bg-primary-500 text-white rounded-xl font-medium hover:bg-primary-600 transition-colors"
+          >
+            立即报名
+          </button>
+        </div>
+      )}
+
+      {selectedRecord && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedRecord(null)}
+        >
+          <div
+            className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-slide-up max-h-[80vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-primary-500 to-primary-600 text-white sticky top-0">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-bold">报名详情</h3>
+                  <p className="text-sm text-primary-100 mt-1">{selectedRecord.id}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedRecord(null)}
+                  className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                >
+                  <XCircle className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-500">审核状态</span>
+                <span className={cn('px-3 py-1 rounded-full text-sm font-medium', enrollmentStatusMap[selectedRecord.status].bgColor, enrollmentStatusMap[selectedRecord.status].color)}>
+                  {enrollmentStatusMap[selectedRecord.status].name}
+                </span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">学生姓名</span>
+                <span className="font-medium text-gray-800">{selectedRecord.childName}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">身份证号</span>
+                <span className="font-medium text-gray-800">{selectedRecord.childIdCard}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">报名学校</span>
+                <span className="font-medium text-gray-800">{schools.find(s => s.id === selectedRecord.schoolId)?.name}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-500">申请时间</span>
+                <span className="font-medium text-gray-800">{new Date(selectedRecord.createdAt).toLocaleString('zh-CN')}</span>
+              </div>
+              {selectedRecord.reviewComment && (
+                <div className="py-2">
+                  <span className="text-gray-500 block mb-2">审核意见</span>
+                  <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-700">
+                    {selectedRecord.reviewComment}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="p-6 bg-gray-50">
+              <button
+                onClick={() => setSelectedRecord(null)}
+                className="w-full py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+              >
+                关闭
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 
-  const renderGuidelines = () => (
-    <div className="bg-white rounded-2xl p-6 shadow-card">
-      <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-4">
-        <Info className="w-5 h-5 text-primary-500" />
-        报名指南
-      </h3>
-      {guidelines && (
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-medium text-gray-700 mb-2">报名条件</h4>
-            <p className="text-sm text-gray-600 leading-relaxed">{guidelines.content}</p>
-          </div>
-          <div>
-            <h4 className="font-medium text-gray-700 mb-3">时间安排</h4>
-            <div className="space-y-2">
-              {guidelines.timeline.map((item, index) => (
-                <div key={index} className="flex items-center gap-3 text-sm">
-                  <div className="w-2 h-2 rounded-full bg-primary-500" />
-                  <span className="text-primary-600 font-medium w-28">{item.date}</span>
-                  <span className="text-gray-600">{item.event}</span>
+  const renderGuide = () => (
+    <div className="space-y-6 animate-fade-in">
+      <div className="bg-white rounded-2xl p-6 shadow-card">
+        <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-6">
+          <Info className="w-5 h-5 text-primary-500" />
+          报名指南
+        </h3>
+        {guidelines && (
+          <div className="space-y-6">
+            <div>
+              <h4 className="font-medium text-gray-700 mb-3">报名条件</h4>
+              <p className="text-sm text-gray-600 leading-relaxed">{guidelines.content}</p>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-700 mb-4">时间安排</h4>
+              <div className="relative">
+                <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-primary-200" />
+                <div className="space-y-4">
+                  {guidelines.timeline.map((item, index) => (
+                    <div key={index} className="flex items-center gap-4 relative">
+                      <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium z-10">
+                        {index + 1}
+                      </div>
+                      <div className="flex-1 bg-primary-50 rounded-xl p-4">
+                        <span className="text-primary-600 font-medium">{item.date}</span>
+                        <span className="text-gray-600 ml-3">{item.event}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-700 mb-3">所需材料</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {guidelines.requiredDocuments.map((doc, index) => (
+                  <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                    <CheckCircle className="w-5 h-5 text-eco-500 flex-shrink-0" />
+                    <span className="text-sm text-gray-700">{doc}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <div>
-            <h4 className="font-medium text-gray-700 mb-3">所需材料</h4>
-            <div className="grid grid-cols-2 gap-2">
-              {guidelines.requiredDocuments.map((doc, index) => (
-                <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-eco-500" />
-                  {doc}
-                </div>
-              ))}
-            </div>
-          </div>
+        )}
+      </div>
+
+      <div className="bg-gradient-to-br from-warm-500 to-warm-600 rounded-2xl p-6 text-white shadow-lg">
+        <div className="flex items-center gap-2 mb-4">
+          <Clock className="w-5 h-5" />
+          <h3 className="font-semibold text-lg">温馨提示</h3>
         </div>
+        <ul className="space-y-3 text-sm text-warm-100">
+          <li className="flex items-start gap-2">
+            <span className="text-warm-300 mt-0.5">•</span>
+            请在规定时间内完成报名，逾期不予受理
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-warm-300 mt-0.5">•</span>
+            确保所填信息真实有效，虚假信息将取消报名资格
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-warm-300 mt-0.5">•</span>
+            审核结果将通过短信通知，请保持手机畅通
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-warm-300 mt-0.5">•</span>
+            如有疑问，请拨打服务热线：0771-12345
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-warm-300 mt-0.5">•</span>
+            建议提前准备好所有材料，避免因材料不全影响报名
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+
+  const renderForm = () => (
+    <div className="bg-white rounded-2xl p-6 shadow-card">
+      {submitSuccess ? (
+        renderSuccess()
+      ) : (
+        <>
+          {renderStepIndicator()}
+          <div className="min-h-96">
+            {currentStep === 1 && renderStep1()}
+            {currentStep === 2 && renderStep2()}
+            {currentStep === 3 && renderStep3()}
+            {currentStep === 4 && renderStep4()}
+          </div>
+          <div className="flex justify-between mt-8 pt-6 border-t border-gray-100">
+            <button
+              onClick={handlePrev}
+              disabled={currentStep === 1}
+              className={cn(
+                'px-6 py-3 rounded-xl font-medium transition-colors',
+                currentStep === 1
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              )}
+            >
+              上一步
+            </button>
+            {currentStep < 4 ? (
+              <button
+                onClick={handleNext}
+                className="px-6 py-3 bg-primary-500 text-white rounded-xl font-medium hover:bg-primary-600 transition-colors shadow-lg hover:shadow-glow"
+              >
+                下一步
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="px-8 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium hover:from-primary-600 hover:to-primary-700 transition-all shadow-lg hover:shadow-glow disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    提交中...
+                  </span>
+                ) : '提交报名'}
+              </button>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
+
+  const tabConfig = [
+    { key: 'district' as Tab, label: '学区查询', icon: MapPin },
+    { key: 'form' as Tab, label: '我要报名', icon: Plus },
+    { key: 'records' as Tab, label: '报名记录', icon: FileText },
+    { key: 'guide' as Tab, label: '报名指南', icon: Info },
+  ];
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -882,131 +1203,34 @@ export default function Enrollment() {
         </div>
       </div>
 
-      <div className="flex gap-2 mb-6">
-        <button
-          onClick={() => { setActiveTab('form'); if (submitSuccess) resetForm(); }}
-          className={cn(
-            'px-6 py-2 rounded-xl font-medium transition-all',
-            activeTab === 'form'
-              ? 'bg-primary-500 text-white shadow-lg'
-              : 'bg-white text-gray-600 hover:bg-gray-50 shadow-card'
-          )}
-        >
-          <span className="flex items-center gap-2">
-            <Plus className="w-4 h-4" />
-            新建报名
-          </span>
-        </button>
-        <button
-          onClick={() => setActiveTab('records')}
-          className={cn(
-            'px-6 py-2 rounded-xl font-medium transition-all',
-            activeTab === 'records'
-              ? 'bg-primary-500 text-white shadow-lg'
-              : 'bg-white text-gray-600 hover:bg-gray-50 shadow-card'
-          )}
-        >
-          <span className="flex items-center gap-2">
-            <FileText className="w-4 h-4" />
-            报名记录
-            {enrollments.length > 0 && (
-              <span className="px-2 py-0.5 bg-white/20 rounded-full text-xs">
-                {enrollments.length}
-              </span>
-            )}
-          </span>
-        </button>
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          {activeTab === 'form' ? (
-            <div className="bg-white rounded-2xl p-6 shadow-card">
-              {submitSuccess ? (
-                renderSuccess()
-              ) : (
-                <>
-                  {renderStepIndicator()}
-                  <div className="min-h-96">
-                    {currentStep === 1 && renderStep1()}
-                    {currentStep === 2 && renderStep2()}
-                    {currentStep === 3 && renderStep3()}
-                    {currentStep === 4 && renderStep4()}
-                  </div>
-                  <div className="flex justify-between mt-8 pt-6 border-t border-gray-100">
-                    <button
-                      onClick={handlePrev}
-                      disabled={currentStep === 1}
-                      className={cn(
-                        'px-6 py-3 rounded-xl font-medium transition-colors',
-                        currentStep === 1
-                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                      )}
-                    >
-                      上一步
-                    </button>
-                    {currentStep < 4 ? (
-                      <button
-                        onClick={handleNext}
-                        className="px-6 py-3 bg-primary-500 text-white rounded-xl font-medium hover:bg-primary-600 transition-colors shadow-lg hover:shadow-glow"
-                      >
-                        下一步
-                      </button>
-                    ) : (
-                      <button
-                        onClick={handleSubmit}
-                        disabled={isSubmitting}
-                        className="px-8 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium hover:from-primary-600 hover:to-primary-700 transition-all shadow-lg hover:shadow-glow disabled:opacity-50"
-                      >
-                        {isSubmitting ? (
-                          <span className="flex items-center gap-2">
-                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                            提交中...
-                          </span>
-                        ) : '提交报名'}
-                      </button>
-                    )}
-                  </div>
-                </>
+      <div className="flex flex-wrap gap-2">
+        {tabConfig.map((tab) => {
+          const TabIcon = tab.icon;
+          return (
+            <button
+              key={tab.key}
+              onClick={() => {
+                setActiveTab(tab.key);
+                if (tab.key === 'form' && submitSuccess) resetForm();
+              }}
+              className={cn(
+                'px-5 py-3 rounded-xl font-medium transition-all flex items-center gap-2',
+                activeTab === tab.key
+                  ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-glow'
+                  : 'bg-white text-gray-600 hover:bg-gray-50 shadow-card'
               )}
-            </div>
-          ) : (
-            <div className="bg-white rounded-2xl p-6 shadow-card">
-              {renderRecords()}
-            </div>
-          )}
-        </div>
-
-        <div className="space-y-6">
-          {renderGuidelines()}
-
-          <div className="bg-gradient-to-br from-warm-500 to-warm-600 rounded-2xl p-6 text-white shadow-lg">
-            <div className="flex items-center gap-2 mb-3">
-              <Clock className="w-5 h-5" />
-              <h3 className="font-semibold">温馨提示</h3>
-            </div>
-            <ul className="space-y-2 text-sm text-warm-100">
-              <li className="flex items-start gap-2">
-                <span className="text-warm-300">•</span>
-                请在规定时间内完成报名，逾期不予受理
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-warm-300">•</span>
-                确保所填信息真实有效，虚假信息将取消报名资格
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-warm-300">•</span>
-                审核结果将通过短信通知，请保持手机畅通
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-warm-300">•</span>
-                如有疑问，请拨打服务热线：0771-12345
-              </li>
-            </ul>
-          </div>
-        </div>
+            >
+              <TabIcon className="w-4 h-4" />
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
+
+      {activeTab === 'district' && renderDistrictSearch()}
+      {activeTab === 'form' && renderForm()}
+      {activeTab === 'records' && renderRecords()}
+      {activeTab === 'guide' && renderGuide()}
     </div>
   );
 }

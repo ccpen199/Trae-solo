@@ -4,9 +4,10 @@ import type { ApiResponse } from '../../shared/types';
 
 export const getPolicies = async (req: Request, res: Response) => {
   try {
-    const { category, page, pageSize } = req.query;
+    const { category, keyword, page, pageSize } = req.query;
     const result = await governmentService.getPolicies(
       category as string | undefined,
+      keyword as string | undefined,
       page ? parseInt(page as string) : 1,
       pageSize ? parseInt(pageSize as string) : 10
     );
@@ -69,6 +70,65 @@ export const getPolicyInterpretation = async (req: Request, res: Response) => {
     res.json({
       code: 200,
       message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const getRelatedPolicies = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await governmentService.getRelatedPolicies(id);
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const getPolicyPushRecords = async (_req: Request, res: Response) => {
+  try {
+    const result = await governmentService.getPolicyPushRecords();
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const markPolicyAsRead = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await governmentService.markPolicyAsRead(id);
+    res.json({
+      code: 200,
+      message: result.success ? '标记成功' : '标记失败',
       data: result,
       timestamp: Date.now(),
     } as ApiResponse<typeof result>);

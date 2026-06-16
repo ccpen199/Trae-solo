@@ -1,13 +1,21 @@
-import { mockPolicies, mockAtomicServices } from '../data/mockData';
-import type { PolicyDocument, AtomicService, OrchestrationFlow } from '../../shared/types';
+import { mockPolicies, mockAtomicServices, mockPolicyPushRecords } from '../data/mockData';
+import type { PolicyDocument, AtomicService, OrchestrationFlow, PolicyPushRecord } from '../../shared/types';
 import { v4 as uuidv4 } from 'uuid';
 
 export class GovernmentService {
-  async getPolicies(category?: string, page: number = 1, pageSize: number = 10): Promise<{ total: number; policies: PolicyDocument[] }> {
+  async getPolicies(category?: string, keyword?: string, page: number = 1, pageSize: number = 10): Promise<{ total: number; policies: PolicyDocument[] }> {
     await new Promise(resolve => setTimeout(resolve, 300));
     let policies = [...mockPolicies];
-    if (category) {
+    if (category && category !== 'all') {
       policies = policies.filter(p => p.category === category);
+    }
+    if (keyword) {
+      const lowerKeyword = keyword.toLowerCase();
+      policies = policies.filter(p => 
+        p.title.toLowerCase().includes(lowerKeyword) || 
+        p.content.toLowerCase().includes(lowerKeyword) ||
+        p.tags.some(t => t.toLowerCase().includes(lowerKeyword))
+      );
     }
     const start = (page - 1) * pageSize;
     return {
@@ -31,6 +39,31 @@ export class GovernmentService {
       keyPoints: policy.structuredContent.flatMap(s => s.keyPoints || []),
       relatedPolicies: mockPolicies.filter(p => p.id !== policyId && p.tags.some(t => policy.tags.includes(t))),
     };
+  }
+
+  async getRelatedPolicies(policyId: string): Promise<PolicyDocument[]> {
+    await new Promise(resolve => setTimeout(resolve, 200));
+    const policy = mockPolicies.find(p => p.id === policyId);
+    if (!policy) return [];
+    
+    return mockPolicies
+      .filter(p => p.id !== policyId && (p.category === policy.category || p.tags.some(t => policy.tags.includes(t))))
+      .slice(0, 3);
+  }
+
+  async getPolicyPushRecords(): Promise<PolicyPushRecord[]> {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return [...mockPolicyPushRecords];
+  }
+
+  async markPolicyAsRead(recordId: string): Promise<{ success: boolean }> {
+    await new Promise(resolve => setTimeout(resolve, 200));
+    const record = mockPolicyPushRecords.find(r => r.id === recordId);
+    if (record) {
+      record.read = true;
+      return { success: true };
+    }
+    return { success: false };
   }
 
   async structurePolicy(content: string): Promise<{ sections: Array<{ title: string; level: number; content: string; keyPoints?: string[] }> }> {

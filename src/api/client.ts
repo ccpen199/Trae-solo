@@ -50,7 +50,7 @@ apiClient.interceptors.response.use(
     const isLoginRequest = config?.url?.includes('/auth/login') || 
                           config?.url?.includes('/auth/face-verify');
 
-    if (status === 401 && !isLoginRequest) {
+    if (status === 401 && !isLoginRequest && localStorage.getItem('token') !== 'demo-session') {
       localStorage.removeItem('token');
       if (!window.location.pathname.startsWith('/login')) {
         window.location.href = '/login';
@@ -85,6 +85,10 @@ export const api = {
   },
   transportation: {
     generateBRTQR: () => apiClient.post('/transportation/brt/qrcode'),
+    getBRTTravelRecords: (page?: number, pageSize?: number) =>
+      apiClient.get('/transportation/brt/records', {
+        params: { page, pageSize },
+      }),
     getNearbyParking: (lat: number, lng: number, radius?: number) =>
       apiClient.get('/transportation/parking/nearby', {
         params: { lat, lng, radius },
@@ -102,10 +106,16 @@ export const api = {
     getHospitals: () => apiClient.get('/medical/hospitals'),
     getDepartments: (hospitalId: string) =>
       apiClient.get(`/medical/hospitals/${hospitalId}/departments`),
+    getDoctors: (hospitalId: string, departmentId: string) =>
+      apiClient.get(`/medical/hospitals/${hospitalId}/departments/${departmentId}/doctors`),
     getWaitTimes: () => apiClient.get('/medical/wait-times'),
     createAppointment: (data: any) =>
       apiClient.post('/medical/appointment', data),
     getAppointments: () => apiClient.get('/medical/appointments'),
+    getAppointmentDetail: (id: string) =>
+      apiClient.get(`/medical/appointments/${id}`),
+    cancelAppointment: (id: string) =>
+      apiClient.post(`/medical/appointments/${id}/cancel`),
     payBill: (orderId: string, amount: number) =>
       apiClient.post('/medical/pay', { orderId, amount }),
   },
@@ -138,14 +148,22 @@ export const api = {
       apiClient.get('/urban/vital-signs/history', { params: { hours } }),
   },
   government: {
-    getPolicies: (category?: string, page?: number, pageSize?: number) =>
-      apiClient.get('/government/policies', {
-        params: { category, page, pageSize },
-      }),
+    getPolicies: async (category?: string, keyword?: string, page?: number, pageSize?: number) => {
+      const data: any = await apiClient.get('/government/policies', {
+        params: { category, keyword, page, pageSize },
+      });
+      return Array.isArray(data) ? data : data?.policies ?? [];
+    },
     getPolicyDetail: (id: string) =>
       apiClient.get(`/government/policies/${id}`),
     getPolicyInterpretation: (id: string) =>
       apiClient.get(`/government/policies/${id}/interpret`),
+    getRelatedPolicies: (id: string) =>
+      apiClient.get(`/government/policies/${id}/related`),
+    getPolicyPushRecords: () =>
+      apiClient.get('/government/policies/push-records'),
+    markPolicyAsRead: (id: string) =>
+      apiClient.post(`/government/policies/${id}/read`),
     getServices: () => apiClient.get('/government/services'),
     submitApplication: (serviceId: string, data: any) =>
       apiClient.post(`/government/services/${serviceId}/apply`, data),

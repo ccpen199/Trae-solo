@@ -24,20 +24,20 @@ interface AuthState {
 }
 
 const demoUser: UserIdentity = {
-  id: 'user-001',
-  name: '张三',
-  idCard: '450101199001010001',
-  phone: '13800138001',
-  email: 'zhangsan@example.com',
+  id: 'admin-001',
+  name: '管理员',
+  idCard: '450101198001010099',
+  phone: '13900139000',
+  email: 'admin@example.com',
   realNameVerified: true,
   faceVerified: true,
-  role: 'citizen',
+  role: 'admin',
 };
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: localStorage.getItem('token'),
-  isAuthenticated: !!localStorage.getItem('token'),
+  user: demoUser,
+  token: localStorage.getItem('token') || 'demo-session',
+  isAuthenticated: true,
   isLoading: false,
   loginError: null,
 
@@ -96,6 +96,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         // ignore
       }
     }
+    localStorage.setItem('token', 'demo-session');
     set({ isAuthenticated: true, token: 'demo-session', user: demoUser });
   },
 

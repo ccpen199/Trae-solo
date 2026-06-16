@@ -21,6 +21,7 @@ import {
   Activity,
   User,
   Shield,
+  AlertCircle,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { api } from '@/api/client';
@@ -116,6 +117,8 @@ export default function Home() {
   const [recentTickets, setRecentTickets] = useState<ComplaintTicket[]>([]);
   const [recentPolicies, setRecentPolicies] = useState<PolicyDocument[]>([]);
   const [currentBanner, setCurrentBanner] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const banners = [
     { title: '南宁市小学入学报名现已开放', subtitle: '2024年秋季学期招生工作正式启动', color: 'from-primary-500 to-primary-600' },
@@ -123,21 +126,67 @@ export default function Home() {
     { title: 'BRT快速公交扫码乘车优惠', subtitle: '扫码乘车享9折优惠', color: 'from-warm-500 to-warm-600' },
   ];
 
+  const isValidVitalSigns = (data: any): data is CityVitalSigns => {
+    return (
+      data &&
+      typeof data === 'object' &&
+      data.transportation &&
+      typeof data.transportation.busOnTimeRate === 'number' &&
+      typeof data.transportation.trafficFlow === 'number' &&
+      typeof data.transportation.parkingOccupancy === 'number' &&
+      data.medical &&
+      typeof data.medical.emergencyLoad === 'number' &&
+      data.urbanManagement &&
+      typeof data.urbanManagement.openTickets === 'number'
+    );
+  };
+
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const [signs, tickets, policies] = await Promise.all([
+        const [signsResult, ticketsResult, policiesResult] = await Promise.allSettled([
           api.urban.getVitalSigns(),
           api.urban.getTickets(),
           api.government.getPolicies(),
         ]);
-        setVitalSigns(signs);
-        setRecentTickets(Array.isArray(tickets) ? tickets.slice(0, 3) : []);
-        setRecentPolicies(Array.isArray(policies) ? policies.slice(0, 3) : []);
+
+        if (signsResult.status === 'fulfilled' && isValidVitalSigns(signsResult.value)) {
+          setVitalSigns(signsResult.value);
+        } else {
+          console.warn('Failed to load vital signs:', signsResult.status === 'rejected' ? signsResult.reason : 'Invalid data format');
+        }
+
+        if (ticketsResult.status === 'fulfilled' && Array.isArray(ticketsResult.value)) {
+          setRecentTickets(ticketsResult.value.slice(0, 3));
+        } else {
+          console.warn('Failed to load tickets:', ticketsResult.status === 'rejected' ? ticketsResult.reason : 'Invalid data format');
+        }
+
+        if (policiesResult.status === 'fulfilled' && Array.isArray(policiesResult.value)) {
+          setRecentPolicies(policiesResult.value.slice(0, 3));
+        } else {
+          console.warn('Failed to load policies:', policiesResult.status === 'rejected' ? policiesResult.reason : 'Invalid data format');
+        }
+
+        const allFailed =
+          signsResult.status === 'rejected' &&
+          ticketsResult.status === 'rejected' &&
+          policiesResult.status === 'rejected';
+
+        if (allFailed) {
+          setError('数据加载失败，请稍后重试');
+        }
       } catch (e) {
         console.error('Failed to load data:', e);
+        setError('数据加载失败，请稍后重试');
+      } finally {
+        setLoading(false);
       }
     };
+
     loadData();
 
     const bannerTimer = setInterval(() => {
@@ -227,8 +276,8 @@ export default function Home() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
           { label: '今日服务人次', value: vitalSigns ? formatNumber(vitalSigns.transportation.trafficFlow + vitalSigns.medical.emergencyLoad) : '--', icon: Users, color: 'primary' },
-          { label: '公交准点率', value: vitalSigns ? `${vitalSigns.transportation.busOnTimeRate}%` : '--', icon: Bus, color: 'warm' },
-          { label: '停车周转率', value: vitalSigns ? `${vitalSigns.transportation.parkingOccupancy}%` : '--', icon: MapPin, color: 'eco' },
+          { label: '公交准点率', value: vitalSigns ? `${vitalSigns.transportation.busOnTimeRate.toFixed(1)}%` : '--', icon: Bus, color: 'warm' },
+          { label: '停车周转率', value: vitalSigns ? `${vitalSigns.transportation.parkingOccupancy.toFixed(1)}%` : '--', icon: MapPin, color: 'eco' },
           { label: '待处理工单', value: vitalSigns ? vitalSigns.urbanManagement.openTickets : '--', icon: MessageSquare, color: 'primary' },
         ].map((stat, index) => (
           <div key={index} className="bg-white rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all duration-300">
@@ -246,11 +295,22 @@ export default function Home() {
                 stat.color === 'warm' ? 'text-warm-500' : 'text-eco-500'
               )} />
             </div>
-            <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
+            {loading ? (
+              <div className="h-8 w-24 bg-gray-200 rounded animate-pulse"></div>
+            ) : (
+              <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
+            )}
             <p className="text-sm text-gray-500 mt-1">{stat.label}</p>
           </div>
         ))}
       </div>
+
+      {error && (
+        <div className="bg-warm-50 border border-warm-200 text-warm-700 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+          <AlertCircle className="w-5 h-5" />
+          <span>{error}</span>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-6">
         {serviceCategories.map((category, catIndex) => (
@@ -309,7 +369,17 @@ export default function Home() {
             </button>
           </div>
           <div className="space-y-3">
-            {recentPolicies.length > 0 ? recentPolicies.map((policy) => (
+            {loading ? (
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="p-4 rounded-xl bg-gray-50">
+                    <div className="h-5 w-3/4 bg-gray-200 rounded animate-pulse mb-2"></div>
+                    <div className="h-4 w-full bg-gray-200 rounded animate-pulse mb-3"></div>
+                    <div className="h-4 w-1/4 bg-gray-200 rounded animate-pulse"></div>
+                  </div>
+                ))}
+              </div>
+            ) : recentPolicies.length > 0 ? recentPolicies.map((policy) => (
               <div
                 key={policy.id}
                 onClick={() => navigate(`/government/policy/${policy.id}`)}
@@ -352,7 +422,19 @@ export default function Home() {
             </button>
           </div>
           <div className="space-y-3">
-            {recentTickets.length > 0 ? recentTickets.map((ticket) => (
+            {loading ? (
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="p-4 rounded-xl bg-gray-50">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="h-5 w-32 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="h-5 w-12 bg-gray-200 rounded-full animate-pulse"></div>
+                    </div>
+                    <div className="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+                  </div>
+                ))}
+              </div>
+            ) : recentTickets.length > 0 ? recentTickets.map((ticket) => (
               <div
                 key={ticket.id}
                 onClick={() => navigate(`/urban/complaint/${ticket.id}`)}

@@ -18,6 +18,7 @@ import medicalRoutes from './routes/medical.js'
 import educationRoutes from './routes/education.js'
 import urbanRoutes from './routes/urban.js'
 import governmentRoutes from './routes/government.js'
+import { mockAtomicServices, mockPolicies, mockTickets, mockUsers } from './data/mockData.js'
 
 // for esm mode
 const __filename = fileURLToPath(import.meta.url)
@@ -43,6 +44,58 @@ app.use('/api/education', educationRoutes)
 app.use('/api/urban', urbanRoutes)
 app.use('/api/government', governmentRoutes)
 app.use('/api/dashboard', urbanRoutes)
+
+app.get('/api/search', (req: Request, res: Response): void => {
+  const query = String(req.query.q || req.query.keyword || '').trim().toLowerCase()
+  const sourceItems = [
+    ...mockPolicies.map((item) => ({ type: 'policy', title: item.title, summary: item.content, item })),
+    ...mockTickets.map((item) => ({ type: 'ticket', title: item.title, summary: item.content, item })),
+    ...mockAtomicServices.map((item) => ({ type: 'service', title: item.name, summary: item.description, item })),
+  ]
+  const items = sourceItems.filter((entry) => {
+    const haystack = `${entry.title} ${entry.summary} ${JSON.stringify(entry.item)}`.toLowerCase()
+    return !query || haystack.includes(query)
+  })
+
+  res.status(200).json({
+    code: 200,
+    success: true,
+    message: '搜索成功',
+    data: {
+      query,
+      total: items.length,
+      items: items.slice(0, 20),
+    },
+    timestamp: Date.now(),
+  })
+})
+
+app.get(['/api/admin/stats', '/api/admin/dashboard'], (_req: Request, res: Response): void => {
+  const openTickets = mockTickets.filter((ticket) => ticket.status !== 'closed' && ticket.status !== 'resolved')
+  const activeServices = mockAtomicServices.filter((service) => service.isActive)
+
+  res.status(200).json({
+    code: 200,
+    success: true,
+    message: '获取成功',
+    data: {
+      users: mockUsers.length,
+      policies: mockPolicies.length,
+      tickets: mockTickets.length,
+      openTickets: openTickets.length,
+      atomicServices: mockAtomicServices.length,
+      activeServices: activeServices.length,
+      categories: {
+        transportation: mockTickets.filter((ticket) => ticket.category === 'transportation').length,
+        medical: mockTickets.filter((ticket) => ticket.category === 'medical').length,
+        education: mockTickets.filter((ticket) => ticket.category === 'education').length,
+        government: mockTickets.filter((ticket) => ticket.category === 'government').length,
+        urbanManagement: mockTickets.filter((ticket) => ticket.category === 'urban_management').length,
+      },
+    },
+    timestamp: Date.now(),
+  })
+})
 
 /**
  * health

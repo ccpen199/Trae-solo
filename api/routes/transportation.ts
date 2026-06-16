@@ -4,6 +4,7 @@ import * as transportationController from '../controllers/transportationControll
 const router = Router();
 
 router.post('/brt/qrcode', transportationController.generateBRTQRCode);
+router.get('/brt/records', transportationController.getBRTTravelRecords);
 router.get('/parking/nearby', transportationController.getNearbyParking);
 router.get('/violations', transportationController.getTrafficViolations);
 router.post('/violations/:id/pay', transportationController.payViolation);

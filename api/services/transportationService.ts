@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { mockParkingLots, mockViolations } from '../data/mockData';
-import type { ParkingLot, TrafficViolation } from '../../shared/types';
+import { mockParkingLots, mockViolations, mockBRTTravelRecords } from '../data/mockData';
+import type { ParkingLot, TrafficViolation, BRTTravelRecord } from '../../shared/types';
 
 export class TransportationService {
   async generateBRTQRCode(userId: string): Promise<{ qrCode: string; expiresAt: number }> {
@@ -43,6 +43,19 @@ export class TransportationService {
     return {
       success: true,
       transactionId: uuidv4(),
+    };
+  }
+
+  async getBRTTravelRecords(userId: string, page: number = 1, pageSize: number = 10): Promise<{ records: BRTTravelRecord[]; total: number; page: number; pageSize: number }> {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const records = mockBRTTravelRecords.slice(startIndex, endIndex);
+    return {
+      records,
+      total: mockBRTTravelRecords.length,
+      page,
+      pageSize,
     };
   }
 

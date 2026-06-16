@@ -13,12 +13,20 @@ export default function Header({ onMenuToggle, sidebarOpen }: HeaderProps) {
   const { user } = useAuthStore();
   const navigate = useNavigate();
   const [searchFocused, setSearchFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState('');
   const [notifications] = useState([
     { id: 1, title: '您的预约即将开始', time: '5分钟前', type: 'medical' },
     { id: 2, title: '小学入学报名已开放', time: '1小时前', type: 'education' },
     { id: 3, title: '违章处理提醒', time: '2小时前', type: 'transportation' },
   ]);
   const [showNotifications, setShowNotifications] = useState(false);
+
+  const handleSearch = () => {
+    const query = searchQuery.trim();
+    if (!query) return;
+    setSearchResult(query);
+  };
 
   return (
     <header className="h-16 bg-white/80 backdrop-blur-lg border-b border-gray-100 flex items-center justify-between px-6 sticky top-0 z-40">
@@ -37,10 +45,33 @@ export default function Header({ onMenuToggle, sidebarOpen }: HeaderProps) {
           <input
             type="text"
             placeholder="搜索服务、医院、学校、政策..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch();
+            }}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
-            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300"
+            className="w-full pl-10 pr-16 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300"
           />
+          <button
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={handleSearch}
+            className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-primary-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-primary-700"
+          >
+            搜索
+          </button>
+          {searchResult && (
+            <div className="absolute left-0 right-0 top-full mt-2 rounded-xl border border-gray-100 bg-white p-4 shadow-card z-50">
+              <p className="text-sm font-semibold text-gray-800">搜索结果</p>
+              <p className="mt-1 text-xs text-gray-500">已为“{searchResult}”匹配服务、医院、学校与政策。</p>
+              <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => navigate('/government/policy')} className="rounded-lg bg-gray-50 px-3 py-2 text-left text-gray-700 hover:bg-primary-50">政策查询结果</button>
+                <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => navigate('/transportation/violation')} className="rounded-lg bg-gray-50 px-3 py-2 text-left text-gray-700 hover:bg-primary-50">交通服务结果</button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

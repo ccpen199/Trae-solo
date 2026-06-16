@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { mockTickets, generateVitalSigns } from '../data/mockData';
-import type { ComplaintTicket, TicketCategory, TicketPriority } from '../../shared/types';
+import { mockTickets, mockTicketLogs, generateVitalSigns } from '../data/mockData';
+import type { ComplaintTicket, TicketCategory, TicketPriority, TicketLog } from '../../shared/types';
 import { TICKET_CATEGORY_MAP } from '../../shared/types';
 
 export interface ComplaintRequest {
@@ -112,7 +112,90 @@ export class UrbanService {
 
   async getTicketDetail(ticketId: string): Promise<ComplaintTicket | null> {
     await new Promise(resolve => setTimeout(resolve, 200));
-    return mockTickets.find(t => t.id === ticketId) || null;
+    const ticket = mockTickets.find(t => t.id === ticketId);
+    if (!ticket) return null;
+    
+    const logs = mockTicketLogs[ticket.ticketNo] || this.generateDefaultLogs(ticket);
+    return {
+      ...ticket,
+      logs,
+    };
+  }
+
+  private generateDefaultLogs(ticket: ComplaintTicket): TicketLog[] {
+    const logs: TicketLog[] = [
+      {
+        id: uuidv4(),
+        ticketId: ticket.ticketNo,
+        action: 'submit',
+        description: '市民提交诉求',
+        operator: '市民',
+        department: '市民',
+        timestamp: ticket.createdAt,
+      },
+    ];
+
+    if (ticket.status !== 'pending') {
+      logs.push({
+        id: uuidv4(),
+        ticketId: ticket.ticketNo,
+        action: 'classify',
+        description: 'AI智能分类完成',
+        operator: '系统',
+        department: 'AI分类系统',
+        timestamp: ticket.createdAt,
+      });
+    }
+
+    if (ticket.status === 'assigned' || ticket.status === 'processing' || ticket.status === 'resolved' || ticket.status === 'closed') {
+      logs.push({
+        id: uuidv4(),
+        ticketId: ticket.ticketNo,
+        action: 'assign',
+        description: `分派至${ticket.department}`,
+        operator: '工单管理员',
+        department: ticket.department,
+        timestamp: ticket.updatedAt,
+      });
+    }
+
+    if (ticket.status === 'processing' || ticket.status === 'resolved' || ticket.status === 'closed') {
+      logs.push({
+        id: uuidv4(),
+        ticketId: ticket.ticketNo,
+        action: 'process',
+        description: '工作人员正在处理中',
+        operator: '经办人员',
+        department: ticket.department,
+        timestamp: ticket.updatedAt,
+      });
+    }
+
+    if (ticket.status === 'resolved' || ticket.status === 'closed') {
+      logs.push({
+        id: uuidv4(),
+        ticketId: ticket.ticketNo,
+        action: 'resolve',
+        description: ticket.resolution || '问题已处理完成',
+        operator: '经办人员',
+        department: ticket.department,
+        timestamp: ticket.updatedAt,
+      });
+    }
+
+    if (ticket.status === 'closed' && ticket.satisfactionScore !== undefined) {
+      logs.push({
+        id: uuidv4(),
+        ticketId: ticket.ticketNo,
+        action: 'rate',
+        description: `市民评价：${ticket.satisfactionScore}星`,
+        operator: '市民',
+        department: '市民',
+        timestamp: ticket.updatedAt,
+      });
+    }
+
+    return logs;
   }
 
   async rateTicket(ticketId: string, score: number, comment?: string): Promise<{ success: boolean }> {

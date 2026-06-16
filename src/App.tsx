@@ -9,6 +9,8 @@ import IdentityCenter from "@/pages/IdentityCenter";
 import Profile from "@/pages/Profile";
 import Dashboard from "@/pages/Dashboard";
 import Orchestration from "@/pages/Orchestration";
+import AdminWorkbench from "@/pages/AdminWorkbench";
+import TicketDispatch from "@/pages/urban/TicketDispatch";
 
 import Transportation from "@/pages/transportation/Transportation";
 import BRTQRCode from "@/pages/transportation/BRTQRCode";
@@ -78,6 +80,17 @@ export default function App() {
           />
 
           <Route
+            path="/admin-workbench"
+            element={
+              <ProtectedRoute requireAdmin>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<AdminWorkbench />} />
+          </Route>
+
+          <Route
             path="/orchestration"
             element={
               <ProtectedRoute requireAdmin>
@@ -86,6 +99,17 @@ export default function App() {
             }
           >
             <Route index element={<Orchestration />} />
+          </Route>
+
+          <Route
+            path="/ticket-dispatch"
+            element={
+              <ProtectedRoute requireAdmin>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<TicketDispatch />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

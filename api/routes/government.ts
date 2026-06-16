@@ -4,8 +4,11 @@ import * as governmentController from '../controllers/governmentController';
 const router = Router();
 
 router.get('/policies', governmentController.getPolicies);
+router.get('/policies/push-records', governmentController.getPolicyPushRecords);
 router.get('/policies/:id', governmentController.getPolicyDetail);
 router.get('/policies/:id/interpret', governmentController.getPolicyInterpretation);
+router.get('/policies/:id/related', governmentController.getRelatedPolicies);
+router.post('/policies/:id/read', governmentController.markPolicyAsRead);
 router.get('/services', governmentController.getGovernmentServices);
 router.post('/services/:serviceId/apply', governmentController.submitApplication);
 router.get('/atomic-services', governmentController.getAtomicServices);

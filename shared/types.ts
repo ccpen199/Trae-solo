@@ -78,6 +78,16 @@ export type TicketCategory = 'transportation' | 'medical' | 'education' | 'gover
 export type TicketStatus = 'pending' | 'assigned' | 'processing' | 'resolved' | 'closed';
 export type TicketPriority = 'low' | 'medium' | 'high' | 'urgent';
 
+export interface TicketLog {
+  id: string;
+  ticketId: string;
+  action: string;
+  description: string;
+  operator: string;
+  department: string;
+  timestamp: string;
+}
+
 export interface ComplaintTicket {
   id: string;
   ticketNo: string;
@@ -89,11 +99,15 @@ export interface ComplaintTicket {
   status: TicketStatus;
   priority: TicketPriority;
   assigneeId?: string;
+  assigneeName?: string;
   deadline: string;
   resolution?: string;
   satisfactionScore?: number;
+  satisfactionComment?: string;
+  images?: string[];
   createdAt: string;
   updatedAt: string;
+  logs?: TicketLog[];
 }
 
 export interface PolicySection {
@@ -102,6 +116,16 @@ export interface PolicySection {
   level: number;
   content: string;
   keyPoints?: string[];
+}
+
+export interface PolicyPushRecord {
+  id: string;
+  policyId: string;
+  policyTitle: string;
+  category: string;
+  pushTime: string;
+  pushType: 'system' | 'subscription' | 'recommendation';
+  read: boolean;
 }
 
 export interface PolicyDocument {
@@ -113,6 +137,8 @@ export interface PolicyDocument {
   structuredContent: PolicySection[];
   aiInterpretation?: string;
   tags: string[];
+  viewCount?: number;
+  relatedPolicies?: string[];
 }
 
 export interface AtomicService {
@@ -149,6 +175,12 @@ export interface ParkingLot {
   availableSpaces: number;
   pricePerHour: number;
   distance?: number;
+  phone?: string;
+  openHours?: string;
+  parkingType?: string;
+  facilities?: string[];
+  rating?: number;
+  reviews?: number;
 }
 
 export interface Hospital {
@@ -171,6 +203,35 @@ export interface Doctor {
   name: string;
   title: string;
   available: boolean;
+  rating?: number;
+  consultationCount?: number;
+  specialty?: string;
+}
+
+export interface AppointmentRecord {
+  id: string;
+  hospitalId: string;
+  hospitalName: string;
+  departmentId: string;
+  departmentName: string;
+  doctorId: string;
+  doctorName: string;
+  doctorTitle: string;
+  date: string;
+  time: string;
+  status: 'pending' | 'completed' | 'cancelled' | 'no_show';
+  appointmentNo: string;
+  createdAt: string;
+}
+
+export interface SchoolDistrictResult {
+  schoolId: string;
+  schoolName: string;
+  schoolType: string;
+  distance: number;
+  address: string;
+  district: string;
+  enrollmentQuota: number;
 }
 
 export interface TrafficViolation {
@@ -182,6 +243,20 @@ export interface TrafficViolation {
   fine: number;
   points: number;
   status: 'unpaid' | 'paid' | 'appealing';
+  description?: string;
+  cameraLocation?: string;
+}
+
+export interface BRTTravelRecord {
+  id: string;
+  routeName: string;
+  startStation: string;
+  endStation: string;
+  startTime: string;
+  endTime: string;
+  fare: number;
+  status: 'completed' | 'in_progress' | 'refunded';
+  paymentMethod: string;
 }
 
 export interface School {

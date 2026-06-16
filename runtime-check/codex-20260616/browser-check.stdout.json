@@ -1,0 +1,2042 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T23:54:51.678Z",
+  "order": "may-89215",
+  "roundIndex": 99,
+  "captureId": "may-89215-codex-20260616",
+  "url": "http://127.0.0.1:49215/",
+  "initialUrl": "http://127.0.0.1:49215/",
+  "finalUrl": "http://127.0.0.1:49215/",
+  "status": 200,
+  "title": "南宁城市服务",
+  "initialTitle": "南宁城市服务",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-02-导航-管理工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-05-操作-搜索.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-06-导航-城市体征.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-07-操作-城市体征.png"
+  ],
+  "issueTextPreview": "搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题；登录后管理工作台链路复验",
+  "targetReason": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49215/login"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49215/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:管理工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:系统设置 20 / 20 服务",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:系统设置 20 / 20 服务:安全设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:城市体征",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:城市体征",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49215/",
+        "title": "南宁城市服务",
+        "headings": [
+          "南宁城市服务",
+          "您好，管理员 👋",
+          "南宁市小学入学报名现已开放",
+          "电子证照全面推广使用",
+          "BRT快速公交扫码乘车优惠",
+          "快捷服务",
+          "交通出行",
+          "医疗健康",
+          "教育服务",
+          "政务服务",
+          "城市管理",
+          "政策通知"
+        ],
+        "navLabels": [
+          "邕 南宁城市服务 智慧城市·山水南宁",
+          "邕",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "管 管理员 13900139000",
+          "管"
+        ],
+        "buttons": [
+          "交通出行",
+          "医疗健康",
+          "教育服务",
+          "政务服务",
+          "城市管理",
+          "退出登录",
+          "搜索",
+          "我的电子证照",
+          "立即查看 →",
+          "我的证照",
+          "BRT乘车码",
+          "预约挂号",
+          "入学报名",
+          "违章查询",
+          "12345诉求",
+          "更多",
+          "智慧停车",
+          "公交实时",
+          "候诊热力图",
+          "在线缴费",
+          "健康档案",
+          "学区查询",
+          "学籍管理",
+          "教育资源"
+        ],
+        "links": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "预约挂号",
+          "候诊热力图",
+          "入学报名",
+          "政策解读",
+          "12345诉求",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务、医院、学校、政策...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邕南宁城市服务智慧城市·山水南宁管理工作台城市体征服务编排工单分拨调度市民首页数字身份交通出行BRT乘车码智慧停车违章查询医疗健康预约挂号候诊热力图教育服务入学报名政务服务政策解读城市管理12345诉求个人中心管管理员13900139000退出登录搜索管管理员管理员已实名认证您好，管理员 👋今天想办理什么业务？我的电子证照南宁市小学入学报名现已开放2024年秋季学期招生工作正式启动立即查看 →电子证照全面推广使用一码通行，办事更便捷立即查看 →BRT快速公交扫码乘车优惠扫码乘车享9折优惠立即查看 →快捷服务我的证照BRT乘车码预约挂号入学报名违章查询12345诉求今日服务人次公交准点率停车周转率待处理工单交通出行便民服务更多 BRT乘车码智慧停车违章查询公交实时医疗健康便民服务更多 预约挂号候诊热力图在线缴费健康档案教育服务便民服务更多 入学报名学区查询学籍管理教育资源政务服务便民服务更多 政策解读证件办理事项申报进度查询城市管理便民服务更多 12345诉求问题上报执法公示满意度评价政策通知查看全部我的工单提交诉求",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2064,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89215-codex-20260616-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49215/",
+          "title": "南宁城市服务",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-01-首屏.png",
+          "elementCount": 666,
+          "interactiveCount": 65,
+          "interactiveLabels": [
+            "管理工作台",
+            "城市体征",
+            "服务编排",
+            "工单分拨调度",
+            "市民首页",
+            "数字身份",
+            "交通出行",
+            "BRT乘车码",
+            "智慧停车",
+            "违章查询",
+            "医疗健康",
+            "预约挂号",
+            "候诊热力图",
+            "教育服务",
+            "入学报名",
+            "政务服务",
+            "政策解读",
+            "城市管理",
+            "12345诉求",
+            "个人中心",
+            "退出登录",
+            "搜索服务、医院、学校、政策...",
+            "搜索",
+            "我的电子证照",
+            "立即查看 →",
+            "我的证照",
+            "更多",
+            "公交实时",
+            "在线缴费",
+            "健康档案"
+          ]
+        }
+      },
+      {
+        "label": "导航:管理工作台",
+        "url": "http://127.0.0.1:49215/admin-workbench",
+        "title": "南宁城市服务",
+        "headings": [
+          "南宁城市服务",
+          "您好，管理员 👋",
+          "城市体征大屏",
+          "服务编排中心",
+          "工单分拨调度",
+          "用户管理",
+          "最新工单",
+          "系统通知",
+          "编排流程",
+          "业务模块概览"
+        ],
+        "navLabels": [
+          "邕 南宁城市服务 智慧城市·山水南宁",
+          "邕",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "管 管理员 13900139000",
+          "管"
+        ],
+        "buttons": [
+          "交通出行",
+          "医疗健康",
+          "教育服务",
+          "政务服务",
+          "城市管理",
+          "退出登录",
+          "搜索",
+          "进入大屏",
+          "服务编排",
+          "城市体征大屏 实时监测城市运行状态 立即进入",
+          "服务编排中心 原子能力与流程编排 立即进入",
+          "工单分拨调度 12345诉求统一分派 立即进入",
+          "用户管理 市民与办事员管理 立即进入",
+          "全部工单",
+          "管理",
+          "交通出行 10 / 12 服务",
+          "医疗健康 8 / 8 服务",
+          "教育服务 5 / 6 服务",
+          "政务服务 14 / 15 服务",
+          "城市管理 9 / 9 服务",
+          "系统设置 20 / 20 服务"
+        ],
+        "links": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "预约挂号",
+          "候诊热力图",
+          "入学报名",
+          "政策解读",
+          "12345诉求",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务、医院、学校、政策...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邕南宁城市服务智慧城市·山水南宁管理工作台城市体征服务编排工单分拨调度市民首页数字身份交通出行BRT乘车码智慧停车违章查询医疗健康预约挂号候诊热力图教育服务入学报名政务服务政策解读城市管理12345诉求个人中心管管理员13900139000退出登录搜索管管理员管理员已实名认证您好，管理员 👋欢迎来到南宁城市服务管理后台系统运行正常2026年6月16日星期二 02:54:14进入大屏服务编排城市体征大屏实时监测城市运行状态立即进入 服务编排中心原子能力与流程编排立即进入 工单分拨调度12345诉求统一分派立即进入 用户管理市民与办事员管理立即进入 +5.2%7.6万今日服务人次+2.1%88.6%公交准点率-3.5%184待处理工单+0.3%99.8%服务接通率最新工单全部工单 民族大道井盖破损处理中202406150001 · 南宁市城市管理局2026/6/16BRT公交晚点严重已分派202406150002 · 南宁市交通运输局2026/6/15小区周边噪音扰民已解决202406150003 · 南宁市城市管理局2026/6/13系统通知服务编排流程已部署违章处理自动化流程上线运行10分钟前交通流量预警民族大道早高峰车流量超阈值1小时前系统更新通知城市体征监测模块升级完成3小时前编排流程管理入学报名全流程运行中就医挂号全流程运行中业务模块概览交通出行10 / 12 服务医疗健康8 / 8 服务教育服务5 / 6 服务政务服务14 / 15 服务城市管理9 / 9 服务系统设置20 / 20 服务",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89215-codex-20260616-structure-02-导航-管理工作台",
+          "label": "导航:管理工作台",
+          "finalUrl": "http://127.0.0.1:49215/admin-workbench",
+          "title": "南宁城市服务",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-02-导航-管理工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-02-导航-管理工作台.png",
+          "elementCount": 530,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "管理工作台",
+            "城市体征",
+            "服务编排",
+            "工单分拨调度",
+            "市民首页",
+            "数字身份",
+            "交通出行",
+            "BRT乘车码",
+            "智慧停车",
+            "违章查询",
+            "医疗健康",
+            "预约挂号",
+            "候诊热力图",
+            "教育服务",
+            "入学报名",
+            "政务服务",
+            "政策解读",
+            "城市管理",
+            "12345诉求",
+            "个人中心",
+            "退出登录",
+            "搜索服务、医院、学校、政策...",
+            "搜索",
+            "进入大屏",
+            "城市体征大屏 实时监测城市运行状态 立即进入",
+            "服务编排中心 原子能力与流程编排 立即进入",
+            "工单分拨调度 12345诉求统一分派 立即进入",
+            "用户管理 市民与办事员管理 立即进入",
+            "全部工单",
+            "管理"
+          ]
+        }
+      },
+      {
+        "label": "操作:系统设置 20 / 20 服务",
+        "url": "http://127.0.0.1:49215/profile",
+        "title": "南宁城市服务",
+        "headings": [
+          "南宁城市服务",
+          "个人中心",
+          "管理员",
+          "基本信息"
+        ],
+        "navLabels": [
+          "邕 南宁城市服务 智慧城市·山水南宁",
+          "邕",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "管 管理员 13900139000",
+          "管"
+        ],
+        "buttons": [
+          "交通出行",
+          "医疗健康",
+          "教育服务",
+          "政务服务",
+          "城市管理",
+          "退出登录",
+          "搜索",
+          "基本信息",
+          "安全设置",
+          "消息通知",
+          "我的预约",
+          "我的工单",
+          "我的评价",
+          "帮助中心",
+          "关于我们",
+          "编辑"
+        ],
+        "links": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "预约挂号",
+          "候诊热力图",
+          "入学报名",
+          "政策解读",
+          "12345诉求",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务、医院、学校、政策...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邕南宁城市服务智慧城市·山水南宁管理工作台城市体征服务编排工单分拨调度市民首页数字身份交通出行BRT乘车码智慧停车违章查询医疗健康预约挂号候诊热力图教育服务入学报名政务服务政策解读城市管理12345诉求个人中心管管理员13900139000退出登录搜索管管理员管理员已实名认证个人中心管理您的账户信息和服务偏好管管理员13900139000已实名认证人脸认证账户设置基本信息安全设置消息通知服务记录我的预约我的工单我的评价帮助与支持帮助中心关于我们退出登录基本信息编辑姓名手机号码电子邮箱身份证号450101********0099居住地址用户角色城市管理员",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务",
+          "label": "操作:系统设置 20 / 20 服务",
+          "finalUrl": "http://127.0.0.1:49215/profile",
+          "title": "南宁城市服务",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务.png",
+          "elementCount": 395,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "管理工作台",
+            "城市体征",
+            "服务编排",
+            "工单分拨调度",
+            "市民首页",
+            "数字身份",
+            "交通出行",
+            "BRT乘车码",
+            "智慧停车",
+            "违章查询",
+            "医疗健康",
+            "预约挂号",
+            "候诊热力图",
+            "教育服务",
+            "入学报名",
+            "政务服务",
+            "政策解读",
+            "城市管理",
+            "12345诉求",
+            "个人中心",
+            "退出登录",
+            "搜索服务、医院、学校、政策...",
+            "搜索",
+            "基本信息",
+            "安全设置",
+            "消息通知",
+            "我的预约",
+            "我的工单",
+            "我的评价",
+            "帮助中心"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:系统设置 20 / 20 服务->安全设置",
+        "url": "http://127.0.0.1:49215/profile",
+        "title": "南宁城市服务",
+        "headings": [
+          "南宁城市服务",
+          "个人中心",
+          "管理员",
+          "安全设置"
+        ],
+        "navLabels": [
+          "邕 南宁城市服务 智慧城市·山水南宁",
+          "邕",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "管 管理员 13900139000",
+          "管"
+        ],
+        "buttons": [
+          "交通出行",
+          "医疗健康",
+          "教育服务",
+          "政务服务",
+          "城市管理",
+          "退出登录",
+          "搜索",
+          "基本信息",
+          "安全设置",
+          "消息通知",
+          "我的预约",
+          "我的工单",
+          "我的评价",
+          "帮助中心",
+          "关于我们",
+          "修改密码",
+          "设置支付密码",
+          "重新录入",
+          "设置指纹",
+          "查看"
+        ],
+        "links": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "预约挂号",
+          "候诊热力图",
+          "入学报名",
+          "政策解读",
+          "12345诉求",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务、医院、学校、政策...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邕南宁城市服务智慧城市·山水南宁管理工作台城市体征服务编排工单分拨调度市民首页数字身份交通出行BRT乘车码智慧停车违章查询医疗健康预约挂号候诊热力图教育服务入学报名政务服务政策解读城市管理12345诉求个人中心管管理员13900139000退出登录搜索管管理员管理员已实名认证个人中心管理您的账户信息和服务偏好管管理员13900139000已实名认证人脸认证账户设置基本信息安全设置消息通知服务记录我的预约我的工单我的评价帮助与支持帮助中心关于我们退出登录安全设置登录密码建议定期更换密码，确保账户安全修改密码支付密码用于服务缴费时的身份验证设置支付密码人脸认证已完成人脸录入，可用于刷脸登录已启用重新录入指纹认证支持指纹快速登录未启用设置指纹登录设备管理管理已登录的设备查看",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置",
+          "label": "二层操作:系统设置 20 / 20 服务->安全设置",
+          "finalUrl": "http://127.0.0.1:49215/profile",
+          "title": "南宁城市服务",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置.png",
+          "elementCount": 398,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "管理工作台",
+            "城市体征",
+            "服务编排",
+            "工单分拨调度",
+            "市民首页",
+            "数字身份",
+            "交通出行",
+            "BRT乘车码",
+            "智慧停车",
+            "违章查询",
+            "医疗健康",
+            "预约挂号",
+            "候诊热力图",
+            "教育服务",
+            "入学报名",
+            "政务服务",
+            "政策解读",
+            "城市管理",
+            "12345诉求",
+            "个人中心",
+            "退出登录",
+            "搜索服务、医院、学校、政策...",
+            "搜索",
+            "基本信息",
+            "安全设置",
+            "消息通知",
+            "我的预约",
+            "我的工单",
+            "我的评价",
+            "帮助中心"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索",
+        "url": "http://127.0.0.1:49215/admin-workbench",
+        "title": "南宁城市服务",
+        "headings": [
+          "南宁城市服务",
+          "您好，管理员 👋",
+          "城市体征大屏",
+          "服务编排中心",
+          "工单分拨调度",
+          "用户管理",
+          "最新工单",
+          "系统通知",
+          "编排流程",
+          "业务模块概览"
+        ],
+        "navLabels": [
+          "邕 南宁城市服务 智慧城市·山水南宁",
+          "邕",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "管 管理员 13900139000",
+          "管"
+        ],
+        "buttons": [
+          "交通出行",
+          "医疗健康",
+          "教育服务",
+          "政务服务",
+          "城市管理",
+          "退出登录",
+          "搜索",
+          "进入大屏",
+          "服务编排",
+          "城市体征大屏 实时监测城市运行状态 立即进入",
+          "服务编排中心 原子能力与流程编排 立即进入",
+          "工单分拨调度 12345诉求统一分派 立即进入",
+          "用户管理 市民与办事员管理 立即进入",
+          "全部工单",
+          "管理",
+          "交通出行 10 / 12 服务",
+          "医疗健康 8 / 8 服务",
+          "教育服务 5 / 6 服务",
+          "政务服务 14 / 15 服务",
+          "城市管理 9 / 9 服务",
+          "系统设置 20 / 20 服务"
+        ],
+        "links": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "预约挂号",
+          "候诊热力图",
+          "入学报名",
+          "政策解读",
+          "12345诉求",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务、医院、学校、政策...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邕南宁城市服务智慧城市·山水南宁管理工作台城市体征服务编排工单分拨调度市民首页数字身份交通出行BRT乘车码智慧停车违章查询医疗健康预约挂号候诊热力图教育服务入学报名政务服务政策解读城市管理12345诉求个人中心管管理员13900139000退出登录搜索管管理员管理员已实名认证您好，管理员 👋欢迎来到南宁城市服务管理后台系统运行正常2026年6月16日星期二 02:54:31进入大屏服务编排城市体征大屏实时监测城市运行状态立即进入 服务编排中心原子能力与流程编排立即进入 工单分拨调度12345诉求统一分派立即进入 用户管理市民与办事员管理立即进入 +5.2%7.4万今日服务人次+2.1%89.1%公交准点率-3.5%137待处理工单+0.3%99.8%服务接通率最新工单全部工单 民族大道井盖破损处理中202406150001 · 南宁市城市管理局2026/6/16BRT公交晚点严重已分派202406150002 · 南宁市交通运输局2026/6/15小区周边噪音扰民已解决202406150003 · 南宁市城市管理局2026/6/13系统通知服务编排流程已部署违章处理自动化流程上线运行10分钟前交通流量预警民族大道早高峰车流量超阈值1小时前系统更新通知城市体征监测模块升级完成3小时前编排流程管理入学报名全流程运行中就医挂号全流程运行中业务模块概览交通出行10 / 12 服务医疗健康8 / 8 服务教育服务5 / 6 服务政务服务14 / 15 服务城市管理9 / 9 服务系统设置20 / 20 服务",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89215-codex-20260616-structure-05-操作-搜索",
+          "label": "操作:搜索",
+          "finalUrl": "http://127.0.0.1:49215/admin-workbench",
+          "title": "南宁城市服务",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-05-操作-搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-05-操作-搜索.png",
+          "elementCount": 530,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "管理工作台",
+            "城市体征",
+            "服务编排",
+            "工单分拨调度",
+            "市民首页",
+            "数字身份",
+            "交通出行",
+            "BRT乘车码",
+            "智慧停车",
+            "违章查询",
+            "医疗健康",
+            "预约挂号",
+            "候诊热力图",
+            "教育服务",
+            "入学报名",
+            "政务服务",
+            "政策解读",
+            "城市管理",
+            "12345诉求",
+            "个人中心",
+            "退出登录",
+            "搜索服务、医院、学校、政策...",
+            "搜索",
+            "进入大屏",
+            "城市体征大屏 实时监测城市运行状态 立即进入",
+            "服务编排中心 原子能力与流程编排 立即进入",
+            "工单分拨调度 12345诉求统一分派 立即进入",
+            "用户管理 市民与办事员管理 立即进入",
+            "全部工单",
+            "管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:城市体征",
+        "url": "http://127.0.0.1:49215/dashboard",
+        "title": "南宁城市服务",
+        "headings": [
+          "南宁城市运行体征监测中心",
+          "水电燃气用量趋势（24小时）",
+          "科室候诊分布",
+          "今日交通流量分布",
+          "实时预警信息"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "返回工作台",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "总览",
+          "交通",
+          "医疗",
+          "水电燃气"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "返回工作台管理工作台城市体征服务编排工单分拨调度实时监测中南宁城市运行体征监测中心2026年6月16日星期二02:54:38总览交通医疗水电燃气89.27626091893968%公交准点率6.7万交通流量80.6315875392751%停车周转率73.5006319038631%急诊负荷1266390.5990186704m³用水量3824096.7547375867MW用电量886770.4674608419m³用气量86,531入学报名数水电燃气用量趋势（24小时）水电气科室候诊分布今日交通流量分布实时预警信息民族大道交通拥堵预警高级当前车流量达到饱和状态，建议绕行2分钟前市第一人民医院候诊高峰中级儿科候诊时间超过60分钟15分钟前东盟商务区停车位紧张普通周边停车场周转率超过85%30分钟前用水量异常波动中级江南区用水量较昨日同期上升15%1小时前",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89215-codex-20260616-structure-06-导航-城市体征",
+          "label": "导航:城市体征",
+          "finalUrl": "http://127.0.0.1:49215/dashboard",
+          "title": "南宁城市服务",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-06-导航-城市体征.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-06-导航-城市体征.png",
+          "elementCount": 273,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "返回工作台",
+            "管理工作台",
+            "城市体征",
+            "服务编排",
+            "工单分拨调度",
+            "总览",
+            "交通",
+            "医疗",
+            "水电燃气"
+          ]
+        }
+      },
+      {
+        "label": "操作:城市体征",
+        "url": "http://127.0.0.1:49215/dashboard",
+        "title": "南宁城市服务",
+        "headings": [
+          "南宁城市运行体征监测中心",
+          "水电燃气用量趋势（24小时）",
+          "科室候诊分布",
+          "今日交通流量分布",
+          "实时预警信息"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "返回工作台",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "总览",
+          "交通",
+          "医疗",
+          "水电燃气"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "返回工作台管理工作台城市体征服务编排工单分拨调度实时监测中南宁城市运行体征监测中心2026年6月16日星期二02:54:41总览交通医疗水电燃气89.27626091893968%公交准点率6.7万交通流量80.6315875392751%停车周转率73.5006319038631%急诊负荷1266390.5990186704m³用水量3824096.7547375867MW用电量886770.4674608419m³用气量86,531入学报名数水电燃气用量趋势（24小时）水电气科室候诊分布今日交通流量分布实时预警信息民族大道交通拥堵预警高级当前车流量达到饱和状态，建议绕行2分钟前市第一人民医院候诊高峰中级儿科候诊时间超过60分钟15分钟前东盟商务区停车位紧张普通周边停车场周转率超过85%30分钟前用水量异常波动中级江南区用水量较昨日同期上升15%1小时前",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89215-codex-20260616-structure-07-操作-城市体征",
+          "label": "操作:城市体征",
+          "finalUrl": "http://127.0.0.1:49215/dashboard",
+          "title": "南宁城市服务",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-07-操作-城市体征.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-07-操作-城市体征.png",
+          "elementCount": 273,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "返回工作台",
+            "管理工作台",
+            "城市体征",
+            "服务编排",
+            "工单分拨调度",
+            "总览",
+            "交通",
+            "医疗",
+            "水电燃气"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 GET /api/government/policies 请求失败，页面无法加载对应业务数据。",
+      "接口 GET /api/urban/vital-signs 请求失败，页面无法加载对应业务数据。",
+      "接口 GET /api/urban/tickets 请求失败，页面无法加载对应业务数据。"
+    ],
+    "actionHints": [
+      "修复 /api/government/policies 的前端地址、CORS 或后端路由，并让页面渲染真实业务数据。",
+      "修复 /api/urban/vital-signs 的前端地址、CORS 或后端路由，并让页面渲染真实业务数据。",
+      "修复 /api/urban/tickets 的前端地址、CORS 或后端路由，并让页面渲染真实业务数据。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/government/policies",
+      "/api/urban/vital-signs",
+      "/api/urban/tickets"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "管理工作台",
+        "label": "系统设置 20 / 20 服务",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "管理工作台",
+        "label": "系统设置 20 / 20 服务->安全设置",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "管理工作台",
+        "label": "搜索",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "城市体征",
+        "label": "城市体征",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49215/",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-01-首屏.png",
+        "elementCount": 666,
+        "interactiveCount": 65,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "我的电子证照",
+          "立即查看 →",
+          "我的证照",
+          "更多",
+          "公交实时",
+          "在线缴费",
+          "健康档案"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-02-导航-管理工作台",
+        "label": "导航:管理工作台",
+        "finalUrl": "http://127.0.0.1:49215/admin-workbench",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-02-导航-管理工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-02-导航-管理工作台.png",
+        "elementCount": 530,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "进入大屏",
+          "城市体征大屏 实时监测城市运行状态 立即进入",
+          "服务编排中心 原子能力与流程编排 立即进入",
+          "工单分拨调度 12345诉求统一分派 立即进入",
+          "用户管理 市民与办事员管理 立即进入",
+          "全部工单",
+          "管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务",
+        "label": "操作:系统设置 20 / 20 服务",
+        "finalUrl": "http://127.0.0.1:49215/profile",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务.png",
+        "elementCount": 395,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "基本信息",
+          "安全设置",
+          "消息通知",
+          "我的预约",
+          "我的工单",
+          "我的评价",
+          "帮助中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置",
+        "label": "二层操作:系统设置 20 / 20 服务->安全设置",
+        "finalUrl": "http://127.0.0.1:49215/profile",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置.png",
+        "elementCount": 398,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "基本信息",
+          "安全设置",
+          "消息通知",
+          "我的预约",
+          "我的工单",
+          "我的评价",
+          "帮助中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-05-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49215/admin-workbench",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-05-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-05-操作-搜索.png",
+        "elementCount": 530,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "进入大屏",
+          "城市体征大屏 实时监测城市运行状态 立即进入",
+          "服务编排中心 原子能力与流程编排 立即进入",
+          "工单分拨调度 12345诉求统一分派 立即进入",
+          "用户管理 市民与办事员管理 立即进入",
+          "全部工单",
+          "管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-06-导航-城市体征",
+        "label": "导航:城市体征",
+        "finalUrl": "http://127.0.0.1:49215/dashboard",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-06-导航-城市体征.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-06-导航-城市体征.png",
+        "elementCount": 273,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "返回工作台",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "总览",
+          "交通",
+          "医疗",
+          "水电燃气"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-07-操作-城市体征",
+        "label": "操作:城市体征",
+        "finalUrl": "http://127.0.0.1:49215/dashboard",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-07-操作-城市体征.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-07-操作-城市体征.png",
+        "elementCount": 273,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "返回工作台",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "总览",
+          "交通",
+          "医疗",
+          "水电燃气"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49215/",
+    "representativeScreenshotLabel": "南宁城市服务"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49215/",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-01-首屏.png",
+        "elementCount": 666,
+        "interactiveCount": 65,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "我的电子证照",
+          "立即查看 →",
+          "我的证照",
+          "更多",
+          "公交实时",
+          "在线缴费",
+          "健康档案"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-02-导航-管理工作台",
+        "label": "导航:管理工作台",
+        "finalUrl": "http://127.0.0.1:49215/admin-workbench",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-02-导航-管理工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-02-导航-管理工作台.png",
+        "elementCount": 530,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "进入大屏",
+          "城市体征大屏 实时监测城市运行状态 立即进入",
+          "服务编排中心 原子能力与流程编排 立即进入",
+          "工单分拨调度 12345诉求统一分派 立即进入",
+          "用户管理 市民与办事员管理 立即进入",
+          "全部工单",
+          "管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务",
+        "label": "操作:系统设置 20 / 20 服务",
+        "finalUrl": "http://127.0.0.1:49215/profile",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-03-操作-系统设置-20-20-服务.png",
+        "elementCount": 395,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "基本信息",
+          "安全设置",
+          "消息通知",
+          "我的预约",
+          "我的工单",
+          "我的评价",
+          "帮助中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置",
+        "label": "二层操作:系统设置 20 / 20 服务->安全设置",
+        "finalUrl": "http://127.0.0.1:49215/profile",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-04-二层操作-系统设置-20-20-服务-安全设置.png",
+        "elementCount": 398,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "基本信息",
+          "安全设置",
+          "消息通知",
+          "我的预约",
+          "我的工单",
+          "我的评价",
+          "帮助中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-05-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49215/admin-workbench",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-05-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-05-操作-搜索.png",
+        "elementCount": 530,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "市民首页",
+          "数字身份",
+          "交通出行",
+          "BRT乘车码",
+          "智慧停车",
+          "违章查询",
+          "医疗健康",
+          "预约挂号",
+          "候诊热力图",
+          "教育服务",
+          "入学报名",
+          "政务服务",
+          "政策解读",
+          "城市管理",
+          "12345诉求",
+          "个人中心",
+          "退出登录",
+          "搜索服务、医院、学校、政策...",
+          "搜索",
+          "进入大屏",
+          "城市体征大屏 实时监测城市运行状态 立即进入",
+          "服务编排中心 原子能力与流程编排 立即进入",
+          "工单分拨调度 12345诉求统一分派 立即进入",
+          "用户管理 市民与办事员管理 立即进入",
+          "全部工单",
+          "管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-06-导航-城市体征",
+        "label": "导航:城市体征",
+        "finalUrl": "http://127.0.0.1:49215/dashboard",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-06-导航-城市体征.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-06-导航-城市体征.png",
+        "elementCount": 273,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "返回工作台",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "总览",
+          "交通",
+          "医疗",
+          "水电燃气"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-20260616-structure-07-操作-城市体征",
+        "label": "操作:城市体征",
+        "finalUrl": "http://127.0.0.1:49215/dashboard",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-07-操作-城市体征.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-codex-20260616-structure-07-操作-城市体征.png",
+        "elementCount": 273,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "返回工作台",
+          "管理工作台",
+          "城市体征",
+          "服务编排",
+          "工单分拨调度",
+          "总览",
+          "交通",
+          "医疗",
+          "水电燃气"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1600,
+    "scrollWidth": 1696,
+    "scrollHeight": 2148
+  },
+  "initialBodyTextPreview": "邕\n南宁城市服务\n\n智慧城市·山水南宁\n\n管理工作台\n城市体征\n服务编排\n工单分拨调度\n市民首页\n数字身份\n交通出行\nBRT乘车码\n智慧停车\n违章查询\n医疗健康\n预约挂号\n候诊热力图\n教育服务\n入学报名\n政务服务\n政策解读\n城市管理\n12345诉求\n个人中心\n管\n\n管理员\n\n13900139000\n\n退出登录\n搜索\n管\n\n管理员\n\n管理员\n已实名认证\n您好，管理员 👋\n\n今天想办理什么业务？\n\n我的电子证照\n南宁市小学入学报名现已开放\n\n2024年秋季学期招生工作正式启动\n\n立即查看 →\n电子证照全面推广使用\n\n一码通行，办事更便捷\n\n立即查看 →\nBRT快速公交扫码乘车优惠\n\n扫码乘车享9折优惠\n\n立即查看 →\n快捷服务\n我的证照\nBRT乘车码\n预约挂号\n入学报名\n违章查询\n12345诉求\n\n5.9万\n\n今日服务人次\n\n86.9%\n\n公交准点率\n\n81.8%\n\n停车周转率\n\n133\n\n待处理工单\n\n交通出行\n\n便民服务\n\n更多\nBRT乘车码\n智慧停车\n违章查询\n公交实时\n医疗健康\n\n便民服务\n\n更多\n预约挂号\n候诊热力图\n在线缴费\n健康档案\n教育服务\n\n便民服务\n\n更多\n入学报名\n学区查询\n学籍管理\n教育资源\n政务服务\n\n便民服务\n\n更多\n政策解读\n证件办理\n事项申报\n进度查询\n城市管理\n\n便民服务\n\n更多\n12345诉求\n问题上报\n执法公示\n满意度评价\n政策通知\n查看全部\n南宁市关于加强电动车管理的通知\n\n为进一步规范我市电动车管理，维护道路交通秩序，保障道路交通安全和畅通，根据《中华人民共和国道路交通安全法》等法律法规，结合我市实际，现就加强电动车管理有关事项通知如下： 一、严格电动车登记管理 自2024年3月1日起，新购置的电动车必须符合国家标准并取得CCC认证，方可办理注册登记。已注册登记的电动车应当按照规定定期进行安全技术检验。 二、规范电动车通行秩序 电动车应当在非机动车道内行驶，最高时速不得超过25公里/小时。禁止电动车在机动车道内行驶，禁止闯红灯、逆行、超速等违法行为。 三、加强电动车停放管理 电动车应当在规定的停车区域内有序停放，禁止在人行道、机动车道、消防通道等区域停放。对违规停放的电动车，将依法予以拖移。 四、严厉打击电动车非法营运 禁止利用电动车从事非法营运活动，对非法营运的电动车，将依法予以查处。 五、强化电动车交通安全宣传 各级各部门要加强电动车交通安全宣传教育，提高电动车驾驶人的交通安全意识和法治意识。\n\n2024-01-15\n电动车\n交通管理\n新规\n南宁市小学入学报名指导意见\n\n根据《中华人民共和国义务教育法》和自治区教育厅有关文件精神，结合我市实际，现就做好2024年我市小学入学报名工作提出如下指导意见： 一、报名条件 （一）具有本市户籍的适龄儿童； （二）父母双方或一方在本市居住的非本市户籍适龄儿童。 二、报名时间 2024年6月1日-6月15日，通过\"爱南宁\"APP或南宁市教育局官网进行网上报名。 三、报名材料 （一）本市户籍适龄儿童：户口本、父母身份证、房产证或购房合同； （二）非本市户籍适龄儿童：户口本、父母身份证、居住证、社保缴费证明。 四、录取原则 （一）按学区划分免试就近入学； （二）优先安排本市户籍适龄儿童； （三）非本市户籍适龄儿童按积分高低排序。 五、时间安排 6月1日-15日：网上报名 6月20日-30日：材料审核 7月5日：公布录取结果\n\n2024-03-01\n入学\n教育\n小学\n南宁市医疗保障惠民政策\n\n为进一步完善我市医疗保障体系，提高医疗保障水平，减轻群众医疗负担，经市人民政府同意，现就调整我市医疗保障有关政策通知如下： 一、提高门诊统筹报销比例 在职职工门诊统筹报销比例由原来的50%提高到60%，退休人员由60%提高到70%。年度最高支付限额由2000元提高到3000元。 二",
+  "bodyTextPreview": "邕\n南宁城市服务\n\n智慧城市·山水南宁\n\n管理工作台\n城市体征\n服务编排\n工单分拨调度\n市民首页\n数字身份\n交通出行\nBRT乘车码\n智慧停车\n违章查询\n医疗健康\n预约挂号\n候诊热力图\n教育服务\n入学报名\n政务服务\n政策解读\n城市管理\n12345诉求\n个人中心\n管\n\n管理员\n\n13900139000\n\n退出登录\n搜索\n管\n\n管理员\n\n管理员\n已实名认证\n您好，管理员 👋\n\n今天想办理什么业务？\n\n我的电子证照\n南宁市小学入学报名现已开放\n\n2024年秋季学期招生工作正式启动\n\n立即查看 →\n电子证照全面推广使用\n\n一码通行，办事更便捷\n\n立即查看 →\nBRT快速公交扫码乘车优惠\n\n扫码乘车享9折优惠\n\n立即查看 →\n快捷服务\n我的证照\nBRT乘车码\n预约挂号\n入学报名\n违章查询\n12345诉求\n\n今日服务人次\n\n公交准点率\n\n停车周转率\n\n待处理工单\n\n交通出行\n\n便民服务\n\n更多\nBRT乘车码\n智慧停车\n违章查询\n公交实时\n医疗健康\n\n便民服务\n\n更多\n预约挂号\n候诊热力图\n在线缴费\n健康档案\n教育服务\n\n便民服务\n\n更多\n入学报名\n学区查询\n学籍管理\n教育资源\n政务服务\n\n便民服务\n\n更多\n政策解读\n证件办理\n事项申报\n进度查询\n城市管理\n\n便民服务\n\n更多\n12345诉求\n问题上报\n执法公示\n满意度评价\n政策通知\n查看全部\n我的工单\n提交诉求",
+  "apiBase": "http://127.0.0.1:59215/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/policies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/policies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/policies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/policies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/flows"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/flows"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/flows"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/flows"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs/history?hours=24"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs/history?hours=24"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs/history?hours=24"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/auth/user"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/policies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/urban/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49215/api/government/policies"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/auth/user",
+      "path": "/api/auth/user",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取成功\",\"data\":{\"id\":\"admin-001\",\"name\":\"管理员\",\"idCard\":\"450101198001010099\",\"phone\":\"13900139000\",\"email\":\"admin@example.com\",\"realNameVerified\":true,\"faceVerified\":true,\"role\":\"admin\"},\"timestamp\":1781567685537}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/urban/vital-signs",
+      "path": "/api/urban/vital-signs",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取成功\",\"data\":{\"timestamp\":\"2026-06-15T23:54:45.992Z\",\"transportation\":{\"busOnTimeRate\":94.06417519132653,\"trafficFlow\":68867,\"parkingOccupancy\":65.26797011717946},\"medical\":{\"hospitalWaitTimes\":{\"内科\":52,\"外科\":52,\"儿科\":63,\"急诊科\":47},\"emergencyLoad\":85.16212162743258},\"utilities\":{\"waterUsage\":1437796.0896373622,\"electricityUsage\":3584338.3018366476,\"gasUsage\":997811.2739645483},\"education\":{\"schoolEnrollment\":86364},\"urbanManagement\":{\"openTickets\":133,\"resolutionRate\":78.4776"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/urban/tickets",
+      "path": "/api/urban/tickets",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取成功\",\"data\":[{\"id\":\"affab109-8311-45e4-a678-70a67a147d04\",\"ticketNo\":\"202406150001\",\"title\":\"民族大道井盖破损\",\"content\":\"民族大道与滨湖路交叉口往东50米，非机动车道上有一井盖破损，存在安全隐患，请尽快处理。\",\"category\":\"urban_management\",\"subCategory\":\"市政设施\",\"department\":\"南宁市城市管理局\",\"status\":\"processing\",\"priority\":\"high\",\"deadline\":\"2026-06-16T23:21:27.101Z\",\"createdAt\":\"2026-06-15T21:21:27.105Z\",\"updatedAt\":\"2026-06-15T22:21:27.105Z\"},{\"id\":\"89cc9c4c-42b1-4583-8dec-10df5fe97588\",\"ticketNo\":\"202406150002\",\"title\":\"BRT公交"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/government/policies",
+      "path": "/api/government/policies",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取成功\",\"data\":{\"total\":3,\"policies\":[{\"id\":\"ef74216e-0473-4366-bcc7-798d89aae0bc\",\"title\":\"南宁市关于加强电动车管理的通知\",\"category\":\"urban_management\",\"publishDate\":\"2024-01-15\",\"content\":\"为进一步规范我市电动车管理，维护道路交通秩序，保障道路交通安全和畅通，根据《中华人民共和国道路交通安全法》等法律法规，结合我市实际，现就加强电动车管理有关事项通知如下：\\n\\n一、严格电动车登记管理\\n自2024年3月1日起，新购置的电动车必须符合国家标准并取得CCC认证，方可办理注册登记。已注册登记的电动车应当按照规定定期进行安全技术检验。\\n\\n二、规范电动车通行秩序\\n电动车应当在非机动车道内行驶，最高时速不得超过25公里/小时。禁止电动车在机动车道内行驶，禁止闯红灯、逆行、超速等违法行为。\\n\\n三、加强电动车停放管理\\n电动车应当在规定的停车区域内有序停放，禁止在人行道、机动车道、消防通"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/government/flows",
+      "path": "/api/government/flows",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取成功\",\"data\":[{\"id\":\"a2c86b1c-5186-4d16-a48d-b22562be0271\",\"name\":\"入学报名全流程\",\"description\":\"小学入学报名自动审核流程\",\"flowDefinition\":{\"nodes\":[{\"id\":\"start\",\"type\":\"start\",\"label\":\"开始\"},{\"id\":\"validate\",\"type\":\"service\",\"serviceId\":\"school_query_district\",\"label\":\"学区验证\"},{\"id\":\"check_materials\",\"type\":\"service\",\"serviceId\":\"identity_verify_face\",\"label\":\"身份核验\"},{\"id\":\"submit\",\"type\":\"end\",\"label\":\"提交成功\"}],\"edges\":[{\"source\":\"start\",\"target\":\"validate\"},{\"source\":\"validate\",\"target\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/urban/vital-signs/history?hours=24",
+      "path": "/api/urban/vital-signs/history?hours=24",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取成功\",\"data\":[{\"timestamp\":\"2026-06-15T23:54:47.614Z\",\"transportation\":{\"busOnTimeRate\":88.85609912447154,\"trafficFlow\":64664,\"parkingOccupancy\":78.82733514993734},\"medical\":{\"hospitalWaitTimes\":{\"内科\":46,\"外科\":47,\"儿科\":109,\"急诊科\":49},\"emergencyLoad\":56.196896088478105},\"utilities\":{\"waterUsage\":1307119.516621918,\"electricityUsage\":3955266.850230923,\"gasUsage\":995678.429369726},\"education\":{\"schoolEnrollment\":85370},\"urbanManagement\":{\"openTickets\":178,\"resolutionRate\":86.2927"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/courses",
+      "path": "/api/courses",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49215/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ac032373",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49215/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49215/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ac032373",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49215/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ac032373",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49215/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ac032373",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49215/api/government/policies",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49215/api/urban/tickets",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49215/api/government/policies",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49215/api/urban/tickets",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49215/api/urban/vital-signs",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260616/may-89215-browser-report.json"
+}

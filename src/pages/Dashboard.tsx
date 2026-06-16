@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Activity,
   Car,
@@ -14,6 +15,12 @@ import {
   Clock,
   MapPin,
   AlertTriangle,
+  ArrowLeft,
+  LayoutDashboard,
+  Workflow,
+  ClipboardList,
+  Menu,
+  X,
 } from 'lucide-react';
 import ReactECharts from 'echarts-for-react';
 import { api } from '@/api/client';
@@ -21,12 +28,21 @@ import type { CityVitalSigns } from '../../shared/types';
 import { cn } from '@/lib/utils';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [vitalSigns, setVitalSigns] = useState<CityVitalSigns | null>(null);
   const [historyData, setHistoryData] = useState<CityVitalSigns[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeTab, setActiveTab] = useState<'overview' | 'transportation' | 'medical' | 'utilities'>('overview');
+  const [menuOpen, setMenuOpen] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const adminNavItems = [
+    { path: '/admin-workbench', icon: LayoutDashboard, label: '管理工作台' },
+    { path: '/dashboard', icon: Activity, label: '城市体征' },
+    { path: '/orchestration', icon: Workflow, label: '服务编排' },
+    { path: '/ticket-dispatch', icon: ClipboardList, label: '工单分拨调度' },
+  ];
 
   useEffect(() => {
     loadData();
@@ -317,51 +333,109 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-bg text-white p-6">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-primary-400 to-eco-400 bg-clip-text text-transparent">
-            南宁城市运行体征监测中心
-          </h1>
-          <div className="flex items-center gap-4 mt-2">
-            <p className="text-gray-400">{formatDate(currentTime)}</p>
-            <p className="text-primary-400 font-mono text-lg">{formatTime(currentTime)}</p>
-            <div className="flex items-center gap-2 text-eco-400">
-              <div className="w-2 h-2 rounded-full bg-eco-400 animate-pulse"></div>
-              实时监测中
+    <div className="min-h-screen bg-dark-bg text-white">
+      <div className="sticky top-0 z-30 bg-dark-bg/80 backdrop-blur-lg border-b border-dark-border">
+        <div className="flex items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => navigate('/admin-workbench')}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-dark-card transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span className="text-sm">返回工作台</span>
+            </button>
+            <div className="h-6 w-px bg-dark-border"></div>
+            <div className="hidden md:flex items-center gap-1">
+              {adminNavItems.map((item) => (
+                <button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  className={cn(
+                    'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all',
+                    item.path === '/dashboard'
+                      ? 'bg-primary-500/20 text-primary-400'
+                      : 'text-gray-400 hover:text-white hover:bg-dark-card'
+                  )}
+                >
+                  <item.icon className="w-4 h-4" />
+                  {item.label}
+                </button>
+              ))}
             </div>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-dark-card transition-colors"
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+          <div className="flex items-center gap-2 text-eco-400">
+            <div className="w-2 h-2 rounded-full bg-eco-400 animate-pulse"></div>
+            <span className="text-sm">实时监测中</span>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex bg-dark-card p-1 rounded-lg border border-dark-border">
-            {[
-              { key: 'overview', label: '总览' },
-              { key: 'transportation', label: '交通' },
-              { key: 'medical', label: '医疗' },
-              { key: 'utilities', label: '水电燃气' },
-            ].map(tab => (
+        {menuOpen && (
+          <div className="md:hidden border-t border-dark-border p-3 space-y-1">
+            {adminNavItems.map((item) => (
               <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key as any)}
+                key={item.path}
+                onClick={() => { navigate(item.path); setMenuOpen(false); }}
                 className={cn(
-                  'px-4 py-2 rounded-md text-sm font-medium transition-all',
-                  activeTab === tab.key
-                    ? 'bg-primary-500 text-white shadow-glow'
-                    : 'text-gray-400 hover:text-white'
+                  'w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all',
+                  item.path === '/dashboard'
+                    ? 'bg-primary-500/20 text-primary-400'
+                    : 'text-gray-400 hover:text-white hover:bg-dark-card'
                 )}
               >
-                {tab.label}
+                <item.icon className="w-4 h-4" />
+                {item.label}
               </button>
             ))}
           </div>
-          <button
-            onClick={loadData}
-            className="p-2.5 bg-dark-card border border-dark-border rounded-lg text-gray-400 hover:text-white hover:border-primary-500 transition-colors"
-          >
-            <RefreshCw className="w-5 h-5" />
-          </button>
-        </div>
+        )}
       </div>
+
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-primary-400 to-eco-400 bg-clip-text text-transparent">
+              南宁城市运行体征监测中心
+            </h1>
+            <div className="flex items-center gap-4 mt-2">
+              <p className="text-gray-400">{formatDate(currentTime)}</p>
+              <p className="text-primary-400 font-mono text-lg">{formatTime(currentTime)}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex bg-dark-card p-1 rounded-lg border border-dark-border">
+              {[
+                { key: 'overview', label: '总览' },
+                { key: 'transportation', label: '交通' },
+                { key: 'medical', label: '医疗' },
+                { key: 'utilities', label: '水电燃气' },
+              ].map(tab => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key as any)}
+                  className={cn(
+                    'px-4 py-2 rounded-md text-sm font-medium transition-all',
+                    activeTab === tab.key
+                      ? 'bg-primary-500 text-white shadow-glow'
+                      : 'text-gray-400 hover:text-white'
+                  )}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={loadData}
+              className="p-2.5 bg-dark-card border border-dark-border rounded-lg text-gray-400 hover:text-white hover:border-primary-500 transition-colors"
+            >
+              <RefreshCw className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
 
       <div className="grid grid-cols-4 gap-4 mb-6">
         {statCards.map((card, index) => {
@@ -485,6 +559,7 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

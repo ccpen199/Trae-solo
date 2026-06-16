@@ -5,11 +5,18 @@ import type {
   CityVitalSigns,
   ComplaintTicket,
   PolicyDocument,
+  PolicyPushRecord,
   AtomicService,
   ParkingLot,
   Hospital,
+  Doctor,
+  AppointmentRecord,
   TrafficViolation,
   School,
+  SchoolDistrictResult,
+  BRTTravelRecord,
+  TicketLog,
+  EnrollmentApplication,
 } from '../../shared/types';
 
 export const mockUsers: UserIdentity[] = [
@@ -47,45 +54,100 @@ export const mockUsers: UserIdentity[] = [
 
 export const mockCertificates: DigitalCertificate[] = [
   {
-    id: uuidv4(),
+    id: 'cert-id-card-001',
     type: 'id_card',
     number: '450101199001010001',
     name: '张三',
     issueDate: '2010-01-01',
     expiryDate: '2030-01-01',
     status: 'active',
+    metadata: {
+      性别: '男',
+      民族: '汉族',
+      出生日期: '1990-01-01',
+      住址: '南宁市青秀区滨湖路66号',
+      签发机关: '南宁市公安局青秀分局',
+      公民身份号码: '450101199001010001',
+    },
   },
   {
-    id: uuidv4(),
+    id: 'cert-social-001',
     type: 'social_security',
     number: 'A123456789',
     name: '张三',
     issueDate: '2015-01-01',
     status: 'active',
+    metadata: {
+      社保卡号: 'A123456789',
+      医保卡号: 'YB987654321',
+      参保状态: '正常参保',
+      缴费基数: '5000元',
+      所属单位: '南宁市某某有限公司',
+      个人账户余额: '2580.50元',
+    },
   },
   {
-    id: uuidv4(),
+    id: 'cert-driving-001',
     type: 'driving_license',
     number: '450101199001010001',
     name: '张三',
     issueDate: '2012-06-15',
     expiryDate: '2028-06-15',
     status: 'active',
+    metadata: {
+      准驾车型: 'C1',
+      初次领证日期: '2012-06-15',
+      有效期开始: '2022-06-15',
+      有效期截止: '2028-06-15',
+      发证机关: '南宁市公安局交通警察支队',
+      累积记分: '3分',
+      状态: '正常',
+    },
   },
   {
-    id: uuidv4(),
+    id: 'cert-vehicle-001',
+    type: 'vehicle_license',
+    number: '桂A12345',
+    name: '张三',
+    issueDate: '2020-03-20',
+    expiryDate: '2026-03-20',
+    status: 'active',
+    metadata: {
+      号牌号码: '桂A12345',
+      车辆类型: '小型轿车',
+      品牌型号: '大众汽车牌SVW71612GH',
+      车辆识别代号: 'LFV2A2151D3012345',
+      发动机号码: '123456',
+      注册日期: '2020-03-20',
+      发证日期: '2020-03-20',
+      使用性质: '非营运',
+      检验有效期至: '2026-03-31',
+    },
+  },
+  {
+    id: 'cert-ebike-001',
     type: 'ebike_plate',
     number: '南宁00001',
     name: '张三',
     issueDate: '2022-03-15',
     expiryDate: '2027-03-15',
     status: 'active',
+    metadata: {
+      号牌号码: '南宁00001',
+      车辆类型: '电动自行车',
+      品牌型号: '爱玛 TDT123Z',
+      整车编码: '123456789012345',
+      电机编号: 'MOTOR123456',
+      颜色: '白色',
+      注册日期: '2022-03-15',
+      有效期至: '2027-03-15',
+    },
   },
 ];
 
 export const mockParkingLots: ParkingLot[] = [
   {
-    id: uuidv4(),
+    id: 'park-001',
     name: '万象城停车场',
     address: '南宁市青秀区民族大道136号',
     lat: 22.8171,
@@ -94,9 +156,15 @@ export const mockParkingLots: ParkingLot[] = [
     availableSpaces: 342,
     pricePerHour: 5,
     distance: 0.5,
+    phone: '0771-1234567',
+    openHours: '全天24小时',
+    parkingType: '地下停车场',
+    facilities: ['充电桩', '洗车服务', '无障碍车位', '母婴车位'],
+    rating: 4.8,
+    reviews: 2568,
   },
   {
-    id: uuidv4(),
+    id: 'park-002',
     name: '南宁东站停车场',
     address: '南宁市青秀区凤岭北路北侧',
     lat: 22.8512,
@@ -105,9 +173,15 @@ export const mockParkingLots: ParkingLot[] = [
     availableSpaces: 856,
     pricePerHour: 6,
     distance: 2.3,
+    phone: '0771-2345678',
+    openHours: '全天24小时',
+    parkingType: '室内+室外',
+    facilities: ['充电桩', '24小时安保', '行李寄存', '便利店'],
+    rating: 4.5,
+    reviews: 1892,
   },
   {
-    id: uuidv4(),
+    id: 'park-003',
     name: '朝阳广场地下停车场',
     address: '南宁市兴宁区朝阳路38号',
     lat: 22.8245,
@@ -116,9 +190,15 @@ export const mockParkingLots: ParkingLot[] = [
     availableSpaces: 45,
     pricePerHour: 8,
     distance: 1.2,
+    phone: '0771-3456789',
+    openHours: '06:00 - 24:00',
+    parkingType: '地下停车场',
+    facilities: ['充电桩', '洗车服务', '智能寻车'],
+    rating: 4.2,
+    reviews: 956,
   },
   {
-    id: uuidv4(),
+    id: 'park-004',
     name: '广西医科大学第一附属医院停车场',
     address: '南宁市青秀区双拥路6号',
     lat: 22.8200,
@@ -127,6 +207,46 @@ export const mockParkingLots: ParkingLot[] = [
     availableSpaces: 89,
     pricePerHour: 4,
     distance: 0.8,
+    phone: '0771-4567890',
+    openHours: '全天24小时',
+    parkingType: '室内停车场',
+    facilities: ['无障碍车位', '母婴车位', '电梯直达', '便利店'],
+    rating: 4.0,
+    reviews: 3241,
+  },
+  {
+    id: 'park-005',
+    name: '青秀山风景区停车场',
+    address: '南宁市青秀区青秀山风景区东门',
+    lat: 22.8050,
+    lng: 108.3850,
+    totalSpaces: 1500,
+    availableSpaces: 620,
+    pricePerHour: 3,
+    distance: 3.5,
+    phone: '0771-5678901',
+    openHours: '07:00 - 22:00',
+    parkingType: '室外停车场',
+    facilities: ['充电桩', '遮阳棚', '厕所', '便利店'],
+    rating: 4.6,
+    reviews: 1456,
+  },
+  {
+    id: 'park-006',
+    name: '江南万达广场停车场',
+    address: '南宁市江南区亭洪路48号',
+    lat: 22.7950,
+    lng: 108.3100,
+    totalSpaces: 2500,
+    availableSpaces: 980,
+    pricePerHour: 4,
+    distance: 4.2,
+    phone: '0771-6789012',
+    openHours: '全天24小时',
+    parkingType: '地下停车场',
+    facilities: ['充电桩', '洗车服务', '智能寻车', '母婴车位'],
+    rating: 4.7,
+    reviews: 2103,
   },
 ];
 
@@ -225,7 +345,7 @@ export const mockHospitals: Hospital[] = [
 
 export const mockViolations: TrafficViolation[] = [
   {
-    id: uuidv4(),
+    id: 'violation-001',
     plateNumber: '桂A12345',
     violationType: '闯红灯',
     location: '民族大道-滨湖路口',
@@ -233,9 +353,11 @@ export const mockViolations: TrafficViolation[] = [
     fine: 200,
     points: 6,
     status: 'unpaid',
+    description: '驾驶机动车违反道路交通信号灯通行',
+    cameraLocation: '滨湖路口东向西方向电子警察',
   },
   {
-    id: uuidv4(),
+    id: 'violation-002',
     plateNumber: '桂A12345',
     violationType: '违停',
     location: '青秀路',
@@ -243,9 +365,11 @@ export const mockViolations: TrafficViolation[] = [
     fine: 150,
     points: 0,
     status: 'unpaid',
+    description: '在设有禁停标志、标线的路段，在机动车道与非机动车道、人行道之间设有隔离设施的路段以及人行横道、施工地段停车',
+    cameraLocation: '青秀路中段违停抓拍球机',
   },
   {
-    id: uuidv4(),
+    id: 'violation-003',
     plateNumber: '桂A12345',
     violationType: '超速10%以下',
     location: '环城高速',
@@ -253,6 +377,90 @@ export const mockViolations: TrafficViolation[] = [
     fine: 0,
     points: 0,
     status: 'paid',
+    description: '驾驶中型以上载客载货汽车、危险物品运输车辆以外的机动车超过规定时速10%以下的',
+    cameraLocation: '环城高速K25+500处测速点',
+  },
+  {
+    id: 'violation-004',
+    plateNumber: '桂A12345',
+    violationType: '不按导向车道行驶',
+    location: '朝阳路-人民路口',
+    time: '2024-02-10 09:15:00',
+    fine: 100,
+    points: 2,
+    status: 'unpaid',
+    description: '通过有灯控路口时，不按所需行进方向驶入导向车道',
+    cameraLocation: '人民路口南向北方向电子警察',
+  },
+  {
+    id: 'violation-005',
+    plateNumber: '桂A12345',
+    violationType: '未系安全带',
+    location: '民族大道-古城路口',
+    time: '2024-02-15 11:30:00',
+    fine: 50,
+    points: 1,
+    status: 'paid',
+    description: '驾驶人未按规定使用安全带',
+    cameraLocation: '古城路口西向东方向电子警察',
+  },
+];
+
+export const mockBRTTravelRecords: BRTTravelRecord[] = [
+  {
+    id: 'brt-record-001',
+    routeName: 'BRT1号线',
+    startStation: '南宁东站',
+    endStation: '朝阳广场站',
+    startTime: '2024-06-15 08:00:00',
+    endTime: '2024-06-15 08:35:00',
+    fare: 2.0,
+    status: 'completed',
+    paymentMethod: '电子钱包',
+  },
+  {
+    id: 'brt-record-002',
+    routeName: 'BRT1号线',
+    startStation: '朝阳广场站',
+    endStation: '民族影城站',
+    startTime: '2024-06-14 18:30:00',
+    endTime: '2024-06-14 18:50:00',
+    fare: 2.0,
+    status: 'completed',
+    paymentMethod: '电子钱包',
+  },
+  {
+    id: 'brt-record-003',
+    routeName: 'BRT2号线',
+    startStation: '五象湖站',
+    endStation: '玉洞站',
+    startTime: '2024-06-13 09:15:00',
+    endTime: '2024-06-13 09:40:00',
+    fare: 2.0,
+    status: 'completed',
+    paymentMethod: '电子钱包',
+  },
+  {
+    id: 'brt-record-004',
+    routeName: 'BRT1号线',
+    startStation: '万象城站',
+    endStation: '滨湖路站',
+    startTime: '2024-06-12 07:45:00',
+    endTime: '2024-06-12 08:00:00',
+    fare: 2.0,
+    status: 'completed',
+    paymentMethod: '电子钱包',
+  },
+  {
+    id: 'brt-record-005',
+    routeName: 'BRT1号线',
+    startStation: '火车站',
+    endStation: '南宁东站',
+    startTime: '2024-06-10 14:00:00',
+    endTime: '2024-06-10 14:40:00',
+    fare: 2.0,
+    status: 'refunded',
+    paymentMethod: '电子钱包',
   },
 ];
 
@@ -586,4 +794,211 @@ export function generateVitalSigns(): CityVitalSigns {
   };
 }
 
-export const mockUser = mockUsers[0];
+export const mockAppointments: AppointmentRecord[] = [
+  {
+    id: 'appt-001',
+    hospitalId: 'h001',
+    hospitalName: '广西医科大学第一附属医院',
+    departmentId: 'd001',
+    departmentName: '内科',
+    doctorId: 'doc001',
+    doctorName: '王医生',
+    doctorTitle: '主任医师',
+    date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    time: '09:00',
+    status: 'pending',
+    appointmentNo: 'YY202406170001',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'appt-002',
+    hospitalId: 'h002',
+    hospitalName: '广西壮族自治区人民医院',
+    departmentId: 'd005',
+    departmentName: '心血管内科',
+    doctorId: 'doc007',
+    doctorName: '黄医生',
+    doctorTitle: '主任医师',
+    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    time: '10:30',
+    status: 'completed',
+    appointmentNo: 'YY202406120002',
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'appt-003',
+    hospitalId: 'h001',
+    hospitalName: '广西医科大学第一附属医院',
+    departmentId: 'd003',
+    departmentName: '儿科',
+    doctorId: 'doc005',
+    doctorName: '陈医生',
+    doctorTitle: '主任医师',
+    date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    time: '14:00',
+    status: 'cancelled',
+    appointmentNo: 'YY202406080003',
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+export const mockTicketLogs: Record<string, TicketLog[]> = {
+  '202406150001': [
+    {
+      id: 'log-001',
+      ticketId: '202406150001',
+      action: 'submit',
+      description: '市民提交诉求',
+      operator: '张三',
+      department: '市民',
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'log-002',
+      ticketId: '202406150001',
+      action: 'classify',
+      description: 'AI智能分类为市政设施类',
+      operator: '系统',
+      department: 'AI分类系统',
+      timestamp: new Date(Date.now() - 110 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'log-003',
+      ticketId: '202406150001',
+      action: 'assign',
+      description: '分派至南宁市城市管理局市政科',
+      operator: '李科长',
+      department: '南宁市城市管理局',
+      timestamp: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'log-004',
+      ticketId: '202406150001',
+      action: 'process',
+      description: '已安排维修人员前往现场处理',
+      operator: '王师傅',
+      department: '市政设施维护队',
+      timestamp: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+    },
+  ],
+};
+
+export const mockPolicyPushRecords: PolicyPushRecord[] = [
+  {
+    id: 'push-001',
+    policyId: 'policy-001',
+    policyTitle: '南宁市关于加强电动车管理的通知',
+    category: 'urban_management',
+    pushTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    pushType: 'system',
+    read: false,
+  },
+  {
+    id: 'push-002',
+    policyId: 'policy-002',
+    policyTitle: '南宁市小学入学报名指导意见',
+    category: 'education',
+    pushTime: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    pushType: 'subscription',
+    read: true,
+  },
+  {
+    id: 'push-003',
+    policyId: 'policy-003',
+    policyTitle: '南宁市医疗保障惠民政策',
+    category: 'medical',
+    pushTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    pushType: 'recommendation',
+    read: true,
+  },
+];
+
+export function getSchoolByAddress(address: string): SchoolDistrictResult | null {
+  if (!address || address.length < 2) return null;
+  
+  const districts = ['青秀区', '西乡塘区', '兴宁区', '江南区', '良庆区', '邕宁区'];
+  let matchedDistrict = '青秀区';
+  
+  for (const district of districts) {
+    if (address.includes(district)) {
+      matchedDistrict = district;
+      break;
+    }
+  }
+  
+  const districtSchools = mockSchools.filter(s => s.district === matchedDistrict && s.type === 'primary');
+  if (districtSchools.length === 0) {
+    return {
+      schoolId: 's001',
+      schoolName: '南宁市滨湖路小学',
+      schoolType: 'primary',
+      distance: 0.8,
+      address: '南宁市青秀区滨湖路66号',
+      district: '青秀区',
+      enrollmentQuota: 450,
+    };
+  }
+  
+  const school = districtSchools[0];
+  return {
+    schoolId: school.id,
+    schoolName: school.name,
+    schoolType: school.type,
+    distance: Math.round((0.5 + Math.random() * 2) * 10) / 10,
+    address: school.address,
+    district: school.district,
+    enrollmentQuota: 400 + Math.floor(Math.random() * 200),
+  };
+}
+
+export const mockEnrollmentGuidelines = {
+  title: '2024年南宁市小学入学报名指南',
+  content: '凡年满6周岁（2018年8月31日前出生），具有本市户籍或父母一方持有本市居住证的适龄儿童，均可申请报名。',
+  timeline: [
+    { date: '6月1日-15日', event: '网上报名' },
+    { date: '6月20日-30日', event: '材料审核' },
+    { date: '7月5日', event: '公布录取结果' },
+    { date: '7月10日-15日', event: '新生注册' },
+    { date: '9月1日', event: '正式开学' },
+  ],
+  requiredDocuments: [
+    '户口本（父母及子女）',
+    '父母身份证',
+    '房产证或购房合同',
+    '儿童预防接种证',
+    '出生医学证明',
+    '非本市户籍需提供居住证',
+    '非本市户籍需提供社保证明',
+  ],
+};
+
+export const mockEnrollments: EnrollmentApplication[] = [
+  {
+    id: 'enroll-001',
+    childName: '张小明',
+    childIdCard: '450101201801010011',
+    schoolId: 's001',
+    status: 'approved',
+    reviewComment: '经审核，材料齐全，符合入学条件，同意录取。',
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'enroll-002',
+    childName: '李小红',
+    childIdCard: '450101201803050022',
+    schoolId: 's002',
+    status: 'reviewing',
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'enroll-003',
+    childName: '王小强',
+    childIdCard: '450101201805120033',
+    schoolId: 's003',
+    status: 'rejected',
+    reviewComment: '材料不完整，请补充社保证明后重新提交。',
+    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+export const mockUser = mockUsers.find((user) => user.role === 'admin') || mockUsers[0];

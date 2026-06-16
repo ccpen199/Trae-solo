@@ -58,7 +58,17 @@ export class AuthService {
     };
   }
 
-  getCurrentUser(): UserIdentity {
+  getCurrentUser(token?: string): UserIdentity {
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; role: string };
+        const tokenUser = mockUsers.find(u => u.id === decoded.userId);
+        if (tokenUser) return tokenUser;
+      } catch {
+        // Fall back to the default demo user for unsigned local demo sessions.
+      }
+    }
+
     return mockUser;
   }
 }
