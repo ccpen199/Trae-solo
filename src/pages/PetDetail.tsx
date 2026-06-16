@@ -74,7 +74,7 @@ export default function PetDetail() {
           <ArrowLeft className="w-5 h-5 text-gray-600" />
         </button>
         <div className="flex-1">
-          <h1 className="section-title">{pet.name}</h1>
+          <h1 className="section-title">宠物详情 · {pet.name}</h1>
           <p className="section-subtitle">{speciesMap[pet.species]} · 健康档案</p>
         </div>
         <button className="btn-secondary">

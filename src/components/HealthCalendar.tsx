@@ -47,9 +47,9 @@ export default function HealthCalendar({ events, compact, onEventClick }: Health
 
   if (compact) {
     const upcomingEvents = events
-      .filter((e) => new Date(e.date) >= new Date(today.toDateString()))
+      .filter((e) => !e.completed)
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-      .slice(0, 3);
+      .slice(0, 4);
 
     return (
       <div className="space-y-3">
@@ -59,6 +59,10 @@ export default function HealthCalendar({ events, compact, onEventClick }: Health
           upcomingEvents.map((event) => {
             const config = typeConfig[event.type];
             const Icon = config.icon;
+            const eventDate = new Date(event.date);
+            const isPast = eventDate < new Date(new Date().toDateString());
+            const isToday = eventDate.toDateString() === new Date().toDateString();
+            const isUpcoming = !isPast && !isToday;
             return (
               <button
                 key={event.id}
@@ -77,6 +81,15 @@ export default function HealthCalendar({ events, compact, onEventClick }: Health
                     })}
                   </p>
                 </div>
+                {isToday && (
+                  <span className="text-[10px] font-semibold px-2 py-1 rounded-full bg-forest-100 text-forest-700">今日</span>
+                )}
+                {isUpcoming && (
+                  <span className="text-[10px] font-semibold px-2 py-1 rounded-full bg-blue-100 text-blue-700">待预约</span>
+                )}
+                {isPast && !event.completed && (
+                  <span className="text-[10px] font-semibold px-2 py-1 rounded-full bg-warm-100 text-warm-600">逾期</span>
+                )}
                 {event.completed && (
                   <span className="tag tag-green">
                     <Check className="w-3 h-3" /> 已完成

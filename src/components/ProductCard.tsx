@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ShoppingCart, Star, Package, Pill } from 'lucide-react';
+import { ShoppingCart, Star, Package, Pill, ShieldCheck, AlertTriangle } from 'lucide-react';
 import type { Product } from '@shared/types';
 import { cn } from '@/lib/utils';
 
@@ -43,6 +43,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.name}
         </h3>
 
+        {product.isPrescription && (
+          <div className="flex items-center gap-1.5 mb-2 p-1.5 rounded-lg bg-warm-50 border border-warm-100">
+            <ShieldCheck className="w-3.5 h-3.5 text-warm-500 shrink-0" />
+            <span className="text-[10px] text-warm-600 font-semibold">需医生处方 · 双签验证</span>
+          </div>
+        )}
+
         <div className="flex items-center gap-1 mb-3">
           <div className="flex items-center gap-0.5">
             {[1, 2, 3, 4, 5].map((i) => (
@@ -66,10 +73,22 @@ export default function ProductCard({ product }: ProductCardProps) {
           <button
             onClick={(e) => {
               e.stopPropagation();
+              if (product.isPrescription) {
+                navigate(`/shop/${product.id}`);
+              }
             }}
-            className="p-2.5 rounded-xl bg-forest-500 text-white hover:bg-forest-600 transition-colors shadow-soft"
+            className={cn(
+              "p-2.5 rounded-xl transition-colors shadow-soft",
+              product.isPrescription
+                ? "bg-warm-100 text-warm-600 hover:bg-warm-200"
+                : "bg-forest-500 text-white hover:bg-forest-600"
+            )}
           >
-            <ShoppingCart className="w-4 h-4" />
+            {product.isPrescription ? (
+              <AlertTriangle className="w-4 h-4" />
+            ) : (
+              <ShoppingCart className="w-4 h-4" />
+            )}
           </button>
         </div>
       </div>

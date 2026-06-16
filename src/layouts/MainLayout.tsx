@@ -111,26 +111,39 @@ function groupNavItems(items: NavItem[]) {
 export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout, login } = useAuthStore();
+  const { user, logout, login, impersonateRole, originalCredentials, startImpersonation, exitImpersonation } = useAuthStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [impersonating, setImpersonating] = useState(false);
+  const [exitingPreview, setExitingPreview] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/login', { replace: true });
   };
 
+  const handleExitImpersonation = async () => {
+    if (!originalCredentials) return;
+    setExitingPreview(true);
+    try {
+      const { user: origUser, token: origToken } = await api.auth.login(originalCredentials.phone, originalCredentials.password);
+      exitImpersonation();
+      login(origUser, origToken);
+      const homePath = `/${originalCredentials.role}/dashboard`;
+      navigate(homePath, { replace: true });
+    } catch {
+    } finally {
+      setExitingPreview(false);
+    }
+  };
+
   const handleNavClick = async (path: string) => {
-    if (path === '/' && user && ['admin', 'platform', 'ops'].includes(user.role) && !impersonating) {
-      setImpersonating(true);
+    if (path === '/' && user && ['admin', 'platform', 'ops'].includes(user.role) && !impersonateRole) {
       try {
         const { user: ownerUser, token: ownerToken } = await api.auth.login('13800000001', '123456');
+        startImpersonation('owner', { phone: user.phone === '13800000001' ? 'admin' : user.phone, password: '123456', role: user.role });
         login(ownerUser, ownerToken);
         navigate('/', { replace: true });
-      } catch {
-        setImpersonating(false);
-      }
+      } catch {}
       return;
     }
     navigate(path);
@@ -138,9 +151,10 @@ export default function MainLayout() {
   };
 
   const role = user?.role;
-  const navItems = getNavForRole(role);
+  const effectiveRole = impersonateRole ? impersonateRole : role;
+  const navItems = getNavForRole(effectiveRole);
   const groupedNav = groupNavItems(navItems);
-  const roleInfo = role ? ROLE_LABEL[role] : ROLE_LABEL.owner;
+  const roleInfo = effectiveRole ? ROLE_LABEL[effectiveRole] : ROLE_LABEL.owner;
 
   const currentNav = navItems.find(item => location.pathname === item.path
     || (item.path !== '/' && location.pathname.startsWith(item.path)));
@@ -165,7 +179,7 @@ export default function MainLayout() {
           <div className="flex items-center justify-between">
             <button
               className="flex items-center gap-3"
-              onClick={() => navigate(role ? (role === 'owner' ? '/' : `/${role}/dashboard`) : '/')}
+              onClick={() => navigate(effectiveRole ? (effectiveRole === 'owner' ? '/' : `/${effectiveRole}/dashboard`) : '/')}
             >
               <div className={cn('w-11 h-11 rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-md', roleInfo.accent)}>
                 <PawPrint className="w-5.5 h-5.5 text-white" />
@@ -184,7 +198,7 @@ export default function MainLayout() {
               <X className="w-5 h-5 text-gray-600" />
             </button>
           </div>
-          {role === 'owner' ? null : (
+          {effectiveRole === 'owner' ? null : (
             <div className="mt-4 p-2.5 rounded-xl bg-gradient-to-r bg-clip-padding border-forest-50 border flex items-center justify-between">
               <span className="text-[11px] font-semibold text-forest-800">权限：{roleInfo.name}</span>
               <ShieldAlert className="w-3.5 h-3.5 text-forest-600" />
@@ -277,6 +291,23 @@ export default function MainLayout() {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
+        {impersonateRole && originalCredentials && (
+          <div className="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 text-white px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 shadow-md z-30">
+            <div className="flex items-center gap-2 min-w-0">
+              <ShieldAlert className="w-4 h-4 shrink-0" />
+              <span className="text-sm font-semibold truncate">
+                正在以{ROLE_LABEL[impersonateRole]?.name || impersonateRole}身份预览 · 原身份：{ROLE_LABEL[originalCredentials.role]?.name || originalCredentials.role}
+              </span>
+            </div>
+            <button
+              onClick={handleExitImpersonation}
+              disabled={exitingPreview}
+              className="shrink-0 px-3 py-1 rounded-lg bg-white/20 hover:bg-white/30 text-sm font-bold backdrop-blur-sm transition-all disabled:opacity-50"
+            >
+              {exitingPreview ? '退出中...' : '退出预览'}
+            </button>
+          </div>
+        )}
         <header className="sticky top-0 z-30 bg-white/85 backdrop-blur-xl border-b border-forest-50">
           <div className="h-16 px-4 sm:px-6 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
@@ -302,7 +333,7 @@ export default function MainLayout() {
             </div>
 
             <div className="flex items-center gap-1.5">
-              {role !== 'ops' && (
+              {effectiveRole !== 'ops' && (
                 <div className="hidden md:flex relative mr-2">
                   <Search className="w-4 h-4" />
                 </div>
@@ -314,7 +345,7 @@ export default function MainLayout() {
                 <span className="hidden sm:hidden text-[9px] absolute -top-0.5 -right-0.5 bg-rose-500 text-white px-1 rounded-full font-bold">3</span>
               </button>
 
-              {(role === 'admin' || role === 'platform') && (
+              {(effectiveRole === 'admin' || effectiveRole === 'platform') && (
                 <button className="hidden md:inline-flex p-2.5 rounded-xl hover:bg-purple-50 transition-all text-purple-600" title="审核队列">
                   <FileCheck2 className="w-5 h-5" />
                 </button>
