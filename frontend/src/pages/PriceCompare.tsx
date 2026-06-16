@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, App, Statistic, List, Progress, Radio, Divider, Steps } from 'antd';
+import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, message, Statistic, List, Progress, Radio, Divider, Steps } from 'antd';
 import { BulbOutlined, ThunderboltOutlined, DollarOutlined, StarOutlined, SafetyOutlined } from '@ant-design/icons';
 import { api } from '../api';
 import ReactECharts from 'echarts-for-react';
@@ -7,7 +7,6 @@ import ReactECharts from 'echarts-for-react';
 const cities = ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '西安', '南京', '重庆', '天津', '苏州', '青岛', '长沙', '郑州'];
 
 export default function PriceCompare() {
-  const { message } = App.useApp();
   const [form] = Form.useForm();
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);

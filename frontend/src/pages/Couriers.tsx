@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import {
-  Card, Table, Tag, Input, Select, Button, Space, App, Progress, Avatar, Statistic,
+  Card, Table, Tag, Input, Select, Button, Space, message, Progress, Avatar, Statistic,
   Row, Col, Badge, List, Drawer, Modal, Form, DatePicker, TimePicker, Timeline,
   Tabs, Alert, Empty, Rate, Segmented, Divider, Steps, Checkbox, Tooltip, Upload
 } from 'antd';
@@ -35,7 +35,6 @@ const statusMap: Record<string, { text: string; color: string; icon: string }> =
 
 export default function Couriers() {
   const nav = useNavigate();
-  const { message, modal } = App.useApp();
   const [data, setData] = useState<any>({ list: [], total: 0 });
   const [pool, setPool] = useState<any>({ list: [], stats: {} });
   const [f, setF] = useState<any>({});
@@ -132,7 +131,7 @@ export default function Couriers() {
       setSignPad(dataUrl);
     }
     if (!faceVerified) {
-      modal.warning({
+      Modal.warning({
         title: '错收误收风险提醒',
         content: '未经过人脸识别二次确认，此签收可能存在错收误收风险，系统将自动标记为"待人工复核"。',
         okText: '确认签收（待复核）',

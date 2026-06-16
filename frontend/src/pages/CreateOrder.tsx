@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, App, Steps, Alert, Statistic, Radio, List, Progress } from 'antd';
+import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, message, Modal, Steps, Alert, Statistic, Radio, List, Progress } from 'antd';
 import { SendOutlined, SafetyOutlined, BulbOutlined, WarningOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { api } from '../api';
 import ReactECharts from 'echarts-for-react';
@@ -7,7 +7,6 @@ import ReactECharts from 'echarts-for-react';
 const cities = ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '西安', '南京', '重庆', '天津', '苏州', '青岛', '长沙', '郑州'];
 
 export default function CreateOrder() {
-  const { message, modal } = App.useApp();
   const [form] = Form.useForm();
   const [step, setStep] = useState(0);
   const [priceResult, setPriceResult] = useState<any>(null);
@@ -43,7 +42,7 @@ export default function CreateOrder() {
 
       const hasFake = addressCheck();
       if (hasFake) {
-        modal.confirm({
+        Modal.confirm({
           title: <><WarningOutlined style={{ color: '#ff4d4f' }} /> 检测到异常收货地址</>,
           content: '该地址疑似虚构/不存在，继续下单可能导致包裹无法送达，是否仍然提交？',
           okText: '仍然提交',

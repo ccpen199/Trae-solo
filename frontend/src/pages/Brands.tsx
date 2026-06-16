@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Card, Table, Tag, Input, Button, Space, Switch, App, Progress, Avatar, Row, Col, Statistic } from 'antd';
+import { Card, Table, Tag, Input, Button, Space, Switch, message, Progress, Avatar, Row, Col, Statistic } from 'antd';
 import { SearchOutlined, ApiOutlined } from '@ant-design/icons';
 import { api } from '../api';
 
 export default function Brands() {
-  const { message } = App.useApp();
   const [data, setData] = useState<any>({ list: [], total: 0 });
   const [keyword, setKeyword] = useState('');
   const [page, setPage] = useState(1);

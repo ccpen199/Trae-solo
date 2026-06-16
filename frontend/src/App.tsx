@@ -1,5 +1,5 @@
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Layout, Menu, Dropdown, Avatar, Space, Typography, Button, Badge, App as AntdAppComp } from 'antd';
+import { Layout, Menu, Dropdown, Avatar, Space, Typography, Button, Badge, message } from 'antd';
 import {
   DashboardOutlined, UnorderedListOutlined, ShopOutlined, UserOutlined,
   ApiOutlined, EnvironmentOutlined, AlertOutlined, LogoutOutlined,
@@ -32,7 +32,6 @@ function PrivateRoute({ children }: { children: JSX.Element }) {
 export default function App() {
   const location = useLocation();
   const nav = useNavigate();
-  const { message } = AntdAppComp.useApp();
   const [user, setUser] = useState<any>(null);
   const [collapsed, setCollapsed] = useState(false);
 

@@ -1,0 +1,599 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T18:00:59.036Z",
+  "order": "may-89219",
+  "roundIndex": 106,
+  "captureId": "may-89219-codex",
+  "url": "http://127.0.0.1:49219/",
+  "initialUrl": "http://127.0.0.1:49219/",
+  "finalUrl": "http://127.0.0.1:49219/login",
+  "status": 200,
+  "title": "快递全链路协同开放平台",
+  "initialTitle": "快递全链路协同开放平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/.trae/codex-runtime-check-20260616/may-89219-codex-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89219/.trae/codex-runtime-check-20260616/may-89219-codex-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "purchase",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49219/login"
+    },
+    {
+      "action": "click",
+      "label": "购买/提交相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "购买/提交相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49219/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49219/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49219/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49219/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "user1",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "user1:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:user1",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "user1",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49219/login"
+      },
+      {
+        "action": "login-result",
+        "label": "user1",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49219/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "courier1",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "courier1:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:courier1",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /登录|登陆|Sign in|Login|进入/i }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" class=\"ant-btn css-dev-only-d"
+      },
+      {
+        "action": "click",
+        "label": "登录:courier1",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "courier1",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49219/login"
+      },
+      {
+        "action": "login-result",
+        "label": "courier1",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49219/login",
+        "feedback": []
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49219/login",
+        "title": "快递全链路协同开放平台",
+        "headings": [
+          "快递全链路协同平台",
+          "连接 30+ 快递品牌 一站式智能物流服务",
+          "账号登录"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登录系统"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "admin / user1 / courier1",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "默认密码 123456",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "快递全链路协同平台Express Open Platform · 开放协同 · 智能调度连接 30+ 快递品牌一站式智能物流服务面向快递全链路协同的开放平台，覆盖快递员资源池、包裹生命周期跟踪、智能比价决策。 提供快递员轻量化工作台、用户包裹地图可视化、后台网络拓扑与服务质量仪表盘、API开放中心。快递员资源池统一认证·服务评级30+品牌API申通/中通/顺丰等📍实时地图追踪位置·倒计时·语音⚡智能比价引擎价格·时效·覆盖度账号登录选择下方演示账号快速体验或输入自定义账号账号密码登录用户名密码登录系统🎯 演示账号admin / 123456平台管理员查看仪表盘、品牌管理、拓扑图、API开放中心user1 / 123456普通用户下单、比价、包裹地图、签收验证、投诉courier1 / 123456快递员工作台、待派单聚合、电子签收、SLA监控",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89219-codex-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49219/login",
+          "title": "快递全链路协同开放平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/.trae/codex-runtime-check-20260616/may-89219-codex-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/.trae/codex-runtime-check-20260616/may-89219-codex-structure-01-首屏.png",
+          "elementCount": 137,
+          "interactiveCount": 6,
+          "interactiveLabels": [
+            "账号密码登录",
+            "用户名 密码 登录系统",
+            "admin / user1 / courier1",
+            "默认密码 123456",
+            "登录系统"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89219-codex-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49219/login",
+        "title": "快递全链路协同开放平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/.trae/codex-runtime-check-20260616/may-89219-codex-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/.trae/codex-runtime-check-20260616/may-89219-codex-structure-01-首屏.png",
+        "elementCount": 137,
+        "interactiveCount": 6,
+        "interactiveLabels": [
+          "账号密码登录",
+          "用户名 密码 登录系统",
+          "admin / user1 / courier1",
+          "默认密码 123456",
+          "登录系统"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49219/login",
+    "representativeScreenshotLabel": "快递全链路协同平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89219-codex-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49219/login",
+        "title": "快递全链路协同开放平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/.trae/codex-runtime-check-20260616/may-89219-codex-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/.trae/codex-runtime-check-20260616/may-89219-codex-structure-01-首屏.png",
+        "elementCount": 137,
+        "interactiveCount": 6,
+        "interactiveLabels": [
+          "账号密码登录",
+          "用户名 密码 登录系统",
+          "admin / user1 / courier1",
+          "默认密码 123456",
+          "登录系统"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "快递全链路协同平台\nExpress Open Platform · 开放协同 · 智能调度\n连接 30+ 快递品牌\n一站式智能物流服务\n面向快递全链路协同的开放平台，覆盖快递员资源池、包裹生命周期跟踪、智能比价决策。 提供快递员轻量化工作台、用户包裹地图可视化、后台网络拓扑与服务质量仪表盘、API开放中心。\n快递员资源池\n统一认证·服务评级\n30+品牌API\n申通/中通/顺丰等\n📍\n实时地图追踪\n位置·倒计时·语音\n⚡\n智能比价引擎\n价格·时效·覆盖度\n账号登录\n选择下方演示账号快速体验或输入自定义账号\n账号密码登录\n用户名\n密码\n登录系统\n🎯 演示账号\nadmin / 123456平台管理员\n查看仪表盘、品牌管理、拓扑图、API开放中心\nuser1 / 123456普通用户\n下单、比价、包裹地图、签收验证、投诉\ncourier1 / 123456快递员\n工作台、待派单聚合、电子签收、SLA监控",
+  "bodyTextPreview": "快递全链路协同平台\nExpress Open Platform · 开放协同 · 智能调度\n连接 30+ 快递品牌\n一站式智能物流服务\n面向快递全链路协同的开放平台，覆盖快递员资源池、包裹生命周期跟踪、智能比价决策。 提供快递员轻量化工作台、用户包裹地图可视化、后台网络拓扑与服务质量仪表盘、API开放中心。\n快递员资源池\n统一认证·服务评级\n30+品牌API\n申通/中通/顺丰等\n📍\n实时地图追踪\n位置·倒计时·语音\n⚡\n智能比价引擎\n价格·时效·覆盖度\n账号登录\n选择下方演示账号快速体验或输入自定义账号\n账号密码登录\n用户名\n密码\n登录系统\n🎯 演示账号\nadmin / 123456平台管理员\n查看仪表盘、品牌管理、拓扑图、API开放中心\nuser1 / 123456普通用户\n下单、比价、包裹地图、签收验证、投诉\ncourier1 / 123456快递员\n工作台、待派单聚合、电子签收、SLA监控",
+  "apiBase": "http://127.0.0.1:59219",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-16T18:00:42.783Z\",\"version\":\"1.0.0\",\"service\":\"express-logistics-open-platform\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":\"NOT_FOUND\",\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":\"NOT_FOUND\",\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":\"NOT_FOUND\",\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":\"NOT_FOUND\",\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":\"NOT_FOUND\",\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":\"NOT_FOUND\",\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"items\":[{\"id\":120,\"order_no\":\"EXP2026061501203900120\",\"tracking_no\":\"SF2026061501203900120\",\"brand_id\":1,\"courier_id\":15,\"sender_id\":4,\"receiver_id\":2,\"sender_name\":\"寄件人120\",\"sender_phone\":\"13852253299\",\"sender_address\":\"河南郑州XX区XX路69号XX小区2栋501室\",\"sender_longitude\":113.56864104623514,\"sender_latitude\":34.67268431251739,\"receiver_name\":\"收件人120\",\"receiver_phone\":\"13917079734\",\"receiver_address\":\"广东深圳XX区中山大道498号大厦10栋405室\",\"receiver_longitude\":114.09930810058349,\"receiver_latitude\":22.5940304824556"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":\"NOT_FOUND\",\"message\":\"接口不存在\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49219/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49219/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/chunk-6GSFWH52.js?v=398d9349",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/react-router-dom.js?v=398d9349",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/react-router-dom.js?v=398d9349",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49219/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49219/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49219/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:59219/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:59219/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:59219/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:59219/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49219/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/chunk-6GSFWH52.js?v=398d9349",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/react-router-dom.js?v=398d9349",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/react-router-dom.js?v=398d9349",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49219/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49219/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49219/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/chunk-6GSFWH52.js?v=398d9349",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/react-router-dom.js?v=398d9349",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49219/node_modules/.vite/deps/react-router-dom.js?v=398d9349",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49219/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49219/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:59219/auth/login"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:59219/auth/login"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:59219/auth/login"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:59219/auth/login"
+    }
+  ]
+}

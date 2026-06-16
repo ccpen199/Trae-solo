@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Card, Statistic, Table, Progress, App, Tabs, Drawer, Modal, Form, Input, Button, Space, Tag, Alert, List, Tooltip } from 'antd';
+import { Row, Col, Card, Statistic, Table, Progress, message, Tabs, Drawer, Modal, Form, Input, Button, Space, Tag, Alert, List, Tooltip } from 'antd';
 import {
   ShoppingCartOutlined, DollarOutlined, CheckCircleOutlined,
   WarningOutlined, TeamOutlined, BankOutlined, ThunderboltOutlined,
@@ -11,7 +11,6 @@ import { api } from '../api';
 import dayjs from 'dayjs';
 
 export default function Dashboard() {
-  const { message, modal } = App.useApp();
   const [overview, setOverview] = useState<any>({ summary: {} });
   const [quality, setQuality] = useState<any>({ list: [] });
   const [trend, setTrend] = useState<any>({ dates: [], orders: [], revenue: [] });

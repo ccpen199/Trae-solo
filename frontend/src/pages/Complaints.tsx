@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Card, Form, Input, Select, Button, Space, Tag, App, Table, Progress, Statistic, Tabs, Modal, Rate, Alert, Timeline, Badge } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Button, Space, Tag, message, Table, Progress, Statistic, Tabs, Modal, Rate, Alert, Timeline, Badge } from 'antd';
 import { ExclamationCircleOutlined, ClockCircleOutlined, CheckCircleOutlined, CloseCircleOutlined, WarningOutlined, MessageOutlined, PlusOutlined, SafetyOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { api } from '../api';
 import dayjs from 'dayjs';
@@ -8,7 +8,6 @@ import ReactECharts from 'echarts-for-react';
 const SLA_HOURS = 8;
 
 export default function Complaints() {
-  const { message, modal } = App.useApp();
   const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<any>({ pending: 0, processing: 0, resolved: 0, expired: 0 });
@@ -75,7 +74,7 @@ export default function Complaints() {
   };
 
   const onProcess = (c: any) => {
-    modal.confirm({
+    Modal.confirm({
       title: '确认受理该投诉？',
       icon: <SafetyOutlined />,
       content: `运单 ${c.order_no} - ${c.complaint_type}`,

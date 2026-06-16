@@ -1,15 +1,28 @@
-import { Form, Input, Button, Card, Typography, App, Tabs } from 'antd';
+import { Form, Input, Button, Card, Typography, Tabs, message } from 'antd';
 import { UserOutlined, LockOutlined, TruckOutlined, GlobalOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const { Title, Text, Paragraph } = Typography;
 
 export default function Login() {
   const nav = useNavigate();
-  const { message } = App.useApp();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const t = localStorage.getItem('token');
+    if (t) {
+      try {
+        const u = JSON.parse(localStorage.getItem('user') || '{}');
+        message.success(`检测到已登录，欢迎回来，${u.name || u.username || '用户'}`);
+        nav('/', { replace: true });
+      } catch (e) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      }
+    }
+  }, [nav]);
 
   const accounts = [
     { user: 'admin', pwd: '123456', role: '平台管理员', desc: '查看仪表盘、品牌管理、拓扑图、API开放中心' },
@@ -18,18 +31,53 @@ export default function Login() {
   ];
 
   const onFinish = async (v: any) => {
+    if (!v.username || !v.password) {
+      message.warning('请输入用户名和密码');
+      return;
+    }
     setLoading(true);
     try {
-      const res: any = await api.auth.login(v);
+      const start = Date.now();
+      const res: any = await api.auth.login({ username: v.username.trim(), password: v.password });
+      if (!res?.token) throw new Error('登录响应异常，请重试');
+
       localStorage.setItem('token', res.token);
-      localStorage.setItem('user', JSON.stringify(res.user));
-      message.success(`欢迎回来，${res.user.name || res.user.username}！`);
-      setTimeout(() => nav('/'), 200);
+      localStorage.setItem('user', JSON.stringify(res.user || {}));
+
+      const elapsed = Date.now() - start;
+      const delay = Math.max(0, 400 - elapsed);
+
+      setTimeout(() => {
+        message.success(`欢迎回来，${res.user?.name || res.user?.username || v.username}！`);
+        try {
+          const role = res.user?.role || '';
+          if (role === 'courier') nav('/couriers', { replace: true });
+          else if (role === 'user') nav('/orders', { replace: true });
+          else nav('/', { replace: true });
+        } catch (err) {
+          nav('/', { replace: true });
+        }
+      }, delay);
     } catch (e: any) {
-      message.error(e.message || '登录失败');
+      console.error('Login error:', e);
+      const msg = e?.response?.data?.message || e?.message || '登录失败';
+      if (msg === '用户名或密码错误' || msg === 'INVALID_CREDENTIALS') {
+        message.error('用户名或密码错误，请检查演示账号：admin / user1 / courier1，密码 123456');
+      } else if (msg.includes('401')) {
+        message.error('账号密码校验失败，请确认账号是否正确');
+      } else if (msg.includes('400')) {
+        message.error('请输入完整的账号和密码');
+      } else {
+        message.error(`登录失败：${msg}（请检查后端服务是否启动）`);
+      }
     } finally {
       setLoading(false);
     }
+  };
+
+  const quickLogin = (user: string, pwd: string) => {
+    if (loading) return;
+    onFinish({ username: user, password: pwd });
   };
 
   return (
@@ -90,16 +138,52 @@ export default function Login() {
             ]}
           />
           <div style={{ marginTop: 28, padding: 16, background: '#f5f7fa', borderRadius: 10, border: '1px solid #e5eaf1' }}>
-            <Text strong style={{ display: 'block', marginBottom: 12 }}>🎯 演示账号</Text>
+            <Text strong style={{ display: 'block', marginBottom: 12 }}>🎯 演示账号（点击卡片快速登录）</Text>
             {accounts.map((a, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '8px 0', borderBottom: i < 2 ? '1px dashed #e5eaf1' : 'none' }}>
-                <div style={{ width: 6, height: 6, borderRadius: 3, background: '#1677ff', marginTop: 7, flexShrink: 0 }} />
+              <div
+                key={i}
+                onClick={() => quickLogin(a.user, a.pwd)}
+                style={{
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  display: 'flex', alignItems: 'flex-start', gap: 10,
+                  padding: '10px 8px',
+                  borderBottom: i < 2 ? '1px dashed #e5eaf1' : 'none',
+                  borderRadius: 8,
+                  opacity: loading ? 0.6 : 1,
+                  transition: 'all 0.2s',
+                  userSelect: 'none'
+                }}
+                onMouseEnter={e => !loading && (e.currentTarget.style.background = 'rgba(22,119,255,0.06)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+              >
+                <div style={{
+                  width: 28, height: 28, borderRadius: 6,
+                  background: a.role === '平台管理员' ? '#1677ff' :
+                              a.role === '普通用户' ? '#52c41a' : '#fa8c16',
+                  color: '#fff', display: 'flex', alignItems: 'center',
+                  justifyContent: 'center', fontWeight: 700, fontSize: 13,
+                  flexShrink: 0, marginTop: 1
+                }}>
+                  {a.role === '平台管理员' ? '管' : a.role === '普通用户' ? '用' : '快'}
+                </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13 }}>
-                    <Text strong code>{a.user}</Text> / <Text code>123456</Text>
-                    <span style={{ marginLeft: 8, padding: '1px 6px', background: '#e6f4ff', color: '#1677ff', borderRadius: 4, fontSize: 11 }}>{a.role}</span>
+                    <Text strong code>{a.user}</Text>
+                    <span style={{ margin: '0 4px', color: '#bfbfbf' }}>/</span>
+                    <Text code>123456</Text>
+                    <span style={{
+                      marginLeft: 8, padding: '1px 6px',
+                      background: a.role === '平台管理员' ? '#e6f4ff' :
+                                  a.role === '普通用户' ? '#f6ffed' : '#fff7e6',
+                      color: a.role === '平台管理员' ? '#1677ff' :
+                             a.role === '普通用户' ? '#52c41a' : '#fa8c16',
+                      borderRadius: 4, fontSize: 11
+                    }}>{a.role}</span>
+                    <span style={{ float: 'right', color: '#1677ff', fontSize: 12 }}>
+                      立即登录 →
+                    </span>
                   </div>
-                  <div style={{ fontSize: 12, color: '#8c8c8c', marginTop: 2 }}>{a.desc}</div>
+                  <div style={{ fontSize: 12, color: '#8c8c8c', marginTop: 3 }}>{a.desc}</div>
                 </div>
               </div>
             ))}

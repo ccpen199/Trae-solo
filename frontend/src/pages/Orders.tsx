@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { TimelineProps } from 'antd';
 import {
-  Card, Table, Input, Select, DatePicker, Button, Space, Tag, App,
+  Card, Table, Input, Select, DatePicker, Button, Space, Tag, message,
   Modal, Timeline, Statistic, Row, Col, Tooltip, Badge, Drawer, List,
   Alert, Empty, Progress, Steps, Divider, Typography, Form
 } from 'antd';
@@ -30,7 +30,6 @@ const statusMap: Record<string, { text: string; color: string; icon: string }> =
 
 export default function Orders() {
   const nav = useNavigate();
-  const { message, modal } = App.useApp();
   const [data, setData] = useState<any>({ list: [], total: 0 });
   const [dashboard, setDashboard] = useState<any>(null);
   const [page, setPage] = useState(1);
@@ -112,13 +111,13 @@ export default function Orders() {
         setData({ ...data, list: data.list.map((o: any) => o.id === faceModal.order.id ? { ...o, is_face_verified: 1 } : o) });
         setTimeout(() => setFaceModal({ open: false, order: null, loading: false }), 800);
       } else {
-        modal.error({
+        Modal.error({
           title: '人脸核验失败',
           content: '人脸不匹配，非本人签收。为防止错收误收，请确认收件人身份后再次核验，或转至错收待复核流程。'
         });
       }
     } catch (e: any) {
-      modal.confirm({
+      Modal.confirm({
         title: '错收误收风险确认',
         icon: <AlertOutlined style={{ color: '#fa8c16' }} />,
         content: '人脸核验未通过，疑似错收误收。是否标记为待复核，转入人工复查流程？',

@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Card, Form, Input, Select, Button, Space, Tag, App, Table, Progress, Statistic, Alert, Badge, Tooltip, Tabs } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Button, Space, Tag, message, Table, Progress, Statistic, Alert, Badge, Tooltip, Tabs } from 'antd';
 import { GlobalOutlined, ShopOutlined, WarningOutlined, SafetyOutlined, RiseOutlined, EnvironmentOutlined, ThunderboltOutlined, SearchOutlined } from '@ant-design/icons';
 import { api } from '../api';
 import dayjs from 'dayjs';
 import ReactECharts from 'echarts-for-react';
 
 export default function Branches() {
-  const { message } = App.useApp();
   const [list, setList] = useState<any[]>([]);
   const [throughput, setThroughput] = useState<any>(null);
   const [loading, setLoading] = useState(false);

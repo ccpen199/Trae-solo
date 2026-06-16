@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-const baseURL = (import.meta as any).env.VITE_API_URL || '/api';
+function normalizeApiBase(value: string | undefined): string {
+  const raw = (value || '/api').replace(/\/+$/, '');
+  if (/^https?:\/\//i.test(raw) && !/\/api(?:\/|$)/.test(new URL(raw).pathname)) {
+    return `${raw}/api`;
+  }
+  return raw || '/api';
+}
+
+const baseURL = normalizeApiBase((import.meta as any).env.VITE_API_URL);
 
 const request = axios.create({ baseURL, timeout: 15000 });
 

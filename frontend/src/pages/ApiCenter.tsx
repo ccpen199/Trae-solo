@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Row, Col, Card, Form, Input, Select, Button, Space, Tag, App, Table, Progress, Statistic, Alert, Tabs, Modal, Typography, List, Tooltip, DatePicker, Segmented } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Button, Space, Tag, message, Table, Progress, Statistic, Alert, Tabs, Modal, Typography, List, Tooltip, DatePicker, Segmented } from 'antd';
 import { ApiOutlined, SafetyOutlined, CopyOutlined, PlusOutlined, CheckCircleOutlined, ClockCircleOutlined, KeyOutlined, ThunderboltOutlined, BookOutlined, CodeOutlined, ShopOutlined, MessageOutlined, BulbOutlined, EyeOutlined, SettingOutlined, HistoryOutlined, TrophyOutlined, StopOutlined, ReloadOutlined } from '@ant-design/icons';
 import { api } from '../api';
 import ReactECharts from 'echarts-for-react';
@@ -14,7 +14,6 @@ const defaultMockApps = [
 ];
 
 export default function ApiCenter() {
-  const { message, modal } = App.useApp();
   const [loading, setLoading] = useState(false);
   const [apps, setApps] = useState<any[]>([]);
   const [apiUsage, setApiUsage] = useState<any>(null);
@@ -137,7 +136,7 @@ export default function ApiCenter() {
   };
 
   const onResetKey = (app: any) => {
-    modal.confirm({
+    Modal.confirm({
       title: '确认重置密钥',
       content: `重置后原 AppSecret 将立即失效，${app.app_name} 的所有调用需要更新密钥。`,
       okText: '确认重置',
@@ -153,7 +152,7 @@ export default function ApiCenter() {
 
   const onToggleStatus = (app: any) => {
     const newStatus = app.status === 'active' ? 'suspended' : 'active';
-    modal.confirm({
+    Modal.confirm({
       title: newStatus === 'suspended' ? '确认停用应用' : '确认启用应用',
       content: newStatus === 'suspended' ? `停用后 ${app.app_name} 的所有API调用将被拒绝。` : `启用后 ${app.app_name} 将恢复API调用权限。`,
       onOk: () => {
