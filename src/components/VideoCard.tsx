@@ -41,6 +41,7 @@ interface VideoLike {
   audited?: boolean;
   type?: 'video' | 'course';
   isSubscription?: boolean;
+  courseId?: string;
 }
 
 interface VideoCardProps extends VideoLike {
@@ -104,7 +105,7 @@ const VideoCard = ({ video: videoProp, className, ...flatVideo }: VideoCardProps
       : formatDuration(video.duration);
 
   const handleClick = () => {
-    navigate(`/course/${video.id}`);
+    navigate(`/course/${rawVideo.courseId || video.id}`);
   };
 
   const handleCreatorClick = (e: React.MouseEvent) => {

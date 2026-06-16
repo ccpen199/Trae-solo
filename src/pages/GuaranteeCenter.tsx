@@ -4,9 +4,9 @@ import {
   Shield, Star, Clock, Scale, FileCheck, Wallet, ArrowRight, CheckCircle,
   AlertTriangle, Users, Zap, Award, Headphones, ThumbsUp, ThumbsDown,
   MapPin, Phone, FileText, User, BadgeCheck, Home, Stethoscope,
-  TrendingUp, AlertCircle, CheckSquare, ChevronDown, MessageSquare,
+  TrendingUp, AlertCircle, CheckSquare, ChevronDown, ChevronRight, MessageSquare,
   Receipt, PiggyBank, Landmark, Eye, UserCheck, Search, FileText as FileTextIcon,
-  Gavel, Calculator, StarHalf, ShieldCheck, Download, Building2, X
+  Gavel, Calculator, StarHalf, ShieldCheck, Download, Building2, X, Loader2, IdCard
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -187,6 +187,15 @@ const disputeCases = [
     currentStep: '平台审核中',
     nextStep: '预计24小时内给出判定结果',
     applicant: '需求方',
+    timeline: [
+      { step: 1, title: '受理', time: '2024-06-02 10:35', handler: '系统自动', note: '仲裁申请已受理，编号 ARB20240602001' },
+      { step: 2, title: '证据收集', time: '2024-06-02 14:20', handler: '仲裁员李公正', note: '已通知双方提交证据，需求方已上传签到记录' },
+      { step: 3, title: '双方质证', time: '2024-06-03 09:15', handler: '仲裁员李公正', note: '创作者补充说明，正在等待需求方回应' },
+    ],
+    messages: {
+      demander: '明明预约了3小时服务，实际只做了2小时就走了，很多地方还没打扫...',
+      creator: '路上堵车迟到了半小时，主要区域都打扫完了，边角可以下次补做',
+    },
   },
   {
     id: 'd2',
@@ -199,6 +208,33 @@ const disputeCases = [
     currentStep: '已完成',
     nextStep: '双方接受判定结果，退款30%',
     applicant: '需求方',
+    result: '部分支持',
+    resultColor: 'amber',
+    timeline: [
+      { step: 1, title: '受理', time: '2024-05-28 15:10', handler: '系统自动', note: '仲裁申请已受理，编号 ARB20240528003' },
+      { step: 2, title: '证据收集', time: '2024-05-28 18:00', handler: '仲裁员王裁决', note: '双方已上传服务前后对比照片' },
+      { step: 3, title: '双方质证', time: '2024-05-29 10:30', handler: '仲裁员王裁决', note: '双方完成质证陈述' },
+      { step: 4, title: '裁决', time: '2024-05-29 16:00', handler: '仲裁员王裁决', note: '判定服务存在部分质量问题，部分支持退款诉求' },
+      { step: 5, title: '执行', time: '2024-05-30 09:00', handler: '系统自动', note: '已按裁决结果执行资金处置' },
+    ],
+    messages: {
+      demander: '厨房油污没有清理干净，窗户也有很多水渍，和宣传的深度保洁差远了',
+      creator: '厨房油污是陈年积垢，事先有说明需要额外收费，我已经尽力清理了',
+    },
+    fundDisposal: {
+      depositAmount: 150,
+      demanderRefund: 45,
+      creatorIncome: 105,
+      description: '按比例分配：退还需求方30%（¥45），支付创作者70%（¥105）',
+      type: 'partial',
+      execStatus: 'done',
+    },
+    arbitrator: {
+      name: '王裁决',
+      employeeId: 'AR007',
+      finishTime: '2024-05-30 09:00',
+      archived: true,
+    },
   },
   {
     id: 'd3',
@@ -211,6 +247,33 @@ const disputeCases = [
     currentStep: '已完成',
     nextStep: '判定创作者违约，双倍退还定金',
     applicant: '需求方',
+    result: '支持',
+    resultColor: 'green',
+    timeline: [
+      { step: 1, title: '受理', time: '2024-05-12 09:05', handler: '系统自动', note: '仲裁申请已受理，编号 ARB20240512002' },
+      { step: 2, title: '证据收集', time: '2024-05-12 10:00', handler: '仲裁员张公正', note: '调取系统签到记录，创作者未签到' },
+      { step: 3, title: '双方质证', time: '2024-05-12 11:00', handler: '仲裁员张公正', note: '创作者无法提供合理缺席理由' },
+      { step: 4, title: '裁决', time: '2024-05-12 14:00', handler: '仲裁员张公正', note: '判定创作者违约，需双倍退还定金' },
+      { step: 5, title: '执行', time: '2024-05-12 15:00', handler: '系统自动', note: '已从创作者保证金扣除违约金' },
+    ],
+    messages: {
+      demander: '约好了早上9点上门，等到11点都没人来，电话也不接，太耽误事了！',
+      creator: '抱歉早上临时有事，忘了通知对方，愿意承担责任',
+    },
+    fundDisposal: {
+      depositAmount: 200,
+      demanderRefund: 400,
+      creatorIncome: 0,
+      description: '创作者违约，双倍退还定金：退还需求方¥400（含违约金¥200）',
+      type: 'demander',
+      execStatus: 'done',
+    },
+    arbitrator: {
+      name: '张公正',
+      employeeId: 'AR003',
+      finishTime: '2024-05-12 15:00',
+      archived: true,
+    },
   },
 ];
 
@@ -221,7 +284,7 @@ const insuranceRecords = [
     receiptNo: 'RC20240601000001',
     orderNo: 'ORD202406010002',
     type: '家政服务责任险',
-    amount: 500000,
+    amount: 1000000,
     premium: 12,
     status: 'active',
     startDate: '2024-06-05',
@@ -231,10 +294,18 @@ const insuranceRecords = [
     period: '服务开始前 2 小时至服务结束后 30 天',
     range: ['第三者财产损失', '服务人员意外伤害', '家政服务过失责任', '盗抢损失保障'],
     docking: [
-      { step: 1, title: '平台发起投保', status: 'done', time: '2024-06-01 09:30:15' },
-      { step: 2, title: '保险公司承保', status: 'done', time: '2024-06-01 09:32:08', policyNo: 'PICC20240601000001' },
-      { step: 3, title: '保单生效', status: 'done', time: '2024-06-01 09:35:00' },
+      { step: 1, title: '平台发起投保', status: 'done', time: '2024-06-01 09:30:15', operator: '系统自动' },
+      { step: 2, title: '保险公司承保', status: 'done', time: '2024-06-01 09:32:08', operator: '中国人保核保系统', policyNo: 'PICC20240601000001' },
+      { step: 3, title: '保单生效', status: 'done', time: '2024-06-01 09:35:00', operator: '系统自动' },
     ],
+    upgrade: {
+      beforeAmount: 500000,
+      afterAmount: 1000000,
+      reviewer: '张审核（工号：AR001）',
+      reviewTime: '2024-06-02 14:30:00',
+      upgradeFee: 25,
+      status: 'approved',
+    },
   },
   {
     id: 'i2',
@@ -252,9 +323,9 @@ const insuranceRecords = [
     period: '服务开始前 2 小时至服务结束后 30 天',
     range: ['第三者财产损失', '服务人员意外伤害', '家政服务过失责任', '盗抢损失保障'],
     docking: [
-      { step: 1, title: '平台发起投保', status: 'done', time: '2024-05-28 14:20:33' },
-      { step: 2, title: '保险公司承保', status: 'done', time: '2024-05-28 14:22:15', policyNo: 'PICC20240528000015' },
-      { step: 3, title: '保单生效', status: 'done', time: '2024-05-28 14:25:00' },
+      { step: 1, title: '平台发起投保', status: 'done', time: '2024-05-28 14:20:33', operator: '系统自动' },
+      { step: 2, title: '保险公司承保', status: 'done', time: '2024-05-28 14:22:15', operator: '中国人保核保系统', policyNo: 'PICC20240528000015' },
+      { step: 3, title: '保单生效', status: 'done', time: '2024-05-28 14:25:00', operator: '系统自动' },
     ],
   },
   {
@@ -273,15 +344,17 @@ const insuranceRecords = [
     period: '服务开始前 2 小时至服务结束后 30 天',
     range: ['第三者财产损失', '服务人员意外伤害', '家政服务过失责任', '盗抢损失保障'],
     claimDesc: '清洁过程中损坏油烟机滤网，已理赔¥380',
+    claimAmount: 380,
     claimProgress: [
       { step: 1, title: '提交理赔申请', status: 'done', time: '2024-05-23 10:15:00', desc: '用户上传损坏照片及维修报价' },
-      { step: 2, title: '保险公司审核', status: 'done', time: '2024-05-23 14:30:00', desc: '材料核验通过，理赔金额确认' },
-      { step: 3, title: '理赔到账', status: 'done', time: '2024-05-24 09:00:00', desc: '¥380 已赔付至用户账户' },
+      { step: 2, title: '材料审核', status: 'done', time: '2024-05-23 14:30:00', desc: '平台专员核验凭证，材料齐全' },
+      { step: 3, title: '保险公司核验', status: 'done', time: '2024-05-23 16:45:00', desc: '保险公司确认事故属于保障范围' },
+      { step: 4, title: '理赔到账', status: 'done', time: '2024-05-24 09:00:00', desc: '¥380 已赔付至用户账户' },
     ],
     docking: [
-      { step: 1, title: '平台发起投保', status: 'done', time: '2024-05-20 16:45:22' },
-      { step: 2, title: '保险公司承保', status: 'done', time: '2024-05-20 16:47:11', policyNo: 'PICC2024052000032' },
-      { step: 3, title: '保单生效', status: 'done', time: '2024-05-20 16:50:00' },
+      { step: 1, title: '平台发起投保', status: 'done', time: '2024-05-20 16:45:22', operator: '系统自动' },
+      { step: 2, title: '保险公司承保', status: 'done', time: '2024-05-20 16:47:11', operator: '中国人保核保系统', policyNo: 'PICC2024052000032' },
+      { step: 3, title: '保单生效', status: 'done', time: '2024-05-20 16:50:00', operator: '系统自动' },
     ],
   },
 ];
@@ -383,6 +456,12 @@ export default function GuaranteeCenter() {
   const [showPolicyDetailModal, setShowPolicyDetailModal] = useState(false);
   const [showClaimModal, setShowClaimModal] = useState(false);
   const [selectedClaimPolicy, setSelectedClaimPolicy] = useState<any>(null);
+  const [expandedInsuranceIds, setExpandedInsuranceIds] = useState<Set<string>>(new Set());
+  const [expandedDisputeIds, setExpandedDisputeIds] = useState<Set<string>>(new Set());
+  const [claimLoading, setClaimLoading] = useState(false);
+  const [claimSuccess, setClaimSuccess] = useState(false);
+  const [selectedClaimType, setSelectedClaimType] = useState('');
+  const [claimFormData, setClaimFormData] = useState({ description: '', amount: '', contact: '' });
   const businessSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -518,6 +597,55 @@ export default function GuaranteeCenter() {
             <p className="text-zinc-500 max-w-xl mx-auto">
               全流程透明可追溯，每一笔交易都有完整记录
             </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="card p-5 relative overflow-hidden group hover:shadow-lg transition-all">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-amber-100 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity" />
+                <div className="relative">
+                  <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center mb-3">
+                    <Star className="w-5 h-5 text-amber-600" />
+                  </div>
+                  <div className="text-2xl font-bold text-zinc-900 mb-0.5">4.8</div>
+                  <div className="text-sm text-zinc-500 mb-1">信用评价</div>
+                  <div className="text-xs text-amber-600 font-medium">好评率 96.5%</div>
+                </div>
+              </div>
+              <div className="card p-5 relative overflow-hidden group hover:shadow-lg transition-all">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-blue-100 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity" />
+                <div className="relative">
+                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-3">
+                    <Clock className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div className="text-2xl font-bold text-zinc-900 mb-0.5">128</div>
+                  <div className="text-sm text-zinc-500 mb-1">服务留痕</div>
+                  <div className="text-xs text-blue-600 font-medium">完整率 99.2%</div>
+                </div>
+              </div>
+              <div className="card p-5 relative overflow-hidden group hover:shadow-lg transition-all">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-green-100 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity" />
+                <div className="relative">
+                  <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center mb-3">
+                    <Shield className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div className="text-2xl font-bold text-zinc-900 mb-0.5">3</div>
+                  <div className="text-sm text-zinc-500 mb-1">保险覆盖</div>
+                  <div className="text-xs text-green-600 font-medium">生效保单 1 份</div>
+                </div>
+              </div>
+              <div className="card p-5 relative overflow-hidden group hover:shadow-lg transition-all">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-purple-100 rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity" />
+                <div className="relative">
+                  <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center mb-3">
+                    <Wallet className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <div className="text-2xl font-bold text-zinc-900 mb-0.5">¥850</div>
+                  <div className="text-sm text-zinc-500 mb-1">资金托管</div>
+                  <div className="text-xs text-purple-600 font-medium">安全率 100%</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="max-w-5xl mx-auto">
@@ -672,63 +800,224 @@ export default function GuaranteeCenter() {
 
               {activeBusinessTab === 'disputes' && (
                 <div className="space-y-4">
-                  {disputeCases.map((dispute, index) => (
-                    <div key={dispute.id} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${index * 0.1}s` }}>
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <div className="font-semibold text-zinc-900 mb-1">{dispute.title}</div>
-                          <div className="text-xs text-zinc-400 flex items-center gap-2">
-                            <span>订单: {dispute.orderNo}</span>
-                            <span>·</span>
-                            <span>提交: {dispute.submitTime}</span>
+                  {disputeCases.map((dispute, index) => {
+                    const isExpanded = expandedDisputeIds.has(dispute.id);
+                    const toggleExpand = () => {
+                      setExpandedDisputeIds(prev => {
+                        const next = new Set(prev);
+                        if (next.has(dispute.id)) next.delete(dispute.id);
+                        else next.add(dispute.id);
+                        return next;
+                      });
+                    };
+                    return (
+                      <div key={dispute.id} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${index * 0.1}s` }}>
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <div className="font-semibold text-zinc-900 mb-1">{dispute.title}</div>
+                            <div className="text-xs text-zinc-400 flex items-center gap-2">
+                              <span>订单: {dispute.orderNo}</span>
+                              <span>·</span>
+                              <span>提交: {dispute.submitTime}</span>
+                              <span>·</span>
+                              <span>申请人: {dispute.applicant}</span>
+                            </div>
+                          </div>
+                          <div className="flex flex-col items-end gap-2">
+                            <span className={cn(
+                              'px-3 py-1 text-xs rounded-full font-medium',
+                              dispute.status === 'processing' ? 'bg-amber-100 text-amber-600' :
+                              'bg-green-100 text-green-600'
+                            )}>
+                              {dispute.status === 'processing' ? '处理中' : '已完成'}
+                            </span>
+                            {dispute.result && (
+                              <span className={cn(
+                                'px-3 py-1 text-xs rounded-full font-bold',
+                                dispute.resultColor === 'green' ? 'bg-green-100 text-green-700' :
+                                dispute.resultColor === 'amber' ? 'bg-amber-100 text-amber-700' :
+                                'bg-red-100 text-red-700'
+                              )}>
+                                裁决：{dispute.result}
+                              </span>
+                            )}
                           </div>
                         </div>
-                        <span className={cn(
-                          'px-3 py-1 text-xs rounded-full font-medium',
-                          dispute.status === 'processing' ? 'bg-amber-100 text-amber-600' :
-                          'bg-green-100 text-green-600'
-                        )}>
-                          {dispute.status === 'processing' ? '处理中' : '已完成'}
-                        </span>
-                      </div>
-                      <div className="mb-4">
-                        <div className="flex items-center justify-between text-xs mb-2">
-                          <span className="text-zinc-500">仲裁进度</span>
-                          <span className="text-zinc-700 font-medium">{dispute.progress}%</span>
+
+                        <div className="mb-4">
+                          <div className="flex items-center justify-between text-xs mb-2">
+                            <span className="text-zinc-500">仲裁进度</span>
+                            <span className="text-zinc-700 font-medium">{dispute.progress}%</span>
+                          </div>
+                          <div className="h-2 bg-zinc-100 rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                'h-full rounded-full transition-all duration-500',
+                                dispute.status === 'processing' ? 'bg-amber-500' : 'bg-green-500'
+                              )}
+                              style={{ width: `${dispute.progress}%` }}
+                            />
+                          </div>
                         </div>
-                        <div className="h-2 bg-zinc-100 rounded-full overflow-hidden">
-                          <div
-                            className={cn(
-                              'h-full rounded-full transition-all duration-500',
-                              dispute.status === 'processing' ? 'bg-amber-500' : 'bg-green-500'
-                            )}
-                            style={{ width: `${dispute.progress}%` }}
-                          />
+
+                        <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+                          <div className="flex items-center gap-2">
+                            <AlertCircle className="w-4 h-4 text-zinc-400" />
+                            <span className="text-zinc-500">当前:</span>
+                            <span className="text-zinc-700">{dispute.currentStep}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-zinc-400" />
+                            <span className="text-zinc-500">下一步:</span>
+                            <span className="text-zinc-700 truncate">{dispute.nextStep}</span>
+                          </div>
                         </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm mb-4">
-                        <div className="flex items-center gap-2">
-                          <AlertCircle className="w-4 h-4 text-zinc-400" />
-                          <span className="text-zinc-500">当前:</span>
-                          <span className="text-zinc-700">{dispute.currentStep}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-zinc-400" />
-                          <span className="text-zinc-500">下一步:</span>
-                          <span className="text-zinc-700 truncate">{dispute.nextStep}</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-end pt-3 border-t border-zinc-100">
+
+                        {dispute.messages && (
+                          <div className="mb-4 p-4 bg-zinc-50 rounded-xl border border-zinc-100">
+                            <div className="text-xs font-semibold text-zinc-700 mb-3 flex items-center gap-1.5">
+                              <MessageSquare className="w-3.5 h-3.5" />
+                              双方沟通留痕摘要
+                            </div>
+                            <div className="space-y-2.5">
+                              <div className="flex gap-2">
+                                <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                  <User className="w-3 h-3 text-blue-600" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-[10px] text-zinc-500 mb-0.5">需求方</div>
+                                  <p className="text-xs text-zinc-600 line-clamp-2">{dispute.messages.demander}</p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2">
+                                <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                                  <IdCard className="w-3 h-3 text-purple-600" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-[10px] text-zinc-500 mb-0.5">创作者</div>
+                                  <p className="text-xs text-zinc-600 line-clamp-2">{dispute.messages.creator}</p>
+                                </div>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => navigate(`/orders/${dispute.orderNo}`)}
+                              className="mt-3 text-xs text-primary-600 hover:text-primary-700 font-medium flex items-center gap-0.5"
+                            >
+                              查看完整沟通记录
+                              <ArrowRight className="w-3 h-3" />
+                            </button>
+                          </div>
+                        )}
+
+                        {dispute.fundDisposal && (
+                          <div className="mb-4 p-4 bg-gradient-to-r from-purple-50 to-violet-50 rounded-xl border border-purple-100">
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="text-xs font-semibold text-purple-700 flex items-center gap-1.5">
+                                <Landmark className="w-3.5 h-3.5" />
+                                资金处置说明
+                              </div>
+                              <span className={cn(
+                                'px-2 py-0.5 text-[10px] rounded-full font-medium',
+                                dispute.fundDisposal.execStatus === 'done'
+                                  ? 'bg-green-100 text-green-700'
+                                  : 'bg-amber-100 text-amber-700'
+                              )}>
+                                {dispute.fundDisposal.execStatus === 'done' ? '已执行' : '执行中'}
+                              </span>
+                            </div>
+                            <div className="grid grid-cols-3 gap-3 text-xs mb-2">
+                              <div>
+                                <div className="text-zinc-500 mb-0.5">定金总额</div>
+                                <div className="font-bold text-zinc-800">¥{dispute.fundDisposal.depositAmount?.toLocaleString()}</div>
+                              </div>
+                              <div>
+                                <div className="text-zinc-500 mb-0.5">需求方退还</div>
+                                <div className="font-bold text-blue-600">¥{dispute.fundDisposal.demanderRefund?.toLocaleString()}</div>
+                              </div>
+                              <div>
+                                <div className="text-zinc-500 mb-0.5">创作者收入</div>
+                                <div className="font-bold text-purple-600">¥{dispute.fundDisposal.creatorIncome?.toLocaleString()}</div>
+                              </div>
+                            </div>
+                            <div className="text-xs text-zinc-600 bg-white/60 p-2 rounded-lg">
+                              {dispute.fundDisposal.description}
+                            </div>
+                          </div>
+                        )}
+
                         <button
-                          onClick={() => navigate(`/orders/${dispute.orderNo}`)}
-                          className="text-sm text-primary-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
+                          onClick={toggleExpand}
+                          className="w-full flex items-center justify-between py-2.5 px-3 mb-3 text-sm text-zinc-600 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 rounded-xl transition-colors"
                         >
-                          查看详情
-                          <ArrowRight className="w-4 h-4" />
+                          <span className="flex items-center gap-2">
+                            <Scale className="w-4 h-4" />
+                            仲裁复核记录
+                          </span>
+                          {isExpanded ? (
+                            <ChevronDown className="w-4 h-4 transition-transform" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4 transition-transform" />
+                          )}
                         </button>
+
+                        {isExpanded && dispute.timeline && (
+                          <div className="mb-4 p-4 bg-red-50/40 rounded-xl border border-red-100 animate-fade-in">
+                            <div className="relative">
+                              <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-red-200" />
+                              <div className="space-y-3">
+                                {dispute.timeline.map((step: any) => (
+                                  <div key={step.step} className="relative flex gap-3">
+                                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-red-400 to-red-500 flex items-center justify-center flex-shrink-0 z-10 shadow-sm text-white text-xs font-bold">
+                                      {step.step}
+                                    </div>
+                                    <div className="flex-1 pb-0.5">
+                                      <div className="flex items-center justify-between">
+                                        <span className="text-sm font-medium text-zinc-900">{step.title}</span>
+                                        <span className="text-xs text-zinc-400">{step.time}</span>
+                                      </div>
+                                      <p className="text-xs text-zinc-500 mt-0.5">处理人：{step.handler}</p>
+                                      <p className="text-xs text-zinc-600 mt-0.5">{step.note}</p>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {dispute.arbitrator && (
+                          <div className="mb-4 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-100 flex items-start justify-between gap-4">
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white flex-shrink-0">
+                                <Gavel className="w-5 h-5" />
+                              </div>
+                              <div>
+                                <div className="text-sm font-semibold text-zinc-900">仲裁员：{dispute.arbitrator.name}</div>
+                                <div className="text-xs text-zinc-500 mt-0.5">工号：{dispute.arbitrator.employeeId}</div>
+                                <div className="text-xs text-zinc-500 mt-0.5">完成时间：{dispute.arbitrator.finishTime}</div>
+                              </div>
+                            </div>
+                            {dispute.arbitrator.archived && (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] rounded-full bg-zinc-100 text-zinc-600 font-medium">
+                                <FileCheck className="w-3 h-3" />
+                                仲裁结果已归档
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        <div className="flex items-center justify-end pt-3 border-t border-zinc-100">
+                          <button
+                            onClick={() => navigate(`/orders/${dispute.orderNo}`)}
+                            className="text-sm text-primary-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
+                          >
+                            查看详情
+                            <ArrowRight className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                   <div className="text-center pt-4">
                     <button className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
                       查看全部
@@ -749,125 +1038,236 @@ export default function GuaranteeCenter() {
                       </p>
                     </div>
                   </div>
-                  {insuranceRecords.map((record, index) => (
-                    <div key={record.id} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${index * 0.1}s` }}>
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <div className={cn(
-                            'w-10 h-10 rounded-xl flex items-center justify-center',
-                            record.status === 'active' ? 'bg-green-100' :
-                            record.status === 'claimed' ? 'bg-red-100' : 'bg-zinc-100'
-                          )}>
-                            <ShieldCheck className={cn(
-                              'w-5 h-5',
-                              record.status === 'active' ? 'text-green-600' :
-                              record.status === 'claimed' ? 'text-red-600' : 'text-zinc-500'
-                            )} />
-                          </div>
-                          <div>
-                            <div className="font-medium text-zinc-900">{record.type}</div>
-                            <div className="text-xs text-zinc-400 flex items-center gap-2">
-                              <span>保单号:</span>
-                              <span className="font-mono text-zinc-600">{record.policyNo}</span>
+                  {insuranceRecords.map((record, index) => {
+                    const isExpanded = expandedInsuranceIds.has(record.id);
+                    const toggleExpand = () => {
+                      setExpandedInsuranceIds(prev => {
+                        const next = new Set(prev);
+                        if (next.has(record.id)) next.delete(record.id);
+                        else next.add(record.id);
+                        return next;
+                      });
+                    };
+                    return (
+                      <div key={record.id} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${index * 0.1}s` }}>
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className={cn(
+                              'w-10 h-10 rounded-xl flex items-center justify-center',
+                              record.status === 'active' ? 'bg-green-100' :
+                              record.status === 'claimed' ? 'bg-red-100' : 'bg-zinc-100'
+                            )}>
+                              <ShieldCheck className={cn(
+                                'w-5 h-5',
+                                record.status === 'active' ? 'text-green-600' :
+                                record.status === 'claimed' ? 'text-red-600' : 'text-zinc-500'
+                              )} />
+                            </div>
+                            <div>
+                              <div className="font-medium text-zinc-900">{record.type}</div>
+                              <div className="text-xs text-zinc-400 flex items-center gap-2">
+                                <span>保单号:</span>
+                                <span className="font-mono text-zinc-600">{record.policyNo}</span>
+                              </div>
                             </div>
                           </div>
+                          {record.status === 'active' && (
+                            <span className="relative inline-flex items-center gap-1.5 px-3 py-1 text-xs rounded-full font-semibold bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-sm">
+                              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
+                              <span className="relative flex items-center gap-1">
+                                <ShieldCheck className="w-3 h-3" />
+                                保障中
+                              </span>
+                            </span>
+                          )}
+                          {record.status === 'claimed' && (
+                            <span className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full font-medium bg-red-100 text-red-700">
+                              <AlertTriangle className="w-3 h-3" />
+                              已理赔
+                            </span>
+                          )}
+                          {record.status === 'expired' && (
+                            <span className="px-3 py-1 text-xs rounded-full font-medium bg-zinc-100 text-zinc-500">
+                              已过期
+                            </span>
+                          )}
                         </div>
-                        <span className={cn(
-                          'px-3 py-1 text-xs rounded-full font-medium',
-                          record.status === 'active' ? 'bg-green-100 text-green-700' :
-                          record.status === 'claimed' ? 'bg-red-100 text-red-700' :
-                          'bg-zinc-100 text-zinc-500'
-                        )}>
-                          {record.status === 'active' ? '保障中' :
-                           record.status === 'claimed' ? '已理赔' : '已过期'}
-                        </span>
-                      </div>
 
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-4">
-                        <div className="p-2.5 bg-zinc-50 rounded-lg">
-                          <div className="text-zinc-400 text-xs mb-0.5">关联订单</div>
-                          <button
-                            onClick={() => navigate(`/orders/${record.orderNo}`)}
-                            className="text-primary-600 font-medium hover:text-primary-700 hover:underline font-mono text-xs"
-                          >
-                            {record.orderNo} →
-                          </button>
-                        </div>
-                        <div className="p-2.5 bg-zinc-50 rounded-lg">
-                          <div className="text-zinc-400 text-xs mb-0.5">服务项目</div>
-                          <div className="text-zinc-700 font-medium">{record.service}</div>
-                        </div>
-                        <div className="p-2.5 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border border-green-100">
-                          <div className="text-green-600 text-xs mb-0.5">保障额度</div>
-                          <div className="text-green-700 font-bold text-lg">¥{record.amount.toLocaleString()}</div>
-                        </div>
-                        <div className="p-2.5 bg-zinc-50 rounded-lg">
-                          <div className="text-zinc-400 text-xs mb-0.5">保障期限</div>
-                          <div className="text-zinc-700 font-medium text-xs">{record.startDate} ~ {record.endDate}</div>
-                        </div>
-                      </div>
-
-                      {record.claimProgress && record.claimProgress.length > 0 && (
-                        <div className="mb-4 p-4 bg-red-50 rounded-xl border border-red-100">
-                          <div className="text-xs text-red-700 font-semibold mb-3 flex items-center gap-1.5">
-                            <AlertTriangle className="w-4 h-4" />
-                            理赔进度 · {record.claimDesc}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-4">
+                          <div className="p-2.5 bg-zinc-50 rounded-lg">
+                            <div className="text-zinc-400 text-xs mb-0.5">关联订单</div>
+                            <button
+                              onClick={() => navigate(`/orders/${record.orderNo}`)}
+                              className="text-primary-600 font-medium hover:text-primary-700 hover:underline font-mono text-xs"
+                            >
+                              {record.orderNo} →
+                            </button>
                           </div>
-                          <div className="relative">
-                            <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-red-200" />
-                            <div className="space-y-3">
-                              {record.claimProgress.map((claimStep, claimIdx) => (
-                                <div key={claimStep.step} className="relative flex gap-3">
-                                  <div className="w-7 h-7 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 z-10">
-                                    <CheckCircle className="w-4 h-4 text-white" />
-                                  </div>
-                                  <div className="flex-1 pb-0.5">
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-sm font-medium text-zinc-900">{claimStep.title}</span>
-                                      <span className="text-xs text-zinc-400">{claimStep.time}</span>
+                          <div className="p-2.5 bg-zinc-50 rounded-lg">
+                            <div className="text-zinc-400 text-xs mb-0.5">服务项目</div>
+                            <div className="text-zinc-700 font-medium">{record.service}</div>
+                          </div>
+                          <div className="p-2.5 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border border-green-100">
+                            <div className="text-green-600 text-xs mb-0.5">保障额度</div>
+                            <div className="text-green-700 font-bold text-lg">¥{record.amount?.toLocaleString()}</div>
+                          </div>
+                          <div className="p-2.5 bg-zinc-50 rounded-lg">
+                            <div className="text-zinc-400 text-xs mb-0.5">保障期限</div>
+                            <div className="text-zinc-700 font-medium text-xs">{record.startDate} ~ {record.endDate}</div>
+                          </div>
+                        </div>
+
+                        {record.upgrade && record.upgrade.status === 'approved' && (
+                          <div className="mb-4 p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl border border-emerald-100">
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center gap-2">
+                                <TrendingUp className="w-4 h-4 text-emerald-600" />
+                                <span className="text-sm font-semibold text-emerald-800">保障升级审核记录</span>
+                                <span className="inline-flex items-center px-2 py-0.5 text-[10px] rounded-full bg-green-100 text-green-700 font-medium">
+                                  <CheckCircle className="w-3 h-3 mr-0.5" />
+                                  审核通过
+                                </span>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                              <div>
+                                <div className="text-zinc-500 mb-1">升级前保额</div>
+                                <div className="text-zinc-700 font-medium line-through">¥{record.upgrade.beforeAmount?.toLocaleString()}</div>
+                              </div>
+                              <div>
+                                <div className="text-zinc-500 mb-1">升级后保额</div>
+                                <div className="text-emerald-700 font-bold">¥{record.upgrade.afterAmount?.toLocaleString()}</div>
+                              </div>
+                              <div>
+                                <div className="text-zinc-500 mb-1">审核人</div>
+                                <div className="text-zinc-700 font-medium">{record.upgrade.reviewer}</div>
+                              </div>
+                              <div>
+                                <div className="text-zinc-500 mb-1">升级费用</div>
+                                <div className="text-zinc-700 font-medium">¥{record.upgrade.upgradeFee}</div>
+                              </div>
+                            </div>
+                            <div className="mt-2 text-xs text-zinc-500">审核时间：{record.upgrade.reviewTime}</div>
+                          </div>
+                        )}
+
+                        {record.claimProgress && record.claimProgress.length > 0 && (
+                          <div className="mb-4 p-4 bg-gradient-to-br from-red-50 to-orange-50 rounded-xl border border-red-100">
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center gap-1.5">
+                                <AlertTriangle className="w-4 h-4 text-red-600" />
+                                <span className="text-sm font-semibold text-red-700">理赔进度</span>
+                              </div>
+                              <div className="text-sm font-bold text-orange-600 bg-orange-100 px-2.5 py-1 rounded-lg">
+                                赔付金额 ¥{record.claimAmount?.toLocaleString()}
+                              </div>
+                            </div>
+                            <div className="text-xs text-zinc-600 mb-3">{record.claimDesc}</div>
+                            <div className="relative">
+                              <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-gradient-to-b from-green-300 via-green-300 to-green-300" />
+                              <div className="space-y-3">
+                                {record.claimProgress.map((claimStep: any) => (
+                                  <div key={claimStep.step} className="relative flex gap-3">
+                                    <div className="w-7 h-7 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 z-10 shadow-sm">
+                                      <CheckCircle className="w-4 h-4 text-white" />
                                     </div>
-                                    <p className="text-xs text-zinc-500 mt-0.5">{claimStep.desc}</p>
+                                    <div className="flex-1 pb-0.5">
+                                      <div className="flex items-center justify-between">
+                                        <span className="text-sm font-medium text-zinc-900">{claimStep.title}</span>
+                                        <span className="text-xs text-zinc-400">{claimStep.time}</span>
+                                      </div>
+                                      <p className="text-xs text-zinc-500 mt-0.5">{claimStep.desc}</p>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )}
+                        )}
 
-                      <div className="flex flex-wrap gap-2 pt-4 border-t border-zinc-100">
                         <button
-                          onClick={() => {
-                            setSelectedPolicy(record);
-                            setShowPolicyDetailModal(true);
-                          }}
-                          className="flex-1 min-w-[120px] py-2 text-sm bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl transition-colors flex items-center justify-center gap-1.5 border border-blue-100"
+                          onClick={toggleExpand}
+                          className="w-full flex items-center justify-between py-2.5 px-3 mb-3 text-sm text-zinc-600 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 rounded-xl transition-colors"
                         >
-                          <FileText className="w-4 h-4" />
-                          保单详情
+                          <span className="flex items-center gap-2">
+                            <FileText className="w-4 h-4" />
+                            保险对接结果
+                          </span>
+                          {isExpanded ? (
+                            <ChevronDown className="w-4 h-4 transition-transform" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4 transition-transform" />
+                          )}
                         </button>
-                        {record.status === 'active' && (
+
+                        {isExpanded && (
+                          <div className="mb-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100 animate-fade-in">
+                            <div className="text-xs text-blue-700 font-medium mb-3 flex items-center gap-1.5">
+                              <Building2 className="w-3.5 h-3.5" />
+                              保险公司回执单号：<span className="font-mono">{record.receiptNo}</span>
+                            </div>
+                            <div className="relative">
+                              <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-blue-200" />
+                              <div className="space-y-3">
+                                {record.docking?.map((step: any) => (
+                                  <div key={step.step} className="relative flex gap-3">
+                                    <div className="w-7 h-7 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 z-10 shadow-sm">
+                                      <CheckCircle className="w-4 h-4 text-white" />
+                                    </div>
+                                    <div className="flex-1 pb-0.5">
+                                      <div className="flex items-center justify-between">
+                                        <span className="text-sm font-medium text-zinc-900">{step.title}</span>
+                                        <span className="text-xs text-zinc-400">{step.time}</span>
+                                      </div>
+                                      <p className="text-xs text-zinc-500 mt-0.5">处理人：{step.operator}</p>
+                                      {step.policyNo && (
+                                        <p className="text-xs text-blue-600 mt-0.5 font-mono">保单号：{step.policyNo}</p>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="flex flex-wrap gap-2 pt-4 border-t border-zinc-100">
                           <button
                             onClick={() => {
-                              setSelectedClaimPolicy(record);
-                              setShowClaimModal(true);
+                              setSelectedPolicy(record);
+                              setShowPolicyDetailModal(true);
                             }}
-                            className="flex-1 min-w-[120px] py-2 text-sm bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-xl transition-colors flex items-center justify-center gap-1.5 border border-orange-100"
+                            className="flex-1 min-w-[120px] py-2 text-sm bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl transition-colors flex items-center justify-center gap-1.5 border border-blue-100"
                           >
-                            <AlertTriangle className="w-4 h-4" />
-                            理赔申请
+                            <FileText className="w-4 h-4" />
+                            保单详情
                           </button>
-                        )}
-                        <button
-                          onClick={() => navigate(`/orders/${record.orderNo}`)}
-                          className="flex-1 min-w-[120px] py-2 text-sm bg-zinc-50 hover:bg-zinc-100 text-zinc-700 rounded-xl transition-colors flex items-center justify-center gap-1.5 border border-zinc-200"
-                        >
-                          <ArrowRight className="w-4 h-4" />
-                          订单详情
-                        </button>
+                          {record.status === 'active' && (
+                            <button
+                              onClick={() => {
+                                setSelectedClaimPolicy(record);
+                                setSelectedClaimType('');
+                                setClaimFormData({ description: '', amount: '', contact: '' });
+                                setClaimSuccess(false);
+                                setShowClaimModal(true);
+                              }}
+                              className="flex-1 min-w-[120px] py-2 text-sm bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-sm shadow-orange-200"
+                            >
+                              <AlertTriangle className="w-4 h-4" />
+                              申请理赔
+                            </button>
+                          )}
+                          <button
+                            onClick={() => navigate(`/orders/${record.orderNo}`)}
+                            className="flex-1 min-w-[120px] py-2 text-sm bg-zinc-50 hover:bg-zinc-100 text-zinc-700 rounded-xl transition-colors flex items-center justify-center gap-1.5 border border-zinc-200"
+                          >
+                            <ArrowRight className="w-4 h-4" />
+                            订单详情
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                   <div className="text-center pt-4">
                     <button className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
                       查看全部保单
@@ -1217,121 +1617,196 @@ export default function GuaranteeCenter() {
                   </div>
                 </div>
                 <button
-                  onClick={() => setShowClaimModal(false)}
-                  className="p-2 rounded-full hover:bg-white/20 transition-colors"
+                  onClick={() => !claimLoading && setShowClaimModal(false)}
+                  className="p-2 rounded-full hover:bg-white/20 transition-colors disabled:opacity-50"
+                  disabled={claimLoading}
                 >
                   <X className="w-5 h-5 text-white" />
                 </button>
               </div>
             </div>
 
-            <div className="p-6 space-y-5">
-              <div className="p-4 bg-orange-50 rounded-2xl border border-orange-200">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-zinc-600">关联保单</span>
-                  <span className="font-mono text-xs text-zinc-700">{selectedClaimPolicy?.policyNo}</span>
+            {claimSuccess ? (
+              <div className="p-8 text-center animate-fade-in">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                  <CheckCircle className="w-10 h-10 text-green-600" />
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-zinc-600">保障额度</span>
-                  <span className="font-bold text-orange-600">¥{selectedClaimPolicy?.amount?.toLocaleString()}</span>
+                <h3 className="text-xl font-bold text-zinc-900 mb-2">理赔申请已提交</h3>
+                <p className="text-sm text-zinc-500 mb-6 leading-relaxed">
+                  您的理赔申请已成功提交，平台专员将在24小时内联系您，协助您对接保险公司处理后续事宜。
+                </p>
+                <div className="p-4 bg-green-50 rounded-xl border border-green-100 mb-6 text-left">
+                  <div className="flex items-center justify-between text-sm mb-2">
+                    <span className="text-zinc-500">申请编号</span>
+                    <span className="font-mono font-medium text-zinc-800">CLAIM{Date.now().toString().slice(-8)}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-zinc-500">关联保单</span>
+                    <span className="font-mono font-medium text-zinc-800">{selectedClaimPolicy?.policyNo}</span>
+                  </div>
                 </div>
+                <button
+                  onClick={() => {
+                    setShowClaimModal(false);
+                    setClaimSuccess(false);
+                  }}
+                  className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  我知道了
+                </button>
               </div>
+            ) : (
+              <>
+                <div className="p-6 space-y-5">
+                  <div className="p-4 bg-orange-50 rounded-2xl border border-orange-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-zinc-600">关联保单</span>
+                      <span className="font-mono text-xs text-zinc-700">{selectedClaimPolicy?.policyNo}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-zinc-600">保障额度</span>
+                      <span className="font-bold text-orange-600">¥{selectedClaimPolicy?.amount?.toLocaleString()}</span>
+                    </div>
+                  </div>
 
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    理赔类型 <span className="text-red-500">*</span>
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {['财产损失', '人身意外', '服务过失', '盗抢损失'].map((type) => (
-                      <button
-                        key={type}
-                        type="button"
-                        className="p-3 text-sm border-2 border-zinc-200 rounded-xl text-zinc-700 hover:border-orange-300 hover:bg-orange-50 transition-all"
-                      >
-                        {type}
-                      </button>
-                    ))}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-700 mb-2">
+                        理赔原因 <span className="text-red-500">*</span>
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {['财产损失', '人身意外', '服务过失', '盗抢损失'].map((type) => (
+                          <button
+                            key={type}
+                            type="button"
+                            onClick={() => setSelectedClaimType(type)}
+                            className={cn(
+                              'p-3 text-sm border-2 rounded-xl transition-all',
+                              selectedClaimType === type
+                                ? 'border-orange-400 bg-orange-50 text-orange-700 font-medium'
+                                : 'border-zinc-200 text-zinc-700 hover:border-orange-300 hover:bg-orange-50'
+                            )}
+                          >
+                            {type}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-700 mb-2">
+                        情况描述 <span className="text-red-500">*</span>
+                      </label>
+                      <textarea
+                        placeholder="请详细描述事故发生时间、经过、损失情况..."
+                        rows={4}
+                        value={claimFormData.description}
+                        onChange={(e) => setClaimFormData(prev => ({ ...prev, description: e.target.value }))}
+                        className="input-field resize-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-700 mb-2">
+                        联系方式 <span className="text-red-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+                        <input
+                          type="tel"
+                          placeholder="请输入您的联系电话"
+                          value={claimFormData.contact}
+                          onChange={(e) => setClaimFormData(prev => ({ ...prev, contact: e.target.value }))}
+                          className="input-field pl-10"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-700 mb-2">
+                        预估损失金额
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500">¥</span>
+                        <input
+                          type="number"
+                          placeholder="请输入预估金额"
+                          value={claimFormData.amount}
+                          onChange={(e) => setClaimFormData(prev => ({ ...prev, amount: e.target.value }))}
+                          className="input-field pl-8"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-700 mb-2">
+                        上传凭证（最多6张）
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[1, 2, 3].map((i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            className="aspect-square rounded-xl border-2 border-dashed border-zinc-200 hover:border-orange-300 hover:bg-orange-50 flex flex-col items-center justify-center text-zinc-400 hover:text-orange-500 transition-colors"
+                          >
+                            <FileTextIcon className="w-6 h-6 mb-1" />
+                            <span className="text-xs">上传凭证</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                    <div className="flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <div className="text-sm text-amber-700">
+                        <p className="font-medium mb-1">温馨提示</p>
+                        <ul className="space-y-1 text-xs">
+                          <li>• 请确保提供的信息真实准确，虚假理赔将影响您的平台信用</li>
+                          <li>• 平台将在24小时内响应，协助您对接保险公司</li>
+                          <li>• 如有疑问，请联系客服电话：400-xxx-xxxx</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    事故描述 <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    placeholder="请详细描述事故发生时间、经过、损失情况..."
-                    rows={4}
-                    className="input-field resize-none"
-                  />
+                <div className="p-6 border-t border-zinc-100 flex gap-3">
+                  <button
+                    onClick={() => setShowClaimModal(false)}
+                    disabled={claimLoading}
+                    className="flex-1 py-3 border border-zinc-200 text-zinc-700 rounded-xl font-medium hover:bg-zinc-50 transition-colors disabled:opacity-50"
+                  >
+                    取消
+                  </button>
+                  <button
+                    onClick={() => {
+                      setClaimLoading(true);
+                      setTimeout(() => {
+                        setClaimLoading(false);
+                        setClaimSuccess(true);
+                      }, 1500);
+                    }}
+                    disabled={claimLoading}
+                    className="flex-1 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
+                  >
+                    {claimLoading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        提交中...
+                      </>
+                    ) : (
+                      <>
+                        <FileCheck className="w-4 h-4" />
+                        提交理赔申请
+                      </>
+                    )}
+                  </button>
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    预估损失金额
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500">¥</span>
-                    <input
-                      type="number"
-                      placeholder="请输入预估金额"
-                      className="input-field pl-8"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    上传凭证（最多6张）
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[1, 2, 3].map((i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        className="aspect-square rounded-xl border-2 border-dashed border-zinc-200 hover:border-orange-300 hover:bg-orange-50 flex flex-col items-center justify-center text-zinc-400 hover:text-orange-500 transition-colors"
-                      >
-                        <FileTextIcon className="w-6 h-6 mb-1" />
-                        <span className="text-xs">上传凭证</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 bg-amber-50 rounded-xl border border-amber-100">
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <div className="text-sm text-amber-700">
-                    <p className="font-medium mb-1">温馨提示</p>
-                    <ul className="space-y-1 text-xs">
-                      <li>• 请确保提供的信息真实准确，虚假理赔将影响您的平台信用</li>
-                      <li>• 平台将在24小时内响应，协助您对接保险公司</li>
-                      <li>• 如有疑问，请联系客服电话：400-xxx-xxxx</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 border-t border-zinc-100 flex gap-3">
-              <button
-                onClick={() => setShowClaimModal(false)}
-                className="flex-1 py-3 border border-zinc-200 text-zinc-700 rounded-xl font-medium hover:bg-zinc-50 transition-colors"
-              >
-                取消
-              </button>
-              <button
-                onClick={() => {
-                  setShowClaimModal(false);
-                  alert('理赔申请已提交，平台将在24小时内联系您');
-                }}
-                className="flex-1 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
-              >
-                <FileCheck className="w-4 h-4" />
-                提交理赔申请
-              </button>
-            </div>
+              </>
+            )}
           </div>
         </div>
       )}

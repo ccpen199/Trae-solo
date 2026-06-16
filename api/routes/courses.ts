@@ -194,9 +194,9 @@ router.post('/:id/purchase', authMiddleware, (req: AuthRequest, res) => {
     ? (course.subscriptionPrice || course.price)
     : course.price;
   
-  purchaseCourse(req.userId, id, purchaseType);
+  purchaseCourse(req.userId, course.id, purchaseType);
   
-  const transaction = createCoursePayment(req.userId, id, amount, course.creatorId);
+  const transaction = createCoursePayment(req.userId, course.id, amount, course.creatorId);
   
   return success(res, { transaction, alreadyOwned: false }, '购买成功');
 });

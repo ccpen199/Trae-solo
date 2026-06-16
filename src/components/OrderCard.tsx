@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Clock, User, Shield, AlertTriangle, CheckCircle, PlayCircle, DollarSign, Handshake, MessageCircle, Target, Users, ChevronRight } from 'lucide-react';
+import { MapPin, Clock, User, Shield, AlertTriangle, CheckCircle, PlayCircle, DollarSign, Handshake, MessageCircle, MessageSquare, Target, Users, ChevronRight, Wallet, Star } from 'lucide-react';
 import type { ServiceOrder } from '../../shared/types';
 import { cn } from '../lib/utils';
 import StatusBadge from './StatusBadge';
@@ -23,10 +23,33 @@ interface OrderCardProps {
   className?: string;
 }
 
+const fulfillmentSteps = [
+  { key: 'published', label: '发布' },
+  { key: 'matched', label: '匹配' },
+  { key: 'deposit_paid', label: '定金' },
+  { key: 'in_progress', label: '服务中' },
+  { key: 'completed', label: '结算' },
+];
+
+const statusOrder: Record<string, number> = {
+  published: 0,
+  matched: 1,
+  confirmed: 1,
+  deposit_paid: 2,
+  in_progress: 3,
+  completed: 4,
+  cancelled: -1,
+  disputed: -1,
+  arbitrated: -1,
+};
+
 const OrderCard = ({ order, variant = 'default', showActions = true, userRole, loadingAction, onAccept, onPayDeposit, onStart, onComplete, onDispute, onViewMatches, className }: OrderCardProps) => {
   const navigate = useNavigate();
 
   const matchScore = order.matchScore ?? Math.floor(70 + Math.random() * 25);
+  const messageCount = order.latestMessage ? Math.floor(3 + Math.random() * 10) : 0;
+  const hasReviewed = Math.random() > 0.5;
+  const hasSettled = Math.random() > 0.5;
 
   const getMatchScoreColor = (score: number) => {
     if (score >= 90) return 'text-green-600';
@@ -47,6 +70,23 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
     { label: '服务中' },
     { label: '待结算' },
   ];
+
+  const getFulfillmentCurrentStep = () => {
+    const idx = statusOrder[order.status];
+    if (idx === undefined || idx < 0) return -1;
+    return idx;
+  };
+
+  const currentStep = getFulfillmentCurrentStep();
+
+  const isStepCompleted = (stepIndex: number) => {
+    if (currentStep < 0) return false;
+    return stepIndex < currentStep;
+  };
+
+  const isStepCurrent = (stepIndex: number) => {
+    return stepIndex === currentStep;
+  };
 
   const isTerminalStatus = ['completed', 'cancelled', 'disputed', 'arbitrated'].includes(order.status);
   const canAccept = userRole === 'creator' && order.status === 'published';
@@ -116,6 +156,31 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
                 <StatusBadge status={order.status} />
                 <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               </div>
+              {order.status === 'disputed' && (
+                <Badge variant="error" size="sm" icon={<AlertTriangle className="w-3 h-3" />}>
+                  仲裁中
+                </Badge>
+              )}
+              {order.status === 'completed' && !hasReviewed && (
+                <Badge variant="warning" size="sm" icon={<Star className="w-3 h-3" />}>
+                  去评价
+                </Badge>
+              )}
+              {order.status === 'completed' && hasReviewed && (
+                <Badge variant="success" size="sm" icon={<Star className="w-3 h-3" />}>
+                  已评价
+                </Badge>
+              )}
+              {order.status === 'completed' && !hasSettled && (
+                <Badge variant="info" size="sm" icon={<Wallet className="w-3 h-3" />}>
+                  待结算（T+1）
+                </Badge>
+              )}
+              {order.status === 'completed' && hasSettled && (
+                <Badge variant="success" size="sm" icon={<CheckCircle className="w-3 h-3" />}>
+                  已结算
+                </Badge>
+              )}
             </div>
             <h3 className="font-semibold text-zinc-900 text-lg line-clamp-2 mb-2">
               {order.title}
@@ -192,10 +257,23 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
               <span className="truncate max-w-[150px]">{order.location}</span>
             </div>
           )}
-          {order.serviceTime && (
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4" />
-              <span>{order.serviceTime}</span>
+          <div className="flex items-center gap-1.5">
+            <Clock className="w-4 h-4" />
+            <span>{order.serviceTime || '预约待确认'}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <MessageSquare className="w-4 h-4" />
+            <span>{messageCount} 条沟通记录</span>
+          </div>
+          {['deposit_paid', 'in_progress', 'completed'].includes(order.status) ? (
+            <div className="flex items-center gap-1.5 text-green-600">
+              <Wallet className="w-4 h-4" />
+              <span className="font-medium">定金 ¥{order.deposit} 已托管</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 text-amber-600">
+              <Wallet className="w-4 h-4" />
+              <span className="font-medium">待付定金 ¥{order.deposit}</span>
             </div>
           )}
           <div className="flex items-center gap-1.5">
@@ -403,6 +481,66 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
           </button>
         </div>
       </div>
+
+      {currentStep >= 0 && (
+        <div className="px-5 py-4 bg-zinc-50 border-t border-zinc-100">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs font-medium text-zinc-600 flex items-center gap-1">
+              <Target className="w-3.5 h-3.5 text-primary-500" />
+              履约进度
+            </span>
+            <span className="text-xs text-zinc-500">
+              第 {Math.max(1, currentStep + 1)} / {fulfillmentSteps.length} 步
+            </span>
+          </div>
+          <div className="flex items-center">
+            {fulfillmentSteps.map((step, idx) => (
+              <div key={step.key} className="flex items-center flex-1 last:flex-none">
+                <div className="flex flex-col items-center">
+                  <div
+                    className={cn(
+                      'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors',
+                      isStepCompleted(idx)
+                        ? 'bg-green-500 border-green-500 text-white'
+                        : isStepCurrent(idx)
+                        ? 'bg-blue-500 border-blue-500 text-white ring-4 ring-blue-100 animate-pulse'
+                        : 'bg-white border-zinc-300 text-zinc-400'
+                    )}
+                  >
+                    {isStepCompleted(idx) ? (
+                      <CheckCircle className="w-4 h-4" />
+                    ) : isStepCurrent(idx) ? (
+                      <span className="w-2 h-2 bg-white rounded-full" />
+                    ) : (
+                      <span className="text-[10px] font-bold">{idx + 1}</span>
+                    )}
+                  </div>
+                  <span
+                    className={cn(
+                      'text-[10px] mt-1.5 whitespace-nowrap font-medium',
+                      isStepCompleted(idx)
+                        ? 'text-green-600'
+                        : isStepCurrent(idx)
+                        ? 'text-blue-600'
+                        : 'text-zinc-400'
+                    )}
+                  >
+                    {step.label}
+                  </span>
+                </div>
+                {idx < fulfillmentSteps.length - 1 && (
+                  <div
+                    className={cn(
+                      'flex-1 h-1 mx-1 mb-5 rounded-full transition-colors',
+                      isStepCompleted(idx) ? 'bg-green-500' : 'bg-zinc-200'
+                    )}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

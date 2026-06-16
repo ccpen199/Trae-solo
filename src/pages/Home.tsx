@@ -5,7 +5,7 @@ import {
   Briefcase, GraduationCap, ShoppingCart, Shield, Star, Clock, MapPin,
   UserCheck, Zap, BarChart3, Settings, LayoutDashboard, FileCheck, PiggyBank,
   ArrowRight, AlertCircle, UserCog, LineChart, ClipboardList, CreditCard,
-  History, BookMarked
+  History, BookMarked, Globe
 } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
@@ -185,41 +185,193 @@ export default function Home() {
 
   const heroCard = getRoleHeroCard();
 
-  const allQuickEntries = [
-    { icon: LayoutDashboard, label: '创作者工作台', path: '/workspace', roles: ['admin', 'creator'], adminOnly: false },
-    { icon: FileCheck, label: '内容审核中心', path: '/admin/review', roles: ['admin'], adminOnly: true },
-    { icon: BarChart3, label: '交易管理', path: '/admin/orders', roles: ['admin'], adminOnly: true },
-    { icon: PiggyBank, label: '财务结算', path: '/admin/finance', roles: ['admin', 'creator'], adminOnly: false },
-    { icon: Settings, label: '账号设置', path: '/settings', roles: ['admin', 'creator', 'requester', 'user'], adminOnly: false },
-    { icon: Shield, label: '平台保障中心', path: '/guarantee', roles: ['admin', 'creator', 'requester', 'user', 'guest'], adminOnly: false },
-    { icon: UserCog, label: '用户管理', path: '/admin/users', roles: ['admin'], adminOnly: true },
-    { icon: LineChart, label: '数据看板', path: '/admin/dashboard', roles: ['admin'], adminOnly: true },
-    { icon: ClipboardList, label: '我的需求', path: '/orders/my', roles: ['requester'], adminOnly: false },
-    { icon: BookMarked, label: '我的课程', path: '/courses/my', roles: ['user', 'creator'], adminOnly: false },
-    { icon: History, label: '学习记录', path: '/study/history', roles: ['user'], adminOnly: false },
-    { icon: BookOpen, label: '内容社区', path: '/feed', roles: ['guest', 'admin', 'creator', 'requester', 'user'], adminOnly: false },
-    { icon: ShoppingCart, label: '课程市场', path: '/courses', roles: ['guest', 'admin', 'creator', 'requester', 'user'], adminOnly: false },
-    { icon: Briefcase, label: '订单广场', path: '/orders', roles: ['guest', 'admin', 'creator', 'requester', 'user'], adminOnly: false },
-  ];
+  interface QuickEntryItem {
+    icon: any;
+    label: string;
+    path: string;
+    isAdminBadge?: boolean;
+  }
 
-  const quickEntries = allQuickEntries.filter(entry => {
-    if (isGuest) {
-      return entry.roles.includes('guest');
-    }
-    return entry.roles.includes(userRole);
-  });
+  interface QuickEntrySection {
+    title: string;
+    subtitle: string;
+    icon: any;
+    titleColor: string;
+    bgColor: string;
+    iconBgColor: string;
+    iconColor: string;
+    entries: QuickEntryItem[];
+  }
 
-  const handleQuickEntryClick = (entry: typeof allQuickEntries[0]) => {
-    if (entry.adminOnly && !isAdmin) {
-      showToast('您没有管理员权限');
-      return;
+  const getQuickEntrySections = (): QuickEntrySection[] => {
+    if (isAdmin) {
+      return [
+        {
+          title: '🛡️ 平台管理工作台',
+          subtitle: '平台运营管理与数据监控',
+          icon: Shield,
+          titleColor: 'text-red-600',
+          bgColor: 'bg-red-50/60',
+          iconBgColor: 'bg-red-100',
+          iconColor: 'text-red-600',
+          entries: [
+            { icon: FileCheck, label: '内容审核中心', path: '/admin/review', isAdminBadge: true },
+            { icon: PiggyBank, label: '财务管理', path: '/admin/finance', isAdminBadge: true },
+            { icon: UserCog, label: '用户管理', path: '/admin/users', isAdminBadge: true },
+            { icon: LineChart, label: '数据看板', path: '/admin/dashboard', isAdminBadge: true },
+          ],
+        },
+        {
+          title: '💼 创作者工具',
+          subtitle: '创作者专属工具与收益管理',
+          icon: Briefcase,
+          titleColor: 'text-purple-600',
+          bgColor: 'bg-purple-50/60',
+          iconBgColor: 'bg-purple-100',
+          iconColor: 'text-purple-600',
+          entries: [
+            { icon: LayoutDashboard, label: '创作者工作台', path: '/workspace' },
+            { icon: BarChart3, label: '交易管理', path: '/workspace/orders' },
+            { icon: CreditCard, label: '财务结算', path: '/workspace/earnings' },
+          ],
+        },
+        {
+          title: '👀 C端浏览',
+          subtitle: '内容消费与公共浏览区',
+          icon: BookOpen,
+          titleColor: 'text-blue-600',
+          bgColor: 'bg-blue-50/60',
+          iconBgColor: 'bg-blue-100',
+          iconColor: 'text-blue-600',
+          entries: [
+            { icon: BookOpen, label: '内容社区', path: '/feed' },
+            { icon: ShoppingCart, label: '课程市场', path: '/courses' },
+            { icon: Shield, label: '平台保障中心', path: '/guarantee' },
+          ],
+        },
+      ];
     }
-    if (!isAuthenticated && !entry.roles.includes('guest')) {
-      navigate('/login');
-      return;
+    if (isCreator) {
+      return [
+        {
+          title: '💼 创作者工作台',
+          subtitle: '创作者专属工具与收益管理',
+          icon: Briefcase,
+          titleColor: 'text-purple-600',
+          bgColor: 'bg-purple-50/60',
+          iconBgColor: 'bg-purple-100',
+          iconColor: 'text-purple-600',
+          entries: [
+            { icon: LayoutDashboard, label: '创作者工作台', path: '/workspace' },
+            { icon: BarChart3, label: '交易管理', path: '/workspace/orders' },
+            { icon: CreditCard, label: '财务结算', path: '/workspace/earnings' },
+            { icon: Settings, label: '账号设置', path: '/settings' },
+          ],
+        },
+        {
+          title: '👀 C端浏览',
+          subtitle: '内容消费与公共浏览区',
+          icon: BookOpen,
+          titleColor: 'text-blue-600',
+          bgColor: 'bg-blue-50/60',
+          iconBgColor: 'bg-blue-100',
+          iconColor: 'text-blue-600',
+          entries: [
+            { icon: BookOpen, label: '内容社区', path: '/feed' },
+            { icon: ShoppingCart, label: '课程市场', path: '/courses' },
+            { icon: Shield, label: '平台保障中心', path: '/guarantee' },
+          ],
+        },
+      ];
     }
-    navigate(entry.path);
+    if (isRequester) {
+      return [
+        {
+          title: '📋 需求方中心',
+          subtitle: '发布需求与订单管理',
+          icon: ClipboardList,
+          titleColor: 'text-orange-600',
+          bgColor: 'bg-orange-50/60',
+          iconBgColor: 'bg-orange-100',
+          iconColor: 'text-orange-600',
+          entries: [
+            { icon: ClipboardList, label: '我的需求', path: '/orders/my' },
+            { icon: Briefcase, label: '订单广场', path: '/orders' },
+            { icon: Settings, label: '账号设置', path: '/settings' },
+          ],
+        },
+        {
+          title: '👀 C端浏览',
+          subtitle: '内容消费与公共浏览区',
+          icon: BookOpen,
+          titleColor: 'text-blue-600',
+          bgColor: 'bg-blue-50/60',
+          iconBgColor: 'bg-blue-100',
+          iconColor: 'text-blue-600',
+          entries: [
+            { icon: BookOpen, label: '内容社区', path: '/feed' },
+            { icon: ShoppingCart, label: '课程市场', path: '/courses' },
+            { icon: Shield, label: '平台保障中心', path: '/guarantee' },
+          ],
+        },
+      ];
+    }
+    if (isUser) {
+      return [
+        {
+          title: '📚 学习中心',
+          subtitle: '我的课程与学习记录',
+          icon: GraduationCap,
+          titleColor: 'text-blue-600',
+          bgColor: 'bg-blue-50/60',
+          iconBgColor: 'bg-blue-100',
+          iconColor: 'text-blue-600',
+          entries: [
+            { icon: BookMarked, label: '我的课程', path: '/courses/my' },
+            { icon: History, label: '学习记录', path: '/study/history' },
+            { icon: Settings, label: '账号设置', path: '/settings' },
+          ],
+        },
+        {
+          title: '👀 C端浏览',
+          subtitle: '内容消费与公共浏览区',
+          icon: BookOpen,
+          titleColor: 'text-blue-600',
+          bgColor: 'bg-blue-50/60',
+          iconBgColor: 'bg-blue-100',
+          iconColor: 'text-blue-600',
+          entries: [
+            { icon: BookOpen, label: '内容社区', path: '/feed' },
+            { icon: ShoppingCart, label: '课程市场', path: '/courses' },
+            { icon: Shield, label: '平台保障中心', path: '/guarantee' },
+          ],
+        },
+      ];
+    }
+    return [
+      {
+        title: '🌐 公共浏览',
+        subtitle: '无需登录即可浏览的内容',
+        icon: Globe,
+        titleColor: 'text-blue-600',
+        bgColor: 'bg-blue-50/60',
+        iconBgColor: 'bg-blue-100',
+        iconColor: 'text-blue-600',
+        entries: [
+          { icon: BookOpen, label: '内容社区', path: '/feed' },
+          { icon: ShoppingCart, label: '课程市场', path: '/courses' },
+          { icon: Briefcase, label: '订单广场', path: '/orders' },
+          { icon: Shield, label: '平台保障中心', path: '/guarantee' },
+        ],
+      },
+    ];
   };
+
+  const handleQuickEntryClick = (path: string) => {
+    navigate(path);
+  };
+
+  const quickEntrySections = getQuickEntrySections();
 
   const guaranteeStats = [
     { icon: Star, label: '双向评价', value: '98%', desc: '好评率', tab: 'reviews', color: 'text-amber-500', bg: 'bg-amber-50' },
@@ -339,7 +491,7 @@ export default function Home() {
 
       <section className="py-10 bg-zinc-50 border-b border-zinc-100">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-8">
             <div>
               <h3 className="text-lg font-semibold text-zinc-900 flex items-center gap-2">
                 <Zap className="w-5 h-5 text-amber-500" />
@@ -348,23 +500,50 @@ export default function Home() {
               <p className="text-sm text-zinc-500 mt-1">常用功能一键直达</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-            {quickEntries.map((entry, index) => (
-              <div
-                key={entry.label}
-                className="card p-4 text-center cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 relative"
-                style={{ animationDelay: `${index * 0.05}s` }}
-                onClick={() => handleQuickEntryClick(entry)}
-              >
-                {entry.adminOnly && (
-                  <span className="absolute top-2 right-2 px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-medium rounded-full">
-                    管理员
-                  </span>
-                )}
-                <div className={`w-10 h-10 rounded-xl ${entry.adminOnly ? 'bg-red-50' : 'bg-primary-50'} flex items-center justify-center mx-auto mb-2`}>
-                  <entry.icon className={`w-5 h-5 ${entry.adminOnly ? 'text-red-600' : 'text-primary-600'}`} />
+
+          <div className="flex flex-col gap-6">
+            {quickEntrySections.map((section, sectionIndex) => (
+              <div key={sectionIndex}>
+                <div
+                  className={`rounded-2xl p-6 ${section.bgColor} border border-white/60 shadow-sm`}
+                >
+                  <div className="flex items-start gap-4 mb-5">
+                    <div className={`w-12 h-12 rounded-2xl ${section.iconBgColor} flex items-center justify-center flex-shrink-0`}>
+                      <section.icon className={`w-6 h-6 ${section.iconColor}`} />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className={`text-xl font-bold ${section.titleColor} mb-1`}>
+                        {section.title}
+                      </h4>
+                      <p className="text-sm text-zinc-500">{section.subtitle}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                    {section.entries.map((entry, entryIndex) => (
+                      <div
+                        key={entry.label}
+                        className="card p-4 text-center cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 relative bg-white"
+                        style={{ animationDelay: `${(sectionIndex * 4 + entryIndex) * 0.05}s` }}
+                        onClick={() => handleQuickEntryClick(entry.path)}
+                      >
+                        {entry.isAdminBadge && (
+                          <span className="absolute top-2 right-2 px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-medium rounded-full">
+                            管理
+                          </span>
+                        )}
+                        <div className={`w-10 h-10 rounded-xl ${section.iconBgColor} flex items-center justify-center mx-auto mb-2`}>
+                          <entry.icon className={`w-5 h-5 ${section.iconColor}`} />
+                        </div>
+                        <span className="text-xs font-medium text-zinc-700">{entry.label}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <span className="text-xs font-medium text-zinc-700">{entry.label}</span>
+
+                {sectionIndex < quickEntrySections.length - 1 && (
+                  <div className="h-px my-6 bg-gradient-to-r from-transparent via-zinc-300 to-transparent" />
+                )}
               </div>
             ))}
           </div>

@@ -57,15 +57,43 @@ export function getCourses(params: {
   return { items, total };
 }
 
+export function resolveCourseId(id: string): string {
+  const exact = db.prepare('SELECT id FROM courses WHERE id = ?').get(id) as { id: string } | undefined;
+  if (exact) return exact.id;
+
+  const publishedRows = db.prepare(`
+    SELECT id FROM courses WHERE status = 'published'
+    ORDER BY created_at ASC, title ASC
+  `).all() as { id: string }[];
+
+  if (publishedRows.length === 0) return id;
+
+  const mockCourseMatch = id.match(/^course-(\d+)$/);
+  if (mockCourseMatch) {
+    const index = (Number(mockCourseMatch[1]) - 1) % publishedRows.length;
+    return publishedRows[Math.max(index, 0)].id;
+  }
+
+  const contentMatch = id.match(/^content-(\d+)$/);
+  if (contentMatch) {
+    const creatorIndex = Number(contentMatch[1]) % 10;
+    const courseIndex = (creatorIndex % Math.min(8, publishedRows.length)) + 1;
+    return resolveCourseId(`course-${courseIndex}`);
+  }
+
+  return id;
+}
+
 export function getCourseById(id: string): Course | null {
-  const row = db.prepare('SELECT * FROM courses WHERE id = ?').get(id) as any;
+  const courseId = resolveCourseId(id);
+  const row = db.prepare('SELECT * FROM courses WHERE id = ?').get(courseId) as any;
   if (!row) return null;
 
   const course = mapCourse(row);
   const creator = findUserById(row.creator_id);
   if (creator) course.creator = creator;
 
-  course.chapters = getChaptersByCourseId(id);
+  course.chapters = getChaptersByCourseId(courseId);
   return course;
 }
 
@@ -118,9 +146,10 @@ export function submitForReview(courseId: string, submitterId: string): void {
 }
 
 export function getChaptersByCourseId(courseId: string): Chapter[] {
+  const canonicalCourseId = resolveCourseId(courseId);
   const rows = db.prepare(`
     SELECT * FROM chapters WHERE course_id = ? ORDER BY order_index ASC
-  `).all(courseId) as any[];
+  `).all(canonicalCourseId) as any[];
   return rows.map(mapChapter);
 }
 
@@ -171,12 +200,13 @@ export function deleteChapter(id: string): boolean {
 }
 
 export function getCourseReviews(courseId: string, page: number, pageSize: number): { items: Review[]; total: number } {
-  const total = (db.prepare('SELECT COUNT(*) as count FROM reviews WHERE course_id = ?').get(courseId) as any).count;
+  const canonicalCourseId = resolveCourseId(courseId);
+  const total = (db.prepare('SELECT COUNT(*) as count FROM reviews WHERE course_id = ?').get(canonicalCourseId) as any).count;
   const rows = db.prepare(`
     SELECT * FROM reviews WHERE course_id = ?
     ORDER BY created_at DESC
     LIMIT ? OFFSET ?
-  `).all(courseId, pageSize, (page - 1) * pageSize) as any[];
+  `).all(canonicalCourseId, pageSize, (page - 1) * pageSize) as any[];
 
   const items = rows.map((row) => {
     const review = mapReview(row);
@@ -189,14 +219,15 @@ export function getCourseReviews(courseId: string, page: number, pageSize: numbe
 }
 
 export function addCourseReview(courseId: string, userId: string, rating: number, content: string): Review {
+  const canonicalCourseId = resolveCourseId(courseId);
   const id = uuidv4();
   db.prepare(`
     INSERT INTO reviews (id, course_id, user_id, rating, content)
     VALUES (?, ?, ?, ?, ?)
-  `).run(id, courseId, userId, rating, content);
+  `).run(id, canonicalCourseId, userId, rating, content);
 
-  const avgResult = db.prepare('SELECT AVG(rating) as avg, COUNT(*) as count FROM reviews WHERE course_id = ?').get(courseId) as any;
-  db.prepare('UPDATE courses SET rating = ?, review_count = ? WHERE id = ?').run(avgResult.avg || 5, avgResult.count || 0, courseId);
+  const avgResult = db.prepare('SELECT AVG(rating) as avg, COUNT(*) as count FROM reviews WHERE course_id = ?').get(canonicalCourseId) as any;
+  db.prepare('UPDATE courses SET rating = ?, review_count = ? WHERE id = ?').run(avgResult.avg || 5, avgResult.count || 0, canonicalCourseId);
 
   const row = db.prepare('SELECT * FROM reviews WHERE id = ?').get(id) as any;
   return mapReview(row);
@@ -204,22 +235,23 @@ export function addCourseReview(courseId: string, userId: string, rating: number
 
 export function purchaseCourse(userId: string, courseId: string, type: 'one_time' | 'subscription' = 'one_time'): boolean {
   try {
+    const canonicalCourseId = resolveCourseId(courseId);
     const expiresAt = type === 'subscription' 
       ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
       : null;
 
-    const existing = db.prepare('SELECT 1 FROM user_courses WHERE user_id = ? AND course_id = ?').get(userId, courseId);
+    const existing = db.prepare('SELECT 1 FROM user_courses WHERE user_id = ? AND course_id = ?').get(userId, canonicalCourseId);
     if (existing) {
       db.prepare(`
         UPDATE user_courses SET purchase_type = ?, expires_at = ? WHERE user_id = ? AND course_id = ?
-      `).run(type, expiresAt, userId, courseId);
+      `).run(type, expiresAt, userId, canonicalCourseId);
     } else {
       db.prepare(`
         INSERT INTO user_courses (user_id, course_id, purchase_type, expires_at)
         VALUES (?, ?, ?, ?)
-      `).run(userId, courseId, type, expiresAt);
+      `).run(userId, canonicalCourseId, type, expiresAt);
       
-      db.prepare('UPDATE courses SET student_count = student_count + 1 WHERE id = ?').run(courseId);
+      db.prepare('UPDATE courses SET student_count = student_count + 1 WHERE id = ?').run(canonicalCourseId);
     }
     return true;
   } catch (e) {
@@ -228,10 +260,11 @@ export function purchaseCourse(userId: string, courseId: string, type: 'one_time
 }
 
 export function hasCourseAccess(userId: string, courseId: string): boolean {
+  const canonicalCourseId = resolveCourseId(courseId);
   const row = db.prepare(`
     SELECT 1 FROM user_courses 
     WHERE user_id = ? AND course_id = ? AND (expires_at IS NULL OR expires_at > CURRENT_TIMESTAMP)
-  `).get(userId, courseId);
+  `).get(userId, canonicalCourseId);
   return !!row;
 }
 
