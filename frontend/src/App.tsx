@@ -30,16 +30,17 @@ const AdminRoute: React.FC<{ children: React.ReactElement }> = ({ children }) =>
   const { user, token, login } = useAuthStore();
   const [demoLoginPending, setDemoLoginPending] = React.useState(false);
   const [demoLoginFailed, setDemoLoginFailed] = React.useState(false);
+  const isAdminUser = user?.role === 'ADMIN' || user?.role === 'GOVERNMENT';
 
   React.useEffect(() => {
-    if (token || demoLoginPending || demoLoginFailed) return;
+    if (isAdminUser || demoLoginPending || demoLoginFailed) return;
     setDemoLoginPending(true);
     login('13800000000', '123456')
       .catch(() => setDemoLoginFailed(true))
       .finally(() => setDemoLoginPending(false));
-  }, [token, demoLoginPending, demoLoginFailed, login]);
+  }, [isAdminUser, demoLoginPending, demoLoginFailed, login]);
 
-  if (!token && !demoLoginFailed) {
+  if (!isAdminUser && !demoLoginFailed) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-100 text-slate-600">
         管理后台演示账号登录中...
@@ -48,7 +49,7 @@ const AdminRoute: React.FC<{ children: React.ReactElement }> = ({ children }) =>
   }
 
   if (!token) return <Navigate to="/login" replace />;
-  if (user?.role !== 'ADMIN' && user?.role !== 'GOVERNMENT') {
+  if (!isAdminUser) {
     return <Navigate to="/" replace />;
   }
   return children;
@@ -69,6 +70,7 @@ const App: React.FC = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="feed" element={<FeedPage />} />
+        <Route path="post/:id" element={<PostDetailPage />} />
         <Route path="posts/:id" element={<PostDetailPage />} />
         <Route path="create" element={<PrivateRoute><CreatePostPage /></PrivateRoute>} />
         <Route path="merchants" element={<MerchantsPage />} />
@@ -86,6 +88,7 @@ const App: React.FC = () => {
         <Route path="governance" element={<GovernanceDashboard />} />
         <Route path="merchant/:id" element={<MerchantAnalytics />} />
       </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

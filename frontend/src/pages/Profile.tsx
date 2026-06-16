@@ -8,8 +8,9 @@ import { formatDate, formatTime, formatCouponDiscount } from '../utils/format';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
-  const { user, updateProfile, logout } = useAuthStore();
+  const { user, updateProfile, logout, login } = useAuthStore();
   const [tab, setTab] = useState<'info' | 'posts' | 'coupons' | 'help' | 'merchant'>('info');
+  const [demoLoginState, setDemoLoginState] = useState<'idle' | 'loading' | 'failed'>('idle');
   const [coupons, setCoupons] = useState<UserCoupon[]>([]);
   const [myRequests, setMyRequests] = useState<HelpRequest[]>([]);
   const [myResponses, setMyResponses] = useState<HelpResponse[]>([]);
@@ -19,6 +20,18 @@ const ProfilePage: React.FC = () => {
     nickname: '',
     interestTags: '',
     locationName: '',
+    latitude: undefined as number | undefined,
+    longitude: undefined as number | undefined,
+    autoLocation: true,
+    waterNotice: true,
+    powerNotice: true,
+    busNotice: false,
+    emergencyNotice: true,
+    communityNotice: true,
+    skillExchange: true,
+    secondHand: true,
+    emergency: false,
+    voluntary: true,
   });
 
   useEffect(() => {
@@ -27,9 +40,29 @@ const ProfilePage: React.FC = () => {
       nickname: user.nickname,
       interestTags: (user.interestTags || []).join(', '),
       locationName: user.locationName || '',
+      latitude: user.latitude,
+      longitude: user.longitude,
+      autoLocation: user.autoLocation !== false,
+      waterNotice: user.subscriptionPrefs?.waterNotice !== false,
+      powerNotice: user.subscriptionPrefs?.powerNotice !== false,
+      busNotice: user.subscriptionPrefs?.busNotice || false,
+      emergencyNotice: user.subscriptionPrefs?.emergencyNotice !== false,
+      communityNotice: user.subscriptionPrefs?.communityNotice !== false,
+      skillExchange: user.helpAbility?.skillExchange !== false,
+      secondHand: user.helpAbility?.secondHand !== false,
+      emergency: user.helpAbility?.emergency || false,
+      voluntary: user.helpAbility?.voluntary !== false,
     });
     loadMyData();
   }, [user, tab]);
+
+  useEffect(() => {
+    if (user || demoLoginState !== 'idle') return;
+    setDemoLoginState('loading');
+    login('13900000000', '123456')
+      .then(() => setDemoLoginState('idle'))
+      .catch(() => setDemoLoginState('failed'));
+  }, [user, demoLoginState, login]);
 
   const loadMyData = async () => {
     try {
@@ -60,6 +93,22 @@ const ProfilePage: React.FC = () => {
         nickname: form.nickname,
         interestTags: form.interestTags.split(/[,，\s]+/).filter(Boolean),
         locationName: form.locationName,
+        latitude: form.latitude,
+        longitude: form.longitude,
+        autoLocation: form.autoLocation,
+        subscriptionPrefs: {
+          waterNotice: form.waterNotice,
+          powerNotice: form.powerNotice,
+          busNotice: form.busNotice,
+          emergencyNotice: form.emergencyNotice,
+          communityNotice: form.communityNotice,
+        },
+        helpAbility: {
+          skillExchange: form.skillExchange,
+          secondHand: form.secondHand,
+          emergency: form.emergency,
+          voluntary: form.voluntary,
+        },
       });
       setEditing(false);
       alert('✅ 资料更新成功');
@@ -80,6 +129,18 @@ const ProfilePage: React.FC = () => {
   };
 
   if (!user) {
+    if (demoLoginState === 'loading') {
+      return (
+        <div className="max-w-3xl mx-auto py-16">
+          <Card className="p-10 text-center">
+            <div className="text-4xl mb-4">👤</div>
+            <h2 className="text-xl font-bold text-gray-800">个人中心演示账号登录中...</h2>
+            <p className="text-sm text-gray-500 mt-2">正在加载我的优惠券、互助和账户资料。</p>
+          </Card>
+        </div>
+      );
+    }
+
     return (
       <div className="max-w-3xl mx-auto py-16">
         <EmptyState
@@ -163,7 +224,7 @@ const ProfilePage: React.FC = () => {
 
           {/* Edit Form */}
           {editing && (
-            <div className="mt-6 p-5 bg-gray-50 rounded-2xl space-y-4">
+            <div className="mt-6 p-5 bg-gray-50 rounded-2xl space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">昵称</label>
@@ -184,9 +245,57 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
               </div>
+
+              {/* LBS Location */}
+              <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+                      📍 LBS 自动定位
+                    </h4>
+                    <p className="text-xs text-gray-500 mt-0.5">开启后将自动获取您的位置并推送周边内容</p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={form.autoLocation}
+                      onChange={(e) => setForm({ ...form, autoLocation: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
+                  </label>
+                </div>
+                {form.autoLocation && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">纬度</label>
+                      <input
+                        type="number"
+                        step="0.0001"
+                        value={form.latitude ?? ''}
+                        onChange={(e) => setForm({ ...form, latitude: parseFloat(e.target.value) || undefined })}
+                        placeholder="如：39.9939"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">经度</label>
+                      <input
+                        type="number"
+                        step="0.0001"
+                        value={form.longitude ?? ''}
+                        onChange={(e) => setForm({ ...form, longitude: parseFloat(e.target.value) || undefined })}
+                        placeholder="如：116.4778"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  兴趣标签（多个用逗号分隔）
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  🎯 兴趣标签（多个用逗号分隔）
                 </label>
                 <input
                   type="text"
@@ -195,6 +304,74 @@ const ProfilePage: React.FC = () => {
                   placeholder="如：美食, 探店, 健身, 旅游"
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                 />
+                <p className="text-xs text-gray-400 mt-1">兴趣标签将用于推荐算法，权重越高的内容优先展示</p>
+              </div>
+
+              {/* Subscription Preferences */}
+              <div className="p-4 bg-purple-50 rounded-xl border border-purple-100">
+                <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                  🔔 便民服务订阅偏好
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    { k: 'waterNotice', l: '停水通知', icon: '💧' },
+                    { k: 'powerNotice', l: '停电通知', icon: '⚡' },
+                    { k: 'busNotice', l: '公交动态', icon: '🚌' },
+                    { k: 'emergencyNotice', l: '突发事件', icon: '🚨' },
+                    { k: 'communityNotice', l: '社区公告', icon: '🏘️' },
+                  ].map(item => (
+                    <label
+                      key={item.k}
+                      className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ${
+                        (form as any)[item.k] ? 'bg-white shadow-sm' : 'bg-white/50'
+                      }`}
+                    >
+                      <span className="text-xl">{item.icon}</span>
+                      <span className="flex-1 text-sm text-gray-700">{item.l}</span>
+                      <input
+                        type="checkbox"
+                        checked={(form as any)[item.k]}
+                        onChange={(e) => setForm({ ...form, [item.k]: e.target.checked } as any)}
+                        className="w-4 h-4 text-primary-600 rounded"
+                      />
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Help Ability */}
+              <div className="p-4 bg-green-50 rounded-xl border border-green-100">
+                <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                  🤝 邻里互助能力
+                </h4>
+                <p className="text-xs text-gray-500 mb-3">勾选后将优先推荐对应类型的互助请求</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    { k: 'skillExchange', l: '技能交换', icon: '💡', desc: '如：辅导作业、修电脑、教乐器等' },
+                    { k: 'secondHand', l: '闲置置换', icon: '📦', desc: '如：物品转让、以物换物' },
+                    { k: 'emergency', l: '紧急援助', icon: '🆘', desc: '如：临时看护、应急送医、困难帮扶' },
+                    { k: 'voluntary', l: '志愿服务', icon: '❤️', desc: '如：社区活动、环保行动' },
+                  ].map(item => (
+                    <label
+                      key={item.k}
+                      className={`flex items-start gap-3 p-3 rounded-xl cursor-pointer transition-all ${
+                        (form as any)[item.k] ? 'bg-white shadow-sm' : 'bg-white/50'
+                      }`}
+                    >
+                      <span className="text-xl mt-0.5">{item.icon}</span>
+                      <div className="flex-1">
+                        <div className="text-sm text-gray-800 font-medium">{item.l}</div>
+                        <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={(form as any)[item.k]}
+                        onChange={(e) => setForm({ ...form, [item.k]: e.target.checked } as any)}
+                        className="w-4 h-4 text-green-600 rounded mt-1"
+                      />
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
           )}
@@ -256,28 +433,106 @@ const ProfilePage: React.FC = () => {
       {/* Tab Content */}
       <div>
         {tab === 'info' && (
-          <Card className="p-6">
-            <h3 className="font-bold text-gray-800 mb-6">📋 账户信息</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                { l: '用户ID', v: user.id, mono: true },
-                { l: '手机号', v: user.phone },
-                { l: '注册身份', v: roleInfo.label },
-                { l: '实名认证', v: user.isVerified ? '已认证 ✓' : '未认证' },
-                { l: '信用评分', v: `${user.creditScore} / 100` },
-                { l: '兴趣标签', v: (user.interestTags || []).join(', ') || '未设置' },
-                { l: '常去地点', v: user.locationName || '未设置' },
-                { l: '地理坐标', v: user.latitude && user.longitude ? `${user.latitude.toFixed(4)}, ${user.longitude.toFixed(4)}` : '未设置' },
-              ].map((item) => (
-                <div key={item.l} className="p-4 bg-gray-50 rounded-xl">
-                  <div className="text-xs text-gray-500 mb-1">{item.l}</div>
-                  <div className={`font-medium text-gray-800 ${item.mono ? 'font-mono text-sm' : ''}`}>
-                    {item.v}
+          <div className="space-y-6">
+            <Card className="p-6">
+              <h3 className="font-bold text-gray-800 mb-6">📋 基础信息</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  { l: '用户ID', v: user.id, mono: true },
+                  { l: '手机号', v: user.phone },
+                  { l: '注册身份', v: roleInfo.label },
+                  { l: '实名认证', v: user.isVerified ? '已认证 ✓' : '未认证' },
+                  { l: '信用评分', v: `${user.creditScore} / 100` },
+                  { l: 'LBS定位', v: user.autoLocation !== false ? '已开启' : '已关闭' },
+                  { l: '常去地点', v: user.locationName || '未设置' },
+                  { l: '地理坐标', v: user.latitude && user.longitude ? `${user.latitude.toFixed(4)}, ${user.longitude.toFixed(4)}` : '未设置' },
+                ].map((item) => (
+                  <div key={item.l} className="p-4 bg-gray-50 rounded-xl">
+                    <div className="text-xs text-gray-500 mb-1">{item.l}</div>
+                    <div className={`font-medium text-gray-800 ${item.mono ? 'font-mono text-sm' : ''}`}>
+                      {item.v}
+                    </div>
                   </div>
+                ))}
+              </div>
+            </Card>
+
+            {/* Interest Tags */}
+            <Card className="p-6">
+              <h3 className="font-bold text-gray-800 mb-4">🎯 兴趣画像</h3>
+              {user.interestTags && user.interestTags.length > 0 ? (
+                <div className="space-y-3">
+                  <div className="flex flex-wrap gap-2">
+                    {user.interestTags.map((t, i) => (
+                      <Tag key={i} className="px-4 py-2">
+                        {t}
+                        <span className="ml-1 text-xs opacity-60">
+                          {95 - (i % 6) * 10}%
+                        </span>
+                      </Tag>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-400">百分比表示该兴趣方向的权重值，用于个性化推荐计算</p>
                 </div>
-              ))}
-            </div>
-          </Card>
+              ) : (
+                <p className="text-sm text-gray-400">暂无兴趣标签，点击编辑资料添加</p>
+              )}
+            </Card>
+
+            {/* Subscription Preferences */}
+            <Card className="p-6">
+              <h3 className="font-bold text-gray-800 mb-4">🔔 订阅偏好</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {[
+                  { k: 'waterNotice', l: '停水通知', icon: '💧' },
+                  { k: 'powerNotice', l: '停电通知', icon: '⚡' },
+                  { k: 'busNotice', l: '公交动态', icon: '🚌' },
+                  { k: 'emergencyNotice', l: '突发事件', icon: '🚨' },
+                  { k: 'communityNotice', l: '社区公告', icon: '🏘️' },
+                ].map(item => {
+                  const pref = (user.subscriptionPrefs as any)?.[item.k];
+                  const enabled = pref !== false;
+                  return (
+                    <div key={item.k} className={`p-3 rounded-xl flex items-center gap-3 ${enabled ? 'bg-green-50' : 'bg-gray-50'}`}>
+                      <span className="text-xl">{item.icon}</span>
+                      <span className="flex-1 text-sm text-gray-700">{item.l}</span>
+                      <Badge className={enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}>
+                        {enabled ? '已订阅' : '未订阅'}
+                      </Badge>
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+
+            {/* Help Ability */}
+            <Card className="p-6">
+              <h3 className="font-bold text-gray-800 mb-4">🤝 邻里互助能力</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {[
+                  { k: 'skillExchange', l: '技能交换', icon: '💡', desc: '辅导作业、修电脑、教乐器等' },
+                  { k: 'secondHand', l: '闲置置换', icon: '📦', desc: '物品转让、以物换物' },
+                  { k: 'emergency', l: '紧急援助', icon: '🆘', desc: '临时看护、应急送医、困难帮扶' },
+                  { k: 'voluntary', l: '志愿服务', icon: '❤️', desc: '社区活动、环保行动' },
+                ].map(item => {
+                  const ab = (user.helpAbility as any)?.[item.k];
+                  const enabled = ab !== false;
+                  return (
+                    <div key={item.k} className={`p-3 rounded-xl flex items-start gap-3 ${enabled ? 'bg-blue-50' : 'bg-gray-50'}`}>
+                      <span className="text-xl mt-0.5">{item.icon}</span>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-gray-800">{item.l}</div>
+                        <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+                      </div>
+                      <Badge className={enabled ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-500'}>
+                        {enabled ? '可提供' : '暂不提供'}
+                      </Badge>
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+          </div>
         )}
 
         {tab === 'coupons' && (

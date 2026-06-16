@@ -91,6 +91,7 @@ router.get(
       const longitude = req.query.longitude ? parseFloat(req.query.longitude as string) : undefined;
       const type = req.query.type as string | undefined;
       const topic = req.query.topic as string | undefined;
+      const keyword = (req.query.keyword as string | undefined)?.trim();
       const page = parseInt(req.query.page as string) || 1;
       const limit = parseInt(req.query.limit as string) || 20;
 
@@ -105,6 +106,27 @@ router.get(
 
       if (topic) {
         where.topics = { some: { topic: { name: topic } } };
+      }
+
+      if (keyword) {
+        where.OR = [
+          { title: { contains: keyword } },
+          { content: { contains: keyword } },
+          { sourceOrg: { contains: keyword } },
+          { locationName: { contains: keyword } },
+          {
+            topics: {
+              some: {
+                topic: {
+                  OR: [
+                    { name: { contains: keyword } },
+                    { description: { contains: keyword } },
+                  ],
+                },
+              },
+            },
+          },
+        ];
       }
 
       const posts = await prisma.post.findMany({

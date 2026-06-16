@@ -5,11 +5,26 @@ export interface User {
   avatar?: string;
   role: 'CITIZEN' | 'MERCHANT' | 'ADMIN' | 'GOVERNMENT';
   interestTags?: string[];
+  interestWeights?: Record<string, number>;
   latitude?: number;
   longitude?: number;
   locationName?: string;
+  autoLocation?: boolean;
   isVerified: boolean;
   creditScore: number;
+  subscriptionPrefs?: {
+    waterNotice: boolean;
+    powerNotice: boolean;
+    busNotice: boolean;
+    emergencyNotice: boolean;
+    communityNotice: boolean;
+  };
+  helpAbility?: {
+    skillExchange: boolean;
+    secondHand: boolean;
+    emergency: boolean;
+    voluntary: boolean;
+  };
 }
 
 export interface Merchant {

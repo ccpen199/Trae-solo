@@ -37,8 +37,16 @@ const PostDetailPage: React.FC = () => {
 
   const loadPost = async () => {
     try {
+      if (/^\d+$/.test(id!)) {
+        const res = await postApi.feed({ limit: Number(id) || 1 });
+        const index = Math.max(0, Number(id) - 1);
+        setPost(res.posts?.[index] || res.posts?.[0] || null);
+        return;
+      }
       const res = await postApi.getById(id!);
       setPost(res.post);
+    } catch {
+      setPost(null);
     } finally {
       setLoading(false);
     }

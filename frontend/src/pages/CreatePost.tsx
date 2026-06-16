@@ -30,6 +30,11 @@ const CreatePostPage: React.FC = () => {
     proofImage: '',
     urgency: 1,
     expireHours: 72,
+    sourceLevel: 'ORDINARY',
+    sourceOrg: '',
+    riskLevel: 'LOW',
+    pushScope: 'COMMUNITY',
+    officialDoc: '',
   });
   const [merchants, setMerchants] = useState<Merchant[]>([]);
   const [submitting, setSubmitting] = useState(false);
@@ -288,19 +293,170 @@ const CreatePostPage: React.FC = () => {
               </div>
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  ⚠️ 风险等级
+                </label>
+                <select
+                  value={form.riskLevel}
+                  onChange={(e) => update('riskLevel', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                >
+                  <option value="LOW">低风险</option>
+                  <option value="MEDIUM">中风险</option>
+                  <option value="HIGH">高风险</option>
+                  <option value="CRITICAL">极高风险</option>
+                </select>
+                <p className="text-xs text-gray-400 mt-1">预估风险等级将影响推送优先级</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  ⏰ 有效期（小时）
+                </label>
+                <input
+                  type="number"
+                  value={form.expireHours}
+                  onChange={(e) => update('expireHours', e.target.value)}
+                  min="1"
+                  max="168"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                />
+                <p className="text-xs text-gray-400 mt-1">超时后内容将自动转为历史状态</p>
+              </div>
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                ⏰ 有效期（小时）
+                📡 推送范围
+              </label>
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  { v: 'BUILDING', l: '本楼栋', icon: '🏢' },
+                  { v: 'COMMUNITY', l: '本社区', icon: '🏘️' },
+                  { v: 'STREET', l: '街道范围', icon: '🛣️' },
+                  { v: 'DISTRICT', l: '全区覆盖', icon: '🗺️' },
+                  { v: 'CITY', l: '全市推送', icon: '🌆' },
+                ].map(scope => (
+                  <button
+                    key={scope.v}
+                    type="button"
+                    onClick={() => update('pushScope', scope.v)}
+                    className={`flex-1 min-w-[100px] py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                      form.pushScope === scope.v
+                        ? 'bg-red-500 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <span className="mr-1">{scope.icon}</span>
+                    {scope.l}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* Notice Specific */}
+        {form.type === 'NOTICE' && (
+          <Card className="p-6 mb-6 space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-2xl">
+                📢
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-800">政务通知设置</h3>
+                <p className="text-sm text-gray-500">官方认证内容将获得最高推送优先级</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  🏛️ 信源等级
+                </label>
+                <select
+                  value={form.sourceLevel}
+                  onChange={(e) => update('sourceLevel', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                >
+                  <option value="ORDINARY">普通用户</option>
+                  <option value="V">实名认证个人</option>
+                  <option value="OFFICIAL">官方机构</option>
+                  <option value="GOV">政府部门</option>
+                </select>
+                <p className="text-xs text-gray-400 mt-1">信源等级越高，推送权重越大</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  🏢 发布机构
+                </label>
+                <input
+                  type="text"
+                  value={form.sourceOrg}
+                  onChange={(e) => update('sourceOrg', e.target.value)}
+                  placeholder="如：望京街道办事处"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                />
+                <p className="text-xs text-gray-400 mt-1">政务通知必填发布机构名称</p>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                📄 官方文件编号/文号
               </label>
               <input
-                type="number"
-                value={form.expireHours}
-                onChange={(e) => update('expireHours', e.target.value)}
-                min="1"
-                max="168"
-                className="w-full md:w-64 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                type="text"
+                value={form.officialDoc}
+                onChange={(e) => update('officialDoc', e.target.value)}
+                placeholder="如：朝办发〔2024〕12号"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
               />
-              <p className="text-xs text-gray-400 mt-1">超时后内容将自动转为历史状态</p>
+              <p className="text-xs text-gray-400 mt-1">填写官方文号可增强内容可信度</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                📡 推送范围
+              </label>
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  { v: 'COMMUNITY', l: '本社区', icon: '🏘️' },
+                  { v: 'STREET', l: '街道范围', icon: '🛣️' },
+                  { v: 'DISTRICT', l: '全区覆盖', icon: '🗺️' },
+                  { v: 'CITY', l: '全市推送', icon: '🌆' },
+                ].map(scope => (
+                  <button
+                    key={scope.v}
+                    type="button"
+                    onClick={() => update('pushScope', scope.v)}
+                    className={`flex-1 min-w-[100px] py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                      form.pushScope === scope.v
+                        ? 'bg-purple-500 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <span className="mr-1">{scope.icon}</span>
+                    {scope.l}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-gray-400 mt-2">选择通知覆盖的地理范围</p>
+            </div>
+
+            <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
+              <div className="flex items-start gap-2">
+                <span className="text-xl">🔐</span>
+                <div className="text-sm text-blue-700">
+                  <p className="font-medium mb-1">政务通知审核说明</p>
+                  <p className="text-blue-600">
+                    政务/官方内容需经过人工复审后方可发布，审核通过后将获得
+                    <span className="font-bold mx-1">最高优先级推送</span>
+                    并在列表顶部置顶展示。
+                  </p>
+                </div>
+              </div>
             </div>
           </Card>
         )}
