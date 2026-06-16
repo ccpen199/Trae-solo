@@ -29,7 +29,7 @@ export interface WorkEntry {
   entrySubtitle: string;
   workbenchPath: string;
   urgentItems: UrgentItem[];
-  workbenchData?: WorkflowWorkbenchData | TimeoutWorkbenchData | TemplatesWorkbenchData;
+  workbenchData?: WorkflowWorkbenchData | TimeoutWorkbenchData | TemplatesWorkbenchData | OpenApiWorkbenchData | PolicyWorkbenchData | AuthChainWorkbenchData;
 }
 
 export interface ActionableOperation {
@@ -188,6 +188,64 @@ export interface TemplatesWorkbenchData {
   pendingNewVersion: number;
   pendingToggle: number;
   pendingAudit: number;
+}
+
+export interface OpenApiWorkbenchData {
+  authorizationsByStatus: {
+    authorized: number;
+    pending: number;
+    revoked: number;
+  };
+  todayApiActions: WorkbenchAction[];
+  recentAuthorizationChanges: Array<{
+    id: string;
+    appName: string;
+    action: string;
+    timestamp: Date;
+    operator: string;
+  }>;
+  pendingAuthorizationReviews: number;
+  pendingScopeChanges: number;
+  pendingExceptionAudits: number;
+}
+
+export interface PolicyWorkbenchData {
+  policiesByStatus: {
+    draft: number;
+    pendingReview: number;
+    published: number;
+    archived: number;
+  };
+  todayPolicyActions: WorkbenchAction[];
+  recentPolicyChanges: Array<{
+    id: string;
+    title: string;
+    action: string;
+    timestamp: Date;
+    operator: string;
+  }>;
+  pendingPublishReviews: number;
+  pendingQaQualityReviews: number;
+  pendingCorpusUpdates: number;
+}
+
+export interface AuthChainWorkbenchData {
+  authTypesByStatus: {
+    online: number;
+    degraded: number;
+    offline: number;
+  };
+  todayAuthActions: WorkbenchAction[];
+  recentDegradationEvents: Array<{
+    id: string;
+    authType: string;
+    eventType: string;
+    timestamp: Date;
+    operator: string;
+  }>;
+  pendingAlternativeVerifications: number;
+  pendingManualReviews: number;
+  pendingHighRiskVerifications: number;
 }
 
 export interface TimeoutDisposalStats {
@@ -1721,6 +1779,164 @@ export class AdminConsoleService {
       pendingAudit,
     };
 
+    const openApiAuthorized = Math.max(1, Math.floor(totalUsers * 0.7));
+    const openApiPending = Math.max(0, Math.floor(totalUsers * 0.2));
+    const openApiRevoked = Math.max(0, totalUsers - openApiAuthorized - openApiPending);
+    const pendingAuthorizationReviews = Math.max(0, openApiPending);
+    const pendingScopeChanges = Math.max(0, Math.floor(pendingRetry * 0.5));
+    const pendingExceptionAudits = Math.max(0, pendingRetry);
+
+    const todayApiActions: WorkbenchAction[] = [
+      {
+        actionCode: 'REVIEW_AUTHORIZATION',
+        actionName: '授权审核',
+        count: pendingAuthorizationReviews,
+        endpoint: '/api/admin/open-api/authorizations/pending',
+        type: 'primary',
+      },
+      {
+        actionCode: 'AUDIT_EXCEPTION',
+        actionName: '异常调用审计',
+        count: pendingExceptionAudits,
+        endpoint: '/api/admin/open-api/exceptions',
+        type: 'warning',
+      },
+      {
+        actionCode: 'ADJUST_SCOPE',
+        actionName: '授权范围调整',
+        count: pendingScopeChanges,
+        endpoint: '/api/admin/open-api/scopes/:id',
+        type: 'secondary',
+      },
+    ];
+
+    const recentAuthorizationChanges = templateRecentChanges.slice(0, 5).map((t) => ({
+      id: t.id,
+      appName: t.templateName,
+      action: t.action,
+      timestamp: t.timestamp,
+      operator: t.operator,
+    }));
+
+    const openApiWorkbenchData: OpenApiWorkbenchData = {
+      authorizationsByStatus: {
+        authorized: openApiAuthorized,
+        pending: openApiPending,
+        revoked: openApiRevoked,
+      },
+      todayApiActions,
+      recentAuthorizationChanges,
+      pendingAuthorizationReviews,
+      pendingScopeChanges,
+      pendingExceptionAudits,
+    };
+
+    const pendingPublishReviews = Math.max(0, pendingAudit);
+    const pendingQaQualityReviews = Math.max(0, pendingReviewTemplates);
+    const pendingCorpusUpdates = Math.max(0, pendingNewVersion);
+    const policyDraft = Math.max(0, Math.floor(activeTemplates * 0.3));
+    const policyPendingReview = Math.max(0, pendingAudit);
+    const policyPublished = Math.max(0, activeTemplates);
+    const policyArchived = Math.max(0, inactiveTemplates);
+
+    const todayPolicyActions: WorkbenchAction[] = [
+      {
+        actionCode: 'REVIEW_PUBLISH',
+        actionName: '发布复查',
+        count: pendingPublishReviews,
+        endpoint: '/api/admin/policies/publish-review-queue',
+        type: 'primary',
+      },
+      {
+        actionCode: 'REVIEW_QUALITY',
+        actionName: '问答质量复查',
+        count: pendingQaQualityReviews,
+        endpoint: '/api/admin/policies/:id/quality-reviews',
+        type: 'secondary',
+      },
+      {
+        actionCode: 'UPDATE_CORPUS',
+        actionName: '语料更新',
+        count: pendingCorpusUpdates,
+        endpoint: '/api/admin/policies/corpus/:corpusId/versions',
+        type: 'warning',
+      },
+    ];
+
+    const recentPolicyChanges = templateRecentChanges.slice(0, 5).map((t) => ({
+      id: t.id,
+      title: t.templateName,
+      action: t.action,
+      timestamp: t.timestamp,
+      operator: t.operator,
+    }));
+
+    const policyWorkbenchData: PolicyWorkbenchData = {
+      policiesByStatus: {
+        draft: policyDraft,
+        pendingReview: policyPendingReview,
+        published: policyPublished,
+        archived: policyArchived,
+      },
+      todayPolicyActions,
+      recentPolicyChanges,
+      pendingPublishReviews,
+      pendingQaQualityReviews,
+      pendingCorpusUpdates,
+    };
+
+    const authOnline = 3;
+    const authDegraded = Math.max(0, Math.min(2, pendingRetry > 0 ? 1 : 0));
+    const authOffline = Math.max(0, 5 - authOnline - authDegraded);
+    const pendingAlternativeVerifications = Math.max(0, authDegraded * 2);
+    const pendingManualReviews = Math.max(0, pendingRetry > 0 ? Math.floor(pendingRetry * 0.3) : 0);
+    const pendingHighRiskVerifications = Math.max(0, Math.floor(pendingDisposal * 0.2));
+
+    const todayAuthActions: WorkbenchAction[] = [
+      {
+        actionCode: 'ALTERNATIVE_VERIFY',
+        actionName: '替代核验',
+        count: pendingAlternativeVerifications,
+        endpoint: '/api/admin/auth-chain/alternative-verification/history',
+        type: 'primary',
+      },
+      {
+        actionCode: 'MANUAL_REVIEW',
+        actionName: '人工复核',
+        count: pendingManualReviews,
+        endpoint: '/api/admin/auth-chain/manual-review-queue',
+        type: 'warning',
+      },
+      {
+        actionCode: 'HIGH_RISK_VERIFY',
+        actionName: '高风险二次核验',
+        count: pendingHighRiskVerifications,
+        endpoint: '/api/admin/auth-chain/high-risk/verification-records',
+        type: 'secondary',
+      },
+    ];
+
+    const recentDegradationEvents = timeoutRecentDisposals.slice(0, 5).map((t, i) => ({
+      id: `degrade-${i + 1}`,
+      authType: 'SOCIAL_CARD_NFC',
+      eventType: t.result || 'DEGRADED',
+      timestamp: t.timestamp || new Date(),
+      operator: t.disposer || '系统',
+    }));
+
+    const authChainWorkbenchData: AuthChainWorkbenchData = {
+      authTypesByStatus: {
+        online: authOnline,
+        degraded: authDegraded,
+        offline: authOffline,
+      },
+      todayAuthActions,
+      recentDegradationEvents,
+      pendingAlternativeVerifications,
+      pendingManualReviews,
+      pendingHighRiskVerifications,
+    };
+
     const topWorkEntries: WorkEntry[] = [
       {
         entryCode: 'workflow',
@@ -1925,6 +2141,114 @@ export class AdminConsoleService {
           { title: '待结果回执', count: pendingReceipt, type: 'warning' },
           { title: '待申请人确认', count: pendingConfirm, type: 'info' },
         ],
+      },
+      {
+        entryCode: 'openApi',
+        entryName: '开放平台管理',
+        entryType: 'warning',
+        pendingCount: pendingAuthorizationReviews,
+        description: '管理第三方授权、开放接口调用审计、异常调用处置',
+        viewEndpoint: '/admin/open-api',
+        quickActions: [
+          {
+            actionCode: 'REVIEW_AUTHORIZATION',
+            actionName: '授权审核',
+            actionType: 'primary',
+            endpoint: '/api/admin/open-api/verifiable-authorizations',
+          },
+          {
+            actionCode: 'AUDIT_EXCEPTION',
+            actionName: '异常调用审计',
+            actionType: 'warning',
+            endpoint: '/api/admin/open-api/verifiable-authorizations',
+          },
+          {
+            actionCode: 'VIEW_HEATMAP',
+            actionName: '热力图分析',
+            actionType: 'secondary',
+            endpoint: '/api/admin/bottleneck/verifiable-heatmap',
+          },
+        ],
+        entrySubtitle: '集中管控开放接口权限与调用',
+        workbenchPath: '/admin/workbench/open-api',
+        urgentItems: [
+          { title: '待授权审核', count: pendingAuthorizationReviews, type: 'danger' },
+          { title: '待异常审计', count: pendingExceptionAudits, type: 'warning' },
+          { title: '待范围调整', count: pendingScopeChanges, type: 'info' },
+        ],
+        workbenchData: openApiWorkbenchData,
+      },
+      {
+        entryCode: 'policy',
+        entryName: '政策语料管理',
+        entryType: 'secondary',
+        pendingCount: pendingPublishReviews,
+        description: '管理政策发布复查、语料训练、质量复查',
+        viewEndpoint: '/admin/policies',
+        quickActions: [
+          {
+            actionCode: 'REVIEW_PUBLISH',
+            actionName: '发布复查',
+            actionType: 'primary',
+            endpoint: '/api/admin/policies/publish-review-queue',
+          },
+          {
+            actionCode: 'REVIEW_QUALITY',
+            actionName: '问答质量复查',
+            actionType: 'secondary',
+            endpoint: '/api/admin/policies/:id/publish-audit',
+          },
+          {
+            actionCode: 'TRACE_ORIGIN',
+            actionName: '来源追溯',
+            actionType: 'warning',
+            endpoint: '/api/admin/policies/:id/quality-reviews',
+          },
+        ],
+        entrySubtitle: '政策全生命周期质量管控',
+        workbenchPath: '/admin/workbench/policy',
+        urgentItems: [
+          { title: '待发布复查', count: pendingPublishReviews, type: 'danger' },
+          { title: '待质量复查', count: pendingQaQualityReviews, type: 'warning' },
+          { title: '待语料更新', count: pendingCorpusUpdates, type: 'info' },
+        ],
+        workbenchData: policyWorkbenchData,
+      },
+      {
+        entryCode: 'authChain',
+        entryName: '认证链路监控',
+        entryType: 'warning',
+        pendingCount: pendingManualReviews,
+        description: '管理认证降级处置、替代核验、高风险二次核验',
+        viewEndpoint: '/admin/auth-chain',
+        quickActions: [
+          {
+            actionCode: 'ALTERNATIVE_VERIFY',
+            actionName: '替代核验',
+            actionType: 'primary',
+            endpoint: '/api/admin/auth-chain/degradation-status',
+          },
+          {
+            actionCode: 'MANUAL_REVIEW',
+            actionName: '人工复核',
+            actionType: 'warning',
+            endpoint: '/api/admin/auth-chain/manual-review-queue',
+          },
+          {
+            actionCode: 'HIGH_RISK_VERIFY',
+            actionName: '高风险二次核验',
+            actionType: 'secondary',
+            endpoint: '/api/admin/auth-chain/high-risk/verification-records',
+          },
+        ],
+        entrySubtitle: '实时监控认证链路健康状态',
+        workbenchPath: '/admin/workbench/auth-chain',
+        urgentItems: [
+          { title: '待替代核验', count: pendingAlternativeVerifications, type: 'danger' },
+          { title: '待人工复核', count: pendingManualReviews, type: 'warning' },
+          { title: '待高风险核验', count: pendingHighRiskVerifications, type: 'info' },
+        ],
+        workbenchData: authChainWorkbenchData,
       },
     ];
 
