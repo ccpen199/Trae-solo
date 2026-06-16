@@ -65,6 +65,19 @@ router.post('/compare', (req, res) => {
     const timeScore = Math.max(0, 100 - hours * 1.5);
     const compositeScore = +(priceScore * 0.35 + timeScore * 0.3 + coverageFactor * 100 * 0.2 + ratingFactor * 100 * 0.15).toFixed(2);
 
+    const highlights: string[] = [];
+    if (priceScore >= 70) highlights.push('价格优势明显');
+    else if (priceScore >= 50) highlights.push('价格合理');
+    if (timeScore >= 70) highlights.push('时效快');
+    else if (timeScore >= 50) highlights.push('时效稳定');
+    if (b.coverage_score >= 80) highlights.push('网点覆盖广');
+    else if (b.coverage_score >= 60) highlights.push('覆盖较全面');
+    if (b.rating >= 4.5) highlights.push('服务口碑极佳');
+    else if (b.rating >= 4.0) highlights.push('服务质量好');
+    if (sameCity && b.code === 'SFTC') highlights.push('同城闪送首选');
+    if (priority === 'urgent' && hours <= 24) highlights.push('加急件优选');
+    if (goods_type === 'fragile' && b.rating >= 4.2) highlights.push('易碎品运输经验丰富');
+
     return {
       brand_id: b.id,
       brand_code: b.code,
@@ -87,6 +100,8 @@ router.post('/compare', (req, res) => {
         priority === 'urgent' ? '加急件' : '标准件',
         price < 12 ? '经济实惠' : price < 20 ? '性价比高' : '品质服务'
       ],
+      highlights,
+      recommendation: highlights.slice(0, 3).join(' · '),
       available: b.coverage_score > (distance > 1500 ? 50 : 30)
     };
   }).filter(r => r.available).sort((a, b) => b.composite_score - a.composite_score);

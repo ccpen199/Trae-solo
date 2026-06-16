@@ -87,7 +87,69 @@ export default function Dashboard() {
     } finally { setBrandLoading(false); }
   };
 
+  const afterReviewSuccess = (orderId: number, action: string, correctedAddress?: string) => {
+    load();
+    if (brandDetail.open && brandDetail.id) {
+      const brandOrders = brandDetail.data?.recent_orders || [];
+      const hasOrder = brandOrders.some((o: any) => o.id === orderId);
+      if (hasOrder) {
+        setBrandDetail(prev => ({
+          ...prev,
+          data: {
+            ...prev.data,
+            recent_orders: prev.data.recent_orders.map((o: any) =>
+              o.id === orderId
+                ? {
+                    ...o,
+                    is_address_abnormal: action === 'confirm_abnormal' ? 1 : 0,
+                    receiver_address: correctedAddress || o.receiver_address
+                  }
+                : o
+            )
+          }
+        }));
+      }
+    }
+  };
+
+  const handleDirectReview = (order: any, action: string) => {
+    const actionText = action === 'confirm_normal' ? '确认地址正常' : '确认地址异常';
+    const content = action === 'confirm_normal'
+      ? '确认该地址为正常地址，系统将解除异常拦截，恢复派送流程。'
+      : '确认该地址为异常地址，运单将保持异常状态，建议联系寄件人核实后重新派送。';
+    Modal.confirm({
+      title: (
+        <Space>
+          <WarningOutlined style={{ color: action === 'confirm_normal' ? '#52c41a' : '#fa8c16' }} />
+          <b>{actionText}</b>
+          <Tag color="red">{order.tracking_no}</Tag>
+        </Space>
+      ),
+      content: (
+        <div>
+          <p style={{ marginBottom: 12 }}>{content}</p>
+          <div style={{ padding: 12, background: '#fafafa', borderRadius: 8 }}>
+            <div style={{ marginBottom: 4 }}><b>运单号：</b><code>{order.tracking_no}</code></div>
+            <div style={{ marginBottom: 4 }}><b>当前地址：</b><span style={{ color: '#cf1322' }}>{order.receiver_address}</span></div>
+            <div><b>当前状态：</b>{order.status}</div>
+          </div>
+        </div>
+      ),
+      okText: '确认提交',
+      okButtonProps: { danger: action === 'confirm_abnormal' },
+      cancelText: '取消',
+      onOk: async () => {
+        try {
+          await api.orders.reviewAddress(order.id, { action });
+          message.success('地址复核处理成功');
+          afterReviewSuccess(order.id, action);
+        } catch (e: any) { message.error(e.message); }
+      }
+    });
+  };
+
   const onReviewAddress = async () => {
+    if (!reviewModal.order) return;
     try {
       const vals = await reviewForm.validateFields();
       await api.orders.reviewAddress(reviewModal.order.id, {
@@ -96,22 +158,36 @@ export default function Dashboard() {
         note: vals.note
       });
       message.success('地址复核处理成功');
+      const orderId = reviewModal.order.id;
+      const action = reviewModal.action;
+      const correctedAddress = vals.corrected_address;
       setReviewModal({ open: false, order: null, action: '' });
       reviewForm.resetFields();
-      load();
+      afterReviewSuccess(orderId, action, correctedAddress);
     } catch (e: any) { message.error(e.message); }
   };
 
   const s = overview.summary || {};
+  const apiS = apiUsage.summary || {};
+  const fmtNum = (v: any) => {
+    const value = v ?? 0;
+    return typeof value === 'number' ? value.toLocaleString() : value;
+  };
+  const fmtPct = (v: any, d = 2) => {
+    const value = v ?? 0;
+    return typeof value === 'number' ? value.toFixed(d) : value;
+  };
   const statCards = [
-    { t: '总运单数', v: s.total_orders, i: <ShoppingCartOutlined />, c: '#1677ff', g: 'linear-gradient(135deg, #1677ff33, #1677ff0d)' },
-    { t: '累计收入 (元)', v: s.total_revenue?.toLocaleString?.() || s.total_revenue, i: <DollarOutlined />, c: '#52c41a', g: 'linear-gradient(135deg, #52c41a33, #52c41a0d)' },
-    { t: '妥投率', v: `${s.success_rate}%`, i: <CheckCircleOutlined />, c: '#722ed1', g: 'linear-gradient(135deg, #722ed133, #722ed10d)' },
-    { t: '时效达标率', v: `${s.on_time_rate}%`, i: <ThunderboltOutlined />, c: '#fa8c16', g: 'linear-gradient(135deg, #fa8c1633, #fa8c160d)' },
-    { t: '异常包裹', v: s.exception_count, i: <WarningOutlined />, c: '#ff4d4f', g: 'linear-gradient(135deg, #ff4d4f33, #ff4d4f0d)' },
-    { t: '接入品牌数', v: s.total_brands, i: <BankOutlined />, c: '#13c2c2', g: 'linear-gradient(135deg, #13c2c233, #13c2c20d)' },
-    { t: '在线快递员', v: s.total_couriers, i: <TeamOutlined />, c: '#eb2f96', g: 'linear-gradient(135deg, #eb2f9633, #eb2f960d)' },
-    { t: 'API今日调用', v: apiUsage.summary?.today_calls || 0, i: <SafetyOutlined />, c: '#2f54eb', g: 'linear-gradient(135deg, #2f54eb33, #2f54eb0d)' }
+    { t: '总运单数', v: s.total_orders ?? 0, i: <ShoppingCartOutlined />, c: '#1677ff', g: 'linear-gradient(135deg, #1677ff33, #1677ff0d)' },
+    { t: '累计收入 (元)', v: fmtNum(s.total_revenue), i: <DollarOutlined />, c: '#52c41a', g: 'linear-gradient(135deg, #52c41a33, #52c41a0d)' },
+    { t: '妥投率', v: `${fmtPct(s.success_rate)}%`, i: <CheckCircleOutlined />, c: '#722ed1', g: 'linear-gradient(135deg, #722ed133, #722ed10d)' },
+    { t: '时效达标率', v: `${fmtPct(s.on_time_rate)}%`, i: <ThunderboltOutlined />, c: '#fa8c16', g: 'linear-gradient(135deg, #fa8c1633, #fa8c160d)' },
+    { t: '异常包裹', v: s.exception_count ?? 0, i: <WarningOutlined />, c: '#ff4d4f', g: 'linear-gradient(135deg, #ff4d4f33, #ff4d4f0d)' },
+    { t: '投诉率', v: `${fmtPct(s.complaint_rate, 3)}‰`, i: <WarningOutlined />, c: '#ff7a45', g: 'linear-gradient(135deg, #ff7a4533, #ff7a450d)' },
+    { t: '接入品牌数', v: s.total_brands ?? 0, i: <BankOutlined />, c: '#13c2c2', g: 'linear-gradient(135deg, #13c2c233, #13c2c20d)' },
+    { t: '快递员总数', v: s.total_couriers ?? 0, i: <TeamOutlined />, c: '#eb2f96', g: 'linear-gradient(135deg, #eb2f9633, #eb2f960d)' },
+    { t: '网点总数', v: s.total_branches ?? 0, i: <BankOutlined />, c: '#1890ff', g: 'linear-gradient(135deg, #1890ff33, #1890ff0d)' },
+    { t: 'API今日调用', v: apiS.today_calls ?? 0, i: <SafetyOutlined />, c: '#2f54eb', g: 'linear-gradient(135deg, #2f54eb33, #2f54eb0d)' }
   ];
 
   const trendOption = {
@@ -131,12 +207,12 @@ export default function Dashboard() {
 
   const qualityCols = [
     { title: '品牌', dataIndex: 'name', render: (t: string, r: any) => <><b>{t}</b> <span style={{ color: '#8c8c8c' }}>({r.code})</span></> },
-    { title: '总单量', dataIndex: 'total', sorter: (a: any, b: any) => a.total - b.total },
-    { title: '妥投率', dataIndex: 'success_rate', render: (v: number) => <Progress percent={v} size="small" strokeColor="#52c41a" /> },
-    { title: '时效达标', dataIndex: 'on_time_rate', render: (v: number) => <Progress percent={v} size="small" strokeColor="#1677ff" /> },
-    { title: '异常率', dataIndex: 'exception_rate', render: (v: number) => <span style={{ color: v > 5 ? '#ff4d4f' : '#52c41a' }}>{v}%</span> },
-    { title: '投诉率‰', dataIndex: 'complaint_rate', render: (v: number) => <span style={{ color: v > 5 ? '#ff4d4f' : '#1677ff' }}>{v}‰</span> },
-    { title: '评分', dataIndex: 'rating', render: (v: number) => <b style={{ color: '#fa8c16' }}>★ {v}</b> },
+    { title: '总单量', dataIndex: 'total', sorter: (a: any, b: any) => (a.total ?? 0) - (b.total ?? 0), render: (v: number) => v ?? 0 },
+    { title: '妥投率', dataIndex: 'success_rate', render: (v: number) => <Progress percent={v ?? 0} size="small" strokeColor="#52c41a" /> },
+    { title: '时效达标', dataIndex: 'on_time_rate', render: (v: number) => <Progress percent={v ?? 0} size="small" strokeColor="#1677ff" /> },
+    { title: '异常率', dataIndex: 'exception_rate', render: (v: number) => <span style={{ color: (v ?? 0) > 5 ? '#ff4d4f' : '#52c41a' }}>{fmtPct(v)}%</span> },
+    { title: '投诉率‰', dataIndex: 'complaint_rate', render: (v: number) => <span style={{ color: (v ?? 0) > 5 ? '#ff4d4f' : '#1677ff' }}>{fmtPct(v, 3)}‰</span> },
+    { title: '评分', dataIndex: 'rating', render: (v: number) => <b style={{ color: '#fa8c16' }}>★ {fmtPct(v, 1)}</b> },
     {
       title: '操作', width: 100,
       render: (_: any, r: any) => <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => loadBrandDetail(r.id)}>详情</Button>
@@ -264,21 +340,21 @@ export default function Dashboard() {
                       <div style={{ padding: 14, background: '#f5f7fa', borderRadius: 8 }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                           <span style={{ color: '#595959' }}>今日新单</span>
-                          <b>{s.today_orders} 单</b>
+                          <b>{s.today_orders ?? 0} 单</b>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                           <span style={{ color: '#595959' }}>今日收入</span>
-                          <b style={{ color: '#52c41a' }}>¥ {s.today_revenue}</b>
+                          <b style={{ color: '#52c41a' }}>¥ {fmtNum(s.today_revenue)}</b>
                         </div>
                       </div>
                       <div style={{ padding: 14, background: '#fff7e6', borderRadius: 8 }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                           <span>异常包裹</span>
-                          <b style={{ color: '#fa8c16' }}>{s.exception_count} 件</b>
+                          <b style={{ color: '#fa8c16' }}>{s.exception_count ?? 0} 件</b>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                           <span>待处理投诉</span>
-                          <b style={{ color: '#ff4d4f' }}>{s.complaint_count} 件</b>
+                          <b style={{ color: '#ff4d4f' }}>{s.complaint_count ?? 0} 件</b>
                         </div>
                       </div>
                       <Card size="small" title="派送中TOP快递员" styles={{ body: { padding: 0 } }}>
@@ -349,14 +425,32 @@ export default function Dashboard() {
             key: 'api',
             label: '🔌 API开放中心',
             children: (
-              <Row gutter={[16, 16]}>
-                <Col xs={24} md={15}>
-                  <Card title="API调用趋势">
-                    <ReactECharts option={apiTrendOpt} style={{ height: 300 }} />
-                  </Card>
-                </Col>
-                <Col xs={24} md={9}>
-                  <Card title="接入应用TOP" styles={{ body: { padding: 0 } }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <Row gutter={[12, 12]}>
+                  <Col xs={12} md={8}>
+                    <Card styles={{ body: { padding: 16 } }}>
+                      <Statistic title="累计调用量" value={apiS.total_calls ?? 0} valueStyle={{ color: '#2f54eb' }} />
+                    </Card>
+                  </Col>
+                  <Col xs={12} md={8}>
+                    <Card styles={{ body: { padding: 16 } }}>
+                      <Statistic title="今日调用量" value={apiS.today_calls ?? 0} valueStyle={{ color: '#52c41a' }} />
+                    </Card>
+                  </Col>
+                  <Col xs={12} md={8}>
+                    <Card styles={{ body: { padding: 16 } }}>
+                      <Statistic title="接入应用数" value={apiS.app_count ?? 0} valueStyle={{ color: '#fa8c16' }} />
+                    </Card>
+                  </Col>
+                </Row>
+                <Row gutter={[16, 16]}>
+                  <Col xs={24} md={15}>
+                    <Card title="API调用趋势">
+                      <ReactECharts option={apiTrendOpt} style={{ height: 300 }} />
+                    </Card>
+                  </Col>
+                  <Col xs={24} md={9}>
+                  <Card title="接入应用TOP" extra={<span style={{ fontSize: 12, color: '#8c8c8c' }}>共 {apiS.app_count ?? 0} 个应用</span>} styles={{ body: { padding: 0 } }}>
                     {(apiUsage.apps || []).map((a: any, i: number) => (
                       <div key={i} style={{ padding: '12px 20px', borderBottom: i < (apiUsage.apps?.length || 0) - 1 ? '1px solid #f0f0f0' : 'none' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -364,17 +458,18 @@ export default function Dashboard() {
                             <div style={{ fontWeight: 500 }}>{a.app_name} <TagColored text={a.app_type} /></div>
                             <div style={{ fontSize: 11, color: '#8c8c8c', marginTop: 2 }}>AppKey: <code>{a.app_key}</code></div>
                           </div>
-                          <b>{a.total_calls?.toLocaleString?.() || a.total_calls}</b>
+                          <b>{fmtNum(a.total_calls)}</b>
                         </div>
                         <div style={{ marginTop: 6 }}>
-                          <Progress percent={Math.min(a.today_calls / a.daily_limit * 100, 100)} size="small"
-                            showInfo format={() => <span style={{ fontSize: 11 }}>今日 {a.today_calls} / {a.daily_limit}</span>} />
+                          <Progress percent={Math.min(((a.today_calls ?? 0) / (a.daily_limit ?? 1)) * 100, 100)} size="small"
+                            showInfo format={() => <span style={{ fontSize: 11 }}>今日 {a.today_calls ?? 0} / {a.daily_limit ?? 0}</span>} />
                         </div>
                       </div>
                     ))}
                   </Card>
                 </Col>
-              </Row>
+                </Row>
+              </div>
             )
           }
         ]}
@@ -402,13 +497,13 @@ export default function Dashboard() {
                 <div style={{ fontSize: 13, marginBottom: 4 }}>⚠️ <b>无法解析地址</b>：{a.receiver_address}</div>
                 <div style={{ fontSize: 11, color: '#8c8c8c', marginBottom: 10 }}>当前状态：{a.status}</div>
                 <Space wrap size="small">
-                  <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => { setReviewModal({ open: true, order: a, action: 'confirm_normal' }); reviewForm.resetFields(); }}>
+                  <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => handleDirectReview(a, 'confirm_normal')}>
                     地址正常
                   </Button>
                   <Button size="small" icon={<EditOutlined />} onClick={() => { setReviewModal({ open: true, order: a, action: 'correct_address' }); reviewForm.resetFields(); }}>
                     修正地址
                   </Button>
-                  <Button size="small" danger icon={<CloseOutlined />} onClick={() => { setReviewModal({ open: true, order: a, action: 'confirm_abnormal' }); reviewForm.resetFields(); }}>
+                  <Button size="small" danger icon={<CloseOutlined />} onClick={() => handleDirectReview(a, 'confirm_abnormal')}>
                     确认异常
                   </Button>
                 </Space>
@@ -437,22 +532,22 @@ export default function Dashboard() {
             <Row gutter={[12, 12]}>
               <Col xs={12} md={6}>
                 <Card styles={{ body: { padding: 12 } }}>
-                  <Statistic title="总单量" value={brandDetail.data.total} />
+                  <Statistic title="总单量" value={brandDetail.data.total ?? 0} />
                 </Card>
               </Col>
               <Col xs={12} md={6}>
                 <Card styles={{ body: { padding: 12 } }}>
-                  <Statistic title="妥投率" value={brandDetail.data.success_rate} suffix="%" valueStyle={{ color: '#52c41a' }} />
+                  <Statistic title="妥投率" value={brandDetail.data.success_rate ?? 0} suffix="%" valueStyle={{ color: '#52c41a' }} precision={2} />
                 </Card>
               </Col>
               <Col xs={12} md={6}>
                 <Card styles={{ body: { padding: 12 } }}>
-                  <Statistic title="时效达标" value={brandDetail.data.on_time_rate} suffix="%" valueStyle={{ color: '#1677ff' }} />
+                  <Statistic title="时效达标" value={brandDetail.data.on_time_rate ?? 0} suffix="%" valueStyle={{ color: '#1677ff' }} precision={2} />
                 </Card>
               </Col>
               <Col xs={12} md={6}>
                 <Card styles={{ body: { padding: 12 } }}>
-                  <Statistic title="投诉率" value={brandDetail.data.complaint_rate} suffix="‰" valueStyle={{ color: '#ff4d4f' }} />
+                  <Statistic title="投诉率" value={brandDetail.data.complaint_rate ?? 0} suffix="‰" valueStyle={{ color: '#ff4d4f' }} precision={3} />
                 </Card>
               </Col>
             </Row>
@@ -546,9 +641,9 @@ export default function Dashboard() {
                 <Card styles={{ body: { padding: 12 } }}>
                   <Statistic
                     title="负载率"
-                    value={Math.round((branchDetail.data.daily_throughput || 0) / (branchDetail.data.max_capacity || 1) * 100)}
+                    value={Math.round(((branchDetail.data.daily_throughput ?? 0) / (branchDetail.data.max_capacity ?? 1)) * 100)}
                     suffix="%"
-                    valueStyle={{ color: (branchDetail.data.daily_throughput / branchDetail.data.max_capacity) > 0.85 ? '#ff4d4f' : '#52c41a' }}
+                    valueStyle={{ color: ((branchDetail.data.daily_throughput ?? 0) / (branchDetail.data.max_capacity ?? 1)) > 0.85 ? '#ff4d4f' : '#52c41a' }}
                   />
                 </Card>
               </Col>
@@ -565,7 +660,7 @@ export default function Dashboard() {
               </List>
             </Card>
 
-            {branchDetail.data.daily_throughput / branchDetail.data.max_capacity > 0.85 && (
+            {((branchDetail.data.daily_throughput ?? 0) / (branchDetail.data.max_capacity ?? 1)) > 0.85 && (
               <Alert type="warning" showIcon message="该网点当前负载已超过85%，建议：1) 协调周边网点分流 2) 临时增加分拣人员 3) 引导快递员错峰派送" />
             )}
           </div>

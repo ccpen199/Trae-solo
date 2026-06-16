@@ -1,20 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, message, Modal, Steps, Alert, Statistic, Radio, List, Progress } from 'antd';
-import { SendOutlined, SafetyOutlined, BulbOutlined, WarningOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { SendOutlined, SafetyOutlined, BulbOutlined, WarningOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined, ShoppingOutlined, UnorderedListOutlined, EyeOutlined } from '@ant-design/icons';
 import { api } from '../api';
 import ReactECharts from 'echarts-for-react';
 
 const cities = ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '西安', '南京', '重庆', '天津', '苏州', '青岛', '长沙', '郑州'];
 
 export default function CreateOrder() {
+  const nav = useNavigate();
+  const [searchParams] = useSearchParams();
   const [form] = Form.useForm();
   const [step, setStep] = useState(0);
   const [priceResult, setPriceResult] = useState<any>(null);
   const [selectedBrand, setSelectedBrand] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [orderResult, setOrderResult] = useState<any>(null);
   const [sortBy, setSortBy] = useState('composite');
   const [alertVisible, setAlertVisible] = useState(true);
+  const preselectedBrandId = searchParams.get('brand_id');
+
+  useEffect(() => {
+    if (priceResult && preselectedBrandId) {
+      const brandId = Number(preselectedBrandId);
+      const brand = priceResult.list.find((b: any) => b.brand_id === brandId);
+      if (brand) {
+        setSelectedBrand(brandId);
+      }
+    }
+  }, [priceResult, preselectedBrandId]);
 
   const onPriceCompare = async () => {
     try {
@@ -25,7 +40,11 @@ export default function CreateOrder() {
       setStep(1);
       message.success('比价完成，共匹配 ' + r.summary.brand_count + ' 个品牌');
     } catch (e: any) {
-      if (e.message) message.error(e.message);
+      if (e.errorFields) {
+        message.error('请完善必填信息后再进行比价');
+      } else if (e.message) {
+        message.error(e.message);
+      }
     } finally { setLoading(false); }
   };
 
@@ -54,12 +73,16 @@ export default function CreateOrder() {
       }
       doSubmit(vals, false);
     } catch (e: any) {
-      if (e.message) message.error(e.message);
+      if (e.errorFields) {
+        message.error('请完善所有必填信息后再提交');
+      } else if (e.message) {
+        message.error(e.message);
+      }
     }
   };
 
   const doSubmit = async (vals: any, forced: boolean) => {
-    setLoading(true);
+    setSubmitting(true);
     try {
       const brand = priceResult.list.find((b: any) => b.brand_id === selectedBrand);
       const r: any = await api.orders.create({
@@ -73,8 +96,8 @@ export default function CreateOrder() {
       setOrderResult(r);
       setStep(2);
       message.success(r.suspicious_address ? '运单已创建，异常地址已标记并通知人工审核' : '运单创建成功');
-    } catch (e: any) { message.error(e.message); }
-    finally { setLoading(false); }
+    } catch (e: any) { message.error(e.message || '创建运单失败，请重试'); }
+    finally { setSubmitting(false); }
   };
 
   const priceChartOpt = priceResult ? {
@@ -137,8 +160,9 @@ export default function CreateOrder() {
           </Row>
           <div style={{ marginTop: 32 }}>
             <Space>
-              <Button type="primary" onClick={() => { setOrderResult(null); setStep(0); setPriceResult(null); setSelectedBrand(null); form.resetFields(); }}>再寄一单</Button>
-              <Button onClick={() => location.hash = '#/packages/' + orderResult.id}>查看运单详情</Button>
+              <Button type="primary" icon={<UnorderedListOutlined />} onClick={() => nav('/orders')}>查看运单列表</Button>
+              <Button icon={<EyeOutlined />} onClick={() => nav(`/orders/${orderResult.id}`)}>查看运单详情</Button>
+              <Button onClick={() => { setOrderResult(null); setStep(0); setPriceResult(null); setSelectedBrand(null); form.resetFields(); }}>再寄一单</Button>
             </Space>
           </div>
         </div>
@@ -370,8 +394,8 @@ export default function CreateOrder() {
           )}
           {step === 1 && (
             <>
-              <Button onClick={() => setStep(0)}>上一步</Button>
-              <Button type="primary" onClick={onSubmit} loading={loading} disabled={!selectedBrand} icon={<SendOutlined />}>
+              <Button onClick={() => setStep(0)} disabled={submitting}>上一步</Button>
+              <Button type="primary" onClick={onSubmit} loading={submitting} disabled={!selectedBrand} icon={<SendOutlined />}>
                 确认下单
               </Button>
               {selectedBrand && <Tag color="blue">已选：{priceResult.list.find((b: any) => b.brand_id === selectedBrand)?.brand_name}</Tag>}

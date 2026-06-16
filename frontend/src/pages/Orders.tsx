@@ -376,7 +376,7 @@ export default function Orders() {
           <Space wrap>
             <Button icon={<QrcodeOutlined />} onClick={() => setScanModal(true)}>面单扫码查询</Button>
             <Button type="dashed" icon={<ShoppingOutlined />} onClick={() => setSyncModal(true)}>电商订单一键同步</Button>
-            <Button type="primary" onClick={() => nav('/create-order')}>创建运单</Button>
+            <Button type="primary" onClick={() => nav('/create')}>创建运单</Button>
           </Space>
         }
       >

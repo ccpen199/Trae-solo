@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import db from '../db';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest, authMiddleware } from '../middleware/auth';
 
 const router = Router();
+
+router.use(authMiddleware);
 
 router.get('/', (req: AuthRequest, res) => {
   const { page = 1, pageSize = 30, is_read, type } = req.query as any;

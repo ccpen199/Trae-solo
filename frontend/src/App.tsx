@@ -127,6 +127,7 @@ export default function App() {
             <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
             <Route path="/create" element={<PrivateRoute><CreateOrder /></PrivateRoute>} />
+            <Route path="/create-order" element={<PrivateRoute><CreateOrder /></PrivateRoute>} />
             <Route path="/price" element={<PrivateRoute><PriceCompare /></PrivateRoute>} />
             <Route path="/brands" element={<PrivateRoute><Brands /></PrivateRoute>} />
             <Route path="/couriers" element={<PrivateRoute><Couriers /></PrivateRoute>} />

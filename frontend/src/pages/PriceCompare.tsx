@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, message, Statistic, List, Progress, Radio, Divider, Steps } from 'antd';
 import { BulbOutlined, ThunderboltOutlined, DollarOutlined, StarOutlined, SafetyOutlined } from '@ant-design/icons';
 import { api } from '../api';
@@ -11,6 +12,11 @@ export default function PriceCompare() {
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [sortBy, setSortBy] = useState('composite');
+  const nav = useNavigate();
+
+  const goToCreateOrder = (brandId: number) => {
+    nav(`/create?brand_id=${brandId}`);
+  };
 
   const onSubmit = async (v: any) => {
     setLoading(true);
@@ -110,7 +116,15 @@ export default function PriceCompare() {
                   <div style={{ marginTop: 6, fontSize: 13 }}>
                     ¥{result.recommendation?.price} · {result.recommendation?.estimated_hours}h · ★{result.recommendation?.rating}
                   </div>
-                  <Button type="primary" size="small" block style={{ marginTop: 10 }}>立即下单</Button>
+                  <div style={{ marginTop: 8, fontSize: 12, color: '#52c41a', lineHeight: 1.5 }}>
+                    💡 {result.recommendation?.recommendation || '综合性价比最优'}
+                  </div>
+                  <div style={{ marginTop: 8, fontSize: 12, color: '#8c8c8c' }}>
+                    网点覆盖度：{result.recommendation?.coverage_score}%
+                  </div>
+                  <Button type="primary" size="small" block style={{ marginTop: 10 }} onClick={() => goToCreateOrder(result.recommendation?.brand_id)}>
+                    立即下单
+                  </Button>
                 </Card>
               </Col>
               <Col xs={24} md={6}>
@@ -201,10 +215,17 @@ export default function PriceCompare() {
                           <span style={{ color: '#8c8c8c', fontSize: 12 }}>综合评分</span>
                           <Progress percent={r.composite_score} size="small" strokeColor={{ '0%': '#1677ff', '100%': '#52c41a' }} />
                         </Col>
+                        {r.recommendation && (
+                          <Col xs={24}>
+                            <div style={{ fontSize: 12, color: '#52c41a', marginTop: 4 }}>
+                              💡 推荐理由：{r.recommendation}
+                            </div>
+                          </Col>
+                        )}
                       </Row>
                     }
                   />
-                  <Button type="primary" size="small">选择该品牌下单</Button>
+                  <Button type="primary" size="small" onClick={() => goToCreateOrder(r.brand_id)}>立即下单</Button>
                 </List.Item>
               )}
             />
