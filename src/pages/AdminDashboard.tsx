@@ -17,6 +17,8 @@ import {
   Activity,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const stats = [
   { label: '平台注册用户', value: '28,465', Icon: Users, color: 'from-purple-400 to-indigo-600' },
@@ -49,6 +51,27 @@ const roleTypeConfig: Record<string, { color: string; Icon: React.ComponentType<
 
 export default function AdminDashboard() {
   const { user } = useAuthStore();
+  const navigate = useNavigate();
+  const [reviews, setReviews] = useState(pendingReviews);
+  const [processing, setProcessing] = useState<string | null>(null);
+
+  const handleReject = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setProcessing(`reject-${id}`);
+    setTimeout(() => {
+      setReviews(reviews.filter(r => r.id !== id));
+      setProcessing(null);
+    }, 600);
+  };
+
+  const handleApprove = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setProcessing(`approve-${id}`);
+    setTimeout(() => {
+      setReviews(reviews.filter(r => r.id !== id));
+      setProcessing(null);
+    }, 600);
+  };
 
   return (
     <div className="space-y-6">
@@ -104,14 +127,14 @@ export default function AdminDashboard() {
               <Clock className="w-5 h-5 text-purple-500" /> 资质审核 & 账号申诉队列
             </h2>
             <div className="flex items-center gap-2 text-xs">
-              <span className="px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 font-semibold">待处理 {pendingReviews.length}</span>
+              <span className="px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 font-semibold">待处理 {reviews.length}</span>
             </div>
           </div>
           <div className="space-y-3">
-            {pendingReviews.map((item, i) => {
+            {reviews.map((item, i) => {
               const cfg = roleTypeConfig[item.type];
               return (
-                <div key={i} className="p-4 rounded-2xl bg-gradient-to-r from-gray-50 to-white border border-gray-100 hover:border-purple-200 hover:shadow-sm transition-all">
+                <div key={i} onClick={() => navigate(`/admin/review/${item.id}`)} className="p-4 rounded-2xl bg-gradient-to-r from-gray-50 to-white border border-gray-100 hover:border-purple-200 hover:shadow-sm transition-all cursor-pointer">
                   <div className="flex items-start gap-4">
                     <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${cfg.color} flex items-center justify-center shrink-0`}>
                       <cfg.Icon className="w-5 h-5" />
@@ -128,15 +151,25 @@ export default function AdminDashboard() {
                         <span>🕒 提交于 {item.submitted}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <button className="p-2 rounded-lg text-gray-400 hover:text-sky-600 hover:bg-sky-50 transition-colors" title="查看详情">
+                    <div className="flex items-center gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
+                      <button onClick={() => navigate(`/admin/review/${item.id}`)} className="p-2 rounded-lg text-gray-400 hover:text-sky-600 hover:bg-sky-50 transition-colors" title="查看详情">
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="px-3 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors text-xs font-medium inline-flex items-center gap-1">
-                        <XCircle className="w-3.5 h-3.5" /> 驳回
+                      <button
+                        onClick={(e) => handleReject(item.id, e)}
+                        disabled={!!processing}
+                        className="px-3 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors text-xs font-medium inline-flex items-center gap-1 disabled:opacity-50"
+                      >
+                        {processing === `reject-${item.id}` ? <Clock className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
+                        {processing === `reject-${item.id}` ? '处理中' : '驳回'}
                       </button>
-                      <button className="px-3 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white hover:shadow-md transition-all text-xs font-medium inline-flex items-center gap-1">
-                        <CheckCircle2 className="w-3.5 h-3.5" /> 通过
+                      <button
+                        onClick={(e) => handleApprove(item.id, e)}
+                        disabled={!!processing}
+                        className="px-3 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white hover:shadow-md transition-all text-xs font-medium inline-flex items-center gap-1 disabled:opacity-50"
+                      >
+                        {processing === `approve-${item.id}` ? <Clock className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                        {processing === `approve-${item.id}` ? '处理中' : '通过'}
                       </button>
                     </div>
                   </div>

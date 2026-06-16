@@ -7,6 +7,7 @@ import {
   Globe, TrendingUp, Search,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
+import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import type { UserRole } from '@shared/types';
 
@@ -110,16 +111,28 @@ function groupNavItems(items: NavItem[]) {
 export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { user, logout, login } = useAuthStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [impersonating, setImpersonating] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/login', { replace: true });
   };
 
-  const handleNavClick = (path: string) => {
+  const handleNavClick = async (path: string) => {
+    if (path === '/' && user && ['admin', 'platform', 'ops'].includes(user.role) && !impersonating) {
+      setImpersonating(true);
+      try {
+        const { user: ownerUser, token: ownerToken } = await api.auth.login('13800000001', '123456');
+        login(ownerUser, ownerToken);
+        navigate('/', { replace: true });
+      } catch {
+        setImpersonating(false);
+      }
+      return;
+    }
     navigate(path);
     setSidebarOpen(false);
   };
@@ -244,7 +257,7 @@ export default function MainLayout() {
               </div>
               <div className="flex gap-1.5 pt-2 mt-2 border-t border-gray-100">
                 <button
-                  onClick={() => { setUserMenuOpen(false); }}
+                  onClick={() => { setUserMenuOpen(false); navigate('/account/settings'); }}
                   className="flex-1 text-[10px] px-2 py-1.5 rounded-lg bg-white text-gray-600 border border-gray-200 hover:bg-forest-50 hover:border-forest-200 hover:text-forest-700 font-semibold flex items-center justify-center gap-1 transition-all"
                 >
                   <Settings className="w-3 h-3" />
@@ -344,15 +357,15 @@ export default function MainLayout() {
                       </div>
                     </div>
                     <div className="py-1">
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-gray-700 hover:bg-forest-50 transition-all">
+                      <button onClick={() => { setUserMenuOpen(false); navigate('/account/settings'); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-gray-700 hover:bg-forest-50 transition-all">
                         <Settings className="w-4 h-4" />
                         <span className="text-sm">个人中心</span>
                       </button>
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-gray-700 hover:bg-forest-50 transition-all">
+                      <button onClick={() => { setUserMenuOpen(false); navigate('/account/settings'); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-gray-700 hover:bg-forest-50 transition-all">
                         <ShieldCheck className="w-4 h-4" />
                         <span className="text-sm">权限与安全</span>
                       </button>
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-gray-700 hover:bg-forest-50 transition-all">
+                      <button onClick={() => { setUserMenuOpen(false); navigate('/admin/dashboard'); }} className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-gray-700 hover:bg-forest-50 transition-all">
                         <ClipboardList className="w-4 h-4" />
                         <span className="text-sm">操作日志</span>
                       </button>

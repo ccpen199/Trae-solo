@@ -22,6 +22,8 @@ import MerchantDashboard from '@/pages/MerchantDashboard';
 import AdminDashboard from '@/pages/AdminDashboard';
 import PlatformDashboard from '@/pages/PlatformDashboard';
 import OpsDashboard from '@/pages/OpsDashboard';
+import AccountSettings from '@/pages/AccountSettings';
+import ReviewDetail from '@/pages/ReviewDetail';
 import type { UserRole } from '@shared/types';
 
 const ROLE_HOME_MAP: Record<UserRole, string> = {
@@ -123,10 +125,10 @@ export default function App() {
           }
         />
 
-        {/* 宠主前台：owner 及以上角色可访问 */}
+        {/* 宠主前台：所有登录用户可访问（支持角色模拟） */}
         <Route
           element={
-            <ProtectedRoute requiredRole={['owner', 'admin', 'platform', 'ops']}>
+            <ProtectedRoute requiredRole={['owner', 'doctor', 'hospital', 'merchant', 'admin', 'platform', 'ops']}>
               <MainLayout />
             </ProtectedRoute>
           }
@@ -144,6 +146,19 @@ export default function App() {
           <Route path="/lost-pet" element={<LostPet />} />
           <Route path="/lost-pet/:id" element={<LostPet />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/account/settings" element={<AccountSettings />} />
+        </Route>
+
+        {/* 审核详情页 */}
+        <Route
+          path="/admin/review/:id"
+          element={
+            <ProtectedRoute requiredRole={['admin', 'platform', 'ops']}>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<ReviewDetail />} />
         </Route>
 
         {/* 医生工作台 */}
