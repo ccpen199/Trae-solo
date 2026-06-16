@@ -23,7 +23,7 @@ import ReviewCenter from "@/pages/admin/ReviewCenter";
 import OrderManage from "@/pages/admin/OrderManage";
 import Finance from "@/pages/admin/Finance";
 import { useAuthStore, useAppStore } from "@/store/authStore";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import Button from "@/components/Button";
 import type { User as UserType } from "../shared/types";
@@ -103,6 +103,15 @@ function ForbiddenPage() {
       </div>
     </div>
   );
+}
+
+function OrderRedirect() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate(`/orders/${id || ''}`, { replace: true });
+  }, [id, navigate]);
+  return null;
 }
 
 function NotFound() {
@@ -354,6 +363,8 @@ function AppContent() {
           <Route path="/search" element={<FeedPage />} />
           <Route path="/course/:id" element={<CourseDetail />} />
           <Route path="/courses/:id" element={<CourseDetail />} />
+          <Route path="/order/:id" element={<OrderRedirect />} />
+          <Route path="/orders/:id" element={<OrderDetail />} />
           <Route path="/forbidden" element={<ForbiddenPage />} />
           <Route 
             path="/orders/*" 
@@ -363,7 +374,6 @@ function AppContent() {
                   <Route path="" element={<OrdersPage />} />
                   <Route path="publish" element={<OrdersPage />} />
                   <Route path="my" element={<OrdersPage />} />
-                  <Route path=":id" element={<OrderDetail />} />
                 </Routes>
               </RouteGuard>
             } 

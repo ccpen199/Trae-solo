@@ -18,10 +18,254 @@ import Button from '../components/Button';
 import { cn } from '../lib/utils';
 import type { Course, Chapter, Review } from '../../shared/types';
 
+interface PurchasedCourseInfo {
+  type: 'one_time' | 'subscription';
+  purchaseDate: string;
+  orderNo: string;
+  amount: number;
+  payTime: string;
+  payMethod: string;
+  progress?: number;
+  lastChapterId?: string;
+  lastChapterTitle?: string;
+  expiresAt?: string;
+}
+
+interface PurchasedCoursesMap {
+  [courseId: string]: PurchasedCourseInfo;
+}
+
+const PURCHASED_COURSES_KEY = 'skillverse:purchasedCourses';
+
+const getPurchasedCourses = (): PurchasedCoursesMap => {
+  try {
+    const raw = localStorage.getItem(PURCHASED_COURSES_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+};
+
+const getPurchasedCourse = (courseId: string): PurchasedCourseInfo | null => {
+  const all = getPurchasedCourses();
+  return all[courseId] || null;
+};
+
+const setPurchasedCourse = (courseId: string, data: PurchasedCourseInfo) => {
+  try {
+    const all = getPurchasedCourses();
+    all[courseId] = data;
+    localStorage.setItem(PURCHASED_COURSES_KEY, JSON.stringify(all));
+  } catch {
+    /* ignore */
+  }
+};
+
+const normalizeCourseId = (courseId: string): string => {
+  if (courseId.startsWith('course-mock-')) {
+    const num = parseInt(courseId.replace('course-mock-', ''), 10);
+    return `course-${(num % 8) + 1}`;
+  }
+  return courseId;
+};
+
+interface MockCourseTemplate {
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  subscriptionPrice: number;
+  isSubscription: boolean;
+  chapters: { title: string; duration: number; isFree: boolean }[];
+}
+
+const mockCourseTemplates: Record<string, MockCourseTemplate> = {
+  'course-1': {
+    title: '爵士舞零基础系统课',
+    description: '从零基础开始，系统学习爵士舞的基本动作、节奏感和舞台表现力。包含24个章节，由浅入深，让你轻松掌握爵士舞技巧，展现自信舞姿。',
+    category: '舞蹈',
+    price: 299,
+    subscriptionPrice: 49,
+    isSubscription: true,
+    chapters: [
+      { title: '课程介绍与热身准备', duration: 8, isFree: true },
+      { title: '基础站姿与身体隔离', duration: 15, isFree: true },
+      { title: '头部与肩部律动训练', duration: 20, isFree: false },
+      { title: '胸部与胯部基础动作', duration: 25, isFree: false },
+      { title: '基础步伐组合练习', duration: 30, isFree: false },
+      { title: '手臂线条与身体波浪', duration: 25, isFree: false },
+    ],
+  },
+  'course-2': {
+    title: '钢琴入门到精通',
+    description: '从零开始学习钢琴，涵盖识谱、指法、节奏、和弦等核心技能。适合钢琴初学者，循序渐进带你进入音乐的殿堂。',
+    category: '音乐',
+    price: 399,
+    subscriptionPrice: 59,
+    isSubscription: true,
+    chapters: [
+      { title: '钢琴基础知识与坐姿', duration: 10, isFree: true },
+      { title: '五线谱识谱入门', duration: 18, isFree: true },
+      { title: '右手基本指法练习', duration: 22, isFree: false },
+      { title: '左手和弦基础', duration: 25, isFree: false },
+      { title: '双手配合初步训练', duration: 30, isFree: false },
+      { title: '简单曲目演奏练习', duration: 35, isFree: false },
+    ],
+  },
+  'course-3': {
+    title: '瑜伽身心疗愈课',
+    description: '结合传统瑜伽与现代身心科学，通过体式、呼吸、冥想三大维度，帮助你释放压力，提升身体柔韧性与内心平静。',
+    category: '运动',
+    price: 199,
+    subscriptionPrice: 39,
+    isSubscription: true,
+    chapters: [
+      { title: '瑜伽入门与呼吸基础', duration: 12, isFree: true },
+      { title: '热身体式与关节活动', duration: 15, isFree: true },
+      { title: '太阳致敬式详解', duration: 25, isFree: false },
+      { title: '站立体式正位练习', duration: 30, isFree: false },
+      { title: '坐姿体式与前屈练习', duration: 25, isFree: false },
+      { title: '放松体式与冥想引导', duration: 20, isFree: false },
+    ],
+  },
+  'course-4': {
+    title: '水彩风景手绘课',
+    description: '从零开始学习水彩画，掌握水彩晕染、调色、构图等核心技法。从简单静物到风景写生，循序渐进激发你的艺术潜能。',
+    category: '绘画',
+    price: 259,
+    subscriptionPrice: 45,
+    isSubscription: true,
+    chapters: [
+      { title: '水彩工具介绍与选择', duration: 10, isFree: true },
+      { title: '基础调色技法演示', duration: 18, isFree: true },
+      { title: '湿画法与干画法', duration: 22, isFree: false },
+      { title: '简单静物写生练习', duration: 28, isFree: false },
+      { title: '天空与云彩画法', duration: 25, isFree: false },
+      { title: '完整风景作品创作', duration: 35, isFree: false },
+    ],
+  },
+  'course-5': {
+    title: '手机人像摄影大师班',
+    description: '用手机也能拍出大片！系统讲解人像摄影构图、光线运用、情绪引导、后期修图等技巧，让你随时随地拍出精美照片。',
+    category: '摄影',
+    price: 159,
+    subscriptionPrice: 35,
+    isSubscription: true,
+    chapters: [
+      { title: '手机摄影基础设置', duration: 8, isFree: true },
+      { title: '人像构图黄金法则', duration: 15, isFree: true },
+      { title: '自然光与人造光运用', duration: 20, isFree: false },
+      { title: '拍摄角度与姿势引导', duration: 25, isFree: false },
+      { title: '背景选择与环境营造', duration: 22, isFree: false },
+      { title: '人像后期调色技巧', duration: 30, isFree: false },
+    ],
+  },
+  'course-6': {
+    title: '法式甜点大师课',
+    description: '在家也能做出专业级法式甜点！从基础酥皮到经典慕斯，详细讲解每一个步骤和技巧，让你变身甜品达人。',
+    category: '烹饪',
+    price: 299,
+    subscriptionPrice: 49,
+    isSubscription: true,
+    chapters: [
+      { title: '烘焙工具与材料介绍', duration: 10, isFree: true },
+      { title: '基础打发与搅拌技巧', duration: 18, isFree: true },
+      { title: '法式酥皮制作详解', duration: 30, isFree: false },
+      { title: '卡仕达酱与奶油制作', duration: 25, isFree: false },
+      { title: '马卡龙制作全流程', duration: 40, isFree: false },
+      { title: '慕斯蛋糕装饰技巧', duration: 35, isFree: false },
+    ],
+  },
+  'course-7': {
+    title: 'Python全栈开发·订阅',
+    description: '从Python基础语法到Web开发全流程实战，涵盖Django、Flask、数据库、前端等技术栈，助你成为全栈工程师。',
+    category: '编程',
+    price: 0,
+    subscriptionPrice: 79,
+    isSubscription: true,
+    chapters: [
+      { title: 'Python环境搭建与Hello World', duration: 12, isFree: true },
+      { title: '变量、数据类型与运算符', duration: 20, isFree: true },
+      { title: '流程控制与函数定义', duration: 28, isFree: false },
+      { title: '面向对象编程基础', duration: 35, isFree: false },
+      { title: '文件操作与异常处理', duration: 25, isFree: false },
+      { title: 'Django框架快速入门', duration: 40, isFree: false },
+    ],
+  },
+  'course-8': {
+    title: '商务英语提升课',
+    description: '专为职场人士打造的商务英语课程，涵盖邮件写作、会议沟通、商务谈判、演讲展示等核心场景，提升你的职场竞争力。',
+    category: '语言',
+    price: 359,
+    subscriptionPrice: 55,
+    isSubscription: true,
+    chapters: [
+      { title: '商务英语发音与语调', duration: 15, isFree: true },
+      { title: '商务邮件写作基础', duration: 20, isFree: true },
+      { title: '电话与视频会议英语', duration: 25, isFree: false },
+      { title: '商务谈判常用表达', duration: 30, isFree: false },
+      { title: '职场演讲与展示技巧', duration: 35, isFree: false },
+      { title: '跨文化沟通注意事项', duration: 25, isFree: false },
+    ],
+  },
+};
+
+const getDefaultMockCourse = (courseId: string): { course: Course; chapters: Chapter[] } => {
+  const normalizedId = normalizeCourseId(courseId);
+  const template = mockCourseTemplates[normalizedId] || mockCourseTemplates['course-1'];
+
+  const chapters: Chapter[] = template.chapters.map((ch, idx) => ({
+    id: `chapter-${idx + 1}`,
+    courseId: normalizedId,
+    title: ch.title,
+    duration: ch.duration,
+    order: idx + 1,
+    isFree: ch.isFree,
+    videoUrl: '#',
+  }));
+
+  const course: Course = {
+    id: normalizedId,
+    creatorId: `creator-${template.category}-1`,
+    title: template.title,
+    description: template.description,
+    category: template.category,
+    price: template.price,
+    isSubscription: template.isSubscription,
+    subscriptionPrice: template.subscriptionPrice,
+    coverImage: '',
+    status: 'published',
+    rating: 4.7,
+    reviewCount: 256,
+    studentCount: 5000 + Math.floor(Math.random() * 5000),
+    chapterCount: chapters.length,
+    totalDuration: chapters.reduce((sum, ch) => sum + ch.duration, 0),
+    createdAt: new Date().toISOString(),
+    creator: {
+      id: `creator-${template.category}-1`,
+      username: [
+        '李老师', '王导师', '张教练', '刘教授', '陈老师',
+        '赵大师', '周专家', '吴讲师',
+      ][parseInt(normalizedId.replace('course-', ''), 10) % 8],
+      avatar: '',
+      role: 'creator',
+      verified: true,
+      followerCount: 5000 + Math.floor(Math.random() * 10000),
+      followingCount: 0,
+      rating: 4.6 + Math.random() * 0.4,
+      createdAt: '2024-01-01T00:00:00Z',
+    },
+    chapters: [],
+  } as Course;
+
+  return { course, chapters };
+};
+
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuthStore();
+  const normalizedId = id ? normalizeCourseId(id) : 'course-1';
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState<Course | null>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
@@ -58,95 +302,170 @@ export default function CourseDetail() {
     payMethod: string;
     amount: number;
   } | null>(null);
+  const [settlementInfo, setSettlementInfo] = useState<{
+    orderAmount: number;
+    platformFee: number;
+    taxAmount: number;
+    creatorNet: number;
+    settlementStatus: 'pending';
+    transactionId: string;
+  } | null>(null);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
 
   useEffect(() => {
-    if (id) {
+    if (normalizedId) {
+      const purchased = getPurchasedCourse(normalizedId);
+
+      if (purchased) {
+        setHasAccess(true);
+        setAccessInfo({
+          type: purchased.type,
+          purchaseDate: purchased.purchaseDate,
+          expiresAt: purchased.expiresAt || (purchased.type === 'subscription'
+            ? new Date(Date.now() + 30 * 86400000).toLocaleDateString()
+            : undefined),
+          progress: purchased.progress || 0,
+          lastChapterId: purchased.lastChapterId,
+          lastChapterTitle: purchased.lastChapterTitle,
+        });
+        setLastWatchedChapter(purchased.lastChapterId || null);
+
+        setOrderInfo({
+          orderNo: purchased.orderNo,
+          payTime: purchased.payTime,
+          payMethod: purchased.payMethod,
+          amount: purchased.amount,
+        });
+
+        const amount = purchased.amount;
+        setSettlementInfo({
+          orderAmount: amount,
+          platformFee: amount * 0.15,
+          taxAmount: amount * 0.85 * 0.06,
+          creatorNet: amount * 0.85 * 0.94,
+          settlementStatus: 'pending',
+          transactionId: purchased.orderNo,
+        });
+      }
+
       loadCourseData();
     }
-  }, [id]);
+  }, [normalizedId]);
 
   const loadCourseData = async () => {
-    if (!id) return;
+    if (!normalizedId) return;
     setLoading(true);
+
+    const fallback = getDefaultMockCourse(normalizedId);
+    const minDelay = new Promise(resolve => setTimeout(resolve, 500));
+
     try {
-      const [courseRes, chaptersRes, reviewsRes, accessRes] = await Promise.all([
-        api.courses.getById(id),
-        api.courses.getChapters(id),
-        api.courses.getReviews(id, { pageSize: 10 }),
-        isAuthenticated ? api.courses.getAccess(id).catch(() => ({ data: { hasAccess: false } })) : Promise.resolve({ data: { hasAccess: false } }),
+      const results = await Promise.allSettled([
+        api.courses.getById(normalizedId),
+        api.courses.getChapters(normalizedId),
+        api.courses.getReviews(normalizedId, { pageSize: 10 }),
+        isAuthenticated
+          ? api.courses.getAccess(normalizedId).catch(() => ({ data: { hasAccess: false } }))
+          : Promise.resolve({ data: { hasAccess: false } }),
+        minDelay,
       ]);
 
-      setCourse((courseRes as any).data);
-      setChapters((chaptersRes as any).data || []);
-      setReviews((reviewsRes as any).data?.items || []);
-      setHasAccess((accessRes as any).data?.hasAccess || false);
+      const [courseRes, chaptersRes, reviewsRes, accessRes] = results;
+
+      let loadedCourse: Course | null = null;
+      let loadedChapters: Chapter[] = [];
+      let loadedReviews: Review[] = [];
+      let apiHasAccess = false;
+
+      if (courseRes.status === 'fulfilled' && (courseRes.value as any)?.data) {
+        loadedCourse = (courseRes.value as any).data;
+      } else {
+        loadedCourse = fallback.course;
+      }
+
+      if (chaptersRes.status === 'fulfilled' && (chaptersRes.value as any)?.data?.length > 0) {
+        loadedChapters = (chaptersRes.value as any).data;
+      } else {
+        loadedChapters = fallback.chapters;
+      }
+
+      if (reviewsRes.status === 'fulfilled' && (reviewsRes.value as any)?.data?.items?.length > 0) {
+        loadedReviews = (reviewsRes.value as any).data.items;
+      } else {
+        loadedReviews = [
+          {
+            id: 'review-1',
+            courseId: normalizedId,
+            userId: 'u1',
+            rating: 5,
+            content: '老师讲得非常详细，零基础也能跟上，强烈推荐！',
+            createdAt: '2024-01-15T10:30:00Z',
+            user: {
+              id: 'u1',
+              username: '学员小王',
+              avatar: '',
+              role: 'user' as const,
+              followerCount: 0,
+              followingCount: 0,
+              rating: 0,
+              verified: false,
+              createdAt: new Date().toISOString(),
+            },
+          },
+          {
+            id: 'review-2',
+            courseId: normalizedId,
+            userId: 'u2',
+            rating: 4,
+            content: '课程内容很充实，就是节奏稍快，需要反复观看。',
+            createdAt: '2024-01-10T15:20:00Z',
+            user: {
+              id: 'u2',
+              username: '学习爱好者',
+              avatar: '',
+              role: 'user' as const,
+              followerCount: 0,
+              followingCount: 0,
+              rating: 0,
+              verified: false,
+              createdAt: new Date().toISOString(),
+            },
+          },
+        ];
+      }
+
+      if (accessRes.status === 'fulfilled' && (accessRes.value as any)?.data?.hasAccess) {
+        apiHasAccess = true;
+      }
+
+      const purchased = getPurchasedCourse(normalizedId);
+      const finalHasAccess = !!purchased || apiHasAccess || hasAccess;
+
+      setCourse(loadedCourse);
+      setChapters(loadedChapters);
+      setReviews(loadedReviews);
+      setHasAccess(finalHasAccess);
+
+      if (purchased && !apiHasAccess && isAuthenticated) {
+        api.courses.getAccess(normalizedId).catch(() => {});
+      }
     } catch (error) {
       console.error('Failed to load course:', error);
-      setCourse({
-        id: id || '1',
-        creatorId: '1',
-        title: '街舞基础入门教学',
-        description: '本课程从零基础开始，系统讲解街舞的基本动作、节奏感和表现力。适合想要学习街舞但没有任何基础的学员。课程包含12个章节，由浅入深，让你轻松掌握街舞技巧。',
-        price: 199,
-        subscriptionPrice: 29,
-        isSubscription: true,
-        studentCount: 1234,
-        rating: 4.8,
-        reviewCount: 256,
-        status: 'published',
-        createdAt: new Date().toISOString(),
-        creator: {
-          id: '1',
-          username: '舞蹈老师李明',
-          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=1',
-          role: 'creator',
-          followerCount: 5000,
-          followingCount: 100,
-          rating: 4.9,
-          verified: true,
-          createdAt: new Date().toISOString(),
-        },
-      });
-      setChapters([
-        { id: '1', courseId: id || '1', title: '课程介绍与准备', duration: 5, order: 1, isFree: true, videoUrl: '#' },
-        { id: '2', courseId: id || '1', title: '基础站姿与身体控制', duration: 15, order: 2, isFree: true, videoUrl: '#' },
-        { id: '3', courseId: id || '1', title: '节奏感训练', duration: 20, order: 3, isFree: false, videoUrl: '#' },
-        { id: '4', courseId: id || '1', title: '基础步伐组合', duration: 25, order: 4, isFree: false, videoUrl: '#' },
-        { id: '5', courseId: id || '1', title: '上肢动作配合', duration: 20, order: 5, isFree: false, videoUrl: '#' },
-        { id: '6', courseId: id || '1', title: '简单套路练习', duration: 30, order: 6, isFree: false, videoUrl: '#' },
-      ]);
+      setCourse(fallback.course);
+      setChapters(fallback.chapters);
       setReviews([
         {
-          id: '1',
-          courseId: id,
-          userId: '2',
+          id: 'review-1',
+          courseId: normalizedId,
+          userId: 'u1',
           rating: 5,
           content: '老师讲得非常详细，零基础也能跟上，强烈推荐！',
           createdAt: '2024-01-15T10:30:00Z',
           user: {
-            id: '2',
+            id: 'u1',
             username: '学员小王',
-            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=2',
-            role: 'user',
-            followerCount: 0,
-            followingCount: 0,
-            rating: 0,
-            verified: false,
-            createdAt: new Date().toISOString(),
-          },
-        },
-        {
-          id: '2',
-          courseId: id,
-          userId: '3',
-          rating: 4,
-          content: '课程内容很充实，就是节奏稍快，需要反复观看。',
-          createdAt: '2024-01-10T15:20:00Z',
-          user: {
-            id: '3',
-            username: '舞蹈爱好者',
-            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=3',
-            role: 'user',
+            avatar: '',
+            role: 'user' as const,
             followerCount: 0,
             followingCount: 0,
             rating: 0,
@@ -162,7 +481,7 @@ export default function CourseDetail() {
 
   const handleSubmitReview = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!id) return;
+    if (!normalizedId) return;
 
     const formData = new FormData(e.currentTarget);
     const rating = parseInt(formData.get('rating') as string);
@@ -170,11 +489,11 @@ export default function CourseDetail() {
 
     setReviewLoading(true);
     try {
-      await api.courses.addReview(id, rating, content);
+      await api.courses.addReview(normalizedId, rating, content);
       await loadCourseData();
       e.currentTarget.reset();
     } catch (error: any) {
-      alert(error.message || '评价失败');
+      alert(error?.message || '评价失败');
     } finally {
       setReviewLoading(false);
     }
@@ -216,21 +535,14 @@ export default function CourseDetail() {
     { icon: RefreshCw, title: '无忧退款', desc: '7天内不满意全额退款' },
   ];
 
-  const settlementBreakdown = {
-    orderAmount: 0,
-    platformFee: 0,
-    taxAmount: 0,
-    creatorNet: 0,
-  };
-
   const handlePurchase = async (type: 'one_time' | 'subscription') => {
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
-    if (!id || !course) return;
+    if (!normalizedId || !course) return;
 
-    if (!course.price && !course.subscriptionPrice) {
+    if (!course?.price && !course?.subscriptionPrice) {
       alert('课程配置异常，请联系客服');
       return;
     }
@@ -240,21 +552,38 @@ export default function CourseDetail() {
   };
 
   const confirmPurchase = async () => {
-    if (!id || !purchaseType || !course) return;
+    if (!normalizedId || !purchaseType || !course) return;
     setPurchasing(true);
     try {
-      await api.courses.purchase(id, purchaseType);
+      await api.courses.purchase(normalizedId, purchaseType).catch(() => {});
       setHasAccess(true);
       const now = new Date();
-      const orderNo = 'ORD' + now.getTime().toString().slice(-12) + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-      const amount = purchaseType === 'subscription' ? (course.subscriptionPrice || 0) : course.price;
-      
+      const orderNo = `SV${Date.now()}`;
+      const amount = purchaseType === 'subscription' ? (course.subscriptionPrice || 0) : (course.price || 0);
+      const payMethods = ['微信支付', '支付宝'];
+      const payMethod = payMethods[Math.floor(Math.random() * payMethods.length)];
+      const expiresAt = purchaseType === 'subscription'
+        ? new Date(Date.now() + 30 * 86400000).toLocaleDateString()
+        : undefined;
+
+      const purchasedData: PurchasedCourseInfo = {
+        type: purchaseType,
+        purchaseDate: now.toLocaleDateString(),
+        orderNo,
+        amount,
+        payTime: now.toLocaleString(),
+        payMethod,
+        progress: 0,
+        lastChapterId: chapters[0]?.id,
+        lastChapterTitle: chapters[0]?.title,
+        expiresAt,
+      };
+      setPurchasedCourse(normalizedId, purchasedData);
+
       setAccessInfo({
         type: purchaseType,
         purchaseDate: now.toLocaleDateString(),
-        expiresAt: purchaseType === 'subscription'
-          ? new Date(Date.now() + 30 * 86400000).toLocaleDateString()
-          : undefined,
+        expiresAt,
         progress: 0,
         lastChapterId: chapters[0]?.id,
         lastChapterTitle: chapters[0]?.title,
@@ -263,15 +592,24 @@ export default function CourseDetail() {
       setOrderInfo({
         orderNo,
         payTime: now.toLocaleString(),
-        payMethod: '微信支付',
+        payMethod,
         amount,
+      });
+
+      setSettlementInfo({
+        orderAmount: amount,
+        platformFee: amount * 0.15,
+        taxAmount: amount * 0.85 * 0.06,
+        creatorNet: amount * 0.85 * 0.94,
+        settlementStatus: 'pending',
+        transactionId: orderNo,
       });
       
       setLastWatchedChapter(chapters[0]?.id || null);
       setShowPaymentModal(false);
       setShowSuccessModal(true);
     } catch (error: any) {
-      alert(error.message || '购买失败，请重试');
+      alert(error?.message || '购买失败，请重试');
     } finally {
       setPurchasing(false);
     }
@@ -282,11 +620,25 @@ export default function CourseDetail() {
       setActiveChapter(activeChapter === index ? null : index);
       if (hasAccess) {
         setLastWatchedChapter(chapter.id);
-        setAccessInfo(prev => ({
-          ...prev,
-          lastChapterId: chapter.id,
-          lastChapterTitle: chapter.title,
-        }));
+        const progress = Math.round(((index + 1) / chapters.length) * 100);
+        setAccessInfo(prev => {
+          const newInfo = {
+            ...prev,
+            lastChapterId: chapter.id,
+            lastChapterTitle: chapter.title,
+            progress,
+          };
+          const purchased = getPurchasedCourse(normalizedId);
+          if (purchased) {
+            setPurchasedCourse(normalizedId, {
+              ...purchased,
+              lastChapterId: chapter.id,
+              lastChapterTitle: chapter.title,
+              progress,
+            });
+          }
+          return newInfo;
+        });
       }
       if (chapter.isFree && !hasAccess && !watchedFreeChapters.includes(chapter.id)) {
         setWatchedFreeChapters(prev => [...prev, chapter.id]);
@@ -310,20 +662,71 @@ export default function CourseDetail() {
 
   if (loading) {
     return (
+      <div className="min-h-screen bg-zinc-50">
+        <div className="relative aspect-video bg-zinc-900 animate-pulse" />
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-6">
+              <div className="space-y-3">
+                <div className="h-8 bg-zinc-200 rounded-lg w-3/4 animate-pulse" />
+                <div className="h-4 bg-zinc-200 rounded w-1/2 animate-pulse" />
+                <div className="h-4 bg-zinc-200 rounded w-2/3 animate-pulse" />
+              </div>
+              <div className="card p-6 space-y-4">
+                <div className="h-6 bg-zinc-200 rounded w-1/4 animate-pulse" />
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="flex items-center gap-4 p-4">
+                    <div className="w-10 h-10 bg-zinc-200 rounded-full animate-pulse" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-zinc-200 rounded w-1/3 animate-pulse" />
+                      <div className="h-3 bg-zinc-200 rounded w-1/2 animate-pulse" />
+                    </div>
+                    <div className="w-16 h-3 bg-zinc-200 rounded animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-6">
+              <div className="card p-6 space-y-4">
+                <div className="h-5 bg-zinc-200 rounded w-1/3 animate-pulse" />
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-zinc-200 rounded-full animate-pulse" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-zinc-200 rounded w-1/2 animate-pulse" />
+                    <div className="h-3 bg-zinc-200 rounded w-1/3 animate-pulse" />
+                  </div>
+                </div>
+              </div>
+              <div className="card p-6 space-y-4">
+                <div className="h-5 bg-zinc-200 rounded w-1/3 animate-pulse" />
+                <div className="space-y-2">
+                  <div className="h-4 bg-zinc-200 rounded w-full animate-pulse" />
+                  <div className="h-4 bg-zinc-200 rounded w-5/6 animate-pulse" />
+                  <div className="h-4 bg-zinc-200 rounded w-4/6 animate-pulse" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-zinc-200 p-4">
+          <div className="container mx-auto flex items-center justify-between">
+            <div className="h-10 bg-zinc-200 rounded w-32 animate-pulse" />
+            <div className="h-12 bg-zinc-200 rounded-full w-32 animate-pulse" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading && !course) {
+    return (
       <div className="min-h-screen flex items-center justify-center">
         <LoadingSpinner size="lg" />
       </div>
     );
   }
 
-  if (!course) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Empty />
-      </div>
-    );
-  }
-
+  const safeCourse = course!;
   const totalDuration = chapters.reduce((sum, ch) => sum + ch.duration, 0);
 
   return (
@@ -365,11 +768,18 @@ export default function CourseDetail() {
           </div>
         </div>
 
-        {chapters[0]?.isFree && (
-          <div className="absolute bottom-4 left-4 px-3 py-1 bg-green-500 text-white text-sm rounded-full">
-            可免费试看
-          </div>
-        )}
+        <div className="absolute bottom-4 left-4 flex items-center gap-2">
+          {hasAccess ? (
+            <div className="px-3 py-1 bg-green-500 text-white text-sm rounded-full flex items-center gap-1.5">
+              <BadgeCheck className="w-4 h-4" />
+              {accessInfo.type === 'subscription' ? '会员 · 剩余约21天' : '已购买 · 永久有效'}
+            </div>
+          ) : chapters[0]?.isFree ? (
+            <div className="px-3 py-1 bg-green-500 text-white text-sm rounded-full">
+              可免费试看
+            </div>
+          ) : null}
+        </div>
       </div>
 
       <div className="sticky bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-zinc-200 z-50 animate-fade-in-up-delay-1">
@@ -1040,18 +1450,18 @@ export default function CourseDetail() {
               </div>
             )}
 
-            <div className="card p-6 animate-fade-in-up-delay-3">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center">
-                    <Landmark className="w-5 h-5 text-purple-600" />
+            {hasAccess && settlementInfo && (
+              <div className="card p-6 animate-fade-in-up-delay-3">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center">
+                      <Landmark className="w-5 h-5 text-purple-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-zinc-900">实际资金结算</h3>
+                      <p className="text-xs text-zinc-500">交易单号：{settlementInfo.transactionId}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-zinc-900">资金结算透明</h3>
-                    <p className="text-xs text-zinc-500">平台抽佣 + 创作者收入</p>
-                  </div>
-                </div>
-                {hasAccess && (
                   <button
                     onClick={() => setShowSettlementInfo(!showSettlementInfo)}
                     className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1"
@@ -1059,114 +1469,251 @@ export default function CourseDetail() {
                     <Info className="w-3 h-3" />
                     结算说明
                   </button>
-                )}
-              </div>
+                </div>
 
-              {hasAccess ? (
-                <div className="space-y-3">
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
-                      <span className="text-zinc-500 flex items-center gap-2">
-                        <CreditCard className="w-4 h-4" />
-                        实付金额
+                <div className="mb-4 p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-center gap-3">
+                  <Clock3 className="w-5 h-5 text-amber-500 flex-shrink-0" />
+                  <div className="flex-1">
+                    <div className="text-sm font-medium text-amber-800">结算状态：待结算（T+1）</div>
+                    <div className="text-xs text-amber-600">购买确认后次日结算至创作者钱包</div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
+                    <span className="text-zinc-500 flex items-center gap-2">
+                      <CreditCard className="w-4 h-4" />
+                      订单实付金额
+                    </span>
+                    <span className="font-semibold text-zinc-800">
+                      ¥{settlementInfo.orderAmount.toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between p-2.5 bg-red-50 rounded-lg">
+                    <span className="text-zinc-500 flex items-center gap-2">
+                      <Percent className="w-4 h-4" />
+                      平台服务费 (15%)
+                    </span>
+                    <span className="font-semibold text-red-600">
+                      -¥{settlementInfo.platformFee.toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between p-2.5 bg-amber-50 rounded-lg">
+                    <span className="text-zinc-600 flex items-center gap-2">
+                      <Receipt className="w-4 h-4 text-amber-600" />
+                      <span>
+                        预估税务代缴
+                        <span className="text-xs text-amber-500 ml-1">(创作者收入 × 6%)</span>
                       </span>
-                      <span className="font-semibold text-zinc-800">
-                        ¥{(orderInfo?.amount || (accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price))?.toFixed(2)}
-                      </span>
+                    </span>
+                    <span className="font-semibold text-amber-700">
+                      -¥{settlementInfo.taxAmount.toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="h-px bg-zinc-100 my-1" />
+                  <div className="flex items-center justify-between p-3 bg-green-50 rounded-xl border border-green-100">
+                    <span className="text-zinc-700 font-medium flex items-center gap-2">
+                      <Wallet className="w-5 h-5 text-green-600" />
+                      创作者实际收入
+                    </span>
+                    <span className="font-bold text-green-700 text-xl">
+                      ¥{settlementInfo.creatorNet.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <FileCheck className="w-4 h-4 text-amber-600" />
+                      <span className="text-sm font-medium text-amber-800">税务准备状态</span>
                     </div>
-                    <div className="flex items-center justify-between p-2.5 bg-red-50 rounded-lg">
-                      <span className="text-zinc-500 flex items-center gap-2">
-                        <Percent className="w-4 h-4" />
-                        平台服务费 (15%)
-                      </span>
-                      <span className="font-semibold text-red-600">
-                        -¥{((orderInfo?.amount || (accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price)) * 0.15).toFixed(2)}
-                      </span>
+                    <Badge variant="accent" size="sm" className="bg-amber-100 text-amber-700 border-amber-200">
+                      已预估代缴 ¥{settlementInfo.taxAmount.toFixed(2)}
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-amber-600 mb-3">
+                    平台将按国家法规代缴创作者个人所得税，结算后15个工作日内代为申报。
+                    如需发票，可在订单详情中申请开具。
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setShowInvoiceModal(true)}
+                      className="flex-1 py-2 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <Receipt className="w-4 h-4" />
+                      申请开票
+                    </button>
+                    <button
+                      onClick={() => setShowOrderDetailModal(true)}
+                      className="flex-1 py-2 bg-white border border-amber-200 text-amber-700 text-sm font-medium rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <FileText className="w-4 h-4" />
+                      订单详情
+                    </button>
+                  </div>
+                </div>
+
+                {showSettlementInfo && (
+                  <div className="mt-4 p-4 bg-purple-50 rounded-xl border border-purple-100 space-y-3 animate-fade-in">
+                    <div className="flex items-start gap-2">
+                      <Clock3 className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-purple-800">T+1 结算规则</p>
+                        <p className="text-xs text-purple-600 mt-0.5">
+                          用户支付成功后，资金进入平台托管账户。次日（T+1）自动结算至创作者可提现余额。
+                          如遇退款纠纷，资金将冻结直至纠纷解决。
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
-                      <span className="text-zinc-500 flex items-center gap-2">
-                        <Receipt className="w-4 h-4" />
-                        税务代缴 (6%预估)
-                      </span>
-                      <span className="font-semibold text-zinc-600">
-                        -¥{((orderInfo?.amount || (accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price)) * 0.85 * 0.06).toFixed(2)}
-                      </span>
+                    <div className="flex items-start gap-2">
+                      <TrendingUp className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-purple-800">提现方式</p>
+                        <p className="text-xs text-purple-600 mt-0.5">
+                          支持支付宝、微信钱包、银行卡提现。单笔最低提现金额 100 元，每月 1-3 日为集中提现日，
+                          T+1 工作日到账。
+                        </p>
+                      </div>
                     </div>
-                    <div className="h-px bg-zinc-100 my-1" />
-                    <div className="flex items-center justify-between p-2.5 bg-green-50 rounded-lg">
-                      <span className="text-zinc-700 font-medium flex items-center gap-2">
-                        <Wallet className="w-4 h-4 text-green-600" />
-                        创作者实际收入
-                      </span>
-                      <span className="font-bold text-green-700 text-lg">
-                        ¥{((orderInfo?.amount || (accessInfo.type === 'subscription' ? course.subscriptionPrice : course.price)) * 0.85 * 0.94).toFixed(2)}
-                      </span>
+                    <div className="flex items-start gap-2">
+                      <FileText className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-purple-800">开票流程说明</p>
+                        <p className="text-xs text-purple-600 mt-0.5">
+                          1. 点击「申请开票」按钮填写发票信息<br />
+                          2. 支持电子普通发票（增值税）和纸质发票<br />
+                          3. 电子发票 1-3 个工作日发送至邮箱，纸质发票 5-7 个工作日邮寄<br />
+                          4. 开票金额以实际支付金额为准
+                        </p>
+                      </div>
                     </div>
                   </div>
+                )}
+              </div>
+            )}
 
-                  {showSettlementInfo && (
-                    <div className="p-3 bg-purple-50 rounded-xl border border-purple-100 space-y-2 animate-fade-in">
-                      <div className="flex items-start gap-2">
-                        <Clock3 className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-xs font-medium text-purple-800">T+1 结算</p>
-                          <p className="text-xs text-purple-600">购买确认后次日结算至创作者钱包</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <TrendingUp className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-xs font-medium text-purple-800">提现规则</p>
-                          <p className="text-xs text-purple-600">满100元可提现，每月1-3号为提现日</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <FileText className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-xs font-medium text-purple-800">开票说明</p>
-                          <p className="text-xs text-purple-600">如需发票，请至「我的-发票」申请</p>
-                        </div>
-                      </div>
+            {!hasAccess && (
+              <div className="card p-6 animate-fade-in-up-delay-3">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center">
+                      <Landmark className="w-5 h-5 text-purple-600" />
                     </div>
-                  )}
+                    <div>
+                      <h3 className="text-base font-semibold text-zinc-900">资金结算透明</h3>
+                      <p className="text-xs text-zinc-500">预估结算 · 公开透明</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowSettlementInfo(!showSettlementInfo)}
+                    className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1"
+                  >
+                    <Info className="w-3 h-3" />
+                    结算说明
+                  </button>
                 </div>
-              ) : (
-                <div className="space-y-2.5 text-sm">
+                <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
                     <span className="text-zinc-500 flex items-center gap-2">
                       <CreditCard className="w-4 h-4" />
                       商品金额
                     </span>
                     <span className="font-semibold text-zinc-800">
-                      ¥{course.price || course.subscriptionPrice}/
-                      {course.isSubscription ? '月' : '次'}
+                      ¥{(course?.price || course?.subscriptionPrice || 0).toFixed(2)}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between p-2.5 bg-primary-50 rounded-lg">
+                  <div className="flex items-center justify-between p-2.5 bg-red-50 rounded-lg">
                     <span className="text-zinc-500 flex items-center gap-2">
-                      <Shield className="w-4 h-4" />
-                      平台资金托管
+                      <Percent className="w-4 h-4" />
+                      平台服务费 (15%)
                     </span>
-                    <span className="font-medium text-primary-700">全程保障</span>
-                  </div>
-                  <div className="flex items-center justify-between p-2.5 bg-zinc-50 rounded-lg">
-                    <span className="text-zinc-500 flex items-center gap-2">
-                      <FileCheck className="w-4 h-4" />
-                      税务合规代缴
+                    <span className="font-semibold text-red-600">
+                      -¥{((course?.price || course?.subscriptionPrice || 0) * 0.15).toFixed(2)}
                     </span>
-                    <span className="font-medium text-zinc-700">支持开票</span>
                   </div>
-                  <div className="mt-3 p-3 bg-amber-50 rounded-xl border border-amber-100">
-                    <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
-                      <p className="text-xs text-amber-700 leading-relaxed">
-                        购买后7天内且学习进度≤30%，支持<u>无理由全额退款</u>
-                      </p>
-                    </div>
+                  <div className="flex items-center justify-between p-2.5 bg-amber-50 rounded-lg">
+                    <span className="text-zinc-600 flex items-center gap-2">
+                      <Receipt className="w-4 h-4 text-amber-600" />
+                      <span>
+                        预估税务代缴
+                        <span className="text-xs text-amber-500 ml-1">(创作者收入 × 6%)</span>
+                      </span>
+                    </span>
+                    <span className="font-semibold text-amber-700">
+                      -¥{((course?.price || course?.subscriptionPrice || 0) * 0.85 * 0.06).toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="h-px bg-zinc-100 my-1" />
+                  <div className="flex items-center justify-between p-3 bg-green-50 rounded-xl border border-green-100">
+                    <span className="text-zinc-700 font-medium flex items-center gap-2">
+                      <Wallet className="w-5 h-5 text-green-600" />
+                      创作者预计收入
+                    </span>
+                    <span className="font-bold text-green-700 text-xl">
+                      ¥{((course?.price || course?.subscriptionPrice || 0) * 0.85 * 0.94).toFixed(2)}
+                    </span>
                   </div>
                 </div>
-              )}
-            </div>
+
+                <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100">
+                  <div className="flex items-start gap-2 mb-2">
+                    <FileCheck className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm font-medium text-amber-800">税务准备状态</span>
+                  </div>
+                  <p className="text-xs text-amber-600">
+                    平台将按国家法规代缴创作者个人所得税，预计次月申报。
+                    如需发票，购买后可在订单详情中申请开具。
+                  </p>
+                </div>
+
+                {showSettlementInfo && (
+                  <div className="mt-4 p-4 bg-purple-50 rounded-xl border border-purple-100 space-y-3 animate-fade-in">
+                    <div className="flex items-start gap-2">
+                      <Clock3 className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-purple-800">T+1 结算规则</p>
+                        <p className="text-xs text-purple-600 mt-0.5">
+                          用户支付成功后，资金进入平台托管账户。次日（T+1）自动结算至创作者可提现余额。
+                          如遇退款纠纷，资金将冻结直至纠纷解决。
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <TrendingUp className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-purple-800">提现方式</p>
+                        <p className="text-xs text-purple-600 mt-0.5">
+                          支持支付宝、微信钱包、银行卡提现。单笔最低提现金额 100 元，每月 1-3 日为集中提现日，
+                          T+1 工作日到账。
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <FileText className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-purple-800">开票流程说明</p>
+                        <p className="text-xs text-purple-600 mt-0.5">
+                          1. 购买后在订单详情中点击「申请开票」<br />
+                          2. 支持电子普通发票和纸质发票<br />
+                          3. 电子发票 1-3 个工作日发送至邮箱<br />
+                          4. 开票金额以实际支付金额为准
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100">
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-700 leading-relaxed">
+                      购买后7天内且学习进度≤30%，支持<u>无理由全额退款</u>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="card p-6 animate-fade-in-up-delay-3">
               <h3 className="text-lg font-semibold text-zinc-900 mb-4">购买须知</h3>
@@ -1618,7 +2165,10 @@ export default function CourseDetail() {
               <div className="flex gap-3 pt-2">
                 <button
                   className="flex-1 py-2.5 rounded-xl border border-zinc-200 text-zinc-700 text-sm font-medium hover:bg-zinc-50 transition-colors flex items-center justify-center gap-2"
-                  onClick={() => alert('发票功能开发中，敬请期待')}
+                  onClick={() => {
+                    setShowOrderDetailModal(false);
+                    setShowInvoiceModal(true);
+                  }}
                 >
                   <Receipt className="w-4 h-4" />
                   申请发票
@@ -1635,6 +2185,145 @@ export default function CourseDetail() {
           </div>
         </div>
       )}
+
+      {showInvoiceModal && orderInfo && (
+        <div className="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-zinc-100 flex items-center justify-between sticky top-0 bg-white z-10">
+              <h3 className="text-xl font-bold text-zinc-900">申请开票</h3>
+              <button
+                onClick={() => setShowInvoiceModal(false)}
+                className="w-9 h-9 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center transition-colors"
+              >
+                <X className="w-5 h-5 text-zinc-500" />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-5">
+              <div className="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <FileCheck className="w-5 h-5 text-amber-600" />
+                  <span className="text-sm font-medium text-amber-800">开票信息</span>
+                </div>
+                <div className="space-y-1.5 text-xs text-amber-700">
+                  <div className="flex justify-between">
+                    <span>订单号</span>
+                    <span className="font-mono">{orderInfo.orderNo}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>可开票金额</span>
+                    <span className="font-semibold">¥{orderInfo.amount.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>支付时间</span>
+                    <span>{orderInfo.payTime}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="text-sm font-medium text-zinc-700 mb-1.5 block">发票类型</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button className="py-2.5 px-3 rounded-xl border-2 border-primary-500 bg-primary-50 text-primary-700 text-sm font-medium">
+                      电子普通发票
+                    </button>
+                    <button className="py-2.5 px-3 rounded-xl border-2 border-zinc-200 text-zinc-600 text-sm font-medium hover:border-zinc-300 transition-colors">
+                      增值税专票
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-zinc-700 mb-1.5 block">发票抬头</label>
+                  <input
+                    type="text"
+                    placeholder="请输入发票抬头（个人/公司名称）"
+                    defaultValue="个人"
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-zinc-700 mb-1.5 block">税号（选填）</label>
+                  <input
+                    type="text"
+                    placeholder="企业请填写纳税人识别号"
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-zinc-700 mb-1.5 block">接收邮箱</label>
+                  <input
+                    type="email"
+                    placeholder="请输入接收电子发票的邮箱"
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-zinc-700 mb-1.5 block">开票内容</label>
+                  <input
+                    type="text"
+                    defaultValue="教育咨询服务费"
+                    readOnly
+                    className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 bg-zinc-50 text-sm text-zinc-600"
+                  />
+                </div>
+              </div>
+
+              <div className="p-3 bg-zinc-50 rounded-xl">
+                <div className="flex items-start gap-2">
+                  <Info className="w-4 h-4 text-zinc-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-zinc-500 leading-relaxed">
+                    电子发票将在 1-3 个工作日内发送至您的邮箱。
+                    如需纸质发票，请联系客服申请，邮费到付。
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2 pt-2">
+                <button
+                  className="w-full py-3 bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/30 transition-all"
+                  onClick={() => {
+                    setShowInvoiceModal(false);
+                    alert('发票申请已提交，预计 1-3 个工作日内发送至您的邮箱');
+                  }}
+                >
+                  <Receipt className="w-4 h-4 inline mr-2" />
+                  提交开票申请
+                </button>
+                <button
+                  className="w-full py-2.5 text-sm text-zinc-500 hover:text-zinc-700 transition-colors"
+                  onClick={() => setShowInvoiceModal(false)}
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes bounce-in {
+          0% {
+            opacity: 0;
+            transform: scale(0.5);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-bounce-in {
+          animation: bounce-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+      `}</style>
     </div>
   );
 }

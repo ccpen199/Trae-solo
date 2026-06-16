@@ -59,7 +59,7 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
   const hasAnyAction = canAccept || canPayDeposit || canStart || canComplete || canDispute || canViewMatches;
 
   const handleClick = () => {
-    navigate(`/order/${order.id}`);
+    navigate(`/orders/${order.id}`);
   };
 
   const formatDate = (dateStr: string) => {

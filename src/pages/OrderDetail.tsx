@@ -36,11 +36,241 @@ const traceTypeLabels: Record<string, string> = {
   upload: '文件上传',
 };
 
+const categories = ['家政', '保洁', '搬家', '维修', '护理', '育婴', '宠物照料', '上门烹饪'];
+const titles = [
+  '深度保洁服务（三居室）',
+  '日常家庭保洁',
+  '搬家搬运服务',
+  '家电维修服务',
+  '老人护理服务',
+  '育婴师住家服务',
+  '宠物上门喂养',
+  '上门烹饪私厨',
+];
+const locations = [
+  '北京市海淀区中关村大街1号院5号楼1单元1802',
+  '北京市朝阳区建国路88号院3号楼2单元501',
+  '上海市浦东新区陆家嘴环路1000号12栋3单元201',
+  '广州市天河区珠江新城华夏路10号8栋1单元1503',
+  '深圳市南山区科技园南区科苑路1号6栋2单元802',
+];
+
+function generateMockOrder(orderId: string): any {
+  const hash = orderId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const catIndex = hash % categories.length;
+  const locIndex = (hash * 3) % locations.length;
+  const statuses = ['published', 'matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'];
+  const statusIndex = (hash * 7) % statuses.length;
+  const priceBase = [200, 350, 500, 680, 800, 1200, 150, 400];
+  const price = priceBase[catIndex] + (hash % 100);
+  const deposit = Math.floor(price * 0.3);
+  const durationBase = [120, 180, 240, 300, 360, 480, 60, 240];
+  const duration = durationBase[catIndex];
+
+  const daysAgo = (hash % 14) + 1;
+  const createdAt = new Date(Date.now() - daysAgo * 86400000).toISOString();
+  const serviceDate = new Date(Date.now() - (daysAgo - 2) * 86400000);
+  const serviceTime = `${serviceDate.getFullYear()}年${serviceDate.getMonth() + 1}月${serviceDate.getDate()}日 上午9:00-${9 + Math.floor(duration / 60)}:${(duration % 60).toString().padStart(2, '0')}`;
+
+  return {
+    id: orderId,
+    requesterId: 'user1',
+    title: titles[catIndex],
+    description: `专业${categories[catIndex]}服务，经验丰富，品质保障。`,
+    category: categories[catIndex],
+    price,
+    deposit,
+    location: locations[locIndex],
+    serviceTime,
+    duration,
+    status: statuses[statusIndex],
+    insurancePolicy: categories[catIndex] === '家政' || categories[catIndex] === '护理' ? '家政服务责任险（强制投保）' : '平台基础保障',
+    requirements: '需要携带专业设备，服务人员需有相关资质和经验。',
+    createdAt,
+    requester: {
+      id: 'user1',
+      username: '王先生',
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${orderId}user`,
+      role: 'user',
+      followerCount: 0,
+      followingCount: 0,
+      rating: 4.8,
+      verified: true,
+      createdAt: new Date().toISOString(),
+    },
+    creator: {
+      id: 'creator1',
+      username: `服务者李${categories[catIndex]}`,
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${orderId}creator`,
+      role: 'creator',
+      followerCount: 5000,
+      followingCount: 100,
+      rating: 4.9,
+      verified: true,
+      createdAt: new Date().toISOString(),
+    },
+    contactPhone: '138****5678',
+    bookingNo: 'BK' + orderId.toUpperCase().slice(0, 10),
+    checkInTime: statuses.indexOf(statuses[statusIndex]) >= 4 ? new Date(Date.now() - (daysAgo - 2) * 86400000 + 9 * 3600000).toISOString() : null,
+    checkOutTime: statuses.indexOf(statuses[statusIndex]) >= 5 ? new Date(Date.now() - (daysAgo - 2) * 86400000 + 13 * 3600000).toISOString() : null,
+    actualDuration: statuses.indexOf(statuses[statusIndex]) >= 5 ? duration + 13 : null,
+    gpsDistance: 0.08,
+  };
+}
+
+function generateMockTraces(orderId: string, status: string): any[] {
+  const hash = orderId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const daysAgo = (hash % 14) + 1;
+  const baseTime = Date.now() - daysAgo * 86400000;
+
+  const allTraces = [
+    { type: 'create', content: '订单已创建', timeOffset: 0, hasOperator: true, role: 'user' },
+    { type: 'match', content: '系统匹配了多位符合条件的服务者', timeOffset: 3600000, hasOperator: false },
+    { type: 'confirm', content: '服务者已接单，双方确认服务时间', timeOffset: 7200000, hasOperator: true, role: 'creator' },
+    { type: 'deposit', content: '定金已支付，平台托管', timeOffset: 86400000, hasOperator: true, role: 'user' },
+    { type: 'start', content: '服务者已签到，服务开始', timeOffset: 2 * 86400000 + 9 * 3600000, hasOperator: true, role: 'creator' },
+    { type: 'complete', content: '服务完成，等待确认', timeOffset: 2 * 86400000 + 13 * 3600000, hasOperator: true, role: 'creator' },
+  ];
+
+  const statusIndex = ['published', 'matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].indexOf(status);
+  const selectedTraces = allTraces.slice(0, statusIndex + 1 < 1 ? 1 : statusIndex + 1);
+
+  return selectedTraces.map((trace, index) => ({
+    id: `trace${index + 1}`,
+    orderId,
+    type: trace.type,
+    content: trace.content,
+    operatorId: trace.hasOperator ? (trace.role === 'user' ? 'user1' : 'creator1') : undefined,
+    createdAt: new Date(baseTime + trace.timeOffset).toISOString(),
+    operator: trace.hasOperator ? {
+      id: trace.role === 'user' ? 'user1' : 'creator1',
+      username: trace.role === 'user' ? '王先生' : `服务者李`,
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${orderId}${trace.role}`,
+      role: trace.role === 'user' ? 'user' : 'creator',
+      followerCount: trace.role === 'creator' ? 5000 : 0,
+      followingCount: 100,
+      rating: trace.role === 'creator' ? 4.9 : 4.8,
+      verified: true,
+      createdAt: new Date().toISOString(),
+    } : undefined,
+  }));
+}
+
+function generateMockReview(orderId: string): any {
+  return {
+    id: 'review1',
+    orderId,
+    userId: 'user1',
+    rating: 5,
+    content: '服务非常专业！效果超出预期，工作人员态度也特别好，全程沟通顺畅。强烈推荐！下次还会选择。',
+    createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
+    tags: ['专业细致', '准时到达', '态度友好', '服务周到'],
+    images: [
+      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=400&h=300&fit=crop',
+    ],
+    user: {
+      id: 'user1',
+      username: '王先生',
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${orderId}user`,
+      role: 'user',
+      followerCount: 0,
+      followingCount: 0,
+      rating: 4.8,
+      verified: true,
+      createdAt: new Date().toISOString(),
+    },
+  };
+}
+
+function generateChatMessages(orderId: string, category: string): any[] {
+  const requesterName = '王先生';
+  const creatorName = `服务者李${category}`;
+  const requesterAvatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${orderId}user`;
+  const creatorAvatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${orderId}creator`;
+
+  return [
+    {
+      id: 'msg1',
+      sender: 'user1',
+      senderName: requesterName,
+      senderAvatar: requesterAvatar,
+      type: 'text',
+      content: `您好，我想确认一下明天的${category}服务，时间是上午9点对吗？`,
+      time: '2024-06-09 20:15',
+      role: 'requester',
+    },
+    {
+      id: 'msg2',
+      sender: 'creator1',
+      senderName: creatorName,
+      senderAvatar: creatorAvatar,
+      type: 'text',
+      content: '您好！是的，明天上午9点准时到。请问家里有停车位吗？需要特别注意的地方可以提前跟我说一下。',
+      time: '2024-06-09 20:22',
+      role: 'creator',
+    },
+    {
+      id: 'msg3',
+      sender: 'user1',
+      senderName: requesterName,
+      senderAvatar: requesterAvatar,
+      type: 'image',
+      content: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop',
+      time: '2024-06-09 20:25',
+      role: 'requester',
+      caption: '这是现场情况，麻烦重点处理一下',
+    },
+    {
+      id: 'msg4',
+      sender: 'creator1',
+      senderName: creatorName,
+      senderAvatar: creatorAvatar,
+      type: 'text',
+      content: '收到！看图片情况我会多带一套专业设备过去。另外我把我的资质证书发给您确认。',
+      time: '2024-06-09 20:30',
+      role: 'creator',
+    },
+    {
+      id: 'msg5',
+      sender: 'creator1',
+      senderName: creatorName,
+      senderAvatar: creatorAvatar,
+      type: 'file',
+      content: '服务资质证书.pdf',
+      fileSize: '2.3 MB',
+      time: '2024-06-09 20:31',
+      role: 'creator',
+    },
+    {
+      id: 'msg6',
+      sender: 'user1',
+      senderName: requesterName,
+      senderAvatar: requesterAvatar,
+      type: 'text',
+      content: '太好了，谢谢您！另外小区地下车库可以临时停车，我到时帮您登记。明天见！',
+      time: '2024-06-09 20:35',
+      role: 'requester',
+    },
+    {
+      id: 'msg7',
+      sender: 'creator1',
+      senderName: creatorName,
+      senderAvatar: creatorAvatar,
+      type: 'text',
+      content: '好的，明天9点准时到！期待为您服务。',
+      time: '2024-06-09 20:36',
+      role: 'creator',
+    },
+  ];
+}
+
 export default function OrderDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuthStore();
   const [loading, setLoading] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(true);
   const [order, setOrder] = useState<ServiceOrder | null>(null);
   const [traces, setTraces] = useState<ServiceTrace[]>([]);
   const [review, setReview] = useState<Review | null>(null);
@@ -274,6 +504,12 @@ export default function OrderDetail() {
   const loadOrderData = async () => {
     if (!id) return;
     setLoading(true);
+    setShowSkeleton(true);
+
+    const skeletonTimer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 500);
+
     try {
       const [orderRes, tracesRes, reviewRes] = await Promise.all([
         api.orders.getById(id),
@@ -281,185 +517,29 @@ export default function OrderDetail() {
         api.orders.getReview(id).catch(() => ({ data: null })),
       ]);
 
-      setOrder((orderRes as any).data);
+      const orderData = (orderRes as any).data;
+      setOrder(orderData);
       setTraces((tracesRes as any).data || []);
       setReview((reviewRes as any).data);
+
+      if (orderData) {
+        const chatMsgs = generateChatMessages(id, orderData.category || '家政');
+        setChatMessagesList(chatMsgs);
+      }
     } catch (error) {
       console.error('Failed to load order:', error);
-      setOrder({
-        id: id || '1',
-        requesterId: 'user1',
-        title: '深度保洁服务（三居室）',
-        description: '需要对三居室进行深度保洁，包括厨房油污清理、卫生间消毒、窗户擦拭、地板打蜡等。重点区域：厨房油烟机、灶台、卫生间马桶、淋浴间玻璃水垢。',
-        category: '家政',
-        price: 680,
-        deposit: 200,
-        location: '北京市海淀区中关村大街1号院5号楼1单元1802',
-        serviceTime: '2024年6月10日 上午9:00-13:00',
-        duration: 240,
-        status: 'completed',
-        insurancePolicy: '家政服务责任险（强制投保）',
-        requirements: '需要携带专业清洁设备和环保清洁剂，保洁人员需有健康证和3年以上家政经验。',
-        createdAt: new Date(Date.now() - 7 * 86400000).toISOString(),
-        requester: {
-          id: 'user1',
-          username: '王先生',
-          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=wang',
-          role: 'user',
-          followerCount: 0,
-          followingCount: 0,
-          rating: 4.8,
-          verified: true,
-          createdAt: new Date().toISOString(),
-        },
-        creator: {
-          id: 'creator1',
-          username: '家政师张阿姨',
-          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=zhangayi',
-          role: 'creator',
-          followerCount: 5000,
-          followingCount: 100,
-          rating: 4.9,
-          verified: true,
-          createdAt: new Date().toISOString(),
-        },
-        contactPhone: '138****5678',
-        bookingNo: 'BK20240610001234',
-        checkInTime: '2024-06-10T09:02:15',
-        checkOutTime: '2024-06-10T13:15:42',
-        actualDuration: 253,
-        gpsDistance: 0.08,
-      } as any);
-      setTraces([
-        {
-          id: 'trace1',
-          orderId: id || '1',
-          type: 'create',
-          content: '订单已创建，等待家政师接单',
-          operatorId: 'user1',
-          createdAt: new Date(Date.now() - 7 * 86400000).toISOString(),
-          operator: {
-            id: 'user1',
-            username: '王先生',
-            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=wang',
-            role: 'user',
-            followerCount: 0,
-            followingCount: 0,
-            rating: 0,
-            verified: false,
-            createdAt: new Date().toISOString(),
-          },
-        },
-        {
-          id: 'trace2',
-          orderId: id || '1',
-          type: 'match',
-          content: '系统为您匹配了5位符合条件的家政师',
-          createdAt: new Date(Date.now() - 7 * 86400000 + 3600000).toISOString(),
-        },
-        {
-          id: 'trace3',
-          orderId: id || '1',
-          type: 'confirm',
-          content: '家政师张阿姨已接单，双方确认服务时间',
-          operatorId: 'creator1',
-          createdAt: new Date(Date.now() - 7 * 86400000 + 7200000).toISOString(),
-          operator: {
-            id: 'creator1',
-            username: '家政师张阿姨',
-            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=zhangayi',
-            role: 'creator',
-            followerCount: 5000,
-            followingCount: 100,
-            rating: 4.9,
-            verified: true,
-            createdAt: new Date().toISOString(),
-          },
-        },
-        {
-          id: 'trace4',
-          orderId: id || '1',
-          type: 'deposit',
-          content: '定金¥200已支付，平台托管',
-          operatorId: 'user1',
-          createdAt: new Date(Date.now() - 6 * 86400000).toISOString(),
-          operator: {
-            id: 'user1',
-            username: '王先生',
-            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=wang',
-            role: 'user',
-            followerCount: 0,
-            followingCount: 0,
-            rating: 0,
-            verified: false,
-            createdAt: new Date().toISOString(),
-          },
-        },
-        {
-          id: 'trace5',
-          orderId: id || '1',
-          type: 'start',
-          content: '家政师已GPS签到，服务开始',
-          operatorId: 'creator1',
-          createdAt: new Date(Date.now() - 4 * 86400000 + 9 * 3600000 + 2 * 60000).toISOString(),
-          operator: {
-            id: 'creator1',
-            username: '家政师张阿姨',
-            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=zhangayi',
-            role: 'creator',
-            followerCount: 5000,
-            followingCount: 100,
-            rating: 4.9,
-            verified: true,
-            createdAt: new Date().toISOString(),
-          },
-        },
-        {
-          id: 'trace6',
-          orderId: id || '1',
-          type: 'complete',
-          content: '服务完成，等待确认',
-          operatorId: 'creator1',
-          createdAt: new Date(Date.now() - 4 * 86400000 + 13 * 3600000 + 15 * 60000).toISOString(),
-          operator: {
-            id: 'creator1',
-            username: '家政师张阿姨',
-            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=zhangayi',
-            role: 'creator',
-            followerCount: 5000,
-            followingCount: 100,
-            rating: 4.9,
-            verified: true,
-            createdAt: new Date().toISOString(),
-          },
-        },
-      ]);
-      setReview({
-        id: 'review1',
-        orderId: id || '1',
-        userId: 'user1',
-        rating: 5,
-        content: '张阿姨非常专业！厨房的油污清理得干干净净，连我自己都没注意到的死角都清洁到了。窗户擦得特别透亮，地板打蜡后焕然一新。态度也特别好，全程没有一句怨言。强烈推荐！下次还会找张阿姨。',
-        createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
-        tags: ['清洁到位', '准时到达', '态度友好', '专业细致'],
-        images: [
-          'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop',
-          'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=400&h=300&fit=crop',
-        ],
-        user: {
-          id: 'user1',
-          username: '王先生',
-          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=wang',
-          role: 'user',
-          followerCount: 0,
-          followingCount: 0,
-          rating: 4.8,
-          verified: true,
-          createdAt: new Date().toISOString(),
-        },
-      } as any);
+      const mockOrder = generateMockOrder(id);
+      setOrder(mockOrder);
+      setTraces(generateMockTraces(id, mockOrder.status));
+      if (mockOrder.status === 'completed') {
+        setReview(generateMockReview(id));
+      }
+      const chatMsgs = generateChatMessages(id, mockOrder.category);
+      setChatMessagesList(chatMsgs);
     } finally {
+      clearTimeout(skeletonTimer);
       setLoading(false);
+      setTimeout(() => setShowSkeleton(false), 300);
     }
   };
 
@@ -602,10 +682,101 @@ export default function OrderDetail() {
     handleAction('payDeposit');
   };
 
-  if (loading) {
+  if (loading || showSkeleton) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <LoadingSpinner size="lg" />
+      <div className="min-h-screen bg-zinc-50 pb-32">
+        <div className="container mx-auto px-4 py-6">
+          <div className="h-5 w-20 bg-zinc-200 rounded animate-pulse mb-6" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-6">
+              <div className="card p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-6 w-16 bg-zinc-200 rounded-full animate-pulse" />
+                      <div className="h-6 w-12 bg-zinc-200 rounded-full animate-pulse" />
+                    </div>
+                    <div className="h-7 w-64 bg-zinc-200 rounded animate-pulse" />
+                  </div>
+                  <div className="text-right space-y-2">
+                    <div className="h-8 w-24 bg-zinc-200 rounded animate-pulse" />
+                    <div className="h-4 w-16 bg-zinc-200 rounded animate-pulse" />
+                  </div>
+                </div>
+                <div className="h-4 w-full bg-zinc-200 rounded animate-pulse mb-2" />
+                <div className="h-4 w-5/6 bg-zinc-200 rounded animate-pulse mb-6" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-zinc-50 rounded-xl mb-6">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-full bg-zinc-200 animate-pulse flex-shrink-0" />
+                      <div className="space-y-2 flex-1">
+                        <div className="h-3 w-16 bg-zinc-200 rounded animate-pulse" />
+                        <div className="h-4 w-32 bg-zinc-200 rounded animate-pulse" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="card p-6">
+                <div className="h-6 w-36 bg-zinc-200 rounded animate-pulse mb-6" />
+                <div className="flex items-center justify-between mb-4">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <div key={i} className="flex flex-col items-center flex-1">
+                      <div className="w-8 h-8 rounded-full bg-zinc-200 animate-pulse mb-2" />
+                      <div className="h-3 w-12 bg-zinc-200 rounded animate-pulse" />
+                    </div>
+                  ))}
+                </div>
+                <div className="h-1 w-full bg-zinc-200 rounded-full animate-pulse mb-8" />
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex gap-4">
+                      <div className="w-10 h-10 rounded-full bg-zinc-200 animate-pulse flex-shrink-0" />
+                      <div className="flex-1 pb-6 space-y-2">
+                        <div className="h-4 w-24 bg-zinc-200 rounded animate-pulse" />
+                        <div className="h-3 w-full bg-zinc-200 rounded animate-pulse" />
+                        <div className="h-3 w-20 bg-zinc-200 rounded animate-pulse" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="card p-6">
+                <div className="h-5 w-24 bg-zinc-200 rounded animate-pulse mb-4" />
+                <div className="space-y-3">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="flex justify-between">
+                      <div className="h-4 w-16 bg-zinc-200 rounded animate-pulse" />
+                      <div className="h-4 w-12 bg-zinc-200 rounded animate-pulse" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="card p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-10 h-10 bg-zinc-200 rounded-xl animate-pulse" />
+                  <div className="space-y-1">
+                    <div className="h-5 w-24 bg-zinc-200 rounded animate-pulse" />
+                    <div className="h-3 w-20 bg-zinc-200 rounded animate-pulse" />
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full bg-zinc-200 animate-pulse" />
+                      <div className="h-4 w-28 bg-zinc-200 rounded animate-pulse" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -684,6 +855,104 @@ export default function OrderDetail() {
               {order.description && (
                 <p className="text-zinc-600 mb-6 leading-relaxed">{order.description}</p>
               )}
+
+              <div className="mb-6 p-4 bg-gradient-to-r from-blue-50/50 via-purple-50/50 to-green-50/50 rounded-xl border border-blue-100">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+                    <CheckCircle className="w-3.5 h-3.5 text-blue-600" />
+                  </div>
+                  <span className="text-sm font-semibold text-zinc-800">三方履约状态</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col items-center flex-1">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${
+                      ['published', 'matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status)
+                        ? 'bg-green-500 text-white'
+                        : 'bg-zinc-200 text-zinc-500'
+                    }`}>
+                      {['published', 'matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status) ? (
+                        <CheckCircle className="w-6 h-6" />
+                      ) : (
+                        <User className="w-6 h-6" />
+                      )}
+                    </div>
+                    <span className="text-sm font-medium text-zinc-800">需求方</span>
+                    <span className={`text-xs mt-1 ${
+                      ['published', 'matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status)
+                        ? 'text-green-600'
+                        : 'text-zinc-400'
+                    }`}>
+                      {['published', 'matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status) ? '✓ 已发布' : '待发布'}
+                    </span>
+                  </div>
+
+                  <div className={`flex-1 h-0.5 mx-2 ${
+                    ['matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status)
+                      ? 'bg-green-400'
+                      : 'bg-zinc-200'
+                  }`} />
+
+                  <div className="flex flex-col items-center flex-1">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${
+                      ['matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status)
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-zinc-200 text-zinc-500'
+                    }`}>
+                      {['matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status) ? (
+                        <CheckCircle className="w-6 h-6" />
+                      ) : (
+                        <User className="w-6 h-6" />
+                      )}
+                    </div>
+                    <span className="text-sm font-medium text-zinc-800">服务方</span>
+                    <span className={`text-xs mt-1 ${
+                      ['matched', 'confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status)
+                        ? 'text-blue-600'
+                        : 'text-zinc-400'
+                    }`}>
+                      {order.status === 'published' ? '○ 待接单' :
+                       order.status === 'matched' ? '✓ 已匹配' :
+                       ['confirmed', 'deposit_paid', 'in_progress', 'completed'].includes(order.status) ? '✓ 已接单' : '○ 待接单'}
+                    </span>
+                  </div>
+
+                  <div className={`flex-1 h-0.5 mx-2 ${
+                    ['deposit_paid', 'in_progress', 'completed'].includes(order.status)
+                      ? 'bg-blue-400'
+                      : 'bg-zinc-200'
+                  }`} />
+
+                  <div className="flex flex-col items-center flex-1">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${
+                      order.status === 'completed'
+                        ? 'bg-green-500 text-white'
+                        : ['deposit_paid', 'in_progress'].includes(order.status)
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-zinc-200 text-zinc-500'
+                    }`}>
+                      {order.status === 'completed' ? (
+                        <CheckCircle className="w-6 h-6" />
+                      ) : ['deposit_paid', 'in_progress'].includes(order.status) ? (
+                        <Shield className="w-6 h-6" />
+                      ) : (
+                        <Shield className="w-6 h-6" />
+                      )}
+                    </div>
+                    <span className="text-sm font-medium text-zinc-800">平台</span>
+                    <span className={`text-xs mt-1 ${
+                      order.status === 'completed'
+                        ? 'text-green-600'
+                        : ['deposit_paid', 'in_progress'].includes(order.status)
+                        ? 'text-blue-600'
+                        : 'text-zinc-400'
+                    }`}>
+                      {order.status === 'completed' ? '✓ 已结算' :
+                       ['deposit_paid', 'in_progress'].includes(order.status) ? '○ 资金托管中' :
+                       '○ 待托管'}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-zinc-50 rounded-xl mb-6">
                 <div className="flex items-start gap-3">
@@ -998,56 +1267,85 @@ export default function OrderDetail() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className={`grid gap-4 ${
+                  (order.status === 'in_progress' || order.status === 'completed')
+                    ? 'grid-cols-1 md:grid-cols-3'
+                    : 'grid-cols-1'
+                }`}>
                   <div className="p-4 border border-zinc-200 rounded-xl">
                     <div className="flex items-center gap-2 mb-2">
                       <Calendar className="w-4 h-4 text-blue-500" />
                       <span className="text-sm text-zinc-500">预约服务时间</span>
                     </div>
-                    <div className="font-medium text-zinc-900">{order.serviceTime}</div>
+                    <div className="font-medium text-zinc-900">{order.serviceTime || '待确认'}</div>
                   </div>
-                  <div className="p-4 border border-green-200 rounded-xl bg-green-50/50">
-                    <div className="flex items-center gap-2 mb-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm text-green-600">签到时间</span>
+                  {(order.status === 'in_progress' || order.status === 'completed') && (
+                    <div className="p-4 border border-green-200 rounded-xl bg-green-50/50">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <span className="text-sm text-green-600">签到时间</span>
+                      </div>
+                      <div className="font-medium text-zinc-900">
+                        {(order as any).checkInTime
+                          ? new Date((order as any).checkInTime).toLocaleString()
+                          : '服务开始后显示'}
+                      </div>
                     </div>
-                    <div className="font-medium text-zinc-900">
-                      {(order as any).checkInTime ? new Date((order as any).checkInTime).toLocaleString() : '2024-06-10 09:02:15'}
+                  )}
+                  {order.status === 'completed' && (
+                    <div className="p-4 border border-teal-200 rounded-xl bg-teal-50/50">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Clock className="w-4 h-4 text-teal-500" />
+                        <span className="text-sm text-teal-600">签出时间</span>
+                      </div>
+                      <div className="font-medium text-zinc-900">
+                        {(order as any).checkOutTime
+                          ? new Date((order as any).checkOutTime).toLocaleString()
+                          : '服务完成后显示'}
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-4 border border-red-200 rounded-xl bg-red-50/50">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Clock className="w-4 h-4 text-red-500" />
-                      <span className="text-sm text-red-600">签出时间</span>
-                    </div>
-                    <div className="font-medium text-zinc-900">
-                      {(order as any).checkOutTime ? new Date((order as any).checkOutTime).toLocaleString() : '2024-06-10 13:15:42'}
-                    </div>
-                  </div>
+                  )}
                 </div>
 
-                <div className="p-4 bg-gradient-to-r from-accent-50 to-primary-50 rounded-xl border border-accent-200">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center">
-                        <Timer className="w-5 h-5 text-accent-600" />
+                {order.status === 'completed' && (
+                  <div className="p-4 bg-gradient-to-r from-accent-50 to-primary-50 rounded-xl border border-accent-200">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center">
+                          <Timer className="w-5 h-5 text-accent-600" />
+                        </div>
+                        <div>
+                          <div className="text-sm text-zinc-500">实际服务时长</div>
+                          <div className="text-2xl font-bold text-zinc-900">
+                            {Math.floor(((order as any).actualDuration || order.duration || 240) / 60)}小时{((order as any).actualDuration || order.duration || 240) % 60}分钟
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-sm text-zinc-500">实际服务时长</div>
-                        <div className="text-2xl font-bold text-zinc-900">
-                          {Math.floor(((order as any).actualDuration || 253) / 60)}小时{((order as any).actualDuration || 253) % 60}分钟
+                      <div className="text-right">
+                        <div className="text-sm text-zinc-500 mb-1">对比预约时长</div>
+                        <div className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                          <ThumbsUp className="w-3.5 h-3.5" />
+                          +{((order as any).actualDuration || order.duration || 240) - (order.duration || 240)} 分钟
                         </div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm text-zinc-500 mb-1">对比预约时长</div>
-                      <div className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
-                        <ThumbsUp className="w-3.5 h-3.5" />
-                        +{((order as any).actualDuration || 253) - (order.duration || 240)} 分钟
-                      </div>
-                    </div>
                   </div>
-                </div>
+                )}
+
+                {chatMessagesList?.length > 0 && (
+                  <div className="p-4 border border-zinc-200 rounded-xl">
+                    <div className="flex items-center gap-2 mb-2">
+                      <MessageSquare className="w-4 h-4 text-purple-500" />
+                      <span className="text-sm text-zinc-500">最新沟通</span>
+                    </div>
+                    <p className="text-sm text-zinc-700 line-clamp-1">
+                      {chatMessagesList[chatMessagesList.length - 1]?.content || '暂无沟通记录'}
+                    </p>
+                    <p className="text-xs text-zinc-400 mt-1">
+                      {chatMessagesList[chatMessagesList.length - 1]?.time || ''}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -1618,8 +1916,8 @@ export default function OrderDetail() {
                     <Shield className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <div className="font-medium text-green-800">全流程复查通过</div>
-                    <div className="text-xs text-green-600">本订单服务品质保障已完成，可申请评价抽样奖励</div>
+                    <div className="font-medium text-green-800">全流程通过 · 平台认证</div>
+                    <div className="text-xs text-green-600">签到核验 / 时长核对 / 评价抽样 三项均通过</div>
                   </div>
                 </div>
               </div>
@@ -1630,7 +1928,8 @@ export default function OrderDetail() {
             <div className="card p-6 animate-fade-in-up-delay-1">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-zinc-900">
-                  {order.status === 'completed' ? '资金分账' : '支付信息'}
+                  {order.status === 'completed' ? '资金分账' :
+                   order.status === 'disputed' ? '争议处理' : '支付信息'}
                 </h3>
                 {(order.status === 'completed' || order.status === 'in_progress' || order.status === 'deposit_paid') && (
                   <button
@@ -1643,22 +1942,97 @@ export default function OrderDetail() {
                 )}
               </div>
 
-              {(order.status === 'in_progress' || order.status === 'deposit_paid') && (
-                <div className="mb-4 p-4 bg-amber-50 rounded-xl border border-amber-100">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-amber-800">定金已托管</span>
-                    <span className="text-lg font-bold text-amber-600">¥{order.deposit}</span>
+              {order.status === 'deposit_paid' && (
+                <div className="mb-4 p-4 bg-green-50 rounded-xl border border-green-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                        <CheckCircle className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-semibold text-green-800">定金已托管</span>
+                    </div>
+                    <span className="text-xl font-bold text-green-600">¥{order.deposit}</span>
                   </div>
-                  <div className="relative h-2 bg-amber-200 rounded-full overflow-hidden">
+                  <div className="relative h-2 bg-green-200 rounded-full overflow-hidden">
                     <div
-                      className="absolute left-0 top-0 h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full transition-all duration-500"
-                      style={{ width: order.status === 'in_progress' ? '60%' : '30%' }}
+                      className="absolute left-0 top-0 h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-500"
+                      style={{ width: '33%' }}
                     />
                   </div>
-                  <div className="flex justify-between mt-2 text-xs text-amber-600">
-                    <span>已支付定金</span>
-                    <span>{order.status === 'in_progress' ? '服务进行中' : '等待服务开始'}</span>
+                  <div className="flex justify-between mt-2 text-xs text-green-600">
+                    <span>第1步 · 定金支付</span>
+                    <span>等待服务开始</span>
                   </div>
+                </div>
+              )}
+
+              {order.status === 'in_progress' && (
+                <div className="mb-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center animate-pulse">
+                        <Clock className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-semibold text-blue-800">服务进行中</span>
+                    </div>
+                    <span className="text-xl font-bold text-blue-600">¥{order.deposit}</span>
+                  </div>
+                  <div className="relative h-2 bg-blue-200 rounded-full overflow-hidden">
+                    <div
+                      className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-400 to-blue-500 rounded-full transition-all duration-500"
+                      style={{ width: '66%' }}
+                    />
+                  </div>
+                  <div className="flex justify-between mt-2 text-xs text-blue-600">
+                    <span>第2步 · 服务进行</span>
+                    <span>完成后结算</span>
+                  </div>
+                </div>
+              )}
+
+              {order.status === 'completed' && (
+                <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-teal-50 rounded-xl border border-green-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                        <CheckCircle className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-semibold text-green-800">已完成 · 待结算</span>
+                    </div>
+                    <span className="text-xl font-bold text-green-600">¥{order.price}</span>
+                  </div>
+                  <div className="relative h-2 bg-green-200 rounded-full overflow-hidden">
+                    <div
+                      className="absolute left-0 top-0 h-full bg-gradient-to-r from-green-400 to-teal-500 rounded-full transition-all duration-500"
+                      style={{ width: '100%' }}
+                    />
+                  </div>
+                  <div className="flex justify-between mt-2 text-xs text-green-600">
+                    <span>第3步 · 服务完成</span>
+                    <span>T+1 自动结算</span>
+                  </div>
+                </div>
+              )}
+
+              {order.status === 'disputed' && (
+                <div className="mb-4 p-4 bg-red-50 rounded-xl border border-red-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center animate-pulse">
+                        <AlertTriangle className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-semibold text-red-800">仲裁中</span>
+                    </div>
+                    <span className="text-xl font-bold text-red-600">¥{order.price}</span>
+                  </div>
+                  <p className="text-xs text-red-600 mb-2">资金已冻结，待仲裁结果</p>
+                  <button
+                    onClick={() => setShowArbitrationTimeline(true)}
+                    className="text-xs text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+                  >
+                    <Scale className="w-3 h-3" />
+                    查看仲裁进度
+                  </button>
                 </div>
               )}
 
@@ -1795,22 +2169,58 @@ export default function OrderDetail() {
             </div>
 
             {order.category === '家政' || order.category === '护理' || (order as any).insuranceRequired ? (
-              <div className="card p-6 animate-fade-in-up-delay-2 border-2 border-blue-200 overflow-hidden relative bg-gradient-to-br from-blue-50/50 to-transparent">
-                <div className="absolute top-0 right-0 px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-bl-xl">
-                  强制投保
+              <div className={`card p-6 animate-fade-in-up-delay-2 border-2 overflow-hidden relative ${
+                order.status === 'deposit_paid' || order.status === 'in_progress'
+                  ? 'border-green-200 bg-gradient-to-br from-green-50/50 to-transparent'
+                  : order.status === 'completed'
+                  ? 'border-teal-200 bg-gradient-to-br from-teal-50/50 to-transparent'
+                  : 'border-amber-200 bg-gradient-to-br from-amber-50/50 to-transparent'
+              }`}>
+                <div className={`absolute top-0 right-0 px-3 py-1 text-white text-xs font-medium rounded-bl-xl ${
+                  order.status === 'deposit_paid' || order.status === 'in_progress'
+                    ? 'bg-green-500'
+                    : order.status === 'completed'
+                    ? 'bg-teal-500'
+                    : 'bg-amber-500'
+                }`}>
+                  {order.status === 'deposit_paid' || order.status === 'in_progress'
+                    ? '保障中'
+                    : order.status === 'completed'
+                    ? '保障有效'
+                    : '待投保'}
                 </div>
                 <div className="flex items-center gap-2 mb-5">
-                  <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-blue-600" />
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                    order.status === 'deposit_paid' || order.status === 'in_progress'
+                      ? 'bg-green-100'
+                      : order.status === 'completed'
+                      ? 'bg-teal-100'
+                      : 'bg-amber-100'
+                  }`}>
+                    <Shield className={`w-5 h-5 ${
+                      order.status === 'deposit_paid' || order.status === 'in_progress'
+                        ? 'text-green-600'
+                        : order.status === 'completed'
+                        ? 'text-teal-600'
+                        : 'text-amber-600'
+                    }`} />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-zinc-900">家政服务责任险</h3>
-                    <p className="text-xs text-zinc-500">
+                    <p className={`text-xs ${
+                      order.status === 'deposit_paid' || order.status === 'in_progress'
+                        ? 'text-green-600 font-medium'
+                        : order.status === 'completed'
+                        ? 'text-teal-600 font-medium'
+                        : 'text-amber-600 font-medium'
+                    }`}>
                       {order.status === 'completed'
                         ? '保障有效 · 30天追溯期'
                         : order.status === 'cancelled'
                         ? '保障已终止'
-                        : '保单已生效 · 全程保障'}
+                        : order.status === 'deposit_paid' || order.status === 'in_progress'
+                        ? '保障中 · 50万保额'
+                        : '待投保 · 支付后自动生效'}
                     </p>
                   </div>
                 </div>
@@ -1838,12 +2248,34 @@ export default function OrderDetail() {
                     <div className="font-medium text-zinc-900">{insuranceInfo.company}</div>
                   </div>
 
-                  <div className="p-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl text-white">
-                    <div className="text-xs text-blue-100 mb-1">累计保额</div>
+                  <div className={`p-4 rounded-xl text-white ${
+                    order.status === 'deposit_paid' || order.status === 'in_progress'
+                      ? 'bg-gradient-to-r from-green-500 to-emerald-500'
+                      : order.status === 'completed'
+                      ? 'bg-gradient-to-r from-teal-500 to-cyan-500'
+                      : 'bg-gradient-to-r from-amber-400 to-orange-400'
+                  }`}>
+                    <div className={`text-xs mb-1 ${
+                      order.status === 'deposit_paid' || order.status === 'in_progress'
+                        ? 'text-green-100'
+                        : order.status === 'completed'
+                        ? 'text-teal-100'
+                        : 'text-amber-100'
+                    }`}>累计保额</div>
                     <div className="text-3xl font-bold">
                       ¥{(insuranceInfo.coverage / 10000).toFixed(0)}万
                     </div>
-                    <div className="text-xs text-blue-100 mt-1">人身伤害 + 财产损失 双重保障</div>
+                    <div className={`text-xs mt-1 ${
+                      order.status === 'deposit_paid' || order.status === 'in_progress'
+                        ? 'text-green-100'
+                        : order.status === 'completed'
+                        ? 'text-teal-100'
+                        : 'text-amber-100'
+                    }`}>
+                      {order.status === 'published' || order.status === 'matched' || order.status === 'confirmed'
+                        ? '支付定金后自动生效'
+                        : '人身伤害 + 财产损失 双重保障'}
+                    </div>
                   </div>
 
                   <div>

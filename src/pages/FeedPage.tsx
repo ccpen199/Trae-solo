@@ -118,7 +118,7 @@ const generateMockComments = (videoId: string): Comment[] => {
 
 const mockContentVideos: ContentVideo[] = Array.from({ length: 20 }, (_, i) => {
   const creatorIndex = i % 10;
-  const courseId = `course-mock-${creatorIndex * 6 + (i % 6)}`;
+  const courseId = `course-${(creatorIndex % 8) + 1}`;
   return {
     id: `content-${i}`,
     title: [
@@ -162,6 +162,7 @@ export default function FeedPage() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [courses, setCourses] = useState<Course[]>([]);
+  const [guideCourses, setGuideCourses] = useState<Course[]>([]);
   const [contentVideos, setContentVideos] = useState<ContentVideo[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState(1);
@@ -175,6 +176,7 @@ export default function FeedPage() {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [commentInput, setCommentInput] = useState('');
+  const [navigatingCourse, setNavigatingCourse] = useState(false);
   const observerRef = useRef<HTMLDivElement>(null);
   const pageSize = 12;
 
@@ -188,6 +190,11 @@ export default function FeedPage() {
   ];
 
   useEffect(() => {
+    loadGuideCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     setPage(1);
     setCourses([]);
     setContentVideos([]);
@@ -195,6 +202,22 @@ export default function FeedPage() {
     loadData(1, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCategory, searchKeyword, activeTab, priceFilter]);
+
+  const loadGuideCourses = async () => {
+    try {
+      const res = await api.courses.list({
+        page: 1,
+        pageSize: 12,
+        status: 'published',
+      });
+      const items = (res as ApiResponse<PaginatedResponse<Course>>)?.data?.items || [];
+      if (items.length > 0) {
+        setGuideCourses(items);
+      }
+    } catch (error) {
+      console.error('Failed to load guide courses:', error);
+    }
+  };
 
   const loadData = async (pageNum: number, isInitial = false) => {
     if (isInitial) setLoading(true);
@@ -297,15 +320,16 @@ export default function FeedPage() {
       : [selectedCategory];
 
     const courses: Course[] = [];
-    let id = 0;
+    let id = 1;
 
     categories.forEach((cat) => {
       const template = courseTemplates[cat];
       template.titles.forEach((title, idx) => {
         const creator = creators[idx % creators.length];
         const isSubscription = template.basePrice === 0;
+        if (id > 8) return;
         courses.push({
-          id: `course-mock-${id++}`,
+          id: `course-${id++}`,
           creatorId: `creator-${cat}-${idx}`,
           title,
           description: `${title}，专业导师带你系统学习`,
@@ -411,6 +435,8 @@ export default function FeedPage() {
   };
 
   const getCreatorCourse = (video: ContentVideo) => {
+    const matched = guideCourses.find((c) => c.category === video.category);
+    if (matched) return matched;
     const allCourses = generateMockCourses(video.category);
     return allCourses.find(
       (c) => c.creator?.username === video.creatorName
@@ -418,8 +444,12 @@ export default function FeedPage() {
   };
 
   const handleCourseClick = (courseId: string) => {
-    handleCloseModal();
-    navigate(`/courses/${courseId}`);
+    setNavigatingCourse(true);
+    setTimeout(() => {
+      handleCloseModal();
+      setNavigatingCourse(false);
+      navigate(`/courses/${courseId}`);
+    }, 500);
   };
 
   const handleCreatorClick = (creatorId: string) => {
@@ -896,56 +926,63 @@ export default function FeedPage() {
                     <Crown className="w-4 h-4 text-amber-500" />
                     TA 的完整课程
                   </h3>
-                  {(() => {
-                    const course = getCreatorCourse(selectedVideo);
-                    return (
-                      <div
-                        className="bg-white rounded-xl overflow-hidden shadow-sm border border-zinc-200 cursor-pointer hover:shadow-md transition-shadow group"
-                        onClick={() => handleCourseClick(course?.id || '')}
-                      >
-                        <div className="relative aspect-video bg-gradient-to-br from-purple-400 to-violet-500">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <Play className="w-10 h-10 text-white/60" />
+                  {navigatingCourse ? (
+                    <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-zinc-200 p-6 flex flex-col items-center justify-center">
+                      <LoadingSpinner size="md" />
+                      <p className="mt-3 text-sm text-zinc-500">正在加载课程...</p>
+                    </div>
+                  ) : (
+                    (() => {
+                      const course = getCreatorCourse(selectedVideo);
+                      return (
+                        <div
+                          className="bg-white rounded-xl overflow-hidden shadow-sm border border-zinc-200 cursor-pointer hover:shadow-md transition-shadow group"
+                          onClick={() => handleCourseClick(course?.id || '')}
+                        >
+                          <div className="relative aspect-video bg-gradient-to-br from-purple-400 to-violet-500">
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <Play className="w-10 h-10 text-white/60" />
+                            </div>
+                            <div className="absolute top-2 left-2">
+                              <Badge variant="accent" size="sm" className="bg-amber-500 text-white border-0">
+                                <Crown className="w-3 h-3 mr-0.5" />
+                                系统课
+                              </Badge>
+                            </div>
                           </div>
-                          <div className="absolute top-2 left-2">
-                            <Badge variant="accent" size="sm" className="bg-amber-500 text-white border-0">
-                              <Crown className="w-3 h-3 mr-0.5" />
-                              系统课
-                            </Badge>
-                          </div>
-                        </div>
-                        <div className="p-3">
-                          <h4 className="text-sm font-semibold text-zinc-900 line-clamp-2 mb-2 group-hover:text-purple-600 transition-colors">
-                            {course?.title}
-                          </h4>
-                          <div className="flex items-center gap-2 mb-2">
-                            <RatingStars rating={course?.rating || 4.8} size="sm" showValue />
-                            <span className="text-xs text-zinc-500">
-                              ({course?.reviewCount || 0}评价)
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <span className="text-lg font-bold text-purple-600">
-                                {course?.price === 0
-                                  ? course?.isSubscription && course?.subscriptionPrice
-                                    ? `¥${course.subscriptionPrice}/月`
-                                    : '免费'
-                                  : `¥${course?.price}`}
+                          <div className="p-3">
+                            <h4 className="text-sm font-semibold text-zinc-900 line-clamp-2 mb-2 group-hover:text-purple-600 transition-colors">
+                              {course?.title}
+                            </h4>
+                            <div className="flex items-center gap-2 mb-2">
+                              <RatingStars rating={course?.rating || 4.8} size="sm" showValue />
+                              <span className="text-xs text-zinc-500">
+                                ({course?.reviewCount || 0}评价)
                               </span>
                             </div>
-                            <span className="text-xs text-zinc-500">
-                              {course?.chapterCount || 0} 章节
-                            </span>
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <span className="text-lg font-bold text-purple-600">
+                                  {course?.price === 0
+                                    ? course?.isSubscription && course?.subscriptionPrice
+                                      ? `¥${course.subscriptionPrice}/月`
+                                      : '免费'
+                                    : `¥${course?.price}`}
+                                </span>
+                              </div>
+                              <span className="text-xs text-zinc-500">
+                                {course?.chapterCount || 0} 章节
+                              </span>
+                            </div>
+                            <button className="w-full mt-3 py-2 bg-gradient-to-r from-purple-500 to-violet-500 text-white text-sm font-medium rounded-lg hover:from-purple-600 hover:to-violet-600 transition-all">
+                              查看课程详情
+                              <ChevronRight className="w-4 h-4 inline ml-0.5" />
+                            </button>
                           </div>
-                          <button className="w-full mt-3 py-2 bg-gradient-to-r from-purple-500 to-violet-500 text-white text-sm font-medium rounded-lg hover:from-purple-600 hover:to-violet-600 transition-all">
-                            查看课程详情
-                            <ChevronRight className="w-4 h-4 inline ml-0.5" />
-                          </button>
                         </div>
-                      </div>
-                    );
-                  })()}
+                      );
+                    })()
+                  )}
                 </div>
               </div>
             </div>
