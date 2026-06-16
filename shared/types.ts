@@ -1,4 +1,6 @@
-export type UserRole = 'owner' | 'doctor' | 'hospital' | 'merchant';
+export type UserRole = 'owner' | 'doctor' | 'hospital' | 'merchant' | 'admin' | 'platform' | 'ops';
+
+export type UserStatus = 'active' | 'disabled' | 'pending_review';
 
 export interface User {
   id: string;
@@ -6,6 +8,8 @@ export interface User {
   phone: string;
   nickname: string;
   avatar?: string;
+  status: UserStatus;
+  licenseVerified?: boolean;
   createdAt: string;
 }
 

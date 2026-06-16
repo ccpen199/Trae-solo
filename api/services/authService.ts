@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
 import { getDatabase } from '../database.js'
-import type { User, UserRole } from '@shared/types'
+import type { User, UserRole, UserStatus } from '@shared/types'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'petlife-dev-secret-change-me'
 const JWT_EXPIRES_IN = '7d'
@@ -26,6 +26,22 @@ export interface AuthResult {
   token: string
 }
 
+export class AuthError extends Error {
+  code: string
+  constructor(code: string, message: string) {
+    super(message)
+    this.code = code
+    this.name = 'AuthError'
+  }
+}
+
+export const AUTH_ERRORS = {
+  ACCOUNT_NOT_FOUND: 'ACCOUNT_NOT_FOUND',
+  WRONG_PASSWORD: 'WRONG_PASSWORD',
+  ACCOUNT_DISABLED: 'ACCOUNT_DISABLED',
+  LICENSE_PENDING: 'LICENSE_PENDING',
+} as const
+
 function rowToUser(row: any): User {
   return {
     id: row.id,
@@ -33,6 +49,8 @@ function rowToUser(row: any): User {
     phone: row.phone,
     nickname: row.nickname,
     avatar: row.avatar,
+    status: (row.status as UserStatus) || 'active',
+    licenseVerified: !!row.license_verified,
     createdAt: row.created_at,
   }
 }
@@ -62,15 +80,33 @@ export function login(payload: LoginPayload): AuthResult {
   const row = db.prepare('SELECT * FROM users WHERE phone = ?').get(payload.phone)
 
   if (!row) {
-    throw new Error('手机号或密码错误')
+    throw new AuthError(AUTH_ERRORS.ACCOUNT_NOT_FOUND, '账号不存在，请检查手机号或注册新账号')
   }
 
   const userRow = row as any
+
   if (!verifyPassword(payload.password, userRow.password_hash)) {
-    throw new Error('手机号或密码错误')
+    throw new AuthError(AUTH_ERRORS.WRONG_PASSWORD, '密码错误，请重新输入或找回密码')
+  }
+
+  if (userRow.status === 'disabled') {
+    throw new AuthError(AUTH_ERRORS.ACCOUNT_DISABLED, '账号已被禁用，请联系平台管理员客服申诉')
+  }
+
+  if (userRow.status === 'pending_review') {
+    throw new AuthError(AUTH_ERRORS.ACCOUNT_DISABLED, '账号资质待审核，请耐心等待平台审核完成后再登录')
   }
 
   const user = rowToUser(userRow)
+
+  if (user.role === 'doctor' && user.licenseVerified === false) {
+    throw new AuthError(AUTH_ERRORS.LICENSE_PENDING, '医生执业资质审核中，请耐心等待平台审核通过')
+  }
+
+  if ((user.role === 'hospital' || user.role === 'merchant') && user.status === 'pending_review') {
+    throw new AuthError(AUTH_ERRORS.LICENSE_PENDING, '商家资质备案审核中，请耐心等待平台审核通过')
+  }
+
   const token = generateToken(user)
 
   return { user, token }

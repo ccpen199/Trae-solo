@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from 'express'
 import { authenticateToken } from '../middleware/auth.js'
-import { login, register, getUserById } from '../services/authService.js'
+import { login, register, getUserById, AuthError } from '../services/authService.js'
 import type { UserRole } from '@shared/types'
 
 const router = Router()
@@ -13,6 +13,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({
         success: false,
         error: '手机号和密码不能为空',
+        errorCode: 'EMPTY_FIELDS',
       })
       return
     }
@@ -24,10 +25,19 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       data: result,
     })
   } catch (err) {
-    res.status(401).json({
-      success: false,
-      error: (err as Error).message,
-    })
+    if (err instanceof AuthError) {
+      res.status(401).json({
+        success: false,
+        error: err.message,
+        errorCode: err.code,
+      })
+    } else {
+      res.status(401).json({
+        success: false,
+        error: (err as Error).message,
+        errorCode: 'UNKNOWN_ERROR',
+      })
+    }
   }
 })
 

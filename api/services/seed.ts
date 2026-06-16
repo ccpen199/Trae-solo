@@ -35,57 +35,93 @@ function randomFromArray<T>(arr: T[]): T {
 
 function createUsers(db: Database.Database, ctx: SeedContext): void {
   const insertUser = db.prepare(
-    'INSERT INTO users (id, role, phone, password_hash, nickname, avatar, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    'INSERT INTO users (id, role, phone, password_hash, nickname, avatar, status, license_verified, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
   )
 
   const owners = [
-    { phone: '13800000001', nickname: '张小明', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner1' },
-    { phone: '13800000002', nickname: '李小红', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner2' },
-    { phone: '13800000003', nickname: '王小刚', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner3' },
-    { phone: '13800000004', nickname: '赵小美', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner4' },
-    { phone: '13800000005', nickname: '陈小华', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner5' },
+    { phone: '13800000001', nickname: '张小明', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner1', status: 'active' as const, lic: 1 },
+    { phone: '13800000002', nickname: '李小红', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner2', status: 'active' as const, lic: 1 },
+    { phone: '13800000003', nickname: '王小刚', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner3', status: 'active' as const, lic: 1 },
+    { phone: '13800000004', nickname: '赵小美', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner4', status: 'active' as const, lic: 1 },
+    { phone: '13800000005', nickname: '陈小华', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner5', status: 'active' as const, lic: 1 },
   ]
 
   for (const o of owners) {
     const id = uuidv4()
-    insertUser.run(id, 'owner', o.phone, hashPassword('123456'), o.nickname, o.avatar, randomDate(180))
+    insertUser.run(id, 'owner', o.phone, hashPassword('123456'), o.nickname, o.avatar, o.status, o.lic, randomDate(180))
     ctx.ownerIds.push(id)
   }
 
   const doctors = [
-    { phone: '13900000001', nickname: '王医生' },
-    { phone: '13900000002', nickname: '李医生' },
-    { phone: '13900000003', nickname: '张医生' },
-    { phone: '13900000004', nickname: '刘医生' },
+    { phone: '13900000001', nickname: '王医生', status: 'active' as const, lic: 1 },
+    { phone: '13900000002', nickname: '李医生', status: 'active' as const, lic: 1 },
+    { phone: '13900000003', nickname: '张医生', status: 'active' as const, lic: 1 },
+    { phone: '13900000004', nickname: '刘医生', status: 'active' as const, lic: 1 },
+    { phone: '13900000009', nickname: '待审孙医生', status: 'active' as const, lic: 0 },
   ]
 
   for (const d of doctors) {
     const id = uuidv4()
-    insertUser.run(id, 'doctor', d.phone, hashPassword('123456'), d.nickname, `https://api.dicebear.com/7.x/avataaars/svg?seed=${d.nickname}`, randomDate(200))
+    insertUser.run(id, 'doctor', d.phone, hashPassword('123456'), d.nickname, `https://api.dicebear.com/7.x/avataaars/svg?seed=${d.nickname}`, d.status, d.lic, randomDate(200))
     ctx.doctorUserIds.push(id)
   }
 
   const hospitals = [
-    { phone: '13700000001', nickname: '爱宠宠物医院' },
-    { phone: '13700000002', nickname: '康宠动物诊所' },
-    { phone: '13700000003', nickname: '佳宠医疗中心' },
+    { phone: '13700000001', nickname: '爱宠宠物医院', status: 'active' as const, lic: 1 },
+    { phone: '13700000002', nickname: '康宠动物诊所', status: 'active' as const, lic: 1 },
+    { phone: '13700000003', nickname: '佳宠医疗中心', status: 'active' as const, lic: 1 },
   ]
 
   for (const h of hospitals) {
     const id = uuidv4()
-    insertUser.run(id, 'hospital', h.phone, hashPassword('123456'), h.nickname, `https://api.dicebear.com/7.x/shapes/svg?seed=${h.nickname}`, randomDate(250))
+    insertUser.run(id, 'hospital', h.phone, hashPassword('123456'), h.nickname, `https://api.dicebear.com/7.x/shapes/svg?seed=${h.nickname}`, h.status, h.lic, randomDate(250))
     ctx.hospitalUserIds.push(id)
   }
 
   const merchants = [
-    { phone: '13600000001', nickname: '宠物优选商城' },
-    { phone: '13600000002', nickname: '爱宠生活馆' },
+    { phone: '13600000001', nickname: '宠物优选商城', status: 'active' as const, lic: 1 },
+    { phone: '13600000002', nickname: '爱宠生活馆', status: 'active' as const, lic: 1 },
   ]
 
   for (const m of merchants) {
     const id = uuidv4()
-    insertUser.run(id, 'merchant', m.phone, hashPassword('123456'), m.nickname, `https://api.dicebear.com/7.x/shapes/svg?seed=${m.nickname}`, randomDate(220))
+    insertUser.run(id, 'merchant', m.phone, hashPassword('123456'), m.nickname, `https://api.dicebear.com/7.x/shapes/svg?seed=${m.nickname}`, m.status, m.lic, randomDate(220))
     ctx.merchantUserIds.push(id)
+  }
+
+  const admins = [
+    { phone: 'admin', nickname: '超级管理员', role: 'admin' as const },
+  ]
+  for (const a of admins) {
+    insertUser.run(uuidv4(), a.role, a.phone, hashPassword('123456'), a.nickname, 'https://api.dicebear.com/7.x/shapes/svg?seed=admin', 'active', 1, randomDate(365))
+  }
+
+  const platforms = [
+    { phone: 'platform', nickname: '平台运营主管', role: 'platform' as const },
+  ]
+  for (const p of platforms) {
+    insertUser.run(uuidv4(), p.role, p.phone, hashPassword('123456'), p.nickname, 'https://api.dicebear.com/7.x/shapes/svg?seed=platform', 'active', 1, randomDate(300))
+  }
+
+  const ops = [
+    { phone: 'ops', nickname: '运维工程师', role: 'ops' as const },
+  ]
+  for (const o of ops) {
+    insertUser.run(uuidv4(), o.role, o.phone, hashPassword('123456'), o.nickname, 'https://api.dicebear.com/7.x/shapes/svg?seed=ops', 'active', 1, randomDate(300))
+  }
+
+  const disabledUsers = [
+    { phone: '13500000001', nickname: '禁用账号示例', role: 'owner' as const, status: 'disabled' as const },
+  ]
+  for (const d of disabledUsers) {
+    insertUser.run(uuidv4(), d.role, d.phone, hashPassword('123456'), d.nickname, 'https://api.dicebear.com/7.x/avataaars/svg?seed=disabled', d.status, 1, randomDate(100))
+  }
+
+  const pendingUsers = [
+    { phone: '13500000002', nickname: '待审核医院', role: 'hospital' as const, status: 'pending_review' as const },
+  ]
+  for (const p of pendingUsers) {
+    insertUser.run(uuidv4(), p.role, p.phone, hashPassword('123456'), p.nickname, 'https://api.dicebear.com/7.x/shapes/svg?seed=pending', p.status, 0, randomDate(10))
   }
 }
 

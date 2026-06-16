@@ -15,9 +15,10 @@ import type {
 
 const API_BASE = '/api';
 
-interface ApiError {
-  message: string;
-  code?: number;
+export interface ApiErrorResponse {
+  error: string;
+  errorCode?: string;
+  success: boolean;
 }
 
 class ApiClient {
@@ -42,19 +43,28 @@ class ApiClient {
       });
 
       if (!response.ok) {
-        if (response.status === 401) {
+        const errorData = (await response.json().catch(() => ({ error: `请求失败: ${response.status}` }))) as ApiErrorResponse;
+        if (response.status === 401 && endpoint !== '/auth/login') {
           useAuthStore.getState().logout();
-          throw new Error('登录已过期，请重新登录');
+          const err = new Error('登录已过期，请重新登录');
+          (err as any).errorCode = 'SESSION_EXPIRED';
+          throw err;
         }
-        const errorData = (await response.json().catch(() => ({}))) as ApiError;
-        throw new Error(errorData.message || `请求失败: ${response.status}`);
+        const err = new Error(errorData.error || `请求失败: ${response.status}`);
+        (err as any).errorCode = errorData.errorCode || 'UNKNOWN';
+        throw err;
       }
 
       if (response.status === 204) {
         return undefined as T;
       }
 
-      return (await response.json()) as T;
+      const json = await response.json() as { success: boolean; data?: T; error?: string };
+      if (json.success === false) {
+        const err = new Error(json.error || '请求失败');
+        throw err;
+      }
+      return json.data !== undefined ? json.data : (json as unknown as T);
     } catch (error) {
       if (error instanceof Error) {
         throw error;

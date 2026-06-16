@@ -103,7 +103,10 @@ export function isDatabaseEmpty(): boolean {
 }
 
 export function initDatabase(seed: boolean = true): void {
+  const database = getDatabase()
+  database.pragma('foreign_keys = OFF')
   runMigrations()
+  database.pragma('foreign_keys = ON')
 
   if (seed && isDatabaseEmpty()) {
     console.log('Seeding database with mock data...')
