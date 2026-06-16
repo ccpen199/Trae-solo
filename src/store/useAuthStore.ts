@@ -29,7 +29,20 @@ interface AuthState {
   clearLoginError: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+const parseLoginError = (error: any): LoginErrorCode => {
+  const errCode = error?.error || error?.data?.error;
+  const errMsg = error?.message || '';
+
+  if (errCode === 'PASSWORD_ERROR' || errMsg.includes('密码')) return 'PASSWORD_ERROR';
+  if (errCode === 'ACCOUNT_NOT_FOUND' || errMsg.includes('账号不存在') || errMsg.includes('不存在')) return 'ACCOUNT_NOT_FOUND';
+  if (errCode === 'VERIFY_CODE_ERROR' || errMsg.includes('验证码')) return 'VERIFY_CODE_ERROR';
+  if (errCode === 'FACE_VERIFY_FAILED' || errMsg.includes('人脸')) return 'FACE_VERIFY_FAILED';
+  if (errCode === 'INSUFFICIENT_PERMISSIONS' || errMsg.includes('权限')) return 'INSUFFICIENT_PERMISSIONS';
+  if (errMsg.includes('Failed to fetch') || errMsg.includes('Network') || error?.code === 'NETWORK_ERROR') return 'NETWORK_ERROR';
+  return 'UNKNOWN_ERROR';
+};
+
+export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   token: null,
   isAuthenticated: false,
@@ -55,16 +68,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ isLoading: false, loginError: 'UNKNOWN_ERROR' });
       return { success: false, code: 'UNKNOWN_ERROR' };
     } catch (error: any) {
-      let errorCode: LoginErrorCode = 'UNKNOWN_ERROR';
-      if (error?.error === 'PASSWORD_ERROR' || error?.message?.includes('密码')) {
-        errorCode = 'PASSWORD_ERROR';
-      } else if (error?.error === 'ACCOUNT_NOT_FOUND' || error?.message?.includes('账号不存在') || error?.message?.includes('不存在')) {
-        errorCode = 'ACCOUNT_NOT_FOUND';
-      } else if (error?.error === 'INSUFFICIENT_PERMISSIONS' || error?.message?.includes('权限')) {
-        errorCode = 'INSUFFICIENT_PERMISSIONS';
-      } else if (error?.code === 'NETWORK_ERROR' || error?.message?.includes('Failed to fetch') || error?.message?.includes('Network')) {
-        errorCode = 'NETWORK_ERROR';
-      }
+      const errorCode = parseLoginError(error);
       set({ isLoading: false, loginError: errorCode });
       return { success: false, code: errorCode };
     }
@@ -88,14 +92,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ isLoading: false, loginError: 'UNKNOWN_ERROR' });
       return { success: false, code: 'UNKNOWN_ERROR' };
     } catch (error: any) {
-      let errorCode: LoginErrorCode = 'UNKNOWN_ERROR';
-      if (error?.error === 'VERIFY_CODE_ERROR' || error?.message?.includes('验证码')) {
-        errorCode = 'VERIFY_CODE_ERROR';
-      } else if (error?.error === 'ACCOUNT_NOT_FOUND' || error?.message?.includes('账号不存在')) {
-        errorCode = 'ACCOUNT_NOT_FOUND';
-      } else if (error?.code === 'NETWORK_ERROR') {
-        errorCode = 'NETWORK_ERROR';
-      }
+      const errorCode = parseLoginError(error);
       set({ isLoading: false, loginError: errorCode });
       return { success: false, code: errorCode };
     }
@@ -119,12 +116,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ isLoading: false, loginError: 'FACE_VERIFY_FAILED' });
       return { success: false, code: 'FACE_VERIFY_FAILED' };
     } catch (error: any) {
-      let errorCode: LoginErrorCode = 'FACE_VERIFY_FAILED';
-      if (error?.error === 'ACCOUNT_NOT_FOUND') {
-        errorCode = 'ACCOUNT_NOT_FOUND';
-      } else if (error?.code === 'NETWORK_ERROR') {
-        errorCode = 'NETWORK_ERROR';
-      }
+      const errorCode = parseLoginError(error);
       set({ isLoading: false, loginError: errorCode });
       return { success: false, code: errorCode };
     }
@@ -149,8 +141,12 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   checkAuth: async () => {
+    const state = get();
+    if (state.isAuthenticated && state.token && state.user) {
+      return true;
+    }
     const token = localStorage.getItem('token');
-    if (token && token !== 'demo-session') {
+    if (token) {
       try {
         const user = await api.auth.getCurrentUser() as UserIdentity;
         if (user) {
@@ -158,10 +154,9 @@ export const useAuthStore = create<AuthState>((set) => ({
           return true;
         }
       } catch {
-        // token 无效，清除
+        localStorage.removeItem('token');
       }
     }
-    localStorage.removeItem('token');
     set({ user: null, token: null, isAuthenticated: false });
     return false;
   },

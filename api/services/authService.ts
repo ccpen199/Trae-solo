@@ -95,7 +95,8 @@ export class AuthService {
     const confidence = 85 + Math.random() * 15;
 
     if (confidence > 92) {
-      const user = mockUsers.find(u => u.faceVerified) || mockUsers[0];
+      const faceVerifiedUsers = mockUsers.filter(u => u.faceVerified);
+      const user = faceVerifiedUsers[Math.floor(Math.random() * faceVerifiedUsers.length)];
       const token = this.generateToken(user);
       return { token, user };
     }

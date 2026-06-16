@@ -8,19 +8,26 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children, requireAdmin = false }: ProtectedRouteProps) {
-  const { isAuthenticated, user, checkAuth, isLoading } = useAuthStore();
+  const { isAuthenticated, user, checkAuth, token } = useAuthStore();
   const location = useLocation();
-  const [checking, setChecking] = useState(true);
+  const [checking, setChecking] = useState(!isAuthenticated);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
+    if (isAuthenticated && token) {
+      setChecking(false);
+      setChecked(true);
+      return;
+    }
     const init = async () => {
-      await checkAuth();
+      const valid = await checkAuth();
+      setChecked(true);
       setChecking(false);
     };
     init();
-  }, [checkAuth]);
+  }, [isAuthenticated, token, checkAuth]);
 
-  if (checking || isLoading) {
+  if (checking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-white">
         <div className="text-center">
@@ -35,7 +42,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (requireAdmin && user?.role !== 'admin') {
+  if (requireAdmin && user?.role !== 'admin' && user?.role !== 'clerk') {
     return <Navigate to="/" replace />;
   }
 

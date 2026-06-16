@@ -90,6 +90,14 @@ const demoAccounts: Array<{
     desc: '城市体征监测、服务编排引擎、工单分拨调度、政策AI解读、数据大屏',
     color: 'warm'
   },
+  { 
+    phone: '13800138002', 
+    password: '123456', 
+    role: 'clerk', 
+    roleLabel: '办事员端',
+    desc: '12345工单接收处置、诉求分拨处理、服务事项办理、政策解读推送',
+    color: 'primary'
+  },
 ];
 
 const NON_DIGIT_REGEX = new RegExp('[^0-9]', 'g');
@@ -97,7 +105,7 @@ const NON_DIGIT_REGEX = new RegExp('[^0-9]', 'g');
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, loginBySms, loginByFace, sendSmsCode, isLoading, isAuthenticated, user, loginError, clearLoginError, checkAuth } = useAuthStore();
+  const { login, loginBySms, loginByFace, sendSmsCode, isLoading, isAuthenticated, user, loginError, clearLoginError } = useAuthStore();
 
   const [phone, setPhone] = useState('13800138001');
   const [password, setPassword] = useState('123456');
@@ -109,48 +117,49 @@ export default function Login() {
   const [showDemoAccounts, setShowDemoAccounts] = useState(true);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginAuditInfo, setLoginAuditInfo] = useState<{
-  label: string;
-  status: string;
-  role?: string;
-} | null>(null);
+    label: string;
+    status: string;
+    role?: string;
+    detail?: string;
+  } | null>(null);
   const [detectedRole, setDetectedRole] = useState<string | null>(null);
+  const [verifySteps, setVerifySteps] = useState<{
+    accountValid: 'pending' | 'pass' | 'fail';
+    credentialValid: 'pending' | 'pass' | 'fail';
+    roleMatched: 'pending' | 'pass' | 'fail';
+  }>({ accountValid: 'pending', credentialValid: 'pending', roleMatched: 'pending' });
 
   const from = (location.state as any)?.from?.pathname || null;
 
   const navigateByRole = useCallback((role: string) => {
-    if (from) {
-      navigate(from, { replace: true });
-    } else if (role === 'admin') {
-      navigate('/admin-workbench', { replace: true });
-    } else if (role === 'clerk') {
-      navigate('/ticket-dispatch', { replace: true });
-    } else {
-      navigate('/', { replace: true });
-    }
+    const target = from
+      ? from
+      : role === 'admin'
+        ? '/admin-workbench'
+        : role === 'clerk'
+          ? '/ticket-dispatch'
+          : '/';
+    navigate(target, { replace: true });
   }, [from, navigate]);
 
   useEffect(() => {
-    if (isAuthenticated && user) {
-      setLoginSuccess(true);
-      setLoginAuditInfo({
-        label: '身份核验结果',
-        status: '通过',
-        role: user.role === 'admin' ? '管理端权限' : user.role === 'clerk' ? '办事员权限' : '市民端权限',
-      });
+    if (isAuthenticated && user && loginSuccess) {
       const timer = setTimeout(() => {
         navigateByRole(user.role);
-      }, 1200);
+      }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [isAuthenticated, user, navigateByRole]);
+  }, [isAuthenticated, user, loginSuccess, navigateByRole]);
 
   useEffect(() => {
     if (loginError && loginError !== 'SUCCESS') {
-      setLoginAuditInfo({
-        label: '身份核验结果',
+      const errMsg = errorMessages[loginError];
+      setLoginAuditInfo(prev => ({
+        ...prev,
+        label: prev?.label || '身份核验',
         status: '未通过',
-        role: errorMessages[loginError]?.statusCode,
-      });
+        detail: errMsg?.message || '未知错误',
+      }));
     }
   }, [loginError]);
 
@@ -209,43 +218,91 @@ export default function Login() {
   const handleFaceLogin = async () => {
     setFaceScanning(true);
     clearLoginError();
-    setLoginAuditInfo({ label: '身份核验中', status: '处理中', role: '正在采集面部特征...' });
+    setVerifySteps({ accountValid: 'pending', credentialValid: 'pending', roleMatched: 'pending' });
+    setLoginAuditInfo({ label: '身份核验中', status: '处理中', detail: '正在采集面部特征...' });
 
     try {
       const result = await loginByFace('mock_face_image_base64');
-      if (!result.success) {
+      if (result.success && result.user) {
+        setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
+        const roleName = result.user.role === 'admin' ? '管理员' : result.user.role === 'clerk' ? '办事员' : '市民';
+        setLoginAuditInfo({
+          label: '人脸核验通过',
+          status: '通过',
+          role: `${roleName}（${result.user.name}）`,
+          detail: `面部特征匹配成功，正在跳转至${roleName}工作台...`,
+        });
+        setLoginSuccess(true);
+      } else {
         setFaceScanning(false);
+        setVerifySteps({ accountValid: 'pass', credentialValid: 'fail', roleMatched: 'pending' });
+        setLoginAuditInfo({ label: '人脸核验', status: '未通过', detail: '面部特征匹配度不足，请调整光线和角度后重试' });
       }
     } catch (e: any) {
       setFaceScanning(false);
-      setLoginAuditInfo({ label: '人脸核验异常', status: '失败', role: e?.message });
+      setVerifySteps({ accountValid: 'fail', credentialValid: 'fail', roleMatched: 'pending' });
+      setLoginAuditInfo({ label: '人脸核验异常', status: '未通过', detail: e?.message || '识别服务异常' });
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearLoginError();
-    setLoginAuditInfo({ label: '身份核验中', status: '处理中' });
+    setVerifySteps({ accountValid: 'pending', credentialValid: 'pending', roleMatched: 'pending' });
+    setLoginAuditInfo({ label: '账号校验中', status: '处理中', detail: '正在检测账号状态...' });
 
     if (!phone || phone.length !== 11) {
-      setLoginAuditInfo({ label: '手机号校验', status: '失败', role: '请输入11位手机号' });
+      setVerifySteps({ accountValid: 'fail', credentialValid: 'pending', roleMatched: 'pending' });
+      setLoginAuditInfo({ label: '手机号校验', status: '未通过', detail: '请输入11位手机号' });
       return;
     }
 
     if (loginType === 'password' && !password) {
-      setLoginAuditInfo({ label: '密码校验', status: '失败', role: '请输入密码' });
+      setVerifySteps({ accountValid: 'pending', credentialValid: 'fail', roleMatched: 'pending' });
+      setLoginAuditInfo({ label: '密码校验', status: '未通过', detail: '请输入密码' });
       return;
     }
 
     if (loginType === 'sms' && !smsCode) {
-      setLoginAuditInfo({ label: '验证码校验', status: '失败', role: '请输入验证码' });
+      setVerifySteps({ accountValid: 'pending', credentialValid: 'fail', roleMatched: 'pending' });
+      setLoginAuditInfo({ label: '验证码校验', status: '未通过', detail: '请输入验证码' });
       return;
     }
 
+    setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pending' });
+    setLoginAuditInfo({ label: '身份核验中', status: '处理中', detail: '正在验证凭据并识别角色...' });
+
+    let result: { success: boolean; code: LoginErrorCode; user?: any };
     if (loginType === 'password') {
-      await login(phone, password);
+      result = await login(phone, password);
     } else if (loginType === 'sms') {
-      await loginBySms(phone, smsCode);
+      result = await loginBySms(phone, smsCode);
+    } else {
+      return;
+    }
+
+    if (result.success && result.user) {
+      setVerifySteps({ accountValid: 'pass', credentialValid: 'pass', roleMatched: 'pass' });
+      const roleName = result.user.role === 'admin' ? '管理员' : result.user.role === 'clerk' ? '办事员' : '市民';
+      setLoginAuditInfo({
+        label: '身份核验通过',
+        status: '通过',
+        role: `${roleName}（${result.user.name}）`,
+        detail: `账号有效 · 凭据校验通过 · 角色权限已匹配，正在跳转至${roleName}工作台...`,
+      });
+      setLoginSuccess(true);
+    } else {
+      const errorCode = result.code;
+      if (errorCode === 'ACCOUNT_NOT_FOUND') {
+        setVerifySteps({ accountValid: 'fail', credentialValid: 'pending', roleMatched: 'pending' });
+        setLoginAuditInfo({ label: '账号校验', status: '未通过', detail: '该手机号未注册，账号不存在' });
+      } else if (errorCode === 'PASSWORD_ERROR' || errorCode === 'VERIFY_CODE_ERROR' || errorCode === 'FACE_VERIFY_FAILED') {
+        setVerifySteps({ accountValid: 'pass', credentialValid: 'fail', roleMatched: 'pending' });
+        setLoginAuditInfo({ label: '凭据校验', status: '未通过', detail: '账号有效，但凭据校验未通过' });
+      } else {
+        setVerifySteps({ accountValid: 'fail', credentialValid: 'fail', roleMatched: 'pending' });
+        setLoginAuditInfo({ label: '身份核验', status: '未通过', detail: '认证服务异常，请稍后重试' });
+      }
     }
   };
 
@@ -329,7 +386,9 @@ export default function Login() {
                   key={i}
                   className={cn(
                     'p-4 rounded-2xl backdrop-blur border transition-all',
-                    acc.color === 'eco' ? 'bg-eco-400/20 border-eco-300/30' : 'bg-warm-400/20 border-warm-300/30'
+                    acc.color === 'eco' ? 'bg-eco-400/20 border-eco-300/30' : 
+                    acc.color === 'primary' ? 'bg-primary-400/20 border-primary-300/30' :
+                    'bg-warm-400/20 border-warm-300/30'
                   )}
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -398,7 +457,8 @@ export default function Login() {
                     <div className={cn(
                       'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
                       acc.color === 'eco' && 'bg-eco-100 text-eco-600',
-                      acc.color === 'warm' && 'bg-warm-100 text-warm-600'
+                      acc.color === 'warm' && 'bg-warm-100 text-warm-600',
+                      acc.color === 'primary' && 'bg-primary-100 text-primary-600'
                     )}>
                       {acc.role === 'citizen' ? <UserCog className="w-5 h-5" /> : <LogIn className="w-5 h-5" />}
                     </div>
@@ -412,9 +472,6 @@ export default function Login() {
                     <ArrowRight className="w-4 h-4 text-gray-300" />
                   </button>
                 ))}
-                <p className="sr-only">
-                  自动化登录别名：citizen13800138001 / 123456；admin13900139000 / admin123
-                </p>
               </div>
             )}
 
@@ -485,9 +542,11 @@ export default function Login() {
                         'text-xs px-2 py-0.5 rounded-full font-medium',
                         detectedRole === 'admin' 
                           ? 'bg-warm-100 text-warm-600' 
-                          : 'bg-eco-100 text-eco-600'
+                          : detectedRole === 'clerk'
+                            ? 'bg-primary-100 text-primary-600'
+                            : 'bg-eco-100 text-eco-600'
                       )}>
-                        已识别：{detectedRole === 'admin' ? '管理员' : '市民'}
+                        已识别：{detectedRole === 'admin' ? '管理员' : detectedRole === 'clerk' ? '办事员' : '市民'}
                       </span>
                     )}
                   </div>
@@ -570,59 +629,104 @@ export default function Login() {
 
                 {loginAuditInfo && (
                   <div className={cn(
-                    'p-3 rounded-xl flex items-start gap-2.5',
+                    'p-3 rounded-xl',
                     loginAuditInfo.status === '通过' ? 'bg-eco-50 border border-eco-100' :
                     loginAuditInfo.status === '处理中' ? 'bg-primary-50 border border-primary-100' :
                     'bg-warm-50 border border-warm-100'
                   )}>
-                    {loginAuditInfo.status === '通过' ? (
-                      <CheckCircle className={cn('w-5 h-5 mt-0.5 flex-shrink-0', 'text-eco-500')} />
-                    ) : loginAuditInfo.status === '处理中' ? (
-                      <div className="w-5 h-5 mt-0.5 flex-shrink-0 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-                    ) : (
-                      <AlertCircle className={cn('w-5 h-5 mt-0.5 flex-shrink-0', 'text-warm-500')} />
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-800">{loginAuditInfo.label}</span>
-                        <span className={cn(
-                          'text-xs px-1.5 py-0.5 rounded font-medium',
-                          loginAuditInfo.status === '通过' ? 'bg-eco-100 text-eco-700' :
-                          loginAuditInfo.status === '处理中' ? 'bg-primary-100 text-primary-700' :
-                          'bg-warm-100 text-warm-700'
-                        )}>
-                          {loginAuditInfo.status}
-                        </span>
-                      </div>
-                      {loginAuditInfo.role && (
-                        <p className={cn(
-                          'text-xs mt-1',
-                          loginAuditInfo.status === '通过' ? 'text-eco-600' :
-                          loginAuditInfo.status === '处理中' ? 'text-primary-600' :
-                          'text-warm-600'
-                        )}>
-                          {loginAuditInfo.role}
-                        </p>
+                    <div className="flex items-start gap-2.5">
+                      {loginAuditInfo.status === '通过' ? (
+                        <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0 text-eco-500" />
+                      ) : loginAuditInfo.status === '处理中' ? (
+                        <div className="w-5 h-5 mt-0.5 flex-shrink-0 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+                      ) : (
+                        <AlertCircle className="w-5 h-5 mt-0.5 flex-shrink-0 text-warm-500" />
                       )}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium text-gray-800">{loginAuditInfo.label}</span>
+                          <span className={cn(
+                            'text-xs px-1.5 py-0.5 rounded font-medium',
+                            loginAuditInfo.status === '通过' ? 'bg-eco-100 text-eco-700' :
+                            loginAuditInfo.status === '处理中' ? 'bg-primary-100 text-primary-700' :
+                            'bg-warm-100 text-warm-700'
+                          )}>
+                            {loginAuditInfo.status}
+                          </span>
+                          {loginAuditInfo.role && (
+                            <span className={cn(
+                              'text-xs px-1.5 py-0.5 rounded font-medium',
+                              loginAuditInfo.status === '通过' ? 'bg-eco-100 text-eco-700' : 'bg-gray-100 text-gray-600'
+                            )}>
+                              {loginAuditInfo.role}
+                            </span>
+                          )}
+                        </div>
+                        {loginAuditInfo.detail && (
+                          <p className={cn(
+                            'text-xs mt-1',
+                            loginAuditInfo.status === '通过' ? 'text-eco-600' :
+                            loginAuditInfo.status === '处理中' ? 'text-primary-600' :
+                            'text-warm-600'
+                          )}>
+                            {loginAuditInfo.detail}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="mt-2 pt-2 border-t border-gray-200/50">
+                      <p className="text-xs font-medium text-gray-500 mb-1.5">身份核验进度</p>
+                      <div className="space-y-1">
+                        {[
+                          { key: 'accountValid' as const, label: '账号有效性', passLabel: '账号有效' },
+                          { key: 'credentialValid' as const, label: loginType === 'password' ? '密码校验' : loginType === 'sms' ? '验证码校验' : '人脸核验', passLabel: '凭据通过' },
+                          { key: 'roleMatched' as const, label: '角色权限识别', passLabel: '角色已匹配' },
+                        ].map(step => {
+                          const status = verifySteps[step.key];
+                          return (
+                            <div key={step.key} className="flex items-center gap-2">
+                              <div className={cn(
+                                'w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0',
+                                status === 'pass' && 'bg-eco-100',
+                                status === 'fail' && 'bg-red-100',
+                                status === 'pending' && 'bg-gray-100'
+                              )}>
+                                {status === 'pass' && <Check className="w-2.5 h-2.5 text-eco-500" />}
+                                {status === 'fail' && <AlertCircle className="w-2.5 h-2.5 text-red-500" />}
+                                {status === 'pending' && <span className="w-2 h-2 rounded-full bg-gray-300"></span>}
+                              </div>
+                              <span className={cn(
+                                'text-xs',
+                                status === 'pass' && 'text-eco-700 font-medium',
+                                status === 'fail' && 'text-red-600',
+                                status === 'pending' && 'text-gray-400'
+                              )}>
+                                {status === 'pass' ? step.passLabel : status === 'fail' ? `${step.label}未通过` : step.label}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 )}
 
-                {errorDisplay && loginAuditInfo && loginAuditInfo.status !== '处理中' && (
+                {errorDisplay && loginAuditInfo && loginAuditInfo.status === '未通过' && (
                   <div className={cn(
-                    'rounded-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300',
+                    'rounded-xl overflow-hidden',
                     errorDisplay.type === 'error' && 'border border-red-100',
                     errorDisplay.type === 'warning' && 'border border-warm-100',
                     errorDisplay.type === 'info' && 'border border-eco-100'
                   )}>
                     <div className={cn(
-                      'p-4 flex items-start gap-3',
+                      'p-3 flex items-start gap-3',
                       errorDisplay.type === 'error' && 'bg-red-50',
                       errorDisplay.type === 'warning' && 'bg-warm-50',
                       errorDisplay.type === 'info' && 'bg-eco-50'
                     )}>
                       <errorDisplay.Icon className={cn(
-                        'w-5 h-5 flex-shrink-0 mt-0.5',
+                        'w-4 h-4 flex-shrink-0 mt-0.5',
                         errorDisplay.type === 'error' && 'text-red-500',
                         errorDisplay.type === 'warning' && 'text-warm-500',
                         errorDisplay.type === 'info' && 'text-eco-500'
@@ -630,7 +734,7 @@ export default function Login() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <p className={cn(
-                            'text-sm font-semibold',
+                            'text-xs font-semibold',
                             errorDisplay.type === 'error' && 'text-red-800',
                             errorDisplay.type === 'warning' && 'text-warm-800',
                             errorDisplay.type === 'info' && 'text-eco-800'
@@ -638,13 +742,13 @@ export default function Login() {
                             {errorDisplay.title}
                           </p>
                           {errorDisplay.statusCode && (
-                            <span className="text-xs font-mono bg-white/60 px-1.5 py-0.5 rounded text-gray-500">
+                            <span className="text-[10px] font-mono bg-white/60 px-1 py-0.5 rounded text-gray-500">
                               #{errorDisplay.statusCode}
                             </span>
                           )}
                         </div>
                         <p className={cn(
-                          'text-sm mt-1',
+                          'text-xs mt-0.5',
                           errorDisplay.type === 'error' && 'text-red-600',
                           errorDisplay.type === 'warning' && 'text-warm-600',
                           errorDisplay.type === 'info' && 'text-eco-600'
@@ -653,66 +757,11 @@ export default function Login() {
                         </p>
                       </div>
                     </div>
-                    
                     {errorDisplay.suggestion && (
-                      <div className="px-4 py-3 bg-white border-t border-gray-100">
-                        <div className="flex items-start gap-2">
-                          <Info className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-xs font-medium text-gray-600">温馨提示</p>
-                            <p className="text-xs text-gray-500 mt-0.5">{errorDisplay.suggestion}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {loginError && loginError !== 'SUCCESS' && (
-                      <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
-                        <p className="text-xs font-medium text-gray-600 mb-2">身份核验进度</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2">
-                            <div className={cn(
-                              'w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0',
-                              ['ACCOUNT_NOT_FOUND'].includes(loginError) 
-                                ? 'bg-red-100' 
-                                : 'bg-eco-100'
-                            )}>
-                              {['ACCOUNT_NOT_FOUND'].includes(loginError) 
-                                ? <AlertCircle className="w-2.5 h-2.5 text-red-500" />
-                                : <Check className="w-2.5 h-2.5 text-eco-500" />
-                              }
-                            </div>
-                            <span className="text-xs text-gray-600">账号状态检测</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className={cn(
-                              'w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0',
-                              ['PASSWORD_ERROR', 'VERIFY_CODE_ERROR', 'FACE_VERIFY_FAILED'].includes(loginError)
-                                ? 'bg-red-100'
-                                : loginError === 'ACCOUNT_NOT_FOUND'
-                                  ? 'bg-gray-100'
-                                  : 'bg-eco-100'
-                            )}>
-                              {['PASSWORD_ERROR', 'VERIFY_CODE_ERROR', 'FACE_VERIFY_FAILED'].includes(loginError)
-                                ? <AlertCircle className="w-2.5 h-2.5 text-red-500" />
-                                : loginError === 'ACCOUNT_NOT_FOUND'
-                                  ? <span className="w-2 h-2 rounded-full bg-gray-300"></span>
-                                  : <Check className="w-2.5 h-2.5 text-eco-500" />
-                              }
-                            </div>
-                            <span className={cn(
-                              'text-xs',
-                              loginError === 'ACCOUNT_NOT_FOUND' ? 'text-gray-400' : 'text-gray-600'
-                            )}>
-                              {loginType === 'password' ? '密码校验' : loginType === 'sms' ? '验证码校验' : '人脸核验'}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                              <span className="w-2 h-2 rounded-full bg-gray-300"></span>
-                            </div>
-                            <span className="text-xs text-gray-400">权限角色识别</span>
-                          </div>
+                      <div className="px-3 py-2 bg-white border-t border-gray-100">
+                        <div className="flex items-start gap-1.5">
+                          <Info className="w-3 h-3 text-gray-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-[11px] text-gray-500">{errorDisplay.suggestion}</p>
                         </div>
                       </div>
                     )}
@@ -798,7 +847,7 @@ export default function Login() {
               <p className="text-gray-600 text-center leading-relaxed">
                 <strong>市民端：</strong>13800138001 / 123456<br />
                 <strong>管理端：</strong>13900139000 / admin123<br />
-                <span>自动化别名：citizen13800138001 / 123456；admin13900139000 / admin123</span>
+                <strong>办事员：</strong>13800138002 / 123456
               </p>
             </div>
           </div>

@@ -59,7 +59,7 @@ export const mockUsers: UserIdentity[] = [
     email: 'lisi@example.com',
     realNameVerified: true,
     faceVerified: true,
-    role: 'citizen',
+    role: 'clerk',
   },
   {
     id: 'admin-001',
