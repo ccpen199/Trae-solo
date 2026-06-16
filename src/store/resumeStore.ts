@@ -28,7 +28,7 @@ interface ResumeStore {
   loadSettings: () => Promise<void>;
   updateSettings: (settings: Partial<AppSettings>) => Promise<void>;
   createNewResume: (templateId: string, category: TemplateCategory, modules: ResumeModule[], theme: ResumeTheme) => void;
-  createAndSaveResume: (templateId: string, category: TemplateCategory, modules: ResumeModule[], theme: ResumeTheme) => Promise<Resume | null>;
+  createAndSaveResume: (templateId: string, category: TemplateCategory | 'blank', modules: ResumeModule[], theme: ResumeTheme) => Promise<Resume | null>;
   setAtsPassed: (resumeId: string, passed: boolean) => void;
   setLastDiagnosis: (resumeId: string, result: any) => void;
   setLastAtsCheck: (resumeId: string, result: any) => void;
@@ -216,28 +216,49 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
   loadAllResumes: async () => {
     set({ loading: true });
     try {
-      const data = await getResumes();
-      const resumes = await Promise.all(
-        data.map(async (item) => {
+      let data: Resume[] = [];
+      try {
+        data = await getResumes();
+      } catch (dbErr) {
+        console.error('Failed to load resumes from IndexedDB:', dbErr);
+      }
+      
+      const resumes: Resume[] = [];
+      for (const item of data) {
+        try {
           if ((item as any)._encrypted) {
             try {
-              return await decrypt<Resume>((item as any)._encrypted);
-            } catch {
-              return item as Resume;
+              const decrypted = await decrypt<Resume>((item as any)._encrypted);
+              resumes.push(decrypted);
+            } catch (decErr) {
+              console.warn('Failed to decrypt resume, using raw data');
+              resumes.push(item as Resume);
             }
+          } else {
+            resumes.push(item as Resume);
           }
-          return item as Resume;
-        })
-      );
+        } catch (e) {
+          console.warn('Skipping corrupted resume entry:', e);
+        }
+      }
+      
       const sortedResumes = resumes.sort((a, b) => b.updatedAt - a.updatedAt);
       
       const diagnosisResults: Record<string, any> = {};
       const atsResults: Record<string, any> = {};
       for (const r of sortedResumes) {
-        const diag = await getSetting(`diagnosis_${r.id}`);
-        if (diag) diagnosisResults[r.id] = diag;
-        const ats = await getSetting(`atscheck_${r.id}`);
-        if (ats) atsResults[r.id] = ats;
+        try {
+          const diag = await getSetting(`diagnosis_${r.id}`);
+          if (diag) diagnosisResults[r.id] = diag;
+        } catch (e) {
+          console.warn('Failed to load diagnosis result for', r.id);
+        }
+        try {
+          const ats = await getSetting(`atscheck_${r.id}`);
+          if (ats) atsResults[r.id] = ats;
+        } catch (e) {
+          console.warn('Failed to load ATS result for', r.id);
+        }
       }
       
       set({ 
@@ -245,6 +266,8 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
         lastDiagnosis: diagnosisResults,
         lastAtsCheck: atsResults,
       });
+    } catch (e) {
+      console.error('Failed to load all resumes:', e);
     } finally {
       set({ loading: false });
     }

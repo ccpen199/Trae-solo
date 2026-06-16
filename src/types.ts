@@ -1,4 +1,4 @@
-export type TemplateCategory = 'tech' | 'design' | 'function';
+export type TemplateCategory = 'tech' | 'design' | 'function' | 'sample';
 export type TemplateCategoryWithBlank = TemplateCategory | 'blank';
 export type ModuleType = 'basic' | 'education' | 'experience' | 'project' | 'skills' | 'selfEvaluation' | 'custom';
 

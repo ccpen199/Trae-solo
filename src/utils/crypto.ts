@@ -1,6 +1,6 @@
 const FIXED_PASSWORD = 'resume-workbench-default-secret-key';
 const PBKDF2_SALT = new TextEncoder().encode('resume-workbench-salt');
-const PBKDF2_ITERATIONS = 100000;
+const PBKDF2_ITERATIONS = 10000;
 const AES_GCM_TAG_LENGTH = 128;
 const IV_LENGTH = 12;
 

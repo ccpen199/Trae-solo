@@ -29,6 +29,7 @@ const INDUSTRY_KEYWORDS: Record<TemplateCategory, string[]> = {
   tech: ['React', 'Vue', 'Node.js', 'TypeScript', 'JavaScript', 'Python', 'Java', 'MySQL', 'Redis', 'Docker', 'Kubernetes', 'Git', 'Webpack', 'Vite', 'API', '微服务', '算法', '数据结构', 'Linux', 'Nginx'],
   design: ['Figma', 'Sketch', 'UI', 'UX', 'Photoshop', 'Illustrator', '原型设计', '交互设计', '视觉设计', '用户研究', '设计系统', '移动端', '响应式', '动效设计', '图标设计', '品牌设计'],
   function: ['项目管理', '数据分析', 'Excel', 'PPT', 'SQL', 'Python', 'OKR', 'KPI', '流程优化', '跨部门协作', '风险管理', '预算管理', '团队管理', '客户关系', '商务谈判', '市场调研'],
+  sample: ['实习', '项目', '校园', '竞赛', '奖学金', '学生干部', '社会实践', '专业技能', '英语', '四六级', '计算机二级', '培训经历', '证书', '奖项'],
 };
 
 function detectEmptyPhrases(resume: Resume): EmptyPhraseIssue[] {

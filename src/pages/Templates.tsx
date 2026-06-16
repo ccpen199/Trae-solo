@@ -43,6 +43,7 @@ export default function Templates() {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlCategory = searchParams.get('category') as FilterCategory | null;
   const [activeCategory, setActiveCategory] = useState<FilterCategory>(urlCategory || 'all');
+  const [creatingId, setCreatingId] = useState<string | null>(null);
   const navigate = useNavigate();
   const createAndSaveResume = useResumeStore((state) => state.createAndSaveResume);
 
@@ -69,17 +70,27 @@ export default function Templates() {
       : resumeTemplates.filter((t) => t.category === activeCategory || (activeCategory === 'tech' && t.category === 'sample'));
 
   const handleUseTemplate = async (template: ResumeTemplate) => {
-    const category =
-      template.category === 'blank' ? 'tech' : (template.category as TemplateCategory);
-    const resume = await createAndSaveResume(
-      template.id,
-      category,
-      template.modules,
-      template.theme,
-    );
-    if (resume) {
-      await addAuditLog('template.use', { templateId: template.id, templateName: template.name, resumeId: resume.id });
-      navigate(`/editor/${resume.id}`);
+    setCreatingId(template.id);
+    try {
+      const category =
+        template.category === 'blank' ? 'tech' : (template.category as TemplateCategory);
+      const resume = await createAndSaveResume(
+        template.id,
+        category,
+        template.modules,
+        template.theme,
+      );
+      if (resume) {
+        await addAuditLog('template.use', { templateId: template.id, templateName: template.name, resumeId: resume.id });
+        navigate(`/editor/${resume.id}`);
+      } else {
+        alert('创建简历失败，请重试');
+      }
+    } catch (e) {
+      console.error('Failed to create from template:', e);
+      alert('创建失败：' + (e instanceof Error ? e.message : String(e)));
+    } finally {
+      setCreatingId(null);
     }
   };
 
@@ -363,14 +374,20 @@ export default function Templates() {
                     <div className="mt-auto">
                       <button
                         onClick={() => handleUseTemplate(template)}
-                        className="btn-primary w-full inline-flex items-center justify-center gap-2"
+                        disabled={creatingId === template.id}
+                        className="btn-primary w-full inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-wait"
                       >
-                        {template.category === 'blank' ? (
+                        {creatingId === template.id ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            创建中...
+                          </>
+                        ) : template.category === 'blank' ? (
                           <Plus className="w-4 h-4" />
                         ) : (
                           <ChevronRight className="w-4 h-4" />
                         )}
-                        使用此模板
+                        {creatingId !== template.id && '使用此模板'}
                       </button>
                     </div>
                   </div>

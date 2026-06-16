@@ -85,7 +85,7 @@ export default function Home() {
     setShowCreateModal(false)
   }
 
-  const createResumeFromTemplate = async (template: typeof blankTemplate, category: TemplateCategory) => {
+  const createResumeFromTemplate = async (template: typeof blankTemplate, category: TemplateCategory | 'blank') => {
     setCreating(true)
     try {
       const resume = await createAndSaveResume(
@@ -644,7 +644,16 @@ export default function Home() {
       {/* 创建选项弹窗 */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto animate-fade-in relative">
+            {creating && (
+              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center rounded-2xl">
+                <div className="text-center">
+                  <div className="w-12 h-12 border-4 border-navy-200 border-t-navy-600 rounded-full animate-spin mx-auto mb-3" />
+                  <p className="text-sm font-medium text-navy-700">正在创建简历...</p>
+                  <p className="text-xs text-navy-400 mt-1">本地加密存储中，请稍候</p>
+                </div>
+              </div>
+            )}
             <div className="flex items-center justify-between p-6 border-b border-navy-100">
               <div>
                 <h3 className="text-xl font-semibold text-navy-700">创建简历</h3>

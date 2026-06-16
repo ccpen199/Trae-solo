@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Shield, Download, Trash2, Info, CheckCircle2, XCircle, Lock, CloudOff, Database, HardDrive, Clock, List, RotateCcw } from 'lucide-react';
 import { useResumeStore } from '@/store/resumeStore';
 import { getAuditLogs, clearAuditLogs, addAuditLog, type AuditLogEntry } from '../utils/audit';
-import { formatTime } from '../lib/utils';
+import { formatTime, cn } from '../lib/utils';
 
 export default function Settings() {
   const { settings, updateSettings, loadSettings, clearData, resumes, loadAllResumes } = useResumeStore();

@@ -22,20 +22,11 @@ export default function App() {
         <Route path="/editor/:id" element={<Editor />} />
         <Route path="/diagnosis/:id" element={<Diagnosis />} />
         <Route path="/ats-check/:id" element={<AtsCheck />} />
-        <Route
-          path="*"
-          element={
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/templates" element={<Templates />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/settings" element={<Settings />} />
-              </Routes>
-            </Layout>
-          }
-        />
+        <Route path="/" element={<Layout><Home /></Layout>} />
+        <Route path="/templates" element={<Layout><Templates /></Layout>} />
+        <Route path="/profile" element={<Layout><Profile /></Layout>} />
+        <Route path="/admin" element={<Layout><Admin /></Layout>} />
+        <Route path="/settings" element={<Layout><Settings /></Layout>} />
       </Routes>
     </Router>
   );

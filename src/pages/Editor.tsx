@@ -89,8 +89,9 @@ function TagInput({ value, onChange }: { value: string[]; onChange: (v: string[]
   );
 }
 
-function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
+function ModuleEditor({ module, onUpdate, onToggleVisibility, showToast }: {
   module: ResumeModule; onUpdate: (fields: Record<string, any>) => void; onToggleVisibility?: (key: string) => void;
+  showToast?: (message: string, type?: 'success' | 'info' | 'warning') => void;
 }) {
   const f = module.fields;
   const set = (key: string, val: any) => onUpdate({ ...f, [key]: val });
@@ -660,8 +661,29 @@ export default function Editor() {
     }, 1500);
   };
 
-  if (!currentResume && !loading) return (
-    <div className="flex items-center justify-center h-screen text-navy-400">未找到简历数据</div>
+  if (loading && !currentResume) return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="w-16 h-16 border-4 border-navy-200 border-t-navy-600 rounded-full animate-spin mb-4" />
+      <p className="text-base font-medium text-navy-700">正在加载简历...</p>
+      <p className="text-sm text-navy-400 mt-1">本地解密中，请稍候</p>
+    </div>
+  );
+
+  if (!currentResume) return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
+      <div className="w-20 h-20 rounded-full bg-navy-100 flex items-center justify-center mb-6">
+        <FileText className="w-10 h-10 text-navy-400" />
+      </div>
+      <h2 className="text-xl font-semibold text-navy-700 mb-2">未找到简历数据</h2>
+      <p className="text-sm text-navy-400 mb-6 text-center max-w-sm">
+        该简历可能已被删除或数据损坏。请返回工作台重新创建。
+      </p>
+      <div className="flex gap-3">
+        <button onClick={() => navigate('/')} className="btn-primary">
+          返回工作台
+        </button>
+      </div>
+    </div>
   );
 
   const modules = currentResume?.modules || [];
@@ -711,6 +733,11 @@ export default function Editor() {
       )}
       <header className="bg-white border-b border-navy-100 shadow-sm flex-shrink-0">
         <div className="flex items-center gap-2 px-4 py-2">
+          <button onClick={() => navigate('/')} className="btn-ghost text-xs px-2 py-1.5 flex items-center gap-1 mr-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            工作台
+          </button>
+          <div className="h-5 w-px bg-navy-100 mr-1" />
           <h1 className="text-sm font-semibold text-navy-700 mr-1 truncate max-w-[200px]">{currentResume?.title}</h1>
           {templateLabel && (
             <span className={cn(
@@ -817,7 +844,7 @@ export default function Editor() {
               <DragOverlay>
                 {activeDragModule ? (
                   <div className="opacity-60 shadow-lg">
-                    <SortableItem module={activeDragModule} active={false}
+                    <SortableItem module={activeDragModule} active={false} isOver={false}
                       onSelect={() => {}} onToggle={() => {}} onDelete={() => {}} />
                   </div>
                 ) : null}
@@ -940,6 +967,7 @@ export default function Editor() {
                     handleFieldUpdate(activeModuleId, { ...fields, _fieldVisibility: { ...vis, [key]: !(vis[key] ?? true) } });
                   }
                 }}
+                showToast={showToast}
               />
             )}
           </div>

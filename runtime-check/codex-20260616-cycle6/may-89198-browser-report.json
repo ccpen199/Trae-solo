@@ -1,0 +1,1133 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T00:07:46.448Z",
+  "order": "may-89198",
+  "roundIndex": 6,
+  "captureId": "may-89198-codex-cycle6",
+  "url": "http://127.0.0.1:49198/",
+  "initialUrl": "http://127.0.0.1:49198/",
+  "finalUrl": "http://127.0.0.1:49198/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-03-操作-创建简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-05-操作-新建.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49198/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49198/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建简历",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:创建简历:创建简历",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:新建",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建:创建简历",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:模板库",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*模板库\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/templates\" data-discover=\"true\" class=\"nav-link flex it"
+      },
+      {
+        "action": "click",
+        "label": "导航:模板库",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^\\s*模板库\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button trae-inspector-end-line=\"222\" trae-inspector-end-column"
+      },
+      {
+        "action": "click",
+        "label": "导航:模板库",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:模板库",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:个人中心",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*个人中心\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/profile\" data-discover=\"true\" class=\"nav-link flex ite"
+      },
+      {
+        "action": "click",
+        "label": "导航:个人中心",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:个人中心",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:管理后台",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*管理后台\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/admin\" data-discover=\"true\" class=\"nav-link flex items"
+      },
+      {
+        "action": "click",
+        "label": "导航:管理后台",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:管理后台",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-cycle6-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-01-首屏.png",
+          "elementCount": 269,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-cycle6-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-02-导航-工作台.png",
+          "elementCount": 269,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建简历",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板创建简历选择起点和岗位方向选择起点空白创建所有模块为空，完全从零开始应届生样例含完整实习经历与项目样例，直接编辑行业语义模板技术岗突出项目指标与技术栈项目指标技术栈开源贡献设计岗强化作品集链接与设计工具作品集链接设计工具视觉规范职能岗侧重流程优化与项目成果流程优化供应商管理预算控制隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-cycle6-structure-03-操作-创建简历",
+          "label": "操作:创建简历",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-03-操作-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-03-操作-创建简历.png",
+          "elementCount": 348,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板",
+            "空白创建 所有模块为空，完全从零开始",
+            "应届生样例 含完整实习经历与项目样例，直接编辑",
+            "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+            "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+            "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:创建简历->创建简历",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板创建简历选择起点和岗位方向选择起点空白创建所有模块为空，完全从零开始应届生样例含完整实习经历与项目样例，直接编辑行业语义模板技术岗突出项目指标与技术栈项目指标技术栈开源贡献设计岗强化作品集链接与设计工具作品集链接设计工具视觉规范职能岗侧重流程优化与项目成果流程优化供应商管理预算控制隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历",
+          "label": "二层操作:创建简历->创建简历",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历.png",
+          "elementCount": 348,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板",
+            "空白创建 所有模块为空，完全从零开始",
+            "应届生样例 含完整实习经历与项目样例，直接编辑",
+            "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+            "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+            "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板创建简历选择起点和岗位方向选择起点空白创建所有模块为空，完全从零开始应届生样例含完整实习经历与项目样例，直接编辑行业语义模板技术岗突出项目指标与技术栈项目指标技术栈开源贡献设计岗强化作品集链接与设计工具作品集链接设计工具视觉规范职能岗侧重流程优化与项目成果流程优化供应商管理预算控制隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-cycle6-structure-05-操作-新建",
+          "label": "操作:新建",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-05-操作-新建.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-05-操作-新建.png",
+          "elementCount": 348,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板",
+            "空白创建 所有模块为空，完全从零开始",
+            "应届生样例 含完整实习经历与项目样例，直接编辑",
+            "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+            "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+            "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建->创建简历",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板创建简历选择起点和岗位方向选择起点空白创建所有模块为空，完全从零开始应届生样例含完整实习经历与项目样例，直接编辑行业语义模板技术岗突出项目指标与技术栈项目指标技术栈开源贡献设计岗强化作品集链接与设计工具作品集链接设计工具视觉规范职能岗侧重流程优化与项目成果流程优化供应商管理预算控制隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历",
+          "label": "二层操作:新建->创建简历",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历.png",
+          "elementCount": 348,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板",
+            "空白创建 所有模块为空，完全从零开始",
+            "应届生样例 含完整实习经历与项目样例，直接编辑",
+            "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+            "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+            "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "创建简历",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "创建简历->创建简历",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "新建",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "新建->创建简历",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-01-首屏.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-02-导航-工作台.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-03-操作-创建简历",
+        "label": "操作:创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-03-操作-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-03-操作-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历",
+        "label": "二层操作:创建简历->创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-05-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-05-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-05-操作-新建.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历",
+        "label": "二层操作:新建->创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49198/",
+    "representativeScreenshotLabel": "智能简历工作台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 6,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-01-首屏.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-02-导航-工作台.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-03-操作-创建简历",
+        "label": "操作:创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-03-操作-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-03-操作-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历",
+        "label": "二层操作:创建简历->创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-04-二层操作-创建简历-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-05-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-05-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-05-操作-新建.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历",
+        "label": "二层操作:新建->创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616-cycle6/may-89198-codex-cycle6-structure-06-二层操作-新建-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1696,
+    "height": 1600,
+    "scrollWidth": 1664,
+    "scrollHeight": 1746
+  },
+  "initialBodyTextPreview": "智能简历工作台\n\nResume Workbench\n\n工作台\n模板库\n个人中心\n管理后台\n设置\n已加密\n共 0 份简历\n模板库\n设置\n开始创建你的简历\n\n专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储\n\n创建简历\n使用行业模板\nAI智能诊断\n\n深度分析简历内容，提供专业优化建议，提升简历竞争力\n\n立即检测\nATS兼容性检测\n\n智能检测简历与招聘系统的兼容性，提升通过率\n\n立即检测\nWord原生导出\n\n一键导出标准Word格式，排版完美还原，可直接投递\n\n格式保真\nAES加密存储\n\n银行级AES加密，数据仅保存在本地，隐私安全有保障\n\n前往设置\n行业模板\n技术岗\n\n技术岗专用，突出项目指标与技术栈，适合前端开发工程师\n\n项目指标\n技术栈标签\n开源贡献\n使用此模板\n设计岗\n\n设计岗专用，强化作品集链接与设计成果展示\n\n作品集链接\n设计工具\n视觉规范\n使用此模板\n职能岗\n\n职能岗专用，侧重流程优化与管理成果\n\n流程优化\n供应商管理\n预算控制\n使用此模板\n最近简历\n新建\n还没有简历\n\n创建你的第一份简历，开启求职之旅\n\n创建简历\n选择行业模板\n隐私保护模式 · 数据仅存本地 · AES加密存储\n\n© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+  "bodyTextPreview": "智能简历工作台\n\nResume Workbench\n\n工作台\n模板库\n个人中心\n管理后台\n设置\n已加密\n共 0 份简历\n模板库\n设置\n开始创建你的简历\n\n专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储\n\n创建简历\n使用行业模板\nAI智能诊断\n\n深度分析简历内容，提供专业优化建议，提升简历竞争力\n\n立即检测\nATS兼容性检测\n\n智能检测简历与招聘系统的兼容性，提升通过率\n\n立即检测\nWord原生导出\n\n一键导出标准Word格式，排版完美还原，可直接投递\n\n格式保真\nAES加密存储\n\n银行级AES加密，数据仅保存在本地，隐私安全有保障\n\n前往设置\n行业模板\n技术岗\n\n技术岗专用，突出项目指标与技术栈，适合前端开发工程师\n\n项目指标\n技术栈标签\n开源贡献\n使用此模板\n设计岗\n\n设计岗专用，强化作品集链接与设计成果展示\n\n作品集链接\n设计工具\n视觉规范\n使用此模板\n职能岗\n\n职能岗专用，侧重流程优化与管理成果\n\n流程优化\n供应商管理\n预算控制\n使用此模板\n最近简历\n新建\n还没有简历\n\n创建你的第一份简历，开启求职之旅\n\n创建简历\n选择行业模板\n创建简历\n\n选择起点和岗位方向\n\n选择起点\n\n空白创建\n\n所有模块为空，完全从零开始\n\n应届生样例\n\n含完整实习经历与项目样例，直接编辑\n\n行业语义模板\n\n技术岗\n\n突出项目指标与技术栈\n\n项目指标\n技术栈\n开源贡献\n\n设计岗\n\n强化作品集链接与设计工具\n\n作品集链接\n设计工具\n视觉规范\n\n职能岗\n\n侧重流程优化与项目成果\n\n流程优化\n供应商管理\n预算控制\n隐私保护模式 · 数据仅存本地 · AES加密存储\n\n© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/resumes/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/resumes/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49198/api/admin/stats"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
