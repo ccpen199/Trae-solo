@@ -49,6 +49,7 @@ import {
 } from '@ant-design/icons'
 import type { DataNode } from 'antd/es/tree'
 import ReactECharts from 'echarts-for-react'
+import { useUserStore } from '@/store/user'
 
 const { Title, Text } = Typography
 const { Option } = Select
@@ -272,6 +273,17 @@ const Departments: React.FC = () => {
     }
   }
 
+  const { userInfo } = useUserStore()
+  const currentRole = useMemo(() => {
+    const roles = userInfo?.roles || []
+    if (roles.includes('超级管理员')) return 'admin'
+    if (roles.includes('委办局管理员')) return 'dept_admin'
+    if (roles.includes('窗口办事员')) return 'clerk'
+    if (roles.includes('审计员')) return 'auditor'
+    return 'default'
+  }, [userInfo?.roles])
+  const isAdminOrManager = currentRole === 'admin' || currentRole === 'dept_admin'
+
   const handleViewDetail = (dept: Department) => {
     setSelectedDepartment(dept)
     setDrawerVisible(true)
@@ -451,12 +463,19 @@ const Departments: React.FC = () => {
       key: 'action',
       render: (_: unknown, record: Department) => (
         <Space size="small">
-          <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>
-            详情
-          </Button>
-          <Button type="link" size="small" icon={<ToolOutlined />}>
-            配置
-          </Button>
+          {isAdminOrManager && (
+            <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>
+              详情
+            </Button>
+          )}
+          {currentRole === 'admin' && (
+            <Button type="link" size="small" icon={<ToolOutlined />}>
+              配置
+            </Button>
+          )}
+          {!isAdminOrManager && (
+            <Text type="secondary" style={{ fontSize: 12 }}>无操作权限</Text>
+          )}
         </Space>
       )
     }
@@ -1283,7 +1302,6 @@ const Departments: React.FC = () => {
             <Col span={8}>
               <Card size="small" title="业务办理链路">
                 <Timeline
-                  size="small"
                   items={[
                     { color: 'green', children: <div><Text strong>接口调用</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>12,458次/日</Text></div></div> },
                     { color: 'green', children: <div><Text strong>事项办理</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>3,856件/月</Text></div></div> },
@@ -1296,7 +1314,6 @@ const Departments: React.FC = () => {
             <Col span={8}>
               <Card size="small" title="数据共享链路">
                 <Timeline
-                  size="small"
                   items={[
                     { color: 'green', children: <div><Text strong>数据同步</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>568批次/日</Text></div></div> },
                     { color: 'green', children: <div><Text strong>跨部门共享</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>12个部门</Text></div></div> },
@@ -1309,7 +1326,6 @@ const Departments: React.FC = () => {
             <Col span={8}>
               <Card size="small" title="异常处置链路">
                 <Timeline
-                  size="small"
                   items={[
                     { color: 'orange', children: <div><Text strong>异常触发</Text><div><Tag color="orange">告警</Tag><Text type="secondary" style={{ marginLeft: 8 }}>12次/本月</Text></div></div> },
                     { color: 'green', children: <div><Text strong>告警通知</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>≤1分钟</Text></div></div> },
@@ -1427,6 +1443,16 @@ const Departments: React.FC = () => {
         </Col>
       </Row>
 
+      {!isAdminOrManager && (
+        <Alert
+          message="只读视图"
+          description="当前为普通用户权限，仅可查看委办局公开接入信息。详情查看、接口测试、数据同步等操作需管理员权限。"
+          type="info"
+          showIcon
+          style={{ marginBottom: 16 }}
+        />
+      )}
+
       <Row gutter={16}>
         <Col span={5}>
           <Card
@@ -1453,10 +1479,11 @@ const Departments: React.FC = () => {
                 <p style={{ marginBottom: 12 }}>以下3个委办局当前未接入平台，请及时跟进：</p>
 
                 <div style={{ marginBottom: 12 }}>
-                  <Space style={{ marginBottom: 8 }}>
+                  <Space style={{ marginBottom: 8 }} wrap>
                     <Text strong style={{ fontSize: 14 }}>宁夏回族自治区中医药管理局</Text>
                     <Tag color="error">离线</Tag>
                     <Tag color="orange">待复核</Tag>
+                    <Tag color="orange">恢复中</Tag>
                   </Space>
                   <Descriptions column={1} size="small" bordered style={{ marginBottom: 8 }}>
                     <Descriptions.Item label="原因说明">网络连接中断，运营商光缆故障导致专线中断</Descriptions.Item>
@@ -1464,22 +1491,64 @@ const Departments: React.FC = () => {
                     <Descriptions.Item label="责任人">王组长：138****0001</Descriptions.Item>
                   </Descriptions>
                   <Timeline
-                    size="small"
                     items={[
                       { color: 'green', children: <Space><Text>问题发现</Text><Tag color="green" style={{ fontSize: 11 }}>已完成</Tag><Text type="secondary" style={{ fontSize: 11 }}>2026-06-15 08:30</Text></Space> },
                       { color: 'orange', children: <Space><Text>紧急处置</Text><Tag color="orange" style={{ fontSize: 11 }}>处理中</Tag><Text type="secondary" style={{ fontSize: 11 }}>进行中</Text></Space> },
-                      { color: 'blue', children: <Space><Text>系统恢复+复核</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-17 10:00</Text></Space> }
+                      { color: 'blue', children: <Space><Text>系统恢复</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-17 10:00</Text></Space> },
+                      { color: 'blue', children: <Space><Text>复核</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag></Space> },
+                      { color: 'gray', children: <Space><Text>重新纳管</Text><Tag color="default" style={{ fontSize: 11 }}>待启动</Tag></Space> }
                     ]}
                   />
+                  <Row gutter={8} style={{ marginTop: 12, marginBottom: 8 }}>
+                    <Col span={12}>
+                      <Card size="small" title="恢复结果">
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <Tag color="orange" style={{ width: 'fit-content' }}>恢复中</Tag>
+                          <Text type="secondary" style={{ fontSize: 12 }}>运营商已修复光缆，正在进行业务连通性测试</Text>
+                        </Space>
+                      </Card>
+                    </Col>
+                    <Col span={12}>
+                      <Card size="small" title="复核结论">
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <Tag color="blue" style={{ width: 'fit-content' }}>待复核</Tag>
+                          <Text type="secondary" style={{ fontSize: 12 }}>预计恢复后24小时内完成复核</Text>
+                        </Space>
+                      </Card>
+                    </Col>
+                  </Row>
+                  <Card size="small" title="重新纳管业务状态">
+                    <Row gutter={16}>
+                      <Col span={12}>
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <div>
+                            <Text type="secondary" style={{ fontSize: 12 }}>业务接口恢复进度</Text>
+                            <Progress percent={35} size="small" />
+                          </div>
+                          <div>
+                            <Text type="secondary" style={{ fontSize: 12 }}>数据同步状态：</Text>
+                            <Tag color="green">待同步</Tag>
+                          </div>
+                        </Space>
+                      </Col>
+                      <Col span={12}>
+                        <Descriptions column={1} size="small">
+                          <Descriptions.Item label="预计重新纳管时间">2026-06-18 12:00</Descriptions.Item>
+                          <Descriptions.Item label="纳管责任人">王组长 138****0001</Descriptions.Item>
+                        </Descriptions>
+                      </Col>
+                    </Row>
+                  </Card>
                 </div>
 
                 <Divider style={{ margin: '12px 0' }} />
 
                 <div style={{ marginBottom: 12 }}>
-                  <Space style={{ marginBottom: 8 }}>
+                  <Space style={{ marginBottom: 8 }} wrap>
                     <Text strong style={{ fontSize: 14 }}>宁夏回族自治区应急管理厅</Text>
                     <Tag color="error">离线</Tag>
                     <Tag color="blue">复核中</Tag>
+                    <Tag color="red">未恢复</Tag>
                   </Space>
                   <Descriptions column={1} size="small" bordered style={{ marginBottom: 8 }}>
                     <Descriptions.Item label="原因说明">服务器硬件故障，主板损坏正在更换备件</Descriptions.Item>
@@ -1487,22 +1556,64 @@ const Departments: React.FC = () => {
                     <Descriptions.Item label="责任人">李组长：138****0002</Descriptions.Item>
                   </Descriptions>
                   <Timeline
-                    size="small"
                     items={[
                       { color: 'green', children: <Space><Text>问题发现</Text><Tag color="green" style={{ fontSize: 11 }}>已完成</Tag><Text type="secondary" style={{ fontSize: 11 }}>2026-06-14 22:15</Text></Space> },
                       { color: 'orange', children: <Space><Text>紧急处置</Text><Tag color="orange" style={{ fontSize: 11 }}>处理中</Tag><Text type="secondary" style={{ fontSize: 11 }}>备件更换中</Text></Space> },
-                      { color: 'blue', children: <Space><Text>系统恢复+复核</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-18 18:00</Text></Space> }
+                      { color: 'red', children: <Space><Text>系统恢复</Text><Tag color="red" style={{ fontSize: 11 }}>延迟</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-20 18:00</Text></Space> },
+                      { color: 'orange', children: <Space><Text>复核</Text><Tag color="orange" style={{ fontSize: 11 }}>有条件通过</Tag></Space> },
+                      { color: 'gray', children: <Space><Text>重新纳管</Text><Tag color="default" style={{ fontSize: 11 }}>待启动</Tag></Space> }
                     ]}
                   />
+                  <Row gutter={8} style={{ marginTop: 12, marginBottom: 8 }}>
+                    <Col span={12}>
+                      <Card size="small" title="恢复结果">
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <Tag color="red" style={{ width: 'fit-content' }}>未恢复</Tag>
+                          <Text type="secondary" style={{ fontSize: 12 }}>服务器主板备件尚未到货，预计延迟2天</Text>
+                        </Space>
+                      </Card>
+                    </Col>
+                    <Col span={12}>
+                      <Card size="small" title="复核结论">
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <Tag color="orange" style={{ width: 'fit-content' }}>有条件通过</Tag>
+                          <Text type="secondary" style={{ fontSize: 12 }}>允许临时启用备用服务器，正式恢复后需二次复核</Text>
+                        </Space>
+                      </Card>
+                    </Col>
+                  </Row>
+                  <Card size="small" title="重新纳管业务状态">
+                    <Row gutter={16}>
+                      <Col span={12}>
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <div>
+                            <Text type="secondary" style={{ fontSize: 12 }}>业务接口恢复进度</Text>
+                            <Progress percent={0} size="small" status="exception" />
+                          </div>
+                          <div>
+                            <Text type="secondary" style={{ fontSize: 12 }}>数据同步状态：</Text>
+                            <Tag color="green">待同步</Tag>
+                          </div>
+                        </Space>
+                      </Col>
+                      <Col span={12}>
+                        <Descriptions column={1} size="small">
+                          <Descriptions.Item label="预计重新纳管时间">2026-06-22 10:00</Descriptions.Item>
+                          <Descriptions.Item label="纳管责任人">李组长 138****0002</Descriptions.Item>
+                        </Descriptions>
+                      </Col>
+                    </Row>
+                  </Card>
                 </div>
 
                 <Divider style={{ margin: '12px 0' }} />
 
                 <div>
-                  <Space style={{ marginBottom: 8 }}>
+                  <Space style={{ marginBottom: 8 }} wrap>
                     <Text strong style={{ fontSize: 14 }}>宁夏回族自治区农业农村厅</Text>
                     <Tag color="warning">维护中</Tag>
                     <Tag color="orange">待复核</Tag>
+                    <Tag color="orange">恢复中</Tag>
                   </Space>
                   <Descriptions column={1} size="small" bordered style={{ marginBottom: 8 }}>
                     <Descriptions.Item label="原因说明">系统升级维护，V2.3版本数据库结构迁移</Descriptions.Item>
@@ -1510,13 +1621,54 @@ const Departments: React.FC = () => {
                     <Descriptions.Item label="责任人">张组长：138****0003</Descriptions.Item>
                   </Descriptions>
                   <Timeline
-                    size="small"
                     items={[
                       { color: 'green', children: <Space><Text>问题发现</Text><Tag color="green" style={{ fontSize: 11 }}>已完成</Tag><Text type="secondary" style={{ fontSize: 11 }}>2026-06-16 00:00</Text></Space> },
                       { color: 'orange', children: <Space><Text>紧急处置</Text><Tag color="orange" style={{ fontSize: 11 }}>处理中</Tag><Text type="secondary" style={{ fontSize: 11 }}>数据迁移中</Text></Space> },
-                      { color: 'blue', children: <Space><Text>系统恢复+复核</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-16 20:00</Text></Space> }
+                      { color: 'orange', children: <Space><Text>系统恢复</Text><Tag color="orange" style={{ fontSize: 11 }}>恢复中</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-16 20:00</Text></Space> },
+                      { color: 'blue', children: <Space><Text>复核</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag></Space> },
+                      { color: 'orange', children: <Space><Text>重新纳管</Text><Tag color="orange" style={{ fontSize: 11 }}>准备中</Tag></Space> }
                     ]}
                   />
+                  <Row gutter={8} style={{ marginTop: 12, marginBottom: 8 }}>
+                    <Col span={12}>
+                      <Card size="small" title="恢复结果">
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <Tag color="orange" style={{ width: 'fit-content' }}>恢复中</Tag>
+                          <Text type="secondary" style={{ fontSize: 12 }}>数据库结构迁移完成85%，正在进行数据校验</Text>
+                        </Space>
+                      </Card>
+                    </Col>
+                    <Col span={12}>
+                      <Card size="small" title="复核结论">
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <Tag color="blue" style={{ width: 'fit-content' }}>待复核</Tag>
+                          <Text type="secondary" style={{ fontSize: 12 }}>系统升级后需进行功能和安全性双重复核</Text>
+                        </Space>
+                      </Card>
+                    </Col>
+                  </Row>
+                  <Card size="small" title="重新纳管业务状态">
+                    <Row gutter={16}>
+                      <Col span={12}>
+                        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                          <div>
+                            <Text type="secondary" style={{ fontSize: 12 }}>业务接口恢复进度</Text>
+                            <Progress percent={85} size="small" />
+                          </div>
+                          <div>
+                            <Text type="secondary" style={{ fontSize: 12 }}>数据同步状态：</Text>
+                            <Tag color="orange">同步中</Tag>
+                          </div>
+                        </Space>
+                      </Col>
+                      <Col span={12}>
+                        <Descriptions column={1} size="small">
+                          <Descriptions.Item label="预计重新纳管时间">2026-06-17 09:00</Descriptions.Item>
+                          <Descriptions.Item label="纳管责任人">张组长 138****0003</Descriptions.Item>
+                        </Descriptions>
+                      </Col>
+                    </Row>
+                  </Card>
                 </div>
               </div>
             }
@@ -1602,9 +1754,9 @@ const Departments: React.FC = () => {
               {filteredDepartments.map((dept) => (
                 <Col span={8} key={dept.id}>
                   <Card
-                    hoverable
+                    hoverable={isAdminOrManager}
                     size="small"
-                    onClick={() => handleViewDetail(dept)}
+                    onClick={() => isAdminOrManager && handleViewDetail(dept)}
                     styles={{ body: { padding: 16 } }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
@@ -1689,39 +1841,48 @@ const Departments: React.FC = () => {
                         最后同步: {dept.lastSyncTime.split(' ')[1]}
                       </Text>
                       <Space size="small">
-                        <Button
-                          type="text"
-                          size="small"
-                          icon={<EyeOutlined />}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleViewDetail(dept)
-                          }}
-                        >
-                          详情
-                        </Button>
-                        <Button
-                          type="text"
-                          size="small"
-                          icon={<PlayCircleOutlined />}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleTestConnection(dept)
-                          }}
-                        >
-                          测试
-                        </Button>
-                        <Button
-                          type="text"
-                          size="small"
-                          icon={<ReloadOutlined />}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleSyncData(dept)
-                          }}
-                        >
-                          同步
-                        </Button>
+                        {isAdminOrManager && (
+                          <Button
+                            type="text"
+                            size="small"
+                            icon={<EyeOutlined />}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleViewDetail(dept)
+                            }}
+                          >
+                            详情
+                          </Button>
+                        )}
+                        {currentRole === 'admin' && (
+                          <Button
+                            type="text"
+                            size="small"
+                            icon={<PlayCircleOutlined />}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleTestConnection(dept)
+                            }}
+                          >
+                            测试
+                          </Button>
+                        )}
+                        {isAdminOrManager && (
+                          <Button
+                            type="text"
+                            size="small"
+                            icon={<ReloadOutlined />}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleSyncData(dept)
+                            }}
+                          >
+                            同步
+                          </Button>
+                        )}
+                        {!isAdminOrManager && (
+                          <Text type="secondary" style={{ fontSize: 12 }}>只读</Text>
+                        )}
                       </Space>
                     </div>
                   </Card>
@@ -1750,12 +1911,22 @@ const Departments: React.FC = () => {
         open={drawerVisible}
         extra={
           <Space>
-            <Button icon={<ToolOutlined />}>配置</Button>
-            <Button type="primary" icon={<ReloadOutlined />}>同步数据</Button>
+            {currentRole === 'admin' && <Button icon={<ToolOutlined />}>配置</Button>}
+            {isAdminOrManager && <Button type="primary" icon={<ReloadOutlined />}>同步数据</Button>}
+            {!isAdminOrManager && <Tag color="default">只读视图</Tag>}
           </Space>
         }
       >
-        <Tabs defaultActiveKey="base" items={drawerTabs} />
+        {!isAdminOrManager && (
+          <Alert
+            message="您当前为只读权限，仅可查看公开信息"
+            description="接入配置、同步测试、敏感操作等需管理员权限。所有操作均已纳入审计留痕。"
+            type="warning"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+        )}
+        <Tabs defaultActiveKey="base" items={isAdminOrManager ? drawerTabs : drawerTabs.filter(t => t.key !== 'config')} />
       </Drawer>
     </div>
   )
