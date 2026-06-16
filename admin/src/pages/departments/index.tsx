@@ -20,7 +20,8 @@ import {
   Badge,
   message,
   Alert,
-  Timeline
+  Timeline,
+  Progress
 } from 'antd'
 import {
   SearchOutlined,
@@ -648,6 +649,26 @@ const Departments: React.FC = () => {
                     <div>数据同步出现格式异常，正在与数据源单位协调解决</div>
                   </div>
                 )
+              },
+              {
+                color: 'blue',
+                children: (
+                  <div>
+                    <div style={{ fontWeight: 500 }}>恢复验证中 <Tag color="blue">验证中</Tag></div>
+                    <Text type="secondary">2024-01-15 11:00 - 验证人：王主任</Text>
+                    <div>对连接超时恢复结果进行验证，确认服务可用性达标</div>
+                  </div>
+                )
+              },
+              {
+                color: 'green',
+                children: (
+                  <div>
+                    <div style={{ fontWeight: 500 }}>恢复复核完成 <Tag color="green">已通过</Tag></div>
+                    <Text type="secondary">2024-01-15 12:00 - 复核人：张局长</Text>
+                    <div>确认系统升级后所有异常已消除，恢复正式服务</div>
+                  </div>
+                )
               }
             ]}
           />
@@ -691,6 +712,220 @@ const Departments: React.FC = () => {
             size="small"
             pagination={false}
           />
+        </div>
+      )
+    },
+    {
+      key: 'recovery-review',
+      label: '恢复复核',
+      icon: <CheckCircleOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Table
+            columns={[
+              { title: '复核时间', dataIndex: 'reviewTime', key: 'reviewTime', width: 160 },
+              { title: '复核人', dataIndex: 'reviewer', key: 'reviewer' },
+              { title: '原异常描述', dataIndex: 'errorDesc', key: 'errorDesc' },
+              { title: '恢复方案', dataIndex: 'recoveryPlan', key: 'recoveryPlan' },
+              {
+                title: '复核结果',
+                dataIndex: 'result',
+                key: 'result',
+                render: (r: string) => {
+                  const config: Record<string, { color: string; text: string }> = {
+                    confirmed: { color: 'green', text: '确认恢复' },
+                    pending: { color: 'orange', text: '待验证' },
+                    partial: { color: 'blue', text: '部分恢复' },
+                    notRecovered: { color: 'red', text: '未恢复' }
+                  }
+                  const item = config[r] || { color: 'default', text: r }
+                  return <Tag color={item.color}>{item.text}</Tag>
+                }
+              },
+              { title: '恢复确认时间', dataIndex: 'confirmTime', key: 'confirmTime', width: 160 },
+              {
+                title: '操作',
+                key: 'action',
+                render: () => (
+                  <Button type="link" size="small" onClick={() => {}}>
+                    查看步骤
+                  </Button>
+                )
+              }
+            ]}
+            expandable={{
+              expandedRowRender: (record: any) => (
+                <div style={{ padding: '8px 0' }}>
+                  <Descriptions bordered column={1} size="small" title="恢复步骤详情">
+                    <Descriptions.Item label="步骤一">{record.step1}</Descriptions.Item>
+                    <Descriptions.Item label="步骤二">{record.step2}</Descriptions.Item>
+                    <Descriptions.Item label="步骤三">{record.step3}</Descriptions.Item>
+                  </Descriptions>
+                </div>
+              )
+            }}
+            dataSource={[
+              {
+                key: 'rr1',
+                reviewTime: '2024-01-15 10:00',
+                reviewer: '运维组-王工',
+                errorDesc: '连接超时',
+                recoveryPlan: '重启服务并优化连接池配置',
+                result: 'confirmed',
+                confirmTime: '2024-01-15 12:00',
+                step1: '检测服务状态，确认超时原因',
+                step2: '重启服务并调整连接池参数为200',
+                step3: '验证服务可用性，确认响应时间达标'
+              },
+              {
+                key: 'rr2',
+                reviewTime: '2024-01-15 09:00',
+                reviewer: '安全组-刘工',
+                errorDesc: '证书过期',
+                recoveryPlan: '更新SSL证书并重新部署',
+                result: 'pending',
+                confirmTime: '预计2024-01-16 09:00',
+                step1: '申请新证书并完成CA签发',
+                step2: '部署新证书到服务节点',
+                step3: '验证证书链完整性（待执行）'
+              },
+              {
+                key: 'rr3',
+                reviewTime: '2024-01-14 16:00',
+                reviewer: '数据组-陈工',
+                errorDesc: '数据格式异常',
+                recoveryPlan: '修复数据解析模块并补充校验规则',
+                result: 'partial',
+                confirmTime: '2024-01-15 10:30',
+                step1: '定位数据格式异常字段',
+                step2: '修复解析模块并增加容错处理',
+                step3: '部分接口数据格式仍有偏差，继续排查'
+              },
+              {
+                key: 'rr4',
+                reviewTime: '2024-01-14 11:00',
+                reviewer: '权限组-周工',
+                errorDesc: '权限拒绝',
+                recoveryPlan: '重新配置接口访问权限',
+                result: 'notRecovered',
+                confirmTime: '-',
+                step1: '审查当前权限配置',
+                step2: '提交权限变更申请（审批中）',
+                step3: '等待审批通过后重新配置'
+              }
+            ]}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+        </div>
+      )
+    },
+    {
+      key: 'cross-dept-sync',
+      label: '跨部门同步',
+      icon: <BranchesOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Table
+            columns={[
+              { title: '对接部门', dataIndex: 'dept', key: 'dept' },
+              { title: '同步数据类型', dataIndex: 'dataType', key: 'dataType' },
+              { title: '同步方式', dataIndex: 'syncMode', key: 'syncMode', render: (m: string) => <Tag color={m === '实时同步' ? 'blue' : 'default'}>{m}</Tag> },
+              { title: '同步频率', dataIndex: 'frequency', key: 'frequency' },
+              { title: '最近同步时间', dataIndex: 'lastSyncTime', key: 'lastSyncTime', width: 160 },
+              {
+                title: '同步状态',
+                dataIndex: 'status',
+                key: 'status',
+                render: (s: string) => {
+                  const config: Record<string, { color: string; text: string }> = {
+                    normal: { color: 'green', text: '同步正常' },
+                    error: { color: 'red', text: '异常' },
+                    delayed: { color: 'orange', text: '延迟' }
+                  }
+                  const item = config[s] || { color: 'default', text: s }
+                  return <Tag color={item.color}>{item.text}</Tag>
+                }
+              }
+            ]}
+            expandable={{
+              rowExpandable: (record: any) => record.status !== 'normal',
+              expandedRowRender: (record: any) => (
+                <div style={{ padding: '8px 0' }}>
+                  <Descriptions bordered column={1} size="small" title="异常详情">
+                    <Descriptions.Item label="异常原因">{record.errorReason}</Descriptions.Item>
+                    <Descriptions.Item label="影响数据量">{record.affectedData}</Descriptions.Item>
+                    <Descriptions.Item label="处置措施">{record.measure}</Descriptions.Item>
+                    <Descriptions.Item label="预计恢复时间">{record.estimatedRecovery}</Descriptions.Item>
+                  </Descriptions>
+                </div>
+              )
+            }}
+            dataSource={[
+              {
+                key: 'cds1',
+                dept: '公安厅 ↔ 本厅',
+                dataType: '人口基础信息',
+                syncMode: '实时同步',
+                frequency: '每日',
+                lastSyncTime: '2024-01-15 08:00',
+                status: 'normal'
+              },
+              {
+                key: 'cds2',
+                dept: '人社厅 ↔ 本厅',
+                dataType: '社保参保信息',
+                syncMode: '批量同步',
+                frequency: '每周',
+                lastSyncTime: '2024-01-14 22:00',
+                status: 'normal'
+              },
+              {
+                key: 'cds3',
+                dept: '医保局 ↔ 本厅',
+                dataType: '医保结算数据',
+                syncMode: '实时同步',
+                frequency: '每日',
+                lastSyncTime: '2024-01-15 07:30',
+                status: 'error',
+                errorReason: '数据格式不匹配，字段类型变更未同步更新',
+                affectedData: '3条结算记录',
+                measure: '已通知医保局数据部门，正在协调更新数据映射规则',
+                estimatedRecovery: '2024-01-16 10:00'
+              },
+              {
+                key: 'cds4',
+                dept: '住建厅 ↔ 本厅',
+                dataType: '不动产登记信息',
+                syncMode: '批量同步',
+                frequency: '每月',
+                lastSyncTime: '2024-01-10 23:00',
+                status: 'normal'
+              },
+              {
+                key: 'cds5',
+                dept: '民政厅 ↔ 本厅',
+                dataType: '婚姻登记信息',
+                syncMode: '批量同步',
+                frequency: '每周',
+                lastSyncTime: '2024-01-13 22:00',
+                status: 'delayed',
+                errorReason: '源系统批量导出任务排队，导致数据延迟推送',
+                affectedData: '约200条登记记录',
+                measure: '已协调民政厅优化导出任务调度，增加并发通道',
+                estimatedRecovery: '2024-01-15 14:00'
+              }
+            ]}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+          <Divider />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <Text strong>跨部门同步总体健康度</Text>
+            <Progress percent={85} style={{ flex: 1 }} />
+          </div>
         </div>
       )
     }

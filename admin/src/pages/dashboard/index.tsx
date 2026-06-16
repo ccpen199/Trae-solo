@@ -18,7 +18,12 @@ import {
   Input,
   Descriptions,
   Timeline,
-  Divider
+  Divider,
+  Steps,
+  Radio,
+  Checkbox,
+  Select,
+  DatePicker
 } from 'antd'
 import {
   AppstoreOutlined,
@@ -68,6 +73,10 @@ const Dashboard: React.FC = () => {
   const [applyModalVisible, setApplyModalVisible] = useState(false)
   const [selectedService, setSelectedService] = useState<any>(null)
   const [applyForm] = Form.useForm()
+  const [applyStep, setApplyStep] = useState(0)
+  const [selectedServiceItem, setSelectedServiceItem] = useState<any>(null)
+  const [guideAnswers, setGuideAnswers] = useState<Record<number, string>>({})
+  const [exportAuditModalVisible, setExportAuditModalVisible] = useState(false)
 
   const today = dayjs().format('YYYY年MM月DD日 dddd')
   const greeting = useMemo(() => {
@@ -922,6 +931,7 @@ const Dashboard: React.FC = () => {
               <Title level={5} className="card-title">
                 <StarOutlined className="title-icon" /> 热门服务推荐
               </Title>
+              <Button type="link" onClick={() => navigate('/city-data-secretary')}>数据推荐依据 <ArrowRightOutlined /></Button>
             </div>
             <div className="recommend-grid">
               {hotServices.map((item) => (
@@ -951,10 +961,11 @@ const Dashboard: React.FC = () => {
           <Title level={5} className="card-title">
             <DatabaseOutlined className="title-icon" /> 数据资产概览
           </Title>
+          <Button type="link" onClick={() => navigate('/city-data-secretary')}>进入城市数据秘书 <ArrowRightOutlined /></Button>
         </div>
         <div className="data-assets-grid">
           {dataAssets.map((asset, index) => (
-            <div key={index} className="data-asset-item">
+            <div key={index} className="data-asset-item" onClick={() => navigate('/city-data-secretary')} style={{ cursor: 'pointer' }}>
               <div className="asset-icon" style={{ background: `${asset.color}15`, color: asset.color }}>
                 {asset.icon}
               </div>
@@ -969,6 +980,7 @@ const Dashboard: React.FC = () => {
             </div>
           ))}
         </div>
+        <Text type="secondary" style={{ display: 'block', textAlign: 'center', marginTop: 8, fontSize: 12 }}>点击查看个人授权、推荐来源、共享状态、调用留痕</Text>
       </Card>
 
       <Card bordered={false} style={{ marginTop: 16 }}>
@@ -991,58 +1003,212 @@ const Dashboard: React.FC = () => {
           <Text type="secondary">
             <DesktopOutlined /> 登录设备：{userInfo?.loginDevice || '未知'} · 登录IP：{userInfo?.loginIp || '未知'} · 登录方式：{userInfo?.loginMethod || '未知'} · 登录时间：{userInfo?.loginTime || '未知'}
           </Text>
-          <Button type="link" icon={<ExportOutlined />}>
+          <Button type="link" icon={<ExportOutlined />} onClick={() => setExportAuditModalVisible(true)}>
             导出审计日志
           </Button>
         </div>
       </Card>
 
       <Drawer
-        title={<Space><ThunderboltOutlined style={{ color: '#0958d9' }} />快速办件</Space>}
+        title={<Space><ThunderboltOutlined style={{ color: '#0958d9' }} />快速办件 · 一网通办</Space>}
         placement="right"
-        width={720}
+        width={800}
         open={quickServiceVisible}
-        onClose={() => setQuickServiceVisible(false)}
+        onClose={() => { setQuickServiceVisible(false); setApplyStep(0); setSelectedServiceItem(null); setGuideAnswers({}) }}
       >
-        <Input.Search placeholder="搜索服务事项..." style={{ marginBottom: 16 }} size="large" />
-        <Title level={5}>热门服务</Title>
-        <Row gutter={[12, 12]}>
-          {hotServices.map((item) => (
-            <Col xs={12} key={item.id}>
-              <Card hoverable onClick={() => handleApplyService(item)} style={{ cursor: 'pointer', borderRadius: 8 }}>
-                <Space>
-                  <div style={{ width: 48, height: 48, borderRadius: 8, background: `${item.hot ? '#fff1f0' : '#e6f7ff'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <AppstoreOutlined style={{ fontSize: 20, color: item.hot ? '#ff4d4f' : '#1890ff' }} />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 500 }}>
-                      {item.title}
-                      {item.hot && <Tag color="red" style={{ marginLeft: 8 }}>HOT</Tag>}
-                    </div>
-                    <Text type="secondary" style={{ fontSize: 12 }}>{item.desc}</Text>
-                    <div style={{ marginTop: 4 }}>
-                      <Tag color="blue">{item.timeLimit}</Tag>
-                      <Tag color={item.fee === '免费' ? 'green' : 'orange'}>{item.fee}</Tag>
-                    </div>
-                  </div>
-                  <ArrowRightOutlined style={{ color: '#bfbfbf' }} />
-                </Space>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-        <Divider />
-        <Title level={5}>服务分类</Title>
-        <Row gutter={[12, 12]}>
-          {['社会保障', '住房公积金', '医疗健康', '企业开办', '不动产', '交通运输', '教育服务', '税务办理'].map((item) => (
-            <Col xs={8} key={item}>
-              <Card hoverable style={{ cursor: 'pointer', borderRadius: 8, textAlign: 'center' }}>
-                <FileTextOutlined style={{ fontSize: 24, color: '#0958d9' }} />
-                <div style={{ marginTop: 8, fontSize: 13 }}>{item}</div>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        <Steps current={applyStep} size="small" style={{ marginBottom: 24 }}>
+          <Steps.Step title="选择事项" />
+          <Steps.Step title="情形引导" />
+          <Steps.Step title="证照调取" />
+          <Steps.Step title="受理确认" />
+          <Steps.Step title="办结反馈" />
+        </Steps>
+
+        {applyStep === 0 && (
+          <div>
+            <Input.Search placeholder="搜索服务事项..." style={{ marginBottom: 16 }} size="large" />
+            <Title level={5}>热门服务</Title>
+            <Row gutter={[12, 12]}>
+              {hotServices.map((item) => (
+                <Col xs={12} key={item.id}>
+                  <Card hoverable onClick={() => { setSelectedServiceItem(item); setApplyStep(1) }} style={{ cursor: 'pointer', borderRadius: 8 }}>
+                    <Space>
+                      <div style={{ width: 48, height: 48, borderRadius: 8, background: `${item.hot ? '#fff1f0' : '#e6f7ff'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <AppstoreOutlined style={{ fontSize: 20, color: item.hot ? '#ff4d4f' : '#1890ff' }} />
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 500 }}>
+                          {item.title}
+                          {item.hot && <Tag color="red" style={{ marginLeft: 8 }}>HOT</Tag>}
+                        </div>
+                        <Text type="secondary" style={{ fontSize: 12 }}>{item.desc}</Text>
+                        <div style={{ marginTop: 4 }}>
+                          <Tag color="blue">{item.timeLimit}</Tag>
+                          <Tag color={item.fee === '免费' ? 'green' : 'orange'}>{item.fee}</Tag>
+                        </div>
+                      </div>
+                      <ArrowRightOutlined style={{ color: '#bfbfbf' }} />
+                    </Space>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </div>
+        )}
+
+        {applyStep === 1 && selectedServiceItem && (
+          <div>
+            <Card size="small" style={{ marginBottom: 16, background: '#fafafa' }}>
+              <Space>
+                <div style={{ width: 48, height: 48, borderRadius: 8, background: '#e6f7ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <AppstoreOutlined style={{ fontSize: 20, color: '#1890ff' }} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 500, fontSize: 16 }}>{selectedServiceItem.title}</div>
+                  <Text type="secondary">{selectedServiceItem.desc}</Text>
+                </div>
+              </Space>
+            </Card>
+            <Title level={5}>情形引导</Title>
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ marginBottom: 20 }}>
+                <Text strong style={{ display: 'block', marginBottom: 8 }}>1. 您的办理类型？</Text>
+                <Radio.Group value={guideAnswers[0]} onChange={(e) => setGuideAnswers({ ...guideAnswers, 0: e.target.value })}>
+                  <Space direction="vertical">
+                    <Radio value="首次申领">首次申领</Radio>
+                    <Radio value="换领">换领</Radio>
+                    <Radio value="补领">补领</Radio>
+                  </Space>
+                </Radio.Group>
+              </div>
+              <div style={{ marginBottom: 20 }}>
+                <Text strong style={{ display: 'block', marginBottom: 8 }}>2. 您的户籍所在地？</Text>
+                <Radio.Group value={guideAnswers[1]} onChange={(e) => setGuideAnswers({ ...guideAnswers, 1: e.target.value })}>
+                  <Space direction="vertical">
+                    <Radio value="宁夏本地">宁夏本地</Radio>
+                    <Radio value="外省迁入">外省迁入</Radio>
+                  </Space>
+                </Radio.Group>
+              </div>
+              <div style={{ marginBottom: 20 }}>
+                <Text strong style={{ display: 'block', marginBottom: 8 }}>3. 是否代办？</Text>
+                <Radio.Group value={guideAnswers[2]} onChange={(e) => setGuideAnswers({ ...guideAnswers, 2: e.target.value })}>
+                  <Space direction="vertical">
+                    <Radio value="本人办理">本人办理</Radio>
+                    <Radio value="委托代办">委托代办</Radio>
+                  </Space>
+                </Radio.Group>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Button onClick={() => setApplyStep(0)}>上一步</Button>
+              <Button type="primary" disabled={!guideAnswers[0] || !guideAnswers[1] || !guideAnswers[2]} onClick={() => setApplyStep(2)}>下一步</Button>
+            </div>
+          </div>
+        )}
+
+        {applyStep === 2 && (
+          <div>
+            <Title level={5}>证照调取</Title>
+            <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>请选择需要调取的电子证照，已关联的证照可直接调取</Text>
+            <Checkbox.Group defaultValue={['身份证电子证照', '户口本电子证照']} style={{ width: '100%' }}>
+              <Space direction="vertical" style={{ width: '100%' }} size="middle">
+                <Card size="small" style={{ borderRadius: 8 }}>
+                  <Checkbox value="身份证电子证照">
+                    <Space>
+                      <SafetyCertificateOutlined style={{ color: '#0958d9' }} />
+                      <span>身份证电子证照</span>
+                      <Tag color="green">已关联</Tag>
+                    </Space>
+                  </Checkbox>
+                </Card>
+                <Card size="small" style={{ borderRadius: 8 }}>
+                  <Checkbox value="户口本电子证照">
+                    <Space>
+                      <FileTextOutlined style={{ color: '#52c41a' }} />
+                      <span>户口本电子证照</span>
+                      <Tag color="green">已关联</Tag>
+                    </Space>
+                  </Checkbox>
+                </Card>
+                <Card size="small" style={{ borderRadius: 8 }}>
+                  <Checkbox value="居住证电子证照">
+                    <Space>
+                      <FileDoneOutlined style={{ color: '#faad14' }} />
+                      <span>居住证电子证照</span>
+                      <Tag color="orange">未关联-需上传</Tag>
+                    </Space>
+                  </Checkbox>
+                </Card>
+              </Space>
+            </Checkbox.Group>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+              <Button onClick={() => setApplyStep(1)}>上一步</Button>
+              <Button type="primary" onClick={() => setApplyStep(3)}>下一步</Button>
+            </div>
+          </div>
+        )}
+
+        {applyStep === 3 && selectedServiceItem && (
+          <div>
+            <Title level={5}>受理确认</Title>
+            <Descriptions bordered column={2} size="small" style={{ marginBottom: 16 }}>
+              <Descriptions.Item label="事项名称">{selectedServiceItem.title}</Descriptions.Item>
+              <Descriptions.Item label="办理类型">{guideAnswers[0] || '-'}</Descriptions.Item>
+              <Descriptions.Item label="户籍">{guideAnswers[1] || '-'}</Descriptions.Item>
+              <Descriptions.Item label="证照调取情况">身份证、户口本</Descriptions.Item>
+              <Descriptions.Item label="承诺时限">{selectedServiceItem.timeLimit}</Descriptions.Item>
+              <Descriptions.Item label="收费标准">{selectedServiceItem.fee}</Descriptions.Item>
+            </Descriptions>
+            <Title level={5}>申请人信息</Title>
+            <Form layout="vertical">
+              <Row gutter={12}>
+                <Col span={8}>
+                  <Form.Item label="姓名" required>
+                    <Input placeholder="请输入姓名" />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="身份证号" required>
+                    <Input placeholder="请输入身份证号" />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="联系电话" required>
+                    <Input placeholder="请输入联系电话" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
+              <Button onClick={() => setApplyStep(2)}>上一步</Button>
+              <Button type="primary" onClick={() => setApplyStep(4)} icon={<CheckOutlined />}>确认提交</Button>
+            </div>
+          </div>
+        )}
+
+        {applyStep === 4 && (
+          <div style={{ textAlign: 'center' }}>
+            <CheckCircleOutlined style={{ fontSize: 64, color: '#52c41a', marginBottom: 16 }} />
+            <Title level={4} style={{ color: '#52c41a', marginBottom: 24 }}>申请已受理</Title>
+            <Descriptions bordered column={1} size="small" style={{ marginBottom: 24, textAlign: 'left' }}>
+              <Descriptions.Item label="受理编号">NX20240115001258</Descriptions.Item>
+              <Descriptions.Item label="受理时间">{dayjs().format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
+              <Descriptions.Item label="预计办结">{dayjs().add(7, 'day').format('YYYY-MM-DD')}</Descriptions.Item>
+            </Descriptions>
+            <Title level={5} style={{ textAlign: 'left' }}>办理进度</Title>
+            <Timeline style={{ textAlign: 'left', marginBottom: 24 }}>
+              <Timeline.Item color="green" dot={<CheckCircleOutlined style={{ fontSize: 16 }} />}>已受理 · {dayjs().format('YYYY-MM-DD HH:mm')}</Timeline.Item>
+              <Timeline.Item color="blue" dot={<ClockCircleOutlined style={{ fontSize: 16 }} />}>审核中</Timeline.Item>
+              <Timeline.Item>制证中</Timeline.Item>
+              <Timeline.Item>待领取</Timeline.Item>
+            </Timeline>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 12 }}>
+              <Button type="primary" onClick={() => navigate('/tickets')}>查看办件详情</Button>
+              <Button onClick={() => { setApplyStep(0); setSelectedServiceItem(null); setGuideAnswers({}) }}>继续办理</Button>
+            </div>
+          </div>
+        )}
       </Drawer>
 
       <Drawer
@@ -1302,6 +1468,81 @@ const Dashboard: React.FC = () => {
             </Form>
           </div>
         )}
+      </Modal>
+
+      <Modal
+        title={<Space><ExportOutlined style={{ color: '#0958d9' }} />导出审计日志</Space>}
+        open={exportAuditModalVisible}
+        onCancel={() => setExportAuditModalVisible(false)}
+        width={640}
+        footer={[
+          <Button key="cancel" onClick={() => setExportAuditModalVisible(false)}>取消</Button>,
+          <Button key="submit" type="primary" icon={<ExportOutlined />} onClick={() => {
+            Modal.success({
+              title: '导出成功',
+              content: (
+                <div>
+                  <p>导出记录数：1,258 条</p>
+                  <p>文件编号：AUDIT-EXP-{dayjs().format('YYYYMMDD')}-{Math.random().toString(36).substring(2, 8).toUpperCase()}</p>
+                </div>
+              )
+            })
+            setExportAuditModalVisible(false)
+          }}>确认导出</Button>
+        ]}
+      >
+        <div style={{ marginBottom: 16 }}>
+          <Text strong>导出范围</Text>
+          <div style={{ marginTop: 8 }}>
+            <div style={{ marginBottom: 12 }}>
+              <Text type="secondary" style={{ display: 'block', marginBottom: 4 }}>日期范围</Text>
+              <DatePicker.RangePicker style={{ width: '100%' }} />
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <Text type="secondary" style={{ display: 'block', marginBottom: 4 }}>操作类型</Text>
+              <Select mode="multiple" style={{ width: '100%' }} placeholder="请选择操作类型" options={[
+                { label: '登录', value: '登录' },
+                { label: '审批', value: '审批' },
+                { label: '数据导出', value: '数据导出' },
+                { label: '权限变更', value: '权限变更' },
+                { label: '删除', value: '删除' },
+                { label: '配置修改', value: '配置修改' }
+              ]} />
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <Text type="secondary" style={{ display: 'block', marginBottom: 4 }}>复查人</Text>
+              <Input placeholder="请输入复查人姓名" />
+            </div>
+            <div>
+              <Text type="secondary" style={{ display: 'block', marginBottom: 4 }}>风险等级筛选</Text>
+              <Select style={{ width: '100%' }} placeholder="请选择风险等级" options={[
+                { label: '全部', value: 'all' },
+                { label: '高风险', value: 'high' },
+                { label: '中风险', value: 'medium' },
+                { label: '低风险', value: 'low' }
+              ]} />
+            </div>
+          </div>
+        </div>
+        <Divider style={{ margin: '16px 0' }} />
+        <div>
+          <Text strong>90天追溯校验</Text>
+          <Text type="secondary" style={{ display: 'block', margin: '8px 0 12px' }}>根据等保三级要求，系统已对近90天内所有关键操作进行追溯校验</Text>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#f6ffed', borderRadius: 4 }}>
+              <span>审计日志完整性校验</span>
+              <Tag color="green">已通过</Tag>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#f6ffed', borderRadius: 4 }}>
+              <span>操作记录关联性校验</span>
+              <Tag color="green">已通过</Tag>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#f6ffed', borderRadius: 4 }}>
+              <span>90天留存期合规校验</span>
+              <Tag color="green">已通过</Tag>
+            </div>
+          </div>
+        </div>
       </Modal>
     </div>
   )
