@@ -26,10 +26,12 @@ export const api = {
   dashboard: {
     overview: () => request.get('/dashboard/overview'),
     brandQuality: () => request.get('/dashboard/brand-quality'),
+    brandQualityDetail: (id: number) => request.get(`/dashboard/brand-quality/${id}`),
     ordersTrend: () => request.get('/dashboard/orders-trend'),
     networkTopology: () => request.get('/dashboard/network-topology'),
     apiUsage: () => request.get('/dashboard/api-usage'),
-    realtimeMap: () => request.get('/dashboard/realtime-map')
+    realtimeMap: () => request.get('/dashboard/realtime-map'),
+    auditLogs: (p: any = {}) => request.get('/dashboard/audit-logs', { params: p })
   },
   brands: {
     list: (p: any = {}) => request.get('/brands', { params: p }),
@@ -53,7 +55,8 @@ export const api = {
     patchStatus: (id: number, d: any) => request.patch(`/orders/${id}/status`, d),
     appointment: (id: number, t: string) => request.post(`/orders/${id}/appointment`, { appointment_time: t }),
     verifyFace: (id: number, data: string) => request.post(`/orders/${id}/verify-face`, { face_data: data }),
-    syncEcommerce: (d: any) => request.post('/orders/sync-ecommerce', d)
+    syncEcommerce: (d: any) => request.post('/orders/sync-ecommerce', d),
+    reviewAddress: (id: number, data: any) => request.post(`/orders/${id}/review-address`, data)
   },
   price: {
     compare: (d: any) => request.post('/price/compare', d),
@@ -77,6 +80,7 @@ export const api = {
   },
   open: {
     brands: (key?: string) => request.get('/open/brands', key ? { headers: { 'X-App-Key': key } } : {}),
-    tracking: (no: string, key?: string) => request.get(`/open/orders/${no}/tracking`, key ? { headers: { 'X-App-Key': key } } : {})
+    tracking: (no: string, key?: string) => request.get(`/open/orders/${no}/tracking`, key ? { headers: { 'X-App-Key': key } } : {}),
+    brandQuality: (key?: string) => request.get('/open/brand-quality', key ? { headers: { 'X-App-Key': key } } : {})
   }
 };

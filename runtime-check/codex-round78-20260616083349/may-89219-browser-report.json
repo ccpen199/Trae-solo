@@ -1,0 +1,166 @@
+{
+  "ok": false,
+  "generatedAt": "2026-06-16T05:33:57.047Z",
+  "order": "may-89219",
+  "roundIndex": 78,
+  "captureId": "may-89219-codex-round78",
+  "url": "http://127.0.0.1:49219/",
+  "initialUrl": "http://127.0.0.1:49219/",
+  "finalUrl": "chrome-error://chromewebdata/",
+  "status": null,
+  "title": "127.0.0.1",
+  "initialTitle": "127.0.0.1",
+  "navigationError": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:49219/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:49219/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+  "screenshotPath": "runtime-check/codex-round78-20260616083349/may-89219-codex-round78-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89219/runtime-check/codex-round78-20260616083349/may-89219-codex-round78-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "服务修复后复验前端首页和业务接口",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题",
+  "targetKind": "search",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "chrome-error://chromewebdata/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "chrome-error://chromewebdata/",
+        "title": "127.0.0.1",
+        "headings": [
+          "无法访问此网站"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "重新加载",
+          "详情"
+        ],
+        "links": [
+          "检查代理服务器和防火墙"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "无法访问此网站 127.0.0.1 拒绝了我们的连接请求。 请试试以下办法： 检查网络连接 检查代理服务器和防火墙 ERR_CONNECTION_REFUSED 重新加载 详情 请检查您的互联网连接是否正常 请检查所有网线是否都已连好，然后重新启动您可能正在使用的任何路由器、调制解调器或其他网络设备。 在防火墙或防病毒设置部分设为允许 Chrome 访问网络。 如果它已在可访问网络的程序列表中，请尝试将它从该列表中移除，然后重新添加到其中。 如果您使用代理服务器… 依次前往“应用”>“系统设置”>“网络”，选择有效的网络，点击“详情…”按钮，然后取消选择所有已选的代理。 127.0.0.1 拒绝了我们的连接请求。",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89219-codex-round78-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "chrome-error://chromewebdata/",
+          "title": "127.0.0.1",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/runtime-check/codex-round78-20260616083349/may-89219-codex-round78-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/runtime-check/codex-round78-20260616083349/may-89219-codex-round78-structure-01-首屏.png",
+          "elementCount": 45,
+          "interactiveCount": 3,
+          "interactiveLabels": [
+            "检查代理服务器和防火墙",
+            "重新加载",
+            "详情"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89219-codex-round78-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "chrome-error://chromewebdata/",
+        "title": "127.0.0.1",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/runtime-check/codex-round78-20260616083349/may-89219-codex-round78-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/runtime-check/codex-round78-20260616083349/may-89219-codex-round78-structure-01-首屏.png",
+        "elementCount": 45,
+        "interactiveCount": 3,
+        "interactiveLabels": [
+          "检查代理服务器和防火墙",
+          "重新加载",
+          "详情"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "chrome-error://chromewebdata/",
+    "representativeScreenshotLabel": "无法访问此网站"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89219-codex-round78-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "chrome-error://chromewebdata/",
+        "title": "127.0.0.1",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/runtime-check/codex-round78-20260616083349/may-89219-codex-round78-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89219/runtime-check/codex-round78-20260616083349/may-89219-codex-round78-structure-01-首屏.png",
+        "elementCount": 45,
+        "interactiveCount": 3,
+        "interactiveLabels": [
+          "检查代理服务器和防火墙",
+          "重新加载",
+          "详情"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "无法访问此网站\n\n127.0.0.1 拒绝了我们的连接请求。\n\n请试试以下办法：\n\n检查网络连接\n检查代理服务器和防火墙\nERR_CONNECTION_REFUSED\n重新加载\n详情",
+  "bodyTextPreview": "无法访问此网站\n\n127.0.0.1 拒绝了我们的连接请求。\n\n请试试以下办法：\n\n检查网络连接\n检查代理服务器和防火墙\nERR_CONNECTION_REFUSED\n重新加载\n详情",
+  "apiBase": "http://127.0.0.1:59219",
+  "businessGoalPreview": "快递全链路协同开放平台首页、搜索筛选、管理后台、开放接口可用",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59219/api/health",
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59219\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59219/api/health\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Saf"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49219/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49219/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    }
+  ],
+  "responseErrors": []
+}

@@ -74,4 +74,30 @@ router.get('/couriers/available', (req, res) => {
   res.json({ code: 0, data: list });
 });
 
+router.get('/brand-quality', (_req, res) => {
+  const brands = db.prepare(`
+    SELECT b.id, b.code, b.name, b.rating, b.coverage_score, b.base_price, b.per_kg_price, b.avg_delivery_hours,
+      (SELECT COUNT(*) FROM shipment_orders o WHERE o.brand_id = b.id) total_orders,
+      (SELECT COUNT(*) FROM shipment_orders o WHERE o.brand_id = b.id AND o.status = 'signed') signed,
+      (SELECT COUNT(*) FROM shipment_orders o WHERE o.brand_id = b.id AND o.status = 'signed' AND o.actual_delivery_time <= o.estimated_delivery_time) on_time,
+      (SELECT COUNT(*) FROM complaints c JOIN shipment_orders o ON c.order_id = o.id WHERE o.brand_id = b.id) complaints
+    FROM courier_brands b WHERE b.api_status = 'active' ORDER BY b.rating DESC
+  `).all() as any[];
+
+  const list = brands.map(b => {
+    const total = b.total_orders || 1;
+    return {
+      id: b.id, code: b.code, name: b.name, rating: b.rating,
+      coverage_score: b.coverage_score,
+      base_price: b.base_price, per_kg_price: b.per_kg_price,
+      avg_delivery_hours: b.avg_delivery_hours,
+      total_orders: b.total_orders,
+      success_rate: +((b.signed || 0) / total * 100).toFixed(2),
+      on_time_rate: +((b.on_time || 0) / Math.max(1, b.signed) * 100).toFixed(2),
+      complaint_rate: +((b.complaints || 0) / total * 1000).toFixed(2)
+    };
+  });
+  res.json({ code: 0, data: list });
+});
+
 export default router;

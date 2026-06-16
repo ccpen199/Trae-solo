@@ -103,6 +103,102 @@ router.get('/api-usage', (_req, res) => {
   });
 });
 
+router.get('/brand-quality/:id', (req, res) => {
+  const brand = db.prepare(`
+    SELECT b.*,
+      (SELECT COUNT(*) FROM shipment_orders o WHERE o.brand_id = b.id) total,
+      (SELECT COUNT(*) FROM shipment_orders o WHERE o.brand_id = b.id AND o.status = 'signed') signed,
+      (SELECT COUNT(*) FROM shipment_orders o WHERE o.brand_id = b.id AND o.status = 'signed' AND o.actual_delivery_time <= o.estimated_delivery_time) on_time,
+      (SELECT COUNT(*) FROM shipment_orders o WHERE o.brand_id = b.id AND (o.status = 'exception' OR o.is_address_abnormal = 1)) exceptions,
+      (SELECT COUNT(*) FROM complaints c JOIN shipment_orders o ON c.order_id = o.id WHERE o.brand_id = b.id) complaints
+    FROM courier_brands b WHERE b.id = ?
+  `).get(req.params.id) as any;
+  if (!brand) return res.status(404).json({ code: 'NOT_FOUND', message: '品牌不存在' });
+
+  const total = brand.total || 1;
+  const trend = db.prepare(`
+    SELECT DATE(created_at) d, COUNT(*) c,
+      SUM(CASE WHEN status = 'signed' THEN 1 ELSE 0 END) s,
+      SUM(CASE WHEN status = 'signed' AND actual_delivery_time <= estimated_delivery_time THEN 1 ELSE 0 END) ot,
+      SUM(CASE WHEN status = 'exception' OR is_address_abnormal = 1 THEN 1 ELSE 0 END) ex
+    FROM shipment_orders WHERE brand_id = ? GROUP BY DATE(created_at) ORDER BY d DESC LIMIT 14
+  `).all(req.params.id).reverse() as any[];
+
+  const recentOrders = db.prepare(`
+    SELECT o.id, o.order_no, o.tracking_no, o.status, o.created_at, o.estimated_delivery_time, o.actual_delivery_time,
+      o.receiver_name, o.receiver_address, o.is_address_abnormal, o.face_verified
+    FROM shipment_orders o WHERE o.brand_id = ? ORDER BY o.created_at DESC LIMIT 20
+  `).all(req.params.id);
+
+  const recentComplaints = db.prepare(`
+    SELECT c.id, c.type, c.status, c.description, c.sla_deadline, c.created_at,
+      o.order_no, o.tracking_no
+    FROM complaints c JOIN shipment_orders o ON c.order_id = o.id
+    WHERE o.brand_id = ? ORDER BY c.created_at DESC LIMIT 10
+  `).all(req.params.id);
+
+  res.json({
+    ...brand,
+    success_rate: +((brand.signed || 0) / total * 100).toFixed(2),
+    on_time_rate: +((brand.on_time || 0) / Math.max(1, brand.signed) * 100).toFixed(2),
+    exception_rate: +((brand.exceptions || 0) / total * 100).toFixed(2),
+    complaint_rate: +((brand.complaints || 0) / total * 100).toFixed(3),
+    trend: {
+      dates: trend.map(t => t.d),
+      orders: trend.map(t => t.c),
+      signed: trend.map(t => t.s),
+      on_time: trend.map(t => t.ot),
+      exceptions: trend.map(t => t.ex)
+    },
+    recent_orders: recentOrders,
+    recent_complaints: recentComplaints
+  });
+});
+
+router.get('/audit-logs', (req, res) => {
+  const { page = 1, pageSize = 30, app_id, api_path, method, status, date_from, date_to } = req.query as any;
+  const offset = (page - 1) * pageSize;
+  let where = [];
+  let params: any[] = [];
+  if (app_id) { where.push('l.app_id = ?'); params.push(app_id); }
+  if (api_path) { where.push('l.api_path LIKE ?'); params.push(`%${api_path}%`); }
+  if (method) { where.push('l.method = ?'); params.push(method); }
+  if (status) {
+    if (status === 'success') { where.push('l.response_status BETWEEN 200 AND 299'); }
+    else if (status === 'error') { where.push('l.response_status >= 400'); }
+    else { where.push('l.response_status = ?'); params.push(+status); }
+  }
+  if (date_from) { where.push('DATE(l.created_at) >= ?'); params.push(date_from); }
+  if (date_to) { where.push('DATE(l.created_at) <= ?'); params.push(date_to); }
+  const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
+  const total = (db.prepare(`SELECT COUNT(*) c FROM api_call_logs l ${whereSql}`).get(...params) as any).c;
+  const list = db.prepare(`
+    SELECT l.*, a.app_name, a.app_key FROM api_call_logs l
+    LEFT JOIN api_applications a ON l.app_id = a.id
+    ${whereSql} ORDER BY l.id DESC LIMIT ? OFFSET ?
+  `).all(...params, pageSize, offset);
+
+  const stats = db.prepare(`
+    SELECT
+      COUNT(*) total_calls,
+      SUM(CASE WHEN response_status BETWEEN 200 AND 299 THEN 1 ELSE 0 END) success_calls,
+      SUM(CASE WHEN response_status >= 400 THEN 1 ELSE 0 END) error_calls,
+      AVG(response_time) avg_response_time
+    FROM api_call_logs l ${whereSql}
+  `).get(...params) as any;
+
+  res.json({
+    list, total, page: +page, pageSize: +pageSize,
+    stats: {
+      total_calls: stats.total_calls || 0,
+      success_calls: stats.success_calls || 0,
+      error_calls: stats.error_calls || 0,
+      success_rate: stats.total_calls ? +((stats.success_calls || 0) / stats.total_calls * 100).toFixed(2) : 0,
+      avg_response_time: Math.round(stats.avg_response_time || 0)
+    }
+  });
+});
+
 router.get('/realtime-map', (_req, res) => {
   const orders = db.prepare(`
     SELECT o.id, o.order_no, o.tracking_no, o.status, o.sender_address, o.receiver_address,

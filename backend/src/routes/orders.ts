@@ -183,4 +183,48 @@ router.post('/sync-ecommerce', (req: AuthRequest, res) => {
   res.json({ total: orders.length, success_count: results.filter(r => r.synced).length, results });
 });
 
+router.post('/:id/review-address', (req: AuthRequest, res) => {
+  const { action, corrected_address, note } = req.body;
+  const order = db.prepare('SELECT * FROM shipment_orders WHERE id = ?').get(req.params.id) as any;
+  if (!order) return res.status(404).json({ code: 'NOT_FOUND', message: '订单不存在' });
+  if (!['confirm_normal', 'confirm_abnormal', 'correct_address'].includes(action)) {
+    return res.status(400).json({ code: 'BAD_ACTION', message: '无效操作类型' });
+  }
+
+  const now = formatDate(new Date());
+  if (action === 'confirm_normal') {
+    db.prepare('UPDATE shipment_orders SET is_address_abnormal = 0, status = ?, updated_at = ? WHERE id = ?')
+      .run(order.status === 'exception' ? 'created' : order.status, now, req.params.id);
+    db.prepare(`INSERT INTO tracking_events (order_id, tracking_no, event_type, event_desc, operator_name, is_exception, created_at)
+      VALUES (?, ?, 'ADDRESS_REVIEWED', '人工复核：地址确认为正常，解除异常拦截', ?, 0, ?)`)
+      .run(req.params.id, order.tracking_no, req.user?.name || '管理员', now);
+    if (order.sender_id) {
+      db.prepare("INSERT INTO notifications (user_id, type, title, content, related_id, created_at) VALUES (?, 'info', '地址异常已解除', '您的运单收货地址经人工复核确认为正常，已恢复派送流程', ?, ?)")
+        .run(order.sender_id, req.params.id, now);
+    }
+    res.json({ message: '地址已确认为正常，异常已解除' });
+  } else if (action === 'confirm_abnormal') {
+    db.prepare('UPDATE shipment_orders SET status = ?, updated_at = ? WHERE id = ?').run('exception', now, req.params.id);
+    db.prepare(`INSERT INTO tracking_events (order_id, tracking_no, event_type, event_desc, operator_name, is_exception, exception_type, created_at)
+      VALUES (?, ?, 'ADDRESS_REVIEWED', '人工复核：确认地址异常，请联系寄件人', ?, 1, '地址异常', ?)`)
+      .run(req.params.id, order.tracking_no, req.user?.name || '管理员', now);
+    res.json({ message: '已确认地址异常，建议联系寄件人处理' });
+  } else if (action === 'correct_address') {
+    if (!corrected_address) return res.status(400).json({ code: 'NO_ADDRESS', message: '请输入修正后地址' });
+    db.prepare('UPDATE shipment_orders SET receiver_address = ?, is_address_abnormal = 0, status = ?, updated_at = ? WHERE id = ?')
+      .run(corrected_address, order.status === 'exception' ? 'created' : order.status, now, req.params.id);
+    db.prepare(`INSERT INTO tracking_events (order_id, tracking_no, event_type, event_desc, operator_name, location, is_exception, created_at)
+      VALUES (?, ?, 'ADDRESS_UPDATED', ?, ?, ?, 0, ?)`)
+      .run(req.params.id, order.tracking_no,
+        `人工修正收货地址：${corrected_address}${note ? '（备注：' + note + '）' : ''}`,
+        req.user?.name || '管理员', corrected_address, now);
+    if (order.sender_id) {
+      const notifContent = `运单地址已修正为：${corrected_address}${note ? '（备注：' + note + '）' : ''}`;
+      db.prepare("INSERT INTO notifications (user_id, type, title, content, related_id, created_at) VALUES (?, 'info', '收货地址已修正', ?, ?, ?)")
+        .run(order.sender_id, notifContent, req.params.id, now);
+    }
+    res.json({ message: '地址已修正，运单恢复正常流程' });
+  }
+});
+
 export default router;
