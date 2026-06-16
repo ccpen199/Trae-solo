@@ -136,6 +136,24 @@ export interface Order {
   insurance?: InsuranceInfo;
   is_overtime?: boolean;
   overtime_minutes?: number;
+  dispatch_records?: DispatchRecord[];
+}
+
+export interface DispatchRecord {
+  id: number;
+  order_id: number;
+  worker_id: number;
+  worker_name: string;
+  action: 'system_assign' | 'manual_reassign' | 'worker_accept' | 'dispatch_audit';
+  action_label: string;
+  action_time: string;
+  operator: string;
+  reason?: string;
+  dispatch_method: 'heatmap_1km' | 'weighted_score' | 'manual';
+  weighted_score?: number;
+  distance_km?: number;
+  satisfaction_rate?: number;
+  complaint_rate?: number;
 }
 
 export interface InsuranceInfo {
@@ -170,6 +188,7 @@ export interface QARecordDetail {
   audio_duration: number;
   transcript_text: string;
   transcript_summary: string;
+  transcript_full?: string;
   keywords: { text: string; hit: boolean; count: number }[];
   compliance_rate: number;
   root_cause: string;

@@ -12,7 +12,7 @@ import {
 import Navbar from '@/components/Navbar';
 import { useAppStore } from '@/store';
 import { useWorkerStore } from '@/store/useWorkerStore';
-import type { Order, OrderStatus, ServiceNode, CompensationRecord, QARecordDetail, OCRField, ReviewRecord } from '@/types';
+import type { Order, OrderStatus, ServiceNode, CompensationRecord, QARecordDetail, OCRField, ReviewRecord, DispatchRecord } from '@/types';
 import { cn } from '@/lib/utils';
 
 const serviceIconMap = {
@@ -58,8 +58,10 @@ function ConfidenceTag({ confidence }: { confidence: number }) {
 }
 
 function WorkerCertSection({ order }: { order: Order }) {
-  const cert = useWorkerStore((s) => s.cert);
-  const score = useWorkerStore((s) => s.score);
+  const getCertByWorkerId = useWorkerStore((s) => s.getCertByWorkerId);
+  const getScoreByWorkerId = useWorkerStore((s) => s.getScoreByWorkerId);
+  const cert = order.worker_id ? getCertByWorkerId(order.worker_id) : undefined;
+  const score = order.worker_id ? getScoreByWorkerId(order.worker_id) : undefined;
   const [showCertDetail, setShowCertDetail] = useState(false);
   const [activeCertTab, setActiveCertTab] = useState<'ocr' | 'review'>('ocr');
 
@@ -310,6 +312,105 @@ function NodeTimelineSection({ nodes, status }: { nodes: ServiceNode[]; status: 
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+function DispatchRecordSection({ records }: { records: DispatchRecord[] }) {
+  if (!records || records.length === 0) return null;
+
+  const actionConfig = {
+    system_assign: { icon: Zap, label: '系统派单', color: 'bg-blue-100 text-blue-600', line: 'bg-blue-200' },
+    manual_reassign: { icon: Users, label: '人工改派', color: 'bg-orange-100 text-orange-600', line: 'bg-orange-200' },
+    worker_accept: { icon: CheckCircle, label: '阿姨接单', color: 'bg-green-100 text-green-600', line: 'bg-green-200' },
+    dispatch_audit: { icon: UserCheck, label: '调度复核', color: 'bg-purple-100 text-purple-600', line: 'bg-purple-200' },
+  };
+
+  return (
+    <div className="card p-6 mb-6 border-l-4 border-l-blue-400">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-bold text-secondary-800 flex items-center gap-2">
+          <Navigation className="w-5 h-5 text-blue-500" />
+          调度记录 · 1km优先派单 + 动态加权
+        </h3>
+        <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">
+          共{records.length}条记录
+        </span>
+      </div>
+
+      <div className="space-y-0">
+        {records.map((rec, ri) => {
+          const cfg = actionConfig[rec.action] || actionConfig.system_assign;
+          const Icon = cfg.icon;
+          const isLast = ri === records.length - 1;
+          const methodLabel = {
+            heatmap_1km: '热力图调度（1km优先）',
+            weighted_score: '动态加权评分',
+            manual: '人工手动指定',
+          };
+          return (
+            <div key={rec.id} className="flex items-start gap-3">
+              <div className="flex flex-col items-center">
+                <div className={cn('w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0', cfg.color)}>
+                  <Icon className="w-4 h-4" />
+                </div>
+                {!isLast && <div className={cn('w-0.5 h-6 mt-0.5', cfg.line)} />}
+              </div>
+              <div className="pb-4 flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-sm font-bold text-secondary-800">{cfg.label}</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary-100 text-secondary-600">
+                      {methodLabel[rec.dispatch_method] || rec.dispatch_method}
+                    </span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary-50 text-primary-600">
+                      {rec.worker_name}
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-secondary-400">{rec.action_time}</span>
+                </div>
+                <div className="flex items-center gap-2 mt-1 flex-wrap text-[9px]">
+                  <span className="flex items-center gap-1 text-secondary-500">
+                    <UserCheck className="w-3 h-3" />操作人：{rec.operator}
+                  </span>
+                  {rec.weighted_score !== undefined && (
+                    <span className="px-1.5 py-0.5 rounded bg-orange-50 text-orange-600">综合{rec.weighted_score.toFixed(1)}</span>
+                  )}
+                  {rec.distance_km !== undefined && (
+                    <span className="px-1.5 py-0.5 rounded bg-blue-50 text-blue-600">距离{rec.distance_km}km</span>
+                  )}
+                  {rec.satisfaction_rate !== undefined && (
+                    <span className="px-1.5 py-0.5 rounded bg-green-50 text-green-600">好评{rec.satisfaction_rate}%</span>
+                  )}
+                  {rec.complaint_rate !== undefined && (
+                    <span className="px-1.5 py-0.5 rounded bg-red-50 text-red-600">投诉{rec.complaint_rate}%</span>
+                  )}
+                </div>
+                {rec.reason && (
+                  <p className="text-[10px] text-secondary-600 mt-1.5 leading-relaxed bg-cream-100 rounded-lg p-2">
+                    {rec.reason}
+                  </p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-2 pt-3 border-t border-dashed border-gray-200 grid grid-cols-3 gap-1.5 text-[9px]">
+        <div className="text-center px-1.5 py-1 rounded-md bg-blue-50">
+          <p className="text-blue-600 font-bold text-[11px]">40%</p>
+          <p className="text-secondary-500">距离权重</p>
+        </div>
+        <div className="text-center px-1.5 py-1 rounded-md bg-green-50">
+          <p className="text-green-600 font-bold text-[11px]">50%</p>
+          <p className="text-secondary-500">好评权重</p>
+        </div>
+        <div className="text-center px-1.5 py-1 rounded-md bg-red-50">
+          <p className="text-red-600 font-bold text-[11px]">10%</p>
+          <p className="text-secondary-500">投诉权重</p>
+        </div>
       </div>
     </div>
   );
@@ -703,6 +804,10 @@ export default function OrderDetail() {
 
         {order.nodes && order.nodes.length > 0 && (
           <NodeTimelineSection nodes={order.nodes} status={order.status} />
+        )}
+
+        {order.dispatch_records && order.dispatch_records.length > 0 && (
+          <DispatchRecordSection records={order.dispatch_records} />
         )}
 
         {canAdvance && (

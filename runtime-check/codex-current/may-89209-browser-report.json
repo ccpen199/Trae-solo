@@ -1,9 +1,9 @@
 {
   "ok": true,
-  "generatedAt": "2026-06-16T03:00:32.848Z",
+  "generatedAt": "2026-06-16T03:09:02.697Z",
   "order": "may-89209",
-  "roundIndex": 12,
-  "captureId": "codex-final-may-89209",
+  "roundIndex": 99,
+  "captureId": "may-89209-codex-current",
   "url": "http://127.0.0.1:49209/",
   "initialUrl": "http://127.0.0.1:49209/",
   "finalUrl": "http://127.0.0.1:49209/",
@@ -11,19 +11,25 @@
   "title": "My Trae Project",
   "initialTitle": "My Trae Project",
   "navigationError": "",
-  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-frontend.png",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-frontend.png",
   "screenshotPaths": [
-    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-01-首屏.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-02-导航-首页.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-03-操作-详情.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-04-二层操作-详情-展开三证详情.png",
-    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-05-操作-后天.png"
+    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-03-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-04-二层操作-详情-展开三证详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-05-操作-后天.png"
   ],
-  "issueTextPreview": "后台管理相关问题；购买/提交相关问题",
+  "issueTextPreview": "后台管理、购买提交、订单链路",
   "targetReason": "后台管理相关问题；购买/提交相关问题",
   "targetKind": "admin",
   "targetMatched": true,
   "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /管理后台/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/admin\" data-discover=\"true\" class=\"mt-4 flex items-center gap-"
+    },
     {
       "action": "click",
       "label": "后台管理相关问题",
@@ -168,12 +174,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89209-structure-01-首屏",
+          "runId": "may-89209-codex-current-structure-01-首屏",
           "label": "首屏",
           "finalUrl": "http://127.0.0.1:49209/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-01-首屏.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-01-首屏.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-01-首屏.png",
           "elementCount": 1200,
           "interactiveCount": 58,
           "interactiveLabels": [
@@ -298,12 +304,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89209-structure-02-导航-首页",
+          "runId": "may-89209-codex-current-structure-02-导航-首页",
           "label": "导航:首页",
           "finalUrl": "http://127.0.0.1:49209/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-02-导航-首页.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-02-导航-首页.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-02-导航-首页.png",
           "elementCount": 1200,
           "interactiveCount": 58,
           "interactiveLabels": [
@@ -381,12 +387,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89209-structure-03-操作-详情",
+          "runId": "may-89209-codex-current-structure-03-操作-详情",
           "label": "操作:详情",
           "finalUrl": "http://127.0.0.1:49209/orders/1001",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-03-操作-详情.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-03-操作-详情.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-03-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-03-操作-详情.png",
           "elementCount": 347,
           "interactiveCount": 10,
           "interactiveLabels": [
@@ -444,12 +450,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89209-structure-04-二层操作-详情-展开三证详情",
+          "runId": "may-89209-codex-current-structure-04-二层操作-详情-展开三证详情",
           "label": "二层操作:详情->展开三证详情",
           "finalUrl": "http://127.0.0.1:49209/orders/1001",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-04-二层操作-详情-展开三证详情.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-04-二层操作-详情-展开三证详情.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-04-二层操作-详情-展开三证详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-04-二层操作-详情-展开三证详情.png",
           "elementCount": 509,
           "interactiveCount": 12,
           "interactiveLabels": [
@@ -554,12 +560,12 @@
         },
         "structureCapture": {
           "module": "website_structure_capture",
-          "runId": "codex-final-may-89209-structure-05-操作-后天",
+          "runId": "may-89209-codex-current-structure-05-操作-后天",
           "label": "操作:后天",
           "finalUrl": "http://127.0.0.1:49209/",
           "title": "My Trae Project",
-          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-05-操作-后天.json",
-          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-05-操作-后天.png",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-05-操作-后天.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-05-操作-后天.png",
           "elementCount": 1200,
           "interactiveCount": 58,
           "interactiveLabels": [
@@ -629,12 +635,12 @@
     "structureCaptures": [
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-01-首屏",
+        "runId": "may-89209-codex-current-structure-01-首屏",
         "label": "首屏",
         "finalUrl": "http://127.0.0.1:49209/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-01-首屏.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-01-首屏.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-01-首屏.png",
         "elementCount": 1200,
         "interactiveCount": 58,
         "interactiveLabels": [
@@ -672,12 +678,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-02-导航-首页",
+        "runId": "may-89209-codex-current-structure-02-导航-首页",
         "label": "导航:首页",
         "finalUrl": "http://127.0.0.1:49209/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-02-导航-首页.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-02-导航-首页.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-02-导航-首页.png",
         "elementCount": 1200,
         "interactiveCount": 58,
         "interactiveLabels": [
@@ -715,12 +721,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-03-操作-详情",
+        "runId": "may-89209-codex-current-structure-03-操作-详情",
         "label": "操作:详情",
         "finalUrl": "http://127.0.0.1:49209/orders/1001",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-03-操作-详情.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-03-操作-详情.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-03-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-03-操作-详情.png",
         "elementCount": 347,
         "interactiveCount": 10,
         "interactiveLabels": [
@@ -736,12 +742,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-04-二层操作-详情-展开三证详情",
+        "runId": "may-89209-codex-current-structure-04-二层操作-详情-展开三证详情",
         "label": "二层操作:详情->展开三证详情",
         "finalUrl": "http://127.0.0.1:49209/orders/1001",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-04-二层操作-详情-展开三证详情.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-04-二层操作-详情-展开三证详情.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-04-二层操作-详情-展开三证详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-04-二层操作-详情-展开三证详情.png",
         "elementCount": 509,
         "interactiveCount": 12,
         "interactiveLabels": [
@@ -759,12 +765,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-05-操作-后天",
+        "runId": "may-89209-codex-current-structure-05-操作-后天",
         "label": "操作:后天",
         "finalUrl": "http://127.0.0.1:49209/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-05-操作-后天.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-05-操作-后天.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-05-操作-后天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-05-操作-后天.png",
         "elementCount": 1200,
         "interactiveCount": 58,
         "interactiveLabels": [
@@ -810,12 +816,12 @@
     "captures": [
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-01-首屏",
+        "runId": "may-89209-codex-current-structure-01-首屏",
         "label": "首屏",
         "finalUrl": "http://127.0.0.1:49209/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-01-首屏.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-01-首屏.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-01-首屏.png",
         "elementCount": 1200,
         "interactiveCount": 58,
         "interactiveLabels": [
@@ -853,12 +859,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-02-导航-首页",
+        "runId": "may-89209-codex-current-structure-02-导航-首页",
         "label": "导航:首页",
         "finalUrl": "http://127.0.0.1:49209/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-02-导航-首页.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-02-导航-首页.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-02-导航-首页.png",
         "elementCount": 1200,
         "interactiveCount": 58,
         "interactiveLabels": [
@@ -896,12 +902,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-03-操作-详情",
+        "runId": "may-89209-codex-current-structure-03-操作-详情",
         "label": "操作:详情",
         "finalUrl": "http://127.0.0.1:49209/orders/1001",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-03-操作-详情.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-03-操作-详情.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-03-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-03-操作-详情.png",
         "elementCount": 347,
         "interactiveCount": 10,
         "interactiveLabels": [
@@ -917,12 +923,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-04-二层操作-详情-展开三证详情",
+        "runId": "may-89209-codex-current-structure-04-二层操作-详情-展开三证详情",
         "label": "二层操作:详情->展开三证详情",
         "finalUrl": "http://127.0.0.1:49209/orders/1001",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-04-二层操作-详情-展开三证详情.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-04-二层操作-详情-展开三证详情.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-04-二层操作-详情-展开三证详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-04-二层操作-详情-展开三证详情.png",
         "elementCount": 509,
         "interactiveCount": 12,
         "interactiveLabels": [
@@ -940,12 +946,12 @@
       },
       {
         "module": "website_structure_capture",
-        "runId": "codex-final-may-89209-structure-05-操作-后天",
+        "runId": "may-89209-codex-current-structure-05-操作-后天",
         "label": "操作:后天",
         "finalUrl": "http://127.0.0.1:49209/",
         "title": "My Trae Project",
-        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-05-操作-后天.json",
-        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-final-may-89209-structure-05-操作-后天.png",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-05-操作-后天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89209/runtime-check/codex-current/may-89209-codex-current-structure-05-操作-后天.png",
         "elementCount": 1200,
         "interactiveCount": 58,
         "interactiveLabels": [

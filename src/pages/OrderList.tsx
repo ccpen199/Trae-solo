@@ -216,7 +216,11 @@ function CompletedOrderDetail({ order }: { order: Order }) {
   return (
     <div className="mt-3 border-t border-gray-100 pt-3">
       <button
-        onClick={() => setExpanded(!expanded)}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setExpanded(!expanded);
+        }}
         className={cn(
           'w-full flex items-center justify-between px-3 py-2 rounded-xl border transition-colors',
           conclusionCls,
@@ -367,7 +371,11 @@ function OngoingActions({ order }: { order: Order }) {
   const canClaimCompensation = ['accepted', 'departing', 'arrived', 'servicing'].includes(order.status) || order.is_overtime;
   const canAdvance = order.status !== 'completed' && order.status !== 'cancelled' && order.status !== 'compensated';
 
-  const handleAdvance = async () => {
+  const handleAdvance = async (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setAdvancing(true);
     await new Promise((resolve) => setTimeout(resolve, 600));
     advanceOrderStatus(order.id);
@@ -379,6 +387,7 @@ function OngoingActions({ order }: { order: Order }) {
       <Link
         to={`/orders/${order.id}`}
         className="flex-1 text-center py-1.5 rounded-lg bg-primary-50 text-primary-600 text-xs font-medium hover:bg-primary-100 transition-colors"
+        onClick={(e) => e.stopPropagation()}
       >
         追踪详情
       </Link>

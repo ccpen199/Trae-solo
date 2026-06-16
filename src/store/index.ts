@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import type { User, Order, Address, PageRole, ServiceType, AddressDispatchInfo, ServiceNode, CompensationRecord, QARecordDetail, InsuranceInfo, Worker } from '@/types';
+import type { User, Order, Address, PageRole, ServiceType, AddressDispatchInfo, ServiceNode, CompensationRecord, QARecordDetail, InsuranceInfo, Worker, DispatchRecord } from '@/types';
+import { useWorkerStore } from './useWorkerStore';
 
 interface HomeStats {
   todayDispatched: number;
@@ -28,6 +29,7 @@ interface AppState {
   getDispatchInfo: (addressId: number) => AddressDispatchInfo | undefined;
   getHomeStats: () => HomeStats;
   advanceOrderStatus: (orderId: number) => Order | null;
+  reassignWorker: (orderId: number, newWorkerId: number, reason?: string, operator?: string) => Order | null;
   getDispatchQueue: (addressId: number, serviceType: ServiceType) => Worker[];
 }
 
@@ -471,10 +473,116 @@ const addressDispatchMap: Record<number, AddressDispatchInfo> = {
   },
 };
 
+const workerNameMap: Record<number, { name: string; phone: string }> = {
+  101: { name: '王秀兰', phone: '137****3701' },
+  102: { name: '李桂芳', phone: '137****3702' },
+  103: { name: '张淑珍', phone: '137****3703' },
+  104: { name: '赵美华', phone: '137****3704' },
+  105: { name: '刘春梅', phone: '137****3705' },
+  106: { name: '孙丽娟', phone: '137****3706' },
+  107: { name: '陈金英', phone: '137****3707' },
+};
+
+const workerScoreMap: Record<number, number> = {
+  101: 4.8, 102: 4.7, 103: 4.85, 104: 4.2, 105: 4.95, 106: 3.2, 107: 4.9,
+};
+
+const workerSatisfactionMap: Record<number, number> = {
+  101: 96.2, 102: 95.5, 103: 97.8, 104: 90.0, 105: 99.0, 106: 85.0, 107: 98.5,
+};
+
+const workerComplaintMap: Record<number, number> = {
+  101: 0.8, 102: 1.0, 103: 0.5, 104: 2.5, 105: 0.3, 106: 5.5, 107: 0.2,
+};
+
+function buildDispatchRecords(order: Order): DispatchRecord[] {
+  if (!order.worker_id || !order.start_time) return [];
+  const d = order.start_time.slice(0, 10);
+  const t = order.start_time.slice(11, 16);
+  const [h, m] = t.split(':').map(Number);
+  const addMin = (min: number) => {
+    const total = h * 60 + m + min;
+    const nh = Math.floor(total / 60) % 24;
+    const nm = total % 60;
+    return `${d} ${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
+  };
+
+  const recs: DispatchRecord[] = [];
+  recs.push({
+    id: 1,
+    order_id: order.id,
+    worker_id: order.worker_id,
+    worker_name: workerNameMap[order.worker_id]?.name || order.worker_name || '',
+    action: 'system_assign',
+    action_label: '热力图派单',
+    action_time: addMin(-60),
+    operator: '调度热力系统',
+    reason: '1km优先+动态加权综合匹配',
+    dispatch_method: 'heatmap_1km',
+    weighted_score: workerScoreMap[order.worker_id],
+    distance_km: order.distance_km,
+    satisfaction_rate: workerSatisfactionMap[order.worker_id],
+    complaint_rate: workerComplaintMap[order.worker_id],
+  });
+  recs.push({
+    id: 2,
+    order_id: order.id,
+    worker_id: order.worker_id,
+    worker_name: workerNameMap[order.worker_id]?.name || order.worker_name || '',
+    action: 'dispatch_audit',
+    action_label: '调度复核',
+    action_time: addMin(-55),
+    operator: '调度员-李伟',
+    reason: '人工复核通过，三证齐全+评分达标',
+    dispatch_method: 'weighted_score',
+    weighted_score: workerScoreMap[order.worker_id],
+    distance_km: order.distance_km,
+    satisfaction_rate: workerSatisfactionMap[order.worker_id],
+    complaint_rate: workerComplaintMap[order.worker_id],
+  });
+  if (['accepted', 'departing', 'arrived', 'servicing', 'completed', 'compensated'].includes(order.status)) {
+    recs.push({
+      id: 3,
+      order_id: order.id,
+      worker_id: order.worker_id,
+      worker_name: workerNameMap[order.worker_id]?.name || order.worker_name || '',
+      action: 'worker_accept',
+      action_label: '阿姨确认接单',
+      action_time: addMin(-50),
+      operator: workerNameMap[order.worker_id]?.name || order.worker_name || '',
+      reason: '阿姨已接单，正在准备出发',
+      dispatch_method: 'weighted_score',
+    });
+  }
+  if (order.id === 1006) {
+    recs.push({
+      id: 4,
+      order_id: order.id,
+      worker_id: order.worker_id,
+      worker_name: workerNameMap[order.worker_id]?.name || order.worker_name || '',
+      action: 'manual_reassign',
+      action_label: '紧急改派',
+      action_time: addMin(-40),
+      operator: '调度主管-王强',
+      reason: '原派阿姨临时请假，紧急改派备选阿姨',
+      dispatch_method: 'manual',
+    });
+  }
+  return recs;
+}
+
+const enhancedOrders: Order[] = mockOrders.map((o) => ({
+  ...o,
+  worker_name: o.worker_id && workerNameMap[o.worker_id] ? workerNameMap[o.worker_id].name : o.worker_name,
+  worker_phone: o.worker_id && workerNameMap[o.worker_id] ? workerNameMap[o.worker_id].phone : o.worker_phone,
+  worker_score: o.worker_id && workerScoreMap[o.worker_id] ? workerScoreMap[o.worker_id] : o.worker_score,
+  dispatch_records: buildDispatchRecords(o),
+}));
+
 export const useAppStore = create<AppState>((set, get) => ({
   currentRole: 'user',
   user: mockUser,
-  orders: mockOrders,
+  orders: enhancedOrders,
   addresses: mockAddresses,
   selectedAddress: mockAddresses[0],
   addressDispatchMap,
@@ -565,23 +673,81 @@ export const useAppStore = create<AppState>((set, get) => ({
 
     return updatedOrder;
   },
+  reassignWorker: (orderId, newWorkerId, reason, operator = '用户手动改派') => {
+    const state = get();
+    const order = state.orders.find((o) => o.id === orderId);
+    const getCertByWorkerId = useWorkerStore.getState().getCertByWorkerId;
+    const getScoreByWorkerId = useWorkerStore.getState().getScoreByWorkerId;
+    const getWorkerById = useWorkerStore.getState().getWorkerById;
+
+    if (!order) return null;
+    const worker = getWorkerById(newWorkerId);
+    const cert = getCertByWorkerId(newWorkerId);
+    const score = getScoreByWorkerId(newWorkerId);
+    if (!worker) return null;
+
+    const nowTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    const newDispatchRecord: DispatchRecord = {
+      id: (order.dispatch_records?.length || 0) + 1,
+      order_id: orderId,
+      worker_id: newWorkerId,
+      worker_name: worker.real_name,
+      action: 'manual_reassign',
+      action_label: '人工改派',
+      action_time: nowTime,
+      operator,
+      reason: reason || '用户选择其他阿姨',
+      dispatch_method: 'manual',
+      weighted_score: score?.overall_score,
+      satisfaction_rate: score?.satisfaction_rate,
+      complaint_rate: score?.complaint_rate,
+    };
+
+    const assignNode: ServiceNode = {
+      id: (order.nodes?.length || 0) + 1,
+      order_id: orderId,
+      node_type: 'assigned',
+      node_label: '阿姨改派',
+      node_time: nowTime,
+      remark: `由${operator}改派至${worker.real_name}（${reason || '用户选择其他阿姨'}）`,
+    };
+
+    const updatedOrder: Order = {
+      ...order,
+      worker_id: newWorkerId,
+      worker_name: worker.real_name,
+      worker_phone: worker.phone,
+      worker_score: score?.overall_score,
+      worker_avatar: worker.avatar,
+      status: order.status === 'pending' ? 'assigned' : order.status,
+      status_label: order.status === 'pending' ? '待接单' : order.status_label,
+      nodes: [...(order.nodes || []), assignNode],
+      dispatch_records: [...(order.dispatch_records || []), newDispatchRecord],
+      distance_km: Math.random() * 1.5 + 0.3,
+    };
+
+    set((s) => ({
+      orders: s.orders.map((o) => (o.id === orderId ? updatedOrder : o)),
+    }));
+    return updatedOrder;
+  },
   getDispatchQueue: (addressId, serviceType) => {
     const dispatchInfo = get().addressDispatchMap[addressId];
     if (!dispatchInfo) return [];
 
     const workerPool: Worker[] = [
-      { id: 101, real_name: '李阿姨', phone: '139****6666', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Liyi', age: 45, status: 'verified', skills: ['日常保洁', '衣物整理', '上门做饭'], experience_years: 6, punctuality_rate: 98, satisfaction_rate: 96, complaint_rate: 1.2, distance_km: 0.5, avg_arrive_minutes: 12, order_count: 328, completed_orders: 325 },
-      { id: 102, real_name: '王阿姨', phone: '137****5555', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Wang', age: 42, status: 'verified', skills: ['日常保洁', '上门做饭'], experience_years: 5, punctuality_rate: 95, satisfaction_rate: 94, complaint_rate: 2.1, distance_km: 0.8, avg_arrive_minutes: 18, order_count: 256, completed_orders: 250 },
-      { id: 103, real_name: '张阿姨', phone: '136****4444', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zhang', age: 48, status: 'verified', skills: ['日常保洁', '育婴师', '辅食制作'], experience_years: 8, punctuality_rate: 99, satisfaction_rate: 98, complaint_rate: 0.5, distance_km: 1.0, avg_arrive_minutes: 22, order_count: 412, completed_orders: 410 },
-      { id: 105, real_name: '陈阿姨', phone: '136****9999', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Chen', age: 44, status: 'verified', skills: ['育婴师', '日常保洁'], experience_years: 7, punctuality_rate: 97, satisfaction_rate: 97, complaint_rate: 0.8, distance_km: 0.6, avg_arrive_minutes: 15, order_count: 386, completed_orders: 383 },
-      { id: 107, real_name: '刘阿姨', phone: '135****2222', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Liu', age: 40, status: 'verified', skills: ['育婴师', '辅食制作'], experience_years: 4, punctuality_rate: 96, satisfaction_rate: 95, complaint_rate: 1.5, distance_km: 0.4, avg_arrive_minutes: 10, order_count: 198, completed_orders: 195 },
-      { id: 108, real_name: '周阿姨', phone: '134****8888', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zhou', age: 46, status: 'verified', skills: ['日常保洁', '上门做饭', '衣物整理'], experience_years: 5, punctuality_rate: 94, satisfaction_rate: 92, complaint_rate: 2.8, distance_km: 1.2, avg_arrive_minutes: 25, order_count: 221, completed_orders: 215 },
-      { id: 110, real_name: '吴阿姨', phone: '133****6666', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Wu', age: 43, status: 'verified', skills: ['上门做饭', '日常保洁'], experience_years: 3, punctuality_rate: 93, satisfaction_rate: 91, complaint_rate: 3.2, distance_km: 1.5, avg_arrive_minutes: 30, order_count: 145, completed_orders: 140 },
-      { id: 111, real_name: '郑阿姨', phone: '132****5555', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zheng', age: 47, status: 'verified', skills: ['育婴师', '辅食制作', '日常保洁'], experience_years: 9, punctuality_rate: 99, satisfaction_rate: 99, complaint_rate: 0.3, distance_km: 0.9, avg_arrive_minutes: 20, order_count: 523, completed_orders: 522 },
-      { id: 112, real_name: '孙阿姨', phone: '131****4444', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sun', age: 39, status: 'verified', skills: ['日常保洁'], experience_years: 2, punctuality_rate: 92, satisfaction_rate: 90, complaint_rate: 3.8, distance_km: 1.8, avg_arrive_minutes: 35, order_count: 87, completed_orders: 83 },
-      { id: 113, real_name: '胡阿姨', phone: '130****3333', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Hu', age: 41, status: 'verified', skills: ['上门做饭', '育婴师'], experience_years: 6, punctuality_rate: 97, satisfaction_rate: 96, complaint_rate: 1.0, distance_km: 0.7, avg_arrive_minutes: 16, order_count: 276, completed_orders: 273 },
-      { id: 114, real_name: '林阿姨', phone: '158****2222', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lin', age: 45, status: 'verified', skills: ['日常保洁', '育婴师'], experience_years: 7, punctuality_rate: 98, satisfaction_rate: 97, complaint_rate: 0.7, distance_km: 0.55, avg_arrive_minutes: 13, order_count: 345, completed_orders: 343 },
-      { id: 115, real_name: '何阿姨', phone: '159****1111', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=He', age: 38, status: 'verified', skills: ['上门做饭', '日常保洁'], experience_years: 4, punctuality_rate: 95, satisfaction_rate: 93, complaint_rate: 2.0, distance_km: 1.1, avg_arrive_minutes: 23, order_count: 167, completed_orders: 164 },
+      { id: 101, real_name: '王秀兰', phone: '137****3701', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Auntie1', age: 45, status: 'verified', skills: ['日常保洁', '深度保洁', '厨卫清洁'], experience_years: 6, punctuality_rate: 98.5, satisfaction_rate: 96.2, complaint_rate: 0.8, distance_km: 0.45, avg_arrive_minutes: 12, order_count: 328, completed_orders: 325, weighted_score: 96.5 },
+      { id: 102, real_name: '李桂芳', phone: '137****3702', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Auntie2', age: 42, status: 'verified', skills: ['育儿陪护', '上门做饭'], experience_years: 5, punctuality_rate: 97.0, satisfaction_rate: 95.5, complaint_rate: 1.0, distance_km: 0.65, avg_arrive_minutes: 15, order_count: 256, completed_orders: 250, weighted_score: 94.2 },
+      { id: 103, real_name: '张淑珍', phone: '137****3703', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Auntie3', age: 48, status: 'verified', skills: ['深度保洁', '日常保洁', '开荒保洁'], experience_years: 8, punctuality_rate: 99.0, satisfaction_rate: 97.8, complaint_rate: 0.5, distance_km: 0.95, avg_arrive_minutes: 20, order_count: 412, completed_orders: 410, weighted_score: 97.8 },
+      { id: 105, real_name: '刘春梅', phone: '137****3705', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Auntie5', age: 50, status: 'verified', skills: ['育婴师', '上门烹饪', '月子餐'], experience_years: 10, punctuality_rate: 99.5, satisfaction_rate: 99.0, complaint_rate: 0.3, distance_km: 0.55, avg_arrive_minutes: 13, order_count: 189, completed_orders: 188, weighted_score: 99.1 },
+      { id: 107, real_name: '陈金英', phone: '137****3707', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Auntie7', age: 46, status: 'verified', skills: ['育婴师', '婴儿抚触', '早教启蒙'], experience_years: 7, punctuality_rate: 99.0, satisfaction_rate: 98.5, complaint_rate: 0.2, distance_km: 0.35, avg_arrive_minutes: 9, order_count: 301, completed_orders: 300, weighted_score: 98.6 },
+      { id: 108, real_name: '周淑芬', phone: '134****5678', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zhou', age: 46, status: 'verified', skills: ['日常保洁', '上门做饭'], experience_years: 5, punctuality_rate: 94.0, satisfaction_rate: 92.0, complaint_rate: 2.8, distance_km: 1.2, avg_arrive_minutes: 25, order_count: 221, completed_orders: 215, weighted_score: 88.6 },
+      { id: 110, real_name: '吴玉梅', phone: '133****6666', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Wu', age: 43, status: 'verified', skills: ['上门做饭', '日常保洁'], experience_years: 3, punctuality_rate: 93.0, satisfaction_rate: 91.0, complaint_rate: 3.2, distance_km: 1.5, avg_arrive_minutes: 30, order_count: 145, completed_orders: 140, weighted_score: 86.2 },
+      { id: 111, real_name: '郑桂兰', phone: '132****5555', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zheng', age: 47, status: 'verified', skills: ['育婴师', '日常保洁'], experience_years: 9, punctuality_rate: 99.0, satisfaction_rate: 99.0, complaint_rate: 0.3, distance_km: 0.85, avg_arrive_minutes: 18, order_count: 523, completed_orders: 522, weighted_score: 98.9 },
+      { id: 112, real_name: '孙丽华', phone: '131****4444', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sun', age: 39, status: 'verified', skills: ['日常保洁', '衣物整理'], experience_years: 2, punctuality_rate: 92.0, satisfaction_rate: 90.0, complaint_rate: 3.8, distance_km: 1.8, avg_arrive_minutes: 35, order_count: 87, completed_orders: 83, weighted_score: 84.5 },
+      { id: 113, real_name: '胡秀芬', phone: '130****3333', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Hu', age: 41, status: 'verified', skills: ['上门做饭', '育婴师'], experience_years: 6, punctuality_rate: 97.0, satisfaction_rate: 96.0, complaint_rate: 1.0, distance_km: 0.7, avg_arrive_minutes: 16, order_count: 276, completed_orders: 273, weighted_score: 95.3 },
+      { id: 114, real_name: '林春梅', phone: '158****2222', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lin', age: 45, status: 'verified', skills: ['日常保洁', '育婴师'], experience_years: 7, punctuality_rate: 98.0, satisfaction_rate: 97.0, complaint_rate: 0.7, distance_km: 0.55, avg_arrive_minutes: 13, order_count: 345, completed_orders: 343, weighted_score: 96.8 },
+      { id: 115, real_name: '何丽娟', phone: '159****1111', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=He', age: 38, status: 'verified', skills: ['上门做饭', '日常保洁'], experience_years: 4, punctuality_rate: 95.0, satisfaction_rate: 93.0, complaint_rate: 2.0, distance_km: 1.1, avg_arrive_minutes: 23, order_count: 167, completed_orders: 164, weighted_score: 90.1 },
     ];
 
     const typeSkillMap: Record<ServiceType, string[]> = {

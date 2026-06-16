@@ -57,6 +57,7 @@ export default function QuickOrderForm() {
   const [submitting, setSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [orderId, setOrderId] = useState(0);
+  const [selectedWorkerId, setSelectedWorkerId] = useState<number | null>(null);
 
   const currentService = serviceTypeList.find((s) => s.type === serviceType)!;
   const dateStr = getDateStr(dateOffset);
@@ -103,6 +104,8 @@ export default function QuickOrderForm() {
     const newOrderId = Date.now();
     const policyNo = `JZ${dateStr.replace(/-/g, '')}${String(newOrderId).slice(-6)}`;
     const startTimeStr = `${dateStr} ${time}`;
+    const targetWorkerId = selectedWorkerId ?? dispatchQueue[0]?.id ?? 101;
+    const chosenWorker = dispatchQueue.find(w => w.id === targetWorkerId) || dispatchQueue[0];
 
     const genOrderNodes = (): import('@/types').ServiceNode[] => {
       const d = dateStr;
@@ -113,15 +116,65 @@ export default function QuickOrderForm() {
         const nm = total % 60;
         return `${d} ${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
       };
+      const assignRemark = selectedWorkerId
+        ? `用户手动指定阿姨：${chosenWorker?.real_name || ''}`
+        : '热力图匹配1km内最优阿姨（动态加权评分第一）';
       return [
         { id: 1, order_id: newOrderId, node_type: 'order_created' as const, node_label: '订单创建', node_time: addMin(time, -1), remark: '3秒快速下单完成' },
-        { id: 2, order_id: newOrderId, node_type: 'assigned' as const, node_label: '系统派单', node_time: addMin(time, 2), remark: '热力图匹配1km内最优阿姨' },
+        { id: 2, order_id: newOrderId, node_type: 'assigned' as const, node_label: selectedWorkerId ? '人工指定派单' : '系统派单', node_time: addMin(time, 2), remark: assignRemark },
       ];
+    };
+
+    const genDispatchRecords = (): import('@/types').DispatchRecord[] => {
+      const d = dateStr;
+      const addMin = (min: number) => {
+        const [h, m] = time.split(':').map(Number);
+        const total = h * 60 + m + min;
+        const nh = Math.floor(total / 60) % 24;
+        const nm = total % 60;
+        return `${d} ${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
+      };
+      const recs: import('@/types').DispatchRecord[] = [
+        {
+          id: 1,
+          order_id: newOrderId,
+          worker_id: targetWorkerId,
+          worker_name: chosenWorker?.real_name || '待指派',
+          action: selectedWorkerId ? 'manual_reassign' : 'system_assign',
+          action_label: selectedWorkerId ? '用户指定派单' : '热力图派单',
+          action_time: addMin(-58),
+          operator: selectedWorkerId ? '用户手动指定' : '调度热力系统',
+          reason: selectedWorkerId ? '用户在派单队列中主动选择此阿姨' : '1km优先+动态加权综合匹配',
+          dispatch_method: selectedWorkerId ? 'manual' : 'heatmap_1km',
+          weighted_score: chosenWorker?.weighted_score || avgScore * 20,
+          distance_km: chosenWorker?.distance_km || (dispatchInfo ? dispatchInfo.worker_distribution[0]?.count ? 0.5 : 1.0 : 0.8),
+          satisfaction_rate: chosenWorker?.satisfaction_rate,
+          complaint_rate: chosenWorker?.complaint_rate,
+        },
+        {
+          id: 2,
+          order_id: newOrderId,
+          worker_id: targetWorkerId,
+          worker_name: chosenWorker?.real_name || '待指派',
+          action: 'dispatch_audit',
+          action_label: '调度复核',
+          action_time: addMin(-55),
+          operator: '调度员-李伟',
+          reason: `复核通过：三证齐全+综合评分${(chosenWorker?.weighted_score || avgScore * 20).toFixed(1)}达标，${chosenWorker?.distance_km || 0.8}km符合1km优先条件`,
+          dispatch_method: 'weighted_score',
+          weighted_score: chosenWorker?.weighted_score || avgScore * 20,
+          distance_km: chosenWorker?.distance_km || 0.8,
+          satisfaction_rate: chosenWorker?.satisfaction_rate,
+          complaint_rate: chosenWorker?.complaint_rate,
+        },
+      ];
+      return recs;
     };
 
     const newOrder: import('@/types').Order = {
       id: newOrderId,
       user_id: 1,
+      worker_id: targetWorkerId,
       service_type: serviceType,
       service_type_label: currentService.label,
       address: selectedAddress.detail,
@@ -135,6 +188,7 @@ export default function QuickOrderForm() {
       amount: totalFee,
       created_at: new Date().toISOString().slice(0, 16).replace('T', ' '),
       nodes: genOrderNodes(),
+      dispatch_records: genDispatchRecords(),
       insurance: {
         policy_no: policyNo,
         product_name: '家政服务责任险',
@@ -142,8 +196,11 @@ export default function QuickOrderForm() {
         premium: insuranceFee,
         status: 'active',
       },
-      worker_score: avgScore,
-      distance_km: dispatchInfo ? dispatchInfo.worker_distribution[0]?.count ? 0.5 : 1.0 : 0.8,
+      worker_name: chosenWorker?.real_name || '匹配中...',
+      worker_avatar: chosenWorker?.avatar || '',
+      worker_phone: chosenWorker?.phone || '待确认',
+      worker_score: chosenWorker ? Math.round(chosenWorker.weighted_score / 20 * 10) / 10 : avgScore,
+      distance_km: chosenWorker?.distance_km || (dispatchInfo ? dispatchInfo.worker_distribution[0]?.count ? 0.5 : 1.0 : 0.8),
     };
 
     setTimeout(() => {
@@ -492,6 +549,7 @@ export default function QuickOrderForm() {
             <div className="space-y-1.5">
               {dispatchQueue.map((w, i) => {
                 const isTop = i === 0;
+                const isSelected = selectedWorkerId === w.id;
                 const satColor = w.satisfaction_rate && w.satisfaction_rate >= 97 ? 'text-green-600' : w.satisfaction_rate && w.satisfaction_rate >= 93 ? 'text-yellow-600' : 'text-orange-600';
                 const complColor = w.complaint_rate && w.complaint_rate <= 1 ? 'text-green-600' : w.complaint_rate && w.complaint_rate <= 2.5 ? 'text-yellow-600' : 'text-red-600';
                 return (
@@ -499,22 +557,25 @@ export default function QuickOrderForm() {
                     key={w.id}
                     className={cn(
                       'flex items-center gap-2.5 p-2 rounded-xl transition-colors',
-                      isTop ? 'bg-orange-50 border border-orange-100' : 'bg-cream-100 border border-transparent'
+                      isSelected ? 'bg-primary-50 border-2 border-primary-300 ring-2 ring-primary-100' :
+                      isTop ? 'bg-orange-50 border border-orange-100' : 'bg-cream-100 border border-transparent hover:border-gray-200'
                     )}
                   >
                     <div className="relative flex-shrink-0">
                       <img src={w.avatar} alt={w.real_name} className="w-9 h-9 rounded-full bg-secondary-100" />
                       <div className={cn(
                         'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white',
+                        isSelected ? 'bg-primary-500' :
                         isTop ? 'bg-orange-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-secondary-300'
                       )}>
-                        {i + 1}
+                        {isSelected ? '✓' : i + 1}
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
                         <span className="text-xs font-semibold text-secondary-800">{w.real_name}</span>
-                        {isTop && <span className="text-[8px] px-1 py-0 rounded bg-orange-200 text-orange-700 font-medium">优先派单</span>}
+                        {isTop && !isSelected && <span className="text-[8px] px-1 py-0 rounded bg-orange-200 text-orange-700 font-medium">优先派单</span>}
+                        {isSelected && <span className="text-[8px] px-1 py-0 rounded bg-primary-200 text-primary-700 font-medium">已选</span>}
                         <span className="text-[9px] text-secondary-400">·{w.experience_years}年</span>
                       </div>
                       <div className="flex items-center gap-2 mt-0.5 text-[9px]">
@@ -525,9 +586,20 @@ export default function QuickOrderForm() {
                         <span className={complColor}>投诉{w.complaint_rate}%</span>
                       </div>
                     </div>
-                    <div className="text-right flex-shrink-0">
-                      <p className="text-xs font-bold text-orange-600">{w.weighted_score?.toFixed(1)}</p>
-                      <p className="text-[8px] text-secondary-400">综合分</p>
+                    <div className="flex items-center gap-1">
+                      <div className="text-right flex-shrink-0">
+                        <p className="text-xs font-bold text-orange-600">{(w.weighted_score || 90).toFixed(1)}</p>
+                        <p className="text-[8px] text-secondary-400">综合分</p>
+                      </div>
+                      <button
+                        onClick={() => setSelectedWorkerId(isSelected ? null : w.id!)}
+                        className={cn(
+                          'text-[9px] px-1.5 py-1 rounded-md font-medium transition-colors',
+                          isSelected ? 'bg-primary-500 text-white' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
+                        )}
+                      >
+                        {isSelected ? '取消' : '选择'}
+                      </button>
                     </div>
                   </div>
                 );
