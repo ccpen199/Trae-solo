@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { postApi } from '../api';
+import { postApi, adminApi } from '../api';
 import { useAuthStore } from '../store/auth';
 import { Button, Card, Avatar, Badge, Icon, EmptyState } from '../components/ui';
 import type { Post, Comment } from '../types';
@@ -11,6 +11,11 @@ import {
   getPostTypeColor,
   getSourceLevelLabel,
   getSourceLevelColor,
+  getSourceLevelDesc,
+  getRiskLevelLabel,
+  getRiskLevelColor,
+  getAuditActionLabel,
+  getAuditActionColor,
 } from '../utils/format';
 
 const PostDetailPage: React.FC = () => {
@@ -22,6 +27,9 @@ const PostDetailPage: React.FC = () => {
   const [replyTo, setReplyTo] = useState<Comment | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [showTrace, setShowTrace] = useState(false);
+  const [traceData, setTraceData] = useState<any>(null);
+  const [loadingTrace, setLoadingTrace] = useState(false);
 
   useEffect(() => {
     if (id) loadPost();
@@ -33,6 +41,20 @@ const PostDetailPage: React.FC = () => {
       setPost(res.post);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleTrace = async () => {
+    if (!user || !post) return;
+    setLoadingTrace(true);
+    try {
+      const res = await adminApi.tracePost(post.id);
+      setTraceData(res);
+      setShowTrace(true);
+    } catch (err: any) {
+      alert(err.response?.data?.error || '加载溯源数据失败');
+    } finally {
+      setLoadingTrace(false);
     }
   };
 
@@ -61,6 +83,9 @@ const PostDetailPage: React.FC = () => {
       setSubmitting(false);
     }
   };
+
+  const latestAudit = post?.auditLogs?.[0];
+  const riskLevel = latestAudit?.riskLevel;
 
   if (loading) {
     return (
@@ -112,13 +137,21 @@ const PostDetailPage: React.FC = () => {
                 <span className="text-lg font-bold text-gray-900">{post.user.nickname}</span>
                 {post.user.isVerified && <Badge className="bg-blue-100 text-blue-700">✓ 已认证</Badge>}
                 {post.sourceLevel !== 'ORDINARY' && (
-                  <Badge className={`${getSourceLevelColor(post.sourceLevel)} text-white`}>
+                  <Badge
+                    className={`${getSourceLevelColor(post.sourceLevel)} text-white`}
+                    title={getSourceLevelDesc(post.sourceLevel)}
+                  >
                     {getSourceLevelLabel(post.sourceLevel)}
+                  </Badge>
+                )}
+                {riskLevel && riskLevel !== 'LOW' && (
+                  <Badge className={`${getRiskLevelColor(riskLevel)}`}>
+                    {getRiskLevelLabel(riskLevel)}
                   </Badge>
                 )}
                 <Badge className={getPostTypeColor(post.type)}>{getPostTypeLabel(post.type)}</Badge>
               </div>
-              <div className="flex items-center gap-2 mt-1 text-sm text-gray-400">
+              <div className="flex items-center gap-2 mt-1 text-sm text-gray-400 flex-wrap">
                 <span>{formatDateTime(post.createdAt)}</span>
                 {post.locationName && (
                   <>
@@ -131,6 +164,28 @@ const PostDetailPage: React.FC = () => {
                 )}
                 <span>·</span>
                 <span>阅读 {post.viewCount}</span>
+                {post.auditLogs && post.auditLogs.length > 0 && (
+                  <>
+                    <span>·</span>
+                    <button
+                      onClick={handleTrace}
+                      className="text-purple-500 hover:text-purple-600 flex items-center gap-1 font-medium"
+                    >
+                      🔍 查看溯源
+                    </button>
+                  </>
+                )}
+                {user?.role === 'ADMIN' && (
+                  <>
+                    <span>·</span>
+                    <Link
+                      to="/admin/audit"
+                      className="text-blue-500 hover:text-blue-600 flex items-center gap-1 font-medium"
+                    >
+                      🛠️ 内容审核
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -183,6 +238,11 @@ const PostDetailPage: React.FC = () => {
               <Icon name="check" /> 真实消费凭证
             </Badge>
           )}
+          {post.isPitfall && (
+            <Badge className="bg-red-50 text-red-700 px-3 py-1 text-sm">
+              ⚠️ 避坑提示（已置顶）
+            </Badge>
+          )}
         </div>
 
         {/* Merchant Link */}
@@ -227,6 +287,133 @@ const PostDetailPage: React.FC = () => {
           </div>
         </div>
       </Card>
+
+      {/* Audit Timeline */}
+      {post.auditLogs && post.auditLogs.length > 0 && (
+        <Card className="p-6">
+          <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span className="text-xl">📋</span> 内容审核时间线
+          </h3>
+          <div className="space-y-4">
+            {post.auditLogs.map((log, i) => (
+              <div key={log.id} className="flex gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-3 h-3 rounded-full bg-primary-500 flex-shrink-0" />
+                  {i < post.auditLogs!.length - 1 && (
+                    <div className="w-0.5 flex-1 bg-gray-200 mt-1" />
+                  )}
+                </div>
+                <div className="flex-1 pb-4">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Badge className={getAuditActionColor(log.action)}>
+                      {getAuditActionLabel(log.action)}
+                    </Badge>
+                    {log.riskLevel && (
+                      <Badge className={getRiskLevelColor(log.riskLevel)}>
+                        风险等级：{getRiskLevelLabel(log.riskLevel)}
+                      </Badge>
+                    )}
+                    {log.aiScore !== undefined && (
+                      <span className="text-xs text-gray-500">AI 评分：{log.aiScore}</span>
+                    )}
+                  </div>
+                  {log.matchedKeywords && log.matchedKeywords.length > 0 && (
+                    <div className="mt-2 text-xs text-gray-500">
+                      检测关键词：{log.matchedKeywords.join('、')}
+                    </div>
+                  )}
+                  {log.reason && (
+                    <div className="mt-1 text-sm text-gray-600">
+                      备注：{log.reason}
+                    </div>
+                  )}
+                  <div className="mt-1 text-xs text-gray-400">
+                    {log.auditor ? `${log.auditor.nickname} · ` : ''}
+                    {formatDateTime(log.createdAt)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Trace Modal */}
+      {showTrace && traceData && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowTrace(false)}>
+          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <div className="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white">
+              <h3 className="text-lg font-bold text-gray-800">🔍 内容溯源追踪</h3>
+              <button onClick={() => setShowTrace(false)} className="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div className="p-6 space-y-6">
+              <div>
+                <h4 className="font-semibold text-gray-800 mb-2">内容基本信息</h4>
+                <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">内容 ID</span>
+                    <span className="font-mono">{traceData.post?.id}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">发布时间</span>
+                    <span>{traceData.post ? formatDateTime(traceData.post.createdAt) : '-'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">当前状态</span>
+                    <span>{traceData.post?.status}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">信源等级</span>
+                    <span>{traceData.post ? getSourceLevelLabel(traceData.post.sourceLevel) : '-'}</span>
+                  </div>
+                </div>
+              </div>
+
+              {traceData.timeline && traceData.timeline.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-3">完整传播链路</h4>
+                  <div className="space-y-3">
+                    {traceData.timeline.map((item: any, i: number) => (
+                      <div key={i} className="flex gap-3">
+                        <div className="w-2 h-2 rounded-full bg-purple-500 mt-2 flex-shrink-0" />
+                        <div className="flex-1 bg-gray-50 rounded-lg p-3 text-sm">
+                          <div className="flex justify-between items-start">
+                            <span className="font-medium text-gray-800">{item.action}</span>
+                            <span className="text-xs text-gray-400">{formatDateTime(item.time)}</span>
+                          </div>
+                          {item.detail && <div className="text-gray-600 mt-1">{item.detail}</div>}
+                          {item.operator && <div className="text-xs text-gray-400 mt-1">操作人：{item.operator}</div>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {traceData.relatedPosts && traceData.relatedPosts.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-3">关联内容（{traceData.relatedPosts.length}）</h4>
+                  <div className="space-y-2">
+                    {traceData.relatedPosts.slice(0, 5).map((rp: any) => (
+                      <div
+                        key={rp.id}
+                        className="bg-gray-50 rounded-lg p-3 cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          setShowTrace(false);
+                          navigate(`/posts/${rp.id}`);
+                        }}
+                      >
+                        <div className="text-sm font-medium text-gray-800 line-clamp-1">{rp.title}</div>
+                        <div className="text-xs text-gray-400 mt-1">{formatDateTime(rp.createdAt)} · {rp.user?.nickname}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Comment Input */}
       <Card className="p-6">

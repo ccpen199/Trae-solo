@@ -32,6 +32,15 @@ export interface Merchant {
   status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'SUSPENDED';
   coupons?: Coupon[];
   distance?: number;
+  stats?: {
+    totalCoupons: number;
+    totalClaimed: number;
+    totalRedeemed: number;
+    redemptionRate: number;
+    reviewCount: number;
+    postConversionRate: number;
+    heatScore: number;
+  };
 }
 
 export interface Coupon {
@@ -59,6 +68,19 @@ export interface UserCoupon {
   usedAt?: string;
   status: 'AVAILABLE' | 'USED' | 'EXPIRED';
   coupon: Coupon & { merchant: Merchant };
+}
+
+export interface AuditLog {
+  id: string;
+  postId: string;
+  auditorId: string;
+  action: string;
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  aiScore: number;
+  matchedKeywords?: string[];
+  reason?: string;
+  createdAt: string;
+  auditor?: Pick<User, 'id' | 'nickname' | 'avatar' | 'role'>;
 }
 
 export interface Post {
@@ -93,6 +115,7 @@ export interface Post {
   topics?: { topic: Topic }[];
   comments?: Comment[];
   likes?: any[];
+  auditLogs?: AuditLog[];
   isLiked?: boolean;
   distance?: number;
 }

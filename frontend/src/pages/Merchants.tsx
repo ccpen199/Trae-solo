@@ -6,7 +6,7 @@ import { merchantApi, couponApi } from '../api';
 import { useAuthStore } from '../store/auth';
 import { Card, Button, Avatar, Tag, ProgressBar, Badge, EmptyState } from '../components/ui';
 import type { Merchant } from '../types';
-import { formatDistance, formatCouponDiscount } from '../utils/format';
+import { formatDistance, formatCouponDiscount, getRedemptionRateColor } from '../utils/format';
 
 const customIcon = L.divIcon({
   className: 'custom-marker',
@@ -181,8 +181,16 @@ const MerchantsPage: React.FC = () => {
               onClick={() => navigate(`/merchants/${m.id}`)}
             >
               <div className="flex gap-4">
-                <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-4xl flex-shrink-0">
+                <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center text-4xl flex-shrink-0 relative">
                   🏪
+                  {m.licenseVerified && (
+                    <div
+                      className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs shadow-lg"
+                      title="营业执照已核验"
+                    >
+                      ✓
+                    </div>
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
@@ -195,6 +203,11 @@ const MerchantsPage: React.FC = () => {
 
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
                     <Tag>{m.category}</Tag>
+                    {m.licenseVerified && (
+                      <Badge className="bg-green-50 text-green-700" title="营业执照已通过官方核验">
+                        ✓ 执照核验
+                      </Badge>
+                    )}
                     {m.distance !== undefined && (
                       <span className="text-xs text-primary-600 font-medium">
                         📍 {formatDistance(m.distance)}
@@ -206,11 +219,51 @@ const MerchantsPage: React.FC = () => {
                     📍 {m.address}
                   </p>
 
+                  {m.stats && (
+                    <div className="mt-3 pt-3 border-t border-gray-100">
+                      <div className="grid grid-cols-3 gap-2 text-center">
+                        <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg p-2">
+                          <div className={`text-lg font-bold ${getRedemptionRateColor(m.stats.redemptionRate)}`}>
+                            {m.stats.redemptionRate}%
+                          </div>
+                          <div className="text-xs text-gray-500">核销率</div>
+                        </div>
+                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-2">
+                          <div className="text-lg font-bold text-blue-600">
+                            {m.stats.postConversionRate}%
+                          </div>
+                          <div className="text-xs text-gray-500">笔记转化</div>
+                        </div>
+                        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-2">
+                          <div className="text-lg font-bold text-purple-600">
+                            {m.stats.reviewCount}
+                          </div>
+                          <div className="text-xs text-gray-500">真实评价</div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
+                        <div className="flex items-center gap-1">
+                          <span>📊</span>
+                          <span>热度 {m.stats.heatScore}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span>🎫</span>
+                          <span>已发券 {m.stats.totalClaimed} 张</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <span>✓</span>
+                          <span>已核销 {m.stats.totalRedeemed} 张</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex items-center justify-between mt-3">
                     <div className="text-xs text-gray-400">
                       {m.reviewCount} 条评价 · {m.coupons?.length || 0} 个优惠
                     </div>
-                    <span className="text-primary-600 text-sm font-medium">查看 →</span>
+                    <span className="text-primary-600 text-sm font-medium">查看详情 →</span>
                   </div>
                 </div>
               </div>

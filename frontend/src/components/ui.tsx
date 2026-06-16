@@ -1,12 +1,15 @@
 import React from 'react';
 
-interface BadgeProps {
+interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;
   className?: string;
 }
 
-export const Badge: React.FC<BadgeProps> = ({ children, className = '' }) => (
-  <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${className}`}>
+export const Badge: React.FC<BadgeProps> = ({ children, className = '', ...props }) => (
+  <span
+    className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${className}`}
+    {...props}
+  >
     {children}
   </span>
 );

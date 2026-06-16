@@ -4,9 +4,7 @@ import { Button, Card, Badge, Avatar } from '../../components/ui';
 import { formatTime } from '../../utils/format';
 import type { Post } from '../../types';
 
-interface AuditPost extends Post {
-  auditLogs?: { riskLevel: string; aiScore: number; matchedKeywords: string[]; action: string }[];
-}
+type AuditPost = Post;
 
 const AuditDashboard: React.FC = () => {
   const [posts, setPosts] = useState<AuditPost[]>([]);

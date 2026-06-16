@@ -24,6 +24,12 @@ const CreatePostPage: React.FC = () => {
     latitude: userLocation?.latitude,
     longitude: userLocation?.longitude,
     locationName: userLocation?.locationName || '',
+    radiusMeters: 5000,
+    enableResponseChain: true,
+    enableSubscription: false,
+    proofImage: '',
+    urgency: 1,
+    expireHours: 72,
   });
   const [merchants, setMerchants] = useState<Merchant[]>([]);
   const [submitting, setSubmitting] = useState(false);
@@ -77,6 +83,8 @@ const CreatePostPage: React.FC = () => {
   const types = [
     { v: 'NEWS', l: '本地资讯', icon: '📰', desc: '分享社区新鲜事' },
     { v: 'REVIEW', l: '探店笔记', icon: '🍜', desc: '消费体验分享' },
+    { v: 'NOTICE', l: '政务通知', icon: '📢', desc: '官方公告发布' },
+    { v: 'EMERGENCY', l: '突发事件', icon: '🚨', desc: '紧急事件播报' },
     { v: 'ACTIVITY', l: '活动召集', icon: '🎉', desc: '组织社区活动' },
     { v: 'INFO', l: '便民信息', icon: 'ℹ️', desc: '实用信息共享' },
   ];
@@ -190,6 +198,36 @@ const CreatePostPage: React.FC = () => {
               />
             </div>
 
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                📷 真实消费凭证
+              </label>
+              <div className="flex gap-3">
+                <div
+                  className={`w-24 h-24 rounded-xl border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all ${
+                    form.proofImage ? 'border-primary-500 bg-primary-50' : 'border-gray-300 hover:border-primary-400 hover:bg-gray-50'
+                  }`}
+                  onClick={() => update('proofImage', form.proofImage ? '' : 'proof_demo')}
+                >
+                  {form.proofImage ? (
+                    <>
+                      <span className="text-2xl">✅</span>
+                      <span className="text-xs text-primary-600 mt-1">已上传</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-2xl">📷</span>
+                      <span className="text-xs text-gray-500 mt-1">上传小票</span>
+                    </>
+                  )}
+                </div>
+                <div className="text-xs text-gray-400 mt-auto">
+                  <p>支持上传消费小票、支付截图</p>
+                  <p>通过核验后将展示「真实消费」标识</p>
+                </div>
+              </div>
+            </div>
+
             <div className="flex flex-wrap gap-4">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -212,6 +250,129 @@ const CreatePostPage: React.FC = () => {
             </div>
           </Card>
         )}
+
+        {/* Emergency Specific */}
+        {form.type === 'EMERGENCY' && (
+          <Card className="p-6 mb-6 space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center text-2xl">
+                🚨
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-800">紧急事件设置</h3>
+                <p className="text-sm text-gray-500">紧急内容将优先推送至周边用户</p>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">紧急程度</label>
+              <div className="flex gap-2">
+                {[1, 2, 3, 4, 5].map(level => (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() => update('urgency', level)}
+                    className={`flex-1 py-3 rounded-xl font-medium transition-all ${
+                      form.urgency === level
+                        ? 'bg-red-500 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {level === 1 && '一般'}
+                    {level === 2 && '注意'}
+                    {level === 3 && '重要'}
+                    {level === 4 && '紧急'}
+                    {level === 5 && '特急'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                ⏰ 有效期（小时）
+              </label>
+              <input
+                type="number"
+                value={form.expireHours}
+                onChange={(e) => update('expireHours', e.target.value)}
+                min="1"
+                max="168"
+                className="w-full md:w-64 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+              />
+              <p className="text-xs text-gray-400 mt-1">超时后内容将自动转为历史状态</p>
+            </div>
+          </Card>
+        )}
+
+        {/* LBS & Response Settings */}
+        <Card className="p-6 mb-6 space-y-5">
+          <div>
+            <h3 className="font-semibold text-gray-800 mb-1">📍 LBS 广播范围</h3>
+            <p className="text-sm text-gray-500">设置内容可见的地理范围</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              广播半径
+            </label>
+            <div className="flex gap-2">
+              {[1000, 3000, 5000, 10000, 50000].map(radius => (
+                <button
+                  key={radius}
+                  type="button"
+                  onClick={() => update('radiusMeters', radius)}
+                  className={`flex-1 py-3 rounded-xl text-sm font-medium transition-all ${
+                    form.radiusMeters === radius
+                      ? 'bg-primary-500 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {radius < 1000 ? `${radius}m` : `${radius / 1000}km`}
+                </button>
+              ))}
+            </div>
+            <div className="mt-3">
+              <input
+                type="range"
+                min="500"
+                max="50000"
+                step="500"
+                value={form.radiusMeters}
+                onChange={(e) => update('radiusMeters', parseInt(e.target.value))}
+                className="w-full accent-primary-500"
+              />
+              <div className="flex justify-between text-xs text-gray-400 mt-1">
+                <span>500m</span>
+                <span className="text-primary-500 font-medium">
+                  当前：{form.radiusMeters < 1000 ? `${form.radiusMeters}m` : `${(form.radiusMeters / 1000).toFixed(1)}km`}
+                </span>
+                <span>50km</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-4 pt-4 border-t border-gray-100">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.enableResponseChain}
+                onChange={(e) => update('enableResponseChain', e.target.checked)}
+                className="w-4 h-4 text-primary-600 rounded"
+              />
+              <span className="text-sm text-gray-700">🔗 开启响应链（可被其他人接单/回应）</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.enableSubscription}
+                onChange={(e) => update('enableSubscription', e.target.checked)}
+                className="w-4 h-4 text-primary-600 rounded"
+              />
+              <span className="text-sm text-gray-700">🔔 允许订阅（更新时通知订阅者）</span>
+            </label>
+          </div>
+        </Card>
 
         {/* Location & Topics */}
         <Card className="p-6 mb-6 space-y-5">

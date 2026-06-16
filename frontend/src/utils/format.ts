@@ -82,6 +82,60 @@ export const getSourceLevelColor = (level: string) => {
   return colors[level] || '';
 };
 
+export const getSourceLevelDesc = (level: string) => {
+  const descs: Record<string, string> = {
+    ORDINARY: '',
+    V: '个人实名认证用户，内容可信度高',
+    OFFICIAL: '经官方机构认证，信息权威可靠',
+    GOV: '政府机构发布，具有最高公信力',
+  };
+  return descs[level] || '';
+};
+
+export const getRiskLevelLabel = (level: string) => {
+  const labels: Record<string, string> = {
+    LOW: '低风险',
+    MEDIUM: '待核验',
+    HIGH: '高风险',
+    CRITICAL: '极高风险',
+  };
+  return labels[level] || level;
+};
+
+export const getRiskLevelColor = (level: string) => {
+  const colors: Record<string, string> = {
+    LOW: 'bg-green-100 text-green-700',
+    MEDIUM: 'bg-yellow-100 text-yellow-700',
+    HIGH: 'bg-orange-100 text-orange-700',
+    CRITICAL: 'bg-red-100 text-red-700',
+  };
+  return colors[level] || 'bg-gray-100 text-gray-700';
+};
+
+export const getAuditActionLabel = (action: string) => {
+  const labels: Record<string, string> = {
+    AI_PASS: 'AI审核通过',
+    AI_FLAG: 'AI风险标记',
+    APPROVE: '人工审核通过',
+    REJECT: '内容驳回',
+    RUMOR: '谣言标记',
+    CLARIFY: '辟谣澄清',
+  };
+  return labels[action] || action;
+};
+
+export const getAuditActionColor = (action: string) => {
+  const colors: Record<string, string> = {
+    AI_PASS: 'bg-green-100 text-green-700',
+    AI_FLAG: 'bg-yellow-100 text-yellow-700',
+    APPROVE: 'bg-blue-100 text-blue-700',
+    REJECT: 'bg-red-100 text-red-700',
+    RUMOR: 'bg-red-100 text-red-700',
+    CLARIFY: 'bg-purple-100 text-purple-700',
+  };
+  return colors[action] || 'bg-gray-100 text-gray-700';
+};
+
 export const getHelpTypeLabel = (type: string) => {
   const labels: Record<string, string> = {
     SECOND_HAND: '闲置置换',
@@ -120,4 +174,10 @@ export const getHelpStatusColor = (status: string) => {
     CLOSED: 'bg-gray-400',
   };
   return colors[status] || '';
+};
+
+export const getRedemptionRateColor = (rate: number) => {
+  if (rate >= 80) return 'text-green-600';
+  if (rate >= 50) return 'text-yellow-600';
+  return 'text-gray-500';
 };

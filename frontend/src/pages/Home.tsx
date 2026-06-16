@@ -70,6 +70,12 @@ const HomePage: React.FC = () => {
               搜索发现 →
             </button>
             <button
+              onClick={() => navigate('/admin')}
+              className="px-6 py-3 bg-amber-100 text-amber-800 rounded-xl font-semibold hover:bg-amber-200 transition-all shadow-lg"
+            >
+              后台管理
+            </button>
+            <button
               onClick={() => navigate('/profile')}
               className="px-6 py-3 bg-white/20 backdrop-blur border border-white/30 text-white rounded-xl font-semibold hover:bg-white/30 transition-all"
             >

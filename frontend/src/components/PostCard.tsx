@@ -9,6 +9,9 @@ import {
   getPostTypeColor,
   getSourceLevelLabel,
   getSourceLevelColor,
+  getSourceLevelDesc,
+  getRiskLevelLabel,
+  getRiskLevelColor,
 } from '../utils/format';
 
 interface PostCardProps {
@@ -21,6 +24,16 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const hasImages = post.images && post.images.length > 0;
   const gridCols = post.images!.length >= 3 ? 'grid-cols-3' : post.images!.length === 2 ? 'grid-cols-2' : 'grid-cols-1';
 
+  const latestAudit = post.auditLogs?.[0];
+  const riskLevel = latestAudit?.riskLevel;
+  const hasAuditRecords = post.auditLogs && post.auditLogs.length > 1;
+  const hasTrace = post.auditLogs && post.auditLogs.length > 0;
+
+  const isRumor = post.auditLogs?.some(log => log.action === 'RUMOR');
+  const isClarified = post.auditLogs?.some(log => log.action === 'CLARIFY');
+  const isMetro = post.topics?.some(t => t.topic.name.includes('地铁') || t.topic.name.includes('出行'));
+  const isOfficialVerified = post.sourceLevel === 'OFFICIAL' || post.sourceLevel === 'GOV' || hasAuditRecords;
+
   return (
     <Card
       className="p-5 hover:shadow-lg transition-all duration-300"
@@ -31,12 +44,40 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         <div className="flex items-center gap-3">
           <Avatar src={post.user.avatar} name={post.user.nickname} />
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="font-semibold text-gray-900">{post.user.nickname}</span>
               {post.user.isVerified && <Badge className="bg-blue-100 text-blue-700">✓ 已认证</Badge>}
               {post.sourceLevel !== 'ORDINARY' && (
-                <Badge className={`${getSourceLevelColor(post.sourceLevel)} text-white`}>
+                <Badge
+                  className={`${getSourceLevelColor(post.sourceLevel)} text-white`}
+                  title={getSourceLevelDesc(post.sourceLevel)}
+                >
                   {getSourceLevelLabel(post.sourceLevel)}
+                </Badge>
+              )}
+              {isOfficialVerified && !post.sourceLevel.includes('OFFICIAL') && !post.sourceLevel.includes('GOV') && (
+                <Badge className="bg-blue-100 text-blue-700" title="已通过官方核验">
+                  ✓ 官方核验
+                </Badge>
+              )}
+              {isRumor && (
+                <Badge className="bg-red-100 text-red-700">
+                  ⚠️ 疑似谣言
+                </Badge>
+              )}
+              {isClarified && (
+                <Badge className="bg-green-100 text-green-700">
+                  ✓ 已辟谣
+                </Badge>
+              )}
+              {isMetro && (
+                <Badge className="bg-cyan-100 text-cyan-700">
+                  🚇 地铁出行
+                </Badge>
+              )}
+              {riskLevel && riskLevel !== 'LOW' && (
+                <Badge className={`${getRiskLevelColor(riskLevel)}`}>
+                  {getRiskLevelLabel(riskLevel)}
                 </Badge>
               )}
             </div>
@@ -51,6 +92,22 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                     {post.distance !== undefined && post.distance !== null && (
                       <span className="text-primary-500">({formatDistance(post.distance)})</span>
                     )}
+                  </span>
+                </>
+              )}
+              {hasAuditRecords && (
+                <>
+                  <span>·</span>
+                  <span className="text-blue-500 flex items-center gap-1">
+                    <Icon name="check" /> 已人工复审
+                  </span>
+                </>
+              )}
+              {hasTrace && (
+                <>
+                  <span>·</span>
+                  <span className="text-purple-500 flex items-center gap-1">
+                    🔍 可溯源
                   </span>
                 </>
               )}
@@ -101,7 +158,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
       {/* Price & Meta */}
       <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 flex-wrap">
           {post.priceAnchor && (
             <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 rounded-lg">
               <span className="text-xs text-orange-600">人均</span>
@@ -111,6 +168,11 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           {post.hasProof && (
             <Badge className="bg-green-50 text-green-700">
               <Icon name="check" /> 真实消费
+            </Badge>
+          )}
+          {post.isPitfall && (
+            <Badge className="bg-red-50 text-red-600">
+              ⚠️ 避坑置顶
             </Badge>
           )}
           {post.hotScore > 100 && (

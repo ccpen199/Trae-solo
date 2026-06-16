@@ -114,6 +114,13 @@ router.get(
           topics: { include: { topic: true } },
           merchant: { select: { id: true, businessName: true, logo: true } },
           likes: { select: { userId: true } },
+          auditLogs: {
+            orderBy: { createdAt: 'desc' },
+            take: 2,
+            include: {
+              auditor: { select: { id: true, nickname: true, avatar: true, role: true } },
+            },
+          },
         },
         orderBy: { createdAt: 'desc' },
         skip: (page - 1) * limit,
@@ -142,7 +149,7 @@ router.get(
   }
 );
 
-router.get('/:id', auth, async (req: AuthRequest, res) => {
+router.get('/:id', async (req: AuthRequest, res) => {
   try {
     const post = await prisma.post.findUnique({
       where: { id: req.params.id },
@@ -150,6 +157,12 @@ router.get('/:id', auth, async (req: AuthRequest, res) => {
         user: true,
         topics: { include: { topic: true } },
         merchant: true,
+        auditLogs: {
+          orderBy: { createdAt: 'desc' },
+          include: {
+            auditor: { select: { id: true, nickname: true, avatar: true, role: true } },
+          },
+        },
         comments: {
           where: { parentId: null, status: 'NORMAL' },
           include: {
@@ -171,9 +184,9 @@ router.get('/:id', auth, async (req: AuthRequest, res) => {
       data: { viewCount: { increment: 1 } },
     });
 
-    const isLiked = await prisma.like.findFirst({
+    const isLiked = req.userId ? !!await prisma.like.findFirst({
       where: { userId: req.userId, postId: req.params.id },
-    });
+    }) : false;
 
     res.json({ post: { ...parsePostImages(post), isLiked: !!isLiked } });
   } catch (error: any) {

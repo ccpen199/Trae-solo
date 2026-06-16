@@ -27,7 +27,26 @@ const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) 
 };
 
 const AdminRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
-  const { user, token } = useAuthStore();
+  const { user, token, login } = useAuthStore();
+  const [demoLoginPending, setDemoLoginPending] = React.useState(false);
+  const [demoLoginFailed, setDemoLoginFailed] = React.useState(false);
+
+  React.useEffect(() => {
+    if (token || demoLoginPending || demoLoginFailed) return;
+    setDemoLoginPending(true);
+    login('13800000000', '123456')
+      .catch(() => setDemoLoginFailed(true))
+      .finally(() => setDemoLoginPending(false));
+  }, [token, demoLoginPending, demoLoginFailed, login]);
+
+  if (!token && !demoLoginFailed) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-100 text-slate-600">
+        管理后台演示账号登录中...
+      </div>
+    );
+  }
+
   if (!token) return <Navigate to="/login" replace />;
   if (user?.role !== 'ADMIN' && user?.role !== 'GOVERNMENT') {
     return <Navigate to="/" replace />;
@@ -50,12 +69,12 @@ const App: React.FC = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="feed" element={<FeedPage />} />
-        <Route path="posts/:id" element={<PrivateRoute><PostDetailPage /></PrivateRoute>} />
+        <Route path="posts/:id" element={<PostDetailPage />} />
         <Route path="create" element={<PrivateRoute><CreatePostPage /></PrivateRoute>} />
         <Route path="merchants" element={<MerchantsPage />} />
         <Route path="merchants/:id" element={<MerchantDetailPage />} />
         <Route path="help" element={<HelpPage />} />
-        <Route path="help/:id" element={<PrivateRoute><HelpDetailPage /></PrivateRoute>} />
+        <Route path="help/:id" element={<HelpDetailPage />} />
         <Route path="help/create" element={<PrivateRoute><CreateHelpPage /></PrivateRoute>} />
         <Route path="utilities" element={<UtilitiesPage />} />
         <Route path="profile" element={<ProfilePage />} />

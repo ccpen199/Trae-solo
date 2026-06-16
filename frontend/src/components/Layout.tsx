@@ -98,6 +98,12 @@ const MainLayout: React.FC = () => {
             ) : (
               <div className="flex items-center gap-2">
                 <button
+                  onClick={() => navigate('/admin')}
+                  className="hidden sm:inline-flex px-3 py-2 text-sm font-medium text-amber-700 hover:text-amber-900"
+                >
+                  后台管理
+                </button>
+                <button
                   onClick={() => navigate('/profile')}
                   className="hidden sm:inline-flex px-3 py-2 text-sm font-medium text-primary-700 hover:text-primary-900"
                 >
