@@ -42,6 +42,7 @@ export default function QuickOrderForm() {
   const selectedAddress = useAppStore((state) => state.selectedAddress);
   const setSelectedAddress = useAppStore((state) => state.setSelectedAddress);
   const getDispatchInfo = useAppStore((state) => state.getDispatchInfo);
+  const getDispatchQueue = useAppStore((state) => state.getDispatchQueue);
   const addOrder = useAppStore((state) => state.addOrder);
   const navigate = useNavigate();
 
@@ -80,6 +81,12 @@ export default function QuickOrderForm() {
     medium: { text: '中热力区', cls: 'text-orange-600 bg-orange-50' },
     low: { text: '低热力区', cls: 'text-blue-600 bg-blue-50' },
   };
+
+  const dispatchQueue = useMemo(() => {
+    if (!selectedAddress) return [];
+    const queue = getDispatchQueue(selectedAddress.id, serviceType);
+    return queue;
+  }, [selectedAddress, serviceType]);
 
   const timeline = useMemo(() => [
     { label: '预计派单', time: addMinutes(time, 3), desc: `${nearbyWorkers}位阿姨待命中`, icon: Navigation },
@@ -465,6 +472,83 @@ export default function QuickOrderForm() {
             </div>
           )}
         </div>
+
+        {dispatchQueue.length > 0 && (
+          <div className="card p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-orange-50 flex items-center justify-center">
+                  <Award className="w-3.5 h-3.5 text-orange-600" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-bold text-secondary-800">动态加权派单队列</h3>
+                  <p className="text-[9px] text-secondary-400">距离40%+好评50%+投诉率10% 综合排序</p>
+                </div>
+              </div>
+              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-secondary-100 text-secondary-600">
+                共{dispatchQueue.length}位
+              </span>
+            </div>
+            <div className="space-y-1.5">
+              {dispatchQueue.map((w, i) => {
+                const isTop = i === 0;
+                const satColor = w.satisfaction_rate && w.satisfaction_rate >= 97 ? 'text-green-600' : w.satisfaction_rate && w.satisfaction_rate >= 93 ? 'text-yellow-600' : 'text-orange-600';
+                const complColor = w.complaint_rate && w.complaint_rate <= 1 ? 'text-green-600' : w.complaint_rate && w.complaint_rate <= 2.5 ? 'text-yellow-600' : 'text-red-600';
+                return (
+                  <div
+                    key={w.id}
+                    className={cn(
+                      'flex items-center gap-2.5 p-2 rounded-xl transition-colors',
+                      isTop ? 'bg-orange-50 border border-orange-100' : 'bg-cream-100 border border-transparent'
+                    )}
+                  >
+                    <div className="relative flex-shrink-0">
+                      <img src={w.avatar} alt={w.real_name} className="w-9 h-9 rounded-full bg-secondary-100" />
+                      <div className={cn(
+                        'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white',
+                        isTop ? 'bg-orange-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-secondary-300'
+                      )}>
+                        {i + 1}
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-xs font-semibold text-secondary-800">{w.real_name}</span>
+                        {isTop && <span className="text-[8px] px-1 py-0 rounded bg-orange-200 text-orange-700 font-medium">优先派单</span>}
+                        <span className="text-[9px] text-secondary-400">·{w.experience_years}年</span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-0.5 text-[9px]">
+                        <span className="text-blue-600">{w.distance_km}km</span>
+                        <span className="text-secondary-300">|</span>
+                        <span className={satColor}>好评{w.satisfaction_rate}%</span>
+                        <span className="text-secondary-300">|</span>
+                        <span className={complColor}>投诉{w.complaint_rate}%</span>
+                      </div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-xs font-bold text-orange-600">{w.weighted_score?.toFixed(1)}</p>
+                      <p className="text-[8px] text-secondary-400">综合分</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-2.5 pt-2 border-t border-dashed border-gray-200 grid grid-cols-3 gap-1.5 text-[9px]">
+              <div className="text-center px-1.5 py-1 rounded-md bg-blue-50">
+                <p className="text-blue-600 font-bold text-[11px]">40%</p>
+                <p className="text-secondary-500">距离权重</p>
+              </div>
+              <div className="text-center px-1.5 py-1 rounded-md bg-green-50">
+                <p className="text-green-600 font-bold text-[11px]">50%</p>
+                <p className="text-secondary-500">好评权重</p>
+              </div>
+              <div className="text-center px-1.5 py-1 rounded-md bg-red-50">
+                <p className="text-red-600 font-bold text-[11px]">10%</p>
+                <p className="text-secondary-500">投诉权重</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="rounded-xl bg-cream-100 p-4 space-y-2">
           <div

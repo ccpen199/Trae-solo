@@ -26,6 +26,14 @@ export interface Worker {
   skills: string[];
   age: number;
   experience_years: number;
+  punctuality_rate?: number;
+  satisfaction_rate?: number;
+  complaint_rate?: number;
+  distance_km?: number;
+  weighted_score?: number;
+  avg_arrive_minutes?: number;
+  order_count?: number;
+  completed_orders?: number;
 }
 
 export interface OCRField {

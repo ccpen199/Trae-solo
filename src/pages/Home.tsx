@@ -68,6 +68,160 @@ function OrderNodeTimeline({ order }: { order: Order }) {
   );
 }
 
+const statusLabelMap: Record<OrderStatus, string> = {
+  pending: '待派单',
+  assigned: '已派单',
+  accepted: '已接单',
+  departing: '出发中',
+  arrived: '已到达',
+  servicing: '服务中',
+  completed: '已完成',
+  cancelled: '已取消',
+  compensated: '已赔付',
+};
+
+function RecentOrders() {
+  const orders = useAppStore((state) => state.orders);
+  const advanceOrderStatus = useAppStore((state) => state.advanceOrderStatus);
+  const navigate = useNavigate();
+  const [advancingId, setAdvancingId] = useState<number | null>(null);
+  const recentOrders = orders.slice(0, 4);
+
+  const handleAdvance = async (id: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setAdvancingId(id);
+    await new Promise((r) => setTimeout(r, 500));
+    advanceOrderStatus(id);
+    setAdvancingId(null);
+  };
+
+  if (recentOrders.length === 0) return null;
+
+  return (
+    <div className="mt-5 card p-4 border border-primary-100 bg-gradient-to-br from-white to-primary-50/30">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-primary-50 flex items-center justify-center">
+            <ClipboardList className="w-3.5 h-3.5 text-primary-600" />
+          </div>
+          <div>
+            <h3 className="text-xs font-bold text-secondary-800">履约追踪 · 最近订单</h3>
+            <p className="text-[9px] text-secondary-400">实时查看派单号/阿姨确认/节点通知</p>
+          </div>
+        </div>
+        <Link to="/orders" className="text-[10px] text-primary-600 font-medium hover:text-primary-700 flex items-center gap-0.5">
+          全部 <ChevronRight className="w-3 h-3" />
+        </Link>
+      </div>
+      <div className="space-y-2">
+        {recentOrders.map((order) => {
+          const Icon = serviceIconMap[order.service_type];
+          const canAdvance = !['completed', 'cancelled', 'compensated'].includes(order.status);
+          const hasComp = !!order.compensation;
+          const hasQA = !!order.qa_record;
+          const nodeCount = order.nodes?.length || 0;
+          const isAdvancing = advancingId === order.id;
+          return (
+            <div
+              key={order.id}
+              onClick={() => navigate(`/orders/${order.id}`)}
+              className="p-2.5 rounded-xl bg-white border border-gray-100 hover:border-primary-200 hover:bg-primary-50/40 transition-all cursor-pointer"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-secondary-50 flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-3.5 h-3.5 text-secondary-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-semibold text-secondary-800 truncate">
+                      {order.service_type_label}
+                    </span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary-100 text-primary-700 font-mono">
+                      #{order.id.toString().slice(-6)}
+                    </span>
+                    {order.worker_name && (
+                      <span className="text-[9px] text-green-600 flex items-center gap-0.5">
+                        <UserCheck className="w-2 h-2" />{order.worker_name}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 mt-0.5 text-[9px]">
+                    <span className="text-secondary-500 flex items-center gap-0.5">
+                      <Clock className="w-2 h-2" />{order.start_time.slice(5, 16)}
+                    </span>
+                    {nodeCount > 0 && (
+                      <span className="text-blue-600 flex items-center gap-0.5">
+                        <Zap className="w-2 h-2" />{nodeCount}节点
+                      </span>
+                    )}
+                    {hasComp && (
+                      <span className="text-red-600 flex items-center gap-0.5">
+                        <CircleDollarSign className="w-2 h-2" />
+                        赔付{order.compensation?.refund_amount || 0}元
+                      </span>
+                    )}
+                    {hasQA && (
+                      <span className={cn(
+                        'flex items-center gap-0.5',
+                        order.qa_record?.review_conclusion === 'pass' ? 'text-green-600' : 'text-orange-600'
+                      )}>
+                        <BadgeCheck className="w-2 h-2" />
+                        {order.qa_record?.review_conclusion === 'pass' ? '质检通过' : '质检待复查'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className={cn(
+                    'text-[9px] px-1.5 py-0.5 rounded-full font-medium flex-shrink-0',
+                    ['completed'].includes(order.status) ? 'bg-green-100 text-green-700' :
+                    ['cancelled', 'compensated'].includes(order.status) ? 'bg-red-100 text-red-700' :
+                    'bg-blue-100 text-blue-700'
+                  )}>
+                    {statusLabelMap[order.status]}
+                  </span>
+                  {canAdvance && (
+                    <button
+                      onClick={(e) => handleAdvance(order.id, e)}
+                      disabled={isAdvancing}
+                      className="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-100 transition-colors disabled:opacity-50"
+                      title="推进状态"
+                    >
+                      {isAdvancing ? (
+                        <span className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <TrendingUp className="w-3 h-3" />
+                      )}
+                    </button>
+                  )}
+                </div>
+              </div>
+              {order.nodes && order.nodes.length > 0 && (
+                <div className="flex items-center gap-1 mt-2 pl-9">
+                  {order.nodes.slice(0, 6).map((n, i) => {
+                    const isLast = i === order.nodes!.length - 1;
+                    return (
+                      <div key={n.id} className="flex items-center gap-0.5 flex-shrink-0">
+                        <span className={cn(
+                          'w-1.5 h-1.5 rounded-full',
+                          isLast ? 'bg-blue-500 ring-2 ring-blue-100' : 'bg-green-500'
+                        )} />
+                        <span className="text-[8px] text-secondary-500 whitespace-nowrap">
+                          {n.node_label.slice(0, 2)}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function OngoingOrderCard({ order }: { order: Order }) {
   const Icon = serviceIconMap[order.service_type];
   const badge = getStatusBadge(order.status);
@@ -382,6 +536,8 @@ export default function Home() {
                 <QuickOrderForm />
               </div>
             </div>
+
+            <RecentOrders />
           </div>
         </div>
       </section>
