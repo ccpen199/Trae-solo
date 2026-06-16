@@ -10,6 +10,7 @@ export interface LoginResult {
   redirectRoute?: string;
   remainingAttempts?: number;
   token?: string;
+  availableRoles?: string[];
 }
 
 export interface LoginLog {
@@ -181,19 +182,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       }
 
       const userRole = account.user.userType;
-      const roleMap: Record<string, string[]> = {
-        citizen: ['citizen', 'auto'],
-        enterprise: ['enterprise', 'auto'],
-        staff: ['staff', 'ops', 'auto'],
-        admin: ['admin', 'platform', 'staff', 'ops', 'auto'],
-      };
+      const effectiveRole = role === 'auto' ? account.defaultRole : role;
 
-      if (role !== 'auto' && !roleMap[userRole]?.includes(role)) {
+      if (role !== 'auto' && !account.roles.includes(role)) {
         const errCode: LoginErrorCode = 'NO_ROLE_PERMISSION';
         const result: LoginResult = {
           success: false,
           errorCode: errCode,
           errorInfo: loginErrorMessages[errCode],
+          availableRoles: account.roles,
         };
         log.errorCode = errCode;
         set({
@@ -205,11 +202,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       }
 
       const token = generateToken(account.user.id, userRole);
-      const redirectRoute = roleConfig[role === 'auto' ? userRole : role]?.defaultRoute || roleConfig[userRole]?.defaultRoute || '/';
+      const redirectRoute = roleConfig[effectiveRole]?.defaultRoute || roleConfig[userRole]?.defaultRoute || '/';
 
       localStorage.setItem('auth_token', token);
       localStorage.setItem('user', JSON.stringify(account.user));
-      localStorage.setItem('login_role', role === 'auto' ? userRole : role);
+      localStorage.setItem('login_role', effectiveRole);
       localStorage.setItem('login_time', Date.now().toString());
 
       log.success = true;
@@ -224,7 +221,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({
         user: account.user,
         token,
-        loginRole: role === 'auto' ? userRole : role,
+        loginRole: effectiveRole,
         isAuthenticated: true,
         isLoading: false,
         lastLoginResult: result,

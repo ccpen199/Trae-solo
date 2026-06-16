@@ -78,51 +78,82 @@ export default function Login() {
 
   const getErrorDisplay = (result: LoginResult | null) => {
     if (!result || result.success || !result.errorCode || !result.errorInfo) return null;
-    const { errorCode, errorInfo, remainingAttempts } = result;
+    const { errorCode, errorInfo, remainingAttempts, availableRoles } = result;
     const severityConfig = {
       error: {
-        icon: <CloseCircleOutlined className="text-gov-red" />,
+        icon: <CloseCircleOutlined className="text-gov-red text-xl" />,
         bg: 'bg-red-50 border-red-200',
         titleColor: 'text-red-700',
         descColor: 'text-red-600',
+        headerBg: 'bg-red-500',
       },
       warning: {
-        icon: <WarningOutlined className="text-gov-orange" />,
+        icon: <WarningOutlined className="text-gov-orange text-xl" />,
         bg: 'bg-orange-50 border-orange-200',
         titleColor: 'text-orange-700',
         descColor: 'text-orange-600',
+        headerBg: 'bg-orange-500',
       },
       info: {
-        icon: <InfoCircleOutlined className="text-primary-500" />,
+        icon: <InfoCircleOutlined className="text-primary-500 text-xl" />,
         bg: 'bg-blue-50 border-blue-200',
         titleColor: 'text-blue-700',
         descColor: 'text-blue-600',
+        headerBg: 'bg-primary-500',
       },
     };
     const cfg = severityConfig[errorInfo.severity];
     return (
-      <div className={`rounded-xl border-2 ${cfg.bg} p-5 mb-6 animate-slide-down`}>
-        <div className="flex items-start gap-3">
-          <div className="text-2xl mt-0.5 flex-shrink-0">{cfg.icon}</div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <h4 className={`font-semibold text-base ${cfg.titleColor}`}>{errorInfo.title}</h4>
-              <Tag color={errorInfo.severity === 'error' ? 'red' : errorInfo.severity === 'warning' ? 'orange' : 'blue'}>
-                错误码: {errorCode}
+      <div className={`rounded-2xl border-2 ${cfg.bg} overflow-hidden mb-6 animate-slide-down shadow-sm`}>
+        <div className={`${cfg.headerBg} text-white px-5 py-3 flex items-center gap-3`}>
+          {cfg.icon}
+          <div className="flex-1">
+            <h4 className="font-semibold text-base">{errorInfo.title}</h4>
+          </div>
+          <Tag color="default" className="bg-white/20 border-white/30 text-white border">
+            错误码: {errorCode}
+          </Tag>
+        </div>
+        <div className="p-5">
+          <p className={`text-sm mb-4 ${cfg.descColor} leading-relaxed`}>{errorInfo.detail}</p>
+
+          {remainingAttempts !== undefined && errorCode === 'PASSWORD_ERROR' && (
+            <div className="mb-4 flex items-center gap-2">
+              <Tag color={remainingAttempts <= 1 ? 'red' : remainingAttempts <= 2 ? 'orange' : 'blue'} className="m-0">
+                剩余尝试: {remainingAttempts}次
               </Tag>
-              {remainingAttempts !== undefined && errorCode === 'PASSWORD_ERROR' && (
-                <Tag color={remainingAttempts <= 1 ? 'red' : remainingAttempts <= 2 ? 'orange' : 'blue'}>
-                  剩余尝试: {remainingAttempts}次
-                </Tag>
-              )}
+              <span className="text-xs text-gov-gray-500">累计5次错误账号将被锁定</span>
             </div>
-            <p className={`text-sm mb-2 ${cfg.descColor}`}>{errorInfo.detail}</p>
-            <div className="flex items-start gap-2 mt-3 p-3 bg-white/70 rounded-lg">
-              <InfoCircleOutlined className="text-gov-gray-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-gov-gray-500 leading-relaxed">
-                <span className="font-medium text-gov-gray-600">建议方案：</span>
-                {errorInfo.suggestion}
+          )}
+
+          {availableRoles && availableRoles.length > 0 && errorCode === 'NO_ROLE_PERMISSION' && (
+            <div className="mb-4 p-4 bg-white rounded-xl border border-gov-gray-200">
+              <p className="text-sm font-medium text-gov-gray-700 mb-3 flex items-center gap-2">
+                <InfoCircleOutlined className="text-primary-500" />
+                该账号可使用的角色入口：
               </p>
+              <div className="flex flex-wrap gap-2">
+                {availableRoles.map(r => (
+                  <Tag
+                    key={r}
+                    color="blue"
+                    className="cursor-pointer hover:bg-primary-100 transition-colors m-0 px-3 py-1"
+                    onClick={() => setSelectedRole(r as RoleKey)}
+                  >
+                    → 切换到「{roleConfig[r]?.label || r}」入口
+                  </Tag>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-start gap-3 p-4 bg-white/70 rounded-xl border border-gov-gray-100">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gov-green/10 flex items-center justify-center">
+              <span className="text-gov-green text-sm font-bold">✓</span>
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-medium text-gov-gray-600 mb-1">建议方案</p>
+              <p className="text-sm text-gov-gray-500 leading-relaxed">{errorInfo.suggestion}</p>
             </div>
           </div>
         </div>

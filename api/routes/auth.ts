@@ -103,14 +103,9 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     }
 
     const userRole = account.user.userType;
-    const roleMap: Record<string, string[]> = {
-      citizen: ['citizen', 'auto'],
-      enterprise: ['enterprise', 'auto'],
-      staff: ['staff', 'ops', 'auto'],
-      admin: ['admin', 'platform', 'staff', 'ops', 'auto'],
-    };
+    const effectiveRole = role === 'auto' ? account.defaultRole : role;
 
-    if (role !== 'auto' && !roleMap[userRole]?.includes(role)) {
+    if (role !== 'auto' && !account.roles.includes(role)) {
       const errCode: LoginErrorCode = 'NO_ROLE_PERMISSION';
       res.status(403).json({
         success: false,
@@ -123,7 +118,6 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
 
     const token = generateToken(account.user);
     const expiresAt = Date.now() + 24 * 60 * 60 * 1000;
-    const effectiveRole = role === 'auto' ? userRole : role;
     const redirectRoute =
       (roleConfig[effectiveRole as keyof typeof roleConfig]?.defaultRoute) ||
       (roleConfig[userRole as keyof typeof roleConfig]?.defaultRoute) ||

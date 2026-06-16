@@ -31,6 +31,8 @@ export interface AccountCredential {
   lastLogin?: Date;
   loginFailCount: number;
   deptId?: string;
+  roles: string[];
+  defaultRole: string;
 }
 
 export const userAccounts: AccountCredential[] = [
@@ -50,6 +52,8 @@ export const userAccounts: AccountCredential[] = [
     accountStatus: 'active',
     loginFailCount: 0,
     lastLogin: new Date('2026-06-15'),
+    roles: ['citizen'],
+    defaultRole: 'citizen',
   },
   {
     username: 'admin',
@@ -67,6 +71,8 @@ export const userAccounts: AccountCredential[] = [
     accountStatus: 'active',
     loginFailCount: 0,
     lastLogin: new Date('2026-06-15'),
+    roles: ['admin', 'staff', 'platform', 'ops'],
+    defaultRole: 'admin',
   },
   {
     username: 'staff',
@@ -85,6 +91,8 @@ export const userAccounts: AccountCredential[] = [
     loginFailCount: 0,
     lastLogin: new Date('2026-06-14'),
     deptId: '1',
+    roles: ['staff', 'ops'],
+    defaultRole: 'staff',
   },
   {
     username: 'platform',
@@ -102,6 +110,8 @@ export const userAccounts: AccountCredential[] = [
     accountStatus: 'active',
     loginFailCount: 0,
     lastLogin: new Date('2026-06-15'),
+    roles: ['platform'],
+    defaultRole: 'platform',
   },
   {
     username: 'ops',
@@ -120,6 +130,8 @@ export const userAccounts: AccountCredential[] = [
     loginFailCount: 0,
     lastLogin: new Date('2026-06-13'),
     deptId: '5',
+    roles: ['ops'],
+    defaultRole: 'ops',
   },
   {
     username: 'enterprise',
@@ -137,6 +149,8 @@ export const userAccounts: AccountCredential[] = [
     accountStatus: 'active',
     loginFailCount: 0,
     lastLogin: new Date('2026-06-12'),
+    roles: ['enterprise'],
+    defaultRole: 'enterprise',
   },
   {
     username: 'locked_user',
@@ -153,6 +167,8 @@ export const userAccounts: AccountCredential[] = [
     },
     accountStatus: 'locked',
     loginFailCount: 5,
+    roles: ['citizen'],
+    defaultRole: 'citizen',
   },
 ];
 
