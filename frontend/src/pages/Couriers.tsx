@@ -8,7 +8,7 @@ import {
   SearchOutlined, CalendarOutlined, FileTextOutlined, SafetyOutlined,
   ExclamationCircleOutlined, PhoneOutlined, EnvironmentOutlined, VideoCameraOutlined,
   CheckCircleOutlined, ClockCircleOutlined, FormOutlined, AuditOutlined,
-  UserOutlined, HistoryOutlined, PlusOutlined
+  UserOutlined, HistoryOutlined, PlusOutlined, AlertOutlined
 } from '@ant-design/icons';
 import { api } from '../api';
 import dayjs from 'dayjs';
@@ -271,7 +271,7 @@ export default function Couriers() {
         <Alert
           type="info"
           showIcon
-          message="💡 点击快递员姓名或"工作台"按钮，可进入详情查看：待派单聚合、上门时间协商、电子签收回传、投诉SLA监控、复查记录"
+          message="💡 点击快递员姓名或「工作台」按钮，可进入详情查看：待派单聚合、上门时间协商、电子签收回传、投诉SLA监控、复查记录"
           style={{ marginBottom: 12 }}
         />
         <Table

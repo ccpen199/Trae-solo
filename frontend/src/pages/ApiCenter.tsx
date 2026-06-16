@@ -8,6 +8,11 @@ import dayjs from 'dayjs';
 const { Text, Paragraph, Title } = Typography;
 const { RangePicker } = DatePicker;
 
+const defaultMockApps = [
+  { id: 1, app_name: '某电商ERP系统', app_key: 'ecom_erp_8f3a2d1b' },
+  { id: 2, app_name: 'WMS仓储系统', app_key: 'wms_sys_c9e4f7a2' }
+];
+
 export default function ApiCenter() {
   const { message, modal } = App.useApp();
   const [loading, setLoading] = useState(false);
@@ -329,15 +334,15 @@ export default function ApiCenter() {
     { title: '累计单量', dataIndex: 'total_orders', width: 120, render: (v: number) => v?.toLocaleString?.() || v }
   ];
 
-  const mockAuditLogs = () => {
+  const mockAuditLogs = (appsList: any[]) => {
     const methods = ['GET', 'POST', 'GET', 'GET', 'POST', 'GET', 'GET'];
     const paths = ['/open/orders', '/open/brands', '/open/orders/SF202410150001/tracking', '/open/brand-quality', '/open/price/compare', '/open/couriers/beijing', '/open/orders/batch'];
-    const apps = apps.length ? apps : [{ id: 1, app_name: '某电商ERP系统', app_key: 'ecom_erp_8f3a2d1b' }, { id: 2, app_name: 'WMS仓储系统', app_key: 'wms_sys_c9e4f7a2' }];
+    const appSources = appsList.length ? appsList : defaultMockApps;
     const logs: any[] = [];
     for (let i = 0; i < 50; i++) {
       const m = methods[Math.floor(Math.random() * methods.length)];
       const p = paths[Math.floor(Math.random() * paths.length)];
-      const a = apps[Math.floor(Math.random() * apps.length)];
+      const a = appSources[Math.floor(Math.random() * appSources.length)];
       const status = Math.random() > 0.08 ? (Math.random() > 0.5 ? 200 : 201) : (Math.random() > 0.5 ? 400 : 429);
       logs.push({
         id: 10000 - i,
@@ -352,7 +357,7 @@ export default function ApiCenter() {
   };
 
   if (!auditData.list?.length && !auditLoading) {
-    setAuditData({ list: mockAuditLogs(), stats: { total_calls: 54582, success_calls: 54147, error_calls: 435, success_rate: 99.2, avg_response_time: 128 } });
+    setAuditData({ list: mockAuditLogs(apps), stats: { total_calls: 54582, success_calls: 54147, error_calls: 435, success_rate: 99.2, avg_response_time: 128 } });
   }
 
   return (

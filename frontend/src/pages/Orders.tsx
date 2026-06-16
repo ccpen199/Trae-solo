@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type { TimelineProps } from 'antd';
 import {
   Card, Table, Input, Select, DatePicker, Button, Space, Tag, App,
   Modal, Timeline, Statistic, Row, Col, Tooltip, Badge, Drawer, List,
@@ -622,10 +623,9 @@ export default function Orders() {
               />
               <Divider style={{ margin: '12px 0' }} />
               <Timeline
-                size="small"
-                items={(drawerOrder.tracking_events || drawerOrder.events || [
+                items={((drawerOrder.tracking_events || drawerOrder.events || [
                   { time: drawerOrder.created_at, event_type: 'created', description: '运单创建', location: drawerOrder.sender_address }
-                ]).map((e: any) => ({
+                ]) as any[]).map((e: any): NonNullable<TimelineProps['items']>[number] => ({
                   color: e.event_type === 'exception' ? 'red' : e.event_type === 'signed' ? 'green' : 'blue',
                   children: (
                     <div>
@@ -637,7 +637,7 @@ export default function Orders() {
                       </div>
                     </div>
                   )
-                })))}
+                }))}
               />
             </Card>
 

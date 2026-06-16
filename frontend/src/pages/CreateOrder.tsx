@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, App, Steps, Alert, Divider, Statistic, Radio, List, Progress, Modal } from 'antd';
+import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, App, Steps, Alert, Statistic, Radio, List, Progress } from 'antd';
 import { SendOutlined, SafetyOutlined, BulbOutlined, WarningOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { api } from '../api';
 import ReactECharts from 'echarts-for-react';
@@ -177,25 +177,26 @@ export default function CreateOrder() {
         />
       )}
 
+      <Form form={form} layout="vertical">
       <Card title={<><UserOutlined /> 寄件人信息</>}>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={8}>
-            <Form.Item form={form} name="sender_name" label="寄件人" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="sender_name" label="寄件人" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
               <Input prefix={<UserOutlined />} placeholder="姓名" />
             </Form.Item>
           </Col>
           <Col xs={24} md={8}>
-            <Form.Item form={form} name="sender_phone" label="手机号" rules={[{ required: true, pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="sender_phone" label="手机号" rules={[{ required: true, pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
               <Input prefix={<PhoneOutlined />} placeholder="11位手机号" />
             </Form.Item>
           </Col>
           <Col xs={24} md={8}>
-            <Form.Item form={form} name="sender_city" label="寄件城市" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="sender_city" label="寄件城市" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
               <Select options={cities.map(c => ({ value: c, label: c }))} placeholder="选择城市" />
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item form={form} name="sender_address" label="详细地址" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="sender_address" label="详细地址" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
               <Input prefix={<EnvironmentOutlined />} placeholder="街道门牌号" />
             </Form.Item>
           </Col>
@@ -205,22 +206,22 @@ export default function CreateOrder() {
       <Card title={<><ShoppingOutlined /> 收件人信息</>}>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={8}>
-            <Form.Item form={form} name="receiver_name" label="收件人" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="receiver_name" label="收件人" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
               <Input prefix={<UserOutlined />} placeholder="姓名" />
             </Form.Item>
           </Col>
           <Col xs={24} md={8}>
-            <Form.Item form={form} name="receiver_phone" label="手机号" rules={[{ required: true, pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="receiver_phone" label="手机号" rules={[{ required: true, pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
               <Input prefix={<PhoneOutlined />} placeholder="11位手机号" />
             </Form.Item>
           </Col>
           <Col xs={24} md={8}>
-            <Form.Item form={form} name="receiver_city" label="收件城市" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="receiver_city" label="收件城市" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
               <Select options={cities.map(c => ({ value: c, label: c }))} placeholder="选择城市" />
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item form={form} name="receiver_address" label="详细地址" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="receiver_address" label="详细地址" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
               <Input prefix={<EnvironmentOutlined />} placeholder="街道门牌号（如含'虚构路/假小区'将触发异常拦截）" />
             </Form.Item>
           </Col>
@@ -230,32 +231,32 @@ export default function CreateOrder() {
       <Card title={<><BulbOutlined /> 物品与偏好设置</>}>
         <Row gutter={[16, 16]}>
           <Col xs={12} md={6}>
-            <Form.Item form={form} name="weight" label="重量(kg)" initialValue={1} rules={[{ required: true }]} style={{ marginBottom: 0 }}>
+            <Form.Item name="weight" label="重量(kg)" initialValue={1} rules={[{ required: true }]} style={{ marginBottom: 0 }}>
               <InputNumber min={0.1} max={100} step={0.1} style={{ width: '100%' }} />
             </Form.Item>
           </Col>
           <Col xs={8} md={4}>
-            <Form.Item form={form} name="length" label="长(cm)" initialValue={30} style={{ marginBottom: 0 }}>
+            <Form.Item name="length" label="长(cm)" initialValue={30} style={{ marginBottom: 0 }}>
               <InputNumber min={1} style={{ width: '100%' }} />
             </Form.Item>
           </Col>
           <Col xs={8} md={4}>
-            <Form.Item form={form} name="width" label="宽(cm)" initialValue={20} style={{ marginBottom: 0 }}>
+            <Form.Item name="width" label="宽(cm)" initialValue={20} style={{ marginBottom: 0 }}>
               <InputNumber min={1} style={{ width: '100%' }} />
             </Form.Item>
           </Col>
           <Col xs={8} md={4}>
-            <Form.Item form={form} name="height" label="高(cm)" initialValue={15} style={{ marginBottom: 0 }}>
+            <Form.Item name="height" label="高(cm)" initialValue={15} style={{ marginBottom: 0 }}>
               <InputNumber min={1} style={{ width: '100%' }} />
             </Form.Item>
           </Col>
           <Col xs={12} md={6}>
-            <Form.Item form={form} name="priority" label="优先级" initialValue="normal" style={{ marginBottom: 0 }}>
+            <Form.Item name="priority" label="优先级" initialValue="normal" style={{ marginBottom: 0 }}>
               <Radio.Group options={[{ value: 'normal', label: '标准' }, { value: 'urgent', label: '加急' }]} />
             </Form.Item>
           </Col>
           <Col xs={12} md={6}>
-            <Form.Item form={form} name="goods_type" label="物品类型" initialValue="standard" style={{ marginBottom: 0 }}>
+            <Form.Item name="goods_type" label="物品类型" initialValue="standard" style={{ marginBottom: 0 }}>
               <Select style={{ width: '100%' }} options={[
                 { value: 'standard', label: '标准件' },
                 { value: 'fragile', label: '易碎品' },
@@ -266,6 +267,7 @@ export default function CreateOrder() {
           </Col>
         </Row>
       </Card>
+      </Form>
 
       {step >= 1 && priceResult && (
         <>

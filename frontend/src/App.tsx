@@ -1,241 +1,143 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Layout, Menu, Dropdown, Avatar, Space, Typography, Button, Badge, App as AntdAppComp } from 'antd';
+import {
+  DashboardOutlined, UnorderedListOutlined, ShopOutlined, UserOutlined,
+  ApiOutlined, EnvironmentOutlined, AlertOutlined, LogoutOutlined,
+  SafetyCertificateOutlined, TruckOutlined
+} from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Orders from './pages/Orders';
+import Brands from './pages/Brands';
+import Couriers from './pages/Couriers';
+import ApiCenter from './pages/ApiCenter';
+import Branches from './pages/Branches';
+import Complaints from './pages/Complaints';
+import PriceCompare from './pages/PriceCompare';
+import CreateOrder from './pages/CreateOrder';
 
-type Brand = {
-  id: number;
-  code: string;
-  name: string;
-  base_price: number;
-  per_kg_price: number;
-  avg_delivery_hours: number;
-  coverage_score: number;
-  rating: number;
-  api_status: string;
-  estimated_price?: number;
-};
+const { Header, Sider, Content } = Layout;
+const { Title, Text } = Typography;
 
-type Order = {
-  id: number;
-  order_no: string;
-  tracking_no: string;
-  brand_name: string;
-  courier_name?: string;
-  sender_name: string;
-  receiver_name: string;
-  goods_name: string;
-  status: string;
-  total_amount: number;
-  receiver_address: string;
-};
-
-type Overview = {
-  summary: Record<string, number>;
-  brandStats: Array<Brand & { order_count: number; revenue: number }>;
-  recentOrders: Order[];
-  alerts: Order[];
-};
-
-const apiBase = '/api';
-
-const statusText: Record<string, string> = {
-  created: '已创建',
-  picked: '已揽收',
-  in_transit: '运输中',
-  arrived_branch: '到达网点',
-  out_for_delivery: '派送中',
-  delivered: '已送达',
-  signed: '已签收',
-  exception: '异常件',
-  returned: '已退回'
-};
-
-async function getJson<T>(path: string): Promise<T> {
-  const response = await fetch(`${apiBase}${path}`);
-  if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-  return response.json();
+function PrivateRoute({ children }: { children: JSX.Element }) {
+  const nav = useNavigate();
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    if (!token) nav('/login');
+  }, [token, nav]);
+  return token ? children : null;
 }
 
 export default function App() {
-  const [overview, setOverview] = useState<Overview | null>(null);
-  const [brands, setBrands] = useState<Brand[]>([]);
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [prices, setPrices] = useState<Brand[]>([]);
-  const [keyword, setKeyword] = useState('');
-  const [status, setStatus] = useState('');
-  const [brandKeyword, setBrandKeyword] = useState('');
-  const [weight, setWeight] = useState(3);
-  const [health, setHealth] = useState('checking');
-  const [error, setError] = useState('');
-
-  const load = async () => {
-    try {
-      setError('');
-      const [healthData, overviewData, brandData, orderData, priceData] = await Promise.all([
-        getJson<{ status: string }>('/health'),
-        getJson<Overview>('/dashboard/overview'),
-        getJson<{ items: Brand[] }>(`/brands?keyword=${encodeURIComponent(brandKeyword)}`),
-        getJson<{ items: Order[] }>(`/orders?keyword=${encodeURIComponent(keyword)}&status=${encodeURIComponent(status)}`),
-        getJson<{ items: Brand[] }>(`/price/compare?weight=${weight}`)
-      ]);
-      setHealth(healthData.status);
-      setOverview(overviewData);
-      setBrands(brandData.items);
-      setOrders(orderData.items);
-      setPrices(priceData.items);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : '接口请求失败');
-      setHealth('error');
-    }
-  };
+  const location = useLocation();
+  const nav = useNavigate();
+  const { message } = AntdAppComp.useApp();
+  const [user, setUser] = useState<any>(null);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
-    load();
-  }, []);
+    const u = localStorage.getItem('user');
+    if (u) setUser(JSON.parse(u));
+  }, [location.pathname]);
 
-  const summaryCards = useMemo(() => {
-    const summary = overview?.summary || {};
-    return [
-      ['总运单', summary.total_orders || 0],
-      ['活跃运单', summary.active_orders || 0],
-      ['异常件', summary.exception_orders || 0],
-      ['在线快递员', summary.online_couriers || 0],
-      ['开放品牌', summary.active_brands || 0],
-      ['待处理投诉', summary.pending_complaints || 0]
-    ] as Array<[string, number]>;
-  }, [overview]);
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    message.success('已退出登录');
+    nav('/login');
+  };
+
+  const menuItems = [
+    { key: '/', icon: <DashboardOutlined />, label: <Link to="/">运营管理台</Link> },
+    { key: '/orders', icon: <UnorderedListOutlined />, label: <Link to="/orders">运单管理</Link> },
+    { key: '/create', icon: <TruckOutlined />, label: <Link to="/create">智能发件</Link> },
+    { key: '/price', icon: <SafetyCertificateOutlined />, label: <Link to="/price">比价引擎</Link> },
+    { key: '/brands', icon: <ShopOutlined />, label: <Link to="/brands">品牌资源池</Link> },
+    { key: '/couriers', icon: <UserOutlined />, label: <Link to="/couriers">快递员池</Link> },
+    { key: '/branches', icon: <EnvironmentOutlined />, label: <Link to="/branches">网点拓扑</Link> },
+    { key: '/complaints', icon: <AlertOutlined />, label: <Link to="/complaints">投诉SLA</Link> },
+    { key: '/api', icon: <ApiOutlined />, label: <Link to="/api">开放接口中心</Link> },
+  ];
+
+  if (location.pathname === '/login') return <Login />;
 
   return (
-    <main className="shell">
-      <header className="topbar">
-        <div>
-          <p className="eyebrow">Express Logistics Open Platform</p>
-          <h1>快递全链路协同开放平台</h1>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={setCollapsed}
+        theme="dark"
+        style={{ position: 'sticky', top: 0, height: '100vh' }}
+      >
+        <div style={{
+          height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: '#fff', borderBottom: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          {!collapsed ? (
+            <Space>
+              <div style={{ width: 32, height: 32, borderRadius: 8, background: '#1677ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <TruckOutlined style={{ fontSize: 18 }} />
+              </div>
+              <Title level={5} style={{ color: '#fff', margin: 0 }}>快递开放平台</Title>
+            </Space>
+          ) : (
+            <TruckOutlined style={{ fontSize: 22, color: '#1677ff' }} />
+          )}
         </div>
-        <nav>
-          <a href="#search">搜索筛选</a>
-          <a href="#admin">管理后台</a>
-          <a href="#openapi">开放接口</a>
-        </nav>
-      </header>
-
-      <section className="hero">
-        <div>
-          <h2>订单、快递员、网点、价格与投诉统一运营</h2>
-          <p>面向电商 ERP、品牌方和城市网点的本地演示系统，已接入 SQLite 示例数据和 Express API。</p>
-          <div className="actions">
-            <a className="primary" href="#search">进入搜索筛选</a>
-            <a className="secondary" href="#admin">查看管理后台</a>
-          </div>
-        </div>
-        <div className="status-panel">
-          <span>后端健康状态</span>
-          <strong className={health === 'ok' ? 'ok' : 'bad'}>{health}</strong>
-          <small>{error || 'http://127.0.0.1:59219/api/health'}</small>
-        </div>
-      </section>
-
-      <section className="metrics" id="admin">
-        {summaryCards.map(([label, value]) => (
-          <article key={label}>
-            <span>{label}</span>
-            <strong>{value.toLocaleString()}</strong>
-          </article>
-        ))}
-      </section>
-
-      <section className="grid">
-        <article className="panel large" id="search">
-          <div className="panel-title">
-            <div>
-              <h3>搜索筛选中心</h3>
-              <p>按运单、收寄件人、商品、状态筛选快递订单。</p>
-            </div>
-            <button onClick={load}>刷新</button>
-          </div>
-          <div className="filters">
-            <input value={keyword} onChange={(event) => setKeyword(event.target.value)} placeholder="搜索运单号、收件人、商品" />
-            <select value={status} onChange={(event) => setStatus(event.target.value)}>
-              <option value="">全部状态</option>
-              {Object.entries(statusText).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
-            </select>
-            <button onClick={load}>查询结果</button>
-          </div>
-          <div className="table">
-            {orders.slice(0, 12).map((order) => (
-              <div className="row" key={order.id}>
-                <div>
-                  <strong>{order.tracking_no}</strong>
-                  <span>{order.sender_name} - {order.receiver_name}</span>
-                </div>
-                <span>{order.brand_name}</span>
-                <span>{statusText[order.status] || order.status}</span>
-                <b>¥{Number(order.total_amount || 0).toFixed(2)}</b>
-              </div>
-            ))}
-          </div>
-        </article>
-
-        <article className="panel">
-          <div className="panel-title">
-            <div>
-              <h3>后台管理</h3>
-              <p>运力、异常、投诉和品牌运营看板。</p>
-            </div>
-          </div>
-          <div className="alert-list">
-            {(overview?.alerts || []).slice(0, 6).map((item) => (
-              <div key={item.id}>
-                <strong>{item.tracking_no}</strong>
-                <span>{item.brand_name} · {item.receiver_address}</span>
-              </div>
-            ))}
-          </div>
-        </article>
-      </section>
-
-      <section className="grid">
-        <article className="panel">
-          <div className="panel-title">
-            <div>
-              <h3>发现分类与品牌筛选</h3>
-              <p>按快递品牌、覆盖评分和开放状态分类。</p>
-            </div>
-          </div>
-          <div className="filters">
-            <input value={brandKeyword} onChange={(event) => setBrandKeyword(event.target.value)} placeholder="搜索顺丰、中通、EMS" />
-            <button onClick={load}>筛选品牌</button>
-          </div>
-          <div className="cards">
-            {brands.slice(0, 8).map((brand) => (
-              <div className="brand" key={brand.id}>
-                <strong>{brand.name}</strong>
-                <span>{brand.code} · 覆盖 {brand.coverage_score}</span>
-                <small>基础价 ¥{brand.base_price} · {brand.avg_delivery_hours}h</small>
-              </div>
-            ))}
-          </div>
-        </article>
-
-        <article className="panel" id="openapi">
-          <div className="panel-title">
-            <div>
-              <h3>价格比较 API</h3>
-              <p>输入重量后对多品牌报价排序。</p>
-            </div>
-          </div>
-          <div className="filters">
-            <input type="number" min="1" value={weight} onChange={(event) => setWeight(Number(event.target.value || 1))} />
-            <button onClick={load}>计算报价</button>
-          </div>
-          <div className="price-list">
-            {prices.slice(0, 7).map((price) => (
-              <div key={price.id}>
-                <span>{price.name}</span>
-                <strong>¥{Number(price.estimated_price || 0).toFixed(2)}</strong>
-              </div>
-            ))}
-          </div>
-        </article>
-      </section>
-    </main>
+        <Menu
+          theme="dark"
+          mode="inline"
+          selectedKeys={[location.pathname]}
+          items={menuItems}
+          style={{ border: 0 }}
+        />
+      </Sider>
+      <Layout>
+        <Header style={{
+          background: '#fff', padding: '0 24px', display: 'flex',
+          alignItems: 'center', justifyContent: 'space-between',
+          borderBottom: '1px solid #f0f0f0', position: 'sticky', top: 0, zIndex: 10
+        }}>
+          <Text type="secondary">
+            {menuItems.find(m => m.key === location.pathname)?.label?.props?.children || '快递全链路协同开放平台'}
+          </Text>
+          <Space>
+            <Badge count={3} size="small">
+              <Button type="text" icon={<AlertOutlined />}>告警</Button>
+            </Badge>
+            <Dropdown menu={{
+              items: [
+                { key: 'profile', icon: <UserOutlined />, label: user?.name || '用户' },
+                { type: 'divider' as const },
+                { key: 'logout', icon: <LogoutOutlined />, label: '退出登录', onClick: logout }
+              ]
+            }}>
+              <Space style={{ cursor: 'pointer' }}>
+                <Avatar style={{ background: '#1677ff' }} icon={<UserOutlined />} />
+                <Text strong>{user?.name || user?.username || '未登录'}</Text>
+                <Text type="secondary">（{user?.role === 'admin' ? '管理员' : user?.role === 'courier' ? '快递员' : '用户'}）</Text>
+              </Space>
+            </Dropdown>
+          </Space>
+        </Header>
+        <Content style={{ padding: 24, background: '#f5f7fa' }}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
+            <Route path="/create" element={<PrivateRoute><CreateOrder /></PrivateRoute>} />
+            <Route path="/price" element={<PrivateRoute><PriceCompare /></PrivateRoute>} />
+            <Route path="/brands" element={<PrivateRoute><Brands /></PrivateRoute>} />
+            <Route path="/couriers" element={<PrivateRoute><Couriers /></PrivateRoute>} />
+            <Route path="/branches" element={<PrivateRoute><Branches /></PrivateRoute>} />
+            <Route path="/complaints" element={<PrivateRoute><Complaints /></PrivateRoute>} />
+            <Route path="/api" element={<PrivateRoute><ApiCenter /></PrivateRoute>} />
+            <Route path="*" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          </Routes>
+        </Content>
+      </Layout>
+    </Layout>
   );
 }

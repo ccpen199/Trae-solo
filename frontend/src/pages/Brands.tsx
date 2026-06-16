@@ -9,8 +9,34 @@ export default function Brands() {
   const [keyword, setKeyword] = useState('');
   const [page, setPage] = useState(1);
 
-  const load = () => api.brands.list({ page, pageSize: 30, keyword }).then(setData).catch(e => message.error(e.message));
-  useEffect(() => load(), [page, keyword]);
+  const load = async () => {
+    try {
+      const result = await api.brands.list({ page, pageSize: 30, keyword });
+      setData(result);
+    } catch (e: any) {
+      message.error(e.message);
+    }
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchData = async () => {
+      try {
+        const result = await api.brands.list({ page, pageSize: 30, keyword });
+        if (!cancelled) {
+          setData(result);
+        }
+      } catch (e: any) {
+        if (!cancelled) {
+          message.error(e.message);
+        }
+      }
+    };
+    fetchData();
+    return () => {
+      cancelled = true;
+    };
+  }, [page, keyword]);
 
   const cols = [
     { title: '品牌', dataIndex: 'name', render: (t: string, r: any) => <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>

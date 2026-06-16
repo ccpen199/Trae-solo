@@ -222,7 +222,7 @@ export default function Dashboard() {
         <div style={{ position: 'absolute', bottom: 8, left: 12, display: 'flex', gap: 16, fontSize: 11, color: '#595959', flexWrap: 'wrap' }}>
           <span>● 网点（点击查看详情；颜色：品牌；大小=吞吐量）</span>
           <span style={{ color: '#52c41a' }}>● 派送中快递员</span>
-          <span style={{ color: '#ff4d4f' }}>● 超载预警(>85%)</span>
+          <span style={{ color: '#ff4d4f' }}>● 超载预警（超过85%）</span>
         </div>
       </div>
     );

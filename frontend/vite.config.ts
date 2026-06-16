@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   const port = parseInt(env.FRONTEND_PORT || '49219');
   const backendUrl = env.BACKEND_URL || 'http://127.0.0.1:59219';
   return {
+    envDir: path.resolve(__dirname, '../'),
     plugins: [react()],
     resolve: {
       alias: {
