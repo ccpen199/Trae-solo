@@ -7,11 +7,12 @@ import {
   Shield, FileCheck, Users, Timer, TrendingUp,
   CheckCircle, CircleDollarSign, Gift, UserCheck,
   Mic, BarChart3, Navigation, Eye, ThumbsUp, ThumbsDown,
-  Play, XCircle, AlertCircle,
+  Play, XCircle, AlertCircle, ScanLine, History,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import { useAppStore } from '@/store';
-import type { Order, OrderStatus, ServiceNode, CompensationRecord, QARecordDetail } from '@/types';
+import { useWorkerStore } from '@/store/useWorkerStore';
+import type { Order, OrderStatus, ServiceNode, CompensationRecord, QARecordDetail, OCRField, ReviewRecord } from '@/types';
 import { cn } from '@/lib/utils';
 
 const serviceIconMap = {
@@ -44,6 +45,197 @@ const nodeIconMap: Record<string, typeof CheckCircle> = {
   servicing: Sparkles,
   completed: CheckCircle,
 };
+
+const certConfig = [
+  { key: 'id_card' as const, label: '身份证', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50' },
+  { key: 'health_cert' as const, label: '健康证', icon: ShieldCheck, color: 'text-green-600', bg: 'bg-green-50' },
+  { key: 'crime_record' as const, label: '无犯罪记录', icon: Shield, color: 'text-purple-600', bg: 'bg-purple-50' },
+];
+
+function ConfidenceTag({ confidence }: { confidence: number }) {
+  const cls = confidence >= 98 ? 'bg-green-100 text-green-700' : confidence >= 95 ? 'bg-yellow-100 text-yellow-700' : confidence >= 70 ? 'bg-orange-100 text-orange-700' : 'bg-red-100 text-red-700';
+  return <span className={cn('text-[9px] px-1 py-0.5 rounded-full font-medium', cls)}>{confidence}%</span>;
+}
+
+function WorkerCertSection({ order }: { order: Order }) {
+  const cert = useWorkerStore((s) => s.cert);
+  const score = useWorkerStore((s) => s.score);
+  const [showCertDetail, setShowCertDetail] = useState(false);
+  const [activeCertTab, setActiveCertTab] = useState<'ocr' | 'review'>('ocr');
+
+  const distanceWeight = 0.4;
+  const satisfactionWeight = 0.5;
+  const complaintWeight = 0.1;
+  const weightedScore = score ? Math.round((score.punctuality_rate * distanceWeight + score.satisfaction_rate * satisfactionWeight + (100 - score.complaint_rate * 10) * complaintWeight) / 10) / 10 : null;
+
+  return (
+    <div className="card p-6 mb-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-bold text-secondary-800 flex items-center gap-2">
+          <Users className="w-5 h-5 text-primary-500" />
+          服务阿姨 · 三证审核
+        </h2>
+        <button
+          onClick={() => setShowCertDetail(!showCertDetail)}
+          className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1 font-medium"
+        >
+          {showCertDetail ? '收起' : '展开三证详情'}
+          <ChevronDown className={cn('w-3 h-3 transition-transform', showCertDetail && 'rotate-180')} />
+        </button>
+      </div>
+
+      <div className="flex items-center gap-4 mb-4">
+        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
+          <User className="w-7 h-7 text-white" />
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-3">
+            <p className="font-bold text-secondary-800 text-lg">{order.worker_name}</p>
+            {order.worker_score && (
+              <div className="flex items-center gap-1">
+                <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                <span className="text-sm font-medium text-secondary-700">{order.worker_score}</span>
+              </div>
+            )}
+          </div>
+          <div className="flex items-center gap-3 mt-1 text-xs">
+            <span className="text-secondary-500">{order.worker_phone}</span>
+            {order.distance_km && (
+              <span className="flex items-center gap-1 text-blue-600">
+                <MapPin className="w-3 h-3" />{order.distance_km}km
+              </span>
+            )}
+            <span className="flex items-center gap-1 text-primary-500">
+              <Navigation className="w-3 h-3" />1km优先派单
+            </span>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <a href={`tel:${order.worker_phone}`} className="w-10 h-10 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center hover:bg-primary-100 transition-colors">
+            <Phone className="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 mb-4">
+        {certConfig.map((item) => {
+          const certData = cert?.ocr_detail?.[item.key];
+          const Icon = item.icon;
+          const status = cert?.verify_status === 'approved' ? 'verified' : 'pending';
+          return (
+            <div key={item.key} className={cn('rounded-xl p-2.5 text-center', item.bg)}>
+              <Icon className={cn('w-5 h-5 mx-auto mb-1', item.color)} />
+              <p className="text-xs font-bold text-secondary-800">{item.label}</p>
+              {certData && <ConfidenceTag confidence={certData.confidence} />}
+              <p className={cn('text-[9px] mt-0.5', status === 'verified' ? 'text-green-600' : 'text-yellow-600')}>
+                {status === 'verified' ? '✓ 已核验' : '⏳ 待复核'}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+
+      {score && (
+        <div className="rounded-xl bg-cream-100 p-3 mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold text-secondary-800">动态加权评分</span>
+            <span className="text-xs text-orange-600 font-bold">{weightedScore}分</span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-[9px]">
+            <div className="text-center px-2 py-1.5 rounded-lg bg-blue-50">
+              <p className="text-blue-600 font-bold text-[11px]">{score.punctuality_rate}%</p>
+              <p className="text-secondary-500">准时率 · 40%</p>
+            </div>
+            <div className="text-center px-2 py-1.5 rounded-lg bg-green-50">
+              <p className="text-green-600 font-bold text-[11px]">{score.satisfaction_rate}%</p>
+              <p className="text-secondary-500">好评率 · 50%</p>
+            </div>
+            <div className="text-center px-2 py-1.5 rounded-lg bg-red-50">
+              <p className="text-red-600 font-bold text-[11px]">{score.complaint_rate}%</p>
+              <p className="text-secondary-500">投诉率 · 10%</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCertDetail && cert && (
+        <div className="animate-fade-up space-y-4">
+          <div className="flex gap-1 p-1 bg-secondary-50 rounded-lg">
+            <button onClick={() => setActiveCertTab('ocr')} className={cn('flex-1 text-center py-1.5 rounded-md text-xs font-medium transition-all', activeCertTab === 'ocr' ? 'bg-white text-primary-600 shadow-sm' : 'text-secondary-600')}>
+              <ScanLine className="w-3 h-3 inline mr-1" />OCR识别结果
+            </button>
+            <button onClick={() => setActiveCertTab('review')} className={cn('flex-1 text-center py-1.5 rounded-md text-xs font-medium transition-all', activeCertTab === 'review' ? 'bg-white text-primary-600 shadow-sm' : 'text-secondary-600')}>
+              <History className="w-3 h-3 inline mr-1" />人工复核记录
+            </button>
+          </div>
+
+          {activeCertTab === 'ocr' && cert.ocr_detail && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+              {certConfig.map((item) => {
+                const certData = cert.ocr_detail![item.key];
+                if (!certData) return null;
+                const Icon = item.icon;
+                return (
+                  <div key={item.key} className="rounded-xl border border-gray-100 overflow-hidden">
+                    <div className={cn('px-3 py-2 flex items-center justify-between', item.bg)}>
+                      <div className="flex items-center gap-1.5">
+                        <Icon className={cn('w-4 h-4', item.color)} />
+                        <span className="text-xs font-bold text-secondary-800">{item.label}</span>
+                      </div>
+                      <ConfidenceTag confidence={certData.confidence} />
+                    </div>
+                    <div className="p-2.5 space-y-1">
+                      {certData.fields.map((field, fi) => (
+                        <div key={fi} className="flex items-start justify-between text-[10px] py-0.5 border-b border-dashed border-gray-50 last:border-b-0">
+                          <span className="text-secondary-400 flex-shrink-0">{field.label}</span>
+                          <div className="text-right min-w-0 ml-1">
+                            <span className="text-secondary-800 font-medium">{field.value}</span>
+                            {field.confidence !== undefined && <ConfidenceTag confidence={field.confidence} />}
+                          </div>
+                        </div>
+                      ))}
+                      <p className="text-[8px] text-secondary-300 mt-1">识别时间：{new Date(certData.ocr_time).toLocaleString('zh-CN')}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {activeCertTab === 'review' && cert.review_history && (
+            <div className="space-y-0">
+              {cert.review_history.map((record, ri) => {
+                const isLast = ri === cert.review_history!.length - 1;
+                const typeLabel: Record<string, string> = { ocr: 'OCR识别', manual: '人工复核', recheck: '复查' };
+                return (
+                  <div key={record.id} className="flex items-start gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', record.result === 'pass' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600')}>
+                        {record.result === 'pass' ? <CheckCircle className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
+                      </div>
+                      {!isLast && <div className="w-0.5 h-6 mt-0.5 bg-gray-200" />}
+                    </div>
+                    <div className="pb-3 flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs font-bold text-secondary-800">{record.reviewer}</span>
+                        <span className="text-[8px] px-1 py-0.5 rounded-full bg-secondary-100 text-secondary-600">{typeLabel[record.type] || record.type}</span>
+                        <span className={cn('text-[8px] px-1 py-0.5 rounded-full', record.result === 'pass' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')}>
+                          {record.result === 'pass' ? '通过' : '驳回'}
+                        </span>
+                      </div>
+                      <p className="text-[9px] text-secondary-400 mt-0.5">{new Date(record.review_time).toLocaleString('zh-CN')}</p>
+                      <p className="text-[10px] mt-1 text-secondary-600 leading-relaxed bg-cream-100 rounded-lg p-2">{record.remark}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function NodeTimelineSection({ nodes, status }: { nodes: ServiceNode[]; status: OrderStatus }) {
   if (nodes.length === 0) return null;
@@ -525,6 +717,12 @@ export default function OrderDetail() {
                   <p className="text-xs text-secondary-500 mt-0.5">
                     当前状态：{badge.label} → 下一状态：{statusFlowLabels[order.status].next}
                   </p>
+                  <div className="flex items-center gap-2 mt-1 text-[9px]">
+                    <span className="px-1.5 py-0.5 rounded bg-blue-50 text-blue-600">1km优先</span>
+                    <span className="px-1.5 py-0.5 rounded bg-green-50 text-green-600">好评50%</span>
+                    <span className="px-1.5 py-0.5 rounded bg-orange-50 text-orange-600">准时40%</span>
+                    <span className="px-1.5 py-0.5 rounded bg-red-50 text-red-600">投诉10%</span>
+                  </div>
                 </div>
               </div>
               <button
@@ -572,63 +770,7 @@ export default function OrderDetail() {
         )}
 
         {order.worker_name && (
-          <div className="card p-6 mb-6">
-            <h2 className="text-lg font-bold text-secondary-800 mb-4 flex items-center gap-2">
-              <Users className="w-5 h-5 text-primary-500" />
-              服务阿姨
-            </h2>
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
-                <User className="w-8 h-8 text-white" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3">
-                  <p className="font-bold text-secondary-800 text-lg">{order.worker_name}</p>
-                  {order.worker_score && (
-                    <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                      <span className="text-sm font-medium text-secondary-700">{order.worker_score}</span>
-                    </div>
-                  )}
-                  <Link
-                    to="/worker/profile"
-                    className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1 font-medium"
-                  >
-                    <ShieldCheck className="w-3 h-3" />
-                    查看三证
-                  </Link>
-                </div>
-                <p className="text-secondary-500 text-sm">{order.worker_phone}</p>
-                <div className="flex items-center gap-3 mt-1">
-                  <div className="flex items-center gap-1">
-                    <ShieldCheck className="w-4 h-4 text-green-500" />
-                    <span className="text-xs text-green-600">已实名认证</span>
-                  </div>
-                  {order.distance_km && (
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4 text-secondary-400" />
-                      <span className="text-xs text-secondary-500">{order.distance_km}km</span>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-1">
-                    <Navigation className="w-4 h-4 text-primary-400" />
-                    <span className="text-xs text-primary-500">1km内优先派单</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <a
-                  href={`tel:${order.worker_phone}`}
-                  className="w-11 h-11 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center hover:bg-primary-100 transition-colors"
-                >
-                  <Phone className="w-5 h-5" />
-                </a>
-                <button className="w-11 h-11 rounded-full bg-secondary-50 text-secondary-600 flex items-center justify-center hover:bg-secondary-100 transition-colors">
-                  <MessageCircle className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
+          <WorkerCertSection order={order} />
         )}
 
         <div className="card p-6 mb-6">

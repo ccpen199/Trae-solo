@@ -208,28 +208,28 @@ function CompensationCard({ compensation }: { compensation: CompensationRecord }
 function CompletedOrderDetail({ order }: { order: Order }) {
   const [expanded, setExpanded] = useState(false);
   const qa = order.qa_record;
+  if (!qa) return null;
+
+  const conclusionLabel = qa.review_conclusion === 'pass' ? '质检通过' : qa.review_conclusion === 'warning' ? '质检警告' : '质检不通过';
+  const conclusionCls = qa.review_conclusion === 'pass' ? 'bg-green-100 text-green-700 border-green-200' : qa.review_conclusion === 'warning' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : 'bg-red-100 text-red-700 border-red-200';
 
   return (
     <div className="mt-3 border-t border-gray-100 pt-3">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-between text-xs text-secondary-500 hover:text-primary-600"
+        className={cn(
+          'w-full flex items-center justify-between px-3 py-2 rounded-xl border transition-colors',
+          conclusionCls,
+          !expanded && 'hover:opacity-80'
+        )}
       >
-        <span className="flex items-center gap-1.5">
-          <BarChart3 className="w-3.5 h-3.5" />
+        <span className="flex items-center gap-2 text-xs font-bold">
+          {qa.review_conclusion === 'pass' ? <CheckCircle className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
           服务评分与质量回溯
-          {qa?.review_conclusion && (
-            <span className={cn(
-              'text-[9px] px-1.5 py-0.5 rounded-full',
-              qa.review_conclusion === 'pass' ? 'bg-green-100 text-green-600'
-              : qa.review_conclusion === 'warning' ? 'bg-yellow-100 text-yellow-600'
-              : 'bg-red-100 text-red-600'
-            )}>
-              {qa.review_conclusion === 'pass' ? '质检通过' : qa.review_conclusion === 'warning' ? '质检警告' : '质检不通过'}
-            </span>
-          )}
+          <span className="font-normal text-[10px]">{conclusionLabel}</span>
+          <span className="font-normal text-[10px]">合规{qa.compliance_rate}%</span>
         </span>
-        <ChevronLeft className={cn('w-3 h-3 transition-transform', expanded && 'rotate-180')} />
+        <ChevronLeft className={cn('w-3.5 h-3.5 transition-transform', expanded && 'rotate-180')} />
       </button>
 
       {expanded && (
@@ -237,47 +237,47 @@ function CompletedOrderDetail({ order }: { order: Order }) {
           <div className="grid grid-cols-3 gap-2">
             <div className="bg-yellow-50 rounded-lg p-2 text-center">
               <Star className="w-4 h-4 text-yellow-500 mx-auto mb-0.5 fill-yellow-500" />
-              <p className="text-sm font-bold text-yellow-700">{qa?.rating ?? 4.8}</p>
+              <p className="text-sm font-bold text-yellow-700">{qa.rating ?? 4.8}</p>
               <p className="text-[9px] text-yellow-600">客户评分</p>
             </div>
             <div className="bg-green-50 rounded-lg p-2 text-center">
               <CheckCircle className="w-4 h-4 text-green-500 mx-auto mb-0.5" />
-              <p className="text-sm font-bold text-green-700">{qa ? (qa.compliance_rate) : 95}%</p>
+              <p className="text-sm font-bold text-green-700">{qa.compliance_rate}%</p>
               <p className="text-[9px] text-green-600">质检合规率</p>
             </div>
             <div className="bg-blue-50 rounded-lg p-2 text-center">
               <Award className="w-4 h-4 text-blue-500 mx-auto mb-0.5" />
-              <p className="text-sm font-bold text-blue-700">{qa?.complaint_count === 0 ? '0' : qa?.complaint_count ?? 0}</p>
+              <p className="text-sm font-bold text-blue-700">{qa.complaint_count === 0 ? '0' : qa.complaint_count}</p>
               <p className="text-[9px] text-blue-600">投诉次数</p>
             </div>
           </div>
 
-          {qa && (
-            <div className="bg-secondary-50 rounded-lg p-2.5 space-y-2">
-              <div className="flex items-center gap-1.5 text-[10px] text-secondary-700 font-medium">
-                <BarChart3 className="w-3 h-3" />
-                差评根因分析
+          <div className="bg-secondary-50 rounded-lg p-2.5 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] text-secondary-700 font-medium">
+              <BarChart3 className="w-3 h-3" />
+              差评根因分析
+            </div>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-secondary-500">根因分类</span>
+                <span className={cn('font-medium', qa.complaint_count > 0 ? 'text-red-600' : 'text-green-600')}>
+                  {qa.root_cause_category}
+                </span>
               </div>
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-secondary-500">根因分类</span>
-                  <span className={cn('font-medium', qa.complaint_count > 0 ? 'text-red-600' : 'text-green-600')}>
-                    {qa.root_cause_category}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-secondary-500">具体原因</span>
-                  <span className="text-secondary-700 text-right max-w-[60%]">{qa.root_cause}</span>
-                </div>
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-secondary-500">具体原因</span>
+                <span className="text-secondary-700 text-right max-w-[60%]">{qa.root_cause}</span>
+              </div>
+              {qa.root_cause_detail && (
                 <div className="flex items-start justify-between text-[10px]">
                   <span className="text-secondary-500 flex-shrink-0">详细分析</span>
                   <p className="text-secondary-600 text-right max-w-[65%] leading-relaxed">{qa.root_cause_detail}</p>
                 </div>
-              </div>
+              )}
             </div>
-          )}
+          </div>
 
-          {qa && qa.keywords && qa.keywords.length > 0 && (
+          {qa.keywords && qa.keywords.length > 0 && (
             <div className="bg-primary-50 rounded-lg p-2.5">
               <div className="flex items-center gap-1.5 text-[10px] text-primary-700 font-medium mb-1.5">
                 <MessageSquare className="w-3 h-3" />
@@ -300,20 +300,22 @@ function CompletedOrderDetail({ order }: { order: Order }) {
             </div>
           )}
 
-          {qa && (
-            <div className="bg-cream-100 rounded-lg p-2.5">
-              <div className="flex items-center gap-1.5 text-[10px] text-secondary-700 font-medium mb-1.5">
-                <Mic className="w-3 h-3" />
-                录音转文字摘要
-                <span className="text-[9px] text-secondary-400 font-normal">
-                  · 时长{Math.floor(qa.audio_duration / 60)}分钟
-                </span>
-              </div>
-              <p className="text-[10px] text-secondary-600 leading-relaxed">{qa.transcript_summary}</p>
+          <div className="bg-cream-100 rounded-lg p-2.5">
+            <div className="flex items-center gap-1.5 text-[10px] text-secondary-700 font-medium mb-1.5">
+              <Mic className="w-3 h-3" />
+              录音转文字摘要
+              <span className="text-[9px] text-secondary-400 font-normal">· 时长{Math.floor(qa.audio_duration / 60)}分钟</span>
             </div>
-          )}
+            <p className="text-[10px] text-secondary-600 leading-relaxed">{qa.transcript_summary}</p>
+            {qa.transcript_full && (
+              <details className="mt-1.5">
+                <summary className="text-[9px] text-primary-600 cursor-pointer hover:text-primary-700">展开完整转写</summary>
+                <p className="text-[9px] text-secondary-500 mt-1 leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">{qa.transcript_full}</p>
+              </details>
+            )}
+          </div>
 
-          {qa && qa.qa_status === 'completed' && (
+          {qa.qa_status === 'completed' && (
             <div className="bg-blue-50 rounded-lg p-2.5 space-y-1.5 border border-blue-100">
               <div className="flex items-center gap-1.5 text-[10px] text-blue-700 font-medium">
                 <UserCheck className="w-3 h-3" />
@@ -333,17 +335,17 @@ function CompletedOrderDetail({ order }: { order: Order }) {
                 <span className="text-secondary-500">质检结论：</span>
                 <span className={cn(
                   'font-medium',
-                  qa.review_conclusion === 'pass' ? 'text-green-600'
-                  : qa.review_conclusion === 'warning' ? 'text-yellow-600'
-                  : 'text-red-600'
+                  qa.review_conclusion === 'pass' ? 'text-green-600' : qa.review_conclusion === 'warning' ? 'text-yellow-600' : 'text-red-600'
                 )}>
                   {qa.review_conclusion === 'pass' ? '通过' : qa.review_conclusion === 'warning' ? '警告' : '不通过'}
                 </span>
               </div>
-              <div className="text-[10px] bg-white/60 rounded p-1.5 mt-1">
-                <span className="text-secondary-500">复查意见：</span>
-                <span className="text-secondary-600">{qa.review_remark}</span>
-              </div>
+              {qa.review_remark && (
+                <div className="text-[10px] bg-white/60 rounded p-1.5 mt-1">
+                  <span className="text-secondary-500">复查意见：</span>
+                  <span className="text-secondary-600">{qa.review_remark}</span>
+                </div>
+              )}
             </div>
           )}
 
