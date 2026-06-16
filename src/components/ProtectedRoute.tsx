@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/useAuthStore';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -8,24 +8,40 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children, requireAdmin = false }: ProtectedRouteProps) {
-  const { isAuthenticated, user, checkAuth, token } = useAuthStore();
+  const isAuthenticated = useAuthStore(s => s.isAuthenticated);
+  const user = useAuthStore(s => s.user);
+  const token = useAuthStore(s => s.token);
+  const checkAuth = useAuthStore(s => s.checkAuth);
   const location = useLocation();
-  const [checking, setChecking] = useState(!isAuthenticated);
-  const [checked, setChecked] = useState(false);
+  const [checking, setChecking] = useState(true);
+  const hasChecked = useRef(false);
 
   useEffect(() => {
-    if (isAuthenticated && token) {
+    if (hasChecked.current) return;
+    
+    if (isAuthenticated && token && user) {
       setChecking(false);
-      setChecked(true);
+      hasChecked.current = true;
       return;
     }
-    const init = async () => {
-      const valid = await checkAuth();
-      setChecked(true);
+
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      checkAuth().finally(() => {
+        setChecking(false);
+        hasChecked.current = true;
+      });
+    } else {
       setChecking(false);
-    };
-    init();
-  }, [isAuthenticated, token, checkAuth]);
+      hasChecked.current = true;
+    }
+  }, [isAuthenticated, token, user, checkAuth]);
+
+  useEffect(() => {
+    if (isAuthenticated && checking) {
+      setChecking(false);
+    }
+  }, [isAuthenticated, checking]);
 
   if (checking) {
     return (

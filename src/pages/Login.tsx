@@ -146,7 +146,7 @@ export default function Login() {
     if (isAuthenticated && user && loginSuccess) {
       const timer = setTimeout(() => {
         navigateByRole(user.role);
-      }, 1000);
+      }, 800);
       return () => clearTimeout(timer);
     }
   }, [isAuthenticated, user, loginSuccess, navigateByRole]);
@@ -233,6 +233,7 @@ export default function Login() {
           detail: `面部特征匹配成功，正在跳转至${roleName}工作台...`,
         });
         setLoginSuccess(true);
+        setTimeout(() => navigateByRole(result.user.role), 800);
       } else {
         setFaceScanning(false);
         setVerifySteps({ accountValid: 'pass', credentialValid: 'fail', roleMatched: 'pending' });
@@ -291,6 +292,7 @@ export default function Login() {
         detail: `账号有效 · 凭据校验通过 · 角色权限已匹配，正在跳转至${roleName}工作台...`,
       });
       setLoginSuccess(true);
+      setTimeout(() => navigateByRole(result.user.role), 800);
     } else {
       const errorCode = result.code;
       if (errorCode === 'ACCOUNT_NOT_FOUND') {
@@ -310,8 +312,11 @@ export default function Login() {
     setPhone(account.phone);
     setPassword(account.password);
     setLoginType('password');
+    setDetectedRole(account.role);
+    setVerifySteps({ accountValid: 'pending', credentialValid: 'pending', roleMatched: 'pending' });
     clearLoginError();
     setLoginAuditInfo(null);
+    setLoginSuccess(false);
   };
 
   const getErrorDisplay = () => {
@@ -822,13 +827,13 @@ export default function Login() {
                   </div>
                   刷脸
                 </button>
-                <button type="button" className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
+                <button type="button" onClick={() => fillDemoAccount(demoAccounts[0])} className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
                   <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
                     <Smartphone className="w-5 h-5" />
                   </div>
                   爱南宁
                 </button>
-                <button type="button" className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
+                <button type="button" onClick={() => { setLoginType('sms'); fillDemoAccount(demoAccounts[0]); }} className="flex flex-col items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
                   <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
                     <Shield className="w-5 h-5" />
                   </div>
