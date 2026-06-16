@@ -1,0 +1,733 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T23:52:34.801Z",
+  "order": "may-89212",
+  "roundIndex": 99,
+  "captureId": "may-89212-codex-20260616",
+  "url": "http://127.0.0.1:49212/",
+  "initialUrl": "http://127.0.0.1:49212/",
+  "finalUrl": "http://127.0.0.1:49212/",
+  "status": 200,
+  "title": "虚拟商品聚合平台 - 极速充值",
+  "initialTitle": "虚拟商品聚合平台 - 极速充值",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260616/may-89212-codex-20260616-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260616/may-89212-codex-20260616-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "后台管理相关问题；购买/提交相关问题；详情/内容页相关问题；用户端和管理端链路复验",
+  "targetReason": "后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetKind": "admin",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /运营后台/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a class=\"admin-entry\" href=\"http://127.0.0.1:50212\">运营后台</a>\u001b[22m\n\u001b[2m "
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49212/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "headings": [
+          "虚拟商品中心",
+          "🎉 新用户首单立减20元",
+          "🔥 热门推荐",
+          "📦 完整SKU分类"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "⚠️ 2",
+          "🔄",
+          "📊 关系链",
+          "立即充值",
+          "💰 优惠明细",
+          "📊 佣金明细 三级+¥1.06",
+          "📞 充值试算 输入号码",
+          "📊 佣金明细 三级+¥2.01",
+          "📊 佣金明细 三级+¥2.02",
+          "📊 佣金明细 三级+¥0.91",
+          "📊 佣金明细 三级+¥1.42",
+          "📊 佣金明细 三级+¥10.72",
+          "⚠️ 1",
+          "📊 佣金明细 三级+¥1.31",
+          "📊 佣金明细 三级+¥1.39",
+          "📊 佣金明细 三级+¥5.90",
+          "📊 佣金明细 三级+¥1.24",
+          "📊 佣金明细 三级+¥0.69",
+          "📊 佣金明细 三级+¥2.05",
+          "📊 佣金明细 三级+¥0.82",
+          "📊 佣金明细 三级+¥0.37",
+          "📊 佣金明细 三级+¥0.68",
+          "📊 佣金明细 三级+¥0.49",
+          "📊 佣金明细 三级+¥0.52"
+        ],
+        "links": [
+          "运营后台",
+          "🏠 首页",
+          "📂 分类",
+          "📋 订单",
+          "👤 我的"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商品名、供应商名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "虚拟商品中心运营后台🔍🎉 新用户首单立减20元200+商品极速充值 · 安全保障 · 佣金实时到账💰 满100减10全场通用 ·可叠加💰 满50减5话费专享 ·可叠加📉 会员全场95折 ·可叠加💸 满200返20元佣金 📱话费充值54款🌐流量充值76款🎬视频会员80款🎵音乐会员76款🍔外卖券73款🛒电商购物卡75款🔥 热门推荐查看全部 ›📦 完整SKU分类📱话费充值54款商品查看全部 →🌐流量充值76款商品查看全部 →🎬视频会员80款商品查看全部 →🎵音乐会员76款商品查看全部 →🍔外卖券73款商品查看全部 →🛒电商购物卡75款商品查看全部 →🛟 已切到备用通道2号 · 延迟约2分钟话费50元📍 部分地区⚠️2🔄HOT腾讯充值中心4通道🛡️ 备用1个可叠加优惠中国移动话费50元库存充足6小时前同步批次 BATCH2026061520¥49.5¥50实付预估 ¥49.50赚 ¥1.41📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细三级+¥1.06📞充值试算输入号码话费100元📍 部分地区🔄HOT腾讯充值中心3通道🛡️ 备用1个可叠加优惠中国移动话费100元库存充足6小时前同步批次 BATCH2026061520¥99¥100实付预估 ¥99.00赚 ¥2.68📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细三级+¥2.01📞充值试算输入号码电信话费100📍 部分地区🔄HOT腾讯充值中心3通道🛡️ 备用1个可叠加优惠中国电信话费100元库存充足6小时前同步批次 BATCH2026061520¥99.8¥100实付预估 ¥99.80赚 ¥2.70📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细三级+¥2.02📞充值试算输入号码流量5G📍 部分地区🔄HOT腾讯充值中心3通道🛡️ 备用1个可叠加优惠全国通用流量5GB库存充足6小时前同步批次 BATCH2026061520¥25.5¥30实付预估 ¥25.50赚 ¥1.21📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细三级+¥0.91📞充值试算输入号码爱奇艺月卡📍 部分地区🔄HOT爱奇艺会员中心3通道🛡️ 备用1个可叠加优惠爱奇艺黄金会员月卡库存充足6小时前同步批次 BATCH2026061520¥25¥30实付预估 ¥25.00赚 ¥1.90📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细三级+¥1.42📞充值试算输入号码爱奇艺年卡📍 部分地区🔄HOT爱奇艺会员中心3通道🛡️ 备用1个可叠加优惠爱奇艺黄金会员年卡库存充足6小时前同步批次 BATCH2026061520¥198¥248实付预估 ¥198.00赚 ¥14.29📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细三级+¥10.72📞充值试算输入号码🛟 已切到备用通道2号 · 延迟约2分钟美团50券📍 部分地区⚠️1🔄HOT美团外卖券4通道🛡️ 备用1个可叠加优惠美团外卖券50元缺货1小时前同步批次 BATCH2026061601¥46¥50实付预估 ¥46.00赚 ¥1.75📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细三级+¥1.31📞充值试算输入号码京东100📍 部分地区🔄HOT京东E卡4通道🛡️ 备用1个可叠加优惠京东E卡100元库存充足21小时前同步批次 BATCH2026061505¥97.5¥100实付预估 ¥97.50赚 ¥1.85📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细📊佣金明细三级+¥1.39📞充值试算输入号码🛟 已切到备用通道2号 · 延迟约2分钟绿钻年卡📍 部分地区⚠️1🔄HOT腾讯充值中心4通道🛡️ 备用1个可叠加优惠QQ音乐绿钻年卡库存充足6小时前同步批次 BATCH2026061520¥148¥180实付预估 ¥148.00赚 ¥7.87📊 关系链L1 8% / L2 4% / L3 2%立",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 7220,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260616-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49212/",
+          "title": "虚拟商品聚合平台 - 极速充值",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260616/may-89212-codex-20260616-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260616/may-89212-codex-20260616-structure-01-首屏.png",
+          "elementCount": 1048,
+          "interactiveCount": 131,
+          "interactiveLabels": [
+            "运营后台",
+            "搜索商品名、供应商名称...",
+            "2",
+            "关系链",
+            "立即充值",
+            "优惠明细",
+            "佣金明细 三级+¥1.06",
+            "充值试算 输入号码",
+            "佣金明细 三级+¥2.01",
+            "佣金明细 三级+¥2.02",
+            "佣金明细 三级+¥0.91",
+            "佣金明细 三级+¥1.42",
+            "佣金明细 三级+¥10.72",
+            "1",
+            "佣金明细 三级+¥1.31",
+            "佣金明细 三级+¥1.39",
+            "佣金明细 三级+¥5.90",
+            "佣金明细 三级+¥1.24"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260616-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260616/may-89212-codex-20260616-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260616/may-89212-codex-20260616-structure-01-首屏.png",
+        "elementCount": 1048,
+        "interactiveCount": 131,
+        "interactiveLabels": [
+          "运营后台",
+          "搜索商品名、供应商名称...",
+          "2",
+          "关系链",
+          "立即充值",
+          "优惠明细",
+          "佣金明细 三级+¥1.06",
+          "充值试算 输入号码",
+          "佣金明细 三级+¥2.01",
+          "佣金明细 三级+¥2.02",
+          "佣金明细 三级+¥0.91",
+          "佣金明细 三级+¥1.42",
+          "佣金明细 三级+¥10.72",
+          "1",
+          "佣金明细 三级+¥1.31",
+          "佣金明细 三级+¥1.39",
+          "佣金明细 三级+¥5.90",
+          "佣金明细 三级+¥1.24"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49212/",
+    "representativeScreenshotLabel": "虚拟商品中心"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260616-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260616/may-89212-codex-20260616-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260616/may-89212-codex-20260616-structure-01-首屏.png",
+        "elementCount": 1048,
+        "interactiveCount": 131,
+        "interactiveLabels": [
+          "运营后台",
+          "搜索商品名、供应商名称...",
+          "2",
+          "关系链",
+          "立即充值",
+          "优惠明细",
+          "佣金明细 三级+¥1.06",
+          "充值试算 输入号码",
+          "佣金明细 三级+¥2.01",
+          "佣金明细 三级+¥2.02",
+          "佣金明细 三级+¥0.91",
+          "佣金明细 三级+¥1.42",
+          "佣金明细 三级+¥10.72",
+          "1",
+          "佣金明细 三级+¥1.31",
+          "佣金明细 三级+¥1.39",
+          "佣金明细 三级+¥5.90",
+          "佣金明细 三级+¥1.24"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 7220
+  },
+  "initialBodyTextPreview": "虚拟商品中心\n运营后台\n🔍\n🎉 新用户首单立减20元\n\n200+商品极速充值 · 安全保障 · 佣金实时到账\n\n💰 满100减10全场通用 ·可叠加\n💰 满50减5话费专享 ·可叠加\n📉 会员全场95折 ·可叠加\n💸 满200返20元佣金\n📱\n话费充值\n54款\n🌐\n流量充值\n76款\n🎬\n视频会员\n80款\n🎵\n音乐会员\n76款\n🍔\n外卖券\n73款\n🛒\n电商购物卡\n75款\n🔥 热门推荐\n查看全部 ›\n📦 完整SKU分类\n📱\n话费充值\n54款商品\n查看全部 →\n🌐\n流量充值\n76款商品\n查看全部 →\n🎬\n视频会员\n80款商品\n查看全部 →\n🎵\n音乐会员\n76款商品\n查看全部 →\n🍔\n外卖券\n73款商品\n查看全部 →\n🛒\n电商购物卡\n75款商品\n查看全部 →\n🛟 已切到备用通道2号 · 延迟约2分钟\n话费50元\n📍 部分地区\n⚠️\n2\n🔄\nHOT\n腾讯充值中心\n4通道\n🛡️ 备用1个\n可叠加优惠\n中国移动话费50元\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥49.5\n¥50\n实付预估 ¥49.50\n赚 ¥1.41\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.06\n📞\n充值试算\n输入号码\n话费100元\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n中国移动话费100元\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥99\n¥100\n实付预估 ¥99.00\n赚 ¥2.68\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥2.01\n📞\n充值试算\n输入号码\n电信话费100\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n中国电信话费100元\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥99.8\n¥100\n实付预估 ¥99.80\n赚 ¥2.70\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥2.02\n📞\n充值试算\n输入号码\n流量5G\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n全国通用流量5GB\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥25.5\n¥30\n实付预估 ¥25.50\n赚 ¥1.21\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥0.91\n📞\n充值试算\n输入号码\n爱奇艺月卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员月卡\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥25\n¥30\n实付预估 ¥25.00\n赚 ¥1.90\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.42\n📞\n充值试算\n输入号码\n爱奇艺年卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员年卡\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥198\n¥248\n实付预估 ¥198.00\n赚 ¥14.29\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥10.72\n📞\n充值试算\n输入号码\n🛟 已切到备用通道2号 · 延迟约2分钟\n美团50券\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n美团外卖券\n4通道\n🛡️ 备用1个\n可叠加优惠\n美团外",
+  "bodyTextPreview": "虚拟商品中心\n运营后台\n🔍\n🎉 新用户首单立减20元\n\n200+商品极速充值 · 安全保障 · 佣金实时到账\n\n💰 满100减10全场通用 ·可叠加\n💰 满50减5话费专享 ·可叠加\n📉 会员全场95折 ·可叠加\n💸 满200返20元佣金\n📱\n话费充值\n54款\n🌐\n流量充值\n76款\n🎬\n视频会员\n80款\n🎵\n音乐会员\n76款\n🍔\n外卖券\n73款\n🛒\n电商购物卡\n75款\n🔥 热门推荐\n查看全部 ›\n📦 完整SKU分类\n📱\n话费充值\n54款商品\n查看全部 →\n🌐\n流量充值\n76款商品\n查看全部 →\n🎬\n视频会员\n80款商品\n查看全部 →\n🎵\n音乐会员\n76款商品\n查看全部 →\n🍔\n外卖券\n73款商品\n查看全部 →\n🛒\n电商购物卡\n75款商品\n查看全部 →\n🛟 已切到备用通道2号 · 延迟约2分钟\n话费50元\n📍 部分地区\n⚠️\n2\n🔄\nHOT\n腾讯充值中心\n4通道\n🛡️ 备用1个\n可叠加优惠\n中国移动话费50元\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥49.5\n¥50\n实付预估 ¥49.50\n赚 ¥1.41\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.06\n📞\n充值试算\n输入号码\n话费100元\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n中国移动话费100元\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥99\n¥100\n实付预估 ¥99.00\n赚 ¥2.68\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥2.01\n📞\n充值试算\n输入号码\n电信话费100\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n中国电信话费100元\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥99.8\n¥100\n实付预估 ¥99.80\n赚 ¥2.70\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥2.02\n📞\n充值试算\n输入号码\n流量5G\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n全国通用流量5GB\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥25.5\n¥30\n实付预估 ¥25.50\n赚 ¥1.21\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥0.91\n📞\n充值试算\n输入号码\n爱奇艺月卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员月卡\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥25\n¥30\n实付预估 ¥25.00\n赚 ¥1.90\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.42\n📞\n充值试算\n输入号码\n爱奇艺年卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员年卡\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥198\n¥248\n实付预估 ¥198.00\n赚 ¥14.29\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥10.72\n📞\n充值试算\n输入号码\n🛟 已切到备用通道2号 · 延迟约2分钟\n美团50券\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n美团外卖券\n4通道\n🛡️ 备用1个\n可叠加优惠\n美团外卖券50元\n缺货\n1小时前同步\n批次 BATCH2026061601\n¥46\n¥50\n实付预估 ¥46.00\n赚 ¥1.75\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.31\n📞\n充值试算\n输入号码\n京东100\n📍 部分地区\n🔄\nHOT\n京东E卡\n4通道\n🛡️ 备用1个\n可叠加优惠\n京东E卡100元\n库存充足\n21小时前同步\n批次 BATCH2026061505\n¥97.5\n¥100\n实付预估 ¥97.50\n赚 ¥1.85\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.39\n📞\n充值试算\n输入号码\n🛟 已切到备用通道2号 · 延迟约2分钟\n绿钻年卡\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n腾讯充值中心\n4通道\n🛡️ 备用1个\n可叠加优惠\nQQ音乐绿钻年卡\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥148\n¥180\n实付预估 ¥148.00\n赚 ¥7.87\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥5.90\n📞\n充值试算\n输入号码\n腾讯视频月卡\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n4通道\n🛡️ 备用1个\n可叠加优惠\n腾讯视频VIP月卡\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥25\n¥30\n实付预估 ¥25.00\n赚 ¥1.90\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.42\n📞\n充值试算\n输入号码\n🛟 已切到备用通道1号 · 延迟约2分钟\n腾讯视频年卡\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n腾讯充值中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n腾讯视频VIP年卡\n库存充足\n6小时前同步\n批次 BATCH2026061520\n¥198\n¥288\n实付预估 ¥198.00\n赚 ¥14.29\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥10.72\n📞\n充值试算\n输入号码\n爱奇艺月卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n5通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员月卡\n库存充足\n2小时前同步\n批次 BATCH2026061600\n¥26.06\n¥30\n实付预估 ¥26.06\n赚 ¥1.66\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.24\n📞\n充值试算\n输入号码\nQQ音乐月卡\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n3通道\n🛡️ 备用1个\n可叠加优惠\nQQ音乐绿钻豪华版月卡\n库存充足\n2小时前同步\n批次 BATCH2026061600\n¥14.86\n¥18\n实付预估 ¥14.86\n赚 ¥0.92\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥0.69\n📞\n充值试算\n输入号码\n爱奇艺月卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n3通道\n🛡️ 备用1个\n可叠加优惠\n爱奇艺黄金会员月卡\n库存充足\n2",
+  "apiBase": "http://127.0.0.1:59212/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"status\":\"ok\",\"timestamp\":1781567525,\"version\":\"1.0.0\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/categories",
+      "path": "/api/categories",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"c_phone\",\"name\":\"话费充值\",\"code\":\"phone\",\"icon\":\"📱\",\"sort\":1,\"parent_id\":null,\"created_at\":1781489008,\"product_count\":54},{\"id\":\"c_data\",\"name\":\"流量充值\",\"code\":\"data\",\"icon\":\"🌐\",\"sort\":2,\"parent_id\":null,\"created_at\":1781489008,\"product_count\":76},{\"id\":\"c_video\",\"name\":\"视频会员\",\"code\":\"video\",\"icon\":\"🎬\",\"sort\":3,\"parent_id\":null,\"created_at\":1781489008,\"product_count\":80},{\"id\":\"c_food\",\"name\":\"外卖券\",\"code\":\"food\",\"icon\":\"🍔\",\"sort\":4,\"parent_id\":null,\"created_at\":1781"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/hot",
+      "path": "/api/products/hot",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"name\":\"中国移动话费50元\",\"category_id\":\"c_phone\",\"supplier_id\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"supplier_product_id\":\"SKU000001\",\"sku_type\":\"recharge\",\"face_value\":50,\"price\":49.5,\"cost_price\":48,\"commission_rate\":0.03,\"stock\":9999,\"stock_warning\":10,\"image\":\"话费50元\",\"description\":\"中国移动话费50元，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":1,\"recharge_type\":\"auto\",\"region_limit\":null,\"created_at\":1781489008,\"updated_at\":1781543662,"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/promotions",
+      "path": "/api/promotions",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"e6440b65-4036-498a-a062-ad3b0e6f72b7\",\"name\":\"满100减10全场通用\",\"type\":\"full_reduction\",\"rules\":{\"threshold\":100,\"value\":10,\"stackable\":true},\"priority\":100,\"start_time\":null,\"end_time\":null,\"status\":1,\"created_at\":1781489008},{\"id\":\"270e9309-bf5d-4f4b-a2fc-1e39f7b9b157\",\"name\":\"满50减5话费专享\",\"type\":\"full_reduction\",\"rules\":{\"threshold\":50,\"value\":5,\"stackable\":true,\"scope\":{\"categoryIds\":[\"c_phone\"]}},\"priority\":90,\"start_time\":null,\"end_time\":null,\"status\":1,\"created_at\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":1000,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":1000,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":1000,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"totalOrders\":80,\"totalGMV\":10033.3,\"totalUsers\":8,\"totalProducts\":434,\"totalSuppliers\":6,\"pendingCommission\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"totalOrders\":80,\"totalGMV\":10033.3,\"totalUsers\":8,\"totalProducts\":434,\"totalSuppliers\":6,\"pendingCommission\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":\"f0dd3438-27ca-493e-b62a-47f55fcff375\",\"name\":\"美团外卖券50元\",\"category_id\":\"c_food\",\"supplier_id\":\"3dcebd99-e593-4ef8-a62c-f10047fec049\",\"supplier_product_id\":\"SKU000016\",\"sku_type\":\"card\",\"face_value\":50,\"price\":46,\"cost_price\":42.5,\"commission_rate\":0.04,\"stock\":0,\"stock_warning\":10,\"image\":\"美团50券\",\"description\":\"美团外卖券50元，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":1,\"recharge_type\":\"auto\",\"region_limit\":null,\"created_at\":1781489008,\"updated_at\":1781561115,\"s"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":\"c3234a6f-c2c9-408a-9c0d-9317f7ea83a0\",\"order_no\":\"V17810930080055\",\"product_name\":\"京东E卡100元\",\"status\":\"failed\",\"final_amount\":92.5,\"recharge_account\":\"ACC552222\",\"created_at\":1781439531,\"updated_at\":1781439531},{\"id\":\"d6954d95-a1d5-465a-8eea-716d6749c4c3\",\"order_no\":\"V17814314080008\",\"product_name\":\"腾讯视频VIP月卡\",\"status\":\"completed\",\"final_amount\":25,\"recharge_account\":\"13700003333\",\"created_at\":1781403590,\"updated_at\":1781403590},{\"id\":\"78a37b35-540d-4381-89"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"virtual-goods-local-cart\",\"items\":[{\"id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"name\":\"中国移动话费50元\",\"price\":49.5,\"quantity\":1}],\"total\":49.5}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=6e305429",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49212/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=6e305429",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50212/src/styles.css",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50212/node_modules/.vite/deps/chunk-G3PMV62Z.js?v=4e33f11f",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-dom_client.js?v=4e33f11f",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50212/node_modules/.vite/deps/chunk-76T5642S.js?v=4e33f11f",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50212/src/App.tsx",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": []
+}

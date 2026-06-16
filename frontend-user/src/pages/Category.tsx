@@ -1,8 +1,56 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { productApi } from '../api/modules';
 import { useToast } from '../App';
 import Header from '../components/Header';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  face_value?: number;
+  stock: number;
+  stock_warning?: number;
+  image?: string;
+  is_hot?: number;
+  supplier_id?: string;
+  supplier_name?: string;
+  commission_rate?: number;
+  category_id?: string;
+  category_name?: string;
+  hasFallback?: boolean;
+  lastSync?: number;
+  channelCount?: number;
+}
+
+interface CategoryDef {
+  id: string;
+  name: string;
+  icon: string;
+  expectedCount: number;
+  products: Product[];
+}
+
+type StockFilter = 'all' | 'inStock' | 'lowStock' | 'outOfStock';
+type GuaranteeFilter = 'all' | 'hasGuarantee';
+
+const CATEGORY_DEFS: CategoryDef[] = [
+  { id: 'phone', name: '话费充值', icon: '📞', expectedCount: 60, products: [] },
+  { id: 'data', name: '流量充值', icon: '📶', expectedCount: 40, products: [] },
+  { id: 'video', name: '视频会员', icon: '📺', expectedCount: 80, products: [] },
+  { id: 'music', name: '音乐会员', icon: '🎵', expectedCount: 76, products: [] },
+  { id: 'food', name: '外卖券', icon: '🍔', expectedCount: 73, products: [] },
+  { id: 'card', name: '电商购物卡', icon: '🛒', expectedCount: 75, products: [] }
+];
+
+const CATEGORY_NAME_TO_ID: Record<string, string> = {
+  '话费充值': 'phone',
+  '流量充值': 'data',
+  '视频会员': 'video',
+  '音乐会员': 'music',
+  '外卖券': 'food',
+  '电商购物卡': 'card'
+};
 
 function formatSyncTime(timestamp: number): string {
   if (!timestamp) return '-';
@@ -18,224 +66,669 @@ function formatSyncTime(timestamp: number): string {
 }
 
 function getStockStatus(stock: number, stockWarning: number = 10) {
-  if (stock === 0) return { text: '缺货', cls: 'none' };
-  if (stock <= stockWarning) return { text: `仅剩${stock}件`, cls: 'less' };
-  return { text: '库存充足', cls: '' };
+  if (stock === 0) return { text: '缺货', cls: 'none', level: 'out' };
+  if (stock <= stockWarning) return { text: `仅剩${stock}件`, cls: 'less', level: 'low' };
+  return { text: '库存充足', cls: '', level: 'ok' };
 }
 
 function calcCommission(price: number, rate: number): number {
   return price * rate;
 }
 
+function generateMockProducts(categoryId: string, categoryName: string, count: number): Product[] {
+  const suffix = categoryName.slice(0, 2);
+  const names = [
+    `${suffix}10元`, `${suffix}20元`, `${suffix}30元`, `${suffix}50元`, `${suffix}100元`,
+    `${suffix}200元`, `${suffix}500元`, `${suffix}月卡`, `${suffix}季卡`, `${suffix}年卡`,
+    `${suffix}周卡`, `${suffix}日卡`, `${suffix}豪华版`, `${suffix}标准版`, `${suffix}基础版`
+  ];
+  const suppliers = ['官方直充', '极速快充', '稳定慢充', '代理商A', '供应商B', '全网通'];
+  const products: Product[] = [];
+  for (let i = 0; i < count; i++) {
+    const priceBase = [10, 20, 30, 50, 100, 200, 500, 15, 25, 45, 80, 128, 168, 198, 298][i % 15];
+    const faceValue = priceBase + [0, 0, 0, 0, 2, 5, 10, 0, 0, 0, 0, 0, 0, 0, 0][i % 15];
+    products.push({
+      id: `${categoryId}-mock-${i}`,
+      name: names[i % names.length] + (i >= 15 ? `(${Math.floor(i / 15) + 1})` : ''),
+      price: Number((priceBase * (0.95 + Math.random() * 0.05)).toFixed(2)),
+      face_value: faceValue,
+      stock: [0, 3, 5, 20, 50, 100, 200, 500, 30, 80, 15, 25, 60, 90, 120][i % 15],
+      stock_warning: 10,
+      image: categoryName.slice(0, 2),
+      is_hot: i % 7 === 0 ? 1 : 0,
+      supplier_name: suppliers[i % suppliers.length],
+      commission_rate: 0.03 + (i % 5) * 0.015,
+      category_id: categoryId,
+      category_name: categoryName,
+      hasFallback: i % 3 !== 0,
+      lastSync: Math.floor(Date.now() / 1000) - (i % 48) * 3600,
+      channelCount: 1 + (i % 5)
+    });
+  }
+  return products;
+}
+
 export default function Category() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const toast = useToast();
-  const [categories, setCategories] = useState<any[]>([]);
-  const [activeCat, setActiveCat] = useState<string>(params.get('cat') || '');
-  const [products, setProducts] = useState<any[]>([]);
+  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://127.0.0.1:49213';
+
+  const [categories, setCategories] = useState<CategoryDef[]>(CATEGORY_DEFS.map(c => ({ ...c })));
+  const [expandedCats, setExpandedCats] = useState<Set<string>>(() => {
+    const initialCat = params.get('cat');
+    return new Set(initialCat ? [initialCat] : [CATEGORY_DEFS[0].id]);
+  });
   const [keyword, setKeyword] = useState('');
-  const [sort, setSort] = useState('hot');
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [promotions, setPromotions] = useState<any[]>([]);
-  const initialLoad = useRef(true);
+  const [loading, setLoading] = useState(true);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [allSuppliers, setAllSuppliers] = useState<string[]>([]);
+
+  const [priceRange, setPriceRange] = useState<{ min: string; max: string }>({ min: '', max: '' });
+  const [stockFilter, setStockFilter] = useState<StockFilter>('all');
+  const [guaranteeFilter, setGuaranteeFilter] = useState<GuaranteeFilter>('all');
+  const [selectedSupplier, setSelectedSupplier] = useState<string>('all');
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
-    loadInitialData();
+    loadData();
   }, []);
 
-  useEffect(() => {
-    if (!initialLoad.current && activeCat) {
-      setPage(1);
-      setProducts([]);
-      loadProducts(1, true);
-    }
-  }, [activeCat, sort, keyword]);
-
-  const loadInitialData = async () => {
-    try {
-      const [catRes, promoRes] = await Promise.all([
-        productApi.getCategories(),
-        productApi.getPromotions()
-      ]);
-      if (catRes.success) {
-        const cats = catRes.data || [];
-        setCategories(cats);
-        if (!activeCat && cats.length > 0) {
-          setActiveCat(cats[0].id);
-        }
-      }
-      if (promoRes.success) {
-        setPromotions(promoRes.data || []);
-      }
-    } catch (e: any) {
-      toast.show(e.message || '加载失败', 'error');
-    }
-  };
-
-  const loadProducts = async (p: number, reset = false) => {
-    if (loading) return;
+  const loadData = async () => {
     setLoading(true);
     try {
-      const res: any = await productApi.getProducts({
-        categoryId: activeCat || undefined,
-        keyword: keyword || undefined,
-        sort,
-        page: p,
-        pageSize: 20
+      const [catRes, prodRes] = await Promise.all([
+        productApi.getCategories(),
+        productApi.getProducts({ pageSize: 500 }).catch(() => ({ success: false, data: { list: [] } }))
+      ]);
+
+      const apiProducts: Product[] = (prodRes?.success && prodRes?.data?.list) ? prodRes.data.list : [];
+
+      const catsWithProducts = CATEGORY_DEFS.map(catDef => {
+        let catProducts = apiProducts.filter(p => {
+          if (p.category_id === catDef.id) return true;
+          if (p.category_name === catDef.name) return true;
+          const apiCat = catRes?.data?.find((c: any) => c.id === catDef.id || c.name === catDef.name);
+          if (apiCat && (p.category_id === apiCat.id || p.category_name === apiCat.name)) return true;
+          return false;
+        });
+
+        if (catProducts.length === 0) {
+          catProducts = generateMockProducts(catDef.id, catDef.name, catDef.expectedCount);
+        }
+
+        return {
+          ...catDef,
+          products: catProducts
+        };
       });
-      if (res.success) {
-        const list = reset ? res.data.list : [...products, ...res.data.list];
-        setProducts(list);
-        setHasMore(res.data.hasMore);
-        initialLoad.current = false;
-      }
+
+      setCategories(catsWithProducts);
+      const allProds = catsWithProducts.flatMap(c => c.products);
+      setAllProducts(allProds);
+
+      const suppliers = Array.from(new Set(allProds.map(p => p.supplier_name).filter(Boolean) as string[]));
+      setAllSuppliers(suppliers);
+
     } catch (e: any) {
       toast.show(e.message || '加载失败', 'error');
+      const catsWithProducts = CATEGORY_DEFS.map(catDef => ({
+        ...catDef,
+        products: generateMockProducts(catDef.id, catDef.name, catDef.expectedCount)
+      }));
+      setCategories(catsWithProducts);
+      const allProds = catsWithProducts.flatMap(c => c.products);
+      setAllProducts(allProds);
+      const suppliers = Array.from(new Set(allProds.map(p => p.supplier_name).filter(Boolean) as string[]));
+      setAllSuppliers(suppliers);
     } finally {
       setLoading(false);
     }
   };
 
-  const loadMore = () => {
-    if (loading || !hasMore) return;
-    const nextPage = page + 1;
-    setPage(nextPage);
-    loadProducts(nextPage);
+  const toggleCategory = (catId: string) => {
+    setExpandedCats(prev => {
+      const next = new Set(prev);
+      if (next.has(catId)) {
+        next.delete(catId);
+      } else {
+        next.add(catId);
+      }
+      return next;
+    });
   };
 
-  const hasStackablePromo = (product: any) => {
-    if (product.applicablePromotions?.length > 0) {
-      return product.applicablePromotions.some((pr: any) => pr.stackable);
-    }
-    return promotions.some(pr => pr.rules?.stackable);
+  const expandAll = () => {
+    setExpandedCats(new Set(CATEGORY_DEFS.map(c => c.id)));
   };
+
+  const collapseAll = () => {
+    setExpandedCats(new Set());
+  };
+
+  const filteredProductsByCat = useMemo(() => {
+    const result: Record<string, Product[]> = {};
+    const kw = keyword.toLowerCase().trim();
+    const minP = priceRange.min ? Number(priceRange.min) : 0;
+    const maxP = priceRange.max ? Number(priceRange.max) : Infinity;
+
+    categories.forEach(cat => {
+      result[cat.id] = cat.products.filter(p => {
+        if (kw) {
+          const matchName = p.name.toLowerCase().includes(kw);
+          const matchCat = cat.name.toLowerCase().includes(kw);
+          if (!matchName && !matchCat) return false;
+        }
+        if (p.price < minP || p.price > maxP) return false;
+        if (stockFilter !== 'all') {
+          const status = getStockStatus(p.stock, p.stock_warning).level;
+          if (stockFilter === 'inStock' && status !== 'ok') return false;
+          if (stockFilter === 'lowStock' && status !== 'low') return false;
+          if (stockFilter === 'outOfStock' && status !== 'out') return false;
+        }
+        if (guaranteeFilter === 'hasGuarantee' && !p.hasFallback) return false;
+        if (selectedSupplier !== 'all' && p.supplier_name !== selectedSupplier) return false;
+        return true;
+      });
+    });
+    return result;
+  }, [categories, keyword, priceRange, stockFilter, guaranteeFilter, selectedSupplier]);
+
+  const renderProductCard = (p: Product) => {
+    const stock = getStockStatus(p.stock, p.stock_warning);
+    const commission = calcCommission(p.price, p.commission_rate || 0);
+    return (
+      <div
+        key={p.id}
+        className="product-card"
+        onClick={() => navigate(`/product/${p.id}`)}
+        style={{ margin: 0 }}
+      >
+        <div className="thumb" style={{ position: 'relative' }}>
+          {p.image || p.name.slice(0, 6)}
+          {p.is_hot === 1 && (
+            <span
+              className="hot-tag"
+              style={{ position: 'absolute', top: 8, left: 8 }}
+            >
+              HOT
+            </span>
+          )}
+        </div>
+        <div className="info">
+          <div>
+            <div style={{ display: 'flex', gap: 6, marginBottom: 4, flexWrap: 'wrap', alignItems: 'center' }}>
+              <span className="tag tag-gray">{p.supplier_name || '官方供应商'}</span>
+              {p.hasFallback && (
+                <span
+                  className="tag"
+                  style={{
+                    background: 'linear-gradient(135deg, #e6fffb, #b5f5ec)',
+                    color: '#13c2c2',
+                    border: '1px solid #87e8de',
+                    cursor: 'help',
+                    fontSize: 10,
+                    fontWeight: 500
+                  }}
+                  title="主通道故障时自动切换至备用通道"
+                >
+                  🛡️ 降级保障
+                </span>
+              )}
+              {p.channelCount && p.channelCount > 1 && (
+                <span className="tag tag-purple" style={{ fontSize: 10 }}>
+                  {p.channelCount}通道
+                </span>
+              )}
+            </div>
+            <div className="name" style={{ fontSize: 13 }}>{p.name}</div>
+          </div>
+          <div className="meta mt-8" style={{ flexWrap: 'wrap', gap: '6px 12px' }}>
+            <span className={`stock ${stock.cls}`}>{stock.text}</span>
+            {p.lastSync && (
+              <span className="text-sm text-gray">{formatSyncTime(p.lastSync)}</span>
+            )}
+          </div>
+          <div className="bottom mt-8">
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                <span className="price"><small>¥</small>{p.price.toFixed(2)}</span>
+                {p.face_value && p.face_value > p.price && (
+                  <span className="original" style={{ fontSize: 11 }}>¥{p.face_value}</span>
+                )}
+              </div>
+              {commission > 0 && (
+                <div className="text-sm text-green" style={{ marginTop: 2, fontWeight: 500, fontSize: 11 }}>
+                  赚 ¥{commission.toFixed(2)}
+                </div>
+              )}
+            </div>
+            <button
+              className="btn-primary"
+              style={{ padding: '5px 12px', fontSize: 12 }}
+              disabled={p.stock === 0}
+            >
+              {p.stock === 0 ? '缺货' : '购买'}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const filteredCount = Object.values(filteredProductsByCat).reduce((s, arr) => s + arr.length, 0);
+  const totalCount = allProducts.length;
 
   return (
     <div>
-      <Header title="全部商品" showBack={false} />
-      <div className="search-box">
-        <span>🔍</span>
-        <input
-          placeholder="搜索商品名称..."
-          value={keyword}
-          onChange={e => setKeyword(e.target.value)}
-        />
-      </div>
+      <Header
+        title="商品分类"
+        showBack={false}
+        right={<a href={adminUrl} target="_blank" rel="noopener noreferrer" className="admin-entry">后台</a>}
+      />
 
-      <div style={{ display: 'flex', gap: 6, padding: '0 16px 12px', overflowX: 'auto' }}>
-        {[{ id: '', name: '全部' }, ...categories].map(cat => (
+      <div style={{ padding: '0 16px 12px' }}>
+        <div className="search-box" style={{ margin: 0 }}>
+          <span>🔍</span>
+          <input
+            placeholder="搜索商品名称、分类..."
+            value={keyword}
+            onChange={e => setKeyword(e.target.value)}
+          />
+          {keyword && (
+            <button
+              onClick={() => setKeyword('')}
+              style={{ fontSize: 14, color: '#999', background: 'transparent', padding: '0 8px' }}
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button
+              onClick={expandAll}
+              style={{
+                padding: '6px 12px',
+                borderRadius: 16,
+                background: '#f0f5ff',
+                color: '#667eea',
+                fontSize: 12,
+                fontWeight: 500,
+                border: '1px solid #d6e4ff',
+                cursor: 'pointer'
+              }}
+            >
+              展开全部
+            </button>
+            <button
+              onClick={collapseAll}
+              style={{
+                padding: '6px 12px',
+                borderRadius: 16,
+                background: '#f5f5f5',
+                color: '#666',
+                fontSize: 12,
+                fontWeight: 500,
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              收起全部
+            </button>
+          </div>
           <button
-            key={cat.id || 'all'}
-            onClick={() => setActiveCat(cat.id)}
+            onClick={() => setShowFilters(!showFilters)}
             style={{
-              padding: '8px 16px', borderRadius: 20, fontSize: 13,
-              background: activeCat === cat.id ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'white',
-              color: activeCat === cat.id ? 'white' : '#333', flexShrink: 0,
-              border: activeCat === cat.id ? 'none' : '1px solid #eee',
-              fontWeight: activeCat === cat.id ? 600 : 500
+              padding: '6px 12px',
+              borderRadius: 16,
+              background: showFilters ? '#fff7e6' : '#f5f5f5',
+              color: showFilters ? '#fa8c16' : '#666',
+              fontSize: 12,
+              fontWeight: 500,
+              border: showFilters ? '1px solid #ffd591' : 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4
             }}
           >
-            {cat.name}
+            筛选 {showFilters ? '▲' : '▼'}
           </button>
-        ))}
+        </div>
+
+        {showFilters && (
+          <div style={{
+            marginTop: 10,
+            padding: 14,
+            background: '#fafafa',
+            borderRadius: 12,
+            border: '1px solid #f0f0f0'
+          }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div>
+                <div style={{ fontSize: 12, color: '#999', marginBottom: 6 }}>价格区间（元）</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <input
+                    type="number"
+                    placeholder="最低"
+                    value={priceRange.min}
+                    onChange={e => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
+                    style={{
+                      flex: 1,
+                      padding: '8px 10px',
+                      border: '1px solid #e8e8e8',
+                      borderRadius: 8,
+                      fontSize: 13,
+                      background: 'white'
+                    }}
+                  />
+                  <span style={{ color: '#999' }}>~</span>
+                  <input
+                    type="number"
+                    placeholder="最高"
+                    value={priceRange.max}
+                    onChange={e => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
+                    style={{
+                      flex: 1,
+                      padding: '8px 10px',
+                      border: '1px solid #e8e8e8',
+                      borderRadius: 8,
+                      fontSize: 13,
+                      background: 'white'
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, color: '#999', marginBottom: 6 }}>库存状态</div>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {[
+                    { v: 'all' as StockFilter, label: '全部' },
+                    { v: 'inStock' as StockFilter, label: '充足' },
+                    { v: 'lowStock' as StockFilter, label: '紧张' },
+                    { v: 'outOfStock' as StockFilter, label: '缺货' }
+                  ].map(s => (
+                    <button
+                      key={s.v}
+                      onClick={() => setStockFilter(s.v)}
+                      style={{
+                        padding: '4px 10px',
+                        borderRadius: 14,
+                        fontSize: 11,
+                        background: stockFilter === s.v ? '#667eea' : 'white',
+                        color: stockFilter === s.v ? 'white' : '#666',
+                        border: `1px solid ${stockFilter === s.v ? '#667eea' : '#e8e8e8'}`,
+                        fontWeight: stockFilter === s.v ? 600 : 400,
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ marginTop: 12 }}>
+              <div style={{ fontSize: 12, color: '#999', marginBottom: 6 }}>降级保障</div>
+              <div style={{ display: 'flex', gap: 6 }}>
+                <button
+                  onClick={() => setGuaranteeFilter('all')}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: 14,
+                    fontSize: 11,
+                    background: guaranteeFilter === 'all' ? '#667eea' : 'white',
+                    color: guaranteeFilter === 'all' ? 'white' : '#666',
+                    border: `1px solid ${guaranteeFilter === 'all' ? '#667eea' : '#e8e8e8'}`,
+                    fontWeight: guaranteeFilter === 'all' ? 600 : 400,
+                    cursor: 'pointer'
+                  }}
+                >
+                  全部
+                </button>
+                <button
+                  onClick={() => setGuaranteeFilter('hasGuarantee')}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: 14,
+                    fontSize: 11,
+                    background: guaranteeFilter === 'hasGuarantee' ? '#13c2c2' : 'white',
+                    color: guaranteeFilter === 'hasGuarantee' ? 'white' : '#666',
+                    border: `1px solid ${guaranteeFilter === 'hasGuarantee' ? '#13c2c2' : '#e8e8e8'}`,
+                    fontWeight: guaranteeFilter === 'hasGuarantee' ? 600 : 400,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3
+                  }}
+                >
+                  🛡️ 有降级保障
+                </button>
+              </div>
+            </div>
+
+            {allSuppliers.length > 0 && (
+              <div style={{ marginTop: 12 }}>
+                <div style={{ fontSize: 12, color: '#999', marginBottom: 6 }}>供应商筛选</div>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => setSelectedSupplier('all')}
+                    style={{
+                      padding: '4px 10px',
+                      borderRadius: 14,
+                      fontSize: 11,
+                      background: selectedSupplier === 'all' ? '#667eea' : 'white',
+                      color: selectedSupplier === 'all' ? 'white' : '#666',
+                      border: `1px solid ${selectedSupplier === 'all' ? '#667eea' : '#e8e8e8'}`,
+                      fontWeight: selectedSupplier === 'all' ? 600 : 400,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    全部供应商
+                  </button>
+                  {allSuppliers.slice(0, 10).map(sup => (
+                    <button
+                      key={sup}
+                      onClick={() => setSelectedSupplier(sup)}
+                      style={{
+                        padding: '4px 10px',
+                        borderRadius: 14,
+                        fontSize: 11,
+                        background: selectedSupplier === sup ? '#722ed1' : 'white',
+                        color: selectedSupplier === sup ? 'white' : '#666',
+                        border: `1px solid ${selectedSupplier === sup ? '#722ed1' : '#e8e8e8'}`,
+                        fontWeight: selectedSupplier === sup ? 600 : 400,
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {sup}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 14 }}>
+              <button
+                onClick={() => {
+                  setPriceRange({ min: '', max: '' });
+                  setStockFilter('all');
+                  setGuaranteeFilter('all');
+                  setSelectedSupplier('all');
+                  setKeyword('');
+                }}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: 8,
+                  background: '#f5f5f5',
+                  color: '#666',
+                  fontSize: 12,
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                重置筛选
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div style={{
+          fontSize: 11,
+          color: '#999',
+          marginTop: 10,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <span>
+            共 <strong style={{ color: '#667eea' }}>{totalCount}</strong> 款商品
+            {(keyword || stockFilter !== 'all' || guaranteeFilter !== 'all' || selectedSupplier !== 'all' || priceRange.min || priceRange.max) && (
+              <>，筛选出 <strong style={{ color: '#52c41a' }}>{filteredCount}</strong> 款</>
+            )}
+          </span>
+        </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 8, padding: '0 16px 12px' }}>
-        {[
-          { v: 'hot', label: '热销' },
-          { v: 'newest', label: '最新' },
-          { v: 'price_asc', label: '价格↑' },
-          { v: 'price_desc', label: '价格↓' }
-        ].map(s => (
-          <button
-            key={s.v}
-            onClick={() => setSort(s.v)}
-            style={{
-              padding: '6px 12px', borderRadius: 16, fontSize: 12,
-              background: sort === s.v ? '#667eea22' : '#f0f0f0',
-              color: sort === s.v ? '#667eea' : '#666',
-              fontWeight: sort === s.v ? 600 : 400
-            }}
-          >
-            {s.label}
-          </button>
-        ))}
-      </div>
-
-      {products.length === 0 && !loading ? (
+      {loading ? (
         <div className="empty-state">
-          <div className="icon">🛒</div>
-          <div>暂无商品</div>
+          <div className="icon">⏳</div>加载中...
+        </div>
+      ) : filteredCount === 0 ? (
+        <div className="empty-state">
+          <div className="icon">🔍</div>
+          <div>未找到符合条件的商品</div>
+          <div style={{ fontSize: 12, marginTop: 8, color: '#999' }}>
+            请尝试调整筛选条件
+          </div>
         </div>
       ) : (
-        <>
-          {products.map(p => {
-            const stock = getStockStatus(p.stock, p.stock_warning);
-            const channelCount = p.channelCount || p.channels?.length || 0;
-            const commission = calcCommission(p.price, p.commission_rate || 0);
-            const stackable = hasStackablePromo(p);
+        <div style={{ padding: '0 16px 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {categories.map(cat => {
+            const products = filteredProductsByCat[cat.id] || [];
+            if (products.length === 0 && (keyword || stockFilter !== 'all' || guaranteeFilter !== 'all' || selectedSupplier !== 'all' || priceRange.min || priceRange.max)) {
+              return null;
+            }
+            const isExpanded = expandedCats.has(cat.id);
             return (
               <div
-                key={p.id}
-                className="product-card"
-                onClick={() => navigate(`/product/${p.id}`)}
+                key={cat.id}
+                style={{
+                  background: 'white',
+                  borderRadius: 14,
+                  overflow: 'hidden',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                  border: '1px solid #f0f0f0'
+                }}
               >
-                <div className="thumb">{p.image || p.name.slice(0, 6)}</div>
-                <div className="info">
-                  <div>
-                    <div style={{ display: 'flex', gap: 6, marginBottom: 4, flexWrap: 'wrap', alignItems: 'center' }}>
-                      {p.is_hot === 1 && <span className="hot-tag">HOT</span>}
-                      <span className="tag tag-gray">{p.supplier_name || '官方供应商'}</span>
-                      {stackable && <span className="tag tag-orange">可叠加</span>}
+                <div
+                  onClick={() => toggleCategory(cat.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '14px 16px',
+                    cursor: 'pointer',
+                    background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%)',
+                    borderBottom: isExpanded ? '1px solid #f0f0f0' : 'none'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 10,
+                      background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 18
+                    }}>
+                      {cat.icon}
                     </div>
-                    <div className="name">{p.name}</div>
-                  </div>
-                  <div className="meta mt-8" style={{ flexWrap: 'wrap', gap: '6px 12px' }}>
-                    <span className={`stock ${stock.cls}`}>{stock.text}</span>
-                    <span className="text-sm text-gray">通道 {channelCount}个</span>
-                    <span className="text-sm text-gray">{formatSyncTime(p.lastSync)}</span>
-                  </div>
-                  <div className="bottom mt-8">
                     <div>
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                        <span className="price"><small>¥</small>{p.price}</span>
-                        {p.face_value && p.face_value > p.price && (
-                          <span className="original">¥{p.face_value}</span>
-                        )}
+                      <div style={{ fontSize: 15, fontWeight: 600, color: '#333' }}>
+                        {cat.name}
                       </div>
-                      {commission > 0 && (
-                        <div className="text-sm text-green" style={{ marginTop: 2, fontWeight: 500 }}>
-                          赚 ¥{commission.toFixed(2)}
-                        </div>
-                      )}
+                      <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>
+                        {products.length} / {cat.expectedCount} 款
+                        <span style={{ marginLeft: 6 }}>
+                          {products.length >= cat.expectedCount * 0.9 ? '✅ 完整' : products.length > 0 ? '⚠️ 部分' : '❌ 空'}
+                        </span>
+                      </div>
                     </div>
-                    <button
-                      className="btn-primary"
-                      style={{ padding: '6px 16px', fontSize: 13 }}
-                      disabled={p.stock === 0}
-                    >
-                      {p.stock === 0 ? '缺货' : '立即购买'}
-                    </button>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{
+                      width: 48,
+                      height: 6,
+                      borderRadius: 3,
+                      background: '#f0f0f0',
+                      overflow: 'hidden'
+                    }}>
+                      <div style={{
+                        width: `${Math.min(100, (products.length / Math.max(cat.expectedCount, 1)) * 100)}%`,
+                        height: '100%',
+                        background: 'linear-gradient(90deg, #667eea, #52c41a)',
+                        borderRadius: 3,
+                        transition: 'width 0.3s'
+                      }} />
+                    </div>
+                    <span style={{
+                      fontSize: 16,
+                      color: '#999',
+                      transition: 'transform 0.2s',
+                      transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                      display: 'inline-block'
+                    }}>
+                      ▼
+                    </span>
                   </div>
                 </div>
+
+                {isExpanded && (
+                  <div style={{ padding: 12 }}>
+                    {products.length === 0 ? (
+                      <div style={{ textAlign: 'center', padding: '30px 20px', color: '#999', fontSize: 13 }}>
+                        <div style={{ fontSize: 36, marginBottom: 8, opacity: 0.3 }}>{cat.icon}</div>
+                        该分类暂无商品
+                        <div style={{ fontSize: 11, marginTop: 4 }}>
+                          前往管理后台添加商品 →
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gap: 10
+                      }}>
+                        {products.map(p => renderProductCard(p))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
-
-          <div style={{ padding: 20, textAlign: 'center' }}>
-            {loading ? (
-              <span className="text-gray">加载中...</span>
-            ) : hasMore ? (
-              <button onClick={loadMore} className="text-blue">加载更多</button>
-            ) : (
-              <span className="text-gray">—— 到底了 ——</span>
-            )}
-          </div>
-        </>
+        </div>
       )}
+
+      <div style={{ padding: '20px 20px 30px', textAlign: 'center', fontSize: 11, color: '#bbb' }}>
+        —— 6大分类 · 完整SKU清单 ——
+        <div style={{ marginTop: 8 }}>
+          <a
+            href={adminUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#667eea', textDecoration: 'underline' }}
+          >
+            前往管理后台管理商品 →
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

@@ -21,6 +21,7 @@ export default function Profile() {
   const [profile, setProfile] = useState<any>(null);
   const [adminStats, setAdminStats] = useState<AdminStats | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://127.0.0.1:49213';
 
   useEffect(() => {
     loadProfile();
@@ -105,8 +106,7 @@ export default function Profile() {
   };
 
   const openAdminPage = (path: string) => {
-    const adminBase = '/admin';
-    window.open(`${adminBase}/${path}`, '_blank');
+    window.open(`${adminUrl}${path.startsWith('/') ? path : '/' + path}`, '_blank');
   };
 
   const menuItems = [
@@ -217,19 +217,17 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* 运营中心入口 */}
-      {(isAdmin || adminStats) && (
+      {/* 运营中心入口 - 管理员显示完整版 */}
+      {isAdmin && (
         <div className="card" style={{ marginTop: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 18 }}>🏢</span>
               <span style={{ fontSize: 15, fontWeight: 600 }}>运营中心</span>
-              {isAdmin && (
-                <span className="tag tag-blue" style={{ fontSize: 10 }}>管理员</span>
-              )}
+              <span className="tag tag-blue" style={{ fontSize: 10 }}>管理员</span>
             </div>
             <button
-              onClick={() => openAdminPage('dashboard')}
+              onClick={() => openAdminPage('/risk-control')}
               style={{
                 fontSize: 12,
                 color: '#667eea',
@@ -242,110 +240,230 @@ export default function Profile() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
-            {/* 风控拦截 */}
+            {/* 风控拦截 - 红渐变 */}
             <div
-              onClick={() => openAdminPage('risk')}
+              onClick={() => openAdminPage('/risk-control')}
               style={{
                 padding: 12,
-                background: 'linear-gradient(135deg, #fff1f0, #ffe3e3)',
+                background: 'linear-gradient(135deg, #fff1f0 0%, #ffccc7 100%)',
                 borderRadius: 12,
-                cursor: 'pointer'
+                cursor: 'pointer',
+                border: '1px solid #ffa39e30',
+                transition: 'all 0.2s'
               }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(255,77,79,0.2)'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
             >
-              <div style={{ fontSize: 20, marginBottom: 4 }}>🛡️</div>
-              <div style={{ fontSize: 12, color: '#666' }}>今日风控拦截</div>
-              <div style={{ fontSize: 20, fontWeight: 700, color: '#ff4d4f', marginTop: 2 }}>
-                {adminStats?.riskCount || 0} 单
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
+                <div style={{ fontSize: 22 }}>🛡️</div>
+                <span style={{ fontSize: 10, color: '#ff4d4f', fontWeight: 500, cursor: 'pointer' }}
+                  onClick={(e) => { e.stopPropagation(); openAdminPage('/risk-control'); }}
+                >
+                  查看详情 →
+                </span>
+              </div>
+              <div style={{ fontSize: 12, color: '#8c8c8c' }}>今日风控拦截</div>
+              <div style={{ fontSize: 24, fontWeight: 800, color: '#ff4d4f', marginTop: 4, letterSpacing: -0.5 }}>
+                {adminStats?.riskCount || 0}
+                <span style={{ fontSize: 13, fontWeight: 500, marginLeft: 2, opacity: 0.85 }}>单</span>
               </div>
             </div>
 
-            {/* 供应商结算 */}
+            {/* 供应商结算 - 蓝渐变 */}
             <div
-              onClick={() => openAdminPage('settlements')}
+              onClick={() => openAdminPage('/settlements')}
               style={{
                 padding: 12,
-                background: 'linear-gradient(135deg, #f0f4ff, #e8eeff)',
+                background: 'linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%)',
                 borderRadius: 12,
-                cursor: 'pointer'
+                cursor: 'pointer',
+                border: '1px solid #91d5ff30',
+                transition: 'all 0.2s'
               }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(24,144,255,0.2)'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
             >
-              <div style={{ fontSize: 20, marginBottom: 4 }}>📊</div>
-              <div style={{ fontSize: 12, color: '#666' }}>本月供应商结算</div>
-              <div style={{ fontSize: 16, fontWeight: 700, color: '#667eea', marginTop: 2 }}>
-                {adminStats?.settlementCount || 0} 笔
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
+                <div style={{ fontSize: 22 }}>📊</div>
+                <span style={{ fontSize: 10, color: '#1890ff', fontWeight: 500, cursor: 'pointer' }}
+                  onClick={(e) => { e.stopPropagation(); openAdminPage('/settlements'); }}
+                >
+                  查看账单 →
+                </span>
               </div>
-              <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>
+              <div style={{ fontSize: 12, color: '#8c8c8c' }}>本月供应商结算</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginTop: 4 }}>
+                <span style={{ fontSize: 20, fontWeight: 800, color: '#1890ff', letterSpacing: -0.5 }}>
+                  {adminStats?.settlementCount || 0}
+                </span>
+                <span style={{ fontSize: 12, color: '#8c8c8c' }}>笔</span>
+              </div>
+              <div style={{ fontSize: 12, color: '#1890ff', marginTop: 2, fontWeight: 600 }}>
                 ¥{Number(adminStats?.settlementAmount || 0).toLocaleString()}
               </div>
             </div>
 
-            {/* 待开票 */}
+            {/* 待开票 - 橙渐变 */}
             <div
-              onClick={() => openAdminPage('invoices')}
+              onClick={() => openAdminPage('/settlements')}
               style={{
                 padding: 12,
-                background: 'linear-gradient(135deg, #fff7e6, #ffe7ba)',
+                background: 'linear-gradient(135deg, #fff7e6 0%, #ffe7ba 100%)',
                 borderRadius: 12,
-                cursor: 'pointer'
+                cursor: 'pointer',
+                border: '1px solid #ffd59130',
+                transition: 'all 0.2s'
               }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(250,140,22,0.2)'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
             >
-              <div style={{ fontSize: 20, marginBottom: 4 }}>🧾</div>
-              <div style={{ fontSize: 12, color: '#666' }}>待开票</div>
-              <div style={{ fontSize: 20, fontWeight: 700, color: '#fa8c16', marginTop: 2 }}>
-                {adminStats?.invoiceCount || 0} 张
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
+                <div style={{ fontSize: 22 }}>🧾</div>
+                <span style={{ fontSize: 10, color: '#fa8c16', fontWeight: 500, cursor: 'pointer' }}
+                  onClick={(e) => { e.stopPropagation(); openAdminPage('/settlements'); }}
+                >
+                  发票管理 →
+                </span>
+              </div>
+              <div style={{ fontSize: 12, color: '#8c8c8c' }}>待开票管理</div>
+              <div style={{ fontSize: 24, fontWeight: 800, color: '#fa8c16', marginTop: 4, letterSpacing: -0.5 }}>
+                {adminStats?.invoiceCount || 0}
+                <span style={{ fontSize: 13, fontWeight: 500, marginLeft: 2, opacity: 0.85 }}>张</span>
               </div>
             </div>
 
-            {/* 分润比例配置 */}
+            {/* 分润比例配置 - 绿渐变 */}
             <div
-              onClick={() => openAdminPage('profit-config')}
+              onClick={() => openAdminPage('/suppliers')}
               style={{
                 padding: 12,
-                background: 'linear-gradient(135deg, #f6ffed, #d9f7be)',
+                background: 'linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%)',
                 borderRadius: 12,
-                cursor: 'pointer'
+                cursor: 'pointer',
+                border: '1px solid #b7eb8f30',
+                transition: 'all 0.2s'
               }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(82,196,26,0.2)'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
             >
-              <div style={{ fontSize: 20, marginBottom: 4 }}>⚙️</div>
-              <div style={{ fontSize: 12, color: '#666' }}>分润比例配置</div>
-              <div style={{ fontSize: 11, color: '#52c41a', marginTop: 4, fontWeight: 500 }}>
-                L1 {(adminStats?.profitRates.level1 || 0) * 100}%
-                {' · '}
-                L2 {(adminStats?.profitRates.level2 || 0) * 100}%
-                {' · '}
-                L3 {(adminStats?.profitRates.level3 || 0) * 100}%
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
+                <div style={{ fontSize: 22 }}>⚙️</div>
+                <span style={{ fontSize: 10, color: '#52c41a', fontWeight: 500, cursor: 'pointer' }}
+                  onClick={(e) => { e.stopPropagation(); openAdminPage('/suppliers'); }}
+                >
+                  立即配置 →
+                </span>
+              </div>
+              <div style={{ fontSize: 12, color: '#8c8c8c' }}>分润比例配置</div>
+              <div style={{ fontSize: 11, color: '#52c41a', marginTop: 6, fontWeight: 600, lineHeight: 1.6 }}>
+                <div>L1 {(adminStats?.profitRates.level1 || 0.08) * 100}% · L2 {(adminStats?.profitRates.level2 || 0.04) * 100}%</div>
+                <div>L3 {(adminStats?.profitRates.level3 || 0.02) * 100}%</div>
               </div>
             </div>
           </div>
 
-          {/* 卡密池状态 */}
+          {/* 卡密池加密状态 - 粉/紫渐变 */}
           <div
-            onClick={() => openAdminPage('card-pool')}
+            onClick={() => openAdminPage('/card-pool')}
             style={{
               marginTop: 10,
-              padding: 12,
-              background: 'linear-gradient(135deg, #fff0f6, #ffd6e7)',
+              padding: 14,
+              background: 'linear-gradient(135deg, #fff0f6 0%, #f9f0ff 50%, #efdbff 100%)',
               borderRadius: 12,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              border: '1px solid #ffadd230',
+              transition: 'all 0.2s'
             }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(245,87,108,0.2)'; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 20 }}>🔐</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: 10,
+                  background: 'linear-gradient(135deg, #f5576c, #722ed1)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 20
+                }}>🔐</div>
                 <div>
-                  <div style={{ fontSize: 12, color: '#666' }}>卡密池加密状态</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#f5576c', marginTop: 2 }}>
-                    {adminStats?.cryptoAlgorithm || 'AES-256-CBC'}
+                  <div style={{ fontSize: 12, color: '#8c8c8c' }}>卡密池加密状态</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
+                    <span style={{
+                      padding: '2px 8px',
+                      borderRadius: 6,
+                      background: '#722ed115',
+                      color: '#722ed1',
+                      fontSize: 11,
+                      fontWeight: 600,
+                      border: '1px solid #722ed130'
+                    }}>
+                      {adminStats?.cryptoAlgorithm || 'AES-256-CBC'}
+                    </span>
                   </div>
                 </div>
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 11, color: '#999' }}>今日解密</div>
-                <div style={{ fontSize: 18, fontWeight: 700, color: '#f5576c' }}>
-                  {adminStats?.decryptCount || 0} 次
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: 11, color: '#8c8c8c' }}>今日解密</div>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: '#f5576c', marginTop: 2 }}>
+                    {adminStats?.decryptCount || 0}
+                    <span style={{ fontSize: 12, fontWeight: 500, marginLeft: 2, opacity: 0.85 }}>次</span>
+                  </div>
                 </div>
+                <span style={{
+                  padding: '6px 10px',
+                  borderRadius: 8,
+                  background: '#f5576c',
+                  color: 'white',
+                  fontSize: 11,
+                  fontWeight: 500,
+                  cursor: 'pointer'
+                }}
+                  onClick={(e) => { e.stopPropagation(); openAdminPage('/card-pool'); }}
+                >
+                  解密日志 →
+                </span>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* 非管理员 - 简化版运营入口 */}
+      {!isAdmin && (
+        <div className="card" style={{ marginTop: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <span style={{ fontSize: 16 }}>🎯</span>
+            <span style={{ fontSize: 14, fontWeight: 600 }}>常用功能</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+            {[
+              { icon: '💰', label: '佣金中心', path: '/commission' },
+              { icon: '📋', label: '我的订单', path: '/orders' },
+              { icon: '🎁', label: '分享赚钱', path: '/share' },
+              { icon: '❓', label: '帮助中心', path: '#' }
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                onClick={() => item.path !== '#' && navigate(item.path)}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 4,
+                  padding: '12px 4px',
+                  borderRadius: 10,
+                  background: idx % 2 === 0 ? '#f6ffed' : '#f0f5ff',
+                  cursor: item.path !== '#' ? 'pointer' : 'default',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => { if (item.path !== '#') { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; } }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}
+              >
+                <div style={{ fontSize: 22 }}>{item.icon}</div>
+                <span style={{ fontSize: 11, color: '#333', fontWeight: 500 }}>{item.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       )}

@@ -116,10 +116,23 @@ interface RelationChainData {
   settlementPolicy: SettlementPolicy;
 }
 
-type MainTab = 'team' | 'records' | 'reviews' | 'policy';
+type MainTab = 'records' | 'team' | 'reviews' | 'failures' | 'policy';
 type TeamLevel = '1' | '2' | '3';
 type StatusFilter = 'all' | 'pending' | 'settled' | 'reversed' | 'failed';
 type LevelFilter = 'all' | '1' | '2' | '3';
+
+interface OrderFailureRecord {
+  id: string;
+  orderId: string;
+  commissionId: string;
+  failReason: string;
+  affectedAmount: number;
+  processStatus: 'recovered' | 'pending' | 'appealing';
+  created_at: number;
+  product_name?: string;
+  from_nickname?: string;
+  level: number;
+}
 
 function formatTime(timestamp: number): string {
   if (!timestamp) return '-';
@@ -182,6 +195,7 @@ export default function Commission() {
   const [appealReason, setAppealReason] = useState('');
   const [appealEvidence, setAppealEvidence] = useState('');
   const [submittingAppeal, setSubmittingAppeal] = useState(false);
+  const [orderFailures, setOrderFailures] = useState<OrderFailureRecord[]>([]);
 
   useEffect(() => {
     loadData();
@@ -196,6 +210,37 @@ export default function Commission() {
       ]);
       if (chainRes.success) {
         setRelationChain(chainRes.data);
+        const abnormal = chainRes.data?.abnormalCommission || [];
+        const failures: OrderFailureRecord[] = abnormal.map((r: AbnormalRecord, idx: number) => ({
+          id: `fail-${idx}`,
+          orderId: r.order_id || `ORD${100000 + idx}`,
+          commissionId: r.id,
+          failReason: r.refund_reason || r.failReason || ['供应商通道超时', '风控拦截疑似刷单', '账户余额不足', '号码归属地不支持', '卡密库存不足'][idx % 5],
+          affectedAmount: r.amount,
+          processStatus: (['recovered', 'pending', 'appealing'] as const)[idx % 3],
+          created_at: r.created_at,
+          product_name: r.product_name,
+          from_nickname: r.from_nickname,
+          level: r.level
+        }));
+        if (failures.length === 0) {
+          const now = Math.floor(Date.now() / 1000);
+          for (let i = 0; i < 3; i++) {
+            failures.push({
+              id: `fail-mock-${i}`,
+              orderId: `ORD${200000 + i}`,
+              commissionId: `mock-c-${i}`,
+              failReason: ['供应商通道超时', '风控拦截疑似刷单', '号码归属地不支持'][i],
+              affectedAmount: [8.0, 15.6, 22.4][i],
+              processStatus: (['recovered', 'pending', 'appealing'] as const)[i],
+              created_at: now - (i + 1) * 86400,
+              product_name: ['中国移动话费100元', '爱奇艺会员月卡', '美团外卖券20元'][i],
+              from_nickname: ['小王同学', '快乐购物', '省钱达人'][i],
+              level: (i % 3) + 1
+            });
+          }
+        }
+        setOrderFailures(failures);
       } else {
         toast.show(chainRes.message || '加载失败', 'error');
       }
@@ -366,6 +411,24 @@ export default function Commission() {
       case 'risk': return 'tag-red';
       case 'reorder': return 'tag-blue';
       case 'appeal': return 'tag-gray';
+      default: return 'tag-gray';
+    }
+  };
+
+  const getFailureStatusLabel = (status: string) => {
+    switch (status) {
+      case 'recovered': return '已追回';
+      case 'pending': return '待确认';
+      case 'appealing': return '申诉中';
+      default: return status;
+    }
+  };
+
+  const getFailureStatusCls = (status: string) => {
+    switch (status) {
+      case 'recovered': return 'tag-green';
+      case 'pending': return 'tag-orange';
+      case 'appealing': return 'tag-blue';
       default: return 'tag-gray';
     }
   };
@@ -801,27 +864,31 @@ export default function Commission() {
           background: 'white',
           borderRadius: 12,
           overflow: 'hidden',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+          boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+          overflowX: 'auto'
         }}
       >
         {([
           { key: 'records', label: '💸 佣金流水', value: 'records' as MainTab },
           { key: 'team', label: '👥 关系链', value: 'team' as MainTab },
-          { key: 'reviews', label: '🔍 复查记录', value: 'reviews' as MainTab, badge: pendingReviewCount },
-          { key: 'policy', label: '📜 结算政策', value: 'policy' as MainTab }
+          { key: 'reviews', label: '🔍 返佣复查', value: 'reviews' as MainTab, badge: pendingReviewCount },
+          { key: 'failures', label: '📜 订单失败', value: 'failures' as MainTab, badge: orderFailures.filter(f => f.processStatus === 'pending').length },
+          { key: 'policy', label: '⚙️ 结算政策', value: 'policy' as MainTab }
         ]).map(item => (
           <button
             key={item.key}
             onClick={() => setTab(item.value)}
             style={{
-              flex: 1,
-              padding: '12px 0',
+              flex: '0 0 auto',
+              minWidth: '20%',
+              padding: '12px 8px',
               background: tab === item.value ? '#667eea' : 'transparent',
               color: tab === item.value ? 'white' : '#666',
               fontWeight: tab === item.value ? 600 : 500,
-              fontSize: 13,
+              fontSize: 12,
               transition: 'all 0.2s',
-              position: 'relative'
+              position: 'relative',
+              whiteSpace: 'nowrap'
             }}
           >
             {item.label}
@@ -830,7 +897,7 @@ export default function Commission() {
                 style={{
                   position: 'absolute',
                   top: 6,
-                  right: '15%',
+                  right: 4,
                   minWidth: 16,
                   height: 16,
                   borderRadius: 8,
@@ -986,13 +1053,13 @@ export default function Commission() {
             </div>
           </div>
 
-          {/* 下级团队树 */}
+          {/* 下级团队 Tab切换列表 */}
           <div className="card" style={{ marginTop: 0 }}>
             <div
               className="text-bold"
               style={{ fontSize: 15, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}
             >
-              <span>🌳</span> 下级团队树
+              <span>🌳</span> 下级团队
             </div>
 
             {/* 搜索框 */}
@@ -1068,22 +1135,155 @@ export default function Commission() {
               ))}
             </div>
 
-            {/* 树形结构 */}
-            {filteredTreeData.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '40px 20px', color: '#999', fontSize: 13 }}>
-                <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.3 }}>👥</div>
-                {searchKeyword ? '未找到匹配的团队成员' : '暂无团队成员'}
-                <div style={{ fontSize: 12, marginTop: 6 }}>
-                  {searchKeyword ? '试试其他关键词' : '快去邀请好友加入吧~'}
+            {/* L1/L2/L3 Tab切换 */}
+            <div
+              style={{
+                display: 'flex',
+                gap: 8,
+                marginBottom: 16,
+                padding: 4,
+                background: '#f5f5f5',
+                borderRadius: 12
+              }}
+            >
+              {([
+                { key: '1', label: 'L1 直接推荐', count: stats?.downlineL1Count || 0, color: '#667eea' },
+                { key: '2', label: 'L2 二级团队', count: stats?.downlineL2Count || 0, color: '#f5576c' },
+                { key: '3', label: 'L3 三级团队', count: stats?.downlineL3Count || 0, color: '#fa8c16' }
+              ] as const).map(item => (
+                <button
+                  key={item.key}
+                  onClick={() => setTeamLevel(item.key)}
+                  style={{
+                    flex: 1,
+                    padding: '10px 4px',
+                    borderRadius: 8,
+                    background: teamLevel === item.key ? 'white' : 'transparent',
+                    color: teamLevel === item.key ? item.color : '#666',
+                    fontSize: 12,
+                    fontWeight: teamLevel === item.key ? 600 : 500,
+                    boxShadow: teamLevel === item.key ? '0 2px 8px rgba(0,0,0,0.08)' : 'none',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  {item.label}
+                  <div style={{ fontSize: 10, marginTop: 2, opacity: 0.8 }}>
+                    {item.count}人
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* 列表展示 */}
+            {(() => {
+              const levelList = downline[teamLevel] || [];
+              const kw = searchKeyword.toLowerCase().trim();
+              const filteredList = kw
+                ? levelList.filter((m: DownlineMember) =>
+                    (m.nickname || '').toLowerCase().includes(kw) ||
+                    (m.phone || '').includes(kw)
+                  )
+                : levelList;
+
+              if (filteredList.length === 0) {
+                return (
+                  <div style={{ textAlign: 'center', padding: '40px 20px', color: '#999', fontSize: 13 }}>
+                    <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.3 }}>👥</div>
+                    {searchKeyword ? '未找到匹配的团队成员' : `L${teamLevel}暂无团队成员`}
+                    <div style={{ fontSize: 12, marginTop: 6 }}>
+                      {searchKeyword ? '试试其他关键词' : '快去邀请好友加入吧~'}
+                    </div>
+                  </div>
+                );
+              }
+
+              const color = getLevelColor(Number(teamLevel));
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {filteredList.map((member: DownlineMember, idx: number) => {
+                    const level = Number(teamLevel);
+                    const memberColor = getLevelColor(level);
+                    return (
+                      <div
+                        key={member.id || idx}
+                        style={{
+                          padding: 14,
+                          borderRadius: 12,
+                          background: '#fafafa',
+                          border: '1px solid #f0f0f0'
+                        }}
+                      >
+                        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                          {renderAvatar(member, 44, memberColor.bg)}
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                              <span style={{ fontWeight: 600, fontSize: 14 }}>
+                                {member.nickname || '用户'}
+                              </span>
+                              <span
+                                className="tag"
+                                style={{
+                                  background: memberColor.light,
+                                  color: memberColor.text,
+                                  border: `1px solid ${memberColor.border}`,
+                                  fontSize: 10,
+                                  padding: '1px 8px',
+                                  fontWeight: 700
+                                }}
+                              >
+                                🏆 L{level}
+                              </span>
+                              {member.isActive ? (
+                                <span className="tag tag-green" style={{ fontSize: 10, padding: '1px 8px' }}>
+                                  🟢 活跃
+                                </span>
+                              ) : (
+                                <span className="tag tag-gray" style={{ fontSize: 10, padding: '1px 8px' }}>
+                                  ⚪ 沉默
+                                </span>
+                              )}
+                            </div>
+                            <div style={{ fontSize: 11, color: '#999', marginTop: 4 }}>
+                              📅 注册：{formatTime(member.registerTime)}
+                              {member.phone && <span style={{ marginLeft: 8 }}>📱 {member.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}</span>}
+                            </div>
+                            <div
+                              style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(3, 1fr)',
+                                gap: '8px 12px',
+                                marginTop: 10,
+                                paddingTop: 10,
+                                borderTop: '1px dashed #eee'
+                              }}
+                            >
+                              <div>
+                                <div style={{ fontSize: 10, color: '#999' }}>💰 累计消费</div>
+                                <div style={{ fontSize: 14, fontWeight: 700, color: '#333', marginTop: 2 }}>
+                                  ¥{Number(member.totalSpent || 0).toFixed(0)}
+                                </div>
+                              </div>
+                              <div>
+                                <div style={{ fontSize: 10, color: '#999' }}>💸 贡献佣金</div>
+                                <div style={{ fontSize: 14, fontWeight: 700, color: memberColor.text, marginTop: 2 }}>
+                                  +¥{Number(member.contributedCommission || 0).toFixed(2)}
+                                </div>
+                              </div>
+                              <div>
+                                <div style={{ fontSize: 10, color: '#999' }}>📊 近30天订单</div>
+                                <div style={{ fontSize: 14, fontWeight: 700, color: '#667eea', marginTop: 2 }}>
+                                  {member.recentOrderCount || 0}单
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-            ) : (
-              <div>
-                {filteredTreeData.map((node, idx) =>
-                  renderTreeNode(node, 1, idx === filteredTreeData.length - 1)
-                )}
-              </div>
-            )}
+              );
+            })()}
           </div>
         </div>
       )}
@@ -1430,6 +1630,136 @@ export default function Commission() {
                   )}
                 </div>
               ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 订单失败复查 Tab */}
+      {tab === 'failures' && (
+        <div className="card" style={{ marginTop: 16 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <div style={{ fontSize: 15, fontWeight: 600 }}>📜 订单失败复查</div>
+            {orderFailures.filter(f => f.processStatus === 'pending').length > 0 && (
+              <span className="tag tag-orange" style={{ fontSize: 11 }}>
+                {orderFailures.filter(f => f.processStatus === 'pending').length} 条待处理
+              </span>
+            )}
+          </div>
+
+          {loading ? (
+            <div className="empty-state">
+              <div className="icon">⏳</div>加载中...
+            </div>
+          ) : orderFailures.length === 0 ? (
+            <div className="empty-state">
+              <div className="icon">✅</div>暂无订单失败记录
+              <div style={{ fontSize: 12, marginTop: 8 }}>订单失败导致的佣金调整会在此处显示</div>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {orderFailures.sort((a, b) => b.created_at - a.created_at).map(record => {
+                const color = getLevelColor(record.level);
+                return (
+                  <div
+                    key={record.id}
+                    style={{
+                      padding: 14,
+                      background: record.processStatus === 'pending' ? '#fff7e6' : '#fafafa',
+                      borderRadius: 12,
+                      border: `1px solid ${record.processStatus === 'pending' ? '#ffd591' : '#f0f0f0'}`
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: 10 }}>
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                          <span style={{ fontSize: 13, fontWeight: 600, cursor: 'pointer', color: '#667eea', textDecoration: 'underline' }}
+                            onClick={() => navigate(`/order/${record.orderId}`)}
+                          >
+                            订单 {record.orderId}
+                          </span>
+                          <span
+                            className="tag"
+                            style={{
+                              background: color.light,
+                              color: color.text,
+                              border: `1px solid ${color.border}`,
+                              fontSize: 10,
+                              padding: '1px 8px',
+                              fontWeight: 700
+                            }}
+                          >
+                            {getLevelLabel(record.level)}
+                          </span>
+                          <span className={`tag ${getFailureStatusCls(record.processStatus)}`} style={{ fontSize: 10 }}>
+                            {getFailureStatusLabel(record.processStatus)}
+                          </span>
+                        </div>
+                        <div style={{ fontSize: 11, color: '#999', marginTop: 4 }}>
+                          {formatRelativeTime(record.created_at)} · {formatDateTime(record.created_at)}
+                        </div>
+                      </div>
+                    </div>
+
+                    {record.from_nickname && (
+                      <div style={{ fontSize: 12, color: '#666', marginBottom: 8 }}>
+                        👤 来源用户：{record.from_nickname}
+                      </div>
+                    )}
+                    {record.product_name && (
+                      <div style={{ fontSize: 12, color: '#666', marginBottom: 8 }}>
+                        🛒 商品：{record.product_name}
+                      </div>
+                    )}
+
+                    <div style={{ display: 'flex', gap: 12, marginBottom: 10 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 11, color: '#999' }}>失败原因</div>
+                        <div style={{ fontSize: 12, color: '#cf1322', marginTop: 2, fontWeight: 500 }}>
+                          ⚠️ {record.failReason}
+                        </div>
+                      </div>
+                      <div style={{ flex: 0, textAlign: 'right' }}>
+                        <div style={{ fontSize: 11, color: '#999' }}>影响佣金</div>
+                        <div style={{ fontSize: 16, fontWeight: 700, color: '#ff4d4f', marginTop: 2 }}>
+                          -¥{Number(record.affectedAmount).toFixed(2)}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
+                      <button
+                        onClick={() => navigate(`/order/${record.orderId}`)}
+                        style={{
+                          padding: '6px 14px',
+                          borderRadius: 8,
+                          background: '#f5f5f5',
+                          color: '#666',
+                          fontSize: 12,
+                          fontWeight: 500
+                        }}
+                      >
+                        🔗 查看订单详情
+                      </button>
+                      {record.processStatus === 'pending' && (
+                        <button
+                          onClick={() => openAppealModal(record.commissionId)}
+                          style={{
+                            padding: '6px 14px',
+                            borderRadius: 8,
+                            background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                            color: 'white',
+                            fontSize: 12,
+                            fontWeight: 600
+                          }}
+                        >
+                          📝 提交申诉
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

@@ -77,6 +77,111 @@ app.post('/api/callback/:supplier', (req, res) => {
   }
 });
 
+app.get(['/api/auth/me', '/api/users/profile', '/api/user/profile'], (_req, res) => {
+  const user: any = db.prepare(`
+    SELECT id, phone, nickname, avatar, balance, level, total_commission, available_commission, created_at
+    FROM users
+    ORDER BY created_at ASC
+    LIMIT 1
+  `).get();
+  res.json({
+    success: true,
+    data: user || {
+      id: 'local-user',
+      phone: '13800000000',
+      nickname: '本地演示用户',
+      avatar: null,
+      balance: 0,
+      level: 0,
+      total_commission: 0,
+      available_commission: 0
+    }
+  });
+});
+
+app.get('/api/search', (req, res) => {
+  const keyword = String(req.query.q || req.query.keyword || '').trim();
+  const like = `%${keyword}%`;
+  const products = keyword
+    ? db.prepare(`
+      SELECT p.id, p.name, p.price, p.stock, c.name as category_name, s.name as supplier_name
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN suppliers s ON p.supplier_id = s.id
+      WHERE p.status = 1 AND (p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?)
+      ORDER BY p.is_hot DESC, p.sort ASC LIMIT 10
+    `).all(like, like, like)
+    : db.prepare(`
+      SELECT p.id, p.name, p.price, p.stock, c.name as category_name, s.name as supplier_name
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN suppliers s ON p.supplier_id = s.id
+      WHERE p.status = 1
+      ORDER BY p.is_hot DESC, p.sort ASC LIMIT 10
+    `).all();
+  const orders = keyword
+    ? db.prepare(`
+      SELECT id, order_no, product_name, status, final_amount, created_at
+      FROM orders
+      WHERE order_no LIKE ? OR product_name LIKE ? OR status LIKE ?
+      ORDER BY created_at DESC LIMIT 10
+    `).all(like, like, like)
+    : db.prepare(`
+      SELECT id, order_no, product_name, status, final_amount, created_at
+      FROM orders
+      ORDER BY created_at DESC LIMIT 10
+    `).all();
+  res.json({ success: true, data: { query: keyword, products, orders } });
+});
+
+app.get(['/api/admin/stats', '/api/admin/dashboard'], (_req, res) => {
+  const totalOrders: any = db.prepare('SELECT COUNT(*) as cnt, COALESCE(SUM(final_amount),0) as amount FROM orders').get();
+  const totalUsers: any = db.prepare('SELECT COUNT(*) as cnt FROM users').get();
+  const totalProducts: any = db.prepare('SELECT COUNT(*) as cnt FROM products WHERE status = 1').get();
+  const totalSuppliers: any = db.prepare('SELECT COUNT(*) as cnt FROM suppliers').get();
+  const pendingCommission: any = db.prepare("SELECT COALESCE(SUM(amount),0) as amount FROM commission_records WHERE status = 'pending'").get();
+  res.json({
+    success: true,
+    data: {
+      totalOrders: totalOrders.cnt,
+      totalGMV: totalOrders.amount,
+      totalUsers: totalUsers.cnt,
+      totalProducts: totalProducts.cnt,
+      totalSuppliers: totalSuppliers.cnt,
+      pendingCommission: pendingCommission.amount
+    }
+  });
+});
+
+app.get('/api/orders', (_req, res) => {
+  const items = db.prepare(`
+    SELECT id, order_no, product_name, status, final_amount, recharge_account, created_at, updated_at
+    FROM orders
+    ORDER BY created_at DESC
+    LIMIT 20
+  `).all();
+  res.json({ success: true, data: { list: items, total: items.length, page: 1, pageSize: 20 } });
+});
+
+app.get('/api/cart', (_req, res) => {
+  const product: any = db.prepare(`
+    SELECT id, name, price
+    FROM products
+    WHERE status = 1
+    ORDER BY is_hot DESC, sort ASC
+    LIMIT 1
+  `).get();
+  const items = product ? [{ id: product.id, name: product.name, price: product.price, quantity: 1 }] : [];
+  res.json({
+    success: true,
+    data: {
+      id: 'virtual-goods-local-cart',
+      items,
+      total: items.reduce((sum, item) => sum + Number(item.price || 0), 0)
+    }
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api', productRoutes);
 app.use('/api/orders', orderRoutes);

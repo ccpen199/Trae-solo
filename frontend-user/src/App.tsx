@@ -10,6 +10,7 @@ import ProductDetail from './pages/ProductDetail';
 import OrderDetail from './pages/OrderDetail';
 import Share from './pages/Share';
 import Commission from './pages/Commission';
+import AdminPortal from './pages/AdminPortal';
 import TabBar from './components/TabBar';
 
 const UserContext = createContext<any>(null);
@@ -68,6 +69,7 @@ export default function App() {
             <Route path="/order/:id" element={<OrderDetail />} />
             <Route path="/share" element={<Share />} />
             <Route path="/commission" element={<Commission />} />
+            <Route path="/admin-portal" element={<AdminPortal />} />
           </Routes>
           {showTabBar && <TabBar />}
           {toast.visible && (

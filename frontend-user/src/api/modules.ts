@@ -2,6 +2,30 @@ import api from './index';
 
 const data = (request: Promise<unknown>) => request as Promise<any>;
 
+interface CalculatePriceItem {
+  productId: string;
+  quantity: number;
+  account?: string;
+  channelId?: string;
+  supplierId?: string;
+}
+
+interface CalculatePriceSinglePayload {
+  productId: string;
+  quantity: number;
+  account?: string;
+  channelId?: string;
+  supplierId?: string;
+}
+
+interface CalculatePriceItemsPayload {
+  items: CalculatePriceItem[];
+  channelId?: string;
+  supplierId?: string;
+}
+
+type CalculatePricePayload = CalculatePriceSinglePayload | CalculatePriceItemsPayload;
+
 export const authApi = {
   register: (payload: any) => data(api.post('/auth/register', payload)),
   login: (payload: any) => data(api.post('/auth/login', payload)),
@@ -14,7 +38,7 @@ export const productApi = {
   getProducts: (params: any) => data(api.get('/products', { params })),
   getHotProducts: () => data(api.get('/products/hot')),
   getProductDetail: (id: string) => data(api.get(`/products/${id}`)),
-  calculatePrice: (payload: any) => data(api.post('/calculate-price', payload)),
+  calculatePrice: (payload: CalculatePricePayload) => data(api.post('/calculate-price', payload)),
   getPromotions: () => data(api.get('/promotions')),
   syncStock: (id: string) => data(api.post(`/products/${id}/sync-stock`)),
   getAlternatives: (id: string) => data(api.get(`/products/${id}/alternatives`))
