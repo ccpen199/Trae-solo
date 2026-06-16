@@ -82,37 +82,69 @@ export default function Home() {
   }
 
   const closeCreateModal = () => {
+    console.log('[CREATE] closeCreateModal called');
     setShowCreateModal(false)
   }
 
   const createResumeFromTemplate = async (template: typeof blankTemplate, category: TemplateCategory | 'blank') => {
-    console.log('[CREATE] Starting create resume:', template.name, 'category:', category);
+    console.log('[CREATE] ========== START ==========');
+    console.log('[CREATE] Template:', template.name, 'Category:', category);
+    console.log('[CREATE] Template ID:', template.id);
+    console.log('[CREATE] Template modules count:', template.modules?.length);
+    
     setCreating(true)
     try {
-      console.log('[CREATE] Calling createAndSaveResume...');
+      console.log('[CREATE] Step 1: Calling createAndSaveResume...');
       const resume = await createAndSaveResume(
         template.id,
         category,
         template.modules,
         template.theme
       )
-      console.log('[CREATE] createAndSaveResume result:', resume?.id, 'title:', resume?.title);
+      console.log('[CREATE] Step 2: createAndSaveResume returned:', resume?.id, 'title:', resume?.title);
+      
       if (resume) {
+        console.log('[CREATE] Step 3: Resume created successfully, ID:', resume.id);
+        
+        // 强制重新加载简历列表
+        console.log('[CREATE] Step 4: Reloading resume list...');
+        try {
+          await loadAllResumes();
+          console.log('[CREATE] Step 5: Resume list reloaded');
+        } catch (reloadErr) {
+          console.warn('[CREATE] Resume list reload failed (non-critical):', reloadErr);
+        }
+        
+        // 记录审计日志
         try {
           await addAuditLog('resume.create', { templateId: template.id, templateName: template.name, resumeId: resume.id, category })
+          console.log('[CREATE] Step 6: Audit log saved');
         } catch (auditErr) {
           console.warn('[CREATE] Audit log failed (non-critical):', auditErr);
         }
-        console.log('[CREATE] Navigating to /editor/' + resume.id);
+        
+        console.log('[CREATE] Step 7: Closing modal and navigating...');
         closeCreateModal();
-        navigate(`/editor/${resume.id}`)
+        
+        // 使用硬跳转，不依赖 React Router
+        const editorUrl = `${window.location.origin}/editor/${resume.id}`;
+        console.log('[CREATE] Step 8: Hard redirect to:', editorUrl);
+        
+        // 短暂延迟确保状态更新完成
+        setTimeout(() => {
+          window.location.href = editorUrl;
+        }, 100);
+        
       } else {
-        alert('创建简历失败，请重试（返回值为空）')
+        console.error('[CREATE] ERROR: createAndSaveResume returned null/undefined');
+        alert('❌ 创建失败：简历对象为空\n请重试或联系技术支持');
         setCreating(false)
       }
     } catch (e) {
-      console.error('[CREATE] Failed to create resume:', e)
-      alert('创建简历失败：' + (e instanceof Error ? e.message : String(e)))
+      console.error('[CREATE] EXCEPTION:', e);
+      console.error('[CREATE] Error message:', e instanceof Error ? e.message : String(e));
+      console.error('[CREATE] Error stack:', e instanceof Error ? e.stack : 'no stack');
+      alert('❌ 创建失败：' + (e instanceof Error ? e.message : String(e)) + '\n请重试或联系技术支持');
       setCreating(false)
     }
   }
@@ -121,30 +153,35 @@ export default function Home() {
     e.stopPropagation();
     e.preventDefault();
     console.log('[CLICK] handleCreateBlank');
+    alert('✅ 按钮点击成功！正在创建空白简历...');
     createResumeFromTemplate(blankTemplate, 'blank');
   }
   const handleCreateGradSample = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     console.log('[CLICK] handleCreateGradSample');
+    alert('✅ 按钮点击成功！正在创建应届生样例...');
     createResumeFromTemplate(gradTemplate, 'tech');
   }
   const handleCreateTech = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     console.log('[CLICK] handleCreateTech');
+    alert('✅ 按钮点击成功！正在创建技术岗模板...');
     createResumeFromTemplate(techTemplate, 'tech');
   }
   const handleCreateDesign = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     console.log('[CLICK] handleCreateDesign');
+    alert('✅ 按钮点击成功！正在创建设计岗模板...');
     createResumeFromTemplate(designTemplate, 'design');
   }
   const handleCreateFunction = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     console.log('[CLICK] handleCreateFunction');
+    alert('✅ 按钮点击成功！正在创建职能岗模板...');
     createResumeFromTemplate(functionTemplate, 'function');
   }
 
@@ -702,7 +739,7 @@ export default function Home() {
               <div>
                 <h4 className="text-sm font-medium text-navy-600 mb-3">选择起点</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <button type="button" onClick={handleCreateBlank} disabled={creating} className="text-left p-4 rounded-xl border-2 border-dashed border-navy-200 hover:border-navy-400 hover:bg-navy-25 transition-all group disabled:opacity-50 disabled:cursor-wait">
+                  <button type="button" onClick={handleCreateBlank} disabled={creating} className="text-left p-4 rounded-xl border-2 border-dashed border-navy-200 hover:border-navy-400 hover:bg-navy-25 transition-all group disabled:opacity-50 disabled:cursor-wait z-[9999] relative">
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-lg bg-navy-50 flex items-center justify-center flex-shrink-0 group-hover:bg-navy-100 transition-colors">
                         <FileEdit className="w-5 h-5 text-navy-500" />
@@ -714,7 +751,7 @@ export default function Home() {
                     </div>
                   </button>
 
-                  <button type="button" onClick={handleCreateGradSample} disabled={creating} className="text-left p-4 rounded-xl border-2 border-navy-100 hover:border-gold-400 hover:bg-gold-25 transition-all group disabled:opacity-50 disabled:cursor-wait">
+                  <button type="button" onClick={handleCreateGradSample} disabled={creating} className="text-left p-4 rounded-xl border-2 border-navy-100 hover:border-gold-400 hover:bg-gold-25 transition-all group disabled:opacity-50 disabled:cursor-wait z-[9999] relative">
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-lg bg-gold-50 flex items-center justify-center flex-shrink-0 group-hover:bg-gold-100 transition-colors">
                         <User className="w-5 h-5 text-gold-600" />
@@ -732,7 +769,7 @@ export default function Home() {
               <div>
                 <h4 className="text-sm font-medium text-navy-600 mb-3">行业语义模板</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <button type="button" onClick={handleCreateTech} disabled={creating} className="text-left p-4 rounded-xl border-2 border-navy-100 hover:border-navy-400 hover:bg-navy-50 transition-all group disabled:opacity-50 disabled:cursor-wait">
+                  <button type="button" onClick={handleCreateTech} disabled={creating} className="text-left p-4 rounded-xl border-2 border-navy-100 hover:border-navy-400 hover:bg-navy-50 transition-all group disabled:opacity-50 disabled:cursor-wait z-[9999] relative">
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-lg bg-navy-50 flex items-center justify-center flex-shrink-0 group-hover:bg-navy-100 transition-colors">
                         <Code2 className="w-5 h-5 text-navy-600" />
@@ -749,7 +786,7 @@ export default function Home() {
                     </div>
                   </button>
 
-                  <button type="button" onClick={handleCreateDesign} disabled={creating} className="text-left p-4 rounded-xl border-2 border-navy-100 hover:border-emerald-400 hover:bg-emerald-50 transition-all group disabled:opacity-50 disabled:cursor-wait">
+                  <button type="button" onClick={handleCreateDesign} disabled={creating} className="text-left p-4 rounded-xl border-2 border-navy-100 hover:border-emerald-400 hover:bg-emerald-50 transition-all group disabled:opacity-50 disabled:cursor-wait z-[9999] relative">
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-100 transition-colors">
                         <Palette className="w-5 h-5 text-emerald-600" />
@@ -766,7 +803,7 @@ export default function Home() {
                     </div>
                   </button>
 
-                  <button type="button" onClick={handleCreateFunction} disabled={creating} className="text-left p-4 rounded-xl border-2 border-navy-100 hover:border-purple-400 hover:bg-purple-50 transition-all group disabled:opacity-50 disabled:cursor-wait">
+                  <button type="button" onClick={handleCreateFunction} disabled={creating} className="text-left p-4 rounded-xl border-2 border-navy-100 hover:border-purple-400 hover:bg-purple-50 transition-all group disabled:opacity-50 disabled:cursor-wait z-[9999] relative">
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-100 transition-colors">
                         <Briefcase className="w-5 h-5 text-purple-600" />
