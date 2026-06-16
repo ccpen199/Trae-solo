@@ -1,5 +1,5 @@
 import { mockPolicies, mockAtomicServices, mockPolicyPushRecords } from '../data/mockData';
-import type { PolicyDocument, AtomicService, OrchestrationFlow, PolicyPushRecord } from '../../shared/types';
+import type { PolicyDocument, AtomicService, OrchestrationFlow, PolicyPushRecord, FlowReleaseRecord, ServiceStats, ServiceCallRecord, ServiceDependency, FlowNodeProperty } from '../../shared/types';
 import { v4 as uuidv4 } from 'uuid';
 
 export class GovernmentService {
@@ -194,6 +194,14 @@ export class OrchestrationService {
         },
         isEnabled: true,
         createdAt: '2024-01-01',
+        currentVersion: 'v1.2.0',
+        lastReleaseTime: '2024-05-20 14:30:00',
+        lastPublisher: '管理员',
+        stats: {
+          executionCount: 1234,
+          successRate: 98.5,
+          avgDuration: 2.3,
+        },
       },
       {
         id: uuidv4(),
@@ -214,7 +222,175 @@ export class OrchestrationService {
         },
         isEnabled: true,
         createdAt: '2024-01-15',
+        currentVersion: 'v1.0.3',
+        lastReleaseTime: '2024-06-10 09:15:00',
+        lastPublisher: '李科长',
+        stats: {
+          executionCount: 856,
+          successRate: 96.8,
+          avgDuration: 3.1,
+        },
       },
+      {
+        id: uuidv4(),
+        name: '违章处理流程',
+        description: '交通违章查询与缴费自动化处理',
+        flowDefinition: {
+          nodes: [
+            { id: 'start', type: 'start', label: '开始' },
+            { id: 'verify', type: 'service', serviceId: 'identity_verify_face', label: '身份认证' },
+            { id: 'query', type: 'service', label: '查询违章记录' },
+            { id: 'calculate', type: 'service', label: '计算罚款金额' },
+            { id: 'pay', type: 'service', label: '生成支付订单' },
+            { id: 'notify', type: 'service', label: '发送通知' },
+            { id: 'end', type: 'end', label: '结束' },
+          ],
+          edges: [],
+        },
+        isEnabled: false,
+        createdAt: '2024-03-01',
+        currentVersion: 'v2.0.0',
+        lastReleaseTime: '2024-06-15 16:45:00',
+        lastPublisher: '王工程师',
+        stats: {
+          executionCount: 567,
+          successRate: 99.2,
+          avgDuration: 4.5,
+        },
+      },
+    ];
+  }
+
+  async getFlowReleaseRecords(flowId: string): Promise<FlowReleaseRecord[]> {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return [
+      {
+        id: uuidv4(),
+        flowId,
+        version: 'v1.2.0',
+        releaseTime: '2024-05-20 14:30:00',
+        publisher: '管理员',
+        publisherId: 'admin-001',
+        changeLog: '优化学区验证算法，提升识别准确率；增加材料审核并行处理能力，缩短处理时间。',
+        status: 'success',
+        flowDefinitionSnapshot: {},
+      },
+      {
+        id: uuidv4(),
+        flowId,
+        version: 'v1.1.0',
+        releaseTime: '2024-04-15 10:20:00',
+        publisher: '李科长',
+        publisherId: 'admin-002',
+        changeLog: '新增身份核验节点，接入人脸识别服务；修复网络异常时的重试机制问题。',
+        status: 'success',
+        flowDefinitionSnapshot: {},
+      },
+      {
+        id: uuidv4(),
+        flowId,
+        version: 'v1.0.1',
+        releaseTime: '2024-03-28 16:00:00',
+        publisher: '王工程师',
+        publisherId: 'admin-003',
+        changeLog: '修复提交成功后状态未更新的Bug；优化错误提示信息。',
+        status: 'rollback',
+        flowDefinitionSnapshot: {},
+      },
+      {
+        id: uuidv4(),
+        flowId,
+        version: 'v1.0.0',
+        releaseTime: '2024-01-01 08:00:00',
+        publisher: '管理员',
+        publisherId: 'admin-001',
+        changeLog: '首次发布，包含学区验证、身份核验、提交三个核心节点。',
+        status: 'success',
+        flowDefinitionSnapshot: {},
+      },
+    ];
+  }
+
+  async rollbackFlow(flowId: string, version: string): Promise<{ success: boolean; message: string }> {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return { success: true, message: `已成功回滚到版本 ${version}` };
+  }
+
+  async compareFlowVersions(flowId: string, version1: string, version2: string): Promise<{ diff: string[] }> {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    return {
+      diff: [
+        `版本 ${version2} 新增「并行处理」配置`,
+        `版本 ${version2} 优化「学区验证」节点参数`,
+        `版本 ${version2} 调整节点执行超时时间从 30s 到 60s`,
+        `版本 ${version2} 新增异常处理分支`,
+      ],
+    };
+  }
+
+  async getServiceStats(serviceId: string): Promise<ServiceStats> {
+    await new Promise(resolve => setTimeout(resolve, 200));
+    return {
+      serviceId,
+      callCount: Math.floor(5000 + Math.random() * 10000),
+      avgDuration: Math.round((0.1 + Math.random() * 2) * 100) / 100,
+      successRate: Math.round((95 + Math.random() * 5) * 10) / 10,
+      errorCount: Math.floor(Math.random() * 50),
+      lastCallTime: new Date(Date.now() - Math.random() * 3600000).toISOString(),
+    };
+  }
+
+  async getServiceCallRecords(serviceId: string): Promise<ServiceCallRecord[]> {
+    await new Promise(resolve => setTimeout(resolve, 200));
+    const service = mockAtomicServices.find(s => s.id === serviceId);
+    const records: ServiceCallRecord[] = [];
+    for (let i = 0; i < 10; i++) {
+      records.push({
+        id: uuidv4(),
+        serviceId,
+        serviceName: service?.name || '未知服务',
+        callTime: new Date(Date.now() - i * 300000 - Math.random() * 60000).toISOString(),
+        duration: Math.round((0.1 + Math.random() * 3) * 100) / 100,
+        status: Math.random() > 0.05 ? 'success' : 'failed',
+        caller: ['入学报名流程', '就医挂号流程', '违章处理流程'][Math.floor(Math.random() * 3)],
+      });
+    }
+    return records;
+  }
+
+  async getServiceDependencies(serviceId: string): Promise<ServiceDependency[]> {
+    await new Promise(resolve => setTimeout(resolve, 200));
+    return [
+      { source: '身份认证服务', target: '学区查询服务', label: '用户信息' },
+      { source: '学区查询服务', target: '学校信息服务', label: '学校ID' },
+      { source: '学校信息服务', target: '报名提交服务', label: '报名信息' },
+      { source: '报名提交服务', target: '消息通知服务', label: '通知数据' },
+    ];
+  }
+
+  async getNodeProperties(nodeId: string, serviceId?: string): Promise<FlowNodeProperty[]> {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    if (nodeId === 'start') {
+      return [
+        { key: 'nodeName', name: '节点名称', type: 'string', required: true, value: '开始', description: '流程起始节点的显示名称' },
+        { key: 'timeout', name: '超时时间(秒)', type: 'number', required: false, value: 30, description: '节点执行超时时间' },
+        { key: 'autoContinue', name: '自动继续', type: 'boolean', required: false, value: true, description: '是否自动进入下一节点' },
+      ];
+    }
+    if (nodeId === 'end') {
+      return [
+        { key: 'nodeName', name: '节点名称', type: 'string', required: true, value: '结束', description: '流程结束节点的显示名称' },
+        { key: 'notifyOnComplete', name: '完成通知', type: 'boolean', required: false, value: false, description: '流程完成时是否发送通知' },
+        { key: 'notificationType', name: '通知类型', type: 'select', required: false, value: 'sms', options: [{ label: '短信', value: 'sms' }, { label: 'APP推送', value: 'push' }, { label: '邮件', value: 'email' }] },
+      ];
+    }
+    return [
+      { key: 'nodeName', name: '节点名称', type: 'string', required: true, value: '服务节点', description: '节点的显示名称' },
+      { key: 'serviceId', name: '关联服务', type: 'select', required: true, value: serviceId || '', options: mockAtomicServices.map(s => ({ label: s.name, value: s.id })) },
+      { key: 'timeout', name: '超时时间(秒)', type: 'number', required: false, value: 30, description: '服务调用超时时间' },
+      { key: 'retryCount', name: '重试次数', type: 'number', required: false, value: 3, description: '失败时的重试次数' },
+      { key: 'ignoreError', name: '忽略错误', type: 'boolean', required: false, value: false, description: '是否忽略错误继续执行' },
+      { key: 'description', name: '节点说明', type: 'textarea', required: false, value: '', description: '节点的详细说明' },
     ];
   }
 

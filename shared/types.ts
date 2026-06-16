@@ -49,6 +49,15 @@ export interface ServiceRequest {
   completedAt?: string;
 }
 
+export interface DataAuditInfo {
+  dataSource: string;
+  collectedAt: string;
+  verifiedAt: string;
+  verifyStatus: 'normal' | 'warning' | 'error';
+  abnormalMark?: string;
+  confidence: number;
+}
+
 export interface CityVitalSigns {
   timestamp: string;
   transportation: {
@@ -73,6 +82,133 @@ export interface CityVitalSigns {
     resolutionRate: number;
   };
 }
+
+export interface BusOnTimeTrendItem {
+  hour: number;
+  onTimeRate: number;
+  audit: DataAuditInfo;
+}
+
+export interface BusRouteRankingItem {
+  routeName: string;
+  onTimeRate: number;
+  totalTrips: number;
+  delayedTrips: number;
+  audit: DataAuditInfo;
+}
+
+export interface TrafficHeatmapItem {
+  area: string;
+  flow: number;
+  congestionLevel: number;
+  audit: DataAuditInfo;
+}
+
+export interface BRTPassengerStats {
+  lineName: string;
+  passengerCount: number;
+  peakHour: string;
+  averageLoadFactor: number;
+  audit: DataAuditInfo;
+}
+
+export interface TransportationDashboardData {
+  busOnTimeTrend: BusOnTimeTrendItem[];
+  busRouteRanking: BusRouteRankingItem[];
+  trafficHeatmap: TrafficHeatmapItem[];
+  brtPassengerStats: BRTPassengerStats[];
+}
+
+export interface HospitalWaitHeatmapItem {
+  department: string;
+  timeSlot: string;
+  waitTime: number;
+  audit: DataAuditInfo;
+}
+
+export interface HospitalEmergencyLoadItem {
+  hospitalName: string;
+  loadRate: number;
+  waitingPatients: number;
+  availableBeds: number;
+  audit: DataAuditInfo;
+}
+
+export interface AppointmentStatsItem {
+  date: string;
+  totalAppointments: number;
+  completedAppointments: number;
+  cancelledAppointments: number;
+  audit: DataAuditInfo;
+}
+
+export interface MedicalDashboardData {
+  waitHeatmap: HospitalWaitHeatmapItem[];
+  emergencyLoad: HospitalEmergencyLoadItem[];
+  appointmentStats: AppointmentStatsItem[];
+}
+
+export interface UtilitiesDetailItem {
+  hour: number;
+  usage: number;
+  audit: DataAuditInfo;
+}
+
+export interface UtilitiesComparison {
+  todayTotal: number;
+  yesterdayTotal: number;
+  lastMonthTotal: number;
+  comparedYesterday: number;
+  comparedLastMonth: number;
+  audit: DataAuditInfo;
+}
+
+export interface UtilitiesDashboardData {
+  waterUsage: UtilitiesDetailItem[];
+  electricityUsage: UtilitiesDetailItem[];
+  gasUsage: UtilitiesDetailItem[];
+  waterComparison: UtilitiesComparison;
+  electricityComparison: UtilitiesComparison;
+  gasComparison: UtilitiesComparison;
+}
+
+export interface TicketCategoryItem {
+  category: string;
+  count: number;
+  percentage: number;
+  audit: DataAuditInfo;
+}
+
+export interface ClassificationAccuracyTrendItem {
+  date: string;
+  accuracy: number;
+  totalTickets: number;
+  audit: DataAuditInfo;
+}
+
+export interface DepartmentEfficiencyItem {
+  department: string;
+  avgProcessingTime: number;
+  completedTickets: number;
+  pendingTickets: number;
+  audit: DataAuditInfo;
+}
+
+export interface TicketStatusItem {
+  status: string;
+  count: number;
+  percentage: number;
+  audit: DataAuditInfo;
+}
+
+export interface GovernmentDashboardData {
+  ticketCategoryDistribution: TicketCategoryItem[];
+  classificationAccuracyTrend: ClassificationAccuracyTrendItem[];
+  departmentEfficiency: DepartmentEfficiencyItem[];
+  ticketStatusDistribution: TicketStatusItem[];
+}
+
+export type DashboardTab = 'overview' | 'transportation' | 'medical' | 'utilities' | 'government';
 
 export type TicketCategory = 'transportation' | 'medical' | 'education' | 'government' | 'urban_management';
 export type TicketStatus = 'pending' | 'assigned' | 'processing' | 'resolved' | 'closed';
@@ -153,6 +289,63 @@ export interface AtomicService {
   responseSchema?: Record<string, any>;
   isActive: boolean;
   createdAt: string;
+  stats?: {
+    callCount: number;
+    avgDuration: number;
+    successRate: number;
+  };
+  dependencies?: { source: string; target: string; label: string }[];
+  recentCalls?: ServiceCallRecord[];
+  properties?: FlowNodeProperty[];
+}
+
+export interface FlowReleaseRecord {
+  id: string;
+  flowId: string;
+  version: string;
+  releaseTime: string;
+  publisher: string;
+  publisherId: string;
+  changeLog: string;
+  status: 'success' | 'rollback' | 'processing' | 'failed';
+  flowDefinitionSnapshot: Record<string, any>;
+}
+
+export interface ServiceStats {
+  serviceId: string;
+  callCount: number;
+  avgDuration: number;
+  successRate: number;
+  errorCount: number;
+  lastCallTime: string;
+}
+
+export interface ServiceCallRecord {
+  id: string;
+  serviceId: string;
+  serviceName: string;
+  callTime: string;
+  duration: number;
+  status: 'success' | 'failed';
+  params?: Record<string, any>;
+  result?: Record<string, any>;
+  caller?: string;
+}
+
+export interface ServiceDependency {
+  source: string;
+  target: string;
+  label: string;
+}
+
+export interface FlowNodeProperty {
+  key: string;
+  name: string;
+  type: 'string' | 'number' | 'boolean' | 'select' | 'textarea';
+  required: boolean;
+  value?: any;
+  options?: Array<{ label: string; value: any }>;
+  description?: string;
 }
 
 export interface OrchestrationFlow {
@@ -163,6 +356,15 @@ export interface OrchestrationFlow {
   triggerServiceId?: string;
   isEnabled: boolean;
   createdAt: string;
+  currentVersion?: string;
+  lastReleaseTime?: string;
+  lastPublisher?: string;
+  releaseRecords?: FlowReleaseRecord[];
+  stats?: {
+    executionCount: number;
+    successRate: number;
+    avgDuration: number;
+  };
 }
 
 export interface ParkingLot {
@@ -299,4 +501,67 @@ export const TICKET_STATUS_MAP: Record<TicketStatus, { name: string; color: stri
   processing: { name: '处理中', color: '#9C27B0' },
   resolved: { name: '已解决', color: '#4CAF50' },
   closed: { name: '已结案', color: '#666666' },
+};
+
+export type DispatchRuleType = 'keyword' | 'category' | 'time' | 'priority';
+export type DispatchRuleCondition = {
+  type: DispatchRuleType;
+  value: string;
+  operator?: string;
+};
+
+export interface DispatchRule {
+  id: string;
+  name: string;
+  type: DispatchRuleType;
+  condition: DispatchRuleCondition;
+  department: string;
+  ccDepartments?: string[];
+  priority: TicketPriority;
+  isEnabled: boolean;
+  description?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const DISPATCH_RULE_TYPE_MAP: Record<DispatchRuleType, { name: string; color: string }> = {
+  keyword: { name: '关键词匹配', color: '#2196F3' },
+  category: { name: '类别匹配', color: '#9C27B0' },
+  time: { name: '时间规则', color: '#FF8833' },
+  priority: { name: '紧急程度', color: '#F44336' },
+};
+
+export interface DepartmentStats {
+  departmentId: string;
+  departmentName: string;
+  pending: number;
+  processing: number;
+  resolved: number;
+  overdue: number;
+  total: number;
+  avgProcessTime: number;
+  resolutionRate: number;
+  satisfactionRate: number;
+}
+
+export interface DepartmentReceipt {
+  id: string;
+  ticketNo: string;
+  ticketTitle: string;
+  department: string;
+  receiver: string;
+  receivedAt: string;
+  estimatedFinishAt: string;
+  status: TicketStatus;
+  note?: string;
+}
+
+export const TICKET_ACTION_MAP: Record<string, { name: string; color: string; icon: string }> = {
+  submit: { name: '提交', color: '#666666', icon: 'Send' },
+  classify: { name: 'AI分类', color: '#2196F3', icon: 'Brain' },
+  assign: { name: '分派', color: '#FF8833', icon: 'Share2' },
+  receive: { name: '部门接收', color: '#9C27B0', icon: 'Inbox' },
+  process: { name: '处理中', color: '#F59E0B', icon: 'Wrench' },
+  resolve: { name: '反馈', color: '#4CAF50', icon: 'CheckCircle' },
+  rate: { name: '评价', color: '#8B5CF6', icon: 'Star' },
 };

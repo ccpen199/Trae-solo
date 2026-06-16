@@ -48,7 +48,10 @@ apiClient.interceptors.response.use(
     const config = error.config;
 
     const isLoginRequest = config?.url?.includes('/auth/login') || 
-                          config?.url?.includes('/auth/face-verify');
+                          config?.url?.includes('/auth/login-sms') ||
+                          config?.url?.includes('/auth/login-face') ||
+                          config?.url?.includes('/auth/face-verify') ||
+                          config?.url?.includes('/auth/send-sms');
 
     if (status === 401 && !isLoginRequest && localStorage.getItem('token') !== 'demo-session') {
       localStorage.removeItem('token');
@@ -72,6 +75,12 @@ export const api = {
   auth: {
     login: (phone: string, password: string) =>
       apiClient.post('/auth/login', { phone, password }),
+    loginBySms: (phone: string, code: string) =>
+      apiClient.post('/auth/login-sms', { phone, code }),
+    loginByFace: (faceImage: string) =>
+      apiClient.post('/auth/login-face', { faceImage }),
+    sendSmsCode: (phone: string) =>
+      apiClient.post('/auth/send-sms', { phone }),
     faceVerify: (faceImage: string) =>
       apiClient.post('/auth/face-verify', { faceImage }),
     getCurrentUser: () => apiClient.get('/auth/user'),
@@ -146,6 +155,22 @@ export const api = {
     getVitalSigns: () => apiClient.get('/urban/vital-signs'),
     getVitalSignsHistory: (hours?: number) =>
       apiClient.get('/urban/vital-signs/history', { params: { hours } }),
+    getDispatchRules: () => apiClient.get('/urban/dispatch-rules'),
+    createDispatchRule: (data: any) =>
+      apiClient.post('/urban/dispatch-rules', data),
+    updateDispatchRule: (id: string, data: any) =>
+      apiClient.put(`/urban/dispatch-rules/${id}`, data),
+    toggleDispatchRule: (id: string, isEnabled: boolean) =>
+      apiClient.post(`/urban/dispatch-rules/${id}/toggle`, { isEnabled }),
+    deleteDispatchRule: (id: string) =>
+      apiClient.delete(`/urban/dispatch-rules/${id}`),
+    getDepartmentStats: () => apiClient.get('/urban/department-stats'),
+    getDepartmentReceipts: (department?: string) =>
+      apiClient.get('/urban/department-receipts', { params: { department } }),
+    getTransportationDashboard: () => apiClient.get('/urban/dashboard/transportation'),
+    getMedicalDashboard: () => apiClient.get('/urban/dashboard/medical'),
+    getUtilitiesDashboard: () => apiClient.get('/urban/dashboard/utilities'),
+    getGovernmentDashboard: () => apiClient.get('/urban/dashboard/government'),
   },
   government: {
     getPolicies: async (category?: string, keyword?: string, page?: number, pageSize?: number) => {
@@ -176,5 +201,21 @@ export const api = {
     getFlows: () => apiClient.get('/government/flows'),
     executeFlow: (id: string, params?: any) =>
       apiClient.post(`/government/flows/${id}/execute`, params),
+    getFlowReleaseRecords: (flowId: string) =>
+      apiClient.get(`/government/flows/${flowId}/releases`),
+    rollbackFlow: (flowId: string, version: string) =>
+      apiClient.post(`/government/flows/${flowId}/rollback`, { version }),
+    compareFlowVersions: (flowId: string, version1: string, version2: string) =>
+      apiClient.get(`/government/flows/${flowId}/compare`, { params: { version1, version2 } }),
+    getServiceStats: (serviceId: string) =>
+      apiClient.get(`/government/atomic-services/${serviceId}/stats`),
+    getServiceCallRecords: (serviceId: string) =>
+      apiClient.get(`/government/atomic-services/${serviceId}/calls`),
+    getServiceDependencies: (serviceId: string) =>
+      apiClient.get(`/government/atomic-services/${serviceId}/dependencies`),
+    getNodeProperties: (nodeId: string, serviceId?: string) =>
+      apiClient.get(`/government/designer/nodes/${nodeId}/properties`, { params: { serviceId } }),
+    publishFlow: (flowId: string, data: { changeLog: string }) =>
+      apiClient.post(`/government/flows/${flowId}/publish`, data),
   },
 };

@@ -303,3 +303,171 @@ export const executeFlow = async (req: Request, res: Response) => {
     } as ApiResponse<null>);
   }
 };
+
+export const getFlowReleaseRecords = async (req: Request, res: Response) => {
+  try {
+    const { flowId } = req.params;
+    const result = await orchestrationService.getFlowReleaseRecords(flowId);
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const rollbackFlow = async (req: Request, res: Response) => {
+  try {
+    const { flowId } = req.params;
+    const { version } = req.body;
+    const result = await orchestrationService.rollbackFlow(flowId, version);
+    res.json({
+      code: 200,
+      message: result.message,
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const compareFlowVersions = async (req: Request, res: Response) => {
+  try {
+    const { flowId } = req.params;
+    const { version1, version2 } = req.query;
+    const result = await orchestrationService.compareFlowVersions(
+      flowId,
+      version1 as string,
+      version2 as string
+    );
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const getServiceStats = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await orchestrationService.getServiceStats(id);
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const getServiceCallRecords = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await orchestrationService.getServiceCallRecords(id);
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const getServiceDependencies = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await orchestrationService.getServiceDependencies(id);
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const getNodeProperties = async (req: Request, res: Response) => {
+  try {
+    const { nodeId } = req.params;
+    const { serviceId } = req.query;
+    const result = await orchestrationService.getNodeProperties(nodeId, serviceId as string | undefined);
+    res.json({
+      code: 200,
+      message: '获取成功',
+      data: result,
+      timestamp: Date.now(),
+    } as ApiResponse<typeof result>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};
+
+export const publishFlow = async (req: Request, res: Response) => {
+  try {
+    const { flowId } = req.params;
+    const { changeLog } = req.body;
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    res.json({
+      code: 200,
+      message: '发布成功',
+      data: { success: true, version: 'v' + (Math.floor(Math.random() * 3) + 1) + '.' + Math.floor(Math.random() * 10) + '.' + Math.floor(Math.random() * 10) },
+      timestamp: Date.now(),
+    } as ApiResponse<any>);
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      message: '服务器错误',
+      data: null,
+      timestamp: Date.now(),
+    } as ApiResponse<null>);
+  }
+};

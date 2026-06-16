@@ -1,6 +1,31 @@
 import { v4 as uuidv4 } from 'uuid';
-import { mockTickets, mockTicketLogs, generateVitalSigns } from '../data/mockData';
-import type { ComplaintTicket, TicketCategory, TicketPriority, TicketLog } from '../../shared/types';
+import { 
+  mockTickets, 
+  mockTicketLogs, 
+  generateVitalSigns, 
+  mockDispatchRules, 
+  mockDepartmentStats, 
+  mockDepartmentReceipts,
+  generateTransportationData,
+  generateMedicalData,
+  generateUtilitiesData,
+  generateGovernmentData,
+} from '../data/mockData';
+import type { 
+  ComplaintTicket, 
+  TicketCategory, 
+  TicketPriority, 
+  TicketLog, 
+  DispatchRule, 
+  DispatchRuleType, 
+  TicketPriority as TPriority, 
+  DepartmentStats, 
+  DepartmentReceipt,
+  TransportationDashboardData,
+  MedicalDashboardData,
+  UtilitiesDashboardData,
+  GovernmentDashboardData,
+} from '../../shared/types';
 import { TICKET_CATEGORY_MAP } from '../../shared/types';
 
 export interface ComplaintRequest {
@@ -233,6 +258,81 @@ export class UrbanService {
     const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
     const seq = String(mockTickets.length + 1).padStart(4, '0');
     return `${dateStr}${seq}`;
+  }
+
+  async getDispatchRules(): Promise<DispatchRule[]> {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return [...mockDispatchRules];
+  }
+
+  async createDispatchRule(rule: Omit<DispatchRule, 'id' | 'createdAt' | 'updatedAt'>): Promise<DispatchRule> {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const newRule: DispatchRule = {
+      id: uuidv4(),
+      ...rule,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    mockDispatchRules.unshift(newRule);
+    return newRule;
+  }
+
+  async updateDispatchRule(id: string, updates: Partial<DispatchRule>): Promise<DispatchRule | null> {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    const index = mockDispatchRules.findIndex(r => r.id === id);
+    if (index === -1) return null;
+    mockDispatchRules[index] = {
+      ...mockDispatchRules[index],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    return mockDispatchRules[index];
+  }
+
+  async toggleDispatchRule(id: string, isEnabled: boolean): Promise<DispatchRule | null> {
+    return this.updateDispatchRule(id, { isEnabled });
+  }
+
+  async deleteDispatchRule(id: string): Promise<boolean> {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const index = mockDispatchRules.findIndex(r => r.id === id);
+    if (index === -1) return false;
+    mockDispatchRules.splice(index, 1);
+    return true;
+  }
+
+  async getDepartmentStats(): Promise<DepartmentStats[]> {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    return [...mockDepartmentStats];
+  }
+
+  async getDepartmentReceipts(department?: string): Promise<DepartmentReceipt[]> {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    let receipts = [...mockDepartmentReceipts];
+    if (department) {
+      receipts = receipts.filter(r => r.department === department);
+    }
+    return receipts;
+  }
+
+  async getTransportationDashboard(): Promise<TransportationDashboardData> {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    return generateTransportationData();
+  }
+
+  async getMedicalDashboard(): Promise<MedicalDashboardData> {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    return generateMedicalData();
+  }
+
+  async getUtilitiesDashboard(): Promise<UtilitiesDashboardData> {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    return generateUtilitiesData();
+  }
+
+  async getGovernmentDashboard(): Promise<GovernmentDashboardData> {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    return generateGovernmentData();
   }
 }
 

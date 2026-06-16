@@ -18,11 +18,19 @@ import {
   Settings,
   Shield,
   Sparkles,
+  IdCard,
+  CreditCard,
+  Car,
+  Bike,
+  Fingerprint,
+  Loader2,
+  Plus,
+  ExternalLink,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { api } from '@/api/client';
-import type { CityVitalSigns, ComplaintTicket, OrchestrationFlow } from '../../shared/types';
-import { TICKET_STATUS_MAP } from '../../shared/types';
+import type { CityVitalSigns, ComplaintTicket, OrchestrationFlow, DigitalCertificate, CertificateType } from '../../shared/types';
+import { TICKET_STATUS_MAP, CERTIFICATE_TYPE_MAP } from '../../shared/types';
 import { cn } from '@/lib/utils';
 
 const quickActions = [
@@ -47,6 +55,9 @@ export default function AdminWorkbench() {
   const [vitalSigns, setVitalSigns] = useState<CityVitalSigns | null>(null);
   const [recentTickets, setRecentTickets] = useState<ComplaintTicket[]>([]);
   const [flows, setFlows] = useState<OrchestrationFlow[]>([]);
+  const [certificates, setCertificates] = useState<DigitalCertificate[]>([]);
+  const [certLoading, setCertLoading] = useState(true);
+  const [certError, setCertError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -61,10 +72,11 @@ export default function AdminWorkbench() {
 
   const loadData = async () => {
     try {
-      const [signs, tickets, flowData] = await Promise.allSettled([
+      const [signs, tickets, flowData, certData] = await Promise.allSettled([
         api.urban.getVitalSigns(),
         api.urban.getTickets(),
         api.government.getFlows(),
+        api.identity.getCertificates(),
       ]);
 
       if (signs.status === 'fulfilled' && signs.value) {
@@ -76,10 +88,19 @@ export default function AdminWorkbench() {
       if (flowData.status === 'fulfilled' && Array.isArray(flowData.value)) {
         setFlows(flowData.value.slice(0, 4));
       }
+      if (certData.status === 'fulfilled') {
+        const certs = Array.isArray(certData.value) ? certData.value : [];
+        setCertificates(certs);
+        setCertError(null);
+      } else {
+        setCertError(certData.reason?.message || '加载证照数据失败');
+      }
     } catch (e) {
       console.error('Failed to load data:', e);
+      setCertError('加载证照数据失败');
     } finally {
       setLoading(false);
+      setCertLoading(false);
     }
   };
 
@@ -113,6 +134,51 @@ export default function AdminWorkbench() {
       default: return { bg: 'bg-gray-100', text: 'text-gray-600', border: 'border-gray-200' };
     }
   };
+
+  const getCertIcon = (type: CertificateType) => {
+    switch (type) {
+      case 'id_card': return IdCard;
+      case 'social_security': return CreditCard;
+      case 'driving_license': return Car;
+      case 'vehicle_license': return FileText;
+      case 'ebike_plate': return Bike;
+      default: return IdCard;
+    }
+  };
+
+  const getCertGradient = (type: CertificateType) => {
+    switch (type) {
+      case 'id_card': return 'from-primary-500 to-primary-700';
+      case 'social_security': return 'from-eco-500 to-eco-700';
+      case 'driving_license': return 'from-warm-500 to-warm-700';
+      case 'vehicle_license': return 'from-purple-500 to-purple-700';
+      case 'ebike_plate': return 'from-pink-500 to-pink-700';
+      default: return 'from-primary-500 to-primary-700';
+    }
+  };
+
+  const maskNumber = (number: string) => {
+    if (number.length <= 8) return number;
+    return number.slice(0, 4) + '********' + number.slice(-4);
+  };
+
+  const formatDateSimple = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('zh-CN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  };
+
+  const getCertificateByType = (type: CertificateType) => {
+    return certificates.find(c => c.type === type);
+  };
+
+  const requiredCertTypes: CertificateType[] = ['id_card', 'social_security', 'driving_license', 'vehicle_license', 'ebike_plate'];
+
+  const unifiedId = 'NN-ID-2024001234';
+  const realNameLevel = '五级实名认证';
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -159,6 +225,161 @@ export default function AdminWorkbench() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="bg-white rounded-2xl p-6 shadow-card">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+            <Shield className="w-5 h-5 text-primary-500" />
+            统一身份绑定状态
+          </h3>
+          <button
+            onClick={() => navigate('/identity-center')}
+            className="text-sm text-primary-600 font-medium hover:text-primary-700 flex items-center gap-1"
+          >
+            查看详情 <ExternalLink className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div className="bg-gradient-to-r from-primary-50 to-eco-50 rounded-xl p-5 mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white">
+                <IdCard className="w-7 h-7" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="text-sm text-gray-500">统一身份 ID</p>
+                  <span className="px-2 py-0.5 bg-primary-100 text-primary-600 text-xs rounded-full font-medium">
+                    {realNameLevel}
+                  </span>
+                </div>
+                <p className="text-xl font-bold text-gray-800 font-mono">{unifiedId}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
+                <div className={cn(
+                  'w-10 h-10 rounded-lg flex items-center justify-center',
+                  user?.realNameVerified ? 'bg-eco-100 text-eco-600' : 'bg-gray-100 text-gray-400'
+                )}>
+                  <IdCard className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">实名认证</p>
+                  <p className="text-sm font-medium text-gray-800">
+                    {user?.realNameVerified ? '已完成' : '待认证'}
+                  </p>
+                </div>
+                {user?.realNameVerified && <CheckCircle className="w-5 h-5 text-eco-500" />}
+              </div>
+              <div className="flex items-center gap-2">
+                <div className={cn(
+                  'w-10 h-10 rounded-lg flex items-center justify-center',
+                  user?.faceVerified ? 'bg-eco-100 text-eco-600' : 'bg-gray-100 text-gray-400'
+                )}>
+                  <Fingerprint className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">人脸认证</p>
+                  <p className="text-sm font-medium text-gray-800">
+                    {user?.faceVerified ? '已录入' : '待录入'}
+                  </p>
+                </div>
+                {user?.faceVerified && <CheckCircle className="w-5 h-5 text-eco-500" />}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {certLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 text-primary-500 animate-spin mr-3" />
+            <p className="text-gray-500">正在加载证照信息...</p>
+          </div>
+        ) : certError ? (
+          <div className="flex items-center justify-center py-12 text-red-500">
+            <AlertTriangle className="w-8 h-8 mr-3" />
+            <div>
+              <p className="font-medium">{certError}</p>
+              <button
+                onClick={loadData}
+                className="text-sm text-primary-600 hover:text-primary-700 mt-1"
+              >
+                点击重试
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-4">
+              {requiredCertTypes.map((type, index) => {
+                const cert = getCertificateByType(type);
+                const typeInfo = CERTIFICATE_TYPE_MAP[type];
+                const Icon = getCertIcon(type);
+                const isBound = !!cert && cert.status === 'active';
+
+                return (
+                  <div
+                    key={type}
+                    className={cn(
+                      'p-4 rounded-xl border-2 transition-all duration-200',
+                      isBound
+                        ? 'border-gray-100 bg-gray-50 hover:border-primary-200 hover:bg-primary-50'
+                        : 'border-dashed border-gray-200 bg-gray-50'
+                    )}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className={cn(
+                        'w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center text-white',
+                        getCertGradient(type)
+                      )}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      {isBound ? (
+                        <span className="px-2 py-0.5 bg-eco-100 text-eco-600 text-xs rounded-full font-medium flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" /> 已绑定
+                        </span>
+                      ) : (
+                        <span className="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded-full font-medium">
+                          待认证
+                        </span>
+                      )}
+                    </div>
+                    <h4 className="font-medium text-gray-800 mb-1">{typeInfo.name}</h4>
+                    {isBound && cert ? (
+                      <>
+                        <p className="text-sm text-gray-500 font-mono mb-2">
+                          {maskNumber(cert.number)}
+                        </p>
+                        <div className="flex items-center gap-1 text-xs text-gray-400">
+                          <Clock className="w-3 h-3" />
+                          绑定时间：{formatDateSimple(cert.issueDate)}
+                        </div>
+                      </>
+                    ) : (
+                      <p className="text-sm text-gray-400">暂未绑定</p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+              <p className="text-sm text-gray-500">
+                已绑定 <span className="font-semibold text-primary-600">{certificates.filter(c => c.status === 'active').length}</span> / {requiredCertTypes.length} 个证照
+              </p>
+              <button
+                onClick={() => navigate('/identity-center')}
+                className="px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl text-sm font-medium hover:from-primary-600 hover:to-primary-700 transition-all flex items-center gap-2 shadow-md hover:shadow-lg"
+              >
+                <Plus className="w-4 h-4" />
+                绑定更多证照
+              </button>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

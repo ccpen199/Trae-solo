@@ -17,6 +17,27 @@ import type {
   BRTTravelRecord,
   TicketLog,
   EnrollmentApplication,
+  DispatchRule,
+  DepartmentStats,
+  DepartmentReceipt,
+  DataAuditInfo,
+  TransportationDashboardData,
+  BusOnTimeTrendItem,
+  BusRouteRankingItem,
+  TrafficHeatmapItem,
+  BRTPassengerStats,
+  MedicalDashboardData,
+  HospitalWaitHeatmapItem,
+  HospitalEmergencyLoadItem,
+  AppointmentStatsItem,
+  UtilitiesDashboardData,
+  UtilitiesDetailItem,
+  UtilitiesComparison,
+  GovernmentDashboardData,
+  TicketCategoryItem,
+  ClassificationAccuracyTrendItem,
+  DepartmentEfficiencyItem,
+  TicketStatusItem,
 } from '../../shared/types';
 
 export const mockUsers: UserIdentity[] = [
@@ -1002,3 +1023,405 @@ export const mockEnrollments: EnrollmentApplication[] = [
 ];
 
 export const mockUser = mockUsers.find((user) => user.role === 'admin') || mockUsers[0];
+
+const generateAuditInfo = (source: string, hasError: boolean = false): DataAuditInfo => {
+  const now = new Date();
+  const collected = new Date(now.getTime() - Math.random() * 30 * 60 * 1000);
+  const verified = new Date(collected.getTime() + Math.random() * 5 * 60 * 1000);
+  const status: 'normal' | 'warning' | 'error' = hasError 
+    ? (Math.random() > 0.8 ? 'error' : 'warning')
+    : 'normal';
+  return {
+    dataSource: source,
+    collectedAt: collected.toISOString(),
+    verifiedAt: verified.toISOString(),
+    verifyStatus: status,
+    abnormalMark: status !== 'normal' ? '数据偏离正常范围' : undefined,
+    confidence: 0.85 + Math.random() * 0.15,
+  };
+};
+
+export function generateTransportationData(): TransportationDashboardData {
+  const busOnTimeTrend: BusOnTimeTrendItem[] = [];
+  for (let i = 0; i < 24; i++) {
+    const hasError = i === 8 || i === 18;
+    busOnTimeTrend.push({
+      hour: i,
+      onTimeRate: 75 + Math.random() * 20,
+      audit: generateAuditInfo('南宁市公交集团GPS系统', hasError),
+    });
+  }
+
+  const routes = ['1路', '6路', '8路', '11路', '25路', '33路', '45路', '60路', '87路', 'B01路'];
+  const busRouteRanking: BusRouteRankingItem[] = routes.map((name, idx) => ({
+    routeName: name,
+    onTimeRate: 70 + Math.random() * 25,
+    totalTrips: 120 + Math.floor(Math.random() * 80),
+    delayedTrips: 5 + Math.floor(Math.random() * 25),
+    audit: generateAuditInfo('南宁市公交集团调度系统', idx === 3),
+  })).sort((a, b) => b.onTimeRate - a.onTimeRate);
+
+  const areas = ['民族大道', '朝阳商圈', '东盟商务区', '凤岭北', '江南区', '西乡塘', '五象新区', '青秀山'];
+  const trafficHeatmap: TrafficHeatmapItem[] = areas.map((area, idx) => ({
+    area,
+    flow: 5000 + Math.floor(Math.random() * 15000),
+    congestionLevel: 1 + Math.random() * 4,
+    audit: generateAuditInfo('南宁市智能交通指挥中心', idx === 1),
+  }));
+
+  const brtLines = ['BRT1号线', 'BRT2号线', 'BRT3号线'];
+  const brtPassengerStats: BRTPassengerStats[] = brtLines.map((line, idx) => ({
+    lineName: line,
+    passengerCount: 80000 + Math.floor(Math.random() * 40000),
+    peakHour: ['07:30-08:30', '08:00-09:00', '07:45-08:45'][idx],
+    averageLoadFactor: 0.65 + Math.random() * 0.25,
+    audit: generateAuditInfo('南宁BRT运营管理系统'),
+  }));
+
+  return {
+    busOnTimeTrend,
+    busRouteRanking,
+    trafficHeatmap,
+    brtPassengerStats,
+  };
+}
+
+export function generateMedicalData(): MedicalDashboardData {
+  const departments = ['内科', '外科', '儿科', '急诊科', '妇产科', '骨科', '眼科', '口腔科'];
+  const timeSlots = ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
+  const waitHeatmap: HospitalWaitHeatmapItem[] = [];
+  departments.forEach((dept, di) => {
+    timeSlots.forEach((slot, ti) => {
+      const hasError = di === 2 && ti === 2;
+      waitHeatmap.push({
+        department: dept,
+        timeSlot: slot,
+        waitTime: 10 + Math.floor(Math.random() * 120),
+        audit: generateAuditInfo('南宁市医疗健康信息平台', hasError),
+      });
+    });
+  });
+
+  const hospitals = ['广西医科大一附院', '自治区人民医院', '南宁市第一人民医院', '广西中医药大学一附院', '南宁市第二人民医院'];
+  const emergencyLoad: HospitalEmergencyLoadItem[] = hospitals.map((name, idx) => ({
+    hospitalName: name,
+    loadRate: 50 + Math.random() * 45,
+    waitingPatients: 15 + Math.floor(Math.random() * 50),
+    availableBeds: 5 + Math.floor(Math.random() * 20),
+    audit: generateAuditInfo('南宁市急救医疗中心', idx === 0),
+  }));
+
+  const appointmentStats: AppointmentStatsItem[] = [];
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    const hasError = i === 3;
+    appointmentStats.push({
+      date: date.toISOString().split('T')[0],
+      totalAppointments: 2000 + Math.floor(Math.random() * 3000),
+      completedAppointments: 1800 + Math.floor(Math.random() * 2800),
+      cancelledAppointments: 100 + Math.floor(Math.random() * 300),
+      audit: generateAuditInfo('南宁市预约挂号平台', hasError),
+    });
+  }
+
+  return {
+    waitHeatmap,
+    emergencyLoad,
+    appointmentStats,
+  };
+}
+
+export function generateUtilitiesData(): UtilitiesDashboardData {
+  const generateUsageDetail = (base: number, variance: number): UtilitiesDetailItem[] => {
+    const items: UtilitiesDetailItem[] = [];
+    for (let i = 0; i < 24; i++) {
+      const hasError = i === 12;
+      items.push({
+        hour: i,
+        usage: base + Math.random() * variance,
+        audit: generateAuditInfo('南宁市公用事业监管平台', hasError),
+      });
+    }
+    return items;
+  };
+
+  const waterUsage = generateUsageDetail(50000, 30000);
+  const electricityUsage = generateUsageDetail(150000, 80000);
+  const gasUsage = generateUsageDetail(35000, 20000);
+
+  const generateComparison = (base: number): UtilitiesComparison => {
+    const today = base * 24;
+    const yesterday = today * (0.95 + Math.random() * 0.1);
+    const lastMonth = today * (0.9 + Math.random() * 0.15);
+    return {
+      todayTotal: today,
+      yesterdayTotal: yesterday,
+      lastMonthTotal: lastMonth,
+      comparedYesterday: ((today - yesterday) / yesterday) * 100,
+      comparedLastMonth: ((today - lastMonth) / lastMonth) * 100,
+      audit: generateAuditInfo('南宁市公用事业监管平台'),
+    };
+  };
+
+  return {
+    waterUsage,
+    electricityUsage,
+    gasUsage,
+    waterComparison: generateComparison(65000),
+    electricityComparison: generateComparison(180000),
+    gasComparison: generateComparison(42000),
+  };
+}
+
+export function generateGovernmentData(): GovernmentDashboardData {
+  const categories = [
+    { name: '交通出行', color: '#3B82F6' },
+    { name: '医疗卫生', color: '#10B981' },
+    { name: '教育服务', color: '#F59E0B' },
+    { name: '政务服务', color: '#8B5CF6' },
+    { name: '城市管理', color: '#F97316' },
+  ];
+  const totalTickets = 2500;
+  const ticketCategoryDistribution: TicketCategoryItem[] = categories.map((cat, idx) => {
+    const count = Math.floor(300 + Math.random() * 700);
+    return {
+      category: cat.name,
+      count,
+      percentage: (count / totalTickets) * 100,
+      audit: generateAuditInfo('南宁市12345政务服务便民热线', idx === 2),
+    };
+  });
+
+  const classificationAccuracyTrend: ClassificationAccuracyTrendItem[] = [];
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    classificationAccuracyTrend.push({
+      date: date.toISOString().split('T')[0],
+      accuracy: 0.88 + Math.random() * 0.1,
+      totalTickets: 300 + Math.floor(Math.random() * 200),
+      audit: generateAuditInfo('南宁市政务AI智能分类系统'),
+    });
+  }
+
+  const departments = [
+    '南宁市交通运输局',
+    '南宁市卫生健康委员会',
+    '南宁市教育局',
+    '南宁市行政审批局',
+    '南宁市城市管理局',
+    '南宁市公安局',
+    '南宁市生态环境局',
+  ];
+  const departmentEfficiency: DepartmentEfficiencyItem[] = departments.map((dept, idx) => ({
+    department: dept,
+    avgProcessingTime: 12 + Math.random() * 36,
+    completedTickets: 80 + Math.floor(Math.random() * 120),
+    pendingTickets: 10 + Math.floor(Math.random() * 40),
+    audit: generateAuditInfo('南宁市政务服务绩效考评系统', idx === 4),
+  }));
+
+  const statuses = ['待处理', '已分派', '处理中', '已解决', '已结案'];
+  const ticketStatusDistribution: TicketStatusItem[] = statuses.map((status, idx) => {
+    const count = [150, 280, 420, 1200, 450][idx];
+    return {
+      status,
+      count,
+      percentage: (count / 2500) * 100,
+      audit: generateAuditInfo('南宁市12345政务服务便民热线'),
+    };
+  });
+
+  return {
+    ticketCategoryDistribution,
+    classificationAccuracyTrend,
+    departmentEfficiency,
+    ticketStatusDistribution,
+  };
+}
+
+export const mockDispatchRules: DispatchRule[] = [
+  {
+    id: uuidv4(),
+    name: '违章关键词分派',
+    type: 'keyword',
+    condition: { type: 'keyword', value: '违章', operator: 'contains' },
+    department: '南宁市交通运输局',
+    priority: 'medium',
+    isEnabled: true,
+    description: '工单内容包含「违章」关键词时自动分派至交通运输局',
+    createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: uuidv4(),
+    name: '医疗健康类别分派',
+    type: 'category',
+    condition: { type: 'category', value: 'medical' },
+    department: '南宁市卫生健康委员会',
+    priority: 'medium',
+    isEnabled: true,
+    description: '工单类别为「医疗健康」时自动分派至卫生健康委员会',
+    createdAt: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: uuidv4(),
+    name: '紧急工单抄送应急管理局',
+    type: 'priority',
+    condition: { type: 'priority', value: 'urgent' },
+    department: '对应责任部门',
+    ccDepartments: ['南宁市应急管理局'],
+    priority: 'urgent',
+    isEnabled: true,
+    description: '紧急程度为「紧急」的工单，除分派至对应部门外，同时抄送应急管理局',
+    createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: uuidv4(),
+    name: '夜间工单延时处理',
+    type: 'time',
+    condition: { type: 'time', value: '22:00-08:00', operator: 'between' },
+    department: '南宁市12345热线中心',
+    priority: 'low',
+    isEnabled: false,
+    description: '夜间22:00至次日08:00提交的工单，优先级降低，次日工作时间处理',
+    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: uuidv4(),
+    name: '教育服务类别分派',
+    type: 'category',
+    condition: { type: 'category', value: 'education' },
+    department: '南宁市教育局',
+    priority: 'medium',
+    isEnabled: true,
+    description: '工单类别为「教育服务」时自动分派至教育局',
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+export const mockDepartmentStats: DepartmentStats[] = [
+  {
+    departmentId: 'dept-001',
+    departmentName: '南宁市交通运输局',
+    pending: 23,
+    processing: 45,
+    resolved: 156,
+    overdue: 3,
+    total: 227,
+    avgProcessTime: 18.5,
+    resolutionRate: 92.5,
+    satisfactionRate: 95.2,
+  },
+  {
+    departmentId: 'dept-002',
+    departmentName: '南宁市卫生健康委员会',
+    pending: 18,
+    processing: 32,
+    resolved: 128,
+    overdue: 2,
+    total: 180,
+    avgProcessTime: 15.2,
+    resolutionRate: 94.2,
+    satisfactionRate: 97.8,
+  },
+  {
+    departmentId: 'dept-003',
+    departmentName: '南宁市教育局',
+    pending: 12,
+    processing: 28,
+    resolved: 95,
+    overdue: 1,
+    total: 136,
+    avgProcessTime: 22.3,
+    resolutionRate: 90.8,
+    satisfactionRate: 93.5,
+  },
+  {
+    departmentId: 'dept-004',
+    departmentName: '南宁市行政审批局',
+    pending: 35,
+    processing: 52,
+    resolved: 189,
+    overdue: 5,
+    total: 281,
+    avgProcessTime: 24.8,
+    resolutionRate: 88.6,
+    satisfactionRate: 91.2,
+  },
+  {
+    departmentId: 'dept-005',
+    departmentName: '南宁市城市管理局',
+    pending: 42,
+    processing: 68,
+    resolved: 245,
+    overdue: 8,
+    total: 363,
+    avgProcessTime: 28.6,
+    resolutionRate: 85.3,
+    satisfactionRate: 89.7,
+  },
+];
+
+export const mockDepartmentReceipts: DepartmentReceipt[] = [
+  {
+    id: uuidv4(),
+    ticketNo: '202406150001',
+    ticketTitle: '民族大道井盖破损',
+    department: '南宁市城市管理局',
+    receiver: '王建国',
+    receivedAt: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
+    estimatedFinishAt: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
+    status: 'processing',
+    note: '已安排市政维修队前往现场',
+  },
+  {
+    id: uuidv4(),
+    ticketNo: '202406150002',
+    ticketTitle: 'BRT公交晚点严重',
+    department: '南宁市交通运输局',
+    receiver: '李明华',
+    receivedAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+    estimatedFinishAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+    status: 'assigned',
+    note: '已转至公交公司调度科处理',
+  },
+  {
+    id: uuidv4(),
+    ticketNo: '202406150003',
+    ticketTitle: '小区周边噪音扰民',
+    department: '南宁市城市管理局',
+    receiver: '张伟强',
+    receivedAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
+    estimatedFinishAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+    status: 'resolved',
+    note: '已完成夜间巡查整治',
+  },
+  {
+    id: uuidv4(),
+    ticketNo: '202406150004',
+    ticketTitle: '医院排队时间过长',
+    department: '南宁市卫生健康委员会',
+    receiver: '陈美玲',
+    receivedAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+    estimatedFinishAt: new Date(Date.now() + 16 * 60 * 60 * 1000).toISOString(),
+    status: 'processing',
+    note: '正在协调医院优化就诊流程',
+  },
+  {
+    id: uuidv4(),
+    ticketNo: '202406150005',
+    ticketTitle: '入学报名咨询',
+    department: '南宁市教育局',
+    receiver: '刘老师',
+    receivedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    estimatedFinishAt: new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(),
+    status: 'assigned',
+    note: '已转至基础教育科',
+  },
+];

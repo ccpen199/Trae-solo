@@ -12,37 +12,57 @@ const errorMessages: Record<LoginErrorCode, {
   message: string;
   type: 'error' | 'warning' | 'info';
   statusCode?: string;
+  suggestion?: string;
 }> = {
   SUCCESS: { title: '登录成功', message: '身份核验通过，正在跳转至对应工作台...', type: 'info' },
   ACCOUNT_NOT_FOUND: { 
-    title: '账号不存在', 
-    message: '该手机号尚未在南宁城市服务平台注册', 
+    title: '账号未注册', 
+    message: '该手机号尚未在南宁城市服务平台注册，请先完成实名认证注册', 
     type: 'error',
-    statusCode: 'ACCOUNT_NOT_FOUND'
+    statusCode: 'ACCOUNT_NOT_FOUND',
+    suggestion: '您可以使用身份证号前往市民中心完成线下注册'
   },
   PASSWORD_ERROR: { 
     title: '密码校验未通过', 
     message: '您输入的密码不正确，请检查后重试', 
     type: 'error',
-    statusCode: 'PASSWORD_ERROR'
+    statusCode: 'PASSWORD_ERROR',
+    suggestion: '连续输错5次将锁定账号30分钟，可通过验证码登录或找回密码'
+  },
+  VERIFY_CODE_ERROR: {
+    title: '验证码校验失败',
+    message: '验证码错误或已过期，请重新获取',
+    type: 'error',
+    statusCode: 'VERIFY_CODE_ERROR',
+    suggestion: '演示模式下可使用固定验证码 123456'
+  },
+  FACE_VERIFY_FAILED: {
+    title: '人脸验证未通过',
+    message: '未能识别到匹配的身份信息，请调整光线和角度后重试',
+    type: 'error',
+    statusCode: 'FACE_VERIFY_FAILED',
+    suggestion: '请确保面部完整出现在取景框内，光线充足，无帽子口罩遮挡'
   },
   INSUFFICIENT_PERMISSIONS: { 
     title: '权限不足', 
     message: '该账号角色无系统访问权限', 
     type: 'warning',
-    statusCode: 'INSUFFICIENT_PERMISSIONS'
+    statusCode: 'INSUFFICIENT_PERMISSIONS',
+    suggestion: '请联系管理员开通对应角色权限'
   },
   NETWORK_ERROR: { 
     title: '网络连接异常', 
-    message: '无法连接城市服务网关，请检查网络', 
+    message: '无法连接城市服务网关，请检查网络设置', 
     type: 'error',
-    statusCode: 'NETWORK_ERROR'
+    statusCode: 'NETWORK_ERROR',
+    suggestion: '请检查网络连接，或稍后重试'
   },
   UNKNOWN_ERROR: { 
     title: '身份校验失败', 
     message: '认证服务暂不可用，请稍后重试', 
     type: 'error',
-    statusCode: 'UNKNOWN_ERROR'
+    statusCode: 'UNKNOWN_ERROR',
+    suggestion: '请稍后重试，如持续出现此问题请联系客服'
   },
 };
 
@@ -77,7 +97,7 @@ const NON_DIGIT_REGEX = new RegExp('[^0-9]', 'g');
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isLoading, isAuthenticated, user, loginError, clearLoginError, checkAuth } = useAuthStore();
+  const { login, loginBySms, loginByFace, sendSmsCode, isLoading, isAuthenticated, user, loginError, clearLoginError, checkAuth } = useAuthStore();
 
   const [phone, setPhone] = useState('13800138001');
   const [password, setPassword] = useState('123456');
@@ -93,6 +113,7 @@ export default function Login() {
   status: string;
   role?: string;
 } | null>(null);
+  const [detectedRole, setDetectedRole] = useState<string | null>(null);
 
   const from = (location.state as any)?.from?.pathname || null;
 
@@ -134,22 +155,36 @@ export default function Login() {
   }, [loginError]);
 
   useEffect(() => {
+    if (phone.length === 11) {
+      const matched = demoAccounts.find(acc => acc.phone === phone);
+      if (matched) {
+        setDetectedRole(matched.role);
+      } else {
+        setDetectedRole(null);
+      }
+    } else {
+      setDetectedRole(null);
+    }
+  }, [phone]);
+
+  useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     }
   }, [countdown]);
 
-  useEffect(() => {
-    const init = async () => {
-      await checkAuth();
-    };
-    init();
-  }, [checkAuth]);
-
-  const handleSendSms = () => {
-    if (phone.length === 11 && countdown === 0) {
+  const handleSendSms = async () => {
+    if (phone.length !== 11 || countdown > 0) return;
+    
+    setLoginAuditInfo({ label: '验证码发送中', status: '处理中' });
+    const result = await sendSmsCode(phone);
+    
+    if (result.success) {
       setCountdown(60);
+      setLoginAuditInfo({ label: '验证码已发送', status: '通过' });
+    } else {
+      setLoginAuditInfo({ label: '验证码发送失败', status: '未通过', role: result.message });
     }
   };
 
@@ -171,33 +206,20 @@ export default function Login() {
     setLoginAuditInfo(null);
   };
 
-  const handleLoginComplete = (success: boolean, roleHint?: string) => {
-    if (success) {
-    }
-  };
-
   const handleFaceLogin = async () => {
     setFaceScanning(true);
     clearLoginError();
-    setLoginAuditInfo({ label: '身份核验中', status: '处理中' });
-    setTimeout(async () => {
-      try {
-        const result = await api.auth.faceVerify('mock_face_image_base64') as any;
-        if (result && result.verified) {
-          const { success, code } = await login(phone, 'face_login');
-          handleLoginComplete(success, '人脸识别');
-          if (!success) {
-            setFaceScanning(false);
-          }
-        } else {
-          setFaceScanning(false);
-          setLoginAuditInfo({ label: '人脸核验结果', status: '未通过' });
-        }
-      } catch (e: any) {
+    setLoginAuditInfo({ label: '身份核验中', status: '处理中', role: '正在采集面部特征...' });
+
+    try {
+      const result = await loginByFace('mock_face_image_base64');
+      if (!result.success) {
         setFaceScanning(false);
-        setLoginAuditInfo({ label: '人脸核验异常', status: '失败', role: e?.message });
       }
-    }, 1500);
+    } catch (e: any) {
+      setFaceScanning(false);
+      setLoginAuditInfo({ label: '人脸核验异常', status: '失败', role: e?.message });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -220,9 +242,11 @@ export default function Login() {
       return;
     }
 
-    const passCode = loginType === 'password' ? password : smsCode;
-    const { success, code } = await login(phone, passCode);
-    handleLoginComplete(success, loginType === 'password' ? '密码登录' : '验证码登录');
+    if (loginType === 'password') {
+      await login(phone, password);
+    } else if (loginType === 'sms') {
+      await loginBySms(phone, smsCode);
+    }
   };
 
   const fillDemoAccount = (account: typeof demoAccounts[0]) => {
@@ -454,7 +478,19 @@ export default function Login() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">手机号 <span className="text-gray-400 text-xs">（已实名认证手机号）</span></label>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-sm font-medium text-gray-700">手机号 <span className="text-gray-400 text-xs">（已实名认证手机号）</span></label>
+                    {detectedRole && (
+                      <span className={cn(
+                        'text-xs px-2 py-0.5 rounded-full font-medium',
+                        detectedRole === 'admin' 
+                          ? 'bg-warm-100 text-warm-600' 
+                          : 'bg-eco-100 text-eco-600'
+                      )}>
+                        已识别：{detectedRole === 'admin' ? '管理员' : '市民'}
+                      </span>
+                    )}
+                  </div>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -528,7 +564,7 @@ export default function Login() {
                         {countdown > 0 ? `${countdown}s 后重发` : '获取验证码'}
                       </button>
                     </div>
-                    <p className="text-xs text-gray-400 mt-2">演示模式下，任意6位数字均可完成验证码登录</p>
+                    <p className="text-xs text-eco-600 mt-2 bg-eco-50 px-2 py-1 rounded">💡 演示模式：使用固定验证码 <span className="font-mono font-semibold">123456</span> 即可登录</p>
                   </div>
                 )}
 
@@ -574,40 +610,112 @@ export default function Login() {
 
                 {errorDisplay && loginAuditInfo && loginAuditInfo.status !== '处理中' && (
                   <div className={cn(
-                    'p-4 rounded-xl flex items-start gap-3 animate-in fade-in slide-in-from-top-2 duration-300',
-                    errorDisplay.type === 'error' && 'bg-red-50 border border-red-100',
-                    errorDisplay.type === 'warning' && 'bg-warm-50 border border-warm-100',
-                    errorDisplay.type === 'info' && 'bg-eco-50 border border-eco-100'
+                    'rounded-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300',
+                    errorDisplay.type === 'error' && 'border border-red-100',
+                    errorDisplay.type === 'warning' && 'border border-warm-100',
+                    errorDisplay.type === 'info' && 'border border-eco-100'
                   )}>
-                    <errorDisplay.Icon className={cn(
-                      'w-5 h-5 flex-shrink-0 mt-0.5',
-                      errorDisplay.type === 'error' && 'text-red-500',
-                      errorDisplay.type === 'warning' && 'text-warm-500',
-                      errorDisplay.type === 'info' && 'text-eco-500'
-                    )} />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
+                    <div className={cn(
+                      'p-4 flex items-start gap-3',
+                      errorDisplay.type === 'error' && 'bg-red-50',
+                      errorDisplay.type === 'warning' && 'bg-warm-50',
+                      errorDisplay.type === 'info' && 'bg-eco-50'
+                    )}>
+                      <errorDisplay.Icon className={cn(
+                        'w-5 h-5 flex-shrink-0 mt-0.5',
+                        errorDisplay.type === 'error' && 'text-red-500',
+                        errorDisplay.type === 'warning' && 'text-warm-500',
+                        errorDisplay.type === 'info' && 'text-eco-500'
+                      )} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className={cn(
+                            'text-sm font-semibold',
+                            errorDisplay.type === 'error' && 'text-red-800',
+                            errorDisplay.type === 'warning' && 'text-warm-800',
+                            errorDisplay.type === 'info' && 'text-eco-800'
+                          )}>
+                            {errorDisplay.title}
+                          </p>
+                          {errorDisplay.statusCode && (
+                            <span className="text-xs font-mono bg-white/60 px-1.5 py-0.5 rounded text-gray-500">
+                              #{errorDisplay.statusCode}
+                            </span>
+                          )}
+                        </div>
                         <p className={cn(
-                          'text-sm font-semibold',
-                          errorDisplay.type === 'error' && 'text-red-800',
-                          errorDisplay.type === 'warning' && 'text-warm-800',
-                          errorDisplay.type === 'info' && 'text-eco-800'
+                          'text-sm mt-1',
+                          errorDisplay.type === 'error' && 'text-red-600',
+                          errorDisplay.type === 'warning' && 'text-warm-600',
+                          errorDisplay.type === 'info' && 'text-eco-600'
                         )}>
-                          {errorDisplay.title}
+                          {errorDisplay.message}
                         </p>
-                        {errorDisplay.statusCode && (
-                          <span className="text-xs font-mono text-gray-400">#{errorDisplay.statusCode}</span>
-                        )}
                       </div>
-                      <p className={cn(
-                        'text-sm mt-0.5',
-                        errorDisplay.type === 'error' && 'text-red-600',
-                        errorDisplay.type === 'warning' && 'text-warm-600',
-                        errorDisplay.type === 'info' && 'text-eco-600'
-                      )}>
-                        {errorDisplay.message}
-                      </p>
                     </div>
+                    
+                    {errorDisplay.suggestion && (
+                      <div className="px-4 py-3 bg-white border-t border-gray-100">
+                        <div className="flex items-start gap-2">
+                          <Info className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-xs font-medium text-gray-600">温馨提示</p>
+                            <p className="text-xs text-gray-500 mt-0.5">{errorDisplay.suggestion}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {loginError && loginError !== 'SUCCESS' && (
+                      <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
+                        <p className="text-xs font-medium text-gray-600 mb-2">身份核验进度</p>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <div className={cn(
+                              'w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0',
+                              ['ACCOUNT_NOT_FOUND'].includes(loginError) 
+                                ? 'bg-red-100' 
+                                : 'bg-eco-100'
+                            )}>
+                              {['ACCOUNT_NOT_FOUND'].includes(loginError) 
+                                ? <AlertCircle className="w-2.5 h-2.5 text-red-500" />
+                                : <Check className="w-2.5 h-2.5 text-eco-500" />
+                              }
+                            </div>
+                            <span className="text-xs text-gray-600">账号状态检测</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className={cn(
+                              'w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0',
+                              ['PASSWORD_ERROR', 'VERIFY_CODE_ERROR', 'FACE_VERIFY_FAILED'].includes(loginError)
+                                ? 'bg-red-100'
+                                : loginError === 'ACCOUNT_NOT_FOUND'
+                                  ? 'bg-gray-100'
+                                  : 'bg-eco-100'
+                            )}>
+                              {['PASSWORD_ERROR', 'VERIFY_CODE_ERROR', 'FACE_VERIFY_FAILED'].includes(loginError)
+                                ? <AlertCircle className="w-2.5 h-2.5 text-red-500" />
+                                : loginError === 'ACCOUNT_NOT_FOUND'
+                                  ? <span className="w-2 h-2 rounded-full bg-gray-300"></span>
+                                  : <Check className="w-2.5 h-2.5 text-eco-500" />
+                              }
+                            </div>
+                            <span className={cn(
+                              'text-xs',
+                              loginError === 'ACCOUNT_NOT_FOUND' ? 'text-gray-400' : 'text-gray-600'
+                            )}>
+                              {loginType === 'password' ? '密码校验' : loginType === 'sms' ? '验证码校验' : '人脸核验'}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                              <span className="w-2 h-2 rounded-full bg-gray-300"></span>
+                            </div>
+                            <span className="text-xs text-gray-400">权限角色识别</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
