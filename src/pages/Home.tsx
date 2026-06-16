@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   PawPrint,
@@ -265,8 +266,42 @@ const quickActions = [
 export default function Home() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
+  const [searchTerm, setSearchTerm] = useState('');
   const hour = new Date().getHours();
   const greeting = hour < 12 ? '早上好' : hour < 18 ? '下午好' : '晚上好';
+  const searchResults = useMemo(() => {
+    const keyword = searchTerm.trim().toLowerCase();
+    if (!keyword) return [];
+
+    return [
+      ...mockDoctors.map((item) => ({
+        id: item.id,
+        type: '医生',
+        title: item.name,
+        desc: `${item.department} · ${item.title} · 评分 ${item.rating}`,
+        action: '发起问诊',
+        path: '/consultations',
+      })),
+      ...mockHospitals.map((item) => ({
+        id: item.id,
+        type: '医院',
+        title: item.name,
+        desc: `${item.address} · ${item.businessHours}`,
+        action: '查看详情',
+        path: '/hospitals',
+      })),
+      ...mockProducts.map((item) => ({
+        id: item.id,
+        type: '商品',
+        title: item.name,
+        desc: `${item.category} · ¥${item.price} · 库存 ${item.stock}`,
+        action: item.isPrescription ? '处方购买' : '立即购买',
+        path: `/shop/${item.id}`,
+      })),
+    ].filter((item) =>
+      `${item.type} ${item.title} ${item.desc}`.toLowerCase().includes(keyword)
+    ).slice(0, 6);
+  }, [searchTerm]);
 
   return (
     <div className="space-y-8">
@@ -288,12 +323,54 @@ export default function Home() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="搜索医生、医院、商品..."
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              aria-label="搜索框"
+              placeholder="搜索框：请输入医生、医院、商品关键词"
               className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-warm-300"
             />
           </div>
         </div>
       </section>
+
+      {searchTerm.trim() && (
+        <section className="card">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div>
+              <h2 className="section-title">搜索筛选结果</h2>
+              <p className="section-subtitle">
+                关键词：{searchTerm.trim()} · 命中 {searchResults.length} 条医生、医院、商品与购买入口
+              </p>
+            </div>
+            <button
+              onClick={() => setSearchTerm('')}
+              className="btn-ghost text-sm"
+            >
+              清除筛选
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {searchResults.length > 0 ? searchResults.map((item) => (
+              <button
+                key={`${item.type}-${item.id}`}
+                onClick={() => navigate(item.path)}
+                className="text-left p-4 rounded-2xl border border-forest-100 bg-white hover:border-forest-300 hover:shadow-soft transition-all"
+              >
+                <div className="flex items-center justify-between gap-3 mb-2">
+                  <span className="tag tag-green">{item.type}</span>
+                  <span className="text-sm font-semibold text-forest-600">{item.action}</span>
+                </div>
+                <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                <p className="text-sm text-gray-500 mt-1 line-clamp-2">{item.desc}</p>
+              </button>
+            )) : (
+              <div className="md:col-span-2 rounded-2xl border border-dashed border-forest-100 p-6 text-center text-gray-500">
+                暂无匹配结果，可尝试搜索“医生”“医院”“商品”“驱虫药”或“购买”
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       <section>
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4">

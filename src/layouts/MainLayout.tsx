@@ -63,7 +63,7 @@ const MERCHANT_NAV: NavItem[] = [
 ];
 
 const ADMIN_NAV: NavItem[] = [
-  { path: '/admin/dashboard', icon: ShieldCheck, label: '管理控制台', group: '全局权限' },
+  { path: '/admin/dashboard', icon: ShieldCheck, label: '管理后台', hint: '管理控制台', group: '全局权限' },
   { path: '/', icon: Home, label: '平台预览', group: '业务入口', hint: '模拟宠主' },
   { path: '/consultations', icon: MessageCircle, label: '问诊审计', hint: '处方流转', group: '全链路审计' },
   { path: '/shop', icon: ShoppingBag, label: '商城复核', hint: '处方药双签', group: '全链路审计' },
@@ -247,8 +247,8 @@ export default function MainLayout() {
                   onClick={() => { setUserMenuOpen(false); }}
                   className="flex-1 text-[10px] px-2 py-1.5 rounded-lg bg-white text-gray-600 border border-gray-200 hover:bg-forest-50 hover:border-forest-200 hover:text-forest-700 font-semibold flex items-center justify-center gap-1 transition-all"
                 >
-                  <FileText className="w-3 h-3" />
                   <Settings className="w-3 h-3" />
+                  账号设置
                 </button>
                 <button
                   onClick={handleLogout}

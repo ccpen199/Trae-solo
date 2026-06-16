@@ -59,9 +59,10 @@ class ApiClient {
         return undefined as T;
       }
 
-      const json = await response.json() as { success: boolean; data?: T; error?: string };
+      const json = await response.json() as { success: boolean; data?: T; error?: string; errorCode?: string };
       if (json.success === false) {
         const err = new Error(json.error || '请求失败');
+        (err as any).errorCode = json.errorCode || 'UNKNOWN';
         throw err;
       }
       return json.data !== undefined ? json.data : (json as unknown as T);

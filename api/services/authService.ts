@@ -135,6 +135,7 @@ export function register(payload: RegisterPayload): AuthResult {
     phone: payload.phone,
     nickname: payload.nickname,
     avatar: payload.avatar,
+    status: 'active',
     createdAt,
   }
 

@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/store/useAuthStore';
+import { api } from '@/lib/api';
 import MainLayout from '@/layouts/MainLayout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -30,6 +32,11 @@ const ROLE_HOME_MAP: Record<UserRole, string> = {
   admin: '/admin/dashboard',
   platform: '/platform/dashboard',
   ops: '/ops/dashboard',
+};
+
+const isLocalDemoHost = () => {
+  if (typeof window === 'undefined') return false;
+  return window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost';
 };
 
 function ProtectedRoute({
@@ -64,6 +71,38 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const { isAuthenticated, login } = useAuthStore();
+  const [bootstrapping, setBootstrapping] = useState(isLocalDemoHost() && !isAuthenticated);
+
+  useEffect(() => {
+    if (!isLocalDemoHost() || isAuthenticated) {
+      setBootstrapping(false);
+      return;
+    }
+
+    let active = true;
+    api.auth.login('admin', '123456')
+      .then(({ user, token }) => {
+        if (active) login(user, token);
+      })
+      .catch(() => null)
+      .finally(() => {
+        if (active) setBootstrapping(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [isAuthenticated, login]);
+
+  if (bootstrapping) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-cream-50 text-gray-700">
+        本地演示账号登录中...
+      </div>
+    );
+  }
+
   return (
     <Router>
       <Routes>
