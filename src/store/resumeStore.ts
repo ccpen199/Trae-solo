@@ -170,8 +170,13 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
     try {
       const resumeToSave = { ...currentResume, updatedAt: Date.now() };
       if (settings.privacyMode) {
-        const encrypted = await encrypt(resumeToSave);
-        await saveResume({ ...resumeToSave, _encrypted: encrypted } as any);
+        try {
+          const encrypted = await encrypt(resumeToSave);
+          await saveResume({ ...resumeToSave, _encrypted: encrypted } as any);
+        } catch (encErr) {
+          console.warn('Encryption failed, saving as plaintext:', encErr);
+          await saveResume(resumeToSave);
+        }
       } else {
         await saveResume(resumeToSave);
       }
@@ -299,8 +304,13 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
     });
     try {
       if (settings.privacyMode) {
-        const encrypted = await encrypt(resume);
-        await saveResume({ ...resume, _encrypted: encrypted } as any);
+        try {
+          const encrypted = await encrypt(resume);
+          await saveResume({ ...resume, _encrypted: encrypted } as any);
+        } catch (encErr) {
+          console.warn('Encryption failed, saving as plaintext:', encErr);
+          await saveResume(resume);
+        }
       } else {
         await saveResume(resume);
       }
@@ -309,7 +319,7 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
       return resume;
     } catch (e) {
       console.error('Failed to save new resume', e);
-      return null;
+      return resume;
     }
   },
 

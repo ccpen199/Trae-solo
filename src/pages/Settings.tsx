@@ -189,21 +189,45 @@ export default function Settings() {
               </div>
             ) : (
               <div className="space-y-2 max-h-[240px] overflow-y-auto">
-                {resumes.map(resume => (
-                  <div key={resume.id} className="flex items-center justify-between p-3 rounded-lg border border-navy-100 bg-white">
-                    <div className="flex items-center gap-2 min-w-0 flex-1">
-                      {settings.privacyMode && <Lock className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />}
-                      <span className="text-sm text-navy-700 truncate">{resume.title || '未命名简历'}</span>
+                {resumes.map(resume => {
+                  const templateLabel = (() => {
+                    if (resume.templateId === 'blank') return '空白创建';
+                    if (resume.templateId === 'grad-sample') return '应届生样例';
+                    if (resume.templateId === 'tech-frontend') return '技术岗';
+                    if (resume.templateId === 'design-ui') return '设计岗';
+                    if (resume.templateId === 'function-admin') return '职能岗';
+                    return '自定义';
+                  })();
+                  const templateColor = (() => {
+                    if (resume.templateId === 'blank') return 'bg-gray-100 text-gray-600';
+                    if (resume.templateId === 'grad-sample') return 'bg-gold-50 text-gold-600';
+                    if (resume.templateId === 'tech-frontend') return 'bg-navy-50 text-navy-600';
+                    if (resume.templateId === 'design-ui') return 'bg-emerald-50 text-emerald-600';
+                    if (resume.templateId === 'function-admin') return 'bg-purple-50 text-purple-600';
+                    return 'bg-gray-100 text-gray-600';
+                  })();
+                  return (
+                    <div key={resume.id} className="flex items-center justify-between p-3 rounded-lg border border-navy-100 bg-white">
+                      <div className="flex items-center gap-2 min-w-0 flex-1">
+                        {settings.privacyMode && <Lock className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />}
+                        <span className="text-sm text-navy-700 truncate">{resume.title || '未命名简历'}</span>
+                        <span className={cn('text-[10px] px-1.5 py-0.5 rounded-full font-medium flex-shrink-0', templateColor)}>
+                          {templateLabel}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3 ml-3">
+                        <span className="text-xs text-navy-400">{(resume.modules?.length || 0)} 模块</span>
+                        <span className="text-xs text-navy-400">{formatTime(resume.updatedAt)}</span>
+                        {settings.privacyMode && (
+                          <span className="text-xs px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 border border-emerald-100">AES加密</span>
+                        )}
+                        {!settings.privacyMode && (
+                          <span className="text-xs px-1.5 py-0.5 rounded bg-amber-50 text-amber-600 border border-amber-100">明文</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 ml-3">
-                      <span className="text-xs text-navy-400">{(resume.modules?.length || 0)} 个模块</span>
-                      <span className="text-xs text-navy-400">{formatTime(resume.updatedAt)}</span>
-                      {settings.privacyMode && (
-                        <span className="text-xs px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600">已加密</span>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
             <p className="text-xs text-navy-400 mt-2">

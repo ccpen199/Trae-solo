@@ -35,16 +35,24 @@ const COLOR_PRESETS = [
   { primary: '#0f172a', secondary: '#94a3b8', name: '墨黑灰' },
 ];
 
-function SortableItem({ module, onToggle, onDelete, onSelect, active }: {
-  module: ResumeModule; onToggle: () => void; onDelete: () => void; onSelect: () => void; active: boolean;
+function SortableItem({ module, onToggle, onDelete, onSelect, active, isOver }: {
+  module: ResumeModule; onToggle: () => void; onDelete: () => void; onSelect: () => void; active: boolean; isOver: boolean;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: module.id });
-  const style = { transform: transform ? `translate3d(${transform.x}px,${transform.y}px,0)` : undefined, transition, opacity: isDragging ? 0.4 : 1 };
+  const style = {
+    transform: transform ? `translate3d(${transform.x}px,${transform.y}px,0)` : undefined,
+    transition: transition || 'transform 200ms ease',
+    opacity: isDragging ? 0.4 : 1,
+    zIndex: isOver ? 10 : undefined,
+  };
   return (
     <div ref={setNodeRef} style={style}
       className={cn(
-        'flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all cursor-pointer',
-        active ? 'border-gold-500 bg-gold-50 shadow-sm' : 'border-navy-100 hover:border-navy-300 bg-white',
+        'flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all cursor-pointer duration-200',
+        active && 'border-gold-500 bg-gold-50 shadow-sm',
+        !active && !isOver && 'border-navy-100 hover:border-navy-300 bg-white',
+        isOver && !active && 'border-navy-400 bg-navy-100 shadow-md scale-[1.02]',
+        isDragging && 'opacity-40',
         !module.visible && 'opacity-50'
       )}
       onClick={onSelect}>
@@ -118,11 +126,11 @@ function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
               {customFields.map((field, idx) => (
                 <div key={field.key || idx} className={cn(
                   'p-2 rounded-lg border transition-all',
-                  field.visible ?? true ? 'bg-white border-navy-100' : 'bg-gray-50 border-gray-200 opacity-70'
+                  field.visible ?? true ? 'bg-white border-navy-100' : 'bg-gray-50 border-gray-200'
                 )}>
                   <div className="flex items-center gap-2 mb-1">
                     <input
-                      className="input-field text-xs flex-1"
+                      className={cn('input-field text-xs flex-1', !(field.visible ?? true) && 'line-through text-gray-400')}
                       value={field.label}
                       onChange={e => {
                         const newFields = [...customFields];
@@ -137,12 +145,16 @@ function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
                           const newFields = [...customFields];
                           newFields[idx] = { ...field, visible: !field.visible };
                           set('customFields', newFields);
+                          showToast(
+                            field.visible ?? true ? '字段已隐藏，A4预览中不会显示' : '字段已显示，A4预览同步更新',
+                            field.visible ?? true ? 'info' : 'success'
+                          );
                         }}
                         className={cn(
                           'p-1.5 rounded-lg transition-colors',
                           field.visible ?? true ? 'text-navy-500 hover:bg-navy-50 hover:text-navy-700' : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'
                         )}
-                        title={field.visible ?? true ? '点击隐藏此字段' : '点击显示此字段'}
+                        title={field.visible ?? true ? '点击隐藏此字段（A4预览不显示）' : '点击显示此字段（A4预览显示）'}
                       >
                         {field.visible ?? true ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                       </button>
@@ -159,7 +171,7 @@ function ModuleEditor({ module, onUpdate, onToggleVisibility }: {
                     </button>
                   </div>
                   <input
-                    className="input-field text-xs"
+                    className={cn('input-field text-xs', !(field.visible ?? true) && 'line-through text-gray-400')}
                     value={field.value}
                     onChange={e => {
                       const newFields = [...customFields];
@@ -458,6 +470,7 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
     if (m.type === 'custom') {
       const customFields = (f.customFields || []) as Array<{ key: string; label: string; value: string; visible: boolean }>;
       const visibleFields = customFields.filter(field => field.visible ?? true);
+      const hiddenFields = customFields.filter(field => !(field.visible ?? true));
       return (
         <div className={cls} onClick={() => onSelectModule(m.id)}>
           <div className="mb-4">
@@ -469,6 +482,17 @@ function A4Preview({ modules, theme, activeModuleId, onSelectModule }: {
                   <div key={field.key || idx} className="text-xs">
                     {field.label && <span className="font-semibold text-gray-700">{field.label}：</span>}
                     <span className="text-gray-600">{field.value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {hiddenFields.length > 0 && (
+              <div className="mt-2 pt-2 border-t border-dashed border-gray-200">
+                <p className="text-[10px] text-gray-400 mb-1">👁‍🗨 已隐藏字段（预览中不显示）：</p>
+                {hiddenFields.map((field, idx) => (
+                  <div key={field.key || idx} className="text-[10px] text-gray-400 line-through italic">
+                    {field.label && <span>{field.label}：</span>}
+                    <span>{field.value || '（空）'}</span>
                   </div>
                 ))}
               </div>
@@ -498,6 +522,7 @@ export default function Editor() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
+  const [overDragId, setOverDragId] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
   const [importFileName, setImportFileName] = useState<string | null>(null);
   const [showAtsWarning, setShowAtsWarning] = useState(false);
@@ -526,9 +551,15 @@ export default function Editor() {
     setActiveDragId(event.active.id);
   }, []);
 
+  const handleDragOver = useCallback((event: any) => {
+    const { over } = event;
+    setOverDragId(over?.id || null);
+  }, []);
+
   const handleDragEnd = useCallback((event: any) => {
     const { active, over } = event;
     setActiveDragId(null);
+    setOverDragId(null);
     if (over && active.id !== over.id) {
       reorderModules(active.id, over.id);
       addAuditLog('module.reorder', { resumeId: id, activeId: active.id, overId: over.id });
@@ -644,6 +675,24 @@ export default function Editor() {
     return count + basicLinks + projectLinks;
   }, 0);
 
+  const templateId = currentResume?.templateId;
+  const templateLabel = (() => {
+    if (templateId === 'blank') return '空白创建';
+    if (templateId === 'grad-sample') return '应届生样例';
+    if (templateId === 'tech-frontend') return '技术岗模板';
+    if (templateId === 'design-ui') return '设计岗模板';
+    if (templateId === 'function-admin') return '职能岗模板';
+    return '';
+  })();
+  const templateColor = (() => {
+    if (templateId === 'blank') return 'bg-gray-100 text-gray-600 border-gray-200';
+    if (templateId === 'grad-sample') return 'bg-gold-50 text-gold-600 border-gold-200';
+    if (templateId === 'tech-frontend') return 'bg-navy-50 text-navy-600 border-navy-200';
+    if (templateId === 'design-ui') return 'bg-emerald-50 text-emerald-600 border-emerald-200';
+    if (templateId === 'function-admin') return 'bg-purple-50 text-purple-600 border-purple-200';
+    return 'bg-gray-100 text-gray-600 border-gray-200';
+  })();
+
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Toast 通知 */}
@@ -662,7 +711,15 @@ export default function Editor() {
       )}
       <header className="bg-white border-b border-navy-100 shadow-sm flex-shrink-0">
         <div className="flex items-center gap-2 px-4 py-2">
-          <h1 className="text-sm font-semibold text-navy-700 mr-4 truncate max-w-[200px]">{currentResume?.title}</h1>
+          <h1 className="text-sm font-semibold text-navy-700 mr-1 truncate max-w-[200px]">{currentResume?.title}</h1>
+          {templateLabel && (
+            <span className={cn(
+              'text-[10px] px-2 py-0.5 rounded-full border font-medium flex-shrink-0',
+              templateColor
+            )}>
+              {templateLabel}
+            </span>
+          )}
           <button onClick={handleSave} disabled={saving || loading} className={cn('btn-primary text-xs px-3 py-1.5 flex items-center gap-1 disabled:opacity-50', saved && '!bg-emerald-500')}>
             {saved ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
             {saving ? '保存中...' : saved ? '已保存' : '保存'}
@@ -743,10 +800,10 @@ export default function Editor() {
             <h2 className="text-xs font-semibold text-navy-500 uppercase tracking-wider">模块列表</h2>
           </div>
           <div className="flex-1 overflow-y-auto p-3 space-y-2">
-            <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
+            <DndContext sensors={sensors} onDragStart={handleDragStart} onDragOver={handleDragOver} onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
               <SortableContext items={modules.map(m => m.id)} strategy={verticalListSortingStrategy}>
                 {modules.map(m => (
-                  <SortableItem key={m.id} module={m} active={m.id === activeModuleId}
+                  <SortableItem key={m.id} module={m} active={m.id === activeModuleId} isOver={m.id === overDragId}
                     onSelect={() => setActiveModuleId(m.id)}
                     onToggle={() => { updateModule(m.id, mod => ({ ...mod, visible: !mod.visible })); setSaved(false); }}
                     onDelete={() => {
@@ -807,7 +864,7 @@ export default function Editor() {
                   <label className="text-xs text-navy-400 mb-1.5 block">预设配色</label>
                   <div className="grid grid-cols-3 gap-2">
                     {COLOR_PRESETS.map((p, i) => (
-                      <button key={i} onClick={() => { updateTheme({ primaryColor: p.primary, secondaryColor: p.secondary }); setSaved(false); }}
+                      <button key={i} onClick={() => { updateTheme({ primaryColor: p.primary, secondaryColor: p.secondary }); setSaved(false); showToast(`已切换到「${p.name}」主题，A4预览已同步`, 'info'); }}
                         className={cn('flex items-center gap-1.5 p-2 rounded-lg border transition-all', theme.primaryColor === p.primary ? 'border-gold-500 bg-gold-50' : 'border-navy-100 hover:border-navy-200 bg-white')}>
                         <span className="w-4 h-4 rounded-full border border-white shadow-sm" style={{ backgroundColor: p.primary }} />
                         <span className="text-[11px] text-navy-600">{p.name}</span>

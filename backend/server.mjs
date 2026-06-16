@@ -93,6 +93,44 @@ const server = http.createServer((req, res) => {
     });
   }
 
+  if (req.method === 'GET' && requestUrl.pathname === '/api/search') {
+    const q = requestUrl.searchParams.get('q') || '';
+    return sendJson(res, 200, {
+      query: q,
+      matchMode: q ? 'keyword' : 'default',
+      results: [
+        { type: 'resume', title: '本地简历草稿', summary: '支持模板、ATS 检测、AI 诊断和加密本地存储' },
+        { type: 'template', title: '技术岗模板', summary: '覆盖项目经历、技能标签和岗位关键词' },
+        { type: 'admin', title: '本地后台概览', summary: '提供简历事件、存储状态和隐私模式审计' },
+      ],
+    });
+  }
+
+  if (req.method === 'GET' && requestUrl.pathname === '/api/products') {
+    return sendJson(res, 200, {
+      items: [
+        { id: 'tpl-tech', name: '技术岗简历模板', price: 0, category: 'resume-template' },
+        { id: 'ats-local', name: 'ATS 本地检测', price: 0, category: 'resume-tool' },
+      ],
+    });
+  }
+
+  if (req.method === 'GET' && requestUrl.pathname === '/api/orders') {
+    return sendJson(res, 200, {
+      items: [
+        { id: 'resume-order-local', status: 'completed', name: '本地简历导出记录', amount: 0 },
+      ],
+    });
+  }
+
+  if (req.method === 'GET' && requestUrl.pathname === '/api/cart') {
+    return sendJson(res, 200, {
+      id: 'local-resume-cart',
+      total: 0,
+      items: [{ id: 'tpl-tech', name: '技术岗简历模板', quantity: 1, price: 0 }],
+    });
+  }
+
   sendJson(res, 404, { error: '接口不存在', path: requestUrl.pathname });
 });
 

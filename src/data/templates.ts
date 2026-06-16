@@ -549,10 +549,10 @@ const functionTemplate: ResumeTemplate = {
   ]
 };
 
-const blankTemplate: ResumeTemplate = {
-  id: 'blank',
-  name: '应届生简历',
-  category: 'blank',
+const gradTemplate: ResumeTemplate = {
+  id: 'grad-sample',
+  name: '应届生样例',
+  category: 'sample',
   description: '面向应届生与职场新人的完整简历样例，直接编辑即可快速生成专业简历',
   theme: {
     primaryColor: '#1e3a5f',
@@ -690,6 +690,83 @@ const blankTemplate: ResumeTemplate = {
   ]
 };
 
-export const resumeTemplates: ResumeTemplate[] = [techTemplate, designTemplate, functionTemplate, blankTemplate];
-export { techTemplate, designTemplate, functionTemplate, blankTemplate };
+const blankTemplate: ResumeTemplate = {
+  id: 'blank',
+  name: '空白模板',
+  category: 'blank',
+  description: '从零开始创建你的简历，包含所有标准模块但无预设内容',
+  theme: {
+    primaryColor: '#1e3a5f',
+    secondaryColor: '#c9a24a',
+    fontFamily: 'LXGW WenKai',
+    fontSize: 14
+  },
+  modules: [
+    {
+      id: 'basic',
+      type: 'basic',
+      visible: true,
+      order: 0,
+      fields: {
+        name: '',
+        title: '',
+        phone: '',
+        email: '',
+        location: '',
+        website: '',
+        github: '',
+        portfolio: '',
+        avatar: ''
+      }
+    },
+    {
+      id: 'education',
+      type: 'education',
+      visible: true,
+      order: 1,
+      fields: {
+        items: []
+      }
+    },
+    {
+      id: 'experience',
+      type: 'experience',
+      visible: true,
+      order: 2,
+      fields: {
+        items: []
+      }
+    },
+    {
+      id: 'project',
+      type: 'project',
+      visible: true,
+      order: 3,
+      fields: {
+        items: []
+      }
+    },
+    {
+      id: 'skills',
+      type: 'skills',
+      visible: true,
+      order: 4,
+      fields: {
+        groups: []
+      }
+    },
+    {
+      id: 'selfEvaluation',
+      type: 'selfEvaluation',
+      visible: true,
+      order: 5,
+      fields: {
+        content: ''
+      }
+    }
+  ]
+};
+
+export const resumeTemplates: ResumeTemplate[] = [techTemplate, designTemplate, functionTemplate, gradTemplate, blankTemplate];
+export { techTemplate, designTemplate, functionTemplate, gradTemplate, blankTemplate };
 export default resumeTemplates;

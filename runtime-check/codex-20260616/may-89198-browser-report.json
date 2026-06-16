@@ -1,0 +1,1390 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-15T23:48:09.367Z",
+  "order": "may-89198",
+  "roundIndex": 99,
+  "captureId": "may-89198-codex-20260616",
+  "url": "http://127.0.0.1:49198/",
+  "initialUrl": "http://127.0.0.1:49198/",
+  "finalUrl": "http://127.0.0.1:49198/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-03-操作-创建简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-05-操作-新建.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-06-二层操作-新建-创建简历.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-07-导航-模板库.png"
+  ],
+  "issueTextPreview": "后台管理相关问题；个人中心/我的相关问题；简历工作台、管理后台、个人中心链路复验",
+  "targetReason": "个人中心/我的相关问题；后台管理相关问题",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49198/profile"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49198/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建简历",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:创建简历:创建简历",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:新建",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建:创建简历",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:模板库",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-20260616-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-01-首屏.png",
+          "elementCount": 269,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-20260616-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-02-导航-工作台.png",
+          "elementCount": 269,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建简历",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板创建简历选择起点和岗位方向选择起点空白创建所有模块为空，完全从零开始应届生样例含完整实习经历与项目样例，直接编辑行业语义模板技术岗突出项目指标与技术栈项目指标技术栈开源贡献设计岗强化作品集链接与设计工具作品集链接设计工具视觉规范职能岗侧重流程优化与项目成果流程优化供应商管理预算控制隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-20260616-structure-03-操作-创建简历",
+          "label": "操作:创建简历",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-03-操作-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-03-操作-创建简历.png",
+          "elementCount": 348,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板",
+            "空白创建 所有模块为空，完全从零开始",
+            "应届生样例 含完整实习经历与项目样例，直接编辑",
+            "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+            "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+            "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:创建简历->创建简历",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板创建简历选择起点和岗位方向选择起点空白创建所有模块为空，完全从零开始应届生样例含完整实习经历与项目样例，直接编辑行业语义模板技术岗突出项目指标与技术栈项目指标技术栈开源贡献设计岗强化作品集链接与设计工具作品集链接设计工具视觉规范职能岗侧重流程优化与项目成果流程优化供应商管理预算控制隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历",
+          "label": "二层操作:创建简历->创建简历",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历.png",
+          "elementCount": 348,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板",
+            "空白创建 所有模块为空，完全从零开始",
+            "应届生样例 含完整实习经历与项目样例，直接编辑",
+            "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+            "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+            "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板创建简历选择起点和岗位方向选择起点空白创建所有模块为空，完全从零开始应届生样例含完整实习经历与项目样例，直接编辑行业语义模板技术岗突出项目指标与技术栈项目指标技术栈开源贡献设计岗强化作品集链接与设计工具作品集链接设计工具视觉规范职能岗侧重流程优化与项目成果流程优化供应商管理预算控制隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-20260616-structure-05-操作-新建",
+          "label": "操作:新建",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-05-操作-新建.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-05-操作-新建.png",
+          "elementCount": 348,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板",
+            "空白创建 所有模块为空，完全从零开始",
+            "应届生样例 含完整实习经历与项目样例，直接编辑",
+            "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+            "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+            "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建->创建简历",
+        "url": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "headings": [
+          "智能简历工作台",
+          "开始创建你的简历",
+          "AI智能诊断",
+          "ATS兼容性检测",
+          "Word原生导出",
+          "AES加密存储",
+          "行业模板",
+          "技术岗",
+          "设计岗",
+          "职能岗",
+          "最近简历",
+          "还没有简历"
+        ],
+        "navLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台"
+        ],
+        "buttons": [
+          "模板库",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ],
+        "links": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智能简历工作台Resume Workbench工作台模板库个人中心管理后台设置工作台模板库个人中心管理后台已加密共 0 份简历模板库设置开始创建你的简历专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储创建简历使用行业模板AI智能诊断深度分析简历内容，提供专业优化建议，提升简历竞争力立即检测ATS兼容性检测智能检测简历与招聘系统的兼容性，提升通过率立即检测Word原生导出一键导出标准Word格式，排版完美还原，可直接投递格式保真AES加密存储银行级AES加密，数据仅保存在本地，隐私安全有保障前往设置行业模板技术岗技术岗专用，突出项目指标与技术栈，适合前端开发工程师项目指标技术栈标签开源贡献使用此模板设计岗设计岗专用，强化作品集链接与设计成果展示作品集链接设计工具视觉规范使用此模板职能岗职能岗专用，侧重流程优化与管理成果流程优化供应商管理预算控制使用此模板最近简历新建还没有简历创建你的第一份简历，开启求职之旅创建简历选择行业模板创建简历选择起点和岗位方向选择起点空白创建所有模块为空，完全从零开始应届生样例含完整实习经历与项目样例，直接编辑行业语义模板技术岗突出项目指标与技术栈项目指标技术栈开源贡献设计岗强化作品集链接与设计工具作品集链接设计工具视觉规范职能岗侧重流程优化与项目成果流程优化供应商管理预算控制隐私保护模式 · 数据仅存本地 · AES加密存储© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1746,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-20260616-structure-06-二层操作-新建-创建简历",
+          "label": "二层操作:新建->创建简历",
+          "finalUrl": "http://127.0.0.1:49198/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-06-二层操作-新建-创建简历.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-06-二层操作-新建-创建简历.png",
+          "elementCount": 348,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "模板库",
+            "个人中心",
+            "管理后台",
+            "设置",
+            "创建简历",
+            "使用行业模板",
+            "立即检测",
+            "前往设置",
+            "新建",
+            "选择行业模板",
+            "空白创建 所有模块为空，完全从零开始",
+            "应届生样例 含完整实习经历与项目样例，直接编辑",
+            "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+            "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+            "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+          ]
+        }
+      },
+      {
+        "label": "导航:模板库",
+        "url": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89198-codex-20260616-structure-07-导航-模板库",
+          "label": "导航:模板库",
+          "finalUrl": "http://127.0.0.1:49198/templates",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-07-导航-模板库.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-07-导航-模板库.png",
+          "elementCount": 8,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "模板库 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 模板库 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "模板库"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "创建简历",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "创建简历->创建简历",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "新建",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "新建->创建简历",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-01-首屏.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-02-导航-工作台.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-03-操作-创建简历",
+        "label": "操作:创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-03-操作-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-03-操作-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历",
+        "label": "二层操作:创建简历->创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-05-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-05-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-05-操作-新建.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-06-二层操作-新建-创建简历",
+        "label": "二层操作:新建->创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-06-二层操作-新建-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-06-二层操作-新建-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-07-导航-模板库",
+        "label": "导航:模板库",
+        "finalUrl": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-07-导航-模板库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-07-导航-模板库.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49198/",
+    "representativeScreenshotLabel": "智能简历工作台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-01-首屏.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-02-导航-工作台.png",
+        "elementCount": 269,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-03-操作-创建简历",
+        "label": "操作:创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-03-操作-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-03-操作-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历",
+        "label": "二层操作:创建简历->创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-04-二层操作-创建简历-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-05-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-05-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-05-操作-新建.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-06-二层操作-新建-创建简历",
+        "label": "二层操作:新建->创建简历",
+        "finalUrl": "http://127.0.0.1:49198/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-06-二层操作-新建-创建简历.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-06-二层操作-新建-创建简历.png",
+        "elementCount": 348,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "模板库",
+          "个人中心",
+          "管理后台",
+          "设置",
+          "创建简历",
+          "使用行业模板",
+          "立即检测",
+          "前往设置",
+          "新建",
+          "选择行业模板",
+          "空白创建 所有模块为空，完全从零开始",
+          "应届生样例 含完整实习经历与项目样例，直接编辑",
+          "技术岗 突出项目指标与技术栈 项目指标 技术栈 开源贡献",
+          "设计岗 强化作品集链接与设计工具 作品集链接 设计工具 视觉规范",
+          "职能岗 侧重流程优化与项目成果 流程优化 供应商管理 预算控制"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89198-codex-20260616-structure-07-导航-模板库",
+        "label": "导航:模板库",
+        "finalUrl": "http://127.0.0.1:49198/templates",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-07-导航-模板库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89198/runtime-check/codex-20260616/may-89198-codex-20260616-structure-07-导航-模板库.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1600,
+    "scrollWidth": 1696,
+    "scrollHeight": 1746
+  },
+  "initialBodyTextPreview": "智能简历工作台\n\nResume Workbench\n\n工作台\n模板库\n个人中心\n管理后台\n设置\n已加密\n共 0 份简历\n模板库\n设置\n开始创建你的简历\n\n专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储\n\n创建简历\n使用行业模板\nAI智能诊断\n\n深度分析简历内容，提供专业优化建议，提升简历竞争力\n\n立即检测\nATS兼容性检测\n\n智能检测简历与招聘系统的兼容性，提升通过率\n\n立即检测\nWord原生导出\n\n一键导出标准Word格式，排版完美还原，可直接投递\n\n格式保真\nAES加密存储\n\n银行级AES加密，数据仅保存在本地，隐私安全有保障\n\n前往设置\n行业模板\n技术岗\n\n技术岗专用，突出项目指标与技术栈，适合前端开发工程师\n\n项目指标\n技术栈标签\n开源贡献\n使用此模板\n设计岗\n\n设计岗专用，强化作品集链接与设计成果展示\n\n作品集链接\n设计工具\n视觉规范\n使用此模板\n职能岗\n\n职能岗专用，侧重流程优化与管理成果\n\n流程优化\n供应商管理\n预算控制\n使用此模板\n最近简历\n新建\n还没有简历\n\n创建你的第一份简历，开启求职之旅\n\n创建简历\n选择行业模板\n隐私保护模式 · 数据仅存本地 · AES加密存储\n\n© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+  "bodyTextPreview": "智能简历工作台\n\nResume Workbench\n\n工作台\n模板库\n个人中心\n管理后台\n设置\n已加密\n共 0 份简历\n模板库\n设置\n开始创建你的简历\n\n专业模板 · AI智能优化 · ATS兼容性检测 · 本地加密存储\n\n创建简历\n使用行业模板\nAI智能诊断\n\n深度分析简历内容，提供专业优化建议，提升简历竞争力\n\n立即检测\nATS兼容性检测\n\n智能检测简历与招聘系统的兼容性，提升通过率\n\n立即检测\nWord原生导出\n\n一键导出标准Word格式，排版完美还原，可直接投递\n\n格式保真\nAES加密存储\n\n银行级AES加密，数据仅保存在本地，隐私安全有保障\n\n前往设置\n行业模板\n技术岗\n\n技术岗专用，突出项目指标与技术栈，适合前端开发工程师\n\n项目指标\n技术栈标签\n开源贡献\n使用此模板\n设计岗\n\n设计岗专用，强化作品集链接与设计成果展示\n\n作品集链接\n设计工具\n视觉规范\n使用此模板\n职能岗\n\n职能岗专用，侧重流程优化与管理成果\n\n流程优化\n供应商管理\n预算控制\n使用此模板\n最近简历\n新建\n还没有简历\n\n创建你的第一份简历，开启求职之旅\n\n创建简历\n选择行业模板\n隐私保护模式 · 数据仅存本地 · AES加密存储\n\n© 2025 智能简历工作台 · 专注应届生与职场新人的职业表达优化",
+  "apiBase": "http://127.0.0.1:59198/api",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59198/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"service\":\"resume-workbench-backend\",\"frontendUrl\":\"http://127.0.0.1:49198\",\"database\":\"data/app.sqlite\",\"updatedAt\":\"2026-06-15 23:41:06\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59198/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":\"local-user\",\"name\":\"本地简历用户\",\"role\":\"user\",\"accountMode\":\"local-only\",\"privacyMode\":\"AES local encryption\",\"frontendUrl\":\"http://127.0.0.1:49198\",\"resumeEventCount\":0,\"capabilities\":[\"profile-overview\",\"local-resume-cache\",\"privacy-settings\"]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59198/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":\"local-user\",\"name\":\"本地简历用户\",\"role\":\"user\",\"accountMode\":\"local-only\",\"privacyMode\":\"AES local encryption\",\"frontendUrl\":\"http://127.0.0.1:49198\",\"resumeEventCount\":0,\"capabilities\":[\"profile-overview\",\"local-resume-cache\",\"privacy-settings\"]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59198/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":\"local-user\",\"name\":\"本地简历用户\",\"role\":\"user\",\"accountMode\":\"local-only\",\"privacyMode\":\"AES local encryption\",\"frontendUrl\":\"http://127.0.0.1:49198\",\"resumeEventCount\":0,\"capabilities\":[\"profile-overview\",\"local-resume-cache\",\"privacy-settings\"]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59198/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"service\":\"智能简历工作台\",\"module\":\"local-admin-summary\",\"totalResumeEvents\":0,\"storageStatus\":\"ok\",\"privacyMode\":\"local-only\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59198/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"service\":\"智能简历工作台\",\"module\":\"local-admin-summary\",\"totalResumeEvents\":0,\"storageStatus\":\"ok\",\"privacyMode\":\"local-only\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Profile.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Home.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Templates.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Diagnosis.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/AtsCheck.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Settings.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Editor.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Profile.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Home.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Templates.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Diagnosis.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/AtsCheck.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Settings.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Editor.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Home.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <Templates> component:\n\n    at Templates (http://127.0.0.1:49198/src/pages/Templates.tsx?t=1781567229162:54:43)\n    at RenderedRoute (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:6626:26)\n    at Routes (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:7561:3)\n    at main\n    at div\n    at Layout (http://127.0.0.1:49198/src/components/Layout.tsx?t=1781548015141:20:34)\n    at RenderedRoute (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:6626:26)\n    at Routes (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:7561:3)\n    at Router (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:7500:13)\n    at BrowserRouter (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:10787:3)\n    at App (http://127.0.0.1:49198/src/App.tsx?t=1781567194838:32:3)\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 14079,
+        "columnNumber": 30
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Home.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <Templates> component:\n\n    at Templates (http://127.0.0.1:49198/src/pages/Templates.tsx?t=1781567229162:54:43)\n    at RenderedRoute (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:6626:26)\n    at Routes (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:7561:3)\n    at main\n    at div\n    at Layout (http://127.0.0.1:49198/src/components/Layout.tsx?t=1781548015141:20:34)\n    at RenderedRoute (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:6626:26)\n    at Routes (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:7561:3)\n    at Router (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:7500:13)\n    at BrowserRouter (http://127.0.0.1:49198/node_modules/.vite/deps/react-router-dom.js?v=8e1f416e:10787:3)\n    at App (http://127.0.0.1:49198/src/App.tsx?t=1781567194838:32:3)\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 14079,
+        "columnNumber": 30
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49198/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49198/node_modules/.vite/deps/chunk-NXESFFTV.js?v=8e1f416e",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49198/src/pages/Home.tsx?t=1781567282286",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": []
+}

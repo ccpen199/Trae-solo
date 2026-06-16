@@ -66,7 +66,7 @@ export default function Templates() {
   const filteredTemplates =
     activeCategory === 'all'
       ? resumeTemplates
-      : resumeTemplates.filter((t) => t.category === activeCategory);
+      : resumeTemplates.filter((t) => t.category === activeCategory || (activeCategory === 'tech' && t.category === 'sample'));
 
   const handleUseTemplate = async (template: ResumeTemplate) => {
     const category =
