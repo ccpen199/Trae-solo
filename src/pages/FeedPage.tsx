@@ -35,6 +35,14 @@ const mockContentVideos = Array.from({ length: 20 }, (_, i) => ({
   likes: Math.floor(Math.random() * 5000) + 200,
   duration: `${Math.floor(Math.random() * 5) + 1}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
   category: ['舞蹈', '音乐', '运动', '绘画', '摄影', '烹饪', '编程', '语言'][i % 8],
+  collection: i % 4 === 0 ? {
+    name: ['街舞入门系列', '钢琴名曲集', '瑜伽晨练系列', '水彩基础课'][i % 4],
+    totalCount: 6 + (i % 5) * 3,
+  } : undefined,
+  price: i % 3 === 0 ? 0 : (i % 5 === 0 ? 29 + (i % 10) * 10 : undefined),
+  audited: i % 2 === 0,
+  creatorVerified: i % 3 === 0,
+  type: i % 5 === 0 ? 'course' : 'video',
 }));
 
 export default function FeedPage() {
@@ -287,8 +295,32 @@ export default function FeedPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <div className="sticky top-0 bg-white/80 backdrop-blur-lg z-40 border-b border-zinc-100">
+      <div className={cn(
+        'sticky top-0 backdrop-blur-lg z-40 border-b transition-colors duration-300',
+        activeTab === 'content'
+          ? 'bg-green-50/80 border-green-100'
+          : 'bg-purple-50/80 border-purple-100'
+      )}>
         <div className="container mx-auto px-4 py-4">
+          <div className={cn(
+            'mb-4 px-4 py-3 rounded-xl flex items-center gap-2',
+            activeTab === 'content'
+              ? 'bg-green-100/60 text-green-700'
+              : 'bg-purple-100/60 text-purple-700'
+          )}>
+            {activeTab === 'content' ? (
+              <>
+                <Zap className="w-5 h-5" />
+                <span className="text-sm font-medium">免费UGC内容 · 创作者自发分享</span>
+              </>
+            ) : (
+              <>
+                <ShieldCheck className="w-5 h-5" />
+                <span className="text-sm font-medium">平台审核·交易保障 · 优质系统课程</span>
+              </>
+            )}
+          </div>
+
           <div className="flex items-center gap-4 mb-4">
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
@@ -297,7 +329,7 @@ export default function FeedPage() {
                 placeholder={activeTab === 'courses' ? '搜索课程、创作者...' : '搜索视频、创作者...'}
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-full bg-zinc-100 border-2 border-transparent focus:border-primary-500 focus:bg-white outline-none transition-all"
+                className="w-full pl-12 pr-4 py-3 rounded-full bg-white/80 border-2 border-transparent focus:border-primary-500 focus:bg-white outline-none transition-all"
               />
             </div>
             <button
@@ -305,17 +337,17 @@ export default function FeedPage() {
                 'p-3 rounded-full transition-colors',
                 showPriceFilter && activeTab === 'courses'
                   ? 'bg-primary-500 text-white'
-                  : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                  : 'bg-white/80 text-zinc-600 hover:bg-white'
               )}
               onClick={() => setShowPriceFilter(!showPriceFilter)}
             >
               <Filter className="w-5 h-5" />
             </button>
-            <div className="flex items-center rounded-full bg-zinc-100 p-1">
+            <div className="flex items-center rounded-full bg-white/80 p-1">
               <button
                 className={cn(
                   'p-2 rounded-full transition-colors',
-                  viewMode === 'grid' ? 'bg-white shadow-sm' : 'hover:bg-zinc-200'
+                  viewMode === 'grid' ? 'bg-white shadow-sm' : 'hover:bg-white/60'
                 )}
                 onClick={() => setViewMode('grid')}
               >
@@ -324,7 +356,7 @@ export default function FeedPage() {
               <button
                 className={cn(
                   'p-2 rounded-full transition-colors',
-                  viewMode === 'list' ? 'bg-white shadow-sm' : 'hover:bg-zinc-200'
+                  viewMode === 'list' ? 'bg-white shadow-sm' : 'hover:bg-white/60'
                 )}
                 onClick={() => setViewMode('list')}
               >
@@ -334,14 +366,14 @@ export default function FeedPage() {
           </div>
 
           <div className="flex items-center gap-2 mb-3">
-            <div className="flex bg-zinc-100 rounded-2xl p-1">
+            <div className="flex bg-white/60 rounded-2xl p-1">
               <button
                 onClick={() => handleTabChange('content')}
                 className={cn(
                   'px-5 py-2 rounded-xl text-sm font-medium transition-all duration-300',
                   activeTab === 'content'
-                    ? 'bg-white text-primary-600 shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-700'
+                    ? 'bg-green-500 text-white shadow-md shadow-green-500/30'
+                    : 'text-zinc-500 hover:text-zinc-700 hover:bg-white/80'
                 )}
               >
                 <Play className="w-4 h-4 inline mr-1.5" />
@@ -352,27 +384,14 @@ export default function FeedPage() {
                 className={cn(
                   'px-5 py-2 rounded-xl text-sm font-medium transition-all duration-300',
                   activeTab === 'courses'
-                    ? 'bg-white text-primary-600 shadow-sm'
-                    : 'text-zinc-500 hover:text-zinc-700'
+                    ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30'
+                    : 'text-zinc-500 hover:text-zinc-700 hover:bg-white/80'
                 )}
               >
                 <Crown className="w-4 h-4 inline mr-1.5" />
                 课程市场
               </button>
             </div>
-
-            {activeTab === 'courses' && (
-              <div className="flex items-center gap-2 ml-2 text-xs text-zinc-500">
-                <ShieldCheck className="w-3.5 h-3.5 text-green-500" />
-                <span>平台审核·交易保障</span>
-              </div>
-            )}
-            {activeTab === 'content' && (
-              <div className="flex items-center gap-2 ml-2 text-xs text-zinc-500">
-                <Zap className="w-3.5 h-3.5 text-amber-500" />
-                <span>免费浏览·UGC内容</span>
-              </div>
-            )}
           </div>
 
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2">
@@ -382,8 +401,10 @@ export default function FeedPage() {
                 className={cn(
                   'whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-all',
                   activeCategory === cat
-                    ? 'bg-primary-500 text-white shadow-md shadow-primary-500/30'
-                    : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                    ? activeTab === 'content'
+                      ? 'bg-green-500 text-white shadow-md shadow-green-500/30'
+                      : 'bg-purple-500 text-white shadow-md shadow-purple-500/30'
+                    : 'bg-white/60 text-zinc-600 hover:bg-white/80'
                 )}
                 onClick={() => handleCategoryChange(cat)}
               >
@@ -393,7 +414,7 @@ export default function FeedPage() {
           </div>
 
           {showPriceFilter && activeTab === 'courses' && (
-            <div className="flex items-center gap-2 pt-3 border-t border-zinc-100 mt-2 animate-fade-in">
+            <div className="flex items-center gap-2 pt-3 border-t border-purple-100 mt-2 animate-fade-in">
               <span className="text-sm text-zinc-500 whitespace-nowrap">价格：</span>
               {priceOptions.map((opt) => (
                 <button
@@ -401,8 +422,8 @@ export default function FeedPage() {
                   className={cn(
                     'whitespace-nowrap px-3 py-1 rounded-full text-sm transition-all',
                     priceFilter === opt.value
-                      ? 'bg-accent-500 text-white'
-                      : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                      ? 'bg-purple-500 text-white'
+                      : 'bg-white/60 text-zinc-600 hover:bg-white/80'
                   )}
                   onClick={() => setPriceFilter(opt.value)}
                 >
@@ -423,7 +444,7 @@ export default function FeedPage() {
               <>
                 <div
                   className={cn(
-                    'grid gap-6 animate-fade-in-up',
+                    'grid gap-4 animate-fade-in-up',
                     viewMode === 'grid'
                       ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
                       : 'grid-cols-1 max-w-3xl mx-auto'

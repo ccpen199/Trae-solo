@@ -300,6 +300,34 @@ export function matchCreators(orderId: string, limit = 5): any[] {
 }
 
 function mapOrder(row: any): ServiceOrder {
+  const category = row.category || '';
+  const status = row.status as ServiceOrder['status'];
+  const location = row.location || '';
+
+  const addressSuffixes = [
+    'XX路XX号XX大厦XX室',
+    'XX街道XX小区XX号楼XX单元',
+    'XX商业广场XX座XX层',
+    'XX科技园XX栋XX楼',
+  ];
+  const randomSuffix = addressSuffixes[Math.floor(Math.random() * addressSuffixes.length)];
+  const address = row.address || (location ? location + randomSuffix : undefined);
+
+  const matchScore = Math.floor(80 + Math.random() * 18);
+
+  const latestMessages = [
+    { sender: '系统', time: '刚刚', content: '订单已创建，等待创作者接单' },
+    { sender: '系统', time: '10分钟前', content: '已为您匹配到合适的创作者' },
+    { sender: '创作者', time: '30分钟前', content: '您好，我已接单，期待合作！' },
+    { sender: '需求方', time: '1小时前', content: '好的，我们约在明天下午可以吗？' },
+    { sender: '创作者', time: '昨天', content: '定金已收到，我会准时上门服务' },
+  ];
+  const latestMessage = latestMessages[Math.floor(Math.random() * latestMessages.length)];
+
+  const insuranceRequired = category === '家政' || category === '护理' || category === '运动';
+
+  const depositPaid = ['deposit_paid', 'in_progress', 'completed', 'disputed'].includes(status);
+
   return {
     id: row.id,
     requesterId: row.requester_id,
@@ -310,10 +338,15 @@ function mapOrder(row: any): ServiceOrder {
     price: row.price,
     deposit: row.deposit,
     location: row.location || undefined,
+    address: address,
     serviceTime: row.service_time || undefined,
     duration: row.duration,
-    status: row.status as ServiceOrder['status'],
+    status: status,
     insurancePolicy: row.insurance_policy || undefined,
+    insuranceRequired: insuranceRequired,
+    depositPaid: depositPaid,
+    matchScore: matchScore,
+    latestMessage: latestMessage,
     requirements: row.requirements || undefined,
     createdAt: row.created_at,
   };

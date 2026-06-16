@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Shield, Star, Clock, Scale, FileCheck, Wallet, ArrowRight, CheckCircle,
   AlertTriangle, Users, Zap, Award, Headphones, ThumbsUp, ThumbsDown,
   MapPin, Phone, FileText, User, BadgeCheck, Home, Stethoscope,
   TrendingUp, AlertCircle, CheckSquare, ChevronDown, MessageSquare,
-  Receipt, PiggyBank, Landmark, Eye, UserCheck
+  Receipt, PiggyBank, Landmark, Eye, UserCheck, Search, FileText as FileTextIcon,
+  Gavel, Calculator, StarHalf
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -12,6 +14,7 @@ import { cn } from '../lib/utils';
 const guaranteeSections = [
   {
     id: 'credit',
+    tabId: 'reviews',
     icon: Star,
     title: '双向信用评价体系',
     desc: '基于真实交易的评价机制，建立可信的技能服务生态',
@@ -28,6 +31,7 @@ const guaranteeSections = [
   },
   {
     id: 'trace',
+    tabId: 'trace',
     icon: Clock,
     title: '服务过程留痕',
     desc: '全流程记录可追溯，保障双方权益',
@@ -44,6 +48,7 @@ const guaranteeSections = [
   },
   {
     id: 'arbitration',
+    tabId: 'disputes',
     icon: Scale,
     title: '争议仲裁机制',
     desc: '专业仲裁团队介入，公平公正处理纠纷',
@@ -60,8 +65,9 @@ const guaranteeSections = [
   },
   {
     id: 'insurance',
+    tabId: 'insurance',
     icon: Shield,
-    title: '保险对接接口',
+    title: '家政投保保障',
     desc: '家政类服务强制投保，全方位保障服务安全',
     color: 'from-green-400 to-green-600',
     bgColor: 'bg-green-50',
@@ -76,6 +82,7 @@ const guaranteeSections = [
   },
   {
     id: 'settlement',
+    tabId: 'settlement',
     icon: Wallet,
     title: '资金分账结算',
     desc: '平台资金托管，服务完成后自动分账',
@@ -92,8 +99,9 @@ const guaranteeSections = [
   },
   {
     id: 'review',
+    tabId: 'reviews',
     icon: FileCheck,
-    title: '内容合规审核',
+    title: '保险保障体系',
     desc: '严格的内容审核机制，保障平台生态健康',
     color: 'from-primary-400 to-primary-600',
     bgColor: 'bg-primary-50',
@@ -336,9 +344,39 @@ const faqItems = [
 ];
 
 export default function GuaranteeCenter() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [activeSection, setActiveSection] = useState('credit');
   const [activeBusinessTab, setActiveBusinessTab] = useState('reviews');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const businessSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get('tab');
+    if (tab && ['reviews', 'trace', 'disputes', 'insurance', 'settlement'].includes(tab)) {
+      setActiveBusinessTab(tab);
+      setTimeout(() => {
+        businessSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [location.search]);
+
+  const handleSectionClick = (section: any) => {
+    setActiveSection(section.id);
+    if (section.tabId) {
+      setActiveBusinessTab(section.tabId);
+      businessSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const quickEntries = [
+    { icon: Shield, label: '我的保单', tab: 'insurance', color: 'text-green-600', bg: 'bg-green-50' },
+    { icon: Gavel, label: '待处理仲裁', tab: 'disputes', color: 'text-red-600', bg: 'bg-red-50' },
+    { icon: Calculator, label: '结算记录', tab: 'settlement', color: 'text-purple-600', bg: 'bg-purple-50' },
+    { icon: StarHalf, label: '评价管理', tab: 'reviews', color: 'text-amber-600', bg: 'bg-amber-50' },
+  ];
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -358,7 +396,7 @@ export default function GuaranteeCenter() {
             <p className="text-xl text-white/80 mb-8">
               六大保障体系，让技能交易更安心
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4 mb-10">
               {['信用评价', '服务留痕', '争议仲裁', '保险保障', '资金托管', '合规审核'].map((item, i) => (
                 <div
                   key={i}
@@ -367,6 +405,35 @@ export default function GuaranteeCenter() {
                   <CheckCircle className="w-4 h-4 text-green-300" />
                   {item}
                 </div>
+              ))}
+            </div>
+
+            <div className="max-w-2xl mx-auto mb-8">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+                <input
+                  type="text"
+                  placeholder="搜索保单号、订单号、仲裁记录..."
+                  value={searchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3.5 bg-white/95 backdrop-blur rounded-2xl text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-lg"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-3">
+              {quickEntries.map((entry, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setActiveBusinessTab(entry.tab);
+                    businessSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
+                  className="px-5 py-2.5 bg-white/15 backdrop-blur hover:bg-white/25 rounded-xl text-sm text-white flex items-center gap-2 transition-all hover:-translate-y-0.5"
+                >
+                  <entry.icon className="w-4 h-4" />
+                  {entry.label}
+                </button>
               ))}
             </div>
           </div>
@@ -379,18 +446,18 @@ export default function GuaranteeCenter() {
             {guaranteeSections.map((section, index) => (
               <div
                 key={section.id}
-                className={`card p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
+                className={`card p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 group ${
                   activeSection === section.id ? 'ring-2 ring-primary-500' : ''
                 }`}
                 style={{ animationDelay: `${index * 0.1}s` }}
-                onClick={() => setActiveSection(section.id)}
+                onClick={() => handleSectionClick(section)}
               >
-                <div className={`w-12 h-12 rounded-2xl ${section.iconBg} flex items-center justify-center mb-4`}>
+                <div className={`w-12 h-12 rounded-2xl ${section.iconBg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <section.icon className={`w-6 h-6 ${section.iconColor}`} />
                 </div>
                 <h3 className="text-xl font-semibold text-zinc-900 mb-2">{section.title}</h3>
                 <p className="text-zinc-500 mb-4">{section.desc}</p>
-                <ul className="space-y-2">
+                <ul className="space-y-2 mb-5">
                   {section.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-zinc-600">
                       <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
@@ -398,13 +465,19 @@ export default function GuaranteeCenter() {
                     </li>
                   ))}
                 </ul>
+                <div className="flex items-center justify-end pt-3 border-t border-zinc-100">
+                  <span className="text-sm text-primary-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                    立即查看
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section ref={businessSectionRef} className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <BadgeCheck className="w-10 h-10 text-primary-500 mx-auto mb-4" />
@@ -437,7 +510,7 @@ export default function GuaranteeCenter() {
               {activeBusinessTab === 'reviews' && (
                 <div className="space-y-4">
                   {reviewSamples.map((review, index) => (
-                    <div key={review.id} className="card p-5 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <div key={review.id} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${index * 0.1}s` }}>
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-medium">
@@ -465,7 +538,7 @@ export default function GuaranteeCenter() {
                         </div>
                       </div>
                       <div className="text-sm text-zinc-600 mb-3">{review.content}</div>
-                      <div className="flex flex-wrap gap-2 mb-3">
+                      <div className="flex flex-wrap gap-2 mb-4">
                         {review.tags.map((tag, i) => (
                           <span key={i} className="px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded-full">
                             {tag}
@@ -473,7 +546,7 @@ export default function GuaranteeCenter() {
                         ))}
                       </div>
                       {review.reply && (
-                        <div className="pl-4 border-l-2 border-primary-200 bg-primary-50/50 p-3 rounded-r-xl">
+                        <div className="pl-4 border-l-2 border-primary-200 bg-primary-50/50 p-3 rounded-r-xl mb-4">
                           <div className="text-xs text-primary-600 font-medium mb-1 flex items-center gap-1">
                             <UserCheck className="w-3 h-3" />
                             {review.toUser} 回复
@@ -481,45 +554,85 @@ export default function GuaranteeCenter() {
                           <p className="text-sm text-zinc-600">{review.reply}</p>
                         </div>
                       )}
+                      <div className="flex items-center justify-end pt-3 border-t border-zinc-100">
+                        <button
+                          onClick={() => navigate(`/order/${review.orderNo}`)}
+                          className="text-sm text-primary-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
+                        >
+                          查看详情
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   ))}
+                  <div className="text-center pt-4">
+                    <button className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
+                      查看全部
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               )}
 
               {activeBusinessTab === 'trace' && (
-                <div className="card p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <h3 className="font-semibold text-zinc-900">订单: ORD202406010001</h3>
-                      <p className="text-sm text-zinc-500">上门爵士舞基础 · 2课时</p>
-                    </div>
-                    <span className="px-3 py-1 bg-green-100 text-green-600 text-xs rounded-full font-medium">
-                      服务完成
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute left-5 top-2 bottom-2 w-0.5 bg-zinc-200" />
-                    <div className="space-y-5">
-                      {serviceTraceSteps.map((step, index) => (
-                        <div key={index} className="relative flex gap-4">
-                          <div className={cn(
-                            'w-10 h-10 rounded-full flex items-center justify-center z-10 flex-shrink-0',
-                            step.status === 'done' ? 'bg-green-500 text-white' :
-                            step.status === 'current' ? 'bg-primary-500 text-white animate-pulse' :
-                            'bg-zinc-200 text-zinc-500'
-                          )}>
-                            <step.icon className="w-5 h-5" />
-                          </div>
-                          <div className="flex-1 pb-1">
-                            <div className="flex items-center justify-between">
-                              <span className="font-medium text-zinc-900">{step.title}</span>
-                              <span className="text-xs text-zinc-400">{step.time}</span>
-                            </div>
-                            <p className="text-sm text-zinc-500 mt-1">{step.desc}</p>
-                          </div>
+                <div className="space-y-4">
+                  {[
+                    { orderNo: 'ORD202406010001', service: '上门爵士舞基础 · 2课时', status: 'completed', statusText: '服务完成' },
+                    { orderNo: 'ORD202405280015', service: '家政保洁服务 · 日常保洁', status: 'completed', statusText: '服务完成' },
+                    { orderNo: 'ORD202405200032', service: '吉他入门教学 · 1对1', status: 'in_progress', statusText: '服务进行中' },
+                  ].map((order, orderIndex) => (
+                    <div key={order.orderNo} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${orderIndex * 0.1}s` }}>
+                      <div className="flex items-center justify-between mb-5">
+                        <div>
+                          <h3 className="font-semibold text-zinc-900">订单: {order.orderNo}</h3>
+                          <p className="text-sm text-zinc-500">{order.service}</p>
                         </div>
-                      ))}
+                        <span className={cn(
+                          'px-3 py-1 text-xs rounded-full font-medium',
+                          order.status === 'completed' ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'
+                        )}>
+                          {order.statusText}
+                        </span>
+                      </div>
+                      <div className="relative mb-4">
+                        <div className="absolute left-5 top-2 bottom-2 w-0.5 bg-zinc-200" />
+                        <div className="space-y-4">
+                          {serviceTraceSteps.slice(0, 4).map((step, index) => (
+                            <div key={index} className="relative flex gap-4">
+                              <div className={cn(
+                                'w-8 h-8 rounded-full flex items-center justify-center z-10 flex-shrink-0',
+                                step.status === 'done' || step.status === 'current' ? 'bg-green-500 text-white' :
+                                'bg-zinc-200 text-zinc-500'
+                              )}>
+                                <step.icon className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1 pb-0.5">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm font-medium text-zinc-900">{step.title}</span>
+                                  <span className="text-xs text-zinc-400">{step.time}</span>
+                                </div>
+                                <p className="text-xs text-zinc-500 mt-0.5 truncate">{step.desc}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-end pt-3 border-t border-zinc-100">
+                        <button
+                          onClick={() => navigate(`/order/${order.orderNo}`)}
+                          className="text-sm text-primary-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
+                        >
+                          查看详情
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
+                  ))}
+                  <div className="text-center pt-4">
+                    <button className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
+                      查看全部
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               )}
@@ -527,7 +640,7 @@ export default function GuaranteeCenter() {
               {activeBusinessTab === 'disputes' && (
                 <div className="space-y-4">
                   {disputeCases.map((dispute, index) => (
-                    <div key={dispute.id} className="card p-5 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <div key={dispute.id} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${index * 0.1}s` }}>
                       <div className="flex items-start justify-between mb-4">
                         <div>
                           <div className="font-semibold text-zinc-900 mb-1">{dispute.title}</div>
@@ -560,7 +673,7 @@ export default function GuaranteeCenter() {
                           />
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="grid grid-cols-2 gap-4 text-sm mb-4">
                         <div className="flex items-center gap-2">
                           <AlertCircle className="w-4 h-4 text-zinc-400" />
                           <span className="text-zinc-500">当前:</span>
@@ -572,8 +685,23 @@ export default function GuaranteeCenter() {
                           <span className="text-zinc-700 truncate">{dispute.nextStep}</span>
                         </div>
                       </div>
+                      <div className="flex items-center justify-end pt-3 border-t border-zinc-100">
+                        <button
+                          onClick={() => navigate(`/order/${dispute.orderNo}`)}
+                          className="text-sm text-primary-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
+                        >
+                          查看详情
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   ))}
+                  <div className="text-center pt-4">
+                    <button className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
+                      查看全部
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -589,7 +717,7 @@ export default function GuaranteeCenter() {
                     </div>
                   </div>
                   {insuranceRecords.map((record, index) => (
-                    <div key={record.id} className="card p-5 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <div key={record.id} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${index * 0.1}s` }}>
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <div className={cn(
@@ -618,7 +746,7 @@ export default function GuaranteeCenter() {
                            record.status === 'claimed' ? '已理赔' : '已过期'}
                         </span>
                       </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
                         <div>
                           <div className="text-zinc-400 text-xs mb-1">服务项目</div>
                           <div className="text-zinc-700 font-medium">{record.service}</div>
@@ -637,7 +765,7 @@ export default function GuaranteeCenter() {
                         </div>
                       </div>
                       {record.claimDesc && (
-                        <div className="mt-4 pt-4 border-t border-zinc-100">
+                        <div className="mb-4 pt-4 border-t border-zinc-100">
                           <div className="text-xs text-red-600 font-medium mb-1 flex items-center gap-1">
                             <AlertTriangle className="w-3.5 h-3.5" />
                             理赔记录
@@ -645,8 +773,23 @@ export default function GuaranteeCenter() {
                           <p className="text-sm text-zinc-600">{record.claimDesc}</p>
                         </div>
                       )}
+                      <div className="flex items-center justify-end pt-3 border-t border-zinc-100">
+                        <button
+                          onClick={() => navigate(`/order/${record.orderNo}`)}
+                          className="text-sm text-primary-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
+                        >
+                          查看详情
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   ))}
+                  <div className="text-center pt-4">
+                    <button className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
+                      查看全部
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -667,7 +810,7 @@ export default function GuaranteeCenter() {
                     </div>
                   </div>
                   {settlementRecords.map((record, index) => (
-                    <div key={record.id} className="card p-5 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <div key={record.id} className="card p-5 animate-fade-in-up group hover:shadow-md transition-all" style={{ animationDelay: `${index * 0.1}s` }}>
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <div className={cn(
@@ -696,7 +839,7 @@ export default function GuaranteeCenter() {
                            record.status === 'pending' ? '待结算' : '冻结中'}
                         </span>
                       </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
                         <div>
                           <div className="text-zinc-400 text-xs mb-1">订单金额</div>
                           <div className="text-zinc-700 font-medium">¥{record.orderAmount}</div>
@@ -714,14 +857,29 @@ export default function GuaranteeCenter() {
                           <div className="text-zinc-700 font-mono text-xs">{record.txnId}</div>
                         </div>
                       </div>
-                      <div className="mt-3 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs">
+                      <div className="flex items-center justify-between text-xs mb-4">
                         <span className="text-zinc-400">
                           {record.status === 'settled' ? '结算时间' : '预计结算'}
                         </span>
                         <span className="text-zinc-600">{record.settleTime}</span>
                       </div>
+                      <div className="flex items-center justify-end pt-3 border-t border-zinc-100">
+                        <button
+                          onClick={() => navigate('/workspace/finance')}
+                          className="text-sm text-primary-600 font-medium flex items-center gap-1 group-hover:gap-2 transition-all"
+                        >
+                          查看详情
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   ))}
+                  <div className="text-center pt-4">
+                    <button className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm">
+                      查看全部
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

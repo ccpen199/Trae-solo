@@ -162,7 +162,7 @@ const Navbar = () => {
                 <span className="text-white font-bold font-display text-lg">S</span>
               </div>
               <span className="font-display text-xl font-bold text-zinc-900 hidden sm:block">
-                SkillHub
+                SkillVerse
               </span>
             </NavLink>
 

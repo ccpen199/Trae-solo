@@ -67,6 +67,14 @@ export interface ServiceOrder {
   checkOutTime?: string;
   actualDuration?: number;
   gpsDistance?: number;
+  address?: string;
+  matchScore?: number;
+  latestMessage?: {
+    sender: string;
+    time: string;
+    content: string;
+  };
+  depositPaid?: boolean;
   createdAt: string;
 }
 

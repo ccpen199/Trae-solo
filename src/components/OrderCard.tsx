@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Clock, User, Shield, AlertTriangle, CheckCircle, PlayCircle, DollarSign, Handshake } from 'lucide-react';
+import { MapPin, Clock, User, Shield, AlertTriangle, CheckCircle, PlayCircle, DollarSign, Handshake, MessageCircle, Target } from 'lucide-react';
 import type { ServiceOrder } from '../../shared/types';
 import { cn } from '../lib/utils';
 import StatusBadge from './StatusBadge';
@@ -24,6 +24,28 @@ interface OrderCardProps {
 
 const OrderCard = ({ order, variant = 'default', showActions = true, userRole, loadingAction, onAccept, onPayDeposit, onStart, onComplete, onDispute, className }: OrderCardProps) => {
   const navigate = useNavigate();
+
+  const matchScore = order.matchScore ?? Math.floor(70 + Math.random() * 25);
+
+  const getMatchScoreColor = (score: number) => {
+    if (score >= 90) return 'text-green-600';
+    if (score >= 70) return 'text-amber-500';
+    return 'text-red-500';
+  };
+
+  const getDepositStep = () => {
+    if (['completed'].includes(order.status)) return 3;
+    if (order.status === 'in_progress') return 2;
+    if (order.status === 'deposit_paid') return 1;
+    return 0;
+  };
+
+  const depositStep = getDepositStep();
+  const depositSteps = [
+    { label: '已支付定金' },
+    { label: '服务中' },
+    { label: '待结算' },
+  ];
 
   const isTerminalStatus = ['completed', 'cancelled', 'disputed'].includes(order.status);
   const canAccept = userRole === 'creator' && order.status === 'published';
@@ -106,6 +128,49 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
             <div className="text-xs text-zinc-500 mt-1">
               定金 ¥{order.deposit}
             </div>
+            <div className="mt-3">
+              <div className="flex items-center justify-between mb-1">
+                {depositSteps.map((step, idx) => (
+                  <span
+                    key={idx}
+                    className={cn(
+                      'text-[10px]',
+                      idx < depositStep ? 'text-green-600' :
+                      idx === depositStep ? 'text-primary-600 font-medium' :
+                      'text-zinc-400'
+                    )}
+                  >
+                    {step.label}
+                  </span>
+                ))}
+              </div>
+              <div className="flex items-center gap-0">
+                {depositSteps.map((_, idx) => (
+                  <div key={idx} className="flex items-center flex-1">
+                    <div
+                      className={cn(
+                        'w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold border-2 transition-colors',
+                        idx < depositStep
+                          ? 'bg-green-500 border-green-500 text-white'
+                          : idx === depositStep
+                          ? 'bg-primary-500 border-primary-500 text-white'
+                          : 'bg-white border-zinc-300 text-zinc-400'
+                      )}
+                    >
+                      {idx < depositStep ? '✓' : idx + 1}
+                    </div>
+                    {idx < depositSteps.length - 1 && (
+                      <div
+                        className={cn(
+                          'flex-1 h-0.5 mx-1',
+                          idx < depositStep ? 'bg-green-500' : 'bg-zinc-200'
+                        )}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -126,6 +191,22 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
             <span className="text-xs">预计 {order.duration} 天</span>
           </div>
         </div>
+
+        {order.address && (
+          <div className="flex items-center gap-1.5 text-sm text-zinc-500 mb-3">
+            <MapPin className="w-4 h-4 flex-shrink-0" />
+            <span className="truncate">{order.address}</span>
+          </div>
+        )}
+
+        {order.latestMessage && (
+          <div className="flex items-center gap-1.5 text-sm text-zinc-500 mb-4 bg-zinc-50 rounded-lg px-3 py-2">
+            <MessageCircle className="w-4 h-4 flex-shrink-0 text-primary-500" />
+            <span className="truncate">
+              最新沟通: {order.latestMessage.sender} {order.latestMessage.time} {order.latestMessage.content}
+            </span>
+          </div>
+        )}
 
         {order.requester && (
           <div className="flex items-center justify-between py-3 border-t border-zinc-100">
@@ -153,6 +234,45 @@ const OrderCard = ({ order, variant = 'default', showActions = true, userRole, l
             <div className="flex items-center gap-1 text-xs text-green-600">
               <Shield className="w-3.5 h-3.5" />
               <span>平台保障</span>
+            </div>
+          </div>
+        )}
+
+        {order.creator && (
+          <div className="flex items-center justify-between py-3 border-t border-zinc-100">
+            <div className="flex items-center gap-3">
+              {order.creator.avatar ? (
+                <img
+                  src={order.creator.avatar}
+                  alt={order.creator.username}
+                  className="w-7 h-7 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-7 h-7 rounded-full bg-accent-100 flex items-center justify-center">
+                  <User className="w-3.5 h-3.5 text-accent-600" />
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-zinc-900">
+                  {order.creator.username}
+                </span>
+                <span className="text-xs text-amber-500">
+                  ★ {order.creator.rating?.toFixed(1) ?? '5.0'}
+                </span>
+              </div>
+            </div>
+            <div className={cn('flex items-center gap-1 text-xs font-medium', getMatchScoreColor(matchScore))}>
+              <Target className="w-3.5 h-3.5" />
+              <span>匹配度 {matchScore}%</span>
+            </div>
+          </div>
+        )}
+
+        {!order.creator && (
+          <div className="flex items-center justify-end py-3 border-t border-zinc-100">
+            <div className={cn('flex items-center gap-1 text-xs font-medium', getMatchScoreColor(matchScore))}>
+              <Target className="w-3.5 h-3.5" />
+              <span>匹配度 {matchScore}%</span>
             </div>
           </div>
         )}

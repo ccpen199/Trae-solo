@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Eye, EyeOff, User, Lock, UserPlus, LogIn, Sparkles, Video, Briefcase, Shield, Crown, Zap, Palette, Code, Star } from 'lucide-react';
+import { Eye, EyeOff, User, Lock, UserPlus, LogIn, Sparkles, Video, Briefcase, Shield, Crown, Zap, Palette, Code } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { cn } from '../lib/utils';
 import Button from '../components/Button';
@@ -35,6 +35,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isAnimating, setIsAnimating] = useState(false);
+  const [quickLoginLoading, setQuickLoginLoading] = useState<string | null>(null);
 
   const from = (location.state as { from?: { pathname?: string } })?.from?.pathname || '';
   const registerTab = new URLSearchParams(location.search).get('tab') === 'register';
@@ -126,46 +127,55 @@ export default function Login() {
     {
       value: 'user' as RoleType,
       label: '学习者',
-      desc: '学习课程、购买服务',
+      desc: '学习课程、提升技能',
       icon: User,
       color: 'text-blue-500',
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-500',
+      ringColor: 'ring-blue-500/30',
+      suitableFor: ['想学习新技能的职场人', '兴趣爱好者', '学生群体'],
     },
     {
       value: 'creator' as RoleType,
       label: '创作者',
-      desc: '发布课程、提供服务',
+      desc: '发布课程、变现技能',
       icon: Crown,
-      color: 'text-primary-500',
-      bgColor: 'bg-primary-50',
-      borderColor: 'border-primary-500',
+      color: 'text-purple-500',
+      bgColor: 'bg-purple-50',
+      borderColor: 'border-purple-500',
+      ringColor: 'ring-purple-500/30',
+      suitableFor: ['有专业技能的达人', '知识付费创作者', '行业专家讲师'],
     },
     {
       value: 'requester' as RoleType,
       label: '需求方',
-      desc: '发布定制需求、购买服务',
+      desc: '发布需求、定制服务',
       icon: Briefcase,
       color: 'text-orange-500',
       bgColor: 'bg-orange-50',
       borderColor: 'border-orange-500',
+      ringColor: 'ring-orange-500/30',
+      suitableFor: ['企业采购方', '项目团队', '有定制需求的个人'],
     },
   ];
 
   const quickLoginAccounts = [
-    { label: '管理员', username: 'admin', password: '123456', role: '管理员' },
-    { label: '创作者', username: '林舞蹈家', password: '123456', role: '创作者' },
-    { label: '需求方', username: '需求方小王', password: '123456', role: '需求方' },
-    { label: '学习者', username: '用户1', password: '123456', role: '普通用户' },
+    { label: '管理员', username: 'admin', password: '123456', role: '管理员', icon: Shield, color: 'text-red-500', bgColor: 'bg-red-50' },
+    { label: '创作者', username: '林舞蹈家', password: '123456', role: '创作者', icon: Crown, color: 'text-purple-500', bgColor: 'bg-purple-50' },
+    { label: '需求方', username: '需求方小王', password: '123456', role: '需求方', icon: Briefcase, color: 'text-orange-500', bgColor: 'bg-orange-50' },
+    { label: '学习者', username: '用户1', password: '123456', role: '学习者', icon: User, color: 'text-blue-500', bgColor: 'bg-blue-50' },
   ];
 
   const handleQuickLogin = async (user: typeof quickLoginAccounts[0]) => {
     setUsername(user.username);
     setPassword(user.password);
+    setQuickLoginLoading(user.username);
     try {
       await login(user.username, user.password);
     } catch {
       // handled in store
+    } finally {
+      setQuickLoginLoading(null);
     }
   };
 
@@ -279,36 +289,57 @@ export default function Login() {
             {activeTab === 'register' && (
               <div className="mb-6 animate-fade-in">
                 <label className="block text-sm font-medium text-zinc-700 mb-3">
-                  选择身份
+                  选择你的身份
                 </label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {roleOptions.map((opt) => (
                     <button
                       key={opt.value}
                       type="button"
                       onClick={() => setRole(opt.value)}
                       className={cn(
-                        'p-4 rounded-xl border-2 transition-all duration-200 text-left',
+                        'p-4 rounded-xl border-2 transition-all duration-200 text-left relative',
                         role === opt.value
-                          ? `${opt.borderColor} ${opt.bgColor}`
-                          : 'border-zinc-200 hover:border-zinc-300'
+                          ? `${opt.borderColor} ${opt.bgColor} ring-2 ${opt.ringColor} sm:scale-[1.02] shadow-md`
+                          : 'border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50'
                       )}
                     >
-                      <opt.icon
-                        className={cn(
-                          'w-6 h-6 mb-2',
-                          role === opt.value ? opt.color : 'text-zinc-400'
-                        )}
-                      />
+                      {role === opt.value && (
+                        <div className={cn('absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center', opt.bgColor)}>
+                          <svg className={cn('w-3 h-3', opt.color)} fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      )}
+                      <div className={cn(
+                        'w-10 h-10 rounded-xl flex items-center justify-center mb-3',
+                        role === opt.value ? opt.bgColor : 'bg-zinc-100'
+                      )}>
+                        <opt.icon
+                          className={cn(
+                            'w-5 h-5',
+                            role === opt.value ? opt.color : 'text-zinc-400'
+                          )}
+                        />
+                      </div>
                       <div
                         className={cn(
-                          'font-medium',
-                          role === opt.value ? 'text-primary-700' : 'text-zinc-700'
+                          'font-semibold text-base',
+                          role === opt.value ? opt.color : 'text-zinc-700'
                         )}
                       >
                         {opt.label}
                       </div>
-                      <div className="text-xs text-zinc-500 mt-1">{opt.desc}</div>
+                      <div className="text-xs text-zinc-500 mt-1 mb-3">{opt.desc}</div>
+                      <div className="space-y-1.5">
+                        <div className="text-xs font-medium text-zinc-500">适合人群</div>
+                        {opt.suitableFor.map((item, i) => (
+                          <div key={i} className="flex items-center gap-1.5">
+                            <span className={cn('w-1 h-1 rounded-full flex-shrink-0', role === opt.value ? opt.color : 'bg-zinc-300')} />
+                            <span className="text-xs text-zinc-500 truncate">{item}</span>
+                          </div>
+                        ))}
+                      </div>
                     </button>
                   ))}
                 </div>
@@ -434,23 +465,59 @@ export default function Login() {
                 >
                   {activeTab === 'login' ? '登录' : '注册'}
                 </Button>
+
+                <p className="mt-4 text-center text-xs text-zinc-400">
+                  登录即代表您同意
+                  <a href="#" className="text-zinc-500 hover:text-primary-600 mx-0.5">《用户服务协议》</a>
+                  和
+                  <a href="#" className="text-zinc-500 hover:text-primary-600 mx-0.5">《隐私政策》</a>
+                </p>
               </div>
             </form>
 
             {activeTab === 'login' && (
               <div className="mt-6 pt-6 border-t border-zinc-100">
                 <p className="text-center text-sm text-zinc-500 mb-4">快速登录体验</p>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 gap-3">
                   {quickLoginAccounts.map((account, i) => (
                     <button
                       key={i}
                       onClick={() => handleQuickLogin(account)}
-                      className="p-3 rounded-xl bg-zinc-50 hover:bg-primary-50 hover:text-primary-600 transition-colors text-center"
+                      disabled={quickLoginLoading !== null}
+                      className={cn(
+                        'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all duration-200 text-left',
+                        quickLoginLoading === account.username
+                          ? `${account.color.replace('text-', 'border-')} ${account.bgColor}`
+                          : 'border-zinc-100 bg-zinc-50 hover:border-zinc-200 hover:bg-white hover:shadow-sm'
+                      )}
                     >
-                      <div className="text-xs font-medium text-zinc-700 mb-1">{account.label}</div>
-                      <div className="text-xs text-zinc-400">{account.role}</div>
+                      <div className={cn(
+                        'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
+                        account.bgColor
+                      )}>
+                        {quickLoginLoading === account.username ? (
+                          <svg className={cn('w-5 h-5 animate-spin', account.color)} fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                        ) : (
+                          <account.icon className={cn('w-5 h-5', account.color)} />
+                        )}
+                      </div>
+                      <div>
+                        <div className="font-medium text-sm text-zinc-800">{account.label}</div>
+                        <div className="text-xs text-zinc-500">{account.role}</div>
+                      </div>
                     </button>
                   ))}
+                </div>
+                <div className="mt-4 text-center">
+                  <p className="text-xs text-zinc-400">
+                    <span className="inline-flex items-center gap-1">
+                      <Shield className="w-3 h-3" />
+                      平台管理员请使用 admin 账号登录，进入管理后台
+                    </span>
+                  </p>
                 </div>
               </div>
             )}
@@ -466,13 +533,6 @@ export default function Login() {
                 </button>
               </p>
             </div>
-          </div>
-
-          <div className="mt-6 text-center text-xs text-zinc-400">
-            登录即表示同意
-            <a href="#" className="text-zinc-500 hover:text-primary-600 mx-1">用户协议</a>
-            和
-            <a href="#" className="text-zinc-500 hover:text-primary-600 mx-1">隐私政策</a>
           </div>
         </div>
       </div>

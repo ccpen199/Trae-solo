@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   Search, TrendingUp, Users, BookOpen, Sparkles, ChevronRight, Plus,
   Briefcase, GraduationCap, ShoppingCart, Shield, Star, Clock, MapPin,
-  UserCheck, Zap, BarChart3, Settings, LayoutDashboard, FileCheck, PiggyBank
+  UserCheck, Zap, BarChart3, Settings, LayoutDashboard, FileCheck, PiggyBank,
+  ArrowRight
 } from 'lucide-react';
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
@@ -108,10 +109,10 @@ export default function Home() {
   ];
 
   const guaranteeStats = [
-    { icon: Star, label: '双向评价', value: '98%', desc: '好评率' },
-    { icon: Clock, label: '服务留痕', value: '100%', desc: '过程可追溯' },
-    { icon: Shield, label: '保险覆盖', value: '50万', desc: '最高保额' },
-    { icon: PiggyBank, label: '资金托管', value: '100%', desc: '安全保障' },
+    { icon: Star, label: '双向评价', value: '98%', desc: '好评率', tab: 'reviews', color: 'text-amber-500', bg: 'bg-amber-50' },
+    { icon: Clock, label: '服务留痕', value: '100%', desc: '过程可追溯', tab: 'trace', color: 'text-blue-500', bg: 'bg-blue-50' },
+    { icon: Shield, label: '保险覆盖', value: '50万', desc: '最高保额', tab: 'insurance', color: 'text-green-500', bg: 'bg-green-50' },
+    { icon: PiggyBank, label: '资金托管', value: '100%', desc: '安全保障', tab: 'settlement', color: 'text-purple-500', bg: 'bg-purple-50' },
   ];
 
   if (loading) {
@@ -346,6 +347,56 @@ export default function Home() {
                 <OrderCard order={order} showActions />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-50 via-white to-accent-50 border border-primary-100 p-8 md:p-10">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-100/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent-100/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-4">
+                  <Shield className="w-4 h-4" />
+                  平台保障 · 全链路覆盖
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-3">平台保障中心</h2>
+                <p className="text-zinc-500 mb-6 max-w-lg">
+                  六大保障体系，全方位守护您的每一笔交易，让技能服务更安心、更放心
+                </p>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {guaranteeStats.map((item, index) => (
+                    <div
+                      key={item.label}
+                      className="card p-4 text-center cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 group animate-fade-in-up"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                      onClick={() => navigate(`/guarantee?tab=${item.tab}`)}
+                    >
+                      <div className={`w-10 h-10 rounded-xl ${item.bg} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
+                        <item.icon className={`w-5 h-5 ${item.color}`} />
+                      </div>
+                      <div className="text-xl font-bold text-zinc-900 mb-0.5">{item.value}</div>
+                      <div className="text-sm font-medium text-zinc-700">{item.label}</div>
+                      <div className="text-xs text-zinc-400">{item.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex-shrink-0">
+                <button
+                  onClick={() => navigate('/guarantee')}
+                  className="w-full lg:w-auto px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-2xl font-semibold shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2 group"
+                >
+                  进入保障中心
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>

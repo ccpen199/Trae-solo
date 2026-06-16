@@ -13,6 +13,20 @@ import { success, error, paginatedSuccess, parsePagination } from '../utils/resp
 
 const router = Router();
 
+const localAdminProfile = {
+  id: 'local-admin',
+  username: 'admin',
+  avatar: '',
+  role: 'admin',
+  bio: 'SkillVerse 本地演示管理员，负责课程审核、订单管理、财务看板和平台治理。',
+  followerCount: 0,
+  followingCount: 0,
+  rating: 5,
+  verified: true,
+  location: '本地演示',
+  createdAt: new Date().toISOString(),
+};
+
 router.get('/creators', (req, res) => {
   const { page, pageSize, offset } = parsePagination(req.query);
   const { category } = req.query;
@@ -35,6 +49,10 @@ router.get('/search', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
+  if (id === 'local-admin') {
+    return success(res, localAdminProfile);
+  }
+
   const user = findUserById(id);
   
   if (!user) {

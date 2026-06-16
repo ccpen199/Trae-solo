@@ -867,7 +867,7 @@ export default function CourseDetail() {
                 {purchaseType === 'subscription' ? '开通会员' : '确认购买'}
               </h3>
               <p className="text-sm text-zinc-500 mt-0.5">
-                SkillHub 平台交易服务协议
+                SkillVerse 平台交易服务协议
               </p>
             </div>
             <button
@@ -993,7 +993,7 @@ export default function CourseDetail() {
               </button>
               <p className="text-center text-xs text-zinc-400 flex items-center justify-center gap-1.5">
                 <Shield className="w-3 h-3" />
-                交易全程银行级加密，由 SkillHub 提供担保
+                交易全程银行级加密，由 SkillVerse 提供担保
               </p>
             </div>
           </div>
