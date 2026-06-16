@@ -1155,6 +1155,211 @@ const Departments: React.FC = () => {
           </Card>
         </div>
       )
+    },
+    {
+      key: 'service-bearing',
+      label: '事项承载',
+      icon: <AppstoreOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+            <Col span={6}>
+              <Card>
+                <Statistic title="承载事项总数" value={28} suffix="件" valueStyle={{ color: '#0958d9' }} />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic title="即时办结事项" value={12} suffix="件" valueStyle={{ color: '#52c41a' }} />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic title="承诺办结事项" value={16} suffix="件" valueStyle={{ color: '#faad14' }} />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic title="本月办件量" value={3856} precision={0} suffix="件" valueStyle={{ color: '#722ed1' }} />
+              </Card>
+            </Col>
+          </Row>
+
+          <Title level={5}>事项承载清单</Title>
+          <Table
+            style={{ marginBottom: 24 }}
+            columns={[
+              { title: '事项编码', dataIndex: 'code', key: 'code', width: 130 },
+              { title: '事项名称', dataIndex: 'name', key: 'name' },
+              { title: '事项类型', dataIndex: 'type', key: 'type', render: (t: string) => {
+                const colors: Record<string, string> = { '行政许可': 'blue', '行政确认': 'green', '行政给付': 'orange', '公共服务': 'purple' }
+                return <Tag color={colors[t] || 'default'}>{t}</Tag>
+              }},
+              { title: '办理层级', dataIndex: 'level', key: 'level' },
+              { title: '承诺时限', dataIndex: 'timeLimit', key: 'timeLimit', width: 90 },
+              { title: '承载接口数', dataIndex: 'interfaceCount', key: 'interfaceCount', width: 90 },
+              { title: '办件量', dataIndex: 'volume', key: 'volume', width: 80 },
+              { title: '状态', dataIndex: 'status', key: 'status', render: (s: string) => <Tag color={s === '运行中' ? 'green' : 'orange'}>{s}</Tag> }
+            ]}
+            dataSource={(
+              selectedDepartment.category === 'gong-an' ? [
+                { key: 'sb1', code: 'NX-GA-XK-001', name: '户籍办理', type: '行政确认', level: '省级/市级/县级', timeLimit: '1个工作日', interfaceCount: 4, volume: 1286, status: '运行中' },
+                { key: 'sb2', code: 'NX-GA-XK-002', name: '身份证办理', type: '行政确认', level: '省级/市级/县级', timeLimit: '15个工作日', interfaceCount: 3, volume: 856, status: '运行中' },
+                { key: 'sb3', code: 'NX-GA-XK-003', name: '出入境证件办理', type: '行政许可', level: '省级/市级', timeLimit: '7个工作日', interfaceCount: 5, volume: 428, status: '运行中' },
+                { key: 'sb4', code: 'NX-GA-XK-004', name: '驾驶证办理', type: '行政许可', level: '市级/县级', timeLimit: '3个工作日', interfaceCount: 4, volume: 612, status: '调整中' },
+                { key: 'sb5', code: 'NX-GA-XK-005', name: '机动车登记', type: '行政确认', level: '市级/县级', timeLimit: '1个工作日', interfaceCount: 3, volume: 389, status: '运行中' },
+                { key: 'sb6', code: 'NX-GA-FW-006', name: '违章查询处理', type: '公共服务', level: '省级/市级/县级', timeLimit: '即时办结', interfaceCount: 2, volume: 2156, status: '运行中' },
+                { key: 'sb7', code: 'NX-GA-XK-007', name: '居住证办理', type: '行政确认', level: '市级/县级', timeLimit: '15个工作日', interfaceCount: 3, volume: 234, status: '运行中' },
+                { key: 'sb8', code: 'NX-GA-XK-008', name: '特种行业许可证', type: '行政许可', level: '市级/县级', timeLimit: '10个工作日', interfaceCount: 4, volume: 78, status: '调整中' }
+              ] : selectedDepartment.category === 'ren-she' ? [
+                { key: 'sb1', code: 'NX-RS-XK-001', name: '社保查询', type: '公共服务', level: '省级/市级/县级', timeLimit: '即时办结', interfaceCount: 3, volume: 3256, status: '运行中' },
+                { key: 'sb2', code: 'NX-RS-XK-002', name: '养老金申领', type: '行政给付', level: '省级/市级/县级', timeLimit: '10个工作日', interfaceCount: 4, volume: 567, status: '运行中' },
+                { key: 'sb3', code: 'NX-RS-XK-003', name: '失业保险金申领', type: '行政给付', level: '市级/县级', timeLimit: '5个工作日', interfaceCount: 3, volume: 234, status: '运行中' },
+                { key: 'sb4', code: 'NX-RS-XK-004', name: '工伤认定', type: '行政确认', level: '市级', timeLimit: '60个工作日', interfaceCount: 5, volume: 128, status: '运行中' },
+                { key: 'sb5', code: 'NX-RS-XK-005', name: '社保卡办理', type: '公共服务', level: '省级/市级/县级', timeLimit: '30个工作日', interfaceCount: 3, volume: 892, status: '调整中' },
+                { key: 'sb6', code: 'NX-RS-XK-006', name: '就业登记', type: '行政确认', level: '市级/县级', timeLimit: '即时办结', interfaceCount: 2, volume: 1456, status: '运行中' },
+                { key: 'sb7', code: 'NX-RS-XK-007', name: '技能等级认定', type: '行政确认', level: '市级', timeLimit: '20个工作日', interfaceCount: 4, volume: 167, status: '运行中' },
+                { key: 'sb8', code: 'NX-RS-XK-008', name: '劳动仲裁申请', type: '公共服务', level: '市级/县级', timeLimit: '45个工作日', interfaceCount: 3, volume: 89, status: '运行中' }
+              ] : selectedDepartment.category === 'wei-jian' ? [
+                { key: 'sb1', code: 'NX-WJ-XK-001', name: '医保报销', type: '行政给付', level: '省级/市级/县级', timeLimit: '15个工作日', interfaceCount: 5, volume: 2156, status: '运行中' },
+                { key: 'sb2', code: 'NX-WJ-XK-002', name: '异地就医备案', type: '公共服务', level: '省级/市级/县级', timeLimit: '即时办结', interfaceCount: 3, volume: 1823, status: '运行中' },
+                { key: 'sb3', code: 'NX-WJ-XK-003', name: '医保参保登记', type: '行政确认', level: '市级/县级', timeLimit: '5个工作日', interfaceCount: 4, volume: 967, status: '运行中' },
+                { key: 'sb4', code: 'NX-WJ-XK-004', name: '门诊慢特病认定', type: '行政确认', level: '市级', timeLimit: '10个工作日', interfaceCount: 4, volume: 345, status: '调整中' },
+                { key: 'sb5', code: 'NX-WJ-XK-005', name: '生育津贴申领', type: '行政给付', level: '市级/县级', timeLimit: '15个工作日', interfaceCount: 3, volume: 234, status: '运行中' },
+                { key: 'sb6', code: 'NX-WJ-XK-006', name: '医疗机构执业许可', type: '行政许可', level: '市级', timeLimit: '30个工作日', interfaceCount: 5, volume: 56, status: '运行中' },
+                { key: 'sb7', code: 'NX-WJ-XK-007', name: '医师执业注册', type: '行政许可', level: '市级', timeLimit: '10个工作日', interfaceCount: 3, volume: 178, status: '运行中' },
+                { key: 'sb8', code: 'NX-WJ-XK-008', name: '疫苗接种预约', type: '公共服务', level: '市级/县级', timeLimit: '即时办结', interfaceCount: 2, volume: 3421, status: '运行中' }
+              ] : selectedDepartment.category === 'zhu-jian' ? [
+                { key: 'sb1', code: 'NX-ZJ-XK-001', name: '不动产登记', type: '行政确认', level: '市级/县级', timeLimit: '5个工作日', interfaceCount: 5, volume: 1256, status: '运行中' },
+                { key: 'sb2', code: 'NX-ZJ-XK-002', name: '公积金提取', type: '行政给付', level: '市级/县级', timeLimit: '3个工作日', interfaceCount: 4, volume: 2341, status: '运行中' },
+                { key: 'sb3', code: 'NX-ZJ-XK-003', name: '建设工程规划许可', type: '行政许可', level: '市级/县级', timeLimit: '20个工作日', interfaceCount: 5, volume: 178, status: '运行中' },
+                { key: 'sb4', code: 'NX-ZJ-XK-004', name: '施工许可证办理', type: '行政许可', level: '市级/县级', timeLimit: '15个工作日', interfaceCount: 4, volume: 145, status: '调整中' },
+                { key: 'sb5', code: 'NX-ZJ-XK-005', name: '商品房预售许可', type: '行政许可', level: '市级', timeLimit: '10个工作日', interfaceCount: 4, volume: 67, status: '运行中' },
+                { key: 'sb6', code: 'NX-ZJ-XK-006', name: '公积金贷款申请', type: '公共服务', level: '市级/县级', timeLimit: '15个工作日', interfaceCount: 5, volume: 456, status: '运行中' },
+                { key: 'sb7', code: 'NX-ZJ-XK-007', name: '物业服务企业资质', type: '行政许可', level: '市级', timeLimit: '10个工作日', interfaceCount: 3, volume: 34, status: '运行中' },
+                { key: 'sb8', code: 'NX-ZJ-XK-008', name: '危房鉴定申请', type: '公共服务', level: '市级/县级', timeLimit: '15个工作日', interfaceCount: 3, volume: 89, status: '运行中' }
+              ] : selectedDepartment.category === 'min-zheng' ? [
+                { key: 'sb1', code: 'NX-MZ-XK-001', name: '婚姻登记', type: '行政确认', level: '县级', timeLimit: '即时办结', interfaceCount: 3, volume: 1567, status: '运行中' },
+                { key: 'sb2', code: 'NX-MZ-XK-002', name: '低保申请', type: '行政给付', level: '县级', timeLimit: '30个工作日', interfaceCount: 4, volume: 678, status: '运行中' },
+                { key: 'sb3', code: 'NX-MZ-XK-003', name: '社会组织登记', type: '行政许可', level: '市级/县级', timeLimit: '30个工作日', interfaceCount: 4, volume: 89, status: '运行中' },
+                { key: 'sb4', code: 'NX-MZ-XK-004', name: '收养登记', type: '行政确认', level: '市级/县级', timeLimit: '30个工作日', interfaceCount: 4, volume: 56, status: '调整中' },
+                { key: 'sb5', code: 'NX-MZ-XK-005', name: '特困人员救助', type: '行政给付', level: '县级', timeLimit: '15个工作日', interfaceCount: 3, volume: 234, status: '运行中' },
+                { key: 'sb6', code: 'NX-MZ-XK-006', name: '临时救助申请', type: '行政给付', level: '县级', timeLimit: '10个工作日', interfaceCount: 3, volume: 456, status: '运行中' },
+                { key: 'sb7', code: 'NX-MZ-XK-007', name: '退役军人优待证', type: '行政确认', level: '县级', timeLimit: '20个工作日', interfaceCount: 4, volume: 789, status: '运行中' },
+                { key: 'sb8', code: 'NX-MZ-XK-008', name: '养老机构设立许可', type: '行政许可', level: '市级/县级', timeLimit: '20个工作日', interfaceCount: 5, volume: 23, status: '运行中' }
+              ] : [
+                { key: 'sb1', code: 'NX-QT-XK-001', name: '企业设立登记', type: '行政许可', level: '市级/县级', timeLimit: '1个工作日', interfaceCount: 4, volume: 2341, status: '运行中' },
+                { key: 'sb2', code: 'NX-QT-XK-002', name: '个体工商户登记', type: '行政确认', level: '县级', timeLimit: '即时办结', interfaceCount: 3, volume: 3456, status: '运行中' },
+                { key: 'sb3', code: 'NX-QT-XK-003', name: '食品经营许可', type: '行政许可', level: '县级', timeLimit: '15个工作日', interfaceCount: 5, volume: 567, status: '运行中' },
+                { key: 'sb4', code: 'NX-QT-XK-004', name: '道路运输经营许可', type: '行政许可', level: '市级/县级', timeLimit: '20个工作日', interfaceCount: 4, volume: 234, status: '调整中' },
+                { key: 'sb5', code: 'NX-QT-XK-005', name: '教师资格认定', type: '行政许可', level: '市级', timeLimit: '30个工作日', interfaceCount: 4, volume: 456, status: '运行中' },
+                { key: 'sb6', code: 'NX-QT-XK-006', name: '税务登记变更', type: '公共服务', level: '市级/县级', timeLimit: '即时办结', interfaceCount: 2, volume: 4521, status: '运行中' },
+                { key: 'sb7', code: 'NX-QT-XK-007', name: '土地使用权登记', type: '行政确认', level: '市级/县级', timeLimit: '10个工作日', interfaceCount: 5, volume: 345, status: '运行中' },
+                { key: 'sb8', code: 'NX-QT-XK-008', name: '林木采伐许可', type: '行政许可', level: '县级', timeLimit: '20个工作日', interfaceCount: 4, volume: 67, status: '运行中' }
+              ]
+            )}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+
+          <Alert
+            type="info"
+            showIcon
+            message="接口-事项-异常处置串联说明"
+            description="每个事项平均绑定3.2个接口，接口异常自动关联事项办件告警，5分钟内触发异常处置流程"
+          />
+        </div>
+      )
+    },
+    {
+      key: 'business-chain',
+      label: '业务链路',
+      icon: <BranchesOutlined />,
+      children: selectedDepartment && (
+        <div>
+          <Title level={5}>接口-事项-异常全景图</Title>
+          <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+            <Col span={8}>
+              <Card size="small" title="业务办理链路">
+                <Timeline
+                  size="small"
+                  items={[
+                    { color: 'green', children: <div><Text strong>接口调用</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>12,458次/日</Text></div></div> },
+                    { color: 'green', children: <div><Text strong>事项办理</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>3,856件/月</Text></div></div> },
+                    { color: 'blue', children: <div><Text strong>办件结果</Text><div><Tag color="blue">处理中</Tag><Text type="secondary" style={{ marginLeft: 8 }}>成功率98.7%</Text></div></div> },
+                    { color: 'green', children: <div><Text strong>证照生成</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>3,245份/月</Text></div></div> }
+                  ]}
+                />
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card size="small" title="数据共享链路">
+                <Timeline
+                  size="small"
+                  items={[
+                    { color: 'green', children: <div><Text strong>数据同步</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>568批次/日</Text></div></div> },
+                    { color: 'green', children: <div><Text strong>跨部门共享</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>12个部门</Text></div></div> },
+                    { color: 'orange', children: <div><Text strong>数据授权</Text><div><Tag color="orange">调整中</Tag><Text type="secondary" style={{ marginLeft: 8 }}>3项待审批</Text></div></div> },
+                    { color: 'green', children: <div><Text strong>安全审计</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>100%覆盖</Text></div></div> }
+                  ]}
+                />
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card size="small" title="异常处置链路">
+                <Timeline
+                  size="small"
+                  items={[
+                    { color: 'orange', children: <div><Text strong>异常触发</Text><div><Tag color="orange">告警</Tag><Text type="secondary" style={{ marginLeft: 8 }}>12次/本月</Text></div></div> },
+                    { color: 'green', children: <div><Text strong>告警通知</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>≤1分钟</Text></div></div> },
+                    { color: 'blue', children: <div><Text strong>责任处置</Text><div><Tag color="blue">处理中</Tag><Text type="secondary" style={{ marginLeft: 8 }}>3项进行中</Text></div></div> },
+                    { color: 'green', children: <div><Text strong>恢复复核</Text><div><Tag color="green">正常</Tag><Text type="secondary" style={{ marginLeft: 8 }}>闭环率97.6%</Text></div></div> }
+                  ]}
+                />
+              </Card>
+            </Col>
+          </Row>
+
+          <Title level={5}>核心系统接口健康度</Title>
+          <Table
+            style={{ marginBottom: 24 }}
+            columns={[
+              { title: '接口名称', dataIndex: 'name', key: 'name' },
+              { title: '关联事项数', dataIndex: 'itemCount', key: 'itemCount', width: 90 },
+              { title: '今日调用量', dataIndex: 'calls', key: 'calls' },
+              { title: '成功率', dataIndex: 'successRate', key: 'successRate' },
+              { title: '平均响应', dataIndex: 'avgResp', key: 'avgResp', width: 90 },
+              { title: '异常次数', dataIndex: 'errorCount', key: 'errorCount', width: 90 },
+              { title: '状态', dataIndex: 'status', key: 'status', render: (s: string) => {
+                const colors: Record<string, string> = { '正常': 'green', '告警': 'orange', '异常': 'red' }
+                return <Tag color={colors[s] || 'default'}>{s}</Tag>
+              }}
+            ]}
+            dataSource={[
+              { key: 'bc1', name: '基础信息查询接口', itemCount: 12, calls: '5,682', successRate: '99.8%', avgResp: '68ms', errorCount: 2, status: '正常' },
+              { key: 'bc2', name: '业务办理提交接口', itemCount: 8, calls: '3,245', successRate: '98.5%', avgResp: '156ms', errorCount: 6, status: '告警' },
+              { key: 'bc3', name: '数据同步上报接口', itemCount: 6, calls: '1,856', successRate: '99.2%', avgResp: '89ms', errorCount: 3, status: '正常' },
+              { key: 'bc4', name: '证照生成调用接口', itemCount: 4, calls: '892', successRate: '95.3%', avgResp: '423ms', errorCount: 12, status: '异常' },
+              { key: 'bc5', name: '统计报表导出接口', itemCount: 3, calls: '456', successRate: '99.5%', avgResp: '234ms', errorCount: 1, status: '正常' },
+              { key: 'bc6', name: '身份认证核验接口', itemCount: 5, calls: '2,134', successRate: '97.8%', avgResp: '178ms', errorCount: 8, status: '告警' }
+            ]}
+            rowKey="key"
+            size="small"
+            pagination={false}
+          />
+
+          <Title level={5}>异常处置联动机制</Title>
+          <Descriptions bordered column={2} size="small">
+            <Descriptions.Item label="异常发现时间">≤30秒</Descriptions.Item>
+            <Descriptions.Item label="告警通知时间">≤1分钟</Descriptions.Item>
+            <Descriptions.Item label="责任到人时间">≤5分钟</Descriptions.Item>
+            <Descriptions.Item label="MTTR平均恢复">≤30分钟</Descriptions.Item>
+            <Descriptions.Item label="异常处置闭环率">97.6%</Descriptions.Item>
+            <Descriptions.Item label="异常关联事项通知">已启用（办事人可收到进度提醒）</Descriptions.Item>
+          </Descriptions>
+        </div>
+      )
     }
   ]
 
@@ -1245,12 +1450,74 @@ const Departments: React.FC = () => {
             message="未接入单位提醒"
             description={
               <div>
-                <p style={{ marginBottom: 8 }}>以下3个委办局当前未接入平台，请及时跟进：</p>
-                <ul style={{ marginBottom: 0, paddingLeft: 20 }}>
-                  <li><Text strong>宁夏回族自治区中医药管理局</Text> — <Tag color="error">离线</Tag> 原因：网络连接中断，预计恢复时间：2026-06-17 10:00</li>
-                  <li><Text strong>宁夏回族自治区应急管理厅</Text> — <Tag color="error">离线</Tag> 原因：服务器故障，预计恢复时间：2026-06-18 18:00</li>
-                  <li><Text strong>宁夏回族自治区农业农村厅</Text> — <Tag color="warning">维护中</Tag> 原因：系统升级维护，预计恢复时间：2026-06-16 20:00</li>
-                </ul>
+                <p style={{ marginBottom: 12 }}>以下3个委办局当前未接入平台，请及时跟进：</p>
+
+                <div style={{ marginBottom: 12 }}>
+                  <Space style={{ marginBottom: 8 }}>
+                    <Text strong style={{ fontSize: 14 }}>宁夏回族自治区中医药管理局</Text>
+                    <Tag color="error">离线</Tag>
+                    <Tag color="orange">待复核</Tag>
+                  </Space>
+                  <Descriptions column={1} size="small" bordered style={{ marginBottom: 8 }}>
+                    <Descriptions.Item label="原因说明">网络连接中断，运营商光缆故障导致专线中断</Descriptions.Item>
+                    <Descriptions.Item label="责任单位">信息中心运维组</Descriptions.Item>
+                    <Descriptions.Item label="责任人">王组长：138****0001</Descriptions.Item>
+                  </Descriptions>
+                  <Timeline
+                    size="small"
+                    items={[
+                      { color: 'green', children: <Space><Text>问题发现</Text><Tag color="green" style={{ fontSize: 11 }}>已完成</Tag><Text type="secondary" style={{ fontSize: 11 }}>2026-06-15 08:30</Text></Space> },
+                      { color: 'orange', children: <Space><Text>紧急处置</Text><Tag color="orange" style={{ fontSize: 11 }}>处理中</Tag><Text type="secondary" style={{ fontSize: 11 }}>进行中</Text></Space> },
+                      { color: 'blue', children: <Space><Text>系统恢复+复核</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-17 10:00</Text></Space> }
+                    ]}
+                  />
+                </div>
+
+                <Divider style={{ margin: '12px 0' }} />
+
+                <div style={{ marginBottom: 12 }}>
+                  <Space style={{ marginBottom: 8 }}>
+                    <Text strong style={{ fontSize: 14 }}>宁夏回族自治区应急管理厅</Text>
+                    <Tag color="error">离线</Tag>
+                    <Tag color="blue">复核中</Tag>
+                  </Space>
+                  <Descriptions column={1} size="small" bordered style={{ marginBottom: 8 }}>
+                    <Descriptions.Item label="原因说明">服务器硬件故障，主板损坏正在更换备件</Descriptions.Item>
+                    <Descriptions.Item label="责任单位">信息中心服务器组</Descriptions.Item>
+                    <Descriptions.Item label="责任人">李组长：138****0002</Descriptions.Item>
+                  </Descriptions>
+                  <Timeline
+                    size="small"
+                    items={[
+                      { color: 'green', children: <Space><Text>问题发现</Text><Tag color="green" style={{ fontSize: 11 }}>已完成</Tag><Text type="secondary" style={{ fontSize: 11 }}>2026-06-14 22:15</Text></Space> },
+                      { color: 'orange', children: <Space><Text>紧急处置</Text><Tag color="orange" style={{ fontSize: 11 }}>处理中</Tag><Text type="secondary" style={{ fontSize: 11 }}>备件更换中</Text></Space> },
+                      { color: 'blue', children: <Space><Text>系统恢复+复核</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-18 18:00</Text></Space> }
+                    ]}
+                  />
+                </div>
+
+                <Divider style={{ margin: '12px 0' }} />
+
+                <div>
+                  <Space style={{ marginBottom: 8 }}>
+                    <Text strong style={{ fontSize: 14 }}>宁夏回族自治区农业农村厅</Text>
+                    <Tag color="warning">维护中</Tag>
+                    <Tag color="orange">待复核</Tag>
+                  </Space>
+                  <Descriptions column={1} size="small" bordered style={{ marginBottom: 8 }}>
+                    <Descriptions.Item label="原因说明">系统升级维护，V2.3版本数据库结构迁移</Descriptions.Item>
+                    <Descriptions.Item label="责任单位">信息中心系统组</Descriptions.Item>
+                    <Descriptions.Item label="责任人">张组长：138****0003</Descriptions.Item>
+                  </Descriptions>
+                  <Timeline
+                    size="small"
+                    items={[
+                      { color: 'green', children: <Space><Text>问题发现</Text><Tag color="green" style={{ fontSize: 11 }}>已完成</Tag><Text type="secondary" style={{ fontSize: 11 }}>2026-06-16 00:00</Text></Space> },
+                      { color: 'orange', children: <Space><Text>紧急处置</Text><Tag color="orange" style={{ fontSize: 11 }}>处理中</Tag><Text type="secondary" style={{ fontSize: 11 }}>数据迁移中</Text></Space> },
+                      { color: 'blue', children: <Space><Text>系统恢复+复核</Text><Tag color="blue" style={{ fontSize: 11 }}>待处理</Tag><Text type="secondary" style={{ fontSize: 11 }}>预计2026-06-16 20:00</Text></Space> }
+                    ]}
+                  />
+                </div>
               </div>
             }
             type="warning"

@@ -20,7 +20,8 @@ import {
   Alert,
   Badge,
   Avatar,
-  List
+  List,
+  Steps
 } from 'antd'
 import {
   DatabaseOutlined,
@@ -116,6 +117,15 @@ interface RecommendationSource {
   confidence: number
   userAction: 'used' | 'ignored' | 'viewed'
   recommendTime: string
+  useScene: string
+  authChain: string[]
+  relatedAssets: { name: string; dept: string; type: string }[]
+  successRate: number
+  useCount30d: number
+  satisfaction: number
+  expectedSaveTime: string
+  requiredMaterials: { name: string; status: 'auto' | 'upload' }[]
+  complianceStatement: string
 }
 
 const assetAuthorizations: AssetAuthorization[] = [
@@ -249,43 +259,133 @@ const recommendationSources: RecommendationSource[] = [
   {
     key: '1', id: 1, serviceName: '社保待遇资格认证',
     recommendReason: '根据用户近期社保查询行为和退休人员标签',
-    recommendSource: '城市数据秘书-推荐引擎',
+    recommendSource: '与您具有相同标签（退休人员/年龄63岁/银川市户籍）的8,520位用户中，92%完成了该事项认证',
     matchTags: ['社保查询', '退休人员', '年龄>60岁'],
-    confidence: 95, userAction: 'used', recommendTime: '2026-06-15 09:30:00'
+    confidence: 95, userAction: 'used', recommendTime: '2026-06-15 09:30:00',
+    useScene: '退休人员养老待遇领取资格年度认证',
+    authChain: ['用户授权', '社保缴费记录查询', '退休人员身份核验', '待遇资格认证接口调用', '认证结果返回'],
+    relatedAssets: [
+      { name: '社保缴费记录查询', dept: '人力资源和社会保障厅', type: '社会保障类' },
+      { name: '退休人员身份信息', dept: '人力资源和社会保障厅', type: '社会保障类' },
+      { name: '居民身份证电子证照', dept: '公安厅', type: '证照类' }
+    ],
+    successRate: 96.8,
+    useCount30d: 12580,
+    satisfaction: 4.8,
+    expectedSaveTime: '预计为您节省2个工作日的线下跑动，无需前往社保经办大厅',
+    requiredMaterials: [
+      { name: '居民身份证电子证照', status: 'auto' },
+      { name: '退休人员身份核验', status: 'auto' },
+      { name: '人脸识别活体检测', status: 'auto' }
+    ],
+    complianceStatement: '该推荐符合《个人信息保护法》第24条自动化决策规定，您有权拒绝或关闭推荐'
   },
   {
     key: '2', id: 2, serviceName: '公积金提取申请',
     recommendReason: '根据用户公积金缴存记录和近期购房行为分析',
-    recommendSource: '事项关联规则 + 用户画像',
+    recommendSource: '根据《宁夏一网通办事项关联规则v2.3》第15条，办理购房贷款后推荐公积金提取',
     matchTags: ['公积金缴存', '购房记录', '有房'],
-    confidence: 88, userAction: 'viewed', recommendTime: '2026-06-15 08:15:00'
+    confidence: 88, userAction: 'viewed', recommendTime: '2026-06-15 08:15:00',
+    useScene: '购房贷款办理后提取公积金用于偿还贷款本息',
+    authChain: ['用户授权', '公积金缴存明细查询', '不动产登记信息核验', '购房贷款信息校验', '提取申请提交'],
+    relatedAssets: [
+      { name: '公积金缴存余额查询', dept: '住房和城乡建设厅', type: '住房公积金类' },
+      { name: '不动产登记信息', dept: '自然资源厅', type: '住房公积金类' },
+      { name: '个人纳税记录查询', dept: '税务局', type: '税务类' }
+    ],
+    successRate: 92.5,
+    useCount30d: 8920,
+    satisfaction: 4.6,
+    expectedSaveTime: '预计为您节省3个工作日的线下跑动，无需前往公积金中心和银行',
+    requiredMaterials: [
+      { name: '居民身份证电子证照', status: 'auto' },
+      { name: '购房合同备案证明', status: 'auto' },
+      { name: '贷款还款明细', status: 'upload' },
+      { name: '本人银行卡信息', status: 'auto' }
+    ],
+    complianceStatement: '该推荐符合《个人信息保护法》第24条自动化决策规定，您有权拒绝或关闭推荐'
   },
   {
     key: '3', id: 3, serviceName: '居住证办理',
     recommendReason: '根据用户流动人口登记和社保缴纳满6个月',
-    recommendSource: '政策规则匹配引擎',
+    recommendSource: '根据公安厅-住建厅-人社厅数据共享协议(宁数共享〔2026〕第008号)，符合条件流动人口推荐办理居住证',
     matchTags: ['流动人口登记', '社保缴纳>6个月', '非本地户籍'],
-    confidence: 92, userAction: 'used', recommendTime: '2026-06-14 16:20:00'
+    confidence: 92, userAction: 'used', recommendTime: '2026-06-14 16:20:00',
+    useScene: '外来务工人员子女入学报名前办理居住证',
+    authChain: ['用户授权', '流动人口登记信息查询', '社保缴费记录核验', '居住地址确认', '居住证申请受理'],
+    relatedAssets: [
+      { name: '流动人口登记信息', dept: '公安厅', type: '证照类' },
+      { name: '社保缴费记录查询', dept: '人力资源和社会保障厅', type: '社会保障类' },
+      { name: '房屋租赁备案信息', dept: '住房和城乡建设厅', type: '证照类' }
+    ],
+    successRate: 89.3,
+    useCount30d: 5680,
+    satisfaction: 4.5,
+    expectedSaveTime: '预计为您节省5个工作日的线下跑动，无需前往派出所排队办理',
+    requiredMaterials: [
+      { name: '居民身份证电子证照', status: 'auto' },
+      { name: '流动人口登记凭证', status: 'auto' },
+      { name: '房屋租赁合同', status: 'upload' },
+      { name: '近期免冠照片', status: 'upload' }
+    ],
+    complianceStatement: '该推荐符合《个人信息保护法》第24条自动化决策规定，您有权拒绝或关闭推荐'
   },
   {
     key: '4', id: 4, serviceName: '医保异地就医备案',
     recommendReason: '根据用户近期异地就医记录和医保参保状态',
-    recommendSource: '行为序列分析',
+    recommendSource: '您近7天搜索了"异地就医"相关内容5次，查看了医保异地结算页面3次，符合服务推荐触发条件',
     matchTags: ['异地就医', '医保参保', '常住外地'],
-    confidence: 85, userAction: 'ignored', recommendTime: '2026-06-14 14:10:00'
+    confidence: 85, userAction: 'ignored', recommendTime: '2026-06-14 14:10:00',
+    useScene: '退休人员随子女异地居住期间医保就医备案',
+    authChain: ['用户授权', '医保参保状态查询', '异地居住信息确认', '备案规则校验', '备案结果生效'],
+    relatedAssets: [
+      { name: '医保参保状态查询', dept: '医疗保障局', type: '医疗保障类' },
+      { name: '医保报销记录查询', dept: '医疗保障局', type: '医疗保障类' },
+      { name: '常住地居住信息', dept: '公安厅', type: '证照类' }
+    ],
+    successRate: 94.2,
+    useCount30d: 6840,
+    satisfaction: 4.7,
+    expectedSaveTime: '预计为您节省4个工作日的线下跑动，无需返回参保地办理备案手续',
+    requiredMaterials: [
+      { name: '居民身份证电子证照', status: 'auto' },
+      { name: '医保电子凭证', status: 'auto' },
+      { name: '异地居住证明', status: 'upload' }
+    ],
+    complianceStatement: '该推荐符合《个人信息保护法》第24条自动化决策规定，您有权拒绝或关闭推荐'
   },
   {
     key: '5', id: 5, serviceName: '子女教育补贴申请',
     recommendReason: '根据用户子女学籍信息和低收入家庭标签',
-    recommendSource: '用户画像 + 政策匹配',
+    recommendSource: '6月为学期末教育补贴申报高峰期，根据教育厅-民政厅-人社厅就业服务专项活动推荐',
     matchTags: ['有子女上学', '低收入', '教育补贴政策'],
-    confidence: 90, userAction: 'viewed', recommendTime: '2026-06-14 10:30:00'
+    confidence: 90, userAction: 'viewed', recommendTime: '2026-06-14 10:30:00',
+    useScene: '义务教育阶段低收入家庭子女教育补贴申请',
+    authChain: ['用户授权', '子女学籍信息查询', '低收入家庭身份核验', '补贴资格匹配', '申请提交受理'],
+    relatedAssets: [
+      { name: '学生学籍信息查询', dept: '教育厅', type: '教育类' },
+      { name: '低保家庭信息核验', dept: '民政厅', type: '社会保障类' },
+      { name: '社保缴费记录查询', dept: '人力资源和社会保障厅', type: '社会保障类' }
+    ],
+    successRate: 87.6,
+    useCount30d: 3560,
+    satisfaction: 4.9,
+    expectedSaveTime: '预计为您节省7个工作日的线下跑动，无需往返学校、社区、教育局等多个部门',
+    requiredMaterials: [
+      { name: '居民身份证电子证照', status: 'auto' },
+      { name: '户口簿电子证照', status: 'auto' },
+      { name: '子女学籍证明', status: 'auto' },
+      { name: '低收入家庭证明', status: 'upload' },
+      { name: '家庭收入证明', status: 'upload' }
+    ],
+    complianceStatement: '该推荐符合《个人信息保护法》第24条自动化决策规定，您有权拒绝或关闭推荐'
   }
 ]
 
 const DataAssetsOverview: React.FC = () => {
   const [authModalVisible, setAuthModalVisible] = useState(false)
   const [selectedAuth, setSelectedAuth] = useState<AssetAuthorization | null>(null)
+  const [closeRecommendModalVisible, setCloseRecommendModalVisible] = useState(false)
 
   const statsCards = [
     { title: '累计数据资产数', value: 128560, suffix: '项', prefix: <DatabaseOutlined />, color: '#0958d9' },
@@ -423,10 +523,25 @@ const DataAssetsOverview: React.FC = () => {
   ]
 
   const recommendationColumns: ColumnsType<RecommendationSource> = [
-    { title: '服务名称', dataIndex: 'serviceName', key: 'serviceName', width: 180 },
-    { title: '推荐原因', dataIndex: 'recommendReason', key: 'recommendReason', ellipsis: true },
-    { title: '推荐来源', dataIndex: 'recommendSource', key: 'recommendSource', width: 180 },
-    { title: '匹配标签', dataIndex: 'matchTags', key: 'matchTags', render: (tags: string[]) => (
+    { title: '服务名称', dataIndex: 'serviceName', key: 'serviceName', width: 170, fixed: 'left' },
+    { title: '使用场景', dataIndex: 'useScene', key: 'useScene', width: 200, ellipsis: true, render: (s: string) => (
+      <Tag color="purple">{s}</Tag>
+    )},
+    { title: '推荐来源说明', dataIndex: 'recommendSource', key: 'recommendSource', width: 320, ellipsis: true },
+    { title: '业务办理成功率', dataIndex: 'successRate', key: 'successRate', width: 150, render: (r: number) => (
+      <Progress percent={r} size="small" strokeColor={r >= 95 ? '#52c41a' : r >= 85 ? '#faad14' : '#ff4d4f'} format={(p) => `${p}%`} />
+    )},
+    { title: '近30天使用', dataIndex: 'useCount30d', key: 'useCount30d', width: 120, render: (c: number) => (
+      <span style={{ fontWeight: 500, color: '#0958d9' }}>{c.toLocaleString()} 次</span>
+    )},
+    { title: '满意度', dataIndex: 'satisfaction', key: 'satisfaction', width: 110, render: (s: number) => (
+      <Space size={4}>
+        <span style={{ color: '#faad14', fontWeight: 500 }}>{'★'.repeat(Math.floor(s))}</span>
+        <span style={{ color: '#ccc' }}>{'★'.repeat(5 - Math.floor(s))}</span>
+        <span style={{ fontSize: 12, color: '#666' }}>{s.toFixed(1)}</span>
+      </Space>
+    )},
+    { title: '匹配标签', dataIndex: 'matchTags', key: 'matchTags', width: 200, render: (tags: string[]) => (
       <Space wrap>{tags.map((tag, i) => <Tag key={i} color="blue">{tag}</Tag>)}</Space>
     )},
     { title: '置信度', dataIndex: 'confidence', key: 'confidence', width: 120, render: (c: number) => (
@@ -918,8 +1033,54 @@ const DataAssetsOverview: React.FC = () => {
           </Col>
         </Row>
       </Card>
+      <Card
+        title={<Space><AppstoreOutlined />推荐引擎配置说明</Space>}
+        style={{ marginBottom: 16, borderRadius: 8 }}
+        extra={
+          <Button
+            danger
+            icon={<LockOutlined />}
+            onClick={() => setCloseRecommendModalVisible(true)}
+          >
+            关闭个性化推荐
+          </Button>
+        }
+      >
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={12} md={8}>
+            <Descriptions column={1} size="small">
+              <Descriptions.Item label="推荐算法版本">
+                <Tag color="blue" style={{ fontFamily: 'monospace' }}>NX-REC-ENGINE v3.2.1</Tag>
+              </Descriptions.Item>
+              <Descriptions.Item label="最后模型训练时间">
+                <span style={{ fontFamily: 'monospace' }}>2026-06-15 03:00</span>
+              </Descriptions.Item>
+            </Descriptions>
+          </Col>
+          <Col xs={24} sm={12} md={8}>
+            <Descriptions column={1} size="small">
+              <Descriptions.Item label="训练数据范围">
+                2026-01-01 至 2026-06-14
+              </Descriptions.Item>
+              <Descriptions.Item label="训练数据量">
+                <span style={{ color: '#0958d9', fontWeight: 500 }}>568 万条办件记录</span>
+              </Descriptions.Item>
+            </Descriptions>
+          </Col>
+          <Col xs={24} sm={12} md={8}>
+            <Descriptions column={1} size="small">
+              <Descriptions.Item label="人工审核覆盖率">
+                <Tag color="green" icon={<CheckCircleOutlined />}>高风险推荐100%人工复核</Tag>
+              </Descriptions.Item>
+              <Descriptions.Item label="合规依据">
+                《个人信息保护法》第24条
+              </Descriptions.Item>
+            </Descriptions>
+          </Col>
+        </Row>
+      </Card>
       <Card style={{ borderRadius: 8 }}>
-        <Table columns={recommendationColumns} dataSource={recommendationSources} pagination={{ pageSize: 10 }} size="small"
+        <Table columns={recommendationColumns} dataSource={recommendationSources} pagination={{ pageSize: 10 }} size="small" scroll={{ x: 1600 }}
           expandable={{
             expandedRowRender: (record) => {
               const explainMap: Record<number, { trigger: string; weights: { label: string; weight: number }[]; path: string[] }> = {
@@ -972,11 +1133,49 @@ const DataAssetsOverview: React.FC = () => {
               const explain = explainMap[record.id]
               return (
                 <div>
-                  <Descriptions column={1} size="small" bordered style={{ marginBottom: 16 }}>
-                    <Descriptions.Item label={<Space><AuditOutlined />触发条件</Space>}>
-                      <span style={{ color: '#333' }}>{explain?.trigger}</span>
+                  <Descriptions column={3} size="small" bordered style={{ marginBottom: 16 }}>
+                    <Descriptions.Item label={<Space><AuditOutlined />使用场景</Space>}>
+                      <span style={{ color: '#333' }}>{record.useScene}</span>
+                    </Descriptions.Item>
+                    <Descriptions.Item label={<Space><ClockCircleOutlined />预期节省时间</Space>}>
+                      <span style={{ color: '#52c41a', fontWeight: 500 }}>{record.expectedSaveTime}</span>
+                    </Descriptions.Item>
+                    <Descriptions.Item label={<Space><SafetyOutlined />数据合规声明</Space>}>
+                      <span style={{ color: '#666', fontSize: 12 }}>{record.complianceStatement}</span>
                     </Descriptions.Item>
                   </Descriptions>
+                  <Row gutter={16} style={{ marginBottom: 16 }}>
+                    <Col xs={24} lg={12}>
+                      <Card title={<Space size={4}><ApiOutlined />调用授权链路</Space>} size="small" style={{ marginBottom: 16, height: '100%' }}>
+                        <Steps
+                          direction="vertical"
+                          size="small"
+                          current={record.authChain.length}
+                          items={record.authChain.map((step, i) => ({
+                            title: step,
+                            status: i === record.authChain.length - 1 ? 'finish' : 'finish'
+                          }))}
+                        />
+                      </Card>
+                    </Col>
+                    <Col xs={24} lg={12}>
+                      <Card title={<Space size={4}><DatabaseOutlined />关联数据资产列表</Space>} size="small" style={{ marginBottom: 16, height: '100%' }}>
+                        <List
+                          size="small"
+                          dataSource={record.relatedAssets}
+                          renderItem={(item) => (
+                            <List.Item>
+                              <List.Item.Meta
+                                avatar={<Tag color="blue">{item.type}</Tag>}
+                                title={<span style={{ fontSize: 13 }}>{item.name}</span>}
+                                description={<span style={{ fontSize: 12, color: '#999' }}>数据来源：{item.dept}</span>}
+                              />
+                            </List.Item>
+                          )}
+                        />
+                      </Card>
+                    </Col>
+                  </Row>
                   <Row gutter={16} style={{ marginBottom: 16 }}>
                     <Col xs={24} lg={12}>
                       <Card title={<Space size={4}><SafetyOutlined />匹配标签权重分析</Space>} size="small" style={{ height: '100%' }}>
@@ -1017,6 +1216,29 @@ const DataAssetsOverview: React.FC = () => {
                       </Card>
                     </Col>
                   </Row>
+                  <Card title={<Space size={4}><FileTextOutlined />所需材料清单</Space>} size="small" style={{ marginBottom: 16 }}>
+                    <Space wrap>
+                      {record.requiredMaterials.map((mat, i) => (
+                        <Tag
+                          key={i}
+                          color={mat.status === 'auto' ? 'green' : 'orange'}
+                          icon={mat.status === 'auto' ? <CheckCircleOutlined /> : <WarningOutlined />}
+                        >
+                          {mat.name}
+                          <span style={{ marginLeft: 4, fontSize: 11 }}>
+                            {mat.status === 'auto' ? '可自动调取' : '需补充上传'}
+                          </span>
+                        </Tag>
+                      ))}
+                    </Space>
+                  </Card>
+                  <Alert
+                    message={record.complianceStatement}
+                    type="info"
+                    showIcon
+                    icon={<SafetyOutlined />}
+                    style={{ borderRadius: 8 }}
+                  />
                 </div>
               )
             }
@@ -1132,6 +1354,34 @@ const DataAssetsOverview: React.FC = () => {
             )}
           </div>
         )}
+      </Modal>
+      <Modal
+        title={<Space><WarningOutlined />关闭个性化推荐确认</Space>}
+        open={closeRecommendModalVisible}
+        onCancel={() => setCloseRecommendModalVisible(false)}
+        onOk={() => {
+          Modal.success({
+            title: '操作成功',
+            content: '个性化推荐已关闭，您将不再收到基于个人画像的服务推荐。如需重新开启，可在"个人中心-隐私设置"中调整。'
+          })
+          setCloseRecommendModalVisible(false)
+        }}
+        okText="确认关闭"
+        okButtonProps={{ danger: true }}
+        cancelText="取消"
+      >
+        <Alert
+          message="关闭个性化推荐后，系统将不再基于您的个人画像、行为记录、标签等信息为您推荐个性化服务。"
+          description="关闭后，您仍可通过搜索、分类浏览等方式获取所有政务服务。此操作不会影响您已有的授权和业务办理记录。根据《个人信息保护法》第24条，您有权随时拒绝自动化决策。"
+          type="warning"
+          showIcon
+          style={{ marginBottom: 16 }}
+        />
+        <Descriptions column={1} size="small" bordered>
+          <Descriptions.Item label="生效时间">立即生效</Descriptions.Item>
+          <Descriptions.Item label="数据影响">停止使用个人画像数据用于推荐</Descriptions.Item>
+          <Descriptions.Item label="恢复方式">个人中心 → 隐私设置 → 个性化推荐</Descriptions.Item>
+        </Descriptions>
       </Modal>
     </div>
   )

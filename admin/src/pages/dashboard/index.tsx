@@ -589,7 +589,7 @@ const Dashboard: React.FC = () => {
       )}
       {currentRole === 'default' && (
         <Alert type="info" showIcon style={{ marginBottom: 16 }}
-          message="当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。"
+          message="当前为普通用户权限，仅可查看个人服务、办件进度和证照信息。注：您当前为普通用户身份，委办局管理、系统配置、审计导出等管理功能不可见。如需管理员权限请联系信息中心。"
         />
       )}
 
@@ -995,7 +995,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="data-assets-grid">
           {dataAssets.map((asset, index) => (
-            <div key={index} className="data-asset-item" onClick={() => navigate('/city-data-secretary?tab=' + asset.tabKey)} style={{ cursor: 'pointer' }}>
+            <div key={index} className="data-asset-item" onClick={() => currentRole === 'default' ? navigate('/city-data-secretary') : navigate('/city-data-secretary?tab=' + asset.tabKey)} style={{ cursor: 'pointer' }}>
               <div className="asset-icon" style={{ background: `${asset.color}15`, color: asset.color }}>
                 {asset.icon}
               </div>
@@ -1009,8 +1009,16 @@ const Dashboard: React.FC = () => {
                 <Text type="secondary" style={{ fontSize: 11, display: 'block' }}>{asset.source}</Text>
                 <div style={{ marginTop: 4, display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                   <Tag color={asset.authStatus === '已授权' ? 'green' : 'orange'} style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>{asset.authStatus}</Tag>
-                  <Tag color="blue" style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>{asset.shareCount}条共享</Tag>
-                  <Tag color="cyan" style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>调用{asset.callCount}次</Tag>
+                  {currentRole === 'default' ? (
+                    <Tag color="default" style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>不可用</Tag>
+                  ) : (
+                    <Tag color="blue" style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>{asset.shareCount}条共享</Tag>
+                  )}
+                  {currentRole === 'default' ? (
+                    <Tag color="default" style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>不可用</Tag>
+                  ) : (
+                    <Tag color="cyan" style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>调用{asset.callCount}次</Tag>
+                  )}
                   <Tag color={asset.tabKey === 'recommend' ? 'purple' : 'default'} style={{ fontSize: 11, lineHeight: '18px', padding: '0 4px' }}>{asset.tabKey === 'recommend' ? '有推荐' : '无推荐'}</Tag>
                 </div>
               </div>
@@ -1025,11 +1033,13 @@ const Dashboard: React.FC = () => {
           <Title level={5} className="card-title">
             <BankOutlined className="title-icon" /> 委办局核心系统状态
           </Title>
-          <Button type="link" onClick={() => navigate('/departments')}>查看全部38个委办局 <ArrowRightOutlined /></Button>
+          {currentRole !== 'default' && (
+            <Button type="link" onClick={() => navigate('/departments')}>查看全部38个委办局 <ArrowRightOutlined /></Button>
+          )}
         </div>
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={12} md={8} lg={4}>
-            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+            <Card size="small" hoverable={currentRole !== 'default'} onClick={currentRole !== 'default' ? () => navigate('/departments') : undefined} style={{ cursor: currentRole !== 'default' ? 'pointer' : 'default', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                 <Text strong>公安厅</Text>
                 <Tag color="green">在线</Tag>
@@ -1042,7 +1052,7 @@ const Dashboard: React.FC = () => {
             </Card>
           </Col>
           <Col xs={24} sm={12} md={8} lg={4}>
-            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+            <Card size="small" hoverable={currentRole !== 'default'} onClick={currentRole !== 'default' ? () => navigate('/departments') : undefined} style={{ cursor: currentRole !== 'default' ? 'pointer' : 'default', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                 <Text strong>人力资源社会保障厅</Text>
                 <Tag color="green">在线</Tag>
@@ -1055,7 +1065,7 @@ const Dashboard: React.FC = () => {
             </Card>
           </Col>
           <Col xs={24} sm={12} md={8} lg={4}>
-            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+            <Card size="small" hoverable={currentRole !== 'default'} onClick={currentRole !== 'default' ? () => navigate('/departments') : undefined} style={{ cursor: currentRole !== 'default' ? 'pointer' : 'default', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                 <Text strong>医疗保障局</Text>
                 <Tag color="green">在线</Tag>
@@ -1068,7 +1078,7 @@ const Dashboard: React.FC = () => {
             </Card>
           </Col>
           <Col xs={24} sm={12} md={8} lg={4}>
-            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+            <Card size="small" hoverable={currentRole !== 'default'} onClick={currentRole !== 'default' ? () => navigate('/departments') : undefined} style={{ cursor: currentRole !== 'default' ? 'pointer' : 'default', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                 <Text strong>住建厅</Text>
                 <Tag color="green">在线</Tag>
@@ -1081,7 +1091,7 @@ const Dashboard: React.FC = () => {
             </Card>
           </Col>
           <Col xs={24} sm={12} md={8} lg={4}>
-            <Card size="small" hoverable onClick={() => navigate('/departments')} style={{ cursor: 'pointer', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
+            <Card size="small" hoverable={currentRole !== 'default'} onClick={currentRole !== 'default' ? () => navigate('/departments') : undefined} style={{ cursor: currentRole !== 'default' ? 'pointer' : 'default', borderRadius: 8 }} styles={{ body: { padding: 12 } }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                 <Text strong>民政厅</Text>
                 <Tag color="green">在线</Tag>
@@ -1095,35 +1105,41 @@ const Dashboard: React.FC = () => {
           </Col>
         </Row>
         <div style={{ marginTop: 12, textAlign: 'center' }}>
-          <Text type="secondary" style={{ fontSize: 12 }}>35/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过</Text>
+          {currentRole === 'default' ? (
+            <Text type="secondary" style={{ fontSize: 12 }}>35/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过</Text>
+          ) : (
+            <Text type="secondary" style={{ fontSize: 12 }}>35/38 已接入 · 3个离线/维护中 · 国密传输验收：已通过</Text>
+          )}
         </div>
       </Card>
 
-      <Card bordered={false} style={{ marginTop: 16 }}>
-        <div className="card-header">
-          <Title level={5} className="card-title">
-            <AuditOutlined className="title-icon" /> 关键操作留痕
-          </Title>
-          <Tag color="green" style={{ marginRight: 8 }}>
-            <CheckCircleOutlined /> 所有关键操作均已记录，90天可追溯
-          </Tag>
-        </div>
-        <Table
-          dataSource={auditTrailData}
-          columns={auditTrailColumns}
-          pagination={false}
-          size="small"
-          bordered
-        />
-        <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text type="secondary">
-            <DesktopOutlined /> 登录设备：{userInfo?.loginDevice || '未知'} · 登录IP：{userInfo?.loginIp || '未知'} · 登录方式：{userInfo?.loginMethod || '未知'} · 登录时间：{userInfo?.loginTime || '未知'}
-          </Text>
-          <Button type="link" icon={<ExportOutlined />} onClick={() => setExportAuditModalVisible(true)}>
-            导出审计日志
-          </Button>
-        </div>
-      </Card>
+      {currentRole !== 'default' && (
+        <Card bordered={false} style={{ marginTop: 16 }}>
+          <div className="card-header">
+            <Title level={5} className="card-title">
+              <AuditOutlined className="title-icon" /> 关键操作留痕
+            </Title>
+            <Tag color="green" style={{ marginRight: 8 }}>
+              <CheckCircleOutlined /> 所有关键操作均已记录，90天可追溯
+            </Tag>
+          </div>
+          <Table
+            dataSource={auditTrailData}
+            columns={auditTrailColumns}
+            pagination={false}
+            size="small"
+            bordered
+          />
+          <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Text type="secondary">
+              <DesktopOutlined /> 登录设备：{userInfo?.loginDevice || '未知'} · 登录IP：{userInfo?.loginIp || '未知'} · 登录方式：{userInfo?.loginMethod || '未知'} · 登录时间：{userInfo?.loginTime || '未知'}
+            </Text>
+            <Button type="link" icon={<ExportOutlined />} onClick={() => setExportAuditModalVisible(true)}>
+              导出审计日志
+            </Button>
+          </div>
+        </Card>
+      )}
 
       <Drawer
         title={<Space><ThunderboltOutlined style={{ color: '#0958d9' }} />快速办件 · 一网通办</Space>}
@@ -1403,7 +1419,7 @@ const Dashboard: React.FC = () => {
                 />
               )
             },
-            {
+            ...(currentRole !== 'default' ? [{
               key: 'audit',
               label: <Space><WarningOutlined />审计告警 <Badge count={3} size="small" /></Space>,
               children: (
@@ -1441,7 +1457,7 @@ const Dashboard: React.FC = () => {
                   )}
                 />
               )
-            }
+            }] : [])
           ]}
         />
       </Drawer>
@@ -1590,21 +1606,22 @@ const Dashboard: React.FC = () => {
         title={<Space><ExportOutlined style={{ color: '#0958d9' }} />导出审计日志</Space>}
         open={exportAuditModalVisible}
         onCancel={() => setExportAuditModalVisible(false)}
-        width={640}
+        width={720}
         footer={[
           <Button key="cancel" onClick={() => setExportAuditModalVisible(false)}>取消</Button>,
-          <Button key="submit" type="primary" icon={<ExportOutlined />} onClick={() => {
+          <Button key="submit" type="primary" icon={<SendOutlined />} onClick={() => {
             Modal.success({
-              title: '导出成功',
+              title: '审批提交成功',
               content: (
                 <div>
-                  <p>导出记录数：1,258 条</p>
-                  <p>文件编号：AUDIT-EXP-{dayjs().format('YYYYMMDD')}-{Math.random().toString(36).substring(2, 8).toUpperCase()}</p>
+                  <p>审批单号：AUDIT-APP-{dayjs().format('YYYYMMDD')}-{Math.random().toString(36).substring(2, 6).toUpperCase()}</p>
+                  <p>已提交至 张主任 审核，预计1个工作日内完成审批</p>
+                  <p>审批通过后您将收到系统通知并可下载导出文件</p>
                 </div>
               )
             })
             setExportAuditModalVisible(false)
-          }}>确认导出</Button>
+          }}>提交审批</Button>
         ]}
       >
         <div style={{ marginBottom: 16 }}>
@@ -1684,6 +1701,81 @@ const Dashboard: React.FC = () => {
           </div>
           <div style={{ marginTop: 8 }}>
             <Text type="secondary" style={{ fontSize: 12 }}>导出范围内所有风险事件均关联处置责任人</Text>
+          </div>
+        </div>
+        <Divider style={{ margin: '16px 0' }} />
+        <div style={{ marginBottom: 16 }}>
+          <Text strong>敏感导出审批</Text>
+          <div style={{ marginTop: 8 }}>
+            <Alert
+              type="warning"
+              showIcon
+              style={{ marginBottom: 12 }}
+              message="当前导出范围包含 156 条敏感操作记录（涉及个人隐私数据），根据《数据安全法》要求需审批"
+            />
+            <Steps current={0} size="small" style={{ marginBottom: 16 }}>
+              <Steps.Step title="申请人提交" />
+              <Steps.Step title="部门负责人审核" />
+              <Steps.Step title="数据安全官复核" />
+              <Steps.Step title="审计员留存" />
+            </Steps>
+            <Row gutter={12}>
+              <Col span={12}>
+                <Form.Item label="审批人" style={{ marginBottom: 12 }}>
+                  <Select placeholder="请选择审批人" options={[
+                    { label: '张主任', value: '张主任' },
+                    { label: '李副主任', value: '李副主任' },
+                    { label: '王安全官', value: '王安全官' }
+                  ]} />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="数据留存期限" style={{ marginBottom: 12 }}>
+                  <Select placeholder="请选择留存期限" options={[
+                    { label: '30天', value: '30天' },
+                    { label: '90天', value: '90天' },
+                    { label: '180天', value: '180天' },
+                    { label: '1年', value: '1年' }
+                  ]} />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item label="导出用途说明" style={{ marginBottom: 12 }}>
+              <Input.TextArea rows={2} placeholder="请详细说明导出用途和数据使用范围（必填）" />
+            </Form.Item>
+            <Form.Item label="脱敏方式" style={{ marginBottom: 0 }}>
+              <Select placeholder="请选择数据脱敏方式" options={[
+                { label: '身份证号掩码', value: '身份证号掩码' },
+                { label: '姓名部分隐藏', value: '姓名部分隐藏' },
+                { label: '地址模糊', value: '地址模糊' },
+                { label: '完整数据', value: '完整数据' }
+              ]} />
+            </Form.Item>
+          </div>
+        </div>
+        <Divider style={{ margin: '16px 0' }} />
+        <div style={{ marginBottom: 16 }}>
+          <Text strong>关联复查记录</Text>
+          <div style={{ marginTop: 8 }}>
+            <Table
+              size="small"
+              pagination={false}
+              dataSource={[
+                { key: '1', time: '2026-06-15 16:30', reviewer: '李审核', item: '权限变更审计', result: '通过', remark: '-' },
+                { key: '2', time: '2026-06-14 10:15', reviewer: '王安全', item: '数据导出合规性', result: '通过', remark: '-' },
+                { key: '3', time: '2026-06-13 14:20', reviewer: '张主任', item: '异常登录处置', result: '有条件通过', remark: '需补充设备信息' }
+              ]}
+              columns={[
+                { title: '复查时间', dataIndex: 'time', key: 'time', width: 140 },
+                { title: '复查人', dataIndex: 'reviewer', key: 'reviewer', width: 80 },
+                { title: '复查事项', dataIndex: 'item', key: 'item' },
+                { title: '复查结果', dataIndex: 'result', key: 'result', width: 90, render: (text: string) => (
+                  <Tag color={text === '通过' ? 'green' : text === '有条件通过' ? 'orange' : 'default'}>{text}</Tag>
+                )},
+                { title: '备注', dataIndex: 'remark', key: 'remark', width: 100 }
+              ]}
+            />
+            <Text type="secondary" style={{ display: 'block', marginTop: 8, fontSize: 12 }}>本次导出操作将自动创建复查任务，纳入本月合规审计范围</Text>
           </div>
         </div>
         <Divider style={{ margin: '16px 0' }} />
