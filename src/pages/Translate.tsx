@@ -21,6 +21,8 @@ import {
   ChevronUp,
   Play,
   Eye,
+  Save,
+  Check,
 } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import type { Emotion, VoiceprintAnalysis, Species, Pet } from "../../shared/types";
@@ -85,6 +87,8 @@ export default function Translate() {
   const [bubbleStyle, setBubbleStyle] = useState<"cloud" | "round" | "shout">("cloud");
   const [reverseInput, setReverseInput] = useState("");
   const [reverseOutput, setReverseOutput] = useState("");
+  const [reversePlaying, setReversePlaying] = useState(false);
+  const [reverseSaved, setReverseSaved] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(locState?.showHistory ?? false);
   const [historyPetFilter, setHistoryPetFilter] = useState<string>("all");
   const [expandedReport, setExpandedReport] = useState<string | null>(locState?.focusAnalysisId ?? null);
@@ -157,9 +161,50 @@ export default function Translate() {
     if (!reverseInput.trim()) return;
     const soundMap = petType === "dog" ? DOG_SOUNDS : CAT_SOUNDS;
     const match = Object.entries(soundMap).find(([k]) => reverseInput.includes(k));
-    setReverseOutput(match ? match[1] : (petType === "dog"
+    const output = match ? match[1] : (petType === "dog"
       ? "汪汪！（歪头看着你，好像在认真听）"
-      : "喵～（眯着眼，似乎在思考什么）"));
+      : "喵～（眯着眼，似乎在思考什么）");
+    setReverseOutput(output);
+    setReverseSaved(null);
+  };
+
+  const handlePlayReverse = () => {
+    if (!reverseOutput) return;
+    setReversePlaying(true);
+    setTimeout(() => setReversePlaying(false), 2500);
+  };
+
+  const handleSaveReverse = () => {
+    if (!reverseOutput || !currentPet) return;
+    const record: VoiceprintAnalysis = {
+      id: "r_new_" + Date.now(),
+      petId: currentPet.id,
+      audioUrl: "/audio/reverse_" + Date.now() + ".wav",
+      emotion: "happy",
+      emotionLabel: "主人对话",
+      confidence: 0.95,
+      semanticText: `【主人说】${reverseInput} → ${reverseOutput}`,
+      voiceprintReport: {
+        frequency: petType === "dog" ? 420 : 350,
+        duration: 2.0,
+        intensity: 0.7,
+        pattern: "主人语音→宠物拟声 反向翻译对话",
+      },
+      createdAt: new Date().toISOString().slice(0, 16).replace("T", " "),
+    };
+    addAnalysis(record);
+    setReverseSaved(record.id);
+  };
+
+  const handleQuickPhrase = (phrase: string) => {
+    setReverseInput(phrase);
+    const soundMap = petType === "dog" ? DOG_SOUNDS : CAT_SOUNDS;
+    const match = Object.entries(soundMap).find(([k]) => phrase.includes(k));
+    const output = match ? match[1] : (petType === "dog"
+      ? "汪汪！（歪头看着你，好像在认真听）"
+      : "喵～（眯着眼，似乎在思考什么）");
+    setReverseOutput(output);
+    setReverseSaved(null);
   };
 
   const handleSwitchSpecies = (s: Species) => {
@@ -262,6 +307,18 @@ export default function Translate() {
               </div>
             )}
 
+            {flowStep === "result" && selectedAnalysis && (
+              <div className="absolute top-0 right-0 z-20">
+                <button
+                  onClick={handleStartRecording}
+                  className="btn-primary !py-2 !px-4 text-sm"
+                >
+                  <Mic className="w-4 h-4" />
+                  再来一次
+                </button>
+              </div>
+            )}
+
             <div className="relative flex items-center justify-center w-48 h-48">
               {(flowStep === "recording" || flowStep === "processing") && (
                 <>
@@ -273,9 +330,15 @@ export default function Translate() {
                   }`} style={{ animationDelay: "0.3s" }} />
                 </>
               )}
+              {flowStep === "idle" && (
+                <>
+                  <div className="absolute w-full h-full rounded-full bg-brand-orange/8 animate-pulse-ring" />
+                  <div className="absolute w-5/6 h-5/6 rounded-full bg-brand-orange/5 animate-pulse-ring" style={{ animationDelay: "0.5s" }} />
+                </>
+              )}
               <button
                 onClick={() => {
-                  if (flowStep === "idle") handleStartRecording();
+                  if (flowStep === "idle" || flowStep === "result") handleStartRecording();
                   else if (flowStep === "recording") setFlowStep("processing");
                 }}
                 disabled={flowStep === "processing"}
@@ -284,15 +347,22 @@ export default function Translate() {
                     ? "bg-gradient-to-br from-red-500 to-red-400 text-white scale-105"
                     : flowStep === "processing"
                       ? "bg-gradient-to-br from-brand-mint to-brand-mint-light text-white scale-105 animate-pulse"
-                      : "bg-gradient-to-br from-brand-orange to-brand-orange-light text-white hover:scale-105 active:scale-95"
+                      : flowStep === "result"
+                        ? "bg-gradient-to-br from-brand-mint to-brand-mint-light text-white hover:scale-105 active:scale-95"
+                        : "bg-gradient-to-br from-brand-orange to-brand-orange-light text-white hover:scale-105 active:scale-95"
                 }`}
               >
                 {flowStep === "recording" ? (
                   <StopCircle className="w-14 h-14 animate-pulse" />
                 ) : flowStep === "processing" ? (
                   <Sparkles className="w-14 h-14 animate-spin" />
-                ) : (
+                ) : flowStep === "result" ? (
                   <Mic className="w-14 h-14" />
+                ) : (
+                  <div className="flex flex-col items-center">
+                    <Mic className="w-12 h-12" />
+                    <span className="text-[11px] mt-1 font-medium opacity-90">点击录音</span>
+                  </div>
                 )}
               </button>
             </div>
@@ -302,12 +372,14 @@ export default function Translate() {
                 const baseH = 8 + Math.sin(i * 0.6) * 6;
                 const isActive = flowStep === "recording";
                 const isProcessing = flowStep === "processing";
+                const isIdle = flowStep === "idle";
                 return (
                   <div
                     key={i}
                     className={`w-1.5 rounded-full transition-all duration-150 ${
                       isActive ? (i % 2 === 0 ? "bg-brand-orange" : "bg-brand-mint")
                         : isProcessing ? "bg-brand-mint/60"
+                        : isIdle ? (i % 2 === 0 ? "bg-brand-orange/20" : "bg-brand-mint/20")
                         : "bg-cream-200"
                     }`}
                     style={{
@@ -315,8 +387,10 @@ export default function Translate() {
                         ? `${baseH + Math.random() * 40}px`
                         : isProcessing
                           ? `${baseH + 12 + Math.sin(Date.now() / 300 + i) * 16}px`
-                          : `${baseH}px`,
-                      animation: isActive ? "wave 0.8s ease-in-out infinite" : isProcessing ? "wave 1.2s ease-in-out infinite" : "none",
+                          : isIdle
+                            ? `${baseH + Math.sin(Date.now() / 600 + i * 0.8) * 4}px`
+                            : `${baseH}px`,
+                      animation: isActive ? "wave 0.8s ease-in-out infinite" : isProcessing ? "wave 1.2s ease-in-out infinite" : isIdle ? "wave 2.4s ease-in-out infinite" : "none",
                       animationDelay: `${i * 40}ms`,
                     }}
                   />
@@ -324,17 +398,54 @@ export default function Translate() {
               })}
             </div>
 
-            <div className="mt-6 flex items-center gap-3 text-warm-gray">
-              <Clock className="w-4 h-4" />
-              <span className="font-mono text-lg">
-                {flowStep === "recording" ? recordDuration.toFixed(1) : flowStep === "processing" ? "分析中..." : "0.0"}s
-              </span>
-              <span className="text-sm text-warm-gray/70">
-                {flowStep === "idle" && "点击开始录音"}
-                {flowStep === "recording" && "正在聆听...点击停止"}
-                {flowStep === "processing" && "AI 声纹模型分析中..."}
-                {flowStep === "result" && "分析完成！查看右侧结果"}
-              </span>
+            <div className="mt-6 flex flex-col items-center gap-2">
+              <div className="flex items-center gap-3 text-warm-gray">
+                <Clock className="w-4 h-4" />
+                <span className="font-mono text-lg">
+                  {flowStep === "recording" ? recordDuration.toFixed(1) : flowStep === "processing" ? "分析中..." : flowStep === "result" ? "✓ 完成" : "0.0"}s
+                </span>
+              </div>
+              <div className="text-sm text-center min-h-[20px]">
+                {flowStep === "idle" && (
+                  <span className="text-warm-gray/80">
+                    🎯 对准{petType === "dog" ? "狗狗" : "猫猫"}点击大按钮，聆听 3 秒即可识别情绪
+                  </span>
+                )}
+                {flowStep === "recording" && (
+                  <span className="text-brand-orange font-medium animate-pulse">
+                    🎙️ 正在聆听中... 点击红色按钮可提前停止分析
+                  </span>
+                )}
+                {flowStep === "processing" && (
+                  <span className="text-brand-mint-dark font-medium">
+                    ✨ AI 模型匹配声纹特征中...
+                  </span>
+                )}
+                {flowStep === "result" && (
+                  <span className="text-brand-mint-dark font-medium">
+                    ✅ 分析完成！右侧展示情绪→气泡→反向翻译，可点击「再来一次」
+                  </span>
+                )}
+              </div>
+              {flowStep === "idle" && (
+                <div className="flex flex-wrap justify-center gap-1.5 mt-1 max-w-sm">
+                  {petType === "dog" ? (
+                    <>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-orange/10 text-brand-orange-dark">😊 开心吠叫</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-pink/15 text-pink-600">🎾 玩耍求伴</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-sky/20 text-sky-700">😟 焦虑呜咽</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-mint/15 text-brand-mint-dark">🤔 好奇探询</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-orange/10 text-brand-orange-dark">🍖 饥饿喵叫</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-mint/15 text-brand-mint-dark">🤔 好奇颤音</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-sky/20 text-sky-700">😴 困倦呼噜</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent-sunny/20 text-amber-700">😊 满足咕噜</span>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -360,6 +471,11 @@ export default function Translate() {
             setInput={setReverseInput}
             output={reverseOutput}
             onTranslate={handleReverseTranslate}
+            onQuickPhrase={handleQuickPhrase}
+            onPlay={handlePlayReverse}
+            onSave={handleSaveReverse}
+            playing={reversePlaying}
+            savedId={reverseSaved}
             petType={petType}
           />
         </div>
@@ -407,7 +523,7 @@ function HistoryPanel({
           </select>
         </div>
       </div>
-      <div className="space-y-3 max-h-80 overflow-y-auto scrollbar-thin">
+      <div className="space-y-3 max-h-[420px] overflow-y-auto scrollbar-thin">
         {analyses.length === 0 ? (
           <p className="text-center text-warm-gray py-8">暂无翻译记录</p>
         ) : analyses.map((a) => {
@@ -417,53 +533,93 @@ function HistoryPanel({
           return (
             <div key={a.id} className="rounded-2xl border border-cream-200 overflow-hidden">
               <div
-                className="flex items-center gap-3 p-3 cursor-pointer hover:bg-cream-50 transition-colors"
+                className="flex items-start gap-3 p-3 cursor-pointer hover:bg-cream-50 transition-colors"
                 onClick={() => onSelect(a)}
               >
-                <div className="w-9 h-9 rounded-xl overflow-hidden shrink-0 border border-cream-200">
+                <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-cream-200">
                   <img src={pet?.avatar} alt="" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-sm font-medium text-warm-brown">{pet?.name}</span>
                     {emo && <span className={`badge ${emo.bg} ${emo.text} text-[10px]`}>{emo.emoji} {emo.label}</span>}
+                    <span className="badge bg-accent-sunny/15 text-amber-700 text-[10px] flex items-center gap-0.5">
+                      <Zap className="w-2.5 h-2.5" /> {Math.round(a.confidence * 100)}%
+                    </span>
                     <span className="text-[10px] text-warm-gray/60 ml-auto">{a.createdAt}</span>
                   </div>
-                  <p className="text-xs text-warm-gray mt-0.5 truncate">&ldquo;{a.semanticText}&rdquo;</p>
+                  <p className="text-xs text-warm-brown/90 mt-1 truncate">&ldquo;{a.semanticText}&rdquo;</p>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-[10px] text-warm-gray/80">
+                    <span className="flex items-center gap-1">
+                      <Activity className="w-2.5 h-2.5 text-brand-mint" />
+                      {a.voiceprintReport.frequency}Hz
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-2.5 h-2.5 text-accent-sky" />
+                      {a.voiceprintReport.duration}s
+                    </span>
+                    <span className="flex items-center gap-1 truncate max-w-[180px]">
+                      <BarChart3 className="w-2.5 h-2.5 text-brand-orange" />
+                      {a.voiceprintReport.pattern}
+                    </span>
+                  </div>
                 </div>
-                <button
-                  onClick={(e) => { e.stopPropagation(); setExpandedReport(isExpanded ? null : a.id); }}
-                  className="p-1.5 rounded-lg hover:bg-cream-100 text-warm-gray"
-                >
-                  {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                </button>
+                <div className="flex flex-col items-end gap-1 shrink-0">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setExpandedReport(isExpanded ? null : a.id); }}
+                    className="p-1.5 rounded-lg hover:bg-cream-100 text-warm-gray"
+                    title={isExpanded ? "收起详情" : "展开详情"}
+                  >
+                    {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onSelect(a); }}
+                    className="px-2 py-1 rounded-lg text-[10px] font-medium bg-brand-orange/10 text-brand-orange-dark hover:bg-brand-orange/20 transition-colors flex items-center gap-0.5"
+                    title="复查这条报告"
+                  >
+                    <Eye className="w-2.5 h-2.5" /> 复查
+                  </button>
+                </div>
               </div>
               {isExpanded && (
-                <div className="px-4 pb-4 pt-1 border-t border-cream-100 animate-fade-in space-y-2">
-                  <div className="flex items-center gap-2 text-xs">
-                    <Zap className="w-3 h-3 text-accent-sunny" />
-                    <span className="text-warm-gray">置信度</span>
-                    <span className="font-semibold text-warm-brown">{Math.round(a.confidence * 100)}%</span>
+                <div className="px-4 pb-4 pt-1 border-t border-cream-100 animate-fade-in space-y-2.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2">
+                      <Zap className="w-3 h-3 text-accent-sunny" />
+                      <span className="text-warm-gray">模型置信度</span>
+                    </div>
+                    <div className="flex items-center gap-2 flex-1 max-w-[60%] ml-3">
+                      <div className="flex-1 h-2 bg-cream-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-brand-orange to-brand-mint rounded-full" style={{ width: `${a.confidence * 100}%` }} />
+                      </div>
+                      <span className="font-semibold text-warm-brown">{Math.round(a.confidence * 100)}%</span>
+                    </div>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-xs">
                     <div className="bg-cream-50 rounded-lg p-2 text-center">
-                      <div className="text-warm-gray">频率</div>
+                      <div className="text-warm-gray">声纹频率</div>
                       <div className="font-semibold text-warm-brown">{a.voiceprintReport.frequency}Hz</div>
+                      <div className="text-[9px] text-warm-gray/70">基频 {Math.round(a.voiceprintReport.frequency * 0.85)}-{Math.round(a.voiceprintReport.frequency * 1.15)}Hz</div>
                     </div>
                     <div className="bg-cream-50 rounded-lg p-2 text-center">
-                      <div className="text-warm-gray">时长</div>
+                      <div className="text-warm-gray">持续时长</div>
                       <div className="font-semibold text-warm-brown">{a.voiceprintReport.duration}s</div>
+                      <div className="text-[9px] text-warm-gray/70">{a.voiceprintReport.duration < 1.5 ? "短促" : a.voiceprintReport.duration < 2.5 ? "中等" : "较长"}</div>
                     </div>
                     <div className="bg-cream-50 rounded-lg p-2 text-center">
-                      <div className="text-warm-gray">强度</div>
+                      <div className="text-warm-gray">能量强度</div>
                       <div className="font-semibold text-warm-brown">{Math.round(a.voiceprintReport.intensity * 100)}%</div>
+                      <div className="text-[9px] text-warm-gray/70">{a.voiceprintReport.intensity > 0.7 ? "洪亮" : a.voiceprintReport.intensity > 0.5 ? "适中" : "轻柔"}</div>
                     </div>
                   </div>
-                  <div className="bg-brand-mint/5 rounded-lg p-2 text-xs flex items-start gap-2">
+                  <div className="bg-brand-mint/5 rounded-lg p-2.5 text-xs flex items-start gap-2">
                     <BarChart3 className="w-4 h-4 text-brand-mint shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-medium text-brand-mint-dark">声纹模式：</span>
-                      <span className="text-warm-brown/80">{a.voiceprintReport.pattern}</span>
+                      <div className="font-medium text-brand-mint-dark mb-0.5">声纹模式分析</div>
+                      <div className="text-warm-brown/80">{a.voiceprintReport.pattern}</div>
+                      <div className="mt-1 text-[10px] text-warm-gray/70">
+                        模型版本 v2.3.0 · 物种：{pet?.species === "dog" ? "犬类" : "猫类"}专项模型
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -661,12 +817,22 @@ function ReverseTranslatePanel({
   setInput,
   output,
   onTranslate,
+  onQuickPhrase,
+  onPlay,
+  onSave,
+  playing,
+  savedId,
   petType,
 }: {
   input: string;
   setInput: (v: string) => void;
   output: string;
   onTranslate: () => void;
+  onQuickPhrase: (phrase: string) => void;
+  onPlay: () => void;
+  onSave: () => void;
+  playing: boolean;
+  savedId: string | null;
   petType: Species;
 }) {
   return (
@@ -689,21 +855,96 @@ function ReverseTranslatePanel({
               <Send className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {(petType === "dog" ? Object.keys(DOG_SOUNDS) : Object.keys(CAT_SOUNDS)).map((phrase) => (
-              <button key={phrase} onClick={() => { setInput(phrase); }} className="text-xs px-2.5 py-1 rounded-full bg-cream-100 text-warm-brown hover:bg-brand-orange/10 hover:text-brand-orange-dark transition-colors">
-                {phrase}
-              </button>
-            ))}
+          <div className="mt-2">
+            <div className="text-[10px] text-warm-gray/60 mb-1.5">快捷短语（点击一键生成拟声）：</div>
+            <div className="flex flex-wrap gap-2">
+              {(petType === "dog" ? Object.keys(DOG_SOUNDS) : Object.keys(CAT_SOUNDS)).map((phrase) => (
+                <button
+                  key={phrase}
+                  onClick={() => onQuickPhrase(phrase)}
+                  className={`text-xs px-2.5 py-1 rounded-full transition-colors ${
+                    input === phrase
+                      ? "bg-brand-orange/15 text-brand-orange-dark border border-brand-orange/30"
+                      : "bg-cream-100 text-warm-brown hover:bg-brand-orange/10 hover:text-brand-orange-dark"
+                  }`}
+                >
+                  {phrase}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         {output && (
           <div className="bg-gradient-to-br from-brand-mint/10 to-accent-sky/10 rounded-2xl p-4 border border-brand-mint/20 animate-slide-in-right">
-            <div className="flex items-center gap-2 text-sm text-brand-mint-dark mb-2">
-              <Play className="w-4 h-4" />
-              翻译为{petType === "dog" ? "狗狗" : "猫猫"}语言
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2 text-sm text-brand-mint-dark">
+                {playing ? (
+                  <>
+                    <span className="relative flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-mint opacity-75" />
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-mint" />
+                    </span>
+                    正在播放{petType === "dog" ? "狗狗" : "猫猫"}拟声...
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-4 h-4" />
+                    翻译为{petType === "dog" ? "狗狗" : "猫猫"}语言
+                  </>
+                )}
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={onPlay}
+                  disabled={playing}
+                  className={`px-2.5 py-1 rounded-lg text-[10px] font-medium flex items-center gap-1 transition-colors ${
+                    playing
+                      ? "bg-brand-mint/20 text-brand-mint-dark cursor-wait"
+                      : "bg-white text-brand-mint-dark hover:bg-brand-mint/15 border border-brand-mint/20"
+                  }`}
+                >
+                  <Volume2 className="w-3 h-3" />
+                  {playing ? "播放中 2.5s" : "🔊 播放拟声"}
+                </button>
+                <button
+                  onClick={onSave}
+                  disabled={!!savedId}
+                  className={`px-2.5 py-1 rounded-lg text-[10px] font-medium flex items-center gap-1 transition-colors ${
+                    savedId
+                      ? "bg-brand-orange/15 text-brand-orange-dark border border-brand-orange/30"
+                      : "bg-white text-warm-brown hover:bg-brand-orange/10 border border-cream-200"
+                  }`}
+                >
+                  {savedId ? <Check className="w-3 h-3" /> : <Save className="w-3 h-3" />}
+                  {savedId ? "已保存到历史" : "保存到历史"}
+                </button>
+              </div>
             </div>
-            <p className="text-warm-brown font-medium leading-relaxed">{output}</p>
+            <div className={`relative rounded-xl bg-white/80 p-3 border border-white ${playing ? "animate-pulse" : ""}`}>
+              <div className="absolute -left-1 top-3 w-3 h-3 rotate-45 bg-white/80 border-l border-b border-white" />
+              <p className="text-warm-brown font-medium leading-relaxed text-sm pl-1">{output}</p>
+            </div>
+            {playing && (
+              <div className="mt-3 h-8 flex items-end justify-center gap-0.5">
+                {Array.from({ length: 20 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={`w-1.5 rounded-full ${petType === "dog" ? "bg-brand-orange" : "bg-brand-mint"}`}
+                    style={{
+                      height: `${6 + Math.sin(i * 0.7 + Date.now() / 100) * 12 + Math.random() * 10}px`,
+                      animation: `wave 0.4s ease-in-out infinite`,
+                      animationDelay: `${i * 30}ms`,
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+            {savedId && (
+              <div className="mt-2 flex items-center gap-1 text-[10px] text-brand-orange-dark bg-brand-orange/5 rounded-lg px-2 py-1.5">
+                <Sparkles className="w-3 h-3" />
+                已记录到翻译历史，可在历史面板查看对话详情
+              </div>
+            )}
           </div>
         )}
       </div>
