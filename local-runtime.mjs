@@ -411,6 +411,92 @@ const auditReviewResults = {
   },
 };
 
+const approvalWithdrawRecords = {
+  'app-20260614-003': [
+    { id: 'wd-001', withdrawType: 'INFO_CORRECTION', withdrawReason: '居住地址门牌号信息有误，需撤回更正后重新审批', withdrawnBy: '王警官', withdrawDept: '公安局电子证照管理处', withdrawnAt: '2026-06-14 15:20', rollbackToNode: 'approval', previousApprovalNode: 'certificate', affectedCount: 1, auditRequired: true, auditStatus: 'PASSED', auditNote: '信息更正类撤回，符合业务规范', blameLevel: 'NONE', },
+  ],
+};
+
+const printWatermarkRules = {
+  'CERTIFICATE_COPY': {
+    watermarkEnabled: true,
+    watermarkType: 'FULL_PAGE_DIAGONAL',
+    watermarkContent: '仅供政务业务办理使用 再次复印无效',
+    fontSize: 24,
+    opacity: 0.15,
+    angle: -30,
+    additionalMarkings: ['打印时间', '验证码', '打印网点', '打印人脱敏姓名'],
+    antiForgery: true,
+    validDays: 30,
+    reprintLimit: 3,
+    ruleSource: '《广州市电子证照打印管理规范》',
+  },
+};
+
+const logLiabilityChain = {
+  'app-20260614-003': {
+    liabilityChain: [
+      { node: '受理登记', responsible: '系统', liability: '系统自动受理，无人工介入', riskLevel: 'LOW' },
+      { node: '材料核验', responsible: 'AI预审系统', liability: '智能核验通过，可追溯核验日志', riskLevel: 'LOW' },
+      { node: '部门审批', responsible: '四部门审批系统', liability: '各部门独立审批，各自承担审批责任', riskLevel: 'MEDIUM' },
+      { node: '证照签发', responsible: '王警官（公安局）', liability: '证照签发人对证照内容真实性负责', riskLevel: 'HIGH' },
+      { node: '结果推送', responsible: '系统', liability: '三渠道推送，送达记录可审计', riskLevel: 'LOW' },
+    ],
+    totalLiabilityNodes: 5,
+    highRiskCount: 1,
+    liabilityPrinciple: '谁审批谁负责、谁签发谁负责',
+  },
+};
+
+const materialVerifyFailureSamples = {
+  '114401000001': [
+    { id: 'mfs-001', materialName: '居住证明', failType: 'OCR_RECOGNITION_FAIL', failReason: '照片模糊，无法识别租赁备案编号', sampleImageDesc: '夜间拍摄，光线不足，字迹模糊', failRate: '8.3%', occurrence: '越秀区政务中心 占比32%', suggestion: '引导用户使用高清拍摄模式', sampleCount: 2348 },
+    { id: 'mfs-002', materialName: '居住证明', failType: 'FORMAT_VALIDATION_FAIL', failReason: '房屋租赁备案编号格式不符', sampleImageDesc: '15位编号，应为18位', failRate: '5.7%', occurrence: '海珠区 占比24%', suggestion: '增加格式说明和样例展示', sampleCount: 1620 },
+    { id: 'mfs-003', materialName: '身份证', failType: 'FACE_MISMATCH', failReason: '证件照与自拍人脸匹配度过低', sampleImageDesc: '佩戴眼镜、刘海遮挡', failRate: '4.2%', occurrence: '天河区 占比18%', suggestion: '提示摘掉眼镜、整理刘海', sampleCount: 1195 },
+  ],
+};
+
+const conditionHitRecords = {
+  '114401000001': {
+    totalApplications: 15230,
+    hitRateByCondition: [
+      { conditionId: 'cond-001', condition: '居住半年以上', hitCount: 14820, hitRate: '97.3%', missReason: '居住登记不满6个月', suggestion: '指引先办理居住登记' },
+      { conditionId: 'cond-002', condition: '合法稳定就业', hitCount: 12680, hitRate: '83.3%', missReason: '社保缴费未满12个月', suggestion: '提供社保补缴指引' },
+      { conditionId: 'cond-003', condition: '合法稳定住所', hitCount: 13950, hitRate: '91.6%', missReason: '无有效房屋租赁备案', suggestion: '推行住所申报承诺制' },
+      { conditionId: 'cond-004', condition: '连续就读（替代）', hitCount: 856, hitRate: '5.6%', missReason: '', suggestion: '在校生可走就读通道' },
+    ],
+    multipleConditionHit: {
+      threeConditionsHit: 11200,
+      threeConditionsHitRate: '73.5%',
+      allConditionsHit: 9850,
+      allConditionsHitRate: '64.7%',
+    },
+  },
+};
+
+const highRiskAuthRecords = [
+  { id: 'hra-001', itemCode: '114401000001', itemName: '居住证办理', riskLevel: 'HIGH', authMethod: 'FACE_RECOGNITION + ID_CARD_VERIFY', userId: 'user-20260614-003', applicationId: 'app-20260614-003', verifiedAt: '2026-06-14 09:16', authLevelBefore: 'L3实名', authLevelAfter: 'L4人脸', traceId: 'TRACE-FACE-20260615-00512', result: 'PASS', similarity: 96.4, livenessScore: 98.2, operatorNote: '高风险事项自动触发二次核验', retentionPeriod: '5年', },
+  { id: 'hra-002', itemCode: '114401000002', itemName: '社保卡申领', riskLevel: 'HIGH', authMethod: 'NFC + ID_CARD_DOUBLE_CHECK', userId: 'user-20260614-002', applicationId: 'app-20260614-002', verifiedAt: '2026-06-15 09:05', authLevelBefore: 'L2登录', authLevelAfter: 'L3芯片核验', traceId: 'TRACE-NFC-20260615-00122', result: 'FALLBACK', similarity: 0, livenessScore: 0, operatorNote: 'NFC读卡失败，降级至身份证核验+人工兜底', retentionPeriod: '5年', },
+];
+
+const bottleneckDeptItemDetails = {
+  '居住证办理': {
+    itemCode: '114401000001',
+    departmentBreakdown: [
+      { dept: '越秀区住建局', disposalCount: 342, avgDisposalHours: 28.5, responsiblePerson: '张伟', lastDisposalAt: '2026-06-15 11:00', bottleneckReason: '租赁备案人工核验耗时长', improvement: '推进备案数据自动核验', },
+      { dept: '海珠区住建局', disposalCount: 256, avgDisposalHours: 22.3, responsiblePerson: '李娜', lastDisposalAt: '2026-06-15 10:30', bottleneckReason: '材料补正率高', improvement: '上线材料样例与OCR预检', },
+      { dept: '天河区公安局', disposalCount: 189, avgDisposalHours: 15.2, responsiblePerson: '王强', lastDisposalAt: '2026-06-15 09:45', bottleneckReason: '人脸核验排队', improvement: '增加人脸识别服务器', },
+    ],
+    nodeBottleneck: {
+      '材料上传': { avgHours: 4.2, volume: '高', bottleneck: '材料拍摄质量参差' },
+      '智能预审': { avgHours: 2.8, volume: '高', bottleneck: 'AI识别准确率待提升' },
+      '部门审批': { avgHours: 36.0, volume: '中', bottleneck: '住建部门核验耗时长' },
+      '证照签发': { avgHours: 1.5, volume: '低', bottleneck: '正常' },
+      '结果推送': { avgHours: 0.5, volume: '低', bottleneck: '正常' },
+    },
+  },
+};
+
 const supervisionRecords = [
   { id: 'spv-001', applicationId: 'app-20260614-002', supervisor: '王处长', supervisorDept: '政务服务处', supervisedAt: '2026-06-15 10:30', supervisionLevel: 'URGENT', content: '请银行加快核验，距超时还有18小时', responseStatus: 'PENDING', responder: '', responseContent: '', followUpCount: 1 },
   { id: 'spv-002', applicationId: 'app-20260614-002', supervisor: '李科长', supervisorDept: '运行监控处', supervisedAt: '2026-06-15 09:45', supervisionLevel: 'NORMAL', content: '请确认跨部门核验进度', responseStatus: 'RESPONDED', responder: '刘芳（工商银行）', responseContent: '正在核验制卡网点产能，预计今日内完成', followUpCount: 0 },
@@ -1479,6 +1565,9 @@ function pageHtml() {
       <td style="font-size:12px;">
         <div style="font-weight:600;color:#172033;">${item.materials}</div>
         <div style="color:#667085;margin-top:2px;">核验规则：${(item.materialVerificationRule || []).length}项 · 适用条件：${conditions.length}条</div>
+        <div style="margin-top:4px;padding:3px 6px;background:#fef2f2;border-radius:4px;font-size:10px;color:#b91c1c;">
+          失败样本：${(materialVerifyFailureSamples[item.item_code] || []).length}类 · 首月 ${(materialVerifyFailureSamples[item.item_code] || [])[0]?.sampleCount || 0} 件
+        </div>
       </td>
       <td style="font-size:12px;">
         <div style="font-weight:600;color:#172033;">${item.formTemplate?.name || '待配置'}</div>
@@ -1491,6 +1580,12 @@ function pageHtml() {
       <td style="font-size:12px;">
         ${readyBadge}<br>
         <small style="color:#98a2b3;">模板复查：${(item.templateReviewRecords || []).length}条</small>
+        <div style="margin-top:4px;padding:2px 6px;background:#eff6ff;border-radius:3px;font-size:10px;color:#1e40af;display:inline-block;">
+          📊 可抽查
+        </div>
+        <div style="margin-top:2px;font-size:10px;color:#667085;">
+          条件命中：${(conditionHitRecords[item.item_code]?.totalApplications || 0).toLocaleString()}件
+        </div>
       </td>
       <td><button onclick="show('/api/service-items/${item.item_code}')">查看详情</button></td>
     </tr>`;
@@ -1508,6 +1603,12 @@ function pageHtml() {
       </div>
       <p>${item.scope} · 延迟 ${item.latency} · 成功率 ${item.successRate}</p>
       ${item.dailyStats ? `<p style="font-size:12px;color:#667085;margin-top:4px;">今日调用：${(item.dailyStats.todayCalls || 0).toLocaleString()} 次 · 成功 ${(item.dailyStats.successCount || 0).toLocaleString()} · 失败 ${(item.dailyStats.failCount || 0).toLocaleString()}</p>` : ''}
+      <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+        <small style="padding:2px 6px;background:#ecfdf3;border-radius:3px;color:#065f46;">✓ 授权凭证</small>
+        <small style="padding:2px 6px;background:#fff7ed;border-radius:3px;color:#92400e;">↓ 降级处理</small>
+        <small style="padding:2px 6px;background:#faf5ff;border-radius:3px;color:#6b21a8;">↻ 二次核验</small>
+        ${item.status === 'DEGRADED' ? '<small style="padding:2px 6px;background:#fef2f2;border-radius:3px;color:#b91c1c;">⚠ 高风险留痕</small>' : ''}
+      </div>
       ${item.auditTrail && item.auditTrail.length > 0 ? `
         <div style="margin-top:8px;padding:8px;background:#f8fafc;border-radius:6px;">
           <small style="font-weight:600;color:#344054;">最近调用明细：</small>
@@ -1523,7 +1624,14 @@ function pageHtml() {
       ` : ''}
     </div>
   `).join('');
-  const apiRows = openApiApps.map((app) => `<tr><td>${app.appId}</td><td>${app.name}</td><td>${app.scopes}</td><td>${app.callsToday.toLocaleString()}</td><td><span class="badge">${app.status}</span></td></tr>`).join('');
+  const apiRows = openApiApps.map((app) => `<tr><td>${app.appId}</td><td>${app.name}</td><td>${app.scopes}</td><td>${app.callsToday.toLocaleString()}</td><td>
+  <span class="badge">${app.status}</span>
+  <div style="margin-top:4px;display:flex;gap:3px;flex-wrap:wrap;">
+    <small style="padding:1px 5px;background:#eff6ff;border-radius:3px;color:#1e40af;font-size:9px;">授权范围</small>
+    <small style="padding:1px 5px;background:#fef2f2;border-radius:3px;color:#b91c1c;font-size:9px;">拦截规则</small>
+    <small style="padding:1px 5px;background:#f0fdf4;border-radius:3px;color:#166534;font-size:9px;">回执追踪</small>
+  </div>
+</td></tr>`).join('');
   const bottleneckRows = bottleneckReports.map((item) => `
     <tr>
       <td><strong>${item.item}</strong></td>
@@ -1536,6 +1644,11 @@ function pageHtml() {
         ${item.reviewDetail ? `
           <div style="color:#1570EF;font-weight:600;">✅ 可复查</div>
           <small style="color:#667085;">典型案例：${item.reviewDetail.sampleCases.length}条 · 优化建议：${item.reviewDetail.improvementSuggestions.length}项</small>
+          <div style="margin-top:4px;display:flex;gap:3px;flex-wrap:wrap;">
+            <small style="padding:1px 5px;background:#fffbeb;border-radius:3px;color:#92400e;font-size:9px;">🔍 归因</small>
+            <small style="padding:1px 5px;background:#ecfdf5;border-radius:3px;color:#065f46;font-size:9px;">📋 处置</small>
+            <small style="padding:1px 5px;background:#eff6ff;border-radius:3px;color:#1e40af;font-size:9px;">🏢 部门</small>
+          </div>
         ` : '<small style="color:#98a2b3;">明细待补充</small>'}
       </td>
     </tr>
@@ -1642,6 +1755,30 @@ function pageHtml() {
         <small style="color:#075985;">${crossPlatformMap.identityInfo.name} · 身份证：${crossPlatformMap.identityInfo.idCardHash} · ${crossPlatformMap.identityInfo.realNameVerified ? '已实名' : '未实名'}</small>
       </div>
       <p style="font-size:11px;color:#64748b;margin-top:6px;">同步时间：${crossPlatformMap.lastSyncAt} · 状态：${crossPlatformMap.mappingStatus === 'ACTIVE' ? '正常' : crossPlatformMap.mappingStatus}</p>
+    </div>
+  ` : '';
+  const highRiskAuthHtml = highRiskAuthRecords && highRiskAuthRecords.length > 0 ? `
+    <div class="depth-section" style="background:#fef2f2;border:1px solid #fecaca;">
+      <h3 style="color:#991b1b;">🚨 高风险事项核验留痕 · ${highRiskAuthRecords.length}条</h3>
+      <div style="max-height:250px;overflow-y:auto;">
+        ${highRiskAuthRecords.map(record => `
+          <div style="padding:8px;background:white;border:1px solid #fee2e2;border-radius:4px;margin-bottom:6px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="font-size:12px;color:#991b1b;">${record.itemName}</strong>
+              <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:${record.result === 'PASS' ? '#dcfce7' : record.result === 'FALLBACK' ? '#fef3c7' : '#fee2e2'};color:${record.result === 'PASS' ? '#166534' : record.result === 'FALLBACK' ? '#92400e' : '#991b1b'};">${record.result === 'PASS' ? '核验通过' : record.result === 'FALLBACK' ? '降级通过' : '待核验'}</span>
+            </div>
+            <div style="font-size:11px;color:#667085;margin-top:2px;">
+              核验方式：${record.authMethod} · 等级跃迁：${record.authLevelBefore} → ${record.authLevelAfter}
+            </div>
+            <div style="font-size:10px;color:#98a2b3;margin-top:2px;">
+              trace: ${record.traceId} · 留存 ${record.retentionPeriod}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <p style="font-size:10px;color:#991b1b;margin-top:6px;text-align:right;">
+        依据《政务服务高风险事项身份核验管理办法》
+      </p>
     </div>
   ` : '';
   const firstOpenApi = openApiApps[0];
@@ -1794,6 +1931,37 @@ function pageHtml() {
       </div>
     </div>
   ` : '';
+  const firstBottleneckDept = bottleneckDeptItemDetails[bottleneckReports[0]?.item] || null;
+  const bottleneckDeptDetailHtml = firstBottleneckDept ? `
+    <div class="depth-section" style="background:#faf5ff;border:1px solid #ddd6fe;">
+      <h3 style="color:#5b21b6;">🏢 部门处置明细 · ${firstBottleneckDept.departmentBreakdown.length}个部门</h3>
+      <div class="detail-grid">
+        ${firstBottleneckDept.departmentBreakdown.map(dept => `
+          <div class="detail-item" style="border-left:3px solid #8b5cf6;">
+            <strong>${dept.dept}</strong>
+            <span style="font-size:11px;color:#6b21a8;">责任人：${dept.responsiblePerson}</span>
+            <div style="font-size:11px;color:#475467;margin-top:4px;">
+              处置 <strong>${dept.disposalCount}</strong> 件 · 平均耗时 <strong style="color:#92400e;">${dept.avgDisposalHours}h</strong>
+            </div>
+            <p style="font-size:10px;color:#6b7280;margin-top:2px;">堵点原因：${dept.bottleneckReason}</p>
+            <p style="font-size:10px;color:#065f46;margin-top:2px;">💡 ${dept.improvement}</p>
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:8px;">
+        <small style="font-weight:600;color:#4c1d95;">各节点耗时分布：</small>
+        <div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;">
+          ${Object.entries(firstBottleneckDept.nodeBottleneck).map(([node, info]) => `
+            <div style="flex:1;min-width:100px;padding:6px 8px;background:white;border:1px solid #e9d5ff;border-radius:4px;">
+              <div style="font-size:11px;font-weight:600;color:#581c87;">${node}</div>
+              <div style="font-size:10px;color:#6b7280;margin-top:2px;">平均 ${info.avgHours}h · ${info.volume === '高' ? '<span style="color:#dc2626;">' : info.volume === '中' ? '<span style="color:#f59e0b;">' : '<span style="color:#22c55e;">'}${info.volume}</span>量</div>
+              <div style="font-size:9px;color:#9ca3af;margin-top:1px;">${info.bottleneck}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  ` : '';
 
   const firstAppId = apps[0]?.id || 'app-20260614-001';
   const firstApprovals = firstFlow.approvalOpinions;
@@ -1895,6 +2063,32 @@ function pageHtml() {
     </div>
   ` : '';
 
+  const printWatermarkHtml = printWatermarkRules['CERTIFICATE_COPY'] ? `
+    <div class="depth-section" style="background:#f0f9ff;border:1px solid #bae6fd;">
+      <h3 style="color:#075985;">💧 打印水印规则</h3>
+      <div style="padding:10px;background:white;border-radius:6px;border:1px solid #e0f2fe;margin-top:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong style="color:#0369a1;">${printWatermarkRules['CERTIFICATE_COPY'].watermarkType === 'FULL_PAGE_DIAGONAL' ? '全页面斜向水印' : printWatermarkRules['CERTIFICATE_COPY'].watermarkType}</strong>
+          <span class="badge" style="font-size:11px;">${printWatermarkRules['CERTIFICATE_COPY'].watermarkEnabled ? '已启用' : '未启用'}</span>
+        </div>
+        <p style="font-size:12px;color:#475467;margin:6px 0 0;">水印内容：${printWatermarkRules['CERTIFICATE_COPY'].watermarkContent}</p>
+        <div class="detail-grid" style="margin-top:8px;">
+          <div class="detail-item" style="border-left:none;"><strong>字号</strong><span>${printWatermarkRules['CERTIFICATE_COPY'].fontSize}px</span></div>
+          <div class="detail-item" style="border-left:none;"><strong>透明度</strong><span>${printWatermarkRules['CERTIFICATE_COPY'].opacity * 100}%</span></div>
+          <div class="detail-item" style="border-left:none;"><strong>角度</strong><span>${printWatermarkRules['CERTIFICATE_COPY'].angle}°</span></div>
+          <div class="detail-item" style="border-left:none;"><strong>重印限制</strong><span>${printWatermarkRules['CERTIFICATE_COPY'].reprintLimit}次</span></div>
+        </div>
+        <div style="margin-top:6px;">
+          <small style="font-weight:600;color:#344054;">附加标识：</small>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:2px;">
+            ${printWatermarkRules['CERTIFICATE_COPY'].additionalMarkings.map(m => `<span style="font-size:10px;padding:2px 6px;background:#f0f9ff;border-radius:10px;color:#0369a1;">${m}</span>`).join('')}
+          </div>
+        </div>
+        <p style="font-size:10px;color:#98a2b3;margin-top:8px;text-align:right;">依据：${printWatermarkRules['CERTIFICATE_COPY'].ruleSource}</p>
+      </div>
+    </div>
+  ` : '';
+
   const auditReviewResultHtml = auditReviewResults[firstApplicationId] ? `
     <div class="depth-section" style="background:#f0fdf4;border:1px solid #bbf7d0;">
       <h3 style="color:#166534;">✅ 审计复查结果 · ${auditReviewResults[firstApplicationId].auditType === 'FULL_PROCESS_AUDIT' ? '全流程审计' : '专项审计'}</h3>
@@ -1925,6 +2119,28 @@ function pageHtml() {
       </div>
       <div style="margin-top:6px;font-size:11px;color:#667085;text-align:right;">
         审计人：${auditReviewResults[firstApplicationId].auditor}（${auditReviewResults[firstApplicationId].auditorDept}）· ${auditReviewResults[firstApplicationId].auditedAt}
+      </div>
+    </div>
+  ` : '';
+
+  const logLiabilityHtml = logLiabilityChain[firstApplicationId] ? `
+    <div class="depth-section" style="background:#fafafa;border:1px solid #d4d4d4;">
+      <h3 style="color:#525252;">⚖️ 日志追责链路 · ${logLiabilityChain[firstApplicationId].totalLiabilityNodes}个责任节点</h3>
+      <p style="font-size:12px;color:#525252;margin-top:4px;">责任原则：${logLiabilityChain[firstApplicationId].liabilityPrinciple}</p>
+      <div style="margin-top:8px;">
+        ${logLiabilityChain[firstApplicationId].liabilityChain.map(node => `
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:white;border:1px solid #e5e5e5;border-radius:4px;margin-bottom:4px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:${node.riskLevel === 'HIGH' ? '#dc2626' : node.riskLevel === 'MEDIUM' ? '#f59e0b' : '#22c55e'};flex-shrink:0;"></div>
+            <div style="flex:1;">
+              <strong style="font-size:12px;color:#172033;">${node.node}</strong>
+              <small style="color:#667085;margin-left:8px;">${node.responsible}</small>
+            </div>
+            <span style="font-size:10px;color:${node.riskLevel === 'HIGH' ? '#dc2626' : node.riskLevel === 'MEDIUM' ? '#f59e0b' : '#16a34a'};">${node.liability}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:6px;text-align:right;font-size:11px;color:#737373;">
+        高风险节点 ${logLiabilityChain[firstApplicationId].highRiskCount} 个 · 全链路可追溯
       </div>
     </div>
   ` : '';
@@ -2344,6 +2560,53 @@ function pageHtml() {
       `).join('')}
     </div>
   ` : '';
+
+  const materialFailureSamplesHtml = materialVerifyFailureSamples[firstItem?.item_code] && materialVerifyFailureSamples[firstItem?.item_code].length > 0 ? `
+    <div class="depth-section" style="background:#fef2f2;border:1px solid #fecaca;">
+      <h3 style="color:#991b1b;">🔍 材料电子化校验失败样本 · ${materialVerifyFailureSamples[firstItem?.item_code].length}类</h3>
+      <div class="detail-grid">
+        ${materialVerifyFailureSamples[firstItem?.item_code].map(sample => `
+          <div class="detail-item" style="border-left:3px solid #ef4444;">
+            <strong>${sample.materialName}：${sample.failType === 'OCR_RECOGNITION_FAIL' ? 'OCR识别失败' : sample.failType === 'FORMAT_VALIDATION_FAIL' ? '格式校验失败' : sample.failType === 'FACE_MISMATCH' ? '人脸不匹配' : sample.failType}</strong>
+            <p style="font-size:11px;color:#667085;margin:4px 0 0;">${sample.failReason}</p>
+            <div style="margin-top:4px;font-size:11px;color:#475467;">
+              <span style="color:#b91c1c;font-weight:600;">失败率 ${sample.failRate}</span>
+              · 月发 ${sample.sampleCount} 件
+            </div>
+            <p style="font-size:10px;color:#065f46;margin-top:4px;">💡 ${sample.suggestion}</p>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  ` : '';
+
+  const conditionHitRecordsHtml = conditionHitRecords[firstItem?.item_code] ? `
+    <div class="depth-section" style="background:#f0fdf4;border:1px solid #86efac;">
+      <h3 style="color:#166534;">📊 适用条件命中记录 · 月 ${conditionHitRecords[firstItem?.item_code].totalApplications.toLocaleString()} 件</h3>
+      <div class="detail-grid">
+        ${conditionHitRecords[firstItem?.item_code].hitRateByCondition.map(cond => `
+          <div class="detail-item" style="border-left:3px solid #22c55e;">
+            <strong>${cond.condition}</strong>
+            <div style="margin-top:4px;">
+              <div style="display:flex;justify-content:space-between;font-size:11px;">
+                <span style="color:#475467;">命中数：${cond.hitCount.toLocaleString()}</span>
+                <span style="font-weight:600;color:#16a34a;">${cond.hitRate}</span>
+              </div>
+              <div style="height:4px;background:#dcfce7;border-radius:2px;margin-top:2px;overflow:hidden;">
+                <div style="height:100%;width:${parseFloat(cond.hitRate.replace('%',''))}%;background:#22c55e;border-radius:2px;"></div>
+              </div>
+            </div>
+            ${cond.missReason ? `<p style="font-size:10px;color:#92400e;margin-top:4px;">未通过原因：${cond.missReason}</p>` : ''}
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:8px;padding:6px 8px;background:#dcfce7;border-radius:4px;font-size:11px;color:#166534;">
+        三条件同时命中：${conditionHitRecords[firstItem?.item_code].multipleConditionHit.threeConditionsHitRate}（${conditionHitRecords[firstItem?.item_code].multipleConditionHit.threeConditionsHit.toLocaleString()}件）
+        · 全部条件命中：${conditionHitRecords[firstItem?.item_code].multipleConditionHit.allConditionsHitRate}（${conditionHitRecords[firstItem?.item_code].multipleConditionHit.allConditionsHit.toLocaleString()}件）
+      </div>
+    </div>
+  ` : '';
+
   const formVersionDiffsHtml = firstItemAudit?.formVersionDiffs && firstItemAudit.formVersionDiffs.length > 0 ? `
     <div class="depth-section">
       <h3>📋 表单版本差异对比 · ${firstItemAudit.formVersionDiffs.length}个历史版本</h3>
@@ -2727,7 +2990,9 @@ function pageHtml() {
       ${operationLogsHtml}
       ${restartRecordsHtml}
       ${printRecordsHtml}
+      ${printWatermarkHtml}
       ${auditReviewResultHtml}
+      ${logLiabilityHtml}
     </section>
 
 <section class="grid columns">
@@ -2751,6 +3016,7 @@ function pageHtml() {
     ${authFailureHtml}
     ${secondaryVerifyHtml}
     ${crossPlatformMapHtml}
+    ${highRiskAuthHtml}
   </div>
 </section>
 
@@ -2771,6 +3037,8 @@ function pageHtml() {
   </div>
   ${timeLimitChangesHtml}
   ${materialFailuresHtml}
+  ${materialFailureSamplesHtml}
+  ${conditionHitRecordsHtml}
   ${formVersionDiffsHtml}
   ${conditionConflictsHtml}
   ${formChangelogHtml}
@@ -2837,6 +3105,7 @@ function pageHtml() {
   </table>
   ${bottleneckLinkageHtml}
   ${bottleneckNodeDetailHtml}
+  ${bottleneckDeptDetailHtml}
   ${bottleneckHeatmapHtml}
   ${attributionHtml}
 </section>
