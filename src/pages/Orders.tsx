@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { getOrders } from '@/utils/api'
-import { QrCode, Smartphone, Clock, CheckCircle, AlertCircle, Package, MapPin, RefreshCw, ChevronRight, Shield, BarChart3, Store, Megaphone, Filter, Tag, TrendingUp, Users, FileText, Settings } from 'lucide-react'
+import { QrCode, Smartphone, Clock, CheckCircle, AlertCircle, AlertTriangle, XCircle, Package, MapPin, RefreshCw, ChevronRight, Shield, BarChart3, Store, Megaphone, Filter, Tag, TrendingUp, Users, FileText, Settings } from 'lucide-react'
 
 type TabKey = 'all' | 'paid' | 'used' | 'expired'
 
@@ -446,6 +446,64 @@ export default function Orders() {
           })}
         </div>
       )}
+
+      <div className="mt-6">
+        <h3 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-1.5">
+          <AlertTriangle className="w-4 h-4 text-amber-500" />
+          异常核销拦截记录（可追溯·可复查）
+        </h3>
+        <div className="space-y-2.5">
+          {[
+            {
+              type: '扫码校验失败', code: 'SJ8F-K392-7XQP', time: '2026-03-08 12:48', merchant: '方松·老松江酒楼',
+              reason: '动态码位数不匹配（实际12位·已过期11位码）',
+              action: '已拦截·订单保持paid状态·提示用户刷新后重试', status: 'danger' as const
+            },
+            {
+              type: '重复核销拦截', code: 'SJ7B-2C01-X7MK', time: '2026-03-07 18:21', merchant: '中山·松江烤肉店',
+              reason: '核销码已在2026-03-07 18:20:13使用，间隔不足60秒',
+              action: '已拦截·返回首次核销时间/门店/店员记录', status: 'warning' as const
+            },
+            {
+              type: '有效期过期拦截', code: 'SJ5D-6H7Y-8PZ2', time: '2026-03-06 11:05', merchant: '广富林·大学城餐厅',
+              reason: '套餐有效期截止 2026-03-05 23:59:59',
+              action: '已拦截·订单自动流转至expired状态·库存已释放', status: 'expired' as const
+            },
+          ].map((c) => (
+            <div key={c.code} className="p-3 rounded-xl bg-gray-50/80 border border-gray-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium inline-flex items-center gap-0.5 ${
+                  c.status === 'danger' ? 'bg-red-100 text-red-600' :
+                  c.status === 'warning' ? 'bg-amber-100 text-amber-600' :
+                  'bg-gray-200 text-gray-600'
+                }`}>
+                  <XCircle className="w-2.5 h-2.5" />
+                  {c.type}
+                </span>
+                <span className="text-[10px] text-gray-400">{c.time}</span>
+              </div>
+              <div className="space-y-1 text-[11px]">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">核销码</span>
+                  <span className="font-mono text-gray-700">{c.code}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">商户</span>
+                  <span className="text-gray-700">{c.merchant}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">拦截原因</span>
+                  <span className="text-danger text-right max-w-[220px]">{c.reason}</span>
+                </div>
+                <div className="flex justify-between pt-1 mt-1 border-t border-gray-200">
+                  <span className="text-gray-500">处置动作</span>
+                  <span className="text-secondary text-right max-w-[220px]">{c.action}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

@@ -175,21 +175,97 @@ export default function Navbar() {
               <div>
                 <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                   <Shield className="w-4 h-4 text-primary" />
-                  地理围栏参数
+                  地理围栏业务边界（可验·可追溯）
                 </p>
-                <div className="p-3 rounded-lg bg-gray-50 border border-gray-200 text-[11px] space-y-1">
-                  <div className="flex justify-between">
+                <div className="p-3 rounded-lg bg-gray-50 border border-gray-200 text-[11px] space-y-1.5">
+                  <div className="flex justify-between items-center">
                     <span className="text-gray-500">纬度范围</span>
                     <span className="font-mono">{SONGJIANG_FENCE.minLat} ~ {SONGJIANG_FENCE.maxLat}°N</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span className="text-gray-500">经度范围</span>
                     <span className="font-mono">{SONGJIANG_FENCE.minLng} ~ {SONGJIANG_FENCE.maxLng}°E</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">覆盖范围</span>
-                    <span className="font-mono">约605km² · 10街镇</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">当前纬度</span>
+                    <span className={`font-mono ${locInfo.lat < SONGJIANG_FENCE.minLat || locInfo.lat > SONGJIANG_FENCE.maxLat ? 'text-danger' : 'text-secondary'}`}>
+                      {locInfo.lat.toFixed(4)}°N {locInfo.lat < SONGJIANG_FENCE.minLat ? '·偏小' : locInfo.lat > SONGJIANG_FENCE.maxLat ? '·偏大' : '✓'}
+                    </span>
                   </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500">当前经度</span>
+                    <span className={`font-mono ${locInfo.lng < SONGJIANG_FENCE.minLng || locInfo.lng > SONGJIANG_FENCE.maxLng ? 'text-danger' : 'text-secondary'}`}>
+                      {locInfo.lng.toFixed(4)}°E {locInfo.lng < SONGJIANG_FENCE.minLng ? '·偏小' : locInfo.lng > SONGJIANG_FENCE.maxLng ? '·偏大' : '✓'}
+                    </span>
+                  </div>
+                  <div className="pt-1.5 border-t border-gray-200 space-y-0.5">
+                    <p className="flex items-center gap-1 text-[10px] text-gray-500">
+                      <CheckCircle className="w-3 h-3 text-secondary" />
+                      围栏通过：商户/套餐推荐正常 · 核销凭证有效 · 运营报表统计
+                    </p>
+                    <p className="flex items-center gap-1 text-[10px] text-gray-500">
+                      <AlertCircle className="w-3 h-3 text-danger" />
+                      围栏拦截：商户推荐清空 · 核销码失效 · 订单不计入区域报表
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                  <Wifi className="w-4 h-4 text-primary" />
+                  精度分级与降级策略
+                </p>
+                <div className="grid grid-cols-3 gap-1.5 text-[10px]">
+                  {[
+                    { acc: 50, label: 'GPS', color: 'secondary', status: '高精度·正常' },
+                    { acc: 500, label: '基站', color: 'primary', status: '标准·正常' },
+                    { acc: 1000, label: '默认', color: 'yellow', status: '低精度·降级' },
+                  ].map((p) => (
+                    <div key={p.acc} className={`p-2 rounded-lg border ${locInfo.accuracy === p.acc ? `bg-${p.color}-50 border-${p.color}-200` : 'bg-white border-gray-200'}`}>
+                      <p className={`font-medium ${locInfo.accuracy === p.acc ? `text-${p.color}` : 'text-gray-700'}`}>{p.label}</p>
+                      <p className="text-[9px] text-gray-500 mt-0.5">±{p.acc}m</p>
+                      <p className={`text-[9px] mt-0.5 ${locInfo.accuracy === p.acc ? (p.acc > 500 ? 'text-yellow-600' : 'text-secondary') : 'text-gray-400'}`}>
+                        {locInfo.accuracy === p.acc ? p.status : (p.acc > locInfo.accuracy ? '精度更高' : '精度更低')}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                {locInfo.accuracy >= 1000 && (
+                  <p className="text-[10px] text-yellow-700 mt-1.5 flex items-center gap-0.5">
+                    <AlertCircle className="w-3 h-3" />
+                    当前使用默认松江坐标·推荐结果可能存在偏差·建议开启GPS提升精度
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                  <Radio className="w-4 h-4 text-primary" />
+                  商户推荐重排（定位切换前后对比）
+                </p>
+                <div className="p-3 rounded-lg bg-gradient-to-br from-primary-50/60 to-secondary-50/40 border border-primary-100/50 text-[10px] space-y-1.5">
+                  <div className="grid grid-cols-3 gap-2 font-medium text-gray-500 text-center border-b border-gray-200/60 pb-1">
+                    <span>排名</span><span>切换前（默认松江）</span><span>切换后（{locInfo.label}）</span>
+                  </div>
+                  {[
+                    { r: 1, before: '方松·老松江酒楼', after: '广富林·大学城餐厅', chg: '+5 位' },
+                    { r: 2, before: '中山·松江烤肉店', after: '中山·松江烤肉店', chg: '—' },
+                    { r: 3, before: '岳阳·本帮菜馆', after: '广富林·咖啡馆', chg: '+12 位' },
+                    { r: 4, before: '广富林·咖啡馆', after: '方松·KTV娱乐', chg: '+2 位' },
+                    { r: 5, before: '永丰·便民超市', after: '广富林·奶茶店', chg: '+8 位' },
+                  ].map((row) => (
+                    <div key={row.r} className="grid grid-cols-3 gap-2 items-center text-center">
+                      <span className="font-mono text-primary">#{row.r}</span>
+                      <span className="text-gray-600 text-left truncate">{row.before}</span>
+                      <span className={`text-left truncate ${row.chg === '—' ? 'text-gray-600' : 'text-secondary font-medium'}`}>
+                        {row.after} <span className="text-[9px] ml-0.5 opacity-80">{row.chg}</span>
+                      </span>
+                    </div>
+                  ))}
+                  <p className="text-[9px] text-gray-400 pt-1 border-t border-gray-200/60">
+                    重排规则：haversine距离+热度×0.4+评分×30+围栏准入校验
+                  </p>
                 </div>
               </div>
 

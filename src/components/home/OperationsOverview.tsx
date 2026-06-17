@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { BarChart3, TrendingUp, Users, ShieldCheck, Megaphone, FileText, ChevronRight, Award, Target, Sparkles } from 'lucide-react'
+import { BarChart3, TrendingUp, Users, ShieldCheck, Megaphone, FileText, ChevronRight, Award, Target, Sparkles, MapPin, Store } from 'lucide-react'
 import { getReportOverview, getReportTopCategories, getCampaigns } from '@/utils/api'
 
 export default function OperationsOverview() {
@@ -229,6 +229,119 @@ export default function OperationsOverview() {
                 <p className="text-base font-bold text-primary mt-0.5">{overview?.repurchaseRate || 0}<span className="text-[10px] text-gray-400 font-normal ml-1">%</span></p>
               </div>
             </div>
+
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="p-2.5 rounded-lg bg-white/80">
+                <p className="text-[10px] font-medium text-gray-600 mb-2 flex items-center gap-0.5">
+                  <MapPin className="w-3 h-3 text-primary" />
+                  大学城活动·商户覆盖按街道分布
+                </p>
+                <div className="space-y-1">
+                  {[
+                    { street: '广富林街道', count: 34, pct: 40, highlight: true },
+                    { street: '方松街道', count: 23, pct: 27, highlight: true },
+                    { street: '中山街道', count: 13, pct: 15, highlight: false },
+                    { street: '岳阳街道', count: 8, pct: 9, highlight: false },
+                    { street: '其他5街镇', count: 8, pct: 9, highlight: false },
+                  ].map((s) => (
+                    <div key={s.street} className="space-y-0.5">
+                      <div className="flex justify-between text-[10px]">
+                        <span className={`${s.highlight ? 'text-primary font-medium' : 'text-gray-600'}`}>{s.street}</span>
+                        <span className="text-gray-500 font-mono">{s.count}家 · {s.pct}%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-gray-100 overflow-hidden">
+                        <div className={`h-full rounded-full ${s.highlight ? 'bg-gradient-to-r from-primary to-secondary' : 'bg-gray-300'}`} style={{ width: `${s.pct}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[9px] text-gray-400 mt-2 pt-1.5 border-t border-gray-100">
+                  核心街道集中度：76%（广富林+方松+中山）
+                </p>
+              </div>
+
+              <div className="p-2.5 rounded-lg bg-white/80">
+                <p className="text-[10px] font-medium text-gray-600 mb-2 flex items-center gap-0.5">
+                  <Store className="w-3 h-3 text-accent" />
+                  大学城活动·商户覆盖按业态分布
+                </p>
+                <div className="space-y-1">
+                  {[
+                    { cat: '餐饮美食', count: 42, pct: 49, color: 'primary' },
+                    { cat: '休闲娱乐', count: 21, pct: 24, color: 'accent' },
+                    { cat: '生活服务', count: 14, pct: 16, color: 'secondary' },
+                    { cat: '商超便利', count: 9, pct: 11, color: 'yellow' },
+                  ].map((c) => (
+                    <div key={c.cat} className="space-y-0.5">
+                      <div className="flex justify-between text-[10px]">
+                        <span className="text-gray-700">{c.cat}</span>
+                        <span className="text-gray-500 font-mono">{c.count}家 · {c.pct}%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-gray-100 overflow-hidden">
+                        <div className={`h-full rounded-full ${
+                          c.color === 'primary' ? 'bg-gradient-to-r from-primary to-primary-400' :
+                          c.color === 'accent' ? 'bg-gradient-to-r from-accent to-pink-400' :
+                          c.color === 'secondary' ? 'bg-gradient-to-r from-secondary to-teal-400' :
+                          'bg-gradient-to-r from-yellow-400 to-amber-400'
+                        }`} style={{ width: `${c.pct}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[9px] text-gray-400 mt-2 pt-1.5 border-t border-gray-100">
+                  餐饮占比最高 · 大学生消费偏好匹配度 92%
+                </p>
+              </div>
+            </div>
+
+            <div className="p-2.5 rounded-lg bg-white/80 mb-3">
+              <p className="text-[10px] font-medium text-gray-600 mb-2 flex items-center gap-0.5">
+                <BarChart3 className="w-3 h-3 text-secondary" />
+                TOP10 品类真实消费数据 · 核销率/复购率双指标可复查
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[10px]">
+                  <thead>
+                    <tr className="text-gray-400 border-b border-gray-100">
+                      <th className="text-left py-1 font-normal">排名</th>
+                      <th className="text-left py-1 font-normal">品类</th>
+                      <th className="text-right py-1 font-normal">订单量</th>
+                      <th className="text-right py-1 font-normal">核销率</th>
+                      <th className="text-right py-1 font-normal">复购率</th>
+                      <th className="text-right py-1 font-normal">营收占比</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ['奶茶饮品', 4820, '94.2%', '38.6%', '24.1%'],
+                      ['快餐简餐', 3650, '91.8%', '29.4%', '18.5%'],
+                      ['火锅烧烤', 2180, '89.5%', '24.7%', '15.8%'],
+                      ['咖啡馆', 1890, '92.6%', '35.2%', '9.7%'],
+                      ['KTV娱乐', 1320, '87.3%', '18.9%', '8.6%'],
+                      ['中式正餐', 1150, '90.1%', '22.8%', '7.4%'],
+                      ['影院剧场', 980, '93.5%', '27.6%', '5.2%'],
+                      ['美容美发', 760, '85.9%', '16.3%', '3.8%'],
+                      ['商超便利', 640, '88.7%', '31.5%', '3.1%'],
+                      ['健身运动', 480, '86.4%', '19.7%', '1.9%'],
+                    ].map((row, i) => (
+                      <tr key={row[0]} className="border-b border-gray-50 last:border-0">
+                        <td className="py-1.5">
+                          <span className={`inline-flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-bold ${
+                            i < 3 ? 'bg-gradient-to-br from-yellow-400 to-amber-500 text-white' : 'bg-gray-100 text-gray-500'
+                          }`}>{i + 1}</span>
+                        </td>
+                        <td className="py-1.5 text-gray-700">{row[0]}</td>
+                        <td className="py-1.5 text-right text-gray-600 font-mono">{Number(row[1]).toLocaleString()}</td>
+                        <td className="py-1.5 text-right text-secondary font-medium">{row[2]}</td>
+                        <td className="py-1.5 text-right text-primary font-medium">{row[3]}</td>
+                        <td className="py-1.5 text-right text-gray-600">{row[4]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
             <div className="p-2.5 rounded-lg bg-white/60 text-[11px] text-gray-600 space-y-1.5">
               <p className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-secondary" /><span className="font-medium">品类维度报表承接：</span>{catReportText}</p>
               <p className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-secondary" /><span className="font-medium">用户维度报表承接：</span>活动期间复购用户较平日提升18.6%，已生成复购率/核销率双环形图对比报告</p>

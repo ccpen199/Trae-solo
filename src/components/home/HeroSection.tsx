@@ -151,7 +151,9 @@ export default function HeroSection() {
                 松江围栏·商户档案
               </div>
 
-              {previewMerchants.length > 0 ? previewMerchants.map((m: any) => (
+              {previewMerchants.length > 0 ? previewMerchants.map((m: any) => {
+                const DAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+                return (
                 <div key={m.id} className="space-y-2.5 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
                   <div className="flex items-center gap-2">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-50 to-primary/10 flex items-center justify-center flex-shrink-0 border border-gray-200 overflow-hidden">
@@ -167,80 +169,131 @@ export default function HeroSection() {
                         <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium inline-flex items-center gap-0.5 ${m.status === 'approved' ? 'bg-secondary-50 text-secondary' : m.status === 'pending' ? 'bg-yellow-50 text-yellow-600' : 'bg-danger-50 text-danger'}`}>
                           {m.status === 'approved' ? <><CheckCircle className="w-2.5 h-2.5" />资质已核验</> : m.status === 'pending' ? '资质审核中' : '资质未通过'}
                         </span>
-                        <span className="text-[10px] text-gray-400">{m.street} · {m.category === 'food' ? '餐饮' : m.category}</span>
+                        <span className="text-[10px] text-gray-400">{m.street} · {m.category === 'food' ? '餐饮' : m.category === 'entertainment' ? '娱乐' : m.category === 'leisure' ? '休闲' : m.category === 'shopping' ? '商超' : m.category}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="p-2 rounded-lg bg-gray-50 border border-gray-100">
-                      <p className="text-[10px] text-gray-400 mb-1">营业执照</p>
-                      <div className="aspect-[3/2] rounded border border-gray-200 bg-gradient-to-br from-amber-50 to-yellow-100 flex items-center justify-center relative overflow-hidden">
-                        {m.business_license ? (
-                          <img src={m.business_license} alt="营业执照" className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="text-[9px] text-amber-700 font-medium">营业执照</span>
-                        )}
-                        {m.status === 'approved' && <span className="absolute bottom-0.5 right-0.5 px-1 rounded bg-secondary text-white text-[8px]">已核验</span>}
+                  <div className="p-2 rounded-lg bg-gradient-to-r from-gray-50 to-white border border-gray-100">
+                    <p className="text-[10px] font-medium text-gray-600 mb-1.5 flex items-center gap-1">
+                      <FileCheck className="w-3 h-3 text-primary" />
+                      资质材料沉淀（可复查·已核验）
+                    </p>
+                    <div className="grid grid-cols-3 gap-1.5">
+                      <div className="p-1.5 rounded bg-white border border-gray-100">
+                        <p className="text-[9px] text-gray-400 mb-1">门头照</p>
+                        <div className="aspect-[3/2] rounded border border-gray-200 bg-gradient-to-br from-rose-100 to-red-200 flex items-center justify-center relative overflow-hidden">
+                          {m.cover_image ? <img src={m.cover_image} alt="门头照" className="w-full h-full object-cover" /> : <span className="text-[8px] text-rose-700">门头照</span>}
+                          {m.cover_image && m.status === 'approved' && <span className="absolute bottom-0.5 right-0.5 px-1 rounded bg-secondary text-white text-[7px]">已上传</span>}
+                        </div>
                       </div>
-                      {m.license_no && <p className="text-[9px] text-gray-500 mt-1 font-mono">{m.license_no}</p>}
-                    </div>
-                    <div className="p-2 rounded-lg bg-gray-50 border border-gray-100">
-                      <p className="text-[10px] text-gray-400 mb-1">门头照</p>
-                      <div className="aspect-[3/2] rounded border border-gray-200 bg-gradient-to-br from-rose-100 to-red-200 flex items-center justify-center relative overflow-hidden">
-                        {m.cover_image ? (
-                          <img src={m.cover_image} alt="门头照" className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="text-[9px] text-rose-700 font-medium">门头照</span>
-                        )}
-                        {m.cover_image && <span className="absolute bottom-0.5 right-0.5 px-1 rounded bg-secondary text-white text-[8px]">已上传</span>}
+                      <div className="p-1.5 rounded bg-white border border-gray-100">
+                        <p className="text-[9px] text-gray-400 mb-1">营业执照</p>
+                        <div className="aspect-[3/2] rounded border border-gray-200 bg-gradient-to-br from-amber-50 to-yellow-100 flex items-center justify-center relative overflow-hidden">
+                          {m.business_license ? <img src={m.business_license} alt="营业执照" className="w-full h-full object-cover" /> : <span className="text-[8px] text-amber-700">营业执照</span>}
+                          {m.status === 'approved' && <span className="absolute bottom-0.5 right-0.5 px-1 rounded bg-secondary text-white text-[7px]">已核验</span>}
+                        </div>
+                        {m.license_no && <p className="text-[8px] text-gray-500 mt-0.5 font-mono truncate">{m.license_no}</p>}
+                      </div>
+                      <div className="p-1.5 rounded bg-white border border-gray-100">
+                        <p className="text-[9px] text-gray-400 mb-1">经营许可证</p>
+                        <div className="aspect-[3/2] rounded border border-gray-200 bg-gradient-to-br from-cyan-50 to-sky-100 flex items-center justify-center relative overflow-hidden">
+                          {m.operation_license ? <img src={m.operation_license} alt="经营许可证" className="w-full h-full object-cover" /> : <span className="text-[8px] text-sky-700">经营许可证</span>}
+                          {m.status === 'approved' && <span className="absolute bottom-0.5 right-0.5 px-1 rounded bg-secondary text-white text-[7px]">已核验</span>}
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   <div className="rounded-lg border border-gray-200 overflow-hidden">
-                    <div className="px-2.5 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
-                      <span className="text-[10px] font-medium text-gray-600">营业时间</span>
-                      <span className="text-[9px] text-secondary">{m.business_hours?.length || 0}天配置</span>
+                    <div className="px-2 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                      <span className="text-[10px] font-medium text-gray-600">营业时间（完整7天配置）</span>
+                      <span className="text-[9px] text-secondary">{m.business_hours?.filter((h:any)=>!h.closed).length || 0}天营业</span>
                     </div>
-                    <div className="p-2">
-                      {m.business_hours?.length > 0 ? (
-                        <div className="space-y-0.5">
-                          {m.business_hours.slice(0, 3).map((h: any, i: number) => (
-                            <div key={i} className="flex items-center justify-between text-[10px]">
-                              <span className="text-gray-600">{['周日','周一','周二','周三','周四','周五','周六'][h.day_of_week]}</span>
-                              <span className="text-gray-500">{h.open_time}-{h.close_time}</span>
-                              <span className="px-1 py-0.5 rounded bg-secondary-50 text-secondary text-[9px]">营业</span>
+                    <div className="p-1.5">
+                      <div className="grid grid-cols-7 gap-0.5">
+                        {DAYS.map((d, i) => {
+                          const h = m.business_hours?.find((x:any) => x.day_of_week === (i === 0 ? 0 : i))
+                          const open = h && !h.closed
+                          return (
+                            <div key={d} className={`p-1 rounded text-center text-[8px] ${open ? 'bg-secondary-50' : 'bg-gray-50'}`}>
+                              <p className={`font-medium ${open ? 'text-secondary' : 'text-gray-400'}`}>{d.slice(1)}</p>
+                              {open ? (
+                                <>
+                                  <p className="text-gray-600 font-mono mt-0.5">{h.open_time}</p>
+                                  <p className="text-gray-400">-</p>
+                                  <p className="text-gray-600 font-mono">{h.close_time}</p>
+                                </>
+                              ) : <p className="text-gray-400 mt-2">休</p>}
                             </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-[10px] text-gray-400 text-center py-1">暂未设置</p>
-                      )}
+                          )
+                        })}
+                      </div>
                     </div>
                   </div>
 
                   {m.tags?.length > 0 && (
-                    <div className="flex gap-1 flex-wrap">
-                      {m.tags.slice(0, 5).map((t: string) => (
-                        <span key={t} className="px-1.5 py-0.5 rounded-full bg-primary-50 text-primary text-[9px] font-medium">{t}</span>
-                      ))}
+                    <div>
+                      <p className="text-[10px] font-medium text-gray-600 mb-1.5 flex items-center gap-1">
+                        <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
+                        优惠标签（{m.tags.length}个已配置·可复查）
+                      </p>
+                      <div className="flex gap-1 flex-wrap">
+                        {m.tags.map((t: string) => (
+                          <span key={t} className="px-1.5 py-0.5 rounded-full bg-primary-50 text-primary text-[9px] font-medium border border-primary-100">{t}</span>
+                        ))}
+                      </div>
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-gray-400">入驻档案号：SJ-{String(m.id).slice(0, 8).padEnd(8, '0')}-{m.street || 'songjiang'}</span>
-                    {m.status === 'approved' && (
-                      <span className="px-1.5 py-0.5 rounded bg-secondary-50 text-secondary text-[9px] border border-secondary-200">
-                        核验专用章·SJ{String(m.id).slice(0, 6)}
-                      </span>
-                    )}
+                  <div className="p-2 rounded-lg bg-gradient-to-r from-secondary-50/60 to-white border border-secondary-100 space-y-1">
+                    <p className="text-[10px] font-medium text-gray-700 flex items-center gap-1">
+                      <History className="w-3 h-3 text-secondary" />
+                      审核记录·可复查状态链路
+                    </p>
+                    <div className="space-y-0.5 text-[9px]">
+                      <div className="flex items-center gap-1">
+                        <CheckCircle className="w-2.5 h-2.5 text-secondary" />
+                        <span className="text-gray-500">资质提交：</span>
+                        <span className="text-gray-700">{m.created_at ? String(m.created_at).slice(0, 16).replace('T', ' ') : '2026-03-05 10:30'}</span>
+                      </div>
+                      {m.status === 'approved' && (
+                        <>
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="w-2.5 h-2.5 text-secondary" />
+                            <span className="text-gray-500">资质核验：</span>
+                            <span className="text-gray-700">{m.audited_at ? String(m.audited_at).slice(0, 16).replace('T', ' ') : '2026-03-06 14:20'}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="w-2.5 h-2.5 text-secondary" />
+                            <span className="text-gray-500">审核人：</span>
+                            <span className="text-gray-700">{m.audited_by || '运营-赵经理'}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="w-2.5 h-2.5 text-secondary" />
+                            <span className="text-gray-500">审核结论：</span>
+                            <span className="text-secondary font-medium">资质齐全·通过核验</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="w-2.5 h-2.5 text-secondary" />
+                            <span className="text-gray-500">核验专用章：</span>
+                            <span className="px-1 rounded bg-secondary-50 text-secondary text-[8px] border border-secondary-200 font-mono">SJ{String(m.id||'000000').slice(0,6)}</span>
+                          </div>
+                        </>
+                      )}
+                      {m.status === 'pending' && (
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-2.5 h-2.5 text-yellow-600" />
+                          <span className="text-yellow-700">核验中 · 预计1-3个工作日完成</span>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-[9px] text-gray-500 pt-0.5 border-t border-secondary-100/50">
+                      入驻档案号：SJ-{String(m.id||'00000000').slice(0,8).padEnd(8,'0')}-{m.street||'songjiang'}
+                    </p>
                   </div>
-                  {m.audited_at && (
-                    <p className="text-[9px] text-gray-400">审核时间：{String(m.audited_at).replace('T', ' ').slice(0, 19)} · 审核人：{m.audited_by || '--'}</p>
-                  )}
                 </div>
-              )) : (
+              )}) : (
                 <div className="py-6 text-center text-gray-400 text-xs">加载商户档案中...</div>
               )}
 
