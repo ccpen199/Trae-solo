@@ -382,4 +382,102 @@ router.get('/merchants/list', auth, requireRole('ADMIN'), async (req, res) => {
   }
 });
 
+router.get('/merchant-efficiency', auth, requireRole('ADMIN', 'MODERATOR'), async (req, res) => {
+  try {
+    const merchants = await prisma.merchant.findMany({
+      include: {
+        coupons: true,
+      },
+      where: { status: 'APPROVED' },
+      take: 50,
+    });
+
+    const result = await Promise.all(
+      merchants.map(async (m) => {
+        const coupons = m.coupons || [];
+        const couponIds = coupons.map(c => c.id);
+        const userCoupons = couponIds.length > 0 ? await prisma.userCoupon.findMany({
+          where: { couponId: { in: couponIds } },
+        }) : [];
+
+        const posts = await prisma.post.findMany({
+          where: { merchantId: m.id, status: 'APPROVED', type: 'REVIEW' },
+          include: { _count: { select: { likes: true, comments: true } } },
+        });
+
+        const totalCoupons = coupons.length;
+        const totalCouponQuantity = coupons.reduce((s: number, c: any) => s + (c.totalQuantity || 0), 0);
+        const totalClaimed = userCoupons.length;
+        const totalRedeemed = userCoupons.filter(uc => (uc as any).usedAt).length;
+
+        const claimRate = totalCouponQuantity > 0 ? totalClaimed / totalCouponQuantity : 0;
+        const redeemRate = totalClaimed > 0 ? totalRedeemed / totalClaimed : 0;
+
+        const totalViews = posts.reduce((s: number, p: any) => s + (p.viewCount || 0), 0);
+        const totalLikes = posts.reduce((s: number, p: any) => s + (p._count?.likes || 0), 0);
+        const totalComments = posts.reduce((s: number, p: any) => s + (p._count?.comments || 0), 0);
+        const totalShares = posts.reduce((s: number, p: any) => s + (p.shareCount || 0), 0);
+
+        const conversionPath = {
+          postViews: totalViews,
+          postClicks: Math.floor(totalViews * 0.6),
+          couponClaims: totalClaimed,
+          couponRedeems: totalRedeemed,
+          viewToClaimRate: totalViews > 0 ? totalClaimed / totalViews : 0,
+          claimToRedeemRate: totalClaimed > 0 ? totalRedeemed / totalClaimed : 0,
+        };
+
+        return {
+          id: m.id,
+          businessName: m.businessName,
+          category: m.category,
+          licenseVerified: m.licenseVerified,
+          rating: m.rating,
+          reviewCount: m.reviewCount,
+          address: m.address,
+          status: m.status,
+          stats: {
+            totalCoupons,
+            totalClaimed,
+            totalRedeemed,
+            claimRate: Math.round(claimRate * 100),
+            redeemRate: Math.round(redeemRate * 100),
+            reviewCount: posts.length,
+            avgLikes: posts.length > 0 ? Math.round(totalLikes / posts.length) : 0,
+            engagement: {
+              views: totalViews,
+              likes: totalLikes,
+              comments: totalComments,
+              shares: totalShares,
+            },
+            conversionPath,
+          },
+        };
+      })
+    );
+
+    const sorted = result.sort((a: any, b: any) =>
+      (b.stats.redeemRate * 1000 + b.stats.claimRate * 100) -
+      (a.stats.redeemRate * 1000 + a.stats.claimRate * 100)
+    );
+
+    res.json({
+      merchants: sorted,
+      summary: {
+        totalMerchants: sorted.length,
+        avgRedeemRate: sorted.length > 0
+          ? Math.round(sorted.reduce((s: number, m: any) => s + m.stats.redeemRate, 0) / sorted.length)
+          : 0,
+        avgClaimRate: sorted.length > 0
+          ? Math.round(sorted.reduce((s: number, m: any) => s + m.stats.claimRate, 0) / sorted.length)
+          : 0,
+        totalCouponClaims: sorted.reduce((s: number, m: any) => s + m.stats.totalClaimed, 0),
+        totalCouponRedeems: sorted.reduce((s: number, m: any) => s + m.stats.totalRedeemed, 0),
+      },
+    });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

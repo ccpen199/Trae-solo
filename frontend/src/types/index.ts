@@ -253,3 +253,14 @@ export interface TestSite {
   waitTime: string;
   distance?: number;
 }
+
+export interface Subscription {
+  id: string;
+  userId: string;
+  type: string;
+  targetId?: string;
+  status: 'ACTIVE' | 'INACTIVE';
+  createdAt: string;
+  updatedAt: string;
+  name?: string;
+}

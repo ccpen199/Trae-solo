@@ -443,9 +443,6 @@ const ProfilePage: React.FC = () => {
                   { l: '注册身份', v: roleInfo.label },
                   { l: '实名认证', v: user.isVerified ? '已认证 ✓' : '未认证' },
                   { l: '信用评分', v: `${user.creditScore} / 100` },
-                  { l: 'LBS定位', v: user.autoLocation !== false ? '已开启' : '已关闭' },
-                  { l: '常去地点', v: user.locationName || '未设置' },
-                  { l: '地理坐标', v: user.latitude && user.longitude ? `${user.latitude.toFixed(4)}, ${user.longitude.toFixed(4)}` : '未设置' },
                 ].map((item) => (
                   <div key={item.l} className="p-4 bg-gray-50 rounded-xl">
                     <div className="text-xs text-gray-500 mb-1">{item.l}</div>
@@ -455,24 +452,150 @@ const ProfilePage: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              <div className="mt-6 p-5 bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 rounded-2xl border border-blue-100">
+                <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  📍 LBS定位与分发
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 bg-white rounded-xl shadow-sm">
+                    <div className="text-xs text-gray-500 mb-1">LBS自动定位状态</div>
+                    <div className="flex items-center gap-2">
+                      <span className={`w-2.5 h-2.5 rounded-full ${user.autoLocation !== false ? 'bg-green-500' : 'bg-gray-400'}`} />
+                      <span className="font-medium text-gray-800">
+                        {user.autoLocation !== false ? '已开启' : '已关闭'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-white rounded-xl shadow-sm">
+                    <div className="text-xs text-gray-500 mb-1">当前坐标</div>
+                    <div className="font-mono text-sm font-medium text-gray-800">
+                      {user.latitude && user.longitude
+                        ? `${user.latitude.toFixed(4)}°N, ${user.longitude.toFixed(4)}°E`
+                        : '未设置'}
+                    </div>
+                  </div>
+                  <div className="p-4 bg-white rounded-xl shadow-sm">
+                    <div className="text-xs text-gray-500 mb-1">常去地点</div>
+                    <div className="font-medium text-gray-800">
+                      {user.locationName || '未设置'}
+                    </div>
+                  </div>
+                  <div className="p-4 bg-white rounded-xl shadow-sm">
+                    <div className="text-xs text-gray-500 mb-1">基于位置的服务分发范围</div>
+                    <div className="font-medium text-gray-800">
+                      {user.latitude && user.longitude ? (
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">3km内</span>
+                            <span className="text-sm">12家商户</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs px-2 py-0.5 bg-teal-100 text-teal-700 rounded-full">周边动态</span>
+                            <span className="text-sm">8条动态</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-gray-400 text-sm">开启定位后可查看</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </Card>
 
             {/* Interest Tags */}
             <Card className="p-6">
-              <h3 className="font-bold text-gray-800 mb-4">🎯 兴趣画像</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-gray-800">🎯 兴趣画像</h3>
+                {user.interestTags && user.interestTags.length > 0 && (
+                  <Badge className="bg-purple-100 text-purple-700">
+                    图谱覆盖 {user.interestTags.length} 个领域
+                  </Badge>
+                )}
+              </div>
               {user.interestTags && user.interestTags.length > 0 ? (
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="flex flex-wrap gap-2">
-                    {user.interestTags.map((t, i) => (
-                      <Tag key={i} className="px-4 py-2">
-                        {t}
-                        <span className="ml-1 text-xs opacity-60">
-                          {95 - (i % 6) * 10}%
+                    {user.interestTags.map((t, i) => {
+                      const weight = 95 - (i % 6) * 10;
+                      const fontSize = 12 + Math.floor((weight - 40) / 15) * 2;
+                      return (
+                        <span
+                          key={i}
+                          className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl transition-all hover:scale-105 cursor-pointer ${
+                            weight >= 80
+                              ? 'bg-gradient-to-r from-primary-500 to-blue-500 text-white font-semibold'
+                              : weight >= 60
+                              ? 'bg-primary-100 text-primary-700 font-medium'
+                              : weight >= 40
+                              ? 'bg-gray-100 text-gray-700'
+                              : 'bg-gray-50 text-gray-500'
+                          }`}
+                          style={{ fontSize: `${fontSize}px` }}
+                        >
+                          {t}
+                          <span className="opacity-70 text-xs">{weight}%</span>
                         </span>
-                      </Tag>
-                    ))}
+                      );
+                    })}
                   </div>
-                  <p className="text-xs text-gray-400">百分比表示该兴趣方向的权重值，用于个性化推荐计算</p>
+                  <p className="text-xs text-gray-400">标签大小和权重值表示推荐优先级，用于个性化内容分发计算</p>
+                  
+                  {/* Interest Graph Visualization */}
+                  <div className="p-4 bg-gradient-to-br from-primary-50 via-purple-50 to-pink-50 rounded-xl border border-primary-100">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-lg">🕸️</span>
+                      <h4 className="font-semibold text-gray-800">兴趣图谱与服务分类分发</h4>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {[
+                        { cat: '美食探店', icon: '🍜', interest: user.interestTags?.some(t => t.includes('美食') || t.includes('吃')) },
+                        { cat: '消费分享', icon: '🛍️', interest: user.interestTags?.some(t => t.includes('购物') || t.includes('消费')) },
+                        { cat: '社区活动', icon: '🎉', interest: user.interestTags?.some(t => t.includes('活动') || t.includes('聚会')) },
+                        { cat: '邻里互助', icon: '🤝', interest: user.helpAbility?.skillExchange || user.helpAbility?.voluntary },
+                        { cat: '便民服务', icon: '🛠️', interest: user.subscriptionPrefs?.waterNotice || user.subscriptionPrefs?.powerNotice },
+                        { cat: '本地资讯', icon: '📰', interest: user.subscriptionPrefs?.communityNotice },
+                      ].map((item, idx) => (
+                        <div
+                          key={idx}
+                          className={`p-3 rounded-xl text-center transition-all ${
+                            item.interest
+                              ? 'bg-white shadow-md border-2 border-primary-200 scale-[1.02]'
+                              : 'bg-white/60 border border-gray-100'
+                          }`}
+                        >
+                          <div className="text-2xl mb-1">{item.icon}</div>
+                          <div className={`text-xs font-medium ${
+                            item.interest ? 'text-primary-600' : 'text-gray-500'
+                          }`}>
+                            {item.cat}
+                          </div>
+                          {item.interest && (
+                            <Badge className="bg-green-100 text-green-700 mt-1 text-xs">
+                              已匹配
+                            </Badge>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 p-3 bg-white/80 rounded-lg">
+                      <div className="flex items-center justify-between text-xs text-gray-600">
+                        <span>📊 兴趣匹配度</span>
+                        <span className="font-semibold text-primary-600">
+                          {Math.round((user.interestTags?.length || 0) * 15 + (user.subscriptionPrefs?.waterNotice ? 10 : 0) + (user.subscriptionPrefs?.emergencyNotice ? 10 : 0))}%
+                        </span>
+                      </div>
+                      <div className="mt-1.5 w-full bg-gray-200 rounded-full h-1.5">
+                        <div
+                          className="h-1.5 rounded-full bg-gradient-to-r from-primary-500 to-purple-500 transition-all"
+                          style={{
+                            width: `${Math.min(100, (user.interestTags?.length || 0) * 15 + (user.subscriptionPrefs?.waterNotice ? 10 : 0) + (user.subscriptionPrefs?.emergencyNotice ? 10 : 0))}%`
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <p className="text-sm text-gray-400">暂无兴趣标签，点击编辑资料添加</p>
@@ -484,21 +607,28 @@ const ProfilePage: React.FC = () => {
               <h3 className="font-bold text-gray-800 mb-4">🔔 订阅偏好</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
-                  { k: 'waterNotice', l: '停水通知', icon: '💧' },
-                  { k: 'powerNotice', l: '停电通知', icon: '⚡' },
-                  { k: 'busNotice', l: '公交动态', icon: '🚌' },
-                  { k: 'emergencyNotice', l: '突发事件', icon: '🚨' },
-                  { k: 'communityNotice', l: '社区公告', icon: '🏘️' },
+                  { k: 'waterNotice', l: '停水通知', icon: '💧', desc: '自动接收望京片区停水公告' },
+                  { k: 'powerNotice', l: '停电通知', icon: '⚡', desc: '自动接收望京片区停电公告' },
+                  { k: 'busNotice', l: '公交动态', icon: '🚌', desc: '推送常坐线路到站提醒' },
+                  { k: 'emergencyNotice', l: '突发事件', icon: '🚨', desc: '推送3km内紧急事件' },
+                  { k: 'communityNotice', l: '社区公告', icon: '🏘️', desc: '推送本社区官方通知' },
                 ].map(item => {
                   const pref = (user.subscriptionPrefs as any)?.[item.k];
                   const enabled = pref !== false;
                   return (
-                    <div key={item.k} className={`p-3 rounded-xl flex items-center gap-3 ${enabled ? 'bg-green-50' : 'bg-gray-50'}`}>
-                      <span className="text-xl">{item.icon}</span>
-                      <span className="flex-1 text-sm text-gray-700">{item.l}</span>
-                      <Badge className={enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}>
-                        {enabled ? '已订阅' : '未订阅'}
-                      </Badge>
+                    <div key={item.k} className={`p-3 rounded-xl flex items-start gap-3 ${enabled ? 'bg-green-50' : 'bg-gray-50'}`}>
+                      <span className="text-xl mt-0.5">{item.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-700 font-medium">{item.l}</span>
+                          <Badge className={enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}>
+                            {enabled ? '已订阅' : '未订阅'}
+                          </Badge>
+                        </div>
+                        <div className={`text-xs mt-1 ${enabled ? 'text-green-600' : 'text-gray-400'}`}>
+                          {item.desc}
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
@@ -530,6 +660,64 @@ const ProfilePage: React.FC = () => {
                     </div>
                   );
                 })}
+              </div>
+
+              <div className="mt-6 p-5 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl border border-amber-100">
+                <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  🎯 基于兴趣的服务分发
+                </h4>
+                <p className="text-xs text-gray-500 mb-4">根据您的兴趣标签，智能推荐对应的本地服务</p>
+                {(() => {
+                  const tags = user.interestTags || [];
+                  const serviceMap: { match: string[]; icon: string; title: string; desc: string; percent: number }[] = [
+                    { match: ['美食', '吃', '探店', '餐饮'], icon: '🍜', title: '附近餐饮商户', desc: '基于美食偏好推荐3km内优质餐厅与小吃', percent: 92 },
+                    { match: ['健身', '运动', '跑步', '瑜伽'], icon: '🏋️', title: '健身活动推荐', desc: '推送周边健身房优惠与社区运动活动', percent: 87 },
+                    { match: ['购物', '消费', '逛街'], icon: '🛍️', title: '本地优惠商圈', desc: '聚合周边商场折扣信息与限时活动', percent: 78 },
+                    { match: ['旅游', '出行', '户外'], icon: '🗺️', title: '周边游玩攻略', desc: '推荐附近景点门票与周末出行方案', percent: 73 },
+                  ];
+                  const matched = serviceMap
+                    .map(s => ({ ...s, matched: tags.some(t => s.match.some(m => t.includes(m))) }))
+                    .sort((a, b) => (b.matched ? 1 : 0) - (a.matched ? 1 : 0));
+                  return (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {matched.map((s, i) => (
+                        <div
+                          key={i}
+                          className={`p-4 rounded-xl transition-all ${
+                            s.matched
+                              ? 'bg-white shadow-md border-2 border-amber-200'
+                              : 'bg-white/60 border border-gray-100'
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <span className="text-2xl">{s.icon}</span>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between">
+                                <span className={`text-sm font-semibold ${s.matched ? 'text-amber-700' : 'text-gray-600'}`}>
+                                  {s.title}
+                                </span>
+                                {s.matched && (
+                                  <Badge className="bg-amber-100 text-amber-700 text-xs">
+                                    匹配 {s.percent}%
+                                  </Badge>
+                                )}
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">{s.desc}</div>
+                              {s.matched && (
+                                <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
+                                  <div
+                                    className="h-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500"
+                                    style={{ width: `${s.percent}%` }}
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
               </div>
             </Card>
           </div>

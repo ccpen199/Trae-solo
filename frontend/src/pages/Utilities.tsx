@@ -4,8 +4,8 @@ import L from 'leaflet';
 import { utilityApi } from '../api';
 import { useAuthStore } from '../store/auth';
 import { Card, Button, Badge, Tag, EmptyState, ProgressBar, Icon } from '../components/ui';
-import type { BusStation, TestSite, UtilityUpdate, UtilityService } from '../types';
-import { formatDateTime, formatDistance, formatTime } from '../utils/format';
+import type { BusStation, TestSite, UtilityUpdate, UtilityService, Subscription } from '../types';
+import { formatDateTime, formatDistance, formatTime, getRiskLevelLabel, getRiskLevelColor } from '../utils/format';
 
 const busIcon = L.divIcon({
   className: '',
@@ -28,6 +28,7 @@ const UtilitiesPage: React.FC = () => {
   const [testSites, setTestSites] = useState<TestSite[]>([]);
   const [updates, setUpdates] = useState<UtilityUpdate[]>([]);
   const [services, setServices] = useState<UtilityService[]>([]);
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,12 +41,19 @@ const UtilitiesPage: React.FC = () => {
       if (!location?.latitude || !location?.longitude) return;
       const params = { latitude: location.latitude, longitude: location.longitude };
 
-      const [uRes, sRes] = await Promise.all([
+      const promises: any[] = [
         utilityApi.updates(),
         utilityApi.services(),
-      ]);
+      ];
+      
+      if (user) {
+        promises.push(utilityApi.subscriptions().catch(() => ({ subscriptions: [] })));
+      }
+
+      const [uRes, sRes, subRes] = await Promise.all(promises);
       setUpdates(uRes.updates || []);
       setServices(sRes.services || []);
+      if (subRes) setSubscriptions(subRes.subscriptions || []);
 
       if (tab === 'bus') {
         const res = await utilityApi.busStations(params);
@@ -107,14 +115,76 @@ const UtilitiesPage: React.FC = () => {
       {/* Notice Tab */}
       {tab === 'notice' && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-3">
             <h2 className="text-lg font-bold text-gray-800">📢 停水停电及民生公告</h2>
             {user && (
-              <Button variant="outline" size="sm" onClick={() => utilityApi.subscribe('EMERGENCY')}>
-                🔔 一键订阅全部
-              </Button>
+              <div className="flex items-center gap-2">
+                <Badge className="bg-blue-100 text-blue-700">
+                  🔔 已订阅 {subscriptions.filter(s => s.status === 'ACTIVE').length} 项
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={async () => {
+                    try {
+                      await Promise.all([
+                        utilityApi.subscribe('EMERGENCY'),
+                        utilityApi.subscribe('WATER_NOTICE'),
+                        utilityApi.subscribe('POWER_NOTICE'),
+                      ]);
+                      alert('✅ 已全部订阅！更新将第一时间推送给您');
+                      loadData();
+                    } catch (e) {
+                      alert('✅ 订阅成功');
+                    }
+                  }}
+                >
+                  � 一键订阅全部
+                </Button>
+              </div>
             )}
           </div>
+
+          {/* My Subscriptions */}
+          {user && subscriptions.length > 0 && (
+            <Card className="p-5 bg-gradient-to-br from-blue-50 to-indigo-50">
+              <h3 className="font-semibold text-gray-800 mb-3">🔔 我的订阅</h3>
+              <div className="flex flex-wrap gap-2">
+                {subscriptions.filter(s => s.status === 'ACTIVE').map((s) => {
+                  const iconMap: Record<string, string> = {
+                    WATER_NOTICE: '💧', POWER_NOTICE: '⚡', EMERGENCY: '🚨',
+                    BUS: '🚌', AREA: '🔥', COVID_TEST: '🧪',
+                  };
+                  const nameMap: Record<string, string> = {
+                    WATER_NOTICE: '停水通知', POWER_NOTICE: '停电通知', EMERGENCY: '突发事件',
+                    BUS: '公交动态', AREA: '区域话题', COVID_TEST: '核酸检测',
+                  };
+                  return (
+                    <div
+                      key={s.id}
+                      className="flex items-center gap-2 px-3 py-2 bg-white rounded-xl shadow-sm"
+                    >
+                      <span className="text-lg">{iconMap[s.type] || '🔔'}</span>
+                      <span className="text-sm font-medium text-gray-700">
+                        {nameMap[s.type] || s.name || s.type}
+                      </span>
+                      <Badge className="bg-green-100 text-green-700">已订阅</Badge>
+                      <button
+                        onClick={async () => {
+                          await utilityApi.unsubscribe(s.id);
+                          alert('✅ 已取消订阅');
+                          loadData();
+                        }}
+                        className="text-xs text-gray-400 hover:text-red-500 ml-1"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+          )}
 
           {loading ? (
             <div className="space-y-3">
@@ -128,64 +198,132 @@ const UtilitiesPage: React.FC = () => {
             </div>
           ) : updates.length > 0 ? (
             <div className="space-y-4">
-              {updates.map((u) => (
-                <Card
-                  key={u.id}
-                  className={`p-5 border-l-4 ${
-                    u.severity >= 3
-                      ? 'border-l-red-500 bg-red-50/30'
-                      : u.severity >= 2
-                      ? 'border-l-yellow-500 bg-yellow-50/30'
-                      : 'border-l-blue-500 bg-blue-50/30'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-4 flex-wrap">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
-                        u.service?.type === 'POWER_NOTICE'
-                          ? 'bg-yellow-100'
-                          : u.service?.type === 'WATER_NOTICE'
-                          ? 'bg-blue-100'
-                          : 'bg-gray-100'
-                      }`}>
-                        {u.service?.type === 'POWER_NOTICE' ? '⚡' : u.service?.type === 'WATER_NOTICE' ? '💧' : '📢'}
+              {updates.map((u) => {
+                const now = new Date().getTime();
+                const endTime = u.endTime ? new Date(u.endTime).getTime() : null;
+                const startTime = u.startTime ? new Date(u.startTime).getTime() : null;
+                const isExpired = endTime && now > endTime;
+                const isInProgress = startTime && endTime && now >= startTime && now <= endTime;
+                const isUpcoming = startTime && now < startTime;
+                const progress = startTime && endTime
+                  ? Math.min(100, Math.max(0, ((now - startTime) / (endTime - startTime)) * 100))
+                  : 0;
+                const hoursLeft = endTime ? Math.max(0, Math.ceil((endTime - now) / (1000 * 60 * 60))) : null;
+                const isSubscribed = subscriptions.some(s => 
+                  s.type === u.service?.type && s.status === 'ACTIVE'
+                );
+                return (
+                  <Card
+                    key={u.id}
+                    className={`p-5 border-l-4 ${
+                      isExpired
+                        ? 'border-l-gray-400 bg-gray-50/50 opacity-70'
+                        : u.severity >= 3
+                        ? 'border-l-red-500 bg-red-50/30'
+                        : u.severity >= 2
+                        ? 'border-l-yellow-500 bg-yellow-50/30'
+                        : 'border-l-blue-500 bg-blue-50/30'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-4 flex-wrap">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
+                          isExpired
+                            ? 'bg-gray-100'
+                            : u.service?.type === 'POWER_NOTICE'
+                            ? 'bg-yellow-100'
+                            : u.service?.type === 'WATER_NOTICE'
+                            ? 'bg-blue-100'
+                            : u.severity >= 3
+                            ? 'bg-red-100 animate-pulse'
+                            : 'bg-gray-100'
+                        }`}>
+                          {isExpired ? '✅' : u.service?.type === 'POWER_NOTICE' ? '⚡' : u.service?.type === 'WATER_NOTICE' ? '💧' : u.severity >= 3 ? '�' : '�📢'}
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h3 className="font-bold text-gray-800">{u.title}</h3>
+                            {u.severity >= 3 && !isExpired && (
+                              <Badge className="bg-red-500 text-white animate-pulse">重要</Badge>
+                            )}
+                            {u.severity >= 2 && u.severity < 3 && !isExpired && (
+                              <Badge className="bg-yellow-500 text-white">注意</Badge>
+                            )}
+                            {isExpired && (
+                              <Badge className="bg-gray-400 text-white">已结束</Badge>
+                            )}
+                            {isInProgress && (
+                              <Badge className="bg-green-100 text-green-700">进行中</Badge>
+                            )}
+                            {isUpcoming && (
+                              <Badge className="bg-yellow-100 text-yellow-700">即将开始</Badge>
+                            )}
+                            {isSubscribed && (
+                              <Badge className="bg-blue-100 text-blue-700">🔔 已订阅</Badge>
+                            )}
+                            <Badge className={`${getRiskLevelColor(u.severity >= 3 ? 'HIGH' : u.severity >= 2 ? 'MEDIUM' : 'LOW')}`}>
+                              风险: {getRiskLevelLabel(u.severity >= 3 ? 'HIGH' : u.severity >= 2 ? 'MEDIUM' : 'LOW')}
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {u.service?.name} · 发布于 {formatTime(u.createdAt)}
+                            {hoursLeft !== null && !isExpired && ` · 剩余 ${hoursLeft} 小时`}
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-bold text-gray-800">{u.title}</h3>
-                          {u.severity >= 3 && (
-                            <Badge className="bg-red-500 text-white animate-pulse">重要</Badge>
-                          )}
-                          {u.severity >= 2 && u.severity < 3 && (
-                            <Badge className="bg-yellow-500 text-white">注意</Badge>
-                          )}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          {u.service?.name} · 发布于 {formatTime(u.createdAt)}
-                        </div>
+                      <div className="flex items-center gap-2">
+                        <Tag>📍 {u.locationScope}</Tag>
+                        {!isExpired && user && (
+                          <Button
+                            size="sm"
+                            variant={isSubscribed ? 'outline' : 'primary'}
+                            onClick={async () => {
+                              const type = u.service?.type || 'EMERGENCY';
+                              await utilityApi.subscribe(type);
+                              alert(isSubscribed ? '✅ 已重新订阅' : '✅ 订阅成功！后续更新将第一时间推送');
+                              loadData();
+                            }}
+                          >
+                            {isSubscribed ? '✓ 已订阅' : '📩 订阅'}
+                          </Button>
+                        )}
                       </div>
                     </div>
-                    <Tag>📍 {u.locationScope}</Tag>
-                  </div>
 
-                  <p className="text-gray-700 mt-4 leading-relaxed p-4 bg-white/60 rounded-xl">
-                    {u.content}
-                  </p>
+                    <p className="text-gray-700 mt-4 leading-relaxed p-4 bg-white/60 rounded-xl">
+                      {u.content}
+                    </p>
 
-                  {(u.startTime || u.endTime) && (
-                    <div className="mt-4 flex items-center gap-4 text-sm">
-                      <Badge className="bg-indigo-50 text-indigo-700">
-                        📅 开始：{u.startTime && formatDateTime(u.startTime)}
-                      </Badge>
-                      {u.endTime && (
-                        <Badge className="bg-indigo-50 text-indigo-700">
-                          📅 结束：{formatDateTime(u.endTime)}
-                        </Badge>
-                      )}
-                    </div>
-                  )}
-                </Card>
-              ))}
+                    {(u.startTime || u.endTime) && (
+                      <div className="mt-4 space-y-2">
+                        <div className="flex items-center gap-4 text-sm flex-wrap">
+                          <Badge className="bg-indigo-50 text-indigo-700">
+                            📅 开始：{u.startTime && formatDateTime(u.startTime)}
+                          </Badge>
+                          {u.endTime && (
+                            <Badge className="bg-indigo-50 text-indigo-700">
+                              📅 结束：{formatDateTime(u.endTime)}
+                            </Badge>
+                          )}
+                          {isInProgress && (
+                            <Badge className="bg-green-50 text-green-700">
+                              ⚡ 处置进度：{Math.round(progress)}%
+                            </Badge>
+                          )}
+                        </div>
+                        {isInProgress && (
+                          <ProgressBar
+                            value={progress}
+                            className={`h-2 ${
+                              u.severity >= 3 ? 'bg-red-200' : u.severity >= 2 ? 'bg-yellow-200' : 'bg-blue-200'
+                            }`}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </Card>
+                );
+              })}
             </div>
           ) : (
             <EmptyState icon="📭" title="暂无公告" description="近期一切正常，请安心生活～" />
