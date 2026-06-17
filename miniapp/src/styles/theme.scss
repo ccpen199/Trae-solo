@@ -1,0 +1,50 @@
+// ============================================
+// 主题配色变量（苏州城市数字服务中台）
+// ============================================
+
+// 品牌主题色：姑苏蓝 - 体现苏州江南水乡的深邃与现代科技的稳重
+$color-primary: #1E4D8C;
+$color-primary-light: #2D6BC4;
+$color-primary-dark: #153A6B;
+$color-primary-gradient: linear-gradient(135deg, #1E4D8C 0%, #2D6BC4 100%);
+
+// 辅助色：园林绿 - 象征苏州园林的生机与文旅特色
+$color-secondary: #2D9D72;
+$color-secondary-light: #45B88B;
+$color-secondary-dark: #1E7A56;
+
+// 点缀色：太湖金 - 呼应苏州丝绸文化的精致与活力
+$color-accent: #E8A838;
+$color-accent-light: #F2BE5C;
+$color-accent-dark: #D49120;
+
+// 功能色
+$color-success: #00B42A;
+$color-warning: #FF7D00;
+$color-error: #F53F3F;
+$color-info: #1E4D8C;
+
+// 背景色
+$color-bg-page: #F5F7FA;
+$color-bg-page-gradient: linear-gradient(180deg, #F0F5FF 0%, #F5F7FA 100%);
+$color-bg-card: #FFFFFF;
+$color-bg-hover: #F2F3F5;
+$color-bg-primary: rgba(30, 77, 140, 0.08);
+$color-bg-secondary: rgba(45, 157, 114, 0.08);
+
+// 文本色
+$color-text-primary: #1A1A2E;
+$color-text-secondary: #4A5568;
+$color-text-tertiary: #A0AEC0;
+$color-text-disabled: #CBD5E0;
+$color-text-white: #FFFFFF;
+
+// 边框色
+$color-border: #E2E8F0;
+$color-divider: #EDF2F7;
+
+// 业务专属色
+$color-transport: #1E4D8C;
+$color-tourism: #2D9D72;
+$color-enterprise: #E8A838;
+$color-commerce: #7C3AED;
