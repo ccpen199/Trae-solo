@@ -104,6 +104,8 @@ export default function QuickOrderForm() {
     setSubmitting(true);
 
     const newOrderId = Date.now();
+    const overtimeCounter = (useAppStore.getState().orders.length + 1);
+    const isOvertimeOrder = overtimeCounter % 3 === 0;
     const policyNo = `JZ${dateStr.replace(/-/g, '')}${String(newOrderId).slice(-6)}`;
     const startTimeStr = `${dateStr} ${time}`;
     const targetWorkerId = selectedWorkerId ?? dispatchQueue[0]?.id ?? 101;
@@ -118,7 +120,6 @@ export default function QuickOrderForm() {
         const nm = total % 60;
         return `${d} ${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
       };
-      const isOvertimeOrder = newOrderId % 5 === 0;
       const arriveOffset = isOvertimeOrder ? 35 : -5;
       const assignRemark = selectedWorkerId
         ? `用户手动指定阿姨：${chosenWorker?.real_name || ''}`
@@ -209,10 +210,7 @@ export default function QuickOrderForm() {
       return recs;
     };
 
-    const isOvertimeOrder = newOrderId % 5 === 0;
-
-    const genQARecord = (): import('@/types').QARecordDetail | undefined => {
-      if (!isOvertimeOrder && newOrderId % 2 !== 0) return undefined;
+    const genQARecord = (): import('@/types').QARecordDetail => {
       const isOver = isOvertimeOrder;
       const addMin = (min: number) => {
         const [h, m] = time.split(':').map(Number);
@@ -729,8 +727,13 @@ export default function QuickOrderForm() {
                               'text-[8px] px-1 py-0 rounded font-medium flex items-center gap-0.5',
                               certOk ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
                             )}>
-                              {certOk ? <><BadgeCheck className="w-2.5 h-2.5" />三证齐全</> : <><ScanLine className="w-2.5 h-2.5" />审核中</>}
+                              {certOk ? <><BadgeCheck className="w-2.5 h-2.5" />审核通过</> : <><ScanLine className="w-2.5 h-2.5" />待复核</>}
                             </span>
+                            {cert.review_history?.some(r => r.result === 'reject') && (
+                              <span className="text-[8px] px-1 py-0 rounded font-medium bg-red-100 text-red-700 flex items-center gap-0.5">
+                                <AlertTriangle className="w-2.5 h-2.5" />有异常
+                              </span>
+                            )}
                           </div>
                           <div className="flex items-center gap-1.5 mt-0.5 text-[9px] flex-wrap">
                             <span className={cn('flex items-center gap-0.5', is1km ? 'text-blue-600 font-medium' : 'text-blue-500')}>
@@ -774,15 +777,18 @@ export default function QuickOrderForm() {
                               </div>
                               <div className="flex items-center gap-1.5 text-[8px] text-secondary-500">
                                 <UserCheck className="w-2 h-2 text-primary-500" />
-                                <span>复核：{cert.review_history?.find(r => r.type === 'recheck' || r.type === 'manual')?.reviewer || '初审专员'}</span>
+                                <span>{cert.review_history?.find(r => r.type === 'recheck' || r.type === 'manual')?.reviewer || '初审专员'}</span>
                                 <span className="text-secondary-300">·</span>
                                 <Clock className="w-2 h-2 text-primary-500" />
                                 <span>{new Date(certTime || cert.review_history?.[0]?.review_time || Date.now()).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })}</span>
+                                <span className="text-secondary-300">·</span>
+                                <span className={cn('font-medium', certOk ? 'text-green-600' : 'text-yellow-600')}>
+                                  {certOk ? '✓复核通过' : '⏳复核中'}
+                                </span>
                                 {cert.review_history?.some(r => r.result === 'reject') && (
                                   <>
                                     <span className="text-secondary-300">·</span>
-                                    <AlertTriangle className="w-2 h-2 text-orange-500" />
-                                    <span className="text-orange-600 font-medium">有驳回记录</span>
+                                    <span className="text-red-500 font-medium">⚠有驳回</span>
                                   </>
                                 )}
                               </div>
@@ -1013,6 +1019,42 @@ export default function QuickOrderForm() {
                 <p className="text-red-600 font-bold text-[11px]">10%</p>
                 <p className="text-secondary-500">投诉权重</p>
               </div>
+            </div>
+          </div>
+        )}
+
+        {selectedWorkerId && dispatchQueue.find(w => w.id === selectedWorkerId) && (
+          <div className="card p-3 border-2 border-primary-200 bg-gradient-to-r from-primary-50/50 to-green-50/50">
+            <div className="flex items-center gap-1.5 mb-2">
+              <GitBranch className="w-3.5 h-3.5 text-primary-500" />
+              <span className="text-[10px] font-bold text-secondary-800">
+                选择后闭环链路 · {dispatchQueue.find(w => w.id === selectedWorkerId)?.real_name}
+              </span>
+            </div>
+            <div className="space-y-1.5">
+              {[
+                { step: 1, label: '派单锁定', desc: `已选${dispatchQueue.find(w => w.id === selectedWorkerId)?.real_name}，加权评分${(dispatchQueue.find(w => w.id === selectedWorkerId)?.weighted_score || 90).toFixed(1)}分`, icon: Navigation, done: true, color: 'bg-blue-500' },
+                { step: 2, label: '保险承保', desc: '50万家政责任险，下单即自动出单', icon: Shield, done: true, color: 'bg-green-500' },
+                { step: 3, label: '服务履约', desc: '7节点全留痕：派单→接单→出发→到达→开始→完成', icon: FileCheck, done: true, color: 'bg-primary-500' },
+                { step: 4, label: '质量回溯', desc: '录音转文字质检 + 差评根因聚类 + 复查留痕', icon: BadgeCheck, done: true, color: 'bg-purple-500' },
+                { step: 5, label: '赔付保障', desc: '迟到>30min自动触发全额退款+30元券', icon: CircleDollarSign, done: true, color: 'bg-red-500' },
+              ].map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <div key={i} className="flex items-start gap-2">
+                    <div className="flex flex-col items-center flex-shrink-0">
+                      <div className={cn('w-5 h-5 rounded-full flex items-center justify-center text-[9px] text-white', item.color)}>
+                        <Icon className="w-3 h-3" />
+                      </div>
+                      {i < 4 && <div className="w-px h-3 bg-gray-200" />}
+                    </div>
+                    <div>
+                      <p className="text-[9px] font-bold text-secondary-800">{item.label}</p>
+                      <p className="text-[8px] text-secondary-500">{item.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -1381,7 +1423,7 @@ function OrderSuccessView({
           </div>
         )}
 
-        {displayStatus === 'completed' && liveOrder?.qa_record && (
+        {(displayStatus === 'completed' || displayStatus === 'compensated') && liveOrder?.qa_record && (
           <div className="card p-3 bg-gradient-to-br from-purple-50 to-blue-50 border-purple-100">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-1.5">
