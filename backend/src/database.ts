@@ -303,6 +303,54 @@ export function initDatabase() {
       switch_channel INTEGER DEFAULT 0
     );
 
+    CREATE TABLE IF NOT EXISTS operation_logs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      operator_id TEXT NOT NULL,
+      operator TEXT NOT NULL,
+      action_type TEXT NOT NULL,
+      target_id TEXT,
+      target_type TEXT,
+      detail TEXT,
+      ip_address TEXT,
+      created_at INTEGER NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS invoices (
+      id TEXT PRIMARY KEY,
+      settlement_id TEXT,
+      invoice_no TEXT,
+      type TEXT DEFAULT 'electronic',
+      title TEXT NOT NULL,
+      amount REAL NOT NULL,
+      status TEXT DEFAULT 'pending',
+      tax_no TEXT,
+      address TEXT,
+      phone TEXT,
+      bank_name TEXT,
+      bank_account TEXT,
+      created_at INTEGER NOT NULL,
+      issued_at INTEGER,
+      mailed_at INTEGER,
+      received_at INTEGER
+    );
+
+    CREATE TABLE IF NOT EXISTS review_records (
+      id TEXT PRIMARY KEY,
+      user_id TEXT,
+      order_id TEXT,
+      commission_id TEXT,
+      type TEXT NOT NULL,
+      reason TEXT,
+      amount REAL,
+      status TEXT DEFAULT 'pending',
+      appeal_reason TEXT,
+      appeal_evidence TEXT,
+      appeal_at INTEGER,
+      reviewed_at INTEGER,
+      reviewed_by TEXT,
+      created_at INTEGER NOT NULL
+    );
+
     CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id);
     CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
     CREATE INDEX IF NOT EXISTS idx_orders_created ON orders(created_at);
@@ -312,6 +360,13 @@ export function initDatabase() {
     CREATE INDEX IF NOT EXISTS idx_card_pool_status ON card_pool(status);
     CREATE INDEX IF NOT EXISTS idx_risk_user ON risk_logs(user_id);
     CREATE INDEX IF NOT EXISTS idx_risk_created ON risk_logs(created_at);
+    CREATE INDEX IF NOT EXISTS idx_operation_logs_action ON operation_logs(action_type);
+    CREATE INDEX IF NOT EXISTS idx_operation_logs_created ON operation_logs(created_at);
+    CREATE INDEX IF NOT EXISTS idx_operation_logs_operator ON operation_logs(operator_id);
+    CREATE INDEX IF NOT EXISTS idx_invoices_status ON invoices(status);
+    CREATE INDEX IF NOT EXISTS idx_invoices_created ON invoices(created_at);
+    CREATE INDEX IF NOT EXISTS idx_review_records_status ON review_records(status);
+    CREATE INDEX IF NOT EXISTS idx_review_records_user ON review_records(user_id);
   `);
 
   addColumnIfMissing('orders', 'channel_id', 'INTEGER');

@@ -375,4 +375,142 @@ router.get('/admin/list', authMiddleware, adminMiddleware, (req, res) => {
   }
 });
 
+router.get('/abnormal/summary', authMiddleware, (req: AuthRequest, res) => {
+  try {
+    const t = now();
+    const userId = req.userId!;
+
+    const failedCount: any = db.prepare("SELECT COUNT(*) as cnt FROM orders WHERE user_id = ? AND status = 'failed'").get(userId);
+    const pendingReview: any = db.prepare("SELECT COUNT(*) as cnt FROM review_records WHERE user_id = ? AND status = 'pending'").get(userId);
+    const processingReview: any = db.prepare("SELECT COUNT(*) as cnt FROM review_records WHERE user_id = ? AND status = 'processing'").get(userId);
+    const completedReview: any = db.prepare("SELECT COUNT(*) as cnt FROM review_records WHERE user_id = ? AND status = 'resolved'").get(userId);
+    const recentFlow: any = db.prepare(`
+      SELECT COUNT(*) as cnt FROM orders
+      WHERE user_id = ? AND status = 'completed' AND created_at >= ?
+    `).get(userId, t - 86400 * 7);
+
+    res.json({
+      success: true,
+      data: {
+        failedOrders: failedCount.cnt || 0,
+        pendingReviews: pendingReview.cnt || 0,
+        processingReviews: processingReview.cnt || 0,
+        resolvedReviews: completedReview.cnt || 0,
+        recentSuccessFlow: recentFlow.cnt || 0
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/abnormal/list', authMiddleware, (req: AuthRequest, res) => {
+  try {
+    const userId = req.userId!;
+    const { page = 1, pageSize = 20, status }: any = req.query;
+
+    const whereClauses: string[] = ["o.user_id = ?"];
+    const params: any[] = [userId];
+
+    if (status) {
+      whereClauses.push("o.status = ?");
+      params.push(status);
+    } else {
+      whereClauses.push("o.status IN ('failed', 'refunded', 'recharging')");
+    }
+
+    const whereSql = "WHERE " + whereClauses.join(" AND ");
+    const offset = (Number(page) - 1) * Number(pageSize);
+
+    const totalRow: any = db.prepare(`SELECT COUNT(*) as cnt FROM orders o ${whereSql}`).get(...params);
+    params.push(Number(pageSize), offset);
+
+    const orders: any[] = db.prepare(`
+      SELECT o.id, o.order_no, o.product_id, o.recharge_account, o.final_amount, o.status, o.fail_reason,
+             o.created_at, o.finish_time, o.updated_at,
+             p.name as product_name, p.face_value, p.sku_type,
+             s.name as supplier_name,
+             COALESCE(rc.name, '通道' || COALESCE(rc.priority, 0)) as channel_name,
+             rr.id as review_id, rr.status as review_status, rr.type as review_type,
+             rr.appeal_reason, rr.reviewed_at
+      FROM orders o
+      LEFT JOIN products p ON o.product_id = p.id
+      LEFT JOIN suppliers s ON o.supplier_id = s.id
+      LEFT JOIN recharge_channels rc ON o.channel_id = rc.id
+      LEFT JOIN review_records rr ON rr.order_id = o.id
+      ${whereSql}
+      ORDER BY o.created_at DESC
+      LIMIT ? OFFSET ?
+    `).all(...params);
+
+    res.json({
+      success: true,
+      data: {
+        list: orders,
+        total: totalRow.cnt || 0,
+        page: Number(page),
+        pageSize: Number(pageSize)
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.post('/:id/appeal', authMiddleware, (req: AuthRequest, res) => {
+  try {
+    const userId = req.userId!;
+    const { reason, evidence } = req.body;
+    if (!reason) return res.status(400).json({ success: false, message: '请填写申诉理由' });
+
+    const order: any = db.prepare('SELECT * FROM orders WHERE id = ? AND user_id = ?').get(req.params.id, userId);
+    if (!order) return res.status(404).json({ success: false, message: '订单不存在' });
+
+    const t = now();
+    const reviewId = generateId();
+
+    db.prepare(`
+      INSERT INTO review_records (id, user_id, order_id, type, reason, amount, status, appeal_reason, appeal_evidence, appeal_at, created_at)
+      VALUES (?, ?, ?, 'order_appeal', ?, ?, 'pending', ?, ?, ?, ?)
+    `).run(reviewId, userId, order.id, reason, order.final_amount, reason, evidence || '', t, t);
+
+    res.json({
+      success: true,
+      data: { reviewId, status: 'pending', message: '申诉已提交，客服将在24小时内处理' }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/flow/recent', authMiddleware, (req: AuthRequest, res) => {
+  try {
+    const userId = req.userId!;
+    const { limit = 10 }: any = req.query;
+
+    const orders: any[] = db.prepare(`
+      SELECT o.id, o.order_no, o.product_id, o.recharge_account, o.final_amount, o.status,
+             o.created_at, o.finish_time,
+             p.name as product_name
+      FROM orders o
+      LEFT JOIN products p ON o.product_id = p.id
+      WHERE o.user_id = ? AND o.status IN ('completed', 'failed', 'refunded')
+      ORDER BY o.created_at DESC
+      LIMIT ?
+    `).all(userId, Number(limit));
+
+    const reviews: any[] = db.prepare(`
+      SELECT id, order_id, type, status, appeal_reason, created_at, reviewed_at
+      FROM review_records
+      WHERE user_id = ?
+      ORDER BY created_at DESC
+      LIMIT ?
+    `).all(userId, Number(limit));
+
+    res.json({ success: true, data: { orders, reviews } });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
 export default router;

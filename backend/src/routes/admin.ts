@@ -3,7 +3,7 @@ import { authMiddleware, AuthRequest, adminMiddleware, clientInfoMiddleware } fr
 import { settlementService } from '../services/settlement';
 import { riskEngine } from '../services/risk';
 import { db } from '../database';
-import { now } from '../utils';
+import { generateId, now } from '../utils';
 
 const router = Router();
 
@@ -393,9 +393,125 @@ router.get('/suppliers/:id/summary', authMiddleware, adminMiddleware, (req, res)
 
 router.get('/risk/logs', authMiddleware, adminMiddleware, (req, res) => {
   try {
-    const { userId, limit = 100 }: any = req.query;
-    const logs = riskEngine.getRiskLogs(userId || undefined, Number(limit));
-    res.json({ success: true, data: logs });
+    const { userId, limit = 100, page = 1, risk_level, type, keyword }: any = req.query;
+    const offset = (Number(page) - 1) * Number(limit);
+
+    const whereClauses: string[] = [];
+    const params: any[] = [];
+
+    if (userId) {
+      whereClauses.push('rl.user_id = ?');
+      params.push(userId);
+    }
+    if (risk_level && risk_level !== 'all') {
+      whereClauses.push('rl.risk_level = ?');
+      params.push(risk_level);
+    }
+    if (type && type !== 'all') {
+      whereClauses.push('rl.action = ?');
+      params.push(type);
+    }
+    if (keyword) {
+      whereClauses.push('(rl.ip LIKE ? OR rl.detail LIKE ? OR u.phone LIKE ? OR u.nickname LIKE ?)');
+      const kw = `%${keyword}%`;
+      params.push(kw, kw, kw, kw);
+    }
+
+    const whereSql = whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : '';
+
+    const totalRow: any = db.prepare(`SELECT COUNT(*) as cnt FROM risk_logs rl LEFT JOIN users u ON rl.user_id = u.id ${whereSql}`).get(...params);
+
+    const countParams = [...params, Number(limit), offset];
+    const logs: any[] = db.prepare(`
+      SELECT rl.*, u.phone as user_phone, u.nickname as user_name,
+        CASE
+          WHEN rl.detail LIKE '%虚拟号%' OR rl.detail LIKE '%virtual%' THEN 'virtual_phone'
+          WHEN rl.detail LIKE '%地域%' OR rl.detail LIKE '%region%' THEN 'region_limit'
+          WHEN rl.detail LIKE '%频繁%' OR rl.detail LIKE '%frequency%' OR rl.detail LIKE '%次数%' THEN 'frequency_limit'
+          WHEN rl.detail LIKE '%IP%' OR rl.detail LIKE '%ip%' OR rl.detail LIKE '%封禁%' THEN 'ip_block'
+          WHEN rl.detail LIKE '%金额%' OR rl.detail LIKE '%amount%' THEN 'amount_limit'
+          ELSE 'other'
+        END as detect_type,
+        CASE
+          WHEN rl.action LIKE '%check%' OR rl.action LIKE '%下单%' THEN (SELECT COUNT(*) FROM risk_logs rl2 WHERE rl2.user_id = rl.user_id AND rl2.created_at >= rl.created_at - 3600)
+          ELSE 0
+        END as hourly_count
+      FROM risk_logs rl
+      LEFT JOIN users u ON rl.user_id = u.id
+      ${whereSql}
+      ORDER BY rl.created_at DESC
+      LIMIT ? OFFSET ?
+    `).all(...countParams);
+
+    const detectTypeMap: Record<string, string> = {
+      virtual_phone: '虚拟号识别',
+      region_limit: '地域限售',
+      frequency_limit: '异常频次',
+      ip_block: 'IP封禁',
+      amount_limit: '金额超限',
+      other: '其他风险'
+    };
+
+    const enrichedLogs = logs.map(log => ({
+      ...log,
+      detect_type_label: detectTypeMap[log.detect_type] || '其他风险',
+      is_virtual_phone: log.detect_type === 'virtual_phone',
+      is_region_limit: log.detect_type === 'region_limit',
+      is_frequency: log.detect_type === 'frequency_limit'
+    }));
+
+    res.json({
+      success: true,
+      data: {
+        list: enrichedLogs,
+        total: totalRow.cnt || 0,
+        page: Number(page),
+        pageSize: Number(limit)
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/risk/stats', authMiddleware, adminMiddleware, (_req, res) => {
+  try {
+    const t = now();
+    const todayStart = t - (t % 86400);
+
+    const totalRisk: any = db.prepare('SELECT COUNT(*) as cnt FROM risk_logs').get();
+    const todayRisk: any = db.prepare('SELECT COUNT(*) as cnt FROM risk_logs WHERE created_at >= ?').get(todayStart);
+    const totalBlocked: any = db.prepare('SELECT COUNT(*) as cnt FROM risk_logs WHERE blocked = 1').get();
+    const virtualPhoneCount: any = db.prepare("SELECT COUNT(*) as cnt FROM risk_logs WHERE detail LIKE '%虚拟号%' OR detail LIKE '%virtual%'").get();
+    const regionCount: any = db.prepare("SELECT COUNT(*) as cnt FROM risk_logs WHERE detail LIKE '%地域%' OR detail LIKE '%region%'").get();
+    const frequencyCount: any = db.prepare("SELECT COUNT(*) as cnt FROM risk_logs WHERE detail LIKE '%频繁%' OR detail LIKE '%frequency%' OR detail LIKE '%次数%'").get();
+
+    const levelDist: any[] = db.prepare('SELECT risk_level, COUNT(*) as cnt FROM risk_logs GROUP BY risk_level').all();
+    const ipRank: any[] = db.prepare('SELECT ip, COUNT(*) as cnt FROM risk_logs WHERE ip IS NOT NULL GROUP BY ip ORDER BY cnt DESC LIMIT 10').all();
+    const userRank: any[] = db.prepare(`
+      SELECT u.nickname, u.phone, COUNT(*) as cnt
+      FROM risk_logs rl
+      LEFT JOIN users u ON rl.user_id = u.id
+      WHERE rl.user_id IS NOT NULL
+      GROUP BY rl.user_id
+      ORDER BY cnt DESC
+      LIMIT 10
+    `).all();
+
+    res.json({
+      success: true,
+      data: {
+        total: totalRisk.cnt || 0,
+        today: todayRisk.cnt || 0,
+        blocked: totalBlocked.cnt || 0,
+        virtualPhone: virtualPhoneCount.cnt || 0,
+        regionLimit: regionCount.cnt || 0,
+        frequencyAbnormal: frequencyCount.cnt || 0,
+        levelDistribution: levelDist,
+        ipRank,
+        userRank
+      }
+    });
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
   }
@@ -1247,6 +1363,674 @@ router.get('/risk/logs/:id', authMiddleware, adminMiddleware, (req, res) => {
         suggestion: log.blocked ? '建议人工复核后决定是否解封' : '持续监控该用户行为'
       }
     });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/reports/export', authMiddleware, adminMiddleware, (req: AuthRequest, res) => {
+  try {
+    const { type = 'orders', format = 'csv', start_date, end_date } = req.query as any;
+    const t = now();
+    const endTime = end_date ? new Date(end_date).getTime() / 1000 : t;
+    const startTime = start_date ? new Date(start_date).getTime() / 1000 : t - 86400 * 30;
+
+    let data: any[] = [];
+    let filename = `${type}_export_${new Date().toISOString().slice(0, 10)}`;
+    let headers: string[] = [];
+
+    switch (type) {
+      case 'risk':
+        headers = ['ID', '类型', '风险等级', '用户ID', '用户昵称', 'IP地址', '地域', '检测类型', '是否封禁', '原因', '创建时间'];
+        data = db.prepare(`
+          SELECT rl.id, rl.action as type, rl.risk_level, rl.user_id, u.nickname as user_name,
+                 rl.ip as ip_address, rl.region, rl.detail as reason, rl.blocked, rl.created_at,
+            CASE
+              WHEN rl.detail LIKE '%虚拟号%' OR rl.detail LIKE '%virtual%' THEN '虚拟号识别'
+              WHEN rl.detail LIKE '%地域%' OR rl.detail LIKE '%region%' THEN '地域限售'
+              WHEN rl.detail LIKE '%频繁%' OR rl.detail LIKE '%frequency%' THEN '异常频次'
+              WHEN rl.detail LIKE '%IP%' OR rl.detail LIKE '%封禁%' THEN 'IP封禁'
+              WHEN rl.detail LIKE '%金额%' OR rl.detail LIKE '%amount%' THEN '金额超限'
+              ELSE '其他风险'
+            END as detection_type
+          FROM risk_logs rl
+          LEFT JOIN users u ON rl.user_id = u.id
+          WHERE rl.created_at >= ? AND rl.created_at <= ?
+          ORDER BY rl.created_at DESC
+          LIMIT 5000
+        `).all(startTime, endTime);
+        filename = `风控日志_${new Date(startTime * 1000).toISOString().slice(0, 10)}_${new Date(endTime * 1000).toISOString().slice(0, 10)}`;
+        break;
+
+      case 'settlements':
+        headers = ['结算单号', '供应商', '账期', '订单数', '订单金额', '结算金额', '分润比例', '发票状态', '状态', '创建时间'];
+        data = db.prepare(`
+          SELECT s.id, su.name as supplier_name, s.period, s.total_orders as order_count,
+                 s.total_amount as order_amount, s.settlement_amount, s.status,
+                 s.invoice_status, s.created_at,
+                 (SELECT level1_ratio FROM profit_share_configs WHERE supplier_id = s.supplier_id LIMIT 1) as profit_ratio
+          FROM settlements s
+          LEFT JOIN suppliers su ON s.supplier_id = su.id
+          WHERE s.created_at >= ? AND s.created_at <= ?
+          ORDER BY s.created_at DESC
+          LIMIT 5000
+        `).all(startTime, endTime);
+        filename = `供应商结算_${new Date(startTime * 1000).toISOString().slice(0, 10)}_${new Date(endTime * 1000).toISOString().slice(0, 10)}`;
+        break;
+
+      case 'commission':
+        headers = ['ID', '用户昵称', '层级', '来源用户', '商品', '订单号', '金额', '状态', '结算时间', '创建时间'];
+        data = db.prepare(`
+          SELECT cr.id, u.nickname as user_name, cr.level, cr.from_nickname,
+                 cr.product_name, cr.order_id, cr.amount, cr.status,
+                 cr.settled_at, cr.created_at
+          FROM commission_records cr
+          LEFT JOIN users u ON cr.user_id = u.id
+          WHERE cr.created_at >= ? AND cr.created_at <= ?
+          ORDER BY cr.created_at DESC
+          LIMIT 5000
+        `).all(startTime, endTime);
+        filename = `佣金明细_${new Date(startTime * 1000).toISOString().slice(0, 10)}_${new Date(endTime * 1000).toISOString().slice(0, 10)}`;
+        break;
+
+      case 'crypto':
+        headers = ['ID', '操作类型', '操作员', '卡密ID', '卡密数量', '算法', '密钥版本', 'IP地址', '操作原因', '状态', '创建时间'];
+        data = db.prepare(`
+          SELECT ccl.id, ccl.operation, ccl.operator, ccl.card_id, ccl.card_count,
+                 ccl.algorithm, ccl.key_version, ccl.ip_address, ccl.reason,
+                 ccl.status, ccl.created_at
+          FROM card_crypto_logs ccl
+          WHERE ccl.created_at >= ? AND ccl.created_at <= ?
+          ORDER BY ccl.created_at DESC
+          LIMIT 5000
+        `).all(startTime, endTime);
+        filename = `卡密加密解密_${new Date(startTime * 1000).toISOString().slice(0, 10)}_${new Date(endTime * 1000).toISOString().slice(0, 10)}`;
+        break;
+
+      case 'invoices':
+        headers = ['发票ID', '发票号', '类型', '抬头', '金额', '关联结算单', '状态', '开票时间', '邮寄时间', '签收时间', '创建时间'];
+        data = db.prepare(`
+          SELECT inv.id, inv.invoice_no, inv.type, inv.title, inv.amount,
+                 inv.settlement_id, inv.status, inv.issued_at, inv.mailed_at,
+                 inv.received_at, inv.created_at
+          FROM invoices inv
+          WHERE inv.created_at >= ? AND inv.created_at <= ?
+          ORDER BY inv.created_at DESC
+          LIMIT 5000
+        `).all(startTime, endTime);
+        filename = `发票管理_${new Date(startTime * 1000).toISOString().slice(0, 10)}_${new Date(endTime * 1000).toISOString().slice(0, 10)}`;
+        break;
+
+      case 'profit':
+        headers = ['配置ID', '供应商', 'L1分润比例', 'L2分润比例', 'L3分润比例', '供应商比例', '平台比例', '更新时间'];
+        data = db.prepare(`
+          SELECT psc.id, s.name as supplier_name, psc.level1_ratio, psc.level2_ratio,
+                 psc.level3_ratio, psc.supplier_ratio, psc.platform_ratio, psc.updated_at
+          FROM profit_share_configs psc
+          LEFT JOIN suppliers s ON psc.supplier_id = s.id
+          WHERE psc.updated_at >= ? AND psc.updated_at <= ?
+          ORDER BY psc.updated_at DESC
+          LIMIT 5000
+        `).all(startTime, endTime);
+        filename = `分润配置_${new Date(startTime * 1000).toISOString().slice(0, 10)}_${new Date(endTime * 1000).toISOString().slice(0, 10)}`;
+        break;
+
+      case 'reviews':
+        headers = ['复查ID', '类型', '关联订单', '用户', '申诉原因', '申诉金额', '状态', '审核人', '申诉时间', '审核时间'];
+        data = db.prepare(`
+          SELECT rr.id, rr.type, rr.order_id, u.nickname as user_name,
+                 rr.appeal_reason, rr.amount, rr.status, rr.reviewed_by,
+                 rr.appeal_at, rr.reviewed_at
+          FROM review_records rr
+          LEFT JOIN users u ON rr.user_id = u.id
+          WHERE rr.created_at >= ? AND rr.created_at <= ?
+          ORDER BY rr.created_at DESC
+          LIMIT 5000
+        `).all(startTime, endTime);
+        filename = `复查记录_${new Date(startTime * 1000).toISOString().slice(0, 10)}_${new Date(endTime * 1000).toISOString().slice(0, 10)}`;
+        break;
+
+      default:
+        headers = ['订单号', '商品', '用户', '手机号', '金额', '状态', '供应商', '渠道', '失败原因', '创建时间'];
+        data = db.prepare(`
+          SELECT o.order_no, p.name as product_name, u.nickname as user_name,
+                 o.recharge_account, o.final_amount, o.status,
+                 s.name as supplier_name, rc.name as channel_name,
+                 o.fail_reason, o.created_at
+          FROM orders o
+          LEFT JOIN products p ON o.product_id = p.id
+          LEFT JOIN users u ON o.user_id = u.id
+          LEFT JOIN suppliers s ON o.supplier_id = s.id
+          LEFT JOIN recharge_channels rc ON o.channel_id = rc.id
+          WHERE o.created_at >= ? AND o.created_at <= ?
+          ORDER BY o.created_at DESC
+          LIMIT 5000
+        `).all(startTime, endTime);
+        filename = `订单明细_${new Date(startTime * 1000).toISOString().slice(0, 10)}_${new Date(endTime * 1000).toISOString().slice(0, 10)}`;
+    }
+
+    if (format === 'json') {
+      res.json({
+        success: true,
+        data: {
+          filename,
+          headers,
+          rows: data,
+          total: data.length
+        }
+      });
+    } else {
+      const escapeCsv = (val: any) => {
+        if (val === null || val === undefined) return '';
+        const str = String(val);
+        if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+          return `"${str.replace(/"/g, '""')}"`;
+        }
+        return str;
+      };
+      const headerToKey = (h: string) => {
+        const map: Record<string, string> = {
+          'ID': 'id', '类型': 'type', '风险等级': 'risk_level', '用户ID': 'user_id', 'IP地址': 'ip_address',
+          '原因': 'reason', '状态': 'status', '创建时间': 'created_at', '供应商': 'supplier_name',
+          '账期': 'period', '订单数': 'order_count', '订单金额': 'order_amount', '结算金额': 'settled_amount',
+          '用户昵称': 'user_name', '层级': 'level', '来源用户': 'from_nickname', '商品': 'product_name',
+          '金额': 'amount', '操作类型': 'operation', '操作员': 'operator', '卡密数量': 'card_count',
+          '算法': 'algorithm', '发票号': 'invoice_no', '抬头': 'title', '关联结算单': 'settlement_id',
+          '订单号': 'order_no', '用户': 'user_name', '渠道': 'channel_name'
+        };
+        return map[h] || h.toLowerCase().replace(/\s+/g, '_');
+      };
+      const csvContent = [
+        headers.join(','),
+        ...data.map(row => headers.map(h => escapeCsv(row[headerToKey(h)])).join(','))
+      ].join('\n');
+
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}.csv`);
+      res.send('\uFEFF' + csvContent);
+    }
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/operation-logs', authMiddleware, adminMiddleware, (req: AuthRequest, res) => {
+  try {
+    const { page = 1, pageSize = 20, action_type, operator } = req.query as any;
+    const offset = (Number(page) - 1) * Number(pageSize);
+
+    let whereClauses: string[] = [];
+    let params: any[] = [];
+
+    if (action_type) {
+      whereClauses.push('action_type = ?');
+      params.push(action_type);
+    }
+    if (operator) {
+      whereClauses.push('operator LIKE ?');
+      params.push(`%${operator}%`);
+    }
+
+    const whereSql = whereClauses.length > 0 ? `WHERE ${whereClauses.join(' AND ')}` : '';
+
+    const totalRow: any = db.prepare(`SELECT COUNT(*) as cnt FROM operation_logs ${whereSql}`).get(...params);
+    const logs: any[] = db.prepare(`
+      SELECT ol.*, u.nickname as operator_name
+      FROM operation_logs ol
+      LEFT JOIN users u ON ol.operator_id = u.id
+      ${whereSql}
+      ORDER BY ol.created_at DESC
+      LIMIT ? OFFSET ?
+    `).all(...params, Number(pageSize), offset);
+
+    res.json({
+      success: true,
+      data: {
+        list: logs,
+        total: totalRow.cnt,
+        page: Number(page),
+        pageSize: Number(pageSize),
+        actionTypes: [
+          { key: 'login', label: '登录' },
+          { key: 'logout', label: '登出' },
+          { key: 'create', label: '创建' },
+          { key: 'update', label: '更新' },
+          { key: 'delete', label: '删除' },
+          { key: 'export', label: '导出' },
+          { key: 'settle', label: '结算' },
+          { key: 'refund', label: '退款' },
+          { key: 'retry', label: '重试' },
+          { key: 'crypto', label: '加解密' },
+          { key: 'risk', label: '风控操作' }
+        ]
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.post('/operation-logs', authMiddleware, adminMiddleware, (req: AuthRequest, res) => {
+  try {
+    const { action_type, target_id, target_type, detail, ip_address } = req.body;
+    const t = now();
+
+    db.prepare(`
+      INSERT INTO operation_logs (operator_id, operator, action_type, target_id, target_type, detail, ip_address, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      req.userId || 'system',
+      (req as any).user?.nickname || 'system',
+      action_type,
+      target_id || null,
+      target_type || null,
+      detail || null,
+      ip_address || req.clientIp,
+      t
+    );
+
+    res.json({ success: true });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/audit/dashboard', authMiddleware, adminMiddleware, (_req, res) => {
+  try {
+    const t = now();
+    const todayStart = t - (t % 86400);
+    const weekStart = t - 86400 * 7;
+
+    const todayOperations: any = db.prepare('SELECT COUNT(*) as cnt FROM operation_logs WHERE created_at >= ?').get(todayStart);
+    const pendingReviews: any = db.prepare("SELECT COUNT(*) as cnt FROM review_records WHERE status = 'pending'").get();
+    const pendingSettlements: any = db.prepare("SELECT COUNT(*) as cnt FROM settlements WHERE status = 'pending'").get();
+    const pendingInvoices: any = db.prepare("SELECT COUNT(*) as cnt FROM invoices WHERE status = 'pending'").get();
+
+    const failedOrders: any = db.prepare("SELECT COUNT(*) as cnt FROM orders WHERE status = 'failed' AND created_at >= ?").get(todayStart);
+    const pendingStockSync: any = db.prepare("SELECT COUNT(*) as cnt FROM products WHERE status = 1 AND need_sync = 1").get();
+    const channelDowngrade: any = db.prepare("SELECT COUNT(*) as cnt FROM recharge_channels WHERE status = 0").get();
+
+    const recentOperations: any[] = db.prepare(`
+      SELECT ol.*, u.nickname as operator_name
+      FROM operation_logs ol
+      LEFT JOIN users u ON ol.operator_id = u.id
+      ORDER BY ol.created_at DESC
+      LIMIT 10
+    `).all();
+
+    const recentReviews: any[] = db.prepare(`
+      SELECT rr.*, u.nickname as user_name, o.order_no, o.product_name
+      FROM review_records rr
+      LEFT JOIN users u ON rr.user_id = u.id
+      LEFT JOIN orders o ON rr.order_id = o.id
+      ORDER BY rr.created_at DESC
+      LIMIT 10
+    `).all();
+
+    const todayRisk: any = db.prepare('SELECT COUNT(*) as cnt FROM risk_logs WHERE created_at >= ?').get(todayStart);
+    const blockedToday: any = db.prepare("SELECT COUNT(*) as cnt FROM risk_logs WHERE blocked = 1 AND created_at >= ?").get(todayStart);
+
+    const auditStats = {
+      todayOperations: todayOperations.cnt || 0,
+      pendingReviews: pendingReviews.cnt || 0,
+      pendingSettlements: pendingSettlements.cnt || 0,
+      pendingInvoices: pendingInvoices.cnt || 0,
+      todayFailedOrders: failedOrders.cnt || 0,
+      pendingStockSync: pendingStockSync.cnt || 0,
+      channelDowngrade: channelDowngrade.cnt || 0,
+      todayRiskLogs: todayRisk.cnt || 0,
+      todayBlocked: blockedToday.cnt || 0,
+      recentOperations,
+      recentReviews
+    };
+
+    res.json({ success: true, data: auditStats });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/invoices', authMiddleware, adminMiddleware, (req, res) => {
+  try {
+    const { page = 1, pageSize = 20, status } = req.query as any;
+    const offset = (Number(page) - 1) * Number(pageSize);
+
+    let whereSql = '';
+    let params: any[] = [];
+    if (status && status !== 'all') {
+      whereSql = 'WHERE status = ?';
+      params.push(status);
+    }
+
+    const totalRow: any = db.prepare(`SELECT COUNT(*) as cnt FROM invoices ${whereSql}`).get(...params);
+    const invoices: any[] = db.prepare(`
+      SELECT i.*, ss.supplier_name, ss.period as settlement_period
+      FROM invoices i
+      LEFT JOIN supplier_settlements ss ON i.settlement_id = ss.id
+      ${whereSql}
+      ORDER BY i.created_at DESC
+      LIMIT ? OFFSET ?
+    `).all(...params, Number(pageSize), offset);
+
+    res.json({
+      success: true,
+      data: {
+        list: invoices,
+        total: totalRow.cnt,
+        page: Number(page),
+        pageSize: Number(pageSize)
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/review-center/summary', authMiddleware, adminMiddleware, (_req, res) => {
+  try {
+    const t = now();
+    const todayStart = t - (t % 86400);
+
+    const pendingOrderReviews: any = db.prepare(`
+      SELECT COUNT(*) as cnt FROM review_records
+      WHERE status = 'pending' AND type = 'order_appeal'
+    `).get();
+
+    const pendingCommissionReviews: any = db.prepare(`
+      SELECT COUNT(*) as cnt FROM review_records
+      WHERE status = 'pending' AND type = 'commission_review'
+    `).get();
+
+    const pendingSettlementReviews: any = db.prepare(`
+      SELECT COUNT(*) as cnt FROM settlements
+      WHERE status = 'pending'
+    `).get();
+
+    const failedOrders: any = db.prepare(`
+      SELECT COUNT(*) as cnt FROM orders
+      WHERE status = 'failed' AND created_at >= ?
+    `).get(todayStart - 86400 * 3);
+
+    const channelDowngrades: any = db.prepare(`
+      SELECT COUNT(*) as cnt FROM recharge_channels
+      WHERE status = 0
+    `).get();
+
+    const stockSyncNeeded: any = db.prepare(`
+      SELECT COUNT(*) as cnt FROM products
+      WHERE status = 1 AND need_sync = 1
+    `).get();
+
+    const todayReviews: any = db.prepare(`
+      SELECT COUNT(*) as cnt FROM review_records
+      WHERE created_at >= ?
+    `).get(todayStart);
+
+    res.json({
+      success: true,
+      data: {
+        pendingOrderReviews: pendingOrderReviews.cnt || 0,
+        pendingCommissionReviews: pendingCommissionReviews.cnt || 0,
+        pendingSettlementReviews: pendingSettlementReviews.cnt || 0,
+        recentFailedOrders: failedOrders.cnt || 0,
+        channelDowngrades: channelDowngrades.cnt || 0,
+        stockSyncNeeded: stockSyncNeeded.cnt || 0,
+        todayReviews: todayReviews.cnt || 0
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/review-center/list', authMiddleware, adminMiddleware, (req, res) => {
+  try {
+    const { page = 1, pageSize = 20, type, status }: any = req.query;
+    const offset = (Number(page) - 1) * Number(pageSize);
+
+    let reviewItems: any[] = [];
+    let total = 0;
+
+    if (!type || type === 'failed_order') {
+      const whereStatus = status && status !== 'all' ? `AND o.status = '${status}'` : '';
+      const countRow: any = db.prepare(`
+        SELECT COUNT(*) as cnt FROM orders o
+        WHERE o.status IN ('failed', 'refunded') ${whereStatus}
+      `).get();
+      total += countRow.cnt || 0;
+
+      const orders: any[] = db.prepare(`
+        SELECT o.id, o.order_no, o.product_name, o.recharge_account, o.final_amount,
+               o.status, o.fail_reason, o.created_at, o.finish_time,
+               u.nickname as user_name, u.phone as user_phone,
+               s.name as supplier_name,
+               rr.id as review_id, rr.status as review_status, rr.appeal_reason
+        FROM orders o
+        LEFT JOIN users u ON o.user_id = u.id
+        LEFT JOIN suppliers s ON o.supplier_id = s.id
+        LEFT JOIN review_records rr ON rr.order_id = o.id
+        WHERE o.status IN ('failed', 'refunded') ${whereStatus}
+        ORDER BY o.created_at DESC
+        LIMIT ? OFFSET ?
+      `).all(Number(pageSize), offset);
+
+      reviewItems = reviewItems.concat(orders.map(o => ({
+        ...o,
+        item_type: 'failed_order',
+        title: o.product_name,
+        amount: o.final_amount,
+        can_retry: o.status === 'failed',
+        can_refund: o.status === 'failed' && o.refund_status !== 'refunded'
+      })));
+    }
+
+    if (!type || type === 'channel_downgrade') {
+      const countRow: any = db.prepare(`
+        SELECT COUNT(*) as cnt FROM recharge_channels
+        WHERE status = 0
+      `).get();
+      total += countRow.cnt || 0;
+
+      if (!type) {
+        const channels: any[] = db.prepare(`
+          SELECT rc.id, rc.name, rc.priority, rc.success_rate, rc.fail_reason,
+                 rc.updated_at, s.name as supplier_name, p.name as product_name
+          FROM recharge_channels rc
+          LEFT JOIN suppliers s ON rc.supplier_id = s.id
+          LEFT JOIN products p ON rc.product_id = p.id
+          WHERE rc.status = 0
+          ORDER BY rc.updated_at DESC
+          LIMIT ? OFFSET ?
+        `).all(Number(pageSize), offset);
+
+        reviewItems = reviewItems.concat(channels.map(c => ({
+          ...c,
+          item_type: 'channel_downgrade',
+          title: `${c.product_name} - ${c.supplier_name}`,
+          amount: null,
+          can_restore: true
+        })));
+      }
+    }
+
+    if (!type || type === 'stock_sync') {
+      const countRow: any = db.prepare(`
+        SELECT COUNT(*) as cnt FROM products
+        WHERE status = 1 AND need_sync = 1
+      `).get();
+      total += countRow.cnt || 0;
+
+      if (!type) {
+        const products: any[] = db.prepare(`
+          SELECT p.id, p.name, p.sku_type, p.stock, p.sync_batch, p.last_sync_at,
+                 s.name as supplier_name, p.supplier_stock
+          FROM products p
+          LEFT JOIN suppliers s ON p.supplier_id = s.id
+          WHERE p.status = 1 AND p.need_sync = 1
+          ORDER BY p.last_sync_at ASC
+          LIMIT ? OFFSET ?
+        `).all(Number(pageSize), offset);
+
+        reviewItems = reviewItems.concat(products.map(p => ({
+          ...p,
+          item_type: 'stock_sync',
+          title: p.name,
+          amount: null,
+          stock_diff: p.supplier_stock !== undefined ? p.supplier_stock - p.stock : null,
+          can_sync: true
+        })));
+      }
+    }
+
+    if (!type || type === 'settlement') {
+      const whereStatus = status && status !== 'all' ? `AND s.status = '${status}'` : '';
+      const countRow: any = db.prepare(`
+        SELECT COUNT(*) as cnt FROM settlements s
+        WHERE s.status IN ('pending', 'processing') ${whereStatus}
+      `).get();
+      total += countRow.cnt || 0;
+
+      if (!type) {
+        const settlements: any[] = db.prepare(`
+          SELECT s.id, s.period, s.total_orders, s.total_amount, s.settlement_amount,
+                 s.status, s.created_at, su.name as supplier_name,
+                 s.invoice_status
+          FROM settlements s
+          LEFT JOIN suppliers su ON s.supplier_id = su.id
+          WHERE s.status IN ('pending', 'processing') ${whereStatus}
+          ORDER BY s.created_at DESC
+          LIMIT ? OFFSET ?
+        `).all(Number(pageSize), offset);
+
+        reviewItems = reviewItems.concat(settlements.map(s => ({
+          ...s,
+          item_type: 'settlement',
+          title: `${s.supplier_name} - ${s.period}`,
+          amount: s.settlement_amount,
+          can_approve: s.status === 'pending',
+          can_invoice: s.invoice_status === 'pending'
+        })));
+      }
+    }
+
+    if (!type || type === 'review') {
+      const whereStatus = status && status !== 'all' ? `AND rr.status = '${status}'` : '';
+      const countRow: any = db.prepare(`
+        SELECT COUNT(*) as cnt FROM review_records rr
+        WHERE rr.status IN ('pending', 'processing') ${whereStatus}
+      `).get();
+      total += countRow.cnt || 0;
+
+      if (!type) {
+        const reviews: any[] = db.prepare(`
+          SELECT rr.*, u.nickname as user_name, o.order_no, o.product_name
+          FROM review_records rr
+          LEFT JOIN users u ON rr.user_id = u.id
+          LEFT JOIN orders o ON rr.order_id = o.id
+          WHERE rr.status IN ('pending', 'processing') ${whereStatus}
+          ORDER BY rr.created_at DESC
+          LIMIT ? OFFSET ?
+        `).all(Number(pageSize), offset);
+
+        reviewItems = reviewItems.concat(reviews.map(r => ({
+          ...r,
+          item_type: 'review',
+          title: r.type === 'order_appeal' ? '订单申诉' : '佣金复查',
+          amount: r.amount,
+          can_process: r.status === 'pending'
+        })));
+      }
+    }
+
+    reviewItems.sort((a, b) => (b.updated_at || b.created_at) - (a.updated_at || a.created_at));
+    reviewItems = reviewItems.slice(0, Number(pageSize));
+
+    res.json({
+      success: true,
+      data: {
+        list: reviewItems,
+        total,
+        page: Number(page),
+        pageSize: Number(pageSize)
+      }
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.post('/review-center/process/:id', authMiddleware, adminMiddleware, (req: AuthRequest, res) => {
+  try {
+    const { action, reason } = req.body;
+    const t = now();
+    const reviewId = req.params.id;
+
+    if (!action) return res.status(400).json({ success: false, message: '缺少操作类型' });
+
+    const result: any = { success: true };
+
+    if (action === 'approve_review') {
+      db.prepare(`
+        UPDATE review_records
+        SET status = 'resolved', reviewed_at = ?, reviewed_by = ?, review_result = ?
+        WHERE id = ?
+      `).run(t, req.userId, reason || '审核通过', reviewId);
+      result.message = '复查已通过';
+    } else if (action === 'reject_review') {
+      db.prepare(`
+        UPDATE review_records
+        SET status = 'rejected', reviewed_at = ?, reviewed_by = ?, review_result = ?
+        WHERE id = ?
+      `).run(t, req.userId, reason || '审核不通过', reviewId);
+      result.message = '复查已驳回';
+    } else if (action === 'retry_order') {
+      const order: any = db.prepare('SELECT * FROM orders WHERE id = ?').get(reviewId);
+      if (!order) return res.status(404).json({ success: false, message: '订单不存在' });
+      db.prepare("UPDATE orders SET status = 'processing', updated_at = ?, fail_reason = NULL WHERE id = ?")
+        .run(t, reviewId);
+      result.message = '订单已重试';
+    } else if (action === 'refund_order') {
+      const order: any = db.prepare('SELECT * FROM orders WHERE id = ?').get(reviewId);
+      if (!order) return res.status(404).json({ success: false, message: '订单不存在' });
+      db.transaction(() => {
+        db.prepare('UPDATE users SET balance = balance + ? WHERE id = ?').run(order.final_amount, order.user_id);
+        db.prepare("UPDATE orders SET status = 'refunded', refund_status = 'refunded', refund_time = ?, updated_at = ?, finish_time = ? WHERE id = ?")
+          .run(t, t, t, reviewId);
+        db.prepare(`
+          INSERT INTO commission_records (id, user_id, order_id, amount, type, status, created_at, remark)
+          VALUES (?, ?, ?, ?, 'refund', 'completed', ?, '订单退款')
+        `).run(generateId(), order.user_id, order.id, -order.final_amount, t);
+      })();
+      result.message = '退款已处理';
+    } else if (action === 'restore_channel') {
+      db.prepare("UPDATE recharge_channels SET status = 1, updated_at = ?, fail_reason = NULL WHERE id = ?")
+        .run(t, reviewId);
+      result.message = '通道已恢复';
+    } else if (action === 'sync_stock') {
+      db.prepare("UPDATE products SET need_sync = 0, last_sync_at = ?, updated_at = ? WHERE id = ?")
+        .run(t, t, reviewId);
+      result.message = '库存已同步';
+    } else if (action === 'approve_settlement') {
+      db.prepare("UPDATE settlements SET status = 'processing', updated_at = ? WHERE id = ?")
+        .run(t, reviewId);
+      result.message = '结算已进入处理';
+    } else if (action === 'mark_invoiced') {
+      db.prepare("UPDATE settlements SET invoice_status = 'invoiced', updated_at = ? WHERE id = ?")
+        .run(t, reviewId);
+      result.message = '已标记开票';
+    }
+
+    db.prepare(`
+      INSERT INTO operation_logs
+        (id, operator_id, operator, action_type, target_id, target_type, detail, ip_address, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      generateId(), req.userId, req.username || req.userId,
+      action, reviewId, 'review_center', reason || action,
+      req.clientIp || '', t
+    );
+
+    res.json(result);
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
   }

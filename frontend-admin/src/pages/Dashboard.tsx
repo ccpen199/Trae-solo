@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { useApp } from '../App';
 
@@ -159,6 +160,7 @@ function ErrorRetry({ message, onRetry }: { message: string; onRetry: () => void
 
 export default function Dashboard() {
   const { showToast } = useApp();
+  const navigate = useNavigate();
 
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [orders, setOrders] = useState<OrderItem[]>([]);
@@ -490,7 +492,14 @@ export default function Dashboard() {
           <div style={{ fontSize: 20, fontWeight: 600, color: '#1e293b' }}>📊 运营概览</div>
           <div style={{ fontSize: 13, color: '#64748b', marginTop: 4 }}>实时监控平台运营数据</div>
         </div>
-        <button className="btn btn-default btn-sm" onClick={() => loadAll(true)}>刷新数据</button>
+        <button
+          className="btn btn-default btn-sm"
+          type="button"
+          aria-label="刷新数据"
+          onClick={() => loadAll(true)}
+        >
+          刷新数据
+        </button>
       </div>
       {lastRefreshMessage && (
         <div className="card" style={{ marginBottom: 16, padding: '10px 14px', color: '#166534', background: '#f0fdf4', border: '1px solid #bbf7d0' }}>
@@ -720,7 +729,15 @@ export default function Dashboard() {
                           <td style={{ color: '#ef4444', fontWeight: 600 }}>¥{o.final_amount.toFixed(2)}</td>
                           <td><span className={`tag ${s.cls}`}>{s.text}</span></td>
                           <td style={{ fontSize: 12, color: '#64748b' }}>{formatTime(o.created_at)}</td>
-                          <td><button className="btn btn-link btn-sm">详情</button></td>
+                          <td>
+                            <button
+                              className="btn btn-link btn-sm"
+                              type="button"
+                              onClick={() => navigate(`/orders/${o.id}`)}
+                            >
+                              详情
+                            </button>
+                          </td>
                         </tr>
                       );
                     })}

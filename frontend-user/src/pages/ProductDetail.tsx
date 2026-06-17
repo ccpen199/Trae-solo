@@ -607,7 +607,7 @@ export default function ProductDetail() {
               } else if (payStatus === 'failed') {
                 toast.show('充值失败', 'error');
                 navigate(`/order/${orderId}?expandDiagnostic=1`);
-              } else if (payStatus === 'processing') {
+              } else if (['paid', 'recharging', 'processing', 'retrying', 'channel_switch'].includes(payStatus)) {
                 toast.show('充值中...', 'info');
                 startPolling(orderId);
               } else {

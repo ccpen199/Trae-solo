@@ -16,6 +16,7 @@ import productRoutes from './routes/products';
 import orderRoutes from './routes/orders';
 import commissionRoutes from './routes/commission';
 import adminRoutes from './routes/admin';
+import adminCompatibilityRoutes from './routes/adminCompatibility';
 
 const app = express();
 const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
@@ -261,6 +262,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api', commissionRoutes);
+app.use('/api/admin', adminCompatibilityRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.use(errorHandler);

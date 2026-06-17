@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { productApi } from '../api/modules';
 import { useToast, useUser } from '../App';
 import Header from '../components/Header';
@@ -16,6 +16,7 @@ interface RechargeChannel {
   created_at?: number;
   updated_at?: number;
   fail_reason?: string;
+  operator?: string;
 }
 
 interface SyncRecord {
@@ -494,6 +495,7 @@ export default function Home() {
   const navigate = useNavigate();
   const toast = useToast();
   const { user } = useUser();
+  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://127.0.0.1:50212';
   const [categories, setCategories] = useState<any[]>([]);
   const [hotProducts, setHotProducts] = useState<Product[]>([]);
   const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
@@ -523,10 +525,15 @@ export default function Home() {
   const [regionDetailModal, setRegionDetailModal] = useState<RegionDetailModalState>({ open: false, productId: null });
   const [commissionTraceData, setCommissionTraceData] = useState<any>(null);
   const [commissionTraceLoading, setCommissionTraceLoading] = useState(false);
+  const [globalSearchResults, setGlobalSearchResults] = useState<Product[]>([]);
+  const [globalSearchLoading, setGlobalSearchLoading] = useState(false);
+  const [globalSearchTotal, setGlobalSearchTotal] = useState(0);
+  const [lastSearchKeyword, setLastSearchKeyword] = useState('');
 
   const allProducts = useMemo(() => [...hotProducts, ...categoryProducts], [hotProducts, categoryProducts]);
 
   const filteredProducts = useMemo(() => {
+    if (globalSearchResults.length > 0) return globalSearchResults;
     const list = activeCategory ? categoryProducts : hotProducts;
     const kw = searchKeyword.trim().toLowerCase();
     if (!kw) return list;
@@ -535,7 +542,7 @@ export default function Home() {
       const supplierMatch = p.supplier_name?.toLowerCase().includes(kw);
       return nameMatch || supplierMatch;
     });
-  }, [activeCategory, categoryProducts, hotProducts, searchKeyword]);
+  }, [activeCategory, categoryProducts, hotProducts, searchKeyword, globalSearchResults]);
 
   const categoryStats = useMemo(() => {
     if (!activeCategory || filteredProducts.length === 0) return null;
@@ -566,8 +573,8 @@ export default function Home() {
   const loadData = async () => {
     try {
       const [catRes, hotRes, promoRes] = await Promise.all([
-        productApi.getCategories(),
-        productApi.getHotProducts(),
+        productApi.categories(),
+        productApi.hot(),
         productApi.getPromotions()
       ]);
       if (catRes.success) {
@@ -634,7 +641,7 @@ export default function Home() {
   const loadCategoryProducts = async (category: any, page: number = 1) => {
     setCategoryLoading(true);
     try {
-      const res = await productApi.getProducts({ categoryId: category.id, page, pageSize: 50 });
+      const res = await productApi.list({ categoryId: category.id, page, pageSize: 50 });
       if (res.success) {
         const rawProducts: any[] = res.data.list || [];
         const products: Product[] = rawProducts.map(p => fieldMapping.mapProduct(p));
@@ -715,6 +722,52 @@ export default function Home() {
     setSearchKeyword('');
     setCategoryTotal(0);
     setHasMoreCategoryProducts(false);
+  };
+
+  const handleGlobalSearch = async () => {
+    const kw = searchKeyword.trim();
+    if (!kw) {
+      toast.show('请输入搜索关键词', 'warning');
+      return;
+    }
+    setGlobalSearchLoading(true);
+    setLastSearchKeyword(kw);
+    try {
+      const res = await productApi.search(kw, { pageSize: 50 });
+      if (res.success) {
+        const data = res.data?.list || res.data || [];
+        const mapped = data.map((p: any) => fieldMapping.mapProduct(p));
+        setGlobalSearchResults(mapped);
+        setGlobalSearchTotal(res.data?.total || mapped.length);
+        setActiveCategory(null);
+        if (mapped.length === 0) {
+          toast.show('未找到匹配商品，已显示全部相关推荐', 'info');
+        } else {
+          toast.show(`找到 ${mapped.length} 个商品`, 'success');
+        }
+      } else {
+        toast.show(res.message || '搜索失败', 'error');
+      }
+    } catch (e: any) {
+      toast.show(e.message || '搜索失败', 'error');
+    } finally {
+      setGlobalSearchLoading(false);
+    }
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleGlobalSearch();
+    }
+  };
+
+  const clearGlobalSearch = () => {
+    setGlobalSearchResults([]);
+    setGlobalSearchTotal(0);
+    setLastSearchKeyword('');
+    setSearchKeyword('');
+    setActiveCategory(null);
   };
 
   const loadPriceEstimate = async (productId: string, unitPrice: number) => {
@@ -2111,16 +2164,17 @@ export default function Home() {
       <Header
         title="虚拟商品中心"
         showBack={false}
-        right={<Link to="/admin-portal" className="admin-entry">管理后台</Link>}
+        right={<a href={adminUrl} target="_blank" rel="noopener noreferrer" className="admin-entry">管理后台</a>}
       />
 
       <div className="search-box">
         <span style={{ fontSize: 16 }}>🔍</span>
         <input
           type="text"
-          placeholder="搜索商品名、供应商名称..."
+          placeholder="搜索商品名、供应商名称、SKU编号..."
           value={searchKeyword}
           onChange={(e) => setSearchKeyword(e.target.value)}
+          onKeyDown={handleSearchKeyDown}
           style={{
             flex: 1,
             border: 'none',
@@ -2141,7 +2195,57 @@ export default function Home() {
             ✕
           </button>
         )}
+        <button
+          onClick={handleGlobalSearch}
+          disabled={globalSearchLoading}
+          style={{
+            marginLeft: 8,
+            padding: '6px 14px',
+            borderRadius: 8,
+            border: 'none',
+            background: globalSearchLoading ? '#d6e4ff' : 'linear-gradient(135deg, #667eea, #764ba2)',
+            color: 'white',
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: globalSearchLoading ? 'not-allowed' : 'pointer'
+          }}
+        >
+          {globalSearchLoading ? '搜索中...' : '搜索'}
+        </button>
       </div>
+
+      {globalSearchResults.length > 0 && (
+        <div style={{ margin: '12px 16px 0' }}>
+          <div style={{
+            padding: '10px 14px',
+            borderRadius: 10,
+            background: 'linear-gradient(90deg, #f0f5ff, #e6f7ff)',
+            border: '1px solid #d6e4ff',
+            fontSize: 12,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <span style={{ color: '#096dd9', fontWeight: 600 }}>
+              🔍 全局搜索「{lastSearchKeyword}」找到 {globalSearchTotal} 个结果
+            </span>
+            <button
+              onClick={clearGlobalSearch}
+              style={{
+                padding: '2px 10px',
+                borderRadius: 6,
+                background: '#667eea',
+                color: 'white',
+                fontSize: 11,
+                fontWeight: 500,
+                border: 'none'
+              }}
+            >
+              返回首页
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="banner">
         <h2>🎉 新用户首单立减20元</h2>
@@ -3432,7 +3536,7 @@ export default function Home() {
                       color: phoneValidation.level === 'error' ? '#cf1322' : phoneValidation.level === 'warning' ? '#d48806' : '#389e0d'
                     }}>
                       <span>{phoneValidation.level === 'error' ? '❌' : phoneValidation.level === 'warning' ? '⚠️' : '✅'}</span>
-                      <span style={{ flex: 1 }}>{phoneValidation.message}</span>
+                      <span style={{ flex: 1, fontWeight: 500 }}>{phoneValidation.message}</span>
                       {phoneValidation.isVirtual && (
                         <span style={{
                           fontSize: 9,
@@ -3445,6 +3549,113 @@ export default function Home() {
                           虚拟号段
                         </span>
                       )}
+                    </div>
+                  )}
+
+                  {rechargeTrialModal.phone && phoneValidation.level !== 'error' && phoneValidation.operator !== '未知' && (() => {
+                    const currentProduct = getCurrentProduct(rechargeTrialModal.productId || '');
+                    const productChannels = currentProduct?.channels || [];
+                    const matchedChannels = productChannels.filter(c => {
+                      if (!c.operator || c.operator === 'all') return true;
+                      return c.operator.toLowerCase() === phoneValidation.operator.toLowerCase() ||
+                             phoneValidation.operator.includes(c.operator);
+                    });
+                    const otherChannels = productChannels.filter(c => !matchedChannels.includes(c));
+                    return (
+                      <div style={{
+                        marginTop: 10,
+                        padding: '10px 12px',
+                        borderRadius: 8,
+                        background: 'linear-gradient(135deg, #f0f5ff, #f9f0ff)',
+                        border: '1px solid #d6e4ff',
+                        fontSize: 11
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          marginBottom: 8,
+                          fontWeight: 600,
+                          color: '#333'
+                        }}>
+                          <span>🔬 运营商匹配诊断</span>
+                          <span style={{
+                            fontSize: 10,
+                            padding: '1px 6px',
+                            borderRadius: 4,
+                            background: matchedChannels.length > 0 ? '#52c41a' : '#ff4d4f',
+                            color: 'white'
+                          }}>
+                            {matchedChannels.length > 0 ? `${matchedChannels.length}条通道匹配` : '无匹配通道'}
+                          </span>
+                        </div>
+                        {matchedChannels.length > 0 ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                            {matchedChannels.slice(0, 2).map((c, idx) => (
+                              <div key={c.id || idx} style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                padding: '4px 8px',
+                                background: 'white',
+                                borderRadius: 6,
+                                border: '1px solid #f0f0f0'
+                              }}>
+                                <span style={{ color: '#666' }}>
+                                  📡 {c.supplier_name || '主通道'} {c.priority ? `(#${c.priority})` : ''}
+                                </span>
+                                <span style={{ color: '#52c41a', fontWeight: 600 }}>
+                                  成功率 {(c.success_rate * 100).toFixed(1)}%
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div style={{ color: '#ff4d4f', marginBottom: 6 }}>
+                            该号码运营商（{phoneValidation.operator}）暂无匹配通道，系统将自动尝试其他通道
+                          </div>
+                        )}
+                        {otherChannels.length > 0 && (
+                          <div style={{
+                            marginTop: 6,
+                            paddingTop: 6,
+                            borderTop: '1px dashed #e8e8e8',
+                            color: '#999',
+                            fontSize: 10
+                          }}>
+                            <div style={{ marginBottom: 4 }}>
+                              💡 可选备用通道 {otherChannels.length} 条（{otherChannels.map(c => c.operator || '通用').filter((v, i, a) => a.indexOf(v) === i).join('、')}）
+                            </div>
+                            <div style={{ color: '#667eea', cursor: 'pointer' }}
+                              onClick={() => navigate(`/product/${rechargeTrialModal.productId}`)}>
+                              前往详情页手动切换运营商通道 →
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {rechargeTrialModal.phone && (
+                    <div style={{
+                      marginTop: 10,
+                      padding: '8px 12px',
+                      borderRadius: 8,
+                      background: '#fafafa',
+                      border: '1px solid #f0f0f0',
+                      fontSize: 10,
+                      color: '#999',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}>
+                      <span>充值失败？可在订单详情提交申诉</span>
+                      <span
+                        style={{ color: '#667eea', cursor: 'pointer', fontWeight: 500 }}
+                        onClick={() => navigate('/orders?status=failed')}
+                      >
+                        查看失败订单 →
+                      </span>
                     </div>
                   )}
                 </div>

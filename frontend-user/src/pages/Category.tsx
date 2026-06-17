@@ -138,8 +138,8 @@ export default function Category() {
     setLoading(true);
     try {
       const [catRes, prodRes] = await Promise.all([
-        productApi.getCategories(),
-        productApi.getProducts({ pageSize: 500 }).catch(() => ({ success: false, data: { list: [] } }))
+        productApi.categories(),
+        productApi.list({ pageSize: 500 }).catch(() => ({ success: false, data: { list: [] } }))
       ]);
 
       const apiProducts: Product[] = (prodRes?.success && prodRes?.data?.list) ? prodRes.data.list : [];

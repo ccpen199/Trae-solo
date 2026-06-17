@@ -4,6 +4,7 @@ import { verifyToken, getClientIp, getRegionByIp } from '../utils';
 export interface AuthRequest extends Request {
   userId?: string;
   userRole?: string;
+  username?: string;
   clientIp?: string;
   clientRegion?: string;
 }
@@ -22,12 +23,14 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
 
   req.userId = payload.userId;
   req.userRole = payload.role || 'user';
+  req.username = payload.username;
   next();
 }
 
 export function adminMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
-  if (req.userRole !== 'admin') {
-    return res.status(403).json({ success: false, message: '无管理员权限' });
+  const allowedRoles = ['admin', 'operation', 'manager'];
+  if (!req.userRole || !allowedRoles.includes(req.userRole)) {
+    return res.status(403).json({ success: false, message: '无管理员权限，请联系运营开通' });
   }
   next();
 }

@@ -34,9 +34,10 @@ export const authApi = {
 };
 
 export const productApi = {
-  getCategories: () => data(api.get('/categories')),
-  getProducts: (params: any) => data(api.get('/products', { params })),
-  getHotProducts: () => data(api.get('/products/hot')),
+  list: (params: any) => data(api.get('/products', { params })),
+  search: (keyword: string, params?: any) => data(api.get('/products', { params: { keyword, ...params } })),
+  hot: () => data(api.get('/products/hot')),
+  categories: () => data(api.get('/categories')),
   getProductDetail: (id: string) => data(api.get(`/products/${id}`)),
   calculatePrice: (payload: CalculatePricePayload) => data(api.post('/calculate-price', payload)),
   getPromotions: () => data(api.get('/promotions')),
@@ -52,7 +53,11 @@ export const orderApi = {
   detail: (id: string) => data(api.get(`/orders/${id}`)),
   getCards: (id: string) => data(api.get(`/orders/${id}/cards`)),
   diagnostic: (id: string) => data(api.get(`/orders/${id}/diagnostic`)),
-  retrySwitchChannel: (id: string) => data(api.post(`/orders/${id}/retry-switch-channel`))
+  retrySwitchChannel: (id: string) => data(api.post(`/orders/${id}/retry-switch-channel`)),
+  getAbnormalSummary: () => data(api.get('/orders/abnormal/summary')),
+  getAbnormalList: (params: any) => data(api.get('/orders/abnormal/list', { params })),
+  appeal: (id: string, payload: any) => data(api.post(`/orders/${id}/appeal`, payload)),
+  getRecentFlow: (limit?: number) => data(api.get('/orders/flow/recent', { params: { limit } }))
 };
 
 export const commissionApi = {
@@ -71,10 +76,23 @@ export const commissionApi = {
 export const adminApi = {
   getDashboard: () => data(api.get('/admin/dashboard')),
   getStats: () => data(api.get('/admin/stats')),
-  getRiskLogs: (limit: number = 5) => data(api.get(`/admin/risk/logs?limit=${limit}`)),
+  getRiskLogs: (params?: any) => data(api.get('/admin/risk/logs', { params })),
+  getRiskStats: () => data(api.get('/admin/risk/stats')),
   getSettlements: () => data(api.get('/admin/settlements')),
   getProfitConfigs: () => data(api.get('/admin/profit-configs')),
   getCardPool: () => data(api.get('/admin/card-pool')),
   getCardCryptoLogs: () => data(api.get('/admin/card-pool/crypto-logs')),
-  getInvoices: () => data(api.get('/admin/invoices'))
+  getInvoices: (params?: any) => data(api.get('/admin/invoices', { params })),
+  exportReport: (type: string, format: string = 'csv', startDate?: string, endDate?: string) => {
+    const params: any = { type, format };
+    if (startDate) params.start_date = startDate;
+    if (endDate) params.end_date = endDate;
+    return data(api.get('/admin/reports/export', { params, responseType: format === 'csv' ? 'blob' : 'json' }));
+  },
+  getOperationLogs: (params?: any) => data(api.get('/admin/operation-logs', { params })),
+  addOperationLog: (payload: any) => data(api.post('/admin/operation-logs', payload)),
+  getAuditDashboard: () => data(api.get('/admin/audit/dashboard')),
+  getReviewSummary: () => data(api.get('/admin/review-center/summary')),
+  getReviewList: (params?: any) => data(api.get('/admin/review-center/list', { params })),
+  processReview: (id: string, payload: any) => data(api.post(`/admin/review-center/process/${id}`, payload))
 };

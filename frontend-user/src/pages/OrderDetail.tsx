@@ -48,11 +48,17 @@ interface ErrorCodeFullInfo {
 
 const STATUS_MAP: Record<string, { text: string; cls: string; desc: string; color: string; icon: string }> = {
   pending: { text: '待支付', cls: 'tag-orange', desc: '请完成支付后系统将自动充值', color: 'linear-gradient(135deg, #faad14, #ffc53d)', icon: '⏳' },
+  paid: { text: '待充值', cls: 'tag-blue', desc: '支付成功，系统正在分配最优充值通道', color: 'linear-gradient(135deg, #1890ff, #40a9ff)', icon: '💳' },
+  recharging: { text: '充值中', cls: 'tag-blue', desc: '支付成功，系统正在为您充值', color: 'linear-gradient(135deg, #1890ff, #40a9ff)', icon: '⚡' },
   processing: { text: '处理中', cls: 'tag-blue', desc: '支付成功，系统正在处理中', color: 'linear-gradient(135deg, #1890ff, #40a9ff)', icon: '⚡' },
+  retrying: { text: '重试中', cls: 'tag-orange', desc: '系统正在重新提交充值请求', color: 'linear-gradient(135deg, #fa8c16, #ffc069)', icon: '🔄' },
+  channel_switch: { text: '切换通道中', cls: 'tag-blue', desc: '主通道异常，系统正在切换备用通道', color: 'linear-gradient(135deg, #3b82f6, #60a5fa)', icon: '🛡️' },
   completed: { text: '已完成', cls: 'tag-green', desc: '充值成功，感谢您的使用', color: 'linear-gradient(135deg, #52c41a, #73d13d)', icon: '✅' },
   failed: { text: '已失败', cls: 'tag-red', desc: '充值失败，建议重新充值或联系客服', color: 'linear-gradient(135deg, #ff4d4f, #ff7875)', icon: '❌' },
   refunded: { text: '已退款', cls: 'tag-gray', desc: '订单已退款完成', color: 'linear-gradient(135deg, #8c8c8c, #bfbfbf)', icon: '💰' }
 };
+
+const IN_PROGRESS_STATUSES = ['paid', 'recharging', 'processing', 'retrying', 'channel_switch'];
 
 const ERROR_CODE_FULL_MAP: Record<string, ErrorCodeFullInfo> = {
   ERR1001: {
@@ -314,14 +320,16 @@ export default function OrderDetail() {
     if (params.get('expandDiagnostic') === '1') {
       setShowDiagnostic(true);
     }
+  }, [id, location.search]);
+
+  useEffect(() => {
+    if (!order || !IN_PROGRESS_STATUSES.includes(order.status)) return;
     const timer = setInterval(() => {
-      if (order && (order.status === 'processing' || order.status === 'pending')) {
-        loadData(true);
-      }
-    }, 4000);
+      loadData(true);
+    }, 2500);
     pollingRef.current = timer;
     return () => { clearInterval(timer); };
-  }, [id]);
+  }, [id, order?.status]);
 
   const loadData = async (silent = false) => {
     if (!silent) setLoading(true);
@@ -436,7 +444,11 @@ export default function OrderDetail() {
   const getStepIndex = (status: string): number => {
     switch (status) {
       case 'pending': return 0;
+      case 'paid': return 1;
+      case 'recharging':
       case 'processing': return 1;
+      case 'retrying': return 1;
+      case 'channel_switch': return 1;
       case 'completed': return 2;
       case 'failed': return 1;
       default: return 0;
@@ -452,8 +464,13 @@ export default function OrderDetail() {
       items.push({ key: 'paying', label: order.pay_time ? '支付成功' : '支付中', icon: '💳', time: order.pay_time || order.created_at + 60, operator: '系统', status: order.pay_time ? 'done' : 'active', remark: order.pay_time ? '支付已完成，准备充值' : '正在处理支付，请稍候' });
     }
 
-    if (order.status === 'processing' || order.status === 'completed' || order.status === 'failed') {
-      items.push({ key: 'recharging', label: '充值中', icon: '⚡', time: order.pay_time ? order.pay_time + 30 : order.created_at + 90, operator: '系统', status: order.status === 'completed' ? 'done' : order.status === 'failed' ? 'active' : 'active', remark: order.status === 'failed' ? '充值处理异常，正在诊断...' : '正在为您充值，请耐心等待' });
+    if (IN_PROGRESS_STATUSES.includes(order.status) || order.status === 'completed' || order.status === 'failed') {
+      const rechargeLabel = order.status === 'paid' ? '等待充值' : order.status === 'channel_switch' ? '切换通道' : '充值中';
+      const rechargeRemark = order.status === 'failed' ? '充值处理异常，正在诊断...'
+        : order.status === 'paid' ? '支付完成，正在分配可用通道'
+          : order.status === 'channel_switch' ? '主通道异常，正在切换备用通道'
+            : '正在为您充值，请耐心等待';
+      items.push({ key: 'recharging', label: rechargeLabel, icon: '⚡', time: order.pay_time ? order.pay_time + 30 : order.created_at + 90, operator: '系统', status: order.status === 'completed' ? 'done' : 'active', remark: rechargeRemark });
     }
 
     if (order.status === 'completed') {
@@ -509,7 +526,7 @@ export default function OrderDetail() {
 
   const status = STATUS_MAP[order.status] || STATUS_MAP.pending;
   const isFailed = order.status === 'failed';
-  const isProcessing = order.status === 'processing';
+  const isProcessing = IN_PROGRESS_STATUSES.includes(order.status);
   const timeline = buildTimeline();
   const displayErrorCode = getDisplayErrorCode();
   const errorInfo = getErrorCodeFullInfo(displayErrorCode);
@@ -1487,7 +1504,7 @@ export default function OrderDetail() {
             <button
               className="btn-outline"
               style={{ flex: 1, borderRadius: 12 }}
-              onClick={() => navigate('/products')}
+              onClick={() => navigate('/')}
             >
               返回商品
             </button>
@@ -1505,7 +1522,7 @@ export default function OrderDetail() {
               {paying ? '支付处理中...' : `立即支付 ¥${order.final_amount?.toFixed(2)}`}
             </button>
           </div>
-        ) : order.status === 'processing' ? (
+        ) : isProcessing ? (
           <div style={{ display: 'flex', gap: 10 }}>
             <button
               className="btn-outline"
@@ -1544,7 +1561,7 @@ export default function OrderDetail() {
                 fontWeight: 800, fontSize: 15,
                 boxShadow: '0 4px 16px rgba(82,196,26,0.3)'
               }}
-              onClick={() => navigate('/products')}
+              onClick={() => navigate('/')}
             >
               🎉 继续购物
             </button>

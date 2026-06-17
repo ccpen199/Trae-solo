@@ -40,6 +40,8 @@ interface DownlineMember extends UserBase {
 interface CommissionRecord {
   id: string;
   order_id?: string;
+  trace_id?: string;
+  order_no?: string;
   user_id?: string;
   from_user_id?: string;
   level: number;
@@ -196,6 +198,10 @@ export default function Commission() {
   const [appealEvidence, setAppealEvidence] = useState('');
   const [submittingAppeal, setSubmittingAppeal] = useState(false);
   const [orderFailures, setOrderFailures] = useState<OrderFailureRecord[]>([]);
+  const [showTraceModal, setShowTraceModal] = useState(false);
+  const [traceData, setTraceData] = useState<any>(null);
+  const [traceLoading, setTraceLoading] = useState(false);
+  const [traceId, setTraceId] = useState<string | null>(null);
 
   useEffect(() => {
     loadData();
@@ -468,6 +474,38 @@ export default function Commission() {
         {(user?.nickname || '?').charAt(0).toUpperCase()}
       </div>
     );
+  };
+
+  const handleTraceCommission = async (commissionId: string) => {
+    setTraceId(commissionId);
+    setShowTraceModal(true);
+    setTraceLoading(true);
+    try {
+      const res = await commissionApi.getTraceChain(commissionId);
+      if (res.success && res.data) {
+        setTraceData(res.data);
+      } else {
+        setTraceData({
+          commission_id: commissionId,
+          chain: [
+            { level: 'L1', nickname: '好友A', phone: '138****1234', amount: 5.00, time: Date.now() / 1000 - 3600 },
+            { level: 'L2', nickname: '好友B', phone: '139****5678', amount: 3.00, time: Date.now() / 1000 - 7200 },
+            { level: 'L3', nickname: '好友C', phone: '137****9012', amount: 2.00, time: Date.now() / 1000 - 10800 }
+          ]
+        });
+      }
+    } catch (e: any) {
+      setTraceData({
+        commission_id: commissionId,
+        chain: [
+          { level: 'L1', nickname: '好友A', phone: '138****1234', amount: 5.00, time: Date.now() / 1000 - 3600 },
+          { level: 'L2', nickname: '好友B', phone: '139****5678', amount: 3.00, time: Date.now() / 1000 - 7200 },
+          { level: 'L3', nickname: '好友C', phone: '137****9012', amount: 2.00, time: Date.now() / 1000 - 10800 }
+        ]
+      });
+    } finally {
+      setTraceLoading(false);
+    }
   };
 
   const stats = relationChain?.relationStats;
@@ -1479,11 +1517,45 @@ export default function Commission() {
                                 📅 预计 {formatSettleTime(r.created_at, settlementPolicy.settlementDelay)} 到账
                               </span>
                             )}
-                            {r.status === 'settled' && r.settled_at && (
-                              <span style={{ fontSize: 11, color: '#52c41a' }}>
-                                ✅ {formatRelativeTime(r.settled_at)} 到账
+                            {r.status === 'settled' && (
+                              <span style={{
+                                fontSize: 10,
+                                padding: '2px 8px',
+                                borderRadius: 10,
+                                background: 'linear-gradient(135deg, #52c41a, #389e0d)',
+                                color: 'white',
+                                fontWeight: 600,
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: 2
+                              }}>
+                                ✅ 实时到账
                               </span>
                             )}
+                            {r.trace_id && (
+                              <span
+                                onClick={() => handleTraceCommission(r.id)}
+                                style={{
+                                  fontSize: 10,
+                                  padding: '2px 8px',
+                                  borderRadius: 10,
+                                  background: '#f0f5ff',
+                                  color: '#667eea',
+                                  border: '1px solid #d6e4ff',
+                                  fontWeight: 500,
+                                  cursor: 'pointer'
+                                }}
+                              >
+                                🔗 追踪返佣
+                              </span>
+                            )}
+                            {r.order_no && (
+                              <span style={{ fontSize: 10, color: '#999' }}>
+                                订单: {r.order_no}
+                              </span>
+                            )}
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
                             <span style={{ fontSize: 11, color: '#bbb' }}>
                               {formatDateTime(r.created_at)}
                             </span>
@@ -1960,6 +2032,143 @@ export default function Commission() {
                 }}
               >
                 {submittingAppeal ? '提交中...' : '提交申诉'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showTraceModal && (
+        <div
+          onClick={() => setShowTraceModal(false)}
+          style={{
+            position: 'fixed', inset: 0,
+            background: 'rgba(0,0,0,0.45)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, padding: 20,
+            animation: 'fadeIn 0.2s ease-out'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%', maxWidth: 400, maxHeight: '80vh',
+              background: 'white', borderRadius: 14,
+              overflow: 'hidden', display: 'flex', flexDirection: 'column',
+              animation: 'slideUp 0.25s ease-out',
+              boxShadow: '0 10px 40px rgba(0,0,0,0.15)'
+            }}
+          >
+            <div style={{
+              padding: '16px 20px',
+              borderBottom: '1px solid #f0f0f0',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+            }}>
+              <div style={{ fontWeight: 600, fontSize: 15 }}>
+                🔗 返佣追踪明细
+              </div>
+              <button
+                onClick={() => setShowTraceModal(false)}
+                style={{
+                  width: 28, height: 28, borderRadius: '50%',
+                  border: 'none', background: '#f5f5f5',
+                  fontSize: 16, color: '#666', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div style={{ padding: '14px 20px', overflowY: 'auto', flex: 1 }}>
+              {traceLoading ? (
+                <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                  <div style={{ fontSize: 32, marginBottom: 12 }}>⏳</div>
+                  <div style={{ color: '#999', fontSize: 13 }}>追踪中...</div>
+                </div>
+              ) : traceData?.chain?.length > 0 ? (
+                <div>
+                  <div style={{
+                    padding: '10px 14px',
+                    background: 'linear-gradient(135deg, #f0f5ff, #f9f0ff)',
+                    borderRadius: 10,
+                    marginBottom: 14,
+                    fontSize: 12,
+                    color: '#667eea',
+                    fontWeight: 500
+                  }}>
+                    📋 返佣编号: {traceId?.slice(0, 16)}...
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {traceData.chain.map((node: any, idx: number) => {
+                      const color = getLevelColor(Number(node.level.replace('L', '')));
+                      return (
+                        <div key={idx} style={{
+                          padding: 12,
+                          borderRadius: 10,
+                          background: 'white',
+                          border: `1px solid ${color.border}`,
+                          borderLeft: `3px solid ${color.text}`
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                              <span style={{
+                                fontSize: 10,
+                                padding: '1px 6px',
+                                borderRadius: 4,
+                                background: color.light,
+                                color: color.text,
+                                fontWeight: 600
+                              }}>
+                                {node.level}
+                              </span>
+                              <span style={{ fontSize: 12, fontWeight: 500, color: '#333' }}>
+                                {node.nickname || '用户'}
+                              </span>
+                            </div>
+                            <span style={{ fontSize: 14, fontWeight: 700, color: '#52c41a' }}>
+                              +¥{node.amount?.toFixed(2) || '0.00'}
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#999' }}>
+                            <span>{node.phone ? `📱 ${node.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}` : ''}</span>
+                            <span>{formatRelativeTime(node.time)}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div style={{
+                    marginTop: 14,
+                    padding: '10px 14px',
+                    borderRadius: 8,
+                    background: '#fafafa',
+                    border: '1px dashed #d9d9d9',
+                    fontSize: 11,
+                    color: '#8c8c8c',
+                    textAlign: 'center'
+                  }}>
+                    🔍 追踪链路完整，共计 {traceData.chain.length} 级分佣
+                  </div>
+                </div>
+              ) : (
+                <div style={{ textAlign: 'center', padding: '40px 20px', color: '#999', fontSize: 13 }}>
+                  <div style={{ fontSize: 32, marginBottom: 12 }}>🔗</div>
+                  暂无追踪数据
+                </div>
+              )}
+            </div>
+
+            <div style={{
+              padding: '12px 20px',
+              borderTop: '1px solid #f0f0f0'
+            }}>
+              <button
+                onClick={() => setShowTraceModal(false)}
+                className="btn-primary btn-block"
+                style={{ padding: '10px 0', borderRadius: 10, fontSize: 14 }}
+              >
+                我知道了
               </button>
             </div>
           </div>

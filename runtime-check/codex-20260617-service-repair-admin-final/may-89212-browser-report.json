@@ -1,0 +1,2520 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-17T15:56:23.120Z",
+  "order": "may-89212",
+  "roundIndex": 19,
+  "captureId": "may-89212-codex-20260617-service-repair-admin-final",
+  "url": "http://127.0.0.1:50212/",
+  "initialUrl": "http://127.0.0.1:50212/",
+  "finalUrl": "http://127.0.0.1:50212/",
+  "status": 200,
+  "title": "虚拟商品聚合平台 - 管理后台",
+  "initialTitle": "虚拟商品聚合平台 - 管理后台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:50212/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50212/"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50212/"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:50212/",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:50212/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:50212/"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:运营概览",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:导出详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新数据",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:商品管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:编辑",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 20
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 20
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:订单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 20
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:导出详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "刷新数据",
+          "详情"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商品",
+              "手机号",
+              "金额",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商品 手机号 金额 状态 时间 操作 V202606170750342696 中国移动话费50元 13800138001 ¥47.02 已失败 6/17 07:50 详情 V17810930080055 京东E卡100元 ACC552222 ¥92.50 已失败 6/14 15:18 详情 V17814314080008 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/14 05:19 详情 V17813810080015 京东E卡100元 ACC154444 ¥185.00 已失败 6/11 22:00 详情 V17809994080068 腾讯视频VIP月卡 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📊 运营概览Aadmin退出📊 运营概览实时监控平台运营数据刷新数据今日GMV¥47.02💰今日订单1📋累计GMV¥10080📈总用户8👥今日新增3➕总商品447📦总供应商6🏭成功率61.7%✅今日佣金¥0.00💎总佣金¥517.52🎁卡密总数340🎫已使用4📝已加密390🔐风控日志101🛡️今日拦截0🚫📈 近7天GMV趋势单位：元¥6336/115单¥06/120单¥06/130单¥1186/142单¥06/150单¥06/160单¥476/171单📊 订单状态分布总计: 81总计订单81已完成50 (62%)已失败11 (14%)待充值10 (12%)待支付10 (12%)🛡️ 风险等级分布总计风险101严重13 (13%)高45 (45%)低15 (15%)中28 (28%)🏭 供应商业绩TOP5按GMV排序1. 腾讯充值中心¥6422.8056单89%2. 爱奇艺会员中心¥2593.0016单88%3. 京东E卡¥1017.508单75%4. 美团外卖券¥47.021单0%📋 最近订单最近10条订单号商品手机号金额状态时间操作V202606170750342696中国移动话费50元13800138001¥47.02已失败6/17 07:50详情V17810930080055京东E卡100元ACC552222¥92.50已失败6/14 15:18详情V17814314080008腾讯视频VIP月卡13700003333¥25.00已完成6/14 05:19详情V17813810080015京东E卡100元ACC154444¥185.00已失败6/11 22:00详情V17809994080068腾讯视频VIP月卡13700003333¥25.00已完成6/11 21:44详情V17811290080050中国移动话费50元13700003333¥49.50已完成6/11 14:48详情V17813522080019腾讯视频VIP年卡13800002222¥188.00已完成6/11 06:39详情V17809490080075京东E卡100元ACC754444¥185.00已完成6/11 05:20详情V17810786080057QQ音乐绿钻年卡13600004444¥286.00已完成6/10 22:55详情V17812442080034爱奇艺黄金会员年卡13500005555¥188.00已完成6/10 22:04详情🚫 最近风控拦截最近10条✅最近无风控记录🎫 卡密池加密概览AES-256-CBC340总卡密数390已加密0今日解密66即将过期29已过期加密算法：AES-256-CBC密钥版本：v2.1加密率：115%",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2921,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50212/",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏.png",
+          "elementCount": 416,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "刷新数据",
+            "详情"
+          ]
+        }
+      },
+      {
+        "label": "导航:运营概览",
+        "url": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "刷新数据",
+          "详情"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商品",
+              "手机号",
+              "金额",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商品 手机号 金额 状态 时间 操作 V202606170750342696 中国移动话费50元 13800138001 ¥47.02 已失败 6/17 07:50 详情 V17810930080055 京东E卡100元 ACC552222 ¥92.50 已失败 6/14 15:18 详情 V17814314080008 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/14 05:19 详情 V17813810080015 京东E卡100元 ACC154444 ¥185.00 已失败 6/11 22:00 详情 V17809994080068 腾讯视频VIP月卡 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📊 运营概览Aadmin退出📊 运营概览实时监控平台运营数据刷新数据今日GMV¥47.02💰今日订单1📋累计GMV¥10080📈总用户8👥今日新增3➕总商品447📦总供应商6🏭成功率61.7%✅今日佣金¥0.00💎总佣金¥517.52🎁卡密总数340🎫已使用4📝已加密390🔐风控日志101🛡️今日拦截0🚫📈 近7天GMV趋势单位：元¥6336/115单¥06/120单¥06/130单¥1186/142单¥06/150单¥06/160单¥476/171单📊 订单状态分布总计: 81总计订单81已完成50 (62%)已失败11 (14%)待充值10 (12%)待支付10 (12%)🛡️ 风险等级分布总计风险101严重13 (13%)高45 (45%)低15 (15%)中28 (28%)🏭 供应商业绩TOP5按GMV排序1. 腾讯充值中心¥6422.8056单89%2. 爱奇艺会员中心¥2593.0016单88%3. 京东E卡¥1017.508单75%4. 美团外卖券¥47.021单0%📋 最近订单最近10条订单号商品手机号金额状态时间操作V202606170750342696中国移动话费50元13800138001¥47.02已失败6/17 07:50详情V17810930080055京东E卡100元ACC552222¥92.50已失败6/14 15:18详情V17814314080008腾讯视频VIP月卡13700003333¥25.00已完成6/14 05:19详情V17813810080015京东E卡100元ACC154444¥185.00已失败6/11 22:00详情V17809994080068腾讯视频VIP月卡13700003333¥25.00已完成6/11 21:44详情V17811290080050中国移动话费50元13700003333¥49.50已完成6/11 14:48详情V17813522080019腾讯视频VIP年卡13800002222¥188.00已完成6/11 06:39详情V17809490080075京东E卡100元ACC754444¥185.00已完成6/11 05:20详情V17810786080057QQ音乐绿钻年卡13600004444¥286.00已完成6/10 22:55详情V17812442080034爱奇艺黄金会员年卡13500005555¥188.00已完成6/10 22:04详情🚫 最近风控拦截最近10条✅最近无风控记录🎫 卡密池加密概览AES-256-CBC340总卡密数390已加密0今日解密66即将过期29已过期加密算法：AES-256-CBC密钥版本：v2.1加密率：115%",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2921,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览",
+          "label": "导航:运营概览",
+          "finalUrl": "http://127.0.0.1:50212/",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览.png",
+          "elementCount": 416,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "刷新数据",
+            "详情"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [
+          "订单详情"
+        ],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "← 返回列表",
+          "导出详情",
+          "🔄 重试（同通道）",
+          "🔀 切换通道重试",
+          "💰 退款"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📋 订单详情Aadmin退出← 返回列表订单详情导出详情V202606170750342696已失败ERR-ALL_FAIL商品信息中国移动话费50元面值：¥50充值账号13800138001用户：138****8001 (张三)供应商 / 通道美团外卖券 / 通道0创建 / 完成时间2026/6/17 07:50:342026/6/17 18:55:51金额明细原价¥49.50优惠-¥2.48实付¥47.02返佣+¥1.41📊 状态流转时间轴订单创建待支付2026/6/17 07:50:34 · 用户订单提交成功支付成功待充值2026/6/17 07:50:34 · 系统用户支付完成充值中充值中2026/6/17 18:55:51 · 系统开始充值处理充值失败已失败2026/6/17 18:55:51 · 系统ALL_FAIL:所有供应商通道均失败🔴 失败诊断ERR-ALL_FAIL🟠中等系统错误根本原因分析MULTIPLE_ISSUES未知原因导致的充值失败ALL_FAIL:所有供应商通道均失败已重试 1 次已尝试切换通道未能识别的错误类型供应商：美团外卖券💡 解决方案建议联系客服人工处理联系客服人工处理建议切换通道或联系客服🔄 重试（同通道）🔀 切换通道重试💰 退款📘 错误码对照表展开 ▼",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情.png",
+          "elementCount": 170,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "返回列表",
+            "导出详情",
+            "重试（同通道）",
+            "切换通道重试",
+            "退款"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->导出详情",
+        "url": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [
+          "订单详情"
+        ],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "← 返回列表",
+          "导出详情",
+          "🔄 重试（同通道）",
+          "🔀 切换通道重试",
+          "💰 退款"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📋 订单详情Aadmin退出← 返回列表订单详情导出详情导出详情完成：订单 V202606170750342696 的报告已生成 18:55:53V202606170750342696已失败ERR-ALL_FAIL商品信息中国移动话费50元面值：¥50充值账号13800138001用户：138****8001 (张三)供应商 / 通道美团外卖券 / 通道0创建 / 完成时间2026/6/17 07:50:342026/6/17 18:55:51金额明细原价¥49.50优惠-¥2.48实付¥47.02返佣+¥1.41📊 状态流转时间轴订单创建待支付2026/6/17 07:50:34 · 用户订单提交成功支付成功待充值2026/6/17 07:50:34 · 系统用户支付完成充值中充值中2026/6/17 18:55:51 · 系统开始充值处理充值失败已失败2026/6/17 18:55:51 · 系统ALL_FAIL:所有供应商通道均失败🔴 失败诊断ERR-ALL_FAIL🟠中等系统错误根本原因分析MULTIPLE_ISSUES未知原因导致的充值失败ALL_FAIL:所有供应商通道均失败已重试 1 次已尝试切换通道未能识别的错误类型供应商：美团外卖券💡 解决方案建议联系客服人工处理联系客服人工处理建议切换通道或联系客服🔄 重试（同通道）🔀 切换通道重试💰 退款📘 错误码对照表展开 ▼详情报告已下载",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情",
+          "label": "二层操作:详情->导出详情",
+          "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情.png",
+          "elementCount": 172,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "返回列表",
+            "导出详情",
+            "重试（同通道）",
+            "切换通道重试",
+            "退款"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新数据",
+        "url": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "刷新数据",
+          "详情"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商品",
+              "手机号",
+              "金额",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商品 手机号 金额 状态 时间 操作 V202606170750342696 中国移动话费50元 13800138001 ¥47.02 已失败 6/17 07:50 详情 V17810930080055 京东E卡100元 ACC552222 ¥92.50 已失败 6/14 15:18 详情 V17814314080008 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/14 05:19 详情 V17813810080015 京东E卡100元 ACC154444 ¥185.00 已失败 6/11 22:00 详情 V17809994080068 腾讯视频VIP月卡 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📊 运营概览Aadmin退出📊 运营概览实时监控平台运营数据刷新数据刷新完成：运营概览、订单、供应商、卡密和风控数据已更新 18:55:57今日GMV¥47.02💰今日订单1📋累计GMV¥10080📈总用户8👥今日新增3➕总商品447📦总供应商6🏭成功率61.7%✅今日佣金¥0.00💎总佣金¥517.52🎁卡密总数340🎫已使用4📝已加密390🔐风控日志101🛡️今日拦截0🚫📈 近7天GMV趋势单位：元¥6336/115单¥06/120单¥06/130单¥1186/142单¥06/150单¥06/160单¥476/171单📊 订单状态分布总计: 81总计订单81已完成50 (62%)已失败11 (14%)待充值10 (12%)待支付10 (12%)🛡️ 风险等级分布总计风险101严重13 (13%)高45 (45%)低15 (15%)中28 (28%)🏭 供应商业绩TOP5按GMV排序1. 腾讯充值中心¥6422.8056单89%2. 爱奇艺会员中心¥2593.0016单88%3. 京东E卡¥1017.508单75%4. 美团外卖券¥47.021单0%📋 最近订单最近10条订单号商品手机号金额状态时间操作V202606170750342696中国移动话费50元13800138001¥47.02已失败6/17 07:50详情V17810930080055京东E卡100元ACC552222¥92.50已失败6/14 15:18详情V17814314080008腾讯视频VIP月卡13700003333¥25.00已完成6/14 05:19详情V17813810080015京东E卡100元ACC154444¥185.00已失败6/11 22:00详情V17809994080068腾讯视频VIP月卡13700003333¥25.00已完成6/11 21:44详情V17811290080050中国移动话费50元13700003333¥49.50已完成6/11 14:48详情V17813522080019腾讯视频VIP年卡13800002222¥188.00已完成6/11 06:39详情V17809490080075京东E卡100元ACC754444¥185.00已完成6/11 05:20详情V17810786080057QQ音乐绿钻年卡13600004444¥286.00已完成6/10 22:55详情V17812442080034爱奇艺黄金会员年卡13500005555¥188.00已完成6/10 22:04详情🚫 最近风控拦截最近10条✅最近无风控记录🎫 卡密池加密概览AES-256-CBC340总卡密数390已加密0今日解密66即将过期29已过期加密算法：AES-256-CBC密钥版本：v2.1加密率：115%",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2979,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据",
+          "label": "操作:刷新数据",
+          "finalUrl": "http://127.0.0.1:50212/",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据.png",
+          "elementCount": 417,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "刷新数据",
+            "详情"
+          ]
+        }
+      },
+      {
+        "label": "导航:商品管理",
+        "url": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "📤 导出商品列表",
+          "🔄 同步全部库存",
+          "+ 新增商品",
+          "🔄 同步库存",
+          "详情",
+          "编辑",
+          "🏪 3家供应商",
+          "最近3次同步",
+          "🏪 5家供应商",
+          "上一页",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索商品名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "商品信息",
+              "供应商",
+              "实时库存",
+              "通道状态",
+              "备用通道",
+              "操作"
+            ],
+            "rowCount": 20,
+            "hasEmptyText": false,
+            "textPreview": "商品信息 供应商 实时库存 通道状态 备用通道 操作 🎫 爱奇艺会员100元 卡密类 视频会员 🌍 全国 爱奇艺会员中心 iqiyi 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 腾讯充值中心10元 卡密类 - 🌍 全国 腾讯充值中心 tencent 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 腾讯充值中心200元 卡密类 - 🌍 全国 腾讯充值中心 tencent 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 爱奇艺会员中心10元 卡密类 - 🌍 全国 爱奇艺会员中心 iq"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📦 商品管理Aadmin退出📤 导出商品列表🔄 同步全部库存+ 新增商品商品总数447📦卡密类商品13🎫直充类商品7⚡库存预警0⚠️商品信息供应商实时库存通道状态备用通道操作🎫爱奇艺会员100元卡密类视频会员🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫腾讯充值中心10元卡密类-🌍 全国腾讯充值中心tencent100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫腾讯充值中心200元卡密类-🌍 全国腾讯充值中心tencent100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫爱奇艺会员中心10元卡密类-🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫爱奇艺会员中心200元卡密类-🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫美团外卖券10元卡密类-🌍 全国美团外卖券meituan100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫美团外卖券200元卡密类-🌍 全国美团外卖券meituan100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫京东E卡10元卡密类-🌍 全国京东E卡jd100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫京东E卡200元卡密类-🌍 全国京东E卡jd100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫联通数科10元卡密类-🌍 全国联通数科unicom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫联通数科200元卡密类-🌍 全国联通数科unicom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫浙江电信10元卡密类-🌍 全国浙江电信zjtelecom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫浙江电信200元卡密类-🌍 全国浙江电信zjtelecom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑⚡移动话费10元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商9867🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 93%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费20元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7849🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 91%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费30元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7777🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡HOT移动话费50元直充类话费充值🌍 全国腾讯充值中心tencent🏪 5家供应商7768🟢 充足批次: BATCH2026061600最近3次同步正常(5/5)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡HOT移动话费100元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7767🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 93%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费200元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商5877🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费300元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商5852🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 91%🛡️ 有0 个备用🔄 同步库存详情编辑共 447 条上一页123下一页",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2074,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理",
+          "label": "导航:商品管理",
+          "finalUrl": "http://127.0.0.1:50212/products",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理.png",
+          "elementCount": 709,
+          "interactiveCount": 92,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "搜索商品名称...",
+            "导出商品列表",
+            "同步全部库存",
+            "新增商品",
+            "同步库存",
+            "详情",
+            "编辑",
+            "3家供应商",
+            "最近3次同步",
+            "5家供应商"
+          ]
+        }
+      },
+      {
+        "label": "操作:编辑",
+        "url": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "📤 导出商品列表",
+          "🔄 同步全部库存",
+          "+ 新增商品",
+          "🔄 同步库存",
+          "详情",
+          "编辑",
+          "🏪 3家供应商",
+          "最近3次同步",
+          "🏪 5家供应商",
+          "上一页",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索商品名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "商品信息",
+              "供应商",
+              "实时库存",
+              "通道状态",
+              "备用通道",
+              "操作"
+            ],
+            "rowCount": 20,
+            "hasEmptyText": false,
+            "textPreview": "商品信息 供应商 实时库存 通道状态 备用通道 操作 🎫 爱奇艺会员100元 卡密类 视频会员 🌍 全国 爱奇艺会员中心 iqiyi 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 腾讯充值中心10元 卡密类 - 🌍 全国 腾讯充值中心 tencent 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 腾讯充值中心200元 卡密类 - 🌍 全国 腾讯充值中心 tencent 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 爱奇艺会员中心10元 卡密类 - 🌍 全国 爱奇艺会员中心 iq"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📦 商品管理Aadmin退出📤 导出商品列表🔄 同步全部库存+ 新增商品商品总数447📦卡密类商品13🎫直充类商品7⚡库存预警0⚠️商品信息供应商实时库存通道状态备用通道操作🎫爱奇艺会员100元卡密类视频会员🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫腾讯充值中心10元卡密类-🌍 全国腾讯充值中心tencent100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫腾讯充值中心200元卡密类-🌍 全国腾讯充值中心tencent100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫爱奇艺会员中心10元卡密类-🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫爱奇艺会员中心200元卡密类-🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫美团外卖券10元卡密类-🌍 全国美团外卖券meituan100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫美团外卖券200元卡密类-🌍 全国美团外卖券meituan100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫京东E卡10元卡密类-🌍 全国京东E卡jd100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫京东E卡200元卡密类-🌍 全国京东E卡jd100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫联通数科10元卡密类-🌍 全国联通数科unicom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫联通数科200元卡密类-🌍 全国联通数科unicom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫浙江电信10元卡密类-🌍 全国浙江电信zjtelecom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫浙江电信200元卡密类-🌍 全国浙江电信zjtelecom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑⚡移动话费10元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商9867🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 93%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费20元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7849🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 91%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费30元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7777🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡HOT移动话费50元直充类话费充值🌍 全国腾讯充值中心tencent🏪 5家供应商7768🟢 充足批次: BATCH2026061600最近3次同步正常(5/5)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡HOT移动话费100元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7767🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 93%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费200元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商5877🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费300元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商5852🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 91%🛡️ 有0 个备用🔄 同步库存详情编辑共 447 条上一页123下一页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 2074,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑",
+          "label": "操作:编辑",
+          "finalUrl": "http://127.0.0.1:50212/products",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑.png",
+          "elementCount": 709,
+          "interactiveCount": 92,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "搜索商品名称...",
+            "导出商品列表",
+            "同步全部库存",
+            "新增商品",
+            "同步库存",
+            "详情",
+            "编辑",
+            "3家供应商",
+            "最近3次同步",
+            "5家供应商"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "📤 导出商品列表",
+          "🔄 同步全部库存",
+          "+ 新增商品",
+          "🔄 同步库存",
+          "详情",
+          "编辑",
+          "🏪 3家供应商",
+          "最近3次同步",
+          "🏪 5家供应商",
+          "上一页",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索商品名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "商品信息",
+              "供应商",
+              "实时库存",
+              "通道状态",
+              "备用通道",
+              "操作"
+            ],
+            "rowCount": 20,
+            "hasEmptyText": false,
+            "textPreview": "商品信息 供应商 实时库存 通道状态 备用通道 操作 🎫 爱奇艺会员100元 卡密类 视频会员 🌍 全国 爱奇艺会员中心 iqiyi 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 腾讯充值中心10元 卡密类 - 🌍 全国 腾讯充值中心 tencent 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 腾讯充值中心200元 卡密类 - 🌍 全国 腾讯充值中心 tencent 100 🟢 充足 故障(0/0) 🛡️ 无 🔄 同步库存 详情 编辑 🎫 爱奇艺会员中心10元 卡密类 - 🌍 全国 爱奇艺会员中心 iq"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📦 商品管理Aadmin退出📤 导出商品列表🔄 同步全部库存+ 新增商品商品总数447📦卡密类商品13🎫直充类商品7⚡库存预警0⚠️商品信息供应商实时库存通道状态备用通道操作🎫爱奇艺会员100元卡密类视频会员🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫腾讯充值中心10元卡密类-🌍 全国腾讯充值中心tencent100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫腾讯充值中心200元卡密类-🌍 全国腾讯充值中心tencent100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫爱奇艺会员中心10元卡密类-🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫爱奇艺会员中心200元卡密类-🌍 全国爱奇艺会员中心iqiyi100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫美团外卖券10元卡密类-🌍 全国美团外卖券meituan100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫美团外卖券200元卡密类-🌍 全国美团外卖券meituan100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫京东E卡10元卡密类-🌍 全国京东E卡jd100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫京东E卡200元卡密类-🌍 全国京东E卡jd100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫联通数科10元卡密类-🌍 全国联通数科unicom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫联通数科200元卡密类-🌍 全国联通数科unicom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫浙江电信10元卡密类-🌍 全国浙江电信zjtelecom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑🎫浙江电信200元卡密类-🌍 全国浙江电信zjtelecom100🟢 充足故障(0/0)🛡️ 无🔄 同步库存详情编辑⚡移动话费10元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商9867🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 93%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费20元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7849🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 91%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费30元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7777🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡HOT移动话费50元直充类话费充值🌍 全国腾讯充值中心tencent🏪 5家供应商7768🟢 充足批次: BATCH2026061600最近3次同步正常(5/5)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡HOT移动话费100元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商7767🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 93%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费200元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商5877🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 92%🛡️ 有0 个备用🔄 同步库存详情编辑⚡移动话费300元直充类话费充值🌍 全国腾讯充值中心tencent🏪 3家供应商5852🟢 充足批次: BATCH2026061600最近3次同步正常(3/3)成功率 91%🛡️ 有0 个备用🔄 同步库存详情编辑共 447 条上一页123下一页",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 2074,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:50212/products",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情.png",
+          "elementCount": 709,
+          "interactiveCount": 92,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "搜索商品名称...",
+            "导出商品列表",
+            "同步全部库存",
+            "新增商品",
+            "同步库存",
+            "详情",
+            "编辑",
+            "3家供应商",
+            "最近3次同步",
+            "5家供应商"
+          ]
+        }
+      },
+      {
+        "label": "导航:订单管理",
+        "url": "http://127.0.0.1:50212/orders",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "今日",
+          "昨日",
+          "近7天",
+          "近30天",
+          "自定义",
+          "导出",
+          "详情",
+          "🔄 重试",
+          "💰 退款",
+          "上一页",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "🔍 搜索订单号/手机号/商品名",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单信息",
+              "金额",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 20,
+            "hasEmptyText": false,
+            "textPreview": "订单信息 金额 状态 时间 操作 V202606170750342696 中国移动话费50元 移动 138****8001 原价 ¥49.50 实付 ¥47.02 返佣 ¥1.41 已失败 ERR-ALL_FAIL 美团外卖券 创建：2026/6/17 07:50:34 失败：2026/6/17 18:55:51 详情 🔄 重试 💰 退款 V17810930080055 京东E卡100元 ACC552222 原价 ¥97.50 实付 ¥92.50 返佣 ¥1.85 已失败 ERR-T1002 京东E卡 创建：2026/6/14 15:18:51 失败：2026/6/17 04:58:08 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📋 订单管理Aadmin退出今日昨日近7天近30天自定义导出📋 全部81⏳ 待支付2⚡ 充值中1✅ 已成功13❌ 已失败4💰 已退款0订单信息金额状态时间操作V202606170750342696中国移动话费50元移动138****8001原价 ¥49.50实付 ¥47.02返佣 ¥1.41已失败ERR-ALL_FAIL美团外卖券创建：2026/6/17 07:50:34失败：2026/6/17 18:55:51详情🔄 重试💰 退款V17810930080055京东E卡100元ACC552222原价 ¥97.50实付 ¥92.50返佣 ¥1.85已失败ERR-T1002京东E卡创建：2026/6/14 15:18:51失败：2026/6/17 04:58:08详情🔄 重试💰 退款V17814314080008腾讯视频VIP月卡移动137****3333原价 ¥25.00实付 ¥25.00返佣 ¥2.00已成功腾讯充值中心创建：2026/6/14 05:19:50完成：2026/6/14 05:22:20详情V17813810080015京东E卡100元ACC154444原价 ¥195.00实付 ¥185.00返佣 ¥3.70已失败ERR-SIGN_ERR京东E卡创建：2026/6/11 22:00:43失败：2026/6/16 18:58:34详情🔄 重试💰 退款V17809994080068腾讯视频VIP月卡移动137****3333原价 ¥25.00实付 ¥25.00返佣 ¥2.00已成功腾讯充值中心创建：2026/6/11 21:44:21完成：2026/6/11 21:46:51详情V17811290080050中国移动话费50元移动137****3333原价 ¥49.50实付 ¥49.50返佣 ¥1.49已成功腾讯充值中心创建：2026/6/11 14:48:32完成：2026/6/11 14:51:02详情V17813522080019腾讯视频VIP年卡移动138****2222原价 ¥198.00实付 ¥188.00返佣 ¥15.04已成功腾讯充值中心创建：2026/6/11 06:39:08完成：2026/6/11 06:41:38详情V17809490080075京东E卡100元ACC754444原价 ¥195.00实付 ¥185.00返佣 ¥3.70已成功京东E卡创建：2026/6/11 05:20:32完成：2026/6/11 05:23:02详情V17810786080057QQ音乐绿钻年卡移动136****4444原价 ¥296.00实付 ¥286.00返佣 ¥17.16已成功腾讯充值中心创建：2026/6/10 22:55:27完成：2026/6/10 22:57:57详情V17812442080034爱奇艺黄金会员年卡移动135****5555原价 ¥198.00实付 ¥188.00返佣 ¥15.04已成功爱奇艺会员中心创建：2026/6/10 22:04:12完成：2026/6/10 22:06:42详情V17813018080026QQ音乐绿钻月卡移动137****3333原价 ¥12.50实付 ¥12.50返佣 ¥0.75已成功腾讯充值中心创建：2026/6/10 05:28:38完成：2026/6/10 05:31:08详情V17814386080007QQ音乐绿钻年卡移动138****2222原价 ¥148.00实付 ¥138.00返佣 ¥8.28已失败ERR-SIGN_ERR腾讯充值中心创建：2026/6/9 21:18:36失败：2026/6/16 18:58:34详情🔄 重试💰 退款V17814098080011中国移动话费100元移动159****6666原价 ¥99.00实付 ¥94.00返佣 ¥2.82已成功腾讯充值中心创建：2026/6/9 12:26:54完成：2026/6/9 12:29:24详情V17809634080073爱奇艺黄金会员季卡移动138****2222原价 ¥68.00实付 ¥63",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 2183,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理",
+          "label": "导航:订单管理",
+          "finalUrl": "http://127.0.0.1:50212/orders",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理.png",
+          "elementCount": 534,
+          "interactiveCount": 49,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "搜索订单号/手机号/商品名",
+            "今日",
+            "昨日",
+            "近7天",
+            "近30天",
+            "自定义",
+            "导出",
+            "详情",
+            "重试",
+            "退款",
+            "上一页",
+            "1",
+            "2",
+            "3",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [
+          "订单详情"
+        ],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "← 返回列表",
+          "导出详情",
+          "🔄 重试（同通道）",
+          "🔀 切换通道重试",
+          "💰 退款"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📋 订单详情Aadmin退出← 返回列表订单详情导出详情V202606170750342696已失败ERR-ALL_FAIL商品信息中国移动话费50元面值：¥50充值账号13800138001用户：138****8001 (张三)供应商 / 通道美团外卖券 / 通道0创建 / 完成时间2026/6/17 07:50:342026/6/17 18:56:15金额明细原价¥49.50优惠-¥2.48实付¥47.02返佣+¥1.41📊 状态流转时间轴订单创建待支付2026/6/17 07:50:34 · 用户订单提交成功支付成功待充值2026/6/17 07:50:34 · 系统用户支付完成充值中充值中2026/6/17 18:56:15 · 系统开始充值处理充值失败已失败2026/6/17 18:56:15 · 系统ALL_FAIL:所有供应商通道均失败🔴 失败诊断ERR-ALL_FAIL🟠中等系统错误根本原因分析MULTIPLE_ISSUES未知原因导致的充值失败ALL_FAIL:所有供应商通道均失败已重试 1 次已尝试切换通道未能识别的错误类型供应商：美团外卖券💡 解决方案建议联系客服人工处理联系客服人工处理建议切换通道或联系客服🔄 重试（同通道）🔀 切换通道重试💰 退款📘 错误码对照表展开 ▼",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情.png",
+          "elementCount": 170,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "返回列表",
+            "导出详情",
+            "重试（同通道）",
+            "切换通道重试",
+            "退款"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->导出详情",
+        "url": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [
+          "订单详情"
+        ],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "← 返回列表",
+          "导出详情",
+          "🔄 重试（同通道）",
+          "🔀 切换通道重试",
+          "💰 退款"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📋 订单详情Aadmin退出← 返回列表订单详情导出详情导出详情完成：订单 V202606170750342696 的报告已生成 18:56:18V202606170750342696已失败ERR-ALL_FAIL商品信息中国移动话费50元面值：¥50充值账号13800138001用户：138****8001 (张三)供应商 / 通道美团外卖券 / 通道0创建 / 完成时间2026/6/17 07:50:342026/6/17 18:56:15金额明细原价¥49.50优惠-¥2.48实付¥47.02返佣+¥1.41📊 状态流转时间轴订单创建待支付2026/6/17 07:50:34 · 用户订单提交成功支付成功待充值2026/6/17 07:50:34 · 系统用户支付完成充值中充值中2026/6/17 18:56:15 · 系统开始充值处理充值失败已失败2026/6/17 18:56:15 · 系统ALL_FAIL:所有供应商通道均失败🔴 失败诊断ERR-ALL_FAIL🟠中等系统错误根本原因分析MULTIPLE_ISSUES未知原因导致的充值失败ALL_FAIL:所有供应商通道均失败已重试 1 次已尝试切换通道未能识别的错误类型供应商：美团外卖券💡 解决方案建议联系客服人工处理联系客服人工处理建议切换通道或联系客服🔄 重试（同通道）🔀 切换通道重试💰 退款📘 错误码对照表展开 ▼详情报告已下载",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情",
+          "label": "二层操作:详情->导出详情",
+          "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情.png",
+          "elementCount": 172,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "返回列表",
+            "导出详情",
+            "重试（同通道）",
+            "切换通道重试",
+            "退款"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "运营概览",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "运营概览",
+        "label": "详情->导出详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "运营概览",
+        "label": "刷新数据",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "商品管理",
+        "label": "编辑",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "商品管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "详情->导出详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏.png",
+        "elementCount": 416,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览",
+        "label": "导航:运营概览",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览.png",
+        "elementCount": 416,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情.png",
+        "elementCount": 170,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "返回列表",
+          "导出详情",
+          "重试（同通道）",
+          "切换通道重试",
+          "退款"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情",
+        "label": "二层操作:详情->导出详情",
+        "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情.png",
+        "elementCount": 172,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "返回列表",
+          "导出详情",
+          "重试（同通道）",
+          "切换通道重试",
+          "退款"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据.png",
+        "elementCount": 417,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理",
+        "label": "导航:商品管理",
+        "finalUrl": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理.png",
+        "elementCount": 709,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "搜索商品名称...",
+          "导出商品列表",
+          "同步全部库存",
+          "新增商品",
+          "同步库存",
+          "详情",
+          "编辑",
+          "3家供应商",
+          "最近3次同步",
+          "5家供应商"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑.png",
+        "elementCount": 709,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "搜索商品名称...",
+          "导出商品列表",
+          "同步全部库存",
+          "新增商品",
+          "同步库存",
+          "详情",
+          "编辑",
+          "3家供应商",
+          "最近3次同步",
+          "5家供应商"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情.png",
+        "elementCount": 709,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "搜索商品名称...",
+          "导出商品列表",
+          "同步全部库存",
+          "新增商品",
+          "同步库存",
+          "详情",
+          "编辑",
+          "3家供应商",
+          "最近3次同步",
+          "5家供应商"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:50212/orders",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理.png",
+        "elementCount": 534,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "搜索订单号/手机号/商品名",
+          "今日",
+          "昨日",
+          "近7天",
+          "近30天",
+          "自定义",
+          "导出",
+          "详情",
+          "重试",
+          "退款",
+          "上一页",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情.png",
+        "elementCount": 170,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "返回列表",
+          "导出详情",
+          "重试（同通道）",
+          "切换通道重试",
+          "退款"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情",
+        "label": "二层操作:详情->导出详情",
+        "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情.png",
+        "elementCount": 172,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "返回列表",
+          "导出详情",
+          "重试（同通道）",
+          "切换通道重试",
+          "退款"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50212/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 11,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-01-首屏.png",
+        "elementCount": 416,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览",
+        "label": "导航:运营概览",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-02-导航-运营概览.png",
+        "elementCount": 416,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-03-操作-详情.png",
+        "elementCount": 170,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "返回列表",
+          "导出详情",
+          "重试（同通道）",
+          "切换通道重试",
+          "退款"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情",
+        "label": "二层操作:详情->导出详情",
+        "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-04-二层操作-详情-导出详情.png",
+        "elementCount": 172,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "返回列表",
+          "导出详情",
+          "重试（同通道）",
+          "切换通道重试",
+          "退款"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-05-操作-刷新数据.png",
+        "elementCount": 417,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理",
+        "label": "导航:商品管理",
+        "finalUrl": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-06-导航-商品管理.png",
+        "elementCount": 709,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "搜索商品名称...",
+          "导出商品列表",
+          "同步全部库存",
+          "新增商品",
+          "同步库存",
+          "详情",
+          "编辑",
+          "3家供应商",
+          "最近3次同步",
+          "5家供应商"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-07-操作-编辑.png",
+        "elementCount": 709,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "搜索商品名称...",
+          "导出商品列表",
+          "同步全部库存",
+          "新增商品",
+          "同步库存",
+          "详情",
+          "编辑",
+          "3家供应商",
+          "最近3次同步",
+          "5家供应商"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:50212/products",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-08-操作-详情.png",
+        "elementCount": 709,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "搜索商品名称...",
+          "导出商品列表",
+          "同步全部库存",
+          "新增商品",
+          "同步库存",
+          "详情",
+          "编辑",
+          "3家供应商",
+          "最近3次同步",
+          "5家供应商"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:50212/orders",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-09-导航-订单管理.png",
+        "elementCount": 534,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "搜索订单号/手机号/商品名",
+          "今日",
+          "昨日",
+          "近7天",
+          "近30天",
+          "自定义",
+          "导出",
+          "详情",
+          "重试",
+          "退款",
+          "上一页",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-10-操作-详情.png",
+        "elementCount": 170,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "返回列表",
+          "导出详情",
+          "重试（同通道）",
+          "切换通道重试",
+          "退款"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情",
+        "label": "二层操作:详情->导出详情",
+        "finalUrl": "http://127.0.0.1:50212/orders/8f13a47a-5b22-4615-9634-ac2f8646babf",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-service-repair-admin-final/may-89212-codex-20260617-service-repair-admin-final-structure-11-二层操作-详情-导出详情.png",
+        "elementCount": 172,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "返回列表",
+          "导出详情",
+          "重试（同通道）",
+          "切换通道重试",
+          "退款"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1856,
+    "height": 1600,
+    "scrollWidth": 1824,
+    "scrollHeight": 2921
+  },
+  "initialBodyTextPreview": "💎\n虚拟商品管理后台\nVirtual Goods Platform · Admin Console\n管理员账号\n登录密码\n登 录\n🔐 默认账号：admin / admin123",
+  "bodyTextPreview": "💎\nVGF 管理台\n数据中心\n📊\n运营概览\n业务管理\n📦\n商品管理\n📋\n订单管理\n🎫\n卡密池管理\n🏭\n供应商管理\n财务中心\n💰\n结算中心\n风控中心\n🛡️\n风控中心\n系统管理\n👥\n用户管理\n📊 运营概览\nA\nadmin\n退出\n📊 运营概览\n实时监控平台运营数据\n刷新数据\n今日GMV\n¥47.02\n💰\n今日订单\n1\n📋\n累计GMV\n¥10080\n📈\n总用户\n8\n👥\n今日新增\n3\n➕\n总商品\n447\n📦\n总供应商\n6\n🏭\n成功率\n61.7%\n✅\n今日佣金\n¥0.00\n💎\n总佣金\n¥517.52\n🎁\n卡密总数\n340\n🎫\n已使用\n4\n📝\n已加密\n390\n🔐\n风控日志\n101\n🛡️\n今日拦截\n0\n🚫\n📈 近7天GMV趋势\n单位：元\n¥633\n6/11\n5单\n¥0\n6/12\n0单\n¥0\n6/13\n0单\n¥118\n6/14\n2单\n¥0\n6/15\n0单\n¥0\n6/16\n0单\n¥47\n6/17\n1单\n📊 订单状态分布\n总计: 81\n总计订单\n81\n已完成\n50 (62%)\n已失败\n11 (14%)\n待充值\n10 (12%)\n待支付\n10 (12%)\n🛡️ 风险等级分布\n总计风险\n101\n严重\n13 (13%)\n高\n45 (45%)\n低\n15 (15%)\n中\n28 (28%)\n🏭 供应商业绩TOP5\n按GMV排序\n1. 腾讯充值中心\n¥6422.8056单89%\n2. 爱奇艺会员中心\n¥2593.0016单88%\n3. 京东E卡\n¥1017.508单75%\n4. 美团外卖券\n¥47.021单0%\n📋 最近订单\n最近10条\n订单号\t商品\t手机号\t金额\t状态\t时间\t操作\nV202606170750342696\t中国移动话费50元\t13800138001\t¥47.02\t已失败\t6/17 07:50\t详情\nV17810930080055\t京东E卡100元\tACC552222\t¥92.50\t已失败\t6/14 15:18\t详情\nV17814314080008\t腾讯视频VIP月卡\t13700003333\t¥25.00\t已完成\t6/14 05:19\t详情\nV17813810080015\t京东E卡100元\tACC154444\t¥185.00\t已失败\t6/11 22:00\t详情\nV17809994080068\t腾讯视频VIP月卡\t13700003333\t¥25.00\t已完成\t6/11 21:44\t详情\nV17811290080050\t中国移动话费50元\t13700003333\t¥49.50\t已完成\t6/11 14:48\t详情\nV17813522080019\t腾讯视频VIP年卡\t13800002222\t¥188.00\t已完成\t6/11 06:39\t详情\nV17809490080075\t京东E卡100元\tACC754444\t¥185.00\t已完成\t6/11 05:20\t详情\nV17810786080057\tQQ音乐绿钻年卡\t13600004444\t¥286.00\t已完成\t6/10 22:55\t详情\nV17812442080034\t爱奇艺黄金会员年卡\t13500005555\t¥188.00\t已完成\t6/10 22:04\t详情\n🚫 最近风控拦截\n最近10条\n✅\n最近无风控记录\n🎫 卡密池加密概览\nAES-256-CBC\n340\n总卡密数\n390\n已加密\n0\n今日解密\n66\n即将过期\n29\n已过期\n加密算法：AES-256-CBC密钥版本：v2.1\n加密率：115%",
+  "apiBase": "http://127.0.0.1:59212",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/auth/admin-login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/admin/8f13a47a-5b22-4615-9634-ac2f8646babf"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/8f13a47a-5b22-4615-9634-ac2f8646babf/diagnostic"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/error-codes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/admin/8f13a47a-5b22-4615-9634-ac2f8646babf"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/8f13a47a-5b22-4615-9634-ac2f8646babf/diagnostic"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/error-codes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/products?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/products?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=20&status=all&startDate=2026-05-18&endDate=2026-06-16"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=20&status=all&startDate=2026-05-18&endDate=2026-06-16"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/admin/8f13a47a-5b22-4615-9634-ac2f8646babf"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/8f13a47a-5b22-4615-9634-ac2f8646babf/diagnostic"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/error-codes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/admin/8f13a47a-5b22-4615-9634-ac2f8646babf"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/8f13a47a-5b22-4615-9634-ac2f8646babf/diagnostic"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/orders/error-codes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=20&status=all&startDate=2026-05-18&endDate=2026-06-16"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"status\":\"ok\",\"timestamp\":1781711780,\"version\":\"1.0.0\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"todayGMV\":47.02,\"todayOrders\":1,\"totalGMV\":10080.32,\"totalOrders\":81,\"totalUsers\":8,\"todayNewUsers\":3,\"totalProducts\":447,\"totalSuppliers\":6,\"todayFailures\":1,\"todayCommission\":0,\"totalCommission\":517.52,\"monthCommission\":510.12,\"pendingCommission\":0,\"rechargeSuccessRate\":61.7,\"cardPoolCount\":340,\"cardUsed\":4,\"cardExpired\":29,\"cardEncrypted\":390,\"cardTodayDecrypt\":0,\"cardExpiringSoon\":66,\"riskLogCount\":101,\"blockedToday\":0,\"ipBlacklistCount\":0,\"regionLimitCount\":86,\"diag"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/orders?page=1&pageSize=10",
+      "path": "/api/admin/orders?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":\"8f13a47a-5b22-4615-9634-ac2f8646babf\",\"user_id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"product_id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"product_name\":\"中国移动话费50元\",\"supplier_id\":\"3dcebd99-e593-4ef8-a62c-f10047fec049\",\"order_no\":\"V202606170750342696\",\"recharge_account\":\"13800138001\",\"quantity\":1,\"face_value\":50,\"unit_price\":49.5,\"original_amount\":49.5,\"discount_amount\":2.48,\"final_amount\":47.02,\"commission_amount\":1.41,\"status\":\"failed\",\"supplier_order_id\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/suppliers",
+      "path": "/api/admin/suppliers",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"d21b13d1-c38f-4297-8fd9-024ac3626508\",\"name\":\"联通数科\",\"code\":\"unicom\",\"api_endpoint\":\"https://api.unicom.example.com\",\"api_key\":\"unicom_demo_key\",\"api_secret\":null,\"status\":1,\"settlement_ratio\":0.88,\"created_at\":1781558018,\"productCount\":86,\"totalOrders\":0,\"totalAmount\":0,\"failCount\":0,\"failRate\":0,\"channelCount\":237,\"cardCount\":15,\"availableCards\":15,\"encryptionStatus\":\"AES-256-CBC\"},{\"id\":\"323585a5-dfdf-45c6-a0fd-e0233ab019bb\",\"name\":\"浙江电信\",\"code\":\"zjtelecom\",\"api_"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/card-pool/stats",
+      "path": "/api/admin/card-pool/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"total\":340,\"used\":4,\"available\":307,\"expired\":29,\"expiringSoon\":66,\"expiring7Days\":21,\"todayNew\":0,\"encryptionMethod\":\"AES-256-CBC\",\"keyId\":\"key-7f9a3c2d\",\"keyVersion\":\"v2.1\",\"byProduct\":[{\"id\":\"0b57afe8-130e-497f-b0eb-4f83a394d3da\",\"name\":\"美团外卖券20元\",\"total\":50,\"available_count\":41,\"used_count\":4,\"expired_count\":5},{\"id\":\"f0dd3438-27ca-493e-b62a-47f55fcff375\",\"name\":\"美团外卖券50元\",\"total\":50,\"available_count\":47,\"used_count\":0,\"expired_count\":3},{\"id\":\"4415abbd-ad90-4191-8ea"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/risk/logs?limit=10",
+      "path": "/api/admin/risk/logs?limit=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":\"0951b255-5895-4c27-bbd2-77257ab0cece\",\"user_id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"ip\":\"127.0.0.1\",\"region\":\"全国\",\"action\":\"create_order\",\"risk_level\":\"low\",\"detail\":\"{}\",\"blocked\":0,\"created_at\":1781671834,\"user_phone\":\"13800138001\",\"user_name\":\"张三\",\"detect_type\":\"other\",\"hourly_count\":0,\"detect_type_label\":\"其他风险\",\"is_virtual_phone\":false,\"is_region_limit\":false,\"is_frequency\":false},{\"id\":\"266fa0a4-d05c-4efb-99d3-8755def23aa9\",\"user_id\":\"1\",\"ip\":\"192."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/orders/admin/8f13a47a-5b22-4615-9634-ac2f8646babf",
+      "path": "/api/orders/admin/8f13a47a-5b22-4615-9634-ac2f8646babf",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"8f13a47a-5b22-4615-9634-ac2f8646babf\",\"user_id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"product_id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"product_name\":\"中国移动话费50元\",\"supplier_id\":\"3dcebd99-e593-4ef8-a62c-f10047fec049\",\"order_no\":\"V202606170750342696\",\"recharge_account\":\"13800138001\",\"quantity\":1,\"face_value\":50,\"unit_price\":49.5,\"original_amount\":49.5,\"discount_amount\":2.48,\"final_amount\":47.02,\"commission_amount\":1.41,\"status\":\"failed\",\"supplier_order_id\":null,\"su"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/orders/8f13a47a-5b22-4615-9634-ac2f8646babf/diagnostic",
+      "path": "/api/orders/8f13a47a-5b22-4615-9634-ac2f8646babf/diagnostic",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"orderId\":\"8f13a47a-5b22-4615-9634-ac2f8646babf\",\"primaryIssue\":\"未知原因导致的充值失败\",\"rootCause\":\"MULTIPLE_ISSUES\",\"suggestions\":[\"建议联系客服人工处理\"],\"autoActions\":[],\"retryable\":false,\"switchChannel\":false,\"userMessage\":\"充值失败，请稍后重试或联系客服\",\"errorCode\":\"ALL_FAIL:所有供应商通道均失败\",\"category\":\"system_error\",\"categoryLabel\":\"系统错误\",\"severity\":\"medium\",\"severityLabel\":\"中等\",\"autoAction\":\"无\",\"switchChannelAvailable\":false,\"switchHistory\":[]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/orders/error-codes",
+      "path": "/api/orders/error-codes",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":14,\"supplier_code\":\"common\",\"error_code\":\"ACCOUNT_INVALID\",\"user_message\":\"充值账号格式错误，请核对\",\"solution\":null,\"auto_retry\":0,\"switch_channel\":0},{\"id\":12,\"supplier_code\":\"common\",\"error_code\":\"SIGN_ERROR\",\"user_message\":\"签名校验失败\",\"solution\":null,\"auto_retry\":0,\"switch_channel\":1},{\"id\":13,\"supplier_code\":\"common\",\"error_code\":\"STOCK_EMPTY\",\"user_message\":\"商品库存不足\",\"solution\":null,\"auto_retry\":0,\"switch_channel\":1},{\"id\":11,\"supplier_code\":\"common\",\"error_code\":\"TIMEOUT\",\"u"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/products?page=1&pageSize=20",
+      "path": "/api/admin/products?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":\"0b696d0f-8021-4fe5-8717-157109790a0a\",\"name\":\"爱奇艺会员100元\",\"category_id\":\"c_video\",\"supplier_id\":\"8d6d786b-89f7-45d8-89d4-6a761ec531c9\",\"supplier_product_id\":\"SKU-IQIYI-100\",\"sku_type\":\"card\",\"face_value\":100,\"price\":95,\"cost_price\":85,\"commission_rate\":0,\"stock\":100,\"stock_warning\":10,\"image\":null,\"description\":null,\"status\":1,\"sort\":0,\"is_hot\":0,\"recharge_type\":\"auto\",\"region_limit\":null,\"created_at\":1781626244,\"updated_at\":null,\"sync_batch\":null,\"available"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/orders?page=1&pageSize=20&status=all&startDate=2026-05-18&endDate=2026-06-16",
+      "path": "/api/admin/orders?page=1&pageSize=20&status=all&startDate=2026-05-18&endDate=2026-06-16",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":\"8f13a47a-5b22-4615-9634-ac2f8646babf\",\"user_id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"product_id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"product_name\":\"中国移动话费50元\",\"supplier_id\":\"3dcebd99-e593-4ef8-a62c-f10047fec049\",\"order_no\":\"V202606170750342696\",\"recharge_account\":\"13800138001\",\"quantity\":1,\"face_value\":50,\"unit_price\":49.5,\"original_amount\":49.5,\"discount_amount\":2.48,\"final_amount\":47.02,\"commission_amount\":1.41,\"status\":\"failed\",\"supplier_order_id\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":952.98,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":952.98,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":952.98,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4e33f11f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:50212/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4e33f11f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4e33f11f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4e33f11f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=20&status=all&startDate=2026-05-18&endDate=2026-06-16",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": []
+}
