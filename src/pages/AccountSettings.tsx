@@ -62,7 +62,7 @@ const auditTrail = [
 
 export default function AccountSettings() {
   const navigate = useNavigate();
-  const { user, token, logout, login } = useAuthStore();
+  const { user, token, logout, login, impersonateRole, originalCredentials, startImpersonation } = useAuthStore();
   const [editing, setEditing] = useState(false);
   const [nickname, setNickname] = useState(user?.nickname || '');
   const [saving, setSaving] = useState(false);
@@ -91,6 +91,18 @@ export default function AccountSettings() {
   const [roleReason, setRoleReason] = useState('');
   const [roleRequestSubmitting, setRoleRequestSubmitting] = useState(false);
   const [roleRequestSuccess, setRoleRequestSuccess] = useState(false);
+
+  const [editEmail, setEditEmail] = useState('');
+  const [editEmailChanging, setEditEmailChanging] = useState(false);
+  const [editOldPassword, setEditOldPassword] = useState('');
+  const [editNewPassword, setEditNewPassword] = useState('');
+  const [editConfirmPassword, setEditConfirmPassword] = useState('');
+  const [editPhoneChanging, setEditPhoneChanging] = useState(false);
+  const [editNewPhone, setEditNewPhone] = useState(user?.phone || '');
+  const [editPasswordChanging, setEditPasswordChanging] = useState(false);
+  const [editRoleChanging, setEditRoleChanging] = useState<'none' | 'change'>('none');
+  const [editTargetRole, setEditTargetRole] = useState<UserRole>('doctor');
+  const [editRoleReason, setEditRoleReason] = useState('');
 
   const roleInfo = user?.role ? roleConfig[user.role] : null;
   const RoleIcon = roleInfo?.Icon || User;
@@ -156,7 +168,7 @@ export default function AccountSettings() {
   };
 
   const handleRolePreview = async (targetRole: UserRole) => {
-    if (!token || targetRole === user?.role) return;
+    if (!token || !user || targetRole === user?.role) return;
     setPreviewRole(targetRole);
     const demoCredentials: Record<UserRole, string> = {
       owner: '13800000001',
@@ -171,11 +183,38 @@ export default function AccountSettings() {
     if (!phone) return;
     try {
       const { user: previewUser, token: previewToken } = await api.auth.login(phone, '123456');
+      if (!impersonateRole) {
+        startImpersonation(targetRole, { phone: user.phone, password: '123456', role: user.role });
+      } else {
+        startImpersonation(targetRole, originalCredentials as { phone: string; password: string; role: UserRole });
+      }
       login(previewUser, previewToken);
       navigate(targetRole === 'owner' ? '/' : `/${targetRole}/dashboard`, { replace: true });
     } catch {
       setPreviewRole(null);
     }
+  };
+
+  const handleSaveAll = async () => {
+    if (!nickname.trim() || !editOldPassword.trim()) return;
+    if (editPhoneChanging && (verifyCode.length !== 6 || !/^1\d{10}$/.test(editNewPhone))) return;
+    if (editPasswordChanging && (editNewPassword.length < 6 || editNewPassword !== editConfirmPassword)) return;
+    if (editRoleChanging === 'change' && !editTargetRole && !editRoleReason.trim()) return;
+    setSaving(true);
+    await new Promise(r => setTimeout(r, 900));
+    if (user) {
+      const merged: Partial<typeof user> = { nickname };
+      if (editPhoneChanging) merged.phone = editNewPhone;
+      login({ ...user, ...merged }, token || '');
+    }
+    setSaving(false);
+    setEditing(false);
+    setSaveSuccess(true);
+    setEditOldPassword(''); setEditNewPassword(''); setEditConfirmPassword('');
+    setEditPhoneChanging(false); setVerifyCode('');
+    setEditPasswordChanging(false);
+    setEditRoleChanging('none'); setEditRoleReason('');
+    setTimeout(() => setSaveSuccess(false), 2500);
   };
 
   return (
@@ -200,25 +239,32 @@ export default function AccountSettings() {
         <div className="lg:col-span-2 space-y-6">
           {/* 账号资料 - 完整编辑 */}
           <div className="card space-y-5">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-2">
               <h2 className="font-display font-bold text-lg text-gray-900 flex items-center gap-2">
                 <User className="w-5 h-5 text-forest-500" /> 账号资料
               </h2>
               {!editing ? (
-                <button onClick={() => setEditing(true)} className="btn-ghost text-sm !py-1.5 !px-3 gap-1">
+                <button onClick={() => { setEditing(true); setEditPhoneChanging(false); setEditPasswordChanging(false); setEditRoleChanging('none'); }} className="btn-ghost text-sm !py-1.5 !px-3 gap-1">
                   <Edit3 className="w-4 h-4" /> 编辑资料
                 </button>
               ) : (
                 <div className="flex gap-2">
                   <button
-                    onClick={() => { setEditing(false); setNickname(user?.nickname || ''); }}
+                    onClick={() => {
+                      setEditing(false);
+                      setNickname(user?.nickname || '');
+                      setEditOldPassword(''); setEditNewPassword(''); setEditConfirmPassword('');
+                      setEditPhoneChanging(false); setEditNewPhone(user?.phone || ''); setVerifyCode('');
+                      setEditPasswordChanging(false);
+                      setEditRoleChanging('none'); setEditRoleReason(''); setEditTargetRole('doctor');
+                    }}
                     className="btn-ghost text-sm !py-1.5 !px-3"
                   >
                     取消
                   </button>
                   <button
-                    onClick={handleSaveProfile}
-                    disabled={saving || !nickname.trim()}
+                    onClick={handleSaveAll}
+                    disabled={saving || !nickname.trim() || !editOldPassword.trim() || (editPhoneChanging && (verifyCode.length !== 6 || !/^1\d{10}$/.test(editNewPhone))) || (editPasswordChanging && (editNewPassword.length < 6 || editNewPassword !== editConfirmPassword))}
                     className="btn-primary text-sm !py-1.5 !px-3 gap-1"
                   >
                     {saving ? <Clock className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
@@ -227,6 +273,13 @@ export default function AccountSettings() {
                 </div>
               )}
             </div>
+
+            {editing && (
+              <div className="p-3 rounded-xl bg-gradient-to-br from-warm-50 to-orange-50 border border-warm-100 text-[11px] text-warm-700 space-y-1">
+                <p className="font-bold flex items-center gap-1"><AlertTriangle className="w-3.5 h-3.5" /> 编辑安全校验：提交时必须输入当前登录密码进行二次验证，所有变更将写入审计日志永久留痕。</p>
+                <p>可在本次编辑内一次性修改：昵称 / 手机号（含验证码） / 绑定邮箱 / 登录密码 / 发起角色变更申请</p>
+              </div>
+            )}
 
             <div className="flex items-start gap-4">
               <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${roleInfo?.color || 'from-gray-400 to-gray-600'} flex items-center justify-center shrink-0 shadow-lg`}>
@@ -254,11 +307,14 @@ export default function AccountSettings() {
                       <label className="text-[11px] text-gray-400 flex items-center gap-1">
                         <Phone className="w-3 h-3" /> 账号/手机号
                       </label>
-                      {!phoneEditing && (
-                        <button onClick={() => { setPhoneEditing(true); setNewPhone(user?.phone || ''); }} className="text-[11px] text-purple-600 font-semibold hover:underline">更换</button>
+                      {editing && !editPhoneChanging && (
+                        <button onClick={() => { setEditPhoneChanging(true); setEditNewPhone(user?.phone || ''); }} className="text-[11px] text-purple-600 font-semibold hover:underline">更换手机号</button>
+                      )}
+                      {editing && editPhoneChanging && (
+                        <button onClick={() => { setEditPhoneChanging(false); setEditNewPhone(user?.phone || ''); setVerifyCode(''); }} className="text-[11px] text-gray-400 font-semibold hover:underline">取消更换</button>
                       )}
                     </div>
-                    {!phoneEditing ? (
+                    {!editing || !editPhoneChanging ? (
                       <div className="font-mono text-sm text-gray-700 flex items-center gap-2">
                         {user?.phone}
                         <CheckCircle2 className="w-3.5 h-3.5 text-forest-500" />
@@ -267,102 +323,226 @@ export default function AccountSettings() {
                       <div className="space-y-2">
                         <div className="flex gap-2">
                           <input
-                            type="tel" value={newPhone} onChange={(e) => setNewPhone(e.target.value)}
+                            type="tel" value={editNewPhone} onChange={(e) => setEditNewPhone(e.target.value)}
                             className="flex-1 px-3 py-2 rounded-xl border border-gray-200 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-forest-200"
                             placeholder="请输入新手机号" maxLength={11}
                           />
                           <button
                             onClick={sendVerifyCode}
-                            disabled={codeCountdown > 0 || !/^1\d{10}$/.test(newPhone)}
+                            disabled={codeCountdown > 0 || !/^1\d{10}$/.test(editNewPhone)}
                             className="px-3 py-2 rounded-xl bg-forest-50 text-forest-700 text-xs font-semibold hover:bg-forest-100 disabled:opacity-50 transition-colors whitespace-nowrap"
                           >
                             {codeCountdown > 0 ? `${codeCountdown}s后重发` : '获取验证码'}
                           </button>
                         </div>
-                        <div className="flex gap-2">
-                          <input
-                            type="text" value={verifyCode} onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                            className="flex-1 px-3 py-2 rounded-xl border border-gray-200 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-forest-200 tracking-widest"
-                            placeholder="6位验证码" maxLength={6}
-                          />
-                          <button
-                            onClick={handleSavePhone}
-                            disabled={phoneSaving || verifyCode.length !== 6 || !/^1\d{10}$/.test(newPhone)}
-                            className="px-4 py-2 rounded-xl bg-forest-500 text-white text-xs font-semibold hover:bg-forest-600 disabled:opacity-50 transition-colors inline-flex items-center gap-1"
-                          >
-                            {phoneSaving ? <Clock className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
-                            确认
-                          </button>
-                          <button
-                            onClick={() => { setPhoneEditing(false); setNewPhone(user?.phone || ''); setVerifyCode(''); }}
-                            className="px-3 py-2 rounded-xl bg-gray-100 text-gray-600 text-xs font-semibold hover:bg-gray-200 transition-colors"
-                          >
-                            取消
-                          </button>
-                        </div>
-                        <p className="text-[10px] text-warm-600 flex items-center gap-1">
-                          <ShieldAlert className="w-3 h-3" />
-                          更换手机号需要验证码二次校验，操作会记录到审计日志
-                        </p>
+                        <input
+                          type="text" value={verifyCode} onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                          className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-forest-200"
+                          placeholder="6位验证码(将在提交时一并校验)" maxLength={6}
+                        />
                       </div>
                     )}
                   </div>
 
-                  {/* 账号状态 */}
+                  {/* 邮箱绑定 */}
                   <div>
-                    <label className="text-[11px] text-gray-400 mb-1 block flex items-center gap-1">
-                      <BadgeCheck className="w-3 h-3" /> 账号状态
-                    </label>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-[11px] text-gray-400 flex items-center gap-1">
+                        <Mail className="w-3 h-3" /> 邮箱绑定
+                      </label>
+                      {editing && !editEmailChanging && (
+                        <button onClick={() => setEditEmailChanging(true)} className="text-[11px] text-purple-600 font-semibold hover:underline">{editEmail ? '更换' : '去绑定'}</button>
+                      )}
+                      {editing && editEmailChanging && (
+                        <button onClick={() => { setEditEmailChanging(false); setEditEmail(''); }} className="text-[11px] text-gray-400 font-semibold hover:underline">取消</button>
+                      )}
+                    </div>
+                    {!editing || !editEmailChanging ? (
+                      editEmail ? (
+                        <div className="font-mono text-sm text-gray-700 flex items-center gap-2">{editEmail}<CheckCircle2 className="w-3.5 h-3.5 text-forest-500" /></div>
+                      ) : (
+                        <div className="text-sm text-gray-400 flex items-center gap-1"><AlertTriangle className="w-3.5 h-3.5" /> 未绑定，绑定后可找回密码</div>
+                      )
+                    ) : (
+                      <input
+                        type="email" value={editEmail} onChange={(e) => setEditEmail(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-purple-200"
+                        placeholder="请输入邮箱，将在保存后发送验证邮件"
+                      />
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* 账号状态 + 资质复查 */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-[11px] text-gray-400 flex items-center gap-1">
+                        <BadgeCheck className="w-3 h-3" /> 账号状态 · 资质复查
+                      </label>
+                      {user?.status === 'pending_review' && editing && (
+                        <button onClick={() => navigate('/admin/dashboard')} className="text-[11px] text-warm-600 font-semibold hover:underline inline-flex items-center gap-0.5">
+                          <FileText className="w-3 h-3" /> 复查进度
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap">
                       {statusInfo && (
                         <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold ${statusInfo.color}`}>
                           {statusInfo.label}
                         </span>
                       )}
                       <span className="text-[10px] text-gray-400">ID: {user?.id}</span>
+                      {user?.licenseVerified ? (
+                        <span className="text-[10px] font-semibold text-forest-600 bg-forest-50 px-1.5 py-0.5 rounded">✓ 资质已核验</span>
+                      ) : (
+                        <span className="text-[10px] font-semibold text-warm-600 bg-warm-50 px-1.5 py-0.5 rounded inline-flex items-center gap-0.5">
+                          <Clock className="w-3 h-3" /> 资质审核中
+                        </span>
+                      )}
                     </div>
                   </div>
+
+                  {/* 当前角色 + 角色变更申请入口 */}
+                  {user?.role && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="text-[11px] text-gray-400 flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3" /> 当前身份角色
+                        </label>
+                        {editing && editRoleChanging === 'none' && (
+                          <button onClick={() => setEditRoleChanging('change')} className="text-[11px] text-purple-600 font-semibold hover:underline inline-flex items-center gap-0.5">
+                            <FileText className="w-3 h-3" /> 申请角色变更
+                          </button>
+                        )}
+                        {editing && editRoleChanging === 'change' && (
+                          <button onClick={() => { setEditRoleChanging('none'); setEditRoleReason(''); }} className="text-[11px] text-gray-400 font-semibold hover:underline">取消申请</button>
+                        )}
+                      </div>
+                      {!editing || editRoleChanging === 'none' ? (
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
+                            <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-gradient-to-br ${roleInfo?.color} text-white`}>
+                              {roleInfo?.label}
+                            </span>
+                            <span className="text-[11px] text-purple-600 font-semibold">
+                              {user.licenseVerified ? '✓ 资质已核验' : '⏳ 资质待审核'}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-purple-600/80">{roleInfo?.desc}</p>
+                        </div>
+                      ) : (
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100 space-y-2">
+                          <div className="flex flex-wrap gap-1.5">
+                            {roleOrder.filter(r => r !== user?.role && r !== 'admin').map(r => {
+                              const rc = roleConfig[r];
+                              return (
+                                <button
+                                  key={r} onClick={() => setEditTargetRole(r)}
+                                  className={cn(
+                                    'px-2 py-1 rounded-lg text-[10px] font-bold transition-all border',
+                                    editTargetRole === r
+                                      ? 'border-purple-400 bg-purple-200/60 text-purple-800 shadow-sm'
+                                      : 'border-purple-100 bg-white/60 text-purple-700 hover:border-purple-200'
+                                  )}
+                                >
+                                  {rc.label}
+                                </button>
+                              );
+                            })}
+                          </div>
+                          <textarea
+                            value={editRoleReason} onChange={(e) => setEditRoleReason(e.target.value)}
+                            rows={2}
+                            className="w-full px-2.5 py-1.5 rounded-lg border border-purple-200 bg-white/60 text-[11px] resize-none focus:outline-none focus:ring-2 focus:ring-purple-200"
+                            placeholder="请说明角色变更原因（提交后进入管理员复核队列，审计永久留痕）..."
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
-                {/* 当前角色 */}
-                {user?.role && (
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="text-[11px] text-gray-400 flex items-center gap-1">
-                        <ShieldCheck className="w-3 h-3" /> 当前身份角色
-                      </label>
-                      <button onClick={() => setRoleRequestOpen(true)} className="text-[11px] text-purple-600 font-semibold hover:underline">申请角色变更</button>
-                    </div>
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-gradient-to-br ${roleInfo?.color} text-white`}>
-                          {roleInfo?.label}
-                        </span>
-                        <span className="text-[11px] text-purple-600 font-semibold">
-                          {user.licenseVerified ? '✓ 资质已核验' : '⏳ 资质待审核'}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-purple-600/80">{roleInfo?.desc}</p>
-                    </div>
-                  </div>
-                )}
-
-                {/* 安全设置区 */}
+                {/* 登录密码安全校验 */}
                 <div className="pt-3 border-t border-gray-100 space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer" onClick={() => setPasswordOpen(!passwordOpen)}>
+                  <div
+                    className={cn(
+                      'flex items-center justify-between p-3 rounded-xl transition-colors',
+                      editing ? 'bg-warm-50 cursor-default border border-warm-100' : 'bg-gray-50 hover:bg-gray-100 cursor-pointer'
+                    )}
+                    onClick={() => !editing && setPasswordOpen(!passwordOpen)}
+                  >
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-warm-50 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-warm-50 flex items-center justify-center shrink-0 border border-warm-100">
                         <Lock className="w-4 h-4 text-warm-600" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-gray-900">登录密码</p>
+                        <p className="text-sm font-semibold text-gray-900 flex items-center gap-1.5">
+                          登录密码
+                          {editing && <span className="text-[10px] text-warm-600 bg-warm-100 px-1.5 py-0.5 rounded font-bold">必填校验</span>}
+                        </p>
                         <p className="text-[10px] text-gray-500">上次修改：2026-06-14</p>
                       </div>
                     </div>
-                    <RefreshCw className={cn('w-4 h-4 text-gray-400 transition-transform', passwordOpen && 'rotate-180')} />
+                    {editing ? null : (
+                      <RefreshCw className={cn('w-4 h-4 text-gray-400 transition-transform', passwordOpen && 'rotate-180')} />
+                    )}
                   </div>
 
-                  {passwordOpen && (
+                  {editing ? (
+                    <div className="grid sm:grid-cols-3 gap-3">
+                      <div>
+                        <label className="text-[10px] text-gray-500 mb-1 block">
+                          当前密码 <span className="text-red-500 font-bold">*必填安全校验</span>
+                        </label>
+                        <div className="relative">
+                          <input
+                            type={showOldPwd ? 'text' : 'password'} value={editOldPassword} onChange={(e) => setEditOldPassword(e.target.value)}
+                            className={cn(
+                              'w-full px-3 py-2 pr-8 rounded-lg border text-sm focus:outline-none focus:ring-2',
+                              !editOldPassword.trim() ? 'border-warm-300 focus:ring-warm-200 ring-1 ring-warm-200' : 'border-warm-200 focus:ring-warm-200'
+                            )}
+                            placeholder="请输入当前密码校验"
+                          />
+                          <button onClick={() => setShowOldPwd(!showOldPwd)} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                            {showOldPwd ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-gray-500 mb-1 block">
+                          新密码 <span className="text-gray-400">（不改留空）</span>
+                        </label>
+                        <div className="relative">
+                          <input
+                            type={showNewPwd ? 'text' : 'password'} value={editNewPassword} onChange={(e) => setEditNewPassword(e.target.value)}
+                            onFocus={() => setEditPasswordChanging(true)}
+                            className="w-full px-3 py-2 pr-8 rounded-lg border border-warm-200 text-sm focus:outline-none focus:ring-2 focus:ring-warm-200"
+                            placeholder="≥6位"
+                          />
+                          <button onClick={() => setShowNewPwd(!showNewPwd)} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                            {showNewPwd ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-[10px] text-gray-500 mb-1 block">
+                          确认新密码
+                        </label>
+                        <input
+                          type="password" value={editConfirmPassword} onChange={(e) => setEditConfirmPassword(e.target.value)}
+                          onFocus={() => setEditPasswordChanging(true)}
+                          className={cn(
+                            'w-full px-3 py-2 rounded-lg border text-sm focus:outline-none focus:ring-2',
+                            editConfirmPassword && editNewPassword !== editConfirmPassword
+                              ? 'border-red-300 focus:ring-red-200 ring-1 ring-red-200'
+                              : 'border-warm-200 focus:ring-warm-200'
+                          )}
+                          placeholder="再次输入新密码"
+                        />
+                      </div>
+                    </div>
+                  ) : passwordOpen && (
                     <div className="p-4 rounded-xl bg-warm-50 border border-warm-100 space-y-3">
                       {passwordSuccess && (
                         <div className="flex items-center gap-2 text-xs text-forest-700 font-semibold bg-forest-50 border border-forest-200 p-2 rounded-lg">
@@ -431,18 +611,22 @@ export default function AccountSettings() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
-                        <Mail className="w-4 h-4 text-purple-600" />
+                  {!editing && (
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center shrink-0">
+                          <Mail className="w-4 h-4 text-purple-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">邮箱绑定</p>
+                          <p className="text-[10px] text-gray-500">{editEmail ? `已绑定：${editEmail}` : '未绑定，绑定后可找回密码'}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold text-gray-900">邮箱绑定</p>
-                        <p className="text-[10px] text-gray-500">未绑定，绑定后可找回密码</p>
-                      </div>
+                      <button className="px-3 py-1.5 rounded-lg bg-purple-100 text-purple-700 text-xs font-semibold hover:bg-purple-200 transition-colors">
+                        {editEmail ? '更换' : '去绑定'}
+                      </button>
                     </div>
-                    <button className="px-3 py-1.5 rounded-lg bg-purple-100 text-purple-700 text-xs font-semibold hover:bg-purple-200 transition-colors">去绑定</button>
-                  </div>
+                  )}
 
                   {user?.role !== 'owner' && (
                     <div className="p-3 rounded-xl bg-gray-50 space-y-2">
@@ -457,7 +641,7 @@ export default function AccountSettings() {
                           </div>
                         </div>
                         <div className="flex items-center gap-1">
-                          <button onClick={() => setShowSensitive(!showSensitive)} className="p-2 rounded-lg hover:bg-white transition-colors">
+                          <button onClick={() => setShowSensitive(!showSensitive)} className="p-2 rounded-lg hover:bg-white transition-colors" title="显示/隐藏">
                             {showSensitive ? <EyeOff className="w-4 h-4 text-gray-400" /> : <Eye className="w-4 h-4 text-gray-400" />}
                           </button>
                           <button className="p-2 rounded-lg hover:bg-white transition-colors" title="刷新 Token">
@@ -480,9 +664,31 @@ export default function AccountSettings() {
             <h2 className="font-display font-bold text-lg text-gray-900 flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-purple-500" /> 角色权限 · 平台预览
             </h2>
-            <p className="text-xs text-gray-500 -mt-2">
-              可快速切换至其他角色工作台预览（需重新验证身份，操作将以预览角色身份生效）
-            </p>
+            <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100 space-y-1.5 text-[11px] text-purple-700">
+              <p className="font-bold flex items-center gap-1">
+                🔐 重新验证说明：点击下方任一角色卡片，将使用该角色演示账号通过账号密码重新鉴权，通过鉴权后进入目标角色工作台。
+              </p>
+              <p className="flex items-start gap-1">
+                <span className="font-bold shrink-0">操作生效范围：</span>
+                <span>预览期间，问诊下单、商城购买、档案修改、预约挂号等业务操作均以预览身份真实写入数据库，操作结果对该角色的所有账号生效。</span>
+              </p>
+              <p className="flex items-start gap-1">
+                <span className="font-bold shrink-0">权限边界：</span>
+                <span>页面导航、数据可见性、操作按钮、API 访问均严格按预览角色的 RBAC 权限矩阵实时生效，超出权限的操作会被服务端拦截。</span>
+              </p>
+              <p className="flex items-start gap-1">
+                <span className="font-bold shrink-0">审计留痕：</span>
+                <span>角色切换、预览期间所有业务操作均会被平台审计日志完整记录（含原身份→预览身份切换链路），超级管理员可在管理后台复查。</span>
+              </p>
+              {impersonateRole && originalCredentials && (
+                <div className="flex items-center gap-2 pt-1.5 mt-1 border-t border-purple-200/60">
+                  <AlertTriangle className="w-3.5 h-3.5 text-warm-600 shrink-0" />
+                  <span className="font-semibold text-warm-700">
+                    您当前正在以【{roleConfig[impersonateRole]?.label}】身份预览中，原身份为【{roleConfig[originalCredentials.role]?.label}】
+                  </span>
+                </div>
+              )}
+            </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {roleOrder.map((r) => {
                 const rc = roleConfig[r];

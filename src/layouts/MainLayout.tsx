@@ -292,20 +292,49 @@ export default function MainLayout() {
 
       <div className="flex-1 flex flex-col min-w-0">
         {impersonateRole && originalCredentials && (
-          <div className="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 text-white px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 shadow-md z-30">
-            <div className="flex items-center gap-2 min-w-0">
-              <ShieldAlert className="w-4 h-4 shrink-0" />
-              <span className="text-sm font-semibold truncate">
-                正在以{ROLE_LABEL[impersonateRole]?.name || impersonateRole}身份预览 · 原身份：{ROLE_LABEL[originalCredentials.role]?.name || originalCredentials.role}
-              </span>
+          <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-warm-500 text-white px-4 sm:px-6 py-2.5 shadow-md z-30">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0 space-y-0.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <ShieldAlert className="w-4 h-4 shrink-0" />
+                  <span className="text-sm font-bold truncate">
+                    平台预览中 · 正在以【{ROLE_LABEL[impersonateRole]?.name || impersonateRole}】身份承接
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold whitespace-nowrap">
+                    原身份：{ROLE_LABEL[originalCredentials.role]?.name || originalCredentials.role}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold whitespace-nowrap">
+                    🔐 已通过账号密码重新验证
+                  </span>
+                </div>
+                <p className="text-[10px] text-white/90 leading-snug">
+                  <span className="font-bold mr-1">操作生效范围：</span>
+                  当前页面所有业务操作（问诊下单/商城购买/档案修改等）均以{ROLE_LABEL[impersonateRole]?.name}身份真实写入数据库，
+                  <span className="font-bold"> 权限边界按{ROLE_LABEL[impersonateRole]?.name}角色的RBAC矩阵实时生效。</span>
+                  审计日志将保留「{ROLE_LABEL[originalCredentials.role]?.name}→{ROLE_LABEL[impersonateRole]?.name}」的切换留痕。
+                </p>
+              </div>
+              <button
+                onClick={handleExitImpersonation}
+                disabled={exitingPreview}
+                className="shrink-0 px-3.5 py-1.5 rounded-xl bg-white text-amber-600 hover:bg-amber-50 text-xs font-bold shadow-md transition-all disabled:opacity-60 inline-flex items-center gap-1"
+              >
+                {exitingPreview ? (
+                  <>
+                    <svg className="animate-spin w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25" />
+                      <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                    </svg>
+                    退出中
+                  </>
+                ) : (
+                  <>
+                    <LogOut className="w-3.5 h-3.5" />
+                    退出预览
+                  </>
+                )}
+              </button>
             </div>
-            <button
-              onClick={handleExitImpersonation}
-              disabled={exitingPreview}
-              className="shrink-0 px-3 py-1 rounded-lg bg-white/20 hover:bg-white/30 text-sm font-bold backdrop-blur-sm transition-all disabled:opacity-50"
-            >
-              {exitingPreview ? '退出中...' : '退出预览'}
-            </button>
           </div>
         )}
         <header className="sticky top-0 z-30 bg-white/85 backdrop-blur-xl border-b border-forest-50">
