@@ -568,7 +568,7 @@ export default function Category() {
                         <div>
                           <p className="text-gray-700 font-medium mb-1.5 flex items-center gap-1">
                             <History className="w-3.5 h-3.5 text-primary" />
-                            审核驳回/变更复查记录 · 可追溯
+                            资质审核/变更复查记录 · 完整链路可追溯
                           </p>
                           <div className="space-y-1.5 pl-1">
                             {changeSubmitted[m.id] && (
@@ -582,18 +582,29 @@ export default function Category() {
                                     <span className="text-[10px] text-gray-400 flex-shrink-0">{new Date().toISOString().slice(0, 16).replace('T', ' ')}</span>
                                   </div>
                                   <p className="text-[10px] text-gray-500 mt-0.5">商户发起资料变更，等待运营1-3个工作日审核</p>
+                                  <div className="mt-1 flex items-center gap-1 flex-wrap">
+                                    <span className="px-1 py-0.5 rounded bg-yellow-100 text-yellow-700 text-[8px]">已提交</span>
+                                    <span className="text-gray-300 text-[8px]">→</span>
+                                    <span className="px-1 py-0.5 rounded bg-yellow-100 text-yellow-700 text-[8px]">运营初审</span>
+                                    <span className="text-gray-300 text-[8px]">→</span>
+                                    <span className="px-1 py-0.5 rounded bg-gray-100 text-gray-400 text-[8px]">复核通过</span>
+                                  </div>
                                 </div>
                                 <div className="absolute left-[7px] top-4 w-px h-full bg-gray-200" />
                               </div>
                             )}
                             {[
-                              { time: m.audited_at ? String(m.audited_at).slice(0, 16).replace('T', ' ') : '2026-03-12 10:30', status: 'approved', title: '第2次提交·审核通过', desc: `资质核验通过，证照有效期至 ${m.license_expire ? String(m.license_expire).split('T')[0] : '2028-03-11'}，审核人：${m.audited_by || '张审核'}` },
-                              { time: '2026-03-08 15:22', status: 'rejected', title: '第1次提交·审核驳回', desc: m.reject_reason || '营业执照照片模糊，请重新上传清晰版本' },
-                              { time: '2026-03-05 09:10', status: 'pending', title: '首次提交·待审核', desc: '提交入驻申请，等待资质审核' },
-                            ].map((record, i) => {
-                              const isOk = record.status === 'approved'
-                              const isReject = record.status === 'rejected'
-                              const isLast = i === 2 && !changeSubmitted[m.id]
+                              { time: m.audited_at ? String(m.audited_at).slice(0, 16).replace('T', ' ') : '2026-03-12 10:30', status: 'approved', title: '入驻资质核验·审核通过', desc: `资质齐全，证照有效期至 ${m.license_expire ? String(m.license_expire).split('T')[0] : '2028-03-11'}，审核人：${m.audited_by || '张审核'}` },
+                              { time: '2026-04-20 14:05', status: 'change_approved', title: '营业时间变更·审批通过', desc: '周末营业时间延长至23:00，变更已生效，审核人：李审核' },
+                              { time: '2026-04-18 09:30', status: 'change_rejected', title: '优惠标签新增·审核驳回', desc: '「学生特惠」标签需提供相关合作证明，请补充材料后重新申请' },
+                              { time: '2026-04-15 16:40', status: 'change_pending', title: '优惠标签新增·申请中', desc: '申请新增「学生特惠」「下午茶」2个优惠标签' },
+                              { time: '2026-03-10 11:20', status: 'rejected', title: '首次入驻·审核驳回', desc: m.reject_reason || '营业执照照片模糊，请重新上传清晰版本' },
+                              { time: m.created_at ? String(m.created_at).slice(0, 16).replace('T', ' ') : '2026-03-05 09:10', status: 'pending', title: '首次提交入驻申请', desc: '提交营业执照、门头照、经营许可证，等待资质审核' },
+                            ].map((record, i, arr) => {
+                              const isOk = record.status === 'approved' || record.status === 'change_approved'
+                              const isReject = record.status === 'rejected' || record.status === 'change_rejected'
+                              const isPending = record.status === 'pending' || record.status === 'change_pending'
+                              const isLast = i === arr.length - 1 && !changeSubmitted[m.id]
                               return (
                                 <div key={i} className="flex items-start gap-2 relative">
                                   <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 z-10 ${isOk ? 'bg-secondary-50' : isReject ? 'bg-danger-50' : 'bg-yellow-50'}`}>
@@ -611,6 +622,9 @@ export default function Category() {
                               )
                             })}
                           </div>
+                          <p className="text-[9px] text-gray-400 mt-2 pt-1.5 border-t border-gray-100">
+                            共 5 条记录 · 3 次通过 · 1 次驳回 · 1 次审核中 · 全部可复查
+                          </p>
                         </div>
 
                         <div>

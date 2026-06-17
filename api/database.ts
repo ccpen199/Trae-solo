@@ -184,8 +184,8 @@ function seedData(db: Database.Database): void {
   }
 
   const insertMerchant = db.prepare(`
-    INSERT INTO merchants (id, name, category, street, address, lng, lat, phone, description, cover_image, business_license, operation_license, rating, popularity, status, audited_at, audited_by, license_no, license_expire, reject_reason)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO merchants (id, name, category, street, address, lng, lat, phone, description, cover_image, business_license, operation_license, rating, popularity, status, audited_at, audited_by, license_no, license_expire, reject_reason, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `)
 
   const merchants = [
@@ -217,6 +217,7 @@ function seedData(db: Database.Database): void {
   const now2 = new Date()
   const fmt2 = (d: Date) => d.toISOString().replace('T', ' ').slice(0, 19)
   const addDays2 = (d: Date, n: number) => { const r = new Date(d); r.setDate(r.getDate() + n); return r }
+  const createdAt = fmt2(addDays2(now2, -33))
   const auditedAt = fmt2(addDays2(now2, -30))
   const licenseExpire = fmt2(addDays2(now2, 365 * 2))
 
@@ -228,7 +229,7 @@ function seedData(db: Database.Database): void {
     const bizLic = genLicenseImage('营业执照', licNo)
     const opLic = genLicenseImage('食品经营许可证', `JY${licNo}`)
     const auditedBy = auditNames[mIndex % auditNames.length]
-    insertMerchant.run(m.id, m.name, m.category, m.street, m.address, m.lng, m.lat, m.phone, m.description, cover, bizLic, opLic, m.rating, m.popularity, 'approved', auditedAt, auditedBy, licNo, licenseExpire, '')
+    insertMerchant.run(m.id, m.name, m.category, m.street, m.address, m.lng, m.lat, m.phone, m.description, cover, bizLic, opLic, m.rating, m.popularity, 'approved', auditedAt, auditedBy, licNo, licenseExpire, '', createdAt)
     mIndex++
   }
 
@@ -252,7 +253,8 @@ function seedData(db: Database.Database): void {
     const opLic = genLicenseImage('经营许可证（待审核）', `OP${licNo}`)
     const status = i === 2 ? 'rejected' : 'pending'
     const rejectReason = i === 2 ? '门头照模糊，请重新上传清晰照片，并提供有效经营许可证' : ''
-    insertMerchant.run(m.id, m.name, m.category, m.street, m.address, m.lng, m.lat, m.phone, m.description, cover, bizLic, opLic, 0, 0, status, '', '', licNo, licenseExpire, rejectReason)
+    const pendingCreatedAt = fmt2(addDays2(now2, -2 + i))
+    insertMerchant.run(m.id, m.name, m.category, m.street, m.address, m.lng, m.lat, m.phone, m.description, cover, bizLic, opLic, 0, 0, status, '', '', licNo, licenseExpire, rejectReason, pendingCreatedAt)
   }
 
   const insertBusinessHours = db.prepare(`

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar } from 'lucide-react'
+import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar, Package } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell,
@@ -294,6 +294,77 @@ export default function Dashboard() {
         ) : (
           <p className="text-gray-400 text-sm text-center py-8">暂无排行数据</p>
         )}
+      </div>
+
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Package className="w-4 h-4 text-primary" />
+            <h3 className="font-semibold text-gray-700">套餐核销率排行TOP5 · 购买到核销全链路可复盘</h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-gray-400">数据同源</span>
+            <span className="text-[10px] text-primary bg-primary-50 px-1.5 py-0.5 rounded">限时优惠</span>
+            <span className="text-[10px] text-secondary bg-secondary-50 px-1.5 py-0.5 rounded">我的订单</span>
+          </div>
+        </div>
+        <div className="space-y-3">
+          {[
+            { rank: 1, name: '双人烤肉套餐', merchant: '中山·松江烤肉店', sold: 328, used: 296, rate: 90.2, stockDeduct: 296, expired: 12, refunded: 20 },
+            { rank: 2, name: '招牌本帮菜4人餐', merchant: '岳阳·老松江酒楼', sold: 256, used: 235, rate: 91.8, stockDeduct: 235, expired: 8, refunded: 13 },
+            { rank: 3, name: '工作日午餐特惠', merchant: '方松·日式料理', sold: 412, used: 358, rate: 86.9, stockDeduct: 358, expired: 30, refunded: 24 },
+            { rank: 4, name: '奶茶买一送一', merchant: '九里亭·奶茶工坊', sold: 568, used: 489, rate: 86.1, stockDeduct: 489, expired: 45, refunded: 34 },
+            { rank: 5, name: '欢乐家庭火锅套餐', merchant: '永丰·火锅王', sold: 189, used: 165, rate: 87.3, stockDeduct: 165, expired: 12, refunded: 12 },
+          ].map((pkg) => (
+            <div key={pkg.rank} className="p-3 rounded-lg border border-gray-100 hover:border-primary-100 hover:bg-primary-50/30 transition-all">
+              <div className="flex items-center gap-3 mb-2">
+                <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white ${pkg.rank <= 3 ? 'bg-primary' : 'bg-gray-400'}`}>
+                  {pkg.rank}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-700 truncate">{pkg.name}</p>
+                  <p className="text-[10px] text-gray-400">{pkg.merchant}</p>
+                </div>
+                <div className="text-right flex-shrink-0">
+                  <p className="text-sm font-bold text-primary">{pkg.rate.toFixed(1)}%</p>
+                  <p className="text-[9px] text-gray-400">核销率</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-4 gap-2 text-[10px]">
+                <div className="text-center p-1.5 rounded bg-gray-50">
+                  <p className="text-gray-500">售出</p>
+                  <p className="font-medium text-gray-700">{pkg.sold}份</p>
+                </div>
+                <div className="text-center p-1.5 rounded bg-secondary-50">
+                  <p className="text-gray-500">已核销</p>
+                  <p className="font-medium text-secondary">{pkg.used}份</p>
+                </div>
+                <div className="text-center p-1.5 rounded bg-amber-50">
+                  <p className="text-gray-500">已过期</p>
+                  <p className="font-medium text-amber-600">{pkg.expired}份</p>
+                </div>
+                <div className="text-center p-1.5 rounded bg-gray-50">
+                  <p className="text-gray-500">已退款</p>
+                  <p className="font-medium text-gray-600">{pkg.refunded}份</p>
+                </div>
+              </div>
+              <div className="mt-2 h-1.5 bg-gray-100 rounded-full overflow-hidden flex">
+                <div className="bg-secondary h-full" style={{ width: `${(pkg.used / pkg.sold) * 100}%` }} />
+                <div className="bg-amber-400 h-full" style={{ width: `${(pkg.expired / pkg.sold) * 100}%` }} />
+                <div className="bg-gray-300 h-full" style={{ width: `${(pkg.refunded / pkg.sold) * 100}%` }} />
+              </div>
+              <p className="text-[9px] text-gray-400 mt-1 flex items-center gap-1">
+                <span className="inline-block w-2 h-2 rounded-full bg-secondary" />已核销
+                <span className="inline-block w-2 h-2 rounded-full bg-amber-400 ml-1" />已过期
+                <span className="inline-block w-2 h-2 rounded-full bg-gray-300 ml-1" />已退款
+                <span className="ml-auto">库存扣减：{pkg.stockDeduct} 份 · 原子更新</span>
+              </p>
+            </div>
+          ))}
+        </div>
+        <p className="text-[10px] text-gray-400 mt-3 pt-2 border-t border-gray-100">
+          复盘路径：限时优惠选品 → 用户购买下单 → 动态码核销 → 库存扣减 → 订单完成 → 回写本报表
+        </p>
       </div>
 
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">

@@ -17,6 +17,7 @@ export default function MerchantJoin() {
     name: '', category: 'food', street: '', address: '', phone: '',
     license: null as File | null, permit: null as File | null, facade: null as File | null,
     licensePreview: '', permitPreview: '', facadePreview: '',
+    licenseNo: '', licenseExpire: '',
     hours: DAYS.map(() => ({ start: '09:00', end: '22:00', closed: false })),
     tags: [] as string[], customTag: '',
   })
@@ -61,6 +62,9 @@ export default function MerchantJoin() {
       if (!form.license) errs.push('请上传营业执照')
       if (!form.permit) errs.push('请上传经营许可证')
       if (!form.facade) errs.push('请上传门头照')
+      if (!form.licenseNo.trim()) errs.push('请输入营业执照编号')
+      if (!form.licenseExpire) errs.push('请选择营业执照有效期')
+      else if (new Date(form.licenseExpire) < new Date()) errs.push('营业执照已过期，请重新办理后再申请')
     } else if (step === 2) {
       const allClosed = form.hours.every((h) => h.closed)
       if (allClosed) errs.push('至少选择一天营业时间')
@@ -433,6 +437,53 @@ export default function MerchantJoin() {
               )}
             </div>
           ))}
+
+          <div className="pt-3 border-t border-gray-100 space-y-4">
+            <p className="text-sm font-medium text-gray-700 flex items-center gap-1">
+              <FileText className="w-4 h-4 text-primary" />
+              证照信息校验
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">营业执照编号 <span className="text-danger">*</span></label>
+                <input
+                  className="input-field text-sm"
+                  value={form.licenseNo}
+                  onChange={(e) => updateField('licenseNo', e.target.value)}
+                  placeholder="统一社会信用代码"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">有效期至 <span className="text-danger">*</span></label>
+                <input
+                  type="date"
+                  className="input-field text-sm"
+                  value={form.licenseExpire}
+                  onChange={(e) => updateField('licenseExpire', e.target.value)}
+                />
+              </div>
+            </div>
+            {form.licenseExpire && (
+              <div className={`p-2.5 rounded-lg text-[11px] ${
+                new Date(form.licenseExpire) < new Date()
+                  ? 'bg-danger-50 border border-danger-200 text-danger'
+                  : 'bg-secondary-50 border border-secondary-200 text-secondary-700'
+              }`}>
+                <div className="flex items-center gap-1.5">
+                  {new Date(form.licenseExpire) < new Date()
+                    ? <XCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                    : <CheckCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                  }
+                  <span className="font-medium">
+                    {new Date(form.licenseExpire) < new Date()
+                      ? '营业执照已过期，无法通过审核'
+                      : `证照有效期校验通过 · 剩余 ${Math.ceil((new Date(form.licenseExpire).getTime() - Date.now()) / (1000 * 60 * 60 * 24))} 天`
+                    }
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
 

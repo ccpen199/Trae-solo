@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Search, MapPin, ClipboardList, Settings, Store, CheckCircle, AlertCircle, X, Radio, Wifi, Navigation, Shield, Target, ToggleLeft, ToggleRight } from 'lucide-react'
+import { Search, MapPin, ClipboardList, Settings, Store, CheckCircle, AlertCircle, X, Radio, Wifi, Navigation, Shield, Target, ToggleLeft, ToggleRight, XCircle } from 'lucide-react'
 import useStore from '@/store/useStore'
 
 const SONGJIANG_FENCE = { minLat: 30.90, maxLat: 31.15, minLng: 121.05, maxLng: 121.35 }
@@ -9,6 +9,7 @@ export default function Navbar() {
   const [query, setQuery] = useState('')
   const [showLocPanel, setShowLocPanel] = useState(false)
   const [simulateOutside, setSimulateOutside] = useState(false)
+  const [prevLocLabel, setPrevLocLabel] = useState('默认松江')
   const { locInfo, isInSongjiang, setLocSource, addInterceptRecord, setLocation, setIsInSongjiang, setSearchQuery, interceptRecords } = useStore()
   const navigate = useNavigate()
 
@@ -22,7 +23,10 @@ export default function Navbar() {
   }
 
   const handleLocSourceChange = (k: 'default' | 'gps' | 'cell') => {
+    if (locInfo.source === k) return
+    const oldLabel = locInfo.label
     const oldCoords = `${locInfo.lat.toFixed(4)},${locInfo.lng.toFixed(4)}`
+    setPrevLocLabel(oldLabel)
     setLocSource(k)
     setTimeout(() => {
       const state = window['__zustand_store']?.getState?.() || require('@/store/useStore').default.getState()
@@ -31,15 +35,16 @@ export default function Navbar() {
       const newLabel = state.locInfo.label
       const dist = Math.round(Math.sqrt(Math.pow(newLat - 31.03, 2) + Math.pow(newLng - 121.22, 2)) * 111000)
       addInterceptRecord?.(new Date().toLocaleTimeString(), newLat, newLng,
-        `定位切换：${oldCoords}→${newLat.toFixed(4)},${newLng.toFixed(4)}(${newLabel})，距中心${dist}m`)
+        `定位切换：${oldLabel}→${newLabel}，距中心${dist}m`)
     }, 50)
   }
 
   const handleSimulateOutside = (enable: boolean) => {
     setSimulateOutside(enable)
     if (enable) {
-      const outsideLat = 31.16  // 嘉定区
-      const outsideLng = 121.38  // 闵行区
+      setPrevLocLabel(locInfo.label)
+      const outsideLat = 31.16
+      const outsideLng = 121.38
       setLocation(outsideLat, outsideLng)
       setIsInSongjiang(false)
       addInterceptRecord?.(new Date().toLocaleTimeString(), outsideLat, outsideLng,
@@ -48,6 +53,7 @@ export default function Navbar() {
       setLocation(31.03, 121.22)
       setIsInSongjiang(true)
       setLocSource('default')
+      setPrevLocLabel('区外(嘉定)')
     }
   }
 
@@ -218,17 +224,21 @@ export default function Navbar() {
                 </p>
                 <div className="grid grid-cols-3 gap-1.5 text-[10px]">
                   {[
-                    { acc: 50, label: 'GPS', color: 'secondary', status: '高精度·正常' },
-                    { acc: 500, label: '基站', color: 'primary', status: '标准·正常' },
-                    { acc: 1000, label: '默认', color: 'yellow', status: '低精度·降级' },
+                    { key: 'gps', acc: 50, label: 'GPS卫星', color: 'secondary', status: '高精度·正常' },
+                    { key: 'cell', acc: 500, label: '基站三角', color: 'primary', status: '标准·正常' },
+                    { key: 'default', acc: 1000, label: '默认松江', color: 'yellow', status: '低精度·降级' },
                   ].map((p) => (
-                    <div key={p.acc} className={`p-2 rounded-lg border ${locInfo.accuracy === p.acc ? `bg-${p.color}-50 border-${p.color}-200` : 'bg-white border-gray-200'}`}>
-                      <p className={`font-medium ${locInfo.accuracy === p.acc ? `text-${p.color}` : 'text-gray-700'}`}>{p.label}</p>
+                    <button
+                      key={p.key}
+                      onClick={() => { handleLocSourceChange(p.key as 'gps' | 'cell' | 'default') }}
+                      className={`p-2 rounded-lg border text-left transition-all ${locInfo.source === p.key ? `bg-${p.color}-50 border-${p.color}-200 ring-1 ring-${p.color}-200` : 'bg-white border-gray-200 hover:border-gray-300 hover:bg-gray-50'}`}
+                    >
+                      <p className={`font-medium ${locInfo.source === p.key ? `text-${p.color}` : 'text-gray-700'}`}>{p.label}</p>
                       <p className="text-[9px] text-gray-500 mt-0.5">±{p.acc}m</p>
-                      <p className={`text-[9px] mt-0.5 ${locInfo.accuracy === p.acc ? (p.acc > 500 ? 'text-yellow-600' : 'text-secondary') : 'text-gray-400'}`}>
-                        {locInfo.accuracy === p.acc ? p.status : (p.acc > locInfo.accuracy ? '精度更高' : '精度更低')}
+                      <p className={`text-[9px] mt-0.5 ${locInfo.source === p.key ? (p.acc > 500 ? 'text-yellow-600' : 'text-secondary') : 'text-gray-400'}`}>
+                        {locInfo.source === p.key ? p.status : '点击切换'}
                       </p>
-                    </div>
+                    </button>
                   ))}
                 </div>
                 {locInfo.accuracy >= 1000 && (
@@ -246,23 +256,42 @@ export default function Navbar() {
                 </p>
                 <div className="p-3 rounded-lg bg-gradient-to-br from-primary-50/60 to-secondary-50/40 border border-primary-100/50 text-[10px] space-y-1.5">
                   <div className="grid grid-cols-3 gap-2 font-medium text-gray-500 text-center border-b border-gray-200/60 pb-1">
-                    <span>排名</span><span>切换前（默认松江）</span><span>切换后（{locInfo.label}）</span>
+                    <span>排名</span><span>切换前（{prevLocLabel}）</span><span>切换后（{effectiveInFence ? locInfo.label : '区外·拦截'}）</span>
                   </div>
-                  {[
-                    { r: 1, before: '方松·老松江酒楼', after: '广富林·大学城餐厅', chg: '+5 位' },
-                    { r: 2, before: '中山·松江烤肉店', after: '中山·松江烤肉店', chg: '—' },
-                    { r: 3, before: '岳阳·本帮菜馆', after: '广富林·咖啡馆', chg: '+12 位' },
-                    { r: 4, before: '广富林·咖啡馆', after: '方松·KTV娱乐', chg: '+2 位' },
-                    { r: 5, before: '永丰·便民超市', after: '广富林·奶茶店', chg: '+8 位' },
-                  ].map((row) => (
-                    <div key={row.r} className="grid grid-cols-3 gap-2 items-center text-center">
-                      <span className="font-mono text-primary">#{row.r}</span>
-                      <span className="text-gray-600 text-left truncate">{row.before}</span>
-                      <span className={`text-left truncate ${row.chg === '—' ? 'text-gray-600' : 'text-secondary font-medium'}`}>
-                        {row.after} <span className="text-[9px] ml-0.5 opacity-80">{row.chg}</span>
-                      </span>
+                  {effectiveInFence ? (
+                    <>
+                      {[
+                        { r: 1, before: '方松·老松江酒楼', after: '广富林·大学城餐厅', chg: '+5 位' },
+                        { r: 2, before: '中山·松江烤肉店', after: '中山·松江烤肉店', chg: '—' },
+                        { r: 3, before: '岳阳·本帮菜馆', after: '广富林·咖啡馆', chg: '+12 位' },
+                        { r: 4, before: '广富林·咖啡馆', after: '方松·KTV娱乐', chg: '+2 位' },
+                        { r: 5, before: '永丰·便民超市', after: '广富林·奶茶店', chg: '+8 位' },
+                      ].map((row) => (
+                        <div key={row.r} className="grid grid-cols-3 gap-2 items-center text-center">
+                          <span className="font-mono text-primary">#{row.r}</span>
+                          <span className="text-gray-600 text-left truncate">{row.before}</span>
+                          <span className={`text-left truncate ${row.chg === '—' ? 'text-gray-600' : 'text-secondary font-medium'}`}>
+                            {row.after} <span className="text-[9px] ml-0.5 opacity-80">{row.chg}</span>
+                          </span>
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <div className="py-4 text-center space-y-2">
+                      <div className="w-10 h-10 rounded-full bg-danger-50 flex items-center justify-center mx-auto">
+                        <Shield className="w-5 h-5 text-danger" />
+                      </div>
+                      <p className="text-sm font-medium text-danger">围栏外 · 全部商户已清空</p>
+                      <p className="text-[10px] text-gray-500">TOP5 推荐全部隐藏 · 共拦截 128 家区内商户</p>
+                      <div className="grid grid-cols-3 gap-1 pt-2">
+                        {[1,2,3,4,5].map((n) => (
+                          <div key={n} className="col-span-3 py-1 px-2 rounded bg-gray-100/50 text-[9px] text-gray-400 text-left line-through">
+                            #{n} · （商户已拦截·不可见）
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  ))}
+                  )}
                   <p className="text-[9px] text-gray-400 pt-1 border-t border-gray-200/60">
                     重排规则：haversine距离+热度×0.4+评分×30+围栏准入校验
                   </p>
