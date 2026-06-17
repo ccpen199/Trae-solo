@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Tag, Button, Descriptions, Avatar, List, message, Modal, Form, Input, Rate, Divider, Space } from 'antd';
+import { Card, Tag, Button, Descriptions, Avatar, List, message, Modal, Form, Input, InputNumber, Rate, Space } from 'antd';
 import { 
   UserOutlined, EnvironmentOutlined, CarryOutOutlined, PhoneOutlined,
   PlayCircleOutlined, CheckCircleOutlined, CommentOutlined,
@@ -173,6 +173,41 @@ function MovingOrderDetail() {
         </Descriptions>
       </Card>
 
+      <Card title="搬家履约与风控状态" style={{ marginBottom: 16 }}>
+        <Descriptions column={2} bordered size="small">
+          <Descriptions.Item label="服务包配置">
+            <Tag color={order.service_packages?.length ? 'orange' : 'default'}>{order.service_packages?.length || 0} 个服务包</Tag>
+          </Descriptions.Item>
+          <Descriptions.Item label="打包清单">
+            <Tag color={order.package_list?.length ? 'blue' : 'default'}>{order.package_list?.length || 0} 项物品</Tag>
+          </Descriptions.Item>
+          <Descriptions.Item label="司机与搬运工">
+            <Space wrap>
+              <Tag color={order.driver_id ? 'green' : 'default'}>{order.driver_id ? '已派司机' : '待派司机'}</Tag>
+              <Tag color={order.workers?.length ? 'green' : 'default'}>搬运工 {order.workers?.length || 0} 人</Tag>
+            </Space>
+          </Descriptions.Item>
+          <Descriptions.Item label="GPS 轨迹">
+            <Tag color={(order as any).gps_tracks?.length ? 'green' : 'default'}>
+              {(order as any).gps_tracks?.length || 0} 条定位记录
+            </Tag>
+          </Descriptions.Item>
+          <Descriptions.Item label="完工确认">
+            <Space wrap>
+              <Tag color={(order as any).confirmation?.employer_confirmed ? 'green' : 'default'}>雇主确认</Tag>
+              <Tag color={(order as any).confirmation?.driver_confirmed ? 'green' : 'default'}>司机确认</Tag>
+              <Tag color={(order as any).confirmation?.worker_confirmed ? 'green' : 'default'}>工人确认</Tag>
+            </Space>
+          </Descriptions.Item>
+          <Descriptions.Item label="保险 / 纠纷">
+            <Space wrap>
+              <Tag color={(order as any).insurance_claims?.length ? 'red' : 'green'}>理赔 {(order as any).insurance_claims?.length || 0}</Tag>
+              <Tag color={(order as any).disputes?.length ? 'orange' : 'green'}>纠纷 {(order as any).disputes?.length || 0}</Tag>
+            </Space>
+          </Descriptions.Item>
+        </Descriptions>
+      </Card>
+
       {order.service_packages && order.service_packages.length > 0 && (
         <Card title="服务包" style={{ marginBottom: 16 }} size="small">
           <List
@@ -277,7 +312,7 @@ function MovingOrderDetail() {
           )}
 
           {isEmployer && order.status === 'completed' && (
-            <Button danger icon={ExclamationCircleOutlined} onClick={() => setClaimModalVisible(true)}>
+            <Button danger icon={<ExclamationCircleOutlined />} onClick={() => setClaimModalVisible(true)}>
               申请理赔
             </Button>
           )}

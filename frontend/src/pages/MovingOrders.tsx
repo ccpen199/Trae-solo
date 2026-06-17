@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, List, Tag, Button, Input, Select, Pagination, Avatar, Space } from 'antd';
-import { SearchOutlined, PlusOutlined, UserOutlined, EnvironmentOutlined, CarryOutOutlined } from '@ant-design/icons';
+import { SearchOutlined, PlusOutlined, UserOutlined, EnvironmentOutlined, CarryOutOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import type { MovingOrder } from '../types';
@@ -15,28 +15,24 @@ function MovingOrders() {
   const [pageSize] = useState(10);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState('');
-  const [vehicleType, setVehicleType] = useState<string | undefined>();
   const [status, setStatus] = useState<string | undefined>();
+  const [vehicleType, setVehicleType] = useState<string | undefined>();
   const navigate = useNavigate();
   const { user } = useAuth();
 
   useEffect(() => {
     fetchOrders();
-  }, [page, vehicleType, status]);
+  }, [page, status, keyword, vehicleType]);
 
   const fetchOrders = async () => {
     setLoading(true);
     try {
       const params: any = { page, limit: pageSize };
       if (status) params.status = status;
+      if (vehicleType) params.vehicle_type = vehicleType;
+      if (keyword.trim()) params.keyword = keyword.trim();
       const data: any = await api.get('/moving-orders', { params });
-      let filtered = data.orders;
-      if (keyword) {
-        filtered = filtered.filter((o: MovingOrder) => 
-          o.title.includes(keyword) || (o.description && o.description.includes(keyword))
-        );
-      }
-      setOrders(filtered);
+      setOrders(data.orders || []);
       setTotal(data.total);
     } catch (error) {
       console.error('Failed to fetch orders:', error);
@@ -44,6 +40,8 @@ function MovingOrders() {
       setLoading(false);
     }
   };
+
+  const vehicleTypes = ['厢式货车', '平板货车', '高栏货车', '冷藏车', '自卸车', '其他'];
 
   const getStatusText = (status: string) => {
     const statusMap: Record<string, { text: string; color: string }> = {
@@ -58,6 +56,10 @@ function MovingOrders() {
 
   return (
     <div className="page-container">
+      <div style={{ marginBottom: 16 }}>
+        <h2 style={{ marginBottom: 4 }}>搬家服务搜索结果</h2>
+        <span style={{ color: '#8c8c8c' }}>支持按搬家标题、描述、起终点地址、车型和订单状态筛选。</span>
+      </div>
       <Card style={{ marginBottom: 16 }}>
         <Space size="large" style={{ width: '100%' }} wrap>
           <Input
@@ -65,22 +67,35 @@ function MovingOrders() {
             prefix={<SearchOutlined />}
             style={{ width: 280 }}
             value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
+            onChange={(e) => { setKeyword(e.target.value); setPage(1); }}
             onPressEnter={fetchOrders}
             allowClear
           />
+          <Select
+            placeholder="车型"
+            style={{ width: 150 }}
+            allowClear
+            value={vehicleType}
+            onChange={(value) => { setVehicleType(value); setPage(1); }}
+          >
+            {vehicleTypes.map(type => (
+              <Option key={type} value={type}>{type}</Option>
+            ))}
+          </Select>
           <Select
             placeholder="订单状态"
             style={{ width: 150 }}
             allowClear
             value={status}
-            onChange={setStatus}
+            onChange={(value) => { setStatus(value); setPage(1); }}
           >
+            <Option value={undefined as any}>全部</Option>
             <Option value="pending">待指派</Option>
             <Option value="accepted">已接单</Option>
             <Option value="in_progress">搬家中</Option>
             <Option value="completed">已完成</Option>
           </Select>
+          <Button icon={<ReloadOutlined />} onClick={fetchOrders}>刷新</Button>
           <div style={{ flex: 1, textAlign: 'right' }}>
             {user?.role === 'employer' && (
               <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate('/publish/moving')}>
@@ -88,6 +103,12 @@ function MovingOrders() {
               </Button>
             )}
           </div>
+        </Space>
+        <Space style={{ marginTop: 16 }} wrap>
+          <Tag color="orange">查询结果 {total} 条</Tag>
+          {keyword.trim() && <Tag color="cyan">关键词：{keyword.trim()}</Tag>}
+          {vehicleType && <Tag color="blue">车型：{vehicleType}</Tag>}
+          {status && <Tag color="gold">状态：{getStatusText(status).text}</Tag>}
         </Space>
       </Card>
 
@@ -137,7 +158,16 @@ function MovingOrders() {
             </List.Item>
           );
         }}
-        locale={{ emptyText: '暂无搬家需求' }}
+        locale={{ emptyText: (() => {
+          const filters: string[] = [];
+          if (keyword.trim()) filters.push(`"${keyword.trim()}"`);
+          if (vehicleType) filters.push(`车型"${vehicleType}"`);
+          if (status) filters.push(`状态"${getStatusText(status).text}"`);
+          if (filters.length > 0) {
+            return `暂无匹配${filters.join('、')}的搬家需求`;
+          }
+          return '暂无搬家需求';
+        })() }}
       />
 
       {total > 0 && (

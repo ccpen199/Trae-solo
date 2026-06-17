@@ -50,7 +50,7 @@ router.post('/', authMiddleware, (req: AuthRequest, res: Response) => {
 
 router.get('/', (req: Request, res: Response) => {
   const db = getDB();
-  const { status, page = 1, limit = 20, employer_id } = req.query;
+  const { status, keyword, page = 1, limit = 20, employer_id, vehicle_type } = req.query;
   
   let whereClause = 'WHERE 1=1';
   const params: any[] = [];
@@ -58,6 +58,19 @@ router.get('/', (req: Request, res: Response) => {
   if (status) {
     whereClause += ' AND mo.status = ?';
     params.push(status);
+  }
+  if (vehicle_type) {
+    whereClause += ' AND mo.vehicle_type = ?';
+    params.push(vehicle_type);
+  }
+  if (keyword) {
+    whereClause += ` AND (
+      mo.title LIKE '%' || ? || '%' OR
+      mo.description LIKE '%' || ? || '%' OR
+      mo.from_address LIKE '%' || ? || '%' OR
+      mo.to_address LIKE '%' || ? || '%'
+    )`;
+    params.push(keyword, keyword, keyword, keyword);
   }
   if (employer_id) {
     whereClause += ' AND mo.employer_id = ?';
@@ -69,10 +82,12 @@ router.get('/', (req: Request, res: Response) => {
   const orders = db.prepare(`
     SELECT mo.*, 
            ue.username as employer_name, ue.real_name as employer_real_name, ue.avatar as employer_avatar, ue.phone as employer_phone,
-           ud.username as driver_name, ud.real_name as driver_real_name, ud.avatar as driver_avatar
+           ud.username as driver_name, ud.real_name as driver_real_name, ud.avatar as driver_avatar, ud.phone as driver_phone,
+           dp.vehicle_type as driver_vehicle_type, dp.plate_number, dp.rating as driver_rating, dp.completed_orders as driver_completed_orders
     FROM moving_orders mo
     LEFT JOIN users ue ON mo.employer_id = ue.id
     LEFT JOIN users ud ON mo.driver_id = ud.id
+    LEFT JOIN driver_profiles dp ON mo.driver_id = dp.user_id
     ${whereClause}
     ORDER BY mo.created_at DESC
     LIMIT ? OFFSET ?
@@ -86,7 +101,9 @@ router.get('/', (req: Request, res: Response) => {
   const result = orders.map(o => ({
     ...o,
     package_list: JSON.parse(o.package_list || '[]'),
-    service_packages: JSON.parse(o.service_packages || []),
+    service_packages: JSON.parse(o.service_packages || '[]'),
+    worker_ids: o.worker_ids ? JSON.parse(o.worker_ids) : [],
+    package_type: JSON.parse(o.service_packages || '[]').map((p: any) => p.name).join('+') || '标准服务',
   }));
 
   res.json({ orders: result, total: total.count });
@@ -111,8 +128,9 @@ router.get('/:id', (req: Request, res: Response) => {
   }
 
   order.package_list = JSON.parse(order.package_list || '[]');
-  order.service_packages = JSON.parse(order.service_packages || []);
+  order.service_packages = JSON.parse(order.service_packages || '[]');
   order.worker_ids = order.worker_ids ? JSON.parse(order.worker_ids) : [];
+  order.package_type = order.service_packages.map((p: any) => p.name).join('+') || '标准服务';
 
   if (order.worker_ids && order.worker_ids.length > 0) {
     const placeholders = order.worker_ids.map(() => '?').join(',');
@@ -128,6 +146,10 @@ router.get('/:id', (req: Request, res: Response) => {
       skills: JSON.parse(w.skills || '[]'),
     }));
   }
+  order.confirmation = db.prepare('SELECT * FROM order_confirmations WHERE order_id = ? AND order_type = ?').get(req.params.id, 'moving') || null;
+  order.gps_tracks = db.prepare('SELECT * FROM gps_tracks WHERE order_id = ? AND order_type = ? ORDER BY timestamp DESC LIMIT 10').all(req.params.id, 'moving');
+  order.disputes = db.prepare('SELECT * FROM disputes WHERE order_id = ? AND order_type = ? ORDER BY created_at DESC').all(req.params.id, 'moving');
+  order.insurance_claims = db.prepare('SELECT * FROM insurance_claims WHERE order_id = ? AND order_type = ? ORDER BY created_at DESC').all(req.params.id, 'moving');
 
   res.json(order);
 });

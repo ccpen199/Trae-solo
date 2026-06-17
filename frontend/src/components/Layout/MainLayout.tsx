@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Layout, Menu, Avatar, Dropdown, Badge, Button } from 'antd';
+import React from 'react';
+import { Layout, Menu, Avatar, Dropdown, Badge, Button, Space } from 'antd';
+import type { MenuProps } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   HomeOutlined,
@@ -14,6 +15,7 @@ import {
   FileTextOutlined,
   PlusOutlined,
   SearchOutlined,
+  DownOutlined,
 } from '@ant-design/icons';
 import { useAuth } from '../../context/AuthContext';
 
@@ -23,20 +25,21 @@ function MainLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedKey, setSelectedKey] = useState(location.pathname.split('/')[1] || 'home');
+  const selectedKey = location.pathname.startsWith('/search')
+    ? 'search-filter'
+    : (location.pathname.split('/')[1] || 'home');
 
   const handleMenuClick = (e: { key: string }) => {
-    setSelectedKey(e.key);
     if (e.key === 'home') {
       navigate('/');
     } else if (e.key === 'search-filter') {
-      navigate('/labor');
+      navigate('/search');
     } else {
       navigate(`/${e.key}`);
     }
   };
 
-  const userMenuItems = [
+  const userMenuItems: MenuProps['items'] = [
     {
       key: 'profile',
       icon: <UserOutlined />,
@@ -67,7 +70,28 @@ function MainLayout() {
     },
   ];
 
-  const menuItems = [
+  const publishMenuItems: MenuProps['items'] = [
+    {
+      key: 'publish-labor',
+      icon: <ShopOutlined />,
+      label: '发布用工需求',
+      onClick: () => navigate('/publish/labor'),
+    },
+    {
+      key: 'publish-delivery',
+      icon: <CarOutlined />,
+      label: '发布找车需求',
+      onClick: () => navigate('/publish/delivery'),
+    },
+    {
+      key: 'publish-moving',
+      icon: <CarryOutOutlined />,
+      label: '发布搬家需求',
+      onClick: () => navigate('/publish/moving'),
+    },
+  ];
+
+  const menuItems: MenuProps['items'] = [
     { key: 'home', icon: <HomeOutlined />, label: '首页' },
     { key: 'labor', icon: <ShopOutlined />, label: '用工服务' },
     { key: 'delivery', icon: <CarOutlined />, label: '找车服务' },
@@ -78,7 +102,7 @@ function MainLayout() {
 
   if (user?.role === 'admin') {
     menuItems.splice(menuItems.length - 1, 1, {
-      key: 'admin',
+      key: 'admin-root',
       icon: <DashboardOutlined />,
       label: '管理后台',
       children: [
@@ -129,6 +153,26 @@ function MainLayout() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           {user ? (
             <>
+              {(user.role === 'employer' || user.role === 'admin') && (
+                <Dropdown.Button
+                  menu={{ items: publishMenuItems }}
+                  placement="bottomRight"
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={() => navigate('/publish/labor')}
+                >
+                  快捷发布
+                </Dropdown.Button>
+              )}
+
+              <Button 
+                type="text" 
+                icon={<FileTextOutlined />} 
+                onClick={() => navigate('/my-orders')}
+              >
+                我的订单
+              </Button>
+
               <Badge count={0} size="small">
                 <Button 
                   type="text" 

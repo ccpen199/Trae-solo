@@ -5,8 +5,8 @@ import api from '../api';
 interface AuthContextType {
   user: User | null;
   token: string | null;
-  login: (username: string, password: string) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
+  login: (username: string, password: string) => Promise<any>;
+  register: (data: RegisterData) => Promise<any>;
   logout: () => void;
   updateProfile: (data: any) => Promise<void>;
   loading: boolean;
@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (savedToken && savedUser) {
       setToken(savedToken);
       setUser(JSON.parse(savedUser));
-      fetchProfile();
+      setLoading(false);
     } else {
       setLoading(false);
     }
@@ -47,25 +47,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('user', JSON.stringify(data));
     } catch (error) {
       console.error('Failed to fetch profile:', error);
+      setToken(null);
+      setUser(null);
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     } finally {
       setLoading(false);
     }
   };
 
   const login = async (username: string, password: string) => {
-    const data: any = await api.post('/auth/login', { username, password });
-    setToken(data.token);
-    setUser(data.user);
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
+    try {
+      const data: any = await api.post('/auth/login', { username, password });
+      if (!data.token || !data.user) {
+        throw new Error('登录响应格式错误');
+      }
+      setToken(data.token);
+      setUser(data.user);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+    } catch (error: any) {
+      const errMsg = error.response?.data?.error || error.message || '登录失败';
+      throw new Error(errMsg);
+    }
   };
 
   const register = async (data: RegisterData) => {
-    const result: any = await api.post('/auth/register', data);
-    setToken(result.token);
-    setUser(result.user);
-    localStorage.setItem('token', result.token);
-    localStorage.setItem('user', JSON.stringify(result.user));
+    try {
+      const result: any = await api.post('/auth/register', data);
+      if (!result.token || !result.user) {
+        throw new Error('注册响应格式错误');
+      }
+      setToken(result.token);
+      setUser(result.user);
+      localStorage.setItem('token', result.token);
+      localStorage.setItem('user', JSON.stringify(result.user));
+    } catch (error: any) {
+      const errMsg = error.response?.data?.error || error.message || '注册失败';
+      throw new Error(errMsg);
+    }
   };
 
   const logout = () => {

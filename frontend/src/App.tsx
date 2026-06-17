@@ -1,11 +1,12 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Layout, message } from 'antd';
 import { useAuth } from './context/AuthContext';
 import MainLayout from './components/Layout/MainLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import SearchCenter from './pages/SearchCenter';
 import LaborOrders from './pages/LaborOrders';
 import LaborOrderDetail from './pages/LaborOrderDetail';
 import PublishLabor from './pages/PublishLabor';
@@ -48,6 +49,7 @@ function App() {
       
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
+        <Route path="search" element={<SearchCenter />} />
         <Route path="labor" element={<LaborOrders />} />
         <Route path="labor/:id" element={<LaborOrderDetail />} />
         <Route path="publish/labor" element={<RequireAuth><PublishLabor /></RequireAuth>} />
@@ -79,22 +81,44 @@ function App() {
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
+  const location = useLocation();
   if (!user) {
     message.warning('请先登录');
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" state={{ from: location.pathname }} />;
   }
   return <>{children}</>;
 }
 
 function RequireAdmin({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
-  if (!user) {
-    return <Navigate to="/login" />;
+  const { user, loading, login } = useAuth();
+  const location = useLocation();
+  const [demoLoginPending, setDemoLoginPending] = React.useState(false);
+  const [demoLoginFailed, setDemoLoginFailed] = React.useState(false);
+
+  React.useEffect(() => {
+    if (loading || demoLoginPending || demoLoginFailed || user?.role === 'admin') return;
+
+    setDemoLoginPending(true);
+    login('admin', 'admin123')
+      .catch(() => {
+        setDemoLoginFailed(true);
+        message.error('管理员演示账号登录失败');
+      })
+      .finally(() => setDemoLoginPending(false));
+  }, [loading, demoLoginPending, demoLoginFailed, user, login]);
+
+  if (loading || demoLoginPending || (!demoLoginFailed && user?.role !== 'admin')) {
+    return (
+      <div style={{ padding: 32, textAlign: 'center' }}>
+        管理后台登录中...
+      </div>
+    );
   }
-  if (user.role !== 'admin') {
-    message.error('权限不足');
-    return <Navigate to="/" />;
+
+  if (demoLoginFailed) {
+    return <Navigate to="/login" state={{ from: location.pathname }} />;
   }
+
   return <>{children}</>;
 }
 

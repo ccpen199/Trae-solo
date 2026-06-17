@@ -226,12 +226,32 @@ router.post('/quality-rules', authMiddleware, requireRole('admin'), (req: AuthRe
 router.put('/quality-rules/:id', authMiddleware, requireRole('admin'), (req: AuthRequest, res: Response) => {
   const db = getDB();
   const { name, rule_type, threshold, action, description, enabled } = req.body;
+  const existing = db.prepare('SELECT * FROM quality_rules WHERE id = ?').get(req.params.id) as any;
+
+  if (!existing) {
+    return res.status(404).json({ error: '规则不存在' });
+  }
+
+  const nextName = name ?? existing.name;
+  const nextRuleType = rule_type ?? existing.rule_type;
+
+  if (!nextName || !nextRuleType) {
+    return res.status(400).json({ error: '请填写规则名称和类型' });
+  }
 
   db.prepare(`
     UPDATE quality_rules 
     SET name = ?, rule_type = ?, threshold = ?, action = ?, description = ?, enabled = ?
     WHERE id = ?
-  `).run(name, rule_type, threshold, action, description, enabled ? 1 : 0, req.params.id);
+  `).run(
+    nextName,
+    nextRuleType,
+    threshold ?? existing.threshold ?? 0,
+    action ?? existing.action ?? '',
+    description ?? existing.description ?? '',
+    enabled === undefined ? existing.enabled : (enabled ? 1 : 0),
+    req.params.id
+  );
 
   res.json({ success: true });
 });

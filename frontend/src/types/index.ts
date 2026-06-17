@@ -32,6 +32,7 @@ export interface DriverProfile {
   load_capacity: number;
   vehicle_length: number;
   insurance_verified: number;
+  insurance_certificate_no?: string;
   insurance_expiry?: string;
   completed_orders: number;
   rating: number;
@@ -68,10 +69,21 @@ export interface LaborOrder {
   employer_real_name?: string;
   employer_avatar?: string;
   employer_phone?: string;
+  employer_credit_score?: number;
   worker_name?: string;
   worker_real_name?: string;
   worker_avatar?: string;
   worker_phone?: string;
+  worker_credit_score?: number;
+  worker_rating?: number;
+  worker_completed_orders?: number;
+  hourly_rate?: number;
+  task_rate?: number;
+  skills?: string;
+  confirmation?: any;
+  gps_tracks?: GpsTrack[];
+  disputes?: Dispute[];
+  insurance_claims?: InsuranceClaim[];
 }
 
 export type LaborOrderStatus = 'pending' | 'accepted' | 'in_progress' | 'completed' | 'cancelled' | 'split';
@@ -113,6 +125,12 @@ export interface DeliveryOrder {
   driver_phone?: string;
   vehicle_type?: string;
   plate_number?: string;
+  driver_rating?: number;
+  driver_completed_orders?: number;
+  confirmation?: any;
+  gps_tracks?: GpsTrack[];
+  disputes?: Dispute[];
+  insurance_claims?: InsuranceClaim[];
 }
 
 export type DeliveryOrderStatus = 'bidding' | 'accepted' | 'in_progress' | 'completed' | 'cancelled';
@@ -168,6 +186,14 @@ export interface MovingOrder {
   driver_real_name?: string;
   driver_avatar?: string;
   driver_phone?: string;
+  driver_vehicle_type?: string;
+  plate_number?: string;
+  driver_rating?: number;
+  driver_completed_orders?: number;
+  confirmation?: any;
+  gps_tracks?: GpsTrack[];
+  disputes?: Dispute[];
+  insurance_claims?: InsuranceClaim[];
 }
 
 export type MovingOrderStatus = 'pending' | 'accepted' | 'in_progress' | 'completed' | 'cancelled';

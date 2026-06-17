@@ -40,6 +40,8 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', authRoutes);
+app.use('/api/user', authRoutes);
 app.use('/api/labor-orders', laborRoutes);
 app.use('/api/delivery-orders', deliveryRoutes);
 app.use('/api/moving-orders', movingRoutes);

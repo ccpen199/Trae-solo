@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Card, List, Tag, Button, Input, Select, Pagination, Avatar, Rate, Space } from 'antd';
-import { SearchOutlined, PlusOutlined, UserOutlined, EnvironmentOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { Card, List, Tag, Button, Input, Select, Pagination, Avatar, Space, Typography } from 'antd';
+import { SearchOutlined, PlusOutlined, UserOutlined, EnvironmentOutlined, ClockCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import type { LaborOrder } from '../types';
 import { useAuth } from '../context/AuthContext';
 
 const { Option } = Select;
+const { Text } = Typography;
 
 function LaborOrders() {
   const [orders, setOrders] = useState<LaborOrder[]>([]);
@@ -22,22 +23,17 @@ function LaborOrders() {
 
   useEffect(() => {
     fetchOrders();
-  }, [page, category, status]);
+  }, [page, category, status, keyword]);
 
   const fetchOrders = async () => {
     setLoading(true);
     try {
       const params: any = { page, limit: pageSize };
+      if (keyword.trim()) params.keyword = keyword.trim();
       if (category) params.category = category;
       if (status) params.status = status;
       const data: any = await api.get('/labor-orders', { params });
-      let filteredOrders = data.orders;
-      if (keyword) {
-        filteredOrders = filteredOrders.filter((o: LaborOrder) => 
-          o.title.includes(keyword) || (o.description && o.description.includes(keyword))
-        );
-      }
-      setOrders(filteredOrders);
+      setOrders(data.orders || []);
       setTotal(data.total);
     } catch (error) {
       console.error('Failed to fetch orders:', error);
@@ -64,6 +60,13 @@ function LaborOrders() {
 
   return (
     <div className="page-container">
+      <div style={{ marginBottom: 16 }}>
+        <h2 style={{ marginBottom: 4 }}>搜索结果</h2>
+        <Text type="secondary">
+          搜索框支持按标题、描述、工种、城市和地址查询用工需求，筛选条件会实时同步到后端查询结果。
+        </Text>
+      </div>
+
       <Card style={{ marginBottom: 16 }}>
         <Space size="large" style={{ width: '100%' }} wrap>
           <Input
@@ -71,7 +74,7 @@ function LaborOrders() {
             prefix={<SearchOutlined />}
             style={{ width: 280 }}
             value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
+            onChange={(e) => { setKeyword(e.target.value); setPage(1); }}
             onPressEnter={fetchOrders}
             allowClear
           />
@@ -93,11 +96,13 @@ function LaborOrders() {
             value={status}
             onChange={setStatus}
           >
+            <Option value={undefined as any}>全部</Option>
             <Option value="pending">待接单</Option>
             <Option value="accepted">已接单</Option>
             <Option value="in_progress">进行中</Option>
             <Option value="completed">已完成</Option>
           </Select>
+          <Button icon={<ReloadOutlined />} onClick={fetchOrders}>刷新</Button>
           <div style={{ flex: 1, textAlign: 'right' }}>
             {user?.role === 'employer' && (
               <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate('/publish/labor')}>
@@ -105,6 +110,12 @@ function LaborOrders() {
               </Button>
             )}
           </div>
+        </Space>
+        <Space style={{ marginTop: 16 }} wrap>
+          <Tag color="blue">查询结果 {total} 条</Tag>
+          {keyword.trim() && <Tag color="cyan">关键词：{keyword.trim()}</Tag>}
+          {category && <Tag color="green">工种：{category}</Tag>}
+          {status && <Tag color="orange">状态：{getStatusText(status).text}</Tag>}
         </Space>
       </Card>
 
@@ -156,7 +167,16 @@ function LaborOrders() {
             </List.Item>
           );
         }}
-        locale={{ emptyText: '暂无用工需求' }}
+        locale={{ emptyText: (() => {
+          const filters: string[] = [];
+          if (keyword.trim()) filters.push(`"${keyword.trim()}"`);
+          if (category) filters.push(`工种"${category}"`);
+          if (status) filters.push(`状态"${getStatusText(status).text}"`);
+          if (filters.length > 0) {
+            return `暂无匹配${filters.join('、')}的用工需求`;
+          }
+          return '暂无用工需求';
+        })() }}
       />
 
       {total > 0 && (

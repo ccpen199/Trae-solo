@@ -48,46 +48,56 @@ router.post('/', authMiddleware, (req: AuthRequest, res: Response) => {
 
 router.get('/', (req: Request, res: Response) => {
   const db = getDB();
-  const { vehicle_type, status, page = 1, limit = 20, employer_id, driver_id } = req.query;
+  const { vehicle_type, status, keyword, page = 1, limit = 20, employer_id, driver_id } = req.query;
   
   let whereClause = 'WHERE 1=1';
   const params: any[] = [];
 
   if (vehicle_type) {
-    whereClause += ' AND do.vehicle_type_required = ?';
+    whereClause += ' AND dord.vehicle_type_required = ?';
     params.push(vehicle_type);
   }
   if (status) {
-    whereClause += ' AND do.status = ?';
+    whereClause += ' AND dord.status = ?';
     params.push(status);
   }
+  if (keyword) {
+    whereClause += ` AND (
+      dord.title LIKE '%' || ? || '%' OR
+      dord.description LIKE '%' || ? || '%' OR
+      dord.goods_type LIKE '%' || ? || '%' OR
+      dord.pickup_address LIKE '%' || ? || '%' OR
+      dord.delivery_address LIKE '%' || ? || '%'
+    )`;
+    params.push(keyword, keyword, keyword, keyword, keyword);
+  }
   if (employer_id) {
-    whereClause += ' AND do.employer_id = ?';
+    whereClause += ' AND dord.employer_id = ?';
     params.push(employer_id);
   }
   if (driver_id) {
-    whereClause += ' AND do.driver_id = ?';
+    whereClause += ' AND dord.driver_id = ?';
     params.push(driver_id);
   }
 
   const offset = (Number(page) - 1) * Number(limit);
   
   const orders = db.prepare(`
-    SELECT do.*, 
+    SELECT dord.*, 
            ue.username as employer_name, ue.real_name as employer_real_name, ue.avatar as employer_avatar, ue.phone as employer_phone,
            ud.username as driver_name, ud.real_name as driver_real_name, ud.avatar as driver_avatar, ud.phone as driver_phone,
-           dp.vehicle_type, dp.plate_number
-    FROM delivery_orders do
-    LEFT JOIN users ue ON do.employer_id = ue.id
-    LEFT JOIN users ud ON do.driver_id = ud.id
-    LEFT JOIN driver_profiles dp ON do.driver_id = dp.user_id
+           dp.vehicle_type, dp.plate_number, dp.rating as driver_rating, dp.completed_orders as driver_completed_orders
+    FROM delivery_orders dord
+    LEFT JOIN users ue ON dord.employer_id = ue.id
+    LEFT JOIN users ud ON dord.driver_id = ud.id
+    LEFT JOIN driver_profiles dp ON dord.driver_id = dp.user_id
     ${whereClause}
-    ORDER BY do.created_at DESC
+    ORDER BY dord.created_at DESC
     LIMIT ? OFFSET ?
   `).all(...params, Number(limit), offset) as any[];
 
   const total = db.prepare(`
-    SELECT COUNT(*) as count FROM delivery_orders do
+    SELECT COUNT(*) as count FROM delivery_orders dord
     ${whereClause}
   `).get(...params) as any;
 
@@ -97,15 +107,15 @@ router.get('/', (req: Request, res: Response) => {
 router.get('/:id', (req: Request, res: Response) => {
   const db = getDB();
   const order = db.prepare(`
-    SELECT do.*, 
+    SELECT dord.*, 
            ue.username as employer_name, ue.real_name as employer_real_name, ue.avatar as employer_avatar, ue.phone as employer_phone,
            ud.username as driver_name, ud.real_name as driver_real_name, ud.avatar as driver_avatar, ud.phone as driver_phone,
-           dp.vehicle_type, dp.vehicle_brand, dp.plate_number, dp.load_capacity, dp.rating
-    FROM delivery_orders do
-    LEFT JOIN users ue ON do.employer_id = ue.id
-    LEFT JOIN users ud ON do.driver_id = ud.id
-    LEFT JOIN driver_profiles dp ON do.driver_id = dp.user_id
-    WHERE do.id = ?
+           dp.vehicle_type, dp.vehicle_brand, dp.plate_number, dp.load_capacity, dp.rating, dp.completed_orders, dp.insurance_verified
+    FROM delivery_orders dord
+    LEFT JOIN users ue ON dord.employer_id = ue.id
+    LEFT JOIN users ud ON dord.driver_id = ud.id
+    LEFT JOIN driver_profiles dp ON dord.driver_id = dp.user_id
+    WHERE dord.id = ?
   `).get(req.params.id) as any;
 
   if (!order) {
@@ -123,6 +133,10 @@ router.get('/:id', (req: Request, res: Response) => {
   `).all(req.params.id) as any[];
 
   order.bids = bids;
+  order.confirmation = db.prepare('SELECT * FROM order_confirmations WHERE order_id = ? AND order_type = ?').get(req.params.id, 'delivery') || null;
+  order.gps_tracks = db.prepare('SELECT * FROM gps_tracks WHERE order_id = ? AND order_type = ? ORDER BY timestamp DESC LIMIT 10').all(req.params.id, 'delivery');
+  order.disputes = db.prepare('SELECT * FROM disputes WHERE order_id = ? AND order_type = ? ORDER BY created_at DESC').all(req.params.id, 'delivery');
+  order.insurance_claims = db.prepare('SELECT * FROM insurance_claims WHERE order_id = ? AND order_type = ? ORDER BY created_at DESC').all(req.params.id, 'delivery');
 
   res.json(order);
 });

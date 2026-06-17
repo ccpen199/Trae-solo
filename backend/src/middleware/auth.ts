@@ -10,7 +10,14 @@ export interface AuthRequest extends Request {
 }
 
 export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
-  const token = req.headers.authorization?.replace('Bearer ', '');
+  const authHeader = req.headers.authorization;
+  let token: string | undefined;
+  
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.slice(7);
+  } else if (authHeader) {
+    token = authHeader;
+  }
   
   if (!token) {
     return res.status(401).json({ error: '未提供认证令牌' });

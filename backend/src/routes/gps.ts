@@ -23,6 +23,24 @@ router.post('/', authMiddleware, (req: AuthRequest, res: Response) => {
   res.json({ success: true, track_id: trackId });
 });
 
+router.get('/gps-tracks', authMiddleware, (req: AuthRequest, res: Response) => {
+  const db = getDB();
+  const { order_id, order_type, limit = 100 } = req.query;
+
+  if (!order_id || !order_type) {
+    return res.status(400).json({ error: 'order_id and order_type are required' });
+  }
+
+  const tracks = db.prepare(`
+    SELECT * FROM gps_tracks 
+    WHERE order_id = ? AND order_type = ?
+    ORDER BY timestamp DESC
+    LIMIT ?
+  `).all(order_id, order_type, Number(limit)) as any[];
+
+  res.json({ tracks: tracks.reverse() });
+});
+
 router.get('/:order_id/:order_type', authMiddleware, (req: AuthRequest, res: Response) => {
   const db = getDB();
   const { order_id, order_type } = req.params;

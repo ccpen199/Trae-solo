@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 function Login() {
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,7 +19,8 @@ function Login() {
       const from = (location.state as any)?.from || '/';
       navigate(from, { replace: true });
     } catch (error: any) {
-      message.error(error.response?.data?.error || '登录失败');
+      const errMsg = error.response?.data?.error || error.message || '登录失败';
+      message.error(errMsg);
     } finally {
       setLoading(false);
     }
@@ -42,12 +44,14 @@ function Login() {
             { key: 'employer', label: '雇主登录' },
             { key: 'worker', label: '工人登录' },
             { key: 'driver', label: '司机登录' },
+            { key: 'admin', label: '管理员登录' },
           ]}
           onChange={(key) => {
             const demoAccounts: Record<string, { username: string; password: string }> = {
               employer: { username: 'employer1', password: '123456' },
               worker: { username: 'worker1', password: '123456' },
               driver: { username: 'driver1', password: '123456' },
+              admin: { username: 'admin', password: 'admin123' },
             };
             form.setFieldsValue(demoAccounts[key]);
           }}
@@ -55,6 +59,7 @@ function Login() {
 
         <Form
           name="login"
+          form={form}
           onFinish={onFinish}
           autoComplete="off"
           initialValues={{ username: 'employer1', password: '123456' }}

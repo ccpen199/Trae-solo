@@ -51,7 +51,7 @@ router.post('/', authMiddleware, (req: AuthRequest, res: Response) => {
 
 router.get('/', (req: Request, res: Response) => {
   const db = getDB();
-  const { city, category, status, page = 1, limit = 20, employer_id, worker_id } = req.query;
+  const { city, category, status, keyword, page = 1, limit = 20, employer_id, worker_id } = req.query;
   
   let whereClause = 'WHERE 1=1';
   const params: any[] = [];
@@ -68,6 +68,16 @@ router.get('/', (req: Request, res: Response) => {
     whereClause += ' AND lo.status = ?';
     params.push(status);
   }
+  if (keyword) {
+    whereClause += ` AND (
+      lo.title LIKE '%' || ? || '%' OR
+      lo.description LIKE '%' || ? || '%' OR
+      lo.category LIKE '%' || ? || '%' OR
+      lo.city LIKE '%' || ? || '%' OR
+      lo.address LIKE '%' || ? || '%'
+    )`;
+    params.push(keyword, keyword, keyword, keyword, keyword);
+  }
   if (employer_id) {
     whereClause += ' AND lo.employer_id = ?';
     params.push(employer_id);
@@ -81,11 +91,13 @@ router.get('/', (req: Request, res: Response) => {
   
   const orders = db.prepare(`
     SELECT lo.*, 
-           ue.username as employer_name, ue.real_name as employer_real_name, ue.avatar as employer_avatar, ue.phone as employer_phone,
-           uw.username as worker_name, uw.real_name as worker_real_name, uw.avatar as worker_avatar, uw.phone as worker_phone
+           ue.username as employer_name, ue.real_name as employer_real_name, ue.avatar as employer_avatar, ue.phone as employer_phone, ue.credit_score as employer_credit_score,
+           uw.username as worker_name, uw.real_name as worker_real_name, uw.avatar as worker_avatar, uw.phone as worker_phone, uw.credit_score as worker_credit_score,
+           wp.skills, wp.rating as worker_rating, wp.completed_orders as worker_completed_orders, wp.hourly_rate, wp.task_rate
     FROM labor_orders lo
     LEFT JOIN users ue ON lo.employer_id = ue.id
     LEFT JOIN users uw ON lo.worker_id = uw.id
+    LEFT JOIN worker_profiles wp ON lo.worker_id = wp.user_id
     ${whereClause}
     ORDER BY lo.created_at DESC
     LIMIT ? OFFSET ?
@@ -108,11 +120,13 @@ router.get('/:id', (req: Request, res: Response) => {
   const db = getDB();
   const order = db.prepare(`
     SELECT lo.*, 
-           ue.username as employer_name, ue.real_name as employer_real_name, ue.avatar as employer_avatar, ue.phone as employer_phone,
-           uw.username as worker_name, uw.real_name as worker_real_name, uw.avatar as worker_avatar, uw.phone as worker_phone
+           ue.username as employer_name, ue.real_name as employer_real_name, ue.avatar as employer_avatar, ue.phone as employer_phone, ue.credit_score as employer_credit_score,
+           uw.username as worker_name, uw.real_name as worker_real_name, uw.avatar as worker_avatar, uw.phone as worker_phone, uw.credit_score as worker_credit_score,
+           wp.skills, wp.rating as worker_rating, wp.completed_orders as worker_completed_orders, wp.hourly_rate, wp.task_rate, wp.id_card_verified
     FROM labor_orders lo
     LEFT JOIN users ue ON lo.employer_id = ue.id
     LEFT JOIN users uw ON lo.worker_id = uw.id
+    LEFT JOIN worker_profiles wp ON lo.worker_id = wp.user_id
     WHERE lo.id = ?
   `).get(req.params.id) as any;
 
@@ -135,6 +149,10 @@ router.get('/:id', (req: Request, res: Response) => {
       skills_required: JSON.parse(s.skills_required || '[]'),
     }));
   }
+  order.confirmation = db.prepare('SELECT * FROM order_confirmations WHERE order_id = ? AND order_type = ?').get(req.params.id, 'labor') || null;
+  order.gps_tracks = db.prepare('SELECT * FROM gps_tracks WHERE order_id = ? AND order_type = ? ORDER BY timestamp DESC LIMIT 10').all(req.params.id, 'labor');
+  order.disputes = db.prepare('SELECT * FROM disputes WHERE order_id = ? AND order_type = ? ORDER BY created_at DESC').all(req.params.id, 'labor');
+  order.insurance_claims = db.prepare('SELECT * FROM insurance_claims WHERE order_id = ? AND order_type = ? ORDER BY created_at DESC').all(req.params.id, 'labor');
 
   res.json(order);
 });
@@ -334,5 +352,103 @@ function createNotification(db: any, userId: string, type: string, title: string
     VALUES (?, ?, ?, ?, ?, ?)
   `).run(id, userId, type, title, content, relatedId);
 }
+
+router.get('/:id/bids', authMiddleware, (req: AuthRequest, res: Response) => {
+  const db = getDB();
+  const orderId = req.params.id;
+
+  const bids = db.prepare(`
+    SELECT b.*, 
+           u.username, u.real_name, u.avatar, u.credit_score,
+           wp.skills, wp.rating, wp.hourly_rate, wp.task_rate, wp.completed_orders
+    FROM labor_order_bids b
+    LEFT JOIN users u ON b.worker_id = u.id
+    LEFT JOIN worker_profiles wp ON b.worker_id = wp.user_id
+    WHERE b.order_id = ?
+    ORDER BY b.created_at DESC
+  `).all(orderId) as any[];
+
+  res.json({ bids, total: bids.length });
+});
+
+router.post('/:id/bids', authMiddleware, (req: AuthRequest, res: Response) => {
+  if (req.user!.role !== 'worker') {
+    return res.status(403).json({ error: '只有工人可以接单' });
+  }
+
+  const db = getDB();
+  const orderId = req.params.id;
+  const { message } = req.body;
+
+  const order = db.prepare('SELECT * FROM labor_orders WHERE id = ?').get(orderId) as any;
+  if (!order) {
+    return res.status(404).json({ error: '订单不存在' });
+  }
+  if (order.status !== 'pending') {
+    return res.status(400).json({ error: '该订单已被接单或已关闭' });
+  }
+
+  const existing = db.prepare('SELECT id FROM labor_order_bids WHERE order_id = ? AND worker_id = ?').get(orderId, req.user!.id);
+  if (existing) {
+    return res.status(400).json({ error: '您已对此订单报过价' });
+  }
+
+  const bidId = uuidv4();
+  db.prepare(`
+    INSERT INTO labor_order_bids (id, order_id, worker_id, message, status)
+    VALUES (?, ?, ?, ?, 'pending')
+  `).run(bidId, orderId, req.user!.id, message || '');
+
+  createNotification(db, order.employer_id, 'new_bid', '新的接单申请', 
+    `有工人对您的"${order.title}"订单提出了接单申请`, orderId);
+
+  res.json({ success: true, bid_id: bidId });
+});
+
+router.put('/:id/bids/:bidId', authMiddleware, (req: AuthRequest, res: Response) => {
+  if (req.user!.role !== 'employer') {
+    return res.status(403).json({ error: '只有雇主可以处理接单申请' });
+  }
+
+  const db = getDB();
+  const { id: orderId, bidId } = req.params;
+  const { status } = req.body;
+
+  const order = db.prepare('SELECT * FROM labor_orders WHERE id = ? AND employer_id = ?').get(orderId, req.user!.id) as any;
+  if (!order) {
+    return res.status(404).json({ error: '订单不存在' });
+  }
+  if (order.status !== 'pending') {
+    return res.status(400).json({ error: '订单状态不允许处理' });
+  }
+
+  const bid = db.prepare('SELECT * FROM labor_order_bids WHERE id = ? AND order_id = ?').get(bidId, orderId) as any;
+  if (!bid) {
+    return res.status(404).json({ error: '接单申请不存在' });
+  }
+
+  if (status === 'accepted') {
+    const transaction = db.transaction(() => {
+      db.prepare('UPDATE labor_order_bids SET status = ? WHERE id = ?').run('accepted', bidId);
+      db.prepare('UPDATE labor_order_bids SET status = ? WHERE order_id = ? AND id != ?').run('rejected', orderId, bidId);
+      db.prepare('UPDATE labor_orders SET status = ?, worker_id = ?, accepted_at = datetime(\"now\") WHERE id = ?').run('accepted', bid.worker_id, orderId);
+    });
+    transaction();
+
+    createNotification(db, bid.worker_id, 'bid_accepted', '接单申请已通过', 
+      `您对"${order.title}"的接单申请已被雇主接受`, orderId);
+
+    res.json({ success: true, message: '已接受该工人的申请' });
+  } else if (status === 'rejected') {
+    db.prepare('UPDATE labor_order_bids SET status = ? WHERE id = ?').run('rejected', bidId);
+    
+    createNotification(db, bid.worker_id, 'bid_rejected', '接单申请已拒绝', 
+      `您对"${order.title}"的接单申请未被采纳`, orderId);
+
+    res.json({ success: true, message: '已拒绝该工人的申请' });
+  } else {
+    res.status(400).json({ error: '无效的状态值' });
+  }
+});
 
 export default router;

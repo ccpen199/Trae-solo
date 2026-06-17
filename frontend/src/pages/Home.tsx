@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Statistic, Button, Space, Tag } from 'antd';
+import { Card, Row, Col, Statistic, Button, Space, Tag, Divider } from 'antd';
 import { 
   ShopOutlined, 
   CarOutlined, 
@@ -10,6 +10,9 @@ import {
   ArrowRightOutlined,
   SearchOutlined,
   DashboardOutlined,
+  UserOutlined,
+  FileTextOutlined,
+  GoldOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -52,7 +55,7 @@ function Home() {
     <div>
       <div className="hero-section">
         <h1 className="hero-title">同城用工与物流协同平台</h1>
-        <p className="hero-subtitle">B2B+C2C混合模式 · 用工·找车·搬家一站式服务</p>
+        <p className="hero-subtitle">B2C+C2C混合模式 · 雇主自主出价·工人司机接单·三方确认·保险直连</p>
         <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
           <Button type="primary" size="large" onClick={() => navigate('/labor')}>
             发布用工需求
@@ -108,7 +111,7 @@ function Home() {
           <Col span={12}>
             <Card
               title="搜索筛选中心"
-              extra={<Button type="link" onClick={() => navigate('/labor')}>进入筛选</Button>}
+              extra={<Button type="link" onClick={() => navigate('/search')}>进入筛选</Button>}
             >
               <p style={{ color: '#595959', marginBottom: 12 }}>
                 支持按工种分类、订单状态、关键词搜索筛选同城用工需求，也可切换到找车服务和搬家服务列表继续筛选。
@@ -161,6 +164,94 @@ function Home() {
             </Card>
           </Col>
         </Row>
+
+        {user && (
+          <Card style={{ marginBottom: 40 }} title={
+            <Space>
+              <DashboardOutlined />
+              {user.role === 'employer' ? '雇主工作台' : user.role === 'worker' ? '工人工作台' : user.role === 'driver' ? '司机工作台' : '管理工作台'}
+            </Space>
+          }>
+            <p style={{ color: '#595959', marginBottom: 16 }}>
+              {user.role === 'employer' && '当前雇主账号可直接进入发布需求、找车运货和我的订单，承接发布后的履约、竞价、保险与纠纷状态。'}
+              {user.role === 'worker' && '当前工人账号可查看附近用工需求、接单工作、管理已接订单和查看收入情况。'}
+              {user.role === 'driver' && '当前司机账号可查看货运需求、竞价接单、管理运输订单和查看运输轨迹。'}
+              {user.role === 'admin' && '当前管理员账号可进入管理后台，查看运营数据、处理纠纷、管理用户和配置系统规则。'}
+            </p>
+            <Space wrap>
+              {(user.role === 'employer' || user.role === 'admin') && (
+                <>
+                  <Button type="primary" icon={<ShopOutlined />} onClick={() => navigate('/publish/labor')}>发布用工需求</Button>
+                  <Button icon={<CarOutlined />} onClick={() => navigate('/publish/delivery')}>发布找车需求</Button>
+                  <Button icon={<CarryOutOutlined />} onClick={() => navigate('/publish/moving')}>发布搬家需求</Button>
+                </>
+              )}
+              {user.role === 'worker' && (
+                <>
+                  <Button type="primary" icon={<ShopOutlined />} onClick={() => navigate('/labor')}>查看用工需求</Button>
+                  <Button icon={<FileTextOutlined />} onClick={() => navigate('/my-orders')}>已接订单</Button>
+                </>
+              )}
+              {user.role === 'driver' && (
+                <>
+                  <Button type="primary" icon={<CarOutlined />} onClick={() => navigate('/delivery')}>查看找车需求</Button>
+                  <Button icon={<FileTextOutlined />} onClick={() => navigate('/my-orders')}>运输订单</Button>
+                </>
+              )}
+              {user.role === 'admin' && (
+                <Button type="primary" icon={<DashboardOutlined />} onClick={() => navigate('/admin')}>进入管理后台</Button>
+              )}
+              <Button icon={<FileTextOutlined />} onClick={() => navigate('/my-orders')}>我的订单</Button>
+              <Button icon={<UserOutlined />} onClick={() => navigate('/profile')}>个人中心</Button>
+            </Space>
+            
+            <Divider />
+            
+            <Row gutter={16}>
+              <Col span={6}>
+                <Card size="small">
+                  <Statistic 
+                    title="信用分" 
+                    value={user.credit_score} 
+                    prefix={<GoldOutlined style={{ color: '#faad14' }} />}
+                    valueStyle={{ color: '#faad14' }}
+                  />
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card size="small">
+                  <Statistic 
+                    title="账户余额" 
+                    value={user.balance} 
+                    precision={2}
+                    prefix="¥"
+                    valueStyle={{ color: '#52c41a' }}
+                  />
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card size="small">
+                  <Statistic 
+                    title="完成订单" 
+                    value={(user as any).worker_profile?.completed_orders || (user as any).driver_profile?.completed_orders || 0}
+                    valueStyle={{ color: '#1890ff' }}
+                  />
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card size="small">
+                  <Statistic 
+                    title="综合评分" 
+                    value={(user as any).worker_profile?.rating || (user as any).driver_profile?.rating || 5.0}
+                    precision={1}
+                    prefix={<StarOutlined style={{ color: '#faad14' }} />}
+                    valueStyle={{ color: '#faad14' }}
+                  />
+                </Card>
+              </Col>
+            </Row>
+          </Card>
+        )}
 
         {!user && (
           <Card style={{ textAlign: 'center', background: '#f0f7ff', border: 'none' }}>

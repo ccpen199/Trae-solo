@@ -219,8 +219,8 @@ function PublishMoving() {
                     description={
                       <Space>
                         <span>数量: {item.quantity}</span>
-                        {item.size && <Tag size="small">{item.size}</Tag>}
-                        {item.fragile && <Tag color="red" size="small">易碎</Tag>}
+                        {item.size && <Tag>{item.size}</Tag>}
+                        {item.fragile && <Tag color="red">易碎</Tag>}
                       </Space>
                     }
                   />

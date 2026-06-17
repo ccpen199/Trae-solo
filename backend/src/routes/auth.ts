@@ -120,6 +120,7 @@ router.post('/login', (req: Request, res: Response) => {
         load_capacity: profile.load_capacity,
         vehicle_length: profile.vehicle_length,
         insurance_verified: profile.insurance_verified,
+        insurance_certificate_no: profile.insurance_certificate_no,
         insurance_expiry: profile.insurance_expiry,
         completed_orders: profile.completed_orders,
         rating: profile.rating,
@@ -131,7 +132,7 @@ router.post('/login', (req: Request, res: Response) => {
   res.json({ token, user: userData });
 });
 
-router.get('/profile', authMiddleware, (req: AuthRequest, res: Response) => {
+const getProfile = (req: AuthRequest, res: Response) => {
   const db = getDB();
   const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.user!.id) as any;
   
@@ -177,6 +178,7 @@ router.get('/profile', authMiddleware, (req: AuthRequest, res: Response) => {
         load_capacity: profile.load_capacity,
         vehicle_length: profile.vehicle_length,
         insurance_verified: profile.insurance_verified,
+        insurance_certificate_no: profile.insurance_certificate_no,
         insurance_expiry: profile.insurance_expiry,
         completed_orders: profile.completed_orders,
         rating: profile.rating,
@@ -186,7 +188,10 @@ router.get('/profile', authMiddleware, (req: AuthRequest, res: Response) => {
   }
 
   res.json(userData);
-});
+};
+
+router.get('/profile', authMiddleware, getProfile);
+router.get('/me', authMiddleware, getProfile);
 
 router.put('/profile', authMiddleware, (req: AuthRequest, res: Response) => {
   const db = getDB();
@@ -230,19 +235,23 @@ router.put('/driver-profile', authMiddleware, (req: AuthRequest, res: Response) 
   }
 
   const db = getDB();
-  const { vehicle_type, vehicle_brand, plate_number, load_capacity, vehicle_length, bio } = req.body;
+  const { vehicle_type, vehicle_brand, plate_number, load_capacity, vehicle_length, bio, insurance_verified, insurance_certificate_no } = req.body;
 
+  const existing = db.prepare('SELECT * FROM driver_profiles WHERE user_id = ?').get(req.user!.id) as any;
+  
   db.prepare(`
     UPDATE driver_profiles 
-    SET vehicle_type = ?, vehicle_brand = ?, plate_number = ?, load_capacity = ?, vehicle_length = ?, bio = ?
+    SET vehicle_type = ?, vehicle_brand = ?, plate_number = ?, load_capacity = ?, vehicle_length = ?, bio = ?, insurance_verified = ?, insurance_certificate_no = ?
     WHERE user_id = ?
   `).run(
-    vehicle_type || '厢式货车',
-    vehicle_brand || '',
-    plate_number || '',
-    load_capacity || 1,
-    vehicle_length || 4.2,
-    bio || '',
+    vehicle_type || existing?.vehicle_type || '厢式货车',
+    vehicle_brand || existing?.vehicle_brand || '',
+    plate_number || existing?.plate_number || '',
+    load_capacity || existing?.load_capacity || 1,
+    vehicle_length || existing?.vehicle_length || 4.2,
+    bio || existing?.bio || '',
+    insurance_verified !== undefined ? insurance_verified : existing?.insurance_verified || 1,
+    insurance_certificate_no || existing?.insurance_certificate_no || '',
     req.user!.id
   );
 
