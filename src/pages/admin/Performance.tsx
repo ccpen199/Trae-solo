@@ -4,10 +4,10 @@ import {
   Progress, List, Avatar, Tooltip, Divider, Empty, Badge, Steps, Timeline, Modal, Popover, Tabs,
 } from 'antd';
 import {
-  BarChart3, TrendingUp, Clock, XCircle, Filter, RefreshCw, ArrowUp, ArrowDown,
+  BarChart3, TrendingUp, Clock, XCircle, Filter, RefreshCw, ArrowUp, ArrowDown, ArrowRight,
   Trophy, FileWarning, GitBranch, FileCheck2, ShieldAlert, FileKey, FileSearch,
   Network, AlertTriangle, CheckCircle2, Database, Zap, FileText, Users, Info,
-  Bell, Eye, Send,
+  Bell, Eye, Send, HandPlatter, Bot, CreditCard,
 } from 'lucide-react';
 import * as echarts from 'echarts';
 import dayjs from 'dayjs';
@@ -103,6 +103,13 @@ const REJECTION_CLUSTER_INSIGHTS = [
     suggestion: '更新办事指南 + AI材料预检',
     relatedModule: null as string | null,
     relatedAction: null as string | null,
+    recheckData: {
+      totalCases: 234,
+      items: [
+        { serviceName: '公积金提取（购房）', cases: 128, completionRateBefore: 68, completionRateAfter: 92, avgTimeBefore: 5.2, avgTimeAfter: 2.8 },
+        { serviceName: '社保关系跨省转移', cases: 106, completionRateBefore: 72, completionRateAfter: 94, avgTimeBefore: 7.1, avgTimeAfter: 3.5 },
+      ],
+    },
   },
   {
     level: 'medium',
@@ -112,6 +119,12 @@ const REJECTION_CLUSTER_INSIGHTS = [
     suggestion: '政策规则引擎紧急校准',
     relatedModule: 'policy' as const,
     relatedAction: '前往政策引擎校准规则参数',
+    recheckData: {
+      totalCases: 18,
+      items: [
+        { serviceName: '涉农补贴自动匹配', cases: 18, completionRateBefore: 0, completionRateAfter: 100, avgTimeBefore: 0, avgTimeAfter: 0.5 },
+      ],
+    },
   },
   {
     level: 'medium',
@@ -121,6 +134,13 @@ const REJECTION_CLUSTER_INSIGHTS = [
     suggestion: '切换证照缓存容灾通道',
     relatedModule: 'disaster' as const,
     relatedAction: '前往容灾中心切换缓存通道',
+    recheckData: {
+      totalCases: 156,
+      items: [
+        { serviceName: '户籍类事项（跨省）', cases: 97, completionRateBefore: 56, completionRateAfter: 91, avgTimeBefore: 8.3, avgTimeAfter: 3.2 },
+        { serviceName: '新生儿出生登记', cases: 59, completionRateBefore: 62, completionRateAfter: 95, avgTimeBefore: 6.5, avgTimeAfter: 2.4 },
+      ],
+    },
   },
   {
     level: 'low',
@@ -130,6 +150,12 @@ const REJECTION_CLUSTER_INSIGHTS = [
     suggestion: '增加格式校验 + 企业信息回填',
     relatedModule: null as string | null,
     relatedAction: null as string | null,
+    recheckData: {
+      totalCases: 91,
+      items: [
+        { serviceName: '企业开办（公司设立）', cases: 91, completionRateBefore: 81, completionRateAfter: 97, avgTimeBefore: 3.2, avgTimeAfter: 1.1 },
+      ],
+    },
   },
 ];
 
@@ -140,6 +166,27 @@ const DISPOSAL_RECORDS = [
     detail: '涉农补贴匹配规则已同步至最新版本，18件误退申请已自动重新受理',
     handler: '政策适配中心-赵工程师',
     time: '2026-06-16 11:30',
+    status: 'verified' as const,
+    beforeMetrics: { matchRate: 82.3, errorCount: 18, affectedItems: '涉农补贴、稳岗返还、育儿津贴' },
+    afterMetrics: { matchRate: 97.8, errorCount: 0, affectedItems: '全部3项补贴规则已校准' },
+    verificationEvidence: [
+      { label: '规则版本', before: 'v2.1.3（过期）', after: 'v2.3.1（最新）' },
+      { label: '参数差异', before: '收入阈值8000元', after: '收入阈值12000元' },
+      { label: '18件重新受理', before: '误退状态', after: '已自动重新受理，其中15件已办结' },
+      { label: '校准确认人', before: '-', after: '政策适配中心-赵工程师 + 农业农村厅-周科长' },
+    ],
+    verificationData: {
+      ruleName: '涉农补贴-年龄阈值校准',
+      beforeValue: 'age<=30 触发补贴',
+      afterValue: 'age<=35 触发补贴',
+      affectedCountBefore: 18,
+      affectedCountAfter: 0,
+      passRateBefore: 72,
+      passRateAfter: 98,
+      reAcceptedCount: 18,
+      verifier: '省大数据中心-李审计',
+      verifyTime: '2026-06-16 15:20',
+    },
   },
   {
     module: 'disaster' as const,
@@ -147,6 +194,27 @@ const DISPOSAL_RECORDS = [
     detail: '民政部门证照库接口已切换至缓存通道，结婚证/出生证调用成功率恢复至98.5%',
     handler: '容灾中心-孙运维',
     time: '2026-06-16 10:45',
+    status: 'verified' as const,
+    beforeMetrics: { callSuccessRate: 76.0, avgResponseTime: 8500, failCount: 113 },
+    afterMetrics: { callSuccessRate: 98.5, avgResponseTime: 230, failCount: 3 },
+    verificationEvidence: [
+      { label: '接口通道', before: '民政证照库直连（故障）', after: '容灾缓存通道（正常）' },
+      { label: '结婚证调用', before: '成功率68.2%', after: '成功率99.1%' },
+      { label: '出生证调用', before: '超时率31.8%', after: '超时率0.4%' },
+      { label: '切换确认人', before: '-', after: '容灾中心-孙运维 + 电子证照中心-钱工程师' },
+    ],
+    verificationData: {
+      ruleName: '民政证照库-缓存通道切换',
+      beforeValue: '主通道（接口超时率24%）',
+      afterValue: '缓存容灾通道（超时率1.5%）',
+      affectedCountBefore: 2156,
+      affectedCountAfter: 138,
+      passRateBefore: 76,
+      passRateAfter: 98.5,
+      reAcceptedCount: 156,
+      verifier: '容灾中心-周总监',
+      verifyTime: '2026-06-16 14:10',
+    },
   },
   {
     module: 'cert' as const,
@@ -154,6 +222,27 @@ const DISPOSAL_RECORDS = [
     detail: '卫健系统凌晨维护窗口后证照接口已恢复，出生证调用超时问题已解决',
     handler: '电子证照中心-钱工程师',
     time: '2026-06-16 06:15',
+    status: 'accepted' as const,
+    beforeMetrics: { certCallSuccess: 89.3, timeoutCount: 47, affectedDepts: '公安厅、卫健委、民政局' },
+    afterMetrics: { certCallSuccess: 98.8, timeoutCount: 2, affectedDepts: '全部恢复正常' },
+    verificationEvidence: [
+      { label: '维护窗口', before: '01:00-06:00（接口不可用）', after: '06:15接口已恢复并验证' },
+      { label: '出生证调用', before: '凌晨超时47次', after: '恢复后超时2次（正常范围）' },
+      { label: '缓存一致性', before: '缓存过期', after: '已重新同步最新证照数据' },
+      { label: '修复确认人', before: '-', after: '电子证照中心-钱工程师 + 卫健委-王工程师' },
+    ],
+    verificationData: {
+      ruleName: '卫健证照接口-重启恢复',
+      beforeValue: '服务不可用（超时100%）',
+      afterValue: '服务恢复正常（超时率<0.1%）',
+      affectedCountBefore: 43,
+      affectedCountAfter: 0,
+      passRateBefore: 0,
+      passRateAfter: 99.9,
+      reAcceptedCount: 43,
+      verifier: '待确认',
+      verifyTime: '-',
+    },
   },
 ];
 
@@ -164,13 +253,22 @@ const HANDLING_CHAINS = [
     citizen: '李某某',
     applyTime: '2026-06-15 09:32:18',
     status: 'processing',
-    currentStep: 3,
+    currentStep: 6,
     steps: [
-      { title: '群众提交', time: '06-15 09:32', dept: '掌上办事APP', status: 'done', desc: '在线提交出生医学证明+父母身份证' },
-      { title: '卫健证照核验', time: '06-15 09:35', dept: '卫生健康委员会', status: 'done', desc: '调用电子证照库：出生医学证明核验通过' },
-      { title: '公安户口登记', time: '06-15 09:41', dept: '公安厅', status: 'processing', desc: '正在办理出生登记，预计2小时内完成' },
-      { title: '人社社保参保', time: '待处理', dept: '人力资源和社会保障厅', status: 'pending', desc: '少儿医保自动参保登记' },
-      { title: '民政补贴推送', time: '待处理', dept: '民政局', status: 'pending', desc: '育儿补贴政策自动匹配+发放' },
+      { title: '群众提交', time: '06-15 09:32', dept: '掌上办事APP', status: 'done', desc: '在线提交出生医学证明+父母身份证，AI自动回填新生儿信息' },
+      { title: '卫健证照核验', time: '06-15 09:35', dept: '卫生健康委员会', status: 'done', desc: '调用电子证照库：出生医学证明核验通过，签发人：王医师' },
+      { title: '公安户口登记', time: '06-15 09:41', dept: '公安厅', status: 'done', desc: '出生登记办理完成，户口登记地：朝阳区xxx派出所，登记人：张民警' },
+      { title: '户口簿制发', time: '06-15 10:15', dept: '公安厅', status: 'done', desc: '电子户口簿已生成并推送至电子证照中心，家长可在"我的证照"查看' },
+      { title: '医保参保登记', time: '06-15 10:45', dept: '人力资源和社会保障厅', status: 'done', desc: '少儿医保自动参保完成，参保档：一档，医保号已关联身份证号' },
+      { title: '社保卡申领', time: '06-15 11:20', dept: '人力资源和社会保障厅', status: 'processing', desc: '社保卡已制发中，预计2个工作日邮寄至预留地址，短信推送至家长手机' },
+      { title: '民政补贴推送', time: '待处理', dept: '民政局', status: 'pending', desc: '育儿补贴政策自动匹配：一次性育儿津贴3000元+每月500元连续发放至3岁' },
+    ],
+    pushNotifications: [
+      { channel: 'APP站内信', time: '06-15 09:36', content: '出生医学证明核验通过，已进入公安登记环节', status: 'sent' },
+      { channel: '手机短信', time: '06-15 10:16', content: '【政务中台】李某某户口登记已完成，电子户口簿已生成', status: 'sent' },
+      { channel: '手机短信', time: '06-15 10:46', content: '【政务中台】医保参保登记完成，医保号关联至新生儿身份证', status: 'sent' },
+      { channel: '邮件通知', time: '06-15 11:21', content: '社保卡申领进度通知：已制发中，2工作日邮寄送达', status: 'sent' },
+      { channel: '人工电话', time: '-', content: '育儿补贴发放确认（待民政审核后触发）', status: 'pending' },
     ],
   },
   {
@@ -181,11 +279,19 @@ const HANDLING_CHAINS = [
     status: 'warning',
     currentStep: 2,
     steps: [
-      { title: '企业提交', time: '06-15 14:09', dept: '政务服务网', status: 'done', desc: '提交工商注册+税务登记+银行开户' },
-      { title: '市监工商登记', time: '06-15 14:12', dept: '市场监督管理局', status: 'warning', desc: '经营地址需补充材料，已通过短信+站内信推送补正通知' },
-      { title: '税务税务登记', time: '待补正', dept: '税务局', status: 'pending', desc: '等待市监证照同步后自动登记' },
-      { title: '银行开户预约', time: '待处理', dept: '建设银行', status: 'pending', desc: '预约对公账户开户' },
-      { title: '社保公积金开户', time: '待处理', dept: '人力资源和社会保障厅', status: 'pending', desc: '企业社保账户自动开立' },
+      { title: '企业提交', time: '06-15 14:09', dept: '政务服务网', status: 'done', desc: '提交工商注册+税务登记+银行开户+社保开户，AI预检表单并自动回填23项信息' },
+      { title: '市监工商登记', time: '06-15 14:12', dept: '市场监督管理局', status: 'warning', desc: '经营地址需补充材料（房屋租赁合同第3页缺失），已通过短信+站内信推送补正通知，补正期限7天' },
+      { title: '税务税务登记', time: '待补正', dept: '税务局', status: 'pending', desc: '等待市监证照同步后自动登记，增值税纳税人类型预判定为小规模纳税人' },
+      { title: '银行开户预约', time: '待补正', dept: '建设银行', status: 'pending', desc: '预约对公账户开户（建行朝阳支行），预约号：YH20260615-8821，法定代表人面签时间待确认' },
+      { title: '社保公积金开户', time: '待补正', dept: '人力资源和社会保障厅', status: 'pending', desc: '企业社保账户+公积金账户自动开立，首月缴费基数已按最低档预填' },
+      { title: '印章刻制备案', time: '待补正', dept: '公安局', status: 'pending', desc: '公章、财务章、法人章刻制备案，已匹配本地正规刻章机构（立等可取）' },
+      { title: '发票票种核定', time: '待补正', dept: '税务局', status: 'pending', desc: '增值税普通发票票种核定，首次申领份数25份，开票限额10万元版' },
+    ],
+    pushNotifications: [
+      { channel: 'APP站内信', time: '06-15 14:10', content: '企业开办申请已提交，市监部门正在审核中', status: 'sent' },
+      { channel: '手机短信', time: '06-15 14:13', content: '【政务中台】经营地址材料需补正，请于7天内补充房屋租赁合同第3页', status: 'sent' },
+      { channel: '邮件通知', time: '06-15 14:13', content: '补正材料清单及操作指引已发送至法定代表人邮箱', status: 'sent' },
+      { channel: '人工电话', time: '-', content: '超期提醒（2天后触发）', status: 'pending' },
     ],
   },
   {
@@ -194,16 +300,61 @@ const HANDLING_CHAINS = [
     citizen: '张某某',
     applyTime: '2026-06-14 16:45:02',
     status: 'done',
-    currentStep: 5,
+    currentStep: 7,
     steps: [
-      { title: '迁入申请', time: '06-14 16:45', dept: '掌上办事APP', status: 'done', desc: '跨省户口迁移申请，选择京津冀通办通道' },
-      { title: '迁入地受理', time: '06-14 17:02', dept: '公安厅（北京）', status: 'done', desc: '受理通过，调用跨省协同接口通知迁出地' },
-      { title: '迁出地核验', time: '06-15 08:31', dept: '公安厅（河北）', status: 'done', desc: '户籍信息核验通过，电子证照调阅完成' },
-      { title: '公安户口核准', time: '06-15 10:18', dept: '公安厅', status: 'done', desc: '户口迁出核准完成' },
-      { title: '证照同步更新', time: '06-15 11:05', dept: '多部门同步', status: 'done', desc: '身份证、居住证、社保等信息已联动更新' },
+      { title: '迁入申请', time: '06-14 16:45', dept: '掌上办事APP', status: 'done', desc: '跨省户口迁移申请，选择京津冀通办通道，AI智能匹配迁移政策并预填8项信息' },
+      { title: '迁入地受理', time: '06-14 17:02', dept: '公安厅（北京）', status: 'done', desc: '受理通过，调用跨省协同接口通知迁出地，电子材料已传至河北公安系统' },
+      { title: '迁出地核验', time: '06-15 08:31', dept: '公安厅（河北）', status: 'done', desc: '户籍信息核验通过，电子证照调阅完成（身份证、户口簿、结婚证），迁出地所长已签字确认' },
+      { title: '公安户口核准', time: '06-15 10:18', dept: '公安厅（北京）', status: 'done', desc: '户口迁入核准完成，朝阳区xxx派出所为登记地，户籍警：刘警官' },
+      { title: '户口簿制发', time: '06-15 10:45', dept: '公安厅（北京）', status: 'done', desc: '新户口簿已制作完成，电子户口簿同步推送至电子证照中心，可在"我的证照"查看' },
+      { title: '证照同步更新', time: '06-15 11:05', dept: '多部门同步', status: 'done', desc: '身份证信息、居住证、社保、医保、公积金、不动产登记等12项信息已联动更新' },
+      { title: '通知送达闭环', time: '06-15 11:20', dept: '统一消息中心', status: 'done', desc: '全流程办结通知已通过APP站内信+短信+邮件推送，办理满意度调查已发送' },
+    ],
+    pushNotifications: [
+      { channel: 'APP站内信', time: '06-14 17:03', content: '您的跨省户口迁移申请已被北京公安受理，已通知河北迁出地', status: 'sent' },
+      { channel: '手机短信', time: '06-15 08:32', content: '【政务中台】河北公安已完成户籍信息核验，迁入核准进行中', status: 'sent' },
+      { channel: '手机短信', time: '06-15 10:46', content: '【政务中台】恭喜！您的户口迁移已完成，电子户口簿已生成', status: 'sent' },
+      { channel: '邮件通知', time: '06-15 11:21', content: '京津冀通办全流程办结报告及电子证照已发送至您的邮箱', status: 'sent' },
     ],
   },
 ];
+
+const REJECTION_BREAKDOWN = Array.from({ length: 50 }, (_, i) => {
+  const services = ['公积金提取', '社保转移', '新生儿登记', '企业开办', '户口迁移', '不动产登记', '涉农补贴', '居住证办理', '身份证换领', '营业执照变更'];
+  const depts = ['住房和城乡建设厅', '人力资源和社会保障厅', '公安厅', '市场监督管理局', '自然资源厅', '农业农村厅', '卫生健康委员会'];
+  const reasons = ['材料不齐全', '政策适配异常', '证照互认失败', '填写信息错误', '不符合条件'];
+  const reacceptStatus = ['已重新受理', '补正中', '待处理', '已办结'];
+  const applicants = ['王某某', '李某某', '张某某', '赵某某', '刘某某', '陈某某', '杨某某', '黄某某', '周某某', '吴某某', '郑某某', '孙某某'];
+  const svc = services[i % services.length];
+  const dpt = depts[i % depts.length];
+  const reason = reasons[i % reasons.length];
+  const status = reacceptStatus[i % reacceptStatus.length];
+  const countMap: Record<string, number> = { '材料不齐全': 234, '政策适配异常': 18, '证照互认失败': 156, '填写信息错误': 67, '不符合条件': 24 };
+
+  return {
+    key: String(i + 1),
+    rejectNo: `RJ2026-${String(3847 + i).padStart(5, '0')}`,
+    serviceName: svc,
+    applicant: applicants[i % applicants.length],
+    department: dpt,
+    rejectReason: reason,
+    reasonCategory: reason,
+    totalCategory: countMap[reason] || 0,
+    correctionRequired: reason === '材料不齐全' ? [
+      { name: '购房合同原件', detail: '模糊需重新上传' },
+      { name: '首付款发票', detail: '收据不合法需正式发票' },
+    ] : reason === '政策适配异常' ? [
+      { name: '政策规则参数', detail: '年龄阈值校准' },
+    ] : reason === '证照互认失败' ? [
+      { name: '电子结婚证', detail: '民政接口超时需重试' },
+    ] : [],
+    reacceptStatus: status,
+    timeBefore: Math.floor(Math.random() * 8 + 2),
+    timeAfter: status === '已办结' ? Math.floor(Math.random() * 3 + 0.5) : status === '已重新受理' ? Math.floor(Math.random() * 2 + 1) : '-',
+    reacceptedAt: status === '已办结' || status === '已重新受理' ? `06-${10 + (i % 6)} ${String(8 + (i % 10)).padStart(2, '0')}:${String(12 + (i % 40)).padStart(2, '0')}` : '-',
+    impactCompletion: (Math.random() * 15 + 3).toFixed(1),
+  };
+});
 
 const MATERIAL_CORRECTION_CASES = [
   {
@@ -1336,6 +1487,27 @@ export default function Performance() {
           </Col>
         </Row>
 
+        <Card className="shadow-card mb-6" size="small" bodyStyle={{padding: '12px 16px'}}>
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-orange-500" />
+              <span className="text-sm font-medium text-gov-gray-700">异常处置快速导航</span>
+              <Tag color="orange" className="m-0 text-[10px]">5模块联动</Tag>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <Button type="link" size="small" className="text-xs" icon={<HandPlatter className="w-3 h-3" />} onClick={() => window.open('/services', '_blank')}>掌上办事</Button>
+              <Button type="link" size="small" className="text-xs" icon={<Bot className="w-3 h-3" />} onClick={() => window.open('/guide', '_blank')}>智能导办</Button>
+              <Button type="link" size="small" className="text-xs" icon={<CreditCard className="w-3 h-3" />} onClick={() => window.open('/certificates', '_blank')}>电子证照</Button>
+              <Button type="link" size="small" className="text-xs" icon={<FileSearch className="w-3 h-3" />} onClick={() => window.open('/admin/policy', '_blank')}>
+                <span className="flex items-center gap-1">政策引擎 <Badge count={1} size="small" color="red" /></span>
+              </Button>
+              <Button type="link" size="small" className="text-xs" icon={<ShieldAlert className="w-3 h-3" />} onClick={() => window.open('/admin/disaster-recovery', '_blank')}>
+                <span className="flex items-center gap-1">容灾中心 <Badge count={1} size="small" color="orange" /></span>
+              </Button>
+            </div>
+          </div>
+        </Card>
+
         <Row gutter={[12, 12]} className="mb-6">
           <Col xs={24} xl={12}>
             <Card
@@ -1437,24 +1609,53 @@ export default function Performance() {
                       {item.relatedModule && (
                         <div className="flex-1 min-w-[200px]">
                           <span className="text-xs text-gov-gray-500 mb-1.5 block">关联处置</span>
-                          <Button
-                            type="link"
-                            size="small"
-                            className="p-0 text-xs"
-                            icon={
-                              item.relatedModule === 'policy' ? <FileSearch className="w-3.5 h-3.5" /> :
-                              <ShieldAlert className="w-3.5 h-3.5" />
-                            }
-                            onClick={() => {
-                              if (item.relatedModule === 'policy') {
-                                window.open('/admin/policy', '_blank');
-                              } else if (item.relatedModule === 'disaster') {
-                                window.open('/admin/disaster-recovery', '_blank');
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <Button
+                              type="link"
+                              size="small"
+                              className="p-0 text-xs"
+                              icon={
+                                item.relatedModule === 'policy' ? <FileSearch className="w-3.5 h-3.5" /> :
+                                item.relatedModule === 'disaster' ? <ShieldAlert className="w-3.5 h-3.5" /> :
+                                <FileKey className="w-3.5 h-3.5" />
                               }
-                            }}
-                          >
-                            {item.relatedAction}
-                          </Button>
+                              onClick={() => {
+                                if (item.relatedModule === 'policy') {
+                                  window.open('/admin/policy', '_blank');
+                                } else if (item.relatedModule === 'disaster') {
+                                  window.open('/admin/disaster-recovery', '_blank');
+                                }
+                              }}
+                            >
+                              {item.relatedAction}
+                            </Button>
+                            <Tag color="green" className="m-0 text-[10px]">处置已回写</Tag>
+                          </div>
+                        </div>
+                      )}
+                      {!item.relatedModule && (
+                        <div className="flex-1 min-w-[200px]">
+                          <span className="text-xs text-gov-gray-500 mb-1.5 block">处置状态</span>
+                          <Tag color="blue" className="m-0 text-xs">监测持续跟踪中</Tag>
+                        </div>
+                      )}
+                      {item.recheckData && (
+                        <div className="flex-1 min-w-[240px]">
+                          <span className="text-xs text-gov-gray-500 mb-1.5 block">复验凭据</span>
+                          <div className="space-y-1">
+                            {item.recheckData.items.map((ri: any, idx: number) => (
+                              <div key={idx} className="text-[11px] bg-gov-gray-50 rounded px-2 py-1.5">
+                                <div className="flex items-center justify-between gap-2 mb-0.5">
+                                  <span className="text-gov-gray-700 font-medium">{ri.serviceName}</span>
+                                  <Tag color="blue" className="m-0 text-[9px]">{ri.cases}件</Tag>
+                                </div>
+                                <div className="flex items-center gap-2 text-[10px] text-gov-gray-500">
+                                  <span>办结率: <span className="text-red-500">{ri.completionRateBefore}%</span> → <span className="text-green-600 font-medium">{ri.completionRateAfter}%</span></span>
+                                  <span>耗时: {ri.avgTimeBefore}天 → {ri.avgTimeAfter}天</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -1467,26 +1668,211 @@ export default function Performance() {
           <div className="flex items-center gap-2 mb-3">
             <FileCheck2 className="w-4 h-4 text-green-600" />
             <span className="font-medium text-sm text-gov-gray-700">处置复查记录</span>
-            <Tag color="green" className="m-0 text-xs">3条已处置</Tag>
+            <Tag color="green" className="m-0 text-xs">{DISPOSAL_RECORDS.length}条已处置</Tag>
+            <span className="text-[11px] text-gov-gray-400 ml-2">含校准前后对比指标</span>
           </div>
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             {DISPOSAL_RECORDS.map((r, i) => (
-              <div key={i} className="flex items-start gap-3 p-3 bg-green-50/50 rounded-lg border border-green-100">
-                <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <span className="text-xs font-medium text-gov-gray-700">{r.action}</span>
-                    <Tag color={r.module === 'policy' ? 'purple' : r.module === 'disaster' ? 'orange' : 'blue'} className="m-0 text-[10px]">
-                      {r.module === 'policy' ? '政策引擎' : r.module === 'disaster' ? '容灾中心' : '电子证照'}
-                    </Tag>
-                    <Tag color="green" className="m-0 text-[10px]">已处置</Tag>
+              <div key={i} className="bg-green-50/30 rounded-xl border border-green-100 overflow-hidden">
+                <div className="p-3 flex items-start gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="text-xs font-medium text-gov-gray-700">{r.action}</span>
+                      <Tag color={r.module === 'policy' ? 'purple' : r.module === 'disaster' ? 'orange' : 'blue'} className="m-0 text-[10px]">
+                        {r.module === 'policy' ? '政策引擎' : r.module === 'disaster' ? '容灾中心' : '电子证照'}
+                      </Tag>
+                      <Tag color="green" className="m-0 text-[10px]">已处置</Tag>
+                    </div>
+                    <div className="text-[11px] text-gov-gray-500">{r.detail}</div>
+                    <div className="text-[10px] text-gov-gray-400 mt-1">处置人：{r.handler} · {r.time}</div>
+                    {r.verificationData && (
+                      <div className="mt-2 p-2.5 bg-white rounded border border-green-200">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-1.5">
+                            <Zap className="w-3 h-3 text-blue-600" />
+                            <span className="text-[11px] font-medium text-gov-gray-700">复验对比指标</span>
+                          </div>
+                          <Tag color={r.status === 'verified' ? 'green' : 'orange'} className="m-0 text-[9px]">
+                            {r.status === 'verified' ? '✓ 已验收' : '待验收'}
+                          </Tag>
+                        </div>
+                        <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[10px]">
+                          <div className="flex items-center justify-between">
+                            <span className="text-gov-gray-500">校准前:</span>
+                            <span className="text-red-500 font-medium">{r.verificationData.beforeValue}</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-gov-gray-500">校准后:</span>
+                            <span className="text-green-600 font-medium">{r.verificationData.afterValue}</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-gov-gray-500">异常件数:</span>
+                            <span className="text-gov-gray-700">{r.verificationData.affectedCountBefore} → {r.verificationData.affectedCountAfter}</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-gov-gray-500">通过率:</span>
+                            <span className="text-gov-gray-700">{r.verificationData.passRateBefore}% → <span className="text-green-600">{r.verificationData.passRateAfter}%</span></span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-gov-gray-500">重受理:</span>
+                            <span className="text-blue-600 font-medium">{r.verificationData.reAcceptedCount}件</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-gov-gray-500">审计:</span>
+                            <span className="text-gov-gray-700">{r.verificationData.verifier} · {r.verificationData.verifyTime}</span>
+                          </div>
+                        </div>
+                        {r.status !== 'verified' && (
+                          <div className="mt-2 flex items-center gap-2">
+                            <Button type="primary" size="small" className="h-6 text-[10px] px-2">确认验收并回写状态</Button>
+                            <Button size="small" className="h-6 text-[10px] px-2">查看处置台账</Button>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <div className="text-[11px] text-gov-gray-500">{r.detail}</div>
-                  <div className="text-[10px] text-gov-gray-400 mt-1">处置人：{r.handler} · {r.time}</div>
+                </div>
+                <div className="border-t border-green-100 px-3 py-2.5 bg-white/50">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <BarChart3 className="w-3.5 h-3.5 text-green-600" />
+                    <span className="text-[11px] font-medium text-gov-gray-700">处置前后对比</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 mb-2">
+                    {Object.entries(r.beforeMetrics).map(([key, beforeVal]) => {
+                      const afterVal = r.afterMetrics[key as keyof typeof r.afterMetrics];
+                      return (
+                        <div key={key} className="bg-white rounded-lg p-2 border border-gov-gray-100">
+                          <div className="text-[10px] text-gov-gray-400 mb-0.5">
+                            {key === 'matchRate' ? '匹配率' : key === 'errorCount' ? '误退件数' : key === 'affectedItems' ? '影响事项' :
+                             key === 'callSuccessRate' ? '调用成功率' : key === 'avgResponseTime' ? '平均响应(ms)' : key === 'failCount' ? '失败次数' :
+                             key === 'certCallSuccess' ? '证照调用成功率' : key === 'timeoutCount' ? '超时次数' : key === 'affectedDepts' ? '影响部门' : key}
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[11px] text-red-500 line-through">{String(beforeVal)}</span>
+                            <ArrowRight className="w-3 h-3 text-green-500" />
+                            <span className="text-[11px] text-green-600 font-medium">{String(afterVal)}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="space-y-1">
+                    {r.verificationEvidence.map((e, j) => (
+                      <div key={j} className="flex items-center gap-2 text-[10px]">
+                        <span className="text-gov-gray-500 w-20 flex-shrink-0">{e.label}</span>
+                        <span className="text-red-400">{e.before}</span>
+                        <ArrowRight className="w-3 h-3 text-green-500" />
+                        <span className="text-green-600 font-medium">{e.after}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
+        </Card>
+
+        <Card
+          className="shadow-card mb-6"
+          size="small"
+          title={
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-2">
+                <XCircle className="w-5 h-5 text-red-500" />
+                <span className="font-semibold">全量退件拆解表（499件）</span>
+              </div>
+              <div className="flex items-center gap-3 flex-wrap">
+                <Tag color="red" className="m-0 text-xs">材料不齐 234</Tag>
+                <Tag color="purple" className="m-0 text-xs">政策异常 18</Tag>
+                <Tag color="orange" className="m-0 text-xs">证照失败 156</Tag>
+                <Tag color="blue" className="m-0 text-xs">信息错误 67</Tag>
+                <Tag color="gray" className="m-0 text-xs">不符合 24</Tag>
+              </div>
+            </div>
+          }
+          extra={
+            <div className="flex items-center gap-3 text-[11px]">
+              <span className="text-gov-gray-500">汇总：</span>
+              <span className="text-green-600 font-medium">已重受理287件</span>
+              <span className="text-orange-500 font-medium">补正中176件</span>
+              <span className="text-gov-gray-400 font-medium">待处理36件</span>
+              <Tag color="green" className="m-0 text-[10px]">办结率 68.2%→94.7%↑</Tag>
+              <Tag color="blue" className="m-0 text-[10px]">平均耗时 5.8→2.1天↓</Tag>
+            </div>
+          }
+        >
+          <Table
+            dataSource={REJECTION_BREAKDOWN}
+            size="small"
+            scroll={{ x: 1800 }}
+            pagination={{ pageSize: 8, showTotal: (total: number) => `共 ${total}/499 条退件记录 · 支持业务复核` }}
+            columns={[
+              { title: '退件编号', dataIndex: 'rejectNo', key: 'rejectNo', width: 140, render: (v: string) => <span className="text-xs font-mono text-red-600">{v}</span> },
+              { title: '事项名称', dataIndex: 'serviceName', key: 'serviceName', width: 140, render: (v: string) => <span className="text-xs font-medium text-gov-gray-700">{v}</span> },
+              { title: '申请人', dataIndex: 'applicant', key: 'applicant', width: 80, render: (v: string) => <span className="text-xs text-gov-gray-600">{v}</span> },
+              { title: '责任部门', dataIndex: 'department', key: 'department', width: 150, render: (v: string) => <Tag color="geekblue" className="m-0 text-xs">{v}</Tag> },
+              { title: '退件原因', dataIndex: 'rejectReason', key: 'rejectReason', width: 110, render: (v: string) => {
+                const cm: Record<string, string> = { '材料不齐全': 'red', '政策适配异常': 'purple', '证照互认失败': 'orange', '填写信息错误': 'blue', '不符合条件': 'default' };
+                return <Tag color={cm[v] || 'default'} className="m-0 text-xs">{v}</Tag>;
+              }},
+              {
+                title: '材料补正要求', dataIndex: 'correctionRequired', key: 'correctionRequired', width: 220,
+                render: (items: any[]) => items.length > 0 ? (
+                  <Popover content={
+                    <div className="space-y-1.5" style={{maxWidth:260}}>
+                      {items.map((it: any, idx: number) => (
+                        <div key={idx} className="text-[11px]">
+                          <span className="text-orange-600 font-medium mr-1.5">○</span>
+                          <span className="text-gov-gray-700">{it.name}</span>
+                          <span className="text-gov-gray-400 ml-1">— {it.detail}</span>
+                        </div>
+                      ))}
+                    </div>
+                  } title="补正要求">
+                    <span className="text-xs cursor-pointer text-orange-600 underline">{items.length}项需补</span>
+                  </Popover>
+                ) : <span className="text-[11px] text-green-600">无需补正</span>,
+              },
+              {
+                title: '重新受理状态', dataIndex: 'reacceptStatus', key: 'reacceptStatus', width: 100,
+                render: (v: string) => {
+                  const cm: Record<string, string> = { '已办结': 'green', '已重新受理': 'blue', '补正中': 'orange', '待处理': 'default' };
+                  return <Tag color={cm[v]} className="m-0 text-xs">{v}</Tag>;
+                },
+              },
+              {
+                title: '原耗时', dataIndex: 'timeBefore', key: 'timeBefore', width: 70,
+                render: (v: number) => <span className="text-xs text-red-500">{v}天</span>,
+              },
+              {
+                title: '补正后耗时', dataIndex: 'timeAfter', key: 'timeAfter', width: 90,
+                render: (v: any) => <span className={`text-xs font-medium ${v !== '-' ? 'text-green-600' : 'text-gov-gray-400'}`}>{v === '-' ? v : `${v}天`}</span>,
+              },
+              {
+                title: '重新受理时间', dataIndex: 'reacceptedAt', key: 'reacceptedAt', width: 120, render: (v: string) => <span className="text-[11px] text-gov-gray-500">{v}</span>,
+              },
+              {
+                title: '办结率影响', dataIndex: 'impactCompletion', key: 'impactCompletion', width: 90,
+                render: (v: string) => (
+                  <div>
+                    <div className="text-xs text-gov-gray-700 mb-0.5">-{v}%</div>
+                    <Progress percent={Math.floor(100 - parseFloat(v))} size="small" showInfo={false} strokeColor="#00B42A" />
+                  </div>
+                ),
+              },
+              {
+                title: '操作', key: 'action', width: 160, fixed: 'right' as const,
+                render: () => (
+                  <Space size="small">
+                    <Button type="link" size="small" className="text-[10px] p-0">查看退件单</Button>
+                    <Button type="link" size="small" className="text-[10px] p-0">重新受理</Button>
+                    <Button type="link" size="small" className="text-[10px] p-0">复核确认</Button>
+                  </Space>
+                ),
+              },
+            ]}
+          />
         </Card>
 
         <Row gutter={[12, 12]} className="mb-6">
@@ -1549,6 +1935,26 @@ export default function Performance() {
                       }))}
                     />
                   </div>
+                  {chain.pushNotifications && chain.pushNotifications.length > 0 && (
+                    <div className="mt-3 pt-3 border-t border-dashed border-gov-gray-200">
+                      <div className="flex items-center gap-1.5 mb-2">
+                        <Bell className="w-3.5 h-3.5 text-blue-600" />
+                        <span className="text-[11px] font-medium text-gov-gray-600">进度推送记录（{chain.pushNotifications.length}条）</span>
+                      </div>
+                      <div className="grid grid-cols-1 gap-1">
+                        {chain.pushNotifications.map((pn: any, pi: number) => (
+                          <div key={pi} className="flex items-center gap-2 text-[10px]">
+                            <Tag color={pn.status === 'sent' ? 'green' : 'orange'} className="m-0 text-[9px]" style={{fontSize:'9px'}}>
+                              {pn.status === 'sent' ? '已推送' : '待推送'}
+                            </Tag>
+                            <span className="text-gov-gray-500 w-16">{pn.channel}</span>
+                            <span className="text-gov-gray-400 w-20 flex-shrink-0">{pn.time}</span>
+                            <span className="text-gov-gray-600 flex-1 truncate">{pn.content}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
               <style>{`
