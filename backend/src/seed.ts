@@ -243,7 +243,89 @@ export function seed() {
         orderId,
         formatDate(new Date(now - rand(3600) * 1000))
       );
+
+      if (i % 8 === 0) {
+        insNotif.run(
+          1,
+          i >= 110 ? 'complaint' : (status === 'exception' ? 'exception' : 'system'),
+          status === 'exception' ? '异常地址预警' : (i >= 110 ? '投诉预警' : '系统通知'),
+          '运单 ' + trackNo + ' 需要管理员关注',
+          orderId,
+          formatDate(new Date(now - rand(3600) * 1000))
+        );
+      }
     }
+  }
+
+  const updateApiAppCalls = db.prepare(`UPDATE api_applications SET total_calls = ?, today_calls = ? WHERE app_key = ?`);
+  updateApiAppCalls.run(12850, 342, 'ERP_DEMO_001');
+  updateApiAppCalls.run(8920, 218, 'ERP_DEMO_002');
+  updateApiAppCalls.run(5160, 127, 'ERP_DEMO_003');
+
+  const apiLogCount = db.prepare('SELECT COUNT(*) as c FROM api_call_logs').get() as any;
+  if (apiLogCount.c === 0) {
+    const appIds = db.prepare('SELECT id, app_key FROM api_applications WHERE app_key IN (?, ?, ?)').all('ERP_DEMO_001', 'ERP_DEMO_002', 'ERP_DEMO_003') as { id: number; app_key: string }[];
+    const apiPaths = [
+      '/open/brands',
+      '/open/brand-quality',
+      '/open/orders/create',
+      '/open/orders/query',
+      '/open/orders/track',
+      '/open/orders/cancel',
+      '/open/address/validate',
+      '/open/price/calculate',
+    ];
+    const methods = ['GET', 'POST'];
+    const ipPool = [
+      '192.168.1.100',
+      '10.0.0.55',
+      '172.16.0.23',
+      '203.0.113.42',
+      '198.51.100.88',
+    ];
+
+    const insLog = db.prepare(`INSERT INTO api_call_logs (app_id, api_path, method, response_status, response_time, ip, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const totalLogs = 105;
+    const days = 14;
+    const logsPerDay = Math.ceil(totalLogs / days);
+
+    const insertMany = db.transaction(() => {
+      for (let d = 0; d < days; d++) {
+        const dayDate = new Date(today);
+        dayDate.setDate(today.getDate() - (days - 1 - d));
+        const logsThisDay = d === days - 1 ? totalLogs - (days - 1) * logsPerDay : logsPerDay;
+
+        for (let i = 0; i < logsThisDay; i++) {
+          const app = appIds[(d * logsPerDay + i) % appIds.length];
+          const apiPath = pick(apiPaths);
+          const method = apiPath.includes('create') || apiPath.includes('cancel') ? 'POST' : pick(methods);
+          const isError = Math.random() < 0.08;
+          const responseStatus = isError ? (Math.random() < 0.5 ? 500 : 503) : 200;
+          const responseTime = 30 + Math.floor(Math.random() * 771);
+          const ip = pick(ipPool);
+          const hour = 8 + Math.floor(Math.random() * 12);
+          const minute = Math.floor(Math.random() * 60);
+          const second = Math.floor(Math.random() * 60);
+          const createdAt = new Date(dayDate);
+          createdAt.setHours(hour, minute, second, 0);
+
+          insLog.run(
+            app.id,
+            apiPath,
+            method,
+            responseStatus,
+            responseTime,
+            ip,
+            formatDate(createdAt)
+          );
+        }
+      }
+    });
+
+    insertMany();
   }
 
   console.log('Seed completed successfully!');

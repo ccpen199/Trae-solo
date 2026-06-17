@@ -561,14 +561,16 @@ export default function Dashboard() {
           {(realtime.abnormal_addresses || []).slice(0, 6).map((a: any, i: number) => {
             const abnormalType = getAbnormalType(a);
             const abnormalColor = getAbnormalTypeColor(abnormalType);
-            const isReviewed = !!a.reviewed_at;
+            const isReviewed = !!a.reviewed_at || a.review_status === 'reviewed_normal' || a.review_status === 'corrected' || a.review_status === 'confirmed_abnormal';
             const reviewStatus = a.review_status;
+            const isResolved = reviewStatus === 'reviewed_normal' || reviewStatus === 'corrected';
+            const isConfirmedAbnormal = reviewStatus === 'confirmed_abnormal';
             return (
               <Col xs={24} md={12} lg={8} key={a.id || i}>
                 <div style={{
                   padding: 14,
-                  border: isReviewed ? '1px solid #faad14' : '1px solid #ffa39e',
-                  background: isReviewed ? '#fffbe6' : '#fff1f0',
+                  border: isResolved ? '1px solid #52c41a' : isReviewed ? '1px solid #faad14' : '1px solid #ffa39e',
+                  background: isResolved ? '#f6ffed' : isReviewed ? '#fffbe6' : '#fff1f0',
                   borderRadius: 8,
                   position: 'relative'
                 }}>
@@ -581,7 +583,17 @@ export default function Dashboard() {
                       <Tag color="error" style={{ background: abnormalColor + '15', color: abnormalColor, borderColor: abnormalColor + '40' }}>
                         ⚠️ {abnormalType}
                       </Tag>
-                      {isReviewed && (
+                      {isResolved && (
+                        <Tag color="success" style={{ marginLeft: 4 }}>
+                          ✅ 复核通过·已解除拦截
+                        </Tag>
+                      )}
+                      {isConfirmedAbnormal && (
+                        <Tag color="warning" style={{ marginLeft: 4 }}>
+                          ⚠️ 已确认异常
+                        </Tag>
+                      )}
+                      {isReviewed && !isResolved && !isConfirmedAbnormal && (
                         <Tag color="warning" style={{ marginLeft: 4 }}>
                           已复核
                         </Tag>
@@ -597,7 +609,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div style={{ fontSize: 11, color: '#8c8c8c', marginBottom: 12 }}>
-                    当前状态：<Tag>{a.status}</Tag>
+                    当前状态：<Tag color={isResolved ? 'green' : isConfirmedAbnormal ? 'red' : 'default'}>{isResolved ? '已恢复派送' : isConfirmedAbnormal ? '异常待处理' : a.status}</Tag>
                     {a.reviewed_at && (
                       <span style={{ marginLeft: 8 }}>
                         复核时间：{dayjs(a.reviewed_at).format('MM-DD HH:mm')}
@@ -605,10 +617,15 @@ export default function Dashboard() {
                     )}
                     {a.reviewed_by && (
                       <span style={{ marginLeft: 8 }}>
-                        复核人：{a.reviewed_by}
+                        处理人：{a.reviewed_by}
                       </span>
                     )}
                   </div>
+                  {a.review_note && (
+                    <div style={{ fontSize: 12, color: '#595959', background: isResolved ? '#f6ffed' : '#fff7e6', padding: '6px 10px', borderRadius: 4, marginBottom: 12, borderLeft: `3px solid ${isResolved ? '#52c41a' : '#faad14'}` }}>
+                      📋 复核结论：{a.review_note}
+                    </div>
+                  )}
                   <Space wrap size="small">
                     <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => handleDirectReview(a, 'confirm_normal')}>
                       地址正常

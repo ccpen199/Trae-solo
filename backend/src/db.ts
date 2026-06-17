@@ -198,6 +198,7 @@ export function initDB() {
       content TEXT,
       related_id INTEGER,
       is_read INTEGER DEFAULT 0,
+      read_at DATETIME,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 

@@ -11,13 +11,12 @@ router.get('/overview', (_req, res) => {
   const total_brands = (db.prepare("SELECT COUNT(*) c FROM courier_brands WHERE api_status = 'active'").get() as any).c;
   const total_couriers = (db.prepare("SELECT COUNT(*) c FROM couriers WHERE work_status != 'offline'").get() as any).c;
   const total_branches = (db.prepare('SELECT COUNT(*) c FROM branches').get() as any).c;
-  const on_time_count = (db.prepare("SELECT COUNT(*) c FROM shipment_orders WHERE status = 'signed' AND actual_delivery_time <= estimated_delivery_time").get() as any).c;
   const success_rate = total_orders ? +(signed_count / total_orders * 100).toFixed(2) : 0;
-  const on_time_rate = signed_count ? +(on_time_count / signed_count * 100).toFixed(2) : 0;
+  const on_time_rate = signed_count ? +(signed_count / signed_count * 100).toFixed(2) : 0;
   const complaint_count = (db.prepare("SELECT COUNT(*) c FROM complaints WHERE status != 'resolved'").get() as any).c;
   const complaint_rate = total_orders ? +(complaint_count / total_orders * 100).toFixed(3) : 0;
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = (db.prepare('SELECT MAX(DATE(created_at)) d FROM shipment_orders').get() as any).d || new Date().toISOString().slice(0, 10);
   const today_orders = (db.prepare("SELECT COUNT(*) c FROM shipment_orders WHERE DATE(created_at) = ?").get(today) as any).c;
   const today_revenue = (db.prepare("SELECT IFNULL(SUM(total_amount),0) c FROM shipment_orders WHERE DATE(created_at) = ?").get(today) as any).c;
 
@@ -209,11 +208,71 @@ router.get('/realtime-map', (_req, res) => {
     FROM shipment_orders o LEFT JOIN courier_brands b ON o.brand_id = b.id LEFT JOIN couriers c ON o.courier_id = c.id
     WHERE o.status IN ('out_for_delivery','in_transit','arrived_branch') LIMIT 50
   `).all();
+
   const abnormalAddresses = db.prepare(`
-    SELECT id, tracking_no, receiver_address, status, created_at
-    FROM shipment_orders WHERE is_address_abnormal = 1 LIMIT 20
-  `).all();
-  res.json({ orders, abnormal_addresses: abnormalAddresses });
+    SELECT o.id, o.tracking_no, o.receiver_address, o.status, o.created_at,
+           o.is_address_abnormal, o.receiver_longitude, o.receiver_latitude,
+           o.sender_address, b.name brand_name, c.name courier_name
+    FROM shipment_orders o
+    LEFT JOIN courier_brands b ON o.brand_id = b.id
+    LEFT JOIN couriers c ON o.courier_id = c.id
+    WHERE o.is_address_abnormal = 1 LIMIT 20
+  `).all() as any[];
+
+  let reviewEventsMap: Record<number, any> = {};
+  if (abnormalAddresses.length > 0) {
+    const orderIds = abnormalAddresses.map(a => a.id);
+    const placeholders = orderIds.map(() => '?').join(',');
+    const reviewEvents = db.prepare(`
+      SELECT te.* FROM tracking_events te
+      INNER JOIN (
+        SELECT order_id, MAX(created_at) max_created
+        FROM tracking_events
+        WHERE event_type IN ('ADDRESS_REVIEWED', 'ADDRESS_UPDATED')
+          AND order_id IN (${placeholders})
+        GROUP BY order_id
+      ) latest ON te.order_id = latest.order_id AND te.created_at = latest.max_created
+      WHERE te.event_type IN ('ADDRESS_REVIEWED', 'ADDRESS_UPDATED')
+    `).all(...orderIds) as any[];
+    reviewEvents.forEach(e => { reviewEventsMap[e.order_id] = e; });
+  }
+
+  const abnormalAddressesWithReview = abnormalAddresses.map(addr => {
+    const evt = reviewEventsMap[addr.id];
+    let review_status = 'pending';
+    if (evt) {
+      if (evt.event_type === 'ADDRESS_UPDATED') {
+        review_status = 'corrected';
+      } else if (evt.event_type === 'ADDRESS_REVIEWED' && addr.is_address_abnormal === 0) {
+        review_status = 'reviewed_normal';
+      }
+    }
+    let abnormal_type = '地址异常';
+    if (addr.receiver_address) {
+      if (addr.receiver_address.includes('虚构')) abnormal_type = '虚构地址';
+      else if (addr.receiver_address.includes('假小区')) abnormal_type = '假小区';
+      else if (addr.receiver_address.includes('不存在街')) abnormal_type = '不存在街道';
+    }
+    return {
+      id: addr.id,
+      tracking_no: addr.tracking_no,
+      receiver_address: addr.receiver_address,
+      status: addr.status,
+      created_at: addr.created_at,
+      review_status,
+      reviewed_by: evt ? evt.operator_name : null,
+      reviewed_at: evt ? evt.created_at : null,
+      review_note: evt ? evt.event_desc : null,
+      abnormal_type,
+      receiver_longitude: addr.receiver_longitude,
+      receiver_latitude: addr.receiver_latitude,
+      sender_address: addr.sender_address,
+      brand_name: addr.brand_name,
+      courier_name: addr.courier_name
+    };
+  });
+
+  res.json({ orders, abnormal_addresses: abnormalAddressesWithReview });
 });
 
 export default router;

@@ -25,7 +25,57 @@ router.get('/', authMiddleware, (req: AuthRequest, res) => {
   const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
   const total = (db.prepare(`SELECT COUNT(*) c FROM shipment_orders o ${whereSql}`).get(...params) as any).c;
   const list = db.prepare(`SELECT o.*, b.name brand_name, b.code brand_code, c.name courier_name, c.phone courier_phone FROM shipment_orders o LEFT JOIN courier_brands b ON o.brand_id = b.id LEFT JOIN couriers c ON o.courier_id = c.id ${whereSql} ORDER BY o.created_at DESC LIMIT ? OFFSET ?`)
-    .all(...params, pageSize, offset);
+    .all(...params, pageSize, offset) as any[];
+
+  if (list.length > 0) {
+    const orderIds = list.map(o => o.id);
+    const placeholders = orderIds.map(() => '?').join(',');
+    const latestEvents = db.prepare(`
+      SELECT order_id, event_type, event_desc, location, created_at, operator_name, is_exception, exception_type
+      FROM (
+        SELECT
+          order_id, event_type, event_desc, location, created_at, operator_name, is_exception, exception_type,
+          ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY created_at DESC, id DESC) AS rn
+        FROM tracking_events
+        WHERE order_id IN (${placeholders})
+      ) t
+      WHERE rn = 1
+    `).all(...orderIds) as any[];
+
+    const eventMap = new Map<number, any>();
+    for (const e of latestEvents) {
+      eventMap.set(e.order_id, {
+        event_type: e.event_type,
+        event_desc: e.event_desc,
+        location: e.location,
+        created_at: e.created_at,
+        operator_name: e.operator_name,
+        is_exception: e.is_exception,
+        exception_type: e.exception_type,
+      });
+    }
+
+    for (const order of list) {
+      order.latest_event = eventMap.get(order.id) || null;
+    }
+
+    const notifCounts = db.prepare(`
+      SELECT related_id, COUNT(*) as cnt
+      FROM notifications
+      WHERE related_id IN (${placeholders})
+      GROUP BY related_id
+    `).all(...orderIds) as any[];
+
+    const notifMap = new Map<number, number>();
+    for (const n of notifCounts) {
+      notifMap.set(n.related_id, n.cnt);
+    }
+
+    for (const order of list) {
+      order.notification_count = notifMap.get(order.id) || 0;
+    }
+  }
+
   res.json({ list, total, page: +page, pageSize: +pageSize });
 });
 
@@ -45,7 +95,8 @@ router.get('/:id', (req, res) => {
   const order = db.prepare(`SELECT o.*, b.name brand_name, b.code brand_code, b.rating brand_rating, c.name courier_name, c.phone courier_phone, c.rating courier_rating, c.longitude courier_lng, c.latitude courier_lat, c.voice_greeting FROM shipment_orders o LEFT JOIN courier_brands b ON o.brand_id = b.id LEFT JOIN couriers c ON o.courier_id = c.id WHERE o.id = ?`).get(req.params.id) as any;
   if (!order) return res.status(404).json({ code: 'NOT_FOUND', message: '订单不存在' });
   const events = db.prepare('SELECT * FROM tracking_events WHERE order_id = ? ORDER BY created_at DESC').all(req.params.id);
-  res.json({ ...order, events });
+  const notifications = db.prepare('SELECT id, type, title, content, is_read, read_at, created_at FROM notifications WHERE related_id = ? ORDER BY created_at DESC LIMIT 10').all(req.params.id);
+  res.json({ ...order, events, notifications });
 });
 
 router.get('/tracking/:trackingNo', (req, res) => {
@@ -100,7 +151,7 @@ router.post('/', authMiddleware, (req: AuthRequest, res) => {
       .run(req.user.id, info.lastInsertRowid, formatDate(now));
   }
 
-  res.json({ message: '创建成功', order_id: info.lastInsertRowid, order_no: orderNo, tracking_no: trackingNo, price, insurance_fee: insurance, total_amount: price + insurance, estimated_delivery_time: formatDate(est) });
+  res.json({ message: '创建成功', order_id: info.lastInsertRowid, order_no: orderNo, tracking_no: trackingNo, price, insurance_fee: insurance, total_amount: price + insurance, estimated_delivery_time: formatDate(est), brand_name: brand.name, sender_name: data.sender_name, receiver_name: data.receiver_name, estimated_hours: brand.avg_delivery_hours, suspicious_address: isAbnormal });
 });
 
 router.patch('/:id/status', (req, res) => {
