@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Search, Filter, Grid3X3, HeartHandshake, UserCircle, Stethoscope, Building2, Store, Heart, Receipt, ChevronLeft, ChevronRight, Flame, Clock, Globe } from 'lucide-react';
+import { Search, Filter, Grid3X3, HeartHandshake, UserCircle, Stethoscope, Building2, Store, Heart, Receipt, ChevronLeft, ChevronRight, Flame, Clock, Globe, Shield, UserCheck, Camera, PenLine, CreditCard } from 'lucide-react';
 import { ServiceCard } from '../components/common';
 import { mockServices, serviceCategories } from '../mock/data';
 import type { ServiceItem } from '../shared/types';
@@ -232,6 +232,20 @@ export default function Services() {
               第 {(currentPage - 1) * PAGE_SIZE + 1} - {Math.min(currentPage * PAGE_SIZE, filteredServices.length)} 项
             </p>
           )}
+        </div>
+
+        <div className="mb-4 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100 flex items-center gap-4 flex-wrap">
+          <div className="flex items-center gap-2">
+            <Shield className="w-4 h-4 text-blue-600" />
+            <span className="text-sm font-medium text-blue-700">智能预检</span>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap text-xs text-gov-gray-600">
+            <span className="flex items-center gap-1"><UserCheck className="w-3.5 h-3.5 text-green-600" />表单自动预填</span>
+            <span className="flex items-center gap-1"><Camera className="w-3.5 h-3.5 text-purple-600" />OCR材料识别</span>
+            <span className="flex items-center gap-1"><PenLine className="w-3.5 h-3.5 text-orange-600" />电子签名签署</span>
+            <span className="flex items-center gap-1"><CreditCard className="w-3.5 h-3.5 text-indigo-600" />电子证照免交</span>
+          </div>
+          <span className="text-[11px] text-blue-500 ml-auto">点击事项查看预检详情 →</span>
         </div>
 
         {paginatedServices.length > 0 ? (

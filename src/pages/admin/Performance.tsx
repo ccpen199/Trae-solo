@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import {
   Card, Table, Tag, Select, DatePicker, Button, Space, Statistic, Row, Col,
-  Progress, List, Avatar, Tooltip, Divider, Empty, Badge, Steps, Timeline, Modal,
+  Progress, List, Avatar, Tooltip, Divider, Empty, Badge, Steps, Timeline, Modal, Popover, Tabs,
 } from 'antd';
 import {
   BarChart3, TrendingUp, Clock, XCircle, Filter, RefreshCw, ArrowUp, ArrowDown,
@@ -101,6 +101,8 @@ const REJECTION_CLUSTER_INSIGHTS = [
     desc: '住建、人社部门近7天"材料缺失"退件环比上升23%，集中在公积金提取、社保转移事项，建议更新办事指南并增加AI预填引导。',
     affected: ['住房和城乡建设厅', '人力资源和社会保障厅'],
     suggestion: '更新办事指南 + AI材料预检',
+    relatedModule: null as string | null,
+    relatedAction: null as string | null,
   },
   {
     level: 'medium',
@@ -108,6 +110,8 @@ const REJECTION_CLUSTER_INSIGHTS = [
     desc: '农业农村厅涉农补贴事项因政策规则引擎参数未同步，导致18件符合条件申请被误退，已通知政策适配中心紧急校准。',
     affected: ['农业农村厅'],
     suggestion: '政策规则引擎紧急校准',
+    relatedModule: 'policy' as const,
+    relatedAction: '前往政策引擎校准规则参数',
   },
   {
     level: 'medium',
@@ -115,6 +119,8 @@ const REJECTION_CLUSTER_INSIGHTS = [
     desc: '公安厅户籍类事项调用电子结婚证、电子出生证成功率仅76%，卫健、民政部门证照库接口偶发超时，需通知容灾中心切换缓存。',
     affected: ['公安厅', '卫生健康委员会', '民政局'],
     suggestion: '切换证照缓存容灾通道',
+    relatedModule: 'disaster' as const,
+    relatedAction: '前往容灾中心切换缓存通道',
   },
   {
     level: 'low',
@@ -122,6 +128,32 @@ const REJECTION_CLUSTER_INSIGHTS = [
     desc: '市监、税务部门企业开办事项"统一社会信用代码"填写错误率约3.2%，建议增加格式自动校验和企业信息自动回填。',
     affected: ['市场监督管理局', '税务局'],
     suggestion: '增加格式校验 + 企业信息回填',
+    relatedModule: null as string | null,
+    relatedAction: null as string | null,
+  },
+];
+
+const DISPOSAL_RECORDS = [
+  {
+    module: 'policy' as const,
+    action: '政策规则引擎参数已校准',
+    detail: '涉农补贴匹配规则已同步至最新版本，18件误退申请已自动重新受理',
+    handler: '政策适配中心-赵工程师',
+    time: '2026-06-16 11:30',
+  },
+  {
+    module: 'disaster' as const,
+    action: '证照缓存容灾通道已切换',
+    detail: '民政部门证照库接口已切换至缓存通道，结婚证/出生证调用成功率恢复至98.5%',
+    handler: '容灾中心-孙运维',
+    time: '2026-06-16 10:45',
+  },
+  {
+    module: 'cert' as const,
+    action: '电子证照互认接口已修复',
+    detail: '卫健系统凌晨维护窗口后证照接口已恢复，出生证调用超时问题已解决',
+    handler: '电子证照中心-钱工程师',
+    time: '2026-06-16 06:15',
   },
 ];
 
@@ -250,20 +282,128 @@ const LEDGER_STATUSES = ['办理中', '审核中', '补正中', '即将超期', 
 
 const LEDGER_ELAPSED = [12, 8, 36, 72, 5, 18, 24, 96, 48, 3, 15, 6, 20, 10, 84];
 
-const LEDGER_RECORDS = Array.from({ length: 15 }, (_, index) => {
-  const dept = mockDepartments[index % mockDepartments.length];
-  return {
-    key: String(index + 1),
-    applyNo: `2026-BS-${String(index + 31).padStart(4, '0')}`,
-    serviceName: LEDGER_SERVICES[index],
-    applicant: LEDGER_APPLICANTS[index],
-    department: dept.name,
-    currentNode: LEDGER_NODES[index],
-    nodePerson: LEDGER_PERSONS[index],
-    status: LEDGER_STATUSES[index],
-    elapsed: LEDGER_ELAPSED[index],
-  };
-});
+const LEDGER_RECORDS = [
+  {
+    key: '1', applyNo: '2026-BS-0031', serviceName: '住房公积金提取购房', applicant: '王某某', department: '住房和城乡建设厅', currentNode: '材料审核', nodePerson: '张主任', status: '办理中', elapsed: 12,
+    certCalls: [{certName:'居民身份证',callTime:'06-16 10:25',status:'success' as const,dept:'住建厅'},{certName:'电子结婚证',callTime:'06-16 10:26',status:'failed' as const,dept:'民政局'}],
+    rejectionReason: {mainReason:'材料不齐全',subReasons:['购房合同模糊','缺少首付款发票'],affectedDept:'住房和城乡建设厅'},
+    pushStatus: [{channel:'APP站内信',sent:true,time:'10:26:03'},{channel:'短信',sent:true,time:'10:26:05'},{channel:'邮件',sent:false,time:'-'},{channel:'人工电话',sent:true,time:'10:35:12'}],
+    signTrail: [{dept:'住建厅',signer:'张主任',signTime:'06-16 10:23',status:'signed' as const},{dept:'自然资源厅',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [{name:'购房合同原件',reason:'模糊不清请重新上传',status:'pending' as const},{name:'首付款发票',reason:'收据不具备法律效力',status:'pending' as const}],
+  },
+  {
+    key: '2', applyNo: '2026-BS-0032', serviceName: '低保申请', applicant: '李某某', department: '民政局', currentNode: '信息核验', nodePerson: '李科长', status: '审核中', elapsed: 8,
+    certCalls: [{certName:'居民身份证',callTime:'06-16 09:10',status:'success' as const,dept:'公安局'},{certName:'低保证明',callTime:'06-16 09:12',status:'success' as const,dept:'民政局'},{certName:'残疾证',callTime:'06-16 09:13',status:'timeout' as const,dept:'残联'}],
+    rejectionReason: null,
+    pushStatus: [{channel:'APP站内信',sent:true,time:'09:12:40'},{channel:'短信',sent:true,time:'09:12:43'},{channel:'邮件',sent:true,time:'09:12:46'},{channel:'人工电话',sent:false,time:'-'}],
+    signTrail: [{dept:'民政局',signer:'李科长',signTime:'06-16 09:15',status:'signed' as const},{dept:'财政局',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [],
+  },
+  {
+    key: '3', applyNo: '2026-BS-0033', serviceName: '户口迁移', applicant: '张某某', department: '公安厅', currentNode: '跨区协办', nodePerson: '王副主任', status: '补正中', elapsed: 36,
+    certCalls: [{certName:'居民身份证',callTime:'06-15 14:20',status:'success' as const,dept:'公安局'},{certName:'户口簿',callTime:'06-15 14:21',status:'success' as const,dept:'公安局'},{certName:'房产证',callTime:'06-15 14:22',status:'failed' as const,dept:'自然资源厅'}],
+    rejectionReason: {mainReason:'填写信息有误',subReasons:['迁入地址与房产证地址不一致','联系人电话格式错误'],affectedDept:'公安厅'},
+    pushStatus: [{channel:'APP站内信',sent:true,time:'14:22:10'},{channel:'短信',sent:true,time:'14:22:13'},{channel:'邮件',sent:false,time:'-'},{channel:'人工电话',sent:true,time:'14:45:30'}],
+    signTrail: [{dept:'公安厅（迁出地）',signer:'王副主任',signTime:'06-15 14:25',status:'signed' as const},{dept:'公安厅（迁入地）',signer:'-',signTime:'-',status:'timeout' as const}],
+    correctionItems: [{name:'房产证原件',reason:'房产证信息与系统登记不一致',status:'pending' as const},{name:'迁移原因说明',reason:'需补充详细迁移原因',status:'done' as const}],
+  },
+  {
+    key: '4', applyNo: '2026-BS-0034', serviceName: '营业执照变更', applicant: '赵某某', department: '市场监督管理局', currentNode: '现场核查', nodePerson: '赵科员', status: '即将超期', elapsed: 72,
+    certCalls: [{certName:'电子营业执照',callTime:'06-14 11:05',status:'success' as const,dept:'市监局'},{certName:'法人身份证',callTime:'06-14 11:06',status:'success' as const,dept:'公安局'}],
+    rejectionReason: {mainReason:'材料不齐全/不规范',subReasons:['股东会决议缺少签章','章程修正案格式不规范'],affectedDept:'市场监督管理局'},
+    pushStatus: [{channel:'APP站内信',sent:true,time:'11:06:20'},{channel:'短信',sent:false,time:'-'},{channel:'邮件',sent:true,time:'11:06:25'},{channel:'人工电话',sent:true,time:'11:30:15'}],
+    signTrail: [{dept:'市监局',signer:'赵科员',signTime:'06-14 11:10',status:'signed' as const},{dept:'税务局',signer:'钱干事',signTime:'06-14 14:30',status:'signed' as const},{dept:'公安局',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [{name:'股东会决议原件',reason:'需全体股东签字盖章',status:'pending' as const},{name:'章程修正案',reason:'修正案未加盖公章',status:'pending' as const}],
+  },
+  {
+    key: '5', applyNo: '2026-BS-0035', serviceName: '社保转移接续', applicant: '刘某某', department: '人力资源和社会保障厅', currentNode: '审批签发', nodePerson: '孙所长', status: '办理中', elapsed: 5,
+    certCalls: [{certName:'居民身份证',callTime:'06-16 08:30',status:'success' as const,dept:'人社厅'},{certName:'社保缴费记录',callTime:'06-16 08:31',status:'success' as const,dept:'人社厅'}],
+    rejectionReason: null,
+    pushStatus: [{channel:'APP站内信',sent:true,time:'08:31:15'},{channel:'短信',sent:true,time:'08:31:18'},{channel:'邮件',sent:true,time:'08:31:20'},{channel:'人工电话',sent:false,time:'-'}],
+    signTrail: [{dept:'人社厅（转出地）',signer:'孙所长',signTime:'06-16 08:35',status:'signed' as const},{dept:'人社厅（转入地）',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [],
+  },
+  {
+    key: '6', applyNo: '2026-BS-0036', serviceName: '新生儿出生登记', applicant: '陈某某', department: '卫生健康委员会', currentNode: '部门会签', nodePerson: '周处长', status: '审核中', elapsed: 18,
+    certCalls: [{certName:'出生医学证明',callTime:'06-15 09:35',status:'success' as const,dept:'卫健委'},{certName:'居民身份证',callTime:'06-15 09:36',status:'success' as const,dept:'公安局'},{certName:'电子结婚证',callTime:'06-15 09:37',status:'success' as const,dept:'民政局'}],
+    rejectionReason: null,
+    pushStatus: [{channel:'APP站内信',sent:true,time:'09:37:05'},{channel:'短信',sent:true,time:'09:37:08'},{channel:'邮件',sent:true,time:'09:37:10'},{channel:'人工电话',sent:false,time:'-'}],
+    signTrail: [{dept:'卫健委',signer:'周处长',signTime:'06-15 09:40',status:'signed' as const},{dept:'公安厅',signer:'-',signTime:'-',status:'pending' as const},{dept:'人社厅',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [],
+  },
+  {
+    key: '7', applyNo: '2026-BS-0037', serviceName: '不动产登记', applicant: '杨某某', department: '自然资源厅', currentNode: '领导审批', nodePerson: '吴主管', status: '办理中', elapsed: 24,
+    certCalls: [{certName:'居民身份证',callTime:'06-15 16:35',status:'success' as const,dept:'公安局'},{certName:'房产证',callTime:'06-15 16:36',status:'success' as const,dept:'自然资源厅'},{certName:'电子完税证明',callTime:'06-15 16:37',status:'timeout' as const,dept:'税务局'}],
+    rejectionReason: null,
+    pushStatus: [{channel:'APP站内信',sent:true,time:'16:37:12'},{channel:'短信',sent:true,time:'16:37:15'},{channel:'邮件',sent:true,time:'16:37:18'},{channel:'人工电话',sent:false,time:'-'}],
+    signTrail: [{dept:'自然资源厅',signer:'吴主管',signTime:'06-15 16:40',status:'signed' as const},{dept:'税务局',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [],
+  },
+  {
+    key: '8', applyNo: '2026-BS-0038', serviceName: '道路运输经营许可', applicant: '黄某某', department: '交通运输厅', currentNode: '系统处理', nodePerson: '郑科长', status: '即将超期', elapsed: 96,
+    certCalls: [{certName:'电子营业执照',callTime:'06-13 10:18',status:'success' as const,dept:'市监局'},{certName:'车辆行驶证',callTime:'06-13 10:19',status:'failed' as const,dept:'公安局'},{certName:'驾驶员从业资格证',callTime:'06-13 10:20',status:'failed' as const,dept:'交通厅'}],
+    rejectionReason: {mainReason:'材料不齐全/不规范',subReasons:['车辆行驶证部分过期','驾驶员从业资格证3人到期','安全生产管理制度不完整'],affectedDept:'交通运输厅'},
+    pushStatus: [{channel:'APP站内信',sent:true,time:'10:20:30'},{channel:'短信',sent:true,time:'10:20:33'},{channel:'邮件',sent:true,time:'10:20:36'},{channel:'人工电话',sent:true,time:'10:45:20'}],
+    signTrail: [{dept:'交通厅',signer:'郑科长',signTime:'06-13 10:25',status:'signed' as const},{dept:'市监局',signer:'-',signTime:'-',status:'timeout' as const},{dept:'公安局',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [{name:'车辆行驶证复印件',reason:'部分车辆行驶证已过期请更新',status:'pending' as const},{name:'安全生产管理制度',reason:'未提供完整的安全生产管理制度文本',status:'pending' as const},{name:'驾驶员从业资格证',reason:'3名驾驶员从业资格证到期需换证',status:'pending' as const}],
+  },
+  {
+    key: '9', applyNo: '2026-BS-0039', serviceName: '建房审批', applicant: '周某某', department: '住房和城乡建设厅', currentNode: '证照核验', nodePerson: '钱干事', status: '补正中', elapsed: 48,
+    certCalls: [{certName:'居民身份证',callTime:'06-14 09:00',status:'success' as const,dept:'公安局'},{certName:'土地使用证',callTime:'06-14 09:01',status:'success' as const,dept:'自然资源厅'},{certName:'规划许可证',callTime:'06-14 09:02',status:'failed' as const,dept:'住建厅'}],
+    rejectionReason: {mainReason:'不符合办理条件',subReasons:['用地性质与规划不符','建筑面积超出审批范围'],affectedDept:'住房和城乡建设厅'},
+    pushStatus: [{channel:'APP站内信',sent:true,time:'09:02:45'},{channel:'短信',sent:true,time:'09:02:48'},{channel:'邮件',sent:false,time:'-'},{channel:'人工电话',sent:true,time:'09:20:10'}],
+    signTrail: [{dept:'住建厅',signer:'钱干事',signTime:'06-14 09:05',status:'signed' as const},{dept:'自然资源厅',signer:'冯书记',signTime:'06-14 10:30',status:'signed' as const},{dept:'规划局',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [{name:'建设用地规划许可证',reason:'用地性质与规划用途不符',status:'pending' as const},{name:'宅基地批准文件',reason:'需补充村委会批准文件',status:'done' as const}],
+  },
+  {
+    key: '10', applyNo: '2026-BS-0040', serviceName: '再生育审批', applicant: '吴某某', department: '卫生健康委员会', currentNode: '材料预审', nodePerson: '冯书记', status: '办理中', elapsed: 3,
+    certCalls: [{certName:'居民身份证',callTime:'06-16 13:52',status:'success' as const,dept:'公安局'},{certName:'电子结婚证',callTime:'06-16 13:53',status:'success' as const,dept:'民政局'}],
+    rejectionReason: null,
+    pushStatus: [{channel:'APP站内信',sent:true,time:'13:53:20'},{channel:'短信',sent:true,time:'13:53:23'},{channel:'邮件',sent:false,time:'-'},{channel:'人工电话',sent:false,time:'-'}],
+    signTrail: [{dept:'卫健委',signer:'冯书记',signTime:'06-16 13:55',status:'signed' as const},{dept:'民政局',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [],
+  },
+  {
+    key: '11', applyNo: '2026-BS-0041', serviceName: '排污许可', applicant: '郑某某', department: '生态环境厅', currentNode: '受理登记', nodePerson: '陈主任', status: '审核中', elapsed: 15,
+    certCalls: [{certName:'电子营业执照',callTime:'06-15 10:40',status:'success' as const,dept:'市监局'},{certName:'环评批复',callTime:'06-15 10:41',status:'timeout' as const,dept:'生态环境厅'}],
+    rejectionReason: {mainReason:'电子证照缺失',subReasons:['环评批复文件未在证照库中找到','排污许可证副本过期'],affectedDept:'生态环境厅'},
+    pushStatus: [{channel:'APP站内信',sent:true,time:'10:41:30'},{channel:'短信',sent:true,time:'10:41:33'},{channel:'邮件',sent:true,time:'10:41:36'},{channel:'人工电话',sent:false,time:'-'}],
+    signTrail: [{dept:'生态环境厅',signer:'陈主任',signTime:'06-15 10:45',status:'signed' as const},{dept:'市监局',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [{name:'环评批复文件',reason:'证照库中未找到请重新上传',status:'pending' as const}],
+  },
+  {
+    key: '12', applyNo: '2026-BS-0042', serviceName: '涉农补贴申请', applicant: '孙某某', department: '农业农村厅', currentNode: '结果送达', nodePerson: '许组长', status: '办理中', elapsed: 6,
+    certCalls: [{certName:'居民身份证',callTime:'06-16 07:30',status:'success' as const,dept:'公安局'},{certName:'土地承包证',callTime:'06-16 07:31',status:'success' as const,dept:'农业农村厅'},{certName:'低保证明',callTime:'06-16 07:32',status:'success' as const,dept:'民政局'}],
+    rejectionReason: null,
+    pushStatus: [{channel:'APP站内信',sent:true,time:'07:32:10'},{channel:'短信',sent:true,time:'07:32:13'},{channel:'邮件',sent:true,time:'07:32:16'},{channel:'人工电话',sent:false,time:'-'}],
+    signTrail: [{dept:'农业农村厅',signer:'许组长',signTime:'06-16 07:35',status:'signed' as const},{dept:'财政局',signer:'韩科长',signTime:'06-16 08:20',status:'signed' as const}],
+    correctionItems: [],
+  },
+  {
+    key: '13', applyNo: '2026-BS-0043', serviceName: '企业税务登记', applicant: '马某某', department: '税务局', currentNode: '信息核验', nodePerson: '韩科长', status: '审核中', elapsed: 20,
+    certCalls: [{certName:'电子营业执照',callTime:'06-15 15:10',status:'success' as const,dept:'市监局'},{certName:'法人身份证',callTime:'06-15 15:11',status:'success' as const,dept:'公安局'},{certName:'电子完税证明',callTime:'06-15 15:12',status:'failed' as const,dept:'税务局'}],
+    rejectionReason: {mainReason:'填写信息有误',subReasons:['统一社会信用代码格式错误','注册地址与营业执照不一致'],affectedDept:'税务局'},
+    pushStatus: [{channel:'APP站内信',sent:true,time:'15:12:30'},{channel:'短信',sent:false,time:'-'},{channel:'邮件',sent:true,time:'15:12:35'},{channel:'人工电话',sent:true,time:'15:40:22'}],
+    signTrail: [{dept:'税务局',signer:'韩科长',signTime:'06-15 15:15',status:'signed' as const},{dept:'市监局',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [{name:'统一社会信用代码',reason:'格式校验未通过请核实后重新填写',status:'pending' as const},{name:'注册地址证明',reason:'与营业执照登记地址不一致',status:'pending' as const}],
+  },
+  {
+    key: '14', applyNo: '2026-BS-0044', serviceName: '学籍转接', applicant: '朱某某', department: '教育厅', currentNode: '审批签发', nodePerson: '曹主任', status: '办理中', elapsed: 10,
+    certCalls: [{certName:'居民身份证',callTime:'06-16 11:00',status:'success' as const,dept:'公安局'},{certName:'学籍证明',callTime:'06-16 11:01',status:'success' as const,dept:'教育厅'}],
+    rejectionReason: null,
+    pushStatus: [{channel:'APP站内信',sent:true,time:'11:01:25'},{channel:'短信',sent:true,time:'11:01:28'},{channel:'邮件',sent:true,time:'11:01:30'},{channel:'人工电话',sent:false,time:'-'}],
+    signTrail: [{dept:'教育厅（转出校）',signer:'曹主任',signTime:'06-16 11:05',status:'signed' as const},{dept:'教育厅（转入校）',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [],
+  },
+  {
+    key: '15', applyNo: '2026-BS-0045', serviceName: '婚姻登记', applicant: '何某某', department: '民政局', currentNode: '领导审批', nodePerson: '魏处长', status: '即将超期', elapsed: 84,
+    certCalls: [{certName:'居民身份证',callTime:'06-13 09:20',status:'success' as const,dept:'公安局'},{certName:'户口簿',callTime:'06-13 09:21',status:'success' as const,dept:'公安局'},{certName:'电子结婚证',callTime:'06-13 09:22',status:'failed' as const,dept:'民政局'}],
+    rejectionReason: {mainReason:'政策适配失败',subReasons:['跨省婚姻登记政策适配规则未更新','户籍地婚姻状态核验超时'],affectedDept:'民政局'},
+    pushStatus: [{channel:'APP站内信',sent:true,time:'09:22:15'},{channel:'短信',sent:true,time:'09:22:18'},{channel:'邮件',sent:false,time:'-'},{channel:'人工电话',sent:true,time:'09:50:30'}],
+    signTrail: [{dept:'民政局',signer:'魏处长',signTime:'06-13 09:25',status:'signed' as const},{dept:'公安局',signer:'-',signTime:'-',status:'timeout' as const},{dept:'民政局（对方户籍地）',signer:'-',signTime:'-',status:'pending' as const}],
+    correctionItems: [{name:'婚姻状况声明书',reason:'需补充对方户籍地出具的婚姻状况证明',status:'pending' as const},{name:'跨省登记申请表',reason:'政策适配规则未更新请手动填写',status:'pending' as const}],
+  },
+];
 
 const ALL_CORRECTION_CASES = [
   ...MATERIAL_CORRECTION_CASES,
@@ -443,6 +583,7 @@ export default function Performance() {
   const [expandedLedger, setExpandedLedger] = useState(false);
   const [expandedCorrection, setExpandedCorrection] = useState(false);
   const [reminderModalVisible, setReminderModalVisible] = useState(false);
+  const [expandedChainKey, setExpandedChainKey] = useState<string | null>(null);
 
   const filteredData = useMemo(() => {
     let result = [...mockPerformanceData];
@@ -1293,12 +1434,59 @@ export default function Performance() {
                           {item.suggestion}
                         </Tag>
                       </div>
+                      {item.relatedModule && (
+                        <div className="flex-1 min-w-[200px]">
+                          <span className="text-xs text-gov-gray-500 mb-1.5 block">关联处置</span>
+                          <Button
+                            type="link"
+                            size="small"
+                            className="p-0 text-xs"
+                            icon={
+                              item.relatedModule === 'policy' ? <FileSearch className="w-3.5 h-3.5" /> :
+                              <ShieldAlert className="w-3.5 h-3.5" />
+                            }
+                            onClick={() => {
+                              if (item.relatedModule === 'policy') {
+                                window.open('/admin/policy', '_blank');
+                              } else if (item.relatedModule === 'disaster') {
+                                window.open('/admin/disaster-recovery', '_blank');
+                              }
+                            }}
+                          >
+                            {item.relatedAction}
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </List.Item>
             )}
           />
+          <Divider className="my-4" />
+          <div className="flex items-center gap-2 mb-3">
+            <FileCheck2 className="w-4 h-4 text-green-600" />
+            <span className="font-medium text-sm text-gov-gray-700">处置复查记录</span>
+            <Tag color="green" className="m-0 text-xs">3条已处置</Tag>
+          </div>
+          <div className="space-y-2.5">
+            {DISPOSAL_RECORDS.map((r, i) => (
+              <div key={i} className="flex items-start gap-3 p-3 bg-green-50/50 rounded-lg border border-green-100">
+                <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="text-xs font-medium text-gov-gray-700">{r.action}</span>
+                    <Tag color={r.module === 'policy' ? 'purple' : r.module === 'disaster' ? 'orange' : 'blue'} className="m-0 text-[10px]">
+                      {r.module === 'policy' ? '政策引擎' : r.module === 'disaster' ? '容灾中心' : '电子证照'}
+                    </Tag>
+                    <Tag color="green" className="m-0 text-[10px]">已处置</Tag>
+                  </div>
+                  <div className="text-[11px] text-gov-gray-500">{r.detail}</div>
+                  <div className="text-[10px] text-gov-gray-400 mt-1">处置人：{r.handler} · {r.time}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </Card>
 
         <Row gutter={[12, 12]} className="mb-6">
@@ -1486,7 +1674,7 @@ export default function Performance() {
             <Table
               dataSource={LEDGER_RECORDS}
               size="small"
-              scroll={{ x: 1200 }}
+              scroll={{ x: 2100 }}
               pagination={{ pageSize: 8, showTotal: (total) => `共 ${total} 条在办记录` }}
               columns={[
                 { title: '申请编号', dataIndex: 'applyNo', key: 'applyNo', width: 140, render: (v: string) => <span className="text-xs font-mono text-blue-600">{v}</span> },
@@ -1511,16 +1699,259 @@ export default function Performance() {
                   ),
                 },
                 {
+                  title: '补正明细', dataIndex: 'correctionItems', key: 'correctionItems', width: 150,
+                  render: (items: any[]) => items.length > 0 ? (
+                    <Popover content={
+                      <div className="space-y-1.5" style={{maxWidth:280}}>
+                        {items.map((m: any, i: number) => (
+                          <div key={i} className="flex items-center gap-2 text-xs">
+                            <span className={m.status === 'done' ? 'text-green-600' : 'text-orange-600'}>{m.status === 'done' ? '✓' : '○'}</span>
+                            <span className="text-gov-gray-700">{m.name}</span>
+                            <span className="text-gov-gray-400">— {m.reason}</span>
+                          </div>
+                        ))}
+                      </div>
+                    } title="补正材料明细">
+                      <Tag color="orange" className="m-0 text-xs cursor-pointer">{items.length}项待补</Tag>
+                    </Popover>
+                  ) : <Tag color="green" className="m-0 text-xs">无补正</Tag>,
+                },
+                {
+                  title: '证照调用', dataIndex: 'certCalls', key: 'certCalls', width: 150,
+                  render: (calls: any[]) => (
+                    <Popover content={
+                      <div className="space-y-1.5" style={{maxWidth:280}}>
+                        {calls.map((c: any, i: number) => (
+                          <div key={i} className="flex items-center justify-between gap-2 text-xs">
+                            <span className="text-gov-gray-700">{c.certName}</span>
+                            <Tag color={c.status === 'success' ? 'green' : c.status === 'failed' ? 'red' : 'orange'} className="m-0 text-[10px]">
+                              {c.status === 'success' ? '成功' : c.status === 'failed' ? '失败' : '超时'}
+                            </Tag>
+                          </div>
+                        ))}
+                      </div>
+                    } title="证照互认调用记录">
+                      <span className="text-xs cursor-pointer text-blue-600 underline">
+                        {calls.filter((c: any) => c.status === 'success').length}/{calls.length}成功
+                      </span>
+                    </Popover>
+                  ),
+                },
+                {
+                  title: '退件归因', dataIndex: 'rejectionReason', key: 'rejectionReason', width: 160,
+                  render: (r: any) => r ? (
+                    <Popover content={
+                      <div style={{maxWidth:260}}>
+                        <div className="text-xs font-medium text-gov-gray-700 mb-1">{r.mainReason}</div>
+                        <div className="space-y-0.5">
+                          {r.subReasons.map((s: string, i: number) => (
+                            <div key={i} className="text-[11px] text-gov-gray-500">• {s}</div>
+                          ))}
+                        </div>
+                        <Tag color="geekblue" className="m-0 text-[10px] mt-1">{r.affectedDept}</Tag>
+                      </div>
+                    } title="退件原因归因">
+                      <Tag color="red" className="m-0 text-xs cursor-pointer">{r.mainReason}</Tag>
+                    </Popover>
+                  ) : <Tag color="green" className="m-0 text-xs">正常</Tag>,
+                },
+                {
+                  title: '推送状态', dataIndex: 'pushStatus', key: 'pushStatus', width: 130,
+                  render: (ps: any[]) => (
+                    <div className="flex flex-wrap gap-1">
+                      {ps.map((p: any, i: number) => (
+                        <span key={i} className={`text-[10px] px-1.5 py-0.5 rounded ${p.sent ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500'}`}>
+                          {p.channel}
+                        </span>
+                      ))}
+                    </div>
+                  ),
+                },
+                {
+                  title: '签收轨迹', dataIndex: 'signTrail', key: 'signTrail', width: 160,
+                  render: (trail: any[]) => (
+                    <Popover content={
+                      <div className="space-y-1.5" style={{maxWidth:280}}>
+                        {trail.map((s: any, i: number) => (
+                          <div key={i} className="flex items-center justify-between gap-2 text-xs">
+                            <div className="flex items-center gap-1.5">
+                              <Tag color={s.status === 'signed' ? 'green' : s.status === 'timeout' ? 'red' : 'orange'} className="m-0 text-[10px]">
+                                {s.status === 'signed' ? '已签收' : s.status === 'timeout' ? '超时' : '待签收'}
+                              </Tag>
+                              <span className="text-gov-gray-700">{s.dept}</span>
+                            </div>
+                            <span className="text-gov-gray-400">{s.status === 'signed' ? s.signer : '—'}</span>
+                          </div>
+                        ))}
+                      </div>
+                    } title="跨部门签收轨迹">
+                      <span className="text-xs cursor-pointer text-blue-600 underline">
+                        {trail.filter((s: any) => s.status === 'signed').length}/{trail.length}已签收
+                      </span>
+                    </Popover>
+                  ),
+                },
+                {
                   title: '操作', key: 'action', width: 140, fixed: 'right' as const,
-                  render: () => (
+                  render: (_: any, record: any) => (
                     <Space size="small">
                       <Button type="link" size="small" className="text-xs p-0" icon={<Bell className="w-3 h-3" />} onClick={() => setReminderModalVisible(true)}>催办</Button>
-                      <Button type="link" size="small" className="text-xs p-0" icon={<GitBranch className="w-3 h-3" />}>查看链路</Button>
+                      <Button type="link" size="small" className="text-xs p-0" icon={<GitBranch className="w-3 h-3" />} onClick={() => setExpandedChainKey(expandedChainKey === record.key ? null : String(record.key))}>查看链路</Button>
                     </Space>
                   ),
                 },
               ]}
             />
+            {expandedChainKey && (() => {
+              const chainRecord = LEDGER_RECORDS.find(r => r.key === expandedChainKey);
+              if (!chainRecord) return null;
+              const chainSteps = [
+                { title: '申请提交', dept: '群众端', signer: chainRecord.applicant, signTime: chainRecord.applyNo.replace('2026-BS-', '06-16 ').replace(/(\d{2})(\d{2})/, '$1:$2'), status: 'finish' as const },
+                { title: '材料预审', dept: chainRecord.department, signer: chainRecord.nodePerson, signTime: '系统自动', status: 'finish' as const },
+                { title: chainRecord.currentNode, dept: chainRecord.department, signer: chainRecord.nodePerson, signTime: chainRecord.status === '即将超期' ? '超时处理中' : '处理中', status: 'process' as const },
+                ...(chainRecord.rejectionReason ? [{ title: '退件归因', dept: chainRecord.rejectionReason.affectedDept, signer: '-', signTime: '-', status: 'error' as const }] : []),
+                { title: '审批签发', dept: chainRecord.department, signer: '-', signTime: '-', status: 'wait' as const },
+                { title: '结果送达', dept: chainRecord.department, signer: '-', signTime: '-', status: 'wait' as const },
+              ];
+              return (
+                <div className="mt-4 border border-blue-200 rounded-lg bg-blue-50/30 p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <GitBranch className="w-4 h-4 text-blue-600" />
+                      <span className="text-sm font-semibold text-gov-gray-700">案例穿透 — {chainRecord.serviceName}</span>
+                      <Tag color="geekblue" className="m-0 text-xs">{chainRecord.applyNo}</Tag>
+                      <Tag color={chainRecord.status === '即将超期' ? 'red' : chainRecord.status === '补正中' ? 'orange' : 'blue'} className="m-0 text-xs">{chainRecord.status}</Tag>
+                    </div>
+                    <Button type="link" size="small" className="text-xs p-0" onClick={() => setExpandedChainKey(null)} icon={<Eye className="w-3 h-3" />}>收起链路</Button>
+                  </div>
+                  <Tabs defaultActiveKey="1" type="card" size="small" items={[
+                    {
+                      key: '1',
+                      label: <span className="text-xs flex items-center gap-1"><Network className="w-3 h-3" />事项办理链路</span>,
+                      children: (
+                        <div className="bg-white rounded-lg p-4 border border-gov-gray-100">
+                          <Steps current={2} status={chainRecord.rejectionReason ? 'error' : 'process'} items={chainSteps.map(s => ({
+                            title: <span className="text-xs font-medium">{s.title}</span>,
+                            description: (
+                              <div className="text-[11px] space-y-0.5">
+                                <div className="text-gov-gray-500">{s.dept}</div>
+                                <div className="text-gov-gray-400">签收人：{s.signer}</div>
+                                <div className="text-gov-gray-400">{s.signTime}</div>
+                              </div>
+                            ),
+                          }))} />
+                        </div>
+                      ),
+                    },
+                    {
+                      key: '2',
+                      label: <span className="text-xs flex items-center gap-1"><FileCheck2 className="w-3 h-3" />材料补正明细</span>,
+                      children: chainRecord.correctionItems.length > 0 ? (
+                        <div className="bg-white rounded-lg p-4 border border-gov-gray-100 space-y-2">
+                          {chainRecord.correctionItems.map((item: any, idx: number) => (
+                            <div key={idx} className="flex items-center justify-between gap-3 px-3 py-2 bg-gov-gray-50 rounded-lg">
+                              <div className="flex items-center gap-2">
+                                <span className={item.status === 'done' ? 'text-green-600' : 'text-orange-600'}>{item.status === 'done' ? '✓' : '○'}</span>
+                                <span className="text-xs font-medium text-gov-gray-700">{item.name}</span>
+                              </div>
+                              <span className="text-xs text-gov-gray-400">{item.reason}</span>
+                              <Tag color={item.status === 'done' ? 'green' : 'orange'} className="m-0 text-[10px]">{item.status === 'done' ? '已补正' : '待补正'}</Tag>
+                            </div>
+                          ))}
+                        </div>
+                      ) : <Empty description="无补正材料" image={Empty.PRESENTED_IMAGE_SIMPLE} />,
+                    },
+                    {
+                      key: '3',
+                      label: <span className="text-xs flex items-center gap-1"><FileKey className="w-3 h-3" />证照互认调用</span>,
+                      children: (
+                        <div className="bg-white rounded-lg p-4 border border-gov-gray-100 space-y-2">
+                          {chainRecord.certCalls.map((c: any, idx: number) => (
+                            <div key={idx} className="flex items-center justify-between gap-3 px-3 py-2 bg-gov-gray-50 rounded-lg">
+                              <span className="text-xs font-medium text-gov-gray-700">{c.certName}</span>
+                              <span className="text-xs text-gov-gray-500">{c.callTime}</span>
+                              <Tag color="geekblue" className="m-0 text-[10px]">{c.dept}</Tag>
+                              <Tag color={c.status === 'success' ? 'green' : c.status === 'failed' ? 'red' : 'orange'} className="m-0 text-[10px]">
+                                {c.status === 'success' ? '调用成功' : c.status === 'failed' ? '调用失败' : '调用超时'}
+                              </Tag>
+                            </div>
+                          ))}
+                        </div>
+                      ),
+                    },
+                    {
+                      key: '4',
+                      label: <span className="text-xs flex items-center gap-1"><ShieldAlert className="w-3 h-3" />退件原因归因</span>,
+                      children: chainRecord.rejectionReason ? (
+                        <div className="bg-white rounded-lg p-4 border border-gov-gray-100">
+                          <div className="flex items-center gap-2 mb-3">
+                            <Tag color="red" className="m-0 text-xs">{chainRecord.rejectionReason.mainReason}</Tag>
+                            <Tag color="geekblue" className="m-0 text-[10px]">涉及部门：{chainRecord.rejectionReason.affectedDept}</Tag>
+                          </div>
+                          <div className="space-y-1.5">
+                            {chainRecord.rejectionReason.subReasons.map((s: string, idx: number) => (
+                              <div key={idx} className="flex items-start gap-2 px-3 py-1.5 bg-red-50 rounded-lg">
+                                <AlertTriangle className="w-3 h-3 text-orange-500 mt-0.5 flex-shrink-0" />
+                                <span className="text-xs text-gov-gray-700">{s}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : <Empty description="无退件记录，流程正常" image={Empty.PRESENTED_IMAGE_SIMPLE} />,
+                    },
+                    {
+                      key: '5',
+                      label: <span className="text-xs flex items-center gap-1"><Users className="w-3 h-3" />签收轨迹 & 推送</span>,
+                      children: (
+                        <div className="bg-white rounded-lg p-4 border border-gov-gray-100">
+                          <Row gutter={24}>
+                            <Col span={14}>
+                              <div className="text-xs font-medium text-gov-gray-600 mb-3 flex items-center gap-1.5">
+                                <Users className="w-3.5 h-3.5 text-blue-600" />
+                                跨部门签收轨迹
+                              </div>
+                              <Timeline items={chainRecord.signTrail.map((s: any) => ({
+                                color: s.status === 'signed' ? 'green' : s.status === 'timeout' ? 'red' : 'gray',
+                                children: (
+                                  <div className="text-xs">
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-medium text-gov-gray-700">{s.dept}</span>
+                                      <Tag color={s.status === 'signed' ? 'green' : s.status === 'timeout' ? 'red' : 'orange'} className="m-0 text-[10px]">
+                                        {s.status === 'signed' ? '已签收' : s.status === 'timeout' ? '超时' : '待签收'}
+                                      </Tag>
+                                    </div>
+                                    <div className="text-gov-gray-400 mt-0.5">
+                                      签收人：{s.status === 'signed' ? s.signer : '—'} | 时间：{s.status === 'signed' ? s.signTime : '—'}
+                                    </div>
+                                  </div>
+                                ),
+                              }))} />
+                            </Col>
+                            <Col span={10}>
+                              <div className="text-xs font-medium text-gov-gray-600 mb-3 flex items-center gap-1.5">
+                                <Send className="w-3.5 h-3.5 text-green-600" />
+                                进度推送状态
+                              </div>
+                              <div className="space-y-2">
+                                {chainRecord.pushStatus.map((p: any, idx: number) => (
+                                  <div key={idx} className="flex items-center justify-between gap-2 px-2.5 py-1.5 bg-gov-gray-50 rounded-lg">
+                                    <span className="text-xs text-gov-gray-600">{p.channel}</span>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-[10px] text-gov-gray-400">{p.time}</span>
+                                      <Tag color={p.sent ? 'green' : 'red'} className="m-0 text-[10px]">{p.sent ? '已推送' : '未推送'}</Tag>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                      ),
+                    },
+                  ]} />
+                </div>
+              );
+            })()}
           </Card>
         )}
 

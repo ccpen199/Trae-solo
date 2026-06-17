@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileText, Clock, Building2, CheckCircle, AlertCircle, HelpCircle, ChevronRight, ListChecks, UserCheck, Upload, PenLine, Send } from 'lucide-react';
+import { ArrowLeft, FileText, Clock, Building2, CheckCircle, AlertCircle, HelpCircle, ChevronRight, ListChecks, UserCheck, Upload, PenLine, Send, Shield, Camera, CreditCard } from 'lucide-react';
+import { Tag } from 'antd';
 import { mockServices } from '../mock/data';
 
 const handlingSteps = [
@@ -98,6 +99,91 @@ export default function ServiceDetail() {
                 <span className="flex items-center gap-2 text-sm text-gov-gray-500">
                   <FileText className="w-4 h-4" />
                   {service.hotLevel}人已办理
+                </span>
+              </div>
+            </div>
+            <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+              <div className="flex items-center gap-2 mb-3">
+                <Shield className="w-4 h-4 text-blue-600" />
+                <span className="text-sm font-medium text-blue-700">办理能力预检</span>
+                <Tag color="blue" className="m-0 text-xs">提交前校验</Tag>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="bg-white rounded-lg p-3 border border-blue-100">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <UserCheck className="w-4 h-4 text-green-600" />
+                    <span className="text-xs font-medium text-gov-gray-700">表单预填</span>
+                  </div>
+                  <div className="text-[11px] text-gov-gray-500">
+                    {service.formFields.filter(f => f.prefillSource).length > 0 ? (
+                      <>
+                        <span className="text-green-600 font-medium">{service.formFields.filter(f => f.prefillSource).length}项</span>可自动填充
+                        <div className="mt-1 space-y-0.5">
+                          {service.formFields.filter(f => f.prefillSource).map(f => (
+                            <div key={f.id} className="text-[10px] text-gov-gray-400">• {f.label}</div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <span className="text-gov-gray-400">无需预填</span>
+                    )}
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-blue-100">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <Camera className="w-4 h-4 text-purple-600" />
+                    <span className="text-xs font-medium text-gov-gray-700">材料识别</span>
+                  </div>
+                  <div className="text-[11px] text-gov-gray-500">
+                    {service.requiredMaterials.filter(m => m.type === 'id_card').length > 0 ? (
+                      <>
+                        <span className="text-purple-600 font-medium">OCR识别</span>可用
+                        <div className="mt-1 space-y-0.5">
+                          {service.requiredMaterials.filter(m => m.type === 'id_card').map(m => (
+                            <div key={m.id} className="text-[10px] text-gov-gray-400">• {m.name}</div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <span className="text-gov-gray-400">无识别需求</span>
+                    )}
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-blue-100">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <PenLine className="w-4 h-4 text-orange-600" />
+                    <span className="text-xs font-medium text-gov-gray-700">电子签名</span>
+                  </div>
+                  <div className="text-[11px] text-gov-gray-500">
+                    <span className="text-orange-600 font-medium">在线签署</span>可用
+                    <div className="mt-1 text-[10px] text-gov-gray-400">• 手写签名确认</div>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-blue-100">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <CreditCard className="w-4 h-4 text-indigo-600" />
+                    <span className="text-xs font-medium text-gov-gray-700">证照免交</span>
+                  </div>
+                  <div className="text-[11px] text-gov-gray-500">
+                    {service.requiredMaterials.filter(m => m.isElectronic).length > 0 ? (
+                      <>
+                        <span className="text-indigo-600 font-medium">{service.requiredMaterials.filter(m => m.isElectronic).length}项</span>可免交
+                        <div className="mt-1 space-y-0.5">
+                          {service.requiredMaterials.filter(m => m.isElectronic).map(m => (
+                            <div key={m.id} className="text-[10px] text-gov-gray-400">• {m.name}</div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <span className="text-gov-gray-400">无电子证照</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center gap-2 text-[11px] text-blue-600">
+                <CheckCircle className="w-3.5 h-3.5" />
+                <span>
+                  预检通过 — 表单{service.formFields.filter(f => f.prefillSource).length > 0 ? '预填' : '填报'}+材料{service.requiredMaterials.filter(m => m.isElectronic).length > 0 ? '证照免交' : '上传'}+签名确认，可形成可提交办件
                 </span>
               </div>
             </div>
@@ -227,6 +313,27 @@ export default function ServiceDetail() {
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-gov-green flex-shrink-0 mt-0.5" />
                   <span>电子签名需本人签署</span>
+                </div>
+              </div>
+              <div className="gov-divider my-4" />
+              <div className="mb-3">
+                <h4 className="font-semibold text-gov-gray-700 mb-2 text-sm flex items-center gap-1.5">
+                  <Shield className="w-4 h-4 text-blue-600" />
+                  办理能力
+                </h4>
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2 text-xs">
+                    <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                    <span className="text-gov-gray-600">表单预填：{service.formFields.filter(f => f.prefillSource).length}项</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs">
+                    <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                    <span className="text-gov-gray-600">证照免交：{service.requiredMaterials.filter(m => m.isElectronic).length}项</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs">
+                    <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
+                    <span className="text-gov-gray-600">电子签名：在线签署</span>
+                  </div>
                 </div>
               </div>
               <div className="gov-divider my-4" />
