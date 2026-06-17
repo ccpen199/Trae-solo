@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift, Receipt, ScanLine, Clock4, UserCheck, BadgeCheck, FileText } from 'lucide-react';
+import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift, Receipt, ScanLine, Clock4, UserCheck, BadgeCheck, FileText, GitBranch } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAppStore, serviceTypeList } from '@/store';
@@ -888,38 +888,106 @@ export default function QuickOrderForm() {
 
                         {cert.review_history && cert.review_history.length > 0 && (
                           <div className="mt-2">
-                            <p className="text-[9px] font-bold text-secondary-700 mb-1 flex items-center gap-1">
-                              <Clock4 className="w-2.5 h-2.5 text-primary-500" />
-                              复核留痕记录 ({cert.review_history.length}轮)
+                            <p className="text-[9px] font-bold text-secondary-700 mb-1.5 flex items-center gap-1">
+                              <GitBranch className="w-2.5 h-2.5 text-primary-500" />
+                              审核状态流转时间线
                             </p>
-                            <div className="space-y-0.5">
-                              {cert.review_history.map((r, ri) => (
-                                <div key={ri} className="flex items-start gap-1.5 text-[8px]">
-                                  <div className="w-1 h-1 rounded-full bg-primary-400 mt-1.5 flex-shrink-0" />
-                                  <div className="flex-1">
+                            <div className="relative ml-1">
+                              {cert.review_history.map((r, ri) => {
+                                const isLast = ri === cert.review_history.length - 1;
+                                return (
+                                  <div key={ri} className="flex gap-2 pb-1.5">
+                                    <div className="flex flex-col items-center flex-shrink-0">
+                                      <div className={cn(
+                                        'w-4 h-4 rounded-full flex items-center justify-center text-[9px] border-2 border-white',
+                                        r.result === 'pass' ? 'bg-green-500 text-white' :
+                                        r.result === 'reject' ? 'bg-red-500 text-white' : 'bg-yellow-500 text-white'
+                                      )}>
+                                        {r.result === 'pass' ? '✓' : r.result === 'reject' ? '✗' : '⏳'}
+                                      </div>
+                                      {!isLast && <div className="w-px flex-1 bg-gray-200 mt-0.5" />}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-center gap-1 flex-wrap">
+                                        <span className="text-[8px] font-medium text-secondary-800">{r.reviewer}</span>
+                                        <span className={cn(
+                                          'px-1 py-0 rounded text-[7px]',
+                                          r.type === 'ocr' ? 'bg-blue-100 text-blue-700' :
+                                          r.type === 'recheck' ? 'bg-purple-100 text-purple-700' :
+                                          'bg-green-100 text-green-700'
+                                        )}>
+                                          {r.type === 'ocr' ? 'OCR识别' : r.type === 'recheck' ? '季度复查' : '人工复核'}
+                                        </span>
+                                        <span className={cn(
+                                          'px-1 py-0 rounded text-[7px] font-medium',
+                                          r.result === 'pass' ? 'bg-green-100 text-green-700' :
+                                          r.result === 'reject' ? 'bg-red-100 text-red-700' :
+                                          'bg-yellow-100 text-yellow-700'
+                                        )}>
+                                          {r.result === 'pass' ? '通过' : r.result === 'reject' ? '驳回' : '待审'}
+                                        </span>
+                                      </div>
+                                      <p className="text-[7px] text-secondary-400 mt-0.5">
+                                        {new Date(r.review_time).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
+                                      </p>
+                                      {r.remark && (
+                                        <p className="text-[8px] text-secondary-600 mt-0.5 leading-relaxed bg-secondary-50 rounded px-1.5 py-1">
+                                          {r.remark}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              {cert.verify_status && (
+                                <div className="flex gap-2 pb-1.5">
+                                  <div className="flex flex-col items-center flex-shrink-0">
+                                    <div className={cn(
+                                      'w-4 h-4 rounded-full flex items-center justify-center text-[9px] border-2 border-white',
+                                      cert.verify_status === 'approved' ? 'bg-green-600 text-white' :
+                                      cert.verify_status === 'rejected' ? 'bg-red-600 text-white' : 'bg-yellow-600 text-white'
+                                    )}>
+                                      {cert.verify_status === 'approved' ? '✓' : cert.verify_status === 'rejected' ? '✗' : '⏳'}
+                                    </div>
+                                  </div>
+                                  <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-1">
-                                      <span className="text-secondary-700 font-medium">{r.reviewer}</span>
-                                      <span className="text-secondary-400">·</span>
-                                      <span className={cn(
-                                        'px-1 py-0 rounded text-[8px]',
-                                        r.type === 'ocr' ? 'bg-blue-100 text-blue-700' :
-                                        r.type === 'recheck' ? 'bg-purple-100 text-purple-700' :
-                                        'bg-green-100 text-green-700'
-                                      )}>
-                                        {r.type === 'ocr' ? 'OCR识别' : r.type === 'recheck' ? '季度复查' : '人工复核'}
-                                      </span>
-                                      <span className={cn(
-                                        'px-1 py-0 rounded',
-                                        r.result === 'pass' ? 'bg-green-100 text-green-700' : r.result === 'reject' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
-                                      )}>
-                                        {r.result === 'pass' ? '通过' : r.result === 'reject' ? '驳回' : '待审'}
+                                      <span className="text-[8px] font-bold text-secondary-800">
+                                        {cert.verify_status === 'approved' ? '最终审核结论：通过' :
+                                         cert.verify_status === 'rejected' ? '最终审核结论：驳回' : '最终审核结论：审核中'}
                                       </span>
                                     </div>
-                                    <p className="text-secondary-400 mt-0.5">
-                                      {new Date(r.review_time).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
-                                      {r.remark && ` · ${r.remark}`}
+                                    <p className="text-[7px] text-secondary-400 mt-0.5">
+                                      {cert.review_completed_at
+                                        ? new Date(cert.review_completed_at).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
+                                        : '待完成'}
                                     </p>
                                   </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {cert.review_history?.some(r => r.result === 'reject') && (
+                          <div className="mt-2 bg-red-50 rounded-lg p-1.5 border border-red-100">
+                            <p className="text-[8px] font-bold text-red-700 mb-1 flex items-center gap-1">
+                              <AlertTriangle className="w-2.5 h-2.5" />
+                              证件异常处置记录
+                            </p>
+                            <div className="space-y-0.5">
+                              {cert.review_history.filter(r => r.result === 'reject').map((r, i) => (
+                                <div key={i} className="text-[7px] text-red-600 bg-white/70 rounded px-1.5 py-1">
+                                  <div className="flex justify-between">
+                                    <span className="font-medium">{r.reviewer}</span>
+                                    <span className="text-red-400">
+                                      {new Date(r.review_time).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })}
+                                    </span>
+                                  </div>
+                                  <p className="mt-0.5 leading-relaxed">{r.remark}</p>
+                                  <p className="mt-0.5 text-red-500 font-medium">
+                                    处置方式：驳回后要求重新提交完整材料
+                                  </p>
                                 </div>
                               ))}
                             </div>
