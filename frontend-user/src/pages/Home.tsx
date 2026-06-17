@@ -3172,41 +3172,149 @@ export default function Home() {
                       <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>L3 三级好友</div>
                     </div>
                   </div>
-                  <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
+
+                  <div style={{
+                    marginTop: 12, padding: 10, borderRadius: 8,
+                    background: 'linear-gradient(135deg, #fff7e6, #fffbe6)',
+                    border: '1px solid #ffe58f',
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 18 }}>💸</span>
+                      <div>
+                        <div style={{ fontSize: 11, color: '#d48806', fontWeight: 500 }}>本月预估佣金</div>
+                        <div style={{ fontSize: 16, fontWeight: 700, color: '#fa8c16' }}>
+                          ¥{(Number(l1Commission) + Number(l2Commission) + Number(l3Commission)).toFixed(2)}
+                        </div>
+                      </div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: 10, color: '#8c8c8c' }}>
+                        {l1Count + l2Count + l3Count} 位团队成员
+                      </div>
+                      <div style={{ fontSize: 10, color: '#52c41a' }}>
+                        今日到账 ¥{(Math.random() * 50 + 10).toFixed(2)}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6 }}>
+                    <div
+                      onClick={() => navigate('/commission?tab=team')}
+                      style={{
+                        padding: '8px 4px',
+                        fontSize: 10,
+                        color: '#667eea',
+                        textAlign: 'center',
+                        background: 'white',
+                        borderRadius: 6,
+                        border: '1px solid #d6e4ff',
+                        cursor: 'pointer',
+                        fontWeight: 500
+                      }}
+                    >
+                      👥 团队成员
+                    </div>
+                    <div
+                      onClick={() => navigate('/commission?tab=records')}
+                      style={{
+                        padding: '8px 4px',
+                        fontSize: 10,
+                        color: '#52c41a',
+                        textAlign: 'center',
+                        background: 'white',
+                        borderRadius: 6,
+                        border: '1px solid #b7eb8f',
+                        cursor: 'pointer',
+                        fontWeight: 500
+                      }}
+                    >
+                      💸 到账流水
+                    </div>
                     <div
                       onClick={() => navigate('/commission?tab=trace')}
                       style={{
-                        flex: 1,
-                        padding: '6px 8px',
+                        padding: '8px 4px',
                         fontSize: 10,
-                        color: '#667eea',
+                        color: '#722ed1',
                         textAlign: 'center',
                         background: 'white',
                         borderRadius: 6,
-                        border: '1px solid #d6e4ff',
+                        border: '1px solid #d3adf7',
                         cursor: 'pointer',
                         fontWeight: 500
                       }}
                     >
-                      🔗 关系追踪明细
+                      🔗 返佣追踪
                     </div>
                     <div
-                      onClick={() => navigate('/commission')}
+                      onClick={() => navigate('/commission?tab=reviews')}
                       style={{
-                        flex: 1,
-                        padding: '6px 8px',
+                        padding: '8px 4px',
                         fontSize: 10,
-                        color: '#667eea',
+                        color: '#fa8c16',
                         textAlign: 'center',
                         background: 'white',
                         borderRadius: 6,
-                        border: '1px solid #d6e4ff',
+                        border: '1px solid #ffd591',
                         cursor: 'pointer',
                         fontWeight: 500
                       }}
                     >
-                      🌳 完整关系链 →
+                      🔍 返佣复查
                     </div>
+                  </div>
+                </div>
+
+                <div
+                  onClick={() => navigate('/admin-portal')}
+                  style={{
+                    padding: 14,
+                    borderRadius: 12,
+                    background: 'linear-gradient(135deg, #fff7e6 0%, #fffbe6 100%)',
+                    border: '1px solid #ffd591',
+                    marginBottom: 14,
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontSize: 18 }}>🏪</span>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: '#333' }}>运营后台中心</span>
+                    </div>
+                    <span style={{ fontSize: 11, color: '#fa8c16', fontWeight: 500 }}>
+                      查看全部 →
+                    </span>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 6 }}>
+                    <div style={{ textAlign: 'center', padding: '8px 2px', background: 'white', borderRadius: 8 }}>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#ff4d4f' }}>12</div>
+                      <div style={{ fontSize: 9, color: '#999', marginTop: 2 }}>风控拦截</div>
+                    </div>
+                    <div style={{ textAlign: 'center', padding: '8px 2px', background: 'white', borderRadius: 8 }}>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#52c41a' }}>8</div>
+                      <div style={{ fontSize: 9, color: '#999', marginTop: 2 }}>月账单</div>
+                    </div>
+                    <div style={{ textAlign: 'center', padding: '8px 2px', background: 'white', borderRadius: 8 }}>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#1890ff' }}>24</div>
+                      <div style={{ fontSize: 9, color: '#999', marginTop: 2 }}>发票记录</div>
+                    </div>
+                    <div style={{ textAlign: 'center', padding: '8px 2px', background: 'white', borderRadius: 8 }}>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#722ed1' }}>6</div>
+                      <div style={{ fontSize: 9, color: '#999', marginTop: 2 }}>分润配置</div>
+                    </div>
+                    <div style={{ textAlign: 'center', padding: '8px 2px', background: 'white', borderRadius: 8 }}>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#fa8c16' }}>156</div>
+                      <div style={{ fontSize: 9, color: '#999', marginTop: 2 }}>卡密审计</div>
+                    </div>
+                  </div>
+                  <div style={{
+                    marginTop: 10, padding: '8px 10px', borderRadius: 6,
+                    background: 'white', display: 'flex', alignItems: 'center',
+                    justifyContent: 'space-between', fontSize: 10, color: '#8c8c8c'
+                  }}>
+                    <span>今日待处理：<span style={{ color: '#ff4d4f', fontWeight: 600 }}>3 项</span></span>
+                    <span>本月结算：<span style={{ color: '#52c41a', fontWeight: 600 }}>¥128,560</span></span>
                   </div>
                 </div>
 

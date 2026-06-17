@@ -21,6 +21,13 @@ interface Product {
   hasFallback?: boolean;
   lastSync?: number;
   channelCount?: number;
+  sync_batch?: string;
+  region_limited?: number;
+  region_list?: string[];
+  supplier_count?: number;
+  supplier_stock?: number;
+  stock_sync_history?: Array<{ batch: string; time: number; stock: number }>;
+  sku_type?: string;
 }
 
 interface CategoryDef {
@@ -237,6 +244,7 @@ export default function Category() {
   const renderProductCard = (p: Product) => {
     const stock = getStockStatus(p.stock, p.stock_warning);
     const commission = calcCommission(p.price, p.commission_rate || 0);
+    const hasRegionLimit = p.region_limited === 1;
     return (
       <div
         key={p.id}
@@ -254,11 +262,26 @@ export default function Category() {
               HOT
             </span>
           )}
+          {hasRegionLimit && (
+            <span style={{
+              position: 'absolute', top: 8, right: 8,
+              padding: '2px 6px', borderRadius: 4,
+              background: 'rgba(250, 173, 20, 0.9)',
+              color: 'white', fontSize: 10, fontWeight: 600
+            }}>
+              📍 限售
+            </span>
+          )}
         </div>
         <div className="info">
           <div>
             <div style={{ display: 'flex', gap: 6, marginBottom: 4, flexWrap: 'wrap', alignItems: 'center' }}>
               <span className="tag tag-gray">{p.supplier_name || '官方供应商'}</span>
+              {(p.supplier_count || 0) > 1 && (
+                <span className="tag tag-blue" style={{ fontSize: 10 }}>
+                  {p.supplier_count}供应商
+                </span>
+              )}
               {p.hasFallback && (
                 <span
                   className="tag"
@@ -282,13 +305,32 @@ export default function Category() {
               )}
             </div>
             <div className="name" style={{ fontSize: 13 }}>{p.name}</div>
+            {p.sku_type && (
+              <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>
+                SKU类型: {p.sku_type}
+              </div>
+            )}
           </div>
           <div className="meta mt-8" style={{ flexWrap: 'wrap', gap: '6px 12px' }}>
             <span className={`stock ${stock.cls}`}>{stock.text}</span>
             {p.lastSync && (
               <span className="text-sm text-gray">{formatSyncTime(p.lastSync)}</span>
             )}
+            {p.sync_batch && (
+              <span style={{
+                fontSize: 10, padding: '1px 5px',
+                background: '#f6ffed', color: '#389e0d',
+                borderRadius: 3, border: '1px solid #b7eb8f'
+              }}>
+                批次: {p.sync_batch}
+              </span>
+            )}
           </div>
+          {hasRegionLimit && p.region_list && p.region_list.length > 0 && (
+            <div style={{ fontSize: 10, color: '#d48806', marginTop: 4 }}>
+              可售区域: {p.region_list.slice(0, 3).join('、')}{p.region_list.length > 3 ? '...' : ''}
+            </div>
+          )}
           <div className="bottom mt-8">
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
@@ -328,6 +370,55 @@ export default function Category() {
       />
 
       <div style={{ padding: '0 16px 12px' }}>
+        <div style={{
+          margin: '12px 0',
+          padding: '14px 16px',
+          borderRadius: 12,
+          background: 'linear-gradient(135deg, #667eea15, #764ba215)',
+          border: '1px solid #667eea30'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#333' }}>
+              📊 商品池总览
+            </div>
+            <div style={{ fontSize: 11, color: '#667eea', fontWeight: 500 }}>
+              共 {categories.length} 个分类
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#667eea' }}>{totalCount}</div>
+              <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>SKU总数</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#52c41a' }}>
+                {allProducts.filter(p => p.stock > 0).length}
+              </div>
+              <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>在售商品</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#fa8c16' }}>
+                {allProducts.filter(p => p.region_limited === 1).length}
+              </div>
+              <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>区域限售</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#722ed1' }}>
+                {allProducts.filter(p => (p.supplier_count || 0) > 1).length}
+              </div>
+              <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>多供应商</div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10, paddingTop: 10, borderTop: '1px dashed #667eea20' }}>
+            <div style={{ fontSize: 11, color: '#666' }}>
+              {allSuppliers.length} 家供应商 · {allProducts.filter(p => p.hasFallback).length} 款有降级保障
+            </div>
+            <div style={{ fontSize: 10, color: '#999' }}>
+              筛选后: {filteredCount} 款
+            </div>
+          </div>
+        </div>
+
         <div className="search-box" style={{ margin: 0 }}>
           <span>🔍</span>
           <input

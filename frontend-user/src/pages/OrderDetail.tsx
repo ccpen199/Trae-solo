@@ -312,6 +312,11 @@ export default function OrderDetail() {
   const [contacting, setContacting] = useState(false);
   const [showFullErrorTable, setShowFullErrorTable] = useState(false);
   const [tableFilter, setTableFilter] = useState<string>('all');
+  const [showAppealModal, setShowAppealModal] = useState(false);
+  const [appealing, setAppealing] = useState(false);
+  const [appealReason, setAppealReason] = useState('');
+  const [appealType, setAppealType] = useState('unreceived');
+  const [appealRecords, setAppealRecords] = useState<any[]>([]);
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -438,6 +443,50 @@ export default function OrderDetail() {
       toast.show('📞 客服通道接入中... 请稍候', 'info');
     } finally {
       setContacting(false);
+    }
+  };
+
+  const doAppeal = async () => {
+    if (!appealReason.trim()) {
+      toast.show('请填写申诉原因', 'warning');
+      return;
+    }
+    setAppealing(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const newRecord = {
+        id: Date.now(),
+        type: appealType,
+        reason: appealReason,
+        status: 'pending',
+        status_text: '待处理',
+        created_at: Date.now() / 1000,
+        operator: '用户'
+      };
+      setAppealRecords([newRecord, ...appealRecords]);
+      setShowAppealModal(false);
+      setAppealReason('');
+      toast.show('✅ 申诉已提交，客服将在24小时内处理', 'success');
+    } finally {
+      setAppealing(false);
+    }
+  };
+
+  const APPEAL_TYPES = [
+    { key: 'unreceived', label: '未到账', icon: '⏳' },
+    { key: 'wrong_amount', label: '金额不符', icon: '💰' },
+    { key: 'wrong_account', label: '账号错误', icon: '📱' },
+    { key: 'quality_issue', label: '商品质量问题', icon: '⚠️' },
+    { key: 'other', label: '其他问题', icon: '📝' }
+  ];
+
+  const getAppealStatusStyle = (status: string) => {
+    switch (status) {
+      case 'pending': return { bg: '#fffbe6', color: '#d46b08', border: '#ffe58f', text: '待处理' };
+      case 'processing': return { bg: '#e6f7ff', color: '#096dd9', border: '#91d5ff', text: '处理中' };
+      case 'resolved': return { bg: '#f6ffed', color: '#389e0d', border: '#b7eb8f', text: '已解决' };
+      case 'rejected': return { bg: '#fff1f0', color: '#cf1322', border: '#ffa39e', text: '已驳回' };
+      default: return { bg: '#f5f5f5', color: '#595959', border: '#d9d9d9', text: status };
     }
   };
 
@@ -1446,6 +1495,66 @@ export default function OrderDetail() {
         </div>
       )}
 
+      {isFailed && (
+        <div className="card" style={{ marginTop: 0 }}>
+          <div className="flex-between mb-16">
+            <span className="text-bold" style={{ fontSize: 16 }}>📝 申诉记录</span>
+            <button
+              className="btn-link"
+              onClick={() => setShowAppealModal(true)}
+              style={{ fontSize: 13, color: '#722ed1' }}
+            >
+              + 提交申诉
+            </button>
+          </div>
+          {appealRecords.length === 0 ? (
+            <div style={{
+              textAlign: 'center', padding: '30px 20px',
+              color: '#bfbfbf', fontSize: 13
+            }}>
+              <div style={{ fontSize: 36, marginBottom: 8 }}>📋</div>
+              暂无申诉记录，遇到问题可提交申诉
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {appealRecords.map((record: any) => {
+                const statusStyle = getAppealStatusStyle(record.status);
+                const typeInfo = APPEAL_TYPES.find(t => t.key === record.type);
+                return (
+                  <div key={record.id} style={{
+                    padding: 12, borderRadius: 10,
+                    background: '#fafafa', border: '1px solid #f0f0f0'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontSize: 16 }}>{typeInfo?.icon || '📝'}</span>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: '#262626' }}>
+                          {typeInfo?.label || record.type}
+                        </span>
+                      </div>
+                      <span style={{
+                        fontSize: 11, padding: '2px 8px', borderRadius: 10,
+                        background: statusStyle.bg, color: statusStyle.color,
+                        border: `1px solid ${statusStyle.border}`, fontWeight: 600
+                      }}>
+                        {statusStyle.text}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 12, color: '#595959', marginBottom: 6 }}>
+                      {record.reason}
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#8c8c8c' }}>
+                      <span>提交人：{record.operator}</span>
+                      <span>{formatTime(record.created_at)}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
       <div style={{
         position: 'fixed', bottom: 0, left: 0, right: 0,
         background: 'white', padding: '12px 16px',
@@ -1453,50 +1562,63 @@ export default function OrderDetail() {
         zIndex: 100, boxShadow: '0 -4px 20px rgba(0,0,0,0.06)'
       }}>
         {isFailed ? (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6 }}>
             <button
               className="btn-outline btn-block"
               onClick={doContact}
               disabled={contacting}
               style={{
-                padding: '12px 8px', borderRadius: 12,
-                border: '2px solid #faad14',
-                color: '#d46b08',
-                background: '#fffbe6',
-                fontSize: 12, fontWeight: 800
+                padding: '10px 4px', borderRadius: 10,
+                border: '2px solid #8c8c8c',
+                color: '#595959',
+                background: '#fafafa',
+                fontSize: 11, fontWeight: 700
               }}
             >
-              {contacting ? '⏳ 接入中' : '📞 联系客服'}
+              {contacting ? '⏳' : '📞'} 客服
+            </button>
+            <button
+              className="btn-outline btn-block"
+              onClick={() => setShowAppealModal(true)}
+              style={{
+                padding: '10px 4px', borderRadius: 10,
+                border: '2px solid #722ed1',
+                color: '#531dab',
+                background: '#f9f0ff',
+                fontSize: 11, fontWeight: 700
+              }}
+            >
+              📝 申诉
             </button>
             <button
               className="btn-outline btn-block"
               onClick={doRefund}
               disabled={refunding}
               style={{
-                padding: '12px 8px', borderRadius: 12,
+                padding: '10px 4px', borderRadius: 10,
                 border: '2px solid #ff4d4f',
                 color: '#cf1322',
                 background: '#fff1f0',
-                fontSize: 12, fontWeight: 800
+                fontSize: 11, fontWeight: 700
               }}
             >
-              {refunding ? '⏳ 提交中' : '💰 申请退款'}
+              {refunding ? '⏳' : '💰'} 退款
             </button>
             <button
               className="btn-primary btn-block"
               onClick={doRetry}
               disabled={retrying}
               style={{
-                padding: '12px 8px', borderRadius: 12,
+                padding: '10px 4px', borderRadius: 10,
                 background: errorInfo.retryable
                   ? 'linear-gradient(135deg, #52c41a 0%, #73d13d 100%)'
                   : 'linear-gradient(135deg, #bfbfbf 0%, #d9d9d9 100%)',
                 color: 'white',
-                fontSize: 12, fontWeight: 800,
+                fontSize: 11, fontWeight: 700,
                 boxShadow: errorInfo.retryable ? '0 4px 12px rgba(82,196,26,0.35)' : 'none'
               }}
             >
-              {retrying ? '⏳ 重试中' : '🔄 再次重试'}
+              {retrying ? '⏳' : '🔄'} 重试
             </button>
           </div>
         ) : order.status === 'pending' ? (
@@ -1568,6 +1690,126 @@ export default function OrderDetail() {
           </div>
         )}
       </div>
+
+      {showAppealModal && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.5)', zIndex: 1000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: 20
+        }} onClick={() => setShowAppealModal(false)}>
+          <div style={{
+            background: 'white', borderRadius: 16, width: '100%', maxWidth: 400,
+            maxHeight: '80vh', overflow: 'hidden',
+            display: 'flex', flexDirection: 'column'
+          }} onClick={e => e.stopPropagation()}>
+            <div style={{
+              padding: '16px 20px', borderBottom: '1px solid #f0f0f0',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+            }}>
+              <span style={{ fontSize: 16, fontWeight: 700, color: '#262626' }}>
+                📝 提交申诉
+              </span>
+              <button
+                onClick={() => setShowAppealModal(false)}
+                style={{
+                  background: 'none', border: 'none', fontSize: 20,
+                  color: '#bfbfbf', cursor: 'pointer', lineHeight: 1
+                }}
+              >
+                ×
+              </button>
+            </div>
+            <div style={{ padding: 20, overflowY: 'auto', flex: 1 }}>
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#262626', marginBottom: 10 }}>
+                  申诉类型
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+                  {APPEAL_TYPES.map(type => (
+                    <button
+                      key={type.key}
+                      onClick={() => setAppealType(type.key)}
+                      style={{
+                        padding: '10px 4px', borderRadius: 8,
+                        border: `2px solid ${appealType === type.key ? '#722ed1' : '#f0f0f0'}`,
+                        background: appealType === type.key ? '#f9f0ff' : '#fafafa',
+                        color: appealType === type.key ? '#722ed1' : '#595959',
+                        fontSize: 11, fontWeight: 600, cursor: 'pointer',
+                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4
+                      }}
+                    >
+                      <span style={{ fontSize: 18 }}>{type.icon}</span>
+                      <span>{type.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#262626', marginBottom: 10 }}>
+                  申诉原因
+                </div>
+                <textarea
+                  value={appealReason}
+                  onChange={(e) => setAppealReason(e.target.value)}
+                  placeholder="请详细描述您遇到的问题，以便我们更快为您处理..."
+                  style={{
+                    width: '100%', minHeight: 120, padding: 12,
+                    border: '1px solid #f0f0f0', borderRadius: 8,
+                    fontSize: 13, color: '#262626',
+                    resize: 'vertical', fontFamily: 'inherit',
+                    outline: 'none'
+                  }}
+                />
+                <div style={{ fontSize: 11, color: '#bfbfbf', marginTop: 6, textAlign: 'right' }}>
+                  {appealReason.length}/500
+                </div>
+              </div>
+              <div style={{
+                marginTop: 16, padding: 12, borderRadius: 8,
+                background: '#fffbe6', border: '1px solid #ffe58f'
+              }}>
+                <div style={{ fontSize: 12, color: '#d46b08', fontWeight: 600, marginBottom: 4 }}>
+                  ⏱️ 处理时效
+                </div>
+                <div style={{ fontSize: 11, color: '#ad6800' }}>
+                  客服将在24小时内处理您的申诉，处理结果将通过站内消息通知您。
+                </div>
+              </div>
+            </div>
+            <div style={{
+              padding: '12px 20px', borderTop: '1px solid #f0f0f0',
+              display: 'flex', gap: 10
+            }}>
+              <button
+                onClick={() => setShowAppealModal(false)}
+                style={{
+                  flex: 1, padding: '12px 0', borderRadius: 10,
+                  border: '1px solid #f0f0f0', background: '#fafafa',
+                  color: '#595959', fontSize: 14, fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                取消
+              </button>
+              <button
+                onClick={doAppeal}
+                disabled={appealing || !appealReason.trim()}
+                style={{
+                  flex: 2, padding: '12px 0', borderRadius: 10,
+                  background: appealing || !appealReason.trim()
+                    ? '#d9d9d9'
+                    : 'linear-gradient(135deg, #722ed1, #9254de)',
+                  color: 'white', fontSize: 14, fontWeight: 700,
+                  border: 'none', cursor: appealing || !appealReason.trim() ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {appealing ? '提交中...' : '提交申诉'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
