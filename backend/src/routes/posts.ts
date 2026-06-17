@@ -27,7 +27,12 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { topics, images, ...postData } = req.body;
+      const { topics, images, ...rawData } = req.body;
+      const postData: any = { ...rawData };
+      if (postData.priceAnchor === '' || postData.priceAnchor === undefined) postData.priceAnchor = null;
+      if (postData.sourceOrg === '' || postData.sourceOrg === undefined) postData.sourceOrg = null;
+      const unknownFields = ['pushScope', 'officialDoc', 'proofImage', 'riskLevel', 'urgency', 'expireHours', 'radiusMeters', 'enableResponseChain', 'enableSubscription'];
+      unknownFields.forEach(f => delete postData[f]);
       const user = req.user;
 
       let sourceLevel = user.role === 'ADMIN' || user.role === 'GOVERNMENT' ? 'OFFICIAL' : 'ORDINARY';

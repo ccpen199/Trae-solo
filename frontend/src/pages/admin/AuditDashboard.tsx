@@ -17,6 +17,9 @@ const AuditDashboard: React.FC = () => {
   const [isRumor, setIsRumor] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [actioningId, setActioningId] = useState<string | null>(null);
+  const [todayApproved, setTodayApproved] = useState(0);
+  const [showRumorConfirm, setShowRumorConfirm] = useState(false);
+  const [rumorPost, setRumorPost] = useState<AuditPost | null>(null);
 
   const fetchPending = async () => {
     setLoading(true);
@@ -32,15 +35,26 @@ const AuditDashboard: React.FC = () => {
     }
   };
 
+  const fetchTodayApproved = async () => {
+    try {
+      const res = await adminApi.dashboardOverview();
+      setTodayApproved(res.todayApproved ?? 0);
+    } catch {
+      console.error('获取今日审核统计失败');
+    }
+  };
+
   useEffect(() => {
     fetchPending();
+    fetchTodayApproved();
   }, [filter]);
 
   const handleApprove = async (post: AuditPost) => {
     setActioningId(post.id);
     try {
       await adminApi.approvePost(post.id, '内容合规，审核通过');
-      setPosts(posts.filter(p => p.id !== post.id));
+      await fetchPending();
+      await fetchTodayApproved();
       setSelectedPost(null);
     } catch (e: any) {
       alert(e.response?.data?.error || '操作失败');
@@ -56,6 +70,28 @@ const AuditDashboard: React.FC = () => {
     setIsRumor(false);
   };
 
+  const openRumorConfirm = (post: AuditPost) => {
+    setRumorPost(post);
+    setShowRumorConfirm(true);
+  };
+
+  const handleRumor = async () => {
+    if (!rumorPost) return;
+    setActioningId(rumorPost.id);
+    try {
+      await adminApi.rejectPost(rumorPost.id, '内容被标记为谣言', true);
+      await fetchPending();
+      await fetchTodayApproved();
+      setSelectedPost(null);
+      setShowRumorConfirm(false);
+      setRumorPost(null);
+    } catch (e: any) {
+      alert(e.response?.data?.error || '操作失败');
+    } finally {
+      setActioningId(null);
+    }
+  };
+
   const handleReject = async () => {
     if (!selectedPost || !rejectReason.trim()) {
       alert('请填写拒绝原因');
@@ -64,7 +100,8 @@ const AuditDashboard: React.FC = () => {
     setActioningId(selectedPost.id);
     try {
       await adminApi.rejectPost(selectedPost.id, rejectReason, isRumor);
-      setPosts(posts.filter(p => p.id !== selectedPost.id));
+      await fetchPending();
+      await fetchTodayApproved();
       setSelectedPost(null);
       setShowRejectModal(false);
     } catch (e: any) {
@@ -114,41 +151,47 @@ const AuditDashboard: React.FC = () => {
 
   const stats = {
     total: posts.length,
-    critical: posts.filter(p => p.auditLogs?.[0]?.riskLevel === 'CRITICAL').length,
-    high: posts.filter(p => p.auditLogs?.[0]?.riskLevel === 'HIGH').length,
-    medium: posts.filter(p => p.auditLogs?.[0]?.riskLevel === 'MEDIUM').length,
-    low: posts.filter(p => p.auditLogs?.[0]?.riskLevel === 'LOW').length,
+    highRisk: posts.filter(p => {
+      const level = p.auditLogs?.[0]?.riskLevel;
+      return level === 'CRITICAL' || level === 'HIGH';
+    }).length,
+    todayApproved,
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800">内容审核工作台</h1>
-          <p className="text-sm text-slate-500 mt-1">AI初筛 + 人工复审 · 守护社区内容安全</p>
-        </div>
-        <div className="text-right">
-          <div className="text-3xl font-bold text-slate-800">{stats.total}</div>
-          <div className="text-xs text-slate-500">待审核内容</div>
-        </div>
+      <div>
+        <h1 className="text-2xl font-bold text-slate-800">内容审核工作台</h1>
+        <p className="text-sm text-slate-500 mt-1">AI初筛 + 人工复审 · 守护社区内容安全</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
-        <Card className="p-4 border-l-4 border-l-red-500">
-          <div className="text-xs text-slate-500">极高风险</div>
-          <div className="text-2xl font-bold text-red-600 mt-1">{stats.critical}</div>
+      <div className="grid grid-cols-3 gap-6">
+        <Card className="p-6 bg-gradient-to-br from-red-50 to-red-100 border border-red-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm font-medium text-red-700">待审核总数</div>
+              <div className="text-4xl font-bold text-red-600 mt-2">{stats.total}</div>
+            </div>
+            <div className="text-4xl">📋</div>
+          </div>
         </Card>
-        <Card className="p-4 border-l-4 border-l-orange-500">
-          <div className="text-xs text-slate-500">高风险</div>
-          <div className="text-2xl font-bold text-orange-600 mt-1">{stats.high}</div>
+        <Card className="p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm font-medium text-yellow-700">高风险内容数</div>
+              <div className="text-4xl font-bold text-yellow-600 mt-2">{stats.highRisk}</div>
+            </div>
+            <div className="text-4xl">⚠️</div>
+          </div>
         </Card>
-        <Card className="p-4 border-l-4 border-l-yellow-500">
-          <div className="text-xs text-slate-500">中风险</div>
-          <div className="text-2xl font-bold text-yellow-600 mt-1">{stats.medium}</div>
-        </Card>
-        <Card className="p-4 border-l-4 border-l-green-500">
-          <div className="text-xs text-slate-500">低风险</div>
-          <div className="text-2xl font-bold text-green-600 mt-1">{stats.low}</div>
+        <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm font-medium text-green-700">今日已审核数</div>
+              <div className="text-4xl font-bold text-green-600 mt-2">{stats.todayApproved}</div>
+            </div>
+            <div className="text-4xl">✅</div>
+          </div>
         </Card>
       </div>
 
@@ -257,6 +300,36 @@ const AuditDashboard: React.FC = () => {
                       ))}
                     </div>
                   )}
+
+                  <div className="mt-3 pt-3 border-t border-slate-100 flex items-center gap-2 flex-wrap" onClick={e => e.stopPropagation()}>
+                    <button
+                      onClick={() => handleApprove(post)}
+                      disabled={actioningId === post.id}
+                      className="px-3 py-1.5 text-sm font-medium rounded-lg bg-green-500 text-white hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      ✅ 通过
+                    </button>
+                    <button
+                      onClick={() => openRejectModal(post)}
+                      disabled={actioningId === post.id}
+                      className="px-3 py-1.5 text-sm font-medium rounded-lg bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      ❌ 拒绝
+                    </button>
+                    <button
+                      onClick={() => openRumorConfirm(post)}
+                      disabled={actioningId === post.id}
+                      className="px-3 py-1.5 text-sm font-medium rounded-lg bg-orange-600 text-white hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      🚩 标记谣言
+                    </button>
+                    <button
+                      onClick={() => handleTrace(post)}
+                      className="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                    >
+                      🔍 查看溯源
+                    </button>
+                  </div>
                 </Card>
               );
             })
@@ -411,6 +484,35 @@ const AuditDashboard: React.FC = () => {
                   确认拒绝
                 </Button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showRumorConfirm && rumorPost && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowRumorConfirm(false)}>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md" onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-slate-800 mb-4">🚩 确认标记为谣言</h3>
+            <div className="p-4 bg-orange-50 rounded-xl mb-4 space-y-2 text-sm">
+              <div>
+                <span className="text-slate-500">标题：</span>
+                <span className="font-medium">{rumorPost.title}</span>
+              </div>
+              <div>
+                <span className="text-slate-500">作者：</span>
+                <span>{rumorPost.user?.nickname}</span>
+              </div>
+            </div>
+            <p className="text-sm text-slate-600 mb-6">
+              标记为谣言后，该内容将被拒绝并进入谣言库，关联内容将被限流。此操作不可撤销，请确认。
+            </p>
+            <div className="flex gap-2">
+              <Button variant="secondary" size="sm" className="flex-1" onClick={() => setShowRumorConfirm(false)}>
+                取消
+              </Button>
+              <Button variant="danger" size="sm" className="flex-1" onClick={handleRumor} disabled={actioningId === rumorPost.id}>
+                确认标记谣言
+              </Button>
             </div>
           </div>
         </div>

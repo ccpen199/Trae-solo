@@ -306,7 +306,15 @@ const HomePage: React.FC = () => {
           {quickActions.map((action) => (
             <button
               key={action.label}
-              onClick={() => navigate(action.page || `/create`, { state: { defaultType: action.type } })}
+              onClick={() => {
+                const targetPage = action.page || '/create';
+                console.log('[快速发布] 点击:', action.label, '→ 跳转:', targetPage, 'type:', action.type);
+                if (action.page) {
+                  navigate(action.page);
+                } else {
+                  navigate('/create', { state: { defaultType: action.type } });
+                }
+              }}
               aria-label={action.actionText}
               className="group relative overflow-hidden p-5 rounded-2xl bg-white border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all"
             >

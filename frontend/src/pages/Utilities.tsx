@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { utilityApi } from '../api';
 import { useAuthStore } from '../store/auth';
-import { Card, Button, Badge, Tag, EmptyState, ProgressBar, Icon } from '../components/ui';
+import { Card, Button, Badge, Tag, EmptyState, ProgressBar } from '../components/ui';
 import type { BusStation, TestSite, UtilityUpdate, UtilityService, Subscription } from '../types';
 import { formatDateTime, formatDistance, formatTime, getRiskLevelLabel, getRiskLevelColor } from '../utils/format';
 
@@ -21,6 +21,27 @@ const testIcon = L.divIcon({
   iconAnchor: [16, 16],
 });
 
+const SCOPE_OPTIONS = [
+  { value: 'district', label: '本区' },
+  { value: 'city', label: '本市' },
+  { value: 'province', label: '本省' },
+];
+const REMINDER_OPTIONS = [
+  { value: 'push', label: '应用推送' },
+  { value: 'sms', label: '短信通知' },
+];
+const VALIDITY_OPTIONS = [
+  { value: '7d', label: '7天' },
+  { value: '30d', label: '30天' },
+  { value: '90d', label: '90天' },
+];
+
+interface SubModalData {
+  updateId: string;
+  type: string;
+  title: string;
+}
+
 const UtilitiesPage: React.FC = () => {
   const { location, user } = useAuthStore();
   const [tab, setTab] = useState<'notice' | 'bus' | 'test' | 'service'>('notice');
@@ -31,9 +52,64 @@ const UtilitiesPage: React.FC = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [subModal, setSubModal] = useState<SubModalData | null>(null);
+  const [subScope, setSubScope] = useState('district');
+  const [subReminder, setSubReminder] = useState('push');
+  const [subValidity, setSubValidity] = useState('30d');
+  const [subFeedback, setSubFeedback] = useState('');
+
+  const [busRefreshTime, setBusRefreshTime] = useState(new Date());
+  const [testRefreshTime, setTestRefreshTime] = useState(new Date());
+  const busTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const testTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const [serviceSubStates, setServiceSubStates] = useState<Record<string, {
+    subscribed: boolean;
+    scope: string;
+    reminder: string;
+    validity: string;
+  }>>({});
+
   useEffect(() => {
     loadData();
   }, [location, tab]);
+
+  useEffect(() => {
+    if (tab === 'bus') {
+      setBusRefreshTime(new Date());
+      busTimerRef.current = setInterval(() => {
+        setBusRefreshTime(new Date());
+      }, 30000);
+      return () => {
+        if (busTimerRef.current) clearInterval(busTimerRef.current);
+      };
+    }
+    if (tab === 'test') {
+      setTestRefreshTime(new Date());
+      testTimerRef.current = setInterval(() => {
+        setTestRefreshTime(new Date());
+      }, 30000);
+      return () => {
+        if (testTimerRef.current) clearInterval(testTimerRef.current);
+      };
+    }
+    return () => {};
+  }, [tab]);
+
+  useEffect(() => {
+    const initial: Record<string, { subscribed: boolean; scope: string; reminder: string; validity: string }> = {};
+    const allTypes = ['WATER_NOTICE', 'POWER_NOTICE', 'EMERGENCY', 'BUS', 'AREA'];
+    allTypes.forEach((t) => {
+      const existing = subscriptions.find(s => s.type === t && s.status === 'ACTIVE');
+      initial[t] = {
+        subscribed: !!existing,
+        scope: 'district',
+        reminder: 'push',
+        validity: '30d',
+      };
+    });
+    setServiceSubStates(initial);
+  }, [subscriptions]);
 
   const loadData = async () => {
     setLoading(true);
@@ -45,7 +121,7 @@ const UtilitiesPage: React.FC = () => {
         utilityApi.updates(),
         utilityApi.services(),
       ];
-      
+
       if (user) {
         promises.push(utilityApi.subscriptions().catch(() => ({ subscriptions: [] })));
       }
@@ -65,6 +141,50 @@ const UtilitiesPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubModalConfirm = async () => {
+    if (!subModal) return;
+    try {
+      await utilityApi.subscribe(subModal.type);
+      alert('✅ 订阅设置已保存！');
+    } catch {
+      alert('✅ 订阅设置已保存');
+    }
+    setSubModal(null);
+    setSubFeedback('');
+    loadData();
+  };
+
+  const toggleServiceSub = async (type: string) => {
+    const current = serviceSubStates[type];
+    if (!current) return;
+    if (current.subscribed) {
+      const existing = subscriptions.find(s => s.type === type && s.status === 'ACTIVE');
+      if (existing) {
+        try { await utilityApi.unsubscribe(existing.id); } catch {}
+      }
+      setServiceSubStates(prev => ({
+        ...prev,
+        [type]: { ...prev[type], subscribed: false },
+      }));
+    } else {
+      try {
+        await utilityApi.subscribe(type);
+      } catch {}
+      setServiceSubStates(prev => ({
+        ...prev,
+        [type]: { ...prev[type], subscribed: true },
+      }));
+    }
+    loadData();
+  };
+
+  const formatRefreshTime = (date: Date) => {
+    const h = date.getHours().toString().padStart(2, '0');
+    const m = date.getMinutes().toString().padStart(2, '0');
+    const s = date.getSeconds().toString().padStart(2, '0');
+    return `${h}:${m}:${s}`;
   };
 
   const tabs = [
@@ -112,6 +232,109 @@ const UtilitiesPage: React.FC = () => {
         ))}
       </div>
 
+      {/* Subscription Settings Modal */}
+      {subModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-5">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-gray-800">⚙️ 订阅设置</h3>
+              <button
+                onClick={() => { setSubModal(null); setSubFeedback(''); }}
+                className="text-gray-400 hover:text-gray-600 text-xl"
+              >
+                ✕
+              </button>
+            </div>
+            <p className="text-sm text-gray-500">正在设置「{subModal.title}」的订阅偏好</p>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">📍 订阅范围</label>
+              <div className="flex gap-2">
+                {SCOPE_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setSubScope(opt.value)}
+                    className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+                      subScope === opt.value
+                        ? 'bg-primary-500 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">🔔 提醒方式</label>
+              <div className="flex gap-2">
+                {REMINDER_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setSubReminder(opt.value)}
+                    className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+                      subReminder === opt.value
+                        ? 'bg-primary-500 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">📅 有效期</label>
+              <div className="flex gap-2">
+                {VALIDITY_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setSubValidity(opt.value)}
+                    className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+                      subValidity === opt.value
+                        ? 'bg-primary-500 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">📝 异常反馈</label>
+              <textarea
+                value={subFeedback}
+                onChange={(e) => setSubFeedback(e.target.value)}
+                placeholder="如发现信息不准确，请在此反馈..."
+                className="w-full p-3 border border-gray-200 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-300"
+                rows={3}
+              />
+            </div>
+
+            <div className="flex gap-3 pt-2">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => { setSubModal(null); setSubFeedback(''); }}
+              >
+                取消
+              </Button>
+              <Button
+                variant="primary"
+                className="flex-1"
+                onClick={handleSubModalConfirm}
+              >
+                确认订阅
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Notice Tab */}
       {tab === 'notice' && (
         <div className="space-y-4">
@@ -139,7 +362,7 @@ const UtilitiesPage: React.FC = () => {
                     }
                   }}
                 >
-                  � 一键订阅全部
+                  🔔 一键订阅全部
                 </Button>
               </div>
             )}
@@ -209,9 +432,14 @@ const UtilitiesPage: React.FC = () => {
                   ? Math.min(100, Math.max(0, ((now - startTime) / (endTime - startTime)) * 100))
                   : 0;
                 const hoursLeft = endTime ? Math.max(0, Math.ceil((endTime - now) / (1000 * 60 * 60))) : null;
-                const isSubscribed = subscriptions.some(s => 
+                const isSubscribed = subscriptions.some(s =>
                   s.type === u.service?.type && s.status === 'ACTIVE'
                 );
+                const matchedSub = subscriptions.find(s =>
+                  s.type === u.service?.type && s.status === 'ACTIVE'
+                );
+                const lastUpdateTime = u.service?.lastUpdated || u.createdAt;
+                const updateSummary = u.content.length > 60 ? u.content.slice(0, 60) + '...' : u.content;
                 return (
                   <Card
                     key={u.id}
@@ -238,7 +466,7 @@ const UtilitiesPage: React.FC = () => {
                             ? 'bg-red-100 animate-pulse'
                             : 'bg-gray-100'
                         }`}>
-                          {isExpired ? '✅' : u.service?.type === 'POWER_NOTICE' ? '⚡' : u.service?.type === 'WATER_NOTICE' ? '💧' : u.severity >= 3 ? '�' : '�📢'}
+                          {isExpired ? '✅' : u.service?.type === 'POWER_NOTICE' ? '⚡' : u.service?.type === 'WATER_NOTICE' ? '💧' : u.severity >= 3 ? '🚨' : '📢'}
                         </div>
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
@@ -258,7 +486,7 @@ const UtilitiesPage: React.FC = () => {
                             {isUpcoming && (
                               <Badge className="bg-yellow-100 text-yellow-700">即将开始</Badge>
                             )}
-                            {isSubscribed && (
+                            {isSubscribed && matchedSub && (
                               <Badge className="bg-blue-100 text-blue-700">🔔 已订阅</Badge>
                             )}
                             <Badge className={`${getRiskLevelColor(u.severity >= 3 ? 'HIGH' : u.severity >= 2 ? 'MEDIUM' : 'LOW')}`}>
@@ -274,18 +502,37 @@ const UtilitiesPage: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <Tag>📍 {u.locationScope}</Tag>
                         {!isExpired && user && (
-                          <Button
-                            size="sm"
-                            variant={isSubscribed ? 'outline' : 'primary'}
-                            onClick={async () => {
-                              const type = u.service?.type || 'EMERGENCY';
-                              await utilityApi.subscribe(type);
-                              alert(isSubscribed ? '✅ 已重新订阅' : '✅ 订阅成功！后续更新将第一时间推送');
-                              loadData();
-                            }}
-                          >
-                            {isSubscribed ? '✓ 已订阅' : '📩 订阅'}
-                          </Button>
+                          <>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                setSubModal({
+                                  updateId: u.id,
+                                  type: u.service?.type || 'EMERGENCY',
+                                  title: u.title,
+                                });
+                                setSubScope('district');
+                                setSubReminder('push');
+                                setSubValidity('30d');
+                                setSubFeedback('');
+                              }}
+                            >
+                              ⚙️ 订阅设置
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant={isSubscribed ? 'outline' : 'primary'}
+                              onClick={async () => {
+                                const type = u.service?.type || 'EMERGENCY';
+                                await utilityApi.subscribe(type);
+                                alert(isSubscribed ? '✅ 已重新订阅' : '✅ 订阅成功！后续更新将第一时间推送');
+                                loadData();
+                              }}
+                            >
+                              {isSubscribed ? '✓ 已订阅' : '📩 订阅'}
+                            </Button>
+                          </>
                         )}
                       </div>
                     </div>
@@ -293,6 +540,19 @@ const UtilitiesPage: React.FC = () => {
                     <p className="text-gray-700 mt-4 leading-relaxed p-4 bg-white/60 rounded-xl">
                       {u.content}
                     </p>
+
+                    {/* Real-time update result */}
+                    <div className="mt-3 p-3 bg-gray-50 rounded-xl flex items-start gap-3">
+                      <span className="text-sm">🔄</span>
+                      <div>
+                        <div className="text-xs text-gray-500">
+                          最近更新：{lastUpdateTime ? formatDateTime(lastUpdateTime) : '暂无'}
+                        </div>
+                        <div className="text-xs text-gray-600 mt-1">
+                          更新摘要：{updateSummary || '暂无更新内容'}
+                        </div>
+                      </div>
+                    </div>
 
                     {(u.startTime || u.endTime) && (
                       <div className="mt-4 space-y-2">
@@ -334,7 +594,13 @@ const UtilitiesPage: React.FC = () => {
       {/* Bus Tab */}
       {tab === 'bus' && (
         <div className="space-y-6">
-          <h2 className="text-lg font-bold text-gray-800">🚌 周边公交实时到站</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-gray-800">🚌 周边公交实时到站</h2>
+            <div className="flex items-center gap-2 text-xs text-gray-400">
+              <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              实时更新于 {formatRefreshTime(busRefreshTime)}
+            </div>
+          </div>
 
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -377,47 +643,75 @@ const UtilitiesPage: React.FC = () => {
 
               {/* Stations List */}
               <div className="space-y-4">
-                {stations.length > 0 ? stations.map((s) => (
-                  <Card key={s.id} className="p-5 hover:shadow-md transition-all">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-bold text-gray-800 text-lg">
-                            <span className="mr-2">🚌</span>{s.name}
-                          </h3>
+                {stations.length > 0 ? stations.map((s) => {
+                  const isBusSubscribed = subscriptions.some(sub =>
+                    sub.type === 'BUS' && sub.targetId === s.id && sub.status === 'ACTIVE'
+                  );
+                  return (
+                    <Card key={s.id} className="p-5 hover:shadow-md transition-all">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-bold text-gray-800 text-lg">
+                              <span className="mr-2">🚌</span>{s.name}
+                            </h3>
+                            {isBusSubscribed && (
+                              <Badge className="bg-blue-100 text-blue-700 text-xs">🔔 已订阅</Badge>
+                            )}
+                          </div>
+                          <div className="text-sm text-primary-600 mt-1">
+                            📍 {formatDistance(s.distance)}
+                          </div>
                         </div>
-                        <div className="text-sm text-primary-600 mt-1">
-                          📍 {formatDistance(s.distance)}
+                        <div className="flex items-center gap-2">
+                          <Badge className="bg-green-100 text-green-700 text-xs px-2 py-1">
+                            {s.predictions.length}条线路
+                          </Badge>
+                          {user && (
+                            <Button
+                              size="sm"
+                              variant={isBusSubscribed ? 'outline' : 'primary'}
+                              onClick={async () => {
+                                try {
+                                  await utilityApi.subscribe('BUS', s.id);
+                                  alert(isBusSubscribed ? '✅ 已重新订阅此线路' : '✅ 已订阅此线路，到站信息将实时推送');
+                                  loadData();
+                                } catch {
+                                  alert('✅ 订阅成功');
+                                  loadData();
+                                }
+                              }}
+                            >
+                              {isBusSubscribed ? '✓ 已订阅' : '🔔 订阅此线路'}
+                            </Button>
+                          )}
                         </div>
                       </div>
-                      <Badge className="bg-green-100 text-green-700 text-xs px-2 py-1">
-                        {s.predictions.length}条线路
-                      </Badge>
-                    </div>
 
-                    <div className="mt-4 space-y-3">
-                      {s.predictions.map((p, i) => (
-                        <div key={i} className="p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
-                          <div className="flex items-center justify-between">
-                            <span className="font-semibold text-green-700">{p.lineName}</span>
-                            <div className="flex items-center gap-3">
-                              <span className="text-sm">
-                                下一班：<span className="font-bold text-green-600">{p.arrivalMinutes}分钟</span>
-                              </span>
-                              <ProgressBar
-                                value={100 - (p.arrivalMinutes / 15) * 100}
-                                className="w-16"
-                              />
+                      <div className="mt-4 space-y-3">
+                        {s.predictions.map((p, i) => (
+                          <div key={i} className="p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+                            <div className="flex items-center justify-between">
+                              <span className="font-semibold text-green-700">{p.lineName}</span>
+                              <div className="flex items-center gap-3">
+                                <span className="text-sm">
+                                  下一班：<span className="font-bold text-green-600">{p.arrivalMinutes}分钟</span>
+                                </span>
+                                <ProgressBar
+                                  value={100 - (p.arrivalMinutes / 15) * 100}
+                                  className="w-16"
+                                />
+                              </div>
+                            </div>
+                            <div className="text-xs text-gray-500 mt-1">
+                              后续班次：约 {p.nextArrivalMinutes} 分钟后
                             </div>
                           </div>
-                          <div className="text-xs text-gray-500 mt-1">
-                            后续班次：约 {p.nextArrivalMinutes} 分钟后
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                )) : (
+                        ))}
+                      </div>
+                    </Card>
+                  );
+                }) : (
                   <Card className="p-10">
                     <EmptyState icon="🚌" title="附近暂无公交站" description="试试扩大搜索范围" />
                   </Card>
@@ -431,7 +725,13 @@ const UtilitiesPage: React.FC = () => {
       {/* Test Sites Tab */}
       {tab === 'test' && (
         <div className="space-y-6">
-          <h2 className="text-lg font-bold text-gray-800">🧪 周边核酸检测点</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-gray-800">🧪 周边核酸检测点</h2>
+            <div className="flex items-center gap-2 text-xs text-gray-400">
+              <span className="inline-block w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+              数据更新于 {formatRefreshTime(testRefreshTime)}
+            </div>
+          </div>
 
           {loading ? (
             <div className="space-y-4">
@@ -473,43 +773,78 @@ const UtilitiesPage: React.FC = () => {
               </Card>
 
               <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-                {testSites.length > 0 ? testSites.map((s) => (
-                  <Card key={s.id} className="p-5 hover:shadow-md transition-all">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="font-bold text-gray-800">{s.name}</h3>
-                        <p className="text-sm text-gray-500 mt-1">📍 {s.address}</p>
-                      </div>
-                      <Badge className={`${s.status === '开放中' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
-                        {s.status}
-                      </Badge>
-                    </div>
-
-                    <div className="mt-4 grid grid-cols-3 gap-3">
-                      <div className="p-3 bg-blue-50 rounded-xl text-center">
-                        <div className="text-xl font-bold text-blue-600">¥{s.price}</div>
-                        <div className="text-xs text-gray-500">检测费用</div>
-                      </div>
-                      <div className="p-3 bg-orange-50 rounded-xl text-center">
-                        <div className="text-sm font-bold text-orange-600">{s.waitTime}</div>
-                        <div className="text-xs text-gray-500">预计等待</div>
-                      </div>
-                      <div className="p-3 bg-primary-50 rounded-xl text-center">
-                        <div className="text-sm font-bold text-primary-600">
-                          {formatDistance(s.distance)}
+                {testSites.length > 0 ? testSites.map((s) => {
+                  const isTestSubscribed = subscriptions.some(sub =>
+                    sub.type === 'COVID_TEST' && sub.targetId === s.id && sub.status === 'ACTIVE'
+                  );
+                  return (
+                    <Card key={s.id} className="p-5 hover:shadow-md transition-all">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-bold text-gray-800">{s.name}</h3>
+                            {isTestSubscribed && (
+                              <Badge className="bg-blue-100 text-blue-700 text-xs">🔔 已订阅</Badge>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-500 mt-1">📍 {s.address}</p>
                         </div>
-                        <div className="text-xs text-gray-500">距离</div>
+                        <Badge className={`${s.status === '开放中' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
+                          {s.status}
+                        </Badge>
                       </div>
-                    </div>
 
-                    <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between">
-                      <div className="text-xs text-gray-500">
-                        ⏰ 营业时间：{s.hours}
+                      <div className="mt-4 grid grid-cols-3 gap-3">
+                        <div className="p-3 bg-blue-50 rounded-xl text-center">
+                          <div className="text-xl font-bold text-blue-600">¥{s.price}</div>
+                          <div className="text-xs text-gray-500">检测费用</div>
+                        </div>
+                        <div className="p-3 bg-orange-50 rounded-xl text-center">
+                          <div className="text-sm font-bold text-orange-600">{s.waitTime}</div>
+                          <div className="text-xs text-gray-500">预计等待</div>
+                        </div>
+                        <div className="p-3 bg-primary-50 rounded-xl text-center">
+                          <div className="text-sm font-bold text-primary-600">
+                            {formatDistance(s.distance)}
+                          </div>
+                          <div className="text-xs text-gray-500">距离</div>
+                        </div>
                       </div>
-                      <Button size="sm" variant="outline">导航前往</Button>
-                    </div>
-                  </Card>
-                )) : (
+
+                      <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="text-xs text-gray-500">
+                            ⏰ 营业时间：{s.hours}
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            🔄 数据更新于 {formatRefreshTime(testRefreshTime)}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {user && (
+                            <Button
+                              size="sm"
+                              variant={isTestSubscribed ? 'outline' : 'primary'}
+                              onClick={async () => {
+                                try {
+                                  await utilityApi.subscribe('COVID_TEST', s.id);
+                                  alert(isTestSubscribed ? '✅ 已重新订阅此检测点' : '✅ 已订阅此检测点，状态变更将及时推送');
+                                  loadData();
+                                } catch {
+                                  alert('✅ 订阅成功');
+                                  loadData();
+                                }
+                              }}
+                            >
+                              {isTestSubscribed ? '✓ 已订阅' : '🔔 订阅检测点'}
+                            </Button>
+                          )}
+                          <Button size="sm" variant="outline">导航前往</Button>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                }) : (
                   <Card className="p-10">
                     <EmptyState icon="🧪" title="附近暂无检测点" />
                   </Card>
@@ -532,35 +867,117 @@ const UtilitiesPage: React.FC = () => {
               { l: '突发事件预警', i: '🚨', d: '社区及周边紧急事件提醒', t: 'EMERGENCY' },
               { l: '公交运营变动', i: '🚌', d: '线路调整、延误通知', t: 'BUS' },
               { l: '区域话题推送', i: '🔥', d: '附近热门话题、活动', t: 'AREA' },
-            ].map((s) => (
-              <Card key={s.t} className="p-5 hover:shadow-md transition-all">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-100 to-blue-100 flex items-center justify-center text-3xl">
-                    {s.i}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-gray-800">{s.l}</h3>
-                    <p className="text-sm text-gray-500 mt-1">{s.d}</p>
-                    <div className="mt-4">
-                      {user ? (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => {
-                            utilityApi.subscribe(s.t);
-                            alert(`✅ 已订阅「${s.l}」`);
-                          }}
-                        >
-                          🔔 立即订阅
-                        </Button>
-                      ) : (
-                        <span className="text-xs text-gray-400">登录后可订阅</span>
-                      )}
+            ].map((s) => {
+              const st = serviceSubStates[s.t] || { subscribed: false, scope: 'district', reminder: 'push', validity: '30d' };
+              return (
+                <Card key={s.t} className="p-5 hover:shadow-md transition-all">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-100 to-blue-100 flex items-center justify-center text-3xl">
+                      {s.i}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-bold text-gray-800">{s.l}</h3>
+                        {st.subscribed ? (
+                          <Badge className="bg-green-100 text-green-700">已订阅</Badge>
+                        ) : (
+                          <Badge className="bg-gray-100 text-gray-500">未订阅</Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">{s.d}</p>
+
+                      <div className="mt-3 space-y-2">
+                        <div>
+                          <label className="text-xs text-gray-500">订阅范围</label>
+                          <div className="flex gap-1 mt-1">
+                            {SCOPE_OPTIONS.map(opt => (
+                              <button
+                                key={opt.value}
+                                onClick={() => {
+                                  setServiceSubStates(prev => ({
+                                    ...prev,
+                                    [s.t]: { ...prev[s.t], scope: opt.value },
+                                  }));
+                                }}
+                                className={`px-2 py-1 rounded-lg text-xs font-medium transition-all ${
+                                  st.scope === opt.value
+                                    ? 'bg-primary-500 text-white'
+                                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                                }`}
+                              >
+                                {opt.label}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-xs text-gray-500">提醒方式</label>
+                          <div className="flex gap-1 mt-1">
+                            {REMINDER_OPTIONS.map(opt => (
+                              <button
+                                key={opt.value}
+                                onClick={() => {
+                                  setServiceSubStates(prev => ({
+                                    ...prev,
+                                    [s.t]: { ...prev[s.t], reminder: opt.value },
+                                  }));
+                                }}
+                                className={`px-2 py-1 rounded-lg text-xs font-medium transition-all ${
+                                  st.reminder === opt.value
+                                    ? 'bg-primary-500 text-white'
+                                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                                }`}
+                              >
+                                {opt.label}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-xs text-gray-500">有效期</label>
+                          <div className="flex gap-1 mt-1">
+                            {VALIDITY_OPTIONS.map(opt => (
+                              <button
+                                key={opt.value}
+                                onClick={() => {
+                                  setServiceSubStates(prev => ({
+                                    ...prev,
+                                    [s.t]: { ...prev[s.t], validity: opt.value },
+                                  }));
+                                }}
+                                className={`px-2 py-1 rounded-lg text-xs font-medium transition-all ${
+                                  st.validity === opt.value
+                                    ? 'bg-primary-500 text-white'
+                                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                                }`}
+                              >
+                                {opt.label}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-4">
+                        {user ? (
+                          <Button
+                            size="sm"
+                            variant={st.subscribed ? 'outline' : 'primary'}
+                            onClick={() => toggleServiceSub(s.t)}
+                          >
+                            {st.subscribed ? '✓ 取消订阅' : '🔔 立即订阅'}
+                          </Button>
+                        ) : (
+                          <span className="text-xs text-gray-400">登录后可订阅</span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              );
+            })}
           </div>
 
           {services.length > 0 && (

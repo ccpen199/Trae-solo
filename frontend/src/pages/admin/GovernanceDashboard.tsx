@@ -28,6 +28,9 @@ const GovernanceDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedMerchantId, setSelectedMerchantId] = useState('');
   const [merchants, setMerchants] = useState<any[]>([]);
+  const [showHotspots, setShowHotspots] = useState(false);
+  const [merchantEfficiency, setMerchantEfficiency] = useState<any>(null);
+  const [efficiencyLoading, setEfficiencyLoading] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
@@ -45,6 +48,18 @@ const GovernanceDashboard: React.FC = () => {
       console.error(e);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchMerchantEfficiency = async () => {
+    setEfficiencyLoading(true);
+    try {
+      const data = await adminApi.dashboardOverview();
+      setMerchantEfficiency(data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setEfficiencyLoading(false);
     }
   };
 
@@ -124,6 +139,106 @@ const GovernanceDashboard: React.FC = () => {
             🔄 刷新数据
           </button>
         </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {[
+          {
+            icon: '🛡️',
+            title: '内容安全复审',
+            desc: 'AI初筛+人工复审',
+            btnLabel: '进入复审',
+            btnAction: () => navigate('/admin/audit'),
+            gradient: 'from-blue-500 to-indigo-600',
+            lightBg: 'bg-blue-50',
+            borderColor: 'border-blue-200',
+          },
+          {
+            icon: '🔍',
+            title: '谣言溯源追踪',
+            desc: '完整溯源链+辟谣澄清',
+            btnLabel: '查看溯源',
+            btnAction: () => navigate('/admin/audit'),
+            gradient: 'from-amber-500 to-orange-600',
+            lightBg: 'bg-amber-50',
+            borderColor: 'border-amber-200',
+          },
+          {
+            icon: '🏪',
+            title: '商户核销转化',
+            desc: '核销率+转化路径分析',
+            btnLabel: efficiencyLoading ? '加载中...' : '查看效能',
+            btnAction: () => fetchMerchantEfficiency(),
+            gradient: 'from-emerald-500 to-teal-600',
+            lightBg: 'bg-emerald-50',
+            borderColor: 'border-emerald-200',
+          },
+          {
+            icon: '📊',
+            title: '社区风险预警',
+            desc: '热点聚类+风险预警',
+            btnLabel: showHotspots ? '收起预警' : '查看预警',
+            btnAction: () => setShowHotspots(prev => !prev),
+            gradient: 'from-rose-500 to-red-600',
+            lightBg: 'bg-rose-50',
+            borderColor: 'border-rose-200',
+          },
+        ].map((action, i) => (
+          <Card key={i} className={`p-5 border ${action.borderColor} hover:shadow-md transition-shadow`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.gradient} flex items-center justify-center text-2xl shadow-sm`}>
+                  {action.icon}
+                </div>
+                <div>
+                  <div className="font-bold text-slate-800 text-base">{action.title}</div>
+                  <div className="text-sm text-slate-500 mt-0.5">{action.desc}</div>
+                </div>
+              </div>
+              <Button
+                size="sm"
+                onClick={action.btnAction}
+                className={`bg-gradient-to-r ${action.gradient} text-white border-0 shadow-sm hover:shadow-md transition-shadow`}
+              >
+                {action.btnLabel}
+              </Button>
+            </div>
+            {i === 2 && merchantEfficiency && (
+              <div className={`mt-3 p-3 rounded-lg ${action.lightBg} text-sm`}>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <div className="text-xs text-slate-500">商户总数</div>
+                    <div className="font-bold text-slate-800">{merchantEfficiency.stats?.merchantCount || 0}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500">审核通过率</div>
+                    <div className="font-bold text-slate-800">{(merchantEfficiency.stats?.approvalRate || 0).toFixed(1)}%</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500">内容总数</div>
+                    <div className="font-bold text-slate-800">{merchantEfficiency.stats?.postCount || 0}</div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {i === 3 && showHotspots && hotspots.length > 0 && (
+              <div className={`mt-3 p-3 rounded-lg ${action.lightBg} text-sm space-y-2`}>
+                {hotspots.slice(0, 5).map((hs, j) => (
+                  <div key={j} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span>{hs.heatScore >= 500 ? '🔥' : hs.heatScore >= 200 ? '⭐' : '📌'}</span>
+                      <span className="font-medium text-slate-700">#{hs.topic}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-slate-500">{hs.postCount}帖</span>
+                      <span className="text-orange-600 font-bold text-xs">{hs.heatScore}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
+        ))}
       </div>
 
       <div className="grid grid-cols-6 gap-4">
