@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
-import { MapPin, Filter, AlertTriangle, CheckCircle, Wifi, Navigation, Shield, Eye, TrendingUp, Award, Store, BarChart3, XCircle, ShoppingCart, FileX, Ban } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { MapPin, Filter, AlertTriangle, CheckCircle, Wifi, Navigation, Shield, Eye, TrendingUp, Award, Store, BarChart3, XCircle, ShoppingCart, FileX, Ban, Package, QrCode, Tag } from 'lucide-react'
+import { useNavigate, Link } from 'react-router-dom'
 import { getLbsHeatmap, getMerchants } from '@/utils/api'
 import useStore, { LocSource } from '@/store/useStore'
 
@@ -86,6 +86,10 @@ export default function HeatmapSection() {
         const now = new Date()
         const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`
         addInterceptRecord(timeStr, coords.lat, coords.lng, '主动越界模拟·嘉定区，触发围栏外拦截')
+        setTimeout(() => {
+          const el = document.getElementById('out-of-fence-panel')
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 300)
       }
       setTimeout(() => setLocChangeNote(null), 6000)
     }, 50)
@@ -465,18 +469,18 @@ export default function HeatmapSection() {
             ))}
             <button
               onClick={() => handleLocSourceChange('out_of_fence')}
-              className={`px-2 py-0.5 rounded border text-[10px] transition-colors flex items-center gap-0.5 ${
+              className={`px-3 py-1 rounded border text-xs transition-colors flex items-center gap-1 ${
                 locInfo.source === 'out_of_fence'
                   ? 'bg-danger text-white border-danger font-medium'
-                  : 'bg-white text-danger border-danger/30 hover:bg-danger-50'
+                  : 'bg-white text-danger border-danger/30 hover:bg-danger-50 animate-pulse'
               }`}
             >
-              <AlertTriangle className="w-2.5 h-2.5" />
+              <AlertTriangle className="w-3 h-3" />
               越界模拟·嘉定区
             </button>
           </div>
           <div className="flex items-center gap-1">
-            <Shield className="w-3.5 h-3.5 text-primary" />
+            <Shield className={`w-3.5 h-3.5 ${isInSongjiang ? 'text-primary' : 'text-danger'}`} />
             <span>围栏校验：</span>
             <span className={isInSongjiang ? 'text-secondary font-medium' : 'text-danger font-medium'}>
               {isInSongjiang ? '通过·松江区内' : '未通过·围栏外拦截'}
@@ -496,7 +500,11 @@ export default function HeatmapSection() {
         )}
 
         {!isInSongjiang && (
-          <div className="mb-4 p-4 rounded-xl bg-gradient-to-br from-danger-50/80 to-amber-50/40 border border-danger-200/60">
+          <div id="out-of-fence-panel" className="mb-4 p-4 rounded-xl bg-gradient-to-br from-danger-50/80 to-amber-50/40 border border-danger-200/60">
+            <div className="bg-danger text-white text-sm font-bold px-4 py-2 rounded-lg mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5" />
+              ⚠️ 您已离开松江区，所有服务已拦截
+            </div>
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle className="w-4 h-4 text-danger flex-shrink-0" />
               <p className="text-sm font-semibold text-danger">
@@ -626,9 +634,89 @@ export default function HeatmapSection() {
                     <span className="text-gray-400 line-through font-mono">42.3%</span>
                   </div>
                 </div>
+                <div className="mt-2 pl-5 pt-1.5 border-t border-gray-100">
+                  <p className="text-[10px] font-medium text-gray-600 mb-1 flex items-center gap-0.5">
+                    <FileX className="w-2.5 h-2.5 text-gray-400" />
+                    订单剔除明细
+                  </p>
+                  <div className="space-y-1">
+                    {[
+                      { id: 'SJ20240617-0042', name: '松江双人豪华套餐', amount: '¥299', status: '已剔除' },
+                      { id: 'SJ20240617-0107', name: '佘山度假家庭套票', amount: '¥599', status: '已剔除' },
+                      { id: 'SJ20240617-0183', name: '广富林亲子体验券', amount: '¥168', status: '已剔除' },
+                    ].map((order) => (
+                      <div key={order.id} className="flex items-center justify-between p-1 rounded bg-gray-50 text-[9px]">
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <span className="font-mono text-gray-400 flex-shrink-0">{order.id}</span>
+                          <span className="text-gray-500 truncate">{order.name}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 flex-shrink-0">
+                          <span className="text-gray-400 line-through">{order.amount}</span>
+                          <span className="px-1 py-0.5 rounded bg-gray-200 text-gray-400 text-[8px]">{order.status}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-2 pl-5 pt-1.5 border-t border-gray-100 flex items-center gap-3">
+                  <Link to="/orders" className="text-[9px] text-primary hover:underline flex items-center gap-0.5">
+                    <ShoppingCart className="w-2.5 h-2.5" />
+                    查看「我的订单」
+                  </Link>
+                  <Link to="/admin" className="text-[9px] text-primary hover:underline flex items-center gap-0.5">
+                    <BarChart3 className="w-2.5 h-2.5" />
+                    查看「运营后台报表」
+                  </Link>
+                </div>
                 <p className="text-[9px] text-gray-400 pl-5 mt-1">
                   以上数据全部从「松江消费报告」中剔除，不影响区内统计
                 </p>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-lg bg-gradient-to-r from-amber-50/80 to-green-50/40 border border-amber-200/60">
+              <div className="flex items-center gap-1.5 mb-2">
+                <Shield className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                <p className="text-[11px] font-medium text-amber-700">围栏拦截恢复操作</p>
+              </div>
+              <p className="text-[10px] text-gray-500 mb-2">
+                切换到区内定位后，以上拦截状态将自动恢复：
+              </p>
+              <div className="flex items-center gap-1.5 mb-2.5 text-[9px]">
+                <span className="px-1.5 py-0.5 rounded bg-secondary-50 text-secondary flex items-center gap-0.5">
+                  <Store className="w-2.5 h-2.5" />
+                  商户推荐恢复
+                </span>
+                <span className="text-gray-300">→</span>
+                <span className="px-1.5 py-0.5 rounded bg-secondary-50 text-secondary flex items-center gap-0.5">
+                  <QrCode className="w-2.5 h-2.5" />
+                  核销码恢复有效
+                </span>
+                <span className="text-gray-300">→</span>
+                <span className="px-1.5 py-0.5 rounded bg-secondary-50 text-secondary flex items-center gap-0.5">
+                  <FileX className="w-2.5 h-2.5" />
+                  订单重新计入报表
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] text-gray-500">切换定位：</span>
+                {[
+                  { k: 'default' as const, label: '默认松江' },
+                  { k: 'gps' as const, label: 'GPS卫星' },
+                  { k: 'cell' as const, label: '基站三角' },
+                ].map((fb) => (
+                  <button
+                    key={fb.k}
+                    onClick={() => handleLocSourceChange(fb.k)}
+                    className={`px-2 py-0.5 rounded border text-[10px] transition-colors ${
+                      locInfo.source === fb.k
+                        ? 'border-primary bg-primary-50 text-primary font-medium'
+                        : 'border-gray-200 bg-white text-gray-600 hover:border-primary/40'
+                    }`}
+                  >
+                    {fb.label}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -945,6 +1033,27 @@ export default function HeatmapSection() {
                       {m.tags?.slice(0, 1).map((t: string) => (
                         <span key={t} className="badge-discount text-[10px]">{t}</span>
                       ))}
+                    </div>
+                    <div className="flex items-center gap-3 mt-0.5 flex-wrap">
+                      <span className="flex items-center gap-0.5 text-[10px] text-gray-400">
+                        <Package className="w-2.5 h-2.5" />
+                        {m.package_count || 3}个套餐
+                      </span>
+                      <span className="flex items-center gap-0.5 text-[10px] text-gray-400">
+                        <Tag className="w-2.5 h-2.5" />
+                        {m.coupon_count || 2}张团购券
+                      </span>
+                      <span className="flex items-center gap-0.5 text-[10px] text-gray-400">
+                        <ShoppingCart className="w-2.5 h-2.5" />
+                        库存{m.stock || 56}
+                      </span>
+                      <span className="flex items-center gap-0.5 text-[10px] text-gray-400">
+                        <QrCode className="w-2.5 h-2.5" />
+                        本月核销{m.verify_count || 12}单
+                      </span>
+                      <span className="flex items-center gap-0.5 text-[10px] text-gray-400">
+                        核销率{m.verify_rate || 92}%
+                      </span>
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
 import { Search, MapPin, Loader2, CheckCircle, AlertTriangle, Store, FileCheck, ChevronRight, XCircle, Clock, Tag, Star, Shield, History } from 'lucide-react'
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { checkGeofence, getMerchants } from '@/utils/api'
 import useStore from '@/store/useStore'
 
@@ -11,6 +11,7 @@ export default function HeroSection() {
   const [locating, setLocating] = useState(false)
   const [showJoinPreview, setShowJoinPreview] = useState(false)
   const [previewMerchants, setPreviewMerchants] = useState<any[]>([])
+  const [expandedRecordId, setExpandedRecordId] = useState<number | null>(null)
   const locatedRef = useRef(false)
 
   useEffect(() => {
@@ -150,6 +151,33 @@ export default function HeroSection() {
               </div>
             </div>
 
+            <div className="flex flex-wrap gap-2">
+              <Link
+                to="/category/food"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 backdrop-blur border border-white/20 text-[11px] font-medium text-white hover:bg-white/25 transition-colors"
+              >
+                <FileCheck className="w-3 h-3" />
+                查看资质核验结论
+                <ChevronRight className="w-2.5 h-2.5" />
+              </Link>
+              <Link
+                to="/category/food"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 backdrop-blur border border-white/20 text-[11px] font-medium text-white hover:bg-white/25 transition-colors"
+              >
+                <History className="w-3 h-3" />
+                查看变更复查记录
+                <ChevronRight className="w-2.5 h-2.5" />
+              </Link>
+              <Link
+                to="/merchant-join"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-secondary/80 backdrop-blur border border-secondary/30 text-[11px] font-medium text-white hover:bg-secondary transition-colors"
+              >
+                <Store className="w-3 h-3" />
+                立即入驻·生成档案
+                <ChevronRight className="w-2.5 h-2.5" />
+              </Link>
+            </div>
+
             <div className="p-4 rounded-xl bg-white/95 backdrop-blur border-2 border-secondary/40 text-xs space-y-3 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-secondary text-white text-[10px] px-2 py-0.5 rounded-bl-lg font-medium">
                 松江围栏·商户档案
@@ -175,8 +203,49 @@ export default function HeroSection() {
                         </span>
                         <span className="text-[10px] text-gray-400">{m.street} · {m.category === 'food' ? '餐饮' : m.category === 'entertainment' ? '娱乐' : m.category === 'leisure' ? '休闲' : m.category === 'shopping' ? '商超' : m.category}</span>
                       </div>
+                      <button
+                        onClick={() => setExpandedRecordId(expandedRecordId === m.id ? null : m.id)}
+                        className="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] text-primary bg-primary-50 hover:bg-primary-100 border border-primary-100 transition-colors font-medium"
+                      >
+                        <FileCheck className="w-2.5 h-2.5" />
+                        {expandedRecordId === m.id ? '收起复查记录 ▴' : '展开复查记录 ▾'}
+                      </button>
                     </div>
                   </div>
+
+                  {expandedRecordId === m.id && (
+                    <div className="p-2 rounded-lg bg-white/80 border border-gray-200 space-y-1.5 animate-fade-in">
+                      <div className="flex items-center gap-1.5 text-[9px]">
+                        {m.status === 'approved' ? (
+                          <><CheckCircle className="w-3 h-3 text-secondary" /><span className="text-secondary font-medium">资质核验：通过</span><span className="text-gray-400">审核人：{m.audited_by || '运营-赵经理'}</span><span className="text-gray-400">{m.audited_at ? String(m.audited_at).slice(0,10) : '2026-05-18'}</span></>
+                        ) : m.status === 'pending' ? (
+                          <><Clock className="w-3 h-3 text-yellow-600" /><span className="text-yellow-700 font-medium">资质核验：审核中</span><span className="text-gray-400">预计1-3工作日</span></>
+                        ) : (
+                          <><XCircle className="w-3 h-3 text-danger" /><span className="text-danger font-medium">资质核验：驳回</span><span className="text-gray-400">请补充材料重提</span></>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[9px]">
+                        {m.cover_image ? (
+                          m.status === 'approved' ? (
+                            <><CheckCircle className="w-3 h-3 text-secondary" /><span className="text-gray-700">门头照：已上传·审核通过</span><span className="text-gray-400">{m.audited_at ? String(m.audited_at).slice(0,10) : '2026-05-18'}</span></>
+                          ) : (
+                            <><Clock className="w-3 h-3 text-yellow-600" /><span className="text-gray-700">门头照：已上传·待审核</span></>
+                          )
+                        ) : (
+                          <><XCircle className="w-3 h-3 text-gray-400" /><span className="text-gray-500">门头照：未上传</span></>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[9px]">
+                        {m.status === 'approved' ? (
+                          <><CheckCircle className="w-3 h-3 text-secondary" /><span className="text-gray-700">营业时间+标签：已审核</span><span className="text-gray-400">{m.audited_at ? String(m.audited_at).slice(0,10) : '2026-05-18'}</span></>
+                        ) : m.status === 'pending' ? (
+                          <><Clock className="w-3 h-3 text-yellow-600" /><span className="text-gray-700">营业时间+标签：待审核</span></>
+                        ) : (
+                          <><XCircle className="w-3 h-3 text-danger" /><span className="text-gray-700">营业时间+标签：审核驳回</span></>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="p-2 rounded-lg bg-gradient-to-r from-gray-50 to-white border border-gray-100">
                     <p className="text-[10px] font-medium text-gray-600 mb-1.5 flex items-center gap-1">

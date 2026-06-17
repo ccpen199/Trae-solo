@@ -38,6 +38,26 @@ export default function MerchantJoin() {
       tags: prev.tags.includes(tag) ? prev.tags.filter((t) => t !== tag) : [...prev.tags, tag],
     }))
 
+  const handleDemoAll = () => {
+    setForm((prev) => ({
+      ...prev,
+      name: '示例商户·松江烤肉店',
+      category: 'food',
+      street: '方松街道',
+      address: '方松路128号',
+      phone: '13800138000',
+      licenseNo: '91310117MA1FL8X62D',
+      licenseExpire: '2028-06-30',
+      tags: ['满100减20', '周末狂欢'],
+      licensePreview: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=business%20license%20document%20Chinese%20official%20red%20stamp&image_size=landscape_4_3',
+      permitPreview: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=food%20business%20permit%20document%20Chinese&image_size=landscape_4_3',
+      facadePreview: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=restaurant%20storefront%20signage%20Chinese%20bbq%20shop&image_size=landscape_16_9',
+      hours: DAYS.map(() => ({ start: '10:00', end: '22:00', closed: false })),
+    }))
+    setErrors([])
+    setSubmitted(true)
+  }
+
   const handleFileUpload = (key: 'license' | 'permit' | 'facade', file: File | null) => {
     if (!file) return
     const reader = new FileReader()
@@ -378,18 +398,119 @@ export default function MerchantJoin() {
     <div className="max-w-2xl mx-auto px-4 py-6 pb-20 animate-fade-in">
       <h1 className="section-title mb-6">商户入驻</h1>
 
-      <div className="flex items-center mb-8">
-        {STEPS.map((s, i) => (
-          <div key={s} className="flex items-center flex-1">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-              i < step ? 'bg-secondary text-white' : i === step ? 'bg-primary text-white' : 'bg-gray-200 text-gray-500'
-            }`}>
-              {i < step ? <Check className="w-4 h-4" /> : i + 1}
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center flex-1">
+          {STEPS.map((s, i) => (
+            <div key={s} className="flex items-center flex-1">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                i < step ? 'bg-secondary text-white' : i === step ? 'bg-primary text-white' : 'bg-gray-200 text-gray-500'
+              }`}>
+                {i < step ? <Check className="w-4 h-4" /> : i + 1}
+              </div>
+              <span className={`ml-2 text-xs hidden sm:inline ${i <= step ? 'text-primary font-medium' : 'text-gray-400'}`}>{s}</span>
+              {i < STEPS.length - 1 && <div className={`flex-1 h-0.5 mx-2 ${i < step ? 'bg-secondary' : 'bg-gray-200'}`} />}
             </div>
-            <span className={`ml-2 text-xs hidden sm:inline ${i <= step ? 'text-primary font-medium' : 'text-gray-400'}`}>{s}</span>
-            {i < STEPS.length - 1 && <div className={`flex-1 h-0.5 mx-2 ${i < step ? 'bg-secondary' : 'bg-gray-200'}`} />}
-          </div>
+          ))}
+        </div>
+        <div className="ml-4 flex flex-col items-end gap-1 flex-shrink-0">
+          <button
+            onClick={handleDemoAll}
+            className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-bold shadow-md hover:bg-accent/90 transition-colors"
+          >
+            一键演示全流程
+          </button>
+          <span className="text-[10px] text-gray-400">点击可跳过表单，直接查看审核回写状态</span>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-[11px] text-gray-400">快速预览：</span>
+        {STEPS.map((s, i) => (
+          <button
+            key={s}
+            onClick={() => { setErrors([]); setStep(i) }}
+            className={`px-2 py-0.5 rounded text-[11px] border border-dashed transition-colors ${
+              i === step
+                ? 'text-primary border-primary/40 bg-primary-50'
+                : 'text-gray-400 border-gray-300 hover:text-gray-600 hover:border-gray-400'
+            }`}
+          >
+            {i + 1}{s}
+          </button>
         ))}
+      </div>
+
+      <p className="text-[10px] text-gray-400 mb-4">点击步骤名可快速预览 · 填写完整后提交进入审核链路</p>
+
+      <div className="card p-4 text-left mb-4">
+        <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1.5">
+          <CheckCircle2 className="w-4 h-4 text-secondary" />
+          提交后审核回写 · 预览效果
+        </h4>
+        <div className="space-y-3">
+          <div className="flex items-start gap-2">
+            <Image className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-gray-500">门头照</span>
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓审核通过</span>
+              </div>
+              <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                <span>2026-06-18</span>
+                <span>运营-赵经理</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <FileText className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-gray-500">营业执照</span>
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已核验</span>
+              </div>
+              <div className="flex items-center gap-3 text-[11px] text-gray-400 flex-wrap">
+                <span>编号91310117MA1FL8X62D</span>
+                <span>2026-06-18</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <FileText className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-gray-500">经营许可证</span>
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已核验</span>
+              </div>
+              <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                <span>2026-06-18</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Clock className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-gray-500">营业时间</span>
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已审核</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <Tag className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-gray-500">优惠标签</span>
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已审核</span>
+              </div>
+              <div className="text-[11px] text-gray-400">
+                <span>（满100减20、周末狂欢）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p className="text-[10px] text-gray-400 mt-3 pt-2 border-t border-gray-100">
+          实际提交后1-3工作日完成审核，以上为审核通过后的回写效果
+        </p>
       </div>
 
       {errors.length > 0 && (

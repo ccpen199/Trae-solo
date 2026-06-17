@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { Utensils, Gamepad2, Trees, ShoppingCart, Star, MapPin, Filter, ArrowUpDown, Clock, Shield, CheckCircle, AlertCircle, Radio, Wifi, Navigation, ChevronDown, ChevronUp, Target, Edit3, RefreshCw, History, FileCheck, Tag, XCircle, QrCode, Smartphone, Database, Zap, Users, Calendar, Store } from 'lucide-react'
 import { getMerchants, getPackages } from '@/utils/api'
 import useStore, { LocSource } from '@/store/useStore'
@@ -38,6 +38,7 @@ const statusLabels: Record<string, { text: string; cls: string; icon: typeof Che
 
 export default function Category() {
   const { type } = useParams<{ type: string }>()
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<'merchants' | 'packages'>('merchants')
   const cat = categoryMap[type ?? 'food']
   const Icon = cat?.icon ?? Utensils
@@ -426,7 +427,7 @@ export default function Category() {
                       className="w-full flex items-center justify-center gap-1 py-1.5 text-xs text-primary bg-gray-50 hover:bg-gray-100 transition-colors border-t border-gray-100"
                     >
                       {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                      {isExpanded ? '收起详情' : '查看资质/营业时间/优惠配置'}
+                      {isExpanded ? '收起详情' : '查看资质/营业时间/优惠配置/套餐核销'}
                     </button>
                     {isExpanded && (
                       <div className="px-3 pb-3 pt-2.5 space-y-3.5 text-xs border-t border-gray-50 bg-gray-50/50">
@@ -846,6 +847,75 @@ export default function Category() {
                           <p className="text-gray-500 font-medium mb-1">联系方式</p>
                           <p className="text-gray-600">{m.phone || '暂无'}</p>
                         </div>
+                        <div className="p-2.5 rounded-lg bg-gradient-to-r from-primary-50/60 to-accent-50/40 border border-primary-100/60">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-gray-700 font-medium flex items-center gap-1">
+                              <QrCode className="w-3.5 h-3.5 text-primary" />
+                              套餐核销链路 · 限时折扣/团购券/时段特惠
+                            </p>
+                            <span className="text-[9px] text-primary bg-white/80 px-1.5 py-0.5 rounded border border-primary-100">
+                              核销数据·实时
+                            </span>
+                          </div>
+                          <div className="space-y-2">
+                            {[
+                              { type: '限时折扣', typeColor: 'bg-red-500', name: '双人烤肉套餐', price: 199, originalPrice: 299, stock: 56, sold: 42, verified: 38, rate: 90 },
+                              { type: '团购券', typeColor: 'bg-primary', name: '4人火锅套餐', price: 399, originalPrice: 599, stock: 28, sold: 22, verified: 20, rate: 91 },
+                              { type: '时段特惠', typeColor: 'bg-purple-500', name: '下午茶双人套餐', price: 89, originalPrice: 149, stock: 35, sold: 18, verified: 16, rate: 89 },
+                            ].map((pkg) => {
+                              const remaining = pkg.stock - pkg.sold
+                              const stockPct = Math.round((remaining / pkg.stock) * 100)
+                              return (
+                                <div key={pkg.type} className="p-2 rounded-md bg-white border border-gray-100">
+                                  <div className="flex items-center gap-1.5 mb-1.5">
+                                    <span className={`${pkg.typeColor} text-white text-[9px] px-1.5 py-0.5 rounded font-medium`}>
+                                      {pkg.type}
+                                    </span>
+                                    <span className="text-[11px] text-gray-700 font-medium">{pkg.name}</span>
+                                  </div>
+                                  <div className="flex items-baseline gap-1.5 mb-1.5">
+                                    <span className="text-sm font-bold text-accent">¥{pkg.price}</span>
+                                    <span className="text-[10px] text-gray-400 line-through">¥{pkg.originalPrice}</span>
+                                    <span className="text-[9px] text-red-500 font-medium">-{Math.round((1 - pkg.price / pkg.originalPrice) * 100)}%</span>
+                                  </div>
+                                  <div className="flex items-center gap-3 text-[10px] text-gray-500 mb-1">
+                                    <span>库存{pkg.stock}</span>
+                                    <span>已售{pkg.sold}</span>
+                                    <span>核销{pkg.verified}单</span>
+                                    <span className="font-medium text-secondary">核销率{pkg.rate}%</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                      <div className="h-full bg-secondary rounded-full" style={{ width: `${stockPct}%` }} />
+                                    </div>
+                                    <span className="text-[9px] text-gray-400">余{remaining}</span>
+                                  </div>
+                                </div>
+                              )
+                            })}
+                          </div>
+                          <div className="mt-2.5 pt-2 border-t border-primary-100/50">
+                            <div className="flex items-center gap-1 flex-wrap text-[10px] text-gray-500">
+                              <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">发布</span>
+                              <span className="text-gray-300">→</span>
+                              <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">下单</span>
+                              <span className="text-gray-300">→</span>
+                              <span className="px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-medium">动态码核销</span>
+                              <span className="text-gray-300">→</span>
+                              <span className="px-1.5 py-0.5 rounded bg-yellow-50 text-yellow-600 font-medium">库存扣减</span>
+                              <span className="text-gray-300">→</span>
+                              <span className="px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 font-medium">订单记录</span>
+                              <span className="text-gray-300">→</span>
+                              <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">回写运营报表</span>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => navigate('/orders')}
+                            className="mt-2.5 w-full py-1.5 rounded-lg bg-primary text-white text-[11px] font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-1"
+                          >
+                            查看我的核销订单 →
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -910,6 +980,10 @@ export default function Category() {
               <p className="text-[10px] text-gray-400 mt-1.5">
                 发布→购买→动态码核销→库存扣减→订单记录 · 均基于松江围栏商户池
               </p>
+              <div className="flex items-center gap-3 mt-2">
+                <Link to="/orders" className="text-[10px] text-primary hover:underline">查看我的订单 →</Link>
+                <Link to="/admin" className="text-[10px] text-accent hover:underline">查看运营报表 →</Link>
+              </div>
             </div>
           )}
 
@@ -1027,6 +1101,19 @@ export default function Category() {
                           <p className="text-[10px] text-danger mt-1">库存紧张，下单后自动锁定</p>
                         )}
                       </div>
+                      <div className="mt-1.5 text-[10px] text-gray-500 flex items-center gap-0.5 flex-wrap">
+                        <span>🟢下单</span><span>→</span>
+                        <span>🟡核销中</span><span>→</span>
+                        <span>✅已核销</span><span>→</span>
+                        <span>📋订单记录</span>
+                      </div>
+                      {sold > 0 ? (
+                        <p className="text-[10px] text-gray-500 mt-0.5">
+                          已售{sold}单·核销{Math.round(sold * 0.9)}单·核销率90%
+                        </p>
+                      ) : (
+                        <p className="text-[10px] text-gray-400 mt-0.5">暂无销售记录</p>
+                      )}
                       <div className="mt-2 pt-2 border-t border-gray-50 space-y-1">
                         <div className="flex items-center gap-2 text-[10px] text-gray-500 flex-wrap">
                           <span className="inline-flex items-center gap-0.5">
@@ -1040,7 +1127,7 @@ export default function Category() {
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-gray-400">购买后查看订单核销记录 →</span>
+                          <button type="button" className="text-[10px] text-primary hover:underline" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate('/orders') }}>核销明细 →</button>
                         </div>
                       </div>
                     </div>

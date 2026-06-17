@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar, Package, BarChart3, FileText, MapPin, ChevronRight, QrCode } from 'lucide-react'
+import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar, Package, BarChart3, FileText, MapPin, ChevronRight, QrCode, Eye, Tag, Pencil, ClipboardList } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell,
@@ -47,6 +47,17 @@ export default function Dashboard() {
   const [filterStreet, setFilterStreet] = useState('全部')
   const [filterBizType, setFilterBizType] = useState('全部')
   const [filterDays, setFilterDays] = useState(30)
+
+  const [activityEnabled, setActivityEnabled] = useState(true)
+  const [fullReduction, setFullReduction] = useState({ threshold: 100, discount: 20 })
+  const [discountRate, setDiscountRate] = useState(70)
+  const [activityMerchants, setActivityMerchants] = useState<string[]>([
+    '方松烤肉店', '广富林日料', '中山奶茶', '岳阳KTV', '泗泾火锅',
+    '大学城·烤肉饭', '大学城·奶茶工坊', '大学城·日式料理',
+  ])
+  const [expandedAuditMerchant, setExpandedAuditMerchant] = useState<string | null>(null)
+  const [showAuditOverview, setShowAuditOverview] = useState(false)
+  const [toastMsg, setToastMsg] = useState('')
 
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -192,7 +203,7 @@ export default function Dashboard() {
             </p>
           </Link>
 
-          <div className="p-3 rounded-lg bg-white/80 border border-secondary-100/50">
+          <a href="#activity-section" className="p-3 rounded-lg bg-white/80 border border-secondary-100/50 hover:border-secondary/50 transition-colors block cursor-pointer">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-8 h-8 rounded-lg bg-secondary-100 flex items-center justify-center flex-shrink-0">
                 <Megaphone className="w-4 h-4 text-secondary" />
@@ -203,7 +214,10 @@ export default function Dashboard() {
             </div>
             <p className="text-[10px] text-gray-500">活动详情：广富林街道大学城商圈</p>
             <p className="text-[10px] text-secondary mt-1">2026-06-12 ~ 2026-06-22 · 参与商户8家</p>
-          </div>
+            <p className="text-[10px] text-secondary mt-1 flex items-center gap-0.5">
+              查看活动配置 <ChevronRight className="w-3 h-3" />
+            </p>
+          </a>
 
           <Link to="/join" className="p-3 rounded-lg bg-white/80 border border-gray-200/50 hover:border-gray-400/50 transition-colors block">
             <div className="flex items-center gap-2 mb-2">
@@ -242,6 +256,167 @@ export default function Dashboard() {
             </div>
           )
         })}
+      </div>
+
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Store className="w-4 h-4 text-primary" />
+            <h3 className="font-semibold text-gray-700">
+              商户管理 · 按{filterStreet}/{filterBizType}/近{filterDays}天筛选
+            </h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowAuditOverview(!showAuditOverview)}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded text-[11px] font-medium transition-colors ${showAuditOverview ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}`}
+            >
+              <ClipboardList className="w-3.5 h-3.5" />复查审计总览
+            </button>
+            <span className="text-[10px] text-gray-400">
+              当前筛选：{filterStreet !== '全部' ? filterStreet : '全部街道'} · {filterBizType !== '全部' ? filterBizType : '全部业态'} · 近{filterDays}天
+            </span>
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="text-gray-400 border-b border-gray-200">
+                <th className="text-left py-2.5 font-normal">商户名</th>
+                <th className="text-left py-2.5 font-normal">街道</th>
+                <th className="text-left py-2.5 font-normal">业态</th>
+                <th className="text-right py-2.5 font-normal">月营收</th>
+                <th className="text-center py-2.5 font-normal">状态</th>
+                <th className="text-center py-2.5 font-normal">操作</th>
+                <th className="text-center py-2.5 font-normal">复查审计</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { name: '方松烤肉店', street: '方松街道', biz: '餐饮', revenue: 52480, status: '正常营业' },
+                { name: '广富林日料', street: '广富林街道', biz: '餐饮', revenue: 61440, status: '正常营业' },
+                { name: '中山奶茶', street: '中山街道', biz: '饮品', revenue: 28400, status: '暂停' },
+                { name: '岳阳KTV', street: '岳阳街道', biz: '娱乐', revenue: 29000, status: '审核中' },
+                { name: '泗泾火锅', street: '泗泾镇', biz: '餐饮', revenue: 56700, status: '正常营业' },
+              ].map((m) => (
+                <>
+                  <tr key={m.name} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50">
+                    <td className="py-2.5 text-gray-700 font-medium">{m.name}</td>
+                    <td className="py-2.5 text-gray-500 flex items-center gap-1"><MapPin className="w-3 h-3" />{m.street}</td>
+                    <td className="py-2.5">
+                      <span className="px-1.5 py-0.5 rounded text-[10px] bg-primary-50 text-primary">{m.biz}</span>
+                    </td>
+                    <td className="py-2.5 text-right text-accent font-medium">¥{m.revenue.toLocaleString()}</td>
+                    <td className="py-2.5 text-center">
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
+                        m.status === '正常营业' ? 'bg-secondary-50 text-secondary' :
+                        m.status === '暂停' ? 'bg-amber-50 text-amber-600' :
+                        'bg-gray-100 text-gray-500'
+                      }`}>{m.status}</span>
+                    </td>
+                    <td className="py-2.5 text-center">
+                      <div className="flex items-center justify-center gap-2">
+                        <Link to="/join" className="text-primary hover:underline flex items-center gap-0.5">
+                          <Eye className="w-3 h-3" />查看详情
+                        </Link>
+                        <button className="text-gray-500 hover:text-primary flex items-center gap-0.5">
+                          <Tag className="w-3 h-3" />管理标签
+                        </button>
+                      </div>
+                    </td>
+                    <td className="py-2.5 text-center">
+                      <div className="flex items-center justify-center gap-1.5">
+                        <button
+                          onClick={() => setExpandedAuditMerchant(expandedAuditMerchant === m.name ? null : m.name)}
+                          className="text-primary font-medium hover:bg-primary-50 px-2 py-1 rounded flex items-center gap-1"
+                        >
+                          <ClipboardList className="w-3.5 h-3.5" />查看审计日志
+                          {(m.status === '审核中' || m.status === '暂停') && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                          )}
+                        </button>
+                        {m.status === '审核中' && (
+                          <button className="text-amber-600 hover:text-amber-700 flex items-center gap-0.5">
+                            <RefreshCw className="w-3 h-3" />驳回重审
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                  {expandedAuditMerchant === m.name && (
+                    <tr key={`${m.name}-audit`}>
+                      <td colSpan={7} className="px-4 py-3 bg-gray-50/80">
+                        <div className="rounded-lg border border-gray-200 bg-white p-3 text-[11px]">
+                          <p className="font-medium text-gray-700 mb-2 flex items-center gap-1">
+                            <ClipboardList className="w-3.5 h-3.5 text-primary" />
+                            {m.name} · 审计日志
+                          </p>
+                          <div className="space-y-1.5">
+                            <div className="flex items-center gap-2 text-gray-600">
+                              <span className="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0" />
+                              <span className="text-gray-500 w-28">2026-05-20 14:30</span>
+                              <span className="text-secondary font-medium">入驻审核通过</span>
+                              <span className="text-gray-400 ml-auto">操作人：管理员A</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-600">
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />
+                              <span className="text-gray-500 w-28">2026-06-01 10:15</span>
+                              <span className="text-amber-600 font-medium">资料变更驳回</span>
+                              <span className="text-gray-400 ml-auto">操作人：审核员B</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-600">
+                              <span className="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0" />
+                              <span className="text-gray-500 w-28">2026-06-08 16:45</span>
+                              <span className="text-secondary font-medium">营业时间变更通过</span>
+                              <span className="text-gray-400 ml-auto">操作人：管理员A</span>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {showAuditOverview && (
+          <div className="mt-3 p-3 rounded-lg bg-primary-50/50 border border-primary-100/50">
+            <p className="text-[11px] font-medium text-gray-700 mb-2 flex items-center gap-1">
+              <ClipboardList className="w-3.5 h-3.5 text-primary" />
+              复查审计总览
+            </p>
+            <div className="grid grid-cols-3 gap-3">
+              <button
+                onClick={() => { setExpandedAuditMerchant('方松烤肉店'); setShowAuditOverview(false) }}
+                className="p-2.5 rounded-lg bg-white border border-secondary-100 hover:border-secondary/50 transition-colors text-left"
+              >
+                <p className="text-[10px] text-gray-500">已审核通过</p>
+                <p className="text-lg font-bold text-secondary">3家</p>
+                <p className="text-[9px] text-gray-400 mt-1">方松烤肉店 · 广富林日料 · 泗泾火锅</p>
+              </button>
+              <button
+                onClick={() => { setExpandedAuditMerchant('岳阳KTV'); setShowAuditOverview(false) }}
+                className="p-2.5 rounded-lg bg-white border border-amber-100 hover:border-amber-300/50 transition-colors text-left"
+              >
+                <p className="text-[10px] text-gray-500">待审核</p>
+                <p className="text-lg font-bold text-amber-600">1家</p>
+                <p className="text-[9px] text-gray-400 mt-1">岳阳KTV</p>
+              </button>
+              <button
+                onClick={() => { setExpandedAuditMerchant('中山奶茶'); setShowAuditOverview(false) }}
+                className="p-2.5 rounded-lg bg-white border border-red-100 hover:border-red-300/50 transition-colors text-left"
+              >
+                <p className="text-[10px] text-gray-500">有变更待复查</p>
+                <p className="text-lg font-bold text-red-500">1家</p>
+                <p className="text-[9px] text-gray-400 mt-1">中山奶茶</p>
+              </button>
+            </div>
+          </div>
+        )}
+        <p className="text-[10px] text-gray-400 mt-3 pt-2 border-t border-gray-100">
+          共5家商户 · 数据按当前筛选条件实时过滤 · 点击"查看详情"跳转商户详情页
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -552,28 +727,136 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+      <div id="activity-section" className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Megaphone className="w-4 h-4 text-accent" />
             <h3 className="font-semibold text-gray-700">大学城周末狂欢周 · 活动配置与效果复盘</h3>
           </div>
-          <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-secondary-50 text-secondary">进行中</span>
-        </div>
-        <div className="grid grid-cols-3 gap-3 mb-3">
-          <div className="p-2.5 rounded-lg bg-accent-50/50 border border-accent-100/50">
-            <p className="text-[10px] text-gray-500 mb-1">活动配置</p>
-            <div className="space-y-1 text-[10px]">
-              <p className="text-gray-700">满减：满100减20</p>
-              <p className="text-gray-700">折扣：指定套餐7折</p>
-              <p className="text-gray-700">赠品：消费满50送饮品</p>
-            </div>
+          <div className="flex items-center gap-2">
+            <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${activityEnabled ? 'bg-secondary-50 text-secondary' : 'bg-gray-100 text-gray-500'}`}>
+              {activityEnabled ? '进行中' : '已暂停'}
+            </span>
+            <button
+              onClick={() => setActivityEnabled(!activityEnabled)}
+              className={`relative w-10 h-5 rounded-full transition-colors ${activityEnabled ? 'bg-secondary' : 'bg-gray-300'}`}
+            >
+              <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${activityEnabled ? 'left-5' : 'left-0.5'}`} />
+            </button>
           </div>
+        </div>
+
+        <div className="mb-4 flex items-center justify-between px-3 py-2.5 rounded-lg bg-secondary-50 border border-secondary-200 text-secondary">
+          <span className="text-[11px] font-medium">✓活动已通过合规审计 · 审计人：运营经理李四 · 审计时间：2026-06-11</span>
+          <button
+            onClick={() => {
+              const el = document.getElementById('activity-audit-log')
+              if (el) el.scrollIntoView({ behavior: 'smooth' })
+            }}
+            className="text-[10px] font-medium text-secondary hover:text-secondary/80 hover:bg-secondary-100 px-2 py-1 rounded transition-colors flex items-center gap-1"
+          >
+            <ClipboardList className="w-3 h-3" />查看审计日志
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mb-3">
+          <div className="p-3 rounded-lg bg-accent-50/50 border border-accent-100/50">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-[11px] font-medium text-gray-700 flex items-center gap-1">
+                <Pencil className="w-3 h-3 text-accent" />满减设置
+              </p>
+              <span className="text-[9px] text-gray-400">可修改</span>
+            </div>
+            <div className="flex items-center gap-2 text-[11px]">
+              <span className="text-gray-500">满</span>
+              <input
+                type="number"
+                value={fullReduction.threshold}
+                onChange={(e) => setFullReduction({ ...fullReduction, threshold: Number(e.target.value) })}
+                className="w-16 px-2 py-1 rounded border border-gray-200 text-center text-xs bg-white"
+              />
+              <span className="text-gray-500">减</span>
+              <input
+                type="number"
+                value={fullReduction.discount}
+                onChange={(e) => setFullReduction({ ...fullReduction, discount: Number(e.target.value) })}
+                className="w-16 px-2 py-1 rounded border border-gray-200 text-center text-xs bg-white"
+              />
+              <button
+                onClick={() => {}}
+                className="px-2 py-1 rounded text-[10px] bg-accent text-white hover:bg-accent/80 transition-colors"
+              >
+                应用
+              </button>
+            </div>
+            <p className="text-[9px] text-gray-400 mt-1">当前：满{fullReduction.threshold}减{fullReduction.discount}</p>
+          </div>
+          <div className="p-3 rounded-lg bg-primary-50/50 border border-primary-100/50">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-[11px] font-medium text-gray-700 flex items-center gap-1">
+                <Pencil className="w-3 h-3 text-primary" />折扣设置
+              </p>
+              <span className="text-[9px] text-gray-400">可修改</span>
+            </div>
+            <div className="flex items-center gap-2 text-[11px]">
+              <span className="text-gray-500">指定套餐</span>
+              <input
+                type="number"
+                value={discountRate}
+                onChange={(e) => setDiscountRate(Number(e.target.value))}
+                className="w-16 px-2 py-1 rounded border border-gray-200 text-center text-xs bg-white"
+                min={10}
+                max={95}
+              />
+              <span className="text-gray-500">折</span>
+              <button
+                onClick={() => {}}
+                className="px-2 py-1 rounded text-[10px] bg-primary text-white hover:bg-primary/80 transition-colors"
+              >
+                应用
+              </button>
+            </div>
+            <p className="text-[9px] text-gray-400 mt-1">当前：指定套餐{discountRate / 10}折（{discountRate}%）</p>
+          </div>
+        </div>
+
+        <div className="p-3 rounded-lg bg-gray-50 border border-gray-100 mb-3">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[11px] font-medium text-gray-700 flex items-center gap-1">
+              <Store className="w-3 h-3 text-primary" />参与商户管理（已选{activityMerchants.length}家）
+            </p>
+            <span className="text-[9px] text-gray-400">勾选参与活动</span>
+          </div>
+          <div className="grid grid-cols-2 gap-1.5">
+            {[
+              '方松烤肉店', '广富林日料', '中山奶茶', '岳阳KTV', '泗泾火锅',
+              '大学城·烤肉饭', '大学城·奶茶工坊', '大学城·日式料理',
+            ].map((name) => (
+              <label key={name} className="flex items-center gap-1.5 text-[11px] text-gray-700 cursor-pointer hover:bg-white px-1.5 py-1 rounded">
+                <input
+                  type="checkbox"
+                  checked={activityMerchants.includes(name)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setActivityMerchants([...activityMerchants, name])
+                    } else {
+                      setActivityMerchants(activityMerchants.filter((m) => m !== name))
+                    }
+                  }}
+                  className="w-3.5 h-3.5 rounded border-gray-300 text-primary focus:ring-primary"
+                />
+                {name}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-3 mb-3">
           <div className="p-2.5 rounded-lg bg-primary-50/50 border border-primary-100/50">
             <p className="text-[10px] text-gray-500 mb-1">覆盖范围</p>
             <div className="space-y-1 text-[10px]">
               <p className="text-gray-700">广富林街道·大学城商圈</p>
-              <p className="text-gray-700">参与商户：8家</p>
+              <p className="text-gray-700">参与商户：{activityMerchants.length}家</p>
               <p className="text-gray-700">2026-06-12 ~ 2026-06-22</p>
             </div>
           </div>
@@ -586,22 +869,72 @@ export default function Dashboard() {
               <p className="text-gray-700">新客占比：<span className="font-bold text-primary">38.5%</span></p>
             </div>
           </div>
+          <div className="p-2.5 rounded-lg bg-gray-50 border border-gray-100">
+            <p className="text-[10px] font-medium text-gray-600 mb-1.5">TOP3参与商户</p>
+            <div className="space-y-1.5">
+              {[
+                { rank: 1, name: '大学城·烤肉饭', orders: 42, revenue: 5040 },
+                { rank: 2, name: '大学城·奶茶工坊', orders: 38, revenue: 3420 },
+                { rank: 3, name: '大学城·日式料理', orders: 29, revenue: 5220 },
+              ].map((s) => (
+                <div key={s.rank} className="flex items-center gap-2 text-[10px]">
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${s.rank <= 3 ? 'bg-primary' : 'bg-gray-400'}`}>{s.rank}</span>
+                  <span className="text-gray-700 flex-1">{s.name}</span>
+                  <span className="text-gray-500">{s.orders}单</span>
+                  <span className="text-accent font-medium">¥{s.revenue.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="p-2.5 rounded-lg bg-gray-50 border border-gray-100">
-          <p className="text-[10px] font-medium text-gray-600 mb-1.5">TOP3参与商户</p>
-          <div className="space-y-1.5">
-            {[
-              { rank: 1, name: '大学城·烤肉饭', orders: 42, revenue: 5040 },
-              { rank: 2, name: '大学城·奶茶工坊', orders: 38, revenue: 3420 },
-              { rank: 3, name: '大学城·日式料理', orders: 29, revenue: 5220 },
-            ].map((s) => (
-              <div key={s.rank} className="flex items-center gap-2 text-[10px]">
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${s.rank <= 3 ? 'bg-primary' : 'bg-gray-400'}`}>{s.rank}</span>
-                <span className="text-gray-700 flex-1">{s.name}</span>
-                <span className="text-gray-500">{s.orders}单</span>
-                <span className="text-accent font-medium">¥{s.revenue.toLocaleString()}</span>
+
+        <div id="activity-audit-log" className="p-3 rounded-lg bg-gray-50/80 border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[11px] font-medium text-gray-700 flex items-center gap-1">
+              <ClipboardList className="w-3.5 h-3.5 text-primary" />
+              活动审计日志
+            </p>
+            <button
+              onClick={() => {
+                setToastMsg('报告生成中...')
+                setTimeout(() => setToastMsg(''), 2000)
+              }}
+              className="px-2.5 py-1 rounded text-[10px] bg-primary text-white hover:bg-primary/80 transition-colors flex items-center gap-1"
+            >
+              <FileText className="w-3 h-3" />导出活动报告
+            </button>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-start gap-2 text-[11px] p-2 rounded bg-white border border-gray-100">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-700 font-medium">活动创建</span>
+                  <span className="text-gray-400">2026-06-10 09:00</span>
+                </div>
+                <p className="text-gray-500 mt-0.5">操作人：运营专员张三 · 配置满减/折扣/赠品三项优惠</p>
               </div>
-            ))}
+            </div>
+            <div className="flex items-start gap-2 text-[11px] p-2 rounded bg-white border border-gray-100">
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-1.5 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-700 font-medium">活动上线</span>
+                  <span className="text-gray-400">2026-06-12 00:00</span>
+                </div>
+                <p className="text-gray-500 mt-0.5">操作人：系统自动 · 活动按计划开始执行，覆盖8家商户</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2 text-[11px] p-2 rounded bg-white border border-gray-100">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-700 font-medium">效果检查</span>
+                  <span className="text-gray-400">2026-06-15 18:00</span>
+                </div>
+                <p className="text-gray-500 mt-0.5">操作人：运营经理李四 · 中期复盘：订单达成率78%，核销率92.3%</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -616,6 +949,9 @@ export default function Dashboard() {
             <span className="text-[10px] text-gray-400">数据同源</span>
             <span className="text-[10px] text-primary bg-primary-50 px-1.5 py-0.5 rounded">限时优惠</span>
             <span className="text-[10px] text-secondary bg-secondary-50 px-1.5 py-0.5 rounded">我的订单</span>
+            <span className="text-[10px] text-accent bg-accent-50 px-1.5 py-0.5 rounded">
+              筛选：{filterStreet !== '全部' ? filterStreet : '全部街道'} · {filterBizType !== '全部' ? filterBizType : '全部业态'} · 近{filterDays}天
+            </span>
           </div>
         </div>
         <table className="w-full text-xs">
@@ -665,7 +1001,12 @@ export default function Dashboard() {
             <TrendingUp className="w-4 h-4 text-secondary" />
             <h3 className="font-semibold text-gray-700">券核销率与复购率月度趋势 · 可复盘</h3>
           </div>
-          <span className="text-[10px] text-gray-400">近6个月</span>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-gray-400">近6个月</span>
+            <span className="text-[10px] text-accent bg-accent-50 px-1.5 py-0.5 rounded">
+              筛选：{filterStreet !== '全部' ? filterStreet : '全部街道'} · {filterBizType !== '全部' ? filterBizType : '全部业态'} · 近{filterDays}天
+            </span>
+          </div>
         </div>
         <div className="grid grid-cols-4 gap-3 mb-4">
           <div className="p-2.5 rounded-lg bg-primary-50/50 border border-primary-100/50 text-center">
@@ -731,6 +1072,12 @@ export default function Dashboard() {
           核销率/复购率/TOP品类/商户排行均来自松江围栏业务数据库，与首页CampaignSection、NearbyMerchants数据同源
         </p>
       </div>
+
+      {toastMsg && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-lg bg-gray-800 text-white text-sm shadow-lg animate-fade-in">
+          {toastMsg}
+        </div>
+      )}
     </div>
   )
 }
