@@ -15,10 +15,24 @@ import commonRouter from './routes/common';
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const app = express();
-const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59216);
-const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 58921);
+const HOST = process.env.BACKEND_HOST || process.env.HOST || '0.0.0.0';
 
-app.use(cors());
+const allowedOrigins = [
+  `http://localhost:${process.env.FRONTEND_PORT || 48921}`,
+  `http://127.0.0.1:${process.env.FRONTEND_PORT || 48921}`,
+];
+
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, true);
+    }
+  },
+  credentials: true,
+}));
 app.use(express.json());
 
 app.use('/api/auth', authRouter);

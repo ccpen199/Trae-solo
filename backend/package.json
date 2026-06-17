@@ -1,7 +1,7 @@
 {
   "name": "may-89216-backend",
   "version": "1.0.0",
-  "description": "城运通后端服务",
+  "description": "闪跑同城跑腿后端服务",
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
