@@ -352,10 +352,14 @@ function ensureDemoWorkflowData() {
     ];
 
     for (const item of snapshots) {
+      const hours = 8 + item.id;
+      const minutes = (item.id * 17) % 60;
+      const createOffset = `start of day, +${hours} hours, +${minutes} minutes`;
       db.prepare(`
         UPDATE orders
         SET status = ?,
             delivery_status = ?,
+            created_at = datetime('now', ?),
             estimated_arrival_time = datetime('now', ?),
             picked_up_at = CASE WHEN ? IS NULL THEN picked_up_at ELSE datetime('now', ?) END,
             delivered_at = CASE WHEN ? IS NULL THEN delivered_at ELSE datetime('now', ?) END,
@@ -366,6 +370,7 @@ function ensureDemoWorkflowData() {
       `).run(
         item.status,
         item.deliveryStatus,
+        createOffset,
         item.etaOffset,
         item.pickedOffset,
         item.pickedOffset,
