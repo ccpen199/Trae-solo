@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
-import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar, Package, BarChart3 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar, Package, BarChart3, FileText, MapPin, ChevronRight, QrCode } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell,
@@ -148,6 +149,77 @@ export default function Dashboard() {
             · 排行{filteredRanking.length}家 · 品类{filteredCategories.length}项
           </p>
         )}
+      </div>
+
+      <div className="bg-gradient-to-br from-primary-50/50 via-secondary-50/30 to-accent-50/40 border border-primary-100/60 rounded-xl p-4 shadow-sm">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+            <FileCheck className="w-4 h-4 text-primary" />
+            运营数据来源 · 全链路可复查
+          </h3>
+          <span className="text-[10px] text-gray-400 bg-white/70 px-2 py-0.5 rounded border border-gray-100">
+            数据同源可追溯
+          </span>
+        </div>
+        <div className="grid grid-cols-4 gap-3">
+          <Link to="/orders" className="p-3 rounded-lg bg-white/80 border border-primary-100/50 hover:border-primary/50 transition-colors block">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center flex-shrink-0">
+                <ShoppingCart className="w-4 h-4 text-primary" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-700">① 订单数据来源</p>
+              </div>
+            </div>
+            <p className="text-[10px] text-gray-500">从"我的订单"逐笔回写</p>
+            <p className="text-[10px] text-primary mt-1 flex items-center gap-0.5">
+              查看订单 <ChevronRight className="w-3 h-3" />
+            </p>
+          </Link>
+
+          <Link to="/" className="p-3 rounded-lg bg-white/80 border border-accent-100/50 hover:border-accent/50 transition-colors block">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-lg bg-accent-100 flex items-center justify-center flex-shrink-0">
+                <QrCode className="w-4 h-4 text-accent" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-700">② 核销数据来源</p>
+              </div>
+            </div>
+            <p className="text-[10px] text-gray-500">从限时优惠动态码核销触发</p>
+            <p className="text-[10px] text-accent mt-1 flex items-center gap-0.5">
+              首页CampaignSection <ChevronRight className="w-3 h-3" />
+            </p>
+          </Link>
+
+          <div className="p-3 rounded-lg bg-white/80 border border-secondary-100/50">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-lg bg-secondary-100 flex items-center justify-center flex-shrink-0">
+                <Megaphone className="w-4 h-4 text-secondary" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-700">③ 大学城活动配置</p>
+              </div>
+            </div>
+            <p className="text-[10px] text-gray-500">活动详情：广富林街道大学城商圈</p>
+            <p className="text-[10px] text-secondary mt-1">2026-06-12 ~ 2026-06-22 · 参与商户8家</p>
+          </div>
+
+          <Link to="/join" className="p-3 rounded-lg bg-white/80 border border-gray-200/50 hover:border-gray-400/50 transition-colors block">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                <Store className="w-4 h-4 text-gray-600" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-700">④ 商户数据来源</p>
+              </div>
+            </div>
+            <p className="text-[10px] text-gray-500">从商户入驻审核通过后入库</p>
+            <p className="text-[10px] text-gray-600 mt-1 flex items-center gap-0.5">
+              商户入驻 <ChevronRight className="w-3 h-3" />
+            </p>
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -216,6 +216,95 @@ export default function Orders() {
         </div>
       </div>
 
+      <div className="mb-4 card p-3.5 bg-gradient-to-br from-primary-50/50 via-secondary-50/30 to-accent-50/40 border-primary-100/60">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+            <Shield className="w-4 h-4 text-primary" />
+            订单·核销·库存·报表 全链路可复查
+          </h2>
+          <span className="text-[10px] text-gray-400 bg-white/70 px-2 py-0.5 rounded border border-gray-100">
+            数据实时同步
+          </span>
+        </div>
+        <div className="grid grid-cols-5 gap-2">
+          <div className="p-2.5 rounded-lg bg-white/80 border border-primary-100/50">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-6 h-6 rounded bg-primary-100 flex items-center justify-center flex-shrink-0">
+                <QrCode className="w-3.5 h-3.5 text-primary" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-700">① 动态码核销</p>
+              </div>
+            </div>
+            <p className="text-[11px] font-bold text-primary">{usedCount}单</p>
+            <p className="text-[9px] text-gray-500 mt-0.5 flex items-center gap-0.5">
+              <RefreshCw className="w-2.5 h-2.5" />
+              60s自动刷新机制
+            </p>
+          </div>
+
+          <div className="p-2.5 rounded-lg bg-white/80 border border-secondary-100/50">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-6 h-6 rounded bg-secondary-100 flex items-center justify-center flex-shrink-0">
+                <Package className="w-3.5 h-3.5 text-secondary" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-700">② 库存扣减</p>
+              </div>
+            </div>
+            <p className="text-[11px] font-bold text-secondary">扣{totalStockDeducted} / 释{totalStockReleased}</p>
+            <p className="text-[9px] text-gray-500 mt-0.5">净扣减 {totalStockDeducted - totalStockReleased} 件</p>
+          </div>
+
+          <Link to="/admin" className="p-2.5 rounded-lg bg-white/80 border border-accent-100/50 hover:border-accent/50 transition-colors block">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-6 h-6 rounded bg-accent-100 flex items-center justify-center flex-shrink-0">
+                <Megaphone className="w-3.5 h-3.5 text-accent" />
+              </div>
+              <div className="flex-1">
+                <p className="text-[11px] font-semibold text-gray-700">③ 大学城狂欢周</p>
+              </div>
+            </div>
+            <p className="text-[11px] font-bold text-accent">156单 · 92.3%</p>
+            <p className="text-[9px] text-gray-500 mt-0.5 flex items-center gap-0.5">
+              活动核销率 <ChevronRight className="w-2.5 h-2.5" />
+            </p>
+          </Link>
+
+          <Link to="/admin/reports" className="p-2.5 rounded-lg bg-white/80 border border-primary-100/50 hover:border-primary/50 transition-colors block">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-6 h-6 rounded bg-primary-100 flex items-center justify-center flex-shrink-0">
+                <BarChart3 className="w-3.5 h-3.5 text-primary" />
+              </div>
+              <div className="flex-1">
+                <p className="text-[11px] font-semibold text-gray-700">④ 消费报告回写</p>
+              </div>
+            </div>
+            <p className="text-[11px] font-bold text-primary">状态变更即回写</p>
+            <p className="text-[9px] text-gray-500 mt-0.5 flex items-center gap-0.5">
+              <FileText className="w-2.5 h-2.5" />
+              运营报表 <ChevronRight className="w-2.5 h-2.5" />
+            </p>
+          </Link>
+
+          <div className="p-2.5 rounded-lg bg-white/80 border border-amber-100/50">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-6 h-6 rounded bg-amber-100 flex items-center justify-center flex-shrink-0">
+                <Shield className="w-3.5 h-3.5 text-amber-600" />
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-700">⑤ 异常拦截</p>
+              </div>
+            </div>
+            <p className="text-[11px] font-bold text-amber-600">过期1单 · 重复1单</p>
+            <p className="text-[9px] text-gray-500 mt-0.5 flex items-center gap-0.5">
+              <Tag className="w-2.5 h-2.5" />
+              安全机制生效
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="flex gap-2 mb-6">
         {tabs.map((tab) => (
           <button

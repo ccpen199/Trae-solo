@@ -167,7 +167,7 @@ export default function MerchantJoin() {
               { step: '资质证照上传', status: 'done', desc: `营业执照${form.license ? '✓' : '✗'} · 经营许可证${form.permit ? '✓' : '✗'} · 门头照${form.facade ? '✓' : '✗'}` },
               { step: '营业时间配置', status: 'done', desc: `${form.hours.filter((h) => !h.closed).length}天营业时间已设定` },
               { step: '优惠标签配置', status: 'done', desc: `${form.tags.length}个标签已提交` },
-              { step: '资质核验审核', status: 'pending', desc: '1-3工作日内完成 · 审核人/审核时间/证照编号/有效期将记录' },
+              { step: '资质核验审核', status: 'pending', desc: '1-3工作日内完成 · 审核人将逐项核验门头照/营业执照/经营许可证/营业时间/优惠标签共5项内容，每项独立留痕' },
               { step: '审核结果通知', status: 'waiting', desc: '通过→上线营业 / 驳回→查看驳回原因→修改重新提交' },
             ].map((item, i, arr) => (
               <div key={i} className="flex items-start gap-2 relative">
@@ -183,6 +183,79 @@ export default function MerchantJoin() {
                 {i < arr.length - 1 && <div className="absolute left-2.5 top-5 w-px h-full bg-gray-200" />}
               </div>
             ))}
+          </div>
+        </div>
+
+        <div className="card p-4 text-left mb-6">
+          <h4 className="text-sm font-semibold text-gray-700 mb-3">逐项审核回写状态</h4>
+          <div className="space-y-3">
+            <div className="flex items-start gap-2">
+              <Image className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs text-gray-500">门头照</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待核验</span>
+                </div>
+                <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                  <span>审核人：—</span>
+                  <span>审核时间：—</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <FileText className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs text-gray-500">营业执照</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待核验</span>
+                </div>
+                <div className="flex items-center gap-3 text-[11px] text-gray-400 flex-wrap">
+                  <span>证照编号：{form.licenseNo || '—'}</span>
+                  <span>有效期：{form.licenseExpire || '—'}</span>
+                  <span>审核人：—</span>
+                  <span>审核时间：—</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <FileText className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs text-gray-500">经营许可证</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待核验</span>
+                </div>
+                <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                  <span>审核人：—</span>
+                  <span>审核时间：—</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <Clock className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs text-gray-500">营业时间</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待审核</span>
+                </div>
+                <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                  <span>审核人：—</span>
+                  <span>审核时间：—</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <Tag className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs text-gray-500">优惠标签</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待审核</span>
+                </div>
+                <div className="flex items-center gap-3 text-[11px] text-gray-400">
+                  <span>审核人：—</span>
+                  <span>审核时间：—</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -77,10 +77,16 @@ export default function HeatmapSection() {
     setTimeout(() => {
       const coords = s === 'gps' ? { lat: 31.051, lng: 121.247, label: 'GPS卫星' }
         : s === 'cell' ? { lat: 31.042, lng: 121.228, label: '基站三角' }
+        : s === 'out_of_fence' ? { lat: 31.40, lng: 121.50, label: '越界模拟·嘉定区' }
         : { lat: 31.03, lng: 121.22, label: '默认松江' }
       const dist = Math.round(Math.sqrt(Math.pow(coords.lat - 31.03, 2) + Math.pow(coords.lng - 121.22, 2)) * 111000)
-      const heatRanking = s === 'gps' ? '广富林+25%→方松+20%' : s === 'cell' ? '中山+23%→广富林+19%' : '方松+22%→中山+15%'
+      const heatRanking = s === 'gps' ? '广富林+25%→方松+20%' : s === 'cell' ? '中山+23%→广富林+19%' : s === 'out_of_fence' ? '全部清空·围栏外拦截' : '方松+22%→中山+15%'
       setLocChangeNote(`定位切换：${old} → ${coords.lat.toFixed(4)},${coords.lng.toFixed(4)} (${coords.label})，距中心偏移${dist}m，商圈TOP5重排：${heatRanking}`)
+      if (s === 'out_of_fence') {
+        const now = new Date()
+        const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`
+        addInterceptRecord(timeStr, coords.lat, coords.lng, '主动越界模拟·嘉定区，触发围栏外拦截')
+      }
       setTimeout(() => setLocChangeNote(null), 6000)
     }, 50)
   }
@@ -127,6 +133,9 @@ export default function HeatmapSection() {
   }, [fetchMerchants])
 
   const dynamicTopStreets = (() => {
+    if (locInfo.source === 'out_of_fence') {
+      return []
+    }
     const base = [
       { name: '方松街道', merchantCount: 128, intensity: 87 },
       { name: '广富林街道', merchantCount: 96, intensity: 82 },
@@ -228,7 +237,7 @@ export default function HeatmapSection() {
             <p className="text-[9px] text-gray-400 mb-0.5">定位精度</p>
             <p className="text-sm font-bold text-accent">±{effectiveCoords.acc}</p>
             <p className="text-[9px] text-gray-500 mt-0.5">
-              {locInfo.source === 'gps' ? 'WGS84/HDOP<3' : locInfo.source === 'cell' ? 'LBS Cell-ID' : '默认中心点'}
+              {locInfo.source === 'gps' ? 'WGS84/HDOP<3' : locInfo.source === 'cell' ? 'LBS Cell-ID' : locInfo.source === 'out_of_fence' ? '越界模拟坐标' : '默认中心点'}
             </p>
           </div>
           <div className="p-2 rounded-lg bg-white/80 text-center">
@@ -246,47 +255,64 @@ export default function HeatmapSection() {
             <TrendingUp className="w-3 h-3 text-primary" />
             当前定位下商圈TOP5热力排序（可追溯）
           </p>
-          <div className="space-y-1">
-            {(locInfo.source === 'default'
-              ? [['方松街道', 22, 87, 128, 4.6, 0.22], ['广富林街道', 18, 82, 96, 4.5, 0.18], ['中山街道', 15, 75, 88, 4.4, 0.15], ['岳阳街道', 12, 70, 72, 4.3, 0.12], ['泗泾镇', 10, 68, 56, 4.2, 0.10]]
-              : locInfo.source === 'gps'
-              ? [['广富林街道', 25, 90, 96, 4.5, 0.25], ['方松街道', 20, 85, 128, 4.6, 0.20], ['中山街道', 16, 78, 88, 4.4, 0.16], ['岳阳街道', 14, 72, 72, 4.3, 0.14], ['佘山镇', 11, 65, 48, 4.1, 0.11]]
-              : [['中山街道', 23, 88, 88, 4.4, 0.23], ['广富林街道', 19, 84, 96, 4.5, 0.19], ['方松街道', 17, 80, 128, 4.6, 0.17], ['岳阳街道', 13, 71, 72, 4.3, 0.13], ['车墩镇', 9, 66, 44, 4.0, 0.09]]
-            ).map((item, i) => {
-              const name = item[0] as string
-              const weight = item[1] as number
-              const heat = item[2] as number
-              const mCount = item[3] as number
-              const rating = item[4] as number
-              const distW = item[5] as number
-              return (
-                <div key={name}>
-                  <div className="flex items-center gap-1.5">
-                    <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${
-                      i === 0 ? 'bg-yellow-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-gray-200 text-gray-500'
-                    }`}>{i + 1}</span>
-                    <span className="text-[10px] text-gray-700 w-20 flex-shrink-0">{name}</span>
-                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
-                        style={{ width: `${heat}%` }}
-                      />
+          {locInfo.source === 'out_of_fence' ? (
+            <div className="py-2">
+              <div className="flex items-center gap-1 mb-1.5">
+                <Shield className="w-3 h-3 text-danger" />
+                <p className="text-[10px] font-medium text-danger">围栏外 · 商圈TOP5全部清空</p>
+              </div>
+              <div className="space-y-0.5">
+                {['方松街道', '广富林街道', '中山街道', '岳阳街道', '泗泾镇'].map((n) => (
+                  <div key={n} className="flex items-center gap-1 text-[9px] text-gray-400 line-through">
+                    <XCircle className="w-2.5 h-2.5 flex-shrink-0" />
+                    <span>{n}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-1">
+              {(locInfo.source === 'default'
+                ? [['方松街道', 22, 87, 128, 4.6, 0.22], ['广富林街道', 18, 82, 96, 4.5, 0.18], ['中山街道', 15, 75, 88, 4.4, 0.15], ['岳阳街道', 12, 70, 72, 4.3, 0.12], ['泗泾镇', 10, 68, 56, 4.2, 0.10]]
+                : locInfo.source === 'gps'
+                ? [['广富林街道', 25, 90, 96, 4.5, 0.25], ['方松街道', 20, 85, 128, 4.6, 0.20], ['中山街道', 16, 78, 88, 4.4, 0.16], ['岳阳街道', 14, 72, 72, 4.3, 0.14], ['佘山镇', 11, 65, 48, 4.1, 0.11]]
+                : [['中山街道', 23, 88, 88, 4.4, 0.23], ['广富林街道', 19, 84, 96, 4.5, 0.19], ['方松街道', 17, 80, 128, 4.6, 0.17], ['岳阳街道', 13, 71, 72, 4.3, 0.13], ['车墩镇', 9, 66, 44, 4.0, 0.09]]
+              ).map((item, i) => {
+                const name = item[0] as string
+                const weight = item[1] as number
+                const heat = item[2] as number
+                const mCount = item[3] as number
+                const rating = item[4] as number
+                const distW = item[5] as number
+                return (
+                  <div key={name}>
+                    <div className="flex items-center gap-1.5">
+                      <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${
+                        i === 0 ? 'bg-yellow-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-gray-200 text-gray-500'
+                      }`}>{i + 1}</span>
+                      <span className="text-[10px] text-gray-700 w-20 flex-shrink-0">{name}</span>
+                      <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                          style={{ width: `${heat}%` }}
+                        />
+                      </div>
+                      <span className="text-[9px] text-primary font-medium w-10 text-right">+{weight}%</span>
                     </div>
-                    <span className="text-[9px] text-primary font-medium w-10 text-right">+{weight}%</span>
+                    <div className="flex items-center gap-2 ml-5 text-[8px] text-gray-400 mt-0.5">
+                      <span>商户{mCount}家</span>
+                      <span>·</span>
+                      <span>评分{rating}</span>
+                      <span>·</span>
+                      <span>距离衰减+{(distW * 100).toFixed(0)}%</span>
+                      <span>·</span>
+                      <span>热度{(heat * 0.4).toFixed(0)}+评分{(rating * 0.3 * 10).toFixed(0)}+距离{(distW * 100 * 0.3).toFixed(0)}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 ml-5 text-[8px] text-gray-400 mt-0.5">
-                    <span>商户{mCount}家</span>
-                    <span>·</span>
-                    <span>评分{rating}</span>
-                    <span>·</span>
-                    <span>距离衰减+{(distW * 100).toFixed(0)}%</span>
-                    <span>·</span>
-                    <span>热度{(heat * 0.4).toFixed(0)}+评分{(rating * 0.3 * 10).toFixed(0)}+距离{(distW * 100 * 0.3).toFixed(0)}</span>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
+          )}
           <p className="text-[9px] text-gray-400 mt-1.5">排序公式：热度40% + 评分30% + 距离衰减30%，切换定位来源后TOP5权重实时变化</p>
         </div>
         <div className="p-2 rounded-lg bg-white/70 mt-2">
@@ -437,6 +463,17 @@ export default function HeatmapSection() {
                 {fb.label}
               </button>
             ))}
+            <button
+              onClick={() => handleLocSourceChange('out_of_fence')}
+              className={`px-2 py-0.5 rounded border text-[10px] transition-colors flex items-center gap-0.5 ${
+                locInfo.source === 'out_of_fence'
+                  ? 'bg-danger text-white border-danger font-medium'
+                  : 'bg-white text-danger border-danger/30 hover:bg-danger-50'
+              }`}
+            >
+              <AlertTriangle className="w-2.5 h-2.5" />
+              越界模拟·嘉定区
+            </button>
           </div>
           <div className="flex items-center gap-1">
             <Shield className="w-3.5 h-3.5 text-primary" />
@@ -477,9 +514,28 @@ export default function HeatmapSection() {
                   <p className="text-[11px] font-medium text-danger">商户推荐已清空</p>
                 </div>
                 <p className="text-[10px] text-gray-500 pl-5">
-                  原TOP10商户全部隐藏，展示"围栏外·服务受限"边界面板
+                  原TOP10商户全部隐藏，以下商户因区外定位已拦截展示：
                 </p>
-                <div className="mt-1.5 pl-5">
+                <div className="mt-1.5 pl-5 space-y-0.5 max-h-20 overflow-y-auto">
+                  {[
+                    '松江老城·外婆家（方松店）',
+                    '广富林·星巴克咖啡',
+                    '中山二路·海底捞火锅',
+                    '泗泾古镇·本地菜馆',
+                    '佘山度假区·农家大院',
+                    '车墩影视城·主题餐厅',
+                    '新桥商圈·肯德基',
+                    '九亭地铁站·麦当劳',
+                    '岳阳街道·必胜客',
+                    '永丰街道·小龙坎火锅',
+                  ].map((name, i) => (
+                    <div key={i} className="flex items-center gap-1 text-[9px] text-gray-400 line-through">
+                      <XCircle className="w-2 h-2 flex-shrink-0 text-danger/50" />
+                      <span>{name}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-1 pl-5 pt-1 border-t border-gray-50">
                   <div className="flex items-center gap-1">
                     <span className="text-[9px] text-gray-400">清空数量</span>
                     <span className="text-[11px] font-bold text-danger">10 家</span>
@@ -496,6 +552,21 @@ export default function HeatmapSection() {
                   套餐购买按钮置灰，点击提示"仅限松江区域用户购买"
                 </p>
                 <div className="mt-1.5 pl-5">
+                  <div className="p-2 rounded bg-gray-50 border border-gray-100">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] text-gray-500">松江双人豪华套餐</span>
+                      <span className="text-[10px] font-bold text-gray-300 line-through">¥299</span>
+                    </div>
+                    <button
+                      disabled
+                      className="w-full py-1.5 rounded text-[10px] bg-gray-200 text-gray-400 cursor-not-allowed flex items-center justify-center gap-0.5"
+                    >
+                      <Ban className="w-2.5 h-2.5" />
+                      仅限松江区域用户购买
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-1.5 pl-5">
                   <div className="flex items-center gap-1">
                     <span className="text-[9px] text-gray-400">拦截率</span>
                     <span className="text-[11px] font-bold text-danger">100%</span>
@@ -511,9 +582,21 @@ export default function HeatmapSection() {
                 <p className="text-[10px] text-gray-500 pl-5">
                   已有动态码全部标记失效，扫码返回错误码 4031
                 </p>
-                <div className="mt-1.5 pl-5 flex gap-1">
-                  <span className="px-1 py-0.5 rounded bg-gray-100 text-gray-400 text-[9px] font-mono line-through">A3F8K2</span>
-                  <span className="px-1 py-0.5 rounded bg-gray-100 text-gray-400 text-[9px] font-mono line-through">7D9B4E</span>
+                <div className="mt-1.5 pl-5 space-y-1">
+                  <div className="flex items-center gap-2 p-1.5 rounded bg-gray-50">
+                    <span className="px-1.5 py-0.5 rounded bg-gray-200 text-gray-400 text-[9px] font-mono line-through">A3F8K2</span>
+                    <span className="text-[9px] text-danger flex items-center gap-0.5">
+                      <XCircle className="w-2 h-2" />
+                      核销码已失效
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 p-1.5 rounded bg-gray-50">
+                    <span className="px-1.5 py-0.5 rounded bg-gray-200 text-gray-400 text-[9px] font-mono line-through">7D9B4E</span>
+                    <span className="text-[9px] text-danger flex items-center gap-0.5">
+                      <XCircle className="w-2 h-2" />
+                      核销码已失效
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -523,14 +606,29 @@ export default function HeatmapSection() {
                   <p className="text-[11px] font-medium text-gray-700">报表数据已剔除</p>
                 </div>
                 <p className="text-[10px] text-gray-500 pl-5">
-                  区外订单不计入松江消费报告，核销率/复购率统计排除
+                  区外订单不计入松江消费报告，具体剔除项如下：
                 </p>
-                <div className="mt-1.5 pl-5">
-                  <div className="flex items-center gap-1">
-                    <span className="text-[9px] text-gray-400">剔除订单</span>
-                    <span className="text-[11px] font-bold text-gray-500 line-through">42 单</span>
+                <div className="mt-1.5 pl-5 space-y-0.5">
+                  <div className="flex items-center justify-between text-[9px]">
+                    <span className="text-gray-500">今日区外订单</span>
+                    <span className="text-gray-400 line-through font-mono">42 单</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[9px]">
+                    <span className="text-gray-500">区外订单金额</span>
+                    <span className="text-gray-400 line-through font-mono">¥8,960</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[9px]">
+                    <span className="text-gray-500">区外核销率</span>
+                    <span className="text-gray-400 line-through font-mono">87.1%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[9px]">
+                    <span className="text-gray-500">区外复购率</span>
+                    <span className="text-gray-400 line-through font-mono">42.3%</span>
                   </div>
                 </div>
+                <p className="text-[9px] text-gray-400 pl-5 mt-1">
+                  以上数据全部从「松江消费报告」中剔除，不影响区内统计
+                </p>
               </div>
             </div>
 

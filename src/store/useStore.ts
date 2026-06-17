@@ -63,7 +63,7 @@ export interface Order {
 }
 
 export type CategoryType = 'food' | 'entertainment' | 'leisure' | 'shopping'
-export type LocSource = 'default' | 'gps' | 'cell'
+export type LocSource = 'default' | 'gps' | 'cell' | 'out_of_fence'
 
 export interface LocInfo {
   source: LocSource
@@ -93,6 +93,11 @@ function buildLocInfo(source: LocSource, customLat?: number, customLng?: number)
     const lat = customLat ?? 31.042
     const lng = customLng ?? 121.228
     return { source, label: '基站三角', lat, lng, acc: '500m', accuracy: 500, inFence: isInSongjiangFence(lat, lng) }
+  }
+  if (source === 'out_of_fence') {
+    const lat = customLat ?? 31.40
+    const lng = customLng ?? 121.50
+    return { source, label: '越界模拟·嘉定区', lat, lng, acc: 'N/A', accuracy: 0, inFence: isInSongjiangFence(lat, lng) }
   }
   return {
     source: 'default',
@@ -152,10 +157,10 @@ const useStore = create<AppState>((set, get) => ({
       isInSongjiang: inFence,
       locInfo: {
         source: src,
-        label: src === 'gps' ? 'GPS卫星' : src === 'cell' ? '基站三角' : '默认松江',
+        label: src === 'gps' ? 'GPS卫星' : src === 'cell' ? '基站三角' : src === 'out_of_fence' ? '越界模拟·嘉定区' : '默认松江',
         lat, lng,
-        acc: src === 'gps' ? '50m' : src === 'cell' ? '500m' : '1000m',
-        accuracy: src === 'gps' ? 50 : src === 'cell' ? 500 : 1000,
+        acc: src === 'gps' ? '50m' : src === 'cell' ? '500m' : src === 'out_of_fence' ? 'N/A' : '1000m',
+        accuracy: src === 'gps' ? 50 : src === 'cell' ? 500 : src === 'out_of_fence' ? 0 : 1000,
         inFence,
       },
     })

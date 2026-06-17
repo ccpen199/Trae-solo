@@ -504,12 +504,65 @@ export default function Category() {
                             </div>
                           )}
                           {changeSubmitted[m.id] && (
-                            <div className="mt-2 p-2 rounded-lg bg-yellow-50 border border-yellow-100">
-                              <div className="flex items-center gap-1.5">
+                            <div className="mt-2 p-2.5 rounded-lg bg-yellow-50 border border-yellow-100 space-y-2.5">
+                              <div className="flex items-center gap-1.5 pb-1.5 border-b border-yellow-100">
                                 <Clock className="w-3.5 h-3.5 text-yellow-600 flex-shrink-0" />
-                                <div className="flex-1">
-                                  <p className="text-[10px] font-medium text-yellow-700">变更申请已提交 · 等待运营审核</p>
-                                  <p className="text-[9px] text-yellow-600 mt-0.5">预计 1-3 个工作日内完成审核，审核结果将同步至商户档案</p>
+                                <p className="text-[11px] font-medium text-yellow-700">当前资料变更申请详情</p>
+                                <span className="ml-auto px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 text-[9px] font-medium">审批流转中</span>
+                              </div>
+                              <div className="space-y-1.5">
+                                <div className="flex items-start gap-1.5">
+                                  <span className="text-[9px] text-gray-500 w-14 flex-shrink-0">变更类型</span>
+                                  <div className="flex-1 flex gap-1 flex-wrap">
+                                    <span className="px-1.5 py-0.5 rounded bg-primary-50 text-primary text-[9px] font-medium">营业时间变更</span>
+                                    <span className="px-1.5 py-0.5 rounded bg-accent-50 text-accent text-[9px] font-medium">优惠标签新增</span>
+                                  </div>
+                                </div>
+                                <div className="flex items-start gap-1.5">
+                                  <span className="text-[9px] text-gray-500 w-14 flex-shrink-0">变更内容</span>
+                                  <div className="flex-1 space-y-1">
+                                    <div className="flex items-center gap-1.5 text-[10px]">
+                                      <span className="text-gray-400">原营业时间</span>
+                                      <span className="text-gray-600">周一至周日 10:00-21:00</span>
+                                      <span className="text-gray-300">→</span>
+                                      <span className="text-secondary font-medium">周一至周日 09:30-22:30</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 text-[10px]">
+                                      <span className="text-gray-400">新增标签</span>
+                                      <div className="flex gap-1">
+                                        <span className="px-1 py-0.5 rounded bg-accent-50 text-accent text-[9px]">学生特惠</span>
+                                        <span className="px-1 py-0.5 rounded bg-accent-50 text-accent text-[9px]">下午茶</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="flex items-start gap-1.5">
+                                  <span className="text-[9px] text-gray-500 w-14 flex-shrink-0">审批流转</span>
+                                  <div className="flex-1 flex items-center gap-1 flex-wrap">
+                                    <span className="px-1.5 py-0.5 rounded bg-secondary-50 text-secondary text-[9px] font-medium flex items-center gap-0.5">
+                                      <CheckCircle className="w-2 h-2" />已提交
+                                    </span>
+                                    <span className="text-gray-300 text-[9px]">→</span>
+                                    <span className="px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 text-[9px] font-medium flex items-center gap-0.5 animate-pulse">
+                                      <Clock className="w-2 h-2" />运营初审
+                                    </span>
+                                    <span className="text-gray-300 text-[9px]">→</span>
+                                    <span className="px-1.5 py-0.5 rounded bg-gray-100 text-gray-400 text-[9px]">复核通过</span>
+                                  </div>
+                                </div>
+                                <div className="grid grid-cols-3 gap-1.5 pt-1 border-t border-yellow-100/70">
+                                  <div>
+                                    <p className="text-[9px] text-gray-500">申请人</p>
+                                    <p className="text-[10px] text-gray-700 font-medium mt-0.5">商户运营</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-[9px] text-gray-500">申请时间</p>
+                                    <p className="text-[10px] text-gray-700 font-mono mt-0.5">{new Date().toISOString().slice(0, 16).replace('T', ' ')}</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-[9px] text-gray-500">流水号</p>
+                                    <p className="text-[10px] text-gray-700 font-mono mt-0.5">BG{String(m.id).padStart(6, '0')}{new Date().getFullYear()}{String(new Date().getMonth() + 1).padStart(2, '0')}</p>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -595,6 +648,8 @@ export default function Category() {
                             )}
                             {[
                               { time: m.audited_at ? String(m.audited_at).slice(0, 16).replace('T', ' ') : '2026-03-12 10:30', status: 'approved', title: '入驻资质核验·审核通过', desc: `资质齐全，证照有效期至 ${m.license_expire ? String(m.license_expire).split('T')[0] : '2028-03-11'}，审核人：${m.audited_by || '张审核'}` },
+                              { time: '2026-04-22 15:30', status: 'change_approved', title: '优惠标签新增·重提后审批通过', desc: '驳回后3天重新提交，补充「学生特惠」合作证明材料，变更已生效，审核人：李审核' },
+                              { time: '2026-04-21 10:15', status: 'change_pending', title: '优惠标签新增·驳回后重新提交', desc: '补充学生合作证明后再次提交，申请新增「学生特惠」「下午茶」2个优惠标签' },
                               { time: '2026-04-20 14:05', status: 'change_approved', title: '营业时间变更·审批通过', desc: '周末营业时间延长至23:00，变更已生效，审核人：李审核' },
                               { time: '2026-04-18 09:30', status: 'change_rejected', title: '优惠标签新增·审核驳回', desc: '「学生特惠」标签需提供相关合作证明，请补充材料后重新申请' },
                               { time: '2026-04-15 16:40', status: 'change_pending', title: '优惠标签新增·申请中', desc: '申请新增「学生特惠」「下午茶」2个优惠标签' },
@@ -623,7 +678,7 @@ export default function Category() {
                             })}
                           </div>
                           <p className="text-[9px] text-gray-400 mt-2 pt-1.5 border-t border-gray-100">
-                            共 5 条记录 · 3 次通过 · 1 次驳回 · 1 次审核中 · 全部可复查
+                            共 {8 + (changeSubmitted[m.id] ? 1 : 0)} 条记录 · 4 次通过 · 2 次驳回{changeSubmitted[m.id] ? ' · 1 次审核中' : ''} · 全部可复查
                           </p>
                         </div>
 
