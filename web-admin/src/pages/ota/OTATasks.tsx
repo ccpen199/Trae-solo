@@ -36,6 +36,7 @@ import {
   Maximize2,
   ChevronUp,
   AlertCircle,
+  AlertTriangle,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -705,7 +706,7 @@ const OTATasks: React.FC = () => {
         }}
         onOk={confirmPauseToggle}
         okText={selectedTask?.status === 'running' ? '确认暂停' : '确认继续'}
-        okType={selectedTask?.status === 'running' ? 'warning' : 'primary'}
+        okButtonProps={{ danger: selectedTask?.status === 'running' }}
         cancelText="取消"
         width={480}
       >
@@ -720,7 +721,7 @@ const OTATasks: React.FC = () => {
             {selectedTask.status === 'running' ? (
               <div className="bg-warning-50 border border-warning-100 rounded-lg p-4">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle_ size={18} className="text-warning-500 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle size={18} className="text-warning-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-warning-800">暂停任务提示</p>
                     <p className="text-sm text-warning-600 mt-1">
@@ -866,9 +867,5 @@ const OTATasks: React.FC = () => {
     </div>
   );
 };
-
-function AlertTriangle_(props: { size?: number; className?: string }) {
-  return <AlertTriangle size={props.size} className={props.className} />;
-}
 
 export default OTATasks;

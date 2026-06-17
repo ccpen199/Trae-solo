@@ -130,7 +130,6 @@ const HealthOverviewPage: React.FC = () => {
       const data = await healthApi.getDeviceList({
         page,
         pageSize,
-        pageSize: pageSize,
         status: status === 'all' ? undefined : status,
       });
       setDeviceList(data.list);

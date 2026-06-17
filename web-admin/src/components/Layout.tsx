@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout as AntLayout, Menu, Avatar, Dropdown, Breadcrumb, Input, Badge, Space } from 'antd';
+import { Layout as AntLayout, Menu, Avatar, Dropdown, Breadcrumb, Input, Badge } from 'antd';
 import type { MenuProps } from 'antd';
 import {
   Activity,
