@@ -118,13 +118,49 @@ export default function QuickOrderForm() {
         const nm = total % 60;
         return `${d} ${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
       };
+      const isOvertimeOrder = newOrderId % 5 === 0;
+      const arriveOffset = isOvertimeOrder ? 35 : -5;
       const assignRemark = selectedWorkerId
         ? `用户手动指定阿姨：${chosenWorker?.real_name || ''}`
         : '热力图匹配1km内最优阿姨（动态加权评分第一）';
       return [
-        { id: 1, order_id: newOrderId, node_type: 'order_created' as const, node_label: '订单创建', node_time: addMin(time, -1), remark: '3秒快速下单完成' },
-        { id: 2, order_id: newOrderId, node_type: 'assigned' as const, node_label: selectedWorkerId ? '人工指定派单' : '系统派单', node_time: addMin(time, 2), remark: assignRemark },
+        { id: 1, order_id: newOrderId, node_type: 'order_created' as const, node_label: '订单创建', node_time: addMin(time, -60), remark: '3秒快速下单完成' },
+        { id: 2, order_id: newOrderId, node_type: 'assigned' as const, node_label: selectedWorkerId ? '人工指定派单' : '系统派单', node_time: addMin(time, -58), remark: assignRemark },
+        { id: 3, order_id: newOrderId, node_type: 'accepted' as const, node_label: '阿姨接单', node_time: addMin(time, -30), remark: '阿姨已确认接单，正在准备出发' },
+        { id: 4, order_id: newOrderId, node_type: 'departing' as const, node_label: '阿姨出发', node_time: addMin(time, -15), remark: '阿姨已出发，正在赶往服务地址' },
+        { id: 5, order_id: newOrderId, node_type: 'arrived' as const, node_label: '到达地址', node_time: addMin(time, arriveOffset), remark: isOvertimeOrder ? `阿姨迟到${arriveOffset}分钟到达` : '阿姨已到达服务地址' },
+        { id: 6, order_id: newOrderId, node_type: 'servicing' as const, node_label: '服务开始', node_time: addMin(time, Math.max(arriveOffset, 0)), remark: '服务进行中，全程可追踪' },
+        { id: 7, order_id: newOrderId, node_type: 'completed' as const, node_label: '服务完成', node_time: addMin(time, Math.max(arriveOffset, 0) + duration * 60), remark: '服务已完成，请您评价' },
       ];
+    };
+
+    const genCompensation = (isOvertime: boolean): import('@/types').CompensationRecord | undefined => {
+      if (!isOvertime) return undefined;
+      const arriveOffset = 35;
+      const addMin = (min: number) => {
+        const [h, m] = time.split(':').map(Number);
+        const total = h * 60 + m + min;
+        const nh = Math.floor(total / 60) % 24;
+        const nm = total % 60;
+        return `${dateStr} ${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
+      };
+      const baseMin = Math.max(arriveOffset, 0) + duration * 60;
+      return {
+        id: 20000 + newOrderId,
+        order_id: newOrderId,
+        reason: `阿姨迟到${arriveOffset}分钟，触发爽约赔付`,
+        reason_category: '迟到超时',
+        refund_amount: totalFee,
+        coupon_amount: 30,
+        coupon_code: `COMP-${String(newOrderId).slice(-4).toUpperCase()}${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
+        status: 'paid',
+        trigger_type: 'auto',
+        created_at: addMin(baseMin + 10),
+        approved_at: addMin(baseMin + 10),
+        paid_at: addMin(baseMin + 25),
+        auditor: '系统自动',
+        description: `阿姨迟到${arriveOffset}分钟，符合自动赔付条件。全额退款¥${totalFee}已到账，30元补偿券已发放至账户。`,
+      };
     };
 
     const genDispatchRecords = (): import('@/types').DispatchRecord[] => {
@@ -173,6 +209,72 @@ export default function QuickOrderForm() {
       return recs;
     };
 
+    const isOvertimeOrder = newOrderId % 5 === 0;
+
+    const genQARecord = (): import('@/types').QARecordDetail | undefined => {
+      if (!isOvertimeOrder && newOrderId % 2 !== 0) return undefined;
+      const isOver = isOvertimeOrder;
+      const addMin = (min: number) => {
+        const [h, m] = time.split(':').map(Number);
+        const total = h * 60 + m + min;
+        const nh = Math.floor(total / 60) % 24;
+        const nm = total % 60;
+        return `${dateStr} ${String(nh).padStart(2, '0')}:${String(nm).padStart(2, '0')}`;
+      };
+      const compliance = isOver ? 42 + Math.floor(Math.random() * 15) : 92 + Math.floor(Math.random() * 8);
+      const passRate = compliance >= 80;
+      const workerN = chosenWorker?.real_name || '服务阿姨';
+      const reviewTime = addMin(Math.max(isOver ? 35 : 0, 0) + duration * 60 + 30);
+      return {
+        id: 4000 + newOrderId,
+        order_id: newOrderId,
+        audio_url: `/mock/audio/${newOrderId}.mp3`,
+        audio_duration: duration * 3600,
+        transcript_text: isOver
+          ? `客户：你怎么迟到了？${workerN}：抱歉，路上堵车。客户：厨房擦得不干净。${workerN}：我再擦一下。客户：不用了，我要投诉。`
+          : `客户：您好，麻烦重点打扫一下。${workerN}：好的，我会仔细做。客户：打扫得很干净，辛苦了。${workerN}：不客气，这是我应该做的。`,
+        transcript_summary: isOver
+          ? `${workerN}迟到超时，服务质量不达标，客户不满。`
+          : `${workerN}准时到达，服务态度良好，客户表示满意。`,
+        transcript_full: isOver
+          ? `客户：你怎么迟到了这么久？\n${workerN}：不好意思，路上堵车。\n客户：我都等了快30分钟了。\n${workerN}：真的很抱歉。\n客户：算了，你赶紧做吧。\n（服务中）\n客户：这擦得也太敷衍了吧。\n${workerN}：我再擦一下。\n客户：不用了，就这样吧。\n（服务结束）\n客户：服务太不满意了，我要投诉。`
+          : `客户：您好，麻烦重点打扫一下厨房和卫生间。\n${workerN}：好的，我先从厨房开始，油烟机和灶台都会仔细擦的。\n客户：好的，谢谢。\n（30分钟后）\n${workerN}：厨房打扫完了，您看一下。\n客户：挺干净的，不错。\n${workerN}：接下来打扫卫生间。\n（1小时后）\n${workerN}：都打扫完了，您检查一下。\n客户：打扫得很干净，辛苦了。\n${workerN}：不客气，这是我应该做的。`,
+        keywords: isOver
+          ? [
+              { text: '迟到', hit: true, count: 2 },
+              { text: '服务质量', hit: true, count: 1 },
+              { text: '投诉', hit: true, count: 1 },
+              { text: '不满意', hit: true, count: 1 },
+              { text: '标准话术', hit: false, count: 0 },
+              { text: '好评', hit: false, count: 0 },
+            ]
+          : [
+              { text: '准时到达', hit: true, count: 1 },
+              { text: '服务态度', hit: true, count: 2 },
+              { text: '清洁彻底', hit: true, count: 1 },
+              { text: '标准话术', hit: true, count: 1 },
+              { text: '投诉', hit: false, count: 0 },
+              { text: '迟到', hit: false, count: 0 },
+            ],
+        compliance_rate: compliance,
+        root_cause: isOver ? '迟到超时+服务质量不达标' : '无',
+        root_cause_category: isOver ? '服务质量' : '好评订单',
+        root_cause_detail: isOver
+          ? `${workerN}迟到超时，服务质量不达标，客户不满并投诉`
+          : `${workerN}准时到达，服务态度良好，客户表示满意，无差评或投诉记录`,
+        rating: isOver ? 2 : 5,
+        complaint_count: isOver ? 1 : 0,
+        reviewer: isOver ? '质检组长-李建国' : '质检专员-王晓梅',
+        review_time: reviewTime,
+        review_conclusion: passRate ? 'pass' : 'fail',
+        review_remark: passRate
+          ? '服务流程规范，态度良好，质量达标，建议保持。'
+          : '存在质量问题，建议对阿姨进行再培训。',
+        created_at: reviewTime,
+        qa_status: 'completed',
+      };
+    };
+
     const newOrder: import('@/types').Order = {
       id: newOrderId,
       user_id: 1,
@@ -185,8 +287,8 @@ export default function QuickOrderForm() {
       lat: selectedAddress.lat,
       start_time: startTimeStr,
       duration_hours: duration,
-      status: 'assigned',
-      status_label: '待接单',
+      status: isOvertimeOrder ? 'compensated' : 'completed',
+      status_label: isOvertimeOrder ? '已赔付' : '已完成',
       amount: totalFee,
       created_at: new Date().toISOString().slice(0, 16).replace('T', ' '),
       nodes: genOrderNodes(),
@@ -203,6 +305,10 @@ export default function QuickOrderForm() {
       worker_phone: chosenWorker?.phone || '待确认',
       worker_score: chosenWorker ? Math.round(chosenWorker.weighted_score / 20 * 10) / 10 : avgScore,
       distance_km: chosenWorker?.distance_km || (dispatchInfo ? dispatchInfo.worker_distribution[0]?.count ? 0.5 : 1.0 : 0.8),
+      is_overtime: isOvertimeOrder,
+      overtime_minutes: isOvertimeOrder ? 35 : undefined,
+      compensation: genCompensation(isOvertimeOrder),
+      qa_record: genQARecord(),
     };
 
     setTimeout(() => {
@@ -1037,7 +1143,7 @@ function OrderSuccessView({
             { label: '订单生成', icon: Zap, done: true, color: 'text-primary-600 bg-primary-100' },
             { label: '保险承保', icon: Shield, done: !!displayInsurance, color: 'text-green-600 bg-green-100' },
             { label: '节点提醒', icon: Navigation, done: displayNodes.length >= 2, color: 'text-blue-600 bg-blue-100' },
-            { label: '赔付触发', icon: CircleDollarSign, done: displayStatus === 'completed', color: 'text-red-600 bg-red-100' },
+            { label: '赔付闭环', icon: CircleDollarSign, done: displayStatus === 'completed' || displayStatus === 'compensated', color: displayStatus === 'compensated' ? 'text-red-600 bg-red-100' : 'text-green-600 bg-green-100', labelSuffix: displayStatus === 'compensated' ? '· 已赔付' : displayStatus === 'completed' ? '· 未触发' : '' },
           ].map((step, si) => {
             const StepIcon = step.icon;
             return (
@@ -1048,7 +1154,10 @@ function OrderSuccessView({
                 <div className={cn('w-6 h-6 rounded-full flex items-center justify-center relative z-10', step.done ? step.color : 'bg-gray-100 text-gray-400')}>
                   <StepIcon className="w-3 h-3" />
                 </div>
-                <span className={cn('text-[8px] mt-1 font-medium', step.done ? 'text-secondary-700' : 'text-gray-400')}>{step.label}</span>
+                <span className={cn('text-[8px] mt-1 font-medium text-center leading-tight', step.done ? 'text-secondary-700' : 'text-gray-400')}>
+                  {step.label}
+                  {step.labelSuffix && <span className={cn('block', displayStatus === 'compensated' ? 'text-red-600' : 'text-green-600')}>{step.labelSuffix}</span>}
+                </span>
                 {step.done && <span className="text-[7px] text-green-600">✓</span>}
               </div>
             );

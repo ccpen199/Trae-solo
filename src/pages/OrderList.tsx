@@ -114,7 +114,7 @@ function NodeTimeline({ order }: { order: Order }) {
 }
 
 function CompensationCard({ compensation }: { compensation: CompensationRecord }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   return (
     <div className="mt-3 bg-red-50 rounded-xl p-3 border border-red-100">
@@ -130,10 +130,13 @@ function CompensationCard({ compensation }: { compensation: CompensationRecord }
             <p className="text-xs font-bold text-red-700">
               爽约自动赔付 · {compensation.status === 'paid' ? '已到账' : compensation.status === 'approved' ? '审核通过' : '处理中'}
             </p>
-            <p className="text-[10px] text-red-500">{compensation.trigger_type === 'auto' ? '系统自动触发' : '人工申请'}</p>
+            <p className="text-[10px] text-red-500">{compensation.trigger_type === 'auto' ? '系统自动触发' : '人工申请'} · 退款¥{compensation.refund_amount}+券¥{compensation.coupon_amount}</p>
           </div>
         </div>
-        <ChevronLeft className={cn('w-3.5 h-3.5 text-red-400 transition-transform', expanded && 'rotate-180')} />
+        <div className="flex items-center gap-1.5 text-red-500">
+          <span className="text-[10px]">{expanded ? '收起' : '展开'}</span>
+          <ChevronDown className={cn('w-3.5 h-3.5 text-red-400 transition-transform', expanded && 'rotate-180')} />
+        </div>
       </button>
 
       {expanded && (
@@ -574,7 +577,7 @@ export default function OrderList() {
                     <CompensationCard compensation={order.compensation!} />
                   )}
 
-                  {(order.status === 'completed' || order.status === 'compensated') && order.qa_record && (
+                  {order.qa_record && (
                     <CompletedOrderDetail order={order} />
                   )}
 
