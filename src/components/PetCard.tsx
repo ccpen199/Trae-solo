@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Heart, Syringe, Bug, ChevronRight, PawPrint } from 'lucide-react';
+import { Heart, Syringe, Bug, ChevronRight, PawPrint, Calendar, Thermometer, AlertCircle, Stethoscope, MapPin } from 'lucide-react';
 import type { Pet } from '@shared/types';
 import { cn } from '@/lib/utils';
 
@@ -91,18 +91,97 @@ export default function PetCard({ pet, compact }: PetCardProps) {
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1.5">
-          <Syringe className="w-4 h-4 text-forest-500" />
-          <span className="text-xs text-gray-600">疫苗 {pet.vaccineRecords.length}</span>
+      {/* 健康数据概览模板 */}
+      <div className="mb-4 p-3 rounded-xl bg-gradient-to-br from-forest-50 to-cream-50 border border-forest-100 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-forest-700">
+            <Thermometer className="w-3.5 h-3.5" /> 健康数据模板
+          </div>
+          <span className="text-[10px] text-forest-600">模板ID: HT-{pet.id.padStart(6, '0')}</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <Bug className="w-4 h-4 text-warm-400" />
-          <span className="text-xs text-gray-600">驱虫 {pet.dewormingRecords.length}</span>
+        <div className="grid grid-cols-3 gap-1.5 text-center">
+          <div className="p-1.5 rounded-lg bg-white/70">
+            <p className="text-[10px] text-gray-500">体温</p>
+            <p className="text-[11px] font-semibold text-gray-800">38.6°C</p>
+          </div>
+          <div className="p-1.5 rounded-lg bg-white/70">
+            <p className="text-[10px] text-gray-500">心率</p>
+            <p className="text-[11px] font-semibold text-gray-800">102/min</p>
+          </div>
+          <div className="p-1.5 rounded-lg bg-white/70">
+            <p className="text-[10px] text-gray-500">体重趋势</p>
+            <p className="text-[11px] font-semibold text-forest-600">+0.3kg</p>
+          </div>
         </div>
+      </div>
+
+      {/* 病中状态跟踪 */}
+      {pet.healthStatus === 'sick' && (
+        <div className="mb-4 p-3 rounded-xl bg-gradient-to-br from-warm-50 to-orange-50 border border-warm-100 space-y-2">
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-warm-700">
+            <AlertCircle className="w-3.5 h-3.5" /> 病中状态跟踪
+          </div>
+          <div className="text-[11px] text-gray-700 space-y-0.5">
+            <p className="flex items-center gap-1">
+              <Stethoscope className="w-3 h-3 text-warm-600" />
+              诊断：<span className="font-semibold">急性肠胃炎</span>
+            </p>
+            <p className="flex items-center gap-1">
+              <Calendar className="w-3 h-3 text-warm-600" />
+              复诊：<span className="font-semibold text-warm-700">2026-06-22</span> · 已预约
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* 疫苗/驱虫/体检提醒联动 */}
+      <div className="space-y-1.5 mb-3">
+        <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-forest-50/60">
+          <Syringe className="w-3.5 h-3.5 text-forest-500 shrink-0" />
+          <span className="text-[11px] text-gray-700 flex-1">
+            疫苗 {pet.vaccineRecords.length} 次 · 下次加强
+            <span className="font-semibold text-forest-700 ml-1">2026-01-15</span>
+          </span>
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate('/hospitals'); }}
+            className="px-2 py-0.5 rounded-md bg-forest-500 text-white text-[10px] font-semibold hover:bg-forest-600 transition-colors inline-flex items-center gap-1"
+          >
+            <MapPin className="w-3 h-3" /> 预约接种
+          </button>
+        </div>
+        <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-warm-50/60">
+          <Bug className="w-3.5 h-3.5 text-warm-500 shrink-0" />
+          <span className="text-[11px] text-gray-700 flex-1">
+            驱虫 {pet.dewormingRecords.length} 次 · 下次驱虫
+            <span className="font-semibold text-warm-700 ml-1">2025-06-01</span>
+          </span>
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate('/products'); }}
+            className="px-2 py-0.5 rounded-md bg-warm-500 text-white text-[10px] font-semibold hover:bg-warm-600 transition-colors"
+          >
+            去购药
+          </button>
+        </div>
+        <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-pink-50/60">
+          <Heart className="w-3.5 h-3.5 text-pink-500 shrink-0" />
+          <span className="text-[11px] text-gray-700 flex-1">
+            年度体检 · 上次
+            <span className="font-semibold text-pink-700 ml-1">2025-03-10</span>
+          </span>
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate('/hospitals'); }}
+            className="px-2 py-0.5 rounded-md bg-pink-500 text-white text-[10px] font-semibold hover:bg-pink-600 transition-colors inline-flex items-center gap-1"
+          >
+            <Calendar className="w-3 h-3" /> 预约体检
+          </button>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 pt-2 border-t border-forest-50">
         <div className="ml-auto flex items-center gap-1 text-forest-600 group-hover:text-forest-500 transition-colors">
           <Heart className="w-4 h-4" />
-          <span className="text-xs font-medium">查看详情</span>
+          <span className="text-xs font-medium">查看完整健康档案</span>
+          <ChevronRight className="w-4 h-4" />
         </div>
       </div>
     </div>

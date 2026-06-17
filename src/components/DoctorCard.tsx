@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import type { Doctor } from '@shared/types';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/store/useAuthStore';
 
 interface DoctorCardProps {
   doctor: Doctor;
@@ -21,6 +22,9 @@ interface DoctorCardProps {
 }
 
 export default function DoctorCard({ doctor, onConsult }: DoctorCardProps) {
+  const { user, impersonateRole } = useAuthStore();
+  const effectiveRole = impersonateRole || user?.role;
+  const canSeeAdminView = !!(effectiveRole && effectiveRole !== 'owner');
   const [expanded, setExpanded] = useState(false);
 
   const licenseStatus = doctor.licenseVerified
@@ -99,101 +103,103 @@ export default function DoctorCard({ doctor, onConsult }: DoctorCardProps) {
         </div>
       </div>
 
-      <div className="border-t border-forest-50 pt-3">
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="w-full flex items-center justify-between text-sm font-semibold text-forest-700 hover:text-forest-900 transition-colors"
-        >
-          <span className="flex items-center gap-2">
-            <BarChart3 className="w-4 h-4" />
-            执业监管视图
-          </span>
-          <ChevronRight className={cn('w-4 h-4 transition-transform', expanded && 'rotate-90')} />
-        </button>
+      {canSeeAdminView && (
+        <div className="border-t border-forest-50 pt-3">
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="w-full flex items-center justify-between text-sm font-semibold text-forest-700 hover:text-forest-900 transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" />
+              执业监管视图
+            </span>
+            <ChevronRight className={cn('w-4 h-4 transition-transform', expanded && 'rotate-90')} />
+          </button>
 
-        {expanded && (
-          <div className="mt-4 space-y-4">
-            <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100 space-y-3">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-purple-600" />
-                <span className="text-xs font-bold text-purple-800">执业资质</span>
+          {expanded && (
+            <div className="mt-4 space-y-4">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100 space-y-3">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-purple-600" />
+                  <span className="text-xs font-bold text-purple-800">执业资质</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-2 rounded-lg bg-white/60 text-center">
+                    <p className="text-[10px] text-gray-500">执业证号</p>
+                    <p className="text-[11px] font-mono font-semibold text-purple-700">{mockPracticeInfo.licenseNo}</p>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white/60 text-center">
+                    <p className="text-[10px] text-gray-500">资格证号</p>
+                    <p className="text-[11px] font-mono font-semibold text-purple-700">{mockPracticeInfo.certNo}</p>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white/60 text-center">
+                    <p className="text-[10px] text-gray-500">执业范围</p>
+                    <p className="text-xs font-semibold text-purple-700">{mockPracticeInfo.range}</p>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white/60 text-center">
+                    <p className="text-[10px] text-gray-500">有效期至</p>
+                    <p className="text-xs font-semibold text-forest-600">{mockPracticeInfo.validUntil}</p>
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="p-2 rounded-lg bg-white/60 text-center">
-                  <p className="text-[10px] text-gray-500">执业证号</p>
-                  <p className="text-[11px] font-mono font-semibold text-purple-700">{mockPracticeInfo.licenseNo}</p>
+
+              <div className="p-3 rounded-xl bg-gradient-to-br from-forest-50 to-emerald-50 border border-forest-100 space-y-3">
+                <div className="flex items-center gap-2">
+                  <Lock className="w-4 h-4 text-forest-600" />
+                  <span className="text-xs font-bold text-forest-800">问诊记录加密</span>
                 </div>
-                <div className="p-2 rounded-lg bg-white/60 text-center">
-                  <p className="text-[10px] text-gray-500">资格证号</p>
-                  <p className="text-[11px] font-mono font-semibold text-purple-700">{mockPracticeInfo.certNo}</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-2 rounded-lg bg-white/60 text-center">
+                    <p className="text-[10px] text-gray-500">加密记录</p>
+                    <p className="text-sm font-bold text-forest-700">{mockEncryptedRecords.totalEncrypted}</p>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white/60 text-center">
+                    <p className="text-[10px] text-gray-500">本月新增</p>
+                    <p className="text-sm font-bold text-forest-700">{mockEncryptedRecords.thisMonth}</p>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white/60 text-center">
+                    <p className="text-[10px] text-gray-500">处方签名</p>
+                    <p className="text-sm font-bold text-forest-700">{mockEncryptedRecords.prescriptionsSigned}</p>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white/60 text-center">
+                    <p className="text-[10px] text-gray-500">平均响应</p>
+                    <p className="text-sm font-bold text-forest-700">{mockEncryptedRecords.avgResponseMin}分钟</p>
+                  </div>
                 </div>
-                <div className="p-2 rounded-lg bg-white/60 text-center">
-                  <p className="text-[10px] text-gray-500">执业范围</p>
-                  <p className="text-xs font-semibold text-purple-700">{mockPracticeInfo.range}</p>
+                <p className="text-[10px] text-forest-600 flex items-center gap-1">
+                  <Lock className="w-3 h-3" />
+                  AES-256-CBC · 电子病历仅医患双方可解密
+                </p>
+              </div>
+
+              <div className="p-3 rounded-xl bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-100 space-y-3">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-blue-600" />
+                  <span className="text-xs font-bold text-blue-800">处方流转统计</span>
                 </div>
-                <div className="p-2 rounded-lg bg-white/60 text-center">
-                  <p className="text-[10px] text-gray-500">有效期至</p>
-                  <p className="text-xs font-semibold text-forest-600">{mockPracticeInfo.validUntil}</p>
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between p-1.5 rounded-lg bg-white/60 text-[11px]">
+                    <span className="text-gray-600">已签发处方</span>
+                    <span className="font-semibold text-blue-700">{mockEncryptedRecords.prescriptionsSigned} 份</span>
+                  </div>
+                  <div className="flex items-center justify-between p-1.5 rounded-lg bg-white/60 text-[11px]">
+                    <span className="text-gray-600">宠主知情确认率</span>
+                    <span className="font-semibold text-forest-600">98.4%</span>
+                  </div>
+                  <div className="flex items-center justify-between p-1.5 rounded-lg bg-white/60 text-[11px]">
+                    <span className="text-gray-600">复诊提醒触发</span>
+                    <span className="font-semibold text-blue-700">86 次</span>
+                  </div>
+                  <div className="flex items-center justify-between p-1.5 rounded-lg bg-white/60 text-[11px]">
+                    <span className="text-gray-600">处方药双签完成率</span>
+                    <span className="font-semibold text-forest-600">100%</span>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div className="p-3 rounded-xl bg-gradient-to-br from-forest-50 to-emerald-50 border border-forest-100 space-y-3">
-              <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-forest-600" />
-                <span className="text-xs font-bold text-forest-800">问诊记录加密</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="p-2 rounded-lg bg-white/60 text-center">
-                  <p className="text-[10px] text-gray-500">加密记录</p>
-                  <p className="text-sm font-bold text-forest-700">{mockEncryptedRecords.totalEncrypted}</p>
-                </div>
-                <div className="p-2 rounded-lg bg-white/60 text-center">
-                  <p className="text-[10px] text-gray-500">本月新增</p>
-                  <p className="text-sm font-bold text-forest-700">{mockEncryptedRecords.thisMonth}</p>
-                </div>
-                <div className="p-2 rounded-lg bg-white/60 text-center">
-                  <p className="text-[10px] text-gray-500">处方签名</p>
-                  <p className="text-sm font-bold text-forest-700">{mockEncryptedRecords.prescriptionsSigned}</p>
-                </div>
-                <div className="p-2 rounded-lg bg-white/60 text-center">
-                  <p className="text-[10px] text-gray-500">平均响应</p>
-                  <p className="text-sm font-bold text-forest-700">{mockEncryptedRecords.avgResponseMin}分钟</p>
-                </div>
-              </div>
-              <p className="text-[10px] text-forest-600 flex items-center gap-1">
-                <Lock className="w-3 h-3" />
-                AES-256-CBC · 电子病历仅医患双方可解密
-              </p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-100 space-y-3">
-              <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-blue-600" />
-                <span className="text-xs font-bold text-blue-800">处方流转统计</span>
-              </div>
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between p-1.5 rounded-lg bg-white/60 text-[11px]">
-                  <span className="text-gray-600">已签发处方</span>
-                  <span className="font-semibold text-blue-700">{mockEncryptedRecords.prescriptionsSigned} 份</span>
-                </div>
-                <div className="flex items-center justify-between p-1.5 rounded-lg bg-white/60 text-[11px]">
-                  <span className="text-gray-600">宠主知情确认率</span>
-                  <span className="font-semibold text-forest-600">98.4%</span>
-                </div>
-                <div className="flex items-center justify-between p-1.5 rounded-lg bg-white/60 text-[11px]">
-                  <span className="text-gray-600">复诊提醒触发</span>
-                  <span className="font-semibold text-blue-700">86 次</span>
-                </div>
-                <div className="flex items-center justify-between p-1.5 rounded-lg bg-white/60 text-[11px]">
-                  <span className="text-gray-600">处方药双签完成率</span>
-                  <span className="font-semibold text-forest-600">100%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
