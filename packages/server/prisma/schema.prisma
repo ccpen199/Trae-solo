@@ -1,0 +1,778 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  APPLICANT
+  COURIER
+  APPROVER
+  CITY_OPERATOR
+  PROVINCE_ADMIN
+  THIRD_PARTY_SERVICE
+}
+
+enum IdentityVerifyStatus {
+  UNVERIFIED
+  PENDING
+  VERIFIED
+  FAILED
+}
+
+enum OrderType {
+  HK_MACAO_VISA
+  TAIWAN_VISA
+  ID_CARD_REPLACEMENT
+  VIOLATION_PAYMENT
+  VEHICLE_INSPECTION
+}
+
+enum OrderStatus {
+  CREATED
+  PENDING_PICKUP
+  COURIER_ASSIGNED
+  PICKED_UP
+  OCR_PROCESSING
+  PRE_REVIEW
+  PRE_REVIEW_PASSED
+  PRE_REVIEW_FAILED
+  SUBMITTED_FOR_APPROVAL
+  APPROVING
+  APPROVED
+  REJECTED
+  CERTIFICATE_PRINTING
+  PENDING_DELIVERY
+  IN_DELIVERY
+  COMPLETED
+  CANCELLED
+  EXPIRED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING
+  PAID
+  REFUNDING
+  REFUNDED
+  FAILED
+}
+
+enum PaymentChannel {
+  UNIONPAY
+  WECHAT_PAY
+  ALIPAY
+}
+
+enum CourierTaskStatus {
+  PENDING
+  ACCEPTED
+  EN_ROUTE
+  ARRIVED
+  PICKED
+  DELIVERING
+  COMPLETED
+  CANCELLED
+}
+
+enum OcrStatus {
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
+  NEED_MANUAL_REVIEW
+}
+
+enum AlertLevel {
+  INFO
+  WARNING
+  DANGER
+  CRITICAL
+}
+
+enum AlertType {
+  SLA_WARNING
+  SLA_BREACH
+  PAYMENT_EXCEPTION
+  OCR_FAILURE
+  APPROVAL_DELAY
+  COURIER_DELAY
+}
+
+enum FundTransactionType {
+  SERVICE_FEE_COLLECT
+  GOVERNMENT_FEE_COLLECT
+  COURIER_FEE_COLLECT
+  SERVICE_FEE_SETTLE
+  GOVERNMENT_FEE_TRANSFER
+  COURIER_FEE_SETTLE
+  REFUND
+}
+
+enum FundAccountType {
+  REGULATORY
+  SERVICE_REVENUE
+  GOVERNMENT_PAYABLE
+  COURIER_PAYABLE
+}
+
+enum VisaType {
+  HK_G_SIGN
+  HK_L_SIGN
+  HK_T_SIGN
+  HK_S_SIGN
+  HK_D_SIGN
+  MACAO_G_SIGN
+  MACAO_L_SIGN
+  TAIWAN_G_SIGN
+  TAIWAN_L_SIGN
+  TAIWAN_T_SIGN
+}
+
+enum IdCardReplaceReason {
+  LOST
+  DAMAGED
+  EXPIRED
+  INFORMATION_CHANGE
+}
+
+enum ViolationSource {
+  TRAFFIC_12123
+  MINISTRY_POLICE_DB
+}
+
+model User {
+  id                String              @id @default(uuid())
+  phoneEncrypted    String              @unique
+  phoneHash         String              @unique
+  passwordHash      String?
+  role              UserRole            @default(APPLICANT)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  lastLoginAt       DateTime?
+  isActive          Boolean             @default(true)
+  city              String?
+  profile           UserProfile?
+  identityVerifications IdentityVerification[]
+  orders            Order[]
+  courierProfile    CourierProfile?
+  approverProfile   ApproverProfile?
+  operatorProfile   OperatorProfile?
+  auditLogs         AuditLog[]
+  alerts            Alert[]
+
+  @@index([role])
+  @@index([city])
+}
+
+model UserProfile {
+  id                 String    @id @default(uuid())
+  userId             String    @unique
+  realNameEncrypted  String?
+  realNameMasked     String?
+  idCardEncrypted    String?
+  idCardHash         String?   @unique
+  idCardMasked       String?
+  gender             String?
+  birthDate          DateTime?
+  ethnicity          String?
+  addressEncrypted   String?
+  addressMasked      String?
+  avatarUrl          String?
+  faceFeatureHash    String?
+  policeDbVerified   Boolean   @default(false)
+  policeDbVerifyAt   DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+}
+
+model IdentityVerification {
+  id                 String                  @id @default(uuid())
+  userId             String
+  type               String
+  status             IdentityVerifyStatus    @default(PENDING)
+  realNameEncrypted  String?
+  idCardEncrypted    String?
+  faceImageUrl       String?
+  faceVerifyScore    Float?
+  policeDbRequestId  String?
+  policeDbResponse   Json?
+  verifyResult       Json?
+  rejectReason       String?
+  operatorId         String?
+  verifiedAt         DateTime?
+  createdAt          DateTime                @default(now())
+  user               User                    @relation(fields: [userId], references: [id])
+
+  @@index([userId, status])
+}
+
+model CourierProfile {
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  employeeNo        String    @unique
+  postStation       String
+  postStationCode   String
+  serviceCity       String
+  serviceDistrict   String
+  workAreaPolygon   Json?
+  currentLat        Float?
+  currentLon        Float?
+  locationUpdatedAt DateTime?
+  isOnDuty          Boolean   @default(false)
+  todayTaskCount    Int       @default(0)
+  rating            Float     @default(5.0)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  user              User      @relation(fields: [userId], references: [id])
+  tasks             CourierTask[]
+  settlements       CourierSettlement[]
+
+  @@index([serviceCity, isOnDuty])
+  @@index([postStationCode])
+}
+
+model ApproverProfile {
+  id                 String    @id @default(uuid())
+  userId             String    @unique
+  approverNo         String    @unique
+  department         String
+  dutyCity           String
+  approvalTypes      Json
+  dailyLimit         Int       @default(100)
+  todayApprovedCount Int       @default(0)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+  approvalRecords    ApprovalRecord[]
+}
+
+model OperatorProfile {
+  id             String    @id @default(uuid())
+  userId         String    @unique
+  operatorNo     String    @unique
+  department     String
+  managedCity    String
+  permissions    Json
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  user           User      @relation(fields: [userId], references: [id])
+}
+
+model Order {
+  id                    String        @id @default(uuid())
+  orderNo               String        @unique
+  orderType             OrderType
+  status                OrderStatus   @default(CREATED)
+  applicantId           String
+  applicantCity         String
+  serviceFee            Decimal       @default(0) @db.Decimal(10, 2)
+  governmentFee         Decimal       @default(0) @db.Decimal(10, 2)
+  courierFee            Decimal       @default(0) @db.Decimal(10, 2)
+  totalAmount           Decimal       @default(0) @db.Decimal(10, 2)
+  paymentStatus         PaymentStatus @default(UNPAID)
+  paymentChannel        PaymentChannel?
+  paidAt                DateTime?
+  pickupAddressEncrypted String?
+  pickupAddressMasked   String?
+  pickupContactNameEncrypted String?
+  pickupContactPhoneEncrypted String?
+  pickupLat             Float?
+  pickupLon             Float?
+  pickupAppointmentFrom DateTime?
+  pickupAppointmentTo   DateTime?
+  deliveryAddressEncrypted String?
+  deliveryAddressMasked String?
+  deliveryContactNameEncrypted String?
+  deliveryContactPhoneEncrypted String?
+  submittedForApprovalAt DateTime?
+  approvedAt            DateTime?
+  completedAt           DateTime?
+  cancelledAt           DateTime?
+  cancelReason          String?
+  slaDeadline           DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  applicant             User          @relation(fields: [applicantId], references: [id])
+  statusLogs            OrderStatusLog[]
+  ocrRecords            OcrRecord[]
+  paymentRecords        PaymentRecord[]
+  courierTasks          CourierTask[]
+  visaApplication       VisaApplication?
+  idCardApplication     IdCardApplication?
+  violationPayment      ViolationPayment?
+  vehicleInspection     VehicleInspection?
+  emsShipments          EmsShipment[]
+  approvalRecords       ApprovalRecord[]
+  electronicReceipt     ElectronicReceipt?
+  alerts                Alert[]
+  fundTransactions      FundTransaction[]
+
+  @@index([applicantId])
+  @@index([orderType, status])
+  @@index([applicantCity, status])
+  @@index([slaDeadline])
+  @@index([createdAt])
+}
+
+model OrderStatusLog {
+  id         String      @id @default(uuid())
+  orderId    String
+  fromStatus OrderStatus?
+  toStatus   OrderStatus
+  operatorId String?
+  remark     String?
+  extraData  Json?
+  createdAt  DateTime    @default(now())
+  order      Order       @relation(fields: [orderId], references: [id])
+
+  @@index([orderId, createdAt])
+}
+
+model OcrRecord {
+  id              String    @id @default(uuid())
+  orderId         String
+  documentType    String
+  imageUrls       Json
+  status          OcrStatus @default(PENDING)
+  ocrResult       Json?
+  confidence      Float?
+  manualReviewBy  String?
+  reviewRemark    String?
+  recognizedFields Json?
+  ocrProvider     String?
+  requestId       String?
+  createdAt       DateTime  @default(now())
+  completedAt     DateTime?
+  order           Order     @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+  @@index([status])
+}
+
+model PaymentRecord {
+  id               String         @id @default(uuid())
+  orderId          String
+  paymentNo        String         @unique
+  amount           Decimal        @db.Decimal(10, 2)
+  channel          PaymentChannel
+  status           PaymentStatus  @default(PENDING)
+  thirdPartyTradeNo String?
+  payerAccountMasked String?
+  paidAt           DateTime?
+  refundedAt       DateTime?
+  refundAmount     Decimal?       @db.Decimal(10, 2)
+  rawResponse      Json?
+  createdAt        DateTime       @default(now())
+  order            Order          @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+  @@index([paymentNo])
+  @@index([status, createdAt])
+}
+
+model CourierTask {
+  id                 String            @id @default(uuid())
+  taskNo             String            @unique
+  orderId            String
+  courierId          String
+  taskType           String
+  status             CourierTaskStatus @default(PENDING)
+  pickupLat          Float?
+  pickupLon          Float?
+  deliveryLat        Float?
+  deliveryLon        Float?
+  acceptedAt         DateTime?
+  enRouteAt          DateTime?
+  arrivedAt          DateTime?
+  pickedAt           DateTime?
+  deliveredAt        DateTime?
+  completedAt        DateTime?
+  cancelledAt        DateTime?
+  cancelReason       String?
+  distanceToPickupKm Float?
+  pickupPhotoUrl     String?
+  deliveryPhotoUrl   String?
+  signerNameMasked   String?
+  signerIdCardMasked String?
+  remark             String?
+  createdAt          DateTime          @default(now())
+  order              Order             @relation(fields: [orderId], references: [id])
+  courier            CourierProfile    @relation(fields: [courierId], references: [id])
+  locationLogs       CourierLocationLog[]
+
+  @@index([courierId, status])
+  @@index([orderId])
+  @@index([createdAt])
+}
+
+model CourierLocationLog {
+  id         String        @id @default(uuid())
+  taskId     String
+  lat        Float
+  lon        Float
+  accuracy   Float?
+  createdAt  DateTime      @default(now())
+  task       CourierTask   @relation(fields: [taskId], references: [id])
+
+  @@index([taskId, createdAt])
+}
+
+model CourierSettlement {
+  id               String         @id @default(uuid())
+  settlementNo     String         @unique
+  courierId        String
+  periodStart      DateTime
+  periodEnd        DateTime
+  taskCount        Int            @default(0)
+  baseFee          Decimal        @default(0) @db.Decimal(10, 2)
+  bonusFee         Decimal        @default(0) @db.Decimal(10, 2)
+  deductionFee     Decimal        @default(0) @db.Decimal(10, 2)
+  totalAmount      Decimal        @default(0) @db.Decimal(10, 2)
+  status           String         @default("PENDING")
+  paidAt           DateTime?
+  createdAt        DateTime       @default(now())
+  courier          CourierProfile @relation(fields: [courierId], references: [id])
+
+  @@index([courierId, status])
+}
+
+model VisaApplication {
+  id                  String   @id @default(uuid())
+  orderId             String   @unique
+  visaType            VisaType
+  validMonths         Int
+  entryCount          String
+  travelPurpose       String?
+  passportNoEncrypted String?
+  passportNoMasked    String?
+  previousVisaInfo    Json?
+  emergencyContactEncrypted String?
+  provinceGatewayReqId String?
+  provinceGatewayResp Json?
+  certificateNo       String?
+  printedAt           DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  order               Order    @relation(fields: [orderId], references: [id])
+}
+
+model IdCardApplication {
+  id                      String              @id @default(uuid())
+  orderId                 String              @unique
+  replaceReason           IdCardReplaceReason
+  originalIdCardNoEncrypted String?
+  newDeliveryAddressEncrypted String?
+  policeSyncRequestId     String?
+  policeSyncStatus        String              @default("PENDING")
+  policeSyncResp          Json?
+  newIdCardNo             String?
+  populationDbSyncedAt    DateTime?
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+  order                   Order               @relation(fields: [orderId], references: [id])
+}
+
+model ViolationRecord {
+  id                      String   @id @default(uuid())
+  plateNumberEncrypted    String
+  plateNumberMasked       String
+  vehicleType             String
+  violationCode           String
+  violationDesc           String
+  violationTime           DateTime
+  violationLocation       String?
+  fineAmount              Decimal  @db.Decimal(10, 2)
+  lateFee                 Decimal  @default(0) @db.Decimal(10, 2)
+  deductPoints            Int      @default(0)
+  source                  ViolationSource
+  sourceRecordId          String?
+  isHandled               Boolean  @default(false)
+  handledAt               DateTime?
+  paymentId               String?
+  queryBatchId            String?
+  createdAt               DateTime @default(now())
+  violationPayments       ViolationPayment[] @relation("ViolationToRecords")
+  violationQueryLogs      ViolationQueryLog[]
+
+  @@index([plateNumberMasked])
+  @@index([violationTime])
+  @@index([isHandled])
+}
+
+model ViolationPayment {
+  id                 String            @id @default(uuid())
+  orderId            String            @unique
+  plateNumberEncrypted String
+  plateNumberMasked  String
+  engineNoEncrypted  String?
+  vinNoEncrypted     String?
+  ownerNameEncrypted String?
+  totalFineAmount    Decimal           @db.Decimal(10, 2)
+  totalLateFee       Decimal           @default(0) @db.Decimal(10, 2)
+  totalDeductPoints  Int               @default(0)
+  violationCount     Int
+  records            ViolationRecord[] @relation("ViolationToRecords")
+  traffic12123ReqId  String?
+  traffic12123Resp   Json?
+  ministryPoliceReqId String?
+  ministryPoliceResp Json?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  order              Order             @relation(fields: [orderId], references: [id])
+
+  @@index([plateNumberMasked])
+}
+
+model ViolationQueryLog {
+  id                 String          @id @default(uuid())
+  batchId            String
+  plateNumberMasked  String
+  cityCode           String
+  cityName           String
+  source             ViolationSource
+  recordCount        Int             @default(0)
+  apiLatencyMs       Int?
+  isSuccess          Boolean
+  errorMessage       String?
+  records            ViolationRecord[]
+  createdAt          DateTime        @default(now())
+
+  @@index([batchId])
+  @@index([cityCode, createdAt])
+}
+
+model VehicleInspection {
+  id                     String   @id @default(uuid())
+  orderId                String   @unique
+  plateNumberEncrypted   String
+  plateNumberMasked      String
+  vehicleType            String
+  engineNoEncrypted      String?
+  vinNoEncrypted         String?
+  registerDate           DateTime?
+  inspectionStationCode  String?
+  inspectionStationName  String?
+  inspectionDate         DateTime?
+  inspectionResult       String?
+  qualifiedMarkNo        String?
+  qualifiedMarkImageUrl  String?
+  stationApiReqId        String?
+  stationApiResp         Json?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  order                  Order    @relation(fields: [orderId], references: [id])
+}
+
+model EmsShipment {
+  id               String   @id @default(uuid())
+  orderId          String
+  shipmentNo       String   @unique
+  shipmentType     String
+  senderNameMasked String?
+  senderPhoneMasked String?
+  senderAddressMasked String?
+  receiverNameMasked String?
+  receiverPhoneMasked String?
+  receiverAddressMasked String?
+  weightKg         Float?
+  insuredAmount    Decimal? @db.Decimal(10, 2)
+  emsCreateReqId   String?
+  emsCreateResp    Json?
+  status           String   @default("CREATED")
+  shippedAt        DateTime?
+  deliveredAt      DateTime?
+  signedAt         DateTime?
+  signedByNameMasked String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  order            Order    @relation(fields: [orderId], references: [id])
+  trackingLogs     EmsTrackingLog[]
+
+  @@index([orderId])
+  @@index([shipmentNo])
+}
+
+model EmsTrackingLog {
+  id             String      @id @default(uuid())
+  shipmentId     String
+  location       String
+  statusCode     String
+  statusDesc     String
+  operator       String?
+  occurredAt     DateTime
+  createdAt      DateTime    @default(now())
+  shipment       EmsShipment @relation(fields: [shipmentId], references: [id])
+
+  @@index([shipmentId, occurredAt])
+}
+
+model ApprovalRecord {
+  id               String      @id @default(uuid())
+  orderId          String
+  approverId       String
+  approvalType     String
+  decision         String
+  rejectReason     String?
+  gatewayRequestId String?
+  gatewayResponse  Json?
+  approvedAt       DateTime?
+  createdAt        DateTime    @default(now())
+  order            Order       @relation(fields: [orderId], references: [id])
+  approver         ApproverProfile @relation(fields: [approverId], references: [id])
+
+  @@index([orderId])
+  @@index([approverId, createdAt])
+}
+
+model ElectronicReceipt {
+  id              String   @id @default(uuid())
+  orderId         String   @unique
+  receiptNo       String   @unique
+  receiptType     String
+  receiptData     Json
+  qrCodeUrl       String?
+  pdfUrl          String?
+  verifyCode      String
+  issuedAt        DateTime @default(now())
+  verifiedCount   Int      @default(0)
+  order           Order    @relation(fields: [orderId], references: [id])
+}
+
+model Alert {
+  id         String     @id @default(uuid())
+  alertNo    String     @unique
+  type       AlertType
+  level      AlertLevel
+  orderId    String?
+  userId     String?
+  city       String?
+  title      String
+  content    String
+  isHandled  Boolean    @default(false)
+  handledBy  String?
+  handledAt  DateTime?
+  handleNote String?
+  metadata   Json?
+  createdAt  DateTime   @default(now())
+  order      Order?     @relation(fields: [orderId], references: [id])
+  user       User?      @relation(fields: [userId], references: [id])
+
+  @@index([type, level])
+  @@index([city, isHandled])
+  @@index([createdAt])
+}
+
+model FundAccount {
+  id            String          @id @default(uuid())
+  accountNo     String          @unique
+  accountType   FundAccountType
+  managedCity   String?
+  balance       Decimal         @default(0) @db.Decimal(14, 2)
+  frozenAmount  Decimal         @default(0) @db.Decimal(14, 2)
+  lastSettleAt  DateTime?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  transactions  FundTransaction[]
+
+  @@index([accountType, managedCity])
+}
+
+model FundTransaction {
+  id              String              @id @default(uuid())
+  transNo         String              @unique
+  accountId       String
+  orderId         String?
+  transType       FundTransactionType
+  amount          Decimal             @db.Decimal(14, 2)
+  balanceAfter    Decimal             @db.Decimal(14, 2)
+  relatedTransNo  String?
+  operatorId      String?
+  remark          String?
+  rawData         Json?
+  createdAt       DateTime            @default(now())
+  account         FundAccount         @relation(fields: [accountId], references: [id])
+  order           Order?              @relation(fields: [orderId], references: [id])
+
+  @@index([accountId, createdAt])
+  @@index([transType])
+  @@index([orderId])
+}
+
+model CityServiceConfig {
+  id                 String   @id @default(uuid())
+  city               String   @unique
+  cityCode           String   @unique
+  isVisaEnabled      Boolean  @default(true)
+  isIdCardEnabled    Boolean  @default(true)
+  isViolationEnabled Boolean  @default(true)
+  isInspectionEnabled Boolean @default(true)
+  visaServiceFee     Decimal  @default(25) @db.Decimal(10, 2)
+  idCardServiceFee   Decimal  @default(20) @db.Decimal(10, 2)
+  violationServiceFee Decimal @default(5)  @db.Decimal(10, 2)
+  inspectionServiceFee Decimal @default(30) @db.Decimal(10, 2)
+  courierFeeStandard Decimal  @default(18) @db.Decimal(10, 2)
+  slaPickupMinutes   Int      @default(120)
+  slaProcessHours    Int      @default(72)
+  hotlinePhone       String?
+  operatorNotice     String?
+  supportedStations  Json?
+  gatewayEndpoint    String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([city])
+}
+
+model ApiAccessLog {
+  id              String   @id @default(uuid())
+  traceId         String
+  apiName         String
+  apiPath         String
+  method          String
+  userId          String?
+  userRole        String?
+  ipAddress       String?
+  userAgent       String?
+  requestParams   Json?
+  responseCode    Int
+  responseMessage String?
+  latencyMs       Int
+  isSensitive     Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@index([traceId])
+  @@index([apiName, createdAt])
+  @@index([userId, createdAt])
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  traceId     String?
+  userId      String
+  actionType  String
+  targetType  String
+  targetId    String?
+  beforeData  Json?
+  afterData   Json?
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+  @@index([actionType, targetType])
+}
+
+model DataEncryptionKey {
+  id          String   @id @default(uuid())
+  keyVersion  Int      @unique
+  keyValue    String
+  algorithm   String   @default("AES-256-GCM")
+  isActive    Boolean  @default(true)
+  rotatedAt   DateTime?
+  createdAt   DateTime @default(now())
+}
