@@ -192,8 +192,8 @@ export default function FinanceOverview() {
       { key: "execute", metrics: [{ label: "整体执行率", value: 83, suffix: "%", big: true }, { label: "超支科目", value: 2 }, { label: "预警科目", value: 4 }] },
     ];
     const data = coreMetrics[i];
-    const badges = data.metrics.filter(m => !m.big).map((m, idx) => (
-      <Badge key={idx} variant={idx === 0 ? "warning" : idx === 1 ? "danger" : "primary"} size="sm">{m.label} {m.value}{m.suffix || ""}</Badge>
+    const badges = data.metrics.filter(met => !met.big).map((met, idx) => (
+      <Badge key={idx} variant={idx === 0 ? "warning" : idx === 1 ? "danger" : "primary"} size="sm">{met.label} {met.value}{met.suffix || ""}</Badge>
     ));
     return (
       <m.div variants={item} whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
@@ -207,21 +207,21 @@ export default function FinanceOverview() {
                 </div>
                 <span className={cn("text-xs font-medium flex items-center gap-0.5", colors.text)}>{card.enterText}<ArrowRight className="w-3 h-3" /></span>
               </div>
-              {data.metrics.filter(m => m.big).map((m, idx) => (
+              {data.metrics.filter(met => met.big).map((met, idx) => (
                 <div key={idx} className="mb-3">
-                  {data.key === "execute" && m.suffix === "%" ? (
+                  {data.key === "execute" && met.suffix === "%" ? (
                     <div className="flex items-center gap-3">
-                      <svg viewBox="0 0 36 36" className="w-14 h-14 -rotate-90">
+                      <svg viewBox="0 0 36 36" className="w-14 h-14">
                         <circle cx="18" cy="18" r="15.915" fill="none" stroke="#e2e8f0" strokeWidth="3" />
-                        <m.circle cx="18" cy="18" r="15.915" fill="none" stroke="#f59e0b" strokeWidth="3" strokeDasharray={`${m.value}, 100`} strokeLinecap="round" />
-                        <text x="18" y="20.5" textAnchor="middle" className="fill-slate-800 font-bold text-[10px]" style={{ transform: "rotate(90deg)", transformOrigin: "center" }}>{m.value}%</text>
+                        <m.circle cx="18" cy="18" r="15.915" fill="none" stroke="#f59e0b" strokeWidth="3" strokeDasharray={`${met.value}, 100`} strokeLinecap="round" style={{ transformOrigin: "center" }} />
+                        <text x="18" y="21.5" textAnchor="middle" className="fill-slate-800 font-bold text-[9px]">{met.value}%</text>
                       </svg>
-                      <div><span className="text-2xl font-bold text-slate-800">{m.value}{m.suffix}</span><p className="text-xs text-slate-500">{m.label}</p></div>
+                      <div><span className="text-2xl font-bold text-slate-800">{met.value}{met.suffix}</span><p className="text-xs text-slate-500">{met.label}</p></div>
                     </div>
                   ) : (
                     <>
-                      <p className="text-xs text-slate-500">{m.label}</p>
-                      <p className="text-2xl font-bold text-slate-800">{m.value}{m.suffix || ""}</p>
+                      <p className="text-xs text-slate-500">{met.label}</p>
+                      <p className="text-2xl font-bold text-slate-800">{met.value}{met.suffix || ""}</p>
                     </>
                   )}
                 </div>
