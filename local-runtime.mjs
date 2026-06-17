@@ -112,6 +112,7 @@ function serviceItems() {
     const form = formTemplates.find((f) => f.itemCode === item.item_code);
     const formLog = form ? (formFieldChangeLogs[form.id] || []) : [];
     const reviewRecords = form ? (templateReviewRecords[form.id] || []) : [];
+    const audit = standardAuditRecords[item.item_code] || null;
     return {
       ...item,
       handlingTimeLimit: handlingTimeLimits[item.item_code] || null,
@@ -121,6 +122,8 @@ function serviceItems() {
       materialVerificationRule: materialVerificationRules[item.item_code] || [],
       templateReviewRecords: reviewRecords,
       standardReviewReady: form && formLog.length > 0 && reviewRecords.length > 0,
+      standardAuditRecords: audit,
+      hasAuditRecords: audit != null && (audit.timeLimitChanges.length > 0 || audit.materialVerifyFailures.length > 0 || audit.formVersionDiffs.length > 0 || audit.applicableConditionConflicts.length > 0),
     };
   });
 }
@@ -266,6 +269,68 @@ const disposalPersons = {
   },
 };
 
+const workflowActions = {
+  'app-20260614-001': {
+    available: [
+      { key: 'supplement_submit', label: '提交补正材料', type: 'primary', tip: '申请人提交补正后的居住证明' },
+      { key: 'rollback_to_upload', label: '退回材料上传', type: 'warn', tip: '将节点回退到材料上传阶段' },
+      { key: 'supervise', label: '发起督办', type: 'danger', tip: '对当前节点发起超期督办' },
+      { key: 'view_log', label: '操作日志', type: 'secondary', tip: '查看该办件所有操作记录' },
+    ],
+    disabled: [
+      { key: 'approve', label: '审批通过', reason: '待补正材料复核通过后启用' },
+      { key: 'issue_cert', label: '签发证照', reason: '待四部门会签全部通过后启用' },
+    ],
+  },
+  'app-20260614-002': {
+    available: [
+      { key: 'urge_dept', label: '催办银行核验', type: 'primary', tip: '向工商银行核验部门发送催办通知' },
+      { key: 'escalate', label: '升级督办', type: 'danger', tip: '升级至政务服务处处长督办' },
+      { key: 'view_log', label: '操作日志', type: 'secondary', tip: '查看该办件所有操作记录' },
+    ],
+    disabled: [
+      { key: 'approve', label: '审批通过', reason: '待银行核验完成后启用' },
+    ],
+  },
+  'app-20260614-003': {
+    available: [
+      { key: 're_open', label: '重启办件', type: 'warn', tip: '对已办结办件发起复审' },
+      { key: 'print_cert', label: '打印证照', type: 'secondary', tip: '打印电子证照纸质副本' },
+      { key: 'view_log', label: '操作日志', type: 'secondary', tip: '查看该办件所有操作记录' },
+    ],
+    disabled: [
+      { key: 'supplement', label: '发起补正', reason: '办件已办结，材料全部验真' },
+    ],
+  },
+};
+
+const operationLogs = {
+  'app-20260614-001': [
+    { id: 'op-001', action: '发起预约', operator: '陈女士', operatorType: 'APPLICANT', operatedAt: '2026-06-15 08:00', node: 'appointment', result: 'SUCCESS', note: '微信小程序预约越秀区政务服务中心居住证办理' },
+    { id: 'op-002', action: '提交材料', operator: '陈女士', operatorType: 'APPLICANT', operatedAt: '2026-06-15 08:30', node: 'upload', result: 'SUCCESS', note: '上传身份证、居住证明、电子照片、社保缴费证明4项材料' },
+    { id: 'op-003', action: '材料预审', operator: '李敏', operatorType: 'STAFF', operatedAt: '2026-06-15 09:45', node: 'pre-review', result: 'REJECT', note: '居住证明缺少房屋租赁备案编号，退回补正' },
+    { id: 'op-004', action: '发起补正', operator: '李敏', operatorType: 'STAFF', operatedAt: '2026-06-15 09:46', node: 'pre-review', result: 'SUCCESS', note: '系统自动发送补正通知至申请人微信和短信' },
+    { id: 'op-005', action: '节点回退', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-15 09:46', node: 'approval→pre-review→upload', result: 'SUCCESS', note: '补正触发节点回退至材料上传阶段，待申请人重新提交' },
+    { id: 'op-006', action: '督办提醒', operator: '张科长', operatorType: 'SUPERVISOR', operatedAt: '2026-06-15 13:00', node: 'upload', result: 'SUCCESS', note: '关注补正时限，确保申请人及时知晓补正要求' },
+  ],
+  'app-20260614-002': [
+    { id: 'op-011', action: '受理登记', operator: '王芳', operatorType: 'STAFF', operatedAt: '2026-06-15 08:15', node: 'pre-review', result: 'SUCCESS', note: '街镇综合受理窗口录入社保卡申领信息' },
+    { id: 'op-012', action: '身份核验', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-15 08:20', node: 'pre-review', result: 'FALLBACK', note: 'NFC读卡失败，自动降级至身份证联网核查' },
+    { id: 'op-013', action: '临时授权', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-15 08:20', node: 'pre-review', result: 'SUCCESS', note: '发放24小时临时授权凭证 AUTH-TKN-20260615-0820-00156' },
+    { id: 'op-014', action: '推送银行核验', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-15 08:30', node: 'approval', result: 'PENDING', note: '推送至工商银行制卡网点核验，预计2个工作日反馈' },
+    { id: 'op-015', action: '超时预警', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-15 06:00', node: 'approval', result: 'WARNING', note: '距承诺办结时限还有18小时，触发黄色预警' },
+    { id: 'op-016', action: '督办催办', operator: '王处长', operatorType: 'SUPERVISOR', operatedAt: '2026-06-15 10:30', node: 'approval', result: 'PENDING', note: '请银行加快核验，距超时还有18小时（紧急督办）' },
+  ],
+  'app-20260614-003': [
+    { id: 'op-021', action: '受理登记', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-14 09:00', node: 'pre-review', result: 'SUCCESS', note: '线上全流程受理，无需纸质材料' },
+    { id: 'op-022', action: '材料智能核验', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-14 09:05', node: 'pre-review', result: 'SUCCESS', note: '4项材料全部自动验真通过' },
+    { id: 'op-023', action: '四部门会签', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-14 09:30-14:20', node: 'approval', result: 'SUCCESS', note: '公安局、人社局、住建局、卫健委全部审批通过' },
+    { id: 'op-024', action: '电子证照签发', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-14 14:30', node: 'certificate', result: 'SUCCESS', note: '签发电子居住证 证号GZJZZ20260614000123' },
+    { id: 'op-025', action: '三渠道推送', operator: '系统', operatorType: 'SYSTEM', operatedAt: '2026-06-14 14:35', node: 'result-push', result: 'SUCCESS', note: '粤省事、微信、短信三渠道全部送达成功' },
+    { id: 'op-026', action: '申请人签收', operator: '李先生', operatorType: 'APPLICANT', operatedAt: '2026-06-14 15:10', node: 'result-push', result: 'SUCCESS', note: '申请人在粤省事小程序确认收到电子证照' },
+  ],
+};
+
 const supervisionRecords = [
   { id: 'spv-001', applicationId: 'app-20260614-002', supervisor: '王处长', supervisorDept: '政务服务处', supervisedAt: '2026-06-15 10:30', supervisionLevel: 'URGENT', content: '请银行加快核验，距超时还有18小时', responseStatus: 'PENDING', responder: '', responseContent: '', followUpCount: 1 },
   { id: 'spv-002', applicationId: 'app-20260614-002', supervisor: '李科长', supervisorDept: '运行监控处', supervisedAt: '2026-06-15 09:45', supervisionLevel: 'NORMAL', content: '请确认跨部门核验进度', responseStatus: 'RESPONDED', responder: '刘芳（工商银行）', responseContent: '正在核验制卡网点产能，预计今日内完成', followUpCount: 0 },
@@ -394,6 +459,8 @@ function applicationFlow(applicationId) {
     abnormalDisposalChain,
     canShowClosedLoop: approvedNodes,
     canShowIssuance: approvedNodes,
+    workflowActions: workflowActions[applicationId] || { available: [], disabled: [] },
+    operationLogs: operationLogs[applicationId] || [],
   };
 }
 
@@ -514,6 +581,67 @@ const materialVerificationRules = {
   ],
 };
 
+const standardAuditRecords = {
+  '114401000001': {
+    timeLimitChanges: [
+      { id: 'tlc-001', version: 'v3.2', changedAt: '2026-05-20', changedBy: '王处（标准与信息化处）', changeType: 'PROMISE_SHORTEN', fromDays: 15, toDays: 7, reason: '依托"穗好办"全流程线上化，承诺时限压缩53%', basis: '《广州市政务服务事项承诺时限优化工作方案》', status: 'EFFECTIVE' },
+      { id: 'tlc-002', version: 'v2.1', changedAt: '2026-01-15', changedBy: '李处（政务服务处）', changeType: 'STANDARD_ADJUST', fromDays: 20, toDays: 15, reason: '对接省政务服务事项管理系统，统一时限标准', basis: '广东省政务服务事项管理办法', status: 'SUPERSEDED' },
+    ],
+    materialVerifyFailures: [
+      { id: 'mvf-001', material: '居住证明', failReason: '缺少房屋租赁备案编号', failCountMonth: 2348, failRate: '18.2%', topOccurrences: ['越秀区 32%', '海珠区 24%', '天河区 18%'], improvementAction: '上线材料样例与OCR预检，与住建部门打通备案数据自动核验', last30DaysTrend: '下降5.2%' },
+      { id: 'mvf-002', material: '电子照片', failReason: '照片规格不符合要求（模糊/戴帽/底色不对）', failCountMonth: 856, failRate: '6.7%', topOccurrences: ['自助终端拍摄 45%', '手机上传 38%', '照相馆 17%'], improvementAction: '上线AI照片预检，实时提示不合规原因', last30DaysTrend: '下降12.8%' },
+    ],
+    formVersionDiffs: [
+      { id: 'fvd-001', fromVersion: 'v3.1', toVersion: 'v3.2', diffFields: [
+        { field: '居住地址', change: '新增"小区名称"选填字段', type: 'ADD' },
+        { field: '联系电话', change: '增加格式校验（11位手机号）', type: 'VALIDATION' },
+        { field: '申报方式', change: '新增"告知承诺制"选项', type: 'ADD' },
+        { field: '材料清单', change: '取消"工作证明"必填项', type: 'REMOVE' },
+      ], changeCount: 4, updatedAt: '2026-05-22', updatedBy: '张工（电子表单组）', reviewStatus: 'REVIEWED', reviewer: '王处（标准与信息化处）' },
+      { id: 'fvd-002', fromVersion: 'v3.0', toVersion: 'v3.1', diffFields: [
+        { field: '身份证号', change: '增加脱敏显示规则', type: 'DISPLAY' },
+        { field: '办理类型', change: '新增"投靠配偶"选项', type: 'ADD' },
+      ], changeCount: 2, updatedAt: '2026-03-10', updatedBy: '李工（电子表单组）', reviewStatus: 'REVIEWED', reviewer: '李处（法规处）' },
+    ],
+    applicableConditionConflicts: [
+      { id: 'acc-001', condition: '连续缴纳社保满12个月', conflictSource: '《广东省流动人口服务管理条例》 vs 《广州市居住证实施细则》', conflictType: 'DEFINITION_DIFF', description: '省级条例要求"连续居住满半年"，市级细则要求"连续缴纳社保满12个月"，两者适用条件口径不一致', resolutionStatus: 'RESOLVED', resolution: '按"就高不就低"原则，执行市级12个月社保标准，同时接受居住登记满半年替代', resolvedAt: '2026-04-15', resolvedBy: '政策法规处', relatedPolicy: '穗政规〔2026〕3号' },
+    ],
+    auditSummary: {
+      totalTimeLimitChanges: 2,
+      totalMaterialFailures: 2,
+      totalFormVersionDiffs: 2,
+      totalConditionConflicts: 1,
+      lastAuditDate: '2026-06-10',
+      auditor: '标准与信息化处 王处',
+      standardCompliance: '92.5%',
+    },
+  },
+  '114401000002': {
+    timeLimitChanges: [
+      { id: 'tlc-003', version: 'v2.0', changedAt: '2026-02-28', changedBy: '人社局', changeType: 'PROMISE_SHORTEN', fromDays: 30, toDays: 15, reason: '社保卡制卡流程优化，承诺时限减半', basis: '广州市社保卡"立等可取"工程', status: 'EFFECTIVE' },
+    ],
+    materialVerifyFailures: [
+      { id: 'mvf-003', material: '参保凭证', failReason: '异地参保记录未同步', failCountMonth: 924, failRate: '9.4%', topOccurrences: ['省内外市转入 58%', '跨省转入 32%', '本地新参保 10%'], improvementAction: '对接省社保平台，实现参保记录实时查询', last30DaysTrend: '下降8.1%' },
+    ],
+    formVersionDiffs: [
+      { id: 'fvd-003', fromVersion: 'v1.2', toVersion: 'v2.0', diffFields: [
+        { field: '领卡方式', change: '新增"邮寄到家"选项', type: 'ADD' },
+        { field: '社保卡功能', change: '新增"金融功能激活"选项', type: 'ADD' },
+      ], changeCount: 2, updatedAt: '2026-02-28', updatedBy: '人社局部', reviewStatus: 'REVIEWED', reviewer: '标准与信息化处' },
+    ],
+    applicableConditionConflicts: [],
+    auditSummary: {
+      totalTimeLimitChanges: 1,
+      totalMaterialFailures: 1,
+      totalFormVersionDiffs: 1,
+      totalConditionConflicts: 0,
+      lastAuditDate: '2026-06-08',
+      auditor: '标准与信息化处 李科',
+      standardCompliance: '96.8%',
+    },
+  },
+};
+
 const materialVerificationResults = {
   'app-20260614-001': [
     { materialName: '居民身份证', verified: true, verifyMethod: 'OCR+公安联网核查', verifyResult: '身份信息一致', verifiedAt: '2026-06-15 08:30' },
@@ -536,10 +664,21 @@ const templateReviewRecords = {
 };
 
 const policyCorpus = [
-  { id: 'corp-001', policyId: 'pol-001', field: '事项编码规则', chunks: 36, trained: true, qaPairs: 128, lastTrainedAt: '2026-06-14 21:10' },
-  { id: 'corp-002', policyId: 'pol-002', field: '电子证照调用边界', chunks: 24, trained: true, qaPairs: 76, lastTrainedAt: '2026-06-12 18:40' },
-  { id: 'corp-003', policyId: 'pol-003', field: '实名核验问答语料', chunks: 19, trained: false, qaPairs: 42, lastTrainedAt: '待训练' },
+  { id: 'corp-001', policyId: 'pol-001', field: '事项编码规则', chunks: 36, trained: true, qaPairs: 128, lastTrainedAt: '2026-06-14 21:10', linkedItems: ['114401000001', '114401000002', '114401000003'], linkedDepts: ['公安局', '人社局', '市场监管局'] },
+  { id: 'corp-002', policyId: 'pol-002', field: '电子证照调用边界', chunks: 24, trained: true, qaPairs: 76, lastTrainedAt: '2026-06-12 18:40', linkedItems: ['114401000001', '114401000002'], linkedDepts: ['公安局', '人社局'] },
+  { id: 'corp-003', policyId: 'pol-003', field: '实名核验问答语料', chunks: 19, trained: false, qaPairs: 42, lastTrainedAt: '待训练', linkedItems: ['114401000001'], linkedDepts: ['公安局', '政务服务数据管理局'] },
 ];
+
+const policyQaHitRecords = {
+  'pol-001': [
+    { id: 'qa-001', question: '居住证办理需要哪些材料？', hitIntent: '居住证_材料清单', hitConfidence: 96.5, answerSource: 'corp-001/事项编码规则/第三章', askedAt: '2026-06-15 09:30', userId: 'user-20260614-001', applicationId: 'app-20260614-001', helpful: true },
+    { id: 'qa-002', question: '办理时限是多久？', hitIntent: '居住证_办理时限', hitConfidence: 92.1, answerSource: 'corp-001/事项编码规则/办理时限一节', askedAt: '2026-06-15 10:15', userId: 'user-20260614-007', applicationId: '', helpful: true },
+    { id: 'qa-003', question: '社保交多久可以办居住证？', hitIntent: '居住证_适用条件', hitConfidence: 88.3, answerSource: 'corp-001/适用条件/社保要求', askedAt: '2026-06-15 08:45', userId: 'user-20260614-002', applicationId: 'app-20260614-002', helpful: false },
+  ],
+  'pol-002': [
+    { id: 'qa-011', question: '电子证照可以用在什么地方？', hitIntent: '电子证照_应用范围', hitConfidence: 94.8, answerSource: 'corp-002/调用边界/第一节', askedAt: '2026-06-15 11:00', userId: 'user-20260614-003', applicationId: '', helpful: true },
+  ],
+};
 
 const policyPublishAudits = {
   'pol-001': {
@@ -585,6 +724,15 @@ const policyVersionOrigins = {
 const identityIntegrations = [
   {
     name: '粤省事统一认证', status: 'ONLINE', latency: '86ms', successRate: '99.92%', scope: '实名登录/授权',
+    authChain: {
+      entryMethod: '粤省事小程序跳转授权',
+      credentialType: 'JWT电子凭证',
+      credentialValidity: '本次会话有效，最长30分钟',
+      authLevels: ['L1匿名', 'L2登录', 'L3实名', 'L4人脸'],
+      fallbackMethod: '微信授权登录',
+      secondaryVerification: '高风险事项触发人脸识别二次核验',
+      credentialTemplate: { type: 'YSS_OAUTH_TOKEN', issuer: '广东省政务服务数据管理局', algorithm: 'RS256' },
+    },
     auditTrail: [
       { traceId: 'TRACE-YSS-20260615-00882', appId: 'mini-gz-001', userId: 'user-20260614-001', verifiedAt: '2026-06-15 08:15', result: 'SUCCESS', authLevel: 'L3实名', ip: '223.104.63.12', note: '居住证办理身份核验' },
       { traceId: 'TRACE-YSS-20260615-00881', appId: 'mini-gz-001', userId: 'user-20260614-003', verifiedAt: '2026-06-15 08:12', result: 'SUCCESS', authLevel: 'L3实名', ip: '120.230.88.45', note: '社保卡申领身份核验' },
@@ -595,6 +743,15 @@ const identityIntegrations = [
   },
   {
     name: '人脸识别活体检测', status: 'ONLINE', latency: '142ms', successRate: '98.70%', scope: '高风险事项二次核验',
+    authChain: {
+      entryMethod: 'SDK活体检测 + 人脸比对',
+      credentialType: '人脸核验电子凭证',
+      credentialValidity: '本次核验有效，7天内可复用',
+      authLevels: ['L3.5人脸实名'],
+      fallbackMethod: '短信验证码 + 人工坐席复核',
+      secondaryVerification: '首次人脸不通过时，支持二次采集',
+      credentialTemplate: { type: 'FACE_VERIFY_TOKEN', issuer: '广州市政务服务人脸识别平台', algorithm: 'HMAC-SHA256' },
+    },
     auditTrail: [
       { traceId: 'TRACE-FACE-20260615-00512', appId: 'mini-gz-001', userId: 'user-20260614-003', verifiedAt: '2026-06-15 08:20', result: 'SUCCESS', similarity: 96.4, livenessScore: 98.2, note: '居住证二次核验通过' },
       { traceId: 'TRACE-FACE-20260615-00511', appId: 'bank-verify-006', userId: 'user-20260613-088', verifiedAt: '2026-06-15 08:18', result: 'FAIL', similarity: 72.1, livenessScore: 0, note: '疑似照片攻击，已转人工复核' },
@@ -604,6 +761,15 @@ const identityIntegrations = [
   },
   {
     name: '社保卡 NFC', status: 'DEGRADED', latency: '320ms', successRate: '96.40%', scope: '社保卡申领/补换卡',
+    authChain: {
+      entryMethod: 'NFC读卡 + 芯片校验',
+      credentialType: '社保卡芯片凭证 + 临时授权令牌',
+      credentialValidity: '正常读卡永久有效 / 降级模式24小时',
+      authLevels: ['L3芯片核验'],
+      fallbackMethod: '身份证联网核查 + 粤省事实名',
+      secondaryVerification: '降级模式自动触发身份证二次核验',
+      credentialTemplate: { type: 'NFC_CARD_TOKEN + TEMP_AUTH_TOKEN', issuer: '广州市社会保障卡管理中心', algorithm: 'PS256' },
+    },
     auditTrail: [
       { traceId: 'TRACE-NFC-20260615-00122', appId: 'street-portal-018', userId: 'user-20260614-002', verifiedAt: '2026-06-15 09:30', result: 'FALLBACK', fallbackMethod: '身份证联网核查', note: 'NFC读卡失败，自动降级至身份证核验' },
       { traceId: 'TRACE-NFC-20260615-00120', appId: 'mini-gz-001', userId: 'user-20260614-008', verifiedAt: '2026-06-15 09:15', result: 'SUCCESS', cardReadMs: 280, note: 'NFC读卡成功' },
@@ -615,6 +781,15 @@ const identityIntegrations = [
   },
   {
     name: '身份证联网核查', status: 'ONLINE', latency: '103ms', successRate: '99.10%', scope: '基础身份校验',
+    authChain: {
+      entryMethod: '身份证号 + 姓名 + 照片比对',
+      credentialType: '身份核查电子回执',
+      credentialValidity: '本次核查有效，24小时内复用',
+      authLevels: ['L2.5联网核查'],
+      fallbackMethod: '人工审核 + 短信验证',
+      secondaryVerification: '匹配度低于90%触发人工复核',
+      credentialTemplate: { type: 'IDCARD_VERIFY_RECEIPT', issuer: '公安部公民身份信息核查中心', algorithm: '国密SM2' },
+    },
     auditTrail: [
       { traceId: 'TRACE-IDNET-20260615-01208', appId: 'mini-gz-001', userId: 'user-20260614-002', verifiedAt: '2026-06-15 09:03', result: 'SUCCESS', matchScore: 99.8, source: '公安人口信息库', note: 'NFC降级替代核验通过' },
       { traceId: 'TRACE-IDNET-20260615-01207', appId: 'mini-gz-001', userId: 'user-20260614-001', verifiedAt: '2026-06-15 08:31', result: 'SUCCESS', matchScore: 99.5, source: '公安人口信息库', note: '材料补正后重新核验' },
@@ -660,9 +835,9 @@ const nfcDegradationDetail = {
 };
 
 const openApiApps = [
-  { appId: 'mini-gz-001', name: '广州政务小程序', scopes: 'service-items,applications,certificates', callsToday: 12860, status: 'AUTHORIZED' },
-  { appId: 'street-portal-018', name: '街镇综合受理端', scopes: 'applications,notifications', callsToday: 4820, status: 'AUTHORIZED' },
-  { appId: 'bank-verify-006', name: '银行证照核验插件', scopes: 'certificates.read', callsToday: 936, status: 'LIMITED' },
+  { appId: 'mini-gz-001', name: '广州政务小程序', subject: '广州市政务服务数据管理局', subjectType: 'GOVERNMENT', contactPerson: '张工', contactPhone: '020-12345678-8001', scopes: 'service-items,applications,certificates', callsToday: 12860, status: 'AUTHORIZED', authorizedAt: '2025-10-15', expiryDate: '2027-10-15' },
+  { appId: 'street-portal-018', name: '街镇综合受理端', subject: '广州市越秀区人民政府', subjectType: 'GOVERNMENT', contactPerson: '李主任', contactPhone: '020-83123456', scopes: 'applications,notifications', callsToday: 4820, status: 'AUTHORIZED', authorizedAt: '2026-01-20', expiryDate: '2027-01-20' },
+  { appId: 'bank-verify-006', name: '银行证照核验插件', subject: '中国工商银行广州分行', subjectType: 'ENTERPRISE', contactPerson: '王经理', contactPhone: '020-81234567', scopes: 'certificates.read', callsToday: 936, status: 'LIMITED', authorizedAt: '2026-03-01', expiryDate: '2027-03-01' },
 ];
 
 const openApiScopeDetails = {
@@ -681,10 +856,35 @@ const openApiScopeDetails = {
 };
 
 const openApiExceptionLogs = [
-  { id: 'exc-001', appId: 'mini-gz-001', endpoint: 'GET /api/v1/applications', errorType: 'RATE_LIMIT_EXCEEDED', errorMessage: '超出今日调用次数限制', occurredAt: '2026-06-15 08:45', status: 'RESOLVED', resolution: '已临时提升调用限额' },
-  { id: 'exc-002', appId: 'bank-verify-006', endpoint: 'GET /api/v1/certificates/verify', errorType: 'SIGNATURE_INVALID', errorMessage: 'API签名验证失败', occurredAt: '2026-06-15 09:20', status: 'RESOLVED', resolution: '已通知对方更新签名算法' },
-  { id: 'exc-003', appId: 'street-portal-018', endpoint: 'POST /api/v1/applications', errorType: 'PARAM_VALIDATION_FAILED', errorMessage: '缺少必填字段itemCode', occurredAt: '2026-06-15 10:15', status: 'INVESTIGATING', resolution: '正在排查对接系统参数问题' },
+  { id: 'exc-001', appId: 'mini-gz-001', endpoint: 'GET /api/v1/applications', errorType: 'RATE_LIMIT_EXCEEDED', errorMessage: '超出今日调用次数限制', occurredAt: '2026-06-15 08:45', status: 'RESOLVED', resolution: '已临时提升调用限额', intercepted: true, interceptRule: 'dailyLimit:50000', retryCount: 3, receiptId: 'RCPT-EXC-20260615-0001' },
+  { id: 'exc-002', appId: 'bank-verify-006', endpoint: 'GET /api/v1/certificates/verify', errorType: 'SIGNATURE_INVALID', errorMessage: 'API签名验证失败', occurredAt: '2026-06-15 09:20', status: 'RESOLVED', resolution: '已通知对方更新签名算法', intercepted: true, interceptRule: 'signature:RS256', retryCount: 0, receiptId: 'RCPT-EXC-20260615-0002' },
+  { id: 'exc-003', appId: 'street-portal-018', endpoint: 'POST /api/v1/applications', errorType: 'PARAM_VALIDATION_FAILED', errorMessage: '缺少必填字段itemCode', occurredAt: '2026-06-15 10:15', status: 'INVESTIGATING', resolution: '正在排查对接系统参数问题', intercepted: true, interceptRule: 'requiredFields:itemCode,applicantName', retryCount: 1, receiptId: 'RCPT-EXC-20260615-0003' },
 ];
+
+const openApiInterceptRules = {
+  'mini-gz-001': [
+    { id: 'rule-001', type: 'RATE_LIMIT', rule: 'QPS 100次/秒', status: 'ACTIVE', interceptCount: 12, lastInterceptedAt: '2026-06-15 08:45' },
+    { id: 'rule-002', type: 'SIGNATURE_VERIFY', rule: 'RS256签名 + timestamp 5分钟有效', status: 'ACTIVE', interceptCount: 0, lastInterceptedAt: '' },
+    { id: 'rule-003', type: 'IP_WHITELIST', rule: '政务云内网网段', status: 'ACTIVE', interceptCount: 3, lastInterceptedAt: '2026-06-14 22:10' },
+    { id: 'rule-004', type: 'DATA_MASKING', rule: '身份证号脱敏、手机号脱敏', status: 'ACTIVE', interceptCount: 0, lastInterceptedAt: '' },
+  ],
+  'bank-verify-006': [
+    { id: 'rule-011', type: 'SCOPE_LIMIT', rule: '仅可读证照基本信息，不可读敏感字段', status: 'ACTIVE', interceptCount: 28, lastInterceptedAt: '2026-06-15 09:50' },
+    { id: 'rule-012', type: 'SIGNATURE_VERIFY', rule: 'HMAC-SHA256签名', status: 'ACTIVE', interceptCount: 5, lastInterceptedAt: '2026-06-15 09:20' },
+  ],
+};
+
+const openApiReceiptTraces = {
+  'mini-gz-001': [
+    { receiptId: 'RCPT-20260615-084500-001', endpoint: 'GET /api/v1/service-items', method: 'GET', requestAt: '2026-06-15 08:45:00', responseAt: '2026-06-15 08:45:02', statusCode: 200, requestSize: '0.8KB', responseSize: '12.6KB', result: 'SUCCESS', traceId: 'TRACE-API-20260615-084500-001' },
+    { receiptId: 'RCPT-20260615-084510-002', endpoint: 'POST /api/v1/applications', method: 'POST', requestAt: '2026-06-15 08:45:10', responseAt: '2026-06-15 08:45:13', statusCode: 201, requestSize: '2.3KB', responseSize: '0.9KB', result: 'SUCCESS', traceId: 'TRACE-API-20260615-084510-002' },
+    { receiptId: 'RCPT-20260615-092000-003', endpoint: 'GET /api/v1/certificates/xxx', method: 'GET', requestAt: '2026-06-15 09:20:00', responseAt: '2026-06-15 09:20:01', statusCode: 200, requestSize: '0.3KB', responseSize: '4.2KB', result: 'SUCCESS', traceId: 'TRACE-API-20260615-092000-003' },
+  ],
+  'bank-verify-006': [
+    { receiptId: 'RCPT-20260615-091500-101', endpoint: 'GET /api/v1/certificates/verify', method: 'GET', requestAt: '2026-06-15 09:15:00', responseAt: '2026-06-15 09:15:02', statusCode: 403, requestSize: '0.5KB', responseSize: '0.2KB', result: 'INTERCEPTED', interceptReason: '超出授权范围，尝试访问证照敏感字段', traceId: 'TRACE-API-20260615-091500-101' },
+    { receiptId: 'RCPT-20260615-092000-102', endpoint: 'GET /api/v1/certificates/verify', method: 'GET', requestAt: '2026-06-15 09:20:00', responseAt: '2026-06-15 09:20:00', statusCode: 401, requestSize: '0.4KB', responseSize: '0.1KB', result: 'SIGNATURE_FAIL', interceptReason: 'API签名验证失败', traceId: 'TRACE-API-20260615-092000-102' },
+  ],
+};
 
 const openApiPendingAuthorizations = [
   { id: 'pending-001', appId: 'hospital-health-002', appName: '医院预约挂号平台', applyScopes: 'service-items.read,applications.read', applyReason: '就医预约需要核验参保身份', applicant: '广州市某三甲医院', appliedAt: '2026-06-14', status: 'PENDING' },
@@ -693,14 +893,19 @@ const openApiPendingAuthorizations = [
 
 const bottleneckReports = [
   {
-    item: '居住证办理', usage: 12860, materialFixRate: '18.2%', avgDepartmentHours: 14.6, bottleneck: '居住证明补正', action: '上线材料样例与OCR预检',
+    item: '居住证办理', itemCode: '114401000001', department: '公安局', usage: 12860, materialFixRate: '18.2%', avgDepartmentHours: 14.6, bottleneck: '居住证明补正', action: '上线材料样例与OCR预检',
+    linkedApplications: ['app-20260614-001', 'app-20260614-003'],
+    deptDisposalRecords: [
+      { dept: '越秀区住建局', disposalCount: 328, avgDisposalHours: 6.2, responsiblePerson: '陈志强', lastDisposalAt: '2026-06-15 11:20' },
+      { dept: '海珠区住建局', disposalCount: 245, avgDisposalHours: 8.5, responsiblePerson: '李慧敏', lastDisposalAt: '2026-06-15 10:45' },
+    ],
     reviewDetail: {
       heatmapDataId: 'heatmap-jzz',
       attributionId: 'attr-jzz',
       topPeakHours: ['周一 10:00-11:30', '周四 14:30-16:00'],
       sampleCases: [
-        { caseId: 'CASE-JZZ-001', applicant: '陈女士', occurredAt: '2026-06-15', issue: '居住证明缺备案编号', resolution: '系统自动发起补正，待申请人补充后5分钟内完成复核' },
-        { caseId: 'CASE-JZZ-002', applicant: '黄先生', occurredAt: '2026-06-14', issue: '合同出租方信息不一致', resolution: '人工核实后通过告知承诺制办理' },
+        { caseId: 'CASE-JZZ-001', applicationId: 'app-20260614-001', applicant: '陈女士', occurredAt: '2026-06-15', issue: '居住证明缺备案编号', resolution: '系统自动发起补正，待申请人补充后5分钟内完成复核' },
+        { caseId: 'CASE-JZZ-002', applicationId: 'app-20260614-012', applicant: '黄先生', occurredAt: '2026-06-14', issue: '合同出租方信息不一致', resolution: '人工核实后通过告知承诺制办理' },
       ],
       improvementSuggestions: [
         '上线材料自动预检提示，减少现场发现率',
@@ -710,13 +915,18 @@ const bottleneckReports = [
     },
   },
   {
-    item: '社保卡申领', usage: 9820, materialFixRate: '9.4%', avgDepartmentHours: 10.2, bottleneck: '身份核验重试', action: 'NFC降级到身份证联网核查',
+    item: '社保卡申领', itemCode: '114401000002', department: '人社局', usage: 9820, materialFixRate: '9.4%', avgDepartmentHours: 10.2, bottleneck: '身份核验重试', action: 'NFC降级到身份证联网核查',
+    linkedApplications: ['app-20260614-002'],
+    deptDisposalRecords: [
+      { dept: '广州市社会保障卡管理中心', disposalCount: 512, avgDisposalHours: 12.8, responsiblePerson: '林晓东', lastDisposalAt: '2026-06-15 10:30' },
+      { dept: '工商银行广州分行', disposalCount: 896, avgDisposalHours: 24.5, responsiblePerson: '刘芳', lastDisposalAt: '2026-06-15 09:00' },
+    ],
     reviewDetail: {
       heatmapDataId: 'heatmap-sbk',
       attributionId: 'attr-sbk',
       topPeakHours: ['周二 09:30-11:00', '周五 15:00-16:30'],
       sampleCases: [
-        { caseId: 'CASE-SBK-001', applicant: '社保卡申领批量件', occurredAt: '2026-06-15', issue: 'NFC读卡失败触发降级', resolution: '自动发放临时授权凭证，身份证联网核查通过' },
+        { caseId: 'CASE-SBK-001', applicationId: 'app-20260614-002', applicant: '社保卡申领批量件', occurredAt: '2026-06-15', issue: 'NFC读卡失败触发降级', resolution: '自动发放临时授权凭证，身份证联网核查通过' },
       ],
       improvementSuggestions: [
         '加速NFC模块固件升级计划',
@@ -726,13 +936,18 @@ const bottleneckReports = [
     },
   },
   {
-    item: '营业执照设立登记', usage: 7540, materialFixRate: '22.8%', avgDepartmentHours: 21.5, bottleneck: '住所证明复核', action: '增加街镇协同审批提醒',
+    item: '营业执照设立登记', itemCode: '114401000003', department: '市场监管局', usage: 7540, materialFixRate: '22.8%', avgDepartmentHours: 21.5, bottleneck: '住所证明复核', action: '增加街镇协同审批提醒',
+    linkedApplications: ['app-20260614-004'],
+    deptDisposalRecords: [
+      { dept: '越秀区市场监管局', disposalCount: 186, avgDisposalHours: 18.3, responsiblePerson: '张伟', lastDisposalAt: '2026-06-15 11:00' },
+      { dept: '天河区市场监管局', disposalCount: 210, avgDisposalHours: 25.7, responsiblePerson: '王强', lastDisposalAt: '2026-06-15 08:45' },
+    ],
     reviewDetail: {
       heatmapDataId: 'heatmap-yyzz',
       attributionId: 'attr-yyzz',
       topPeakHours: ['周三 10:00-12:00'],
       sampleCases: [
-        { caseId: 'CASE-YYZZ-001', applicant: '某餐饮公司', occurredAt: '2026-06-14', issue: '住所产权证明不清', resolution: '街镇协查后3个工作日完成复核' },
+        { caseId: 'CASE-YYZZ-001', applicationId: 'app-20260614-004', applicant: '某餐饮公司', occurredAt: '2026-06-14', issue: '住所产权证明不清', resolution: '街镇协查后3个工作日完成复核' },
       ],
       improvementSuggestions: [
         '接入不动产登记数据自动核验',
@@ -1201,8 +1416,187 @@ function pageHtml() {
   `).join('');
   const noticeRows = timeoutAuditRecords.map((item) => `<tr><td>${item.applicationId}</td><td>${item.channel}</td><td>${item.receiver}</td><td>${item.message}</td><td>${item.sentAt}</td><td>${item.audit}</td></tr>`).join('');
 
+  const firstAuth = identityIntegrations[0];
+  const authChainHtml = firstAuth?.authChain ? `
+    <div class="depth-section" style="background:linear-gradient(135deg,#eff6ff 0%,#f5f3ff 100%);border:1px solid #c7d2fe;">
+      <h3 style="color:#3730a3;">🔗 认证链路 · 授权凭证·降级·二次核验</h3>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px;">
+        <div style="padding:10px;background:white;border-radius:6px;border-left:4px solid #2563eb;">
+          <small style="color:#64748b;">接入方式</small>
+          <p style="font-weight:600;color:#172033;margin-top:2px;">${firstAuth.authChain.entryMethod}</p>
+        </div>
+        <div style="padding:10px;background:white;border-radius:6px;border-left:4px solid #10b981;">
+          <small style="color:#64748b;">凭证类型</small>
+          <p style="font-weight:600;color:#172033;margin-top:2px;">${firstAuth.authChain.credentialType}</p>
+        </div>
+        <div style="padding:10px;background:white;border-radius:6px;border-left:4px solid #f59e0b;">
+          <small style="color:#64748b;">凭证有效期</small>
+          <p style="font-weight:600;color:#172033;margin-top:2px;">${firstAuth.authChain.credentialValidity}</p>
+        </div>
+        <div style="padding:10px;background:white;border-radius:6px;border-left:4px solid #8b5cf6;">
+          <small style="color:#64748b;">认证等级</small>
+          <p style="font-weight:600;color:#172033;margin-top:2px;font-size:12px;">${firstAuth.authChain.authLevels.join(' → ')}</p>
+        </div>
+      </div>
+      <div style="margin-top:8px;">
+        <small style="color:#64748b;font-weight:600;">🔄 降级路径：</small>
+        <span style="font-size:12px;color:#475467;margin-left:4px;">${firstAuth.authChain.fallbackMethod}</span>
+      </div>
+      <div style="margin-top:4px;">
+        <small style="color:#64748b;font-weight:600;">✅ 二次核验：</small>
+        <span style="font-size:12px;color:#475467;margin-left:4px;">${firstAuth.authChain.secondaryVerification}</span>
+      </div>
+      <div style="margin-top:6px;padding:6px 8px;background:#eef2ff;border-radius:4px;">
+        <small style="color:#3730a3;font-weight:600;">凭证模板：</small>
+        <small style="color:#475467;">${firstAuth.authChain.credentialTemplate.type} · 签发方：${firstAuth.authChain.credentialTemplate.issuer} · 算法：${firstAuth.authChain.credentialTemplate.algorithm}</small>
+      </div>
+    </div>
+  ` : '';
+  const firstOpenApi = openApiApps[0];
+  const firstOpenApiIntercept = openApiInterceptRules[firstOpenApi?.appId] || [];
+  const firstOpenApiReceipt = openApiReceiptTraces[firstOpenApi?.appId] || [];
+  const openApiDepthHtml = firstOpenApi ? `
+    <div class="depth-section">
+      <h3>🏢 调用主体 · ${firstOpenApi.name}</h3>
+      <div class="detail-grid">
+        <div class="detail-item"><strong>主体名称</strong><span>${firstOpenApi.subject}（${firstOpenApi.subjectType === 'GOVERNMENT' ? '政府部门' : '企业单位'}）</span></div>
+        <div class="detail-item"><strong>联系人</strong><span>${firstOpenApi.contactPerson} · ${firstOpenApi.contactPhone}</span></div>
+        <div class="detail-item"><strong>授权时间</strong><span>${firstOpenApi.authorizedAt}</span></div>
+        <div class="detail-item"><strong>到期时间</strong><span>${firstOpenApi.expiryDate}</span></div>
+      </div>
+    </div>
+  ` : '';
+  const interceptRulesHtml = firstOpenApiIntercept.length > 0 ? `
+    <div class="depth-section">
+      <h3>🛡️ 异常拦截规则 · ${firstOpenApiIntercept.length}条</h3>
+      ${firstOpenApiIntercept.map(r => `
+        <div style="padding:8px 10px;border:1px solid #fecaca;border-radius:6px;margin-top:6px;background:#fef2f2;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="color:#991b1b;font-size:13px;">${r.type === 'RATE_LIMIT' ? '流量控制' : r.type === 'SIGNATURE_VERIFY' ? '签名校验' : r.type === 'IP_WHITELIST' ? 'IP白名单' : r.type === 'SCOPE_LIMIT' ? '范围限制' : '数据脱敏'}：${r.rule}</strong>
+            <span class="badge" style="background:${r.status === 'ACTIVE' ? '#dcfce7;color:#166534;' : '#fee2e2;color:#991b1b;'}">${r.status === 'ACTIVE' ? '启用中' : '已停用'}</span>
+          </div>
+          <p style="font-size:11px;color:#667085;margin:4px 0 0;">累计拦截 ${r.interceptCount} 次 · 最近拦截：${r.lastInterceptedAt || '无'}</p>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+  const receiptTracesHtml = firstOpenApiReceipt.length > 0 ? `
+    <div class="depth-section">
+      <h3>📨 调用回执追踪 · ${firstOpenApiReceipt.length}条</h3>
+      ${firstOpenApiReceipt.map(r => `
+        <div style="padding:8px 10px;border:1px solid #e5e7eb;border-radius:6px;margin-top:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="font-size:12px;color:#172033;">${r.method} ${r.endpoint}</strong>
+            <span class="badge ${r.result === 'SUCCESS' ? '' : 'warn'}" style="${r.result === 'SUCCESS' ? '' : 'background:#fee2e2;color:#991b1b;'}">${r.result === 'SUCCESS' ? '成功' : r.result === 'INTERCEPTED' ? '已拦截' : '失败'}</span>
+          </div>
+          <p style="font-size:11px;color:#667085;margin:4px 0 0;">
+            ${r.requestAt} → ${r.responseAt} · 状态码 ${r.statusCode} · 请求 ${r.requestSize} / 响应 ${r.responseSize}
+          </p>
+          ${r.interceptReason ? `<p style="font-size:11px;color:#dc2626;margin:2px 0 0;">拦截原因：${r.interceptReason}</p>` : ''}
+          <p style="font-size:10px;color:#98a2b3;margin:2px 0 0;">trace: ${r.traceId} · 回执号：${r.receiptId}</p>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+  const firstPolicy = policyCorpus[0];
+  const firstPolicyQa = policyQaHitRecords[firstPolicy?.policyId] || [];
+  const policyLinkageHtml = firstPolicy ? `
+    <div class="depth-section">
+      <h3>🔗 政策语料联动 · 关联事项 · 关联部门</h3>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
+        ${firstPolicy.linkedItems.map(code => `<span style="padding:4px 10px;background:#dbeafe;color:#1e40af;border-radius:12px;font-size:11px;">事项：${code}</span>`).join('')}
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
+        ${firstPolicy.linkedDepts.map(dept => `<span style="padding:4px 10px;background:#dcfce7;color:#166534;border-radius:12px;font-size:11px;">部门：${dept}</span>`).join('')}
+      </div>
+    </div>
+  ` : '';
+  const qaHitHtml = firstPolicyQa.length > 0 ? `
+    <div class="depth-section">
+      <h3>💬 问答命中记录 · ${firstPolicyQa.length}条</h3>
+      ${firstPolicyQa.map(qa => `
+        <div style="padding:8px 10px;border:1px solid #e0e7ff;border-radius:6px;margin-top:6px;background:#eef2ff;">
+          <p style="font-size:12px;color:#3730a3;font-weight:600;">Q: ${qa.question}</p>
+          <p style="font-size:11px;color:#667085;margin:4px 0 0;">命中意图：${qa.hitIntent} · 置信度：${qa.hitConfidence}% · 来源：${qa.answerSource}</p>
+          <p style="font-size:11px;color:#98a2b3;margin:2px 0 0;">${qa.askedAt} · 用户：${qa.userId}${qa.applicationId ? ` · 关联办件：${qa.applicationId}` : ''} · ${qa.helpful ? '✅ 有帮助' : '❌ 无帮助'}</p>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+  const firstBottleneck = bottleneckReports[0];
+  const bottleneckLinkageHtml = firstBottleneck ? `
+    <div class="depth-section" style="background:linear-gradient(135deg,#fef3c7 0%,#fce7f3 100%);border:1px solid #fcd34d;">
+      <h3 style="color:#92400e;">🔗 堵点联动 · 关联办件与部门处置</h3>
+      <div style="margin-top:6px;">
+        <small style="color:#64748b;font-weight:600;">📋 关联办件：</small>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+          ${firstBottleneck.linkedApplications.map(id => `<span style="padding:3px 8px;background:#fef3c7;color:#92400e;border-radius:4px;font-size:11px;border:1px solid #fcd34d;">${id}</span>`).join('')}
+        </div>
+      </div>
+      <div style="margin-top:8px;">
+        <small style="color:#64748b;font-weight:600;">🏢 部门处置记录：</small>
+        ${firstBottleneck.deptDisposalRecords.map(d => `
+          <div style="padding:6px 8px;background:white;border-radius:4px;margin-top:4px;border-left:3px solid #f59e0b;">
+            <strong style="font-size:12px;color:#172033;">${d.dept}</strong>
+            <p style="font-size:11px;color:#667085;margin:2px 0 0;">处置 ${d.disposalCount} 件 · 平均耗时 ${d.avgDisposalHours} 小时 · 责任人：${d.responsiblePerson} · 最近：${d.lastDisposalAt}</p>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  ` : '';
+
   const firstAppId = apps[0]?.id || 'app-20260614-001';
   const firstApprovals = firstFlow.approvalOpinions;
+  const workflowActionsHtml = firstFlow.workflowActions ? `
+    <div class="depth-section" style="background:linear-gradient(135deg,#eff6ff 0%,#ecfeff 100%);border:1px solid #bfdbfe;">
+      <h3 style="color:#1e40af;">🎯 业务动作 · 可操作按钮</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+        ${firstFlow.workflowActions.available.map(act => `
+          <button class="${act.type === 'primary' ? '' : act.type === 'warn' ? '' : act.type === 'danger' ? '' : 'secondary'}" 
+                  style="${act.type === 'primary' ? 'background:#2563eb;' : act.type === 'warn' ? 'background:#d97706;' : act.type === 'danger' ? 'background:#dc2626;' : 'background:#64748b;'} color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;"
+                  onclick="alert('【模拟操作】${act.label}\\n\\n${act.tip || ''}')" title="${act.tip || ''}">
+            ${act.label}
+          </button>
+        `).join('')}
+      </div>
+      ${firstFlow.workflowActions.disabled && firstFlow.workflowActions.disabled.length > 0 ? `
+        <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #93c5fd;">
+          <small style="color:#647485;font-weight:600;">🔒 暂不可用操作：</small>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+            ${firstFlow.workflowActions.disabled.map(act => `
+              <span style="padding:6px 12px;background:#f1f5f9;color:#94a3b8;border-radius:6px;font-size:12px;border:1px dashed #cbd5e1;" title="${act.reason}">
+                ${act.label} · <small>${act.reason}</small>
+              </span>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+    </div>
+  ` : '';
+  const operationLogsHtml = firstFlow.operationLogs && firstFlow.operationLogs.length > 0 ? `
+    <div class="depth-section">
+      <h3>📋 操作日志 · ${firstFlow.operationLogs.length}条记录</h3>
+      <div style="max-height:300px;overflow-y:auto;">
+        ${firstFlow.operationLogs.map((log, i) => `
+          <div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid #f0f2f5;${i === 0 ? 'border-top:1px solid #f0f2f5;' : ''}">
+            <div style="width:4px;background:${log.result === 'SUCCESS' ? '#10b981' : log.result === 'REJECT' ? '#ef4444' : log.result === 'FALLBACK' ? '#f59e0b' : log.result === 'WARNING' ? '#f59e0b' : log.result === 'PENDING' ? '#3b82f6' : '#6b7280'};border-radius:2px;flex-shrink:0;"></div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <strong style="font-size:13px;color:#172033;">${log.action}</strong>
+                <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${log.result === 'SUCCESS' ? '#dcfce7' : log.result === 'REJECT' ? '#fee2e2' : log.result === 'WARNING' ? '#fef3c7' : log.result === 'PENDING' ? '#dbeafe' : '#f1f5f9'};color:${log.result === 'SUCCESS' ? '#166534' : log.result === 'REJECT' ? '#991b1b' : log.result === 'WARNING' ? '#92400e' : log.result === 'PENDING' ? '#1e40af' : '#475569'};">${log.result}</span>
+              </div>
+              <div style="font-size:12px;color:#667085;margin-top:2px;">
+                <span style="font-weight:500;color:#344054;">${log.operator}</span>
+                <small style="color:#98a2b3;">（${log.operatorType === 'APPLICANT' ? '申请人' : log.operatorType === 'STAFF' ? '工作人员' : log.operatorType === 'SUPERVISOR' ? '督办人' : '系统'}）</small>
+                · ${log.operatedAt} · 节点：${log.node}
+              </div>
+              <p style="font-size:12px;color:#475467;margin:4px 0 0;">${log.note}</p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  ` : '';
   const approvalOpinionsHtml = firstApprovals.length > 0 ? `
     <div class="depth-section">
       <h3>部门审批意见 · ${firstApprovals.filter(o => o.status === 'APPROVED').length}/${firstApprovals.length} 已通过</h3>
@@ -1549,6 +1943,113 @@ function pageHtml() {
     </div>
   ` : '';
 
+  const firstItem = items[0];
+  const firstItemAudit = firstItem?.standardAuditRecords;
+  const timeLimitChangesHtml = firstItemAudit?.timeLimitChanges && firstItemAudit.timeLimitChanges.length > 0 ? `
+    <div class="depth-section">
+      <h3>⏰ 办理时限变更记录 · ${firstItemAudit.timeLimitChanges.length}条</h3>
+      ${firstItemAudit.timeLimitChanges.map((c, i) => `
+        <div style="padding:10px;border:1px solid #e5e7eb;border-radius:8px;margin-top:8px;background:${i === 0 ? '#ecfdf5' : '#f9fafb'};border-left:4px solid ${c.status === 'EFFECTIVE' ? '#10b981' : '#9ca3af'};">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="color:#172033;">版本 ${c.version} · ${c.status === 'EFFECTIVE' ? '现行有效' : '已废止'}</strong>
+            <span class="badge ${c.changeType === 'PROMISE_SHORTEN' ? '' : 'warn'}" style="${c.changeType === 'PROMISE_SHORTEN' ? 'background:#dcfce7;color:#166534;' : ''}">
+              ${c.changeType === 'PROMISE_SHORTEN' ? '承诺时限压缩' : c.changeType === 'STANDARD_ADJUST' ? '标准调整' : c.changeType}
+            </span>
+          </div>
+          <p style="font-size:13px;color:#475467;margin:6px 0;">
+            <strong>从 ${c.fromDays} 个工作日 → ${c.toDays} 个工作日</strong>
+            <small style="color:#667085;margin-left:8px;">压缩比例：${Math.round((1 - c.toDays / c.fromDays) * 100)}%</small>
+          </p>
+          <p style="font-size:12px;color:#667085;margin:4px 0;">变更原因：${c.reason}</p>
+          <p style="font-size:12px;color:#98a2b3;margin:4px 0 0;">依据：${c.basis} · 变更人：${c.changedBy} · ${c.changedAt}</p>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+  const materialFailuresHtml = firstItemAudit?.materialVerifyFailures && firstItemAudit.materialVerifyFailures.length > 0 ? `
+    <div class="depth-section">
+      <h3>📄 材料核验失败分析 · ${firstItemAudit.materialVerifyFailures.length}类高发问题</h3>
+      ${firstItemAudit.materialVerifyFailures.map(f => `
+        <div style="padding:10px;border:1px solid #fee2e2;border-radius:8px;margin-top:8px;background:#fef2f2;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="color:#991b1b;">${f.material} · ${f.failReason}</strong>
+            <span style="font-weight:700;color:#dc2626;">月失败 ${f.failCountMonth} 次 · 失败率 ${f.failRate}</span>
+          </div>
+          <p style="font-size:12px;color:#991b1b;margin:6px 0 0;">高发区域：${f.topOccurrences.join('，')}</p>
+          <p style="font-size:12px;color:#667085;margin:4px 0 0;">优化动作：${f.improvementAction}</p>
+          <p style="font-size:11px;color:#10b981;margin:4px 0 0;">📈 近30天趋势：${f.last30DaysTrend}</p>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+  const formVersionDiffsHtml = firstItemAudit?.formVersionDiffs && firstItemAudit.formVersionDiffs.length > 0 ? `
+    <div class="depth-section">
+      <h3>📋 表单版本差异对比 · ${firstItemAudit.formVersionDiffs.length}个历史版本</h3>
+      ${firstItemAudit.formVersionDiffs.map(d => `
+        <div style="padding:10px;border:1px solid #e0e7ff;border-radius:8px;margin-top:8px;background:#eef2ff;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="color:#3730a3;">${d.fromVersion} → ${d.toVersion}</strong>
+            <span style="font-size:12px;color:#6366f1;font-weight:600;">${d.changeCount} 处字段变更</span>
+          </div>
+          <div style="margin-top:6px;">
+            ${d.diffFields.map(f => `
+              <span style="display:inline-block;padding:2px 8px;margin:2px 4px 2px 0;border-radius:4px;font-size:11px;
+                background:${f.type === 'ADD' ? '#dcfce7;color:#166534;' : f.type === 'REMOVE' ? '#fee2e2;color:#991b1b;' : f.type === 'VALIDATION' ? '#fef3c7;color:#92400e;' : '#dbeafe;color:#1e40af'};">
+                ${f.type === 'ADD' ? '➕ 新增' : f.type === 'REMOVE' ? '➖ 移除' : f.type === 'VALIDATION' ? '✓ 校验' : '🎨 展示'}：${f.field}
+              </span>
+            `).join('')}
+          </div>
+          <p style="font-size:12px;color:#667085;margin:6px 0 0;">更新人：${d.updatedBy} · ${d.updatedAt} · 复查：${d.reviewer}（${d.reviewStatus === 'REVIEWED' ? '已复查' : '待复查'}）</p>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+  const conditionConflictsHtml = firstItemAudit?.applicableConditionConflicts && firstItemAudit.applicableConditionConflicts.length > 0 ? `
+    <div class="depth-section">
+      <h3>⚖️ 适用条件冲突与解决 · ${firstItemAudit.applicableConditionConflicts.length}项</h3>
+      ${firstItemAudit.applicableConditionConflicts.map(c => `
+        <div style="padding:10px;border:1px solid #fed7aa;border-radius:8px;margin-top:8px;background:#fff7ed;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="color:#9a3412;">${c.condition}</strong>
+            <span class="badge ${c.resolutionStatus === 'RESOLVED' ? '' : 'warn'}" style="${c.resolutionStatus === 'RESOLVED' ? 'background:#dcfce7;color:#166534;' : ''}">
+              ${c.resolutionStatus === 'RESOLVED' ? '已解决' : '待解决'}
+            </span>
+          </div>
+          <p style="font-size:12px;color:#9a3412;margin:6px 0;"><strong>冲突来源：</strong>${c.conflictSource}</p>
+          <p style="font-size:12px;color:#475467;margin:4px 0;"><strong>冲突描述：</strong>${c.description}</p>
+          <p style="font-size:12px;color:#166534;margin:4px 0 0;"><strong>解决方案：</strong>${c.resolution}</p>
+          <p style="font-size:11px;color:#667085;margin:4px 0 0;">解决人：${c.resolvedBy} · ${c.resolvedAt} · 依据：${c.relatedPolicy}</p>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+  const auditSummaryHtml = firstItemAudit?.auditSummary ? `
+    <div class="depth-section" style="background:linear-gradient(135deg,#f0fdf4 0%,#ecfeff 100%);border:1px solid #86efac;">
+      <h3 style="color:#166534;">📊 标准化审计总览</h3>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;">
+        <div style="padding:8px;text-align:center;background:white;border-radius:6px;">
+          <div style="font-size:20px;font-weight:700;color:#2563eb;">${firstItemAudit.auditSummary.totalTimeLimitChanges}</div>
+          <div style="font-size:11px;color:#667085;">时限变更</div>
+        </div>
+        <div style="padding:8px;text-align:center;background:white;border-radius:6px;">
+          <div style="font-size:20px;font-weight:700;color:#dc2626;">${firstItemAudit.auditSummary.totalMaterialFailures}</div>
+          <div style="font-size:11px;color:#667085;">材料失败类型</div>
+        </div>
+        <div style="padding:8px;text-align:center;background:white;border-radius:6px;">
+          <div style="font-size:20px;font-weight:700;color:#7c3aed;">${firstItemAudit.auditSummary.totalFormVersionDiffs}</div>
+          <div style="font-size:11px;color:#667085;">表单版本变更</div>
+        </div>
+        <div style="padding:8px;text-align:center;background:white;border-radius:6px;">
+          <div style="font-size:20px;font-weight:700;color:#f59e0b;">${firstItemAudit.auditSummary.totalConditionConflicts}</div>
+          <div style="font-size:11px;color:#667085;">条件冲突</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#667085;margin-top:8px;">
+        最近审计：${firstItemAudit.auditSummary.lastAuditDate} · 审计人：${firstItemAudit.auditSummary.auditor} · 标准合规度：<strong style="color:#166534;">${firstItemAudit.auditSummary.standardCompliance}</strong>
+      </p>
+    </div>
+  ` : '';
+
   const nfcDetailHtml = `
     <div class="depth-section">
       <h3>NFC 降级受理规则</h3>
@@ -1839,6 +2340,7 @@ function pageHtml() {
         </div>
       </div>
       <div class="grid flow">${flowCards}</div>
+      ${workflowActionsHtml}
       <div class="two-col">
         ${approvalOpinionsHtml}
         ${certHtml}
@@ -1849,6 +2351,7 @@ function pageHtml() {
       ${supplementHtml}
       ${responsibilityChainHtml}
       ${abnormalChainHtml}
+      ${operationLogsHtml}
     </section>
 
 <section class="grid columns">
@@ -1867,6 +2370,7 @@ function pageHtml() {
   <div class="card">
     <h2>身份认证接入状态</h2>
     <div class="list">${integrationRows}</div>
+    ${authChainHtml}
     ${nfcDetailHtml}
   </div>
 </section>
@@ -1880,10 +2384,15 @@ function pageHtml() {
     <thead><tr><th>事项编码</th><th>事项名称</th><th>部门</th><th>材料清单·核验规则</th><th>电子表单·版本</th><th>办理时限</th><th>标准化复查</th><th>操作</th></tr></thead>
     <tbody>${itemRows}</tbody>
   </table>
+  ${auditSummaryHtml}
   <div class="two-col">
     ${timeLimitHtml}
     ${conditionsHtml}
   </div>
+  ${timeLimitChangesHtml}
+  ${materialFailuresHtml}
+  ${formVersionDiffsHtml}
+  ${conditionConflictsHtml}
   ${formChangelogHtml}
   ${templateReviewHtml}
 </section>
@@ -1901,6 +2410,8 @@ function pageHtml() {
     ${policyAuditHtml}
     ${policyVersionHtml}
   </div>
+  ${policyLinkageHtml}
+  ${qaHitHtml}
 </section>
 
 <section class="grid columns">
@@ -1913,7 +2424,10 @@ function pageHtml() {
       <thead><tr><th>AppID</th><th>应用</th><th>授权范围</th><th>今日调用</th><th>状态</th></tr></thead>
       <tbody>${apiRows}</tbody>
     </table>
+    ${openApiDepthHtml}
     ${openApiScopeHtml}
+    ${interceptRulesHtml}
+    ${receiptTracesHtml}
     ${openApiExceptionHtml}
     ${openApiPendingHtml}
   </div>
@@ -1940,6 +2454,7 @@ function pageHtml() {
     <thead><tr><th>事项</th><th>使用量</th><th>材料补正率</th><th>部门协同耗时</th><th>堵点</th><th>处置动作</th><th>可复查明细</th></tr></thead>
     <tbody>${bottleneckRows}</tbody>
   </table>
+  ${bottleneckLinkageHtml}
   ${bottleneckHeatmapHtml}
   ${attributionHtml}
 </section>

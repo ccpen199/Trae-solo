@@ -1,0 +1,429 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-17T00:52:22.965Z",
+  "order": "may-89207",
+  "roundIndex": 3,
+  "captureId": "may-89207-codex-20260617-r3",
+  "url": "http://127.0.0.1:49207/",
+  "initialUrl": "http://127.0.0.1:49207/",
+  "finalUrl": "http://127.0.0.1:49207/#api-response",
+  "status": 200,
+  "title": "广州市统一政务服务移动端后端支撑平台",
+  "initialTitle": "广州市统一政务服务移动端后端支撑平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-20260617-rerun/may-89207-codex-20260617-r3-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-20260617-rerun/may-89207-codex-20260617-r3-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；后台管理相关问题；详情/内容页相关问题；页面存在搜索/发现入口，优先复验检索链路；人工校正第 2 轮已完成，继续第 3 轮",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetKind": "search",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49207/#api-response"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49207/#api-response",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49207/#api-response",
+        "title": "广州市统一政务服务移动端后端支撑平台",
+        "headings": [
+          "广州市统一政务服务移动端后端支撑平台",
+          "办件连续流转工作台",
+          "部门审批意见 · 4/4 已通过",
+          "电子证照签发确认 · app-20260614-003",
+          "结果推送与送达回执 · app-20260614-003",
+          "办件分支追溯 · 共 2 条",
+          "全节点责任链 · 端到端可追溯（6个节点）",
+          "办件全生命周期追踪",
+          "超时办件全责任链 · app-20260614-002",
+          "处置责任人",
+          "部门催办记录 · 共 2 条",
+          "风险等级判定"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "搜索筛选",
+          "管理后台",
+          "查看流转 API",
+          "超时通知留痕",
+          "电子表单模板 API",
+          "查看详情",
+          "语料管理 API",
+          "开放平台 API",
+          "通知记录 API",
+          "堵点报表 API",
+          "检查 /api/health",
+          "办件流转",
+          "认证链路",
+          "堵点分析"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索事项编码、办件、政策文件、后台报表...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件号",
+              "申请人",
+              "事项",
+              "流转阶段",
+              "状态",
+              "到期",
+              "风险等级",
+              "责任链·异常·闭环"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "办件号 申请人 事项 流转阶段 状态 到期 风险等级 责任链·异常·闭环 app-20260614-003 李先生 营业执照设立登记 已办结 当前：电子证照签发 CERTIFICATE_ISSUED 2026-06-14 正常 ✅ 闭环已形成 责任链：6节点 · 异常处置：0条 app-20260614-001 陈女士 居住证办理 材料补正中 当前：智能预审 PRE_REVIEWING 2026-06-17 一级风险（黄色预警） ⏳ 流程进行中 责任链：6节点 · 异常处置：3条 app-20260614-002 广州政务小程序 社保卡申领 部门审批中 当前：部门协同审批 APPROVING "
+          },
+          {
+            "headers": [
+              "事项编码",
+              "事项名称",
+              "部门",
+              "材料清单·核验规则",
+              "电子表单·版本",
+              "办理时限",
+              "标准化复查",
+              "操作"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "事项编码 事项名称 部门 材料清单·核验规则 电子表单·版本 办理时限 标准化复查 操作 114401000001 居住证办理 公安局 身份证、居住证明、电子照片 核验规则：4项 · 适用条件：4条 居住证办理电子表单 版本：v3.2 · 变更记录：3条 承诺：7个工作日 法定：15个工作日 ✓ 可复查 模板复查：3条 查看详情 114401000002 社保卡申领 人社局 身份证、社保缴费记录 核验规则：3项 · 适用条件：2条 社保卡申领电子表单 版本：v2.8 · 变更记录：0条 承诺：5个工作日 法定：30个自然日 待完善 模板复查：0条 查看详情 114401000003 营业执照设"
+          },
+          {
+            "headers": [
+              "政策文件",
+              "分类",
+              "结构化字段",
+              "切片数",
+              "问答对",
+              "训练状态"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "政策文件 分类 结构化字段 切片数 问答对 训练状态 广州市政务服务事项标准化指引 办事指南 事项编码规则 36 128 已训练 电子证照跨部门调用规范 政策文件 电子证照调用边界 24 76 已训练 移动端实名核验与粤省事对接说明 接口规范 实名核验问答语料 19 42 待训练"
+          },
+          {
+            "headers": [
+              "AppID",
+              "应用",
+              "授权范围",
+              "今日调用",
+              "状态"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "AppID 应用 授权范围 今日调用 状态 mini-gz-001 广州政务小程序 service-items,applications,certificates 12,860 AUTHORIZED street-portal-018 街镇综合受理端 applications,notifications 4,820 AUTHORIZED bank-verify-006 银行证照核验插件 certificates.read 936 LIMITED"
+          },
+          {
+            "headers": [
+              "办件号",
+              "渠道",
+              "接收方",
+              "内容",
+              "时间",
+              "审计"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "办件号 渠道 接收方 内容 时间 审计 app-20260614-001 微信服务通知 陈女士 智能预审需补充居住证明 2026-06-15 09:12 自动触发+后台留痕 app-20260614-002 短信 广州政务小程序 部门协同审批剩余 18 小时 2026-06-15 10:03 超时预警规则 R-2024-07 app-20260614-003 小程序订阅消息 李先生 电子证照已签发，可下载 2026-06-14 16:30 证照签发回调"
+          },
+          {
+            "headers": [
+              "事项",
+              "使用量",
+              "材料补正率",
+              "部门协同耗时",
+              "堵点",
+              "处置动作",
+              "可复查明细"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "事项 使用量 材料补正率 部门协同耗时 堵点 处置动作 可复查明细 居住证办理 12,860 18.2% 14.6h 居住证明补正 上线材料样例与OCR预检 ✅ 可复查 典型案例：2条 · 优化建议：3项 社保卡申领 9,820 9.4% 10.2h 身份核验重试 NFC降级到身份证联网核查 ✅ 可复查 典型案例：1条 · 优化建议：3项 营业执照设立登记 7,540 22.8% 21.5h 住所证明复核 增加街镇协同审批提醒 ✅ 可复查 典型案例：1条 · 优化建议：3项"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "广州市统一政务服务移动端后端支撑平台 事项标准化管理 · 多源身份认证 · 全流程线上办件 · 电子证照签发 · 开放 API 搜索筛选 管理后台 管理后台数据概览：事项标准化、办件流转、身份认证、政策语料、开放接口与运营数据统一看板 标准化事项3事项编码/材料清单/电子表单模板 线上办件3预约、材料上传、智能预审、部门协同审批 政策语料246结构化字段与 AI 问答训练语料 开放接口调用18,616第三方小程序授权调用 办件连续流转工作台 📋 当前办件状态：已办结 | 审批会签进度：4/4 | 闭环状态：✅ 已形成闭环（可复核） 查看流转 API 超时通知留痕 已完成 预约取号 责任人：李先生 预约号 GZYY-240614-0712 已完成 材料上传 责任人：李先生 身份证/居住证明/照片/劳动合同全部验真通过 已完成 智能预审 责任人：AI预审引擎 OCR字段通过率 99.4%，评分92分自动核准 已完成 部门协同审批 责任人：王建国/李美玲/周丽/何强 跨部门核验 4/4 完成 已完成 电子证照签发 责任人：王建国（越秀区公安局） 电子证照 GZJZZ-2026-0614-00892 签发 已完成 结果推送 责任人：系统自动推送 短信/微信/小程序已推送，申请人已确认 部门审批意见 · 4/4 已通过 越秀区公安局 王建国 · 2026-06-14 14:10 身份核验通过，居住登记信息与备案一致。 已通过 越秀区人社局 李美玲 · 2026-06-14 14:50 社保缴费记录连续满14个月，符合申领条件。 已通过 越秀区住房城乡建设局 周丽 · 2026-06-14 15:30 房屋租赁备案编号有效，符合住所要求。 已通过 越秀区市场监管局 何强 · 2026-06-14 16:00 无经营异常记录，符合办理条件。 已通过 电子证照签发确认 · app-20260614-003 ✅ 展示条件：四部门会签全部通过 + 材料全部验真 + 无待补正项 证照编号GZJZZ-2026-0614-00892 证照类型电子居住证 签发机关广州市公安局越秀区分局 签发时间2026-06-14 16:20 签发确认人王建国（越秀区公安局审批员） 确认时间2026-06-14 16:25 有效期2026-06-14 ~ 2027-06-13 印章/二维码电子印章已加盖 · 核验码已生成 结果推送与送达回执 · app-20260614-003 ✅ 展示条件：证照已签发确认 推送渠道短信 / 微信 / 小程序 推送时间2026-06-14 16:30 送达回执号DR-20260614-1630-007 申请人确认已确认 确认时间2026-06-14 16:45 重试次数0 次 短信状态已送达 微信状态已读 办件分支追溯 · 共 2 条 签发确认 2026-06-14 16:20 · 电子证照库 证照签发完成并确认 已完成 结果送达 2026-06-14 16:30 · 通知中心 三渠道推送，申请人已确认 已完成 全节点责任链 · 端到端可追溯（6个节点） 预约取号 2026-06-15 08:00 ~ 2026-06-15 08:35 · 责任人：李先生 · 操作：粤省事预约 材料上传 2026-06-15 09:00 ~ 2026-06-15 09:35 · 责任人：李先生 · 操作：自助上传 智能预审 2026-06-15 10:00 ~ 2026-06-15 10:35 · 责任人：AI预审引擎 · 操作：自动预审 部门协同审批 2026-06-15 11:00 ~ 2026-06-15 11:35 · 责任人：王建国/李美玲/周丽/何强 · 操作：四部门会签 4/4 电子证照签发 2026-06-15 12:00 ~ 2026-06-15 12:35 · 责任人：王建国（越秀区公安局） · 操作：签发确认 结果推送 2026-06-15 13:00 ~ 2026-06-15 13:35 · 责任人：系统自动推送 · 操作：三渠道送达 办件全生命周期追踪 办件号申请人事项流转阶段状态到期风险等级责任链·异常·闭环 app-20260614-003 李先生 营业执照设立登记 已办结当前：电子证照签发 CERTIFICATE_ISSUED ",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 8417,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89207-codex-20260617-r3-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49207/#api-response",
+          "title": "广州市统一政务服务移动端后端支撑平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-20260617-rerun/may-89207-codex-20260617-r3-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-20260617-rerun/may-89207-codex-20260617-r3-structure-01-首屏.png",
+          "elementCount": 985,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "搜索事项编码、办件、政策文件、后台报表...",
+            "搜索筛选",
+            "管理后台",
+            "查看流转 API",
+            "超时通知留痕",
+            "电子表单模板 API",
+            "查看详情",
+            "语料管理 API",
+            "开放平台 API",
+            "通知记录 API",
+            "堵点报表 API",
+            "检查 /api/health",
+            "办件流转",
+            "认证链路",
+            "堵点分析"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89207-codex-20260617-r3-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49207/#api-response",
+        "title": "广州市统一政务服务移动端后端支撑平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-20260617-rerun/may-89207-codex-20260617-r3-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-20260617-rerun/may-89207-codex-20260617-r3-structure-01-首屏.png",
+        "elementCount": 985,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "搜索事项编码、办件、政策文件、后台报表...",
+          "搜索筛选",
+          "管理后台",
+          "查看流转 API",
+          "超时通知留痕",
+          "电子表单模板 API",
+          "查看详情",
+          "语料管理 API",
+          "开放平台 API",
+          "通知记录 API",
+          "堵点报表 API",
+          "检查 /api/health",
+          "办件流转",
+          "认证链路",
+          "堵点分析"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49207/#api-response",
+    "representativeScreenshotLabel": "广州市统一政务服务移动端后端支撑平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89207-codex-20260617-r3-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49207/#api-response",
+        "title": "广州市统一政务服务移动端后端支撑平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-20260617-rerun/may-89207-codex-20260617-r3-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89207/runtime-check/codex-20260617-rerun/may-89207-codex-20260617-r3-structure-01-首屏.png",
+        "elementCount": 985,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "搜索事项编码、办件、政策文件、后台报表...",
+          "搜索筛选",
+          "管理后台",
+          "查看流转 API",
+          "超时通知留痕",
+          "电子表单模板 API",
+          "查看详情",
+          "语料管理 API",
+          "开放平台 API",
+          "通知记录 API",
+          "堵点报表 API",
+          "检查 /api/health",
+          "办件流转",
+          "认证链路",
+          "堵点分析"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 8417
+  },
+  "initialBodyTextPreview": "广州市统一政务服务移动端后端支撑平台\n事项标准化管理 · 多源身份认证 · 全流程线上办件 · 电子证照签发 · 开放 API\n搜索筛选\n管理后台\n管理后台数据概览：事项标准化、办件流转、身份认证、政策语料、开放接口与运营数据统一看板\n标准化事项\n3\n事项编码/材料清单/电子表单模板\n线上办件\n3\n预约、材料上传、智能预审、部门协同审批\n政策语料\n246\n结构化字段与 AI 问答训练语料\n开放接口调用\n18,616\n第三方小程序授权调用\n办件连续流转工作台\n📋 当前办件状态：已办结 | 审批会签进度：4/4 | 闭环状态：✅ 已形成闭环（可复核）\n查看流转 API\n超时通知留痕\n已完成\n预约取号\n责任人：李先生\n\n预约号 GZYY-240614-0712\n\n已完成\n材料上传\n责任人：李先生\n\n身份证/居住证明/照片/劳动合同全部验真通过\n\n已完成\n智能预审\n责任人：AI预审引擎\n\nOCR字段通过率 99.4%，评分92分自动核准\n\n已完成\n部门协同审批\n责任人：王建国/李美玲/周丽/何强\n\n跨部门核验 4/4 完成\n\n已完成\n电子证照签发\n责任人：王建国（越秀区公安局）\n\n电子证照 GZJZZ-2026-0614-00892 签发\n\n已完成\n结果推送\n责任人：系统自动推送\n\n短信/微信/小程序已推送，申请人已确认\n\n部门审批意见 · 4/4 已通过\n越秀区公安局\n王建国 · 2026-06-14 14:10\n\n身份核验通过，居住登记信息与备案一致。\n\n已通过\n越秀区人社局\n李美玲 · 2026-06-14 14:50\n\n社保缴费记录连续满14个月，符合申领条件。\n\n已通过\n越秀区住房城乡建设局\n周丽 · 2026-06-14 15:30\n\n房屋租赁备案编号有效，符合住所要求。\n\n已通过\n越秀区市场监管局\n何强 · 2026-06-14 16:00\n\n无经营异常记录，符合办理条件。\n\n已通过\n电子证照签发确认 · app-20260614-003\n✅ 展示条件：四部门会签全部通过 + 材料全部验真 + 无待补正项\n证照编号\nGZJZZ-2026-0614-00892\n证照类型\n电子居住证\n签发机关\n广州市公安局越秀区分局\n签发时间\n2026-06-14 16:20\n签发确认人\n王建国（越秀区公安局审批员）\n确认时间\n2026-06-14 16:25\n有效期\n2026-06-14 ~ 2027-06-13\n印章/二维码\n电子印章已加盖 · 核验码已生成\n结果推送与送达回执 · app-20260614-003\n✅ 展示条件：证照已签发确认\n推送渠道\n短信 / 微信 / 小程序\n推送时间\n2026-06-14 16:30\n送达回执号\nDR-20260614-1630-007\n申请人确认\n已确认\n确认时间\n2026-06-14 16:45\n重试次数\n0 次\n短信状态\n已送达\n微信状态\n已读\n办件分支追溯 · 共 2 条\n签发确认\n2026-06-14 16:20 · 电子证照库\n\n证照签发完成并确认\n\n已完成\n结果送达\n2026-06-14 16:30 · 通知中心\n\n三渠道推送，申请人已确认\n\n已完成\n全节点责任链 · 端到端可追溯（6个节点）\n预约取号\n2026-06-15 08:00 ~ 2026-06-15 08:35 · 责任人：李先生 · 操作：粤省事预约\n材料上传\n2026-06-15 09:00 ~ 2026-06-15 09:35 · 责任人：李先生 · 操作：自助上传\n智能预审\n2026-06-15 10:00 ~ 2026-06-15 10:35 · 责任人：AI预审引擎 · 操作：自动预审\n部门协同审批\n2026-06-15 11:00 ~ 2026-06-15 11:35 · 责任人：王建国/李美玲/周丽/何强 · 操作：",
+  "bodyTextPreview": "广州市统一政务服务移动端后端支撑平台\n事项标准化管理 · 多源身份认证 · 全流程线上办件 · 电子证照签发 · 开放 API\n搜索筛选\n管理后台\n管理后台数据概览：事项标准化、办件流转、身份认证、政策语料、开放接口与运营数据统一看板\n标准化事项\n3\n事项编码/材料清单/电子表单模板\n线上办件\n3\n预约、材料上传、智能预审、部门协同审批\n政策语料\n246\n结构化字段与 AI 问答训练语料\n开放接口调用\n18,616\n第三方小程序授权调用\n办件连续流转工作台\n📋 当前办件状态：已办结 | 审批会签进度：4/4 | 闭环状态：✅ 已形成闭环（可复核）\n查看流转 API\n超时通知留痕\n已完成\n预约取号\n责任人：李先生\n\n预约号 GZYY-240614-0712\n\n已完成\n材料上传\n责任人：李先生\n\n身份证/居住证明/照片/劳动合同全部验真通过\n\n已完成\n智能预审\n责任人：AI预审引擎\n\nOCR字段通过率 99.4%，评分92分自动核准\n\n已完成\n部门协同审批\n责任人：王建国/李美玲/周丽/何强\n\n跨部门核验 4/4 完成\n\n已完成\n电子证照签发\n责任人：王建国（越秀区公安局）\n\n电子证照 GZJZZ-2026-0614-00892 签发\n\n已完成\n结果推送\n责任人：系统自动推送\n\n短信/微信/小程序已推送，申请人已确认\n\n部门审批意见 · 4/4 已通过\n越秀区公安局\n王建国 · 2026-06-14 14:10\n\n身份核验通过，居住登记信息与备案一致。\n\n已通过\n越秀区人社局\n李美玲 · 2026-06-14 14:50\n\n社保缴费记录连续满14个月，符合申领条件。\n\n已通过\n越秀区住房城乡建设局\n周丽 · 2026-06-14 15:30\n\n房屋租赁备案编号有效，符合住所要求。\n\n已通过\n越秀区市场监管局\n何强 · 2026-06-14 16:00\n\n无经营异常记录，符合办理条件。\n\n已通过\n电子证照签发确认 · app-20260614-003\n✅ 展示条件：四部门会签全部通过 + 材料全部验真 + 无待补正项\n证照编号\nGZJZZ-2026-0614-00892\n证照类型\n电子居住证\n签发机关\n广州市公安局越秀区分局\n签发时间\n2026-06-14 16:20\n签发确认人\n王建国（越秀区公安局审批员）\n确认时间\n2026-06-14 16:25\n有效期\n2026-06-14 ~ 2027-06-13\n印章/二维码\n电子印章已加盖 · 核验码已生成\n结果推送与送达回执 · app-20260614-003\n✅ 展示条件：证照已签发确认\n推送渠道\n短信 / 微信 / 小程序\n推送时间\n2026-06-14 16:30\n送达回执号\nDR-20260614-1630-007\n申请人确认\n已确认\n确认时间\n2026-06-14 16:45\n重试次数\n0 次\n短信状态\n已送达\n微信状态\n已读\n办件分支追溯 · 共 2 条\n签发确认\n2026-06-14 16:20 · 电子证照库\n\n证照签发完成并确认\n\n已完成\n结果送达\n2026-06-14 16:30 · 通知中心\n\n三渠道推送，申请人已确认\n\n已完成\n全节点责任链 · 端到端可追溯（6个节点）\n预约取号\n2026-06-15 08:00 ~ 2026-06-15 08:35 · 责任人：李先生 · 操作：粤省事预约\n材料上传\n2026-06-15 09:00 ~ 2026-06-15 09:35 · 责任人：李先生 · 操作：自助上传\n智能预审\n2026-06-15 10:00 ~ 2026-06-15 10:35 · 责任人：AI预审引擎 · 操作：自动预审\n部门协同审批\n2026-06-15 11:00 ~ 2026-06-15 11:35 · 责任人：王建国/李美玲/周丽/何强 · 操作：四部门会签 4/4\n电子证照签发\n2026-06-15 12:00 ~ 2026-06-15 12:35 · 责任人：王建国（越秀区公安局） · 操作：签发确认\n结果推送\n2026-06-15 13:00 ~ 2026-06-15 13:35 · 责任人：系统自动推送 · 操作：三渠道送达\n办件全生命周期追踪\n办件号\t申请人\t事项\t流转阶段\t状态\t到期\t风险等级\t责任链·异常·闭环\napp-20260614-003\t李先生\t营业执照设立登记\t已办结\n当前：电子证照签发\tCERTIFICATE_ISSUED\t2026-06-14\t正常\t✅ 闭环已形成\n责任链：6节点 · 异常处置：0条\napp-20260614-001\t陈女士\t居住证办理\t材料补正中\n当前：智能预审\tPRE_REVIEWING\t2026-06-17\t一级风险（黄色预警）\t⏳ 流程进行中\n责任链：6节点 · 异常处置：3条\napp-20260614-002\t广州政务小程序\t社保卡申领\t部门审批中\n当前：部门协同审批\tAPPROVING\t2026-06-18\t二级风险（橙色预警）\t⏳ 流程进行中\n责任链：6节点 · 异常处置：1条\n超时办件全责任链 · app-20260614-002\n预约取号\n责任人：广州政务小程序 · 批量预约\n材料上传\n责任人：广州政务小程序 · 批量上传\n智能预审\n责任人：AI预审引擎 · 自动预审\n部门协同审批\n责任人：林晓东（协调）/赵军/黄敏/刘芳 · 跨部门审批中\n\n⚠️ 异常：距办理时限还有18小时\n\n电子证照签发\n责任人：待审批通过 · 待制卡\n结果推送\n责任人：待制卡完成 · 待推送\n处置责任人\n处置人\n林晓东\n所属部门\n广州市政务服务数据管理局 运行监控处\n分派时间\n2026-06-15 08:00\n处置时限\n2026-06-16 02:00（剩18小时）\n职责\n跨部门协同协调\n升级路径\n运行监控处 → 政务服务处处长 → 分管副局长\n部门催办记录 · 共 2 条\n王处长（政务服务处）\n2026-06-15 10:30 · 紧急督办\n\n请银行加快核验，距超时还有18小时\n\n等待回复中...\n\n李科长（运行监控处）\n2026-06-15 09:45 · 常规催办\n\n请确认跨部门核验进度\n\n回复：正在核验制卡网点产能，预计今日内完成（刘芳（工商银行））\n\n风险等级判定\n二级风险（橙色预警）\n\n距办理时限还有18小时，部门协同审批未完成，存在超时风险。已触发催办机制，处置人林晓东负责协调。\n\n下次升级：2026-06-16 02:00 - 升级至政务服务处处长督办\n\n通知失败重发追踪\n失败次数\n1 次\n重发次数\n1 次\n重发成功\n1 次\n待重发\n否\n身份认证接入状态\n粤省事统一认证\nONLINE\n✅ 可审计\n\n实名登录/授权 · 延迟 86ms · 成功率 99.92%\n\n今日调用：12,680 次 · 成功 12,669 · 失败 11\n\n最近调用明细：\nSUCCESS · 2026-06-15 08:15 · trace: TRACE-YSS-20260615-00882\n居住证办理身份核验\nSUCCESS · 2026-06-15 08:12 · trace: TRACE-YSS-20260615-00881\n社保卡申领身份核验\nRETRY · 2",
+  "apiBase": "http://127.0.0.1:59207",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59207/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59207/api/search?q=%E5%B1%85%E4%BD%8F%E8%AF%81"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59207/api/search?q=%E6%B5%8B%E8%AF%95"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59207/api/health"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"status\":\"ok\",\"service\":\"gz-government-service-local\",\"database\":\"sqlite\",\"frontendUrl\":\"http://127.0.0.1:49207/\",\"backendUrl\":\"http://127.0.0.1:59207\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/search?q=%E5%B1%85%E4%BD%8F%E8%AF%81",
+      "path": "/api/search?q=%E5%B1%85%E4%BD%8F%E8%AF%81",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"query\":\"居住证\",\"matchMode\":\"keyword\",\"results\":[{\"id\":\"si-001\",\"item_code\":\"114401000001\",\"item_name\":\"居住证办理\",\"department\":\"公安局\",\"time_limit\":\"7 working days\",\"materials\":\"身份证、居住证明、电子照片\",\"handlingTimeLimit\":{\"totalWorkingDays\":7,\"breakdown\":[{\"stage\":\"受理初审\",\"days\":1,\"description\":\"材料齐全的，当日内完成受理初审\"},{\"stage\":\"部门审核\",\"days\":3,\"description\":\"公安、人社、住建等部门联合审核\"},{\"stage\":\"审批决定\",\"days\":2,\"description\":\"根据审核结果作出审批决定\"},{\"stage\":\"证照制发\",\"days\":1,\"description\":\"电子证照签发与推送\"}],\"legalBasis\":\"《广东省流"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"query\":\"测试\",\"matchMode\":\"demo-fallback\",\"results\":[{\"id\":\"si-001\",\"item_code\":\"114401000001\",\"item_name\":\"居住证办理\",\"department\":\"公安局\",\"time_limit\":\"7 working days\",\"materials\":\"身份证、居住证明、电子照片\",\"handlingTimeLimit\":{\"totalWorkingDays\":7,\"breakdown\":[{\"stage\":\"受理初审\",\"days\":1,\"description\":\"材料齐全的，当日内完成受理初审\"},{\"stage\":\"部门审核\",\"days\":3,\"description\":\"公安、人社、住建等部门联合审核\"},{\"stage\":\"审批决定\",\"days\":2,\"description\":\"根据审核结果作出审批决定\"},{\"stage\":\"证照制发\",\"days\":1,\"description\":\"电子证照签发与推送\"}],\"legalBasis\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/teachers",
+      "path": "/api/teachers",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"agent-001\",\"name\":\"智能预审坐席\",\"specialty\":\"材料识别与政策问答\",\"status\":\"ONLINE\"},{\"id\":\"agent-002\",\"name\":\"综合受理专员\",\"specialty\":\"事项导办与办件咨询\",\"status\":\"ONLINE\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/courses",
+      "path": "/api/courses",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"guide-001\",\"title\":\"居住证办理导办流程\",\"itemCode\":\"114401000001\",\"duration\":\"8 minutes\"},{\"id\":\"guide-002\",\"title\":\"社保卡申领材料准备\",\"itemCode\":\"114401000002\",\"duration\":\"6 minutes\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/bookings",
+      "path": "/api/bookings",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"booking-001\",\"applicationId\":\"app-20260614-001\",\"window\":\"越秀区政务大厅 A12\",\"time\":\"2026-06-15 14:30\",\"status\":\"RESERVED\"},{\"id\":\"booking-002\",\"applicationId\":\"app-20260614-002\",\"window\":\"线上智能受理\",\"time\":\"2026-06-15 10:00\",\"status\":\"ONLINE\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"app-20260614-003\",\"applicant\":\"李先生\",\"itemName\":\"营业执照设立登记\",\"status\":\"CERTIFICATE_ISSUED\",\"currentNode\":\"电子证照签发\",\"dueAt\":\"2026-06-14\"},{\"id\":\"app-20260614-001\",\"applicant\":\"陈女士\",\"itemName\":\"居住证办理\",\"status\":\"PRE_REVIEWING\",\"currentNode\":\"智能预审\",\"dueAt\":\"2026-06-17\"},{\"id\":\"app-20260614-002\",\"applicant\":\"广州政务小程序\",\"itemName\":\"社保卡申领\",\"status\":\"APPROVING\",\"currentNode\":\"部门协同审批\",\"dueAt\":\"2026-06-18\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"user-admin-001\",\"name\":\"政务平台管理员\",\"mobile\":\"13800000000\",\"roles\":[\"ADMIN\",\"OPERATOR\"],\"department\":\"广州市政务服务数据管理局\",\"permissions\":[\"service-items.read\",\"applications.trace\",\"admin.dashboard\",\"open-api.audit\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"user-admin-001\",\"name\":\"政务平台管理员\",\"mobile\":\"13800000000\",\"roles\":[\"ADMIN\",\"OPERATOR\"],\"department\":\"广州市政务服务数据管理局\",\"permissions\":[\"service-items.read\",\"applications.trace\",\"admin.dashboard\",\"open-api.audit\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"user-admin-001\",\"name\":\"政务平台管理员\",\"mobile\":\"13800000000\",\"roles\":[\"ADMIN\",\"OPERATOR\"],\"department\":\"广州市政务服务数据管理局\",\"permissions\":[\"service-items.read\",\"applications.trace\",\"admin.dashboard\",\"open-api.audit\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"serviceItems\":3,\"applications\":3,\"policyCorpus\":246,\"openApiCallsToday\":18616,\"identityIntegrations\":[{\"name\":\"粤省事统一认证\",\"status\":\"ONLINE\",\"latency\":\"86ms\",\"successRate\":\"99.92%\",\"scope\":\"实名登录/授权\",\"auditTrail\":[{\"traceId\":\"TRACE-YSS-20260615-00882\",\"appId\":\"mini-gz-001\",\"userId\":\"user-20260614-001\",\"verifiedAt\":\"2026-06-15 08:15\",\"result\":\"SUCCESS\",\"authLevel\":\"L3实名\",\"ip\":\"223.104.63.12\",\"note\":\"居住证办理身份核验\"},{\"traceId\":\"TRACE-YSS-20260615-00881\",\"appId\":\"mini-gz-001\",\"user"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59207/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"serviceItems\":3,\"applications\":3,\"policyCorpus\":246,\"openApiCallsToday\":18616,\"identityIntegrations\":[{\"name\":\"粤省事统一认证\",\"status\":\"ONLINE\",\"latency\":\"86ms\",\"successRate\":\"99.92%\",\"scope\":\"实名登录/授权\",\"auditTrail\":[{\"traceId\":\"TRACE-YSS-20260615-00882\",\"appId\":\"mini-gz-001\",\"userId\":\"user-20260614-001\",\"verifiedAt\":\"2026-06-15 08:15\",\"result\":\"SUCCESS\",\"authLevel\":\"L3实名\",\"ip\":\"223.104.63.12\",\"note\":\"居住证办理身份核验\"},{\"traceId\":\"TRACE-YSS-20260615-00881\",\"appId\":\"mini-gz-001\",\"user"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [],
+  "responseErrors": []
+}
