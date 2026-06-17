@@ -51,7 +51,7 @@ const statusConfig: Record<UserStatus, { label: string; color: string; desc: str
   pending_review: { label: '资质审核中', color: 'bg-warm-100 text-warm-600', desc: '资质材料审核中，部分功能受限' },
 };
 
-const auditTrail = [
+const initialAuditTrail = [
   { time: '2026-06-17 10:32', action: '登录账号', detail: '通过手机号+密码验证', result: '成功', ip: '127.0.0.1' },
   { time: '2026-06-16 18:45', action: '修改昵称', detail: '超级管理员 → 超级管理员-正式', result: '成功', ip: '127.0.0.1' },
   { time: '2026-06-16 10:08', action: '资质审核', detail: '通过医生-李静怡资质申请', result: '成功', ip: '127.0.0.1' },
@@ -103,6 +103,13 @@ export default function AccountSettings() {
   const [editRoleChanging, setEditRoleChanging] = useState<'none' | 'change'>('none');
   const [editTargetRole, setEditTargetRole] = useState<UserRole>('doctor');
   const [editRoleReason, setEditRoleReason] = useState('');
+
+  const [auditTrail, setAuditTrail] = useState(initialAuditTrail);
+  const [roleRequestStatus, setRoleRequestStatus] = useState<'none' | 'submitted'>('none');
+  const [qualificationReviewOpen, setQualificationReviewOpen] = useState(false);
+  const [qualificationReviewSubmitted, setQualificationReviewSubmitted] = useState(false);
+  const [qualificationMaterials, setQualificationMaterials] = useState('');
+  const [changeSummary, setChangeSummary] = useState<string[]>([]);
 
   const roleInfo = user?.role ? roleConfig[user.role] : null;
   const RoleIcon = roleInfo?.Icon || User;
@@ -202,11 +209,55 @@ export default function AccountSettings() {
     if (editRoleChanging === 'change' && !editTargetRole && !editRoleReason.trim()) return;
     setSaving(true);
     await new Promise(r => setTimeout(r, 900));
+
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const newEntries: typeof initialAuditTrail = [];
+    const changes: string[] = [];
+
+    if (user && nickname.trim() !== (user.nickname || '')) {
+      newEntries.push({ time: timeStr, action: '修改昵称', detail: `${user.nickname || ''} → ${nickname}`, result: '成功', ip: '127.0.0.1' });
+      changes.push('昵称');
+    }
+
+    if (editPhoneChanging && user) {
+      const oldTail = user.phone?.slice(-4) || '****';
+      const newTail = editNewPhone.slice(-4);
+      newEntries.push({ time: timeStr, action: '更换手机号', detail: `尾号${oldTail} → 尾号${newTail}`, result: '成功', ip: '127.0.0.1' });
+      changes.push('手机号');
+    }
+
+    if (editPasswordChanging) {
+      newEntries.push({ time: timeStr, action: '修改密码', detail: '通过安全校验验证', result: '成功', ip: '127.0.0.1' });
+      changes.push('密码');
+    }
+
+    if (editEmailChanging && editEmail.trim()) {
+      newEntries.push({ time: timeStr, action: '绑定邮箱', detail: `绑定邮箱 ${editEmail}`, result: '验证邮件已发送', ip: '127.0.0.1' });
+      changes.push('邮箱');
+    }
+
+    if (editRoleChanging === 'change' && editRoleReason.trim()) {
+      newEntries.push({ time: timeStr, action: '角色变更申请', detail: `申请变更为${roleConfig[editTargetRole]?.label}，原因：${editRoleReason}`, result: '已提交', ip: '127.0.0.1' });
+      setRoleRequestStatus('submitted');
+      changes.push('角色申请');
+    }
+
+    if (user?.status === 'pending_review') {
+      newEntries.push({ time: timeStr, action: '资质复查状态更新', detail: '编辑资料后资质状态同步更新', result: '成功', ip: '127.0.0.1' });
+    }
+
     if (user) {
       const merged: Partial<typeof user> = { nickname };
       if (editPhoneChanging) merged.phone = editNewPhone;
       login({ ...user, ...merged }, token || '');
     }
+
+    if (newEntries.length > 0) {
+      setAuditTrail(prev => [...newEntries, ...prev]);
+    }
+    setChangeSummary(changes);
+
     setSaving(false);
     setEditing(false);
     setSaveSuccess(true);
@@ -214,7 +265,21 @@ export default function AccountSettings() {
     setEditPhoneChanging(false); setVerifyCode('');
     setEditPasswordChanging(false);
     setEditRoleChanging('none'); setEditRoleReason('');
-    setTimeout(() => setSaveSuccess(false), 2500);
+    setTimeout(() => { setSaveSuccess(false); setChangeSummary([]); }, 4000);
+  };
+
+  const handleSubmitQualificationReview = () => {
+    if (!qualificationMaterials.trim()) return;
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    setQualificationReviewSubmitted(true);
+    setAuditTrail(prev => [{
+      time: timeStr,
+      action: '申请资质复查',
+      detail: '提交补充材料，申请资质复查复核',
+      result: '已提交',
+      ip: '127.0.0.1',
+    }, ...prev]);
   };
 
   return (
@@ -278,6 +343,13 @@ export default function AccountSettings() {
               <div className="p-3 rounded-xl bg-gradient-to-br from-warm-50 to-orange-50 border border-warm-100 text-[11px] text-warm-700 space-y-1">
                 <p className="font-bold flex items-center gap-1"><AlertTriangle className="w-3.5 h-3.5" /> 编辑安全校验：提交时必须输入当前登录密码进行二次验证，所有变更将写入审计日志永久留痕。</p>
                 <p>可在本次编辑内一次性修改：昵称 / 手机号（含验证码） / 绑定邮箱 / 登录密码 / 发起角色变更申请</p>
+              </div>
+            )}
+
+            {changeSummary.length > 0 && (
+              <div className="p-3 rounded-xl bg-gradient-to-r from-forest-50 to-emerald-50 border border-forest-200 text-[11px] font-semibold text-forest-700 flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                <span>本次修改：{changeSummary.join(' / ')}</span>
               </div>
             )}
 
@@ -401,6 +473,46 @@ export default function AccountSettings() {
                         </span>
                       )}
                     </div>
+                    {['doctor', 'hospital', 'merchant'].includes(user?.role || '') && !user?.licenseVerified && !qualificationReviewSubmitted && (
+                      <div className="mt-2">
+                        {!qualificationReviewOpen ? (
+                          <button onClick={() => setQualificationReviewOpen(true)} className="text-[11px] font-semibold text-purple-600 hover:underline inline-flex items-center gap-1">
+                            <RefreshCw className="w-3 h-3" /> 申请资质复查
+                          </button>
+                        ) : (
+                          <div className="p-3 rounded-xl bg-gradient-to-br from-warm-50 to-orange-50 border border-warm-200 space-y-2">
+                            <div className="text-[11px] text-warm-700">
+                              <p className="font-bold">当前资质状态：{statusInfo?.label}</p>
+                              <p className="text-warm-600 mt-0.5">您的资质材料尚未通过核验，部分功能受限。请在下方补充材料后提交复查申请。</p>
+                            </div>
+                            <textarea
+                              value={qualificationMaterials}
+                              onChange={(e) => setQualificationMaterials(e.target.value)}
+                              rows={3}
+                              className="w-full px-2.5 py-1.5 rounded-lg border border-warm-200 bg-white/60 text-[11px] resize-none focus:outline-none focus:ring-2 focus:ring-warm-200"
+                              placeholder="请补充资质材料说明（如：执业证书编号、营业执照扫描件等）..."
+                            />
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={handleSubmitQualificationReview}
+                                disabled={!qualificationMaterials.trim()}
+                                className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-warm-500 to-orange-500 text-white text-[11px] font-semibold hover:shadow-md disabled:opacity-50 transition-all inline-flex items-center gap-1"
+                              >
+                                <FileText className="w-3 h-3" /> 提交复查申请
+                              </button>
+                              <button onClick={() => { setQualificationReviewOpen(false); setQualificationMaterials(''); }} className="px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-[11px] font-semibold text-gray-600 hover:bg-gray-50">
+                                取消
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {qualificationReviewSubmitted && (
+                      <div className="mt-2 p-2 rounded-lg bg-gradient-to-r from-blue-50 to-sky-50 border border-blue-200 text-[11px] text-blue-700 font-semibold inline-flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5" /> 已提交复查 · 等待管理员复核
+                      </div>
+                    )}
                   </div>
 
                   {/* 当前角色 + 角色变更申请入口 */}
@@ -430,6 +542,11 @@ export default function AccountSettings() {
                             </span>
                           </div>
                           <p className="text-[11px] text-purple-600/80">{roleInfo?.desc}</p>
+                          {roleRequestStatus === 'submitted' && (
+                            <div className="mt-2 p-2 rounded-lg bg-gradient-to-r from-blue-50 to-sky-50 border border-blue-200 text-[11px] text-blue-700 font-semibold inline-flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5" /> 变更申请已提交 · 等待复核
+                            </div>
+                          )}
                         </div>
                       ) : (
                         <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100 space-y-2">
@@ -750,6 +867,8 @@ export default function AccountSettings() {
                         'text-[10px] font-semibold px-2 py-0.5 rounded-full',
                         log.result === '成功' ? 'bg-forest-100 text-forest-700' :
                         log.result === '放行' ? 'bg-blue-100 text-blue-700' :
+                        log.result === '已提交' ? 'bg-warm-100 text-warm-700' :
+                        log.result === '验证邮件已发送' ? 'bg-purple-100 text-purple-700' :
                         'bg-gray-100 text-gray-600'
                       )}>
                         {log.result}

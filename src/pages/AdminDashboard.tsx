@@ -157,6 +157,12 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<TabId>('owner');
   const [expandedAudit, setExpandedAudit] = useState<number | string | null>(null);
   const [processing, setProcessing] = useState<string | null>(null);
+  const [selectedDoctorAction, setSelectedDoctorAction] = useState<{id: string, action: string} | null>(null);
+  const [selectedHospitalAction, setSelectedHospitalAction] = useState<{id: string, action: string} | null>(null);
+  const [selectedMerchantAction, setSelectedMerchantAction] = useState<{id: string, action: string} | null>(null);
+  const [actionProcessing, setActionProcessing] = useState(false);
+  const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
+  const [localAuditLogs, setLocalAuditLogs] = useState(auditLogs);
 
   const handleReject = (id: string) => {
     setProcessing(`reject-${id}`);
@@ -168,8 +174,38 @@ export default function AdminDashboard() {
     setTimeout(() => setProcessing(null), 600);
   };
 
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  const addAuditLog = (action: string, target: string, result: string, detail: string) => {
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const time = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    setLocalAuditLogs(prev => [{ time, action, user: user?.nickname || 'admin', target, result, detail }, ...prev]);
+  };
+
+  const handleAction = (entityType: '医生' | '医院' | '商家', id: string, actionName: string, result: string, detail: string) => {
+    setActionProcessing(true);
+    setTimeout(() => {
+      setActionProcessing(false);
+      addAuditLog(`${entityType}监管-${actionName}`, `${entityType}-${id}`, result, detail);
+      showToast(`${actionName}操作完成：${result}`, result === '通过' ? 'success' : 'error');
+    }, 700);
+  };
+
   return (
     <div className="space-y-6">
+      {toast && (
+        <div className={cn(
+          'fixed top-4 right-4 z-50 px-5 py-3 rounded-xl shadow-lg text-sm font-semibold flex items-center gap-2 animate-in fade-in slide-in-from-top-2',
+          toast.type === 'success' ? 'bg-forest-600 text-white' : 'bg-red-600 text-white'
+        )}>
+          {toast.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+          {toast.message}
+        </div>
+      )}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-100 to-indigo-200 flex items-center justify-center">
@@ -498,26 +534,32 @@ export default function AdminDashboard() {
                       </td>
                       <td className="py-2.5 px-3 text-center">
                         <div className="flex items-center justify-center gap-0.5">
-                          {d.licenseStatus === 'pending' || d.licenseStatus === 're_review' ? (
-                            <button
-                              onClick={() => navigate(`/admin/review/DOC${d.id === 'D003' ? '2024NEW021' : '-REVIEW-' + d.id}`)}
-                              className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors"
-                              title="资质审核详情"
-                            >
-                              <ShieldCheck className="w-3.5 h-3.5" />
-                            </button>
-                          ) : (
-                            <button onClick={() => navigate(`/admin/doctor/${d.id}`)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors" title="医生详情">
-                              <Eye className="w-3.5 h-3.5" />
-                            </button>
-                          )}
-                          <button onClick={() => navigate(`/admin/doctor/${d.id}/schedule`)} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="排班管理">
+                          <button
+                            onClick={() => setSelectedDoctorAction(selectedDoctorAction?.id === d.id && selectedDoctorAction?.action === 'qualification' ? null : {id: d.id, action: 'qualification'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedDoctorAction?.id === d.id && selectedDoctorAction?.action === 'qualification' ? 'bg-purple-100 text-purple-700' : 'hover:bg-purple-50 text-purple-600')}
+                            title="资质审核"
+                          >
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => setSelectedDoctorAction(selectedDoctorAction?.id === d.id && selectedDoctorAction?.action === 'schedule' ? null : {id: d.id, action: 'schedule'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedDoctorAction?.id === d.id && selectedDoctorAction?.action === 'schedule' ? 'bg-blue-100 text-blue-700' : 'hover:bg-blue-50 text-blue-600')}
+                            title="排班管理"
+                          >
                             <Clock className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/audit/doctor/${d.id}`)} className="p-1.5 rounded-lg hover:bg-forest-50 text-forest-600 transition-colors" title="签名审计">
+                          <button
+                            onClick={() => setSelectedDoctorAction(selectedDoctorAction?.id === d.id && selectedDoctorAction?.action === 'signature' ? null : {id: d.id, action: 'signature'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedDoctorAction?.id === d.id && selectedDoctorAction?.action === 'signature' ? 'bg-forest-100 text-forest-700' : 'hover:bg-forest-50 text-forest-600')}
+                            title="签名审计"
+                          >
                             <PenTool className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/doctor/${d.id}/reviews`)} className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors" title="评价风控">
+                          <button
+                            onClick={() => setSelectedDoctorAction(selectedDoctorAction?.id === d.id && selectedDoctorAction?.action === 'review_risk' ? null : {id: d.id, action: 'review_risk'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedDoctorAction?.id === d.id && selectedDoctorAction?.action === 'review_risk' ? 'bg-warm-100 text-warm-700' : 'hover:bg-warm-50 text-warm-600')}
+                            title="评价风控"
+                          >
                             <Star className="w-3.5 h-3.5" />
                           </button>
                         </div>
@@ -527,6 +569,201 @@ export default function AdminDashboard() {
                 </tbody>
               </table>
             </div>
+            {selectedDoctorAction && (() => {
+              const d = doctorLedger.find(doc => doc.id === selectedDoctorAction.id);
+              if (!d) return null;
+              const signRate = d.prescriptions > 0 ? Math.round((d.signedPrescriptions / d.prescriptions) * 100) : 0;
+              const negRate = d.reviews > 0 ? ((d.negativeReviews / d.reviews) * 100).toFixed(1) : '0.0';
+              return (
+                <div className="p-5 rounded-xl bg-gradient-to-br from-purple-50/80 to-indigo-50/80 border border-purple-200 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {selectedDoctorAction.action === 'qualification' && <ShieldCheck className="w-5 h-5 text-purple-600" />}
+                      {selectedDoctorAction.action === 'schedule' && <Clock className="w-5 h-5 text-blue-600" />}
+                      {selectedDoctorAction.action === 'signature' && <PenTool className="w-5 h-5 text-forest-600" />}
+                      {selectedDoctorAction.action === 'review_risk' && <Star className="w-5 h-5 text-warm-600" />}
+                      <span className="font-semibold text-purple-900">
+                        {selectedDoctorAction.action === 'qualification' && '资质审核面板'}
+                        {selectedDoctorAction.action === 'schedule' && '排班管理面板'}
+                        {selectedDoctorAction.action === 'signature' && '签名审计面板'}
+                        {selectedDoctorAction.action === 'review_risk' && '评价风控面板'}
+                      </span>
+                      <span className="text-sm text-gray-500">— {d.name} ({d.id})</span>
+                    </div>
+                    <button onClick={() => setSelectedDoctorAction(null)} className="p-1 rounded-lg hover:bg-white/60 text-gray-400 hover:text-gray-600 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  {selectedDoctorAction.action === 'qualification' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-purple-100">
+                          <p className="text-[10px] text-gray-500">当前资质状态</p>
+                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', statusMap[d.licenseStatus]?.color)}>{statusMap[d.licenseStatus]?.label}</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-purple-100">
+                          <p className="text-[10px] text-gray-500">执业证号</p>
+                          <p className="text-xs font-mono font-semibold text-gray-800">{d.license}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-purple-100">
+                          <p className="text-[10px] text-gray-500">科室 / 职称</p>
+                          <p className="text-xs font-semibold text-gray-800">{d.dept} · {d.title}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 flex-wrap">
+                        <button onClick={() => handleAction('医生', d.id, '资质审核', '通过', `${d.name}资质审核通过，证号${d.license}`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          审核通过
+                        </button>
+                        <button onClick={() => handleAction('医生', d.id, '资质审核', '驳回', `${d.name}资质审核驳回，证号${d.license}`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-gray-200 transition-colors">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
+                          驳回
+                        </button>
+                        <button onClick={() => handleAction('医生', d.id, '资质审核', '补充材料', `要求${d.name}补充资质材料`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileText className="w-3.5 h-3.5" />}
+                          要求补充材料
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {selectedDoctorAction.action === 'schedule' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-4 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">当前状态</p>
+                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', statusMap[d.scheduleStatus]?.color)}>{statusMap[d.scheduleStatus]?.label}</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">今日问诊</p>
+                          <p className="text-lg font-bold text-gray-900">{d.todayConsult} <span className="text-[10px] text-gray-400 font-normal">次</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">累计问诊</p>
+                          <p className="text-lg font-bold text-gray-900">{d.consults} <span className="text-[10px] text-gray-400 font-normal">次</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">平均时长</p>
+                          <p className="text-lg font-bold text-gray-900">{d.avgConsultTime} <span className="text-[10px] text-gray-400 font-normal">分/次</span></p>
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                        <p className="text-[10px] text-gray-500 mb-2">本周排班概况</p>
+                        <div className="grid grid-cols-7 gap-1.5">
+                          {['周一', '周二', '周三', '周四', '周五', '周六', '周日'].map((day, i) => {
+                            const isToday = i === 2;
+                            const status = d.scheduleStatus === 'on_duty' ? (i < 5 ? 'on_duty' : 'off_duty') : d.scheduleStatus === 'in_surgery' ? (i === 2 ? 'in_surgery' : i < 5 ? 'on_duty' : 'off_duty') : 'off_duty';
+                            return (
+                              <div key={day} className={cn('text-center p-1.5 rounded-lg text-[10px] font-semibold', isToday ? 'ring-2 ring-blue-300' : '', status === 'on_duty' ? 'bg-forest-50 text-forest-700' : status === 'in_surgery' ? 'bg-red-50 text-red-700' : 'bg-gray-50 text-gray-400')}>
+                                <div>{day}</div>
+                                <div className="mt-0.5">{status === 'on_duty' ? '当班' : status === 'in_surgery' ? '手术' : '休息'}</div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('医生', d.id, '排班管理', '通过', `${d.name}排班已确认`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-sky-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          确认排班
+                        </button>
+                        <button onClick={() => handleAction('医生', d.id, '排班管理', '调整', `要求调整${d.name}排班`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Clock className="w-3.5 h-3.5" />}
+                          调整排班
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {selectedDoctorAction.action === 'signature' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">处方签名率</p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className={cn('text-lg font-bold', signRate === 100 ? 'text-forest-600' : signRate >= 80 ? 'text-warm-600' : 'text-red-600')}>{signRate}%</span>
+                            <div className="flex-1 h-2 bg-gray-100 rounded-full">
+                              <div className={cn('h-full rounded-full', signRate === 100 ? 'bg-forest-500' : signRate >= 80 ? 'bg-warm-500' : 'bg-red-500')} style={{ width: `${signRate}%` }} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">已签名 / 总处方</p>
+                          <p className="text-lg font-bold text-gray-900">{d.signedPrescriptions} <span className="text-gray-400">/ {d.prescriptions}</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">未签名处方</p>
+                          <p className={cn('text-lg font-bold', d.prescriptions - d.signedPrescriptions > 0 ? 'text-red-600' : 'text-forest-600')}>{d.prescriptions - d.signedPrescriptions} 张</p>
+                        </div>
+                      </div>
+                      {d.prescriptions - d.signedPrescriptions > 0 && (
+                        <div className="p-3 rounded-lg bg-red-50/80 border border-red-100">
+                          <p className="text-[10px] text-red-600 font-semibold mb-1">未签名处方列表</p>
+                          {Array.from({ length: Math.min(3, d.prescriptions - d.signedPrescriptions) }, (_, i) => (
+                            <div key={i} className="flex items-center justify-between py-1 text-[11px]">
+                              <span className="text-gray-700 font-mono">RX-{d.id}-UNSIGNED-{i + 1}</span>
+                              <span className="text-red-600 font-semibold">未签名</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('医生', d.id, '签名审计', '通过', `${d.name}签名审计确认`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          确认审计
+                        </button>
+                        {d.prescriptions - d.signedPrescriptions > 0 && (
+                          <button onClick={() => handleAction('医生', d.id, '签名审计', '催签名', `催促${d.name}签名，共${d.prescriptions - d.signedPrescriptions}张未签`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
+                            {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Bell className="w-3.5 h-3.5" />}
+                            催签名
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  {selectedDoctorAction.action === 'review_risk' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">综合评分</p>
+                          <div className="flex items-center gap-1 mt-1">
+                            <Star className="w-4 h-4 text-warm-500 fill-warm-500" />
+                            <span className="text-lg font-bold text-gray-900">{d.rating > 0 ? d.rating.toFixed(1) : '-'}</span>
+                          </div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">差评率</p>
+                          <span className={cn('text-lg font-bold', parseFloat(negRate) > 10 ? 'text-red-600' : parseFloat(negRate) > 5 ? 'text-warm-600' : 'text-forest-600')}>{negRate}%</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">差评数 / 总评价</p>
+                          <p className="text-lg font-bold text-gray-900">{d.negativeReviews} <span className="text-gray-400 text-sm">/ {d.reviews}</span></p>
+                        </div>
+                      </div>
+                      {d.negativeReviews > 0 && (
+                        <div className="p-3 rounded-lg bg-warm-50/80 border border-warm-100">
+                          <p className="text-[10px] text-warm-600 font-semibold mb-1">差评列表（近30天）</p>
+                          {Array.from({ length: Math.min(3, d.negativeReviews) }, (_, i) => (
+                            <div key={i} className="flex items-center justify-between py-1 text-[11px]">
+                              <span className="text-gray-700">差评 #{i + 1}：服务态度差/等待时间过长</span>
+                              <button onClick={() => handleAction('医生', d.id, '评价风控', '申诉处理', `处理${d.name}差评申诉#${i + 1}`)} disabled={actionProcessing} className="text-purple-600 font-semibold hover:underline">申诉处理</button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('医生', d.id, '评价风控', '通过', `${d.name}评价风控审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          风控通过
+                        </button>
+                        <button onClick={() => handleAction('医生', d.id, '评价风控', '警告', `${d.name}评价风控警告，差评率${negRate}%`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <AlertTriangle className="w-3.5 h-3.5" />}
+                          发出警告
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
             <div className="grid sm:grid-cols-4 gap-3 pt-2">
               <div className="p-3 rounded-xl bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -662,26 +899,33 @@ export default function AdminDashboard() {
                       </td>
                       <td className="py-2.5 px-3 text-center">
                         <div className="flex items-center justify-center gap-0.5">
-                          {h.licenseStatus === 'pending' || h.licenseStatus === 're_review' ? (
-                            <button onClick={() => navigate(`/admin/review/HOS-${h.id}`)} className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors" title="资质审核详情">
-                              <ShieldCheck className="w-3.5 h-3.5" />
-                            </button>
-                          ) : (
-                            <button onClick={() => navigate(`/hospitals/${h.id}`)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors" title="医院详情">
-                              <Eye className="w-3.5 h-3.5" />
-                            </button>
-                          )}
-                          <button onClick={() => navigate('/admin/hospital/services')} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="服务定价明细">
+                          <button
+                            onClick={() => setSelectedHospitalAction(selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'pricing' ? null : {id: h.id, action: 'pricing'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'pricing' ? 'bg-blue-100 text-blue-700' : 'hover:bg-blue-50 text-blue-600')}
+                            title="服务定价审核"
+                          >
                             <FileText className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/hospital/${h.id}/schedule`)} className="p-1.5 rounded-lg hover:bg-teal-50 text-teal-600 transition-colors" title="排班容量">
+                          <button
+                            onClick={() => setSelectedHospitalAction(selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'capacity' ? null : {id: h.id, action: 'capacity'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'capacity' ? 'bg-teal-100 text-teal-700' : 'hover:bg-teal-50 text-teal-600')}
+                            title="排班容量"
+                          >
                             <Clock className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/hospital/${h.id}/reviews`)} className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors" title="评价风控">
-                            <Star className="w-3.5 h-3.5" />
-                          </button>
-                          <button onClick={() => navigate(`/admin/hospital/${h.id}/compliance`)} className="p-1.5 rounded-lg hover:bg-forest-50 text-forest-600 transition-colors" title="合规备案">
+                          <button
+                            onClick={() => setSelectedHospitalAction(selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'compliance' ? null : {id: h.id, action: 'compliance'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'compliance' ? 'bg-forest-100 text-forest-700' : 'hover:bg-forest-50 text-forest-600')}
+                            title="合规备案"
+                          >
                             <BadgeCheck className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => setSelectedHospitalAction(selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'review_risk' ? null : {id: h.id, action: 'review_risk'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'review_risk' ? 'bg-warm-100 text-warm-700' : 'hover:bg-warm-50 text-warm-600')}
+                            title="评价风控"
+                          >
+                            <Star className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       </td>
@@ -690,6 +934,199 @@ export default function AdminDashboard() {
                 </tbody>
               </table>
             </div>
+            {selectedHospitalAction && (() => {
+              const h = hospitalLedger.find(hos => hos.id === selectedHospitalAction.id);
+              if (!h) return null;
+              const negRate = h.reviews > 0 ? ((h.negativeReviews / h.reviews) * 100).toFixed(1) : '0.0';
+              const capacityRate = h.appointmentCapacity > 0 ? Math.round((h.todayAppointments / h.appointmentCapacity) * 100) : 0;
+              return (
+                <div className="p-5 rounded-xl bg-gradient-to-br from-orange-50/80 to-amber-50/80 border border-orange-200 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {selectedHospitalAction.action === 'pricing' && <FileText className="w-5 h-5 text-blue-600" />}
+                      {selectedHospitalAction.action === 'capacity' && <Clock className="w-5 h-5 text-teal-600" />}
+                      {selectedHospitalAction.action === 'compliance' && <BadgeCheck className="w-5 h-5 text-forest-600" />}
+                      {selectedHospitalAction.action === 'review_risk' && <Star className="w-5 h-5 text-warm-600" />}
+                      <span className="font-semibold text-orange-900">
+                        {selectedHospitalAction.action === 'pricing' && '服务定价审核面板'}
+                        {selectedHospitalAction.action === 'capacity' && '排班容量面板'}
+                        {selectedHospitalAction.action === 'compliance' && '合规备案面板'}
+                        {selectedHospitalAction.action === 'review_risk' && '评价风控面板'}
+                      </span>
+                      <span className="text-sm text-gray-500">— {h.name} ({h.id})</span>
+                    </div>
+                    <button onClick={() => setSelectedHospitalAction(null)} className="p-1 rounded-lg hover:bg-white/60 text-gray-400 hover:text-gray-600 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  {selectedHospitalAction.action === 'pricing' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">服务项目数</p>
+                          <p className="text-lg font-bold text-gray-900">{h.services} <span className="text-[10px] text-gray-400 font-normal">项</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">价格区间</p>
+                          <p className="text-lg font-bold text-gray-900">{h.servicePriceRange}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">定价合理性</p>
+                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', h.servicePriceRange !== '-' ? 'bg-forest-100 text-forest-700' : 'bg-gray-100 text-gray-600')}>{h.servicePriceRange !== '-' ? '区间正常' : '暂无定价'}</span>
+                        </div>
+                      </div>
+                      {h.services > 0 && (
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-blue-600 font-semibold mb-2">比价分析（同类医院均价对比）</p>
+                          {Array.from({ length: Math.min(3, h.services) }, (_, i) => (
+                            <div key={i} className="flex items-center justify-between py-1 text-[11px] border-b border-gray-50 last:border-0">
+                              <span className="text-gray-700">服务项 #{i + 1}</span>
+                              <div className="flex items-center gap-3">
+                                <span className="text-gray-500">本院: ¥{(100 + i * 80).toLocaleString()}</span>
+                                <span className="text-forest-600">均价: ¥{(120 + i * 70).toLocaleString()}</span>
+                                <span className={cn('font-semibold', (100 + i * 80) > (120 + i * 70) * 1.3 ? 'text-red-600' : 'text-forest-600')}>{(100 + i * 80) > (120 + i * 70) * 1.3 ? '偏高' : '合理'}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('医院', h.id, '定价审核', '通过', `${h.name}服务定价审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          定价合理
+                        </button>
+                        <button onClick={() => handleAction('医院', h.id, '定价审核', '驳回', `${h.name}服务定价审核驳回，需调整`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-gray-200 transition-colors">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
+                          要求调价
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {selectedHospitalAction.action === 'capacity' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-4 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-teal-100">
+                          <p className="text-[10px] text-gray-500">医生总数</p>
+                          <p className="text-lg font-bold text-gray-900">{h.doctors} <span className="text-[10px] text-gray-400 font-normal">人</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-teal-100">
+                          <p className="text-[10px] text-gray-500">当班医生</p>
+                          <p className="text-lg font-bold text-forest-600">{h.onDutyDoctors} <span className="text-[10px] text-gray-400 font-normal">人</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-teal-100">
+                          <p className="text-[10px] text-gray-500">今日预约</p>
+                          <p className="text-lg font-bold text-gray-900">{h.todayAppointments} <span className="text-[10px] text-gray-400 font-normal">/ {h.appointmentCapacity}</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-teal-100">
+                          <p className="text-[10px] text-gray-500">容量使用率</p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className={cn('text-lg font-bold', capacityRate > 90 ? 'text-red-600' : capacityRate > 60 ? 'text-warm-600' : 'text-forest-600')}>{capacityRate}%</span>
+                            <div className="flex-1 h-2 bg-gray-100 rounded-full">
+                              <div className={cn('h-full rounded-full', capacityRate > 90 ? 'bg-red-500' : capacityRate > 60 ? 'bg-warm-500' : 'bg-forest-500')} style={{ width: `${capacityRate}%` }} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('医院', h.id, '排班容量', '通过', `${h.name}排班容量审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          确认容量
+                        </button>
+                        <button onClick={() => handleAction('医院', h.id, '排班容量', '扩容', `要求${h.name}扩大预约容量`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <TrendingUp className="w-3.5 h-3.5" />}
+                          要求扩容
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {selectedHospitalAction.action === 'compliance' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">资质状态</p>
+                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', statusMap[h.licenseStatus]?.color)}>{statusMap[h.licenseStatus]?.label}</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">GSP 认证状态</p>
+                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', h.complianceScore >= 90 ? 'bg-forest-100 text-forest-700' : h.complianceScore >= 60 ? 'bg-warm-100 text-warm-700' : 'bg-red-100 text-red-700')}>
+                            {h.complianceScore >= 90 ? 'GSP 已认证' : h.complianceScore > 0 ? 'GSP 待完善' : '未认证'}
+                          </span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">年度复核</p>
+                          <span className="text-sm font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">{h.complianceScore > 0 ? '本年度已复核' : '待复核'}</span>
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                        <p className="text-[10px] text-gray-500">合规评分</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className={cn('text-2xl font-bold', h.complianceScore >= 90 ? 'text-forest-600' : h.complianceScore >= 60 ? 'text-warm-600' : 'text-red-600')}>{h.complianceScore > 0 ? h.complianceScore : '-'}</span>
+                          <div className="flex-1 h-2 bg-gray-100 rounded-full">
+                            <div className={cn('h-full rounded-full', h.complianceScore >= 90 ? 'bg-forest-500' : h.complianceScore >= 60 ? 'bg-warm-500' : 'bg-red-500')} style={{ width: `${h.complianceScore}%` }} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('医院', h.id, '合规备案', '通过', `${h.name}合规备案审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          备案通过
+                        </button>
+                        <button onClick={() => handleAction('医院', h.id, '合规备案', '驳回', `${h.name}合规备案驳回`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-gray-200 transition-colors">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
+                          驳回
+                        </button>
+                        <button onClick={() => handleAction('医院', h.id, '合规备案', '年度复核', `触发${h.name}年度复核`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-blue-50 text-blue-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-blue-100 transition-colors border border-blue-200">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RotateCcw className="w-3.5 h-3.5" />}
+                          触发年度复核
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {selectedHospitalAction.action === 'review_risk' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">综合评分</p>
+                          <div className="flex items-center gap-1 mt-1">
+                            <Star className="w-4 h-4 text-warm-500 fill-warm-500" />
+                            <span className="text-lg font-bold text-gray-900">{h.rating > 0 ? h.rating.toFixed(1) : '-'}</span>
+                          </div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">差评率</p>
+                          <span className={cn('text-lg font-bold', parseFloat(negRate) > 10 ? 'text-red-600' : parseFloat(negRate) > 5 ? 'text-warm-600' : 'text-forest-600')}>{negRate}%</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">差评数 / 总评价</p>
+                          <p className="text-lg font-bold text-gray-900">{h.negativeReviews} <span className="text-gray-400 text-sm">/ {h.reviews}</span></p>
+                        </div>
+                      </div>
+                      {h.negativeReviews > 0 && (
+                        <div className="p-3 rounded-lg bg-warm-50/80 border border-warm-100">
+                          <p className="text-[10px] text-warm-600 font-semibold mb-1">差评列表（近30天）</p>
+                          {Array.from({ length: Math.min(3, Math.ceil(h.negativeReviews / 6)) }, (_, i) => (
+                            <div key={i} className="flex items-center justify-between py-1 text-[11px]">
+                              <span className="text-gray-700">差评 #{i + 1}：过度诊疗/收费不合理</span>
+                              <button onClick={() => handleAction('医院', h.id, '评价风控', '申诉处理', `处理${h.name}差评申诉#${i + 1}`)} disabled={actionProcessing} className="text-purple-600 font-semibold hover:underline">申诉处理</button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('医院', h.id, '评价风控', '通过', `${h.name}评价风控审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          风控通过
+                        </button>
+                        <button onClick={() => handleAction('医院', h.id, '评价风控', '警告', `${h.name}评价风控警告，差评率${negRate}%`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <AlertTriangle className="w-3.5 h-3.5" />}
+                          发出警告
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
             <div className="grid sm:grid-cols-4 gap-3 pt-2">
               <div className="p-3 rounded-xl bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -834,25 +1271,32 @@ export default function AdminDashboard() {
                       </td>
                       <td className="py-2.5 px-3 text-center">
                         <div className="flex items-center justify-center gap-0.5">
-                          {m.licenseStatus === 'pending' || m.licenseStatus === 're_review' ? (
-                            <button onClick={() => navigate(`/admin/review/MER-${m.id}`)} className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors" title="资质审核详情">
-                              <ShieldCheck className="w-3.5 h-3.5" />
-                            </button>
-                          ) : (
-                            <button onClick={() => navigate('/shop')} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors" title="商家详情">
-                              <Eye className="w-3.5 h-3.5" />
-                            </button>
-                          )}
-                          <button onClick={() => navigate('/admin/merchant/compliance')} className="p-1.5 rounded-lg hover:bg-forest-50 text-forest-600 transition-colors" title="合规备案明细">
+                          <button
+                            onClick={() => setSelectedMerchantAction(selectedMerchantAction?.id === m.id && selectedMerchantAction?.action === 'compliance' ? null : {id: m.id, action: 'compliance'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedMerchantAction?.id === m.id && selectedMerchantAction?.action === 'compliance' ? 'bg-forest-100 text-forest-700' : 'hover:bg-forest-50 text-forest-600')}
+                            title="合规备案"
+                          >
                             <BadgeCheck className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/merchant/${m.id}/sku`)} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="SKU 上架管理">
+                          <button
+                            onClick={() => setSelectedMerchantAction(selectedMerchantAction?.id === m.id && selectedMerchantAction?.action === 'sku' ? null : {id: m.id, action: 'sku'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedMerchantAction?.id === m.id && selectedMerchantAction?.action === 'sku' ? 'bg-blue-100 text-blue-700' : 'hover:bg-blue-50 text-blue-600')}
+                            title="SKU上架审核"
+                          >
                             <Layers className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/merchant/${m.id}/prescriptions`)} className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors" title="处方复核记录">
+                          <button
+                            onClick={() => setSelectedMerchantAction(selectedMerchantAction?.id === m.id && selectedMerchantAction?.action === 'prescription' ? null : {id: m.id, action: 'prescription'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedMerchantAction?.id === m.id && selectedMerchantAction?.action === 'prescription' ? 'bg-warm-100 text-warm-700' : 'hover:bg-warm-50 text-warm-600')}
+                            title="处方复核"
+                          >
                             <Pill className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/merchant/${m.id}/reviews`)} className="p-1.5 rounded-lg hover:bg-orange-50 text-orange-600 transition-colors" title="评价风控">
+                          <button
+                            onClick={() => setSelectedMerchantAction(selectedMerchantAction?.id === m.id && selectedMerchantAction?.action === 'review_risk' ? null : {id: m.id, action: 'review_risk'})}
+                            className={cn('p-1.5 rounded-lg transition-colors', selectedMerchantAction?.id === m.id && selectedMerchantAction?.action === 'review_risk' ? 'bg-orange-100 text-orange-700' : 'hover:bg-orange-50 text-orange-600')}
+                            title="评价风控"
+                          >
                             <Star className="w-3.5 h-3.5" />
                           </button>
                         </div>
@@ -862,6 +1306,210 @@ export default function AdminDashboard() {
                 </tbody>
               </table>
             </div>
+            {selectedMerchantAction && (() => {
+              const m = merchantLedger.find(mer => mer.id === selectedMerchantAction.id);
+              if (!m) return null;
+              const negRate = m.reviews > 0 ? ((m.negativeReviews / m.reviews) * 100).toFixed(1) : '0.0';
+              return (
+                <div className="p-5 rounded-xl bg-gradient-to-br from-rose-50/80 to-pink-50/80 border border-rose-200 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {selectedMerchantAction.action === 'compliance' && <BadgeCheck className="w-5 h-5 text-forest-600" />}
+                      {selectedMerchantAction.action === 'sku' && <Layers className="w-5 h-5 text-blue-600" />}
+                      {selectedMerchantAction.action === 'prescription' && <Pill className="w-5 h-5 text-warm-600" />}
+                      {selectedMerchantAction.action === 'review_risk' && <Star className="w-5 h-5 text-orange-600" />}
+                      <span className="font-semibold text-rose-900">
+                        {selectedMerchantAction.action === 'compliance' && '合规备案面板'}
+                        {selectedMerchantAction.action === 'sku' && 'SKU上架审核面板'}
+                        {selectedMerchantAction.action === 'prescription' && '处方复核面板'}
+                        {selectedMerchantAction.action === 'review_risk' && '评价风控面板'}
+                      </span>
+                      <span className="text-sm text-gray-500">— {m.name} ({m.id})</span>
+                    </div>
+                    <button onClick={() => setSelectedMerchantAction(null)} className="p-1 rounded-lg hover:bg-white/60 text-gray-400 hover:text-gray-600 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  {selectedMerchantAction.action === 'compliance' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">资质状态</p>
+                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', statusMap[m.licenseStatus]?.color)}>{statusMap[m.licenseStatus]?.label}</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">GSP 认证</p>
+                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', m.gspCertified ? 'bg-forest-100 text-forest-700' : 'bg-red-100 text-red-700')}>{m.gspCertified ? '✓ 已获 GSP 认证' : '✗ 未获 GSP 认证'}</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">合规评分</p>
+                          <span className={cn('text-lg font-bold', m.complianceScore >= 90 ? 'text-forest-600' : m.complianceScore >= 60 ? 'text-warm-600' : 'text-red-600')}>{m.complianceScore > 0 ? m.complianceScore : '-'}</span>
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                        <p className="text-[10px] text-forest-600 font-semibold mb-2">SKU 合规审核</p>
+                        <div className="grid grid-cols-3 gap-3 text-[11px]">
+                          <div className="text-center">
+                            <p className="font-bold text-gray-900">{m.skuCount}</p>
+                            <p className="text-gray-500">总 SKU</p>
+                          </div>
+                          <div className="text-center">
+                            <p className="font-bold text-forest-600">{m.skuOnShelf}</p>
+                            <p className="text-gray-500">在架</p>
+                          </div>
+                          <div className="text-center">
+                            <p className={cn('font-bold', m.skuOutOfStock > 0 ? 'text-warm-600' : 'text-gray-400')}>{m.skuOutOfStock}</p>
+                            <p className="text-gray-500">缺货</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('商家', m.id, '合规备案', '通过', `${m.name}合规备案审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          备案通过
+                        </button>
+                        <button onClick={() => handleAction('商家', m.id, '合规备案', '驳回', `${m.name}合规备案驳回`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-gray-200 transition-colors">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
+                          驳回
+                        </button>
+                        <button onClick={() => handleAction('商家', m.id, '合规备案', '补充材料', `要求${m.name}补充GSP认证材料`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileText className="w-3.5 h-3.5" />}
+                          要求补充材料
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {selectedMerchantAction.action === 'sku' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-4 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">总 SKU</p>
+                          <p className="text-lg font-bold text-gray-900">{m.skuCount}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">在架</p>
+                          <p className="text-lg font-bold text-forest-600">{m.skuOnShelf}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">缺货</p>
+                          <p className={cn('text-lg font-bold', m.skuOutOfStock > 0 ? 'text-warm-600' : 'text-gray-400')}>{m.skuOutOfStock}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">上架率</p>
+                          <span className="text-lg font-bold text-blue-600">{m.skuCount > 0 ? Math.round((m.skuOnShelf / m.skuCount) * 100) : 0}%</span>
+                        </div>
+                      </div>
+                      {m.skuCount > 0 && (
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-blue-600 font-semibold mb-2">待审核 SKU</p>
+                          {Array.from({ length: Math.min(3, m.skuCount - m.skuOnShelf) }, (_, i) => (
+                            <div key={i} className="flex items-center justify-between py-1 text-[11px] border-b border-gray-50 last:border-0">
+                              <span className="text-gray-700 font-mono">SKU-{m.id}-{1000 + i}</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-warm-600">待审核</span>
+                                <button onClick={() => handleAction('商家', m.id, 'SKU审核', '通过', `${m.name} SKU-${m.id}-${1000 + i}上架审核通过`)} disabled={actionProcessing} className="text-forest-600 font-semibold hover:underline">通过</button>
+                                <button onClick={() => handleAction('商家', m.id, 'SKU审核', '驳回', `${m.name} SKU-${m.id}-${1000 + i}上架审核驳回`)} disabled={actionProcessing} className="text-red-600 font-semibold hover:underline">驳回</button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('商家', m.id, 'SKU上架', '批量通过', `${m.name}全部待审核SKU批量通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-sky-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          批量通过
+                        </button>
+                        <button onClick={() => handleAction('商家', m.id, 'SKU上架', '批量驳回', `${m.name}全部待审核SKU批量驳回`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-gray-200 transition-colors">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
+                          批量驳回
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {selectedMerchantAction.action === 'prescription' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">处方复核总量</p>
+                          <p className="text-lg font-bold text-gray-900">{m.prescriptionReviews} <span className="text-[10px] text-gray-400 font-normal">次</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">订单量 / 已发货</p>
+                          <p className="text-lg font-bold text-gray-900">{m.orders} <span className="text-gray-400">/ {m.delivered}</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-gray-500">GMV</p>
+                          <p className="text-lg font-bold text-gray-900">{m.gmv}</p>
+                        </div>
+                      </div>
+                      {m.prescriptionReviews > 0 && (
+                        <div className="p-3 rounded-lg bg-white/80 border border-warm-100">
+                          <p className="text-[10px] text-warm-600 font-semibold mb-2">待复核处方</p>
+                          {Array.from({ length: Math.min(3, m.prescriptionReviews) }, (_, i) => (
+                            <div key={i} className="flex items-center justify-between py-1 text-[11px] border-b border-gray-50 last:border-0">
+                              <span className="text-gray-700 font-mono">RX-{m.id}-MER-{i + 1}</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-warm-600">待复核</span>
+                                <button onClick={() => handleAction('商家', m.id, '处方复核', '通过', `${m.name}处方RX-${m.id}-MER-${i + 1}复核通过`)} disabled={actionProcessing} className="text-forest-600 font-semibold hover:underline">复核通过</button>
+                                <button onClick={() => handleAction('商家', m.id, '处方复核', '驳回', `${m.name}处方RX-${m.id}-MER-${i + 1}复核驳回`)} disabled={actionProcessing} className="text-red-600 font-semibold hover:underline">驳回</button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('商家', m.id, '处方复核', '批量通过', `${m.name}全部待复核处方批量通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-warm-500 to-orange-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          批量复核通过
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {selectedMerchantAction.action === 'review_risk' && (
+                    <div className="space-y-3">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white/80 border border-orange-100">
+                          <p className="text-[10px] text-gray-500">综合评分</p>
+                          <div className="flex items-center gap-1 mt-1">
+                            <Star className="w-4 h-4 text-warm-500 fill-warm-500" />
+                            <span className="text-lg font-bold text-gray-900">{m.rating > 0 ? m.rating.toFixed(1) : '-'}</span>
+                          </div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-orange-100">
+                          <p className="text-[10px] text-gray-500">差评率</p>
+                          <span className={cn('text-lg font-bold', parseFloat(negRate) > 10 ? 'text-red-600' : parseFloat(negRate) > 5 ? 'text-warm-600' : 'text-forest-600')}>{negRate}%</span>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-orange-100">
+                          <p className="text-[10px] text-gray-500">差评数 / 总评价</p>
+                          <p className="text-lg font-bold text-gray-900">{m.negativeReviews} <span className="text-gray-400 text-sm">/ {m.reviews}</span></p>
+                        </div>
+                      </div>
+                      {m.negativeReviews > 0 && (
+                        <div className="p-3 rounded-lg bg-warm-50/80 border border-warm-100">
+                          <p className="text-[10px] text-warm-600 font-semibold mb-1">差评列表（近30天）</p>
+                          {Array.from({ length: Math.min(3, Math.ceil(m.negativeReviews / 10)) }, (_, i) => (
+                            <div key={i} className="flex items-center justify-between py-1 text-[11px]">
+                              <span className="text-gray-700">差评 #{i + 1}：商品质量/物流慢</span>
+                              <button onClick={() => handleAction('商家', m.id, '评价风控', '申诉处理', `处理${m.name}差评申诉#${i + 1}`)} disabled={actionProcessing} className="text-purple-600 font-semibold hover:underline">申诉处理</button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <button onClick={() => handleAction('商家', m.id, '评价风控', '通过', `${m.name}评价风控审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
+                          风控通过
+                        </button>
+                        <button onClick={() => handleAction('商家', m.id, '评价风控', '警告', `${m.name}评价风控警告，差评率${negRate}%`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
+                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <AlertTriangle className="w-3.5 h-3.5" />}
+                          发出警告
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
             <div className="grid sm:grid-cols-4 gap-3 pt-2">
               <div className="p-3 rounded-xl bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -1699,7 +2347,7 @@ export default function AdminDashboard() {
               </div>
             </div>
             <div className="space-y-2">
-              {auditLogs.map((log, i) => (
+              {localAuditLogs.map((log, i) => (
                 <div key={i} className="rounded-xl hover:bg-gray-50 transition-colors border border-gray-50 overflow-hidden">
                   <div className="flex items-start gap-3 p-3">
                     <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center shrink-0">

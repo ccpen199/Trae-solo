@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Plus, Search, Filter, PawPrint, Link2, FileText, AlertTriangle,
   Calendar, Syringe, Bug, Heart, ChevronRight, MapPin, ShoppingCart,
+  Clock, CheckCircle2, XCircle, RotateCcw, Bell,
 } from 'lucide-react';
 import PetCard from '@/components/PetCard';
 import type { Pet } from '@shared/types';
@@ -69,6 +70,11 @@ export default function PetList() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
   const [showBindModal, setShowBindModal] = useState(false);
+  const [overdueActions, setOverdueActions] = useState<Record<string, 'none' | 'buying' | 'booked' | 'purchased' | 'rescheduled'>>({});
+
+  const handleOverdueAction = (id: string, action: 'none' | 'buying' | 'booked' | 'purchased' | 'rescheduled') => {
+    setOverdueActions(prev => ({ ...prev, [id]: action }));
+  };
 
   const filteredPets = mockPets.filter((pet) => {
     const matchesSearch = pet.name.includes(search) || pet.breed.includes(search);
@@ -77,9 +83,9 @@ export default function PetList() {
   });
 
   const upcomingReminders = [
-    { id: 'r1', petName: '豆豆', type: '疫苗', event: '狂犬疫苗+六联疫苗加强针', date: '2026-01-15', action: '预约接种', actionRoute: '/hospitals', Icon: Syringe, color: 'from-forest-50 to-emerald-50 border-forest-200', badgeColor: 'bg-forest-500' },
-    { id: 'r2', petName: '豆豆', type: '驱虫', event: '体内驱虫(拜宠清)', date: '已过期·2025-06-01', action: '商城购药', actionRoute: '/products', Icon: Bug, color: 'from-warm-50 to-orange-50 border-warm-200', badgeColor: 'bg-warm-500', overdue: true },
-    { id: 'r3', petName: '小白', type: '复诊', event: '肠胃炎复诊', date: '2026-06-22·已预约', action: '查看预约', actionRoute: '/hospitals/h1', Icon: Heart, color: 'from-blue-50 to-sky-50 border-blue-200', badgeColor: 'bg-blue-500' },
+    { id: 'r1', petName: '豆豆', type: '疫苗', event: '狂犬疫苗+六联疫苗加强针', date: '2026-01-15', action: '预约接种', actionRoute: '/hospitals', Icon: Syringe, color: 'from-forest-50 to-emerald-50 border-forest-200', badgeColor: 'bg-forest-500', overdue: false, overdueDays: 0 },
+    { id: 'r2', petName: '豆豆', type: '驱虫', event: '体内驱虫(拜宠清)', date: '2025-06-01', action: '商城购药', actionRoute: '/products', Icon: Bug, color: 'from-warm-50 to-orange-50 border-warm-200', badgeColor: 'bg-warm-500', overdue: true, overdueDays: 381 },
+    { id: 'r3', petName: '小白', type: '复诊', event: '肠胃炎复诊', date: '2026-06-22', action: '查看预约', actionRoute: '/hospitals/h1', Icon: Heart, color: 'from-blue-50 to-sky-50 border-blue-200', badgeColor: 'bg-blue-500', overdue: false, overdueDays: 0 },
   ];
 
   const totalStats = {
@@ -163,39 +169,163 @@ export default function PetList() {
             <AlertTriangle className="w-5 h-5 text-warm-500" />
             <h2 className="font-display font-bold text-gray-900">即将到期 · 疫苗/驱虫/体检提醒</h2>
             <span className="px-2 py-0.5 rounded-full bg-warm-100 text-warm-700 text-[10px] font-bold">{upcomingReminders.length} 项待办</span>
+            {upcomingReminders.some(r => r.overdue) && (
+              <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-bold">{upcomingReminders.filter(r => r.overdue).length} 项逾期</span>
+            )}
           </div>
           <button onClick={() => navigate('/calendar')} className="text-xs text-forest-600 hover:text-forest-700 font-semibold inline-flex items-center gap-0.5">
             查看完整日历 <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
         <div className="grid sm:grid-cols-3 gap-3">
-          {upcomingReminders.map(r => (
-            <div key={r.id} className={cn('p-3 rounded-xl bg-gradient-to-br border space-y-2', r.color)}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <div className={cn('w-7 h-7 rounded-lg flex items-center justify-center', r.badgeColor)}>
-                    <r.Icon className="w-4 h-4 text-white" />
+          {upcomingReminders.map(r => {
+            const actionState = overdueActions[r.id] || 'none';
+            return (
+              <div key={r.id} className={cn('p-3 rounded-xl bg-gradient-to-br border space-y-2', r.color)}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <div className={cn('w-7 h-7 rounded-lg flex items-center justify-center', r.badgeColor)}>
+                      <r.Icon className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-xs font-bold text-gray-800">{r.petName} · {r.type}</span>
                   </div>
-                  <span className="text-xs font-bold text-gray-800">{r.petName} · {r.type}</span>
+                  {r.overdue && actionState === 'none' && (
+                    <span className="px-1.5 py-0.5 rounded-md bg-red-100 text-red-700 text-[10px] font-bold">逾期{r.overdueDays}天</span>
+                  )}
+                  {actionState === 'purchased' && (
+                    <span className="px-1.5 py-0.5 rounded-md bg-forest-100 text-forest-700 text-[10px] font-bold flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" />已购药</span>
+                  )}
+                  {actionState === 'rescheduled' && (
+                    <span className="px-1.5 py-0.5 rounded-md bg-blue-100 text-blue-700 text-[10px] font-bold flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" />已重新预约</span>
+                  )}
+                  {actionState === 'booked' && (
+                    <span className="px-1.5 py-0.5 rounded-md bg-forest-100 text-forest-700 text-[10px] font-bold flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" />已预约</span>
+                  )}
                 </div>
-                {r.overdue && (
-                  <span className="px-1.5 py-0.5 rounded-md bg-red-100 text-red-700 text-[10px] font-bold">已过期</span>
+                <p className="text-sm font-semibold text-gray-900 leading-snug">{r.event}</p>
+                <p className="text-[10px] text-gray-500 font-mono">{r.overdue ? `到期日：${r.date}` : r.date}</p>
+
+                {r.overdue && r.overdueDays > 7 && actionState === 'none' && (
+                  <div className="p-2 rounded-lg bg-red-50 border border-red-100 text-[10px] text-red-700 space-y-1">
+                    <p className="font-bold flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> 逾期超过7天 · 需重点处置</p>
+                    <p>长期未驱虫可能导致寄生虫感染，建议立即购药或预约医院驱虫</p>
+                  </div>
+                )}
+
+                {r.overdue && r.overdueDays > 3 && r.overdueDays <= 7 && actionState === 'none' && (
+                  <div className="p-2 rounded-lg bg-warm-50 border border-warm-100 text-[10px] text-warm-700 space-y-1">
+                    <p className="font-bold flex items-center gap-1"><Bell className="w-3 h-3" /> 逾期{r.overdueDays}天 · 建议尽快处置</p>
+                    <p>已触发平台提醒推送，请尽快购药或预约服务</p>
+                  </div>
+                )}
+
+                {actionState === 'none' && (
+                  <div className="flex gap-1.5">
+                    <button
+                      onClick={() => {
+                        if (r.overdue) handleOverdueAction(r.id, 'buying');
+                        navigate(r.actionRoute);
+                      }}
+                      className="flex-1 py-1.5 rounded-lg bg-white/80 hover:bg-white text-gray-800 text-[11px] font-bold border border-gray-200/60 transition-colors inline-flex items-center justify-center gap-1"
+                    >
+                      {r.action === '预约接种' && <MapPin className="w-3 h-3" />}
+                      {r.action === '商城购药' && <ShoppingCart className="w-3 h-3" />}
+                      {r.action === '查看预约' && <Calendar className="w-3 h-3" />}
+                      {r.action}
+                    </button>
+                    {r.overdue && (
+                      <button
+                        onClick={() => handleOverdueAction(r.id, 'rescheduled')}
+                        className="py-1.5 px-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-[11px] font-bold border border-blue-200/60 transition-colors inline-flex items-center gap-1"
+                      >
+                        <RotateCcw className="w-3 h-3" /> 重新预约
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {actionState === 'buying' && (
+                  <div className="p-2 rounded-lg bg-forest-50 border border-forest-100 space-y-1.5">
+                    <p className="text-[10px] font-semibold text-forest-800">购药确认</p>
+                    <div className="flex gap-1.5">
+                      <button
+                        onClick={() => handleOverdueAction(r.id, 'purchased')}
+                        className="flex-1 py-1.5 rounded-lg bg-forest-500 hover:bg-forest-600 text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1"
+                      >
+                        <CheckCircle2 className="w-3 h-3" /> 确认已购药
+                      </button>
+                      <button
+                        onClick={() => handleOverdueAction(r.id, 'none')}
+                        className="py-1.5 px-2 rounded-lg bg-white hover:bg-gray-50 text-gray-600 text-[11px] font-bold border border-gray-200 transition-colors"
+                      >
+                        取消
+                      </button>
+                    </div>
+                    <p className="text-[9px] text-forest-600">确认后将自动更新驱虫记录并写入健康日历</p>
+                  </div>
+                )}
+
+                {actionState === 'purchased' && (
+                  <div className="p-2 rounded-lg bg-forest-50 border border-forest-100 text-[10px] text-forest-700 space-y-1">
+                    <p className="font-bold flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> 已确认购药 · 驱虫记录已更新</p>
+                    <p>下次驱虫日期已自动推算至 2025-09-01，已写入健康日历</p>
+                    <button
+                      onClick={() => navigate('/calendar')}
+                      className="text-[9px] font-bold text-forest-600 hover:underline inline-flex items-center gap-0.5"
+                    >
+                      查看日历 <ChevronRight className="w-2.5 h-2.5" />
+                    </button>
+                  </div>
+                )}
+
+                {actionState === 'rescheduled' && (
+                  <div className="p-2 rounded-lg bg-blue-50 border border-blue-100 text-[10px] text-blue-700 space-y-1">
+                    <p className="font-bold flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> 已重新预约 · 等待服务确认</p>
+                    <p>预约提交后，医院将在24小时内确认，确认结果将通过App推送通知</p>
+                    <button
+                      onClick={() => navigate('/calendar')}
+                      className="text-[9px] font-bold text-blue-600 hover:underline inline-flex items-center gap-0.5"
+                    >
+                      查看预约状态 <ChevronRight className="w-2.5 h-2.5" />
+                    </button>
+                  </div>
+                )}
+
+                {actionState === 'booked' && (
+                  <div className="p-2 rounded-lg bg-forest-50 border border-forest-100 text-[10px] text-forest-700 space-y-1">
+                    <p className="font-bold flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> 预约成功</p>
+                    <p>已写入健康日历，服务前1天/1小时将自动推送提醒</p>
+                    <button
+                      onClick={() => navigate('/calendar')}
+                      className="text-[9px] font-bold text-forest-600 hover:underline inline-flex items-center gap-0.5"
+                    >
+                      查看日历 <ChevronRight className="w-2.5 h-2.5" />
+                    </button>
+                  </div>
                 )}
               </div>
-              <p className="text-sm font-semibold text-gray-900 leading-snug">{r.event}</p>
-              <p className="text-[10px] text-gray-500 font-mono">{r.date}</p>
-              <button
-                onClick={() => navigate(r.actionRoute)}
-                className="w-full py-1.5 rounded-lg bg-white/80 hover:bg-white text-gray-800 text-[11px] font-bold border border-gray-200/60 transition-colors inline-flex items-center justify-center gap-1"
-              >
-                {r.action === '预约接种' && <MapPin className="w-3 h-3" />}
-                {r.action === '商城购药' && <ShoppingCart className="w-3 h-3" />}
-                {r.action === '查看预约' && <Calendar className="w-3 h-3" />}
-                {r.action}
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
+        {upcomingReminders.some(r => r.overdue) && (
+          <div className="p-3 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 text-[11px] text-red-700 space-y-1">
+            <p className="font-bold flex items-center gap-1"><AlertTriangle className="w-3.5 h-3.5" /> 逾期处置规则</p>
+            <div className="grid sm:grid-cols-3 gap-2 text-[10px]">
+              <div className="p-2 rounded-lg bg-white/70">
+                <p className="font-semibold text-warm-700">逾期3天</p>
+                <p className="text-gray-600">App推送+短信双通道提醒</p>
+              </div>
+              <div className="p-2 rounded-lg bg-white/70">
+                <p className="font-semibold text-orange-700">逾期7天</p>
+                <p className="text-gray-600">人工客服介入 · 重点跟进</p>
+              </div>
+              <div className="p-2 rounded-lg bg-white/70">
+                <p className="font-semibold text-red-700">逾期30天</p>
+                <p className="text-gray-600">健康风险预警 · 标记异常账号</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="card">
