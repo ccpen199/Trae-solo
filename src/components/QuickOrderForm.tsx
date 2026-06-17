@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift, Receipt } from 'lucide-react';
+import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift, Receipt, ScanLine, Clock4, UserCheck, BadgeCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAppStore, serviceTypeList } from '@/store';
+import { useWorkerStore } from '@/store/useWorkerStore';
 import type { ServiceType } from '@/types';
 
 const iconMap = {
@@ -458,8 +459,8 @@ export default function QuickOrderForm() {
                 </div>
                 <div className="space-y-1.5">
                   <div>
-                    <div className="flex justify-between text-[10px] mb-0.5"><span className="text-secondary-600">准时率</span><span className="text-primary-600 font-medium">40%</span></div>
-                    <div className="w-full h-1.5 bg-gray-100 rounded-full"><div className="h-full bg-primary-500 rounded-full" style={{ width: '40%' }} /></div>
+                    <div className="flex justify-between text-[10px] mb-0.5"><span className="text-secondary-600">准时率</span><span className="text-purple-600 font-medium">40%</span></div>
+                    <div className="w-full h-1.5 bg-gray-100 rounded-full"><div className="h-full bg-purple-500 rounded-full" style={{ width: '40%' }} /></div>
                   </div>
                   <div>
                     <div className="flex justify-between text-[10px] mb-0.5"><span className="text-secondary-600">客户好评</span><span className="text-yellow-600 font-medium">50%</span></div>
@@ -539,7 +540,7 @@ export default function QuickOrderForm() {
                 </div>
                 <div>
                   <h3 className="text-xs font-bold text-secondary-800">动态加权派单队列</h3>
-                  <p className="text-[9px] text-secondary-400">距离40%+好评50%+投诉率10% 综合排序</p>
+                  <p className="text-[9px] text-secondary-400">准时率40%+好评50%+投诉率10% 综合排序</p>
                 </div>
               </div>
               <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-secondary-100 text-secondary-600">
@@ -550,65 +551,87 @@ export default function QuickOrderForm() {
               {dispatchQueue.map((w, i) => {
                 const isTop = i === 0;
                 const isSelected = selectedWorkerId === w.id;
+                const cert = useWorkerStore.getState().getCertByWorkerId(w.id!);
+                const score = useWorkerStore.getState().getScoreByWorkerId(w.id!);
+                const certOk = cert?.verify_status === 'approved';
+                const certTime = cert?.review_completed_at;
+                const punctRate = score?.punctuality_rate ?? w.punctuality_rate ?? 95;
                 const satColor = w.satisfaction_rate && w.satisfaction_rate >= 97 ? 'text-green-600' : w.satisfaction_rate && w.satisfaction_rate >= 93 ? 'text-yellow-600' : 'text-orange-600';
                 const complColor = w.complaint_rate && w.complaint_rate <= 1 ? 'text-green-600' : w.complaint_rate && w.complaint_rate <= 2.5 ? 'text-yellow-600' : 'text-red-600';
                 return (
                   <div
                     key={w.id}
                     className={cn(
-                      'flex items-center gap-2.5 p-2 rounded-xl transition-colors',
+                      'p-2.5 rounded-xl transition-colors',
                       isSelected ? 'bg-primary-50 border-2 border-primary-300 ring-2 ring-primary-100' :
                       isTop ? 'bg-orange-50 border border-orange-100' : 'bg-cream-100 border border-transparent hover:border-gray-200'
                     )}
                   >
-                    <div className="relative flex-shrink-0">
-                      <img src={w.avatar} alt={w.real_name} className="w-9 h-9 rounded-full bg-secondary-100" />
-                      <div className={cn(
-                        'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white',
-                        isSelected ? 'bg-primary-500' :
-                        isTop ? 'bg-orange-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-secondary-300'
-                      )}>
-                        {isSelected ? '✓' : i + 1}
+                    <div className="flex items-center gap-2.5">
+                      <div className="relative flex-shrink-0">
+                        <img src={w.avatar} alt={w.real_name} className="w-9 h-9 rounded-full bg-secondary-100" />
+                        <div className={cn(
+                          'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white',
+                          isSelected ? 'bg-primary-500' :
+                          isTop ? 'bg-orange-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-secondary-300'
+                        )}>
+                          {isSelected ? '✓' : i + 1}
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-semibold text-secondary-800">{w.real_name}</span>
-                        {isTop && !isSelected && <span className="text-[8px] px-1 py-0 rounded bg-orange-200 text-orange-700 font-medium">优先派单</span>}
-                        {isSelected && <span className="text-[8px] px-1 py-0 rounded bg-primary-200 text-primary-700 font-medium">已选</span>}
-                        <span className="text-[9px] text-secondary-400">·{w.experience_years}年</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-0.5 text-[9px]">
-                        <span className="text-blue-600">{w.distance_km}km</span>
-                        <span className="text-secondary-300">|</span>
-                        <span className={satColor}>好评{w.satisfaction_rate}%</span>
-                        <span className="text-secondary-300">|</span>
-                        <span className={complColor}>投诉{w.complaint_rate}%</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <div className="text-right flex-shrink-0">
-                        <p className="text-xs font-bold text-orange-600">{(w.weighted_score || 90).toFixed(1)}</p>
-                        <p className="text-[8px] text-secondary-400">综合分</p>
-                      </div>
-                      <button
-                        onClick={() => setSelectedWorkerId(isSelected ? null : w.id!)}
-                        className={cn(
-                          'text-[9px] px-1.5 py-1 rounded-md font-medium transition-colors',
-                          isSelected ? 'bg-primary-500 text-white' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs font-semibold text-secondary-800">{w.real_name}</span>
+                          {isTop && !isSelected && <span className="text-[8px] px-1 py-0 rounded bg-orange-200 text-orange-700 font-medium">优先派单</span>}
+                          {isSelected && <span className="text-[8px] px-1 py-0 rounded bg-primary-200 text-primary-700 font-medium">已选</span>}
+                          <span className="text-[9px] text-secondary-400">·{w.experience_years}年</span>
+                          <span className={cn(
+                            'text-[8px] px-1 py-0 rounded font-medium flex items-center gap-0.5',
+                            certOk ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                          )}>
+                            {certOk ? <><BadgeCheck className="w-2.5 h-2.5" />三证齐全</> : <><ScanLine className="w-2.5 h-2.5" />审核中</>}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 mt-0.5 text-[9px] flex-wrap">
+                          <span className="text-blue-600 flex items-center gap-0.5"><MapPin className="w-2.5 h-2.5" />{w.distance_km}km</span>
+                          <span className="text-secondary-300">|</span>
+                          <span className="text-purple-600 flex items-center gap-0.5"><Clock4 className="w-2.5 h-2.5" />准时{punctRate}%</span>
+                          <span className="text-secondary-300">|</span>
+                          <span className={satColor}>好评{w.satisfaction_rate}%</span>
+                          <span className="text-secondary-300">|</span>
+                          <span className={complColor}>投诉{w.complaint_rate}%</span>
+                        </div>
+                        {certOk && certTime && (
+                          <div className="flex items-center gap-1 mt-0.5 text-[8px] text-secondary-400">
+                            <UserCheck className="w-2 h-2" />
+                            <span>复核人：{cert.review_history?.find(r => r.type === 'recheck')?.reviewer || '初审专员'}</span>
+                            <span>· 留痕：{new Date(certTime).toLocaleDateString('zh-CN')}</span>
+                          </div>
                         )}
-                      >
-                        {isSelected ? '取消' : '选择'}
-                      </button>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <div className="text-right flex-shrink-0">
+                          <p className="text-xs font-bold text-orange-600">{(w.weighted_score || 90).toFixed(1)}</p>
+                          <p className="text-[8px] text-secondary-400">综合分</p>
+                        </div>
+                        <button
+                          onClick={() => setSelectedWorkerId(isSelected ? null : w.id!)}
+                          className={cn(
+                            'text-[9px] px-1.5 py-1 rounded-md font-medium transition-colors',
+                            isSelected ? 'bg-primary-500 text-white' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
+                          )}
+                        >
+                          {isSelected ? '取消' : '选择'}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
             <div className="mt-2.5 pt-2 border-t border-dashed border-gray-200 grid grid-cols-3 gap-1.5 text-[9px]">
-              <div className="text-center px-1.5 py-1 rounded-md bg-blue-50">
-                <p className="text-blue-600 font-bold text-[11px]">40%</p>
-                <p className="text-secondary-500">距离权重</p>
+              <div className="text-center px-1.5 py-1 rounded-md bg-purple-50">
+                <p className="text-purple-600 font-bold text-[11px]">40%</p>
+                <p className="text-secondary-500">准时率权重</p>
               </div>
               <div className="text-center px-1.5 py-1 rounded-md bg-green-50">
                 <p className="text-green-600 font-bold text-[11px]">50%</p>

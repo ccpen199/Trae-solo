@@ -119,7 +119,6 @@ function RecentOrders() {
           const canAdvance = !['completed', 'cancelled', 'compensated'].includes(order.status);
           const hasComp = !!order.compensation;
           const hasQA = !!order.qa_record;
-          const nodeCount = order.nodes?.length || 0;
           const isAdvancing = advancingId === order.id;
           return (
             <div
@@ -145,19 +144,14 @@ function RecentOrders() {
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-2 mt-0.5 text-[9px]">
+                  <div className="flex items-center gap-2 mt-0.5 text-[9px] flex-wrap">
                     <span className="text-secondary-500 flex items-center gap-0.5">
                       <Clock className="w-2 h-2" />{order.start_time.slice(5, 16)}
                     </span>
-                    {nodeCount > 0 && (
-                      <span className="text-blue-600 flex items-center gap-0.5">
-                        <Zap className="w-2 h-2" />{nodeCount}节点
-                      </span>
-                    )}
                     {hasComp && (
                       <span className="text-red-600 flex items-center gap-0.5">
                         <CircleDollarSign className="w-2 h-2" />
-                        赔付{order.compensation?.refund_amount || 0}元
+                        赔付¥{order.compensation?.refund_amount || 0}
                       </span>
                     )}
                     {hasQA && (
@@ -166,7 +160,13 @@ function RecentOrders() {
                         order.qa_record?.review_conclusion === 'pass' ? 'text-green-600' : 'text-orange-600'
                       )}>
                         <BadgeCheck className="w-2 h-2" />
-                        {order.qa_record?.review_conclusion === 'pass' ? '质检通过' : '质检待复查'}
+                        合规{order.qa_record?.compliance_rate}%
+                      </span>
+                    )}
+                    {order.insurance && (
+                      <span className="text-green-600 flex items-center gap-0.5">
+                        <Shield className="w-2 h-2" />
+                        已承保
                       </span>
                     )}
                   </div>
@@ -196,24 +196,57 @@ function RecentOrders() {
                   )}
                 </div>
               </div>
+
               {order.nodes && order.nodes.length > 0 && (
-                <div className="flex items-center gap-1 mt-2 pl-9">
-                  {order.nodes.slice(0, 6).map((n, i) => {
-                    const isLast = i === order.nodes!.length - 1;
+                <div className="mt-2 pl-9 space-y-0.5">
+                  {order.nodes.slice(-4).map((n, ni) => {
+                    const isLast = ni === Math.min(order.nodes!.length, 4) - 1;
+                    const isDone = !isLast || order.status === 'completed' || order.status === 'compensated';
                     return (
-                      <div key={n.id} className="flex items-center gap-0.5 flex-shrink-0">
-                        <span className={cn(
-                          'w-1.5 h-1.5 rounded-full',
-                          isLast ? 'bg-blue-500 ring-2 ring-blue-100' : 'bg-green-500'
+                      <div key={n.id} className="flex items-center gap-1.5">
+                        <div className={cn(
+                          'w-1.5 h-1.5 rounded-full flex-shrink-0',
+                          isDone ? 'bg-green-500' : 'bg-blue-500 ring-2 ring-blue-100'
                         )} />
-                        <span className="text-[8px] text-secondary-500 whitespace-nowrap">
-                          {n.node_label.slice(0, 2)}
+                        <span className={cn('text-[9px]', isDone ? 'text-secondary-600' : 'text-blue-600 font-medium')}>
+                          {n.node_label}
                         </span>
+                        <span className="text-[8px] text-secondary-400">{n.node_time.slice(5, 16)}</span>
+                        {n.remark && <span className="text-[8px] text-secondary-300 truncate">· {n.remark.slice(0, 15)}</span>}
                       </div>
                     );
                   })}
                 </div>
               )}
+
+              <div className="flex items-center gap-1.5 mt-1.5 pl-9 flex-wrap">
+                {order.insurance ? (
+                  <span className="text-[8px] px-1 py-0.5 rounded bg-green-50 text-green-600 flex items-center gap-0.5">
+                    <Shield className="w-2 h-2" />保险{order.insurance.status === 'active' ? '生效中' : '已过期'} · 保额{(order.insurance.coverage_amount / 10000).toFixed(0)}万
+                  </span>
+                ) : (
+                  <span className="text-[8px] px-1 py-0.5 rounded bg-secondary-50 text-secondary-400">保险待承保</span>
+                )}
+                {order.is_overtime && (
+                  <span className="text-[8px] px-1 py-0.5 rounded bg-red-50 text-red-600 flex items-center gap-0.5">
+                    <CircleDollarSign className="w-2 h-2" />超时{order.overtime_minutes}min · 赔付已触发
+                  </span>
+                )}
+                {!order.is_overtime && canAdvance && (
+                  <span className="text-[8px] px-1 py-0.5 rounded bg-orange-50 text-orange-600 flex items-center gap-0.5">
+                    <CircleDollarSign className="w-2 h-2" />爽约自动赔付保障
+                  </span>
+                )}
+                {hasQA && (
+                  <Link
+                    to={`/orders/${order.id}#qa-record`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-[8px] px-1 py-0.5 rounded bg-blue-50 text-blue-600 flex items-center gap-0.5 hover:bg-blue-100"
+                  >
+                    <FileText className="w-2 h-2" />质检详情
+                  </Link>
+                )}
+              </div>
             </div>
           );
         })}

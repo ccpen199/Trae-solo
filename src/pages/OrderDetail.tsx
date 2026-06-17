@@ -540,9 +540,9 @@ function DispatchRecordSection({ records, onReassign }: { records: DispatchRecor
       )}
 
       <div className="mt-2 pt-3 border-t border-dashed border-gray-200 grid grid-cols-3 gap-1.5 text-[9px]">
-        <div className="text-center px-1.5 py-1 rounded-md bg-blue-50">
-          <p className="text-blue-600 font-bold text-[11px]">40%</p>
-          <p className="text-secondary-500">距离权重</p>
+        <div className="text-center px-1.5 py-1 rounded-md bg-purple-50">
+          <p className="text-purple-600 font-bold text-[11px]">40%</p>
+          <p className="text-secondary-500">准时率权重</p>
         </div>
         <div className="text-center px-1.5 py-1 rounded-md bg-green-50">
           <p className="text-green-600 font-bold text-[11px]">50%</p>
@@ -783,7 +783,7 @@ function QARecordSection({ qa }: { qa: QARecordDetail }) {
   const [showTranscript, setShowTranscript] = useState(false);
 
   return (
-    <div className="card p-6 mb-6">
+    <div id="qa-record" className="card p-6 mb-6">
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
@@ -1038,8 +1038,8 @@ export default function OrderDetail() {
                   <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                     <span className="text-[9px] text-secondary-400">调度方式：</span>
                     <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600 font-medium">1km内优先派单</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-purple-50 text-purple-600 font-medium">准时率40%加权</span>
                     <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-medium">好评50%加权</span>
-                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-orange-50 text-orange-600 font-medium">准时40%加权</span>
                     <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-red-50 text-red-600 font-medium">投诉10%加权</span>
                   </div>
                 )}
@@ -1104,8 +1104,8 @@ export default function OrderDetail() {
                   </p>
                   <div className="flex items-center gap-2 mt-1 text-[9px]">
                     <span className="px-1.5 py-0.5 rounded bg-blue-50 text-blue-600">1km优先</span>
+                    <span className="px-1.5 py-0.5 rounded bg-purple-50 text-purple-600">准时率40%</span>
                     <span className="px-1.5 py-0.5 rounded bg-green-50 text-green-600">好评50%</span>
-                    <span className="px-1.5 py-0.5 rounded bg-orange-50 text-orange-600">准时40%</span>
                     <span className="px-1.5 py-0.5 rounded bg-red-50 text-red-600">投诉10%</span>
                   </div>
                 </div>
