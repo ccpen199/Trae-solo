@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { mockScenicSpots, mockTourRoutes, mockComplaints } from "@/data/mock";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
 import StatusBadge from "@/components/StatusBadge";
-import { Mountain, Route, MessageSquareWarning, Clock, Users, MapPin, Sparkles, Send } from "lucide-react";
+import { Mountain, Route, MessageSquareWarning, Clock, Users, MapPin, Sparkles, Send, Loader2 } from "lucide-react";
 import { clsx } from "clsx";
 
 type Tab = "spots" | "routes" | "complaints";
@@ -15,19 +15,44 @@ const heatColors: Record<string, string> = {
 
 export default function SmartTour() {
   const [tab, setTab] = useState<Tab>("spots");
-  const [selectedSpot, setSelectedSpot] = useState(mockScenicSpots[0]);
+  const [spots, setSpots] = useState<any[]>([]);
+  const [routes, setRoutes] = useState<any[]>([]);
+  const [complaints, setComplaints] = useState<any[]>([]);
+  const [selectedSpot, setSelectedSpot] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [complaintTitle, setComplaintTitle] = useState("");
   const [complaintContent, setComplaintContent] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const handleComplaintSubmit = () => {
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    Promise.all([api.tour.spots(), api.tour.routes(), api.tour.complaints()]).then(([s, r, c]) => {
+      if (!alive) return;
+      setSpots(s);
+      setRoutes(r);
+      setComplaints(c);
+      if (s.length > 0) setSelectedSpot(s[0]);
+      setLoading(false);
+    }).catch((e) => { console.error(e); setLoading(false); });
+    return () => { alive = false; };
+  }, []);
+
+  const handleComplaintSubmit = async () => {
     if (complaintTitle && complaintContent) {
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        setComplaintTitle("");
-        setComplaintContent("");
-      }, 2000);
+      try {
+        const newComplaint = await api.tour.submitComplaint(complaintTitle, complaintContent);
+        setComplaints([newComplaint, ...complaints]);
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setComplaintTitle("");
+          setComplaintContent("");
+        }, 2000);
+      } catch {
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 2000);
+      }
     }
   };
 
@@ -61,90 +86,111 @@ export default function SmartTour() {
       {tab === "spots" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1 space-y-3">
-            {mockScenicSpots.map((spot) => {
-              const occupancy = Math.round((spot.currentVisitors / spot.maxCapacity) * 100);
-              return (
-                <button
-                  key={spot.id}
-                  onClick={() => setSelectedSpot(spot)}
-                  className={clsx(
-                    "w-full text-left rounded-xl border p-4 transition-all hover-lift",
-                    selectedSpot.id === spot.id ? "border-emerald-300 bg-emerald-50/50" : "border-gray-100 bg-white"
-                  )}
-                >
-                  <div className="flex items-start gap-3">
-                    <img src={spot.image} alt={spot.name} className="w-16 h-12 rounded-lg object-cover flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-semibold text-sm text-gray-900 truncate">{spot.name}</h4>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-gold-50 text-gold-700 font-medium">{spot.level}</span>
-                      </div>
-                      <div className="flex items-center gap-2 mt-1">
-                        <StatusBadge status={spot.heatLevel} />
-                        <span className="text-xs text-gray-500">{occupancy}%</span>
-                      </div>
-                      <div className="w-full h-1 bg-gray-100 rounded-full mt-2 overflow-hidden">
-                        <div className={clsx(
-                          "h-full rounded-full transition-all",
-                          spot.heatLevel === "low" ? "bg-emerald-500" : spot.heatLevel === "medium" ? "bg-blue-500" : spot.heatLevel === "high" ? "bg-amber-500" : "bg-red-500"
-                        )} style={{ width: `${occupancy}%` }} />
+            {loading ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="rounded-xl border border-gray-100 bg-white p-4 space-y-2">
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-1/2" />
+                  <div className="h-3 bg-gray-100 rounded animate-pulse w-1/3" />
+                </div>
+              ))
+            ) : spots.length === 0 ? (
+              <div className="p-8 text-center text-gray-400 flex items-center justify-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />暂无数据
+              </div>
+            ) : (
+              spots.map((spot) => {
+                const occupancy = Math.round((spot.currentVisitors / spot.maxCapacity) * 100);
+                return (
+                  <button
+                    key={spot.id}
+                    onClick={() => setSelectedSpot(spot)}
+                    className={clsx(
+                      "w-full text-left rounded-xl border p-4 transition-all hover-lift",
+                      selectedSpot?.id === spot.id ? "border-emerald-300 bg-emerald-50/50" : "border-gray-100 bg-white"
+                    )}
+                  >
+                    <div className="flex items-start gap-3">
+                      <img src={spot.image} alt={spot.name} className="w-16 h-12 rounded-lg object-cover flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-semibold text-sm text-gray-900 truncate">{spot.name}</h4>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-gold-50 text-gold-700 font-medium">{spot.level}</span>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <StatusBadge status={spot.heatLevel} />
+                          <span className="text-xs text-gray-500">{occupancy}%</span>
+                        </div>
+                        <div className="w-full h-1 bg-gray-100 rounded-full mt-2 overflow-hidden">
+                          <div className={clsx(
+                            "h-full rounded-full transition-all",
+                            spot.heatLevel === "low" ? "bg-emerald-500" : spot.heatLevel === "medium" ? "bg-blue-500" : spot.heatLevel === "high" ? "bg-amber-500" : "bg-red-500"
+                          )} style={{ width: `${occupancy}%` }} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })
+            )}
           </div>
           <div className="lg:col-span-2 space-y-4">
-            <div className="rounded-xl overflow-hidden border border-gray-100">
-              <img src={selectedSpot.image} alt={selectedSpot.name} className="w-full h-48 object-cover" />
-              <div className="bg-white p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-gray-900">{selectedSpot.name}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs px-2 py-0.5 rounded bg-gold-50 text-gold-700 font-medium">{selectedSpot.level}景区</span>
-                      <span className={clsx("text-xs px-2 py-0.5 rounded font-medium", heatColors[selectedSpot.heatLevel])}>
-                        {selectedSpot.heatLevel === "low" ? "空闲" : selectedSpot.heatLevel === "medium" ? "适中" : selectedSpot.heatLevel === "high" ? "较忙" : "限流中"}
-                      </span>
+            {!selectedSpot ? (
+              <div className="bg-white rounded-xl border border-gray-100 p-12 flex items-center justify-center text-gray-400 gap-2">
+                <Loader2 className="w-5 h-5 animate-spin" />加载中...
+              </div>
+            ) : (
+              <>
+                <div className="rounded-xl overflow-hidden border border-gray-100">
+                  <img src={selectedSpot.image} alt={selectedSpot.name} className="w-full h-48 object-cover" />
+                  <div className="bg-white p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <h3 className="font-display font-bold text-lg text-gray-900">{selectedSpot.name}</h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-xs px-2 py-0.5 rounded bg-gold-50 text-gold-700 font-medium">{selectedSpot.level}景区</span>
+                          <span className={clsx("text-xs px-2 py-0.5 rounded font-medium", heatColors[selectedSpot.heatLevel])}>
+                            {selectedSpot.heatLevel === "low" ? "空闲" : selectedSpot.heatLevel === "medium" ? "适中" : selectedSpot.heatLevel === "high" ? "较忙" : "限流中"}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-gray-900">{selectedSpot.currentVisitors.toLocaleString()}</p>
+                        <p className="text-xs text-gray-400">/ {selectedSpot.maxCapacity.toLocaleString()} 人</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-gray-900">{selectedSpot.currentVisitors.toLocaleString()}</p>
-                    <p className="text-xs text-gray-400">/ {selectedSpot.maxCapacity.toLocaleString()} 人</p>
+                </div>
+                <div className="bg-white rounded-xl border border-gray-100 p-5">
+                  <h4 className="font-semibold text-sm text-gray-900 mb-3 flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-emerald-600" />
+                    可预约时段
+                  </h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {selectedSpot.availableSlots.map((slot: any) => (
+                      <div key={slot.time} className={clsx(
+                        "rounded-lg border p-3 text-center transition-all cursor-pointer",
+                        slot.remaining === 0 ? "border-gray-100 bg-gray-50 opacity-50 cursor-not-allowed" : "border-emerald-200 bg-emerald-50/30 hover:border-emerald-400 hover:bg-emerald-50"
+                      )}>
+                        <p className="text-xs font-medium text-gray-700">{slot.time}</p>
+                        <p className={clsx("text-sm font-bold mt-1", slot.remaining === 0 ? "text-gray-400" : "text-emerald-600")}>
+                          {slot.remaining === 0 ? "已满" : `余${slot.remaining}`}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-5">
-              <h4 className="font-semibold text-sm text-gray-900 mb-3 flex items-center gap-2">
-                <Clock className="w-4 h-4 text-emerald-600" />
-                可预约时段
-              </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {selectedSpot.availableSlots.map((slot) => (
-                  <div key={slot.time} className={clsx(
-                    "rounded-lg border p-3 text-center transition-all cursor-pointer",
-                    slot.remaining === 0 ? "border-gray-100 bg-gray-50 opacity-50 cursor-not-allowed" : "border-emerald-200 bg-emerald-50/30 hover:border-emerald-400 hover:bg-emerald-50"
-                  )}>
-                    <p className="text-xs font-medium text-gray-700">{slot.time}</p>
-                    <p className={clsx("text-sm font-bold mt-1", slot.remaining === 0 ? "text-gray-400" : "text-emerald-600")}>
-                      {slot.remaining === 0 ? "已满" : `余${slot.remaining}`}
-                    </p>
+                {selectedSpot.heatLevel === "full" && (
+                  <div className="rounded-xl bg-red-50 border border-red-200 p-4 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center alert-pulse">
+                      <Users className="w-4 h-4 text-red-500" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-red-700">限流预警</p>
+                      <p className="text-xs text-red-500">{selectedSpot.name}当前已达最大承载量，建议选择其他时段或其他景区游览</p>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-            {selectedSpot.heatLevel === "full" && (
-              <div className="rounded-xl bg-red-50 border border-red-200 p-4 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center alert-pulse">
-                  <Users className="w-4 h-4 text-red-500" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-red-700">限流预警</p>
-                  <p className="text-xs text-red-500">{selectedSpot.name}当前已达最大承载量，建议选择其他时段或其他景区游览</p>
-                </div>
-              </div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -165,44 +211,53 @@ export default function SmartTour() {
               ))}
             </div>
           </div>
-          {mockTourRoutes.map((route) => (
-            <div key={route.id} className="bg-white rounded-xl border border-gray-100 p-5 hover-lift">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg gradient-emerald flex items-center justify-center text-white">
-                    <Route className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">{route.name}</h4>
-                    <div className="flex items-center gap-2 mt-0.5 text-xs text-gray-500">
-                      <Clock className="w-3 h-3" />
-                      <span>{route.duration}</span>
-                      <span>·</span>
-                      <span className={clsx(
-                        "px-1.5 py-0.5 rounded",
-                        route.difficulty === "easy" ? "bg-emerald-50 text-emerald-600" : route.difficulty === "moderate" ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-600"
-                      )}>
-                        {route.difficulty === "easy" ? "轻松" : route.difficulty === "moderate" ? "适中" : "挑战"}
-                      </span>
+          {loading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-xl border border-gray-100 p-5 space-y-2">
+                <div className="h-4 bg-gray-200 rounded animate-pulse w-1/2" />
+                <div className="h-3 bg-gray-100 rounded animate-pulse w-3/4" />
+              </div>
+            ))
+          ) : (
+            routes.map((route) => (
+              <div key={route.id} className="bg-white rounded-xl border border-gray-100 p-5 hover-lift">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg gradient-emerald flex items-center justify-center text-white">
+                      <Route className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{route.name}</h4>
+                      <div className="flex items-center gap-2 mt-0.5 text-xs text-gray-500">
+                        <Clock className="w-3 h-3" />
+                        <span>{route.duration}</span>
+                        <span>·</span>
+                        <span className={clsx(
+                          "px-1.5 py-0.5 rounded",
+                          route.difficulty === "easy" ? "bg-emerald-50 text-emerald-600" : route.difficulty === "moderate" ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-600"
+                        )}>
+                          {route.difficulty === "easy" ? "轻松" : route.difficulty === "moderate" ? "适中" : "挑战"}
+                        </span>
+                      </div>
                     </div>
                   </div>
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-xs font-medium">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    AI推荐
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-xs font-medium">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  AI推荐
+                <p className="text-sm text-gray-600 mb-3">{route.description}</p>
+                <div className="flex items-center gap-2">
+                  {route.spots.map((spot: string, i: number) => (
+                    <span key={i} className="flex items-center gap-1.5">
+                      <span className="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">{spot}</span>
+                      {i < route.spots.length - 1 && <span className="text-gray-300">→</span>}
+                    </span>
+                  ))}
                 </div>
               </div>
-              <p className="text-sm text-gray-600 mb-3">{route.description}</p>
-              <div className="flex items-center gap-2">
-                {route.spots.map((spot, i) => (
-                  <span key={i} className="flex items-center gap-1.5">
-                    <span className="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">{spot}</span>
-                    {i < route.spots.length - 1 && <span className="text-gray-300">→</span>}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       )}
 
@@ -249,36 +304,49 @@ export default function SmartTour() {
           </div>
           <div className="space-y-4">
             <h3 className="font-display font-bold text-base text-gray-900">投诉追踪</h3>
-            {mockComplaints.map((complaint) => (
-              <div key={complaint.id} className="bg-white rounded-xl border border-gray-100 p-5">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-sm text-gray-900">{complaint.title}</h4>
-                  <StatusBadge status={complaint.status} />
+            {loading ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="bg-white rounded-xl border border-gray-100 p-5 space-y-2">
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-1/2" />
+                  <div className="h-3 bg-gray-100 rounded animate-pulse w-3/4" />
                 </div>
-                <p className="text-xs text-gray-500 mb-2">{complaint.content}</p>
-                <div className="flex items-center gap-2 text-[10px] text-gray-400">
-                  <Clock className="w-3 h-3" />
-                  {complaint.createdAt}
-                </div>
-                {complaint.reply && (
-                  <div className="mt-3 rounded-lg bg-emerald-50 border border-emerald-100 p-3">
-                    <p className="text-xs text-emerald-600 font-medium mb-1">文旅局回复：</p>
-                    <p className="text-xs text-gray-600">{complaint.reply}</p>
-                  </div>
-                )}
-                <div className="flex items-center gap-1 mt-3">
-                  {["已提交", "处理中", "已解决"].map((step, i) => {
-                    const isActive = (complaint.status === "submitted" && i === 0) || (complaint.status === "processing" && i <= 1) || (complaint.status === "resolved" && i <= 2);
-                    return (
-                      <span key={step} className="flex items-center gap-1">
-                        <span className={clsx("text-[10px]", isActive ? "text-emerald-600 font-medium" : "text-gray-300")}>{step}</span>
-                        {i < 2 && <span className="text-gray-200 mx-1">→</span>}
-                      </span>
-                    );
-                  })}
-                </div>
+              ))
+            ) : complaints.length === 0 ? (
+              <div className="bg-white rounded-xl border border-gray-100 p-8 text-center text-gray-400 flex items-center justify-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />暂无投诉
               </div>
-            ))}
+            ) : (
+              complaints.map((complaint) => (
+                <div key={complaint.id} className="bg-white rounded-xl border border-gray-100 p-5">
+                  <div className="flex items-start justify-between mb-2">
+                    <h4 className="font-semibold text-sm text-gray-900">{complaint.title}</h4>
+                    <StatusBadge status={complaint.status} />
+                  </div>
+                  <p className="text-xs text-gray-500 mb-2">{complaint.content}</p>
+                  <div className="flex items-center gap-2 text-[10px] text-gray-400">
+                    <Clock className="w-3 h-3" />
+                    {complaint.createdAt}
+                  </div>
+                  {complaint.reply && (
+                    <div className="mt-3 rounded-lg bg-emerald-50 border border-emerald-100 p-3">
+                      <p className="text-xs text-emerald-600 font-medium mb-1">文旅局回复：</p>
+                      <p className="text-xs text-gray-600">{complaint.reply}</p>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-1 mt-3">
+                    {["已提交", "处理中", "已解决"].map((step, i) => {
+                      const isActive = (complaint.status === "submitted" && i === 0) || (complaint.status === "processing" && i <= 1) || (complaint.status === "resolved" && i <= 2);
+                      return (
+                        <span key={step} className="flex items-center gap-1">
+                          <span className={clsx("text-[10px]", isActive ? "text-emerald-600 font-medium" : "text-gray-300")}>{step}</span>
+                          {i < 2 && <span className="text-gray-200 mx-1">→</span>}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       )}

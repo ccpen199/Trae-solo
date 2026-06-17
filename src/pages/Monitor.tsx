@@ -1,15 +1,40 @@
-import { mockSLAMetrics, mockPolicyFulfillments, mockSLAHistory } from "@/data/mock";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
 import StatusBadge from "@/components/StatusBadge";
 import AnimatedNumber from "@/components/AnimatedNumber";
-import { Activity, TrendingUp, AlertTriangle, Clock, Building2, BarChart3 } from "lucide-react";
+import { Activity, TrendingUp, AlertTriangle, Clock, Building2, BarChart3, Loader2 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell, Legend } from "recharts";
 import { clsx } from "clsx";
 
 export default function Monitor() {
-  const healthyCount = mockSLAMetrics.filter((m) => m.status === "healthy").length;
-  const warningCount = mockSLAMetrics.filter((m) => m.status === "warning").length;
-  const criticalCount = mockSLAMetrics.filter((m) => m.status === "critical").length;
-  const avgCompliance = (mockSLAMetrics.reduce((s, m) => s + m.complianceRate, 0) / mockSLAMetrics.length).toFixed(1);
+  const [slaMetrics, setSlaMetrics] = useState<any[]>([]);
+  const [policies, setPolicies] = useState<any[]>([]);
+  const [slaHistory, setSlaHistory] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    Promise.all([
+      api.monitor.sla(),
+      api.monitor.policies(),
+      api.monitor.slaHistory(),
+    ]).then(([s, p, h]) => {
+      if (!alive) return;
+      setSlaMetrics(s);
+      setPolicies(p);
+      setSlaHistory(h);
+      setLoading(false);
+    }).catch((e) => { console.error(e); setLoading(false); });
+    return () => { alive = false; };
+  }, []);
+
+  const healthyCount = slaMetrics.filter((m) => m.status === "healthy").length;
+  const warningCount = slaMetrics.filter((m) => m.status === "warning").length;
+  const criticalCount = slaMetrics.filter((m) => m.status === "critical").length;
+  const avgCompliance = slaMetrics.length > 0
+    ? (slaMetrics.reduce((s, m) => s + m.complianceRate, 0) / slaMetrics.length).toFixed(1)
+    : "0.0";
 
   return (
     <div className="p-6 max-w-[1400px] mx-auto">
@@ -56,7 +81,7 @@ export default function Monitor() {
             各厅局API响应时长趋势（今日）
           </h3>
           <ResponsiveContainer width="100%" height={280}>
-            <LineChart data={mockSLAHistory}>
+            <LineChart data={slaHistory}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
               <XAxis dataKey="time" stroke="rgba(255,255,255,0.4)" tick={{ fontSize: 11 }} />
               <YAxis stroke="rgba(255,255,255,0.4)" tick={{ fontSize: 11 }} unit="ms" />
@@ -77,24 +102,36 @@ export default function Monitor() {
             服务状态总览
           </h3>
           <div className="space-y-3">
-            {mockSLAMetrics.map((metric) => (
-              <div key={metric.api} className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50">
-                <div className={clsx(
-                  "w-2 h-2 rounded-full flex-shrink-0",
-                  metric.status === "healthy" ? "bg-emerald-500" : metric.status === "warning" ? "bg-amber-500 alert-pulse" : "bg-red-500 alert-pulse"
-                )} />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-gray-700 truncate">{metric.department}</span>
-                    <StatusBadge status={metric.status} />
-                  </div>
-                  <div className="flex items-center gap-3 mt-0.5">
-                    <span className="text-[10px] text-gray-400">均{metric.avgResponseTime}ms</span>
-                    <span className="text-[10px] text-gray-400">P99 {metric.p99ResponseTime}ms</span>
+            {loading ? (
+              Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50">
+                  <div className="w-2 h-2 rounded-full bg-gray-300" />
+                  <div className="flex-1 space-y-1">
+                    <div className="h-3 bg-gray-200 rounded animate-pulse w-3/4" />
+                    <div className="h-2 bg-gray-100 rounded animate-pulse w-1/2" />
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              slaMetrics.map((metric) => (
+                <div key={metric.api} className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50">
+                  <div className={clsx(
+                    "w-2 h-2 rounded-full flex-shrink-0",
+                    metric.status === "healthy" ? "bg-emerald-500" : metric.status === "warning" ? "bg-amber-500 alert-pulse" : "bg-red-500 alert-pulse"
+                  )} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-gray-700 truncate">{metric.department}</span>
+                      <StatusBadge status={metric.status} />
+                    </div>
+                    <div className="flex items-center gap-3 mt-0.5">
+                      <span className="text-[10px] text-gray-400">均{metric.avgResponseTime}ms</span>
+                      <span className="text-[10px] text-gray-400">P99 {metric.p99ResponseTime}ms</span>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -117,40 +154,52 @@ export default function Monitor() {
                 </tr>
               </thead>
               <tbody>
-                {mockPolicyFulfillments.map((policy) => (
-                  <tr key={policy.policyName} className="border-b border-gray-50 hover:bg-gray-50/50">
-                    <td className="py-3 px-2 text-gray-900 font-medium">{policy.policyName}</td>
-                    <td className="py-3 px-2 text-right text-gray-600">{policy.reachedEnterprises}/{policy.targetEnterprises}</td>
-                    <td className="py-3 px-2 text-right font-semibold text-emerald-700">{policy.totalAmount.toLocaleString()}</td>
-                    <td className="py-3 px-2 text-right">
-                      <span className={clsx(
-                        "text-xs px-2 py-0.5 rounded-full",
-                        policy.avgDisbursementDays <= 10 ? "bg-emerald-50 text-emerald-600" : policy.avgDisbursementDays <= 15 ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-600"
-                      )}>
-                        {policy.avgDisbursementDays}天
-                      </span>
-                    </td>
-                    <td className="py-3 px-2 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                          <div
-                            className={clsx(
-                              "h-full rounded-full",
-                              policy.complianceRate >= 90 ? "bg-emerald-500" : policy.complianceRate >= 75 ? "bg-amber-500" : "bg-red-500"
-                            )}
-                            style={{ width: `${policy.complianceRate}%` }}
-                          />
-                        </div>
+                {loading ? (
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <tr key={i} className="border-b border-gray-50">
+                      {Array.from({ length: 5 }).map((_, j) => (
+                        <td key={j} className="py-3 px-2">
+                          <div className="h-3 bg-gray-200 rounded animate-pulse w-full" />
+                        </td>
+                      ))}
+                    </tr>
+                  ))
+                ) : (
+                  policies.map((policy) => (
+                    <tr key={policy.policyName} className="border-b border-gray-50 hover:bg-gray-50/50">
+                      <td className="py-3 px-2 text-gray-900 font-medium">{policy.policyName}</td>
+                      <td className="py-3 px-2 text-right text-gray-600">{policy.reachedEnterprises}/{policy.targetEnterprises}</td>
+                      <td className="py-3 px-2 text-right font-semibold text-emerald-700">{policy.totalAmount.toLocaleString()}</td>
+                      <td className="py-3 px-2 text-right">
                         <span className={clsx(
-                          "text-xs font-medium",
-                          policy.complianceRate >= 90 ? "text-emerald-600" : policy.complianceRate >= 75 ? "text-amber-600" : "text-red-600"
+                          "text-xs px-2 py-0.5 rounded-full",
+                          policy.avgDisbursementDays <= 10 ? "bg-emerald-50 text-emerald-600" : policy.avgDisbursementDays <= 15 ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-600"
                         )}>
-                          {policy.complianceRate}%
+                          {policy.avgDisbursementDays}天
                         </span>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="py-3 px-2 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div
+                              className={clsx(
+                                "h-full rounded-full",
+                                policy.complianceRate >= 90 ? "bg-emerald-500" : policy.complianceRate >= 75 ? "bg-amber-500" : "bg-red-500"
+                              )}
+                              style={{ width: `${policy.complianceRate}%` }}
+                            />
+                          </div>
+                          <span className={clsx(
+                            "text-xs font-medium",
+                            policy.complianceRate >= 90 ? "text-emerald-600" : policy.complianceRate >= 75 ? "text-amber-600" : "text-red-600"
+                          )}>
+                            {policy.complianceRate}%
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -162,13 +211,13 @@ export default function Monitor() {
             政策覆盖率对比
           </h3>
           <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={mockPolicyFulfillments} layout="vertical">
+            <BarChart data={policies} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
               <XAxis type="number" domain={[0, 100]} unit="%" tick={{ fontSize: 11 }} />
               <YAxis dataKey="policyName" type="category" width={100} tick={{ fontSize: 10 }} />
               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
               <Bar dataKey="complianceRate" radius={[0, 4, 4, 0]}>
-                {mockPolicyFulfillments.map((entry) => (
+                {policies.map((entry: any) => (
                   <Cell key={entry.policyName} fill={entry.complianceRate >= 90 ? "#2d8a56" : entry.complianceRate >= 75 ? "#d4a843" : "#ef4444"} />
                 ))}
               </Bar>

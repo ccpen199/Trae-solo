@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
 import { useAppStore, roleLabels } from "@/store/useAppStore";
-import { mockServices, mockNews } from "@/data/mock";
+import { api } from "@/lib/api";
 import ServiceCard from "@/components/ServiceCard";
 import AnimatedNumber from "@/components/AnimatedNumber";
 import StatusBadge from "@/components/StatusBadge";
-import { MapPin, Clock, ArrowRight, Bus, Plane, FileText, Bell } from "lucide-react";
+import { MapPin, Clock, ArrowRight, Bus, Plane, FileText, Bell, Loader2 } from "lucide-react";
 
 const categoryColors: Record<string, string> = {
   policy: "bg-primary-100 text-primary-700",
@@ -36,7 +37,32 @@ function getGreeting() {
 
 export default function Home() {
   const { currentRole } = useAppStore();
-  const filteredServices = mockServices.filter((s) => s.roles.includes(currentRole));
+  const [services, setServices] = useState<any[]>([]);
+  const [news, setNews] = useState<any[]>([]);
+  const [stats, setStats] = useState<{ totalUsers: number; totalServices: number; avgSLA: number; citiesCovered: number } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    Promise.all([
+      api.services.list(currentRole),
+      api.news.list(),
+      api.stats(),
+    ]).then(([s, n, st]) => {
+      if (!alive) return;
+      setServices(s);
+      setNews(n);
+      setStats(st);
+      setLoading(false);
+    }).catch((e) => {
+      console.error("Failed to load home data:", e);
+      setLoading(false);
+    });
+    return () => { alive = false; };
+  }, [currentRole]);
+
+  const filteredServices = services;
   const quickServices = filteredServices.slice(0, 8);
 
   return (
@@ -139,19 +165,27 @@ export default function Home() {
             <h3 className="font-display font-bold text-lg text-gray-900 mb-4">平台概览</h3>
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-xl bg-white border border-gray-100 p-4 text-center">
-                <AnimatedNumber value={156} suffix="万" className="text-xl font-bold text-primary-900" />
+                {stats ? (
+                  <AnimatedNumber value={Math.round(stats.totalUsers / 10000)} suffix="万" className="text-xl font-bold text-primary-900" />
+                ) : <div className="h-7 animate-pulse bg-gray-200 rounded w-20 mx-auto" />}
                 <p className="text-xs text-gray-500 mt-1">注册用户</p>
               </div>
               <div className="rounded-xl bg-white border border-gray-100 p-4 text-center">
-                <AnimatedNumber value={328} suffix="项" className="text-xl font-bold text-emerald-700" />
+                {stats ? (
+                  <AnimatedNumber value={stats.totalServices} suffix="项" className="text-xl font-bold text-emerald-700" />
+                ) : <div className="h-7 animate-pulse bg-gray-200 rounded w-20 mx-auto" />}
                 <p className="text-xs text-gray-500 mt-1">在线服务</p>
               </div>
               <div className="rounded-xl bg-white border border-gray-100 p-4 text-center">
-                <AnimatedNumber value={99.7} suffix="%" decimals={1} className="text-xl font-bold text-gold-700" />
+                {stats ? (
+                  <AnimatedNumber value={stats.avgSLA} suffix="%" decimals={1} className="text-xl font-bold text-gold-700" />
+                ) : <div className="h-7 animate-pulse bg-gray-200 rounded w-20 mx-auto" />}
                 <p className="text-xs text-gray-500 mt-1">SLA达标率</p>
               </div>
               <div className="rounded-xl bg-white border border-gray-100 p-4 text-center">
-                <AnimatedNumber value={14} suffix="市" className="text-xl font-bold text-primary-700" />
+                {stats ? (
+                  <AnimatedNumber value={stats.citiesCovered} suffix="市" className="text-xl font-bold text-primary-700" />
+                ) : <div className="h-7 animate-pulse bg-gray-200 rounded w-20 mx-auto" />}
                 <p className="text-xs text-gray-500 mt-1">全域覆盖</p>
               </div>
             </div>
@@ -163,25 +197,45 @@ export default function Home() {
               <Bell className="w-4 h-4 text-gray-400" />
             </div>
             <div className="bg-white rounded-xl border border-gray-100 divide-y divide-gray-50">
-              {mockNews.map((news) => (
-                <div key={news.id} className="p-4 hover:bg-gray-50/50 transition-colors cursor-pointer">
-                  <div className="flex items-start gap-3">
-                    <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${categoryColors[news.category]}`}>
-                      {categoryLabels[news.category]}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-gray-900 leading-snug">{news.title}</h4>
-                      <p className="text-xs text-gray-500 mt-1 line-clamp-1">{news.summary}</p>
+              {loading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-4 bg-gray-200 rounded animate-pulse" />
+                      <div className="flex-1 space-y-2">
+                        <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4" />
+                        <div className="h-3 bg-gray-100 rounded animate-pulse w-1/2" />
+                      </div>
                     </div>
                   </div>
-                  <p className="text-[10px] text-gray-400 mt-2 ml-[52px]">{news.time}</p>
+                ))
+              ) : news.length === 0 ? (
+                <div className="p-8 text-center text-gray-400 flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4" />暂无资讯
                 </div>
-              ))}
-              <div className="p-3 text-center">
-                <button className="text-xs text-primary-600 hover:text-primary-700 font-medium inline-flex items-center gap-1">
-                  查看更多 <ArrowRight className="w-3 h-3" />
-                </button>
-              </div>
+              ) : (
+                news.map((item) => (
+                  <div key={item.id} className="p-4 hover:bg-gray-50/50 transition-colors cursor-pointer">
+                    <div className="flex items-start gap-3">
+                      <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5 ${categoryColors[item.category]}`}>
+                        {categoryLabels[item.category]}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-gray-900 leading-snug">{item.title}</h4>
+                        <p className="text-xs text-gray-500 mt-1 line-clamp-1">{item.summary}</p>
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-gray-400 mt-2 ml-[52px]">{item.time}</p>
+                  </div>
+                ))
+              )}
+              {!loading && news.length > 0 && (
+                <div className="p-3 text-center">
+                  <button className="text-xs text-primary-600 hover:text-primary-700 font-medium inline-flex items-center gap-1">
+                    查看更多 <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              )}
             </div>
           </section>
 

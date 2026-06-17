@@ -5,10 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:frontend": "vite",
+    "dev:backend": "cd backend && npm run dev",
     "build": "tsc -b && vite build",
+    "build:backend": "cd backend && npm run build",
+    "start:backend": "cd backend && npm run start",
     "lint": "eslint .",
     "preview": "vite preview",
-    "check": "tsc -b --noEmit"
+    "check": "tsc -b --noEmit",
+    "check:backend": "cd backend && npm run check",
+    "install:all": "npm install && cd backend && npm install"
   },
   "dependencies": {
     "clsx": "^2.1.1",

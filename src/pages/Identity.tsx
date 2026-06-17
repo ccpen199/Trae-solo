@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { useAppStore, roleLabels, type UserRole } from "@/store/useAppStore";
-import { mockIdentityProviders } from "@/data/mock";
+import { api } from "@/lib/api";
 import StatusBadge from "@/components/StatusBadge";
-import { Shield, Cloud, CreditCard, Smartphone, CheckCircle2, AlertCircle, ArrowRight } from "lucide-react";
+import { Shield, Cloud, CreditCard, Smartphone, CheckCircle2, AlertCircle, ArrowRight, Loader2 } from "lucide-react";
 import { clsx } from "clsx";
 
 const providerIcons: Record<string, React.ReactNode> = {
@@ -34,6 +35,22 @@ const roleIconColors: Record<UserRole, string> = {
 
 export default function Identity() {
   const { currentRole, setCurrentRole } = useAppStore();
+  const [providers, setProviders] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    api.identity.providers().then((data) => {
+      if (!alive) return;
+      setProviders(data);
+      setLoading(false);
+    }).catch((e) => {
+      console.error(e);
+      setLoading(false);
+    });
+    return () => { alive = false; };
+  }, []);
 
   return (
     <div className="p-6 max-w-[1400px] mx-auto">
@@ -50,19 +67,28 @@ export default function Identity() {
               身份认证通道
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {mockIdentityProviders.map((provider) => (
-                <div key={provider.provider} className="rounded-xl border border-gray-100 p-4 text-center hover-lift cursor-pointer">
-                  <div className={clsx(
-                    "w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center",
-                    provider.status === "connected" ? "bg-emerald-50 text-emerald-600" : provider.status === "expired" ? "bg-red-50 text-red-500" : "bg-gray-50 text-gray-400"
-                  )}>
-                    {providerIcons[provider.provider]}
+              {loading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="rounded-xl border border-gray-100 p-4 text-center space-y-2">
+                    <div className="w-12 h-12 rounded-xl bg-gray-100 animate-pulse mx-auto" />
+                    <div className="h-4 bg-gray-200 rounded animate-pulse w-20 mx-auto" />
                   </div>
-                  <p className="text-sm font-semibold text-gray-900 mb-1">{provider.label}</p>
-                  <StatusBadge status={provider.status} />
-                  <p className="text-[10px] text-gray-400 mt-2">最近认证：{provider.lastAuth}</p>
-                </div>
-              ))}
+                ))
+              ) : (
+                providers.map((provider) => (
+                  <div key={provider.provider} className="rounded-xl border border-gray-100 p-4 text-center hover-lift cursor-pointer">
+                    <div className={clsx(
+                      "w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center",
+                      provider.status === "connected" ? "bg-emerald-50 text-emerald-600" : provider.status === "expired" ? "bg-red-50 text-red-500" : "bg-gray-50 text-gray-400"
+                    )}>
+                      {providerIcons[provider.provider]}
+                    </div>
+                    <p className="text-sm font-semibold text-gray-900 mb-1">{provider.label}</p>
+                    <StatusBadge status={provider.status} />
+                    <p className="text-[10px] text-gray-400 mt-2">最近认证：{provider.lastAuth}</p>
+                  </div>
+                ))
+              )}
             </div>
           </section>
 
@@ -125,7 +151,7 @@ export default function Identity() {
             </div>
             <div className="flex items-center gap-2 text-xs text-primary-200">
               <AlertCircle className="w-3.5 h-3.5" />
-              已连接 {mockIdentityProviders.filter((p) => p.status === "connected").length}/{mockIdentityProviders.length} 个认证源
+              已连接 {providers.filter((p) => p.status === "connected").length}/{providers.length || 4} 个认证源
             </div>
           </section>
 
