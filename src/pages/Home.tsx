@@ -527,15 +527,10 @@ export default function Home() {
 
           <section>
             <div className="flex items-center justify-between mb-4">
-              <button
-                type="button"
-                onClick={() => navigate('/shop')}
-                className="text-left rounded-2xl -m-2 p-2 hover:bg-forest-50 transition-colors"
-                aria-label="热门商品 去商城"
-              >
+              <div>
                 <h2 className="section-title">热门商品</h2>
                 <p className="section-subtitle">铲屎官都在买</p>
-              </button>
+              </div>
               <button
                 onClick={() => navigate('/shop')}
                 className="btn-ghost text-sm"
