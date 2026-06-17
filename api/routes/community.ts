@@ -97,6 +97,40 @@ const mockPosts: CommunityPost[] = [
   },
 ]
 
+const getCategories = () => {
+  const categories: PostCategory[] = ['knowledge', 'story', 'question', 'vet-article']
+  return categories.map(cat => ({ key: cat, label: categoryLabels[cat] }))
+}
+
+router.get('/categories', async (req: Request, res: Response): Promise<void> => {
+  res.status(200).json({
+    success: true,
+    data: getCategories(),
+  })
+})
+
+router.get('/categories/all', async (req: Request, res: Response): Promise<void> => {
+  res.status(200).json({
+    success: true,
+    data: getCategories(),
+  })
+})
+
+router.get('/discover/summary', async (req: Request, res: Response): Promise<void> => {
+  const categoryCounts = getCategories().map(category => ({
+    ...category,
+    count: mockPosts.filter(post => post.category === category.key).length,
+  }))
+  res.status(200).json({
+    success: true,
+    data: {
+      categories: categoryCounts,
+      featured: mockPosts.slice(0, 3),
+      totalPosts: mockPosts.length,
+    },
+  })
+})
+
 router.get('/', async (req: Request, res: Response): Promise<void> => {
   const { category, tag, sort = 'latest', limit = 20 } = req.query
   let posts = [...mockPosts]
@@ -169,14 +203,6 @@ router.post('/:id/like', async (req: Request, res: Response): Promise<void> => {
   res.status(200).json({
     success: true,
     data: { likes: post.likes },
-  })
-})
-
-router.get('/categories/all', async (req: Request, res: Response): Promise<void> => {
-  const categories: PostCategory[] = ['knowledge', 'story', 'question', 'vet-article']
-  res.status(200).json({
-    success: true,
-    data: categories.map(cat => ({ key: cat, label: categoryLabels[cat] })),
   })
 })
 

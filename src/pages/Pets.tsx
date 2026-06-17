@@ -24,8 +24,8 @@ const healthIconMap: Record<string, typeof Syringe> = {
 };
 
 const speciesAvatarMap: Record<Species, string> = {
-  dog: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=adorable%20golden%20retriever%20puppy%20portrait%20fluffy%20happy%20face%20soft%20studio%20lighting&image_size=square",
-  cat: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20british%20shorthair%20cat%20portrait%20round%20face%20big%20eyes%20soft%20pastel%20background&image_size=square",
+  dog: "/api/ide/v1/text_to_image?prompt=adorable%20golden%20retriever%20puppy%20portrait%20fluffy%20happy%20face%20soft%20studio%20lighting&image_size=square",
+  cat: "/api/ide/v1/text_to_image?prompt=cute%20british%20shorthair%20cat%20portrait%20round%20face%20big%20eyes%20soft%20pastel%20background&image_size=square",
 };
 
 export default function Pets() {
@@ -336,7 +336,7 @@ export default function Pets() {
                   type="submit"
                   className="flex-1 py-3 rounded-xl bg-gradient-to-r from-brand-orange to-brand-orange-light text-white font-medium shadow-soft hover:shadow-hover transition-all"
                 >
-                  确认添加
+                  提交档案
                 </button>
               </div>
             </form>

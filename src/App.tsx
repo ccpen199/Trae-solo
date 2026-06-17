@@ -4,6 +4,7 @@ import Dashboard from "@/pages/Dashboard";
 import Translate from "@/pages/Translate";
 import Album from "@/pages/Album";
 import Community from "@/pages/Community";
+import CommunityPostDetail from "@/pages/CommunityPostDetail";
 import SymptomCheck from "@/pages/SymptomCheck";
 import Pets from "@/pages/Pets";
 import PetDetail from "@/pages/PetDetail";
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/album" element={<Album />} />
             <Route path="/community" element={<Community />} />
             <Route path="/community/symptom-check" element={<SymptomCheck />} />
+            <Route path="/community/:id" element={<CommunityPostDetail />} />
             <Route path="/pets" element={<Pets />} />
             <Route path="/pets/:id" element={<PetDetail />} />
             <Route path="/training" element={<Training />} />

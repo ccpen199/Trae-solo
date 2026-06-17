@@ -80,6 +80,9 @@ const statusConfig: Record<
   },
 };
 
+const adminAvatar = (seed: string) =>
+  `/api/ide/v1/text_to_image?prompt=pet%20community%20moderator%20avatar%20${seed}&image_size=square`;
+
 const mockReviews: ContentReviewItem[] = [
   {
     id: "r1",
@@ -90,7 +93,7 @@ const mockReviews: ContentReviewItem[] = [
     flaggedReason: ["广告推广", "违规交易", "联系方式外露"],
     submitterName: "匿名用户A",
     submittedAt: "2026-06-15 15:20",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=userA",
+    avatar: adminAvatar("userA"),
   },
   {
     id: "r2",
@@ -101,7 +104,7 @@ const mockReviews: ContentReviewItem[] = [
     flaggedReason: ["恶意言论", "人身攻击", "不友善内容"],
     submitterName: "用户B",
     submittedAt: "2026-06-15 13:45",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=userB",
+    avatar: adminAvatar("userB"),
   },
   {
     id: "r3",
@@ -111,7 +114,7 @@ const mockReviews: ContentReviewItem[] = [
     flaggedReason: ["敏感图片", "血腥暴力"],
     submitterName: "用户C",
     submittedAt: "2026-06-15 11:30",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=userC",
+    avatar: adminAvatar("userC"),
   },
   {
     id: "r4",
@@ -122,7 +125,7 @@ const mockReviews: ContentReviewItem[] = [
     flaggedReason: ["未经证实的谣言", "恶意抹黑商家"],
     submitterName: "用户D",
     submittedAt: "2026-06-15 10:00",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=userD",
+    avatar: adminAvatar("userD"),
   },
   {
     id: "r5",
@@ -133,7 +136,7 @@ const mockReviews: ContentReviewItem[] = [
     flaggedReason: ["诱导私聊", "可疑链接", "垃圾信息"],
     submitterName: "匿名用户E",
     submittedAt: "2026-06-15 08:20",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=userE",
+    avatar: adminAvatar("userE"),
   },
   {
     id: "r6",
@@ -144,7 +147,7 @@ const mockReviews: ContentReviewItem[] = [
     flaggedReason: ["可能存在争议"],
     submitterName: "用户F",
     submittedAt: "2026-06-14 20:15",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=userF",
+    avatar: adminAvatar("userF"),
   },
   {
     id: "r7",
@@ -154,7 +157,7 @@ const mockReviews: ContentReviewItem[] = [
     flaggedReason: ["算法误判"],
     submitterName: "用户G",
     submittedAt: "2026-06-14 18:30",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=userG",
+    avatar: adminAvatar("userG"),
   },
   {
     id: "r8",
@@ -164,7 +167,7 @@ const mockReviews: ContentReviewItem[] = [
     flaggedReason: ["公开他人隐私", "需核实真实性"],
     submitterName: "用户H",
     submittedAt: "2026-06-14 16:00",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=userH",
+    avatar: adminAvatar("userH"),
   },
 ];
 

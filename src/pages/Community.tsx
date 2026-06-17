@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../store/useAppStore";
 import {
   BadgeCheck,
@@ -13,15 +14,20 @@ import {
   Sparkles,
   Bookmark,
   Share2,
+  ShoppingCart,
+  CheckCircle,
 } from "lucide-react";
 import type { PostCategory, CommunityPost, FeedingPlan, Pet } from "../../shared/types";
 import { CATEGORY_TABS, CATEGORY_BADGE, CATEGORY_LABEL, VET_AVATAR } from "../data/communityConfig";
 
 export default function Community() {
+  const navigate = useNavigate();
   const { posts, feedingPlans, pets } = useAppStore();
   const [activeCategory, setActiveCategory] = useState<PostCategory | "all">("all");
   const [liked, setLiked] = useState<Set<string>>(new Set());
   const [searchText, setSearchText] = useState("");
+  const [submittedPlanIds, setSubmittedPlanIds] = useState<Set<string>>(new Set());
+  const [consultSubmitted, setConsultSubmitted] = useState(false);
 
   const filteredPosts = useMemo(() => {
     let list = posts;
@@ -44,6 +50,26 @@ export default function Community() {
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
+
+  const submitPurchasePlan = async (plan: FeedingPlan) => {
+    try {
+      await fetch("/api/orders/purchase", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          planId: plan.id,
+          petName: plan.petName,
+          items: [...plan.recommendedFoods.slice(0, 2), ...plan.supplements.slice(0, 1)],
+        }),
+      });
+    } finally {
+      setSubmittedPlanIds((prev) => {
+        const next = new Set(prev);
+        next.add(plan.id);
+        return next;
+      });
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
@@ -70,6 +96,15 @@ export default function Community() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <div className="card">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 className="font-display text-lg text-warm-brown">发现分类</h2>
+                <p className="text-xs text-warm-gray">按知识、故事、问答和兽医专栏筛选内容</p>
+              </div>
+              <span className="badge bg-cream-100 text-warm-gray">
+                {filteredPosts.length} 篇
+              </span>
+            </div>
             <div className="flex flex-wrap gap-2">
               {CATEGORY_TABS.map((tab) => {
                 const Icon = tab.icon;
@@ -110,6 +145,7 @@ export default function Community() {
                     badge={badge}
                     isLiked={isLiked}
                     onToggleLike={toggleLike}
+                    onOpen={() => navigate(`/community/${post.id}`)}
                     idx={idx}
                   />
                 );
@@ -119,7 +155,11 @@ export default function Community() {
         </div>
 
         <div className="space-y-6">
-          <div className="card bg-gradient-to-br from-brand-orange via-brand-orange-light to-accent-sunny/60 border-0 text-white cursor-pointer hover:scale-[1.02] transition-transform duration-300 group">
+          <button
+            type="button"
+            onClick={() => navigate("/community/symptom-check")}
+            className="card w-full text-left bg-gradient-to-br from-brand-orange via-brand-orange-light to-accent-sunny/60 border-0 text-white cursor-pointer hover:scale-[1.02] transition-transform duration-300 group"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-2xl bg-white/25 backdrop-blur flex items-center justify-center">
                 <AlertTriangle className="w-6 h-6" />
@@ -135,7 +175,7 @@ export default function Community() {
             <div className="inline-flex items-center gap-1 text-sm font-medium group-hover:gap-2 transition-all">
               立即开始自查 <ArrowRight className="w-4 h-4" />
             </div>
-          </div>
+          </button>
 
           <div className="card">
             <div className="flex items-center gap-2 mb-5">
@@ -145,7 +185,16 @@ export default function Community() {
             <div className="space-y-4">
               {feedingPlans.map((plan, idx) => {
                 const pet = pets.find((p) => p.name === plan.petName);
-                return <FeedingCard key={plan.id} plan={plan} pet={pet} idx={idx} />;
+                return (
+                  <FeedingCard
+                    key={plan.id}
+                    plan={plan}
+                    pet={pet}
+                    idx={idx}
+                    submitted={submittedPlanIds.has(plan.id)}
+                    onSubmit={() => submitPurchasePlan(plan)}
+                  />
+                );
               })}
             </div>
           </div>
@@ -164,8 +213,12 @@ export default function Community() {
                 </div>
                 <div className="text-xs text-warm-gray">临床兽医学博士 · 10年经验</div>
               </div>
-              <button className="text-xs px-3 py-1.5 rounded-lg bg-brand-mint/15 text-brand-mint-dark font-medium hover:bg-brand-mint/25 transition">
-                咨询
+              <button
+                onClick={() => setConsultSubmitted(true)}
+                className="text-xs px-3 py-1.5 rounded-lg bg-brand-mint/15 text-brand-mint-dark font-medium hover:bg-brand-mint/25 transition inline-flex items-center gap-1"
+              >
+                {consultSubmitted ? <CheckCircle className="w-3 h-3" /> : null}
+                {consultSubmitted ? "已提交咨询" : "提交咨询"}
               </button>
             </div>
           </div>
@@ -180,17 +233,20 @@ function PostCard({
   badge,
   isLiked,
   onToggleLike,
+  onOpen,
   idx,
 }: {
   post: CommunityPost;
   badge: { bg: string; text: string };
   isLiked: boolean;
   onToggleLike: (id: string) => void;
+  onOpen: () => void;
   idx: number;
 }) {
   return (
     <article
-      className="card animate-slide-up"
+      className="card animate-slide-up cursor-pointer"
+      onClick={onOpen}
       style={{ animationDelay: `${idx * 60}ms` }}
     >
       <div className="flex gap-4">
@@ -228,7 +284,10 @@ function PostCard({
 
           <div className="flex items-center gap-2 pt-3 border-t border-cream-100">
             <button
-              onClick={() => onToggleLike(post.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleLike(post.id);
+              }}
               className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm transition ${
                 isLiked ? "bg-brand-orange/10 text-brand-orange-dark" : "text-warm-gray hover:bg-cream-100"
               }`}
@@ -236,15 +295,34 @@ function PostCard({
               <Heart className={`w-4 h-4 ${isLiked ? "fill-brand-orange text-brand-orange" : ""}`} />
               {post.likes + (isLiked ? 1 : 0)}
             </button>
-            <button className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm text-warm-gray hover:bg-cream-100 transition">
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm text-warm-gray hover:bg-cream-100 transition"
+            >
               <MessageCircle className="w-4 h-4" />
               {post.comments}
             </button>
-            <button className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm text-warm-gray hover:bg-cream-100 transition ml-auto">
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm text-warm-gray hover:bg-cream-100 transition ml-auto"
+            >
               <Bookmark className="w-4 h-4" />
             </button>
-            <button className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm text-warm-gray hover:bg-cream-100 transition">
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm text-warm-gray hover:bg-cream-100 transition"
+            >
               <Share2 className="w-4 h-4" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpen();
+              }}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm bg-brand-mint/10 text-brand-mint-dark hover:bg-brand-mint/20 transition"
+            >
+              查看详情
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -253,7 +331,19 @@ function PostCard({
   );
 }
 
-function FeedingCard({ plan, pet, idx }: { plan: FeedingPlan; pet?: Pet; idx: number }) {
+function FeedingCard({
+  plan,
+  pet,
+  idx,
+  submitted,
+  onSubmit,
+}: {
+  plan: FeedingPlan;
+  pet?: Pet;
+  idx: number;
+  submitted: boolean;
+  onSubmit: () => void;
+}) {
   return (
     <div
       className="p-4 rounded-2xl bg-gradient-to-r from-brand-mint/5 via-cream-50 to-brand-orange/5 border border-cream-100 animate-slide-up"
@@ -288,8 +378,25 @@ function FeedingCard({ plan, pet, idx }: { plan: FeedingPlan; pet?: Pet; idx: nu
         </div>
       </div>
 
-      <button className="w-full mt-3 py-2 rounded-xl bg-white text-xs font-medium text-brand-mint-dark border border-brand-mint/20 hover:bg-brand-mint/5 transition">
-        查看完整方案 →
+      <button
+        onClick={onSubmit}
+        className={`w-full mt-3 py-2 rounded-xl text-xs font-medium border transition inline-flex items-center justify-center gap-1 ${
+          submitted
+            ? "bg-brand-mint/10 text-brand-mint-dark border-brand-mint/20"
+            : "bg-white text-brand-mint-dark border-brand-mint/20 hover:bg-brand-mint/5"
+        }`}
+      >
+        {submitted ? (
+          <>
+            <CheckCircle className="w-3.5 h-3.5" />
+            已提交购买清单
+          </>
+        ) : (
+          <>
+            <ShoppingCart className="w-3.5 h-3.5" />
+            查看完整方案并提交购买
+          </>
+        )}
       </button>
     </div>
   );

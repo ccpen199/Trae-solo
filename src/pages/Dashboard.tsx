@@ -14,6 +14,13 @@ import {
   ThumbsUp,
   Activity,
   BarChart3,
+  Stethoscope,
+  UtensilsCrossed,
+  ShieldAlert,
+  FileText,
+  AlertTriangle,
+  CheckCircle2,
+  Clock as ClockIcon,
 } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 
@@ -54,7 +61,7 @@ export default function Dashboard() {
     {
       id: "community",
       label: "萌宠社区",
-      desc: "分享与交流",
+      desc: "发现分类与问答",
       icon: Users,
       color: "from-accent-pink to-pink-300",
       shadow: "shadow-soft",
@@ -136,6 +143,10 @@ export default function Dashboard() {
                       </span>
                     ))}
                   </div>
+                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-brand-orange">
+                    查看详情
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </span>
                 </div>
                 <ChevronRight className="w-5 h-5 text-warm-gray/50 group-hover:text-brand-orange transition-colors shrink-0 mt-2" />
               </div>
@@ -245,6 +256,59 @@ export default function Dashboard() {
         <section className="lg:col-span-2 animate-stagger-4">
           <div className="flex items-center justify-between mb-4">
             <h2 className="section-title !mb-0 flex items-center gap-2">
+              <Sparkles className="w-6 h-6 text-brand-orange" />
+              智能服务
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            <button
+              onClick={() => navigate("/community/symptom-check")}
+              className="card text-left p-4 hover:shadow-lg transition-all group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-400/15 to-orange-400/15 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <Stethoscope className="w-5 h-5 text-red-500" />
+              </div>
+              <div className="font-medium text-warm-brown text-sm mb-1">疾病症状自查</div>
+              <div className="text-[11px] text-warm-gray mb-2">AI 决策树引导，快速定位风险</div>
+              <div className="flex items-center gap-1 text-[10px] text-warm-gray/70">
+                <FileText className="w-3 h-3" />
+                <span>27 种常见症状覆盖</span>
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/community", { state: { feedPlan: true } })}
+              className="card text-left p-4 hover:shadow-lg transition-all group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-mint/15 to-green-400/15 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <UtensilsCrossed className="w-5 h-5 text-brand-mint-dark" />
+              </div>
+              <div className="font-medium text-warm-brown text-sm mb-1">个性化喂养方案</div>
+              <div className="text-[11px] text-warm-gray mb-2">品种+年龄+体重智能推荐</div>
+              <div className="flex items-center gap-1 text-[10px] text-warm-gray/70">
+                <CheckCircle2 className="w-3 h-3 text-brand-mint" />
+                <span>已为 128 位宠主定制</span>
+              </div>
+            </button>
+            <button
+              onClick={() => navigate("/admin/content-safety")}
+              className="card text-left p-4 hover:shadow-lg transition-all group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-sky/15 to-indigo-400/15 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <ShieldAlert className="w-5 h-5 text-sky-600" />
+              </div>
+              <div className="font-medium text-warm-brown text-sm mb-1">内容安全复查</div>
+              <div className="text-[11px] text-warm-gray mb-2">AI 审核 + 人工兜底双保险</div>
+              <div className="flex items-center gap-1 text-[10px] text-warm-gray/70">
+                <ClockIcon className="w-3 h-3 text-accent-sky" />
+                <span>3 条待复查 · 127 条已通过</span>
+              </div>
+            </button>
+          </div>
+        </section>
+
+        <section className="lg:col-span-2 animate-stagger-4">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="section-title !mb-0 flex items-center gap-2">
               <Users className="w-6 h-6 text-brand-mint" />
               社区推荐
             </h2>
@@ -261,7 +325,7 @@ export default function Dashboard() {
               <article
                 key={post.id}
                 className={`card cursor-pointer animate-stagger-${idx + 1}`}
-                onClick={() => navigate("/community")}
+                onClick={() => navigate(`/community/${post.id}`)}
               >
                 <div className="flex items-start gap-3">
                   <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border border-cream-200">

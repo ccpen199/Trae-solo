@@ -88,6 +88,26 @@ const mockPhotos: Photo[] = [
   },
 ]
 
+const getAutoTags = () => allPhotoTags.map(tag => ({ key: tag, label: photoTagLabels[tag] }))
+
+router.get('/tags', async (req: Request, res: Response): Promise<void> => {
+  res.status(200).json({
+    success: true,
+    data: {
+      autoTags: getAutoTags(),
+    },
+  })
+})
+
+router.get('/tags/all', async (req: Request, res: Response): Promise<void> => {
+  res.status(200).json({
+    success: true,
+    data: {
+      autoTags: getAutoTags(),
+    },
+  })
+})
+
 router.get('/', async (req: Request, res: Response): Promise<void> => {
   const { petId, tag, limit = 50 } = req.query
   let photos = [...mockPhotos]
@@ -171,15 +191,6 @@ router.delete('/:id', async (req: Request, res: Response): Promise<void> => {
   mockPhotos.splice(index, 1)
   res.status(200).json({
     success: true,
-  })
-})
-
-router.get('/tags/all', async (req: Request, res: Response): Promise<void> => {
-  res.status(200).json({
-    success: true,
-    data: {
-      autoTags: allPhotoTags.map(tag => ({ key: tag, label: photoTagLabels[tag] })),
-    },
   })
 })
 

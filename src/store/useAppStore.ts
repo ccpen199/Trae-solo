@@ -50,6 +50,9 @@ interface AppState {
   triggerFineTune: () => void;
 }
 
+const localGeneratedImage = (url: string) =>
+  url.replace("https://trae-api-cn.mchost.guru", "");
+
 const mockUser: User = {
   id: "u1",
   name: "小林",
@@ -747,11 +750,21 @@ const mockFeedingPlans: FeedingPlan[] = [
 ];
 
 export const useAppStore = create<AppState>((set) => ({
-  currentUser: mockUser,
-  pets: mockPets,
+  currentUser: { ...mockUser, avatar: localGeneratedImage(mockUser.avatar) },
+  pets: mockPets.map((pet) => ({
+    ...pet,
+    avatar: localGeneratedImage(pet.avatar),
+  })),
   analyses: mockAnalyses,
-  photos: mockPhotos,
-  posts: mockPosts,
+  photos: mockPhotos.map((photo) => ({
+    ...photo,
+    imageUrl: localGeneratedImage(photo.imageUrl),
+    thumbnailUrl: localGeneratedImage(photo.thumbnailUrl),
+  })),
+  posts: mockPosts.map((post) => ({
+    ...post,
+    authorAvatar: localGeneratedImage(post.authorAvatar),
+  })),
   trainingRecords: mockTrainingRecords,
   weeklyReport: mockWeeklyReport,
   samples: mockSamples,

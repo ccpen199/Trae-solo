@@ -33,4 +33,4 @@ export const CATEGORY_LABEL: Record<string, string> = {
 };
 
 export const VET_AVATAR =
-  "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20asian%20veterinarian%20doctor%20portrait%20in%20white%20coat%20friendly%20smile%20clinic%20background&image_size=square";
+  "/api/ide/v1/text_to_image?prompt=professional%20asian%20veterinarian%20doctor%20portrait%20in%20white%20coat%20friendly%20smile%20clinic%20background&image_size=square";

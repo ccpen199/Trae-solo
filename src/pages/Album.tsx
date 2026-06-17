@@ -89,8 +89,8 @@ export default function Album() {
     addPhoto({
       id,
       petId: pets[0]?.id ?? "p1",
-      imageUrl: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20pet%20adorable%20happy%20warm%20cozy%20sunny%20pastel%20fluffy&image_size=portrait_4_3",
-      thumbnailUrl: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20pet%20adorable%20happy%20warm%20cozy%20sunny%20pastel%20fluffy&image_size=square",
+      imageUrl: "/api/ide/v1/text_to_image?prompt=cute%20pet%20adorable%20happy%20warm%20cozy%20sunny%20pastel%20fluffy&image_size=portrait_4_3",
+      thumbnailUrl: "/api/ide/v1/text_to_image?prompt=cute%20pet%20adorable%20happy%20warm%20cozy%20sunny%20pastel%20fluffy&image_size=square",
       autoTags: ["playing"],
       userTags: [],
       filterApplied: null,
@@ -122,6 +122,7 @@ export default function Album() {
     return (
       <div
         key={photo.id}
+        onClick={() => setEditingPhoto(photo)}
         className={`relative group rounded-3xl overflow-hidden mb-4 shadow-soft border border-cream-100 transition-all duration-500 cursor-pointer ${isHovered ? "scale-[1.03] shadow-hover z-10" : ""}`}
         onMouseEnter={() => setHoveredId(photo.id)}
         onMouseLeave={() => setHoveredId(null)}
@@ -187,7 +188,7 @@ export default function Album() {
                 )}
               </div>
             )}
-            <div className="flex gap-2">
+          <div className="flex gap-2">
               <button
                 onClick={(e) => { e.stopPropagation(); setEditingPhoto(photo); }}
                 className="flex-1 py-2 rounded-xl bg-white/25 backdrop-blur text-white text-xs font-medium flex items-center justify-center gap-1 hover:bg-white/40 transition"
@@ -213,7 +214,20 @@ export default function Album() {
             </div>
           </div>
           <div className="flex gap-1.5 pointer-events-auto">
-            <button className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/40 transition">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setEditingPhoto(photo);
+              }}
+              className="px-3 h-8 rounded-full bg-white/25 backdrop-blur-sm flex items-center gap-1 text-white hover:bg-white/40 transition text-xs font-medium"
+            >
+              <Eye className="w-3.5 h-3.5" />
+              查看详情
+            </button>
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/40 transition"
+            >
               <Heart className="w-4 h-4" />
             </button>
           </div>

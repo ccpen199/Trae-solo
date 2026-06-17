@@ -66,6 +66,17 @@ export interface VoiceprintAnalysis {
     ownerText: string;
     petSound: string;
     playedDuration?: number;
+    played?: boolean;
+    templateSource: "quick-phrase" | "manual-input";
+    matchedKeyword?: string;
+    soundPattern: {
+      baseFreq: number;
+      duration: number;
+      intensity: number;
+      pattern: string;
+    };
+    modelVersion: string;
+    generatedAt: string;
   };
   reviewStatus?: ReviewStatus;
   reviewNote?: string;

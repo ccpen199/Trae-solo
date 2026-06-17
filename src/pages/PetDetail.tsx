@@ -10,6 +10,8 @@ import {
   TrendingUp,
   Dog,
   Cat,
+  Mic,
+  GraduationCap,
   Sparkles,
   Clock,
   Volume2,
@@ -134,6 +136,29 @@ export default function PetDetail() {
                   </span>
                 ))}
               </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => navigate("/translate", { state: { showHistory: true } })}
+                className="btn-ghost !py-2"
+              >
+                <Mic className="w-4 h-4" />
+                查看翻译详情
+              </button>
+              <button
+                onClick={() => navigate("/album")}
+                className="btn-ghost !py-2"
+              >
+                <Image className="w-4 h-4" />
+                查看相册详情
+              </button>
+              <button
+                onClick={() => navigate("/training")}
+                className="btn-primary !py-2"
+              >
+                <GraduationCap className="w-4 h-4" />
+                提交训练记录
+              </button>
             </div>
           </div>
         </div>

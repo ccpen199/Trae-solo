@@ -26,7 +26,7 @@ export default function Sidebar({ isAdmin = false }: SidebarProps) {
     { to: "/", icon: LayoutDashboard, label: "首页仪表盘", end: true },
     { to: "/translate", icon: MicVocal, label: "实时翻译" },
     { to: "/album", icon: Image, label: "萌宠相册" },
-    { to: "/community", icon: Users, label: "知识社区" },
+    { to: "/community", icon: Users, label: "发现分类" },
     { to: "/pets", icon: PawPrint, label: "宠物档案" },
     { to: "/training", icon: LineChart, label: "训练追踪" },
   ];
