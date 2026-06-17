@@ -179,14 +179,14 @@ export default function Login() {
   const statusBg = step === 'ok' ? '#f6ffed' : step === 'fail' ? '#fff2f0' : step === 'loading' ? '#e6f4ff' : '#fafafa';
   const statusBorder = step === 'ok' ? '#b7eb8f' : step === 'fail' ? '#ffccc7' : step === 'loading' ? '#91caff' : '#d9d9d9';
 
-  const errorCatMeta: Record<ErrorCategory, { icon: any; color: string; label: string; suggestions: string[] }> = {
-    empty:       { icon: <ExclamationCircleOutlined />, color: '#fa8c16', label: '必填项缺失', suggestions: ['补全用户名和密码后重试', '可直接点击下方演示账号卡片一键登录'] },
-    format:      { icon: <InfoCircleOutlined />,       color: '#1677ff', label: '格式校验失败', suggestions: ['用户名仅限字母/数字/下划线（2-20 字符）', '密码长度不低于 4 个字符'] },
-    credential:  { icon: <CloseCircleOutlined />,      color: '#ff4d4f', label: '凭据不匹配',   suggestions: ['确认使用正确的演示账号：admin / user1 / courier1', '默认密码均为 123456', '注意大小写和空格'] },
-    permission:  { icon: <WarningOutlined />,          color: '#722ed1', label: '权限边界不匹配', suggestions: ['确认账号角色与访问目标一致', '管理员账号仅对应 admin 入口'] },
-    network:     { icon: <ExclamationCircleOutlined />, color: '#d48806', label: '网络连接异常', suggestions: ['确认后端服务（59219 端口）已启动', '可在终端执行健康检查 /api/health'] },
-    server:      { icon: <ExclamationCircleOutlined />, color: '#cf1322', label: '服务器异常',   suggestions: ['后端出现运行时错误', '请查看后端日志定位堆栈'] },
-    unknown:     { icon: <InfoCircleOutlined />,       color: '#8c8c8c', label: '未知错误',     suggestions: ['稍后重试', '如持续出现请联系管理员'] },
+  const errorCatMeta: Record<ErrorCategory, { icon: React.ReactNode; color: string; label: string; suggestions: string[] }> = {
+    empty:       { icon: <ExclamationCircleOutlined style={{ color: '#fa8c16' }} />, color: '#fa8c16', label: '必填项缺失', suggestions: ['补全用户名和密码后重试', '可直接点击下方演示账号卡片一键登录'] },
+    format:      { icon: <InfoCircleOutlined style={{ color: '#1677ff' }} />,       color: '#1677ff', label: '格式校验失败', suggestions: ['用户名仅限字母/数字/下划线（2-20 字符）', '密码长度不低于 4 个字符'] },
+    credential:  { icon: <CloseCircleOutlined style={{ color: '#ff4d4f' }} />,      color: '#ff4d4f', label: '凭据不匹配',   suggestions: ['确认使用正确的演示账号：admin / user1 / courier1', '默认密码均为 123456', '注意大小写和空格'] },
+    permission:  { icon: <WarningOutlined style={{ color: '#722ed1' }} />,          color: '#722ed1', label: '权限边界不匹配', suggestions: ['确认账号角色与访问目标一致', '管理员账号仅对应 admin 入口'] },
+    network:     { icon: <ExclamationCircleOutlined style={{ color: '#d48806' }} />, color: '#d48806', label: '网络连接异常', suggestions: ['确认后端服务（59219 端口）已启动', '可在终端执行健康检查 /api/health'] },
+    server:      { icon: <ExclamationCircleOutlined style={{ color: '#cf1322' }} />, color: '#cf1322', label: '服务器异常',   suggestions: ['后端出现运行时错误', '请查看后端日志定位堆栈'] },
+    unknown:     { icon: <InfoCircleOutlined style={{ color: '#8c8c8c' }} />,       color: '#8c8c8c', label: '未知错误',     suggestions: ['稍后重试', '如持续出现请联系管理员'] },
   };
 
   return (
@@ -285,7 +285,7 @@ export default function Login() {
             <Alert
               type="error"
               showIcon
-              icon={React.createElement(errorCatMeta[errCategory].icon, { style: { color: errorCatMeta[errCategory].color } })}
+              icon={errorCatMeta[errCategory].icon}
               message={
                 <Space>
                   <Tag color={errorCatMeta[errCategory].color} style={{ margin: 0 }}>
