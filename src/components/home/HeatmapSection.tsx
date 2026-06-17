@@ -61,6 +61,7 @@ export default function HeatmapSection() {
   const [showDetail, setShowDetail] = useState(false)
   const [locChangeNote, setLocChangeNote] = useState<string | null>(null)
   const [prevLocLabel, setPrevLocLabel] = useState<string>('默认松江')
+  const [expandedStreet, setExpandedStreet] = useState<string | null>(null)
 
   const effectiveCoords = {
     lat: locInfo.lat,
@@ -247,32 +248,99 @@ export default function HeatmapSection() {
           </p>
           <div className="space-y-1">
             {(locInfo.source === 'default'
-              ? [['方松街道', 22, 87], ['广富林街道', 18, 82], ['中山街道', 15, 75], ['岳阳街道', 12, 70], ['泗泾镇', 10, 68]]
+              ? [['方松街道', 22, 87, 128, 4.6, 0.22], ['广富林街道', 18, 82, 96, 4.5, 0.18], ['中山街道', 15, 75, 88, 4.4, 0.15], ['岳阳街道', 12, 70, 72, 4.3, 0.12], ['泗泾镇', 10, 68, 56, 4.2, 0.10]]
               : locInfo.source === 'gps'
-              ? [['广富林街道', 25, 90], ['方松街道', 20, 85], ['中山街道', 16, 78], ['岳阳街道', 14, 72], ['佘山镇', 11, 65]]
-              : [['中山街道', 23, 88], ['广富林街道', 19, 84], ['方松街道', 17, 80], ['岳阳街道', 13, 71], ['车墩镇', 9, 66]]
+              ? [['广富林街道', 25, 90, 96, 4.5, 0.25], ['方松街道', 20, 85, 128, 4.6, 0.20], ['中山街道', 16, 78, 88, 4.4, 0.16], ['岳阳街道', 14, 72, 72, 4.3, 0.14], ['佘山镇', 11, 65, 48, 4.1, 0.11]]
+              : [['中山街道', 23, 88, 88, 4.4, 0.23], ['广富林街道', 19, 84, 96, 4.5, 0.19], ['方松街道', 17, 80, 128, 4.6, 0.17], ['岳阳街道', 13, 71, 72, 4.3, 0.13], ['车墩镇', 9, 66, 44, 4.0, 0.09]]
             ).map((item, i) => {
               const name = item[0] as string
               const weight = item[1] as number
               const heat = item[2] as number
+              const mCount = item[3] as number
+              const rating = item[4] as number
+              const distW = item[5] as number
               return (
-                <div key={name} className="flex items-center gap-1.5">
-                  <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${
-                    i === 0 ? 'bg-yellow-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-gray-200 text-gray-500'
-                  }`}>{i + 1}</span>
-                  <span className="text-[10px] text-gray-700 w-20 flex-shrink-0">{name}</span>
-                  <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
-                      style={{ width: `${heat}%` }}
-                    />
+                <div key={name}>
+                  <div className="flex items-center gap-1.5">
+                    <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${
+                      i === 0 ? 'bg-yellow-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-gray-200 text-gray-500'
+                    }`}>{i + 1}</span>
+                    <span className="text-[10px] text-gray-700 w-20 flex-shrink-0">{name}</span>
+                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                        style={{ width: `${heat}%` }}
+                      />
+                    </div>
+                    <span className="text-[9px] text-primary font-medium w-10 text-right">+{weight}%</span>
                   </div>
-                  <span className="text-[9px] text-primary font-medium w-10 text-right">+{weight}%</span>
+                  <div className="flex items-center gap-2 ml-5 text-[8px] text-gray-400 mt-0.5">
+                    <span>商户{mCount}家</span>
+                    <span>·</span>
+                    <span>评分{rating}</span>
+                    <span>·</span>
+                    <span>距离衰减+{(distW * 100).toFixed(0)}%</span>
+                    <span>·</span>
+                    <span>热度{(heat * 0.4).toFixed(0)}+评分{(rating * 0.3 * 10).toFixed(0)}+距离{(distW * 100 * 0.3).toFixed(0)}</span>
+                  </div>
                 </div>
               )
             })}
           </div>
           <p className="text-[9px] text-gray-400 mt-1.5">排序公式：热度40% + 评分30% + 距离衰减30%，切换定位来源后TOP5权重实时变化</p>
+        </div>
+        <div className="p-2 rounded-lg bg-white/70 mt-2">
+          <p className="text-[10px] text-gray-500 mb-1.5 flex items-center gap-0.5">
+            <Eye className="w-3 h-3 text-primary" />
+            定位来源切换后服务限制明细 · 可追溯
+          </p>
+          <table className="w-full text-[9px]">
+            <thead>
+              <tr className="text-gray-400 border-b border-gray-100">
+                <th className="text-left py-1 font-normal">定位来源</th>
+                <th className="text-center py-1 font-normal">精度</th>
+                <th className="text-center py-1 font-normal">推荐范围</th>
+                <th className="text-center py-1 font-normal">下单</th>
+                <th className="text-center py-1 font-normal">核销码</th>
+                <th className="text-center py-1 font-normal">报表</th>
+              </tr>
+            </thead>
+            <tbody className="font-mono">
+              <tr className="border-b border-gray-50">
+                <td className="py-1 text-gray-600 flex items-center gap-1"><Navigation className="w-2.5 h-2.5 text-primary" />GPS卫星</td>
+                <td className="text-center">±15m</td>
+                <td className="text-center">3km</td>
+                <td className="text-center text-secondary">✓</td>
+                <td className="text-center text-secondary">✓</td>
+                <td className="text-center text-secondary">✓</td>
+              </tr>
+              <tr className="border-b border-gray-50">
+                <td className="py-1 text-gray-600 flex items-center gap-1"><Wifi className="w-2.5 h-2.5 text-primary" />基站三角</td>
+                <td className="text-center">±200m</td>
+                <td className="text-center">5km</td>
+                <td className="text-center text-secondary">✓</td>
+                <td className="text-center text-secondary">✓</td>
+                <td className="text-center text-secondary">✓</td>
+              </tr>
+              <tr className="border-b border-gray-50">
+                <td className="py-1 text-gray-600 flex items-center gap-1"><MapPin className="w-2.5 h-2.5 text-gray-500" />默认松江</td>
+                <td className="text-center">±500m</td>
+                <td className="text-center">10km</td>
+                <td className="text-center text-secondary">✓</td>
+                <td className="text-center text-secondary">✓</td>
+                <td className="text-center text-secondary">✓</td>
+              </tr>
+              <tr>
+                <td className="py-1 text-danger flex items-center gap-1"><AlertTriangle className="w-2.5 h-2.5 text-danger" />区外定位</td>
+                <td className="text-center text-gray-400">N/A</td>
+                <td className="text-center text-danger">0km</td>
+                <td className="text-center text-danger">✗</td>
+                <td className="text-center text-danger">✗失效</td>
+                <td className="text-center text-danger">✗剔除</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="text-[8px] text-gray-400 mt-1">GPS精度最高推荐范围最小；基站三角覆盖更广；默认松江为中心点兜底；区外定位全部服务拦截</p>
         </div>
         {isInSongjiang ? (
           <div className="p-2 rounded-lg bg-white/70 mt-2">

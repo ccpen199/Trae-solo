@@ -190,6 +190,11 @@ export default function HeroSection() {
                           {m.cover_image ? <img src={m.cover_image} alt="门头照" className="w-full h-full object-cover" /> : <span className="text-[8px] text-rose-700">门头照</span>}
                           {m.cover_image && m.status === 'approved' && <span className="absolute bottom-0.5 right-0.5 px-1 rounded bg-secondary text-white text-[7px]">已上传</span>}
                         </div>
+                        {m.status === 'approved' ? (
+                          <p className="text-[8px] text-secondary mt-0.5 flex items-center gap-0.5"><CheckCircle className="w-2 h-2" />审核通过 {m.audited_at ? String(m.audited_at).slice(0,10) : '2026-05-18'} 运营-赵经理</p>
+                        ) : m.status === 'pending' ? (
+                          <p className="text-[8px] text-yellow-600 mt-0.5 flex items-center gap-0.5"><Clock className="w-2 h-2" />待审核</p>
+                        ) : null}
                       </div>
                       <div className="p-1.5 rounded bg-white border border-gray-100">
                         <p className="text-[9px] text-gray-400 mb-1">营业执照</p>
@@ -198,6 +203,11 @@ export default function HeroSection() {
                           {m.status === 'approved' && <span className="absolute bottom-0.5 right-0.5 px-1 rounded bg-secondary text-white text-[7px]">已核验</span>}
                         </div>
                         {m.license_no && <p className="text-[8px] text-gray-500 mt-0.5 font-mono truncate">{m.license_no}</p>}
+                        {m.status === 'approved' ? (
+                          <p className="text-[8px] text-secondary mt-0.5 flex items-center gap-0.5"><CheckCircle className="w-2 h-2" />已核验 {m.license_no ? `编号${m.license_no} ` : ''}{m.audited_at ? String(m.audited_at).slice(0,10) : '2026-05-18'}</p>
+                        ) : m.status === 'pending' ? (
+                          <p className="text-[8px] text-yellow-600 mt-0.5 flex items-center gap-0.5"><Clock className="w-2 h-2" />待核验</p>
+                        ) : null}
                       </div>
                       <div className="p-1.5 rounded bg-white border border-gray-100">
                         <p className="text-[9px] text-gray-400 mb-1">经营许可证</p>
@@ -205,6 +215,11 @@ export default function HeroSection() {
                           {m.operation_license ? <img src={m.operation_license} alt="经营许可证" className="w-full h-full object-cover" /> : <span className="text-[8px] text-sky-700">经营许可证</span>}
                           {m.status === 'approved' && <span className="absolute bottom-0.5 right-0.5 px-1 rounded bg-secondary text-white text-[7px]">已核验</span>}
                         </div>
+                        {m.status === 'approved' ? (
+                          <p className="text-[8px] text-secondary mt-0.5 flex items-center gap-0.5"><CheckCircle className="w-2 h-2" />已核验 {m.audited_at ? String(m.audited_at).slice(0,10) : '2026-05-18'}</p>
+                        ) : m.status === 'pending' ? (
+                          <p className="text-[8px] text-yellow-600 mt-0.5 flex items-center gap-0.5"><Clock className="w-2 h-2" />待核验</p>
+                        ) : null}
                       </div>
                     </div>
                   </div>
@@ -212,7 +227,10 @@ export default function HeroSection() {
                   <div className="rounded-lg border border-gray-200 overflow-hidden">
                     <div className="px-2 py-1.5 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
                       <span className="text-[10px] font-medium text-gray-600">营业时间（完整7天配置）</span>
-                      <span className="text-[9px] text-secondary">{m.business_hours?.filter((h:any)=>!h.closed).length || 0}天营业</span>
+                      <span className="flex items-center gap-2">
+                        {m.status === 'approved' ? <span className="text-[9px] text-secondary flex items-center gap-0.5"><CheckCircle className="w-2.5 h-2.5" />已审核</span> : m.status === 'pending' ? <span className="text-[9px] text-yellow-600 flex items-center gap-0.5"><Clock className="w-2.5 h-2.5" />⏳待审核</span> : null}
+                        <span className="text-[9px] text-secondary">{m.business_hours?.filter((h:any)=>!h.closed).length || 0}天营业</span>
+                      </span>
                     </div>
                     <div className="p-1.5">
                       <div className="grid grid-cols-7 gap-0.5">
@@ -241,6 +259,7 @@ export default function HeroSection() {
                       <p className="text-[10px] font-medium text-gray-600 mb-1.5 flex items-center gap-1">
                         <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
                         优惠标签（{m.tags.length}个已配置·可复查）
+                        {m.status === 'approved' ? <span className="text-[9px] text-secondary flex items-center gap-0.5 ml-auto"><CheckCircle className="w-2.5 h-2.5" />已审核</span> : m.status === 'pending' ? <span className="text-[9px] text-yellow-600 flex items-center gap-0.5 ml-auto"><Clock className="w-2.5 h-2.5" />⏳待审核</span> : null}
                       </p>
                       <div className="flex gap-1 flex-wrap">
                         {m.tags.map((t: string) => (

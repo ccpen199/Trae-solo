@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar, Package } from 'lucide-react'
+import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar, Package, BarChart3 } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell,
@@ -478,6 +478,174 @@ export default function Dashboard() {
             💡 活动数据与消费报告同源：订单核销后自动计入对应活动和整体报表，可按街道/业态/时间维度筛选验证
           </p>
         </div>
+      </div>
+
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Megaphone className="w-4 h-4 text-accent" />
+            <h3 className="font-semibold text-gray-700">大学城周末狂欢周 · 活动配置与效果复盘</h3>
+          </div>
+          <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-secondary-50 text-secondary">进行中</span>
+        </div>
+        <div className="grid grid-cols-3 gap-3 mb-3">
+          <div className="p-2.5 rounded-lg bg-accent-50/50 border border-accent-100/50">
+            <p className="text-[10px] text-gray-500 mb-1">活动配置</p>
+            <div className="space-y-1 text-[10px]">
+              <p className="text-gray-700">满减：满100减20</p>
+              <p className="text-gray-700">折扣：指定套餐7折</p>
+              <p className="text-gray-700">赠品：消费满50送饮品</p>
+            </div>
+          </div>
+          <div className="p-2.5 rounded-lg bg-primary-50/50 border border-primary-100/50">
+            <p className="text-[10px] text-gray-500 mb-1">覆盖范围</p>
+            <div className="space-y-1 text-[10px]">
+              <p className="text-gray-700">广富林街道·大学城商圈</p>
+              <p className="text-gray-700">参与商户：8家</p>
+              <p className="text-gray-700">2026-06-12 ~ 2026-06-22</p>
+            </div>
+          </div>
+          <div className="p-2.5 rounded-lg bg-secondary-50/50 border border-secondary-100/50">
+            <p className="text-[10px] text-gray-500 mb-1">效果数据</p>
+            <div className="space-y-1 text-[10px]">
+              <p className="text-gray-700">活动订单：<span className="font-bold text-accent">156单</span></p>
+              <p className="text-gray-700">活动营收：<span className="font-bold text-accent">¥18,720</span></p>
+              <p className="text-gray-700">核销率：<span className="font-bold text-secondary">92.3%</span></p>
+              <p className="text-gray-700">新客占比：<span className="font-bold text-primary">38.5%</span></p>
+            </div>
+          </div>
+        </div>
+        <div className="p-2.5 rounded-lg bg-gray-50 border border-gray-100">
+          <p className="text-[10px] font-medium text-gray-600 mb-1.5">TOP3参与商户</p>
+          <div className="space-y-1.5">
+            {[
+              { rank: 1, name: '大学城·烤肉饭', orders: 42, revenue: 5040 },
+              { rank: 2, name: '大学城·奶茶工坊', orders: 38, revenue: 3420 },
+              { rank: 3, name: '大学城·日式料理', orders: 29, revenue: 5220 },
+            ].map((s) => (
+              <div key={s.rank} className="flex items-center gap-2 text-[10px]">
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${s.rank <= 3 ? 'bg-primary' : 'bg-gray-400'}`}>{s.rank}</span>
+                <span className="text-gray-700 flex-1">{s.name}</span>
+                <span className="text-gray-500">{s.orders}单</span>
+                <span className="text-accent font-medium">¥{s.revenue.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <BarChart3 className="w-4 h-4 text-primary" />
+            <h3 className="font-semibold text-gray-700">TOP10品类核销率明细 · 可复盘</h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-gray-400">数据同源</span>
+            <span className="text-[10px] text-primary bg-primary-50 px-1.5 py-0.5 rounded">限时优惠</span>
+            <span className="text-[10px] text-secondary bg-secondary-50 px-1.5 py-0.5 rounded">我的订单</span>
+          </div>
+        </div>
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="text-gray-400 border-b border-gray-200">
+              <th className="text-left py-2 font-normal">排名</th>
+              <th className="text-left py-2 font-normal">品类</th>
+              <th className="text-right py-2 font-normal">订单数</th>
+              <th className="text-right py-2 font-normal">已核销</th>
+              <th className="text-right py-2 font-normal">核销率</th>
+              <th className="text-right py-2 font-normal">营收</th>
+              <th className="text-right py-2 font-normal">复购率</th>
+            </tr>
+          </thead>
+          <tbody className="font-mono">
+            {[
+              { cat: '餐饮·本帮菜', orders: 328, used: 293, rate: 89.2, rev: 52480, repurchase: 34.5 },
+              { cat: '餐饮·日料', orders: 256, used: 235, rate: 91.8, rev: 61440, repurchase: 28.3 },
+              { cat: '餐饮·烧烤', orders: 412, used: 358, rate: 86.9, rev: 82400, repurchase: 31.7 },
+              { cat: '饮品·奶茶', orders: 568, used: 489, rate: 86.1, rev: 28400, repurchase: 42.1 },
+              { cat: '餐饮·火锅', orders: 189, used: 165, rate: 87.3, rev: 56700, repurchase: 26.8 },
+              { cat: '休闲·KTV', orders: 145, used: 132, rate: 91.0, rev: 29000, repurchase: 22.5 },
+              { cat: '娱乐·电影', orders: 220, used: 198, rate: 90.0, rev: 13200, repurchase: 18.9 },
+              { cat: '商超·便利', orders: 380, used: 342, rate: 90.0, rev: 19000, repurchase: 45.2 },
+              { cat: '休闲·按摩', orders: 96, used: 88, rate: 91.7, rev: 28800, repurchase: 20.3 },
+              { cat: '餐饮·快餐', orders: 490, used: 436, rate: 89.0, rev: 24500, repurchase: 38.6 },
+            ].map((row, i) => (
+              <tr key={row.cat} className="border-b border-gray-50 last:border-0">
+                <td className="py-1.5 text-gray-500">{i + 1}</td>
+                <td className="py-1.5 text-gray-700">{row.cat}</td>
+                <td className="py-1.5 text-right text-gray-600">{row.orders}</td>
+                <td className="py-1.5 text-right text-secondary">{row.used}</td>
+                <td className="py-1.5 text-right">
+                  <span className={`font-medium ${row.rate >= 90 ? 'text-secondary' : row.rate >= 85 ? 'text-primary' : 'text-amber-600'}`}>{row.rate}%</span>
+                </td>
+                <td className="py-1.5 text-right text-accent">¥{row.rev.toLocaleString()}</td>
+                <td className="py-1.5 text-right text-primary">{row.repurchase}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-secondary" />
+            <h3 className="font-semibold text-gray-700">券核销率与复购率月度趋势 · 可复盘</h3>
+          </div>
+          <span className="text-[10px] text-gray-400">近6个月</span>
+        </div>
+        <div className="grid grid-cols-4 gap-3 mb-4">
+          <div className="p-2.5 rounded-lg bg-primary-50/50 border border-primary-100/50 text-center">
+            <p className="text-[10px] text-gray-500">本月核销率</p>
+            <p className="text-lg font-bold text-primary">87.6%</p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-secondary-50/50 border border-secondary-100/50 text-center">
+            <p className="text-[10px] text-gray-500">本月复购率</p>
+            <p className="text-lg font-bold text-secondary">32.4%</p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-accent-50/50 border border-accent-100/50 text-center">
+            <p className="text-[10px] text-gray-500">环比上月</p>
+            <p className="text-lg font-bold text-accent">+2.1%</p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-gray-50 border border-gray-100 text-center">
+            <p className="text-[10px] text-gray-500">活跃用户</p>
+            <p className="text-lg font-bold text-gray-700">1,286</p>
+          </div>
+        </div>
+        <div className="space-y-1.5">
+          {[
+            { month: '2026-01', vRate: 82.3, rRate: 28.1 },
+            { month: '2026-02', vRate: 83.5, rRate: 29.3 },
+            { month: '2026-03', vRate: 84.8, rRate: 30.0 },
+            { month: '2026-04', vRate: 85.9, rRate: 31.2 },
+            { month: '2026-05', vRate: 86.4, rRate: 31.8 },
+            { month: '2026-06', vRate: 87.6, rRate: 32.4 },
+          ].map((m) => (
+            <div key={m.month} className="flex items-center gap-2 text-[10px]">
+              <span className="text-gray-500 w-14 flex-shrink-0">{m.month}</span>
+              <div className="flex-1 flex items-center gap-1">
+                <span className="text-primary w-8 text-right flex-shrink-0">{m.vRate}%</span>
+                <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-primary rounded-full" style={{ width: `${m.vRate}%` }} />
+                </div>
+              </div>
+              <div className="flex-1 flex items-center gap-1">
+                <span className="text-secondary w-8 text-right flex-shrink-0">{m.rRate}%</span>
+                <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-secondary rounded-full" style={{ width: `${m.rRate * 2.5}%` }} />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-3 mt-2 text-[9px] text-gray-400">
+          <span className="flex items-center gap-1"><span className="inline-block w-2 h-2 rounded-full bg-primary" />核销率</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-2 h-2 rounded-full bg-secondary" />复购率</span>
+        </div>
+        <p className="text-[9px] text-gray-400 mt-2 pt-2 border-t border-gray-100">
+          复盘路径：限时优惠选品 → 用户购买下单 → 动态码核销 → 库存扣减 → 订单完成 → 回写本报表
+        </p>
       </div>
 
       <div className="p-4 rounded-xl bg-gradient-to-r from-primary-50/60 to-secondary-50/40 border border-primary-100/50 text-[11px] text-gray-600 space-y-1">

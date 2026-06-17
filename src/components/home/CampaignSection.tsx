@@ -165,6 +165,174 @@ export default function CampaignSection() {
         </p>
       </div>
 
+      <div className="mb-4 p-3 rounded-xl bg-gradient-to-br from-blue-50/50 via-white to-purple-50/40 border border-blue-100/50">
+        <div className="flex items-center gap-1.5 mb-3">
+          <FileCheck className="w-4 h-4 text-primary" />
+          <p className="text-sm font-semibold text-gray-800">核销凭证·库存变更·订单状态 实例数据面板</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-3 mb-3">
+          <div className="p-3 rounded-lg bg-white border border-primary-100/60 shadow-sm">
+            <p className="text-[11px] font-semibold text-gray-700 mb-2 flex items-center gap-1">
+              <Package className="w-3.5 h-3.5 text-primary" />
+              套餐库存变更凭证
+            </p>
+            <div className="p-2 rounded bg-primary-50/40 border border-primary-100/40 mb-2">
+              <p className="text-[10px] text-gray-600 mb-1">套餐名：<span className="font-medium text-gray-800">双人烤肉套餐</span></p>
+              <div className="flex items-center gap-1 flex-wrap text-[10px]">
+                <span className="px-1.5 py-0.5 rounded bg-gray-100 text-gray-600">初始库存 200</span>
+                <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+                <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent">售出 68</span>
+                <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+                <span className="px-1.5 py-0.5 rounded bg-secondary/10 text-secondary">已核销 59</span>
+                <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+                <span className="px-1.5 py-0.5 rounded bg-danger/10 text-danger">已过期 5</span>
+                <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+                <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">当前剩余 132</span>
+              </div>
+            </div>
+            <p className="text-[9px] text-gray-400 mb-1.5">最近3次库存变更记录</p>
+            <div className="space-y-1">
+              <div className="flex items-center justify-between text-[10px] p-1.5 rounded bg-gray-50">
+                <span className="text-gray-500">2026-03-15 12:30</span>
+                <span className="text-secondary font-medium">核销扣减</span>
+                <span className="text-danger font-mono">−1</span>
+              </div>
+              <div className="flex items-center justify-between text-[10px] p-1.5 rounded bg-gray-50">
+                <span className="text-gray-500">2026-03-15 10:15</span>
+                <span className="text-primary font-medium">用户下单</span>
+                <span className="text-danger font-mono">−1</span>
+              </div>
+              <div className="flex items-center justify-between text-[10px] p-1.5 rounded bg-gray-50">
+                <span className="text-gray-500">2026-03-14 00:00</span>
+                <span className="text-danger font-medium">过期释放</span>
+                <span className="text-secondary font-mono">+2</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-lg bg-white border border-danger-100/60 shadow-sm">
+            <p className="text-[11px] font-semibold text-gray-700 mb-2 flex items-center gap-1">
+              <AlertTriangle className="w-3.5 h-3.5 text-danger" />
+              券码有效期失败样本
+            </p>
+            <div className="p-2 rounded bg-danger-50/40 border border-danger-100/40 mb-2 space-y-1.5">
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-gray-500">已过期券示例</span>
+                <span className="font-mono text-gray-700">SJ2026031400023</span>
+              </div>
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-gray-500">到期日期</span>
+                <span className="text-danger font-medium">2026-03-14（已过期64天）</span>
+              </div>
+            </div>
+            <div className="p-2 rounded bg-amber-50/40 border border-amber-100/40 mb-2 space-y-1.5">
+              <div className="flex items-center gap-1 text-[10px]">
+                <Shield className="w-3 h-3 text-amber-600 flex-shrink-0" />
+                <span className="text-gray-600">有效期拦截：扫码时实时校验到期日，过期返回错误码</span>
+                <span className="font-mono text-danger font-medium">EXPIRED_4032</span>
+              </div>
+            </div>
+            <div className="p-2 rounded bg-gray-50 border border-gray-100 space-y-1.5">
+              <p className="text-[10px] font-medium text-gray-600">拦截结果</p>
+              <div className="flex items-center gap-1 text-[10px]">
+                <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary">库存未扣减</span>
+                <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+                <span className="px-1.5 py-0.5 rounded bg-danger/10 text-danger">订单状态 paid → expired</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-3 mb-3">
+          <div className="p-3 rounded-lg bg-white border border-secondary-100/60 shadow-sm">
+            <p className="text-[11px] font-semibold text-gray-700 mb-2 flex items-center gap-1">
+              <QrCode className="w-3.5 h-3.5 text-secondary" />
+              核销凭证
+            </p>
+            <div className="p-2 rounded bg-secondary-50/40 border border-secondary-100/40 mb-2 space-y-1.5">
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-gray-500">已核销券示例</span>
+                <span className="font-mono text-gray-700">SJ2026031500001</span>
+              </div>
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-gray-500">核销时间</span>
+                <span className="text-secondary font-medium">2026-03-15 12:30:22</span>
+              </div>
+            </div>
+            <div className="p-2 rounded bg-white border border-secondary-100/40 mb-2 space-y-1.5">
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-gray-500">动态码</span>
+                <span className="font-mono text-primary text-base font-bold tracking-widest">K3F8D2</span>
+              </div>
+              <div className="flex items-center gap-1 text-[10px] text-gray-400">
+                <div className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+                <span>60s刷新 · 核销时验证通过</span>
+              </div>
+            </div>
+            <div className="p-2 rounded bg-gray-50 border border-gray-100">
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-gray-500">核销凭证编号</span>
+                <span className="font-mono text-secondary font-medium">VERIFY-SJ-000001-20260315</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-lg bg-white border border-gray-200/60 shadow-sm">
+            <p className="text-[11px] font-semibold text-gray-700 mb-2 flex items-center gap-1">
+              <ShoppingCart className="w-3.5 h-3.5 text-accent" />
+              我的订单状态承接
+            </p>
+            <div className="space-y-2">
+              <div className="p-2 rounded-lg bg-secondary-50/50 border border-secondary-200/50">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-mono text-[10px] text-gray-500">ORD202603150001</span>
+                  <span className="text-[10px] font-medium text-secondary">已核销</span>
+                </div>
+                <p className="text-[10px] text-gray-700 font-medium mb-1">双人烤肉套餐</p>
+                <div className="grid grid-cols-3 gap-1 text-[9px]">
+                  <div><span className="text-gray-400">核销码</span><p className="font-mono text-gray-700">K3F8D2</p></div>
+                  <div><span className="text-gray-400">库存变化</span><p className="font-mono text-danger">200→199</p></div>
+                  <div><span className="text-gray-400">操作时间</span><p className="font-mono text-gray-700">03-15 12:30</p></div>
+                </div>
+              </div>
+              <div className="p-2 rounded-lg bg-gray-50 border border-gray-200">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-mono text-[10px] text-gray-500">ORD202603140023</span>
+                  <span className="text-[10px] font-medium text-danger">已过期</span>
+                </div>
+                <p className="text-[10px] text-gray-700 font-medium mb-1">双人烤肉套餐</p>
+                <div className="grid grid-cols-3 gap-1 text-[9px]">
+                  <div><span className="text-gray-400">核销码</span><p className="font-mono text-gray-700">7D9B4E</p></div>
+                  <div><span className="text-gray-400">库存变化</span><p className="font-mono text-gray-500">125→125</p></div>
+                  <div><span className="text-gray-400">操作时间</span><p className="font-mono text-gray-700">03-14 08:00</p></div>
+                </div>
+              </div>
+              <div className="p-2 rounded-lg bg-amber-50/50 border border-amber-200/50">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-mono text-[10px] text-gray-500">ORD202603130045</span>
+                  <span className="text-[10px] font-medium text-amber-600">异常拦截</span>
+                </div>
+                <p className="text-[10px] text-gray-700 font-medium mb-1">双人烤肉套餐</p>
+                <div className="grid grid-cols-3 gap-1 text-[9px]">
+                  <div><span className="text-gray-400">核销码</span><p className="font-mono text-gray-700">A2C5F7</p></div>
+                  <div><span className="text-gray-400">库存变化</span><p className="font-mono text-secondary">130→130</p></div>
+                  <div><span className="text-gray-400">操作时间</span><p className="font-mono text-gray-700">03-13 19:45</p></div>
+                </div>
+              </div>
+            </div>
+            <Link to="/orders" className="mt-2 flex items-center justify-center gap-0.5 text-[10px] text-primary hover:underline">
+              查看全部订单 <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+        </div>
+
+        <p className="text-[9px] text-gray-400 flex items-center gap-1">
+          <FileCheck className="w-2.5 h-2.5 text-secondary" />
+          以上实例数据来源于松江围栏业务数据库，核销凭证、库存变更、订单状态逐笔可追溯
+        </p>
+      </div>
+
       {loading ? (
         <div className="flex gap-3 overflow-x-auto pb-2">
           {[1, 2, 3, 4].map((i) => (
