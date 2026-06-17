@@ -149,9 +149,8 @@ router.get(
             },
           },
         },
-        orderBy: { createdAt: 'desc' },
-        skip: (page - 1) * limit,
-        take: limit * 3,
+        orderBy: [{ status: 'asc' }, { createdAt: 'desc' }],
+        take: Math.min(limit * 15, 500),
       });
 
       const enhancedPosts = posts.map(p => {
@@ -164,7 +163,11 @@ router.get(
       }).sort((a, b) => {
         const priorityA = getSourceLevelPriority(a.sourceLevel);
         const priorityB = getSourceLevelPriority(b.sourceLevel);
-        if (priorityA !== priorityB) return priorityB - priorityA;
+        const scoreA = (a.hotScore || 0) + priorityA * 200;
+        const scoreB = (b.hotScore || 0) + priorityB * 200;
+        if (Math.abs(scoreA - scoreB) > 400) {
+          return scoreB - scoreA;
+        }
         return (b.hotScore || 0) - (a.hotScore || 0);
       }).slice(0, limit);
 

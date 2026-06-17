@@ -193,9 +193,22 @@ async function main() {
 
   for (const postData of reviewPostsData) {
     const existing = await prisma.post.findFirst({ where: { title: postData.title } });
-    if (!existing) {
+    let created;
+    if (existing) {
+      created = await prisma.post.update({
+        where: { id: existing.id },
+        data: {
+          sourceLevel: postData.sourceLevel,
+          priceAnchor: (postData as any).priceAnchor || null,
+          hasProof: (postData as any).hasProof || false,
+          isPitfall: (postData as any).isPitfall || false,
+          status: 'APPROVED',
+        },
+      });
+      await prisma.auditLog.deleteMany({ where: { postId: existing.id } });
+    } else {
       const randomUser = citizenUsers[Math.floor(Math.random() * citizenUsers.length)];
-      const created = await prisma.post.create({
+      created = await prisma.post.create({
         data: {
           title: postData.title,
           content: postData.content,
@@ -216,7 +229,9 @@ async function main() {
           hotScore: 0,
         },
       });
+    }
 
+    if (!existing) {
       for (const topicName of postData.topics) {
         const topic = await prisma.topic.upsert({
           where: { name: topicName },
@@ -242,23 +257,22 @@ async function main() {
           });
         }
       }
-
-      // AI审核记录
-      if (defaultAuditor) {
-        await prisma.auditLog.create({
-          data: {
-            postId: created.id,
-            auditorId: defaultAuditor.id,
-            action: 'APPROVE',
-            riskLevel: 'LOW',
-            aiScore: (postData as any).isPitfall ? 25 : 10,
-            reason: '正常消费分享内容',
-          },
-        });
-      }
-
-      console.log(`   ✅ 新增: ${postData.title.substring(0, 30)}...`);
     }
+
+    // AI审核记录（总是创建，因为上面deleteMany清掉了）
+    if (defaultAuditor) {
+      await prisma.auditLog.create({
+        data: {
+          postId: created.id,
+          auditorId: defaultAuditor.id,
+          action: 'APPROVE',
+          riskLevel: (postData as any).isPitfall ? 'MEDIUM' : 'LOW',
+          aiScore: (postData as any).isPitfall ? 25 : 10,
+          reason: (postData as any).isPitfall ? '涉及商家负面评价，建议核实' : '正常消费分享内容',
+        },
+      });
+
+    console.log(`   ✅ ${existing ? '更新' : '新增'}: ${postData.title.substring(0, 30)}...`);
   }
 
   // 4. 补充互助响应
@@ -387,9 +401,20 @@ async function main() {
   let pendingCount = 0;
   for (const postData of pendingPostsData) {
     const existing = await prisma.post.findFirst({ where: { title: postData.title } });
-    if (!existing) {
+    let created;
+    if (existing) {
+      created = await prisma.post.update({
+        where: { id: existing.id },
+        data: {
+          status: 'PENDING',
+          isPitfall: (postData as any).isPitfall || false,
+          sourceLevel: postData.sourceLevel,
+        },
+      });
+      await prisma.auditLog.deleteMany({ where: { postId: existing.id } });
+    } else {
       const randomUser = citizenUsers[Math.floor(Math.random() * citizenUsers.length)];
-      const created = await prisma.post.create({
+      created = await prisma.post.create({
         data: {
           title: postData.title,
           content: postData.content,
@@ -404,32 +429,34 @@ async function main() {
           hotScore: 0,
         },
       });
+    }
 
-      await prisma.auditLog.create({
-        data: {
-          postId: created.id,
-          auditorId: defaultAuditor?.id || '',
-          action: 'PENDING',
-          riskLevel: (postData as any).riskLevel || 'LOW',
-          aiScore: (postData as any).aiScore || 0,
-          reason: (postData as any).aiReason || '',
-        },
+    await prisma.auditLog.create({
+      data: {
+        postId: created.id,
+        auditorId: defaultAuditor?.id || '',
+        action: 'PENDING',
+        riskLevel: (postData as any).riskLevel || 'LOW',
+        aiScore: (postData as any).aiScore || 0,
+        reason: (postData as any).aiReason || '',
+      },
+    });
+
+    const topics = (postData as any).topics || [];
+    for (const topicName of topics) {
+      const topic = await prisma.topic.upsert({
+        where: { name: topicName },
+        update: { postCount: { increment: existing ? 0 : 1 } },
+        create: { name: topicName, category: '资讯', postCount: 1, isHot: false, heatScore: 30 },
       });
-
-      const topics = (postData as any).topics || [];
-      for (const topicName of topics) {
-        const topic = await prisma.topic.upsert({
-          where: { name: topicName },
-          update: { postCount: { increment: 1 } },
-          create: { name: topicName, category: '资讯', postCount: 1, isHot: false, heatScore: 30 },
-        });
+      if (!existing) {
         await prisma.postTopic.create({
           data: { postId: created.id, topicId: topic.id },
         });
       }
-
-      pendingCount++;
     }
+
+    pendingCount++;
   }
   console.log(`   ✅ 新增 ${pendingCount} 条待审核内容`);
 
