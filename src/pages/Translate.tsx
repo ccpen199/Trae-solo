@@ -23,6 +23,13 @@ import {
   Eye,
   Save,
   Check,
+  X,
+  RotateCcw,
+  ThumbsUp,
+  ThumbsDown,
+  User,
+  RefreshCw,
+  VolumeX,
 } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import type { Emotion, VoiceprintAnalysis, Species, Pet } from "../../shared/types";
@@ -77,11 +84,13 @@ const waveBars = Array.from({ length: 24 }, (_, i) => i);
 export default function Translate() {
   const location = useLocation();
   const locState = location.state as { showHistory?: boolean; focusAnalysisId?: string } | null;
-  const { pets, analyses, addAnalysis } = useAppStore();
+  const { pets, analyses, addAnalysis, updateAnalysis } = useAppStore();
 
   const [petType, setPetType] = useState<Species>("dog");
   const [flowStep, setFlowStep] = useState<FlowStep>("idle");
   const [recordDuration, setRecordDuration] = useState(0);
+  const [volumeLevel, setVolumeLevel] = useState(0);
+  const [detectedPeak, setDetectedPeak] = useState<{ freq: number; db: number } | null>(null);
   const [selectedAnalysis, setSelectedAnalysis] = useState<VoiceprintAnalysis | null>(null);
   const [bubbleText, setBubbleText] = useState("");
   const [bubbleStyle, setBubbleStyle] = useState<"cloud" | "round" | "shout">("cloud");
@@ -92,6 +101,8 @@ export default function Translate() {
   const [showHistory, setShowHistory] = useState(locState?.showHistory ?? false);
   const [historyPetFilter, setHistoryPetFilter] = useState<string>("all");
   const [expandedReport, setExpandedReport] = useState<string | null>(locState?.focusAnalysisId ?? null);
+  const [reviewModal, setReviewModal] = useState<{ analysis: VoiceprintAnalysis; action: "approve" | "reject" | "resample" } | null>(null);
+  const [reviewNote, setReviewNote] = useState("");
 
   const currentPet = pets.find((p) => p.species === petType);
 
@@ -120,11 +131,14 @@ export default function Translate() {
   const handleStartRecording = useCallback(() => {
     setFlowStep("recording");
     setRecordDuration(0);
+    setVolumeLevel(0);
+    setDetectedPeak(null);
     setSelectedAnalysis(null);
   }, []);
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
+    let volInterval: ReturnType<typeof setInterval>;
     if (flowStep === "recording") {
       interval = setInterval(() => {
         setRecordDuration((d) => {
@@ -135,9 +149,25 @@ export default function Translate() {
           return +(d + 0.1).toFixed(1);
         });
       }, 100);
+      volInterval = setInterval(() => {
+        const baseVol = petType === "dog" ? 0.55 : 0.4;
+        const noise = Math.random() * 0.35;
+        const wave = Math.sin(Date.now() / 180) * 0.15;
+        const newVol = Math.min(0.98, Math.max(0.05, baseVol + noise + wave));
+        setVolumeLevel(newVol);
+        if (newVol > 0.65) {
+          const freqBase = petType === "dog" ? 450 : 300;
+          const freq = freqBase + Math.floor(Math.random() * (petType === "dog" ? 120 : 200));
+          const db = 55 + Math.floor(newVol * 35);
+          setDetectedPeak({ freq, db });
+        }
+      }, 80);
     }
-    return () => clearInterval(interval);
-  }, [flowStep]);
+    return () => {
+      clearInterval(interval);
+      clearInterval(volInterval);
+    };
+  }, [flowStep, petType]);
 
   useEffect(() => {
     if (flowStep !== "processing") return;
@@ -148,6 +178,10 @@ export default function Translate() {
         ...picked,
         id: "a_new_" + Date.now(),
         createdAt: new Date().toISOString().slice(0, 16).replace("T", " "),
+        reviewStatus: "pending",
+        reviewHistory: [
+          { status: "pending", at: new Date().toISOString().slice(0, 16).replace("T", " "), by: "系统" },
+        ],
       };
       setSelectedAnalysis(newAnalysis);
       addAnalysis(newAnalysis);
@@ -191,9 +225,23 @@ export default function Translate() {
         pattern: "主人语音→宠物拟声 反向翻译对话",
       },
       createdAt: new Date().toISOString().slice(0, 16).replace("T", " "),
+      isReverse: true,
+      reverseSource: {
+        ownerText: reverseInput,
+        petSound: reverseOutput,
+        playedDuration: reversePlaying ? 2.5 : 0,
+      },
+      reviewStatus: "approved",
+      reviewNote: "反向翻译对话已保存",
+      reviewHistory: [
+        { status: "pending", at: new Date().toISOString().slice(0, 16).replace("T", " "), by: "系统" },
+        { status: "approved", note: "反向翻译对话已保存", at: new Date().toISOString().slice(0, 16).replace("T", " "), by: "小林" },
+      ],
     };
     addAnalysis(record);
     setReverseSaved(record.id);
+    setShowHistory(true);
+    setExpandedReport(record.id);
   };
 
   const handleQuickPhrase = (phrase: string) => {
@@ -214,6 +262,39 @@ export default function Translate() {
     setSelectedAnalysis(null);
     setReverseOutput("");
     setBubbleText("");
+  };
+
+  const handleReview = (analysis: VoiceprintAnalysis, action: "approve" | "reject" | "resample") => {
+    const newHistory = analysis.reviewHistory ? [...analysis.reviewHistory] : [];
+    const statusMap = {
+      approve: "approved" as const,
+      reject: "rejected" as const,
+      resample: "resampled" as const,
+    };
+    const newStatus = statusMap[action];
+    newHistory.push({
+      status: newStatus,
+      note: reviewNote || undefined,
+      at: new Date().toISOString().slice(0, 16).replace("T", " "),
+      by: "小林",
+    });
+    const updated: VoiceprintAnalysis = {
+      ...analysis,
+      reviewStatus: newStatus,
+      reviewNote: reviewNote || undefined,
+      reviewHistory: newHistory,
+    };
+    updateAnalysis(updated);
+    if (action === "resample") {
+      const pet = pets.find((p) => p.id === analysis.petId);
+      if (pet) setPetType(pet.species);
+      setFlowStep("recording");
+      setRecordDuration(0);
+      setSelectedAnalysis(null);
+      setShowHistory(false);
+    }
+    setReviewModal(null);
+    setReviewNote("");
   };
 
   const emotion = selectedAnalysis ? emotionConfig[selectedAnalysis.emotion] : null;
@@ -255,7 +336,71 @@ export default function Translate() {
             setBubbleText(a.semanticText);
             setExpandedReport(a.id);
           }}
+          onOpenReview={(analysis, action) => {
+            setReviewModal({ analysis, action });
+            setReviewNote(analysis.reviewNote || "");
+          }}
+          petType={petType}
         />
+      )}
+
+      {reviewModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-warm-brown/30 backdrop-blur-sm animate-fade-in">
+          <div className="card max-w-md w-full mx-4 animate-slide-up">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display text-xl text-warm-brown flex items-center gap-2">
+                {reviewModal.action === "approve" && <ThumbsUp className="w-5 h-5 text-brand-mint" />}
+                {reviewModal.action === "reject" && <ThumbsDown className="w-5 h-5 text-red-500" />}
+                {reviewModal.action === "resample" && <RefreshCw className="w-5 h-5 text-brand-orange" />}
+                {reviewModal.action === "approve" && "确认审核通过"}
+                {reviewModal.action === "reject" && "确认审核驳回"}
+                {reviewModal.action === "resample" && "重新采集声纹"}
+              </h3>
+              <button onClick={() => setReviewModal(null)} className="p-1.5 rounded-lg hover:bg-cream-100">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="mb-4 space-y-2 text-sm">
+              <div className="bg-cream-50 rounded-lg p-3">
+                <div className="text-warm-gray mb-1">待审核报告</div>
+                <div className="text-warm-brown font-medium">
+                  {reviewModal.analysis.emotionLabel} - {reviewModal.analysis.semanticText}
+                </div>
+                <div className="text-xs text-warm-gray mt-1">
+                  {pets.find(p => p.id === reviewModal.analysis.petId)?.name} · {reviewModal.analysis.createdAt}
+                </div>
+              </div>
+              <div>
+                <label className="text-warm-gray mb-1 block text-xs">审核备注（可选）</label>
+                <textarea
+                  value={reviewNote}
+                  onChange={(e) => setReviewNote(e.target.value)}
+                  placeholder={reviewModal.action === "approve" ? "例如：情绪识别准确，声纹特征匹配" :
+                    reviewModal.action === "reject" ? "例如：声纹强度偏高，情绪判断有误" :
+                      "例如：环境噪音较大，需要重新采集"}
+                  className="input-base min-h-[80px] resize-y"
+                />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => setReviewModal(null)} className="btn-secondary flex-1">
+                取消
+              </button>
+              <button
+                onClick={() => handleReview(reviewModal.analysis, reviewModal.action)}
+                className={`flex-1 ${
+                  reviewModal.action === "approve" ? "btn-primary !bg-gradient-to-r !from-brand-mint !to-brand-mint-light" :
+                    reviewModal.action === "reject" ? "btn-primary !bg-gradient-to-r !from-red-400 !to-red-500" :
+                      "btn-primary"
+                }`}
+              >
+                {reviewModal.action === "approve" ? "✓ 确认通过" :
+                  reviewModal.action === "reject" ? "✗ 确认驳回" :
+                    "↻ 开始重新采集"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -373,24 +518,32 @@ export default function Translate() {
                 const isActive = flowStep === "recording";
                 const isProcessing = flowStep === "processing";
                 const isIdle = flowStep === "idle";
+                const dynamicH = isActive
+                  ? baseH + volumeLevel * 50 + Math.random() * 10
+                  : isProcessing
+                    ? baseH + 12 + Math.sin(Date.now() / 300 + i) * 16
+                    : isIdle
+                      ? baseH + Math.sin(Date.now() / 600 + i * 0.8) * 4
+                      : baseH;
                 return (
                   <div
                     key={i}
-                    className={`w-1.5 rounded-full transition-all duration-150 ${
-                      isActive ? (i % 2 === 0 ? "bg-brand-orange" : "bg-brand-mint")
-                        : isProcessing ? "bg-brand-mint/60"
-                        : isIdle ? (i % 2 === 0 ? "bg-brand-orange/20" : "bg-brand-mint/20")
-                        : "bg-cream-200"
+                    className={`w-1.5 rounded-full transition-all duration-75 ${
+                      isActive
+                        ? volumeLevel > 0.7
+                          ? "bg-red-400"
+                          : volumeLevel > 0.5
+                            ? (i % 2 === 0 ? "bg-brand-orange" : "bg-brand-mint")
+                            : (i % 2 === 0 ? "bg-brand-orange/50" : "bg-brand-mint/50")
+                        : isProcessing
+                          ? "bg-brand-mint/60"
+                          : isIdle
+                            ? (i % 2 === 0 ? "bg-brand-orange/20" : "bg-brand-mint/20")
+                            : "bg-cream-200"
                     }`}
                     style={{
-                      height: isActive
-                        ? `${baseH + Math.random() * 40}px`
-                        : isProcessing
-                          ? `${baseH + 12 + Math.sin(Date.now() / 300 + i) * 16}px`
-                          : isIdle
-                            ? `${baseH + Math.sin(Date.now() / 600 + i * 0.8) * 4}px`
-                            : `${baseH}px`,
-                      animation: isActive ? "wave 0.8s ease-in-out infinite" : isProcessing ? "wave 1.2s ease-in-out infinite" : isIdle ? "wave 2.4s ease-in-out infinite" : "none",
+                      height: `${dynamicH}px`,
+                      animation: isActive ? "none" : isProcessing ? "wave 1.2s ease-in-out infinite" : isIdle ? "wave 2.4s ease-in-out infinite" : "none",
                       animationDelay: `${i * 40}ms`,
                     }}
                   />
@@ -398,7 +551,68 @@ export default function Translate() {
               })}
             </div>
 
-            <div className="mt-6 flex flex-col items-center gap-2">
+            {flowStep === "recording" && (
+              <div className="mt-3 w-full max-w-sm space-y-2 animate-fade-in">
+                <div className="flex items-center gap-2 text-xs">
+                  <Volume2 className={`w-3.5 h-3.5 ${
+                    volumeLevel > 0.7 ? "text-red-500" : volumeLevel > 0.4 ? "text-brand-orange" : "text-brand-mint"
+                  }`} />
+                  <span className="text-warm-gray">输入音量</span>
+                  <div className="flex-1 h-2 bg-cream-100 rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full transition-all duration-75 ${
+                      volumeLevel > 0.7 ? "bg-gradient-to-r from-orange-400 to-red-500" :
+                        volumeLevel > 0.4 ? "bg-gradient-to-r from-brand-orange to-brand-mint" :
+                          "bg-gradient-to-r from-brand-mint to-accent-sky"
+                    }`} style={{ width: `${volumeLevel * 100}%` }} />
+                  </div>
+                  <span className="font-mono text-warm-brown font-medium w-10 text-right">
+                    {Math.round(volumeLevel * 100)}%
+                  </span>
+                </div>
+                {detectedPeak && (
+                  <div className="flex items-center justify-center gap-4 text-[10px] bg-gradient-to-r from-brand-orange/10 to-brand-mint/10 rounded-lg px-3 py-1.5 animate-slide-in-right">
+                    <span className="flex items-center gap-1">
+                      <Activity className="w-2.5 h-2.5 text-brand-orange" />
+                      峰值频率 <span className="font-semibold text-warm-brown">{detectedPeak.freq}Hz</span>
+                    </span>
+                    <span className="w-px h-3 bg-cream-200" />
+                    <span className="flex items-center gap-1">
+                      <Zap className="w-2.5 h-2.5 text-accent-sunny" />
+                      声压 <span className="font-semibold text-warm-brown">{detectedPeak.db}dB</span>
+                    </span>
+                    <span className="w-px h-3 bg-cream-200" />
+                    <span className="flex items-center gap-1">
+                      <Check className="w-2.5 h-2.5 text-brand-mint" />
+                      <span className="text-brand-mint-dark font-medium">有效声纹 ✓</span>
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {flowStep === "processing" && (
+              <div className="mt-3 w-full max-w-sm bg-gradient-to-r from-brand-mint/10 to-accent-sky/10 rounded-lg px-3 py-2 animate-fade-in">
+                <div className="flex items-center justify-center gap-2 text-[10px] text-brand-mint-dark">
+                  <Sparkles className="w-3 h-3 animate-spin" />
+                  <span>正在匹配{petType === "dog" ? "犬类" : "猫类"}声纹特征库 → 情绪分类 → 生成语义气泡</span>
+                  <ArrowLeftRight className="w-3 h-3" />
+                </div>
+              </div>
+            )}
+
+            {flowStep === "result" && selectedAnalysis && (
+              <div className="mt-3 w-full max-w-sm bg-gradient-to-r from-brand-orange/10 to-brand-mint/10 rounded-lg px-3 py-2 animate-fade-in">
+                <div className="flex items-center justify-center gap-2 text-[10px]">
+                  <Check className="w-3 h-3 text-brand-mint" />
+                  <span className="text-brand-mint-dark font-medium">
+                    采集完成 → 情绪识别 → 气泡生成 → 已写入历史
+                  </span>
+                  <Sparkles className="w-3 h-3 text-accent-sunny" />
+                </div>
+              </div>
+            )}
+
+            <div className="mt-4 flex flex-col items-center gap-2">
               <div className="flex items-center gap-3 text-warm-gray">
                 <Clock className="w-4 h-4" />
                 <span className="font-mono text-lg">
@@ -492,6 +706,8 @@ function HistoryPanel({
   expandedReport,
   setExpandedReport,
   onSelect,
+  onOpenReview,
+  petType,
 }: {
   analyses: VoiceprintAnalysis[];
   pets: Pet[];
@@ -500,7 +716,18 @@ function HistoryPanel({
   expandedReport: string | null;
   setExpandedReport: (v: string | null) => void;
   onSelect: (a: VoiceprintAnalysis) => void;
+  onOpenReview: (a: VoiceprintAnalysis, action: "approve" | "reject" | "resample") => void;
+  petType: Species;
 }) {
+  const getStatusStyle = (status?: string) => {
+    switch (status) {
+      case "approved": return { bg: "bg-brand-mint/15", text: "text-brand-mint-dark", icon: <Check className="w-2.5 h-2.5" />, label: "已通过" };
+      case "rejected": return { bg: "bg-red-100", text: "text-red-600", icon: <X className="w-2.5 h-2.5" />, label: "已驳回" };
+      case "resampled": return { bg: "bg-brand-orange/15", text: "text-brand-orange-dark", icon: <RefreshCw className="w-2.5 h-2.5" />, label: "已重采" };
+      default: return { bg: "bg-cream-100", text: "text-warm-gray", icon: <Clock className="w-2.5 h-2.5" />, label: "待审核" };
+    }
+  };
+
   return (
     <section className="card animate-slide-up">
       <div className="flex items-center justify-between mb-4">
@@ -530,8 +757,100 @@ function HistoryPanel({
           const pet = pets.find((p) => p.id === a.petId);
           const emo = emotionConfig[a.emotion];
           const isExpanded = expandedReport === a.id;
+          const status = getStatusStyle(a.reviewStatus);
+          const isReverse = !!a.isReverse;
+
+          if (isReverse && a.reverseSource) {
+            return (
+              <div key={a.id} className="rounded-2xl border border-accent-sky/20 bg-gradient-to-br from-accent-sky/5 to-brand-mint/5 overflow-hidden">
+                <div
+                  className="flex items-start gap-3 p-3 cursor-pointer hover:from-accent-sky/8 hover:to-brand-mint/8 transition-colors"
+                  onClick={() => onSelect(a)}
+                >
+                  <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-cream-200 bg-white">
+                    <img src={pet?.avatar} alt="" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <div className="flex items-center gap-1">
+                        <span className="text-sm font-medium text-warm-brown">{pet?.name}</span>
+                        <span className="text-[10px] text-warm-gray/60">↔️ 主人对话</span>
+                      </div>
+                      <span className={`badge ${status.bg} ${status.text} text-[10px] flex items-center gap-0.5`}>
+                        {status.icon} {status.label}
+                      </span>
+                      <span className="badge bg-brand-mint/10 text-brand-mint-dark text-[10px] flex items-center gap-0.5">
+                        <Zap className="w-2.5 h-2.5" /> {Math.round(a.confidence * 100)}%
+                      </span>
+                      <span className="text-[10px] text-warm-gray/60 ml-auto">{a.createdAt}</span>
+                    </div>
+                    <div className="mt-2 space-y-1.5">
+                      <div className="flex items-start gap-1.5">
+                        <User className="w-3 h-3 text-accent-sky shrink-0 mt-0.5" />
+                        <div className="text-xs bg-white/80 rounded-lg px-2 py-1.5 border border-white">
+                          <span className="text-warm-gray">主人说：</span>
+                          <span className="text-warm-brown font-medium">{a.reverseSource.ownerText}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-1.5 pl-6">
+                        <ArrowLeftRight className="w-3 h-3 text-brand-mint shrink-0 mt-0.5" />
+                        <div className="text-xs bg-gradient-to-r from-brand-mint/10 to-accent-sky/10 rounded-lg px-2 py-1.5 border border-brand-mint/15">
+                          <span className="text-warm-gray">{petType === "dog" ? "🐕 狗狗拟声：" : "🐱 猫猫拟声："}</span>
+                          <span className="text-warm-brown font-medium">{a.reverseSource.petSound}</span>
+                        </div>
+                      </div>
+                      {a.reverseSource.playedDuration && a.reverseSource.playedDuration > 0 && (
+                        <div className="flex items-center gap-1 text-[10px] text-brand-mint-dark pl-8">
+                          <Volume2 className="w-2.5 h-2.5" />
+                          已播放拟声 {a.reverseSource.playedDuration}s
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setExpandedReport(isExpanded ? null : a.id); }}
+                    className="p-1.5 rounded-lg hover:bg-white/60 text-warm-gray"
+                  >
+                    {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  </button>
+                </div>
+                {isExpanded && (
+                  <div className="px-4 pb-4 pt-1 border-t border-cream-100 animate-fade-in space-y-2.5">
+                    <div className="bg-white/70 rounded-lg p-2.5">
+                      <div className="text-xs text-warm-gray mb-1.5 flex items-center gap-1">
+                        <Clock className="w-3 h-3" /> 审核记录
+                      </div>
+                      <div className="space-y-1.5">
+                        {a.reviewHistory?.map((h, i) => (
+                          <div key={i} className="flex items-start gap-2 text-[10px]">
+                            <div className={`w-2 h-2 mt-1 rounded-full ${h.status === "approved" ? "bg-brand-mint" : h.status === "rejected" ? "bg-red-400" : h.status === "resampled" ? "bg-brand-orange" : "bg-warm-gray/40"}`} />
+                            <div>
+                              <span className="text-warm-brown font-medium">{h.by}</span>
+                              <span className="text-warm-gray"> · {h.at}</span>
+                              <div className={`${h.status === "approved" ? "text-brand-mint-dark" : h.status === "rejected" ? "text-red-500" : "text-warm-brown"}`}>
+                                {h.status === "pending" ? "待系统审核" :
+                                  h.status === "approved" ? "审核通过 ✓" :
+                                    h.status === "rejected" ? "审核驳回 ✗" :
+                                      "重新采集 ↻"}
+                                {h.note && <span className="text-warm-gray"> — {h.note}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          }
+
           return (
-            <div key={a.id} className="rounded-2xl border border-cream-200 overflow-hidden">
+            <div key={a.id} className={`rounded-2xl border ${
+              a.reviewStatus === "rejected" ? "border-red-200 bg-red-50/30" :
+                a.reviewStatus === "approved" ? "border-brand-mint/20 bg-brand-mint/5" :
+                  "border-cream-200"
+            } overflow-hidden`}>
               <div
                 className="flex items-start gap-3 p-3 cursor-pointer hover:bg-cream-50 transition-colors"
                 onClick={() => onSelect(a)}
@@ -543,6 +862,9 @@ function HistoryPanel({
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-sm font-medium text-warm-brown">{pet?.name}</span>
                     {emo && <span className={`badge ${emo.bg} ${emo.text} text-[10px]`}>{emo.emoji} {emo.label}</span>}
+                    <span className={`badge ${status.bg} ${status.text} text-[10px] flex items-center gap-0.5`}>
+                      {status.icon} {status.label}
+                    </span>
                     <span className="badge bg-accent-sunny/15 text-amber-700 text-[10px] flex items-center gap-0.5">
                       <Zap className="w-2.5 h-2.5" /> {Math.round(a.confidence * 100)}%
                     </span>
@@ -590,7 +912,11 @@ function HistoryPanel({
                     </div>
                     <div className="flex items-center gap-2 flex-1 max-w-[60%] ml-3">
                       <div className="flex-1 h-2 bg-cream-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-brand-orange to-brand-mint rounded-full" style={{ width: `${a.confidence * 100}%` }} />
+                        <div className={`h-full rounded-full ${
+                          a.confidence > 0.9 ? "bg-gradient-to-r from-brand-mint to-brand-mint-light" :
+                            a.confidence > 0.75 ? "bg-gradient-to-r from-brand-orange to-brand-mint" :
+                              "bg-gradient-to-r from-amber-400 to-brand-orange"
+                        }`} style={{ width: `${a.confidence * 100}%` }} />
                       </div>
                       <span className="font-semibold text-warm-brown">{Math.round(a.confidence * 100)}%</span>
                     </div>
@@ -614,12 +940,82 @@ function HistoryPanel({
                   </div>
                   <div className="bg-brand-mint/5 rounded-lg p-2.5 text-xs flex items-start gap-2">
                     <BarChart3 className="w-4 h-4 text-brand-mint shrink-0 mt-0.5" />
-                    <div>
+                    <div className="flex-1">
                       <div className="font-medium text-brand-mint-dark mb-0.5">声纹模式分析</div>
                       <div className="text-warm-brown/80">{a.voiceprintReport.pattern}</div>
                       <div className="mt-1 text-[10px] text-warm-gray/70">
                         模型版本 v2.3.0 · 物种：{pet?.species === "dog" ? "犬类" : "猫类"}专项模型
                       </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-lg border border-cream-200 p-2.5">
+                    <div className="text-xs text-warm-gray mb-2 flex items-center gap-1">
+                      <Clock className="w-3 h-3" /> 审核记录与操作
+                    </div>
+                    {a.reviewHistory && a.reviewHistory.length > 0 && (
+                      <div className="space-y-2 mb-3 max-h-[120px] overflow-y-auto">
+                        {a.reviewHistory.map((h, i) => (
+                          <div key={i} className="flex items-start gap-2 text-[10px]">
+                            <div className={`w-2 h-2 mt-1 rounded-full shrink-0 ${
+                              h.status === "approved" ? "bg-brand-mint" :
+                                h.status === "rejected" ? "bg-red-400" :
+                                  h.status === "resampled" ? "bg-brand-orange" :
+                                    "bg-warm-gray/40"
+                            }`} />
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1">
+                                <span className="text-warm-brown font-medium">{h.by}</span>
+                                <span className="text-warm-gray">·</span>
+                                <span className="text-warm-gray">{h.at}</span>
+                              </div>
+                              <div className={`${
+                                h.status === "approved" ? "text-brand-mint-dark" :
+                                  h.status === "rejected" ? "text-red-500" :
+                                    "text-warm-brown"
+                              }`}>
+                                {h.status === "pending" ? "系统自动标记待审核" :
+                                  h.status === "approved" ? "✓ 审核通过" :
+                                    h.status === "rejected" ? "✗ 审核驳回" :
+                                      "↻ 重新采集"}
+                                {h.note && <span className="text-warm-gray ml-1">— {h.note}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="flex flex-wrap gap-1.5">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onOpenReview(a, "approve"); }}
+                        disabled={a.reviewStatus === "approved"}
+                        className={`flex-1 min-w-[70px] text-[10px] px-2 py-1.5 rounded-lg font-medium flex items-center justify-center gap-0.5 transition-colors ${
+                          a.reviewStatus === "approved"
+                            ? "bg-brand-mint/15 text-brand-mint-dark cursor-default"
+                            : "bg-brand-mint/10 text-brand-mint-dark hover:bg-brand-mint/20"
+                        }`}
+                      >
+                        <ThumbsUp className="w-2.5 h-2.5" />
+                        {a.reviewStatus === "approved" ? "已通过" : "通过"}
+                      </button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onOpenReview(a, "reject"); }}
+                        disabled={a.reviewStatus === "rejected"}
+                        className={`flex-1 min-w-[70px] text-[10px] px-2 py-1.5 rounded-lg font-medium flex items-center justify-center gap-0.5 transition-colors ${
+                          a.reviewStatus === "rejected"
+                            ? "bg-red-100 text-red-600 cursor-default"
+                            : "bg-red-50 text-red-500 hover:bg-red-100"
+                        }`}
+                      >
+                        <ThumbsDown className="w-2.5 h-2.5" />
+                        {a.reviewStatus === "rejected" ? "已驳回" : "驳回"}
+                      </button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onOpenReview(a, "resample"); }}
+                        className="flex-1 min-w-[70px] text-[10px] px-2 py-1.5 rounded-lg font-medium bg-brand-orange/10 text-brand-orange-dark hover:bg-brand-orange/20 transition-colors flex items-center justify-center gap-0.5"
+                      >
+                        <RotateCcw className="w-2.5 h-2.5" />
+                        重新采样
+                      </button>
                     </div>
                   </div>
                 </div>

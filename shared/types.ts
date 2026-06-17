@@ -49,6 +49,8 @@ export interface VoiceprintReport {
   pattern: string;
 }
 
+export type ReviewStatus = "pending" | "approved" | "rejected" | "resampled";
+
 export interface VoiceprintAnalysis {
   id: string;
   petId: string;
@@ -59,6 +61,15 @@ export interface VoiceprintAnalysis {
   semanticText: string;
   voiceprintReport: VoiceprintReport;
   createdAt: string;
+  isReverse?: boolean;
+  reverseSource?: {
+    ownerText: string;
+    petSound: string;
+    playedDuration?: number;
+  };
+  reviewStatus?: ReviewStatus;
+  reviewNote?: string;
+  reviewHistory?: { status: ReviewStatus; note?: string; at: string; by?: string }[];
 }
 
 export type PhotoTag = "playing" | "eating" | "sleeping" | "walking" | "bathing";
@@ -76,6 +87,20 @@ export interface Photo {
   createdAt: string;
   tagEvidence?: Partial<Record<PhotoTag, string>>;
   availableFilters?: string[];
+  aiReport?: {
+    tagConfidence: Partial<Record<PhotoTag, number>>;
+    detectionObjects: string[];
+    sceneDetection: string;
+    emotionDetection: string;
+    filterRecommendation: string;
+    filterReason: string;
+    bubbleTemplateSuggestion: string;
+    bubbleTemplateReason: string;
+    bubbleTextSuggestion: string;
+    bubbleTextReason: string;
+    modelVersion: string;
+    processedAt: string;
+  };
 }
 
 export type PostCategory = "knowledge" | "story" | "question" | "vet-article";
@@ -163,7 +188,6 @@ export interface ModelVersion {
 }
 
 export type ContentType = "text" | "image" | "post";
-export type ReviewStatus = "pending" | "approved" | "rejected";
 
 export interface ContentReviewItem {
   id: string;

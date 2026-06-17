@@ -33,6 +33,7 @@ interface AppState {
   addPet: (pet: Pet) => void;
   updatePet: (pet: Pet) => void;
   addAnalysis: (analysis: VoiceprintAnalysis) => void;
+  updateAnalysis: (analysis: VoiceprintAnalysis) => void;
   addPhoto: (photo: Photo) => void;
   updatePhoto: (photo: Photo) => void;
   addTrainingRecord: (record: TrainingRecord) => void;
@@ -126,6 +127,12 @@ const mockAnalyses: VoiceprintAnalysis[] = [
       pattern: "高频短促连续吠叫",
     },
     createdAt: "2026-06-14 18:23",
+    reviewStatus: "approved",
+    reviewNote: "情绪识别准确，声纹特征匹配柴犬开心吠叫模式",
+    reviewHistory: [
+      { status: "pending", at: "2026-06-14 18:23", by: "系统" },
+      { status: "approved", note: "情绪识别准确，声纹特征匹配柴犬开心吠叫模式", at: "2026-06-14 18:25", by: "小林" },
+    ],
   },
   {
     id: "a2",
@@ -142,6 +149,10 @@ const mockAnalyses: VoiceprintAnalysis[] = [
       pattern: "拖长音的轻柔喵叫",
     },
     createdAt: "2026-06-14 08:15",
+    reviewStatus: "pending",
+    reviewHistory: [
+      { status: "pending", at: "2026-06-14 08:15", by: "系统" },
+    ],
   },
   {
     id: "a3",
@@ -158,6 +169,12 @@ const mockAnalyses: VoiceprintAnalysis[] = [
       pattern: "跳跃式激动吠叫",
     },
     createdAt: "2026-06-13 16:40",
+    reviewStatus: "rejected",
+    reviewNote: "声纹强度偏高，实际更像是兴奋吠叫而非玩耍邀请",
+    reviewHistory: [
+      { status: "pending", at: "2026-06-13 16:40", by: "系统" },
+      { status: "rejected", note: "声纹强度偏高，实际更像是兴奋吠叫而非玩耍邀请", at: "2026-06-13 17:00", by: "小林" },
+    ],
   },
   {
     id: "a4",
@@ -289,6 +306,20 @@ const mockPhotos: Photo[] = [
     createdAt: "2026-06-13 19:00",
     tagEvidence: { eating: "【置信度89%】检测到食盆物体+低头进食姿态+舌头伸出动作+咀嚼频率匹配进食特征" },
     availableFilters: ["warm", "vivid", "natural"],
+    aiReport: {
+      tagConfidence: { eating: 0.89, playing: 0.12, sleeping: 0.05, walking: 0.08, bathing: 0.02 },
+      detectionObjects: ["不锈钢食盆", "狗粮颗粒", "木质地板", "厨房踢脚线"],
+      sceneDetection: "室内厨房晚餐场景，暖黄色灯光",
+      emotionDetection: "兴奋满足，尾巴快速摆动，耳朵朝前",
+      filterRecommendation: "warm",
+      filterReason: "暖色调+橙色增强匹配室内晚餐温馨氛围，提升食物的食欲感",
+      bubbleTemplateSuggestion: "cloud",
+      bubbleTemplateReason: "云朵气泡柔和圆润，契合狗狗满足的表情",
+      bubbleTextSuggestion: "今天的狗粮超香！",
+      bubbleTextReason: "结合进食场景+兴奋表情+尾巴摆动，推测狗狗对食物很满意",
+      modelVersion: "PetVision v3.1.0",
+      processedAt: "2026-06-13 19:00",
+    },
   },
   {
     id: "ph4",
@@ -353,6 +384,20 @@ const mockPhotos: Photo[] = [
     createdAt: "2026-06-10 18:30",
     tagEvidence: { eating: "【置信度93%】检测到食盆+低头舔食姿态+满足微闭眼表情+胡须沾湿+舌头连续舔舐动作" },
     availableFilters: ["natural", "warm", "vivid"],
+    aiReport: {
+      tagConfidence: { eating: 0.93, sleeping: 0.15, playing: 0.08, walking: 0.04, bathing: 0.01 },
+      detectionObjects: ["陶瓷食盆", "湿粮罐头", "厨房地砖", "猫粮残渣"],
+      sceneDetection: "室内厨房傍晚场景，柔和自然光",
+      emotionDetection: "满足愉悦，胡须放松，微闭眼享受状",
+      filterRecommendation: "natural",
+      filterReason: "自然滤镜保持真实感，不破坏布偶猫毛发的柔美光泽",
+      bubbleTemplateSuggestion: "cloud",
+      bubbleTemplateReason: "云朵气泡轻盈柔和，配合猫咪优雅进食姿态",
+      bubbleTextSuggestion: "这个罐头真好吃！",
+      bubbleTextReason: "检测到舔食频率高+胡须沾湿+微闭眼满足，推测猫咪非常喜爱这个食物",
+      modelVersion: "PetVision v3.1.0",
+      processedAt: "2026-06-10 18:30",
+    },
   },
   {
     id: "ph8",
@@ -401,6 +446,20 @@ const mockPhotos: Photo[] = [
     createdAt: "2026-06-08 11:20",
     tagEvidence: { eating: "【置信度86%】检测到零食物体+坐姿等待+张嘴接食动作+快速咀嚼吞咽" },
     availableFilters: ["warm", "natural", "soft"],
+    aiReport: {
+      tagConfidence: { eating: 0.86, playing: 0.22, walking: 0.1, sleeping: 0.04, bathing: 0.02 },
+      detectionObjects: ["狗饼干", "训练垫", "室内地毯", "狗狗爪子"],
+      sceneDetection: "室内训练场景，明亮自然光",
+      emotionDetection: "期待兴奋，坐姿端正，眼神聚焦饼干",
+      filterRecommendation: "warm",
+      filterReason: "暖色调增强训练奖励的温馨感，突出狗狗开心的表情",
+      bubbleTemplateSuggestion: "round",
+      bubbleTemplateReason: "圆形气泡简洁可爱，符合训练奖励的欢快氛围",
+      bubbleTextSuggestion: "奖励饼干超级好吃！",
+      bubbleTextReason: "检测到坐姿等待+快速接食+兴奋表情，推测狗狗非常喜欢这个奖励",
+      modelVersion: "PetVision v3.1.0",
+      processedAt: "2026-06-08 11:20",
+    },
   },
 ];
 
@@ -711,6 +770,11 @@ export const useAppStore = create<AppState>((set) => ({
 
   addAnalysis: (analysis) =>
     set((s) => ({ analyses: [analysis, ...s.analyses] })),
+
+  updateAnalysis: (analysis) =>
+    set((s) => ({
+      analyses: s.analyses.map((a) => (a.id === analysis.id ? analysis : a)),
+    })),
 
   addPhoto: (photo) => set((s) => ({ photos: [photo, ...s.photos] })),
   updatePhoto: (photo) =>

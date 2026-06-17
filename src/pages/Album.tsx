@@ -19,6 +19,10 @@ import {
   X,
   Check,
   Eye,
+  Zap,
+  MapPin,
+  BarChart3,
+  ScanEye,
 } from "lucide-react";
 import type { PhotoTag, Photo } from "../../shared/types";
 
@@ -150,12 +154,37 @@ export default function Album() {
             </div>
             {showTagEvidence && showTagEvidence.startsWith(photo.id) && photo.tagEvidence && (
               <div className="bg-white/95 backdrop-blur rounded-xl p-2.5 mb-2 text-xs text-warm-brown animate-fade-in">
-                <div className="flex items-center gap-1 text-brand-mint-dark font-medium mb-1">
+                <div className="flex items-center gap-1 text-brand-mint-dark font-medium mb-1.5">
                   <Brain className="w-3 h-3" />AI 打标依据
                 </div>
                 {Object.entries(photo.tagEvidence).map(([tag, evidence]) => (
-                  <p key={tag} className="text-warm-brown/80">{TAG_LABEL[tag as PhotoTag]}：{evidence}</p>
+                  <p key={tag} className="text-warm-brown/80 mb-1">{TAG_LABEL[tag as PhotoTag]}：{evidence}</p>
                 ))}
+                {photo.aiReport && (
+                  <div className="mt-2 pt-2 border-t border-cream-200 space-y-1">
+                    <div className="flex items-center gap-2">
+                      <Zap className="w-2.5 h-2.5 text-accent-sunny" />
+                      <span className="text-warm-gray">置信度：</span>
+                      <span className="font-semibold text-warm-brown">
+                        {Math.round((photo.aiReport.tagConfidence?.[photo.autoTags[0]] ?? 0) * 100)}%
+                      </span>
+                      {photo.filterApplied === photo.aiReport.filterRecommendation && (
+                        <>
+                          <span className="w-px h-3 bg-cream-200 mx-0.5" />
+                          <Palette className="w-2.5 h-2.5 text-brand-orange" />
+                          <span className="text-[10px] text-brand-orange-dark">推荐滤镜已应用</span>
+                        </>
+                      )}
+                      {photo.bubbleTemplate === photo.aiReport.bubbleTemplateSuggestion && (
+                        <>
+                          <span className="w-px h-3 bg-cream-200 mx-0.5" />
+                          <MessageSquare className="w-2.5 h-2.5 text-brand-mint" />
+                          <span className="text-[10px] text-brand-mint-dark">推荐模板已应用</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
             <div className="flex gap-2">
@@ -277,7 +306,7 @@ function PhotoEditorModal({
   onApplyFilter: (filterId: string) => void;
   onApplyBubble: (templateId: string, text: string) => void;
 }) {
-  const [editTab, setEditTab] = useState<"filter" | "bubble">("filter");
+  const [editTab, setEditTab] = useState<"filter" | "bubble" | "report">("report");
   const [bubbleInput, setBubbleInput] = useState(photo.bubbleText ?? "");
   const [selectedBubble, setSelectedBubble] = useState(photo.bubbleTemplate ?? "cloud");
 
@@ -316,6 +345,12 @@ function PhotoEditorModal({
 
         <div className="flex border-b border-cream-200">
           <button
+            onClick={() => setEditTab("report")}
+            className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${editTab === "report" ? "text-brand-orange border-b-2 border-brand-orange" : "text-warm-gray"}`}
+          >
+            <BarChart3 className="w-4 h-4" /> AI 分析报告
+          </button>
+          <button
             onClick={() => setEditTab("filter")}
             className={`flex-1 py-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${editTab === "filter" ? "text-brand-orange border-b-2 border-brand-orange" : "text-warm-gray"}`}
           >
@@ -329,7 +364,123 @@ function PhotoEditorModal({
           </button>
         </div>
 
-        <div className="p-4">
+        <div className="p-4 max-h-[380px] overflow-y-auto">
+          {editTab === "report" && photo.aiReport && (
+            <div className="space-y-3 text-xs">
+              <div className="bg-gradient-to-br from-brand-orange/10 to-brand-mint/10 rounded-xl p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles className="w-4 h-4 text-brand-orange" />
+                  <span className="font-display text-sm text-warm-brown">AI 图片分析报告</span>
+                  <span className="ml-auto text-[10px] text-warm-gray">{photo.aiReport.modelVersion}</span>
+                </div>
+                <div className="text-[10px] text-warm-gray">处理时间：{photo.aiReport.processedAt}</div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="font-medium text-warm-brown flex items-center gap-1">
+                  <Zap className="w-3 h-3 text-accent-sunny" /> 自动标签置信度
+                </div>
+                {photo.autoTags.map((tag) => {
+                  const conf = photo.aiReport?.tagConfidence?.[tag] ?? 0;
+                  return (
+                    <div key={tag} className="flex items-center gap-2">
+                      <span className="w-16 text-warm-gray">{TAG_LABEL[tag]}</span>
+                      <div className="flex-1 h-2 bg-cream-100 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${
+                            conf > 0.85 ? "bg-gradient-to-r from-brand-mint to-brand-mint-light" :
+                              conf > 0.7 ? "bg-gradient-to-r from-brand-orange to-brand-mint" :
+                                "bg-gradient-to-r from-amber-400 to-brand-orange"
+                          }`}
+                          style={{ width: `${conf * 100}%` }}
+                        />
+                      </div>
+                      <span className="font-mono font-semibold text-warm-brown w-10 text-right">{Math.round(conf * 100)}%</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="bg-cream-50 rounded-xl p-2.5">
+                  <div className="text-warm-gray mb-1 text-[10px] flex items-center gap-1">
+                    <MapPin className="w-2.5 h-2.5" /> 场景检测
+                  </div>
+                  <div className="text-warm-brown font-medium text-xs">{photo.aiReport.sceneDetection}</div>
+                </div>
+                <div className="bg-cream-50 rounded-xl p-2.5">
+                  <div className="text-warm-gray mb-1 text-[10px] flex items-center gap-1">
+                    <Heart className="w-2.5 h-2.5" /> 情绪检测
+                  </div>
+                  <div className="text-warm-brown font-medium text-xs">{photo.aiReport.emotionDetection}</div>
+                </div>
+              </div>
+
+              <div className="bg-cream-50 rounded-xl p-2.5">
+                <div className="text-warm-gray mb-1 text-[10px] flex items-center gap-1">
+                  <ScanEye className="w-2.5 h-2.5" /> 物体检测
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {photo.aiReport.detectionObjects.map((obj, i) => (
+                    <span key={i} className="text-xs px-2 py-0.5 rounded-full bg-white border border-cream-200 text-warm-brown">
+                      {obj}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {photo.tagEvidence && (
+                <div className="bg-brand-mint/5 rounded-xl p-2.5">
+                  <div className="text-warm-gray mb-1 text-[10px] flex items-center gap-1">
+                    <Brain className="w-2.5 h-2.5 text-brand-mint" /> 打标依据
+                  </div>
+                  {Object.entries(photo.tagEvidence).map(([tag, evidence]) => (
+                    <p key={tag} className="text-warm-brown/80 text-xs">{TAG_LABEL[tag as PhotoTag]}：{evidence}</p>
+                  ))}
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <div className="bg-gradient-to-r from-brand-orange/5 to-accent-sunny/10 rounded-xl p-2.5">
+                  <div className="font-medium text-warm-brown text-xs mb-1 flex items-center gap-1">
+                    <Palette className="w-3 h-3 text-brand-orange" /> 滤镜推荐
+                  </div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs bg-brand-orange/15 text-brand-orange-dark px-2 py-0.5 rounded-full font-medium">
+                      {AI_FILTERS.find(f => f.id === photo.aiReport?.filterRecommendation)?.label}
+                    </span>
+                    {photo.filterApplied === photo.aiReport?.filterRecommendation && (
+                      <span className="text-[10px] text-brand-mint-dark flex items-center gap-0.5">
+                        <Check className="w-2.5 h-2.5" /> 已应用
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[10px] text-warm-gray">{photo.aiReport.filterReason}</p>
+                </div>
+
+                <div className="bg-gradient-to-r from-brand-mint/5 to-accent-sky/10 rounded-xl p-2.5">
+                  <div className="font-medium text-warm-brown text-xs mb-1 flex items-center gap-1">
+                    <MessageSquare className="w-3 h-3 text-brand-mint" /> 气泡模板推荐
+                  </div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs bg-brand-mint/15 text-brand-mint-dark px-2 py-0.5 rounded-full font-medium">
+                      {BUBBLE_TEMPLATES.find(t => t.id === photo.aiReport?.bubbleTemplateSuggestion)?.icon}
+                      &nbsp;{BUBBLE_TEMPLATES.find(t => t.id === photo.aiReport?.bubbleTemplateSuggestion)?.label}
+                    </span>
+                    {photo.bubbleTemplate === photo.aiReport?.bubbleTemplateSuggestion && (
+                      <span className="text-[10px] text-brand-mint-dark flex items-center gap-0.5">
+                        <Check className="w-2.5 h-2.5" /> 已应用
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[10px] text-warm-gray mb-1.5">{photo.aiReport.bubbleTemplateReason}</p>
+                  <div className="text-xs text-warm-brown mb-0.5">💬 文案推荐："{photo.aiReport.bubbleTextSuggestion}"</div>
+                  <p className="text-[10px] text-warm-gray">{photo.aiReport.bubbleTextReason}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {editTab === "filter" ? (
             <div className="space-y-3">
               <p className="text-xs text-warm-gray">选择 AI 滤镜风格，点击应用到照片</p>

@@ -28,6 +28,7 @@ const reviewStatusLabels: Record<ReviewStatus, string> = {
   pending: '待审',
   approved: '已通过',
   rejected: '已拒绝',
+  resampled: '已重采',
 }
 
 const contentTypeLabels: Record<ContentType, string> = {
