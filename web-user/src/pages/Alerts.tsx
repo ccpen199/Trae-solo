@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   Card,
   Button,
@@ -318,7 +318,17 @@ export default function Alerts() {
   const [localAlerts, setLocalAlerts] = useState<AlertEvent[]>([]);
   const [localUnreadCount, setLocalUnreadCount] = useState<number>(0);
   const [processInfoMap, setProcessInfoMap] = useState<Record<string, AlertProcessInfo>>({});
-  const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(mockAuditLogs);
+  const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(() => {
+    const saved = localStorage.getItem('auditLogs');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return mockAuditLogs;
+      }
+    }
+    return mockAuditLogs;
+  });
 
   const [auditFilterAction, setAuditFilterAction] = useState<string | undefined>();
   const [auditFilterOperator, setAuditFilterOperator] = useState<string | undefined>();
@@ -364,6 +374,13 @@ export default function Alerts() {
     return true;
   });
 
+  const alertStats = useMemo(() => {
+    const critical = displayAlerts.filter(a => a.level === 'critical').length;
+    const warning = displayAlerts.filter(a => a.level === 'warning').length;
+    const info = displayAlerts.filter(a => a.level === 'info').length;
+    return { critical, warning, info };
+  }, [displayAlerts]);
+
   const groupedAlerts = filteredAlerts.reduce((groups, alert) => {
     const date = alert.timestamp.split(' ')[0];
     if (!groups[date]) {
@@ -379,7 +396,11 @@ export default function Alerts() {
       id: Date.now().toString(),
       timestamp: new Date().toLocaleString('zh-CN', { hour12: false }),
     };
-    setAuditLogs(prev => [newLog, ...prev]);
+    setAuditLogs(prev => {
+      const updated = [newLog, ...prev];
+      localStorage.setItem('auditLogs', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   const handleAlertClick = (alert: AlertEvent) => {
@@ -430,7 +451,8 @@ export default function Alerts() {
     setLocalAlerts(prev => prev.map(a => ({ ...a, read: true })));
     setLocalUnreadCount(0);
 
-    message.success('已将所有告警标记为已处理');
+    const count = unreadAlerts.length;
+    message.success(`已将${count}条告警标记为已处理，共生成${count}条审计记录`);
   };
 
   const handleMarkSingleRead = (alert: AlertEvent, e?: React.MouseEvent) => {
@@ -465,7 +487,7 @@ export default function Alerts() {
       details: `确认告警，类型：${alertTypeMap[alert.type]?.label || alert.type}`,
     });
 
-    message.success(`告警 ${alert.id} 已标记为已处理`);
+    message.success('告警已确认处理');
   };
 
   const handleDelete = () => {
@@ -639,21 +661,21 @@ export default function Alerts() {
                   <div className="w-2 h-2 rounded-full bg-red-500"></div>
                   <span className="text-sm text-gray-600">严重</span>
                 </div>
-                <span className="font-medium">{displayAlerts.filter(a => a.level === 'critical').length}</span>
+                <span className="font-medium">{alertStats.critical}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-orange-500"></div>
                   <span className="text-sm text-gray-600">警告</span>
                 </div>
-                <span className="font-medium">{displayAlerts.filter(a => a.level === 'warning').length}</span>
+                <span className="font-medium">{alertStats.warning}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-500"></div>
                   <span className="text-sm text-gray-600">提示</span>
                 </div>
-                <span className="font-medium">{displayAlerts.filter(a => a.level === 'info').length}</span>
+                <span className="font-medium">{alertStats.info}</span>
               </div>
             </div>
           </Card>

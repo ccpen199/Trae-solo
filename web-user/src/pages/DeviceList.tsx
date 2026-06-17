@@ -20,9 +20,36 @@ import {
   Unlock,
   Signal,
   Activity,
+  KeyRound,
 } from 'lucide-react';
 import { useDeviceStore } from '@/stores/useDeviceStore';
 import type { Device, DeviceGroup } from '@/types';
+
+interface AuditLogItem {
+  id: string;
+  action: string;
+  deviceId?: string;
+  deviceName?: string;
+  ip: string;
+  timestamp: string;
+  details: string;
+  operator: string;
+  operatorAvatar?: string;
+}
+
+const generateRandomIP = () => {
+  return `192.168.1.${Math.floor(Math.random() * 255) + 1}`;
+};
+
+const addAuditLog = (log: Omit<AuditLogItem, 'id' | 'timestamp'>) => {
+  const newLog: AuditLogItem = {
+    ...log,
+    id: Date.now().toString(),
+    timestamp: new Date().toLocaleString('zh-CN', { hour12: false }),
+  };
+  const existingLogs = JSON.parse(localStorage.getItem('auditLogs') || '[]');
+  localStorage.setItem('auditLogs', JSON.stringify([newLog, ...existingLogs]));
+};
 
 const mockGroups: DeviceGroup[] = [
   { id: 'all', name: '全部设备', deviceIds: [] },
@@ -165,6 +192,12 @@ export default function DeviceList() {
   const [wifiTransmitting, setWifiTransmitting] = useState(false);
   const [formErrors, setFormErrors] = useState<{ name?: string; location?: string }>({});
   const formAreaRef = useRef<HTMLDivElement>(null);
+  const deviceNameInputRef = useRef<any>(null);
+
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [authPassword, setAuthPassword] = useState('');
+  const [authAction, setAuthAction] = useState<{ device: Device; checked: boolean } | null>(null);
+  const [authLoading, setAuthLoading] = useState(false);
 
   useEffect(() => {
     fetchDevices();
@@ -177,10 +210,47 @@ export default function DeviceList() {
     : displayDevices.filter(d => d.groupId === activeGroup || d.location.includes(mockGroups.find(g => g.id === activeGroup)?.name || ''));
 
   const handlePrivacyToggle = (device: Device, checked: boolean) => {
-    updateDevice(device.id, {
-      privacy: { ...device.privacy, cameraEnabled: checked },
-    });
-    message.success(checked ? '已关闭隐私模式' : '已开启隐私模式');
+    setAuthAction({ device, checked });
+    setAuthPassword('');
+    setAuthModalVisible(true);
+  };
+
+  const requestAuthAndToggle = (device: Device, checked: boolean) => {
+    setAuthAction({ device, checked });
+    setAuthPassword('');
+    setAuthModalVisible(true);
+  };
+
+  const confirmAuth = () => {
+    if (authPassword !== '123456') {
+      message.error('身份验证失败，密码错误');
+      return;
+    }
+    setAuthLoading(true);
+    setTimeout(() => {
+      setAuthLoading(false);
+      setAuthModalVisible(false);
+      if (!authAction) return;
+
+      const { device, checked } = authAction;
+      const newPrivacy = { ...device.privacy, cameraEnabled: checked };
+      const actionLabel = checked ? '摄像头已开启' : '摄像头已关闭';
+      const auditAction = '隐私模式设置';
+      const auditDetails = checked ? '关闭隐私模式，摄像头已开启' : '开启隐私模式，摄像头已关闭';
+
+      updateDevice(device.id, { privacy: newPrivacy });
+
+      addAuditLog({
+        action: auditAction,
+        deviceId: device.id,
+        deviceName: device.name,
+        ip: generateRandomIP(),
+        operator: '张三',
+        details: auditDetails,
+      });
+
+      message.success(actionLabel);
+    }, 800);
   };
 
   const startScanning = () => {
@@ -196,6 +266,9 @@ export default function DeviceList() {
       message.success('检测到设备');
       setTimeout(() => {
         formAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          deviceNameInputRef.current?.focus();
+        }, 300);
       }, 100);
     }, 2000);
   };
@@ -208,6 +281,9 @@ export default function DeviceList() {
       setFormErrors({});
       setTimeout(() => {
         formAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          deviceNameInputRef.current?.focus();
+        }, 300);
       }, 100);
     }
   };
@@ -316,8 +392,21 @@ export default function DeviceList() {
   };
 
   const handleCloseAddModal = () => {
-    setAddModalVisible(false);
-    setTimeout(resetAddModal, 300);
+    if (currentStep < 2 && bindingStatus !== 'success') {
+      Modal.confirm({
+        title: '确认退出',
+        content: '添加流程未完成，确定要退出吗？',
+        okText: '确定退出',
+        cancelText: '继续添加',
+        onOk: () => {
+          setAddModalVisible(false);
+          setTimeout(resetAddModal, 300);
+        },
+      });
+    } else {
+      setAddModalVisible(false);
+      setTimeout(resetAddModal, 300);
+    }
   };
 
   const getDeviceMenuItems = (device: Device): MenuProps['items'] => [
@@ -592,6 +681,16 @@ export default function DeviceList() {
             )}
 
             {scanSuccess && (
+              <Alert
+                type="info"
+                showIcon
+                icon={<CheckCircle2 size={16} />}
+                message="请填写设备信息，然后点击下一步继续"
+                className="mb-4"
+              />
+            )}
+
+            {scanSuccess && (
               <div ref={formAreaRef} className="bg-gray-50 rounded-xl p-5 space-y-4">
                 <h4 className="font-medium text-gray-800 flex items-center gap-2">
                   <Settings size={16} className="text-primary-500" />
@@ -606,6 +705,7 @@ export default function DeviceList() {
                     help={formErrors.name}
                   >
                     <Input
+                      ref={deviceNameInputRef}
                       placeholder="如：客厅摄像头"
                       value={newDeviceName}
                       onChange={(e) => {
@@ -662,6 +762,7 @@ export default function DeviceList() {
               <Button 
                 type="primary" 
                 onClick={handleStep1Next}
+                disabled={!scanSuccess || !detectedDevice}
                 className={scanSuccess ? 'font-bold text-base h-11 px-6' : ''}
               >
                 {scanSuccess ? '填写设备信息并下一步' : '下一步'}
@@ -824,6 +925,45 @@ export default function DeviceList() {
             )}
           </div>
         )}
+      </Modal>
+
+      <Modal
+        title={
+          <span className="flex items-center gap-2">
+            <KeyRound size={18} className="text-warning-500" />
+            身份验证
+          </span>
+        }
+        open={authModalVisible}
+        onCancel={() => setAuthModalVisible(false)}
+        onOk={confirmAuth}
+        confirmLoading={authLoading}
+        okText="确认"
+        cancelText="取消"
+      >
+        <div className="space-y-4 py-2">
+          <Alert
+            type="warning"
+            showIcon
+            icon={<Shield size={16} />}
+            message="安全操作确认"
+            description={
+              authAction
+                ? `即将${authAction.checked ? '关闭' : '开启'}摄像头隐私模式，请输入密码确认`
+                : ''
+            }
+          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">请输入操作密码</label>
+            <Input.Password
+              placeholder="请输入操作密码（演示：123456）"
+              value={authPassword}
+              onChange={(e) => setAuthPassword(e.target.value)}
+              onPressEnter={confirmAuth}
+            />
+            <p className="text-xs text-gray-400 mt-1">演示密码：123456</p>
+          </div>
+        </div>
       </Modal>
     </div>
   );

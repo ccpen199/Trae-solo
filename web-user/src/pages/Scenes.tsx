@@ -42,6 +42,18 @@ import type { Scene, SceneAction } from '@/types';
 
 const { Option } = Select;
 
+interface AuditLogItem {
+  id: string;
+  action: string;
+  deviceId?: string;
+  deviceName?: string;
+  ip: string;
+  timestamp: string;
+  details: string;
+  operator: string;
+  operatorAvatar?: string;
+}
+
 interface ExecutionStep {
   id: string;
   name: string;
@@ -161,6 +173,14 @@ const actionTypeMap: Record<string, { label: string; icon: React.ReactNode; colo
   privacy_mode: { label: '隐私模式', icon: <EyeOff size={16} />, color: 'text-gray-500' },
 };
 
+const deviceNameMap: Record<string, string> = {
+  '1': '客厅摄像头',
+  '2': '门口摄像头',
+  '3': '卧室摄像头',
+  '4': '厨房摄像头',
+  '5': '车库摄像头',
+};
+
 const getActionResult = (action: SceneAction): { success: boolean; detail: string } => {
   const random = Math.random();
   switch (action.type) {
@@ -192,10 +212,37 @@ export default function Scenes() {
   const [editingScene, setEditingScene] = useState<Scene | null>(null);
   const [form] = Form.useForm();
 
+  const currentUser = '张三';
+
+  const generateRandomIP = () => {
+    const lastOctet = Math.floor(Math.random() * 255) + 1;
+    return `192.168.1.${lastOctet}`;
+  };
+
+  const addAuditLog = (log: Omit<AuditLogItem, 'id' | 'timestamp'>) => {
+    const newLog: AuditLogItem = {
+      ...log,
+      id: Date.now().toString(),
+      timestamp: new Date().toLocaleString('zh-CN', { hour12: false }),
+    };
+    const existingLogs = localStorage.getItem('auditLogs');
+    let logs: AuditLogItem[] = [];
+    if (existingLogs) {
+      try {
+        logs = JSON.parse(existingLogs);
+      } catch {
+        logs = [];
+      }
+    }
+    const updated = [newLog, ...logs];
+    localStorage.setItem('auditLogs', JSON.stringify(updated));
+  };
+
   const [executionModalVisible, setExecutionModalVisible] = useState(false);
   const [executionSteps, setExecutionSteps] = useState<ExecutionStep[]>([]);
   const [executionResult, setExecutionResult] = useState<'success' | 'failed' | null>(null);
   const [executionSceneName, setExecutionSceneName] = useState('');
+  const [currentExecutionScene, setCurrentExecutionScene] = useState<Scene | null>(null);
 
   const [createResultModalVisible, setCreateResultModalVisible] = useState(false);
   const [createdSceneInfo, setCreatedSceneInfo] = useState<CreatedSceneInfo | null>(null);
@@ -215,6 +262,20 @@ export default function Scenes() {
     setScenes(scenes.map(s => s.id === toggleScene.id ? { ...s, enabled: toggleTargetState } : s));
     setToggleConfirmModalVisible(false);
     message.success(toggleTargetState ? `场景「${toggleScene.name}」已启用` : `场景「${toggleScene.name}」已禁用`);
+
+    const deviceIds = toggleScene.trigger.deviceIds;
+    const deviceId = deviceIds[0] || '';
+    const deviceNames = deviceIds.map(id => deviceNameMap[id] || id).join('、');
+
+    addAuditLog({
+      action: '场景配置',
+      deviceId: deviceId,
+      deviceName: deviceNames,
+      ip: generateRandomIP(),
+      operator: currentUser,
+      details: `${toggleTargetState ? '启用' : '禁用'}场景「${toggleScene.name}」`,
+    });
+
     setToggleScene(null);
   };
 
@@ -250,6 +311,7 @@ export default function Scenes() {
   const handleTrigger = (scene: Scene) => {
     setExecutionSceneName(scene.name);
     setExecutionResult(null);
+    setCurrentExecutionScene(scene);
 
     const actionSteps: ExecutionStep[] = scene.actions.map((action, index) => ({
       id: `action-${index}`,
@@ -274,6 +336,20 @@ export default function Scenes() {
       if (currentStep >= initialSteps.length) {
         const allSuccess = initialSteps.every(s => s.status === 'success');
         setExecutionResult(allSuccess ? 'success' : 'failed');
+
+        const actionNames = scene.actions.map(a => actionTypeMap[a.type]?.label || a.type).join('、');
+        const deviceIds = scene.trigger.deviceIds;
+        const deviceId = deviceIds[0] || '';
+        const deviceNames = deviceIds.map(id => deviceNameMap[id] || id).join('、');
+
+        addAuditLog({
+          action: '场景联动执行',
+          deviceId: deviceId,
+          deviceName: deviceNames,
+          ip: generateRandomIP(),
+          operator: currentUser,
+          details: `手动触发场景「${scene.name}」，执行${scene.actions.length}个动作：${actionNames}`,
+        });
         return;
       }
 
@@ -289,6 +365,64 @@ export default function Scenes() {
         } else {
           const actionIndex = currentStep - 1;
           const action = scene.actions[actionIndex];
+          const result = getActionResult(action);
+          setExecutionSteps(prev => prev.map((s, idx) =>
+            idx === currentStep ? {
+              ...s,
+              status: result.success ? 'success' : 'failed',
+              detail: result.detail,
+            } : s
+          ));
+        }
+        currentStep++;
+        setTimeout(runNextStep, 500);
+      }, 800);
+    };
+
+    setTimeout(runNextStep, 300);
+  };
+
+  const handleRetryFailed = () => {
+    if (!currentExecutionScene) return;
+
+    const failedSteps = executionSteps.filter(s => s.status === 'failed');
+    if (failedSteps.length === 0) return;
+
+    const resetSteps = executionSteps.map(s => {
+      if (s.status === 'failed') {
+        return { ...s, status: 'pending' as const };
+      }
+      return s;
+    });
+    setExecutionSteps(resetSteps);
+    setExecutionResult(null);
+
+    let currentStep = 0;
+    const runNextStep = () => {
+      if (currentStep >= resetSteps.length) {
+        const allSuccess = resetSteps.every(s => s.status === 'success');
+        setExecutionResult(allSuccess ? 'success' : 'failed');
+        return;
+      }
+
+      if (resetSteps[currentStep].status !== 'pending') {
+        currentStep++;
+        setTimeout(runNextStep, 100);
+        return;
+      }
+
+      setExecutionSteps(prev => prev.map((s, idx) =>
+        idx === currentStep ? { ...s, status: 'running' } : s
+      ));
+
+      setTimeout(() => {
+        if (currentStep === 0) {
+          setExecutionSteps(prev => prev.map((s, idx) =>
+            idx === currentStep ? { ...s, status: 'success', detail: '触发条件满足' } : s
+          ));
+        } else {
+          const actionIndex = currentStep - 1;
+          const action = currentExecutionScene.actions[actionIndex];
           const result = getActionResult(action);
           setExecutionSteps(prev => prev.map((s, idx) =>
             idx === currentStep ? {
@@ -325,13 +459,28 @@ export default function Scenes() {
       };
       setScenes([...scenes, newScene]);
 
+      const triggerLabel = triggerTypeMap[values.triggerType]?.label || values.triggerType;
+      const actionLabels = (values.actions || []).map((a: SceneAction) =>
+        actionTypeMap[a.type]?.label || a.type
+      );
+      const deviceIds = values.deviceIds || [];
+      const deviceId = deviceIds[0] || '';
+      const deviceNames = deviceIds.map((id: string) => deviceNameMap[id] || id).join('、');
+
+      addAuditLog({
+        action: '创建场景',
+        deviceId: deviceId,
+        deviceName: deviceNames,
+        ip: generateRandomIP(),
+        operator: currentUser,
+        details: `创建场景「${values.name}」，触发类型：${triggerLabel}，联动动作：${actionLabels.join('、')}`,
+      });
+
       setCreatedSceneInfo({
         scene: newScene,
-        triggerLabel: triggerTypeMap[values.triggerType]?.label || values.triggerType,
-        actionLabels: (values.actions || []).map((a: SceneAction) =>
-          actionTypeMap[a.type]?.label || a.type
-        ),
-        deviceCount: (values.deviceIds || []).length,
+        triggerLabel: triggerLabel,
+        actionLabels: actionLabels,
+        deviceCount: deviceIds.length,
       });
       setModalVisible(false);
       setCreateResultModalVisible(true);
@@ -570,6 +719,11 @@ export default function Scenes() {
           <Button key="close" onClick={() => setExecutionModalVisible(false)}>
             关闭
           </Button>,
+          executionResult === 'failed' && (
+            <Button key="retry" type="primary" onClick={handleRetryFailed} icon={<Play size={14} />}>
+              重试失败动作
+            </Button>
+          ),
         ]}
         width={520}
         maskClosable={false}
@@ -596,10 +750,13 @@ export default function Scenes() {
               <span className="text-red-600 font-medium text-lg">
                 部分动作执行失败
               </span>
-              <div className="text-sm text-gray-500 mt-2">
-                失败原因：
+              <div className="bg-red-50 border border-red-100 rounded-lg p-3 mt-2 text-left w-full">
+                <div className="text-sm text-red-600 font-medium mb-1">警告：以下动作执行失败</div>
                 {executionSteps.filter(s => s.status === 'failed').map((s, idx) => (
-                  <div key={idx} className="text-red-500">{s.detail}</div>
+                  <div key={idx} className="text-sm text-red-500 flex items-center gap-2">
+                    <XCircle size={12} />
+                    {s.name}: {s.detail}
+                  </div>
                 ))}
               </div>
             </div>
@@ -610,7 +767,7 @@ export default function Scenes() {
 
         <div className="space-y-4">
           {executionSteps.map((step, index) => (
-            <div key={step.id} className="flex items-start gap-3">
+            <div key={step.id} className={`flex items-start gap-3 ${step.status === 'failed' ? 'bg-red-50 p-3 rounded-lg -mx-3' : ''}`}>
               <div className="relative">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -642,10 +799,12 @@ export default function Scenes() {
                 )}
               </div>
               <div className="flex-1 pt-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className={`font-medium ${
-                    step.status === 'success' || step.status === 'failed'
+                    step.status === 'success'
                       ? 'text-gray-800'
+                      : step.status === 'failed'
+                      ? 'text-red-600'
                       : 'text-gray-400'
                   }`}>
                     {step.name}
@@ -658,6 +817,11 @@ export default function Scenes() {
                   )}
                   {step.status === 'failed' && (
                     <Tag color="error" className="border-0">失败</Tag>
+                  )}
+                  {step.status === 'failed' && executionResult === 'failed' && (
+                    <Button type="link" size="small" danger onClick={handleRetryFailed} icon={<Play size={12} />}>
+                      重试
+                    </Button>
                   )}
                 </div>
                 {step.detail && (

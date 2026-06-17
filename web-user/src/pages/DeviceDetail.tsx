@@ -133,6 +133,7 @@ export default function DeviceDetail() {
 
   const [saveThresholdLoading, setSaveThresholdLoading] = useState(false);
   const [thresholdSaved, setThresholdSaved] = useState(false);
+  const [saveConfigAuthMode, setSaveConfigAuthMode] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem(`device-${id}-threshold`);
@@ -184,6 +185,29 @@ export default function DeviceDetail() {
     setTimeout(() => {
       setAuthLoading(false);
       setAuthModalVisible(false);
+
+      if (saveConfigAuthMode) {
+        setSaveConfigAuthMode(false);
+        setSaveThresholdLoading(true);
+        setTimeout(() => {
+          localStorage.setItem(`device-${id}-threshold`, String(storageThreshold));
+          setSaveThresholdLoading(false);
+          setThresholdSaved(true);
+
+          addAuditLog({
+            action: '修改设备配置',
+            deviceId: device.id,
+            deviceName: device.name,
+            ip: generateRandomIP(),
+            operator: '张三',
+            details: `存储空间阈值调整为${storageThreshold}%`,
+          });
+
+          message.success(`阈值已更新为 ${storageThreshold}%，告警规则已生效`);
+        }, 600);
+        return;
+      }
+
       if (!authAction) return;
 
       const { key, checked } = authAction;
@@ -853,23 +877,9 @@ export default function DeviceDetail() {
                         size="small"
                         loading={saveThresholdLoading}
                         onClick={() => {
-                          setSaveThresholdLoading(true);
-                          setTimeout(() => {
-                            localStorage.setItem(`device-${id}-threshold`, String(storageThreshold));
-                            setSaveThresholdLoading(false);
-                            setThresholdSaved(true);
-                            
-                            addAuditLog({
-                              action: '修改设备配置',
-                              deviceId: device.id,
-                              deviceName: device.name,
-                              ip: generateRandomIP(),
-                              operator: '张三',
-                              details: `存储空间阈值调整为${storageThreshold}%`,
-                            });
-                            
-                            message.success(`阈值已更新为 ${storageThreshold}%，告警规则已生效`);
-                          }, 600);
+                          setSaveConfigAuthMode(true);
+                          setAuthPassword('');
+                          setAuthModalVisible(true);
                         }}
                       >
                         保存配置
@@ -954,7 +964,9 @@ export default function DeviceDetail() {
             icon={<Shield size={16} />}
             message="安全操作确认"
             description={
-              authAction
+              saveConfigAuthMode
+                ? `即将保存存储阈值配置为${storageThreshold}%，请输入密码确认`
+                : authAction
                 ? authAction.key === 'physicalLock'
                   ? authAction.checked
                     ? '即将开启物理级锁定，设备将被完全禁用，请确认操作'
