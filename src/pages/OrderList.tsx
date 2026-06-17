@@ -268,7 +268,7 @@ function CompletedOrderDetail({ order }: { order: Order }) {
       )}
 
       {expanded && (
-        <div className="mt-2 space-y-2.5 animate-fade-up">
+        <div className="mt-2 space-y-2.5 animate-fade-up relative z-10">
           <div className="grid grid-cols-3 gap-2">
             <div className="bg-yellow-50 rounded-lg p-2 text-center">
               <Star className="w-4 h-4 text-yellow-500 mx-auto mb-0.5 fill-yellow-500" />
@@ -293,7 +293,7 @@ function CompletedOrderDetail({ order }: { order: Order }) {
               录音转文字摘要
               <span className="text-[9px] text-secondary-400 font-normal">· 时长{Math.floor(qa.audio_duration / 60)}分钟</span>
             </div>
-            <p className="text-[10px] text-secondary-600 leading-relaxed">{qa.transcript_summary}</p>
+            <p className="text-[10px] text-secondary-600 leading-relaxed">{qa.transcript_summary || '暂无摘要'}</p>
             {qa.transcript_full && (
               <details className="mt-1.5">
                 <summary className="text-[9px] text-primary-600 cursor-pointer hover:text-primary-700">展开完整转写</summary>
@@ -334,12 +334,12 @@ function CompletedOrderDetail({ order }: { order: Order }) {
               <div className="flex items-center justify-between text-[10px]">
                 <span className="text-secondary-500">根因分类</span>
                 <span className={cn('font-medium', qa.complaint_count > 0 ? 'text-red-600' : 'text-green-600')}>
-                  {qa.root_cause_category}
+                  {qa.root_cause_category || '—'}
                 </span>
               </div>
               <div className="flex items-center justify-between text-[10px]">
                 <span className="text-secondary-500">具体原因</span>
-                <span className="text-secondary-700 text-right max-w-[60%]">{qa.root_cause}</span>
+                <span className="text-secondary-700 text-right max-w-[60%]">{qa.root_cause || '—'}</span>
               </div>
               {qa.root_cause_detail && (
                 <div className="flex items-start justify-between text-[10px]">
@@ -358,11 +358,11 @@ function CompletedOrderDetail({ order }: { order: Order }) {
             <div className="grid grid-cols-2 gap-1.5">
               <div className="text-[10px]">
                 <span className="text-secondary-500">复查人：</span>
-                <span className="text-secondary-700 font-medium">{qa.reviewer}</span>
+                <span className="text-secondary-700 font-medium">{qa.reviewer || '—'}</span>
               </div>
               <div className="text-[10px]">
                 <span className="text-secondary-500">复查时间：</span>
-                <span className="text-secondary-700">{qa.review_time}</span>
+                <span className="text-secondary-700">{qa.review_time || '—'}</span>
               </div>
             </div>
             <div className="text-[10px]">

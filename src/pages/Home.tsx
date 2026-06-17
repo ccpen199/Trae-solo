@@ -536,20 +536,31 @@ export default function Home() {
 
               <div className="grid grid-cols-3 gap-2 mt-3">
                 {[
-                  { icon: FileText, label: '服务SOP库', desc: '保洁/育婴/做饭', to: '/admin/sop', color: 'text-teal-600 bg-teal-50 hover:bg-teal-100 border-teal-200' },
-                  { icon: Mic, label: '录音转文字', desc: '关键词合规质检', to: '/admin/qa', color: 'text-blue-600 bg-blue-50 hover:bg-blue-100 border-blue-200' },
-                  { icon: BarChart3, label: '差评根因聚类', desc: '词云+饼图+趋势', to: '/admin/qa', color: 'text-purple-600 bg-purple-50 hover:bg-purple-100 border-purple-200' },
-                  { icon: Building2, label: '企业批量采购', desc: '物业/公寓服务包', to: '/enterprise', color: 'text-orange-600 bg-orange-50 hover:bg-orange-100 border-orange-200' },
-                  { icon: Shield, label: '保险SaaS中心', desc: '4款产品/自动出单', to: '/admin/insurance', color: 'text-green-600 bg-green-50 hover:bg-green-100 border-green-200' },
-                  { icon: UserCheck, label: '阿姨三证审核', desc: 'OCR+人工复核', to: '/admin/workers', color: 'text-red-600 bg-red-50 hover:bg-red-100 border-red-200' },
+                  { icon: FileText, label: '服务SOP库', desc: '保洁/育婴/做饭', to: '/admin/sop', color: 'text-teal-600 bg-teal-50 hover:bg-teal-100 border-teal-200', steps: ['选择服务类型', '查看标准步骤', '按SOP执行'] },
+                  { icon: Mic, label: '录音转文字', desc: '关键词合规质检', to: '/admin/qa', color: 'text-blue-600 bg-blue-50 hover:bg-blue-100 border-blue-200', steps: ['录音采集', 'ASR转文字', '关键词命中'] },
+                  { icon: BarChart3, label: '差评根因聚类', desc: '词云+饼图+趋势', to: '/admin/qa', color: 'text-purple-600 bg-purple-50 hover:bg-purple-100 border-purple-200', steps: ['差评归集', '根因聚类', '处置建议'] },
+                  { icon: Building2, label: '企业批量采购', desc: '物业/公寓服务包', to: '/enterprise', color: 'text-orange-600 bg-orange-50 hover:bg-orange-100 border-orange-200', steps: ['选择套餐', '批量下单', '统一结算'] },
+                  { icon: Shield, label: '保险SaaS中心', desc: '4款产品/自动出单', to: '/admin/insurance', color: 'text-green-600 bg-green-50 hover:bg-green-100 border-green-200', steps: ['选择险种', '自动出单', '理赔申请'] },
+                  { icon: UserCheck, label: '阿姨三证审核', desc: 'OCR+人工复核', to: '/admin/workers', color: 'text-red-600 bg-red-50 hover:bg-red-100 border-red-200', steps: ['OCR识别', '人工复核', '审核通过'] },
                 ].map((entry, i) => {
                   const Icon = entry.icon;
                   return (
-                    <Link key={i} to={entry.to} className={cn('flex items-center gap-2 p-2 rounded-lg border transition-colors', entry.color)}>
-                      <Icon className="w-4 h-4 flex-shrink-0" />
-                      <div className="min-w-0">
-                        <p className="text-[10px] font-bold leading-tight">{entry.label}</p>
-                        <p className="text-[8px] opacity-70 leading-tight truncate">{entry.desc}</p>
+                    <Link key={i} to={entry.to} className={cn('flex flex-col gap-1.5 p-2.5 rounded-lg border transition-colors', entry.color)}>
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-[10px] font-bold leading-tight">{entry.label}</p>
+                          <p className="text-[8px] opacity-70 leading-tight truncate">{entry.desc}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 text-[7px] opacity-60">
+                        {entry.steps.map((step, si) => (
+                          <span key={si} className="flex items-center gap-0.5">
+                            <span className="w-3 h-3 rounded-full bg-current/20 flex items-center justify-center text-[6px] font-bold">{si + 1}</span>
+                            <span className="truncate">{step}</span>
+                            {si < entry.steps.length - 1 && <span className="opacity-40">→</span>}
+                          </span>
+                        ))}
                       </div>
                     </Link>
                   );

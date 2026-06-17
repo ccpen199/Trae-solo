@@ -349,6 +349,83 @@ function WorkerCertSection({ order }: { order: Order }) {
               })}
             </div>
           </div>
+
+          <div className="border-t border-dashed border-gray-200 pt-4">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="w-4 h-4 text-red-500" />
+              <h3 className="text-sm font-bold text-secondary-800">③ 异常处置与派单资格拦截</h3>
+            </div>
+
+            {cert.review_history?.some(r => r.result === 'reject') ? (
+              <div className="space-y-2">
+                {cert.review_history?.filter(r => r.result === 'reject').map((record, ri) => (
+                  <div key={ri} className="bg-red-50 rounded-lg p-3 border border-red-100">
+                    <div className="flex items-center gap-2 mb-1">
+                      <XCircle className="w-4 h-4 text-red-500" />
+                      <span className="text-xs font-bold text-red-700">驳回记录 #{ri + 1}</span>
+                      <span className="text-[9px] text-red-500">{new Date(record.review_time).toLocaleString('zh-CN')}</span>
+                    </div>
+                    <p className="text-xs text-red-600 mb-1.5">驳回人：{record.reviewer}</p>
+                    <p className="text-xs text-red-600 mb-1.5">驳回原因：{record.remark}</p>
+                    <div className="flex items-center gap-1.5 bg-white rounded p-2 border border-red-200">
+                      <AlertCircle className="w-3 h-3 text-orange-500" />
+                      <span className="text-[10px] text-orange-700 font-medium">处置：证件驳回，要求重新提交完整材料，暂停派单资格直至复核通过</span>
+                    </div>
+                  </div>
+                ))}
+
+                {cert.verify_status === 'approved' && cert.review_history?.some(r => r.type === 'recheck' && r.result === 'pass') && (
+                  <div className="bg-green-50 rounded-lg p-3 border border-green-100">
+                    <div className="flex items-center gap-2 mb-1">
+                      <ThumbsUp className="w-4 h-4 text-green-500" />
+                      <span className="text-xs font-bold text-green-700">复核改判</span>
+                    </div>
+                    <p className="text-xs text-green-600">
+                      经复查后改判通过，恢复派单资格。改判人：{cert.review_history?.find(r => r.type === 'recheck' && r.result === 'pass')?.reviewer || '—'}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="bg-green-50 rounded-lg p-3 border border-green-100">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span className="text-xs font-medium text-green-700">三证均无异常，派单资格正常</span>
+                </div>
+              </div>
+            )}
+
+            <div className="mt-3 bg-yellow-50 rounded-lg p-3 border border-yellow-100">
+              <div className="flex items-center gap-1.5 mb-2">
+                <History className="w-3.5 h-3.5 text-yellow-600" />
+                <span className="text-xs font-bold text-yellow-800">证件有效期与重审规则</span>
+              </div>
+              <div className="space-y-1.5 text-[10px] text-yellow-700">
+                <p>• 身份证：长期有效，信息变更需重新提交OCR识别</p>
+                <p>• 健康证：有效期1年，到期前30天自动触发重审，超期暂停派单</p>
+                <p>• 无犯罪记录：有效期6个月，到期前15天提醒更新，超期暂停派单</p>
+                <p>• 季度复查：每90天执行一次全量复核，确保信息持续有效</p>
+              </div>
+              {cert.ocr_completed_at && (
+                <p className="text-[9px] text-yellow-500 mt-2 pt-1.5 border-t border-yellow-200">
+                  最近OCR识别：{new Date(cert.ocr_completed_at).toLocaleString('zh-CN')} · 下次季度复查：{new Date(new Date(cert.ocr_completed_at).getTime() + 90 * 24 * 3600 * 1000).toLocaleDateString('zh-CN')}
+                </p>
+              )}
+            </div>
+
+            <div className="mt-3 bg-blue-50 rounded-lg p-3 border border-blue-100">
+              <div className="flex items-center gap-1.5 mb-1">
+                <Shield className="w-3.5 h-3.5 text-blue-600" />
+                <span className="text-xs font-bold text-blue-800">派单资格拦截规则</span>
+              </div>
+              <div className="space-y-1 text-[10px] text-blue-700">
+                <p>• 三证任一审核驳回 → 立即暂停派单资格</p>
+                <p>• 健康证/无犯罪记录超期 → 自动移出派单队列</p>
+                <p>• 季度复查未通过 → 暂停派单直至整改完成</p>
+                <p>• 人工改判通过 → 恢复派单资格，全程留痕可追溯</p>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -423,6 +500,24 @@ function NodeTimelineSection({ nodes, status }: { nodes: ServiceNode[]; status: 
                   )}>
                     {node.remark}
                   </p>
+                )}
+                {isDone && (
+                  <div className="mt-1.5 flex items-center gap-2 text-[9px]">
+                    <span className="text-secondary-400 flex items-center gap-0.5">
+                      <Phone className="w-2.5 h-2.5" />
+                      已推送APP通知
+                    </span>
+                    <span className="text-secondary-400 flex items-center gap-0.5">
+                      <MessageCircle className="w-2.5 h-2.5" />
+                      已发送短信提醒
+                    </span>
+                    <span className={cn(
+                      'px-1.5 py-0.5 rounded font-medium',
+                      'bg-green-50 text-green-600'
+                    )}>
+                      ✓ 用户已收到
+                    </span>
+                  </div>
                 )}
               </div>
             </div>

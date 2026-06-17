@@ -1372,12 +1372,50 @@ function OrderSuccessView({
                 </p>
               </div>
             </div>
+
+            {liveOrder.compensation && (
+              <div className="space-y-2 mb-2">
+                <div className="grid grid-cols-2 gap-1.5">
+                  <div className="bg-white/80 rounded-lg p-2 text-center">
+                    <CircleDollarSign className="w-3.5 h-3.5 text-green-500 mx-auto mb-0.5" />
+                    <p className="text-sm font-bold text-green-600">¥{liveOrder.compensation.refund_amount}</p>
+                    <p className="text-[8px] text-green-500">全额退款</p>
+                  </div>
+                  <div className="bg-white/80 rounded-lg p-2 text-center">
+                    <Gift className="w-3.5 h-3.5 text-orange-500 mx-auto mb-0.5" />
+                    <p className="text-sm font-bold text-orange-600">¥{liveOrder.compensation.coupon_amount}</p>
+                    <p className="text-[8px] text-orange-500">补偿券</p>
+                  </div>
+                </div>
+                <div className="bg-white/70 rounded-lg p-1.5 space-y-1 text-[9px]">
+                  <div className="flex items-center justify-between">
+                    <span className="text-secondary-500">赔付原因</span>
+                    <span className="text-secondary-700 font-medium">{liveOrder.compensation.reason_category}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-secondary-500">补偿券码</span>
+                    <span className="text-primary-600 font-mono font-medium">{liveOrder.compensation.coupon_code}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-secondary-500">触发方式</span>
+                    <span className="text-secondary-700">{liveOrder.compensation.trigger_type === 'auto' ? '系统自动触发' : '人工申请'}</span>
+                  </div>
+                  {liveOrder.compensation.paid_at && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-secondary-500">到账时间</span>
+                      <span className="text-green-600 font-medium">{liveOrder.compensation.paid_at}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             <div className="space-y-1.5">
               {[
                 { label: '赔付触发', desc: `超时${liveOrder.overtime_minutes}分钟，自动检测`, done: true, color: 'text-red-600 bg-red-100' },
                 { label: '退款申请', desc: `全额退款¥${liveOrder.compensation?.refund_amount || totalFee}`, done: true, color: 'text-orange-600 bg-orange-100' },
                 { label: '补偿券发券', desc: `30元无门槛家政券`, done: true, color: 'text-yellow-600 bg-yellow-100' },
-                { label: '资金到账', desc: '预计24小时内到账户余额', done: false, color: 'text-green-600 bg-green-100' },
+                { label: '资金到账', desc: '预计24小时内到账户余额', done: !!liveOrder.compensation?.paid_at, color: 'text-green-600 bg-green-100' },
               ].map((step, si) => (
                 <div key={si} className="flex items-center gap-2 text-[9px]">
                   <div className={cn('w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0', step.done ? step.color : 'bg-gray-100 text-gray-400')}>
