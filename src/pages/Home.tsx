@@ -492,7 +492,7 @@ export default function Home() {
               </p>
 
               <div className="grid grid-cols-2 gap-3">
-                <div className="card p-4 bg-white/90 backdrop-blur-sm">
+                <Link to="/admin/dispatch" className="card p-4 bg-white/90 backdrop-blur-sm hover:ring-2 hover:ring-blue-200 transition-all block">
                   <div className="flex items-center gap-2 mb-1.5">
                     <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                       <Navigation className="w-4 h-4 text-blue-600" />
@@ -500,9 +500,9 @@ export default function Home() {
                     <span className="text-xs text-secondary-500">今日已派单</span>
                   </div>
                   <p className="text-2xl font-bold text-secondary-800">{stats.todayDispatched}<span className="text-xs font-normal text-secondary-400 ml-1">单</span></p>
-                  <p className="text-[10px] text-green-600 mt-0.5">↑ 12% 较昨日</p>
-                </div>
-                <div className="card p-4 bg-white/90 backdrop-blur-sm">
+                  <p className="text-[10px] text-green-600 mt-0.5 flex items-center gap-0.5">↑ 12% 较昨日 <span className="text-secondary-400">→ 调度中心</span></p>
+                </Link>
+                <Link to="/orders" className="card p-4 bg-white/90 backdrop-blur-sm hover:ring-2 hover:ring-green-200 transition-all block">
                   <div className="flex items-center gap-2 mb-1.5">
                     <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
                       <CircleDollarSign className="w-4 h-4 text-green-600" />
@@ -510,9 +510,9 @@ export default function Home() {
                     <span className="text-xs text-secondary-500">赔付到账率</span>
                   </div>
                   <p className="text-2xl font-bold text-green-600">{stats.payoutRate}<span className="text-xs font-normal text-green-400 ml-1">%</span></p>
-                  <p className="text-[10px] text-green-600 mt-0.5">24h自动到账</p>
-                </div>
-                <div className="card p-4 bg-white/90 backdrop-blur-sm">
+                  <p className="text-[10px] text-green-600 mt-0.5 flex items-center gap-0.5">24h自动到账 <span className="text-secondary-400">→ 赔付记录</span></p>
+                </Link>
+                <Link to="/admin/insurance" className="card p-4 bg-white/90 backdrop-blur-sm hover:ring-2 hover:ring-purple-200 transition-all block">
                   <div className="flex items-center gap-2 mb-1.5">
                     <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
                       <Shield className="w-4 h-4 text-purple-600" />
@@ -520,9 +520,9 @@ export default function Home() {
                     <span className="text-xs text-secondary-500">保险承保率</span>
                   </div>
                   <p className="text-2xl font-bold text-purple-600">{stats.insuranceRate}<span className="text-xs font-normal text-purple-400 ml-1">%</span></p>
-                  <p className="text-[10px] text-secondary-500 mt-0.5">每单自动投保</p>
-                </div>
-                <div className="card p-4 bg-white/90 backdrop-blur-sm">
+                  <p className="text-[10px] text-secondary-500 mt-0.5 flex items-center gap-0.5">每单自动投保 <span className="text-secondary-400">→ 保险SaaS</span></p>
+                </Link>
+                <Link to="/admin/workers" className="card p-4 bg-white/90 backdrop-blur-sm hover:ring-2 hover:ring-orange-200 transition-all block">
                   <div className="flex items-center gap-2 mb-1.5">
                     <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
                       <Timer className="w-4 h-4 text-orange-600" />
@@ -530,8 +530,8 @@ export default function Home() {
                     <span className="text-xs text-secondary-500">1km平均到达</span>
                   </div>
                   <p className="text-2xl font-bold text-orange-600">{stats.avgArriveKm}<span className="text-xs font-normal text-orange-400 ml-1">km</span></p>
-                  <p className="text-[10px] text-secondary-500 mt-0.5">热力优先调度</p>
-                </div>
+                  <p className="text-[10px] text-secondary-500 mt-0.5 flex items-center gap-0.5">热力优先调度 <span className="text-secondary-400">→ 阿姨审核</span></p>
+                </Link>
               </div>
 
               <div className="flex flex-wrap gap-3 pt-1">

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift, Receipt, ScanLine, Clock4, UserCheck, BadgeCheck, FileText } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAppStore, serviceTypeList } from '@/store';
 import { useWorkerStore } from '@/store/useWorkerStore';
@@ -639,6 +639,49 @@ export default function QuickOrderForm() {
                             <span className="text-secondary-300">|</span>
                             <span className={complColor}>投诉{w.complaint_rate}%</span>
                           </div>
+                          {cert && (
+                            <div className="mt-1 pt-1 border-t border-dashed border-gray-200/70 space-y-0.5">
+                              <div className="grid grid-cols-3 gap-1 text-[8px]">
+                                {cert.ocr_detail?.id_card && (
+                                  <div className="flex items-center gap-0.5 text-blue-600 bg-blue-50/60 px-1 py-0.5 rounded">
+                                    <FileText className="w-2 h-2" />
+                                    <span className="truncate">身份证:{cert.ocr_detail.id_card.confidence}%</span>
+                                  </div>
+                                )}
+                                {cert.ocr_detail?.health_cert && (
+                                  <div className={cn(
+                                    'flex items-center gap-0.5 px-1 py-0.5 rounded',
+                                    cert.ocr_detail.health_cert.confidence >= 80
+                                      ? 'text-green-600 bg-green-50/60'
+                                      : 'text-red-600 bg-red-50/60'
+                                  )}>
+                                    <Receipt className="w-2 h-2" />
+                                    <span>健康证:{cert.ocr_detail.health_cert.confidence}%</span>
+                                  </div>
+                                )}
+                                {cert.ocr_detail?.crime_record && (
+                                  <div className="flex items-center gap-0.5 text-purple-600 bg-purple-50/60 px-1 py-0.5 rounded">
+                                    <Award className="w-2 h-2" />
+                                    <span>无犯罪:{cert.ocr_detail.crime_record.confidence}%</span>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-1.5 text-[8px] text-secondary-500">
+                                <UserCheck className="w-2 h-2 text-primary-500" />
+                                <span>复核：{cert.review_history?.find(r => r.type === 'recheck' || r.type === 'manual')?.reviewer || '初审专员'}</span>
+                                <span className="text-secondary-300">·</span>
+                                <Clock className="w-2 h-2 text-primary-500" />
+                                <span>{new Date(certTime || cert.review_history?.[0]?.review_time || Date.now()).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })}</span>
+                                {cert.review_history?.some(r => r.result === 'reject') && (
+                                  <>
+                                    <span className="text-secondary-300">·</span>
+                                    <AlertTriangle className="w-2 h-2 text-orange-500" />
+                                    <span className="text-orange-600 font-medium">有驳回记录</span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          )}
                           {isTop && (
                             <div className="flex items-center gap-1 mt-1 flex-wrap">
                               {reasons.slice(0, 3).map((r, ri) => (
@@ -654,27 +697,15 @@ export default function QuickOrderForm() {
                             <p className="text-xs font-bold text-orange-600">{(w.weighted_score || 90).toFixed(1)}</p>
                             <p className="text-[8px] text-secondary-400">综合分</p>
                           </div>
-                          <div className="flex gap-1">
-                            <button
-                              onClick={() => setExpandedCertWorkerId(isCertExpanded ? null : w.id!)}
-                              className={cn(
-                                'text-[8px] px-1.5 py-0.5 rounded font-medium transition-colors flex items-center gap-0.5',
-                                isCertExpanded ? 'bg-primary-100 text-primary-600' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
-                              )}
-                            >
-                              <ScanLine className="w-2.5 h-2.5" />
-                              {isCertExpanded ? '收起三证' : '三证详情'}
-                            </button>
-                            <button
-                              onClick={() => setSelectedWorkerId(isSelected ? null : w.id!)}
-                              className={cn(
-                                'text-[8px] px-1.5 py-0.5 rounded font-medium transition-colors',
-                                isSelected ? 'bg-primary-500 text-white' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
-                              )}
-                            >
-                              {isSelected ? '取消' : '选择'}
-                            </button>
-                          </div>
+                          <button
+                            onClick={() => setSelectedWorkerId(isSelected ? null : w.id!)}
+                            className={cn(
+                              'text-[9px] px-2 py-1 rounded font-medium transition-colors',
+                              isSelected ? 'bg-primary-500 text-white' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
+                            )}
+                          >
+                            {isSelected ? '✓ 已选' : '选择阿姨'}
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -1110,7 +1141,7 @@ function OrderSuccessView({
 
         {liveOrder?.is_overtime ? (
           <div className="card p-3 bg-gradient-to-r from-red-50 to-orange-50 border-red-200">
-            <div className="flex items-start gap-2">
+            <div className="flex items-start gap-2 mb-2">
               <CircleDollarSign className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
                 <div className="flex items-center gap-1.5">
@@ -1120,12 +1151,35 @@ function OrderSuccessView({
                 <p className="text-[10px] text-red-600 mt-1">
                   迟到{liveOrder.overtime_minutes}分钟，触发全额返现+30元券
                 </p>
-                <div className="flex items-center gap-3 mt-2 text-[9px]">
-                  <span className="text-secondary-600">返现: <span className="font-bold text-red-700">¥{liveOrder.compensation?.refund_amount || totalFee}</span></span>
-                  <span className="text-secondary-600">补偿券: <span className="font-bold text-red-700">¥{liveOrder.compensation?.coupon_amount || 30}</span></span>
-                </div>
-                <p className="text-[9px] text-secondary-400 mt-1">预计24小时内到账</p>
               </div>
+            </div>
+            <div className="space-y-1.5">
+              {[
+                { label: '赔付触发', desc: `超时${liveOrder.overtime_minutes}分钟，自动检测`, done: true, color: 'text-red-600 bg-red-100' },
+                { label: '退款申请', desc: `全额退款¥${liveOrder.compensation?.refund_amount || totalFee}`, done: true, color: 'text-orange-600 bg-orange-100' },
+                { label: '补偿券发券', desc: `30元无门槛家政券`, done: true, color: 'text-yellow-600 bg-yellow-100' },
+                { label: '资金到账', desc: '预计24小时内到账户余额', done: false, color: 'text-green-600 bg-green-100' },
+              ].map((step, si) => (
+                <div key={si} className="flex items-center gap-2 text-[9px]">
+                  <div className={cn('w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0', step.done ? step.color : 'bg-gray-100 text-gray-400')}>
+                    {step.done ? '✓' : si + 1}
+                  </div>
+                  <div className="flex-1 flex items-center justify-between">
+                    <div>
+                      <span className={step.done ? 'text-secondary-700 font-medium' : 'text-secondary-400'}>{step.label}</span>
+                      <span className="text-secondary-400 ml-1">· {step.desc}</span>
+                    </div>
+                    {step.done && <span className="text-green-600">已完成</span>}
+                    {!step.done && <span className="text-secondary-400">进行中</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 pt-2 border-t border-dashed border-red-200 flex items-center justify-between text-[10px]">
+              <span className="text-secondary-500">赔付单号: <span className="font-mono text-secondary-700">#COMP{String(liveOrder.id).padStart(6, '0')}</span></span>
+              <Link to={`/orders/${orderId}`} className="text-red-600 hover:text-red-700 font-medium flex items-center gap-0.5">
+                查看赔付详情 →
+              </Link>
             </div>
           </div>
         ) : (
@@ -1140,6 +1194,11 @@ function OrderSuccessView({
                 <p className="text-[10px] text-orange-600 mt-0.5">
                   迟到&gt;30min/未上门 → 全额退款+30元券 · 24h自动到账
                 </p>
+                <div className="mt-1.5 flex items-center gap-2 text-[9px]">
+                  <span className="text-secondary-500 flex items-center gap-0.5"><CheckCircle className="w-2.5 h-2.5 text-green-500" />平台先行垫付</span>
+                  <span className="text-secondary-500 flex items-center gap-0.5"><CheckCircle className="w-2.5 h-2.5 text-green-500" />无需人工审核</span>
+                  <span className="text-secondary-500 flex items-center gap-0.5"><CheckCircle className="w-2.5 h-2.5 text-green-500" />实时到账通知</span>
+                </div>
               </div>
             </div>
           </div>
