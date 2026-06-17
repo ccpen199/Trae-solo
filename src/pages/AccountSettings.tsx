@@ -127,14 +127,29 @@ interface AuditDetail {
   verifyMethod: string;
 }
 
-const initialAuditTrail = [
-  { time: '2026-06-17 10:32', action: '登录账号', detail: '通过手机号+密码验证', result: '成功', ip: '127.0.0.1', type: '安全验证' as const },
-  { time: '2026-06-16 18:45', action: '修改昵称', detail: '超级管理员 → 超级管理员-正式', result: '成功', ip: '127.0.0.1', type: '资料修改' as const },
-  { time: '2026-06-16 10:08', action: '资质审核', detail: '通过医生-李静怡资质申请', result: '成功', ip: '127.0.0.1', type: '资质复查' as const },
-  { time: '2026-06-15 15:20', action: '权限变更', detail: '新增运营角色访问处方监管', result: '成功', ip: '127.0.0.1', type: '角色变更' as const },
-  { time: '2026-06-14 09:30', action: '密码修改', detail: '通过验证码安全校验', result: '成功', ip: '192.168.1.100', type: '密码修改' as const },
-  { time: '2026-06-12 14:02', action: '登录异常', detail: '设备指纹不匹配，二次验证通过', result: '放行', ip: '10.0.0.88', type: '安全验证' as const },
-  { time: '2026-06-10 11:20', action: '更换手机号', detail: '尾号0001 → 尾号0002', result: '成功', ip: '127.0.0.1', type: '手机号变更' as const },
+type AuditLogType = '资料修改' | '密码修改' | '手机号变更' | '资质复查' | '角色变更' | '安全验证';
+
+interface AuditLog {
+  time: string;
+  action: string;
+  detail: string;
+  result: string;
+  ip: string;
+  type: AuditLogType;
+  reviewed?: boolean;
+  reviewer?: string;
+  reviewTime?: string;
+  reviewNote?: string;
+}
+
+const initialAuditTrail: AuditLog[] = [
+  { time: '2026-06-17 10:32', action: '登录账号', detail: '通过手机号+密码验证', result: '成功', ip: '127.0.0.1', type: '安全验证', reviewed: true, reviewer: '系统自动', reviewTime: '2026-06-17 10:33', reviewNote: '常规登录，无异常' },
+  { time: '2026-06-16 18:45', action: '修改昵称', detail: '超级管理员 → 超级管理员-正式', result: '成功', ip: '127.0.0.1', type: '资料修改', reviewed: true, reviewer: '李运营', reviewTime: '2026-06-16 19:00' },
+  { time: '2026-06-16 10:08', action: '资质审核', detail: '通过医生-李静怡资质申请', result: '成功', ip: '127.0.0.1', type: '资质复查', reviewed: true, reviewer: '超级管理员', reviewTime: '2026-06-16 10:15' },
+  { time: '2026-06-15 15:20', action: '权限变更', detail: '新增运营角色访问处方监管', result: '成功', ip: '127.0.0.1', type: '角色变更' },
+  { time: '2026-06-14 09:30', action: '密码修改', detail: '通过验证码安全校验', result: '成功', ip: '192.168.1.100', type: '密码修改' },
+  { time: '2026-06-12 14:02', action: '登录异常', detail: '设备指纹不匹配，二次验证通过', result: '放行', ip: '10.0.0.88', type: '安全验证' },
+  { time: '2026-06-10 11:20', action: '更换手机号', detail: '尾号0001 → 尾号0002', result: '成功', ip: '127.0.0.1', type: '手机号变更' },
 ];
 
 const auditActionTypes = ['全部', '资料修改', '密码修改', '手机号变更', '资质复查', '角色变更', '安全验证'] as const;
@@ -199,12 +214,14 @@ export default function AccountSettings() {
   const [editTargetRole, setEditTargetRole] = useState<UserRole>('doctor');
   const [editRoleReason, setEditRoleReason] = useState('');
 
-  const [auditTrail, setAuditTrail] = useState(initialAuditTrail);
+  const [auditTrail, setAuditTrail] = useState<AuditLog[]>(initialAuditTrail);
   const [roleRequestStatus, setRoleRequestStatus] = useState<'none' | 'submitted'>('none');
   const [qualificationReviewOpen, setQualificationReviewOpen] = useState(false);
   const [qualificationReviewSubmitted, setQualificationReviewSubmitted] = useState(false);
   const [qualificationMaterials, setQualificationMaterials] = useState('');
   const [changeSummary, setChangeSummary] = useState<string[]>([]);
+  const [reviewingAuditIndex, setReviewingAuditIndex] = useState<number | null>(null);
+  const [reviewNote, setReviewNote] = useState('');
 
   const [materials, setMaterials] = useState<MaterialItem[]>(initialMaterials);
   const [currentReviewStep, setCurrentReviewStep] = useState<QualificationReviewStep | null>(null);
@@ -323,6 +340,16 @@ export default function AccountSettings() {
     const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     const newEntries: typeof initialAuditTrail = [];
     const changes: string[] = [];
+    const newSecurityRecords: SecurityVerifyRecord[] = [];
+    const genId = () => Math.random().toString(36).slice(2, 10);
+
+    newSecurityRecords.push({
+      id: genId(),
+      time: timeStr,
+      method: '密码校验',
+      result: '成功',
+      ip: '127.0.0.1',
+    });
 
     if (user && nickname.trim() !== (user.nickname || '')) {
       newEntries.push({ time: timeStr, action: '修改昵称', detail: `${user.nickname || ''} → ${nickname}`, result: '成功', ip: '127.0.0.1', type: '资料修改' as const });
@@ -332,21 +359,45 @@ export default function AccountSettings() {
     if (editPhoneChanging && user) {
       const oldTail = user.phone?.slice(-4) || '****';
       const newTail = editNewPhone.slice(-4);
+      newSecurityRecords.push({
+        id: genId(),
+        time: timeStr,
+        method: '短信验证码',
+        result: '成功',
+        ip: '127.0.0.1',
+      });
+      newEntries.push({ time: timeStr, action: '短信验证码校验', detail: `尾号${newTail} 验证码校验通过`, result: '成功', ip: '127.0.0.1', type: '安全验证' as const });
       newEntries.push({ time: timeStr, action: '更换手机号', detail: `尾号${oldTail} → 尾号${newTail}`, result: '成功', ip: '127.0.0.1', type: '手机号变更' as const });
       changes.push('手机号');
     }
 
     if (editPasswordChanging) {
-      newEntries.push({ time: timeStr, action: '修改密码', detail: '通过安全校验验证', result: '成功', ip: '127.0.0.1', type: '密码修改' as const });
+      newEntries.push({ time: timeStr, action: '修改密码', detail: '通过安全校验验证，密码已更新', result: '成功', ip: '127.0.0.1', type: '密码修改' as const });
       changes.push('密码');
     }
 
     if (editEmailChanging && editEmail.trim()) {
+      newSecurityRecords.push({
+        id: genId(),
+        time: timeStr,
+        method: '邮箱验证',
+        result: '成功',
+        ip: '127.0.0.1',
+      });
+      newEntries.push({ time: timeStr, action: '邮箱验证码校验', detail: `${editEmail} 验证链接已确认`, result: '成功', ip: '127.0.0.1', type: '安全验证' as const });
       newEntries.push({ time: timeStr, action: '绑定邮箱', detail: `绑定邮箱 ${editEmail}`, result: '验证邮件已发送', ip: '127.0.0.1', type: '资料修改' as const });
       changes.push('邮箱');
     }
 
     if (editRoleChanging === 'change' && editRoleReason.trim()) {
+      newSecurityRecords.push({
+        id: genId(),
+        time: timeStr,
+        method: '密码校验',
+        result: '成功',
+        ip: '127.0.0.1',
+      });
+      newEntries.push({ time: timeStr, action: '角色变更二次校验', detail: `密码校验通过，允许提交角色变更申请`, result: '成功', ip: '127.0.0.1', type: '安全验证' as const });
       newEntries.push({ time: timeStr, action: '角色变更申请', detail: `申请变更为${roleConfig[editTargetRole]?.label}，原因：${editRoleReason}`, result: '已提交', ip: '127.0.0.1', type: '角色变更' as const });
       setRoleRequestStatus('submitted');
       setRoleChangeCurrentStep('pending_first_review');
@@ -368,6 +419,9 @@ export default function AccountSettings() {
 
     if (newEntries.length > 0) {
       setAuditTrail(prev => [...newEntries, ...prev]);
+    }
+    if (newSecurityRecords.length > 0) {
+      setSecurityRecords(prev => [...newSecurityRecords, ...prev]);
     }
     setChangeSummary(changes);
 
@@ -1262,10 +1316,14 @@ export default function AccountSettings() {
                   const i = auditTrail.indexOf(log);
                   const isExpanded = expandedAuditId === i;
                   const detail = isExpanded ? getAuditDetail(i) : null;
+                  const isReviewing = reviewingAuditIndex === i;
                   return (
                     <div key={i} className="p-2.5 rounded-xl hover:bg-gray-50 transition-colors border border-gray-50">
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-purple-400 mt-1.5 shrink-0" />
+                        <div className={cn(
+                          'w-2 h-2 rounded-full mt-1.5 shrink-0',
+                          log.reviewed ? 'bg-forest-400' : 'bg-orange-400'
+                        )} />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap mb-0.5">
                             <span className="text-xs font-semibold text-gray-800">{log.action}</span>
@@ -1290,13 +1348,36 @@ export default function AccountSettings() {
                             )}>
                               {log.result}
                             </span>
+                            {log.reviewed ? (
+                              <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-forest-50 text-forest-600 flex items-center gap-0.5">
+                                <CheckCircle2 className="w-2.5 h-2.5" /> 已复核
+                              </span>
+                            ) : (
+                              <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-orange-50 text-orange-600 flex items-center gap-0.5">
+                                <Clock className="w-2.5 h-2.5" /> 待复核
+                              </span>
+                            )}
                           </div>
                           <p className="text-[11px] text-gray-600">{log.detail}</p>
+                          {log.reviewed && log.reviewer && (
+                            <p className="text-[10px] text-gray-400 mt-0.5">复核人：{log.reviewer} · {log.reviewTime}{log.reviewNote ? ` · 备注：${log.reviewNote}` : ''}</p>
+                          )}
                         </div>
-                        <div className="flex items-center gap-2 shrink-0">
-                          <div className="text-right">
+                        <div className="flex items-center gap-1 shrink-0">
+                          <div className="text-right mr-1">
                             <div className="text-[10px] text-gray-400 font-mono">{log.time}</div>
                           </div>
+                          {!log.reviewed && (
+                            <button
+                              onClick={() => { setReviewingAuditIndex(isReviewing ? null : i); setReviewNote(''); }}
+                              className={cn(
+                                'px-1.5 py-1 rounded text-[10px] font-semibold transition-colors',
+                                isReviewing ? 'bg-warm-500 text-white' : 'bg-warm-50 text-warm-600 hover:bg-warm-100'
+                              )}
+                            >
+                              复核
+                            </button>
+                          )}
                           <button
                             onClick={() => setExpandedAuditId(isExpanded ? null : i)}
                             className={cn(
@@ -1308,6 +1389,39 @@ export default function AccountSettings() {
                           </button>
                         </div>
                       </div>
+                      {isReviewing && (
+                        <div className="mt-2 ml-5 p-2.5 rounded-lg bg-warm-50 border border-warm-100 space-y-2">
+                          <div className="text-[11px] font-semibold text-warm-800">管理员复核</div>
+                          <textarea
+                            value={reviewNote}
+                            onChange={(e) => setReviewNote(e.target.value)}
+                            placeholder="请输入复核备注（可选）"
+                            className="w-full px-2 py-1.5 rounded-lg border border-warm-200 bg-white text-[11px] text-gray-800 placeholder-gray-400 focus:outline-none focus:border-warm-400 resize-none h-14"
+                          />
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => {
+                                const now = new Date();
+                                const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+                                setAuditTrail(prev => prev.map((l, idx) =>
+                                  idx === i ? { ...l, reviewed: true, reviewer: user?.nickname || user?.phone || '当前用户', reviewTime: timeStr, reviewNote: reviewNote || '合规无异常' } : l
+                                ));
+                                setReviewingAuditIndex(null);
+                                setReviewNote('');
+                              }}
+                              className="px-2.5 py-1 rounded-lg bg-forest-500 text-white text-[10px] font-semibold hover:bg-forest-600 transition-colors"
+                            >
+                              确认复核
+                            </button>
+                            <button
+                              onClick={() => { setReviewingAuditIndex(null); setReviewNote(''); }}
+                              className="px-2.5 py-1 rounded-lg bg-gray-100 text-gray-600 text-[10px] font-semibold hover:bg-gray-200 transition-colors"
+                            >
+                              取消
+                            </button>
+                          </div>
+                        </div>
+                      )}
                       {isExpanded && detail && (
                         <div className="mt-2 ml-5 pt-2 border-t border-gray-100 text-[10px] space-y-1.5">
                           <div className="font-semibold text-gray-700 mb-1">操作详情</div>
@@ -1329,6 +1443,16 @@ export default function AccountSettings() {
                             <span className="text-gray-600"><span className="font-semibold">设备信息：</span>{detail.device}</span>
                             <span className="text-gray-600"><span className="font-semibold">验证方式：</span>{detail.verifyMethod}</span>
                           </div>
+                          {log.reviewed && log.reviewer && (
+                            <div className="mt-1 pl-2 pt-1 border-t border-gray-50">
+                              <div className="font-semibold text-forest-600">复核信息</div>
+                              <div className="flex flex-wrap gap-x-4 gap-y-0.5">
+                                <span className="text-gray-600"><span className="font-semibold">复核人：</span>{log.reviewer}</span>
+                                <span className="text-gray-600"><span className="font-semibold">复核时间：</span>{log.reviewTime}</span>
+                                {log.reviewNote && <span className="text-gray-600"><span className="font-semibold">复核备注：</span>{log.reviewNote}</span>}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   ShieldCheck, Users, Building2, Store, Stethoscope, TrendingUp,
   Clock, Eye, CheckCircle2, XCircle, Search, BarChart3, Activity,
-  AlertTriangle, ClipboardList, FileText, Lock, PenTool, UserCheck,
+  AlertTriangle, ClipboardList, FileText, Lock, Unlock, PenTool, UserCheck,
   RotateCcw, Pill, ShoppingCart, MapPin, Calendar, Syringe, Bug, Heart,
   ChevronRight, ArrowRight, BadgeCheck, ChevronsDown, ChevronsDownUp,
   PawPrint, FileSpreadsheet, MessageCircle, HeartHandshake, Bell,
@@ -28,7 +28,7 @@ const tabs: { id: TabId; label: string; Icon: React.ComponentType<{ className?: 
   { id: 'audit', label: '审计日志', Icon: ClipboardList },
 ];
 
-const ownerLedger = [
+const initialOwnerLedger = [
   { id: 'U100001', nickname: '张小明', phone: '138****0001', pets: 2, petNames: ['豆豆', '咪咪'], healthTemplateCoverage: 100, sickTracking: 0, consultations: 12, prescriptions: 3, appointments: 8, calendarReminders: 15, bindAuthAccounts: 1, status: 'active' as const, riskScore: 12, lastActive: '2026-06-16 18:32' },
   { id: 'U100002', nickname: '李小红', phone: '138****0002', pets: 1, petNames: ['小白'], healthTemplateCoverage: 100, sickTracking: 1, consultations: 5, prescriptions: 1, appointments: 3, calendarReminders: 8, bindAuthAccounts: 0, status: 'active' as const, riskScore: 8, lastActive: '2026-06-16 15:20' },
   { id: 'U100003', nickname: '王大伟', phone: '135****0001', pets: 3, petNames: ['旺财', '来福', '贝贝'], healthTemplateCoverage: 67, sickTracking: 0, consultations: 0, prescriptions: 0, appointments: 0, calendarReminders: 2, bindAuthAccounts: 2, status: 'disabled' as const, riskScore: 92, lastActive: '2026-06-10 09:15' },
@@ -160,9 +160,11 @@ export default function AdminDashboard() {
   const [selectedDoctorAction, setSelectedDoctorAction] = useState<{id: string, action: string} | null>(null);
   const [selectedHospitalAction, setSelectedHospitalAction] = useState<{id: string, action: string} | null>(null);
   const [selectedMerchantAction, setSelectedMerchantAction] = useState<{id: string, action: string} | null>(null);
+  const [selectedOwnerAction, setSelectedOwnerAction] = useState<{id: string, action: string} | null>(null);
   const [actionProcessing, setActionProcessing] = useState(false);
   const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
   const [localAuditLogs, setLocalAuditLogs] = useState(auditLogs);
+  const [ownerLedger, setOwnerLedger] = useState(initialOwnerLedger);
 
   const handleReject = (id: string) => {
     setProcessing(`reject-${id}`);
@@ -219,34 +221,49 @@ export default function AdminDashboard() {
             </p>
           </div>
         </div>
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input type="text" placeholder="搜索编号/姓名/证号..." className="pl-9 pr-4 py-2 rounded-xl bg-white border border-gray-200 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-purple-200" />
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate('/')}
+            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-forest-500 to-emerald-600 text-white text-xs font-bold hover:shadow-md transition-all inline-flex items-center gap-1.5"
+          >
+            <Eye className="w-3.5 h-3.5" />
+            平台预览·模拟宠主
+            <ArrowRight className="w-3 h-3" />
+          </button>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input type="text" placeholder="搜索编号/姓名/证号..." className="pl-9 pr-4 py-2 rounded-xl bg-white border border-gray-200 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-purple-200" />
+          </div>
         </div>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: '注册宠主', value: '28,465', subValue: '绑定宠物 42,356 只', Icon: Users, color: 'from-forest-400 to-emerald-600' },
-          { label: '认证医生', value: '386', subValue: '处方量 12,486 张', Icon: Stethoscope, color: 'from-blue-400 to-sky-600' },
-          { label: '入驻医院', value: '128', subValue: '服务项 1,856 个', Icon: Building2, color: 'from-orange-400 to-amber-600' },
-          { label: '合规商家', value: '96', subValue: '在架 SKU 4,256', Icon: Store, color: 'from-rose-400 to-pink-600' },
-          { label: '多宠绑定', value: '12,895', subValue: '授权账号 8,234 个', Icon: PawPrint, color: 'from-purple-400 to-indigo-600' },
-          { label: '健康模板', value: '38,672', subValue: '覆盖率 91.3%', Icon: FileSpreadsheet, color: 'from-teal-400 to-cyan-600' },
-          { label: '病中跟踪', value: '1,286', subValue: '复诊预约 892 次', Icon: Activity, color: 'from-red-400 to-rose-600' },
-          { label: '预约服务', value: '24,568', subValue: '月完成率 94.6%', Icon: Calendar, color: 'from-warm-400 to-orange-600' },
-        ].map(({ label, value, subValue, Icon, color }) => (
-          <div key={label} className="card !p-4 flex items-start gap-3 relative overflow-hidden group hover:shadow-md transition-all">
+          { label: '注册宠主', value: '28,465', subValue: '绑定宠物 42,356 只', Icon: Users, color: 'from-forest-400 to-emerald-600', tab: 'owner' as TabId },
+          { label: '认证医生', value: '386', subValue: '处方量 12,486 张', Icon: Stethoscope, color: 'from-blue-400 to-sky-600', tab: 'doctor' as TabId },
+          { label: '入驻医院', value: '128', subValue: '服务项 1,856 个', Icon: Building2, color: 'from-orange-400 to-amber-600', tab: 'hospital' as TabId },
+          { label: '合规商家', value: '96', subValue: '在架 SKU 4,256', Icon: Store, color: 'from-rose-400 to-pink-600', tab: 'merchant' as TabId },
+          { label: '多宠绑定', value: '12,895', subValue: '授权账号 8,234 个', Icon: PawPrint, color: 'from-purple-400 to-indigo-600', tab: 'owner' as TabId },
+          { label: '健康模板', value: '38,672', subValue: '覆盖率 91.3%', Icon: FileSpreadsheet, color: 'from-teal-400 to-cyan-600', tab: 'calendar' as TabId },
+          { label: '病中跟踪', value: '1,286', subValue: '复诊预约 892 次', Icon: Activity, color: 'from-red-400 to-rose-600', tab: 'consultation' as TabId },
+          { label: '预约服务', value: '24,568', subValue: '月完成率 94.6%', Icon: Calendar, color: 'from-warm-400 to-orange-600', tab: 'calendar' as TabId },
+        ].map(({ label, value, subValue, Icon, color, tab }) => (
+          <button
+            key={label}
+            onClick={() => setActiveTab(tab)}
+            className="card !p-4 flex items-start gap-3 relative overflow-hidden group hover:shadow-md transition-all text-left cursor-pointer hover:-translate-y-0.5"
+          >
             <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center shrink-0`}>
               <Icon className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-lg font-bold text-gray-900">{value}</div>
+              <div className="text-lg font-bold text-gray-900 group-hover:text-purple-700 transition-colors">{value}</div>
               <div className="text-[10px] text-gray-500 font-medium">{label}</div>
               <div className="text-[9px] text-gray-400 mt-0.5">{subValue}</div>
             </div>
             <TrendingUp className="w-3 h-3 text-forest-500 absolute top-2 right-2" />
-          </div>
+            <ChevronRight className="w-3.5 h-3.5 text-gray-300 absolute bottom-2 right-2 group-hover:text-purple-500 group-hover:translate-x-0.5 transition-all" />
+          </button>
         ))}
       </div>
 
@@ -391,10 +408,30 @@ export default function AdminDashboard() {
                           <button onClick={() => navigate('/calendar')} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="预约记录">
                             <Calendar className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/audit/user/${u.id}`)} className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors" title="操作审计">
+                          <button onClick={() => setSelectedOwnerAction({id: u.id, action: 'bindAudit'})} className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors" title="绑定审计">
                             <ClipboardList className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate(`/admin/owner/${u.id}`)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors" title="完整详情">
+                          <button
+                            onClick={() => {
+                              const newStatus = u.status === 'active' ? 'disabled' : 'active';
+                              setOwnerLedger(prev => prev.map(o => o.id === u.id ? { ...o, status: newStatus } : o));
+                              addAuditLog(
+                                u.status === 'active' ? '账号禁用' : '账号启用',
+                                `宠主-${u.nickname} ${u.id}`,
+                                '生效',
+                                u.status === 'active' ? '超级管理员手动禁用账号' : '超级管理员手动解除禁用'
+                              );
+                              showToast(u.status === 'active' ? '账号已禁用' : '账号已启用');
+                            }}
+                            className={cn(
+                              'p-1.5 rounded-lg transition-colors',
+                              u.status === 'active' ? 'hover:bg-red-50 text-red-500' : 'hover:bg-forest-50 text-forest-600'
+                            )}
+                            title={u.status === 'active' ? '禁用账号' : '启用账号'}
+                          >
+                            {u.status === 'active' ? <Lock className="w-3.5 h-3.5" /> : <Unlock className="w-3.5 h-3.5" />}
+                          </button>
+                          <button onClick={() => setSelectedOwnerAction({id: u.id, action: 'detail'})} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors" title="完整详情">
                             <Eye className="w-3.5 h-3.5" />
                           </button>
                         </div>
@@ -405,43 +442,192 @@ export default function AdminDashboard() {
               </table>
             </div>
             <div className="grid sm:grid-cols-4 gap-3 pt-2">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-forest-50 to-emerald-50 border border-forest-100 flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-forest-50 to-emerald-50 border border-forest-100 flex items-center justify-between cursor-pointer hover:shadow-sm transition-all" onClick={() => setActiveTab('owner')}>
                 <div className="flex items-center gap-2">
                   <PawPrint className="w-4 h-4 text-forest-600" />
                   <span className="text-xs font-semibold text-forest-800">多宠绑定审计</span>
                 </div>
-                <button onClick={() => navigate('/admin/owner/bindings')} className="text-[11px] font-bold text-forest-700 hover:text-forest-800 hover:underline inline-flex items-center gap-0.5">
+                <button className="text-[11px] font-bold text-forest-700 hover:text-forest-800 hover:underline inline-flex items-center gap-0.5">
                   绑定明细 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
-              <div className="p-3 rounded-xl bg-gradient-to-br from-teal-50 to-cyan-50 border border-teal-100 flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-teal-50 to-cyan-50 border border-teal-100 flex items-center justify-between cursor-pointer hover:shadow-sm transition-all" onClick={() => setActiveTab('calendar')}>
                 <div className="flex items-center gap-2">
                   <FileSpreadsheet className="w-4 h-4 text-teal-600" />
                   <span className="text-xs font-semibold text-teal-800">健康模板覆盖</span>
                 </div>
-                <button onClick={() => navigate('/admin/health/templates')} className="text-[11px] font-bold text-teal-700 hover:text-teal-800 hover:underline inline-flex items-center gap-0.5">
+                <button className="text-[11px] font-bold text-teal-700 hover:text-teal-800 hover:underline inline-flex items-center gap-0.5">
                   模板分析 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
-              <div className="p-3 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 flex items-center justify-between cursor-pointer hover:shadow-sm transition-all" onClick={() => setActiveTab('consultation')}>
                 <div className="flex items-center gap-2">
                   <Activity className="w-4 h-4 text-red-600" />
                   <span className="text-xs font-semibold text-red-800">病中病程跟踪</span>
                 </div>
-                <button onClick={() => navigate('/admin/health/sick-tracking')} className="text-[11px] font-bold text-red-700 hover:text-red-800 hover:underline inline-flex items-center gap-0.5">
+                <button className="text-[11px] font-bold text-red-700 hover:text-red-800 hover:underline inline-flex items-center gap-0.5">
                   跟踪列表 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
-              <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100 flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100 flex items-center justify-between cursor-pointer hover:shadow-sm transition-all" onClick={() => setActiveTab('audit')}>
                 <div className="flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 text-purple-600" />
                   <span className="text-xs font-semibold text-purple-800">风控异常监测</span>
                 </div>
-                <button onClick={() => navigate('/admin/risk/owners')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
+                <button className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
                   风险名单 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
             </div>
+            {selectedOwnerAction && (
+              <div className="mt-4 p-4 rounded-xl bg-gradient-to-br from-gray-50 to-cream-50 border border-gray-200">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    {selectedOwnerAction.action === 'bindAudit' && (
+                      <>
+                        <ClipboardList className="w-4 h-4 text-purple-600" />
+                        <h3 className="font-bold text-sm text-gray-900">多宠绑定审计 - {ownerLedger.find(o => o.id === selectedOwnerAction.id)?.nickname}</h3>
+                      </>
+                    )}
+                    {selectedOwnerAction.action === 'detail' && (
+                      <>
+                        <Eye className="w-4 h-4 text-gray-600" />
+                        <h3 className="font-bold text-sm text-gray-900">宠主完整详情 - {ownerLedger.find(o => o.id === selectedOwnerAction.id)?.nickname}</h3>
+                      </>
+                    )}
+                  </div>
+                  <button onClick={() => setSelectedOwnerAction(null)} className="p-1 rounded hover:bg-gray-200 transition-colors">
+                    <X className="w-4 h-4 text-gray-500" />
+                  </button>
+                </div>
+
+                {selectedOwnerAction.action === 'bindAudit' && (() => {
+                  const owner = ownerLedger.find(o => o.id === selectedOwnerAction.id);
+                  if (!owner) return null;
+                  return (
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 rounded-lg bg-white border border-gray-100">
+                          <div className="text-[10px] text-gray-500 mb-1">绑定宠物数</div>
+                          <div className="text-lg font-bold text-forest-700">{owner.pets} 只</div>
+                          <div className="text-[10px] text-gray-400 mt-1">{owner.petNames.join('、')}</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white border border-gray-100">
+                          <div className="text-[10px] text-gray-500 mb-1">授权账号数</div>
+                          <div className="text-lg font-bold text-purple-700">{owner.bindAuthAccounts} 个</div>
+                          <div className="text-[10px] text-gray-400 mt-1">家庭成员/共同照护</div>
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white border border-gray-100">
+                        <div className="text-xs font-semibold text-gray-700 mb-2">绑定历史记录</div>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-gray-600">2025-03-15 · 首次绑定</span>
+                            <span className="text-forest-600 font-semibold">豆豆</span>
+                          </div>
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-gray-600">2025-07-20 · 新增绑定</span>
+                            <span className="text-forest-600 font-semibold">咪咪</span>
+                          </div>
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="text-gray-600">2026-01-10 · 授权账号</span>
+                            <span className="text-purple-600 font-semibold">妻子-138****0002</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <button onClick={() => { setSelectedOwnerAction(null); addAuditLog('绑定审计复核', `宠主-${owner.nickname}`, '通过', '超级管理员复核绑定记录，无异常'); showToast('审计复核完成'); }} className="px-3 py-1.5 rounded-lg bg-purple-500 text-white text-[11px] font-semibold hover:bg-purple-600 transition-colors">
+                          确认复核
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {selectedOwnerAction.action === 'detail' && (() => {
+                  const owner = ownerLedger.find(o => o.id === selectedOwnerAction.id);
+                  if (!owner) return null;
+                  return (
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-3 gap-3">
+                        <div className="p-3 rounded-lg bg-white border border-gray-100">
+                          <div className="text-[10px] text-gray-500 mb-1">账号ID</div>
+                          <div className="text-sm font-bold text-gray-700 font-mono">{owner.id}</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white border border-gray-100">
+                          <div className="text-[10px] text-gray-500 mb-1">手机号</div>
+                          <div className="text-sm font-bold text-gray-700">{owner.phone}</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white border border-gray-100">
+                          <div className="text-[10px] text-gray-500 mb-1">最后活跃</div>
+                          <div className="text-sm font-bold text-gray-700">{owner.lastActive}</div>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-4 gap-3">
+                        <div className="p-3 rounded-lg bg-white border border-gray-100 text-center">
+                          <div className="text-lg font-bold text-forest-600">{owner.pets}</div>
+                          <div className="text-[10px] text-gray-500">宠物数</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white border border-gray-100 text-center">
+                          <div className="text-lg font-bold text-purple-600">{owner.consultations}</div>
+                          <div className="text-[10px] text-gray-500">问诊</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white border border-gray-100 text-center">
+                          <div className="text-lg font-bold text-blue-600">{owner.prescriptions}</div>
+                          <div className="text-[10px] text-gray-500">处方</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white border border-gray-100 text-center">
+                          <div className="text-lg font-bold text-orange-600">{owner.appointments}</div>
+                          <div className="text-[10px] text-gray-500">预约</div>
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white border border-gray-100">
+                        <div className="text-xs font-semibold text-gray-700 mb-2">健康数据概览</div>
+                        <div className="grid grid-cols-3 gap-3">
+                          <div>
+                            <div className="text-[10px] text-gray-500 mb-0.5">健康模板覆盖率</div>
+                            <div className="text-sm font-bold text-teal-600">{owner.healthTemplateCoverage}%</div>
+                            <div className="w-full h-1.5 bg-gray-100 rounded-full mt-1">
+                              <div className="h-full bg-teal-500 rounded-full" style={{width: `${owner.healthTemplateCoverage}%`}} />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-[10px] text-gray-500 mb-0.5">病中跟踪</div>
+                            <div className="text-sm font-bold text-red-600">{owner.sickTracking} 只</div>
+                          </div>
+                          <div>
+                            <div className="text-[10px] text-gray-500 mb-0.5">日历提醒数</div>
+                            <div className="text-sm font-bold text-blue-600">{owner.calendarReminders} 条</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white border border-gray-100">
+                        <div className="text-xs font-semibold text-gray-700 mb-2">风险评分</div>
+                        <div className="flex items-center gap-3">
+                          <div className={cn(
+                            'text-2xl font-bold',
+                            owner.riskScore < 20 ? 'text-forest-600' : owner.riskScore < 50 ? 'text-warm-600' : 'text-red-600'
+                          )}>
+                            {owner.riskScore}
+                          </div>
+                          <div className="flex-1">
+                            <div className="w-full h-2 bg-gray-100 rounded-full">
+                              <div className={cn(
+                                'h-full rounded-full',
+                                owner.riskScore < 20 ? 'bg-forest-500' : owner.riskScore < 50 ? 'bg-warm-500' : 'bg-red-500'
+                              )} style={{width: `${owner.riskScore}%`}} />
+                            </div>
+                            <div className="flex justify-between text-[10px] text-gray-400 mt-1">
+                              <span>低危</span><span>中危</span><span>高危</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
           </div>
         )}
 
