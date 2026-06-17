@@ -83,6 +83,25 @@ export interface Task {
   views: number;
   clicks: number;
   conversionRate: number;
+  riskConfig: {
+    ipDeduplication: boolean;
+    deviceFingerprintCheck: boolean;
+    logicValidation: boolean;
+    antiCheating: boolean;
+  };
+  executorQualification: {
+    minCreditScore: number;
+    requireRealName: boolean;
+    allowedRegions?: string[];
+    blockedDeviceIds?: string[];
+  };
+  reviewChain: {
+    aiReview: boolean;
+    manualSamplingRate: number;
+    allowDispute: boolean;
+  };
+  pricingHistory: PricingAdjustmentRecord[];
+  budgetLimit: number;
   mediaConfig?: {
     videoUrl: string;
     requiredDuration: number;
@@ -99,6 +118,30 @@ export interface Task {
     feedbackMinLength: number;
     minPhotos: number;
   };
+}
+
+export interface PricingAdjustmentRecord {
+  id: string;
+  timestamp: string;
+  reason: string;
+  oldReward: number;
+  newReward: number;
+  triggeredBy: "system" | "manual";
+  completionRateAtTime: number;
+  budgetImpact: number;
+  roiImpact: number;
+}
+
+export interface ReviewFlowRecord {
+  id: string;
+  submissionId: string;
+  stage: "ai_review" | "manual_review" | "dispute_arbitration";
+  action: "pass" | "reject" | "flag" | "escalate";
+  operator: string;
+  timestamp: string;
+  notes?: string;
+  previousStage?: string;
+  nextStage?: string;
 }
 
 export interface SurveyQuestion {
@@ -133,6 +176,13 @@ export interface TaskSubmission {
   submittedAt: string;
   reviewedAt?: string;
   rewardAmount: number;
+  reviewFlow: ReviewFlowRecord[];
+  riskChecks: {
+    ipDuplicate: boolean;
+    deviceFingerprintDuplicate: boolean;
+    logicValidationPassed: boolean;
+    antiCheatingPassed: boolean;
+  };
   deviceInfo: {
     deviceFingerprint: string;
     ip: string;
@@ -189,6 +239,8 @@ export interface RiskAlert {
   resolvedAt?: string;
   resolvedBy?: string;
   metrics?: Record<string, number>;
+  batchNumber?: string;
+  processingStatus?: "unprocessed" | "processing" | "processed";
 }
 
 export interface PricingRule {

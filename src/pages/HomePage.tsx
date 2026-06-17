@@ -3,6 +3,7 @@ import { MainLayout } from "@/components/Layout";
 import { TaskCard, taskTypeConfig } from "@/components/TaskCard";
 import { StatCard } from "@/components/StatCard";
 import { useAppStore } from "@/store/useAppStore";
+import { useNavigate } from "react-router-dom";
 import {
   Video,
   FileText,
@@ -16,11 +17,13 @@ import {
   ArrowRight,
   ChevronRight,
   Zap,
+  Filter,
 } from "lucide-react";
 import type { TaskType } from "@/types";
 import { cn } from "@/lib/utils";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const { platformStats, tasks, taskFilter, setTaskFilter, getFilteredTasks } =
     useAppStore();
   const [selectedType, setSelectedType] = useState<TaskType | "all">("all");
@@ -29,6 +32,13 @@ export default function HomePage() {
   const [earningsTicker, setEarningsTicker] = useState<
     { id: string; user: string; amount: number; task: string }[]
   >([]);
+
+  const typeLabelMap: Record<TaskType | "all", string> = {
+    all: "全部任务",
+    media: "媒体类任务",
+    survey: "调研类任务",
+    experience: "体验类任务",
+  };
 
   useEffect(() => {
     setTaskFilter({ search: searchQuery, sortBy: sortBy as typeof taskFilter.sortBy });
@@ -157,7 +167,10 @@ export default function HomePage() {
                 立即开始接单
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <button className="btn-secondary px-8 py-3 text-base">
+              <button
+                onClick={() => navigate("/enterprise?tab=templates&prefill=survey")}
+                className="btn-secondary px-8 py-3 text-base"
+              >
                 企业发布任务
               </button>
             </div>
@@ -223,9 +236,30 @@ export default function HomePage() {
 
         <div>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-display font-semibold text-white">
-              热门任务
-            </h2>
+            <div>
+              <h2 className="text-xl font-display font-semibold text-white flex items-center gap-3">
+                {selectedType !== "all" && <Filter className="w-5 h-5 text-cyber-cyan-400" />}
+                {typeLabelMap[selectedType]}
+                <span className="text-sm font-normal text-gray-500 ml-2">
+                  共 {filteredTasks.length} 个可接任务
+                </span>
+              </h2>
+              {selectedType === "survey" && (
+                <p className="text-sm text-gray-500 mt-1">
+                  问卷逻辑校验、IP去重、设备指纹检测已启用，确保任务质量
+                </p>
+              )}
+              {selectedType === "media" && (
+                <p className="text-sm text-gray-500 mt-1">
+                  视频时长验证、跳转检测、防作弊已启用
+                </p>
+              )}
+              {selectedType === "experience" && (
+                <p className="text-sm text-gray-500 mt-1">
+                  OCR识别、图文上传、防刷题机制已启用
+                </p>
+              )}
+            </div>
             <div className="flex items-center gap-3">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
@@ -262,6 +296,9 @@ export default function HomePage() {
             ].map((item) => {
               const isActive = selectedType === item.key;
               const Icon = item.icon;
+              const count = item.key === "all" 
+                ? tasks.length 
+                : tasks.filter((t) => t.type === item.key).length;
               return (
                 <button
                   key={item.key}
@@ -275,6 +312,7 @@ export default function HomePage() {
                 >
                   {Icon && <Icon className="w-4 h-4" />}
                   {item.label}
+                  <span className="text-xs opacity-60">({count})</span>
                 </button>
               );
             })}
@@ -290,6 +328,12 @@ export default function HomePage() {
             <div className="glass-card p-12 text-center">
               <Search className="w-12 h-12 text-gray-600 mx-auto mb-4" />
               <p className="text-gray-400">没有找到符合条件的任务</p>
+              <button
+                onClick={() => setSelectedType("all")}
+                className="btn-secondary mt-4 text-sm"
+              >
+                查看全部任务
+              </button>
             </div>
           )}
         </div>

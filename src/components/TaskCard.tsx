@@ -1,5 +1,5 @@
 import type { Task, TaskType } from "@/types";
-import { Video, FileText, Package, Clock, Zap, Users, ChevronRight } from "lucide-react";
+import { Video, FileText, Package, Clock, Zap, Users, ChevronRight, Shield, CheckCircle2, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
@@ -39,6 +39,13 @@ export function TaskCard({ task, className }: TaskCardProps) {
   const progress = (task.completed / task.quota) * 100;
   const hasPriceBoost = task.reward > task.originalReward;
 
+  const riskChecks = [
+    { key: "ip", label: "IP去重", enabled: task.riskConfig.ipDeduplication },
+    { key: "device", label: "设备指纹", enabled: task.riskConfig.deviceFingerprintCheck },
+    { key: "logic", label: "逻辑校验", enabled: task.riskConfig.logicValidation },
+    { key: "anti", label: "防刷题", enabled: task.riskConfig.antiCheating },
+  ].filter((c) => c.enabled);
+
   return (
     <div
       className={cn(
@@ -52,21 +59,47 @@ export function TaskCard({ task, className }: TaskCardProps) {
           <Icon className="w-3.5 h-3.5 mr-1.5" />
           {config.label}
         </span>
-        {hasPriceBoost && (
-          <span className="tag tag-gold animate-pulse">
-            <Zap className="w-3.5 h-3.5 mr-1" />
-            加价
+        <div className="flex items-center gap-2">
+          {hasPriceBoost && (
+            <span className="tag tag-gold animate-pulse">
+              <Zap className="w-3.5 h-3.5 mr-1" />
+              加价
+            </span>
+          )}
+          <span className="tag tag-green flex items-center gap-1">
+            <Shield className="w-3.5 h-3.5" />
+            风控已启用
           </span>
-        )}
+        </div>
       </div>
 
       <h3 className="font-medium text-white mb-2 line-clamp-2 group-hover:text-cyber-cyan-400 transition-colors">
         {task.title}
       </h3>
 
-      <p className="text-sm text-gray-500 mb-4 line-clamp-2">{task.description}</p>
+      <p className="text-sm text-gray-500 mb-3 line-clamp-2">{task.description}</p>
 
-      <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
+      {riskChecks.length > 0 && (
+        <div className="mb-3 p-3 bg-deep-space-800/50 rounded-lg border border-white/5">
+          <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
+            <CheckCircle2 className="w-3.5 h-3.5 text-cyber-cyan-400" />
+            可接任务风控校验
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {riskChecks.map((check) => (
+              <span
+                key={check.key}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-cyber-cyan-500/10 text-cyber-cyan-400 border border-cyber-cyan-500/20"
+              >
+                <CheckCircle2 className="w-3 h-3" />
+                {check.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="flex items-center gap-4 mb-3 text-xs text-gray-500">
         <span className="flex items-center gap-1">
           <Clock className="w-3.5 h-3.5" />
           {task.estimatedTime}分钟
@@ -74,6 +107,10 @@ export function TaskCard({ task, className }: TaskCardProps) {
         <span className="flex items-center gap-1">
           <Users className="w-3.5 h-3.5" />
           {task.completed}/{task.quota}人
+        </span>
+        <span className="flex items-center gap-1 text-cyber-cyan-400">
+          <AlertCircle className="w-3.5 h-3.5" />
+          信用{task.executorQualification.minCreditScore}+
         </span>
       </div>
 
