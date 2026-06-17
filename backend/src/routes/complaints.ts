@@ -30,13 +30,28 @@ router.get('/', authMiddleware, (req: AuthRequest, res) => {
     ${whereSql}
     ORDER BY c.created_at DESC LIMIT ? OFFSET ?
   `).all(...params, pageSize, offset);
+  const now = new Date();
+  const listWithSla = (list as any[]).map(item => {
+    const createdAt = new Date(item.created_at.replace(' ', 'T'));
+    const slaDeadline = new Date(item.sla_deadline.replace(' ', 'T'));
+    const slaRemainingHours = (slaDeadline.getTime() - now.getTime()) / (1000 * 3600);
+    const slaElapsedHours = (now.getTime() - createdAt.getTime()) / (1000 * 3600);
+    const slaProgress = +(slaElapsedHours / 8 * 100).toFixed(2);
+    return {
+      ...item,
+      sla_remaining_hours: +slaRemainingHours.toFixed(2),
+      sla_elapsed_hours: +slaElapsedHours.toFixed(2),
+      sla_progress: slaProgress,
+      is_sla_expired: slaRemainingHours < 0
+    };
+  });
   const stats = {
     pending: (db.prepare("SELECT COUNT(*) c FROM complaints c LEFT JOIN shipment_orders o ON c.order_id = o.id WHERE c.status = 'pending'").get(...params.slice(0, where.length > 0 && req.user.role === 'user' ? 1 : 0)) as any).c,
     processing: (db.prepare("SELECT COUNT(*) c FROM complaints c LEFT JOIN shipment_orders o ON c.order_id = o.id WHERE c.status = 'processing'").get(...params.slice(0, where.length > 0 && req.user.role === 'user' ? 1 : 0)) as any).c,
     resolved: (db.prepare("SELECT COUNT(*) c FROM complaints c LEFT JOIN shipment_orders o ON c.order_id = o.id WHERE c.status = 'resolved'").get(...params.slice(0, where.length > 0 && req.user.role === 'user' ? 1 : 0)) as any).c,
     sla_warning: (db.prepare("SELECT COUNT(*) c FROM complaints c WHERE c.status IN ('pending','processing') AND c.sla_deadline < DATETIME('now','+4 hours')").get() as any).c
   };
-  res.json({ list, total, page: +page, pageSize: +pageSize, stats });
+  res.json({ list: listWithSla, total, page: +page, pageSize: +pageSize, stats });
 });
 
 router.post('/', authMiddleware, (req: AuthRequest, res) => {

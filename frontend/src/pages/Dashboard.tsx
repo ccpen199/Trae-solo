@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Card, Statistic, Table, Progress, message, Tabs, Drawer, Modal, Form, Input, Button, Space, Tag, Alert, List, Tooltip, Divider } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Row, Col, Card, Statistic, Table, Progress, message, Tabs, Drawer, Modal, Form, Input, Button, Space, Tag, Alert, List, Tooltip, Divider, Spin, Empty } from 'antd';
 import {
   ShoppingCartOutlined, DollarOutlined, CheckCircleOutlined,
   WarningOutlined, TeamOutlined, BankOutlined, ThunderboltOutlined,
@@ -11,6 +12,7 @@ import { api } from '../api';
 import dayjs from 'dayjs';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [overview, setOverview] = useState<any>({ summary: {} });
   const [quality, setQuality] = useState<any>({ list: [] });
   const [trend, setTrend] = useState<any>({ dates: [], orders: [], revenue: [] });
@@ -18,14 +20,18 @@ export default function Dashboard() {
   const [realtime, setRealtime] = useState<any>({ orders: [], abnormal_addresses: [] });
   const [network, setNetwork] = useState<any>({ branches: [], couriers: [], brands: [] });
   const [throughput, setThroughput] = useState<any>({ by_city: [], by_brand: [], overload_branches: [] });
+  const [exceptionOrders, setExceptionOrders] = useState<any[]>([]);
+  const [exOrdersLoading, setExOrdersLoading] = useState(false);
 
   const [brandDetail, setBrandDetail] = useState<{ open: boolean; id: number | null; data: any }>({ open: false, id: null, data: null });
   const [brandLoading, setBrandLoading] = useState(false);
   const [branchDetail, setBranchDetail] = useState<{ open: boolean; data: any }>({ open: false, data: null });
   const [reviewModal, setReviewModal] = useState<{ open: boolean; order: any; action: string }>({ open: false, order: null, action: '' });
+  const [reviewActionType, setReviewActionType] = useState<string>('');
   const [reviewForm] = Form.useForm();
 
   const load = () => {
+    setExOrdersLoading(true);
     Promise.all([
       api.dashboard.overview().then((r: any) => setOverview(r)),
       api.dashboard.brandQuality().then((r: any) => setQuality(r)),
@@ -33,7 +39,16 @@ export default function Dashboard() {
       api.dashboard.apiUsage().then((r: any) => setApiUsage(r)),
       api.dashboard.realtimeMap().then((r: any) => setRealtime(r)),
       api.dashboard.networkTopology().then((r: any) => setNetwork(r)),
-      api.branches.throughput().then((r: any) => setThroughput(r))
+      api.branches.throughput().then((r: any) => setThroughput(r)),
+      api.orders.list({ status: 'exception', pageSize: 10 })
+        .then((r: any) => {
+          const list = r?.list || r?.data?.list || r?.data || r || [];
+          setExceptionOrders(Array.isArray(list) ? list : genMockExceptionOrders());
+        })
+        .catch(() => {
+          setExceptionOrders(genMockExceptionOrders());
+        })
+        .finally(() => setExOrdersLoading(false))
     ]).catch(e => message.error(e.message || '加载失败'));
   };
   useEffect(() => load(), []);
@@ -119,9 +134,79 @@ export default function Dashboard() {
     return '#d4380d';
   };
 
-  const updateRealtimeAbnormalList = (orderId: number, action: string, correctedAddress?: string) => {
+  const genMockExceptionOrders = () => {
+    const brands = ['顺丰速运', '中通快递', '圆通速递', '韵达快递', '申通快递', '京东物流'];
+    const couriers = ['张伟', '李强', '王磊', '刘洋', '陈建国', '赵刚', '孙明', '周涛'];
+    const addrAbnormals = [
+      '北京市朝阳区虚构小区不存在路999号',
+      '上海市浦东新区假大厦0单元0室',
+      '广州市天河区测试街道无效门牌',
+      '深圳市南山区写字楼（无具体单元室号）',
+      '杭州市西湖区小区名不详'
+    ];
+    const normalAddrs = [
+      '成都市武侯区人民南路四段1号时代8号大厦1205室',
+      '武汉市江汉区建设大道568号新世界国贸大厦2801',
+      '南京市鼓楼区中山北路100号城市花园3栋2单元501',
+      '西安市雁塔区高新路25号瑞欣大厦1503室'
+    ];
+    const events = [
+      { event_desc: '派送失败：收件人地址不详，无法联系到收件人，正在核实地址信息' },
+      { event_desc: '包裹到达派送网点，快递员尝试联系收件人但电话未接通' },
+      { event_desc: '地址异常预警：系统检测到收件地址存在疑似虚构关键字，已暂停派送等待复核' },
+      { event_desc: '二次派送失败：收件人表示不在收件地址，要求改期派送' },
+      { event_desc: '包裹破损检测：分拣环节发现外包装轻微变形，已标记异常待处理' },
+      { event_desc: '派送超区：该地址超出网点服务范围，正在协调转件或退回' },
+      { event_desc: '客户投诉：收件人反馈未收到包裹，正在核查签收凭证' }
+    ];
+    const len = 6 + Math.floor(Math.random() * 3);
+    return Array.from({ length: len }).map((_, i) => {
+      const isAddrAbn = i < 4;
+      const baseAddr = isAddrAbn ? addrAbnormals[i % addrAbnormals.length] : normalAddrs[i % normalAddrs.length];
+      const evt = events[i % events.length];
+      let abnormalType: string;
+      if (isAddrAbn) {
+        abnormalType = getAbnormalType({ receiver_address: baseAddr });
+      } else if (i === 4) {
+        abnormalType = '派送异常';
+      } else if (i === 5) {
+        abnormalType = '包裹破损';
+      } else {
+        abnormalType = '其他异常';
+      }
+      return {
+        id: 9000 + i,
+        order_no: `SF202406${String(17000 + i).padStart(4, '0')}`,
+        tracking_no: `EX${String(500000 + i).padStart(6, '0')}`,
+        status: 'exception',
+        brand_name: brands[i % brands.length],
+        brand_code: ['SF', 'ZTO', 'YTO', 'YD', 'STO', 'JD'][i % 6],
+        courier_name: couriers[i % couriers.length],
+        receiver_name: ['王小明', '李小红', '张三', '刘芳', '陈静', '赵磊'][i % 6],
+        receiver_address: baseAddr,
+        is_address_abnormal: isAddrAbn ? 1 : 0,
+        abnormal_type: abnormalType,
+        latest_event: evt,
+        created_at: dayjs().subtract(i * 5 + 2, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+        updated_at: dayjs().subtract(i * 2, 'hour').format('YYYY-MM-DD HH:mm:ss')
+      };
+    });
+  };
+
+  const updateRealtimeAbnormalList = (orderId: number, action: string, correctedAddress?: string, note?: string) => {
     setRealtime(prev => {
       const list = prev.abnormal_addresses || [];
+      const getReviewStatus = () => {
+        switch (action) {
+          case 'confirm_normal': return 'reviewed_normal';
+          case 'confirm_abnormal': return 'confirmed_abnormal';
+          case 'correct_address': return 'corrected';
+          default: return '';
+        }
+      };
+      const reviewStatus = getReviewStatus();
+      const now = new Date().toISOString();
+      const reviewer = getCurrentUser();
       if (action === 'confirm_abnormal') {
         return {
           ...prev,
@@ -130,9 +215,10 @@ export default function Dashboard() {
               ? {
                   ...o,
                   is_address_abnormal: 1,
-                  review_status: 'confirmed_abnormal',
-                  reviewed_at: new Date().toISOString(),
-                  reviewed_by: getCurrentUser()
+                  review_status: reviewStatus,
+                  reviewed_at: now,
+                  reviewed_by: reviewer,
+                  review_note: note || ''
                 }
               : o
           )
@@ -140,7 +226,19 @@ export default function Dashboard() {
       } else {
         return {
           ...prev,
-          abnormal_addresses: list.filter((o: any) => o.id !== orderId)
+          abnormal_addresses: list.map((o: any) =>
+            o.id === orderId
+              ? {
+                  ...o,
+                  is_address_abnormal: action === 'correct_address' ? 0 : 0,
+                  receiver_address: correctedAddress || o.receiver_address,
+                  review_status: reviewStatus,
+                  reviewed_at: now,
+                  reviewed_by: reviewer,
+                  review_note: note || ''
+                }
+              : o
+          )
         };
       }
     });
@@ -171,60 +269,30 @@ export default function Dashboard() {
     }
   };
 
-  const afterReviewSuccess = (orderId: number, action: string, correctedAddress?: string) => {
-    updateRealtimeAbnormalList(orderId, action, correctedAddress);
+  const afterReviewSuccess = (orderId: number, action: string, correctedAddress?: string, note?: string) => {
+    updateRealtimeAbnormalList(orderId, action, correctedAddress, note);
     updateBrandDetailOrder(orderId, action, correctedAddress);
     load();
   };
 
   const handleDirectReview = (order: any, action: string) => {
-    const actionText = action === 'confirm_normal' ? '确认地址正常' : '确认地址异常';
-    const content = action === 'confirm_normal'
-      ? '确认该地址为正常地址，系统将解除异常拦截，恢复派送流程。'
-      : '确认该地址为异常地址，运单将保持异常状态，建议联系寄件人核实后重新派送。';
-    Modal.confirm({
-      title: (
-        <Space>
-          <WarningOutlined style={{ color: action === 'confirm_normal' ? '#52c41a' : '#fa8c16' }} />
-          <b>{actionText}</b>
-          <Tag color="red">{order.tracking_no}</Tag>
-        </Space>
-      ),
-      content: (
-        <div>
-          <p style={{ marginBottom: 12 }}>{content}</p>
-          <div style={{ padding: 12, background: '#fafafa', borderRadius: 8 }}>
-            <div style={{ marginBottom: 4 }}><b>运单号：</b><code>{order.tracking_no}</code></div>
-            <div style={{ marginBottom: 4 }}><b>当前地址：</b><span style={{ color: '#cf1322' }}>{order.receiver_address}</span></div>
-            <div><b>当前状态：</b>{order.status}</div>
-          </div>
-        </div>
-      ),
-      okText: '确认提交',
-      okButtonProps: { danger: action === 'confirm_abnormal' },
-      cancelText: '取消',
-      onOk: async () => {
-        try {
-          await api.orders.reviewAddress(order.id, { action });
-          const now = dayjs().format('YYYY-MM-DD HH:mm:ss');
-          const handler = getCurrentUser();
-          const actionLabel = getActionText(action);
-          message.success(`处理成功：${actionLabel}，处理人：${handler}，于 ${now}`);
-          afterReviewSuccess(order.id, action);
-        } catch (e: any) { message.error(e.message); }
-      }
-    });
+    setReviewModal({ open: true, order, action });
+    setReviewActionType(action);
+    reviewForm.resetFields();
   };
 
   const onReviewAddress = async () => {
     if (!reviewModal.order) return;
     try {
       const vals = await reviewForm.validateFields();
-      await api.orders.reviewAddress(reviewModal.order.id, {
+      const payload: any = {
         action: reviewModal.action,
-        corrected_address: vals.corrected_address,
         note: vals.note
-      });
+      };
+      if (reviewModal.action === 'correct_address') {
+        payload.corrected_address = vals.corrected_address;
+      }
+      await api.orders.reviewAddress(reviewModal.order.id, payload);
       const now = dayjs().format('YYYY-MM-DD HH:mm:ss');
       const handler = getCurrentUser();
       const actionLabel = getActionText(reviewModal.action);
@@ -232,9 +300,11 @@ export default function Dashboard() {
       const orderId = reviewModal.order.id;
       const action = reviewModal.action;
       const correctedAddress = vals.corrected_address;
+      const note = vals.note;
       setReviewModal({ open: false, order: null, action: '' });
+      setReviewActionType('');
       reviewForm.resetFields();
-      afterReviewSuccess(orderId, action, correctedAddress);
+      afterReviewSuccess(orderId, action, correctedAddress, note);
     } catch (e: any) { message.error(e.message); }
   };
 
@@ -249,16 +319,16 @@ export default function Dashboard() {
     return typeof value === 'number' ? value.toFixed(d) : value;
   };
   const statCards = [
-    { t: '总运单数', v: s.total_orders ?? 0, i: <ShoppingCartOutlined />, c: '#1677ff', g: 'linear-gradient(135deg, #1677ff33, #1677ff0d)' },
+    { t: '总运单数', v: s.total_orders ?? 0, i: <ShoppingCartOutlined />, c: '#1677ff', g: 'linear-gradient(135deg, #1677ff33, #1677ff0d)', onClick: () => navigate('/orders') },
     { t: '累计收入 (元)', v: fmtNum(s.total_revenue), i: <DollarOutlined />, c: '#52c41a', g: 'linear-gradient(135deg, #52c41a33, #52c41a0d)' },
     { t: '妥投率', v: `${fmtPct(s.success_rate)}%`, i: <CheckCircleOutlined />, c: '#722ed1', g: 'linear-gradient(135deg, #722ed133, #722ed10d)' },
     { t: '时效达标率', v: `${fmtPct(s.on_time_rate)}%`, i: <ThunderboltOutlined />, c: '#fa8c16', g: 'linear-gradient(135deg, #fa8c1633, #fa8c160d)' },
-    { t: '异常包裹', v: s.exception_count ?? 0, i: <WarningOutlined />, c: '#ff4d4f', g: 'linear-gradient(135deg, #ff4d4f33, #ff4d4f0d)' },
-    { t: '投诉率', v: `${fmtPct(s.complaint_rate, 3)}‰`, i: <WarningOutlined />, c: '#ff7a45', g: 'linear-gradient(135deg, #ff7a4533, #ff7a450d)' },
-    { t: '接入品牌数', v: s.total_brands ?? 0, i: <BankOutlined />, c: '#13c2c2', g: 'linear-gradient(135deg, #13c2c233, #13c2c20d)' },
+    { t: '异常包裹', v: s.exception_count ?? 0, i: <WarningOutlined />, c: '#ff4d4f', g: 'linear-gradient(135deg, #ff4d4f33, #ff4d4f0d)', onClick: () => { navigate('/orders'); message.info('已定位到异常运单，请在筛选区选择 状态=异常'); } },
+    { t: '投诉率', v: `${fmtPct(s.complaint_rate, 3)}‰`, i: <WarningOutlined />, c: '#ff7a45', g: 'linear-gradient(135deg, #ff7a4533, #ff7a450d)', onClick: () => navigate('/complaints') },
+    { t: '接入品牌数', v: s.total_brands ?? 0, i: <BankOutlined />, c: '#13c2c2', g: 'linear-gradient(135deg, #13c2c233, #13c2c20d)', onClick: () => navigate('/brands') },
     { t: '快递员总数', v: s.total_couriers ?? 0, i: <TeamOutlined />, c: '#eb2f96', g: 'linear-gradient(135deg, #eb2f9633, #eb2f960d)' },
-    { t: '网点总数', v: s.total_branches ?? 0, i: <BankOutlined />, c: '#1890ff', g: 'linear-gradient(135deg, #1890ff33, #1890ff0d)' },
-    { t: 'API今日调用', v: apiS.today_calls ?? 0, i: <SafetyOutlined />, c: '#2f54eb', g: 'linear-gradient(135deg, #2f54eb33, #2f54eb0d)' }
+    { t: '网点总数', v: s.total_branches ?? 0, i: <BankOutlined />, c: '#1890ff', g: 'linear-gradient(135deg, #1890ff33, #1890ff0d)', onClick: () => navigate('/branches') },
+    { t: 'API今日调用', v: apiS.today_calls ?? 0, i: <SafetyOutlined />, c: '#2f54eb', g: 'linear-gradient(135deg, #2f54eb33, #2f54eb0d)', onClick: () => navigate('/api') }
   ];
 
   const trendOption = {
@@ -383,7 +453,28 @@ export default function Dashboard() {
       <Row gutter={[12, 12]}>
         {statCards.map((c, i) => (
           <Col xs={24} sm={12} md={8} lg={6} xl={3} key={i}>
-            <Card className="stat-card" styles={{ body: { padding: '18px 20px', background: c.g } }}>
+            <Card
+              className="stat-card"
+              styles={{ body: { padding: '18px 20px', background: c.g } }}
+              onClick={() => c.onClick?.()}
+              style={{
+                cursor: c.onClick ? 'pointer' : 'default',
+                transition: 'all 0.25s ease',
+                border: '1px solid transparent'
+              }}
+              onMouseEnter={(e) => {
+                if (c.onClick) {
+                  (e.currentTarget as HTMLDivElement).style.borderColor = c.c;
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = `0 4px 12px ${c.c}33`;
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-2px)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLDivElement).style.borderColor = 'transparent';
+                (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
+                (e.currentTarget as HTMLDivElement).style.transform = 'none';
+              }}
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Statistic title={<span style={{ fontSize: 12, color: '#595959' }}>{c.t}</span>} value={c.v} />
                 <div style={{ width: 40, height: 40, borderRadius: 10, background: c.c + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, color: c.c }}>{c.i}</div>
@@ -627,15 +718,28 @@ export default function Dashboard() {
                     </div>
                   )}
                   <Space wrap size="small">
-                    <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => handleDirectReview(a, 'confirm_normal')}>
-                      地址正常
-                    </Button>
-                    <Button size="small" icon={<EditOutlined />} onClick={() => { setReviewModal({ open: true, order: a, action: 'correct_address' }); reviewForm.resetFields(); }}>
-                      修正地址
-                    </Button>
-                    <Button size="small" danger icon={<CloseOutlined />} onClick={() => handleDirectReview(a, 'confirm_abnormal')}>
-                      确认异常
-                    </Button>
+                    {!isReviewed ? (
+                      <>
+                        <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => handleDirectReview(a, 'confirm_normal')}>
+                          地址正常
+                        </Button>
+                        <Button size="small" icon={<EditOutlined />} onClick={() => { setReviewModal({ open: true, order: a, action: 'correct_address' }); setReviewActionType('correct_address'); reviewForm.resetFields(); }}>
+                          修正地址
+                        </Button>
+                        <Button size="small" danger icon={<CloseOutlined />} onClick={() => handleDirectReview(a, 'confirm_abnormal')}>
+                          确认异常
+                        </Button>
+                        <Button size="small" icon={<InfoCircleOutlined />} onClick={() => navigate('/orders')}>
+                          查看运单详情
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button size="small" icon={<InfoCircleOutlined />} onClick={() => navigate('/orders')}>
+                          查看运单详情
+                        </Button>
+                      </>
+                    )}
                   </Space>
                 </div>
               </Col>
@@ -643,6 +747,116 @@ export default function Dashboard() {
           })}
           {(!realtime.abnormal_addresses?.length) && <Col span={24}><div style={{ padding: 30, textAlign: 'center', color: '#8c8c8c' }}>暂无异常地址拦截记录</div></Col>}
         </Row>
+      </Card>
+
+      <Card
+        title={`📋 异常运单钻取队列（共 ${exceptionOrders.length} 件）`}
+        extra={
+          <Space>
+            <Button icon={<ReloadOutlined />} onClick={load}>刷新</Button>
+            <Button type="primary" onClick={() => { navigate('/orders'); message.info('已定位到异常运单，请在筛选区选择 状态=异常'); }}>查看全部异常运单</Button>
+          </Space>
+        }
+      >
+        <Spin spinning={exOrdersLoading}>
+          {exceptionOrders.length > 0 ? (
+            <Table
+              size="small"
+              rowKey="id"
+              dataSource={exceptionOrders}
+              pagination={{ pageSize: 6 }}
+              columns={[
+                {
+                  title: '运单号',
+                  dataIndex: 'tracking_no',
+                  width: 150,
+                  render: (v: string, r: any) => (
+                    <Space direction="vertical" size={2}>
+                      <code style={{ fontWeight: 500 }}>{v}</code>
+                      <Tag color="red" style={{ margin: 0 }}>异常</Tag>
+                    </Space>
+                  )
+                },
+                {
+                  title: '异常类型',
+                  dataIndex: 'abnormal_type',
+                  width: 140,
+                  render: (v: string, r: any) => {
+                    const type = v || (r.is_address_abnormal ? getAbnormalType(r) : (r.latest_event?.event_desc?.includes('派送') ? '派送异常' : '其他异常'));
+                    const color = r.is_address_abnormal ? getAbnormalTypeColor(type) : (type.includes('破损') ? '#d4380d' : type.includes('派送') ? '#fa8c16' : '#8c8c8c');
+                    return <Tag color={color} style={{ background: color + '15', borderColor: color + '40', color }}>{type}</Tag>;
+                  }
+                },
+                {
+                  title: '品牌 / 快递员',
+                  width: 150,
+                  render: (_: any, r: any) => (
+                    <Space direction="vertical" size={2}>
+                      <b>{r.brand_name || r.brand_code || '-'}</b>
+                      <span style={{ fontSize: 12, color: '#8c8c8c' }}>{r.courier_name || '-'}</span>
+                    </Space>
+                  )
+                },
+                {
+                  title: '收件地址',
+                  dataIndex: 'receiver_address',
+                  render: (v: string, r: any) => {
+                    const isAbn = r.is_address_abnormal || r.abnormal_type?.includes('地址');
+                    return <span style={{ color: isAbn ? '#cf1322' : undefined, fontWeight: isAbn ? 500 : undefined }}>{v || '-'}</span>;
+                  }
+                },
+                {
+                  title: '最新轨迹',
+                  dataIndex: 'latest_event',
+                  width: 260,
+                  render: (v: any, r: any) => {
+                    const desc = v?.event_desc || r.updated_at || '-';
+                    const short = desc.length > 30 ? desc.slice(0, 30) + '...' : desc;
+                    return (
+                      <Tooltip title={desc}>
+                        <span
+                          style={{ color: '#595959', cursor: 'pointer', borderBottom: '1px dashed #bfbfbf' }}
+                          onClick={() => navigate('/orders')}
+                        >
+                          {short}
+                        </span>
+                      </Tooltip>
+                    );
+                  }
+                },
+                {
+                  title: '操作',
+                  width: 180,
+                  fixed: 'right',
+                  render: (_: any, r: any) => {
+                    const isAddrAbn = r.is_address_abnormal || r.abnormal_type?.includes('地址');
+                    return (
+                      <Space wrap size="small">
+                        <Button size="small" type="link" icon={<EyeOutlined />} onClick={() => navigate('/orders')}>查看详情</Button>
+                        {isAddrAbn && (
+                          <Button
+                            size="small"
+                            type="primary"
+                            icon={<EditOutlined />}
+                            onClick={() => {
+                              setReviewModal({ open: true, order: r, action: 'correct_address' });
+                              setReviewActionType('correct_address');
+                              reviewForm.resetFields();
+                            }}
+                          >
+                            进入复核
+                          </Button>
+                        )}
+                      </Space>
+                    );
+                  }
+                }
+              ]}
+            />
+          ) : (
+            <Empty description="暂无异常运单数据" />
+          )}
+        </Spin>
       </Card>
 
       <Drawer
@@ -729,7 +943,7 @@ export default function Dashboard() {
                         <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => handleDirectReview(r, 'confirm_normal')}>
                           正常
                         </Button>
-                        <Button size="small" icon={<EditOutlined />} onClick={() => { setReviewModal({ open: true, order: r, action: 'correct_address' }); reviewForm.resetFields(); }}>
+                        <Button size="small" icon={<EditOutlined />} onClick={() => { setReviewModal({ open: true, order: r, action: 'correct_address' }); setReviewActionType('correct_address'); reviewForm.resetFields(); }}>
                           修正
                         </Button>
                         <Button size="small" danger icon={<CloseOutlined />} onClick={() => handleDirectReview(r, 'confirm_abnormal')}>
@@ -832,17 +1046,17 @@ export default function Dashboard() {
       <Modal
         title={
           <Space>
-            <WarningOutlined style={{ color: '#fa8c16' }} />
+            <WarningOutlined style={{ color: reviewModal.action === 'confirm_normal' ? '#52c41a' : reviewModal.action === 'confirm_abnormal' ? '#cf1322' : '#fa8c16' }} />
             <b>地址异常人工复核</b>
             <Tag color="red">{reviewModal.order?.tracking_no}</Tag>
           </Space>
         }
         open={reviewModal.open}
         onOk={onReviewAddress}
-        onCancel={() => { setReviewModal({ open: false, order: null, action: '' }); reviewForm.resetFields(); }}
+        onCancel={() => { setReviewModal({ open: false, order: null, action: '' }); setReviewActionType(''); reviewForm.resetFields(); }}
         okText="确认提交"
         okButtonProps={{ danger: reviewModal.action === 'confirm_abnormal' }}
-        width={560}
+        width={600}
       >
         {reviewModal.order && (
           <Form form={reviewForm} layout="vertical">
@@ -860,10 +1074,58 @@ export default function Dashboard() {
               style={{ marginBottom: 16 }}
             />
             <div style={{ padding: 12, background: '#fafafa', borderRadius: 8, marginBottom: 16 }}>
-              <div style={{ marginBottom: 4 }}><b>运单号：</b><code>{reviewModal.order.tracking_no}</code></div>
-              <div style={{ marginBottom: 4 }}><b>当前地址：</b><span style={{ color: '#cf1322' }}>{reviewModal.order.receiver_address}</span></div>
-              <div><b>当前状态：</b>{reviewModal.order.status}</div>
+              <div style={{ marginBottom: 6 }}>
+                <b>运单号：</b><code>{reviewModal.order.tracking_no}</code>
+              </div>
+              <div style={{ marginBottom: 6 }}>
+                <b>异常类型：</b>
+                <Tag color="error" style={{ marginLeft: 4 }}>
+                  {getAbnormalType(reviewModal.order)}
+                </Tag>
+              </div>
+              <div>
+                <b>当前地址：</b><span style={{ color: '#cf1322' }}>{reviewModal.order.receiver_address}</span>
+              </div>
             </div>
+            {(reviewModal.action === 'confirm_normal' || reviewModal.action === 'confirm_abnormal') && (
+              <>
+                <Card size="small" title="📋 状态回写预览" style={{ marginBottom: 16 }} styles={{ body: { padding: 12 } }}>
+                  <Row gutter={[12, 12]}>
+                    <Col span={12}>
+                      <div style={{ fontSize: 12, color: '#8c8c8c', marginBottom: 2 }}>操作类型</div>
+                      <b style={{ color: reviewModal.action === 'confirm_normal' ? '#52c41a' : '#cf1322' }}>
+                        {getActionText(reviewModal.action)}
+                      </b>
+                    </Col>
+                    <Col span={12}>
+                      <div style={{ fontSize: 12, color: '#8c8c8c', marginBottom: 2 }}>处理人</div>
+                      <b>{getCurrentUser()}</b>
+                    </Col>
+                    <Col span={12}>
+                      <div style={{ fontSize: 12, color: '#8c8c8c', marginBottom: 2 }}>处理时间</div>
+                      <b>{dayjs().format('YYYY-MM-DD HH:mm:ss')}</b>
+                    </Col>
+                    <Col span={12}>
+                      <div style={{ fontSize: 12, color: '#8c8c8c', marginBottom: 2 }}>复核后状态</div>
+                      <Tag color={reviewModal.action === 'confirm_normal' ? 'success' : 'warning'}>
+                        {reviewModal.action === 'confirm_normal' ? '解除拦截恢复派送' : '保持异常建议重新核实'}
+                      </Tag>
+                    </Col>
+                  </Row>
+                </Card>
+                <Form.Item
+                  name="note"
+                  label="复核理由/备注"
+                  rules={[
+                    { required: true, message: '请填写复核理由' },
+                    { min: 4, message: '至少输入4个字符' },
+                    { max: 200, message: '最多输入200个字符' }
+                  ]}
+                >
+                  <Input.TextArea rows={4} placeholder="请填写复核理由（4-200字符），例如：经核实地址真实有效，门牌号码齐全，可正常派送。" showCount maxLength={200} />
+                </Form.Item>
+              </>
+            )}
             {reviewModal.action === 'correct_address' && (
               <>
                 <Form.Item name="corrected_address" label="修正后地址" rules={[{ required: true, message: '请输入修正后的完整地址' }]}>

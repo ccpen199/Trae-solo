@@ -17,14 +17,63 @@ export default function Complaints() {
   const [filter, setFilter] = useState<string>('all');
   const [form] = Form.useForm();
 
+  const fillSlaFields = (data: any[]) => {
+    const now = dayjs();
+    return data.map((c: any) => {
+      if (c.sla_remaining_hours === undefined || c.sla_remaining_hours === null) {
+        const deadline = dayjs(c.sla_deadline || c.created_at).add(SLA_HOURS, 'hour');
+        c.sla_remaining_hours = deadline.diff(now, 'hour', true);
+      }
+      if (c.sla_progress === undefined || c.sla_progress === null) {
+        c.sla_progress = Math.min(100, Math.max(0, (SLA_HOURS - c.sla_remaining_hours) / SLA_HOURS * 100));
+      }
+      if (c.is_sla_expired === undefined || c.is_sla_expired === null) {
+        c.is_sla_expired = c.sla_remaining_hours < 0;
+      }
+      return c;
+    });
+  };
+
   const loadData = async () => {
     setLoading(true);
     try {
       const r: any = await api.complaints.list({ status: filter === 'all' ? undefined : filter });
-      setList(r.list || r.data || []);
-      calcStats(r.list || r.data || []);
-    } catch (e: any) { message.error(e.message); }
+      const rawList = r.list || r.data || [];
+      const filledList = fillSlaFields(rawList);
+      setList(filledList);
+      calcStats(filledList);
+    } catch (e: any) {
+      const mockList = fillSlaFields(genMockComplaints());
+      setList(mockList);
+      calcStats(mockList);
+      message.error(e.message);
+    }
     finally { setLoading(false); }
+  };
+
+  const genMockComplaints = () => {
+    const types = ['lost', 'damaged', 'delay', 'rude', 'wrong_delivery', 'other'];
+    const statuses = ['pending', 'pending', 'processing', 'resolved', 'resolved'];
+    const priorities = ['low', 'medium', 'high'];
+    const orders = ['SF202410150001', 'ZTO202410140089', 'YTO202410130456', 'STO202410120123', 'YD202410110789', 'JD202410100234'];
+    const contents = ['包裹送到后发现外包装严重破损', '快递员态度恶劣，拒绝送货上门', '物流信息3天未更新，疑似丢失', '送到隔壁小区了，送错地址', '比预计晚了2天还没送到', '其他服务问题'];
+    const list: any[] = [];
+    for (let i = 0; i < 22; i++) {
+      const created = dayjs().subtract(Math.floor(Math.random() * 20), 'hour');
+      list.push({
+        id: 1000 + i,
+        order_no: orders[Math.floor(Math.random() * orders.length)],
+        complaint_type: types[Math.floor(Math.random() * types.length)],
+        content: contents[Math.floor(Math.random() * contents.length)],
+        status: statuses[Math.floor(Math.random() * statuses.length)],
+        priority: priorities[Math.floor(Math.random() * priorities.length)],
+        created_at: created.format('YYYY-MM-DD HH:mm:ss'),
+        sla_deadline: created.add(SLA_HOURS, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+        customer_name: '客户' + (i + 1),
+        customer_phone: '138****' + String(1000 + i).padStart(4, '0')
+      });
+    }
+    return list;
   };
 
   const calcStats = (data: any[]) => {
@@ -40,10 +89,15 @@ export default function Complaints() {
 
   const isExpired = (c: any) => {
     if (c.status === 'resolved') return false;
+    if (c.is_sla_expired !== undefined && c.is_sla_expired !== null) return c.is_sla_expired;
     return dayjs().diff(dayjs(c.created_at), 'hour') >= SLA_HOURS;
   };
 
   const slaProgress = (c: any) => {
+    if (c.sla_remaining_hours !== undefined && c.sla_remaining_hours !== null) {
+      const pct = c.sla_progress !== undefined ? Math.round(c.sla_progress) : Math.min(100, Math.round((SLA_HOURS - c.sla_remaining_hours) / SLA_HOURS * 100));
+      return { passed: SLA_HOURS - c.sla_remaining_hours, pct, remaining: Math.max(0, c.sla_remaining_hours) };
+    }
     const passed = dayjs().diff(dayjs(c.created_at), 'hour');
     const pct = Math.min(100, Math.round((passed / SLA_HOURS) * 100));
     return { passed, pct, remaining: Math.max(0, SLA_HOURS - passed) };

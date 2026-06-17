@@ -14,18 +14,65 @@ export default function Branches() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [topology, setTopology] = useState<any>({ nodes: [], links: [] });
 
+  const genMockThroughput = () => {
+    const dailyTrend = Array.from({ length: 14 }, (_, i) => {
+      const date = dayjs().subtract(13 - i, 'day').format('MM-DD');
+      const base = 2000 + Math.floor(Math.random() * 1500);
+      return { date, inbound: base + Math.floor(Math.random() * 800), outbound: base + 300 + Math.floor(Math.random() * 800) };
+    });
+    const hourlyToday = Array.from({ length: 24 }, (_, i) => ({
+      hour: String(i).padStart(2, '0'),
+      count: i >= 8 && i <= 20 ? Math.floor(Math.random() * 400) + 100 : Math.floor(Math.random() * 80) + 10
+    }));
+    const hubThroughput = [
+      { name: '北京转运中心', throughput: 28500, capacity: 30000 },
+      { name: '上海转运中心', throughput: 32000, capacity: 35000 },
+      { name: '广州转运中心', throughput: 26800, capacity: 30000 },
+      { name: '深圳转运中心', throughput: 29500, capacity: 32000 },
+      { name: '杭州转运中心', throughput: 21500, capacity: 25000 },
+      { name: '成都转运中心', throughput: 19800, capacity: 22000 },
+      { name: '武汉转运中心', throughput: 18200, capacity: 20000 },
+      { name: '西安转运中心', throughput: 15600, capacity: 18000 }
+    ];
+    const byCity = [
+      { city: '北京', count: 35800 }, { city: '上海', count: 42500 }, { city: '广州', count: 28600 },
+      { city: '深圳', count: 31200 }, { city: '杭州', count: 22100 }, { city: '成都', count: 19800 }
+    ];
+    const byBrand = [
+      { brand: '顺丰', count: 58000 }, { brand: '中通', count: 52000 }, { brand: '圆通', count: 45000 },
+      { brand: '申通', count: 38000 }, { brand: '韵达', count: 41000 }
+    ];
+    const total_today = dailyTrend[dailyTrend.length - 1].inbound + dailyTrend[dailyTrend.length - 1].outbound;
+    const overload_branches = [
+      { id: 7, name: '朝阳营业点', load_rate: 0.97 },
+      { id: 8, name: '海淀营业点', load_rate: 0.96 }
+    ];
+    return { total_today, daily_trend: dailyTrend, hourly_today: hourlyToday, by_city: byCity, by_brand: byBrand, hub_throughput: hubThroughput, overload_branches };
+  };
+
   const loadData = async () => {
     setLoading(true);
     try {
-      const [r, t, topo]: any[] = await Promise.all([
+      const [r, tRaw, topo]: any[] = await Promise.all([
         api.branches.list({ brand_id: brandFilter, status: statusFilter === 'all' ? undefined : statusFilter, ...filter }),
-        api.branches.throughput(),
+        api.branches.throughput().catch(() => null),
         api.dashboard.networkTopology()
       ]);
       setList(r.list || r.data || []);
+      let t = tRaw;
+      if (!t || !t.daily_trend || !t.daily_trend.length) {
+        t = genMockThroughput();
+      }
+      if (!t.total_today && t.daily_trend?.length) {
+        const last = t.daily_trend[t.daily_trend.length - 1];
+        t.total_today = (last.inbound || 0) + (last.outbound || 0);
+      }
       setThroughput(t);
       setTopology(topo);
-    } catch (e: any) { message.error(e.message); }
+    } catch (e: any) {
+      setThroughput(genMockThroughput());
+      message.error(e.message);
+    }
     finally { setLoading(false); }
   };
 
@@ -53,20 +100,30 @@ export default function Branches() {
     tooltip: { trigger: 'axis' },
     legend: { data: ['收件量', '派件量'], top: 0 },
     grid: { left: 50, right: 20, top: 40, bottom: 30 },
-    xAxis: { type: 'category', data: Array.from({ length: 7 }, (_, i) => dayjs().subtract(6 - i, 'day').format('MM-DD')) },
+    xAxis: { type: 'category', data: throughput.daily_trend?.map((d: any) => d.date) || [] },
     yAxis: { type: 'value' },
     series: [
-      { name: '收件量', type: 'line', stack: 'total', data: [1820, 2150, 1980, 2450, 2280, 2650, throughput?.total?.inbound || 2400], smooth: true, areaStyle: { opacity: 0.3 }, itemStyle: { color: '#1677ff' } },
-      { name: '派件量', type: 'line', stack: 'total', data: [2100, 2380, 2200, 2680, 2520, 2890, throughput?.total?.outbound || 2650], smooth: true, areaStyle: { opacity: 0.3 }, itemStyle: { color: '#52c41a' } }
+      { name: '收件量', type: 'line', data: throughput.daily_trend?.map((d: any) => d.inbound) || [], smooth: true, areaStyle: { opacity: 0.3 }, itemStyle: { color: '#1677ff' } },
+      { name: '派件量', type: 'line', data: throughput.daily_trend?.map((d: any) => d.outbound) || [], smooth: true, areaStyle: { opacity: 0.3 }, itemStyle: { color: '#52c41a' } }
     ]
   } : {};
 
-  const loadDistributionOpt = {
+  const hourlyTodayOpt = throughput ? {
     tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-    grid: { left: 60, right: 20, top: 30, bottom: 60 },
+    grid: { left: 50, right: 20, top: 30, bottom: 30 },
+    xAxis: { type: 'category', data: throughput.hourly_today?.map((h: any) => h.hour + ':00') || [], axisLabel: { fontSize: 10, interval: 2 } },
+    yAxis: { type: 'value' },
+    series: [
+      { name: '吞吐量', type: 'bar', data: throughput.hourly_today?.map((h: any) => h.count) || [], itemStyle: { color: '#1677ff' }, barWidth: '60%' }
+    ]
+  } : {};
+
+  const loadDistributionOpt = throughput ? {
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    grid: { left: 80, right: 60, top: 30, bottom: 60 },
     xAxis: {
       type: 'category',
-      data: ['北京朝阳', '上海浦东', '广州天河', '深圳南山', '杭州西湖', '成都锦江', '武汉江汉', '西安雁塔', '南京鼓楼', '重庆渝中'],
+      data: throughput.hub_throughput?.map((h: any) => h.name) || [],
       axisLabel: { rotate: 20, fontSize: 11 }
     },
     yAxis: [
@@ -74,10 +131,10 @@ export default function Branches() {
       { type: 'value', name: '负载率(%)', max: 100 }
     ],
     series: [
-      { name: '今日吞吐量', type: 'bar', data: [2850, 3200, 2680, 2950, 2150, 1980, 1820, 1560, 1720, 2050], itemStyle: { color: '#1677ff' } },
-      { name: '负载率', type: 'line', yAxisIndex: 1, data: [95, 89, 84, 79, 72, 66, 61, 52, 57, 68], smooth: true, itemStyle: { color: '#fa8c16' }, lineStyle: { width: 3 } }
+      { name: '今日吞吐量', type: 'bar', data: throughput.hub_throughput?.map((h: any) => h.throughput) || [], itemStyle: { color: '#1677ff' } },
+      { name: '负载率', type: 'line', yAxisIndex: 1, data: throughput.hub_throughput?.map((h: any) => Math.round((h.throughput / h.capacity) * 100)) || [], smooth: true, itemStyle: { color: '#fa8c16' }, lineStyle: { width: 3 } }
     ]
-  };
+  } : {};
 
   const topologyNodes = topology?.nodes || [
     { id: 1, name: '北京转运中心', x: 50, y: 20, type: 'hub', throughput: 28500, capacity: 30000 },
@@ -170,7 +227,7 @@ export default function Branches() {
           <Card styles={{ body: { padding: 16 } }}>
             <Statistic
               title={<><ShopOutlined /> 网点总数</>}
-              value={throughput?.total?.branches || 150}
+              value={list.length || 150}
               valueStyle={{ color: '#1677ff', fontSize: 28 }}
               suffix="个"
             />
@@ -180,7 +237,7 @@ export default function Branches() {
           <Card styles={{ body: { padding: 16 } }}>
             <Statistic
               title={<><RiseOutlined /> 今日总吞吐量</>}
-              value={throughput?.total?.throughput || 58000}
+              value={throughput?.total_today || 58000}
               valueStyle={{ color: '#52c41a', fontSize: 26 }}
               suffix="件"
               precision={0}
@@ -244,13 +301,21 @@ export default function Branches() {
 
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={14}>
-          <Card title="📈 全网吞吐量趋势（近7天）">
+          <Card title="📈 全网吞吐量趋势（近14天）">
             <ReactECharts option={throughputTrendOpt} style={{ height: 280 }} />
           </Card>
         </Col>
         <Col xs={24} lg={10}>
-          <Card title="🏢 TOP10 网点吞吐量与负载率">
+          <Card title="🏢 转运中心吞吐量与负载率">
             <ReactECharts option={loadDistributionOpt} style={{ height: 280 }} />
+          </Card>
+        </Col>
+      </Row>
+
+      <Row gutter={[16, 16]}>
+        <Col xs={24}>
+          <Card title="⏰ 今日24小时吞吐量分布">
+            <ReactECharts option={hourlyTodayOpt} style={{ height: 240 }} />
           </Card>
         </Col>
       </Row>

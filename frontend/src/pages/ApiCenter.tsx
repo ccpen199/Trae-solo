@@ -313,9 +313,9 @@ export default function ApiCenter() {
     { title: 'ID', dataIndex: 'id', width: 70, render: (v: any) => `#${v}` },
     { title: '应用', dataIndex: 'app_name', width: 140, render: (v: string, r: any) => <Space><Text code style={{ fontSize: 11 }}>{r.app_key?.slice(0, 12)}...</Text><span>{v}</span></Space> },
     { title: '方法', dataIndex: 'method', width: 80, render: (v: string) => <Tag color={v === 'GET' ? 'green' : v === 'POST' ? 'blue' : 'default'}>{v}</Tag> },
-    { title: 'API路径', dataIndex: 'api_path', render: (v: string) => <Text code style={{ fontSize: 12 }}>{v}</Text> },
-    { title: '状态', dataIndex: 'response_status', width: 100, render: (v: number) => v >= 200 && v < 300 ? <Tag color="green">{v} OK</Tag> : <Tag color="red">{v} Error</Tag> },
-    { title: '响应时间', dataIndex: 'response_time', width: 110, render: (v: number) => `${v} ms` },
+    { title: 'API路径', dataIndex: 'api_path', render: (_: any, a: any) => <Text code style={{ fontSize: 12 }}>{a.path || a.api_path}</Text> },
+    { title: '状态', dataIndex: 'response_status', width: 100, render: (_: any, a: any) => { const v = a.status ?? a.response_status; return v >= 200 && v < 300 ? <Tag color="green">{v} OK</Tag> : <Tag color="red">{v} Error</Tag>; } },
+    { title: '耗时', dataIndex: 'response_time', width: 110, render: (_: any, a: any) => `${a.latency_ms ?? a.response_time} ms` },
     { title: 'IP', dataIndex: 'ip', width: 120 },
     { title: '时间', dataIndex: 'created_at', width: 160, render: (v: string) => dayjs(v).format('YYYY-MM-DD HH:mm:ss') }
   ];

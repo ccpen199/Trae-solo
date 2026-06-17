@@ -171,11 +171,17 @@ router.get('/audit-logs', (req, res) => {
   if (date_to) { where.push('DATE(l.created_at) <= ?'); params.push(date_to); }
   const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
   const total = (db.prepare(`SELECT COUNT(*) c FROM api_call_logs l ${whereSql}`).get(...params) as any).c;
-  const list = db.prepare(`
+  const rawList = db.prepare(`
     SELECT l.*, a.app_name, a.app_key FROM api_call_logs l
     LEFT JOIN api_applications a ON l.app_id = a.id
     ${whereSql} ORDER BY l.id DESC LIMIT ? OFFSET ?
   `).all(...params, pageSize, offset);
+  const list = (rawList as any[]).map(item => ({
+    ...item,
+    path: item.api_path,
+    status: item.response_status,
+    latency_ms: item.response_time
+  }));
 
   const stats = db.prepare(`
     SELECT
