@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Baby, ChefHat, MapPin, Clock, Phone, ChevronLeft, ArrowLeft, Navigation, AlertTriangle, Star, Shield, FileText, Mic, BarChart3, Users, CheckCircle, CircleDollarSign, Gift, UserCheck, CalendarDays, Award, MessageSquare, TrendingUp, ThumbsUp, ThumbsDown, XCircle, Timer, Info } from 'lucide-react';
+import { Sparkles, Baby, ChefHat, MapPin, Clock, Phone, ChevronLeft, ChevronDown, ArrowLeft, Navigation, AlertTriangle, Star, Shield, FileText, Mic, BarChart3, Users, CheckCircle, CircleDollarSign, Gift, UserCheck, CalendarDays, Award, MessageSquare, TrendingUp, ThumbsUp, ThumbsDown, XCircle, Timer, Info } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Empty from '@/components/Empty';
 import { useAppStore } from '@/store';
@@ -238,12 +238,15 @@ function CompletedOrderDetail({ order }: { order: Order }) {
         >
           <span className="flex items-center gap-2 text-xs">
             {qa.review_conclusion === 'pass' ? <CheckCircle className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
-            服务评分与质量回溯
+            <span>服务评分与质量回溯</span>
             <span className="bg-white/20 px-1.5 py-0.5 rounded-full text-[9px] font-bold">
               {conclusionLabel} · 合规{qa.compliance_rate}%
             </span>
           </span>
-          <ChevronLeft className={cn('w-4 h-4 transition-transform', expanded && 'rotate-180')} />
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] font-normal opacity-90">{expanded ? '收起' : '展开'}</span>
+            <ChevronDown className={cn('w-4 h-4 transition-transform', expanded && 'rotate-180')} />
+          </div>
         </button>
         <Link
           to={`/orders/${order.id}#qa-record`}
@@ -281,29 +284,19 @@ function CompletedOrderDetail({ order }: { order: Order }) {
             </div>
           </div>
 
-          <div className="bg-secondary-50 rounded-lg p-2.5 space-y-2">
-            <div className="flex items-center gap-1.5 text-[10px] text-secondary-700 font-medium">
-              <BarChart3 className="w-3 h-3" />
-              差评根因分析
+          <div className="bg-cream-100 rounded-lg p-2.5">
+            <div className="flex items-center gap-1.5 text-[10px] text-secondary-700 font-medium mb-1.5">
+              <Mic className="w-3 h-3" />
+              录音转文字摘要
+              <span className="text-[9px] text-secondary-400 font-normal">· 时长{Math.floor(qa.audio_duration / 60)}分钟</span>
             </div>
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between text-[10px]">
-                <span className="text-secondary-500">根因分类</span>
-                <span className={cn('font-medium', qa.complaint_count > 0 ? 'text-red-600' : 'text-green-600')}>
-                  {qa.root_cause_category}
-                </span>
-              </div>
-              <div className="flex items-center justify-between text-[10px]">
-                <span className="text-secondary-500">具体原因</span>
-                <span className="text-secondary-700 text-right max-w-[60%]">{qa.root_cause}</span>
-              </div>
-              {qa.root_cause_detail && (
-                <div className="flex items-start justify-between text-[10px]">
-                  <span className="text-secondary-500 flex-shrink-0">详细分析</span>
-                  <p className="text-secondary-600 text-right max-w-[65%] leading-relaxed">{qa.root_cause_detail}</p>
-                </div>
-              )}
-            </div>
+            <p className="text-[10px] text-secondary-600 leading-relaxed">{qa.transcript_summary}</p>
+            {qa.transcript_full && (
+              <details className="mt-1.5">
+                <summary className="text-[9px] text-primary-600 cursor-pointer hover:text-primary-700">展开完整转写</summary>
+                <p className="text-[9px] text-secondary-500 mt-1 leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">{qa.transcript_full}</p>
+              </details>
+            )}
           </div>
 
           {qa.keywords && qa.keywords.length > 0 && (
@@ -329,57 +322,65 @@ function CompletedOrderDetail({ order }: { order: Order }) {
             </div>
           )}
 
-          <div className="bg-cream-100 rounded-lg p-2.5">
-            <div className="flex items-center gap-1.5 text-[10px] text-secondary-700 font-medium mb-1.5">
-              <Mic className="w-3 h-3" />
-              录音转文字摘要
-              <span className="text-[9px] text-secondary-400 font-normal">· 时长{Math.floor(qa.audio_duration / 60)}分钟</span>
+          <div className="bg-secondary-50 rounded-lg p-2.5 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] text-secondary-700 font-medium">
+              <BarChart3 className="w-3 h-3" />
+              差评根因分析
             </div>
-            <p className="text-[10px] text-secondary-600 leading-relaxed">{qa.transcript_summary}</p>
-            {qa.transcript_full && (
-              <details className="mt-1.5">
-                <summary className="text-[9px] text-primary-600 cursor-pointer hover:text-primary-700">展开完整转写</summary>
-                <p className="text-[9px] text-secondary-500 mt-1 leading-relaxed whitespace-pre-wrap max-h-32 overflow-y-auto">{qa.transcript_full}</p>
-              </details>
-            )}
-          </div>
-
-          {qa.qa_status === 'completed' && (
-            <div className="bg-blue-50 rounded-lg p-2.5 space-y-1.5 border border-blue-100">
-              <div className="flex items-center gap-1.5 text-[10px] text-blue-700 font-medium">
-                <UserCheck className="w-3 h-3" />
-                质检审计留痕
-              </div>
-              <div className="grid grid-cols-2 gap-1.5">
-                <div className="text-[10px]">
-                  <span className="text-secondary-500">复查人：</span>
-                  <span className="text-secondary-700 font-medium">{qa.reviewer}</span>
-                </div>
-                <div className="text-[10px]">
-                  <span className="text-secondary-500">复查时间：</span>
-                  <span className="text-secondary-700">{qa.review_time}</span>
-                </div>
-              </div>
-              <div className="text-[10px]">
-                <span className="text-secondary-500">质检结论：</span>
-                <span className={cn(
-                  'font-medium',
-                  qa.review_conclusion === 'pass' ? 'text-green-600' : qa.review_conclusion === 'warning' ? 'text-yellow-600' : 'text-red-600'
-                )}>
-                  {qa.review_conclusion === 'pass' ? '通过' : qa.review_conclusion === 'warning' ? '警告' : '不通过'}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-secondary-500">根因分类</span>
+                <span className={cn('font-medium', qa.complaint_count > 0 ? 'text-red-600' : 'text-green-600')}>
+                  {qa.root_cause_category}
                 </span>
               </div>
-              {qa.review_remark && (
-                <div className="text-[10px] bg-white/60 rounded p-1.5 mt-1">
-                  <span className="text-secondary-500">复查意见：</span>
-                  <span className="text-secondary-600">{qa.review_remark}</span>
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-secondary-500">具体原因</span>
+                <span className="text-secondary-700 text-right max-w-[60%]">{qa.root_cause}</span>
+              </div>
+              {qa.root_cause_detail && (
+                <div className="flex items-start justify-between text-[10px]">
+                  <span className="text-secondary-500 flex-shrink-0">详细分析</span>
+                  <p className="text-secondary-600 text-right max-w-[65%] leading-relaxed">{qa.root_cause_detail}</p>
                 </div>
               )}
             </div>
-          )}
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-2.5 space-y-1.5 border border-blue-100">
+            <div className="flex items-center gap-1.5 text-[10px] text-blue-700 font-medium">
+              <UserCheck className="w-3 h-3" />
+              质检结论与复查留痕
+            </div>
+            <div className="grid grid-cols-2 gap-1.5">
+              <div className="text-[10px]">
+                <span className="text-secondary-500">复查人：</span>
+                <span className="text-secondary-700 font-medium">{qa.reviewer}</span>
+              </div>
+              <div className="text-[10px]">
+                <span className="text-secondary-500">复查时间：</span>
+                <span className="text-secondary-700">{qa.review_time}</span>
+              </div>
+            </div>
+            <div className="text-[10px]">
+              <span className="text-secondary-500">质检结论：</span>
+              <span className={cn(
+                'font-medium',
+                qa.review_conclusion === 'pass' ? 'text-green-600' : qa.review_conclusion === 'warning' ? 'text-yellow-600' : 'text-red-600'
+              )}>
+                {qa.review_conclusion === 'pass' ? '通过' : qa.review_conclusion === 'warning' ? '警告' : '不通过'}
+              </span>
+            </div>
+            {qa.review_remark && (
+              <div className="text-[10px] bg-white/60 rounded p-1.5 mt-1">
+                <span className="text-secondary-500">复查意见：</span>
+                <span className="text-secondary-600">{qa.review_remark}</span>
+              </div>
+            )}
+          </div>
 
           <Link
-            to={`/orders/${order.id}`}
+            to={`/orders/${order.id}#qa-record`}
             className="block text-center text-xs text-primary-600 font-medium hover:text-primary-700 pt-1"
           >
             查看完整订单详情 →

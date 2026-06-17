@@ -623,40 +623,54 @@ export const useAppStore = create<AppState>((set, get) => ({
     const order = get().orders.find((o) => o.id === orderId);
     if (!order) return null;
 
-    const statusFlow: Array<{ status: Order['status']; node_type: ServiceNode['node_type']; node_label: string; remark: string }> = [
-      { status: 'assigned', node_type: 'assigned', node_label: '系统派单', remark: '热力图匹配1km内最优阿姨' },
-      { status: 'accepted', node_type: 'accepted', node_label: '阿姨接单', remark: '阿姨已确认接单，正在准备出发' },
-      { status: 'departing', node_type: 'departing', node_label: '阿姨出发', remark: '阿姨已出发，正在赶往服务地址' },
-      { status: 'arrived', node_type: 'arrived', node_label: '到达地址', remark: '阿姨已到达服务地址' },
-      { status: 'servicing', node_type: 'servicing', node_label: '服务开始', remark: '服务进行中，全程可追踪' },
-      { status: 'completed', node_type: 'completed', node_label: '服务完成', remark: '服务已完成，请您评价' },
+    const statusFlow: Array<{ status: Order['status']; node_type: ServiceNode['node_type']; node_label: string; remark: string; offsetMin: number }> = [
+      { status: 'assigned', node_type: 'assigned', node_label: '系统派单', remark: '热力图匹配1km内最优阿姨', offsetMin: -58 },
+      { status: 'accepted', node_type: 'accepted', node_label: '阿姨接单', remark: '阿姨已确认接单，正在准备出发', offsetMin: -30 },
+      { status: 'departing', node_type: 'departing', node_label: '阿姨出发', remark: '阿姨已出发，正在赶往服务地址', offsetMin: -15 },
+      { status: 'arrived', node_type: 'arrived', node_label: '到达地址', remark: '阿姨已到达服务地址', offsetMin: -5 },
+      { status: 'servicing', node_type: 'servicing', node_label: '服务开始', remark: '服务进行中，全程可追踪', offsetMin: 0 },
+      { status: 'completed', node_type: 'completed', node_label: '服务完成', remark: '服务已完成，请您评价', offsetMin: 0 },
     ];
 
     const currentIdx = statusFlow.findIndex((s) => s.status === order.status);
     if (currentIdx === -1 || currentIdx >= statusFlow.length - 1) return order;
 
     const nextStep = statusFlow[currentIdx + 1];
-    const nowTime = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+    const calcNodeTime = (baseTime: string, offsetMin: number, isOvertime = false) => {
+      const d = new Date(baseTime.replace(' ', 'T'));
+      let mins = offsetMin;
+      if (nextStep.node_type === 'arrived' && isOvertime) {
+        mins = 35;
+      }
+      if (nextStep.node_type === 'completed') {
+        mins = (order.duration_hours || 3) * 60;
+      }
+      d.setMinutes(d.getMinutes() + mins);
+      return d.toISOString().slice(0, 16).replace('T', ' ');
+    };
+
+    let is_overtime = order.is_overtime;
+    let overtime_minutes = order.overtime_minutes;
+
+    if (nextStep.status === 'arrived' && order.start_time && !is_overtime) {
+      const shouldSimulateOvertime = order.id % 5 === 0;
+      if (shouldSimulateOvertime) {
+        is_overtime = true;
+        overtime_minutes = 35;
+      }
+    }
+
+    const nodeTime = calcNodeTime(order.start_time || new Date().toISOString(), nextStep.offsetMin, is_overtime);
+
     const newNode: ServiceNode = {
       id: (order.nodes?.length || 0) + 1,
       order_id: order.id,
       node_type: nextStep.node_type,
       node_label: nextStep.node_label,
-      node_time: nowTime,
+      node_time: nodeTime,
       remark: nextStep.remark,
     };
-
-    let is_overtime = order.is_overtime;
-    let overtime_minutes = order.overtime_minutes;
-    if (nextStep.status === 'arrived' && order.start_time) {
-      const expectedTime = new Date(order.start_time.replace(' ', 'T')).getTime();
-      const actualTime = new Date(nowTime.replace(' ', 'T')).getTime();
-      const diffMin = Math.round((actualTime - expectedTime) / 60000);
-      if (diffMin > 30) {
-        is_overtime = true;
-        overtime_minutes = diffMin;
-      }
-    }
 
     const updatedOrder: Order = {
       ...order,
@@ -669,7 +683,9 @@ export const useAppStore = create<AppState>((set, get) => ({
 
     if (nextStep.status === 'completed' && !order.qa_record) {
       const isOver = is_overtime;
-      const now = new Date().toISOString().slice(0, 16).replace('T', ' ');
+      const completeTime = calcNodeTime(order.start_time || new Date().toISOString(), (order.duration_hours || 3) * 60);
+      const reviewTime = calcNodeTime(order.start_time || new Date().toISOString(), (order.duration_hours || 3) * 60 + 30);
+      const now = reviewTime;
       const qid = 4000 + order.id;
       const workerN = order.worker_name || '服务阿姨';
       const compliance = isOver ? 42 + Math.floor(Math.random() * 15) : 92 + Math.floor(Math.random() * 8);
@@ -722,6 +738,29 @@ export const useAppStore = create<AppState>((set, get) => ({
         created_at: now,
         qa_status: 'completed',
       };
+    }
+
+    if (nextStep.status === 'completed' && is_overtime && !order.compensation) {
+      const compTime = calcNodeTime(order.start_time || new Date().toISOString(), (order.duration_hours || 3) * 60 + 10);
+      const refundAmount = order.amount || 0;
+      updatedOrder.compensation = {
+        id: 20000 + order.id,
+        order_id: order.id,
+        reason: `阿姨迟到${overtime_minutes}分钟，触发爽约赔付`,
+        reason_category: '迟到超时',
+        refund_amount: refundAmount,
+        coupon_amount: 30,
+        coupon_code: `COMP-${String(order.id).slice(-4).toUpperCase()}${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
+        status: 'paid',
+        trigger_type: 'auto',
+        created_at: compTime,
+        approved_at: compTime,
+        paid_at: calcNodeTime(order.start_time || new Date().toISOString(), (order.duration_hours || 3) * 60 + 25),
+        auditor: '系统自动',
+        description: `阿姨迟到${overtime_minutes}分钟，符合自动赔付条件。全额退款¥${refundAmount}已到账，30元补偿券已发放至账户。`,
+      };
+      updatedOrder.status = 'compensated';
+      updatedOrder.status_label = '已赔付';
     }
 
     set((state) => ({
