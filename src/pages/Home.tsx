@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, Tag, Progress, List, Avatar, Badge, Row, Col, Statistic } from 'antd';
 import {
   FileText,
@@ -13,6 +14,7 @@ import {
   Timer,
   ThumbsUp,
   XCircle,
+  Search,
 } from 'lucide-react';
 import * as echarts from 'echarts';
 import { mockStatCards, mockPerformanceData, mockServices, mockApplications } from '../mock/data';
@@ -76,9 +78,20 @@ const StatCard = ({ card }: { card: StatCardData }) => {
   );
 };
 
-const ServiceCard = ({ service }: { service: ServiceItem }) => {
+const ServiceCard = ({ service, onOpen }: { service: ServiceItem; onOpen: () => void }) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onOpen();
+    }
+  };
+
   return (
     <Card
+      role="button"
+      tabIndex={0}
+      onClick={onOpen}
+      onKeyDown={handleKeyDown}
       className="h-full border border-gov-gray-200 hover:shadow-card-hover transition-all duration-300 cursor-pointer group"
       bodyStyle={{ padding: '20px' }}
     >
@@ -148,8 +161,10 @@ const ApplicationItem = ({ app }: { app: Application }) => {
 };
 
 export default function Home() {
+  const navigate = useNavigate();
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
+  const [serviceKeyword, setServiceKeyword] = useState('');
 
   const [performanceSummary] = useState(() => {
     const latest = mockPerformanceData[mockPerformanceData.length - 1];
@@ -168,6 +183,17 @@ export default function Home() {
       satisfaction: 98.5,
     };
   });
+
+  const recommendedServices = useMemo(() => {
+    const keyword = serviceKeyword.trim().toLowerCase();
+    if (!keyword) return mockServices;
+
+    return mockServices.filter(service =>
+      [service.name, service.description, service.department, service.category].some(value =>
+        value.toLowerCase().includes(keyword),
+      ),
+    );
+  }, [serviceKeyword]);
 
   useEffect(() => {
     if (!chartRef.current) return;
@@ -287,6 +313,32 @@ export default function Home() {
           <p className="text-gov-gray-500">欢迎使用省级一体化政务服务平台</p>
         </div>
 
+        <Card className="shadow-card mb-6" bodyStyle={{ padding: '16px' }}>
+          <div className="flex flex-col md:flex-row gap-3 md:items-center">
+            <div className="flex-1 relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gov-gray-400" />
+              <input
+                type="search"
+                value={serviceKeyword}
+                onChange={(event) => setServiceKeyword(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    navigate(`/services?keyword=${encodeURIComponent(serviceKeyword.trim())}`);
+                  }
+                }}
+                placeholder="搜索事项、材料、办理部门"
+                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gov-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all text-gov-gray-700 placeholder:text-gov-gray-400"
+              />
+            </div>
+            <button
+              onClick={() => navigate(`/services?keyword=${encodeURIComponent(serviceKeyword.trim())}`)}
+              className="gov-btn-primary px-6 py-3"
+            >
+              搜索事项
+            </button>
+          </div>
+        </Card>
+
         <Row gutter={[16, 16]} className="mb-6">
           {mockStatCards.map((card, index) => (
             <Col xs={24} sm={12} lg={6} key={index}>
@@ -403,17 +455,21 @@ export default function Home() {
                 <FileText className="w-5 h-5 text-primary-600 mr-2" />
                 <span className="font-semibold">热门事项推荐</span>
               </div>
-              <a className="text-primary-600 text-sm flex items-center cursor-pointer hover:text-primary-700">
+              <button
+                type="button"
+                onClick={() => navigate('/services')}
+                className="text-primary-600 text-sm flex items-center cursor-pointer hover:text-primary-700"
+              >
                 查看全部 <ArrowRight className="w-4 h-4 ml-1" />
-              </a>
+              </button>
             </div>
           }
           className="shadow-card mb-6"
         >
           <Row gutter={[16, 16]}>
-            {mockServices.map((service) => (
+            {recommendedServices.map((service) => (
               <Col xs={24} sm={12} lg={6} key={service.id}>
-                <ServiceCard service={service} />
+                <ServiceCard service={service} onOpen={() => navigate(`/services/${service.id}`)} />
               </Col>
             ))}
           </Row>

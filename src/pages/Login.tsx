@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Form, Input, Button, Checkbox, message, Tabs, Tag, Tooltip, Progress, Spin } from 'antd';
+import { Form, Input, Button, Checkbox, message, Tabs, Tag, Spin } from 'antd';
 import {
   UserOutlined, LockOutlined, SafetyCertificateOutlined,
   TeamOutlined, BankOutlined,
   ApartmentOutlined, ClusterOutlined,
-  CheckCircleOutlined, CloseCircleOutlined, WarningOutlined,
+  CloseCircleOutlined, WarningOutlined,
   InfoCircleOutlined, KeyOutlined, ScanOutlined,
   EyeOutlined, EyeInvisibleOutlined,
 } from '@ant-design/icons';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useAuthStore, type LoginResult } from '@/store/authStore';
 import { roleConfig } from '@/mock/data';
 import type { LoginErrorCode } from '@/mock/data';
@@ -43,29 +43,41 @@ const roleIcons: Record<RoleKey, React.ReactNode> = {
 
 const testAccounts: Record<RoleKey, { username: string; password: string; desc: string }[]> = {
   citizen: [{ username: 'citizen', password: '123456', desc: '办事群众/个人用户' }],
-  enterprise: [{ username: 'enterprise', password: 'enterprise123', desc: '企业法人用户' }],
-  staff: [{ username: 'staff', password: 'staff123', desc: '政务大厅办事人员' }],
-  platform: [{ username: 'platform', password: 'platform123', desc: '平台运维技术人员' }],
-  ops: [{ username: 'ops', password: 'ops123', desc: '委办局协同部门人员' }],
-  admin: [{ username: 'admin', password: 'admin123', desc: '系统超级管理员' }],
+  enterprise: [{ username: 'enterprise', password: '123456', desc: '企业法人用户' }],
+  staff: [{ username: 'staff', password: '123456', desc: '政务大厅办事人员' }],
+  platform: [{ username: 'platform', password: '123456', desc: '平台运维技术人员' }],
+  ops: [{ username: 'ops', password: '123456', desc: '委办局协同部门人员' }],
+  admin: [{ username: 'admin', password: '123456', desc: '系统超级管理员' }],
 };
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation() as { state?: { from?: { pathname: string } } };
-  const { login, caLogin, isLoading, lastLoginResult, clearLastError, getDefaultRoute, isAuthenticated, user, loginRole } = useAuthStore();
+
+  const isAuthenticated = useAuthStore(s => s.isAuthenticated);
+  const isLoading = useAuthStore(s => s.isLoading);
+  const lastLoginResult = useAuthStore(s => s.lastLoginResult);
+  const login = useAuthStore(s => s.login);
+  const caLogin = useAuthStore(s => s.caLogin);
+  const clearLastError = useAuthStore(s => s.clearLastError);
+  const checkAuth = useAuthStore(s => s.checkAuth);
+  const getDefaultRoute = useAuthStore(s => s.getDefaultRoute);
+
   const [form] = Form.useForm<LoginFormValues>();
   const [caLoading, setCaLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState<RoleKey>('citizen');
-  const [showSuccessAnim, setShowSuccessAnim] = useState(false);
-  const [loginSuccessInfo, setLoginSuccessInfo] = useState<{
-    name: string;
-    role: string;
-    redirectRoute: string;
-    countdown: number;
-  } | null>(null);
   const [showPwd, setShowPwd] = useState(false);
   const [showTestAccounts, setShowTestAccounts] = useState(true);
+  const [, forceRender] = useState(0);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  useEffect(() => {
+    const id = setInterval(() => forceRender(n => n + 1), 500);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     clearLastError();
@@ -75,18 +87,19 @@ export default function Login() {
     }
   }, [selectedRole, clearLastError, form]);
 
-  useEffect(() => {
-    if (loginSuccessInfo && loginSuccessInfo.countdown > 0) {
-      const timer = setTimeout(() => {
-        setLoginSuccessInfo({ ...loginSuccessInfo, countdown: loginSuccessInfo.countdown - 1 });
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-    if (loginSuccessInfo && loginSuccessInfo.countdown === 0) {
+  const doLoginRedirect = (result: LoginResult) => {
+    if (result.success && result.user && result.redirectRoute) {
+      const loginRole = result.loginRole as RoleKey | undefined;
+      const userType = result.user.userType as RoleKey;
+      const roleLabel = (loginRole && roleConfig[loginRole]?.label)
+        || roleConfig[selectedRole]?.label
+        || roleConfig[userType]?.label
+        || result.user.userType;
+      message.success(`登录成功，正在进入${roleLabel}工作台`);
       const fromRoute = location.state?.from?.pathname;
-      navigate(fromRoute || loginSuccessInfo.redirectRoute, { replace: true });
+      navigate(fromRoute || result.redirectRoute, { replace: true });
     }
-  }, [loginSuccessInfo, navigate, location.state]);
+  };
 
   const getErrorDisplay = (result: LoginResult | null) => {
     if (!result || result.success || !result.errorCode || !result.errorInfo) return null;
@@ -173,82 +186,10 @@ export default function Login() {
     );
   };
 
-  const renderSuccessView = () => {
-    if (!loginSuccessInfo) return null;
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in">
-        <div className="bg-white rounded-3xl p-10 max-w-md w-full mx-4 shadow-2xl animate-slide-up">
-          <div className="text-center">
-            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-lg shadow-green-500/30 animate-bounce">
-              <CheckCircleOutlined className="text-5xl text-white" />
-            </div>
-            <h2 className="text-2xl font-bold text-gov-gray-700 mb-2">登录成功</h2>
-            <p className="text-gov-gray-500 mb-8">欢迎访问省级一体化政务服务中台</p>
-
-            <div className="bg-gov-gray-50 rounded-2xl p-5 mb-6 text-left space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-gov-gray-500 text-sm">当前用户</span>
-                <span className="font-semibold text-gov-gray-700">{loginSuccessInfo.name}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-gov-gray-500 text-sm">角色身份</span>
-                <Tag color="blue" className="m-0">{loginSuccessInfo.role}</Tag>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-gov-gray-500 text-sm">工作台跳转</span>
-                <span className="font-mono text-primary-500">{loginSuccessInfo.redirectRoute}</span>
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-2 text-sm">
-                <span className="text-gov-gray-500">自动跳转中...</span>
-                <span className="font-semibold text-primary-500">{loginSuccessInfo.countdown}s</span>
-              </div>
-              <Progress
-                percent={((3 - loginSuccessInfo.countdown) / 3) * 100}
-                showInfo={false}
-                strokeColor={{ from: '#165DFF', to: '#4088FF' }}
-                strokeWidth={8}
-              />
-            </div>
-
-            <div className="flex gap-3">
-              <Button
-                type="primary"
-                size="large"
-                block
-                className="gov-btn-primary h-12 rounded-xl text-base"
-                onClick={() => {
-                  const fromRoute = location.state?.from?.pathname;
-                  navigate(fromRoute || loginSuccessInfo.redirectRoute, { replace: true });
-                }}
-              >
-                立即进入工作台
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const handleSubmit = async (values: LoginFormValues) => {
     clearLastError();
     const result = await login(values.username, values.password, selectedRole);
-    if (result.success && result.user && result.redirectRoute) {
-      setShowSuccessAnim(true);
-      const userType = result.user.userType as RoleKey;
-      const roleLabel = roleConfig[selectedRole]?.label
-        || roleConfig[userType]?.label
-        || result.user.userType;
-      setLoginSuccessInfo({
-        name: result.user.name,
-        role: roleLabel,
-        redirectRoute: result.redirectRoute,
-        countdown: 3,
-      });
-    }
+    doLoginRedirect(result);
   };
 
   const handleCaLogin = async () => {
@@ -257,15 +198,7 @@ export default function Login() {
     try {
       const mockCertData = `CA-CERT-${Date.now()}-VALID`;
       const result = await caLogin(mockCertData, selectedRole);
-      if (result.success && result.user && result.redirectRoute) {
-        setShowSuccessAnim(true);
-        setLoginSuccessInfo({
-          name: result.user.name,
-          role: '省政务云CA认证用户',
-          redirectRoute: result.redirectRoute,
-          countdown: 3,
-        });
-      }
+      doLoginRedirect(result);
     } finally {
       setCaLoading(false);
     }
@@ -286,10 +219,13 @@ export default function Login() {
   const currentRoleCfg = roleConfig[selectedRole];
   const errorDisplay = getErrorDisplay(lastLoginResult);
 
+  if (isAuthenticated) {
+    const fromRoute = location.state?.from?.pathname;
+    return <Navigate to={fromRoute || getDefaultRoute()} replace />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gov-gray-50">
-      {showSuccessAnim && renderSuccessView()}
-
       <div className="hidden md:flex md:w-1/2 lg:w-[55%] bg-gradient-to-br from-primary-800 via-primary-600 to-primary-500 flex-col justify-between p-10 lg:p-16 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-72 h-72 rounded-full bg-white/10 blur-3xl animate-pulse-slow"></div>
@@ -452,6 +388,7 @@ export default function Login() {
                   prefix={<UserOutlined className="text-gov-gray-400" />}
                   placeholder={`请输入${currentRoleCfg?.label || '用户'}账号`}
                   className="h-12 rounded-xl"
+                  autoComplete="username"
                 />
               </Form.Item>
 
@@ -460,7 +397,6 @@ export default function Login() {
                 label={<span className="font-medium text-gov-gray-600">登录密码</span>}
                 rules={[
                   { required: true, message: '请输入登录密码' },
-                  { min: 6, message: '密码至少6个字符' },
                 ]}
               >
                 <Password
@@ -598,19 +534,7 @@ export default function Login() {
                         onClick={async () => {
                           clearLastError();
                           const result = await login(acc.username, acc.password, selectedRole);
-                          if (result.success && result.user && result.redirectRoute) {
-                            setShowSuccessAnim(true);
-                            const userType = result.user.userType as RoleKey;
-                            const roleLabel = roleConfig[selectedRole]?.label
-                              || roleConfig[userType]?.label
-                              || result.user.userType;
-                            setLoginSuccessInfo({
-                              name: result.user.name,
-                              role: roleLabel,
-                              redirectRoute: result.redirectRoute,
-                              countdown: 3,
-                            });
-                          }
+                          doLoginRedirect(result);
                         }}
                         className="h-8 px-4 text-xs rounded-lg"
                         style={{
@@ -637,28 +561,6 @@ export default function Login() {
               </p>
             </div>
 
-            <div className="mt-4 p-3 bg-gov-gray-50 rounded-xl border border-gov-gray-200 text-xs font-mono">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-gov-gray-500">🔍 认证状态</span>
-                <span className={isAuthenticated ? 'text-gov-green font-semibold' : 'text-gov-red font-semibold'}>
-                  {isAuthenticated ? '已认证' : '未认证'}
-                </span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-gov-gray-500">
-                <div>loginRole: <span className="text-gov-gray-700">{loginRole || '-'}</span></div>
-                <div>user: <span className="text-gov-gray-700">{user?.name || '-'}</span></div>
-                <div>isLoading: <span className="text-gov-gray-700">{String(isLoading)}</span></div>
-                <div>defaultRoute: <span className="text-gov-gray-700">{getDefaultRoute()}</span></div>
-              </div>
-              {lastLoginResult && (
-                <div className="mt-2 pt-2 border-t border-gov-gray-200">
-                  <div className="text-gov-gray-500 mb-1">lastLoginResult:</div>
-                  <pre className="text-[10px] text-gov-gray-600 overflow-x-auto whitespace-pre-wrap break-all">
-{JSON.stringify(lastLoginResult, null, 2)}
-                  </pre>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </div>

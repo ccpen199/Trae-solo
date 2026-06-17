@@ -6,10 +6,11 @@ import app from './app.js';
 /**
  * start server with port
  */
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || process.env.BACKEND_PORT || 3001;
+const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
 
-const server = app.listen(PORT, () => {
-  console.log(`Server ready on port ${PORT}`);
+const server = app.listen(Number(PORT), HOST, () => {
+  console.log(`Server ready on http://${HOST}:${PORT}`);
 });
 
 /**

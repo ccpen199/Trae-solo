@@ -60,8 +60,22 @@ export const StatCard = ({ data }: { data: StatCardData }) => {
 };
 
 export const ServiceCard = ({ service, onApply }: { service: ServiceItem; onApply?: () => void }) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!onApply) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onApply();
+    }
+  };
+
   return (
-    <div className="gov-card p-5 hover:shadow-card-hover transition-all duration-300 cursor-pointer group">
+    <div
+      role={onApply ? 'button' : undefined}
+      tabIndex={onApply ? 0 : undefined}
+      onClick={onApply}
+      onKeyDown={handleKeyDown}
+      className="gov-card p-5 hover:shadow-card-hover transition-all duration-300 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-primary-500/30"
+    >
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
@@ -88,7 +102,10 @@ export const ServiceCard = ({ service, onApply }: { service: ServiceItem; onAppl
         </div>
         {service.isOnline && (
           <button
-            onClick={onApply}
+            onClick={(event) => {
+              event.stopPropagation();
+              onApply?.();
+            }}
             className="gov-btn-primary text-sm px-4 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 ml-4"
           >
             立即办理

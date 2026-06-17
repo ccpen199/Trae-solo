@@ -298,7 +298,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'admin',
-    password: 'admin123',
+    password: '123456',
     user: {
       id: '2',
       name: '王系统管理员',
@@ -317,7 +317,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'staff',
-    password: 'staff123',
+    password: '123456',
     user: {
       id: '3',
       name: '李办事员',
@@ -337,7 +337,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'platform',
-    password: 'platform123',
+    password: '123456',
     user: {
       id: '4',
       name: '赵平台运维',
@@ -356,7 +356,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'ops',
-    password: 'ops123',
+    password: '123456',
     user: {
       id: '5',
       name: '陈协同部门',
@@ -376,7 +376,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'enterprise',
-    password: 'enterprise123',
+    password: '123456',
     user: {
       id: '6',
       name: '北京科技有限公司',
@@ -395,7 +395,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'locked_user',
-    password: 'locked123',
+    password: '123456',
     user: {
       id: '7',
       name: '锁定测试用户',

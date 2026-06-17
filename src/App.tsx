@@ -72,10 +72,16 @@ const RoleHomeRedirect = () => {
 };
 
 const AdminRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, isAuthenticated, isLoading, loginRole, getDefaultRoute } = useAuthStore();
+  const { user, isAuthenticated, isLoading, loginRole, getDefaultRoute, checkAuth } = useAuthStore();
   const location = useLocation();
+  const [checked, setChecked] = useState(false);
 
-  if (isLoading) {
+  useEffect(() => {
+    checkAuth();
+    setChecked(true);
+  }, [checkAuth]);
+
+  if (!checked || isLoading) {
     return (
       <div className="h-screen flex items-center justify-center bg-gov-gray-50">
         <LoadingSpinner size="lg" />

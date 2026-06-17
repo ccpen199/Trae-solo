@@ -57,7 +57,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'admin',
-    password: 'admin123',
+    password: '123456',
     user: {
       id: '2',
       name: '王系统管理员',
@@ -76,7 +76,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'staff',
-    password: 'staff123',
+    password: '123456',
     user: {
       id: '3',
       name: '李办事员',
@@ -96,7 +96,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'platform',
-    password: 'platform123',
+    password: '123456',
     user: {
       id: '4',
       name: '赵平台运维',
@@ -115,7 +115,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'ops',
-    password: 'ops123',
+    password: '123456',
     user: {
       id: '5',
       name: '陈协同部门',
@@ -135,7 +135,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'enterprise',
-    password: 'enterprise123',
+    password: '123456',
     user: {
       id: '6',
       name: '北京科技有限公司',
@@ -154,7 +154,7 @@ export const userAccounts: AccountCredential[] = [
   },
   {
     username: 'locked_user',
-    password: 'locked123',
+    password: '123456',
     user: {
       id: '7',
       name: '锁定测试用户',
@@ -300,6 +300,10 @@ export const mockDepartments: Department[] = [
   { id: '6', name: '税务局', code: 'SW001', contact: '周主任', phone: '12366' },
   { id: '7', name: '民政局', code: 'MZ001', contact: '吴主任', phone: '12349' },
   { id: '8', name: '自然资源厅', code: 'ZR001', contact: '郑主任', phone: '12336' },
+  { id: '9', name: '交通运输厅', code: 'JT001', contact: '陈主任', phone: '12328' },
+  { id: '10', name: '教育厅', code: 'JY001', contact: '林主任', phone: '12391' },
+  { id: '11', name: '生态环境厅', code: 'HJ001', contact: '黄主任', phone: '12369' },
+  { id: '12', name: '农业农村厅', code: 'NY001', contact: '刘主任', phone: '12316' },
 ];
 
 export const mockServices: ServiceItem[] = [

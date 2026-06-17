@@ -1,0 +1,405 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T18:21:03.363Z",
+  "order": "may-89221",
+  "roundIndex": 3,
+  "captureId": "may-89221-repair",
+  "url": "http://127.0.0.1:49221/",
+  "initialUrl": "http://127.0.0.1:49221/",
+  "finalUrl": "http://127.0.0.1:49221/login",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-repair-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49221/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49221/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "isLoading",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "isLoading:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:isLoading",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "isLoading",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49221/login"
+      },
+      {
+        "action": "login-result",
+        "label": "isLoading",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49221/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49221/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49221/login",
+        "feedback": [
+          "密码错误",
+          "错误"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49221/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49221/login",
+        "feedback": [
+          "密码错误",
+          "错误"
+        ]
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49221/login",
+        "title": "My Trae Project",
+        "headings": [
+          "省级一体化 政务服务中台",
+          "统一身份认证 省政务云CA对接"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "忘记密码？",
+          "安全登录 → 进入办事群众工作台 掌上办事首页",
+          "省政务云CA登录",
+          "扫码登录",
+          "一键登录"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入办事群众账号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "政务服务中台Provincial Gov Service Platform省级一体化政务服务中台构建统一、高效、智能的政务服务体系，整合人社、公安、卫健、住建等12个委办局业务系统， 实现\"一网通办、跨省通办、一件事一次办\"12委办局接入200+电子证照互认98.5%群众满意度安全可靠 · 等保三级高效便捷 · 7×24服务智能服务 · AI驱动© 2025 省级一体化政务服务中台 版权所有技术支持：省大数据中心省级一体化政务服务中台欢迎登录统一身份认证省政务云CA对接请选择您的角色身份后登录系统办事群众企业法人办事人员平台运维协同部门超级管理员办事群众掌上办事首页个人用户办理政务服务事项掌上办事、智能导办、跨域协同电子证照管理、办件进度查询账号 / 身份证号 / 手机号登录密码记住账号（7天内免登录）忘记密码？安全登录 → 进入办事群众工作台掌上办事首页统一认证通道省政务云CA登录扫码登录测试账号（点击自动填充，切换角色Tab自动切换账号）▼办事群众/个人用户账号: citizen|密码: 123456一键登录本系统已对接省政务云统一身份认证平台， 登录信息全程HTTPS/SSL加密传输。服务监督电话：12345·技术支持：010-XXXXXXXX🔍 认证状态未认证loginRole: -user: -isLoading: falsedefaultRoute: /",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1178,
+          "scrollWidth": 1504,
+          "scrollHeight": 1178,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89221-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49221/login",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-repair-structure-01-首屏.png",
+          "elementCount": 247,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "办事群众",
+            "citizen",
+            "123456",
+            "on",
+            "忘记密码？",
+            "安全登录 → 进入办事群众工作台 掌上办事首页",
+            "省政务云CA登录",
+            "扫码登录",
+            "一键登录"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89221-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49221/login",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-repair-structure-01-首屏.png",
+        "elementCount": 247,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "办事群众",
+          "citizen",
+          "123456",
+          "on",
+          "忘记密码？",
+          "安全登录 → 进入办事群众工作台 掌上办事首页",
+          "省政务云CA登录",
+          "扫码登录",
+          "一键登录"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49221/login",
+    "representativeScreenshotLabel": "省级一体化 政务服务中台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89221-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49221/login",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-repair-structure-01-首屏.png",
+        "elementCount": 247,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "办事群众",
+          "citizen",
+          "123456",
+          "on",
+          "忘记密码？",
+          "安全登录 → 进入办事群众工作台 掌上办事首页",
+          "省政务云CA登录",
+          "扫码登录",
+          "一键登录"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1178,
+    "scrollWidth": 1504,
+    "scrollHeight": 1178
+  },
+  "initialBodyTextPreview": "政务服务中台\nProvincial Gov Service Platform\n省级一体化\n政务服务中台\n\n构建统一、高效、智能的政务服务体系，整合人社、公安、卫健、住建等12个委办局业务系统， 实现\"一网通办、跨省通办、一件事一次办\"\n\n12\n委办局接入\n200+\n电子证照互认\n98.5%\n群众满意度\n安全可靠 · 等保三级\n高效便捷 · 7×24服务\n智能服务 · AI驱动\n\n© 2025 省级一体化政务服务中台 版权所有\n\n技术支持：省大数据中心\n\n统一身份认证\n省政务云CA对接\n\n请选择您的角色身份后登录系统\n\n办事群众\n企业法人\n办事人员\n平台运维\n协同部门\n超级管理员\n\n办事群众\n\n掌上办事首页\n\n个人用户办理政务服务事项\n\n掌上办事、智能导办、跨域协同\n电子证照管理、办件进度查询\n账号 / 身份证号 / 手机号\n登录密码\n记住账号（7天内免登录）\n忘记密码？\n安全登录 → 进入办事群众工作台\n掌上办事首页\n统一认证通道\n省政务云CA登录\n扫码登录\n测试账号（点击自动填充，切换角色Tab自动切换账号）\n▼\n办事群众/个人用户\n账号: citizen|密码: 123456\n一键登录\n\n本系统已对接省政务云统一身份认证平台， 登录信息全程HTTPS/SSL加密传输。\n服务监督电话：12345·技术支持：010-XXXXXXXX\n\n🔍 认证状态\n未认证\nloginRole: -\nuser: -\nisLoading: false\ndefaultRoute: /",
+  "bodyTextPreview": "政务服务中台\nProvincial Gov Service Platform\n省级一体化\n政务服务中台\n\n构建统一、高效、智能的政务服务体系，整合人社、公安、卫健、住建等12个委办局业务系统， 实现\"一网通办、跨省通办、一件事一次办\"\n\n12\n委办局接入\n200+\n电子证照互认\n98.5%\n群众满意度\n安全可靠 · 等保三级\n高效便捷 · 7×24服务\n智能服务 · AI驱动\n\n© 2025 省级一体化政务服务中台 版权所有\n\n技术支持：省大数据中心\n\n统一身份认证\n省政务云CA对接\n\n请选择您的角色身份后登录系统\n\n办事群众\n企业法人\n办事人员\n平台运维\n协同部门\n超级管理员\n\n办事群众\n\n掌上办事首页\n\n个人用户办理政务服务事项\n\n掌上办事、智能导办、跨域协同\n电子证照管理、办件进度查询\n账号 / 身份证号 / 手机号\n登录密码\n记住账号（7天内免登录）\n忘记密码？\n安全登录 → 进入办事群众工作台\n掌上办事首页\n统一认证通道\n省政务云CA登录\n扫码登录\n测试账号（点击自动填充，切换角色Tab自动切换账号）\n▼\n办事群众/个人用户\n账号: citizen|密码: 123456\n一键登录\n\n本系统已对接省政务云统一身份认证平台， 登录信息全程HTTPS/SSL加密传输。\n服务监督电话：12345·技术支持：010-XXXXXXXX\n\n🔍 认证状态\n未认证\nloginRole: -\nuser: -\nisLoading: false\ndefaultRoute: /",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49221/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49221/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49221/node_modules/.vite/deps/chunk-NXESFFTV.js?v=7ebd13f3",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"username\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49221/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49221/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49221/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49221/node_modules/.vite/deps/chunk-NXESFFTV.js?v=7ebd13f3",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"username\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49221/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49221/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49221/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49221/node_modules/.vite/deps/chunk-NXESFFTV.js?v=7ebd13f3",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"username\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49221/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89221/runtime-check/repair-20260616-may-89221/may-89221-browser-report.json"
+}

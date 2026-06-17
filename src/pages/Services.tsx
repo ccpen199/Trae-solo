@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Search, Filter, Grid3X3, HeartHandshake, UserCircle, Stethoscope, Building2, Store, Heart, Receipt, ChevronLeft, ChevronRight, Flame, Clock, Globe } from 'lucide-react';
 import { ServiceCard } from '../components/common';
 import { mockServices, serviceCategories } from '../mock/data';
@@ -20,8 +20,10 @@ const PAGE_SIZE = 6;
 
 export default function Services() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const initialKeyword = searchParams.get('keyword') || '';
   const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(initialKeyword);
   const [onlineOnly, setOnlineOnly] = useState(false);
   const [sortBy, setSortBy] = useState<'hot' | 'time'>('hot');
   const [currentPage, setCurrentPage] = useState(1);

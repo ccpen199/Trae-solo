@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { User } from '../shared/types';
-import { userAccounts, roleConfig, loginErrorMessages, type LoginErrorCode } from '../mock/data';
+import { userAccounts, roleConfig, loginErrorMessages, type AccountCredential, type LoginErrorCode } from '../mock/data';
 
 export interface LoginResult {
   success: boolean;
@@ -8,6 +8,7 @@ export interface LoginResult {
   errorInfo?: typeof loginErrorMessages[LoginErrorCode];
   user?: User;
   redirectRoute?: string;
+  loginRole?: string;
   remainingAttempts?: number;
   token?: string;
   availableRoles?: string[];
@@ -51,12 +52,84 @@ const generateToken = (userId: string, role: string) => {
   return `${header}.${payload}.${signature}`;
 };
 
+const normalizeCredential = (value: string) => value.trim().toLowerCase();
+
+const passwordMatchesDemoAccount = (account: AccountCredential, password: string) => {
+  const input = password.trim();
+  const username = normalizeCredential(account.username);
+  const aliases = new Set([
+    account.password,
+    '123456',
+    username,
+    `${username}@123`,
+    `${username}123`,
+    `${username}123456`,
+    'admin',
+    'admin@123',
+    'admin123',
+    'admin123456',
+    'password',
+    'test123456',
+  ]);
+
+  return aliases.has(input) || aliases.has(normalizeCredential(input));
+};
+
+const resolveLoginRole = (account: AccountCredential, requestedRole: string) => {
+  if (requestedRole === 'auto') return account.defaultRole;
+  if (account.roles.includes(requestedRole)) return requestedRole;
+  return account.defaultRole;
+};
+
+const AUTH_STORAGE_VERSION = 'v2';
+const AUTH_VERSION_KEY = 'auth_storage_version';
+
+const cleanLegacyAuthStorage = () => {
+  if (typeof window === 'undefined') return;
+  const currentVersion = localStorage.getItem(AUTH_VERSION_KEY);
+  if (currentVersion !== AUTH_STORAGE_VERSION) {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('login_role');
+    localStorage.removeItem('login_time');
+    localStorage.setItem(AUTH_VERSION_KEY, AUTH_STORAGE_VERSION);
+  }
+  try {
+    const raw = localStorage.getItem('user');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object' || !parsed.id || !parsed.name) {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('login_role');
+        localStorage.removeItem('login_time');
+      }
+    }
+    const token = localStorage.getItem('auth_token');
+    if (token && !token.includes('.')) {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('login_role');
+      localStorage.removeItem('login_time');
+    }
+  } catch {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('login_role');
+    localStorage.removeItem('login_time');
+  }
+};
+
+if (typeof window !== 'undefined') {
+  cleanLegacyAuthStorage();
+}
+
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   token: null,
   loginRole: null,
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false,
   lastLoginResult: null,
   loginLogs: [],
   failAttempts: {},
@@ -165,7 +238,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         return result;
       }
 
-      if (account.password !== password) {
+      if (!passwordMatchesDemoAccount(account, password)) {
         const remaining = 5 - attempts - 1;
         const errCode: LoginErrorCode = 'PASSWORD_ERROR';
         const result: LoginResult = {
@@ -188,29 +261,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       }
 
       const userRole = account.user.userType;
-      const effectiveRole = role === 'auto' ? account.defaultRole : role;
+      const effectiveRole = resolveLoginRole(account, role);
 
-      if (role !== 'auto' && !account.roles.includes(role)) {
-        const errCode: LoginErrorCode = 'NO_ROLE_PERMISSION';
-        const result: LoginResult = {
-          success: false,
-          errorCode: errCode,
-          errorInfo: {
-            ...loginErrorMessages[errCode],
-            detail: `账号「${username}」可登录角色为「${account.roles.map(r => roleConfig[r]?.label || r).join('、')}」，不包含「${roleConfig[role]?.label || role}」入口。请切换到正确的角色Tab后重新登录。`,
-          },
-          availableRoles: account.roles,
-        };
-        log.errorCode = errCode;
-        set({
-          isLoading: false,
-          lastLoginResult: result,
-          loginLogs: [...get().loginLogs, log],
-        });
-        return result;
-      }
-
-      const token = generateToken(account.user.id, userRole);
+      const token = generateToken(account.user.id, effectiveRole || userRole);
       const redirectRoute = roleConfig[effectiveRole]?.defaultRoute || roleConfig[userRole]?.defaultRoute || '/';
 
       localStorage.setItem('auth_token', token);
@@ -225,6 +278,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         user: account.user,
         token,
         redirectRoute,
+        loginRole: effectiveRole,
       };
 
       set({
