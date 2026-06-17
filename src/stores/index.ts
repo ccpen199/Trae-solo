@@ -46,6 +46,7 @@ import {
 
 interface AppState {
   currentUser: User;
+  isLoggedIn: boolean;
   owners: Owner[];
   motions: Motion[];
   financeAccounts: FinanceAccount[];
@@ -70,6 +71,9 @@ interface AppState {
   auditGenerateProgress: number;
   auditGenerateStep: number;
 
+  login: (user: Partial<User>) => void;
+  logout: () => void;
+  switchRole: (role: User['role'], name: string, userId: string) => void;
   setSidebarCollapsed: (collapsed: boolean) => void;
 
   updateMotion: (id: string, updates: Partial<Motion>) => void;
@@ -96,6 +100,7 @@ interface AppState {
   startOcrRecognition: (id: string) => void;
 
   generateAuditReport: () => Promise<void>;
+  acceptAuditReport: () => void;
 
   updateSwapItem: (id: string, updates: Partial<SwapItem>) => void;
   addSwapItem: (item: SwapItem) => void;
@@ -108,12 +113,17 @@ interface AppState {
     id: string,
     updates: Partial<StreetInstruction>
   ) => void;
+
+  toast: { type: "success" | "error" | "info" | null; message: string };
+  showToast: (type: "success" | "error" | "info", message: string) => void;
+  hideToast: () => void;
 }
 
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
       currentUser: mockCurrentUser,
+      isLoggedIn: false,
       owners: mockOwners,
       motions: mockMotions,
       financeAccounts: mockFinanceAccounts,
@@ -137,6 +147,40 @@ export const useAppStore = create<AppState>()(
       isGeneratingAuditReport: false,
       auditGenerateProgress: 0,
       auditGenerateStep: 0,
+      toast: { type: null, message: "" },
+
+      login: (user) =>
+        set({
+          isLoggedIn: true,
+          currentUser: { ...mockCurrentUser, ...user },
+        }),
+
+      logout: () => {
+        localStorage.removeItem("community-gov-store");
+        set({
+          isLoggedIn: false,
+          currentUser: mockCurrentUser,
+          sidebarCollapsed: false,
+          toast: { type: null, message: "" },
+        });
+      },
+
+      switchRole: (role, name, userId) =>
+        set((state) => ({
+          currentUser: {
+            ...state.currentUser,
+            role,
+            name,
+            id: userId,
+            avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${userId}`,
+          },
+        })),
+
+      showToast: (type, message) => {
+        set({ toast: { type, message } });
+        setTimeout(() => set({ toast: { type: null, message: "" } }), 3000);
+      },
+      hideToast: () => set({ toast: { type: null, message: "" } }),
 
       setSidebarCollapsed: (collapsed) =>
         set({ sidebarCollapsed: collapsed }),
@@ -235,6 +279,15 @@ export const useAppStore = create<AppState>()(
         set({ isGeneratingAuditReport: false });
       },
 
+      acceptAuditReport: () =>
+        set((state) => ({
+          auditReport: {
+            ...state.auditReport,
+            status: "final",
+            auditor: state.currentUser.name,
+          },
+        })),
+
       updateSwapItem: (id, updates) =>
         set((state) => ({
           swapItems: state.swapItems.map((item) =>
@@ -271,6 +324,8 @@ export const useAppStore = create<AppState>()(
     {
       name: "community-gov-store",
       partialize: (state) => ({
+        isLoggedIn: state.isLoggedIn,
+        currentUser: state.currentUser,
         motions: state.motions,
         invoices: state.invoices,
         sealApplications: state.sealApplications,

@@ -1,18 +1,27 @@
 import { useState, useMemo } from "react";
 import { motion as m, AnimatePresence } from "framer-motion";
 import {
-  FileText,
   ChevronRight,
   ChevronDown,
-  Eye,
-  ArrowRight,
+  Folder,
+  FileText,
   Receipt,
   BookOpen,
   BarChart3,
-  FileCheck,
-  Clock,
+  PieChart,
+  Check,
+  X,
+  FileSpreadsheet,
   User,
-  Paperclip,
+  Clock,
+  Link2,
+  ArrowRight,
+  Wallet,
+  Building2,
+  Layers,
+  Eye,
+  CheckCircle2,
+  CircleDot,
 } from "lucide-react";
 import { useAppStore } from "@/stores";
 import {
@@ -22,261 +31,787 @@ import {
   CardTitle,
   Button,
   Badge,
-  Modal,
-  DataTable,
-  type Column,
+  Tabs,
+  TabPanel,
 } from "@/components/ui";
 import { cn, formatCurrency, formatDate } from "@/utils";
-import type { Voucher, FinanceAccount, VoucherStatus } from "@/types";
+import type { FinanceAccount, Voucher } from "@/types";
 
-const statusMap: Record<VoucherStatus, { label: string; variant: "success" | "warning" }> = {
-  posted: { label: "已记账", variant: "success" },
-  pending_review: { label: "待审核", variant: "warning" },
+interface AccountNode {
+  id: string;
+  name: string;
+  code: string;
+  type: "income" | "expense";
+  children?: AccountNode[];
+}
+
+interface TraceNode {
+  key: string;
+  title: string;
+  icon: typeof FileText;
+  status: "done" | "current" | "pending";
+  time: string;
+  operator: string;
+  description: string;
+  link?: { label: string; onClick: () => void };
+  amount?: string;
+}
+
+interface Toast {
+  show: boolean;
+  type: "success" | "error" | "info";
+  message: string;
+}
+
+const categoryLabels: Record<"internal" | "external", Record<string, string>> = {
+  internal: {
+    asset: "资产类",
+    liability: "负债类",
+    equity: "权益类",
+    income: "收入类",
+    expense: "费用类",
+  },
+  external: {
+    asset: "资产类",
+    liability: "负债类",
+    equity: "损益类",
+    income: "收入类",
+    expense: "成本费用类",
+  },
 };
 
-const traceSteps = [
-  { key: "invoice", label: "原始票据", icon: Receipt },
-  { key: "voucher", label: "记账凭证", icon: FileText },
-  { key: "book", label: "会计账簿", icon: BookOpen },
-  { key: "report", label: "财务报表", icon: BarChart3 },
-];
-
 export default function VoucherTrace() {
-  const { vouchers, financeAccounts, invoices } = useAppStore();
+  const { vouchers, invoices, financeAccounts, currentUser, showToast } = useAppStore();
+
   const [bookType, setBookType] = useState<"internal" | "external">("internal");
+  const [year, setYear] = useState("2025");
+  const [period, setPeriod] = useState("6");
+  const [expandedCategories, setExpandedCategories] = useState<string[]>(["income", "expense"]);
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>(null);
   const [selectedVoucher, setSelectedVoucher] = useState<Voucher | null>(null);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [expandedAccounts, setExpandedAccounts] = useState<Set<string>>(new Set(["acc001", "acc006"]));
+  const [toast, setToast] = useState<Toast>({ show: false, type: "success", message: "" });
+
+  const showMessage = (type: Toast["type"], message: string) => {
+    setToast({ show: true, type, message });
+    setTimeout(() => setToast({ show: false, type: "success", message: "" }), 3000);
+    showToast(type, message);
+  };
+
+  const accountTree = useMemo(() => {
+    const buildCategoryNode = (
+      categoryKey: string,
+      categoryName: string,
+      accounts: typeof financeAccounts
+    ): AccountNode => ({
+      id: `cat-${categoryKey}`,
+      name: categoryName,
+      code: categoryKey.toUpperCase(),
+      type: accounts[0]?.type || "income",
+      children: accounts.map((a) => ({
+        id: a.id,
+        name: a.name,
+        code: a.code,
+        type: a.type,
+        children: a.children?.map((c) => ({
+          id: c.id,
+          name: c.name,
+          code: c.code,
+          type: c.type,
+          children: c.children?.map((gc) => ({
+            id: gc.id,
+            name: gc.name,
+            code: gc.code,
+            type: gc.type,
+          })),
+        })),
+      })),
+    });
+
+    const incomeAccounts = financeAccounts.filter((a) => a.type === "income");
+    const expenseAccounts = financeAccounts.filter((a) => a.type === "expense");
+
+    return [
+      buildCategoryNode("asset", categoryLabels[bookType].asset, [
+        {
+          id: "asset-1",
+          name: "银行存款",
+          code: "1001",
+          parentId: null,
+          type: "income",
+          budget: 0,
+          actual: 0,
+        },
+      ]),
+      buildCategoryNode("liability", categoryLabels[bookType].liability, []),
+      buildCategoryNode("equity", categoryLabels[bookType].equity, []),
+      buildCategoryNode("income", categoryLabels[bookType].income, incomeAccounts),
+      buildCategoryNode("expense", categoryLabels[bookType].expense, expenseAccounts),
+    ];
+  }, [financeAccounts, bookType]);
 
   const filteredVouchers = useMemo(() => {
-    return vouchers.filter((v) => {
-      if (v.bookType !== bookType) return false;
-      if (selectedAccountId) return v.entries.some((e) => e.accountId === selectedAccountId);
-      return true;
-    });
-  }, [vouchers, bookType, selectedAccountId]);
+    let result = vouchers.filter((v) => v.bookType === bookType);
+    if (year) {
+      result = result.filter((v) => v.date.startsWith(year));
+    }
+    if (period) {
+      const periodStr = `-${String(period).padStart(2, "0")}-`;
+      result = result.filter((v) => v.date.includes(periodStr));
+    }
+    if (selectedAccountId && !selectedAccountId.startsWith("cat-")) {
+      result = result.filter((v) =>
+        v.entries.some((e) => e.accountId === selectedAccountId)
+      );
+    }
+    return result.sort((a, b) => a.date.localeCompare(b.date));
+  }, [vouchers, bookType, year, period, selectedAccountId]);
 
-  const toggleAccount = (id: string) => {
-    setExpandedAccounts((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
+  const traceNodes = useMemo<TraceNode[] | null>(() => {
+    if (!selectedVoucher) return null;
+    const relatedInvoice = invoices.find((i) =>
+      selectedVoucher.relatedInvoiceIds.includes(i.id)
+    );
+    const lastAudit = selectedVoucher.auditRecords[selectedVoucher.auditRecords.length - 1];
+    const postedAudit = selectedVoucher.auditRecords.find((r) =>
+      r.action.includes("审核") || r.action.includes("制单")
+    );
+
+    return [
+      {
+        key: "invoice",
+        title: "原始票据",
+        icon: Receipt,
+        status: relatedInvoice ? "done" : "pending",
+        time: relatedInvoice?.date || selectedVoucher.date,
+        operator: relatedInvoice?.vendor || "原始凭证",
+        description: relatedInvoice
+          ? `${relatedInvoice.vendor} · ${formatCurrency(relatedInvoice.amount)}`
+          : "关联原始凭证",
+        amount: relatedInvoice ? formatCurrency(relatedInvoice.amount) : undefined,
+        link: relatedInvoice
+          ? {
+              label: "查看票据",
+              onClick: () => showMessage("info", `跳转票据详情: ${relatedInvoice.invoiceNo}`),
+            }
+          : undefined,
+      },
+      {
+        key: "voucher",
+        title: "记账凭证",
+        icon: FileSpreadsheet,
+        status: "current",
+        time: selectedVoucher.date,
+        operator: postedAudit?.operatorName || currentUser.name,
+        description: `${selectedVoucher.summary} · 凭证号 ${selectedVoucher.voucherNo}`,
+        amount: formatCurrency(selectedVoucher.totalDebit),
+      },
+      {
+        key: "ledger",
+        title: "明细账登记",
+        icon: BookOpen,
+        status: selectedVoucher.status === "posted" ? "done" : "pending",
+        time: selectedVoucher.date,
+        operator: selectedVoucher.auditRecords[0]?.operatorName || "-",
+        description:
+          selectedVoucher.status === "posted"
+            ? `已登记 ${selectedVoucher.entries.length} 个会计科目`
+            : "待记账",
+      },
+      {
+        key: "general",
+        title: "总账汇总",
+        icon: Layers,
+        status: selectedVoucher.status === "posted" ? "done" : "pending",
+        time: selectedVoucher.date,
+        operator: "系统自动",
+        description:
+          selectedVoucher.status === "posted"
+            ? "已汇总至总账科目余额表"
+            : "等待汇总",
+      },
+      {
+        key: "report",
+        title: "财务报表",
+        icon: BarChart3,
+        status: selectedVoucher.status === "posted" ? "done" : "pending",
+        time: `${year}-${String(period).padStart(2, "0")}-30`,
+        operator: "系统生成",
+        description: "资产负债表 / 利润表 / 现金流量表",
+        link: {
+          label: "查看报表",
+          onClick: () => showMessage("info", `查看 ${year}年${period}月 财务报表`),
+        },
+      },
+    ];
+  }, [selectedVoucher, invoices, currentUser, year, period, showMessage]);
+
+  const toggleCategory = (id: string) => {
+    setExpandedCategories((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
   };
 
-  const handleViewDetail = (voucher: Voucher) => {
-    setSelectedVoucher(voucher);
-    setIsDetailOpen(true);
-  };
+  const renderNode = (node: AccountNode, level: number = 0): React.ReactNode => {
+    const hasChildren = node.children && node.children.length > 0;
+    const isExpanded =
+      node.id.startsWith("cat-") &&
+      expandedCategories.includes(node.id.replace("cat-", ""));
+    const isSelected = selectedAccountId === node.id;
+    const isCategory = node.id.startsWith("cat-");
 
-  const relatedInvoices = useMemo(() => {
-    if (!selectedVoucher) return [];
-    return invoices.filter((inv) => selectedVoucher.relatedInvoiceIds.includes(inv.id));
-  }, [selectedVoucher, invoices]);
-
-  const columns: Column<Voucher>[] = [
-    { key: "voucherNo", title: "凭证号", dataIndex: "voucherNo", width: 140,
-      render: (_, r) => (
-        <button onClick={(e) => { e.stopPropagation(); handleViewDetail(r); }} className="text-primary-600 hover:text-primary-700 font-medium text-sm hover:underline">
-          {r.voucherNo}
-        </button>
-      ),
-    },
-    { key: "date", title: "日期", dataIndex: "date", width: 110 },
-    { key: "summary", title: "摘要", dataIndex: "summary", ellipsis: true },
-    { key: "debit", title: "借方金额", dataIndex: "totalDebit", align: "right", width: 120,
-      render: (v) => <span className="text-emerald-600 font-medium">{formatCurrency(v as number)}</span>,
-    },
-    { key: "credit", title: "贷方金额", dataIndex: "totalCredit", align: "right", width: 120,
-      render: (v) => <span className="text-rose-600 font-medium">{formatCurrency(v as number)}</span>,
-    },
-    { key: "status", title: "状态", dataIndex: "status", width: 90, align: "center",
-      render: (v) => { const info = statusMap[v as VoucherStatus]; return <Badge variant={info.variant} size="sm">{info.label}</Badge>; },
-    },
-    { key: "action", title: "操作", dataIndex: "id", width: 80, align: "center",
-      render: (_, r) => (
-        <Button variant="ghost" size="sm" leftIcon={<Eye className="w-3.5 h-3.5" />} onClick={(e) => { e.stopPropagation(); handleViewDetail(r); }}>查看</Button>
-      ),
-    },
-  ];
-
-  const renderAccountTree = (accounts: FinanceAccount[], level = 0) => {
-    return accounts.map((acc) => {
-      const hasChildren = acc.children && acc.children.length > 0;
-      const isExpanded = expandedAccounts.has(acc.id);
-      const isSelected = selectedAccountId === acc.id;
-      return (
-        <div key={acc.id}>
-          <div
-            className={cn(
-              "flex items-center gap-1 px-2 py-1.5 rounded-md cursor-pointer text-sm",
-              "hover:bg-primary-50 transition-colors",
-              isSelected && "bg-primary-100 text-primary-700 font-medium"
-            )}
-            style={{ paddingLeft: level * 16 + 8 }}
-            onClick={() => {
-              if (hasChildren) toggleAccount(acc.id);
-              setSelectedAccountId(isSelected ? null : acc.id);
-            }}
-          >
-            {hasChildren ? (isExpanded ? <ChevronDown className="w-4 h-4 text-slate-400" /> : <ChevronRight className="w-4 h-4 text-slate-400" />) : <span className="w-4" />}
-            <span className="truncate">{acc.name}</span>
-          </div>
-          {hasChildren && isExpanded && (
-            <AnimatePresence>
-              <m.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}>
-                {renderAccountTree(acc.children!, level + 1)}
-              </m.div>
-            </AnimatePresence>
+    return (
+      <div key={node.id}>
+        <m.div
+          whileHover={{ backgroundColor: "rgba(59, 130, 246, 0.05)" }}
+          onClick={() => {
+            if (isCategory) {
+              toggleCategory(node.id.replace("cat-", ""));
+            } else {
+              setSelectedAccountId(node.id);
+            }
+          }}
+          className={cn(
+            "flex items-center gap-1.5 py-1.5 px-2 rounded-lg cursor-pointer transition-all text-sm",
+            isSelected && !isCategory && "bg-primary-50 text-primary-700 font-medium",
+            !isSelected && !isCategory && "text-slate-600 hover:text-slate-800",
+            isCategory && "text-slate-700 font-semibold"
           )}
+          style={{ paddingLeft: `${8 + level * 16}px` }}
+        >
+          {hasChildren || isCategory ? (
+            <span className="w-4 h-4 flex items-center justify-center text-slate-400">
+              {isExpanded || (!isCategory && hasChildren) ? (
+                <ChevronDown className="w-3.5 h-3.5" />
+              ) : (
+                <ChevronRight className="w-3.5 h-3.5" />
+              )}
+            </span>
+          ) : (
+            <span className="w-4" />
+          )}
+          {isCategory ? (
+            <Folder
+              className={cn(
+                "w-4 h-4 shrink-0",
+                isExpanded ? "text-amber-500" : "text-amber-400"
+              )}
+            />
+          ) : (
+            <FileText className="w-4 h-4 shrink-0 text-primary-400" />
+          )}
+          <span className="truncate flex-1">{node.name}</span>
+          {!isCategory && (
+            <span className="text-xs text-slate-400 shrink-0 font-mono">
+              {node.code}
+            </span>
+          )}
+        </m.div>
+        {(isExpanded || (!isCategory && hasChildren)) && node.children && (
+          <AnimatePresence initial={false}>
+            <m.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              {node.children.map((child) => renderNode(child, level + 1))}
+            </m.div>
+          </AnimatePresence>
+        )}
+      </div>
+    );
+  };
+
+  const renderStatusIcon = (status: TraceNode["status"]) => {
+    if (status === "done") {
+      return (
+        <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-200">
+          <Check className="w-5 h-5" />
         </div>
       );
-    });
+    }
+    if (status === "current") {
+      return (
+        <div className="w-10 h-10 rounded-full bg-primary-500 text-white flex items-center justify-center shadow-lg shadow-primary-200 ring-4 ring-primary-100 animate-pulse">
+          <CircleDot className="w-5 h-5" />
+        </div>
+      );
+    }
+    return (
+      <div className="w-10 h-10 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center">
+        <Clock className="w-5 h-5" />
+      </div>
+    );
   };
 
+  const years = ["2025", "2024", "2023"];
+  const periods = Array.from({ length: 12 }, (_, i) => String(i + 1));
+
   return (
-    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="space-y-6">
+    <m.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="space-y-5 relative"
+    >
+      <AnimatePresence>
+        {toast.show && (
+          <m.div
+            initial={{ opacity: 0, y: -20, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -20, x: "-50%" }}
+            className={cn(
+              "fixed top-6 left-1/2 z-50 px-5 py-3 rounded-xl shadow-lg flex items-center gap-3",
+              toast.type === "success" && "bg-emerald-500 text-white",
+              toast.type === "error" && "bg-rose-500 text-white",
+              toast.type === "info" && "bg-primary-500 text-white"
+            )}
+          >
+            {toast.type === "success" && <Check className="w-5 h-5" />}
+            {toast.type === "error" && <X className="w-5 h-5" />}
+            {toast.type === "info" && <Eye className="w-5 h-5" />}
+            <span className="font-medium">{toast.message}</span>
+          </m.div>
+        )}
+      </AnimatePresence>
+
       <Card>
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <FileText className="w-5 h-5 text-primary-600" />
-              凭证追溯
-            </CardTitle>
+        <CardContent className="p-4">
+          <div className="flex flex-wrap items-center gap-4">
+            <Tabs
+              tabs={[
+                {
+                  key: "internal",
+                  label: "内账",
+                  icon: <Wallet className="w-4 h-4" />,
+                },
+                {
+                  key: "external",
+                  label: "外账",
+                  icon: <Building2 className="w-4 h-4" />,
+                },
+              ]}
+              activeTab={bookType}
+              onChange={(k) => {
+                setBookType(k as typeof bookType);
+                setSelectedVoucher(null);
+                setSelectedAccountId(null);
+              }}
+              variant="pills"
+              className="max-w-xs"
+            >
+              <TabPanel tabKey="internal" activeKey={bookType}>
+                <div />
+              </TabPanel>
+              <TabPanel tabKey="external" activeKey={bookType}>
+                <div />
+              </TabPanel>
+            </Tabs>
+            <div className="h-6 w-px bg-slate-200" />
             <div className="flex items-center gap-2">
-              <Button size="sm" variant={bookType === "internal" ? "primary" : "secondary"} onClick={() => setBookType("internal")}>内账</Button>
-              <Button size="sm" variant={bookType === "external" ? "primary" : "secondary"} onClick={() => setBookType("external")}>外账</Button>
+              <PieChart className="w-4 h-4 text-slate-400" />
+              <select
+                value={year}
+                onChange={(e) => {
+                  setYear(e.target.value);
+                  setSelectedVoucher(null);
+                }}
+                className="px-3 py-1.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              >
+                {years.map((y) => (
+                  <option key={y} value={y}>
+                    {y}年度
+                  </option>
+                ))}
+              </select>
+              <select
+                value={period}
+                onChange={(e) => {
+                  setPeriod(e.target.value);
+                  setSelectedVoucher(null);
+                }}
+                className="px-3 py-1.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              >
+                {periods.map((p) => (
+                  <option key={p} value={p}>
+                    {p}月
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="ml-auto flex items-center gap-3 text-sm">
+              <span className="text-slate-500">
+                共 <span className="font-semibold text-slate-700">{filteredVouchers.length}</span> 张凭证
+              </span>
+              <Badge variant="secondary" size="sm">
+                {bookType === "internal" ? "内部管理账" : "对外报送账"}
+              </Badge>
             </div>
           </div>
-        </CardHeader>
+        </CardContent>
       </Card>
 
-      <div className="grid grid-cols-12 gap-6">
-        <Card className="col-span-3">
-          <CardHeader className="pb-3"><CardTitle className="text-sm">科目导航</CardTitle></CardHeader>
-          <CardContent className="pt-0"><div className="space-y-0.5">{renderAccountTree(financeAccounts)}</div></CardContent>
-        </Card>
-
-        <Card className="col-span-9">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm">
-              凭证列表
-              <span className="text-slate-400 font-normal ml-2">共 {filteredVouchers.length} 条</span>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <Card className="lg:col-span-3 overflow-hidden">
+          <CardHeader className="py-3 px-4 pb-2">
+            <CardTitle className="text-base flex items-center gap-2">
+              <Folder className="w-4 h-4 text-primary-600" />
+              科目树
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-0">
-            <DataTable columns={columns} data={filteredVouchers} rowKey="id" onRowClick={handleViewDetail} showSearch searchPlaceholder="搜索凭证号、摘要..." emptyText="暂无凭证数据" />
-          </CardContent>
-        </Card>
-      </div>
-
-      <Modal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} title="凭证详情" size="xl">
-        <AnimatePresence mode="wait">
-          {selectedVoucher && (
-            <m.div key="detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div><span className="text-sm text-slate-500">凭证号</span><p className="font-medium text-slate-800">{selectedVoucher.voucherNo}</p></div>
-                <div><span className="text-sm text-slate-500">日期</span><p className="font-medium text-slate-800">{formatDate(selectedVoucher.date)}</p></div>
-                <div><span className="text-sm text-slate-500">摘要</span><p className="font-medium text-slate-800">{selectedVoucher.summary}</p></div>
-                <div>
-                  <span className="text-sm text-slate-500">状态</span>
-                  <p><Badge variant={statusMap[selectedVoucher.status].variant} size="sm">{statusMap[selectedVoucher.status].label}</Badge></p>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-semibold text-slate-700 mb-3">会计分录</h4>
-                <div className="border border-slate-200 rounded-lg overflow-hidden">
-                  <table className="w-full text-sm">
-                    <thead className="bg-slate-50">
-                      <tr className="text-slate-600">
-                        <th className="text-left px-4 py-2">科目编码</th>
-                        <th className="text-left px-4 py-2">科目名称</th>
-                        <th className="text-right px-4 py-2">借方金额</th>
-                        <th className="text-right px-4 py-2">贷方金额</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {selectedVoucher.entries.map((entry) => (
-                        <tr key={entry.id}>
-                          <td className="px-4 py-2 text-slate-500">{entry.accountCode}</td>
-                          <td className="px-4 py-2">{entry.accountName}</td>
-                          <td className="px-4 py-2 text-right text-emerald-600">{entry.debit > 0 ? formatCurrency(entry.debit) : "-"}</td>
-                          <td className="px-4 py-2 text-right text-rose-600">{entry.credit > 0 ? formatCurrency(entry.credit) : "-"}</td>
-                        </tr>
-                      ))}
-                      <tr className="bg-slate-50 font-medium">
-                        <td className="px-4 py-2" colSpan={2}>合计</td>
-                        <td className="px-4 py-2 text-right text-emerald-600">{formatCurrency(selectedVoucher.totalDebit)}</td>
-                        <td className="px-4 py-2 text-right text-rose-600">{formatCurrency(selectedVoucher.totalCredit)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {relatedInvoices.length > 0 && (
-                <div>
-                  <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2"><Paperclip className="w-4 h-4" />关联票据</h4>
-                  <div className="grid grid-cols-2 gap-3">
-                    {relatedInvoices.map((inv) => (
-                      <m.div key={inv.id} whileHover={{ scale: 1.02 }} className="flex items-center gap-3 p-3 border border-slate-200 rounded-lg bg-slate-50">
-                        <img src={inv.imageUrl} alt={inv.invoiceNo} className="w-12 h-12 object-cover rounded" />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-slate-700 truncate">{inv.vendor}</p>
-                          <p className="text-xs text-slate-500">{formatCurrency(inv.amount)}</p>
-                        </div>
-                      </m.div>
-                    ))}
-                  </div>
-                </div>
+          <div className="px-2 pb-4 max-h-[calc(100vh-360px)] overflow-y-auto">
+            <div
+              onClick={() => setSelectedAccountId(null)}
+              className={cn(
+                "flex items-center gap-2 py-2 px-3 mb-2 rounded-lg cursor-pointer transition-all text-sm font-medium",
+                !selectedAccountId
+                  ? "bg-primary-50 text-primary-700"
+                  : "text-slate-500 hover:bg-slate-50"
               )}
+            >
+              <Layers className="w-4 h-4" />
+              全部科目
+              <span className="ml-auto text-xs text-slate-400">
+                {vouchers.filter((v) => v.bookType === bookType).length}
+              </span>
+            </div>
+            {accountTree.map((node) => renderNode(node))}
+          </div>
+        </Card>
 
-              <div>
-                <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2"><Clock className="w-4 h-4" />审核记录</h4>
-                <div className="space-y-2">
-                  {selectedVoucher.auditRecords.map((record, idx) => (
-                    <m.div key={record.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: idx * 0.05 }} className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
-                      <div className="p-1.5 rounded-full bg-primary-100 text-primary-600"><User className="w-4 h-4" /></div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-slate-700">{record.operatorName}</span>
-                          <span className="text-xs text-primary-600 bg-primary-50 px-2 py-0.5 rounded">{record.action}</span>
+        <Card
+          className={cn(
+            "lg:col-span-4 overflow-hidden",
+            !selectedVoucher ? "lg:col-span-9" : ""
+          )}
+        >
+          <CardHeader className="py-3 px-4 pb-2">
+            <CardTitle className="text-base flex items-center gap-2">
+              <FileSpreadsheet className="w-4 h-4 text-primary-600" />
+              凭证列表
+              <Badge variant="secondary" size="sm">
+                {filteredVouchers.length}
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          <div className="max-h-[calc(100vh-360px)] overflow-y-auto">
+            {filteredVouchers.length === 0 ? (
+              <div className="p-8 text-center text-slate-400">
+                <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>该条件下暂无凭证</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-slate-100">
+                {filteredVouchers.map((v, idx) => {
+                  const isSelected = selectedVoucher?.id === v.id;
+                  const creatorName =
+                    v.auditRecords.find((r) => r.action === "制单")
+                      ?.operatorName || currentUser.name;
+                  const reviewerName = v.reviewedBy
+                    ? v.auditRecords.find((r) => r.action.includes("审核"))
+                        ?.operatorName || "已审核"
+                    : null;
+                  return (
+                    <m.div
+                      key={v.id}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.02 }}
+                      onClick={() => setSelectedVoucher(v)}
+                      className={cn(
+                        "p-3 cursor-pointer transition-all",
+                        isSelected
+                          ? "bg-primary-50/70 border-l-4 border-l-primary-500"
+                          : "hover:bg-slate-50"
+                      )}
+                    >
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-mono font-semibold text-primary-600 bg-primary-50 px-2 py-0.5 rounded">
+                              {v.voucherNo}
+                            </span>
+                            <Badge
+                              variant={
+                                v.status === "posted" ? "success" : "warning"
+                              }
+                              size="sm"
+                              dot
+                            >
+                              {v.status === "posted" ? "已记账" : "待审核"}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-slate-700 font-medium truncate">
+                            {v.summary}
+                          </p>
                         </div>
-                        <p className="text-xs text-slate-500 mt-0.5">{record.time}{record.remark && ` · ${record.remark}`}</p>
+                        <div className="text-right shrink-0">
+                          <div
+                            className={cn(
+                              "text-sm font-bold",
+                              v.type === "income"
+                                ? "text-emerald-600"
+                                : v.type === "expense"
+                                ? "text-rose-600"
+                                : "text-slate-700"
+                            )}
+                          >
+                            {v.type === "income"
+                              ? "+"
+                              : v.type === "expense"
+                              ? "-"
+                              : "="}
+                            {formatCurrency(v.totalDebit)}
+                          </div>
+                          <p className="text-xs text-slate-400 mt-0.5">
+                            {formatDate(v.date)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
+                        <span className="flex items-center gap-1">
+                          <User className="w-3 h-3" />
+                          制单: {creatorName}
+                        </span>
+                        {reviewerName && (
+                          <span className="flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                            审核: {reviewerName}
+                          </span>
+                        )}
+                        <span className="flex items-center gap-1">
+                          <FileText className="w-3 h-3" />
+                          附件: {v.relatedInvoiceIds.length + v.attachments.length}
+                        </span>
+                        <Button
+                          size="sm"
+                          variant={isSelected ? "primary" : "outline"}
+                          className="ml-auto !py-1"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedVoucher(v);
+                          }}
+                        >
+                          <ArrowRight className="w-3 h-3" />
+                          追溯链路
+                        </Button>
                       </div>
                     </m.div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
+            )}
+          </div>
+        </Card>
 
-              <div>
-                <h4 className="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2"><FileCheck className="w-4 h-4" />追溯链路</h4>
-                <div className="flex items-center justify-between px-4">
-                  {traceSteps.map((step, idx) => {
-                    const Icon = step.icon;
-                    return (
-                      <div key={step.key} className="flex items-center flex-1">
-                        <div className="flex flex-col items-center">
-                          <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center"><Icon className="w-6 h-6" /></div>
-                          <span className="text-xs text-slate-600 mt-2">{step.label}</span>
-                        </div>
-                        {idx < traceSteps.length - 1 && (
-                          <div className="flex-1 flex items-center px-2">
-                            <div className="flex-1 h-0.5 bg-gradient-to-r from-primary-300 to-primary-500 rounded" />
-                            <ArrowRight className="w-4 h-4 text-primary-500 -ml-1" />
+        <AnimatePresence mode="wait">
+          {selectedVoucher && traceNodes && (
+            <m.div
+              key="trace"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 30 }}
+              transition={{ duration: 0.3 }}
+              className="lg:col-span-5"
+            >
+              <Card className="h-full overflow-hidden">
+                <CardHeader className="py-3 px-4 pb-2 flex flex-row items-center justify-between">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Link2 className="w-4 h-4 text-primary-600" />
+                    追溯链路视图
+                  </CardTitle>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSelectedVoucher(null)}
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
+                </CardHeader>
+                <div className="px-4 pb-4 max-h-[calc(100vh-400px)] overflow-y-auto">
+                  <div className="mb-4 p-3 bg-gradient-to-r from-primary-50 to-transparent rounded-lg border border-primary-100">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge variant="primary" size="sm">
+                        {selectedVoucher.voucherNo}
+                      </Badge>
+                      <Badge
+                        variant={
+                          selectedVoucher.type === "income"
+                            ? "success"
+                            : selectedVoucher.type === "expense"
+                            ? "danger"
+                            : "secondary"
+                        }
+                        size="sm"
+                      >
+                        {selectedVoucher.type === "income"
+                          ? "收入凭证"
+                          : selectedVoucher.type === "expense"
+                          ? "支出凭证"
+                          : "转账凭证"}
+                      </Badge>
+                    </div>
+                    <p className="text-sm font-medium text-slate-700">
+                      {selectedVoucher.summary}
+                    </p>
+                    <div className="mt-2 grid grid-cols-2 gap-2 text-xs text-slate-500">
+                      <span>借方合计: {formatCurrency(selectedVoucher.totalDebit)}</span>
+                      <span>贷方合计: {formatCurrency(selectedVoucher.totalCredit)}</span>
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    {traceNodes.map((node, i) => {
+                      const Icon = node.icon;
+                      const isLast = i === traceNodes.length - 1;
+                      return (
+                        <m.div
+                          key={node.key}
+                          initial={{ opacity: 0, y: 15 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.08 }}
+                          className="relative flex gap-4 pb-5"
+                        >
+                          {!isLast && (
+                            <div
+                              className={cn(
+                                "absolute left-5 top-12 bottom-0 w-0.5",
+                                node.status === "done"
+                                  ? "bg-emerald-300"
+                                  : node.status === "current"
+                                  ? "bg-gradient-to-b from-primary-300 to-slate-200"
+                                  : "bg-slate-200"
+                              )}
+                            />
+                          )}
+                          {renderStatusIcon(node.status)}
+                          <div className="flex-1 min-w-0">
+                            <div
+                              className={cn(
+                                "rounded-xl p-3.5 border transition-all",
+                                node.status === "current"
+                                  ? "bg-primary-50/50 border-primary-200 shadow-sm"
+                                  : node.status === "done"
+                                  ? "bg-emerald-50/40 border-emerald-100"
+                                  : "bg-slate-50/60 border-slate-100"
+                              )}
+                            >
+                              <div className="flex items-start justify-between gap-2 mb-1">
+                                <h4
+                                  className={cn(
+                                    "font-semibold flex items-center gap-2",
+                                    node.status === "current"
+                                      ? "text-primary-700"
+                                      : node.status === "done"
+                                      ? "text-emerald-700"
+                                      : "text-slate-500"
+                                  )}
+                                >
+                                  <Icon className="w-4 h-4" />
+                                  {node.title}
+                                </h4>
+                                {node.amount && (
+                                  <span
+                                    className={cn(
+                                      "text-sm font-bold shrink-0",
+                                      node.status === "current"
+                                        ? "text-primary-700"
+                                        : "text-slate-700"
+                                    )}
+                                  >
+                                    {node.amount}
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-sm text-slate-600 mb-2">
+                                {node.description}
+                              </p>
+                              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  {formatDate(node.time)}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <User className="w-3 h-3" />
+                                  {node.operator}
+                                </span>
+                                {node.link && (
+                                  <button
+                                    onClick={node.link.onClick}
+                                    className="text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 underline underline-offset-2 decoration-primary-300"
+                                  >
+                                    <Eye className="w-3 h-3" />
+                                    {node.link.label}
+                                  </button>
+                                )}
+                              </div>
+                            </div>
                           </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                        </m.div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="mt-2 pt-3 border-t border-slate-100">
+                    <h5 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                      会计分录
+                    </h5>
+                    <div className="border border-slate-200 rounded-lg overflow-hidden">
+                      <table className="w-full text-xs">
+                        <thead className="bg-slate-50">
+                          <tr>
+                            <th className="px-3 py-2 text-left font-medium text-slate-600">
+                              科目
+                            </th>
+                            <th className="px-3 py-2 text-right font-medium text-slate-600 w-20">
+                              借方
+                            </th>
+                            <th className="px-3 py-2 text-right font-medium text-slate-600 w-20">
+                              贷方
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {selectedVoucher.entries.map((e) => (
+                            <tr key={e.id} className="hover:bg-slate-50/50">
+                              <td className="px-3 py-2">
+                                <div className="font-medium text-slate-700">
+                                  {e.accountName}
+                                </div>
+                                <div className="text-[10px] text-slate-400 font-mono">
+                                  {e.accountCode}
+                                </div>
+                              </td>
+                              <td className="px-3 py-2 text-right font-mono text-slate-700">
+                                {e.debit > 0 ? formatCurrency(e.debit) : "-"}
+                              </td>
+                              <td className="px-3 py-2 text-right font-mono text-slate-700">
+                                {e.credit > 0 ? formatCurrency(e.credit) : "-"}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                        <tfoot className="bg-slate-50 font-semibold text-slate-700">
+                          <tr>
+                            <td className="px-3 py-2">合计</td>
+                            <td className="px-3 py-2 text-right font-mono">
+                              {formatCurrency(selectedVoucher.totalDebit)}
+                            </td>
+                            <td className="px-3 py-2 text-right font-mono">
+                              {formatCurrency(selectedVoucher.totalCredit)}
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Card>
             </m.div>
           )}
         </AnimatePresence>
-      </Modal>
+      </div>
     </m.div>
   );
 }

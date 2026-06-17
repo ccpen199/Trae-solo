@@ -1,5 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useAppStore } from "@/stores";
 import Home from "@/pages/Home";
+import Login from "@/pages/Login";
 import Dashboard from "@/pages/dashboard";
 import MotionList from "@/pages/council/MotionList";
 import MotionDetail from "@/pages/council/MotionDetail";
@@ -29,12 +31,32 @@ import {
   SwapPage,
 } from "@/pages/Modules";
 
+function RootRedirect() {
+  const { isLoggedIn } = useAppStore();
+  return isLoggedIn ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />;
+}
+
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { isLoggedIn } = useAppStore();
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+  return <>{children}</>;
+}
+
 export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route element={<Layout />}>
+        <Route path="/" element={<RootRedirect />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/council" element={<MotionOverviewPage />} />
           <Route path="/council/motions" element={<MotionList />} />
@@ -67,7 +89,9 @@ export default function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
+        <Route path="/home" element={<Home />} />
         <Route path="/other" element={<div className="text-center text-xl">Other Page - Coming Soon</div>} />
+        <Route path="*" element={<RootRedirect />} />
       </Routes>
     </Router>
   );

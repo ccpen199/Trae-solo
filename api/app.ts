@@ -107,6 +107,20 @@ app.get('/api/auth/me', (_req: Request, res: Response) => {
   })
 })
 
+app.get(['/api/users/profile', '/api/user/profile'], (_req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    data: {
+      id: 'u001',
+      name: '张明华',
+      role: 'council_director',
+      phone: '13800000001',
+      community: '幸福里小区',
+      permissions: ['dashboard.read', 'motions.manage', 'finance.audit', 'owners.manage'],
+    },
+  })
+})
+
 app.get('/api/council/motions', (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
