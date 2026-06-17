@@ -1,27 +1,23 @@
 import { Router } from "express";
-import { db } from "../data/store.js";
+import { repo } from "../data/repo.js";
 
 const router = Router();
 
-router.get("/", (_req, res) => {
-  const { status, stage } = _req.query as Record<string, string>;
-  let result = [...db.submissions];
-  if (status) result = result.filter((s) => s.status === status);
-  if (stage === "ai_review") result = result.filter((s) => s.status === "pending" || s.status === "ai_flagged");
-  else if (stage === "manual_review") result = result.filter((s) => s.status === "ai_flagged" || s.status === "manual_passed" || s.status === "manual_rejected");
-  else if (stage === "dispute") result = result.filter((s) => s.status === "disputed" || s.status === "arbitrated");
-  res.json({ data: result, total: result.length });
+router.get("/", (req, res) => {
+  const { status, stage } = req.query as Record<string, string>;
+  const data = repo.listSubmissions({ status, stage });
+  res.json({ data, total: data.length });
 });
 
 router.get("/:id", (req, res) => {
-  const sub = db.findSubmission(req.params.id);
+  const sub = repo.getSubmission(req.params.id);
   if (!sub) return res.status(404).json({ error: "Submission not found" });
   res.json(sub);
 });
 
 router.patch("/:id/status", (req, res) => {
   const { status, notes } = req.body as { status: string; notes?: string };
-  const sub = db.updateSubmissionStatus(req.params.id, status as any, notes);
+  const sub = repo.updateSubmissionStatus(req.params.id, status, notes);
   if (!sub) return res.status(404).json({ error: "Submission not found" });
   res.json(sub);
 });

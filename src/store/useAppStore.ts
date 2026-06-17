@@ -307,7 +307,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   hydrateFromApi: async () => {
     try {
-      const [tasksRes, subsRes, alertsRes, txnsRes, entRes, exeRes, stats] = await Promise.all([
+      const results = await Promise.allSettled([
         api.tasks.list(),
         api.submissions.list(),
         api.alerts.list(),
@@ -316,17 +316,47 @@ export const useAppStore = create<AppState>((set, get) => ({
         api.users.executors(),
         api.tasks.stats(),
       ]);
-      set({
-        tasks: tasksRes.data || get().tasks,
-        submissions: subsRes.data || get().submissions,
-        riskAlerts: alertsRes.data || get().riskAlerts,
-        transactions: txnsRes.data || get().transactions,
-        enterprises: entRes.data || get().enterprises,
-        executors: exeRes.data || get().executors,
-        platformStats: stats || get().platformStats,
-        apiConnected: true,
-      });
-    } catch {
+      const [tasksRes, subsRes, alertsRes, txnsRes, entRes, exeRes, stats] = results;
+      const state = get();
+      let changed = false;
+      const patch: Partial<AppState> = {};
+      if (tasksRes.status === "fulfilled" && tasksRes.value.data?.length) {
+        patch.tasks = tasksRes.value.data;
+        changed = true;
+      }
+      if (subsRes.status === "fulfilled" && subsRes.value.data?.length) {
+        patch.submissions = subsRes.value.data;
+        changed = true;
+      }
+      if (alertsRes.status === "fulfilled" && alertsRes.value.data?.length) {
+        patch.riskAlerts = alertsRes.value.data;
+        changed = true;
+      }
+      if (txnsRes.status === "fulfilled" && txnsRes.value.data?.length) {
+        patch.transactions = txnsRes.value.data;
+        changed = true;
+      }
+      if (entRes.status === "fulfilled" && entRes.value.data?.length) {
+        patch.enterprises = entRes.value.data;
+        changed = true;
+      }
+      if (exeRes.status === "fulfilled" && exeRes.value.data?.length) {
+        patch.executors = exeRes.value.data;
+        patch.currentExecutor = exeRes.value.data[0] || state.currentExecutor;
+        changed = true;
+      }
+      if (stats.status === "fulfilled") {
+        patch.platformStats = stats.value;
+        changed = true;
+      }
+      if (changed) {
+        patch.apiConnected = true;
+        set(patch);
+      } else {
+        set({ apiConnected: false });
+      }
+    } catch (err) {
+      console.warn("[Store] hydrate failed, using mock fallback", err);
       set({ apiConnected: false });
     }
   },

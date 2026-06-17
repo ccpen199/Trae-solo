@@ -1,22 +1,21 @@
 import { Router } from "express";
-import { db } from "../data/store.js";
+import { repo } from "../data/repo.js";
 
 const router = Router();
 
 router.get("/", (_req, res) => {
-  res.json({ data: db.riskAlerts, total: db.riskAlerts.length });
+  const data = repo.listAlerts();
+  res.json({ data, total: data.length });
 });
 
 router.post("/refresh", (_req, res) => {
-  const alerts = db.refreshAlerts();
-  res.json({ data: alerts, total: alerts.length });
+  const data = repo.refreshAlerts();
+  res.json({ data, total: data.length });
 });
 
 router.patch("/:id/resolve", (req, res) => {
-  const alert = db.riskAlerts.find((a) => a.id === req.params.id);
+  const alert = repo.resolveAlert(req.params.id);
   if (!alert) return res.status(404).json({ error: "Alert not found" });
-  alert.resolved = true;
-  alert.processingStatus = "processed";
   res.json(alert);
 });
 

@@ -1,18 +1,23 @@
-const BASE = import.meta.env.VITE_API_BASE_URL || "/api";
+const BASE = "/api";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const url = `${BASE}${path}`;
+  console.debug(`[API] ${init?.method || "GET"} ${url}`);
   try {
-    const res = await fetch(`${BASE}${path}`, {
+    const res = await fetch(url, {
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       ...init,
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       throw new Error(err.error || `HTTP ${res.status}`);
     }
-    return res.json();
+    const data = await res.json();
+    console.debug(`[API] ✅ ${path} ok`);
+    return data;
   } catch (err) {
-    console.warn(`[API] ${path} failed, falling back to store:`, (err as Error).message);
+    console.warn(`[API] ❌ ${path} failed:`, (err as Error).message);
     throw err;
   }
 }
