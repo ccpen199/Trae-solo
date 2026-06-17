@@ -31,18 +31,35 @@ export class EducationService {
     return schools;
   }
 
-  async getSchoolByAddress(address: string): Promise<{ school: School | null; confidence: number }> {
+  async getSchoolByAddress(address: string): Promise<any> {
     await new Promise(resolve => setTimeout(resolve, 500));
     const keywords = ['滨湖', '天桃', '民主', '秀田'];
     for (const kw of keywords) {
       if (address.includes(kw)) {
         const school = mockSchools.find(s => s.name.includes(kw));
         if (school) {
-          return { school, confidence: 0.95 };
+          return {
+            schoolId: school.id,
+            schoolName: school.name,
+            schoolType: school.type,
+            distance: 0.8 + Math.random() * 2,
+            address: school.address,
+            district: school.district,
+            enrollmentQuota: 200 + Math.floor(Math.random() * 150),
+          };
         }
       }
     }
-    return { school: mockSchools[0], confidence: 0.75 };
+    const school = mockSchools[0];
+    return {
+      schoolId: school.id,
+      schoolName: school.name,
+      schoolType: school.type,
+      distance: 2.5,
+      address: school.address,
+      district: school.district,
+      enrollmentQuota: 180,
+    };
   }
 
   async submitEnrollment(request: EnrollmentRequest): Promise<{ applicationId: string; status: string; estimatedReviewDate: string }> {

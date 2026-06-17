@@ -82,6 +82,13 @@ const initialFormData: FormData = {
 
 type Tab = 'district' | 'form' | 'records' | 'guide';
 
+const hotSchools = [
+  { id: 's001', name: '南宁市滨湖路小学', address: '青秀区滨湖路66号', district: '青秀区', keyword: '滨湖路' },
+  { id: 's002', name: '南宁市天桃实验学校', address: '青秀区教育路2号', district: '青秀区', keyword: '天桃' },
+  { id: 's003', name: '南宁市民主路小学', address: '青秀区民主路19号', district: '青秀区', keyword: '民主路' },
+  { id: 's004', name: '南宁市秀田小学', address: '西乡塘区友爱北路30号', district: '西乡塘区', keyword: '秀田' },
+];
+
 export default function Enrollment() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<Tab>('district');
@@ -404,12 +411,41 @@ export default function Enrollment() {
       )}
 
       {!districtResult && !districtSearching && (
-        <div className="bg-white rounded-2xl p-8 shadow-card text-center">
-          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-            <MapPin className="w-8 h-8 text-gray-400" />
+        <div className="bg-white rounded-2xl p-6 shadow-card">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+              <Star className="w-4 h-4 text-warm-500" />
+              热门学区推荐
+            </h4>
+            <span className="text-xs text-gray-400">点击快速查询</span>
           </div>
-          <p className="text-gray-500 mb-2">输入地址查询您的学区</p>
-          <p className="text-sm text-gray-400">系统将根据您的住址自动匹配最近的公立学校</p>
+          <div className="grid grid-cols-2 gap-3">
+            {hotSchools.map(school => (
+              <button
+                key={school.id}
+                onClick={() => { setDistrictAddress(school.keyword); handleDistrictSearch(); }}
+                className="p-4 rounded-xl bg-gray-50 hover:bg-primary-50 text-left transition-all group"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center flex-shrink-0 group-hover:bg-primary-200 transition-colors">
+                    <SchoolIcon className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm text-gray-800 truncate">{school.name}</p>
+                    <p className="text-xs text-gray-500 mt-0.5 flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      {school.district}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+          <div className="mt-6 pt-4 border-t border-gray-100">
+            <p className="text-xs text-gray-400 text-center">
+              输入您的家庭住址，精准匹配所属学区
+            </p>
+          </div>
         </div>
       )}
     </div>
@@ -1010,7 +1046,38 @@ export default function Enrollment() {
                   {enrollmentStatusMap[selectedRecord.status].name}
                 </span>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-100">
+
+              <div className="py-2">
+                <span className="text-gray-500 block mb-3 text-sm">审核进度</span>
+                <div className="relative">
+                  <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-gray-200" />
+                  <div className="space-y-4">
+                    {[
+                      { key: 'submitted', label: '提交申请', desc: '报名信息已提交', done: true },
+                      { key: 'pending', label: '材料初审', desc: '审核员核验提交材料', done: selectedRecord.status !== 'pending' },
+                      { key: 'reviewing', label: '资格复核', desc: '教育局复核入学资格', done: selectedRecord.status === 'approved' || selectedRecord.status === 'rejected' },
+                      { key: 'result', label: '结果公布', desc: '公布录取/审核结果', done: selectedRecord.status === 'approved' || selectedRecord.status === 'rejected' },
+                    ].map((step, i) => (
+                      <div key={step.key} className="flex items-center gap-4 relative">
+                        <div className={cn(
+                          'w-8 h-8 rounded-full flex items-center justify-center z-10 flex-shrink-0',
+                          step.done ? 'bg-eco-500 text-white' : 'bg-gray-200 text-gray-400'
+                        )}>
+                          {step.done ? <CheckCircle className="w-4 h-4" /> : <span className="text-xs font-medium">{i + 1}</span>}
+                        </div>
+                        <div className="flex-1 pt-0.5">
+                          <p className={cn('text-sm font-medium', step.done ? 'text-gray-800' : 'text-gray-400')}>
+                            {step.label}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-0.5">{step.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-between py-2 border-t border-gray-100">
                 <span className="text-gray-500">学生姓名</span>
                 <span className="font-medium text-gray-800">{selectedRecord.childName}</span>
               </div>

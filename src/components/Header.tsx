@@ -1,4 +1,4 @@
-import { Bell, Search, User, Menu, X } from 'lucide-react';
+import { Bell, Search, User, Menu, X, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
@@ -9,12 +9,25 @@ interface HeaderProps {
   sidebarOpen?: boolean;
 }
 
+const allSearchServices = [
+  { name: 'BRT乘车码', path: '/transportation/brt', category: '交通出行', keywords: '公交,扫码,BRT,乘车' },
+  { name: '智慧停车', path: '/transportation/parking', category: '交通出行', keywords: '停车,泊位,缴费' },
+  { name: '违章查询', path: '/transportation/violation', category: '交通出行', keywords: '违章,处罚,驾驶证,扣分' },
+  { name: '预约挂号', path: '/medical/appointment', category: '医疗健康', keywords: '医院,挂号,看病,就诊' },
+  { name: '候诊热力图', path: '/medical/heatmap', category: '医疗健康', keywords: '医院,候诊,热力图,排队' },
+  { name: '入学报名', path: '/education/enrollment', category: '教育服务', keywords: '小学,入学,报名,招生,学区' },
+  { name: '政策解读', path: '/government/policy', category: '政务服务', keywords: '政策,解读,通知,文件' },
+  { name: '12345诉求', path: '/urban/complaint', category: '城市管理', keywords: '投诉,12345,诉求,工单,举报' },
+  { name: '数字身份中心', path: '/identity', category: '数字身份', keywords: '身份证,电子证照,社保卡,驾驶证' },
+  { name: '市民首页', path: '/', category: '首页', keywords: '首页,首页,推荐' },
+];
+
 export default function Header({ onMenuToggle, sidebarOpen }: HeaderProps) {
   const { user } = useAuthStore();
   const navigate = useNavigate();
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResult, setSearchResult] = useState('');
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
   const [notifications] = useState([
     { id: 1, title: '您的预约即将开始', time: '5分钟前', type: 'medical' },
     { id: 2, title: '小学入学报名已开放', time: '1小时前', type: 'education' },
@@ -22,10 +35,30 @@ export default function Header({ onMenuToggle, sidebarOpen }: HeaderProps) {
   ]);
   const [showNotifications, setShowNotifications] = useState(false);
 
-  const handleSearch = () => {
-    const query = searchQuery.trim();
-    if (!query) return;
-    setSearchResult(query);
+  const searchResults = searchQuery.trim()
+    ? allSearchServices.filter(s =>
+      s.name.includes(searchQuery) ||
+      s.category.includes(searchQuery) ||
+      s.keywords.split(',').some(k => k.includes(searchQuery))
+    )
+    : [];
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchResults.length === 1) {
+      navigate(searchResults[0].path);
+      setShowSearchDropdown(false);
+      setSearchQuery('');
+    } else if (searchResults.length > 1) {
+      navigate(searchResults[0].path);
+      setShowSearchDropdown(false);
+    }
+  };
+
+  const handleServiceClick = (path: string) => {
+    navigate(path);
+    setShowSearchDropdown(false);
+    setSearchQuery('');
   };
 
   return (
@@ -44,32 +77,44 @@ export default function Header({ onMenuToggle, sidebarOpen }: HeaderProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
-            placeholder="搜索服务、医院、学校、政策..."
+            placeholder="搜索服务：乘车码、挂号、入学、违章、停车..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => { setSearchQuery(e.target.value); setShowSearchDropdown(true); }}
+            onFocus={() => { setSearchFocused(true); setShowSearchDropdown(true); }}
+            onBlur={() => { setSearchFocused(false); setTimeout(() => setShowSearchDropdown(false), 200); }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') handleSearch();
+              if (e.key === 'Enter') handleSearchSubmit(e as any);
             }}
-            onFocus={() => setSearchFocused(true)}
-            onBlur={() => setSearchFocused(false)}
-            className="w-full pl-10 pr-16 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300"
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300"
           />
-          <button
-            type="button"
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={handleSearch}
-            className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-primary-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-primary-700"
-          >
-            搜索
-          </button>
-          {searchResult && (
-            <div className="absolute left-0 right-0 top-full mt-2 rounded-xl border border-gray-100 bg-white p-4 shadow-card z-50">
-              <p className="text-sm font-semibold text-gray-800">搜索结果</p>
-              <p className="mt-1 text-xs text-gray-500">已为“{searchResult}”匹配服务、医院、学校与政策。</p>
-              <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
-                <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => navigate('/government/policy')} className="rounded-lg bg-gray-50 px-3 py-2 text-left text-gray-700 hover:bg-primary-50">政策查询结果</button>
-                <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => navigate('/transportation/violation')} className="rounded-lg bg-gray-50 px-3 py-2 text-left text-gray-700 hover:bg-primary-50">交通服务结果</button>
-              </div>
+          {showSearchDropdown && searchQuery.trim() && (
+            <div className="absolute left-0 right-0 top-full mt-2 rounded-2xl border border-gray-100 bg-white shadow-xl z-50 overflow-hidden max-h-80 overflow-y-auto animate-fade-in">
+              {searchResults.length > 0 ? (
+                <>
+                  <div className="px-4 py-2 border-b border-gray-50">
+                    <p className="text-xs text-gray-400">找到 {searchResults.length} 个相关服务</p>
+                  </div>
+                  {searchResults.map(svc => (
+                    <button
+                      key={svc.path}
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => handleServiceClick(svc.path)}
+                      className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 text-left border-b border-gray-50 last:border-0 transition-colors"
+                    >
+                      <div>
+                        <span className="text-sm font-medium text-gray-800">{svc.name}</span>
+                        <span className="text-xs text-gray-400 ml-2">{svc.category}</span>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-gray-300" />
+                    </button>
+                  ))}
+                </>
+              ) : (
+                <div className="px-4 py-6 text-center text-gray-400 text-sm">
+                  未找到匹配服务，试试其他关键词
+                </div>
+              )}
             </div>
           )}
         </div>

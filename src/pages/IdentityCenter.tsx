@@ -102,7 +102,25 @@ const mockAuthorizationList = [
   { id: '3', name: '南宁市第一人民医院', scope: '医保及实名信息', grantedAt: '2026-02-10', status: 'active' },
   { id: '4', name: '南宁交警支队', scope: '驾驶及车辆信息', grantedAt: '2026-04-01', status: 'active' },
   { id: '5', name: '南宁公交集团', scope: '支付扣款授权', grantedAt: '2026-05-08', status: 'active' },
-  { id: '6', name: '康全药业', scope: '医保结算', grantedAt: '2026-02-18', status: 'revoked' },
+  { id: '6', name: '康全药业', scope: '医保结算', grantedAt: '2026-02-18', revokedAt: '2026-05-30', status: 'revoked' },
+];
+
+interface AuthLogItem {
+  id: string;
+  authId: string;
+  authName: string;
+  action: 'grant' | 'revoke';
+  time: string;
+  operator: string;
+}
+
+const initialAuthLogs: AuthLogItem[] = [
+  { id: 'l1', authId: '6', authName: '康全药业', action: 'revoke', time: '2026-05-30 14:23', operator: '本人操作' },
+  { id: 'l2', authId: '5', authName: '南宁公交集团', action: 'grant', time: '2026-05-08 09:15', operator: '本人操作' },
+  { id: 'l3', authId: '4', authName: '南宁交警支队', action: 'grant', time: '2026-04-01 10:30', operator: '本人操作' },
+  { id: 'l4', authId: '3', authName: '南宁市第一人民医院', action: 'grant', time: '2026-02-10 16:45', operator: '本人操作' },
+  { id: 'l5', authId: '2', authName: '南宁市教育局', action: 'grant', time: '2026-03-20 11:00', operator: '本人操作' },
+  { id: 'l6', authId: '1', authName: '南宁市行政审批局', action: 'grant', time: '2026-01-15 08:30', operator: '本人操作' },
 ];
 
 export default function IdentityCenter() {
@@ -121,6 +139,45 @@ export default function IdentityCenter() {
   const [detailTab, setDetailTab] = useState<'info' | 'auth' | 'records'>('info');
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [authorizations, setAuthorizations] = useState(mockAuthorizationList);
+  const [authLogs, setAuthLogs] = useState<AuthLogItem[]>(initialAuthLogs);
+  const [authSubTab, setAuthSubTab] = useState<'list' | 'logs'>('list');
+  const [revokeConfirm, setRevokeConfirm] = useState<string | null>(null);
+
+  const handleRevokeAuth = (authId: string) => {
+    const auth = authorizations.find(a => a.id === authId);
+    if (!auth) return;
+    const now = new Date().toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-');
+    setAuthorizations(prev => prev.map(a =>
+      a.id === authId ? { ...a, status: 'revoked' as const, revokedAt: now } : a
+    ));
+    setAuthLogs(prev => [{
+      id: `l${Date.now()}`,
+      authId,
+      authName: auth.name,
+      action: 'revoke',
+      time: now,
+      operator: '本人操作',
+    }, ...prev]);
+    setRevokeConfirm(null);
+  };
+
+  const handleRestoreAuth = (authId: string) => {
+    const auth = authorizations.find(a => a.id === authId);
+    if (!auth) return;
+    const now = new Date().toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-');
+    setAuthorizations(prev => prev.map(a =>
+      a.id === authId ? { ...a, status: 'active' as const, revokedAt: undefined } : a
+    ));
+    setAuthLogs(prev => [{
+      id: `l${Date.now()}`,
+      authId,
+      authName: auth.name,
+      action: 'grant',
+      time: now,
+      operator: '本人操作',
+    }, ...prev]);
+  };
 
   const searchResults = searchQuery.trim()
     ? allSearchServices.filter(s =>
@@ -581,40 +638,120 @@ export default function IdentityCenter() {
               {detailTab === 'auth' && (
                 <div className="bg-white rounded-2xl p-6 shadow-card">
                   <div className="flex items-center justify-between mb-4">
-                    <h4 className="font-semibold text-gray-800">已授权使用部门</h4>
-                    <span className="text-xs text-gray-400">共 {mockAuthorizationList.filter(a => a.status === 'active').length} 个有效授权</span>
+                    <h4 className="font-semibold text-gray-800">授权管理</h4>
+                    <span className="text-xs text-gray-400">
+                      共 {authorizations.filter(a => a.status === 'active').length} 个有效授权
+                    </span>
                   </div>
-                  <div className="space-y-2">
-                    {mockAuthorizationList.map(auth => (
-                      <div key={auth.id} className="flex items-center justify-between p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-all">
-                        <div className="flex items-center gap-3">
-                          <div className={cn(
-                            'w-10 h-10 rounded-lg flex items-center justify-center',
-                            auth.status === 'active' ? 'bg-primary-100 text-primary-600' : 'bg-gray-100 text-gray-400'
-                          )}>
-                            <Building2 className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <p className="font-medium text-sm text-gray-800">{auth.name}</p>
-                              <span className={cn(
-                                'text-xs px-2 py-0.5 rounded-full',
-                                auth.status === 'active' ? 'bg-eco-100 text-eco-700' : 'bg-gray-200 text-gray-500'
-                              )}>
-                                {auth.status === 'active' ? '已授权' : '已撤回'}
-                              </span>
-                            </div>
-                            <p className="text-xs text-gray-500 mt-0.5">{auth.scope} · 授权于 {auth.grantedAt}</p>
-                          </div>
-                        </div>
-                        {auth.status === 'active' && (
-                          <button className="text-xs text-rose-500 hover:text-rose-600 font-medium px-3 py-1.5 rounded-lg hover:bg-rose-50 transition-colors">
-                            撤回授权
-                          </button>
+                  <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-4">
+                    {[{ key: 'list', label: '授权列表', icon: Shield }, { key: 'logs', label: '操作日志', icon: Clock }].map(tab => (
+                      <button
+                        key={tab.key}
+                        onClick={() => setAuthSubTab(tab.key as any)}
+                        className={cn(
+                          'flex-1 py-2 px-3 rounded-lg text-sm font-medium flex items-center justify-center gap-1.5 transition-all',
+                          authSubTab === tab.key ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                         )}
-                      </div>
+                      >
+                        <tab.icon className="w-4 h-4" />
+                        {tab.label}
+                      </button>
                     ))}
                   </div>
+
+                  {authSubTab === 'list' && (
+                    <div className="space-y-2">
+                      {authorizations.map(auth => (
+                        <div key={auth.id} className="p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-all">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className={cn(
+                                'w-10 h-10 rounded-lg flex items-center justify-center',
+                                auth.status === 'active' ? 'bg-primary-100 text-primary-600' : 'bg-gray-100 text-gray-400'
+                              )}>
+                                <Building2 className="w-5 h-5" />
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <p className="font-medium text-sm text-gray-800">{auth.name}</p>
+                                  <span className={cn(
+                                    'text-xs px-2 py-0.5 rounded-full',
+                                    auth.status === 'active' ? 'bg-eco-100 text-eco-700' : 'bg-gray-200 text-gray-500'
+                                  )}>
+                                    {auth.status === 'active' ? '已授权' : '已撤回'}
+                                  </span>
+                                </div>
+                                <p className="text-xs text-gray-500 mt-0.5">{auth.scope}</p>
+                                <p className="text-xs text-gray-400 mt-0.5">
+                                  授权于 {auth.grantedAt}
+                                  {auth.revokedAt && ` · 撤回于 ${auth.revokedAt}`}
+                                </p>
+                              </div>
+                            </div>
+                            {auth.status === 'active' ? (
+                              revokeConfirm === auth.id ? (
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    onClick={() => handleRevokeAuth(auth.id)}
+                                    className="text-xs text-white bg-rose-500 hover:bg-rose-600 font-medium px-3 py-1.5 rounded-lg transition-colors"
+                                  >
+                                    确认撤回
+                                  </button>
+                                  <button
+                                    onClick={() => setRevokeConfirm(null)}
+                                    className="text-xs text-gray-500 hover:text-gray-700 font-medium px-3 py-1.5 rounded-lg hover:bg-gray-200 transition-colors"
+                                  >
+                                    取消
+                                  </button>
+                                </div>
+                              ) : (
+                                <button
+                                  onClick={() => setRevokeConfirm(auth.id)}
+                                  className="text-xs text-rose-500 hover:text-rose-600 font-medium px-3 py-1.5 rounded-lg hover:bg-rose-50 transition-colors"
+                                >
+                                  撤回授权
+                                </button>
+                              )
+                            ) : (
+                              <button
+                                onClick={() => handleRestoreAuth(auth.id)}
+                                className="text-xs text-primary-500 hover:text-primary-600 font-medium px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors"
+                              >
+                                恢复授权
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {authSubTab === 'logs' && (
+                    <div className="relative">
+                      <div className="absolute left-5 top-2 bottom-2 w-0.5 bg-gray-200" />
+                      <div className="space-y-3">
+                        {authLogs.map(log => (
+                          <div key={log.id} className="flex items-start gap-4 relative pl-2">
+                            <div className={cn(
+                              'w-6 h-6 rounded-full flex items-center justify-center z-10',
+                              log.action === 'grant' ? 'bg-eco-100 text-eco-600' : 'bg-gray-200 text-gray-500'
+                            )}>
+                              {log.action === 'grant' ? <CheckCircle className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
+                            </div>
+                            <div className="flex-1 pt-0.5">
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-medium text-gray-800">
+                                  {log.action === 'grant' ? '授予' : '撤回'} {log.authName}
+                                </p>
+                                <span className="text-xs text-gray-400">{log.time}</span>
+                              </div>
+                              <p className="text-xs text-gray-500 mt-0.5">{log.operator}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 

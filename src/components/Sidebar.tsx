@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import {
   Home,
@@ -88,12 +88,20 @@ const menuItems = [
 export default function Sidebar() {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['/transportation', '/medical', '/education', '/government', '/urban']);
 
   const toggleMenu = (path: string) => {
     setExpandedMenus(prev =>
       prev.includes(path) ? prev.filter(p => p !== path) : [...prev, path]
     );
+  };
+
+  const handleParentClick = (path: string) => {
+    navigate(path);
+    if (!expandedMenus.includes(path)) {
+      setExpandedMenus(prev => [...prev, path]);
+    }
   };
 
   const getColorClass = (color: string, isActive: boolean) => {
@@ -139,23 +147,30 @@ export default function Sidebar() {
             <div key={item.path}>
               {item.children ? (
                 <>
-                  <button
-                    onClick={() => toggleMenu(item.path)}
+                  <div
+                    onClick={() => handleParentClick(item.path)}
                     className={cn(
-                      'w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200',
-                      'text-gray-600 hover:bg-gray-50'
+                      'w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 cursor-pointer',
+                      location.pathname.startsWith(item.path)
+                        ? 'bg-gray-50 text-gray-800 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-50'
                     )}
                   >
                     <div className="flex items-center gap-3">
                       <item.icon className="w-5 h-5" />
                       <span className="font-medium">{item.label}</span>
                     </div>
-                    {expandedMenus.includes(item.path) ? (
-                      <ChevronDown className="w-4 h-4 text-gray-400" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 text-gray-400" />
-                    )}
-                  </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); toggleMenu(item.path); }}
+                      className="p-1 hover:bg-gray-200 rounded-md"
+                    >
+                      {expandedMenus.includes(item.path) ? (
+                        <ChevronDown className="w-4 h-4 text-gray-400" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-gray-400" />
+                      )}
+                    </button>
+                  </div>
                   {expandedMenus.includes(item.path) && (
                     <div className="ml-4 mt-1 space-y-1">
                       {item.children.map((child) => (
