@@ -88,6 +88,8 @@ export interface FinanceAccount {
   children?: FinanceAccount[];
 }
 
+export type OcrStatus = "pending" | "recognizing" | "reviewing" | "verified" | "failed";
+
 export interface OCRResult {
   invoiceNo: string;
   amount: number;
@@ -111,10 +113,61 @@ export interface Invoice {
   imageUrl: string;
   ocrResult?: OCRResult;
   verified: boolean;
+  ocrStatus: OcrStatus;
   accountId: string;
   accountName: string;
   verifiedBy?: string;
   verifiedAt?: string;
+  rejectReason?: string;
+}
+
+export interface VoucherEntry {
+  id: string;
+  accountId: string;
+  accountName: string;
+  accountCode: string;
+  debit: number;
+  credit: number;
+}
+
+export type VoucherStatus = "posted" | "pending_review";
+
+export interface Voucher {
+  id: string;
+  voucherNo: string;
+  date: string;
+  summary: string;
+  type: "income" | "expense" | "transfer";
+  entries: VoucherEntry[];
+  totalDebit: number;
+  totalCredit: number;
+  status: VoucherStatus;
+  bookType: "internal" | "external";
+  relatedInvoiceIds: string[];
+  attachments: Attachment[];
+  createdBy: string;
+  createdAt: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
+  auditRecords: {
+    id: string;
+    action: string;
+    operator: string;
+    operatorName: string;
+    time: string;
+    remark?: string;
+  }[];
+}
+
+export interface AuditHistoryItem {
+  id: string;
+  period: string;
+  startDate: string;
+  endDate: string;
+  generatedAt: string;
+  auditor: string;
+  conclusion: "pass" | "qualified" | "adverse";
+  conclusionLabel: string;
 }
 
 export type SealType = "official" | "finance" | "contract";
@@ -382,6 +435,8 @@ export interface StreetInstruction {
   issueTime?: string;
 }
 
+export type AuditConclusion = "pass" | "qualified" | "adverse";
+
 export interface AuditReport {
   id: string;
   period: string;
@@ -400,4 +455,10 @@ export interface AuditReport {
   recommendations: string[];
   auditor: string;
   status: "draft" | "final";
+  auditScope: string;
+  auditAgency: string;
+  conclusion: AuditConclusion;
+  conclusionLabel: string;
+  auditOpinion: string;
+  history: AuditHistoryItem[];
 }

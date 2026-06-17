@@ -20,6 +20,7 @@ import type {
   CreditScore,
   AuditReport,
   ExchangeRecord,
+  Voucher,
 } from "@/types";
 import {
   mockCurrentUser,
@@ -40,6 +41,7 @@ import {
   mockStreetInstructions,
   mockCreditScore,
   mockAuditReport,
+  mockVouchers,
 } from "@/mock/data";
 
 interface AppState {
@@ -48,6 +50,7 @@ interface AppState {
   motions: Motion[];
   financeAccounts: FinanceAccount[];
   invoices: Invoice[];
+  vouchers: Voucher[];
   sealApplications: SealApplication[];
   repairTickets: RepairTicket[];
   swapItems: SwapItem[];
@@ -63,6 +66,9 @@ interface AppState {
   creditScore: CreditScore;
   auditReport: AuditReport;
   sidebarCollapsed: boolean;
+  isGeneratingAuditReport: boolean;
+  auditGenerateProgress: number;
+  auditGenerateStep: number;
 
   setSidebarCollapsed: (collapsed: boolean) => void;
 
@@ -85,7 +91,11 @@ interface AppState {
   ) => void;
   addRepairTicket: (ticket: RepairTicket) => void;
 
-  verifyInvoice: (id: string) => void;
+  verifyInvoice: (id: string, updates?: Partial<Invoice>) => void;
+  rejectInvoice: (id: string, reason: string) => void;
+  startOcrRecognition: (id: string) => void;
+
+  generateAuditReport: () => Promise<void>;
 
   updateSwapItem: (id: string, updates: Partial<SwapItem>) => void;
   addSwapItem: (item: SwapItem) => void;
@@ -108,6 +118,7 @@ export const useAppStore = create<AppState>()(
       motions: mockMotions,
       financeAccounts: mockFinanceAccounts,
       invoices: mockInvoices,
+      vouchers: mockVouchers,
       sealApplications: mockSealApplications,
       repairTickets: mockRepairTickets,
       swapItems: mockSwapItems,
@@ -123,6 +134,9 @@ export const useAppStore = create<AppState>()(
       creditScore: mockCreditScore,
       auditReport: mockAuditReport,
       sidebarCollapsed: false,
+      isGeneratingAuditReport: false,
+      auditGenerateProgress: 0,
+      auditGenerateStep: 0,
 
       setSidebarCollapsed: (collapsed) =>
         set({ sidebarCollapsed: collapsed }),
@@ -175,19 +189,51 @@ export const useAppStore = create<AppState>()(
           repairTickets: [ticket, ...state.repairTickets],
         })),
 
-      verifyInvoice: (id) =>
+      verifyInvoice: (id, updates) =>
         set((state) => ({
           invoices: state.invoices.map((inv) =>
             inv.id === id
               ? {
                   ...inv,
                   verified: true,
+                  ocrStatus: "verified",
                   verifiedBy: state.currentUser.id,
                   verifiedAt: new Date().toISOString(),
+                  ...updates,
                 }
               : inv
           ),
         })),
+
+      rejectInvoice: (id, reason) =>
+        set((state) => ({
+          invoices: state.invoices.map((inv) =>
+            inv.id === id
+              ? {
+                  ...inv,
+                  ocrStatus: "failed",
+                  rejectReason: reason,
+                }
+              : inv
+          ),
+        })),
+
+      startOcrRecognition: (id) =>
+        set((state) => ({
+          invoices: state.invoices.map((inv) =>
+            inv.id === id ? { ...inv, ocrStatus: "recognizing" } : inv
+          ),
+        })),
+
+      generateAuditReport: async () => {
+        set({ isGeneratingAuditReport: true, auditGenerateProgress: 0, auditGenerateStep: 0 });
+        const steps = [20, 40, 60, 80, 100];
+        for (let i = 0; i < steps.length; i++) {
+          await new Promise((resolve) => setTimeout(resolve, 600));
+          set({ auditGenerateProgress: steps[i], auditGenerateStep: i + 1 });
+        }
+        set({ isGeneratingAuditReport: false });
+      },
 
       updateSwapItem: (id, updates) =>
         set((state) => ({

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import { motion as m } from "framer-motion";
-import { Search, Check, FileText, Eye } from "lucide-react";
+import { motion as m, AnimatePresence } from "framer-motion";
+import { Search, Check, Eye, RefreshCw, FileText } from "lucide-react";
 import { useAppStore } from "@/stores";
 import {
   Card,
@@ -13,79 +13,101 @@ import {
   Empty,
 } from "@/components/ui";
 import { cn, formatCurrency, formatDate, formatPercent } from "@/utils";
-import type { Invoice } from "@/types";
+import type { Invoice, OcrStatus, FinanceAccount } from "@/types";
+
+const ocrStatusMap: Record<OcrStatus, { label: string; variant: "success" | "warning" | "danger" | "info" }> = {
+  pending: { label: "待识别", variant: "warning" },
+  recognizing: { label: "识别中", variant: "info" },
+  reviewing: { label: "待复核", variant: "warning" },
+  verified: { label: "已复核通过", variant: "success" },
+  failed: { label: "复核失败", variant: "danger" },
+};
 
 const typeLabels: Record<string, string> = { all: "全部", income: "收入", expense: "支出" };
-const statusLabels: Record<string, string> = { all: "全部", verified: "已审核", pending: "待审核" };
+const statusLabels: Record<string, string> = { all: "全部", pending: "待识别", recognizing: "识别中", reviewing: "待复核", verified: "已通过", failed: "已失败" };
 const typeOptions = ["all", "income", "expense"] as const;
-const statusOptions = ["all", "verified", "pending"] as const;
+const statusOptions = ["all", "pending", "recognizing", "reviewing", "verified", "failed"] as const;
 
 export default function InvoiceList() {
-  const { invoices, verifyInvoice } = useAppStore();
+  const { invoices, financeAccounts, verifyInvoice, rejectInvoice } = useAppStore();
   const [typeFilter, setTypeFilter] = useState<"all" | "income" | "expense">("all");
-  const [statusFilter, setStatusFilter] = useState<"all" | "verified" | "pending">("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [searchText, setSearchText] = useState("");
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editForm, setEditForm] = useState({ invoiceNo: "", amount: 0, vendor: "", date: "", accountId: "", accountName: "" });
+
+  const flatAccounts = useMemo(() => {
+    const flatten = (accounts: FinanceAccount[]): FinanceAccount[] =>
+      accounts.reduce<FinanceAccount[]>((acc, a) => (acc.push(a), a.children ? acc.push(...flatten(a.children)) : acc, acc), []);
+    return flatten(financeAccounts);
+  }, [financeAccounts]);
 
   const filteredInvoices = useMemo(
-    () =>
-      invoices.filter((inv) => {
-        if (typeFilter !== "all" && inv.type !== typeFilter) return false;
-        if (statusFilter === "verified" && !inv.verified) return false;
-        if (statusFilter === "pending" && inv.verified) return false;
-        if (searchText) {
-          const lower = searchText.toLowerCase();
-          return (
-            inv.vendor.toLowerCase().includes(lower) ||
-            inv.invoiceNo.includes(lower) ||
-            inv.accountName.toLowerCase().includes(lower)
-          );
-        }
-        return true;
-      }),
+    () => invoices.filter((inv) => {
+      if (typeFilter !== "all" && inv.type !== typeFilter) return false;
+      if (statusFilter !== "all" && inv.ocrStatus !== statusFilter) return false;
+      if (searchText) {
+        const lower = searchText.toLowerCase();
+        return inv.vendor.toLowerCase().includes(lower) || inv.invoiceNo.includes(lower) || inv.accountName.toLowerCase().includes(lower);
+      }
+      return true;
+    }),
     [invoices, typeFilter, statusFilter, searchText]
   );
 
-  const handleVerify = (invoice: Invoice) => {
+  const handleReview = (invoice: Invoice) => {
     setSelectedInvoice(invoice);
+    if (invoice.ocrResult) {
+      setEditForm({
+        invoiceNo: invoice.ocrResult.invoiceNo,
+        amount: invoice.ocrResult.amount,
+        vendor: invoice.ocrResult.vendor,
+        date: invoice.ocrResult.date,
+        accountId: invoice.accountId,
+        accountName: invoice.accountName,
+      });
+    }
     setIsModalOpen(true);
   };
 
-  const confirmVerify = () => {
+  const handleConfirm = () => {
     if (selectedInvoice) {
-      verifyInvoice(selectedInvoice.id);
+      const account = flatAccounts.find((a) => a.id === editForm.accountId);
+      verifyInvoice(selectedInvoice.id, {
+        invoiceNo: editForm.invoiceNo,
+        amount: editForm.amount,
+        vendor: editForm.vendor,
+        date: editForm.date,
+        accountId: editForm.accountId,
+        accountName: account?.name || editForm.accountName,
+      });
       setIsModalOpen(false);
       setSelectedInvoice(null);
     }
   };
 
-  const FilterButton = ({
-    value,
-    current,
-    onChange,
-    labels,
-  }: {
-    value: string;
-    current: string;
-    onChange: (v: any) => void;
-    labels: Record<string, string>;
-  }) => (
-    <Button
-      variant={current === value ? "primary" : "secondary"}
-      size="sm"
-      onClick={() => onChange(value)}
-    >
+  const handleReject = () => {
+    if (selectedInvoice) {
+      rejectInvoice(selectedInvoice.id, "OCR识别信息有误，需重新识别");
+      setIsModalOpen(false);
+      setSelectedInvoice(null);
+    }
+  };
+
+  const FilterBtn = ({ value, current, onChange, labels }: any) => (
+    <Button variant={current === value ? "primary" : "secondary"} size="sm" onClick={() => onChange(value)}>
       {labels[value]}
     </Button>
   );
 
-  const InputField = ({ label, value }: { label: string; value: string | number }) => (
+  const InputField = ({ label, value, onChange, type = "text" }: any) => (
     <div>
       <label className="text-sm text-slate-500">{label}</label>
       <input
-        type={typeof value === "number" ? "number" : "text"}
-        defaultValue={value}
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         className="w-full mt-1 px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
       />
     </div>
@@ -97,14 +119,10 @@ export default function InvoiceList() {
         <CardContent className="p-4">
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex gap-2">
-              {typeOptions.map((t) => (
-                <FilterButton key={t} value={t} current={typeFilter} onChange={setTypeFilter} labels={typeLabels} />
-              ))}
+              {typeOptions.map((t) => <FilterBtn key={t} value={t} current={typeFilter} onChange={setTypeFilter} labels={typeLabels} />)}
             </div>
             <div className="flex gap-2">
-              {statusOptions.map((s) => (
-                <FilterButton key={s} value={s} current={statusFilter} onChange={setStatusFilter} labels={statusLabels} />
-              ))}
+              {statusOptions.map((s) => <FilterBtn key={s} value={s} current={statusFilter} onChange={setStatusFilter} labels={statusLabels} />)}
             </div>
             <div className="flex-1 min-w-[200px]">
               <div className="relative">
@@ -122,108 +140,122 @@ export default function InvoiceList() {
         </CardContent>
       </Card>
 
-      {filteredInvoices.length === 0 ? (
-        <Empty title="暂无票据数据" />
-      ) : (
+      {filteredInvoices.length === 0 ? <Empty title="暂无票据数据" /> : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredInvoices.map((invoice, idx) => (
-            <m.div
-              key={invoice.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: idx * 0.05 }}
-              whileHover={{ y: -4 }}
-            >
-              <Card hoverable className="h-full flex flex-col">
-                <CardContent className="flex-1 p-4">
-                  <div className="flex gap-4">
-                    <img src={invoice.imageUrl} alt={invoice.invoiceNo} className="w-32 h-24 object-cover rounded-lg border border-slate-200" />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className={cn("text-2xl font-bold", invoice.type === "income" ? "text-emerald-600" : "text-rose-600")}>
-                          {invoice.type === "income" ? "+" : "-"}
-                          {formatCurrency(invoice.amount)}
+          {filteredInvoices.map((invoice, idx) => {
+            const statusInfo = ocrStatusMap[invoice.ocrStatus];
+            return (
+              <m.div
+                key={invoice.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                whileHover={{ y: -4 }}
+              >
+                <Card hoverable className="h-full flex flex-col">
+                  <CardContent className="flex-1 p-4">
+                    <div className="flex gap-4">
+                      <img src={invoice.imageUrl} alt={invoice.invoiceNo} className="w-32 h-24 object-cover rounded-lg border border-slate-200" />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-2">
+                          <div className={cn("text-2xl font-bold", invoice.type === "income" ? "text-emerald-600" : "text-rose-600")}>
+                            {invoice.type === "income" ? "+" : "-"}{formatCurrency(invoice.amount)}
+                          </div>
+                          <Badge variant={statusInfo.variant} size="sm">{statusInfo.label}</Badge>
                         </div>
-                        <Badge variant={invoice.verified ? "success" : "warning"} size="sm">
-                          {invoice.verified ? "已审核" : "待审核"}
-                        </Badge>
-                      </div>
-                      <div className="text-sm text-slate-600 space-y-1">
-                        <p className="truncate"><span className="text-slate-400">发票号：</span>{invoice.invoiceNo}</p>
-                        <p><span className="text-slate-400">日期：</span>{formatDate(invoice.date)}</p>
-                        <p className="truncate"><span className="text-slate-400">供应商：</span>{invoice.vendor}</p>
+                        <div className="text-sm text-slate-600 space-y-1">
+                          <p className="truncate"><span className="text-slate-400">发票号：</span>{invoice.invoiceNo}</p>
+                          <p><span className="text-slate-400">日期：</span>{formatDate(invoice.date)}</p>
+                          <p className="truncate"><span className="text-slate-400">供应商：</span>{invoice.vendor}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {invoice.ocrResult && (
-                    <div className="mt-4 pt-4 border-t border-slate-100">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-slate-500 flex items-center gap-1"><Eye className="w-4 h-4" />OCR识别置信度</span>
-                        <span className="text-sm font-medium text-slate-700">{formatPercent(invoice.ocrResult.confidence * 100)}</span>
+                    {invoice.ocrResult && (
+                      <div className="mt-4 pt-4 border-t border-slate-100">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm text-slate-500 flex items-center gap-1"><Eye className="w-4 h-4" />OCR识别置信度</span>
+                          <span className="text-sm font-medium text-slate-700">{formatPercent(invoice.ocrResult.confidence * 100)}</span>
+                        </div>
+                        <ProgressBar
+                          value={invoice.ocrResult.confidence * 100}
+                          variant={invoice.ocrResult.confidence >= 0.95 ? "success" : invoice.ocrResult.confidence >= 0.8 ? "warning" : "danger"}
+                          size="sm"
+                          showAnimation={false}
+                        />
                       </div>
-                      <ProgressBar
-                        value={invoice.ocrResult.confidence * 100}
-                        variant={invoice.ocrResult.confidence >= 0.95 ? "success" : invoice.ocrResult.confidence >= 0.8 ? "warning" : "danger"}
-                        size="sm"
-                        showAnimation={false}
-                      />
-                    </div>
+                    )}
+                  </CardContent>
+                  {(invoice.ocrStatus === "reviewing" || invoice.ocrStatus === "pending") && (
+                    <CardFooter className="p-4 pt-0">
+                      <Button className="w-full" leftIcon={<Check className="w-4 h-4" />} onClick={() => handleReview(invoice)}>OCR复核</Button>
+                    </CardFooter>
                   )}
-                </CardContent>
-                {!invoice.verified && (
-                  <CardFooter className="p-4 pt-0">
-                    <Button className="w-full" leftIcon={<Check className="w-4 h-4" />} onClick={() => handleVerify(invoice)}>审核</Button>
-                  </CardFooter>
-                )}
-              </Card>
-            </m.div>
-          ))}
+                </Card>
+              </m.div>
+            );
+          })}
         </div>
       )}
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="票据审核"
-        size="lg"
+        title="OCR复核"
+        size="xl"
         footer={
           <>
-            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>取消</Button>
-            <Button onClick={confirmVerify} leftIcon={<Check className="w-4 h-4" />}>确认审核</Button>
+            <Button variant="secondary" leftIcon={<RefreshCw className="w-4 h-4" />} onClick={handleReject}>退回重识别</Button>
+            <Button onClick={handleConfirm} leftIcon={<Check className="w-4 h-4" />}>确认通过</Button>
           </>
         }
       >
-        {selectedInvoice?.ocrResult && (
-          <div className="space-y-4">
-            <div className="flex gap-6">
-              <img src={selectedInvoice.imageUrl} alt="发票图片" className="w-64 h-48 object-cover rounded-lg border border-slate-200" />
-              <div className="flex-1 space-y-3">
-                <InputField label="发票号" value={selectedInvoice.ocrResult.invoiceNo} />
-                <InputField label="金额" value={selectedInvoice.ocrResult.amount} />
-                <InputField label="日期" value={selectedInvoice.ocrResult.date} />
-                <InputField label="供应商" value={selectedInvoice.ocrResult.vendor} />
+        <AnimatePresence mode="wait">
+          {selectedInvoice && (
+            <m.div key="review" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
+              <div className="flex gap-6">
+                <div className="w-1/2">
+                  <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2"><FileText className="w-4 h-4" />票据原图</h4>
+                  <img src={selectedInvoice.imageUrl} alt="发票图片" className="w-full rounded-lg border border-slate-200 object-cover" />
+                </div>
+                <div className="w-1/2 space-y-3">
+                  <h4 className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Eye className="w-4 h-4" />OCR识别结果（可编辑）</h4>
+                  <InputField label="发票号" value={editForm.invoiceNo} onChange={(v: string) => setEditForm({ ...editForm, invoiceNo: v })} />
+                  <InputField label="金额（元）" value={editForm.amount} type="number" onChange={(v: string) => setEditForm({ ...editForm, amount: Number(v) })} />
+                  <InputField label="供应商" value={editForm.vendor} onChange={(v: string) => setEditForm({ ...editForm, vendor: v })} />
+                  <InputField label="日期" value={editForm.date} type="date" onChange={(v: string) => setEditForm({ ...editForm, date: v })} />
+                  <div>
+                    <label className="text-sm text-slate-500">归属科目</label>
+                    <select
+                      value={editForm.accountId}
+                      onChange={(e) => {
+                        const account = flatAccounts.find((a) => a.id === e.target.value);
+                        setEditForm({ ...editForm, accountId: e.target.value, accountName: account?.name || "" });
+                      }}
+                      className="w-full mt-1 px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    >
+                      <option value="">请选择科目</option>
+                      {flatAccounts.map((acc) => <option key={acc.id} value={acc.id}>{acc.code} - {acc.name}</option>)}
+                    </select>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="border-t border-slate-100 pt-4">
-              <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2"><FileText className="w-4 h-4" />明细项目</h4>
-              <div className="bg-slate-50 rounded-lg p-4">
-                <table className="w-full text-sm">
-                  <thead><tr className="text-slate-500"><th className="text-left pb-2">项目名称</th><th className="text-right pb-2">数量</th><th className="text-right pb-2">单价</th><th className="text-right pb-2">小计</th></tr></thead>
-                  <tbody>
-                    {selectedInvoice.ocrResult.items.map((item, i) => (
-                      <tr key={i} className="border-t border-slate-200">
-                        <td className="py-2">{item.name}</td>
-                        <td className="text-right py-2">{item.quantity}</td>
-                        <td className="text-right py-2">{formatCurrency(item.unitPrice)}</td>
-                        <td className="text-right py-2">{formatCurrency(item.quantity * item.unitPrice)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        )}
+              {selectedInvoice.ocrResult && (
+                <div className="border-t border-slate-100 pt-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-sm font-semibold text-slate-700 flex items-center gap-2"><Eye className="w-4 h-4" />识别置信度</span>
+                    <span className="text-sm font-bold text-primary-600">{formatPercent(selectedInvoice.ocrResult.confidence * 100)}</span>
+                  </div>
+                  <ProgressBar
+                    value={selectedInvoice.ocrResult.confidence * 100}
+                    variant={selectedInvoice.ocrResult.confidence >= 0.95 ? "success" : selectedInvoice.ocrResult.confidence >= 0.8 ? "warning" : "danger"}
+                    size="md"
+                    showAnimation
+                  />
+                </div>
+              )}
+            </m.div>
+          )}
+        </AnimatePresence>
       </Modal>
     </m.div>
   );

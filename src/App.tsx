@@ -4,6 +4,9 @@ import Dashboard from "@/pages/dashboard";
 import MotionList from "@/pages/council/MotionList";
 import MotionDetail from "@/pages/council/MotionDetail";
 import NewMotion from "@/pages/council/NewMotion";
+import ProfilePage from "@/pages/profile/ProfilePage";
+import SettingsPage from "@/pages/settings/SettingsPage";
+import VoucherTrace from "@/pages/finance/VoucherTrace";
 import { Layout } from "@/components/layout";
 import {
   AdminCouncilPage,
@@ -42,6 +45,7 @@ export default function App() {
           <Route path="/finance/overview" element={<FinanceOverviewPage />} />
           <Route path="/finance/invoices" element={<InvoicePage />} />
           <Route path="/finance/audit" element={<AuditReportPage />} />
+          <Route path="/finance/voucher-trace" element={<VoucherTrace />} />
           <Route path="/seal" element={<SealApplicationsPage />} />
           <Route path="/seal/applications" element={<SealApplicationsPage />} />
           <Route path="/seal/applications/new" element={<NewSealApplicationPage />} />
@@ -60,6 +64,8 @@ export default function App() {
           <Route path="/admin/council" element={<AdminCouncilPage />} />
           <Route path="/admin/property" element={<AdminPropertyPage />} />
           <Route path="/admin/street" element={<AdminStreetPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
         <Route path="/other" element={<div className="text-center text-xl">Other Page - Coming Soon</div>} />
       </Routes>

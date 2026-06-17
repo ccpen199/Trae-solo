@@ -57,6 +57,7 @@ const menuConfig: MenuItem[] = [
       { path: "/finance/overview", label: "财务总览", icon: Eye },
       { path: "/finance/invoices", label: "票据管理", icon: Receipt },
       { path: "/finance/audit", label: "审计报告", icon: FileCheck },
+      { path: "/finance/voucher-trace", label: "凭证追溯", icon: FolderKanban },
     ],
   },
   {

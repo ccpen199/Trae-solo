@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -192,14 +193,22 @@ export function Topbar() {
                   </div>
                 </div>
                 <div className="py-2">
-                  <button className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors">
+                  <Link
+                    to="/profile"
+                    onClick={() => setShowUserMenu(false)}
+                    className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
+                  >
                     <User className="w-4 h-4" />
                     个人中心
-                  </button>
-                  <button className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors">
+                  </Link>
+                  <Link
+                    to="/settings"
+                    onClick={() => setShowUserMenu(false)}
+                    className="w-full px-4 py-2.5 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
+                  >
                     <Settings className="w-4 h-4" />
                     系统设置
-                  </button>
+                  </Link>
                 </div>
                 <div className="border-t border-slate-100 py-2">
                   <button className="w-full px-4 py-2.5 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-3 transition-colors">
