@@ -1,0 +1,69 @@
+{
+  "order": "may-89214",
+  "checkedAt": "2026-06-16T22:03:08.253Z",
+  "frontendUrl": "http://127.0.0.1:49214/",
+  "backendHealthUrl": "http://127.0.0.1:59214/api/health",
+  "frontendStatus": 200,
+  "title": "配送调度中台",
+  "titleOk": true,
+  "proxiedHealth": {
+    "ok": true,
+    "status": 200,
+    "text": "{\"success\":true,\"status\":\"ok\",\"timestamp\":\"2026-06-16T22:02:33.369Z\",\"version\":\"1.0.0\"}"
+  },
+  "requiredTexts": [
+    "运营总览",
+    "订单管理",
+    "商户配送看板",
+    "运费比价引擎",
+    "后台管理"
+  ],
+  "missingTexts": [],
+  "clickResults": [
+    {
+      "label": "订单管理",
+      "ok": true,
+      "url": "http://127.0.0.1:49214/orders"
+    },
+    {
+      "label": "商户配送看板",
+      "ok": true,
+      "url": "http://127.0.0.1:49214/merchant"
+    },
+    {
+      "label": "运费比价引擎",
+      "ok": true,
+      "url": "http://127.0.0.1:49214/price-compare"
+    },
+    {
+      "label": "运力质量监控",
+      "ok": true,
+      "url": "http://127.0.0.1:49214/platforms"
+    },
+    {
+      "label": "SLA赔付管理",
+      "ok": true,
+      "url": "http://127.0.0.1:49214/compensation"
+    },
+    {
+      "label": "多平台结算中心",
+      "ok": true,
+      "url": "http://127.0.0.1:49214/settlement"
+    }
+  ],
+  "failedClicks": [],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailures": [],
+  "badResponses": [],
+  "layout": {
+    "viewportWidth": 1440,
+    "viewportHeight": 1100,
+    "scrollWidth": 1440,
+    "scrollHeight": 1653,
+    "horizontalOverflow": false,
+    "bodyLength": 925
+  },
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check-codex-cycle561-20260617/may-89214-browser.png",
+  "ok": true
+}

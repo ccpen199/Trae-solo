@@ -160,6 +160,33 @@ function initDatabase() {
   try {
     db.prepare('ALTER TABLE compensations ADD COLUMN reviewed_at DATETIME').run();
   } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE compensations ADD COLUMN coupon_verified BOOLEAN DEFAULT 0').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE compensations ADD COLUMN coupon_sent_at DATETIME').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE after_sales ADD COLUMN change_fee REAL DEFAULT 0').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE after_sales ADD COLUMN fee_confirmed BOOLEAN DEFAULT 0').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE after_sales ADD COLUMN disposal_result TEXT').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE after_sales ADD COLUMN disposed_at DATETIME').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN has_exception BOOLEAN DEFAULT 0').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN exception_count INTEGER DEFAULT 0').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN exception_amount REAL DEFAULT 0').run();
+  } catch (e) {}
 
   const platformCount = db.prepare('SELECT COUNT(*) as count FROM platforms').get().count;
   if (platformCount === 0) {
@@ -354,21 +381,21 @@ function ensureDemoWorkflowData() {
   const afterSalesCount = db.prepare('SELECT COUNT(*) as count FROM after_sales').get().count;
   if (afterSalesCount === 0) {
     db.prepare(`
-      INSERT INTO after_sales (order_id, type, reason, status, platform_ack, result, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, datetime('now', ?))
-    `).run(5, 'complaint', '配送已超过预计送达时间，商户要求平台说明并触发SLA复核', 'accepted', 1, '平台已受理，预计30分钟内给出处置结果', '-10 minutes');
+      INSERT INTO after_sales (order_id, type, reason, status, platform_ack, result, disposal_result, disposed_at, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now', ?), datetime('now', ?))
+    `).run(5, 'complaint', '配送已超过预计送达时间，商户要求平台说明并触发SLA复核', 'accepted', 1, '平台已受理，预计30分钟内给出处置结果', '骑手已致歉并补偿，商户满意', '-5 minutes', '-10 minutes');
 
     db.prepare(`
-      INSERT INTO after_sales (order_id, type, reason, new_address, status, platform_ack, result, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
-    `).run(2, 'address_change', '客户临时改到同小区北门', '北京市西城区西单北大街120号北门', 'processing', 0, '等待承运平台确认改址费用', '-4 minutes');
+      INSERT INTO after_sales (order_id, type, reason, new_address, status, platform_ack, result, change_fee, fee_confirmed, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
+    `).run(2, 'address_change', '客户临时改到同小区北门', '北京市西城区西单北大街120号北门', 'processing', 0, '等待承运平台确认改址费用', 3.5, 0, '-4 minutes');
   }
 
   const compensationCount = db.prepare('SELECT COUNT(*) as count FROM compensations').get().count;
   if (compensationCount === 0) {
     const insertCompensation = db.prepare(`
-      INSERT INTO compensations (order_id, merchant_id, type, amount, coupon_code, reason, status, review_result, reviewed_at, triggered_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
+      INSERT INTO compensations (order_id, merchant_id, type, amount, coupon_code, reason, status, review_result, reviewed_at, triggered_at, coupon_verified, coupon_sent_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?), ?, datetime('now', ?))
     `);
 
     insertCompensation.run(
@@ -381,7 +408,9 @@ function ensureDemoWorkflowData() {
       'issued',
       null,
       null,
-      '-8 minutes'
+      '-8 minutes',
+      1,
+      '-6 minutes'
     );
     insertCompensation.run(
       4,
@@ -390,10 +419,12 @@ function ensureDemoWorkflowData() {
       10,
       'CPREVIEW04',
       '客户投诉骑手未提前电话联系，复核后确认补偿',
-      'issued',
+      'reviewed',
       '复核通过，补偿券已发放给商户账户',
       new Date(Date.now() - 25 * 60 * 1000).toISOString(),
-      '-40 minutes'
+      '-40 minutes',
+      1,
+      '-30 minutes'
     );
     insertCompensation.run(
       2,
@@ -402,40 +433,48 @@ function ensureDemoWorkflowData() {
       18,
       'CPPENDING02',
       '蛋糕外包装破损，等待运营复核后发放',
-      'pending',
+      'review_pending',
       null,
       null,
-      '-3 minutes'
+      '-3 minutes',
+      0,
+      null
     );
   }
 
   const settlementCount = db.prepare('SELECT COUNT(*) as count FROM settlements').get().count;
   if (settlementCount === 0) {
-    const deliveredOrder = db.prepare('SELECT * FROM orders WHERE id = 4').get();
-    if (deliveredOrder) {
-      const period = new Date().toISOString().slice(0, 7);
-      const settlementAmount = deliveredOrder.platform_fee || deliveredOrder.total_fee;
-      const commissionAmount = (deliveredOrder.total_fee || 0) - (deliveredOrder.platform_fee || 0);
-      const result = db.prepare(`
-        INSERT INTO settlements (settlement_no, merchant_id, platform_id, period, total_orders, total_amount, commission_amount, settlement_amount, status, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', '-20 minutes'))
-      `).run(
-        `JS${period.replace('-', '')}0001`,
-        deliveredOrder.merchant_id,
-        deliveredOrder.platform_id,
-        period,
-        1,
-        deliveredOrder.total_fee,
-        commissionAmount,
-        settlementAmount,
-        'pending'
-      );
+    const period = new Date().toISOString().slice(0, 7);
+    const insertSettlement = db.prepare(`
+      INSERT INTO settlements (settlement_no, merchant_id, platform_id, period, total_orders, total_amount, commission_amount, settlement_amount, status, has_exception, exception_count, exception_amount, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
+    `);
 
-      db.prepare(`
-        INSERT INTO settlement_items (settlement_id, order_id, order_amount, commission_amount)
-        VALUES (?, ?, ?, ?)
-      `).run(result.lastInsertRowid, deliveredOrder.id, settlementAmount, commissionAmount);
-    }
+    const platformSettlements = [
+      [1, 8, 15, 2580.5, 129.03, 2451.47, 'pending', 0, 0, 0, '-3 days'],
+      [1, 1, 12, 1856.0, 92.80, 1763.20, 'reconciled', 0, 0, 0, '-5 days'],
+      [1, 3, 23, 3850.75, 269.55, 3581.20, 'pending', 1, 3, 42.50, '-2 days'],
+      [2, 2, 18, 2940.0, 176.40, 2763.60, 'paid', 0, 0, 0, '-10 days'],
+      [2, 4, 9, 1260.5, 56.72, 1203.78, 'pending', 1, 1, 15.00, '-1 days'],
+    ];
+
+    platformSettlements.forEach((s, idx) => {
+      insertSettlement.run(
+        `JS${period.replace('-', '')}${String(idx + 1).padStart(4, '0')}`,
+        s[0],
+        s[1],
+        period,
+        s[2],
+        s[3],
+        s[4],
+        s[5],
+        s[6],
+        s[7],
+        s[8],
+        s[9],
+        s[10]
+      );
+    });
   }
 
   const ensureTrack = (orderId, status, description, location = null) => {

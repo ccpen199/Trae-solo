@@ -24,6 +24,7 @@ function Orders() {
   const [routeDrawer, setRouteDrawer] = useState(false)
   const [routeDetail, setRouteDetail] = useState(null)
   const [routeLoading, setRouteLoading] = useState(false)
+  const [modal, modalContextHolder] = Modal.useModal()
 
   useEffect(() => {
     loadPlatforms()
@@ -164,7 +165,7 @@ function Orders() {
   }
 
   const handleCancelOrder = async (orderId) => {
-    Modal.confirm({
+    modal.confirm({
       title: '确认取消订单',
       content: '取消后将通知运力平台，是否继续？',
       onOk: async () => {
@@ -303,7 +304,7 @@ function Orders() {
           )}
           {!['delivered', 'cancelled', 'delivering'].includes(record.delivery_status) && (
             <Button type="link" size="small" danger onClick={() => handleCancelOrder(record.id)}>
-              取消
+              取消订单
             </Button>
           )}
         </Space>
@@ -313,6 +314,7 @@ function Orders() {
 
   return (
     <div>
+      {modalContextHolder}
       <div className="page-header">
         <h2 className="page-title">订单管理</h2>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setCreateModal(true)}>
@@ -370,7 +372,7 @@ function Orders() {
         onOk={() => { setCreateModal(false); form.resetFields(); setQuoteResult(null); setSelectedPlatform(null) }}
         width={700}
         maskClosable={false}
-        destroyOnClose
+        destroyOnHidden
         cancelText="关闭"
         okText="创建订单"
         footer={[
@@ -500,7 +502,7 @@ function Orders() {
         width={520}
         open={detailDrawer}
         onClose={() => setDetailDrawer(false)}
-        destroyOnClose
+        destroyOnHidden
       >
         {currentOrder && (
           <div>
@@ -603,7 +605,7 @@ function Orders() {
         width={650}
         open={routeDrawer}
         onClose={() => setRouteDrawer(false)}
-        destroyOnClose
+        destroyOnHidden
         loading={routeLoading}
       >
         {routeDetail && (

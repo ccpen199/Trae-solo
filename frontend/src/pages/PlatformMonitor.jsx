@@ -823,7 +823,7 @@ function PlatformMonitor() {
         width={600}
         open={compensationDrawer}
         onClose={() => setCompensationDrawer(false)}
-        destroyOnClose
+        destroyOnHidden
       >
         {compensationDetail && (
           <div>
@@ -995,7 +995,7 @@ function PlatformMonitor() {
         onCancel={() => setAlertModal(false)}
         onOk={() => alertForm.submit()}
         width={600}
-        destroyOnClose
+        destroyOnHidden
       >
         {currentAlert && (
           <Form form={alertForm} layout="vertical" onFinish={handleAlertSubmit}>

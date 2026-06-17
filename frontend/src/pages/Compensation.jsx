@@ -573,7 +573,7 @@ function Compensation() {
         onCancel={() => setReviewModal(false)}
         footer={null}
         width={500}
-        destroyOnClose
+        destroyOnHidden
       >
         {currentItem && (
           <div>

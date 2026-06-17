@@ -1,0 +1,3944 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T21:08:01.621Z",
+  "order": "may-89214",
+  "roundIndex": 471,
+  "captureId": "may-89214-codex-cycle471",
+  "url": "http://127.0.0.1:49214/",
+  "initialUrl": "http://127.0.0.1:49214/",
+  "finalUrl": "http://127.0.0.1:49214/",
+  "status": 200,
+  "title": "配送调度中台",
+  "initialTitle": "配送调度中台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-02-导航-运营.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-03-操作-新建.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-05-操作-新建订单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-07-导航-运营总览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-08-操作-新建.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-10-操作-新建订单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-12-导航-订单管理.png"
+  ],
+  "issueTextPreview": "登录流程已完成，继续复验登录后的首页和业务导航；第3轮状态截图不属于may-89214，重新确认当前页面",
+  "targetReason": "登录注册相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49214/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49214/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:运营",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建:订单管理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建订单:订单管理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:运营总览",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建:订单管理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建订单:订单管理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:订单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^取消$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"ant-btn css-dev-only-do-not-override-mncu"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/^取消$/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span>取消</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element "
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^Close$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Close\" class=\"ant-modal-close\">…<"
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "headings": [
+          "运营总览"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效要求",
+              "候选承运方",
+              "最优选择理由",
+              "费用",
+              "状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 配送地址 距离 重量 时效要求 候选承运方 最优选择理由 费用 状态 创建时间 操作 订单号 商户 平台 收件人 配送地址 距离 重量 时效要求 候选承运方 最优选择理由 费用 状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 运力 30%|履约 97.0% 周先生 北京市朝阳区三里屯路19号 10.1km 2.5kg ⚡ 加急 #1 ⚡ 闪送 ¥40 45分 #2 🛒 京东到家 ¥36 60分 #3 📦 顺丰同城 ¥38 60分 还有 9 家候选 综合77分 · 价格60分/时效75分 时效稳定，运力充足，历史准时率97.... ¥45."
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心运营总览已登录管理员A运营总览今日 2026年06月17日今日订单5配送中2已完成1累计营收¥52.00运力平台状态4查看全部 检测到 4 个平台存在异常 🍔 美团众包: 投诉率达2.50%，超过预警线2% 🐦 蜂鸟即配: 投诉率达2.20%，超过预警线2% 🐰 极兔速递: 投诉率达3.00%，超过预警线2% 💨 百世闪送: 投诉率达2.80%，超过预警线2%批量处理🚴达达快送饱和度 60%准时率 96.0%丢件率 0.80%投诉率 1.50%今日 1 单📦顺丰同城饱和度 40%准时率 98.0%丢件率 0.50%投诉率 1.00%今日 1 单售后待处理 1待赔付 1⚡闪送饱和度 30%准时率 97.0%丢件率 0.60%投诉率 1.20%今日 2 单售后待处理 1🍔美团众包 异常预警饱和度 70%准时率 93.0%丢件率 1.20%投诉率 2.50%今日 1 单异常订单投诉处理赔付触发订单改派🐦蜂鸟即配 异常预警饱和度 65%准时率 94.0%丢件率 1.00%投诉率 2.20%今日 0 单异常订单投诉处理赔付触发订单改派🏃UU跑腿饱和度 50%准时率 95.0%丢件率 0.90%投诉率 1.80%今日 0 单🎯点我达饱和度 55%准时率 94.0%丢件率 1.10%投诉率 2.00%今日 0 单🐰极兔速递 异常预警饱和度 45%准时率 91.0%丢件率 1.50%投诉率 3.00%今日 0 单异常订单投诉处理赔付触发订单改派🛒京东到家饱和度 35%准时率 97.0%丢件率 0.70%投诉率 1.30%今日 0 单⏱️苏宁秒达饱和度 40%准时率 95.0%丢件率 0.80%投诉率 1.60%今日 0 单💨百世闪送 异常预警饱和度 60%准时率 92.0%丢件率 1.30%投诉率 2.80%今日 0 单异常订单投诉处理赔付触发订单改派🚚德邦快递饱和度 25%准时率 98.0%丢件率 0.40%投诉率 0.80%今日 0 单待处理事项新建订单商户看板售后协同1全部 DD202401150002改址 同步中📦 顺丰同城 · 商户同步: 同步中 · 结果: 等待承运平台确认改址费用改址费: ¥3.50待确认提交: 06-16 02:14原因: 客户临时改到同小区北门DD202401150005投诉 承运方已回执⚡ 闪送 · 商户同步: 已同步 · 结果: 平台已受理，预计30分钟内给出处置结果承运方处置: 骑手已致歉并补偿，商户满意提交: 06-16 02:08处置回传: 06-16 02:13原因: 配送已超过预计送达时间，商户要求平台说明并触发SL...SLA赔付全部 DD202401150002丢件¥18.00 已发券📦 顺丰同城 · 券码: CPPENDING02 · 待复查发放: 已发放核验: 待核验触发: 06-16 02:15原因: 蛋糕外包装破损，等待运营复核后发放多平台结算3按单抽佣月结对账2026-06🍔 美团众包待对账 异常差异0单 · 总额 ¥1260.50抽佣: ¥56.72(0%)应付: ¥1203.78 异常差异 1 笔，差异金额 ¥15.00查看明细2026-06⚡ 闪送待对账 异常差异0单 · 总额 ¥3850.75抽佣: ¥269.55(0%)应付: ¥3581.20 异常差异 3 笔，差异金额 ¥42.50查看明细2026-06🐰 极兔速递待对账00单 · 总额 ¥2580.50抽佣: ¥129.03(0%)应付: ¥2451.47查看明细2026-06🚴 达达快送已对账00单 · 总额 ¥1856.00抽佣: ¥92.80(0%)应付: ¥1763.20查看明细2026-06📦 顺丰同城已付款00单 · 总额 ¥2940.00抽佣: ¥176.40(0%)应付: ¥2763.60查看明细智能比价下单比价引擎新建当前接入运力平台12 家平均准时率95.0%平均运费(5km)¥22.79 今日最低成本方案🐰极兔速递最低成本5km标准配送¥16.00比平均价节省 ¥6.79🚴📦⚡🍔🐦🏃一键比价下单 →最近订单全部订单 订单号商户平",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 3370,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49214/",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-01-首屏.png",
+          "elementCount": 1200,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "查看全部",
+            "批量处理",
+            "异常订单",
+            "投诉处理",
+            "赔付触发",
+            "订单改派",
+            "新建订单",
+            "商户看板",
+            "全部",
+            "按单抽佣",
+            "月结对账",
+            "查看明细",
+            "比价引擎",
+            "新建",
+            "一键比价下单 →",
+            "全部订单",
+            "详情",
+            "路由依据"
+          ]
+        }
+      },
+      {
+        "label": "导航:运营",
+        "url": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "headings": [
+          "运营总览"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效要求",
+              "候选承运方",
+              "最优选择理由",
+              "费用",
+              "状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 配送地址 距离 重量 时效要求 候选承运方 最优选择理由 费用 状态 创建时间 操作 订单号 商户 平台 收件人 配送地址 距离 重量 时效要求 候选承运方 最优选择理由 费用 状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 运力 30%|履约 97.0% 周先生 北京市朝阳区三里屯路19号 10.1km 2.5kg ⚡ 加急 #1 ⚡ 闪送 ¥40 45分 #2 🛒 京东到家 ¥36 60分 #3 📦 顺丰同城 ¥38 60分 还有 9 家候选 综合77分 · 价格60分/时效75分 时效稳定，运力充足，历史准时率97.... ¥45."
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心运营总览已登录管理员A运营总览今日 2026年06月17日今日订单5配送中2已完成1累计营收¥52.00运力平台状态4查看全部 检测到 4 个平台存在异常 🍔 美团众包: 投诉率达2.50%，超过预警线2% 🐦 蜂鸟即配: 投诉率达2.20%，超过预警线2% 🐰 极兔速递: 投诉率达3.00%，超过预警线2% 💨 百世闪送: 投诉率达2.80%，超过预警线2%批量处理🚴达达快送饱和度 60%准时率 96.0%丢件率 0.80%投诉率 1.50%今日 1 单📦顺丰同城饱和度 40%准时率 98.0%丢件率 0.50%投诉率 1.00%今日 1 单售后待处理 1待赔付 1⚡闪送饱和度 30%准时率 97.0%丢件率 0.60%投诉率 1.20%今日 2 单售后待处理 1🍔美团众包 异常预警饱和度 70%准时率 93.0%丢件率 1.20%投诉率 2.50%今日 1 单异常订单投诉处理赔付触发订单改派🐦蜂鸟即配 异常预警饱和度 65%准时率 94.0%丢件率 1.00%投诉率 2.20%今日 0 单异常订单投诉处理赔付触发订单改派🏃UU跑腿饱和度 50%准时率 95.0%丢件率 0.90%投诉率 1.80%今日 0 单🎯点我达饱和度 55%准时率 94.0%丢件率 1.10%投诉率 2.00%今日 0 单🐰极兔速递 异常预警饱和度 45%准时率 91.0%丢件率 1.50%投诉率 3.00%今日 0 单异常订单投诉处理赔付触发订单改派🛒京东到家饱和度 35%准时率 97.0%丢件率 0.70%投诉率 1.30%今日 0 单⏱️苏宁秒达饱和度 40%准时率 95.0%丢件率 0.80%投诉率 1.60%今日 0 单💨百世闪送 异常预警饱和度 60%准时率 92.0%丢件率 1.30%投诉率 2.80%今日 0 单异常订单投诉处理赔付触发订单改派🚚德邦快递饱和度 25%准时率 98.0%丢件率 0.40%投诉率 0.80%今日 0 单待处理事项新建订单商户看板售后协同1全部 DD202401150002改址 同步中📦 顺丰同城 · 商户同步: 同步中 · 结果: 等待承运平台确认改址费用改址费: ¥3.50待确认提交: 06-16 02:14原因: 客户临时改到同小区北门DD202401150005投诉 承运方已回执⚡ 闪送 · 商户同步: 已同步 · 结果: 平台已受理，预计30分钟内给出处置结果承运方处置: 骑手已致歉并补偿，商户满意提交: 06-16 02:08处置回传: 06-16 02:13原因: 配送已超过预计送达时间，商户要求平台说明并触发SL...SLA赔付全部 DD202401150002丢件¥18.00 已发券📦 顺丰同城 · 券码: CPPENDING02 · 待复查发放: 已发放核验: 待核验触发: 06-16 02:15原因: 蛋糕外包装破损，等待运营复核后发放多平台结算3按单抽佣月结对账2026-06🍔 美团众包待对账 异常差异0单 · 总额 ¥1260.50抽佣: ¥56.72(0%)应付: ¥1203.78 异常差异 1 笔，差异金额 ¥15.00查看明细2026-06⚡ 闪送待对账 异常差异0单 · 总额 ¥3850.75抽佣: ¥269.55(0%)应付: ¥3581.20 异常差异 3 笔，差异金额 ¥42.50查看明细2026-06🐰 极兔速递待对账00单 · 总额 ¥2580.50抽佣: ¥129.03(0%)应付: ¥2451.47查看明细2026-06🚴 达达快送已对账00单 · 总额 ¥1856.00抽佣: ¥92.80(0%)应付: ¥1763.20查看明细2026-06📦 顺丰同城已付款00单 · 总额 ¥2940.00抽佣: ¥176.40(0%)应付: ¥2763.60查看明细智能比价下单比价引擎新建当前接入运力平台12 家平均准时率95.0%平均运费(5km)¥22.79 今日最低成本方案🐰极兔速递最低成本5km标准配送¥16.00比平均价节省 ¥6.79🚴📦⚡🍔🐦🏃一键比价下单 →最近订单全部订单 订单号商户平",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 3370,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-02-导航-运营",
+          "label": "导航:运营",
+          "finalUrl": "http://127.0.0.1:49214/",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-02-导航-运营.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-02-导航-运营.png",
+          "elementCount": 1200,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "查看全部",
+            "批量处理",
+            "异常订单",
+            "投诉处理",
+            "赔付触发",
+            "订单改派",
+            "新建订单",
+            "商户看板",
+            "全部",
+            "按单抽佣",
+            "月结对账",
+            "查看明细",
+            "比价引擎",
+            "新建",
+            "一键比价下单 →",
+            "全部订单",
+            "详情",
+            "路由依据"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建",
+        "url": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "headings": [
+          "运费比价引擎"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "清空对比",
+          "开始对比",
+          "订单管理",
+          "智能比价"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入手机号码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入详细收件地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：奶茶、餐食、文件",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公里数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公斤数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "选填，用于评估时效",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心运费比价引擎已登录管理员A运费比价引擎对比篮 0 个平台清空对比开始对比订单管理智能推荐 · 一键比价 · 多平台对比配送信息收件人信息收件人姓名联系电话收件地址物品信息物品名称配送距离(km)重量(kg)时效要求时效经济普通加急期望送达时间(分钟)智能比价全部平台比价排序：综合评分请输入配送参数，点击\"智能比价\"查看各平台报价",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-03-操作-新建",
+          "label": "操作:新建",
+          "finalUrl": "http://127.0.0.1:49214/price-compare",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-03-操作-新建.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-03-操作-新建.png",
+          "elementCount": 257,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "清空对比",
+            "开始对比",
+            "请输入姓名",
+            "请输入手机号码",
+            "请输入详细收件地址",
+            "如：奶茶、餐食、文件",
+            "Increase Value",
+            "Decrease Value",
+            "5.0",
+            "1.0",
+            "economy",
+            "normal",
+            "urgent",
+            "选填，用于评估时效",
+            "智能比价"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建->订单管理",
+        "url": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "收件电话",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效",
+              "异常预警",
+              "费用",
+              "配送状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 收件电话 配送地址 距离 重量 时效 异常预警 费用 配送状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 周先生 13900139005 北京市朝阳区三里屯路19号 10.1km 2.5kg 加急 已超时 ¥45.00 配送中 06-16 02:18 详情 路由依据 完成 DD202401150004 美味鲜花店 ⚡ 闪送 陈女士 13900139004 北京市丰台区丰台路1号 18.6km 0.3kg 普通 正常 ¥52.00 已送达 06-16 02:18 详情 路由依据 DD202401150003 鲜果时光 🍔 美团众包 赵先生 1"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心订单管理已登录管理员A订单管理新建订单配送状态运力平台查询刷新订单号商户平台收件人收件电话配送地址距离重量时效异常预警费用配送状态创建时间操作DD202401150005鲜果时光⚡ 闪送周先生13900139005北京市朝阳区三里屯路19号10.1km2.5kg 加急 已超时¥45.00配送中06-16 02:18详情路由依据完成DD202401150004美味鲜花店⚡ 闪送陈女士13900139004北京市丰台区丰台路1号18.6km0.3kg 普通正常¥52.00已送达06-16 02:18详情路由依据DD202401150003鲜果时光🍔 美团众包赵先生13900139003北京市西城区金融街7号12.3km3kg 普通 已超时¥38.00待分配06-16 02:18详情路由依据分配取消DD202401150002美味鲜花店📦 顺丰同城李先生13900139002北京市西城区西单北大街120号8.5km1.2kg 加急 已超时¥42.00已取货06-16 02:18详情路由依据开始配送取消DD202401150001美味鲜花店🚴 达达快送王女士13900139001北京市东城区王府井大街138号5.2km0.5kg 普通 已超时¥28.00配送中06-16 02:18详情路由依据完成共 5 条110 条/页",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理",
+          "label": "二层操作:新建->订单管理",
+          "finalUrl": "http://127.0.0.1:49214/orders",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理.png",
+          "elementCount": 410,
+          "interactiveCount": 35,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "新建订单",
+            "查询",
+            "刷新",
+            "详情",
+            "路由依据",
+            "完成",
+            "分配",
+            "取消",
+            "开始配送",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建订单",
+        "url": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "headings": [
+          "运费比价引擎"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "清空对比",
+          "开始对比",
+          "订单管理",
+          "智能比价"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入手机号码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入详细收件地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：奶茶、餐食、文件",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公里数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公斤数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "选填，用于评估时效",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心运费比价引擎已登录管理员A运费比价引擎对比篮 0 个平台清空对比开始对比订单管理智能推荐 · 一键比价 · 多平台对比配送信息收件人信息收件人姓名联系电话收件地址物品信息物品名称配送距离(km)重量(kg)时效要求时效经济普通加急期望送达时间(分钟)智能比价全部平台比价排序：综合评分请输入配送参数，点击\"智能比价\"查看各平台报价",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-05-操作-新建订单",
+          "label": "操作:新建订单",
+          "finalUrl": "http://127.0.0.1:49214/price-compare",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-05-操作-新建订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-05-操作-新建订单.png",
+          "elementCount": 257,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "清空对比",
+            "开始对比",
+            "请输入姓名",
+            "请输入手机号码",
+            "请输入详细收件地址",
+            "如：奶茶、餐食、文件",
+            "Increase Value",
+            "Decrease Value",
+            "5.0",
+            "1.0",
+            "economy",
+            "normal",
+            "urgent",
+            "选填，用于评估时效",
+            "智能比价"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建订单->订单管理",
+        "url": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "收件电话",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效",
+              "异常预警",
+              "费用",
+              "配送状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 收件电话 配送地址 距离 重量 时效 异常预警 费用 配送状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 周先生 13900139005 北京市朝阳区三里屯路19号 10.1km 2.5kg 加急 已超时 ¥45.00 配送中 06-16 02:18 详情 路由依据 完成 DD202401150004 美味鲜花店 ⚡ 闪送 陈女士 13900139004 北京市丰台区丰台路1号 18.6km 0.3kg 普通 正常 ¥52.00 已送达 06-16 02:18 详情 路由依据 DD202401150003 鲜果时光 🍔 美团众包 赵先生 1"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心订单管理已登录管理员A订单管理新建订单配送状态运力平台查询刷新订单号商户平台收件人收件电话配送地址距离重量时效异常预警费用配送状态创建时间操作DD202401150005鲜果时光⚡ 闪送周先生13900139005北京市朝阳区三里屯路19号10.1km2.5kg 加急 已超时¥45.00配送中06-16 02:18详情路由依据完成DD202401150004美味鲜花店⚡ 闪送陈女士13900139004北京市丰台区丰台路1号18.6km0.3kg 普通正常¥52.00已送达06-16 02:18详情路由依据DD202401150003鲜果时光🍔 美团众包赵先生13900139003北京市西城区金融街7号12.3km3kg 普通 已超时¥38.00待分配06-16 02:18详情路由依据分配取消DD202401150002美味鲜花店📦 顺丰同城李先生13900139002北京市西城区西单北大街120号8.5km1.2kg 加急 已超时¥42.00已取货06-16 02:18详情路由依据开始配送取消DD202401150001美味鲜花店🚴 达达快送王女士13900139001北京市东城区王府井大街138号5.2km0.5kg 普通 已超时¥28.00配送中06-16 02:18详情路由依据完成共 5 条110 条/页",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理",
+          "label": "二层操作:新建订单->订单管理",
+          "finalUrl": "http://127.0.0.1:49214/orders",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理.png",
+          "elementCount": 410,
+          "interactiveCount": 35,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "新建订单",
+            "查询",
+            "刷新",
+            "详情",
+            "路由依据",
+            "完成",
+            "分配",
+            "取消",
+            "开始配送",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "导航:运营总览",
+        "url": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "headings": [
+          "运营总览"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效要求",
+              "候选承运方",
+              "最优选择理由",
+              "费用",
+              "状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 配送地址 距离 重量 时效要求 候选承运方 最优选择理由 费用 状态 创建时间 操作 订单号 商户 平台 收件人 配送地址 距离 重量 时效要求 候选承运方 最优选择理由 费用 状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 运力 30%|履约 97.0% 周先生 北京市朝阳区三里屯路19号 10.1km 2.5kg ⚡ 加急 #1 ⚡ 闪送 ¥40 45分 #2 🛒 京东到家 ¥36 60分 #3 📦 顺丰同城 ¥38 60分 还有 9 家候选 综合77分 · 价格60分/时效75分 时效稳定，运力充足，历史准时率97.... ¥45."
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心运营总览已登录管理员A运营总览今日 2026年06月17日今日订单5配送中2已完成1累计营收¥52.00运力平台状态4查看全部 检测到 4 个平台存在异常 🍔 美团众包: 投诉率达2.50%，超过预警线2% 🐦 蜂鸟即配: 投诉率达2.20%，超过预警线2% 🐰 极兔速递: 投诉率达3.00%，超过预警线2% 💨 百世闪送: 投诉率达2.80%，超过预警线2%批量处理🚴达达快送饱和度 60%准时率 96.0%丢件率 0.80%投诉率 1.50%今日 1 单📦顺丰同城饱和度 40%准时率 98.0%丢件率 0.50%投诉率 1.00%今日 1 单售后待处理 1待赔付 1⚡闪送饱和度 30%准时率 97.0%丢件率 0.60%投诉率 1.20%今日 2 单售后待处理 1🍔美团众包 异常预警饱和度 70%准时率 93.0%丢件率 1.20%投诉率 2.50%今日 1 单异常订单投诉处理赔付触发订单改派🐦蜂鸟即配 异常预警饱和度 65%准时率 94.0%丢件率 1.00%投诉率 2.20%今日 0 单异常订单投诉处理赔付触发订单改派🏃UU跑腿饱和度 50%准时率 95.0%丢件率 0.90%投诉率 1.80%今日 0 单🎯点我达饱和度 55%准时率 94.0%丢件率 1.10%投诉率 2.00%今日 0 单🐰极兔速递 异常预警饱和度 45%准时率 91.0%丢件率 1.50%投诉率 3.00%今日 0 单异常订单投诉处理赔付触发订单改派🛒京东到家饱和度 35%准时率 97.0%丢件率 0.70%投诉率 1.30%今日 0 单⏱️苏宁秒达饱和度 40%准时率 95.0%丢件率 0.80%投诉率 1.60%今日 0 单💨百世闪送 异常预警饱和度 60%准时率 92.0%丢件率 1.30%投诉率 2.80%今日 0 单异常订单投诉处理赔付触发订单改派🚚德邦快递饱和度 25%准时率 98.0%丢件率 0.40%投诉率 0.80%今日 0 单待处理事项新建订单商户看板售后协同1全部 DD202401150002改址 同步中📦 顺丰同城 · 商户同步: 同步中 · 结果: 等待承运平台确认改址费用改址费: ¥3.50待确认提交: 06-16 02:14原因: 客户临时改到同小区北门DD202401150005投诉 承运方已回执⚡ 闪送 · 商户同步: 已同步 · 结果: 平台已受理，预计30分钟内给出处置结果承运方处置: 骑手已致歉并补偿，商户满意提交: 06-16 02:08处置回传: 06-16 02:13原因: 配送已超过预计送达时间，商户要求平台说明并触发SL...SLA赔付全部 DD202401150002丢件¥18.00 已发券📦 顺丰同城 · 券码: CPPENDING02 · 待复查发放: 已发放核验: 待核验触发: 06-16 02:15原因: 蛋糕外包装破损，等待运营复核后发放多平台结算3按单抽佣月结对账2026-06🍔 美团众包待对账 异常差异0单 · 总额 ¥1260.50抽佣: ¥56.72(0%)应付: ¥1203.78 异常差异 1 笔，差异金额 ¥15.00查看明细2026-06⚡ 闪送待对账 异常差异0单 · 总额 ¥3850.75抽佣: ¥269.55(0%)应付: ¥3581.20 异常差异 3 笔，差异金额 ¥42.50查看明细2026-06🐰 极兔速递待对账00单 · 总额 ¥2580.50抽佣: ¥129.03(0%)应付: ¥2451.47查看明细2026-06🚴 达达快送已对账00单 · 总额 ¥1856.00抽佣: ¥92.80(0%)应付: ¥1763.20查看明细2026-06📦 顺丰同城已付款00单 · 总额 ¥2940.00抽佣: ¥176.40(0%)应付: ¥2763.60查看明细智能比价下单比价引擎新建当前接入运力平台12 家平均准时率95.0%平均运费(5km)¥22.79 今日最低成本方案🐰极兔速递最低成本5km标准配送¥16.00比平均价节省 ¥6.79🚴📦⚡🍔🐦🏃一键比价下单 →最近订单全部订单 订单号商户平",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 3124,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-07-导航-运营总览",
+          "label": "导航:运营总览",
+          "finalUrl": "http://127.0.0.1:49214/",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-07-导航-运营总览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-07-导航-运营总览.png",
+          "elementCount": 1200,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "查看全部",
+            "批量处理",
+            "异常订单",
+            "投诉处理",
+            "赔付触发",
+            "订单改派",
+            "新建订单",
+            "商户看板",
+            "全部",
+            "按单抽佣",
+            "月结对账",
+            "查看明细",
+            "比价引擎",
+            "新建",
+            "一键比价下单 →",
+            "全部订单",
+            "详情",
+            "路由依据"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建",
+        "url": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "headings": [
+          "运费比价引擎"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "清空对比",
+          "开始对比",
+          "订单管理",
+          "智能比价"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入手机号码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入详细收件地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：奶茶、餐食、文件",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公里数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公斤数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "选填，用于评估时效",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心运费比价引擎已登录管理员A运费比价引擎对比篮 0 个平台清空对比开始对比订单管理智能推荐 · 一键比价 · 多平台对比配送信息收件人信息收件人姓名联系电话收件地址物品信息物品名称配送距离(km)重量(kg)时效要求时效经济普通加急期望送达时间(分钟)智能比价全部平台比价排序：综合评分请输入配送参数，点击\"智能比价\"查看各平台报价",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-08-操作-新建",
+          "label": "操作:新建",
+          "finalUrl": "http://127.0.0.1:49214/price-compare",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-08-操作-新建.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-08-操作-新建.png",
+          "elementCount": 257,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "清空对比",
+            "开始对比",
+            "请输入姓名",
+            "请输入手机号码",
+            "请输入详细收件地址",
+            "如：奶茶、餐食、文件",
+            "Increase Value",
+            "Decrease Value",
+            "5.0",
+            "1.0",
+            "economy",
+            "normal",
+            "urgent",
+            "选填，用于评估时效",
+            "智能比价"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建->订单管理",
+        "url": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "收件电话",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效",
+              "异常预警",
+              "费用",
+              "配送状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 收件电话 配送地址 距离 重量 时效 异常预警 费用 配送状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 周先生 13900139005 北京市朝阳区三里屯路19号 10.1km 2.5kg 加急 已超时 ¥45.00 配送中 06-16 02:18 详情 路由依据 完成 DD202401150004 美味鲜花店 ⚡ 闪送 陈女士 13900139004 北京市丰台区丰台路1号 18.6km 0.3kg 普通 正常 ¥52.00 已送达 06-16 02:18 详情 路由依据 DD202401150003 鲜果时光 🍔 美团众包 赵先生 1"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心订单管理已登录管理员A订单管理新建订单配送状态运力平台查询刷新订单号商户平台收件人收件电话配送地址距离重量时效异常预警费用配送状态创建时间操作DD202401150005鲜果时光⚡ 闪送周先生13900139005北京市朝阳区三里屯路19号10.1km2.5kg 加急 已超时¥45.00配送中06-16 02:18详情路由依据完成DD202401150004美味鲜花店⚡ 闪送陈女士13900139004北京市丰台区丰台路1号18.6km0.3kg 普通正常¥52.00已送达06-16 02:18详情路由依据DD202401150003鲜果时光🍔 美团众包赵先生13900139003北京市西城区金融街7号12.3km3kg 普通 已超时¥38.00待分配06-16 02:18详情路由依据分配取消DD202401150002美味鲜花店📦 顺丰同城李先生13900139002北京市西城区西单北大街120号8.5km1.2kg 加急 已超时¥42.00已取货06-16 02:18详情路由依据开始配送取消DD202401150001美味鲜花店🚴 达达快送王女士13900139001北京市东城区王府井大街138号5.2km0.5kg 普通 已超时¥28.00配送中06-16 02:18详情路由依据完成共 5 条110 条/页",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理",
+          "label": "二层操作:新建->订单管理",
+          "finalUrl": "http://127.0.0.1:49214/orders",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理.png",
+          "elementCount": 410,
+          "interactiveCount": 35,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "新建订单",
+            "查询",
+            "刷新",
+            "详情",
+            "路由依据",
+            "完成",
+            "分配",
+            "取消",
+            "开始配送",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建订单",
+        "url": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "headings": [
+          "运费比价引擎"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "清空对比",
+          "开始对比",
+          "订单管理",
+          "智能比价"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入手机号码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入详细收件地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：奶茶、餐食、文件",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公里数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公斤数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "选填，用于评估时效",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心运费比价引擎已登录管理员A运费比价引擎对比篮 0 个平台清空对比开始对比订单管理智能推荐 · 一键比价 · 多平台对比配送信息收件人信息收件人姓名联系电话收件地址物品信息物品名称配送距离(km)重量(kg)时效要求时效经济普通加急期望送达时间(分钟)智能比价全部平台比价排序：综合评分请输入配送参数，点击\"智能比价\"查看各平台报价",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-10-操作-新建订单",
+          "label": "操作:新建订单",
+          "finalUrl": "http://127.0.0.1:49214/price-compare",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-10-操作-新建订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-10-操作-新建订单.png",
+          "elementCount": 257,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "清空对比",
+            "开始对比",
+            "请输入姓名",
+            "请输入手机号码",
+            "请输入详细收件地址",
+            "如：奶茶、餐食、文件",
+            "Increase Value",
+            "Decrease Value",
+            "5.0",
+            "1.0",
+            "economy",
+            "normal",
+            "urgent",
+            "选填，用于评估时效",
+            "智能比价"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建订单->订单管理",
+        "url": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "收件电话",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效",
+              "异常预警",
+              "费用",
+              "配送状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 收件电话 配送地址 距离 重量 时效 异常预警 费用 配送状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 周先生 13900139005 北京市朝阳区三里屯路19号 10.1km 2.5kg 加急 已超时 ¥45.00 配送中 06-16 02:18 详情 路由依据 完成 DD202401150004 美味鲜花店 ⚡ 闪送 陈女士 13900139004 北京市丰台区丰台路1号 18.6km 0.3kg 普通 正常 ¥52.00 已送达 06-16 02:18 详情 路由依据 DD202401150003 鲜果时光 🍔 美团众包 赵先生 1"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心订单管理已登录管理员A订单管理新建订单配送状态运力平台查询刷新订单号商户平台收件人收件电话配送地址距离重量时效异常预警费用配送状态创建时间操作DD202401150005鲜果时光⚡ 闪送周先生13900139005北京市朝阳区三里屯路19号10.1km2.5kg 加急 已超时¥45.00配送中06-16 02:18详情路由依据完成DD202401150004美味鲜花店⚡ 闪送陈女士13900139004北京市丰台区丰台路1号18.6km0.3kg 普通正常¥52.00已送达06-16 02:18详情路由依据DD202401150003鲜果时光🍔 美团众包赵先生13900139003北京市西城区金融街7号12.3km3kg 普通 已超时¥38.00待分配06-16 02:18详情路由依据分配取消DD202401150002美味鲜花店📦 顺丰同城李先生13900139002北京市西城区西单北大街120号8.5km1.2kg 加急 已超时¥42.00已取货06-16 02:18详情路由依据开始配送取消DD202401150001美味鲜花店🚴 达达快送王女士13900139001北京市东城区王府井大街138号5.2km0.5kg 普通 已超时¥28.00配送中06-16 02:18详情路由依据完成共 5 条110 条/页",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理",
+          "label": "二层操作:新建订单->订单管理",
+          "finalUrl": "http://127.0.0.1:49214/orders",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理.png",
+          "elementCount": 410,
+          "interactiveCount": 35,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "新建订单",
+            "查询",
+            "刷新",
+            "详情",
+            "路由依据",
+            "完成",
+            "分配",
+            "取消",
+            "开始配送",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "导航:订单管理",
+        "url": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "收件电话",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效",
+              "异常预警",
+              "费用",
+              "配送状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 收件电话 配送地址 距离 重量 时效 异常预警 费用 配送状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 周先生 13900139005 北京市朝阳区三里屯路19号 10.1km 2.5kg 加急 已超时 ¥45.00 配送中 06-16 02:18 详情 路由依据 完成 DD202401150004 美味鲜花店 ⚡ 闪送 陈女士 13900139004 北京市丰台区丰台路1号 18.6km 0.3kg 普通 正常 ¥52.00 已送达 06-16 02:18 详情 路由依据 DD202401150003 鲜果时光 🍔 美团众包 赵先生 1"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心订单管理已登录管理员A订单管理新建订单配送状态运力平台查询刷新订单号商户平台收件人收件电话配送地址距离重量时效异常预警费用配送状态创建时间操作DD202401150005鲜果时光⚡ 闪送周先生13900139005北京市朝阳区三里屯路19号10.1km2.5kg 加急 已超时¥45.00配送中06-16 02:18详情路由依据完成DD202401150004美味鲜花店⚡ 闪送陈女士13900139004北京市丰台区丰台路1号18.6km0.3kg 普通正常¥52.00已送达06-16 02:18详情路由依据DD202401150003鲜果时光🍔 美团众包赵先生13900139003北京市西城区金融街7号12.3km3kg 普通 已超时¥38.00待分配06-16 02:18详情路由依据分配取消DD202401150002美味鲜花店📦 顺丰同城李先生13900139002北京市西城区西单北大街120号8.5km1.2kg 加急 已超时¥42.00已取货06-16 02:18详情路由依据开始配送取消DD202401150001美味鲜花店🚴 达达快送王女士13900139001北京市东城区王府井大街138号5.2km0.5kg 普通 已超时¥28.00配送中06-16 02:18详情路由依据完成共 5 条110 条/页",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-12-导航-订单管理",
+          "label": "导航:订单管理",
+          "finalUrl": "http://127.0.0.1:49214/orders",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-12-导航-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-12-导航-订单管理.png",
+          "elementCount": 410,
+          "interactiveCount": 35,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "新建订单",
+            "查询",
+            "刷新",
+            "详情",
+            "路由依据",
+            "完成",
+            "分配",
+            "取消",
+            "开始配送",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建订单",
+        "url": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "运营 运营总览 订单管理",
+          "运营",
+          "运营总览 订单管理",
+          "运营总览",
+          "dashboard",
+          "订单管理",
+          "shopping",
+          "商户端 商户配送看板 运费比价引擎 售后协同中心",
+          "商户端",
+          "商户配送看板 运费比价引擎 售后协同中心",
+          "商户配送看板",
+          "shop",
+          "运费比价引擎",
+          "bar-chart",
+          "售后协同中心",
+          "customer-service",
+          "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "后台管理",
+          "运力质量监控 SLA赔付管理 多平台结算中心",
+          "运力质量监控",
+          "safety",
+          "SLA赔付管理",
+          "file-text",
+          "多平台结算中心"
+        ],
+        "buttons": [
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "取 消",
+          "确 定",
+          "Close",
+          "智能估价",
+          "关 闭",
+          "创建订单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "urgency",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入收件人姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入收件人电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入详细收件地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公里",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "公斤",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入物品描述",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商户",
+              "平台",
+              "收件人",
+              "收件电话",
+              "配送地址",
+              "距离",
+              "重量",
+              "时效",
+              "异常预警",
+              "费用",
+              "配送状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商户 平台 收件人 收件电话 配送地址 距离 重量 时效 异常预警 费用 配送状态 创建时间 操作 DD202401150005 鲜果时光 ⚡ 闪送 周先生 13900139005 北京市朝阳区三里屯路19号 10.1km 2.5kg 加急 已超时 ¥45.00 配送中 06-16 02:18 详情 路由依据 完成 DD202401150004 美味鲜花店 ⚡ 闪送 陈女士 13900139004 北京市丰台区丰台路1号 18.6km 0.3kg 普通 正常 ¥52.00 已送达 06-16 02:18 详情 路由依据 DD202401150003 鲜果时光 🍔 美团众包 赵先生 1"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心订单管理已登录管理员A订单管理新建订单配送状态运力平台查询刷新订单号商户平台收件人收件电话配送地址距离重量时效异常预警费用配送状态创建时间操作DD202401150005鲜果时光⚡ 闪送周先生13900139005北京市朝阳区三里屯路19号10.1km2.5kg 加急 已超时¥45.00配送中06-16 02:18详情路由依据完成DD202401150004美味鲜花店⚡ 闪送陈女士13900139004北京市丰台区丰台路1号18.6km0.3kg 普通正常¥52.00已送达06-16 02:18详情路由依据DD202401150003鲜果时光🍔 美团众包赵先生13900139003北京市西城区金融街7号12.3km3kg 普通 已超时¥38.00待分配06-16 02:18详情路由依据分配取消DD202401150002美味鲜花店📦 顺丰同城李先生13900139002北京市西城区西单北大街120号8.5km1.2kg 加急 已超时¥42.00已取货06-16 02:18详情路由依据开始配送取消DD202401150001美味鲜花店🚴 达达快送王女士13900139001北京市东城区王府井大街138号5.2km0.5kg 普通 已超时¥28.00配送中06-16 02:18详情路由依据完成共 5 条110 条/页 确认取消订单确认取消订单取消后将通知运力平台，是否继续？取 消确 定新建配送订单发件商户请选择商户时效要求普通加急经济收件人姓名收件人电话收件地址配送距离(km)物品重量(kg) 智能估价物品描述关 闭创建订单",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89214-codex-cycle471-structure-13-操作-新建订单",
+          "label": "操作:新建订单",
+          "finalUrl": "http://127.0.0.1:49214/orders",
+          "title": "配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-13-操作-新建订单.json",
+          "screenshotPath": "",
+          "elementCount": 584,
+          "interactiveCount": 59,
+          "interactiveLabels": [
+            "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+            "运营总览",
+            "订单管理",
+            "商户配送看板",
+            "运费比价引擎",
+            "售后协同中心",
+            "运力质量监控",
+            "SLA赔付管理",
+            "多平台结算中心",
+            "新建订单",
+            "查询",
+            "刷新",
+            "详情",
+            "路由依据",
+            "完成",
+            "分配",
+            "取消",
+            "开始配送",
+            "1",
+            "页码",
+            "确认取消订单 取消后将通知运力平台，是否继续？ 取 消 确 定",
+            "取 消",
+            "确 定",
+            "新建配送订单 发件商户 请选择商户 时效要求 普通 加急 经济 收件人姓名 收件人电话 收件地址 配送距离(km) 物品重量(kg) 智能估价 物品描述 关 闭 创建订单",
+            "Close",
+            "normal",
+            "urgent",
+            "economy",
+            "请输入收件人姓名",
+            "请输入收件人电话"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "运营",
+        "label": "新建",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "运营",
+        "label": "新建->订单管理",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "运营",
+        "label": "新建订单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "运营",
+        "label": "新建订单->订单管理",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "运营总览",
+        "label": "新建",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "运营总览",
+        "label": "新建->订单管理",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "运营总览",
+        "label": "新建订单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "运营总览",
+        "label": "新建订单->订单管理",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "新建订单",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-02-导航-运营",
+        "label": "导航:运营",
+        "finalUrl": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-02-导航-运营.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-02-导航-运营.png",
+        "elementCount": 1200,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-03-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-03-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-03-操作-新建.png",
+        "elementCount": 257,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "清空对比",
+          "开始对比",
+          "请输入姓名",
+          "请输入手机号码",
+          "请输入详细收件地址",
+          "如：奶茶、餐食、文件",
+          "Increase Value",
+          "Decrease Value",
+          "5.0",
+          "1.0",
+          "economy",
+          "normal",
+          "urgent",
+          "选填，用于评估时效",
+          "智能比价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理",
+        "label": "二层操作:新建->订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-05-操作-新建订单",
+        "label": "操作:新建订单",
+        "finalUrl": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-05-操作-新建订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-05-操作-新建订单.png",
+        "elementCount": 257,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "清空对比",
+          "开始对比",
+          "请输入姓名",
+          "请输入手机号码",
+          "请输入详细收件地址",
+          "如：奶茶、餐食、文件",
+          "Increase Value",
+          "Decrease Value",
+          "5.0",
+          "1.0",
+          "economy",
+          "normal",
+          "urgent",
+          "选填，用于评估时效",
+          "智能比价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理",
+        "label": "二层操作:新建订单->订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-07-导航-运营总览",
+        "label": "导航:运营总览",
+        "finalUrl": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-07-导航-运营总览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-07-导航-运营总览.png",
+        "elementCount": 1200,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-08-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-08-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-08-操作-新建.png",
+        "elementCount": 257,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "清空对比",
+          "开始对比",
+          "请输入姓名",
+          "请输入手机号码",
+          "请输入详细收件地址",
+          "如：奶茶、餐食、文件",
+          "Increase Value",
+          "Decrease Value",
+          "5.0",
+          "1.0",
+          "economy",
+          "normal",
+          "urgent",
+          "选填，用于评估时效",
+          "智能比价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理",
+        "label": "二层操作:新建->订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-10-操作-新建订单",
+        "label": "操作:新建订单",
+        "finalUrl": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-10-操作-新建订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-10-操作-新建订单.png",
+        "elementCount": 257,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "清空对比",
+          "开始对比",
+          "请输入姓名",
+          "请输入手机号码",
+          "请输入详细收件地址",
+          "如：奶茶、餐食、文件",
+          "Increase Value",
+          "Decrease Value",
+          "5.0",
+          "1.0",
+          "economy",
+          "normal",
+          "urgent",
+          "选填，用于评估时效",
+          "智能比价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理",
+        "label": "二层操作:新建订单->订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-12-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-12-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-12-导航-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-13-操作-新建订单",
+        "label": "操作:新建订单",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-13-操作-新建订单.json",
+        "screenshotPath": "",
+        "elementCount": 584,
+        "interactiveCount": 59,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码",
+          "确认取消订单 取消后将通知运力平台，是否继续？ 取 消 确 定",
+          "取 消",
+          "确 定",
+          "新建配送订单 发件商户 请选择商户 时效要求 普通 加急 经济 收件人姓名 收件人电话 收件地址 配送距离(km) 物品重量(kg) 智能估价 物品描述 关 闭 创建订单",
+          "Close",
+          "normal",
+          "urgent",
+          "economy",
+          "请输入收件人姓名",
+          "请输入收件人电话"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49214/",
+    "representativeScreenshotLabel": "运营总览"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 13,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-02-导航-运营",
+        "label": "导航:运营",
+        "finalUrl": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-02-导航-运营.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-02-导航-运营.png",
+        "elementCount": 1200,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-03-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-03-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-03-操作-新建.png",
+        "elementCount": 257,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "清空对比",
+          "开始对比",
+          "请输入姓名",
+          "请输入手机号码",
+          "请输入详细收件地址",
+          "如：奶茶、餐食、文件",
+          "Increase Value",
+          "Decrease Value",
+          "5.0",
+          "1.0",
+          "economy",
+          "normal",
+          "urgent",
+          "选填，用于评估时效",
+          "智能比价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理",
+        "label": "二层操作:新建->订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-04-二层操作-新建-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-05-操作-新建订单",
+        "label": "操作:新建订单",
+        "finalUrl": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-05-操作-新建订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-05-操作-新建订单.png",
+        "elementCount": 257,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "清空对比",
+          "开始对比",
+          "请输入姓名",
+          "请输入手机号码",
+          "请输入详细收件地址",
+          "如：奶茶、餐食、文件",
+          "Increase Value",
+          "Decrease Value",
+          "5.0",
+          "1.0",
+          "economy",
+          "normal",
+          "urgent",
+          "选填，用于评估时效",
+          "智能比价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理",
+        "label": "二层操作:新建订单->订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-06-二层操作-新建订单-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-07-导航-运营总览",
+        "label": "导航:运营总览",
+        "finalUrl": "http://127.0.0.1:49214/",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-07-导航-运营总览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-07-导航-运营总览.png",
+        "elementCount": 1200,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "查看全部",
+          "批量处理",
+          "异常订单",
+          "投诉处理",
+          "赔付触发",
+          "订单改派",
+          "新建订单",
+          "商户看板",
+          "全部",
+          "按单抽佣",
+          "月结对账",
+          "查看明细",
+          "比价引擎",
+          "新建",
+          "一键比价下单 →",
+          "全部订单",
+          "详情",
+          "路由依据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-08-操作-新建",
+        "label": "操作:新建",
+        "finalUrl": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-08-操作-新建.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-08-操作-新建.png",
+        "elementCount": 257,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "清空对比",
+          "开始对比",
+          "请输入姓名",
+          "请输入手机号码",
+          "请输入详细收件地址",
+          "如：奶茶、餐食、文件",
+          "Increase Value",
+          "Decrease Value",
+          "5.0",
+          "1.0",
+          "economy",
+          "normal",
+          "urgent",
+          "选填，用于评估时效",
+          "智能比价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理",
+        "label": "二层操作:新建->订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-09-二层操作-新建-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-10-操作-新建订单",
+        "label": "操作:新建订单",
+        "finalUrl": "http://127.0.0.1:49214/price-compare",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-10-操作-新建订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-10-操作-新建订单.png",
+        "elementCount": 257,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "清空对比",
+          "开始对比",
+          "请输入姓名",
+          "请输入手机号码",
+          "请输入详细收件地址",
+          "如：奶茶、餐食、文件",
+          "Increase Value",
+          "Decrease Value",
+          "5.0",
+          "1.0",
+          "economy",
+          "normal",
+          "urgent",
+          "选填，用于评估时效",
+          "智能比价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理",
+        "label": "二层操作:新建订单->订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-11-二层操作-新建订单-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-12-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-12-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-12-导航-订单管理.png",
+        "elementCount": 410,
+        "interactiveCount": 35,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89214-codex-cycle471-structure-13-操作-新建订单",
+        "label": "操作:新建订单",
+        "finalUrl": "http://127.0.0.1:49214/orders",
+        "title": "配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle471-20260617/may-89214-codex-cycle471-structure-13-操作-新建订单.json",
+        "screenshotPath": "",
+        "elementCount": 584,
+        "interactiveCount": 59,
+        "interactiveLabels": [
+          "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+          "运营总览",
+          "订单管理",
+          "商户配送看板",
+          "运费比价引擎",
+          "售后协同中心",
+          "运力质量监控",
+          "SLA赔付管理",
+          "多平台结算中心",
+          "新建订单",
+          "查询",
+          "刷新",
+          "详情",
+          "路由依据",
+          "完成",
+          "分配",
+          "取消",
+          "开始配送",
+          "1",
+          "页码",
+          "确认取消订单 取消后将通知运力平台，是否继续？ 取 消 确 定",
+          "取 消",
+          "确 定",
+          "新建配送订单 发件商户 请选择商户 时效要求 普通 加急 经济 收件人姓名 收件人电话 收件地址 配送距离(km) 物品重量(kg) 智能估价 物品描述 关 闭 创建订单",
+          "Close",
+          "normal",
+          "urgent",
+          "economy",
+          "请输入收件人姓名",
+          "请输入收件人电话"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1920,
+    "height": 1600,
+    "scrollWidth": 1888,
+    "scrollHeight": 2802
+  },
+  "initialBodyTextPreview": "🚚\n配送调度中台\n运营\n运营总览\n订单管理\n商户端\n商户配送看板\n运费比价引擎\n售后协同中心\n后台管理\n运力质量监控\nSLA赔付管理\n多平台结算中心\n运营总览\n已登录\n管理员\nA\n运营总览\n今日 2026年06月17日\n今日订单\n5\n配送中\n2\n已完成\n1\n累计营收\n¥52.00\n运力平台状态\n4\n查看全部\n检测到 4 个平台存在异常\n 🍔 美团众包: 投诉率达2.50%，超过预警线2%\n 🐦 蜂鸟即配: 投诉率达2.20%，超过预警线2%\n 🐰 极兔速递: 投诉率达3.00%，超过预警线2%\n 💨 百世闪送: 投诉率达2.80%，超过预警线2%\n批量处理\n🚴\n达达快送\n饱和度 60%\n准时率 96.0%\n丢件率 0.80%\n投诉率 1.50%\n今日 1 单\n📦\n顺丰同城\n饱和度 40%\n准时率 98.0%\n丢件率 0.50%\n投诉率 1.00%\n今日 1 单\n售后待处理 1\n待赔付 1\n⚡\n闪送\n饱和度 30%\n准时率 97.0%\n丢件率 0.60%\n投诉率 1.20%\n今日 2 单\n售后待处理 1\n🍔\n美团众包\n 异常预警\n饱和度 70%\n准时率 93.0%\n丢件率 1.20%\n投诉率 2.50%\n今日 1 单\n异常订单\n投诉处理\n赔付触发\n订单改派\n🐦\n蜂鸟即配\n 异常预警\n饱和度 65%\n准时率 94.0%\n丢件率 1.00%\n投诉率 2.20%\n今日 0 单\n异常订单\n投诉处理\n赔付触发\n订单改派\n🏃\nUU跑腿\n饱和度 50%\n准时率 95.0%\n丢件率 0.90%\n投诉率 1.80%\n今日 0 单\n🎯\n点我达\n饱和度 55%\n准时率 94.0%\n丢件率 1.10%\n投诉率 2.00%\n今日 0 单\n🐰\n极兔速递\n 异常预警\n饱和度 45%\n准时率 91.0%\n丢件率 1.50%\n投诉率 3.00%\n今日 0 单\n异常订单\n投诉处理\n赔付触发\n订单改派\n🛒\n京东到家\n饱和度 35%\n准时率 97.0%\n丢件率 0.70%\n投诉率 1.30%\n今日 0 单\n⏱️\n苏宁秒达\n饱和度 40%\n准时率 95.0%\n丢件率 0.80%\n投诉率 1.60%\n今日 0 单\n💨\n百世闪送\n 异常预警\n饱和度 60%\n准时率 92.0%\n丢件率 1.30%\n投诉率 2.80%\n今日 0 单\n异常订单\n投诉处理\n赔付触发\n订单改派\n🚚\n德邦快递\n饱和度 25%\n准时率 98.0%\n丢件率 0.40%\n投诉率 0.80%\n今日 0 单\n待处理事项\n新建订单\n商户看板\n售后协同\n1\n全部\nDD202401150002\n改址\n 同步中\n📦 顺丰同城 · 商户同步: 同步中 · 结果: 等待承运平台确认改址费用\n改址费: ¥3.50待确认\n提交: 06-16 02:14\n原因: 客户临时改到同小区北门\nDD202401150005\n投诉\n 承运方已回执\n⚡ 闪送 · 商户同步: 已同步 · 结果: 平台已受理，预计30分钟内给出处置结果\n承运方处置: 骑手已致歉并补偿，商户满意\n提交: 06-16 02:08\n处置回传: 06-16 02:13\n原因: 配送已超过预计送达时间，商户要求平台说明并触发SL...\nSLA赔付\n全部\nDD202401150002\n丢件\n¥18.00\n 已发券\n📦 顺丰同城 · 券码: CPPENDING02 · 待复查\n发放: 已发放\n核验: 待核验\n触发: 06-16 02:15\n原因: 蛋糕外包装破损，等待运营复核后发放\n多平台结算\n3\n按单抽佣\n月结对账\n2026-06\n🍔 美团众包\n待对账\n 异常差异\n0单 · 总额 ¥1260.50\n抽佣: ¥56.72(0%)\n应付: ¥1203.78\n 异常差异 1 笔，差异金额 ¥15.00\n查看明细\n2026-06\n⚡ 闪送\n待对账\n 异常差异\n",
+  "bodyTextPreview": "🚚\n配送调度中台\n运营\n运营总览\n订单管理\n商户端\n商户配送看板\n运费比价引擎\n售后协同中心\n后台管理\n运力质量监控\nSLA赔付管理\n多平台结算中心\n运营总览\n已登录\n管理员\nA\n运营总览\n今日 2026年06月17日\n今日订单\n5\n配送中\n2\n已完成\n1\n累计营收\n¥52.00\n运力平台状态\n4\n查看全部\n检测到 4 个平台存在异常\n 🍔 美团众包: 投诉率达2.50%，超过预警线2%\n 🐦 蜂鸟即配: 投诉率达2.20%，超过预警线2%\n 🐰 极兔速递: 投诉率达3.00%，超过预警线2%\n 💨 百世闪送: 投诉率达2.80%，超过预警线2%\n批量处理\n🚴\n达达快送\n饱和度 60%\n准时率 96.0%\n丢件率 0.80%\n投诉率 1.50%\n今日 1 单\n📦\n顺丰同城\n饱和度 40%\n准时率 98.0%\n丢件率 0.50%\n投诉率 1.00%\n今日 1 单\n售后待处理 1\n待赔付 1\n⚡\n闪送\n饱和度 30%\n准时率 97.0%\n丢件率 0.60%\n投诉率 1.20%\n今日 2 单\n售后待处理 1\n🍔\n美团众包\n 异常预警\n饱和度 70%\n准时率 93.0%\n丢件率 1.20%\n投诉率 2.50%\n今日 1 单\n异常订单\n投诉处理\n赔付触发\n订单改派\n🐦\n蜂鸟即配\n 异常预警\n饱和度 65%\n准时率 94.0%\n丢件率 1.00%\n投诉率 2.20%\n今日 0 单\n异常订单\n投诉处理\n赔付触发\n订单改派\n🏃\nUU跑腿\n饱和度 50%\n准时率 95.0%\n丢件率 0.90%\n投诉率 1.80%\n今日 0 单\n🎯\n点我达\n饱和度 55%\n准时率 94.0%\n丢件率 1.10%\n投诉率 2.00%\n今日 0 单\n🐰\n极兔速递\n 异常预警\n饱和度 45%\n准时率 91.0%\n丢件率 1.50%\n投诉率 3.00%\n今日 0 单\n异常订单\n投诉处理\n赔付触发\n订单改派\n🛒\n京东到家\n饱和度 35%\n准时率 97.0%\n丢件率 0.70%\n投诉率 1.30%\n今日 0 单\n⏱️\n苏宁秒达\n饱和度 40%\n准时率 95.0%\n丢件率 0.80%\n投诉率 1.60%\n今日 0 单\n💨\n百世闪送\n 异常预警\n饱和度 60%\n准时率 92.0%\n丢件率 1.30%\n投诉率 2.80%\n今日 0 单\n异常订单\n投诉处理\n赔付触发\n订单改派\n🚚\n德邦快递\n饱和度 25%\n准时率 98.0%\n丢件率 0.40%\n投诉率 0.80%\n今日 0 单\n待处理事项\n新建订单\n商户看板\n售后协同\n1\n全部\nDD202401150002\n改址\n 同步中\n📦 顺丰同城 · 商户同步: 同步中 · 结果: 等待承运平台确认改址费用\n改址费: ¥3.50待确认\n提交: 06-16 02:14\n原因: 客户临时改到同小区北门\nDD202401150005\n投诉\n 承运方已回执\n⚡ 闪送 · 商户同步: 已同步 · 结果: 平台已受理，预计30分钟内给出处置结果\n承运方处置: 骑手已致歉并补偿，商户满意\n提交: 06-16 02:08\n处置回传: 06-16 02:13\n原因: 配送已超过预计送达时间，商户要求平台说明并触发SL...\nSLA赔付\n全部\nDD202401150002\n丢件\n¥18.00\n 已发券\n📦 顺丰同城 · 券码: CPPENDING02 · 待复查\n发放: 已发放\n核验: 待核验\n触发: 06-16 02:15\n原因: 蛋糕外包装破损，等待运营复核后发放\n多平台结算\n3\n按单抽佣\n月结对账\n2026-06\n🍔 美团众包\n待对账\n 异常差异\n0单 · 总额 ¥1260.50\n抽佣: ¥56.72(0%)\n应付: ¥1203.78\n 异常差异 1 笔，差异金额 ¥15.00\n查看明细\n2026-06\n⚡ 闪送\n待对账\n 异常差异\n0单 · 总额 ¥3850.75\n抽佣: ¥269.55(0%)\n应付: ¥3581.20\n 异常差异 3 笔，差异金额 ¥42.50\n查看明细\n2026-06\n🐰 极兔速递\n待对账\n0\n0单 · 总额 ¥2580.50\n抽佣: ¥129.03(0%)\n应付: ¥2451.47\n查看明细\n2026-06\n🚴 达达快送\n已对账\n0\n0单 · 总额 ¥1856.00\n抽佣: ¥92.80(0%)\n应付: ¥1763.20\n查看明细\n2026-06\n📦 顺丰同城\n已付款\n0\n0单 · 总额 ¥2940.00\n抽佣: ¥176.40(0%)\n应付: ¥2763.60\n查看明细\n智能比价下单\n比价引擎\n新建\n当前接入运力平台\n12 家\n平均准时率\n95.0%\n平均运费(5km)\n¥22.79\n 今日最低成本方案\n🐰\n极兔速递\n最低成本\n5km标准配送\n¥16.00\n比平均价节省 ¥6.79\n🚴\n📦\n⚡\n🍔\n🐦\n🏃\n一键比价下单 →\n最近订单\n全部订单\n订单号\t商户\t平台\t收件人\t配送地址\t距离\t重量\t时效要求\t候选承运方\t最优选择理由\t费用\t状态\t创建时间\t操作\n\n订单号\n\t\n商户\n\t\n平台\n\t\n收件人\n\t\n配送地址\n\t\n距离\n\t\n重量\n\t\n时效要求\n\t\n候选承运方\n\t\n最优选择理由\n\t\n费用\n\t\n状态\n\t\n创建时间\n\t\n操作\n\nDD202401150005\t鲜果时光\t\n⚡\n闪送\n运力 30%|履约 97.0%\n\t周先生\t北京市朝阳区三里屯路19号\t10.1km\t2.5kg\t⚡ 加急\t计算中...\t-\t¥45.00\t配送中\t06-16 02:18:02\t\n详情\n路由依据\n\nDD202401150004\t美味鲜花店\t\n⚡\n闪送\n运力 30%|履约 97.0%\n\t陈女士\t北京市丰台区丰台路1号\t18.6km\t0.3kg\t🚚 普通\t计算中...\t-\t¥52.00\t已送达\t06-16 02:18:02\t\n详情\n路由依据\n\nDD202401150003\t鲜果时光\t\n🍔\n美团众包\n运力 70%|履约 93.0%\n\t赵先生\t北京市西城区金融街7号\t12.3km\t3kg\t🚚 普通\t计算中...\t-\t¥38.00\t待分配\t06-16 02:18:02\t\n详情\n路由依据\n\nDD202401150002\t美味鲜花店\t\n📦\n顺丰同城\n运力 40%|履约 98.0%\n\t李先生\t北京市西城区西单北大街120号\t8.5km\t1.2kg\t⚡ 加急\t计算中...\t-\t¥42.00\t已取货\t06-16 02:18:02\t\n详情\n路由依据\n\nDD202401150001\t美味鲜花店\t\n🚴\n达达快送\n运力 60%|履约 96.0%\n\t王女士\t北京市东城区王府井大街138号\t5.2km\t0.5kg\t🚚 普通\t计算中...\t-\t¥28.00\t配送中\t06-16 02:18:02\t\n详情\n路由依据",
+  "apiBase": "http://127.0.0.1:59214/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders/quote"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/platforms?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/merchants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49214/api/dashboard/summary"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"status\":\"ok\",\"timestamp\":\"2026-06-16T21:07:51.643Z\",\"version\":\"1.0.0\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/dashboard/summary",
+      "path": "/api/dashboard/summary",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"today_orders\":5,\"delivering_count\":2,\"total_delivered\":1,\"total_revenue\":52,\"pending_after_sales\":1,\"pending_compensations\":0,\"active_platforms\":12,\"active_merchants\":2,\"platform_stats\":[{\"id\":1,\"name\":\"达达快送\",\"logo\":\"🚴\",\"code\":\"dada\",\"base_price\":8,\"per_km_price\":2.5,\"per_kg_price\":0.5,\"capacity_saturation\":0.6,\"on_time_rate\":0.96,\"loss_rate\":0.008,\"complaint_rate\":0.015,\"today_orders\":1,\"total_delivered\":0,\"exception_orders\":0,\"pending_aftersales_count\":0,\"pending_comp"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/platforms?status=active",
+      "path": "/api/platforms?status=active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"code\":\"dada\",\"name\":\"达达快送\",\"logo\":\"🚴\",\"base_price\":8,\"per_km_price\":2.5,\"per_kg_price\":0.5,\"min_delivery_time\":30,\"max_delivery_time\":90,\"capacity_saturation\":0.6,\"on_time_rate\":0.96,\"loss_rate\":0.008,\"complaint_rate\":0.015,\"status\":\"active\",\"commission_rate\":0.05,\"created_at\":\"2026-06-16 02:18:02\",\"updated_at\":\"2026-06-16 02:18:02\",\"completion_rate\":0.969},{\"id\":2,\"code\":\"sf-city\",\"name\":\"顺丰同城\",\"logo\":\"📦\",\"base_price\":12,\"per_km_price\":3,\"per_kg_price\":0.8,\"mi"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/merchants",
+      "path": "/api/merchants",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"美味鲜花店\",\"contact_name\":\"张经理\",\"contact_phone\":\"13800138001\",\"address\":\"北京市朝阳区建国路88号\",\"latitude\":39.9087,\"longitude\":116.4572,\"balance\":5000,\"status\":\"active\",\"created_at\":\"2026-06-16 02:18:02\"},{\"id\":2,\"name\":\"鲜果时光\",\"contact_name\":\"李老板\",\"contact_phone\":\"13800138002\",\"address\":\"北京市海淀区中关村大街1号\",\"latitude\":39.9847,\"longitude\":116.3056,\"balance\":3200,\"status\":\"active\",\"created_at\":\"2026-06-16 02:18:02\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10",
+      "path": "/api/orders?status=&delivery_status=&platform_id=&page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":5,\"order_no\":\"DD202401150005\",\"merchant_id\":2,\"sender_name\":\"李老板\",\"sender_phone\":\"13800138002\",\"sender_address\":\"北京市海淀区中关村大街1号\",\"sender_lat\":39.9847,\"sender_lng\":116.3056,\"receiver_name\":\"周先生\",\"receiver_phone\":\"13900139005\",\"receiver_address\":\"北京市朝阳区三里屯路19号\",\"receiver_lat\":39.9367,\"receiver_lng\":116.4556,\"goods_name\":\"进口水果\",\"goods_weight\":2.5,\"goods_value\":268,\"distance\":10.1,\"expected_delivery_time\":75,\"urgency\":\"urgent\",\"total_fee\":45,\"platform_fee\":42.8,\"platform"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"local-admin\",\"username\":\"admin\",\"role\":\"admin\",\"name\":\"配送调度中台管理员\",\"permissions\":[\"dashboard.read\",\"orders.manage\",\"platforms.monitor\",\"settlements.audit\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"local-admin\",\"username\":\"admin\",\"role\":\"admin\",\"name\":\"配送调度中台管理员\",\"permissions\":[\"dashboard.read\",\"orders.manage\",\"platforms.monitor\",\"settlements.audit\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"local-admin\",\"username\":\"admin\",\"role\":\"admin\",\"name\":\"配送调度中台管理员\",\"permissions\":[\"dashboard.read\",\"orders.manage\",\"platforms.monitor\",\"settlements.audit\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"total_orders\":5,\"delivering_count\":2,\"delivered_count\":1,\"total_revenue\":52,\"active_platforms\":12,\"active_merchants\":2,\"pending_after_sales\":2,\"pending_compensations\":0,\"platform_health\":[{\"id\":1,\"code\":\"dada\",\"name\":\"达达快送\",\"logo\":\"🚴\",\"capacity_saturation\":0.6,\"on_time_rate\":0.96,\"loss_rate\":0.008,\"complaint_rate\":0.015,\"status\":\"active\"},{\"id\":2,\"code\":\"sf-city\",\"name\":\"顺丰同城\",\"logo\":\"📦\",\"capacity_saturation\":0.4,\"on_time_rate\":0.98,\"loss_rate\":0.005,\"complaint_rate\":0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"total_orders\":5,\"delivering_count\":2,\"delivered_count\":1,\"total_revenue\":52,\"active_platforms\":12,\"active_merchants\":2,\"pending_after_sales\":2,\"pending_compensations\":0,\"platform_health\":[{\"id\":1,\"code\":\"dada\",\"name\":\"达达快送\",\"logo\":\"🚴\",\"capacity_saturation\":0.6,\"on_time_rate\":0.96,\"loss_rate\":0.008,\"complaint_rate\":0.015,\"status\":\"active\"},{\"id\":2,\"code\":\"sf-city\",\"name\":\"顺丰同城\",\"logo\":\"📦\",\"capacity_saturation\":0.4,\"on_time_rate\":0.98,\"loss_rate\":0.005,\"complaint_rate\":0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"sku\":\"dada\",\"name\":\"🚴 达达快送 配送服务\",\"category\":\"即时配送平台\",\"base_price\":8,\"per_km_price\":2.5,\"per_kg_price\":0.5,\"delivery_window\":\"30-90分钟\",\"capacity_saturation\":0.6,\"status\":\"active\"},{\"id\":2,\"sku\":\"sf-city\",\"name\":\"📦 顺丰同城 配送服务\",\"category\":\"即时配送平台\",\"base_price\":12,\"per_km_price\":3,\"per_kg_price\":0.8,\"delivery_window\":\"25-60分钟\",\"capacity_saturation\":0.4,\"status\":\"active\"},{\"id\":3,\"sku\":\"shansong\",\"name\":\"⚡ 闪送 配送服务\",\"category\":\"即时配送平台\",\"base_price\":10,\"per_km_price\":3"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":5,\"order_no\":\"DD202401150005\",\"merchant_id\":2,\"sender_name\":\"李老板\",\"sender_phone\":\"13800138002\",\"sender_address\":\"北京市海淀区中关村大街1号\",\"sender_lat\":39.9847,\"sender_lng\":116.3056,\"receiver_name\":\"周先生\",\"receiver_phone\":\"13900139005\",\"receiver_address\":\"北京市朝阳区三里屯路19号\",\"receiver_lat\":39.9367,\"receiver_lng\":116.4556,\"goods_name\":\"进口水果\",\"goods_weight\":2.5,\"goods_value\":268,\"distance\":10.1,\"expected_delivery_time\":75,\"urgency\":\"urgent\",\"total_fee\":45,\"platform_fee\":42.8,\"platform"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59214/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"delivery-local-cart\",\"items\":[{\"id\":1,\"sku\":\"dada\",\"name\":\"达达快送 配送服务\",\"price\":8,\"quantity\":1}],\"total\":8}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49214/node_modules/.vite/deps/chunk-PJEEZAML.js?v=72685621",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49214/node_modules/.vite/deps/chunk-PJEEZAML.js?v=72685621",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49214/node_modules/.vite/deps/chunk-PJEEZAML.js?v=72685621",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49214/node_modules/.vite/deps/chunk-PJEEZAML.js?v=72685621",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49214/node_modules/.vite/deps/chunk-PJEEZAML.js?v=72685621",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49214/node_modules/.vite/deps/chunk-PJEEZAML.js?v=72685621",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49214/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

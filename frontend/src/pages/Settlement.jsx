@@ -654,7 +654,7 @@ function Settlement() {
         onCancel={() => setReconcileModal(false)}
         footer={null}
         width={650}
-        destroyOnClose
+        destroyOnHidden
       >
         {currentSettlement && (
           <div>
@@ -796,7 +796,7 @@ function Settlement() {
         onCancel={() => setInvoiceModal(false)}
         footer={null}
         width={520}
-        destroyOnClose
+        destroyOnHidden
       >
         {currentSettlement && (
           <Form form={invoiceForm} layout="vertical" onFinish={submitInvoice}>
@@ -838,7 +838,7 @@ function Settlement() {
         onCancel={() => setPaymentModal(false)}
         footer={null}
         width={480}
-        destroyOnClose
+        destroyOnHidden
       >
         {currentSettlement && (
           <div>

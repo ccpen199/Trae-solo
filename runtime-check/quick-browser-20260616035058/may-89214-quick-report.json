@@ -1,0 +1,36 @@
+{
+  "order": "may-89214",
+  "frontendUrl": "http://127.0.0.1:49214/",
+  "backendUrl": "http://127.0.0.1:59214",
+  "status": 200,
+  "frontendOk": true,
+  "backendHealth": {
+    "url": "http://127.0.0.1:59214/api/health",
+    "status": 200,
+    "ok": true,
+    "ms": 6,
+    "preview": "{\"success\":true,\"status\":\"ok\",\"timestamp\":\"2026-06-16T03:51:54.722Z\",\"version\":\"1.0.0\"}"
+  },
+  "login": {
+    "attempted": false
+  },
+  "finalUrl": "http://127.0.0.1:49214/",
+  "title": "配送调度中台",
+  "markerHits": {
+    "配送调度": true,
+    "订单管理": true,
+    "商户配送看板": true,
+    "SLA赔付": true,
+    "多平台结算": true
+  },
+  "markerHitCount": 5,
+  "consoleErrorCount": 0,
+  "requestFailureCount": 0,
+  "apiResponseErrorCount": 0,
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "bodyPreview": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运营总览 已登录 管理员 A 运营总览 今日 2026年06月16日 今日订单 5 配送中 2 已完成 1 累计营收 ¥52.00 运力平台状态 4 查看全部 检测到 4 个平台存在异常 🍔 美团众包: 投诉率达2.50%，超过预警线2% 🐦 蜂鸟即配: 投诉率达2.20%，超过预警线2% 🐰 极兔速递: 投诉率达3.00%，超过预警线2% 💨 百世闪送: 投诉率达2.80%，超过预警线2% 批量处理 🚴 达达快送 饱和度 60% 准时率 96.0% 丢件率 0.80% 投诉率 1.50% 今日 1 单 📦 顺丰同城 饱和度 40% 准时率 98.0% 丢件率 0.50% 投诉率 1.00% 今日 1 单 售后待处理 1 待赔付 1 ⚡ 闪送 饱和度 30% 准时率 97.0% 丢件率 0.60% 投诉率 1.20% 今日 2 单 售后待处理 1 🍔 美团众包 异常预警 饱和度 70% 准时率 93.0% 丢件率 1.20",
+  "navError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/quick-browser-20260616035058/may-89214.png"
+}

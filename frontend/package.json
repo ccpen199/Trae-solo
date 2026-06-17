@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH vite",
+    "build": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH vite build",
+    "preview": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH vite preview"
   },
   "dependencies": {
     "react": "^18.2.0",

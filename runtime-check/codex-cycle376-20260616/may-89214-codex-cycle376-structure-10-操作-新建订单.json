@@ -1,0 +1,8452 @@
+{
+  "meta": {
+    "title": "配送调度中台",
+    "url": "http://127.0.0.1:49214/price-compare",
+    "timestamp": "2026-06-16T20:33:50.537Z",
+    "viewport": {
+      "width": 1792,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1792,
+      "scrollHeight": 1600
+    }
+  },
+  "text": {
+    "bodyPreview": "🚚配送调度中台运营运营总览订单管理商户端商户配送看板运费比价引擎售后协同中心后台管理运力质量监控SLA赔付管理多平台结算中心运费比价引擎已登录管理员A运费比价引擎对比篮 0 个平台清空对比开始对比订单管理智能推荐 · 一键比价 · 多平台对比配送信息收件人信息收件人姓名联系电话收件地址物品信息物品名称配送距离(km)重量(kg)时效要求时效经济普通加急期望送达时间(分钟)智能比价全部平台比价排序：综合评分请输入配送参数，点击\"智能比价\"查看各平台报价",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运费比价",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": ":where(.css-dev-only-do-not-override-mncuj7)[class^=\"ant-form\"],:where(.css-dev-",
+        "visible": false,
+        "childCount": 68,
+        "children": []
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运费比价",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运费比价",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-layout ant-layout-has-sider app-layout css-dev-only-do-not-override-mncuj7",
+                "selectorHint": "div.ant-layout.ant-layout-has-sider.app-layout",
+                "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运费比价",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "aside",
+                    "id": "",
+                    "className": "ant-layout-sider ant-layout-sider-dark css-dev-only-do-not-override-mncuj7",
+                    "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.css-dev-only-do-not-override-mncuj7",
+                    "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-layout-sider-children",
+                        "selectorHint": "div.ant-layout-sider-children",
+                        "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-layout css-dev-only-do-not-override-mncuj7",
+                    "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mncuj7",
+                    "text": "运费比价引擎 已登录 管理员 A 运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 ",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "header",
+                        "id": "",
+                        "className": "ant-layout-header css-dev-only-do-not-override-mncuj7",
+                        "selectorHint": "header.ant-layout-header.css-dev-only-do-not-override-mncuj7",
+                        "text": "运费比价引擎 已登录 管理员 A",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "main",
+                        "id": "",
+                        "className": "ant-layout-content css-dev-only-do-not-override-mncuj7",
+                        "selectorHint": "main.ant-layout-content.css-dev-only-do-not-override-mncuj7",
+                        "text": "运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 收件人姓名 联系电话 收件地址 物",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运费比价引擎 已登录 管理员 A 运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ":where(.css-dev-only-do-not-override-mncuj7)[class^=\"ant-form\"],:where(.css-dev-only-do-not-override-mncuj7)[class*=\" ant-form\"]{font-family:-apple-system,BlinkMacSystemFont,'Segoe",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 68,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送调度中台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运费比价引擎 已登录 管理员 A 运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运费比价引擎 已登录 管理员 A 运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout ant-layout-has-sider app-layout css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-layout.ant-layout-has-sider.app-layout",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心 运费比价引擎 已登录 管理员 A 运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1600
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "aside",
+      "id": "",
+      "className": "ant-layout-sider ant-layout-sider-dark css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout-sider-children",
+      "selectorHint": "div.ant-layout-sider-children",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🚚 配送调度中台 运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 200,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "div",
+      "id": "",
+      "className": "logo",
+      "selectorHint": "div.logo",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🚚 配送调度中台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 16,
+        "width": 168,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🚚",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 38,
+        "y": 19,
+        "width": 20,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送调度中台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 66,
+        "y": 21,
+        "width": 96,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 478
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item-group",
+      "selectorHint": "li.ant-menu-item-group",
+      "name": "",
+      "type": "",
+      "role": "presentation",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营 运营总览 订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 126
+      },
+      "style": {
+        "display": "list-item",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "div",
+      "id": "",
+      "className": "ant-menu-item-group-title",
+      "selectorHint": "div.ant-menu-item-group-title",
+      "name": "",
+      "type": "",
+      "role": "presentation",
+      "ariaLabel": "",
+      "title": "运营",
+      "placeholder": "",
+      "text": "运营",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu-item-group-list",
+      "selectorHint": "ul.ant-menu-item-group-list",
+      "name": "",
+      "type": "",
+      "role": "group",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览 订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 106,
+        "width": 200,
+        "height": 84
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 106,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-dashboard ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-dashboard.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "dashboard",
+      "title": "",
+      "placeholder": "",
+      "text": "dashboard",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 119,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 119,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 28,
+        "y": 120,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 106,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 150,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-shopping ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-shopping.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "shopping",
+      "title": "",
+      "placeholder": "",
+      "text": "shopping",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 163,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 163,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 164,
+        "width": 11,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 150,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item-group",
+      "selectorHint": "li.ant-menu-item-group",
+      "name": "",
+      "type": "",
+      "role": "presentation",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "商户端 商户配送看板 运费比价引擎 售后协同中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 194,
+        "width": 200,
+        "height": 170
+      },
+      "style": {
+        "display": "list-item",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "div",
+      "id": "",
+      "className": "ant-menu-item-group-title",
+      "selectorHint": "div.ant-menu-item-group-title",
+      "name": "",
+      "type": "",
+      "role": "presentation",
+      "ariaLabel": "",
+      "title": "商户端",
+      "placeholder": "",
+      "text": "商户端",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 194,
+        "width": 200,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu-item-group-list",
+      "selectorHint": "ul.ant-menu-item-group-list",
+      "name": "",
+      "type": "",
+      "role": "group",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "商户配送看板 运费比价引擎 售后协同中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 236,
+        "width": 200,
+        "height": 128
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "商户配送看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 236,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-shop ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-shop.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "shop",
+      "title": "",
+      "placeholder": "",
+      "text": "shop",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 249,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 249,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 250,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "商户配送看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 236,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 280,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bar-chart ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-bar-chart.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bar-chart",
+      "title": "",
+      "placeholder": "",
+      "text": "bar-chart",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 293,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 293,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 295,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 280,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "售后协同中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 324,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-customer-service ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-customer-service.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "customer-service",
+      "title": "",
+      "placeholder": "",
+      "text": "customer-service",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 337,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 337,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 338,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "售后协同中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 324,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item-group",
+      "selectorHint": "li.ant-menu-item-group",
+      "name": "",
+      "type": "",
+      "role": "presentation",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 368,
+        "width": 200,
+        "height": 170
+      },
+      "style": {
+        "display": "list-item",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "div",
+      "id": "",
+      "className": "ant-menu-item-group-title",
+      "selectorHint": "div.ant-menu-item-group-title",
+      "name": "",
+      "type": "",
+      "role": "presentation",
+      "ariaLabel": "",
+      "title": "后台管理",
+      "placeholder": "",
+      "text": "后台管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 368,
+        "width": 200,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu-item-group-list",
+      "selectorHint": "ul.ant-menu-item-group-list",
+      "name": "",
+      "type": "",
+      "role": "group",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运力质量监控 SLA赔付管理 多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 410,
+        "width": 200,
+        "height": 128
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运力质量监控",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 410,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-safety ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-safety.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "safety",
+      "title": "",
+      "placeholder": "",
+      "text": "safety",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 423,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 28,
+        "y": 423,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 424,
+        "width": 11,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 32,
+        "y": 428,
+        "width": 6,
+        "height": 4
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运力质量监控",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 410,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "SLA赔付管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 454,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 467,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 467,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 467,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "SLA赔付管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 454,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 498,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-money-collect ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-money-collect.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "money-collect",
+      "title": "",
+      "placeholder": "",
+      "text": "money-collect",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 511,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 511,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 512,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 498,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎 已登录 管理员 A 运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名称 配送距离(km) 重量(kg) 时效要求 时效 经济 普通 加急 期望送达时间(分钟) 智能比价 全部平台比价 排序： 综合评分 请输入配送参数，点",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 200,
+        "y": 0,
+        "width": 1592,
+        "height": 1600
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "header",
+      "id": "",
+      "className": "ant-layout-header css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "header.ant-layout-header.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎 已登录 管理员 A",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 200,
+        "y": 0,
+        "width": 1592,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎 已登录 管理员 A",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 200,
+        "y": 0,
+        "width": 1592,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 224,
+        "y": 0,
+        "width": 108,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已登录 管理员 A",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1631,
+        "y": 0,
+        "width": 137,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已登录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1631,
+        "y": 0,
+        "width": 39,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1682,
+        "y": 0,
+        "width": 42,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "A",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1736,
+        "y": 16,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "main",
+      "id": "",
+      "className": "ant-layout-content css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "main.ant-layout-content.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名称 配送距离(km) 重量(kg) 时效要求 时效 经济 普通 加急 期望送达时间(分钟) 智能比价 全部平台比价 排序： 综合评分 请输入配送参数，点击\"智能比价\"查看各平台报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 216,
+        "y": 80,
+        "width": 1560,
+        "height": 1504
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比 配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名称 配送距离(km) 重量(kg) 时效要求 时效 经济 普通 加急 期望送达时间(分钟) 智能比价 全部平台比价 排序： 综合评分 请输入配送参数，点击\"智能比价\"查看各平台报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 104,
+        "width": 1512,
+        "height": 906
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "div",
+      "id": "",
+      "className": "page-header",
+      "selectorHint": "div.page-header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎 对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 104,
+        "width": 1512,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 106,
+        "width": 120,
+        "height": 28
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "h2",
+      "id": "",
+      "className": "page-title",
+      "selectorHint": "h2.page-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 106,
+        "width": 120,
+        "height": 28
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mncuj7 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mncuj7.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比篮 0 个平台 清空对比 开始对比 订单管理 智能推荐 · 一键比价 · 多平台对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 1117,
+        "y": 104,
+        "width": 635,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比篮 0 个平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1117,
+        "y": 109,
+        "width": 110,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-default css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "span.ant-tag.ant-tag-default.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比篮 0 个平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1117,
+        "y": 109,
+        "width": 102,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "清空对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1235,
+        "y": 108,
+        "width": 72,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "清空对比",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1235,
+        "y": 108,
+        "width": 72,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "清空对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1243,
+        "y": 110,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开始对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1315,
+        "y": 104,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开始对比",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1315,
+        "y": 104,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1331,
+        "y": 112,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bar-chart",
+      "selectorHint": "span.anticon.anticon-bar-chart",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bar-chart",
+      "title": "",
+      "placeholder": "",
+      "text": "bar-chart",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1331,
+        "y": 113,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1331,
+        "y": 113,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1332,
+        "y": 115,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开始对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1353,
+        "y": 110,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1433,
+        "y": 104,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1433,
+        "y": 104,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1449,
+        "y": 112,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-shopping-cart",
+      "selectorHint": "span.anticon.anticon-shopping-cart",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "shopping-cart",
+      "title": "",
+      "placeholder": "",
+      "text": "shopping-cart",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1449,
+        "y": 113,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1449,
+        "y": 113,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1450,
+        "y": 115,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1471,
+        "y": 110,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "智能推荐 · 一键比价 · 多平台对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1551,
+        "y": 109,
+        "width": 201,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "智能推荐 · 一键比价 · 多平台对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1551,
+        "y": 109,
+        "width": 193,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名称 配送距离(km) 重量(kg) 时效要求 时效 经济 普通 加急 期望送达时间(分钟) 智能比价 全部平台比价 排序： 综合评分 请输入配送参数，点击\"智能比价\"查看各平台报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 228,
+        "y": 156,
+        "width": 1536,
+        "height": 854
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-8 css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-col-8.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名称 配送距离(km) 重量(kg) 时效要求 时效 经济 普通 加急 期望送达时间(分钟) 智能比价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 228,
+        "y": 156,
+        "width": 512,
+        "height": 854
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered stat-card css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-card.ant-card-bordered.stat-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送信息 收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名称 配送距离(km) 重量(kg) 时效要求 时效 经济 普通 加急 期望送达时间(分钟) 智能比价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 156,
+        "width": 488,
+        "height": 854
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 241,
+        "y": 157,
+        "width": 486,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 172,
+        "width": 438,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 172,
+        "width": 438,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名称 配送距离(km) 重量(kg) 时效要求 时效 经济 普通 加急 期望送达时间(分钟) 智能比价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 241,
+        "y": 212,
+        "width": 486,
+        "height": 797
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "form",
+      "id": "",
+      "className": "ant-form ant-form-vertical css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "form.ant-form.ant-form-vertical.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件人信息 收件人姓名 联系电话 收件地址 物品信息 物品名称 配送距离(km) 重量(kg) 时效要求 时效 经济 普通 加急 期望送达时间(分钟) 智能比价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 11,
+      "rect": {
+        "x": 265,
+        "y": 236,
+        "width": 438,
+        "height": 749
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件人信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 236,
+        "width": 438,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mncuj7 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mncuj7.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件人姓名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 264,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 111,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件人姓名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 264,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 112,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件人姓名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 264,
+        "width": 438,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 113,
+      "tag": "label",
+      "id": "",
+      "className": "ant-form-item-required",
+      "selectorHint": "label.ant-form-item-required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "收件人姓名",
+      "placeholder": "",
+      "text": "收件人姓名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 264,
+        "width": 95,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 114,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 294,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 115,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 294,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 116,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 294,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 117,
+      "tag": "input",
+      "id": "receiver_name",
+      "className": "ant-input css-dev-only-do-not-override-mncuj7 ant-input-outlined",
+      "selectorHint": "input#receiver_name.ant-input.css-dev-only-do-not-override-mncuj7.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入姓名",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 294,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 118,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mncuj7 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mncuj7.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "联系电话",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 350,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 119,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "联系电话",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 350,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 120,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "联系电话",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 350,
+        "width": 438,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 121,
+      "tag": "label",
+      "id": "",
+      "className": "ant-form-item-required",
+      "selectorHint": "label.ant-form-item-required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "联系电话",
+      "placeholder": "",
+      "text": "联系电话",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 350,
+        "width": 81,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 122,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 380,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 123,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 380,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 124,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 380,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 125,
+      "tag": "input",
+      "id": "receiver_phone",
+      "className": "ant-input css-dev-only-do-not-override-mncuj7 ant-input-outlined",
+      "selectorHint": "input#receiver_phone.ant-input.css-dev-only-do-not-override-mncuj7.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入手机号码",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 380,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 126,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mncuj7 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mncuj7.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件地址",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 436,
+        "width": 438,
+        "height": 84
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 127,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件地址",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 436,
+        "width": 438,
+        "height": 84
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 128,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "收件地址",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 436,
+        "width": 438,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 129,
+      "tag": "label",
+      "id": "",
+      "className": "ant-form-item-required",
+      "selectorHint": "label.ant-form-item-required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "收件地址",
+      "placeholder": "",
+      "text": "收件地址",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 436,
+        "width": 81,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 130,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 466,
+        "width": 438,
+        "height": 54
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 131,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 466,
+        "width": 438,
+        "height": 54
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 132,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 466,
+        "width": 438,
+        "height": 54
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 133,
+      "tag": "textarea",
+      "id": "receiver_address",
+      "className": "ant-input css-dev-only-do-not-override-mncuj7 ant-input-outlined",
+      "selectorHint": "textarea#receiver_address.ant-input.css-dev-only-do-not-override-mncuj7.ant-input-outlined",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入详细收件地址",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 466,
+        "width": 438,
+        "height": 54
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 134,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "物品信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 544,
+        "width": 438,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 135,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mncuj7 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mncuj7.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "物品名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 573,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 136,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "物品名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 573,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 137,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "物品名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 573,
+        "width": 438,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 138,
+      "tag": "label",
+      "id": "",
+      "className": "ant-form-item-required",
+      "selectorHint": "label.ant-form-item-required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "物品名称",
+      "placeholder": "",
+      "text": "物品名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 573,
+        "width": 81,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 139,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 603,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 140,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 603,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 141,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 603,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 142,
+      "tag": "input",
+      "id": "goods_name",
+      "className": "ant-input css-dev-only-do-not-override-mncuj7 ant-input-outlined",
+      "selectorHint": "input#goods_name.ant-input.css-dev-only-do-not-override-mncuj7.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "如：奶茶、餐食、文件",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 603,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 143,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送距离(km) 重量(kg)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 261,
+        "y": 659,
+        "width": 446,
+        "height": 86
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 144,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-12 css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-col-12.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送距离(km)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 261,
+        "y": 659,
+        "width": 223,
+        "height": 86
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 145,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mncuj7 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mncuj7.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送距离(km)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 659,
+        "width": 215,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 146,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送距离(km)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 659,
+        "width": 215,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 147,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "配送距离(km)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 659,
+        "width": 215,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 148,
+      "tag": "label",
+      "id": "",
+      "className": "ant-form-item-required",
+      "selectorHint": "label.ant-form-item-required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "配送距离(km)",
+      "placeholder": "",
+      "text": "配送距离(km)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 659,
+        "width": 111,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 149,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 689,
+        "width": 215,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 150,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 689,
+        "width": 215,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 151,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 689,
+        "width": 215,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 152,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number ant-input-number-in-form-item css-dev-only-do-not-override-mncuj7 ant-input-number-outlined",
+      "selectorHint": "div.ant-input-number.ant-input-number-in-form-item.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 689,
+        "width": 215,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 153,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number-handler-wrap",
+      "selectorHint": "div.ant-input-number-handler-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 2,
+      "rect": {
+        "x": 479,
+        "y": 690,
+        "width": 0,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 154,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-up",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-up",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Increase Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Increase Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 479,
+        "y": 690,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 155,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-up ant-input-number-handler-up-inner",
+      "selectorHint": "span.anticon.anticon-up.ant-input-number-handler-up-inner",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "up",
+      "title": "",
+      "placeholder": "",
+      "text": "up",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 477,
+        "y": 694,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 156,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 477,
+        "y": 694,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 157,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 477,
+        "y": 695,
+        "width": 6,
+        "height": 4
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 158,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-down",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-down",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Decrease Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Decrease Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 479,
+        "y": 705,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 159,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-input-number-handler-down-inner",
+      "selectorHint": "span.anticon.anticon-down.ant-input-number-handler-down-inner",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 477,
+        "y": 709,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 160,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 477,
+        "y": 709,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 161,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 477,
+        "y": 711,
+        "width": 6,
+        "height": 4
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 162,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number-input-wrap",
+      "selectorHint": "div.ant-input-number-input-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 266,
+        "y": 690,
+        "width": 213,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 163,
+      "tag": "input",
+      "id": "distance",
+      "className": "ant-input-number-input",
+      "selectorHint": "input#distance.ant-input-number-input",
+      "name": "",
+      "type": "",
+      "role": "spinbutton",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "公里数",
+      "text": "5.0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 266,
+        "y": 690,
+        "width": 213,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 164,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-12 css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-col-12.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "重量(kg)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 484,
+        "y": 659,
+        "width": 223,
+        "height": 86
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 165,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mncuj7 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mncuj7.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "重量(kg)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 488,
+        "y": 659,
+        "width": 215,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 166,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "重量(kg)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 488,
+        "y": 659,
+        "width": 215,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 167,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "重量(kg)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 488,
+        "y": 659,
+        "width": 215,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 168,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "重量(kg)",
+      "placeholder": "",
+      "text": "重量(kg)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 488,
+        "y": 659,
+        "width": 68,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 169,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 488,
+        "y": 689,
+        "width": 215,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 170,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 488,
+        "y": 689,
+        "width": 215,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 171,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 488,
+        "y": 689,
+        "width": 215,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 172,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number ant-input-number-in-form-item css-dev-only-do-not-override-mncuj7 ant-input-number-outlined",
+      "selectorHint": "div.ant-input-number.ant-input-number-in-form-item.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 488,
+        "y": 689,
+        "width": 215,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 173,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number-handler-wrap",
+      "selectorHint": "div.ant-input-number-handler-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 2,
+      "rect": {
+        "x": 702,
+        "y": 690,
+        "width": 0,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 174,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-up",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-up",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Increase Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Increase Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 702,
+        "y": 690,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 175,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-up ant-input-number-handler-up-inner",
+      "selectorHint": "span.anticon.anticon-up.ant-input-number-handler-up-inner",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "up",
+      "title": "",
+      "placeholder": "",
+      "text": "up",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 700,
+        "y": 694,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 176,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 700,
+        "y": 694,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 177,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 700,
+        "y": 695,
+        "width": 6,
+        "height": 4
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 178,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-down",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-down",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Decrease Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Decrease Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 702,
+        "y": 705,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 179,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-input-number-handler-down-inner",
+      "selectorHint": "span.anticon.anticon-down.ant-input-number-handler-down-inner",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 700,
+        "y": 709,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 180,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 700,
+        "y": 709,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 181,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 700,
+        "y": 711,
+        "width": 6,
+        "height": 4
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 182,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number-input-wrap",
+      "selectorHint": "div.ant-input-number-input-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 489,
+        "y": 690,
+        "width": 213,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 183,
+      "tag": "input",
+      "id": "weight",
+      "className": "ant-input-number-input",
+      "selectorHint": "input#weight.ant-input-number-input",
+      "name": "",
+      "type": "",
+      "role": "spinbutton",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "公斤数",
+      "text": "1.0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 489,
+        "y": 690,
+        "width": 213,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 184,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "时效要求",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 745,
+        "width": 438,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 185,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mncuj7 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mncuj7.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "时效 经济 普通 加急",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 773,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 186,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "时效 经济 普通 加急",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 773,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 187,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "时效",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 773,
+        "width": 438,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 188,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "时效",
+      "placeholder": "",
+      "text": "时效",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 773,
+        "width": 42,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 189,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "经济 普通 加急",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 803,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 190,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "经济 普通 加急",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 803,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 191,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "经济 普通 加急",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 808,
+        "width": 438,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 192,
+      "tag": "div",
+      "id": "urgency",
+      "className": "ant-radio-group ant-radio-group-outline css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div#urgency.ant-radio-group.ant-radio-group-outline.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "经济 普通 加急",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 265,
+        "y": 808,
+        "width": 196,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 193,
+      "tag": "label",
+      "id": "",
+      "className": "ant-radio-wrapper ant-radio-wrapper-in-form-item css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "label.ant-radio-wrapper.ant-radio-wrapper-in-form-item.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "经济",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 808,
+        "width": 60,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 194,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio ant-wave-target",
+      "selectorHint": "span.ant-radio.ant-wave-target",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 195,
+      "tag": "input",
+      "id": "",
+      "className": "ant-radio-input",
+      "selectorHint": "input.ant-radio-input",
+      "name": "urgency",
+      "type": "radio",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "economy",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 196,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio-inner",
+      "selectorHint": "span.ant-radio-inner",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 197,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio-label",
+      "selectorHint": "span.ant-radio-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "经济",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 281,
+        "y": 808,
+        "width": 44,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 198,
+      "tag": "label",
+      "id": "",
+      "className": "ant-radio-wrapper ant-radio-wrapper-checked ant-radio-wrapper-in-form-item css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "label.ant-radio-wrapper.ant-radio-wrapper-checked.ant-radio-wrapper-in-form-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "普通",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 333,
+        "y": 808,
+        "width": 60,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 199,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio ant-wave-target ant-radio-checked",
+      "selectorHint": "span.ant-radio.ant-wave-target.ant-radio-checked",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 333,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 200,
+      "tag": "input",
+      "id": "",
+      "className": "ant-radio-input",
+      "selectorHint": "input.ant-radio-input",
+      "name": "urgency",
+      "type": "radio",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "normal",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 201,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio-inner",
+      "selectorHint": "span.ant-radio-inner",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 202,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio-label",
+      "selectorHint": "span.ant-radio-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "普通",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 349,
+        "y": 808,
+        "width": 44,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 203,
+      "tag": "label",
+      "id": "",
+      "className": "ant-radio-wrapper ant-radio-wrapper-in-form-item css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "label.ant-radio-wrapper.ant-radio-wrapper-in-form-item.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "加急",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 401,
+        "y": 808,
+        "width": 60,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 204,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio ant-wave-target",
+      "selectorHint": "span.ant-radio.ant-wave-target",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 401,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 205,
+      "tag": "input",
+      "id": "",
+      "className": "ant-radio-input",
+      "selectorHint": "input.ant-radio-input",
+      "name": "urgency",
+      "type": "radio",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "urgent",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 401,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 206,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio-inner",
+      "selectorHint": "span.ant-radio-inner",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 401,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 207,
+      "tag": "span",
+      "id": "",
+      "className": "ant-radio-label",
+      "selectorHint": "span.ant-radio-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "加急",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 417,
+        "y": 808,
+        "width": 44,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 208,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-mncuj7 ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-mncuj7.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "期望送达时间(分钟)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 859,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 209,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "期望送达时间(分钟)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 859,
+        "width": 438,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 210,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "期望送达时间(分钟)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 859,
+        "width": 438,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 211,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "期望送达时间(分钟)",
+      "placeholder": "",
+      "text": "期望送达时间(分钟)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 859,
+        "width": 136,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 212,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 889,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 213,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 889,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 214,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 889,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 215,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number ant-input-number-in-form-item css-dev-only-do-not-override-mncuj7 ant-input-number-outlined",
+      "selectorHint": "div.ant-input-number.ant-input-number-in-form-item.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 889,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 216,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number-handler-wrap",
+      "selectorHint": "div.ant-input-number-handler-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 2,
+      "rect": {
+        "x": 702,
+        "y": 890,
+        "width": 0,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 217,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-up",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-up",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Increase Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Increase Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 702,
+        "y": 890,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 218,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-up ant-input-number-handler-up-inner",
+      "selectorHint": "span.anticon.anticon-up.ant-input-number-handler-up-inner",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "up",
+      "title": "",
+      "placeholder": "",
+      "text": "up",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 700,
+        "y": 894,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 219,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 700,
+        "y": 894,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 220,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 700,
+        "y": 896,
+        "width": 6,
+        "height": 4
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 221,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-down",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-down",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Decrease Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Decrease Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 702,
+        "y": 905,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 222,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-input-number-handler-down-inner",
+      "selectorHint": "span.anticon.anticon-down.ant-input-number-handler-down-inner",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 700,
+        "y": 910,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 223,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 700,
+        "y": 910,
+        "width": 7,
+        "height": 7
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 224,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 700,
+        "y": 911,
+        "width": 6,
+        "height": 4
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 225,
+      "tag": "div",
+      "id": "",
+      "className": "ant-input-number-input-wrap",
+      "selectorHint": "div.ant-input-number-input-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 266,
+        "y": 890,
+        "width": 436,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 226,
+      "tag": "input",
+      "id": "expected_time",
+      "className": "ant-input-number-input",
+      "selectorHint": "input#expected_time.ant-input-number-input",
+      "name": "",
+      "type": "",
+      "role": "spinbutton",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "选填，用于评估时效",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 266,
+        "y": 890,
+        "width": 436,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 227,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-lg ant-btn-block",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "智能比价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 945,
+        "width": 438,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 228,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 440,
+        "y": 956,
+        "width": 16,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 229,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-thunderbolt",
+      "selectorHint": "span.anticon.anticon-thunderbolt",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "thunderbolt",
+      "title": "",
+      "placeholder": "",
+      "text": "thunderbolt",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 440,
+        "y": 957,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 230,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 440,
+        "y": 957,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 231,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 442,
+        "y": 958,
+        "width": 12,
+        "height": 15
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 232,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "智能比价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 464,
+        "y": 954,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 233,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-16 css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-col-16.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全部平台比价 排序： 综合评分 请输入配送参数，点击\"智能比价\"查看各平台报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 740,
+        "y": 156,
+        "width": 1024,
+        "height": 854
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 234,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全部平台比价 排序： 综合评分 请输入配送参数，点击\"智能比价\"查看各平台报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 752,
+        "y": 156,
+        "width": 1000,
+        "height": 311
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 235,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全部平台比价 排序： 综合评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 753,
+        "y": 157,
+        "width": 998,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 236,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全部平台比价 排序： 综合评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 777,
+        "y": 172,
+        "width": 950,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 237,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全部平台比价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 777,
+        "y": 172,
+        "width": 783,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 238,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-extra",
+      "selectorHint": "div.ant-card-extra",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "排序： 综合评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1560,
+        "y": 172,
+        "width": 167,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 239,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "排序： 综合评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1560,
+        "y": 172,
+        "width": 167,
+        "height": 24
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 240,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "排序：",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1560,
+        "y": 172,
+        "width": 39,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 241,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select ant-select-sm ant-select-outlined css-dev-only-do-not-override-mncuj7 ant-select-single ant-select-show-arrow",
+      "selectorHint": "div.ant-select.ant-select-sm.ant-select-outlined",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "综合评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1607,
+        "y": 172,
+        "width": 120,
+        "height": 24
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 242,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select-selector",
+      "selectorHint": "div.ant-select-selector",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "综合评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1607,
+        "y": 172,
+        "width": 120,
+        "height": 24
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 243,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-wrap",
+      "selectorHint": "span.ant-select-selection-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "综合评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1615,
+        "y": 173,
+        "width": 104,
+        "height": 22
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 244,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-search",
+      "selectorHint": "span.ant-select-selection-search",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1615,
+        "y": 173,
+        "width": 104,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 245,
+      "tag": "input",
+      "id": "rc_select_1",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_1.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 1615,
+        "y": 173,
+        "width": 86,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 246,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-item",
+      "selectorHint": "span.ant-select-selection-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "综合评分",
+      "placeholder": "",
+      "text": "综合评分",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1615,
+        "y": 173,
+        "width": 104,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 247,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-arrow",
+      "selectorHint": "span.ant-select-arrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1704,
+        "y": 178,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 248,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-select-suffix",
+      "selectorHint": "span.anticon.anticon-down.ant-select-suffix",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1704,
+        "y": 178,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 249,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1704,
+        "y": 178,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 250,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1705,
+        "y": 181,
+        "width": 10,
+        "height": 7
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 251,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请输入配送参数，点击\"智能比价\"查看各平台报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 753,
+        "y": 212,
+        "width": 998,
+        "height": 254
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 252,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请输入配送参数，点击\"智能比价\"查看各平台报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 777,
+        "y": 236,
+        "width": 950,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 253,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-dollar",
+      "selectorHint": "span.anticon.anticon-dollar",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "dollar",
+      "title": "",
+      "placeholder": "",
+      "text": "dollar",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1228,
+        "y": 296,
+        "width": 48,
+        "height": 48
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 254,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1228,
+        "y": 296,
+        "width": 48,
+        "height": 48
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 255,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1228,
+        "y": 296,
+        "width": 48,
+        "height": 48
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 256,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请输入配送参数，点击\"智能比价\"查看各平台报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 777,
+        "y": 360,
+        "width": 950,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营 运营总览 订单管理 商户端 商户配送看板 运费比价引擎 售后协同中心 后台管理 运力质量监控 SLA赔付管理 多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 478
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 106,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 150,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "商户配送看板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 236,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运费比价引擎",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 280,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "售后协同中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 324,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运力质量监控",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 410,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "SLA赔付管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 454,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "多平台结算中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 498,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "清空对比",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1235,
+        "y": 108,
+        "width": 72,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "开始对比",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1315,
+        "y": 104,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "订单管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1433,
+        "y": 104,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "input",
+      "id": "receiver_name",
+      "className": "ant-input css-dev-only-do-not-override-mncuj7 ant-input-outlined",
+      "selectorHint": "input#receiver_name.ant-input.css-dev-only-do-not-override-mncuj7.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入姓名",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 294,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "input",
+      "id": "receiver_phone",
+      "className": "ant-input css-dev-only-do-not-override-mncuj7 ant-input-outlined",
+      "selectorHint": "input#receiver_phone.ant-input.css-dev-only-do-not-override-mncuj7.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入手机号码",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 380,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "textarea",
+      "id": "receiver_address",
+      "className": "ant-input css-dev-only-do-not-override-mncuj7 ant-input-outlined",
+      "selectorHint": "textarea#receiver_address.ant-input.css-dev-only-do-not-override-mncuj7.ant-input-outlined",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入详细收件地址",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 466,
+        "width": 438,
+        "height": 54
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "input",
+      "id": "goods_name",
+      "className": "ant-input css-dev-only-do-not-override-mncuj7 ant-input-outlined",
+      "selectorHint": "input#goods_name.ant-input.css-dev-only-do-not-override-mncuj7.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "如：奶茶、餐食、文件",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 603,
+        "width": 438,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-up",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-up",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Increase Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Increase Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 479,
+        "y": 690,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-down",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-down",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Decrease Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Decrease Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 479,
+        "y": 705,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "input",
+      "id": "distance",
+      "className": "ant-input-number-input",
+      "selectorHint": "input#distance.ant-input-number-input",
+      "name": "",
+      "type": "",
+      "role": "spinbutton",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "公里数",
+      "text": "5.0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 266,
+        "y": 690,
+        "width": 213,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-up",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-up",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Increase Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Increase Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 702,
+        "y": 690,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-down",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-down",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Decrease Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Decrease Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 702,
+        "y": 705,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "input",
+      "id": "weight",
+      "className": "ant-input-number-input",
+      "selectorHint": "input#weight.ant-input-number-input",
+      "name": "",
+      "type": "",
+      "role": "spinbutton",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "公斤数",
+      "text": "1.0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 489,
+        "y": 690,
+        "width": 213,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "input",
+      "id": "",
+      "className": "ant-radio-input",
+      "selectorHint": "input.ant-radio-input",
+      "name": "urgency",
+      "type": "radio",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "economy",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "input",
+      "id": "",
+      "className": "ant-radio-input",
+      "selectorHint": "input.ant-radio-input",
+      "name": "urgency",
+      "type": "radio",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "normal",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "input",
+      "id": "",
+      "className": "ant-radio-input",
+      "selectorHint": "input.ant-radio-input",
+      "name": "urgency",
+      "type": "radio",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "urgent",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 401,
+        "y": 811,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-up",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-up",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Increase Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Increase Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 702,
+        "y": 890,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "span",
+      "id": "",
+      "className": "ant-input-number-handler ant-input-number-handler-down",
+      "selectorHint": "span.ant-input-number-handler.ant-input-number-handler-down",
+      "name": "",
+      "type": "",
+      "role": "button",
+      "ariaLabel": "Decrease Value",
+      "title": "",
+      "placeholder": "",
+      "text": "Decrease Value",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 702,
+        "y": 905,
+        "width": 1,
+        "height": 15
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "input",
+      "id": "expected_time",
+      "className": "ant-input-number-input",
+      "selectorHint": "input#expected_time.ant-input-number-input",
+      "name": "",
+      "type": "",
+      "role": "spinbutton",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "选填，用于评估时效",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 266,
+        "y": 890,
+        "width": 436,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-lg ant-btn-block",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "智能比价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 945,
+        "width": 438,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "input",
+      "id": "rc_select_1",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_1.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 1615,
+        "y": 173,
+        "width": 86,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    }
+  ]
+}

@@ -90,18 +90,23 @@ app.get('/api/dashboard/summary', (req, res) => {
   `).all();
 
   const settlementList = db.prepare(`
-    SELECT s.*, p.name as platform_name, p.logo as platform_logo,
-      (SELECT COUNT(*) FROM orders o WHERE o.platform_id = s.platform_id AND DATE(o.created_at) >= DATE('now', '-30 days')) as order_count,
-      (SELECT COALESCE(SUM(o.total_fee), 0) FROM orders o WHERE o.platform_id = s.platform_id AND DATE(o.created_at) >= DATE('now', '-30 days')) as total_amount
+    SELECT s.*, p.name as platform_name, p.logo as platform_logo
     FROM settlements s
     LEFT JOIN platforms p ON s.platform_id = p.id
-    WHERE s.status = 'pending'
-    ORDER BY s.id DESC
+    ORDER BY 
+      CASE s.status 
+        WHEN 'pending' THEN 1 
+        WHEN 'reconciled' THEN 2 
+        WHEN 'paid' THEN 3 
+        ELSE 4 
+      END,
+      s.id DESC
     LIMIT 5
   `).all();
 
   const platformStats = db.prepare(`
-    SELECT p.id, p.name, p.logo, p.code, p.capacity_saturation, p.on_time_rate, p.loss_rate, p.complaint_rate,
+    SELECT p.id, p.name, p.logo, p.code, p.base_price, p.per_km_price, p.per_kg_price,
+      p.capacity_saturation, p.on_time_rate, p.loss_rate, p.complaint_rate,
       (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND DATE(o.created_at) = DATE('now')) as today_orders,
       (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND o.delivery_status = 'delivered') as total_delivered,
       (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND o.delivery_status = 'exception') as exception_orders,
@@ -199,6 +204,68 @@ app.get('/api/products', (req, res) => {
       capacity_saturation: platform.capacity_saturation,
       status: platform.status
     }))
+  });
+});
+
+app.get(['/api/auth/me', '/api/users/profile', '/api/user/profile'], (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      id: 'local-admin',
+      username: 'admin',
+      role: 'admin',
+      name: '配送调度中台管理员',
+      permissions: ['dashboard.read', 'orders.manage', 'platforms.monitor', 'settlements.audit']
+    }
+  });
+});
+
+app.get('/api/search', (req, res) => {
+  const keyword = String(req.query.q || req.query.keyword || '').trim();
+  const like = `%${keyword}%`;
+  const orders = keyword
+    ? db.prepare(`
+      SELECT o.id, o.order_no, o.delivery_status, o.total_fee, p.name as platform_name, m.name as merchant_name
+      FROM orders o
+      LEFT JOIN platforms p ON o.platform_id = p.id
+      LEFT JOIN merchants m ON o.merchant_id = m.id
+      WHERE o.order_no LIKE ? OR p.name LIKE ? OR m.name LIKE ?
+      ORDER BY o.id DESC LIMIT 10
+    `).all(like, like, like)
+    : db.prepare(`
+      SELECT o.id, o.order_no, o.delivery_status, o.total_fee, p.name as platform_name, m.name as merchant_name
+      FROM orders o
+      LEFT JOIN platforms p ON o.platform_id = p.id
+      LEFT JOIN merchants m ON o.merchant_id = m.id
+      ORDER BY o.id DESC LIMIT 10
+    `).all();
+  const platforms = keyword
+    ? db.prepare('SELECT id, code, name, status, capacity_saturation FROM platforms WHERE name LIKE ? OR code LIKE ? LIMIT 10').all(like, like)
+    : db.prepare('SELECT id, code, name, status, capacity_saturation FROM platforms ORDER BY id LIMIT 10').all();
+  res.json({ success: true, data: { query: keyword, orders, platforms } });
+});
+
+app.get('/api/cart', (req, res) => {
+  const platform = db.prepare(`
+    SELECT id, code, name, base_price
+    FROM platforms
+    WHERE status = 'active'
+    ORDER BY id LIMIT 1
+  `).get();
+  const items = platform ? [{
+    id: platform.id,
+    sku: platform.code,
+    name: `${platform.name} 配送服务`,
+    price: platform.base_price,
+    quantity: 1
+  }] : [];
+  res.json({
+    success: true,
+    data: {
+      id: 'delivery-local-cart',
+      items,
+      total: items.reduce((sum, item) => sum + Number(item.price || 0), 0)
+    }
   });
 });
 

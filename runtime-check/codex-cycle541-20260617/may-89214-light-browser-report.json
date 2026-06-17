@@ -1,0 +1,148 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T21:57:30.219Z",
+  "order": "may-89214",
+  "url": "http://127.0.0.1:49214/",
+  "finalUrl": "http://127.0.0.1:49214/settlement",
+  "title": "配送调度中台",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89214/runtime-check/codex-cycle541-20260617/may-89214-light-frontend.png",
+  "checks": [
+    {
+      "name": "route /",
+      "ok": true,
+      "status": 200,
+      "expected": [
+        "/配送调度中台/",
+        "/运营总览/",
+        "/今日订单/",
+        "/最近订单/"
+      ],
+      "url": "http://127.0.0.1:49214/"
+    },
+    {
+      "name": "route /orders",
+      "ok": true,
+      "status": 200,
+      "expected": [
+        "/订单管理/",
+        "/新建订单/",
+        "/订单号/"
+      ],
+      "url": "http://127.0.0.1:49214/orders"
+    },
+    {
+      "name": "new order interaction",
+      "ok": true
+    },
+    {
+      "name": "route /price-compare",
+      "ok": true,
+      "status": 200,
+      "expected": [
+        "/运费比价引擎/",
+        "/智能比价/",
+        "/多平台对比|一键比价/"
+      ],
+      "url": "http://127.0.0.1:49214/price-compare"
+    },
+    {
+      "name": "route /after-sales",
+      "ok": true,
+      "status": 200,
+      "expected": [
+        "/售后协同中心|售后/",
+        "/投诉|改址|处理中/"
+      ],
+      "url": "http://127.0.0.1:49214/after-sales"
+    },
+    {
+      "name": "route /settlement",
+      "ok": true,
+      "status": 200,
+      "expected": [
+        "/多平台结算中心|结算/",
+        "/对账|抽佣|结算/"
+      ],
+      "url": "http://127.0.0.1:49214/settlement"
+    },
+    {
+      "name": "backend health api",
+      "ok": true,
+      "status": 200,
+      "bodyPreview": "{\"success\":true,\"status\":\"ok\",\"timestamp\":\"2026-06-16T21:57:29.802Z\",\"version\":\"1.0.0\"}"
+    },
+    {
+      "name": "dashboard summary api",
+      "ok": true,
+      "status": 200,
+      "today_orders": 5,
+      "platforms": 12,
+      "recent_orders": 5
+    }
+  ],
+  "failedChecks": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Statistic, Table, Tag, Progress, List, Avatar, Button, Drawer, Descriptions, Timeline, Space, Badge, Modal, message, Alert, Empty, Tooltip } from 'antd'
+import { Row, Col, Card, Statistic, Table, Tag, Progress, List, Avatar, Button, Drawer, Descriptions, Timeline, Space, Badge, Modal, message, Alert, Empty, Tooltip, Divider } from 'antd'
 import {
   ShoppingCartOutlined,
   RocketOutlined,
@@ -23,7 +23,8 @@ import {
   EditOutlined,
   ReloadOutlined,
   FileTextOutlined,
-  SwapOutlined
+  SwapOutlined,
+  InfoCircleOutlined
 } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
@@ -179,6 +180,15 @@ function Dashboard() {
     if (saturation < 0.8) return '#faad14'
     return '#ff4d4f'
   }
+
+  const toNumber = (value, fallback = 0) => {
+    const number = Number(value)
+    return Number.isFinite(number) ? number : fallback
+  }
+
+  const deliveryFee5km = (platform) => (
+    toNumber(platform?.base_price) + toNumber(platform?.per_km_price) * 5
+  )
 
   return (
     <div>
@@ -448,7 +458,31 @@ function Dashboard() {
                                     <span> · 结果: <span style={{ color: '#1677ff' }}>{item.result}</span></span>
                                   )}
                                 </div>
+                                <div style={{ marginTop: 2 }}>
+                                  <Space size={8}>
+                                    {item.type === 'address_change' && item.change_fee !== undefined && (
+                                      <span>
+                                        改址费: <span style={{ color: '#fa8c16', fontWeight: 500 }}>¥{item.change_fee?.toFixed(2)}</span>
+                                        {item.fee_confirmed ? (
+                                          <Tag color="green" style={{ marginLeft: 4, padding: '0 4px' }}>✓已确认</Tag>
+                                        ) : (
+                                          <Tag color="orange" style={{ marginLeft: 4, padding: '0 4px' }}>待确认</Tag>
+                                        )}
+                                      </span>
+                                    )}
+                                    {item.disposal_result && (
+                                      <span style={{ color: '#722ed1' }}>
+                                        承运方处置: {item.disposal_result}
+                                      </span>
+                                    )}
+                                  </Space>
+                                </div>
                                 <div>提交: {dayjs(item.created_at).format('MM-DD HH:mm')}</div>
+                                {item.disposed_at && (
+                                  <div style={{ color: '#52c41a' }}>
+                                    处置回传: {dayjs(item.disposed_at).format('MM-DD HH:mm')}
+                                  </div>
+                                )}
                                 {item.reason && (
                                   <div style={{ color: '#999', marginTop: 2 }}>
                                     原因: {item.reason.length > 25 ? item.reason.substring(0, 25) + '...' : item.reason}
@@ -518,13 +552,38 @@ function Dashboard() {
                                     <span> · <Tag color="green" style={{ margin: 0, padding: '0 4px' }}>已复查</Tag></span>
                                   )}
                                 </div>
+                                <div style={{ marginTop: 2 }}>
+                                  <Space size={8}>
+                                    <span>
+                                      发放: <span style={{ color: item.coupon_code ? '#52c41a' : '#faad14', fontWeight: 500 }}>{item.coupon_code ? '已发放' : '待发放'}</span>
+                                    </span>
+                                    {item.coupon_code && (
+                                      <span>
+                                        核验: {item.coupon_verified ? (
+                                          <Tag color="green" style={{ margin: 0, padding: '0 4px' }}>✓已核验</Tag>
+                                        ) : (
+                                          <Tag color="orange" style={{ margin: 0, padding: '0 4px' }}>待核验</Tag>
+                                        )}
+                                      </span>
+                                    )}
+                                    {item.coupon_sent_at && (
+                                      <span style={{ color: '#52c41a' }}>
+                                        发券: {dayjs(item.coupon_sent_at).format('MM-DD HH:mm')}
+                                      </span>
+                                    )}
+                                  </Space>
+                                </div>
                                 <div>
-                                  触发: {dayjs(item.triggered_at).format('MM-DD HH:mm')} · 
-                                  发放: <span style={{ color: item.coupon_code ? '#52c41a' : '#faad14', fontWeight: 500 }}>{item.coupon_code ? '已发放' : '待发放'}</span>
+                                  触发: {dayjs(item.triggered_at).format('MM-DD HH:mm')}
+                                  {item.reviewed_at && (
+                                    <span style={{ color: '#722ed1', marginLeft: 8 }}>
+                                      复查: {dayjs(item.reviewed_at).format('MM-DD HH:mm')}
+                                    </span>
+                                  )}
                                 </div>
                                 {item.review_result && (
-                                  <div style={{ color: '#1677ff', marginTop: 2 }}>
-                                    复查: {item.review_result.length > 25 ? item.review_result.substring(0, 25) + '...' : item.review_result}
+                                  <div style={{ color: '#722ed1', marginTop: 2 }}>
+                                    <InfoCircleOutlined /> 复查记录: {item.review_result.length > 20 ? item.review_result.substring(0, 20) + '...' : item.review_result}
                                   </div>
                                 )}
                                 {item.reason && !item.review_result && (
@@ -551,12 +610,20 @@ function Dashboard() {
                     <Space>
                       <MoneyCollectOutlined style={{ color: '#13c2c2' }} />
                       <span>多平台结算</span>
+                      {settlementList.filter(s => s.status === 'pending').length > 0 && (
+                        <Badge count={settlementList.filter(s => s.status === 'pending').length} color="#faad14" />
+                      )}
                     </Space>
                   }
                   extra={
-                    <Button type="link" size="small">
-                      全部 <RightOutlined />
-                    </Button>
+                    <Space size={8}>
+                      <Button type="link" size="small" onClick={e => { e.stopPropagation(); navigate('/settlement?tab=commission') }}>
+                        按单抽佣
+                      </Button>
+                      <Button type="link" size="small" onClick={e => { e.stopPropagation(); navigate('/settlement?tab=reconciliation') }}>
+                        月结对账
+                      </Button>
+                    </Space>
                   }
                 >
                   {settlementList.length === 0 ? (
@@ -566,21 +633,66 @@ function Dashboard() {
                       size="small"
                       dataSource={settlementList}
                       renderItem={item => (
-                        <List.Item size="small" style={{ padding: '4px 0' }}>
+                        <List.Item 
+                          size="small" 
+                          style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}
+                          actions={[
+                            <Button key="detail" type="link" size="small" onClick={e => { e.stopPropagation(); navigate('/settlement') }}>
+                              查看明细
+                            </Button>
+                          ]}
+                        >
                           <List.Item.Meta
                             avatar={<FileTextOutlined style={{ color: '#13c2c2' }} />}
                             title={
-                              <Space size={4}>
+                              <Space size={4} wrap>
                                 <span style={{ fontSize: 12 }}>{item.period}</span>
                                 <Tag color="cyan" style={{ fontSize: 10, padding: '0 4px' }}>
                                   {item.platform_logo} {item.platform_name}
                                 </Tag>
+                                {item.status === 'pending' && (
+                                  <Tag color="orange" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    待对账
+                                  </Tag>
+                                )}
+                                {item.status === 'reconciled' && (
+                                  <Tag color="green" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    已对账
+                                  </Tag>
+                                )}
+                                {item.status === 'paid' && (
+                                  <Tag color="blue" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    已付款
+                                  </Tag>
+                                )}
+                                {item.has_exception && (
+                                  <Tag color="red" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    <WarningOutlined /> 异常差异
+                                  </Tag>
+                                )}
                               </Space>
                             }
                             description={
                               <div style={{ fontSize: 11, color: '#666' }}>
-                                <div>{item.order_count || 0}单 · 总额 ¥{Number(item.total_amount || 0).toFixed(2)}</div>
-                                <div>抽佣 ¥{Number(item.commission_amount || 0).toFixed(2)} · 应付 ¥{Number(item.settlement_amount || 0).toFixed(2)}</div>
+                                <div style={{ marginBottom: 4 }}>
+                                  {item.order_count || 0}单 · 总额 <span style={{ color: '#1677ff' }}>¥{Number(item.total_amount || 0).toFixed(2)}</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                  <span>
+                                    抽佣: <span style={{ color: '#722ed1' }}>¥{Number(item.commission_amount || 0).toFixed(2)}</span>
+                                    <span style={{ color: '#999', marginLeft: 4 }}>
+                                      ({item.order_count ? ((item.commission_amount / item.total_amount) * 100).toFixed(1) : 0}%)
+                                    </span>
+                                  </span>
+                                  <span style={{ color: '#fa8c16' }}>
+                                    应付: ¥{Number(item.settlement_amount || 0).toFixed(2)}
+                                  </span>
+                                </div>
+                                {item.exception_count > 0 && (
+                                  <div style={{ color: '#ff4d4f', marginTop: 4, fontSize: 11 }}>
+                                    <WarningOutlined /> 异常差异 {item.exception_count} 笔，差异金额 ¥{Number(item.exception_amount || 0).toFixed(2)}
+                                  </div>
+                                )}
                               </div>
                             }
                           />
@@ -602,9 +714,14 @@ function Dashboard() {
                     </Space>
                   }
                   extra={
-                    <Button type="primary" size="small" icon={<EditOutlined />}>
-                      新建订单
-                    </Button>
+                    <Space>
+                      <Button type="link" size="small" onClick={e => { e.stopPropagation(); navigate('/price-compare') }}>
+                        比价引擎
+                      </Button>
+                      <Button type="primary" size="small" icon={<EditOutlined />} onClick={e => { e.stopPropagation(); navigate('/price-compare') }}>
+                        新建
+                      </Button>
+                    </Space>
                   }
                 >
                   <div style={{ padding: '8px 0' }}>
@@ -615,17 +732,47 @@ function Dashboard() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                       <span style={{ fontSize: 12, color: '#666' }}>平均准时率</span>
                       <span style={{ fontWeight: 600, color: '#52c41a' }}>
-                        {platformStats.length ? (platformStats.reduce((s, p) => s + p.on_time_rate, 0) / platformStats.length * 100).toFixed(1) : 0}%
+                        {platformStats.length ? (platformStats.reduce((s, p) => s + toNumber(p.on_time_rate), 0) / platformStats.length * 100).toFixed(1) : 0}%
                       </span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                       <span style={{ fontSize: 12, color: '#666' }}>平均运费(5km)</span>
-                      <span style={{ fontWeight: 600, color: '#f5222d' }}>¥{platformStats.length ? (platformStats.reduce((s, p) => s + (p.base_price || 0) + (p.per_km_price || 0) * 5, 0) / platformStats.length).toFixed(2) : '0.00'}</span>
+                      <span style={{ fontWeight: 600, color: '#f5222d' }}>¥{platformStats.length ? (platformStats.reduce((s, p) => s + deliveryFee5km(p), 0) / platformStats.length).toFixed(2) : '0.00'}</span>
                     </div>
+
+                    <Divider style={{ margin: '12px 0' }} />
+
+                    <div style={{ fontSize: 12, fontWeight: 500, marginBottom: 8, color: '#1677ff' }}>
+                      <DollarOutlined /> 今日最低成本方案
+                    </div>
+                    {platformStats.length > 0 && (() => {
+                      const sorted = [...platformStats].sort((a, b) => deliveryFee5km(a) - deliveryFee5km(b))
+                      const cheapest = sorted[0]
+                      const cheapestFee = deliveryFee5km(cheapest)
+                      const avgPrice = platformStats.reduce((s, p) => s + deliveryFee5km(p), 0) / platformStats.length
+                      const save = Math.max(0, avgPrice - cheapestFee).toFixed(2)
+                      return (
+                        <div style={{ background: '#f0f5ff', padding: '8px 12px', borderRadius: 8, marginBottom: 8 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                            <span style={{ fontSize: 20 }}>{cheapest.logo}</span>
+                            <span style={{ fontWeight: 600 }}>{cheapest.name}</span>
+                            <Tag color="green">最低成本</Tag>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+                            <span style={{ color: '#666' }}>5km标准配送</span>
+                            <span style={{ color: '#52c41a', fontWeight: 600 }}>¥{cheapestFee.toFixed(2)}</span>
+                          </div>
+                          <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>
+                            比平均价节省 <span style={{ color: '#52c41a' }}>¥{save}</span>
+                          </div>
+                        </div>
+                      )
+                    })()}
+
                     <Space style={{ marginTop: 8 }} wrap>
                       {platformStats.slice(0, 6).map(p => (
-                        <Tooltip key={p.id} title={`${p.name} 饱和度${(p.capacity_saturation * 100).toFixed(0)}%`}>
-                          <Tag color={p.capacity_saturation < 0.7 ? 'green' : p.capacity_saturation < 0.85 ? 'orange' : 'red'} style={{ margin: 0 }}>
+                        <Tooltip key={p.id} title={`${p.name} 饱和度${(toNumber(p.capacity_saturation) * 100).toFixed(0)}%`}>
+                          <Tag color={toNumber(p.capacity_saturation) < 0.7 ? 'green' : toNumber(p.capacity_saturation) < 0.85 ? 'orange' : 'red'} style={{ margin: 0 }}>
                             {p.logo}
                           </Tag>
                         </Tooltip>
@@ -721,28 +868,38 @@ function Dashboard() {
             },
             {
               title: '候选承运方',
-              width: 180,
+              width: 260,
               render: (_, record) => {
                 const route = orderRoutes[record.id]
                 if (!route || !route.optimal) return <span style={{ color: '#999' }}>计算中...</span>
                 return (
-                  <Space size={4} wrap>
+                  <Space direction="vertical" size={4} style={{ width: '100%' }}>
                     {route.optimal.slice(0, 3).map((r, idx) => (
-                      <Tooltip key={r.platform.id} title={`${r.platform.name} ¥${r.fee?.toFixed(2)}`}>
-                        <Tag
-                          color={r.platform.id === record.platform_id ? 'green' : idx === 0 ? 'blue' : 'default'}
-                          style={{ padding: '0 4px', margin: 0 }}
-                        >
-                          <span style={{ fontSize: 14 }}>{r.platform.logo}</span>
-                          <span style={{ fontSize: 10, marginLeft: 2 }}>¥{r.fee?.toFixed(0)}</span>
-                          {r.platform.id === record.platform_id && <CheckCircleOutlined style={{ fontSize: 10, marginLeft: 2 }} />}
+                      <div key={r.platform.id} style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 6, 
+                        padding: '2px 6px',
+                        background: r.platform.id === record.platform_id ? '#f6ffed' : idx === 0 ? '#f0f5ff' : 'transparent',
+                        borderRadius: 4,
+                        border: r.platform.id === record.platform_id ? '1px solid #b7eb8f' : 'none'
+                      }}>
+                        <Tag color={idx === 0 ? 'green' : idx === 1 ? 'blue' : 'default'} style={{ margin: 0, padding: '0 6px', minWidth: 28, textAlign: 'center' }}>
+                          #{idx + 1}
                         </Tag>
-                      </Tooltip>
+                        <span style={{ fontSize: 16 }}>{r.platform.logo}</span>
+                        <span style={{ fontSize: 12, fontWeight: r.platform.id === record.platform_id ? 600 : 400 }}>{r.platform.name}</span>
+                        <span style={{ color: '#52c41a', fontSize: 12, marginLeft: 'auto' }}>¥{r.fee?.toFixed(0)}</span>
+                        <span style={{ color: '#1677ff', fontSize: 11 }}>{r.delivery_time}分</span>
+                        {r.platform.id === record.platform_id && (
+                          <CheckCircleOutlined style={{ color: '#52c41a', fontSize: 12 }} />
+                        )}
+                      </div>
                     ))}
                     {route.optimal.length > 3 && (
-                      <Tag color="default" style={{ padding: '0 4px', margin: 0 }}>
-                        +{route.optimal.length - 3}
-                      </Tag>
+                      <div style={{ fontSize: 11, color: '#999', textAlign: 'center' }}>
+                        还有 {route.optimal.length - 3} 家候选
+                      </div>
                     )}
                   </Space>
                 )
@@ -750,20 +907,51 @@ function Dashboard() {
             },
             {
               title: '最优选择理由',
-              width: 160,
+              width: 200,
               ellipsis: true,
               render: (_, record) => {
                 const route = orderRoutes[record.id]
                 if (!route || !route.optimal) return <span style={{ color: '#999' }}>-</span>
                 const selected = route.optimal.find(r => r.platform.id === record.platform_id) || route.optimal[0]
-                let reason = selected?.reason || route.reason || '综合最优'
-                if (reason.length > 20) reason = reason.substring(0, 20) + '...'
+                const details = []
+                if (selected?.score_detail) {
+                  details.push(`价格${(selected.score_detail.price_score * 100).toFixed(0)}分`)
+                  details.push(`时效${(selected.score_detail.time_score * 100).toFixed(0)}分`)
+                  details.push(`质量${(selected.score_detail.quality_score * 100).toFixed(0)}分`)
+                  details.push(`运力${(selected.score_detail.saturation_score * 100).toFixed(0)}分`)
+                }
                 return (
-                  <Tooltip title={selected?.reason || route.reason || '综合评分最高'}>
-                    <span style={{ color: '#666', fontSize: 12 }}>
-                      <RobotOutlined style={{ marginRight: 4 }} />
-                      {reason}
-                    </span>
+                  <Tooltip
+                    title={
+                      <div style={{ maxWidth: 280 }}>
+                        <div style={{ fontWeight: 600, marginBottom: 8 }}>五维评分详情</div>
+                        {details.length > 0 ? (
+                          <div>
+                            <div>• 价格评分: {(selected.score_detail.price_score * 100).toFixed(1)}分</div>
+                            <div>• 时效评分: {(selected.score_detail.time_score * 100).toFixed(1)}分</div>
+                            <div>• 服务质量评分: {(selected.score_detail.quality_score * 100).toFixed(1)}分</div>
+                            <div>• 运力饱和度评分: {(selected.score_detail.saturation_score * 100).toFixed(1)}分</div>
+                            <div style={{ marginTop: 8, color: '#999', fontSize: 11 }}>
+                              综合评分: {(selected.score * 100).toFixed(1)}分
+                            </div>
+                          </div>
+                        ) : (
+                          <span>综合评分最高</span>
+                        )}
+                        <div style={{ marginTop: 8, fontSize: 11, color: '#666' }}>
+                          {selected?.reason || route.reason || '综合最优'}
+                        </div>
+                      </div>
+                    }
+                  >
+                    <div style={{ fontSize: 12, color: '#666' }}>
+                      <RobotOutlined style={{ marginRight: 4, color: '#722ed1' }} />
+                      综合{(selected?.score * 100).toFixed(0)}分
+                      {details.length > 0 && ` · ${details.slice(0, 2).join('/')}`}
+                    </div>
+                    <div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>
+                      {selected?.reason?.substring(0, 18) || '综合最优'}...
+                    </div>
                   </Tooltip>
                 )
               }
@@ -947,7 +1135,7 @@ function Dashboard() {
         width={650}
         open={routeDrawer}
         onClose={() => setRouteDrawer(false)}
-        destroyOnClose
+        destroyOnHidden
         loading={routeLoading}
       >
         {routeDetail && (
@@ -1134,7 +1322,7 @@ function Dashboard() {
         width={600}
         open={platformAlertDrawer}
         onClose={() => setPlatformAlertDrawer(false)}
-        destroyOnClose
+        destroyOnHidden
       >
         {currentAlertPlatform && (
           <div>
