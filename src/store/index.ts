@@ -920,9 +920,27 @@ export const useAppStore = create<AppState>((set, get) => ({
     };
 
     const requiredSkills = typeSkillMap[serviceType] || [];
-    const filtered = workerPool.filter((w) =>
-      w.skills.some((s) => requiredSkills.includes(s))
-    );
+    const getCertByWorkerId = useWorkerStore.getState().getCertByWorkerId;
+    const certMap = useWorkerStore.getState().certMap;
+
+    const filtered = workerPool.filter((w) => {
+      const hasSkill = w.skills.some((s) => requiredSkills.includes(s));
+      const cert = getCertByWorkerId(w.id);
+      const isCertApproved = cert?.verify_status === 'approved';
+      const hasRejectRecord = cert?.review_history?.some(r => r.result === 'reject');
+      const healthExpiry = cert?.ocr_detail?.health_cert?.fields?.find((f: any) => f.label === '有效期至')?.value;
+      const crimeExpiry = cert?.ocr_detail?.crime_record?.fields?.find((f: any) => f.label === '有效期至')?.value;
+      const today = new Date();
+      const isHealthExpired = healthExpiry ? new Date(healthExpiry) < today : false;
+      const isCrimeExpired = crimeExpiry ? new Date(crimeExpiry) < today : false;
+      const isCertExpired = isHealthExpired || isCrimeExpired;
+
+      if (cert) {
+        (certMap as any)[w.id] = cert;
+      }
+
+      return hasSkill && isCertApproved && !hasRejectRecord && !isCertExpired;
+    });
 
     const distanceWeight = 0.4;
     const satisfactionWeight = 0.5;

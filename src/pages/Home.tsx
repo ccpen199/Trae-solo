@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, ShieldCheck, Clock, Star, Sparkles, Baby, ChefHat, ClipboardList, MapPin, Phone, Zap, Shield, BadgeCheck, CircleDollarSign, Timer, Navigation, ChevronRight, HandHeart, LayoutDashboard, Building2, FileSearch, ScanLine, Flame, FileText, Mic, BarChart3, Gift, CheckCircle, AlertTriangle, UserCheck, Eye, Users, Award, TrendingUp, User } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Clock, Star, Sparkles, Baby, ChefHat, ClipboardList, MapPin, Phone, Zap, Shield, BadgeCheck, CircleDollarSign, Timer, Navigation, ChevronRight, HandHeart, LayoutDashboard, Building2, FileSearch, ScanLine, Flame, FileText, Mic, BarChart3, Gift, CheckCircle, AlertTriangle, UserCheck, Eye, Users, Award, TrendingUp, User, Package, Receipt } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import QuickOrderForm from '@/components/QuickOrderForm';
@@ -604,6 +604,181 @@ export default function Home() {
             </div>
 
             <RecentOrders />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-orange-700 text-sm font-medium mb-4">
+              <LayoutDashboard className="w-4 h-4" />
+              业务工作台 · 实时可操作
+            </div>
+            <h2 className="text-3xl font-bold text-secondary-900 mb-3">三大业务工作台</h2>
+            <p className="text-secondary-500">从下单、调度到企业采购，全流程真实可办理</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="card-hover p-6 animate-fade-up stagger-1 border-2 border-primary-100">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-soft">
+                  <Zap className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-secondary-800">快速下单工作台</h3>
+                  <p className="text-xs text-secondary-500">C端用户 · 3秒极速下单</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-[10px] font-medium text-secondary-600 mb-1 block">选择服务</label>
+                  <div className="grid grid-cols-3 gap-1">
+                    {[{l:'保洁',c:'bg-primary-50 text-primary-700 border-primary-200'},{l:'育婴',c:'bg-gray-50 text-secondary-600 border-gray-200'},{l:'做饭',c:'bg-gray-50 text-secondary-600 border-gray-200'}].map((s,i)=>(
+                      <button key={i} className={cn('py-1.5 rounded-lg text-[11px] font-medium border transition-colors',s.c)}>{s.l}</button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-medium text-secondary-600 mb-1 block">服务时间</label>
+                  <div className="grid grid-cols-3 gap-1">
+                    {[{l:'今天',c:'bg-gray-50 text-secondary-600 border-gray-200'},{l:'明天',c:'bg-primary-50 text-primary-700 border-primary-200'},{l:'后天',c:'bg-gray-50 text-secondary-600 border-gray-200'}].map((s,i)=>(
+                      <button key={i} className={cn('py-1.5 rounded-lg text-[11px] font-medium border transition-colors',s.c)}>{s.l}</button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-medium text-secondary-600 mb-1 block">服务时长：<span className="text-primary-600 font-bold">3小时</span></label>
+                  <input type="range" min="1" max="8" defaultValue="3" className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-500" />
+                </div>
+                <div className="flex items-center justify-between p-2.5 rounded-lg bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-100">
+                  <div>
+                    <p className="text-[10px] text-secondary-500">预估费用</p>
+                    <p className="text-lg font-bold text-primary-600">¥182<span className="text-[10px] text-secondary-400 font-normal">含保险</span></p>
+                  </div>
+                  <a href="#quick-order" className="px-3 py-1.5 rounded-lg bg-primary-500 text-white text-[11px] font-medium hover:bg-primary-600 transition-colors flex items-center gap-1">
+                    立即下单 <ArrowRight className="w-3 h-3" />
+                  </a>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5 text-[9px]">
+                  <div className="flex items-center gap-1 text-green-600"><ShieldCheck className="w-3 h-3" />三证阿姨优先</div>
+                  <div className="flex items-center gap-1 text-orange-600"><Timer className="w-3 h-3" />1km热力调度</div>
+                  <div className="flex items-center gap-1 text-red-600"><CircleDollarSign className="w-3 h-3" />超时全额赔</div>
+                  <div className="flex items-center gap-1 text-blue-600"><Shield className="w-3 h-3" />50万保险</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="card-hover p-6 animate-fade-up stagger-2 border-2 border-teal-100">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center shadow-soft">
+                  <Navigation className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-secondary-800">阿姨调度工作台</h3>
+                  <p className="text-xs text-secondary-500">运营端 · 智能派单调度</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="p-2.5 rounded-lg bg-teal-50 border border-teal-100">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-bold text-teal-700">待派单队列</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 font-medium">5单待派</span>
+                  </div>
+                  <div className="space-y-1">
+                    {[{id:'#202406',addr:'朝阳区建国路88号',type:'日常保洁·3h',dist:'0.45km'},{id:'#202407',addr:'海淀区中关村123号',type:'育婴师·4h',dist:'0.65km'}].map((o,i)=>(
+                      <div key={i} className="flex items-center justify-between p-1.5 rounded bg-white/70">
+                        <div className="min-w-0">
+                          <p className="text-[10px] font-medium text-secondary-800 truncate">{o.id} · {o.type}</p>
+                          <p className="text-[8px] text-secondary-400 truncate">{o.addr}</p>
+                        </div>
+                        <span className="text-[9px] text-teal-600 font-medium flex-shrink-0 ml-1">{o.dist}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-medium text-secondary-600 mb-1 block">派单策略</label>
+                  <div className="grid grid-cols-2 gap-1">
+                    {[{l:'热力优先',c:'bg-teal-50 text-teal-700 border-teal-200'},{l:'距离优先',c:'bg-gray-50 text-secondary-600 border-gray-200'}].map((s,i)=>(
+                      <button key={i} className={cn('py-1.5 rounded-lg text-[11px] font-medium border transition-colors',s.c)}>{s.l}</button>
+                    ))}
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="text-secondary-600">准时率权重</span>
+                    <span className="text-teal-600 font-bold">40%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-gray-100 rounded-full"><div className="h-full bg-teal-500 rounded-full" style={{width:'40%'}} /></div>
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="text-secondary-600">好评率权重</span>
+                    <span className="text-yellow-600 font-bold">50%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-gray-100 rounded-full"><div className="h-full bg-yellow-500 rounded-full" style={{width:'50%'}} /></div>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5">
+                  <Link to="/admin/dispatch" className="px-3 py-2 rounded-lg bg-teal-500 text-white text-[11px] font-medium hover:bg-teal-600 transition-colors text-center flex items-center justify-center gap-1">
+                    <Users className="w-3 h-3" />调度中心
+                  </Link>
+                  <Link to="/admin/workers" className="px-3 py-2 rounded-lg bg-white text-secondary-700 text-[11px] font-medium border border-gray-200 hover:bg-gray-50 transition-colors text-center flex items-center justify-center gap-1">
+                    <BadgeCheck className="w-3 h-3" />阿姨审核
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="card-hover p-6 animate-fade-up stagger-3 border-2 border-orange-100">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-soft">
+                  <Building2 className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-secondary-800">企业采购工作台</h3>
+                  <p className="text-xs text-secondary-500">B端客户 · 批量服务采购</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="p-2.5 rounded-lg bg-orange-50 border border-orange-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-bold text-orange-700">企业信息</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">已认证</span>
+                  </div>
+                  <div className="space-y-0.5 text-[10px]">
+                    <div className="flex justify-between"><span className="text-secondary-500">企业名称</span><span className="text-secondary-700 font-medium">阳光物业有限公司</span></div>
+                    <div className="flex justify-between"><span className="text-secondary-500">剩余次数</span><span className="text-orange-600 font-bold">128次</span></div>
+                    <div className="flex justify-between"><span className="text-secondary-500">待支付</span><span className="text-red-600 font-medium">¥12,580</span></div>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-medium text-secondary-600 mb-1 block">采购服务包</label>
+                  <div className="space-y-1">
+                    {[{l:'保洁月卡·30次',p:'¥5,980',c:'bg-orange-50 text-orange-700 border-orange-200'},{l:'育婴季卡·90次',p:'¥28,800',c:'bg-gray-50 text-secondary-600 border-gray-200'},{l:'做饭半年卡·180次',p:'¥49,800',c:'bg-gray-50 text-secondary-600 border-gray-200'}].map((s,i)=>(
+                      <button key={i} className={cn('w-full py-1.5 px-2 rounded-lg text-[10px] font-medium border transition-colors flex items-center justify-between',s.c)}>
+                        <span>{s.l}</span>
+                        <span className="font-bold">{s.p}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-medium text-secondary-600 mb-1 block">采购数量：<span className="text-orange-600 font-bold">10份</span></label>
+                  <div className="flex items-center gap-2">
+                    <button className="w-7 h-7 rounded-lg bg-gray-100 text-secondary-600 hover:bg-gray-200 transition-colors text-sm font-bold">−</button>
+                    <div className="flex-1 text-center py-1.5 rounded-lg bg-orange-50 text-orange-700 text-sm font-bold border border-orange-200">10</div>
+                    <button className="w-7 h-7 rounded-lg bg-gray-100 text-secondary-600 hover:bg-gray-200 transition-colors text-sm font-bold">+</button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5">
+                  <Link to="/enterprise" className="px-3 py-2 rounded-lg bg-orange-500 text-white text-[11px] font-medium hover:bg-orange-600 transition-colors text-center flex items-center justify-center gap-1">
+                    <Package className="w-3 h-3" />进入企业端
+                  </Link>
+                  <Link to="/enterprise/billing" className="px-3 py-2 rounded-lg bg-white text-secondary-700 text-[11px] font-medium border border-gray-200 hover:bg-gray-50 transition-colors text-center flex items-center justify-center gap-1">
+                    <Receipt className="w-3 h-3" />统一结算
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

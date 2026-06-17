@@ -1295,7 +1295,7 @@ function OrderSuccessView({
           </div>
           <div className="space-y-0">
             {displayNodes.map((node, i) => {
-              const isDone = i < displayNodes.length - 1 || displayStatus === 'completed';
+              const isDone = i < displayNodes.length - 1 || displayStatus === 'completed' || displayStatus === 'compensated';
               const isCurrent = !isDone && i === displayNodes.length - 1;
               const Icon = nodeIconMap[node.node_type] || CheckCircle;
               return (
@@ -1312,7 +1312,7 @@ function OrderSuccessView({
                     )}
                   </div>
                   <div className="pb-1.5 flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap">
                       <span className={cn('text-[11px] font-medium', isDone ? 'text-secondary-800' : isCurrent ? 'text-primary-600' : 'text-gray-400')}>
                         {node.node_label}
                       </span>
@@ -1323,6 +1323,19 @@ function OrderSuccessView({
                       <span className="font-mono">{node.node_time.slice(5, 16)}</span>
                       {node.remark && <span className="truncate">· {node.remark}</span>}
                     </div>
+                    {isDone && (
+                      <div className="flex items-center gap-2 mt-1 text-[8px]">
+                        <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-blue-50 text-blue-600">
+                          📱 APP推送
+                        </span>
+                        <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-green-50 text-green-600">
+                          💬 短信提醒
+                        </span>
+                        <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-purple-50 text-purple-600">
+                          ✓ 用户已触达
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -1359,82 +1372,90 @@ function OrderSuccessView({
         )}
 
         {liveOrder?.is_overtime ? (
-          <div className="card p-3 bg-gradient-to-r from-red-50 to-orange-50 border-red-200">
-            <div className="flex items-start gap-2 mb-2">
-              <CircleDollarSign className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+          <div className="card p-4 bg-gradient-to-r from-red-50 to-orange-50 border-red-200">
+            <div className="flex items-start gap-2 mb-3">
+              <CircleDollarSign className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
-                <div className="flex items-center gap-1.5">
-                  <p className="text-xs font-bold text-red-800">爽约赔付已触发</p>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-red-200 text-red-800">处理中</span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <p className="text-sm font-bold text-red-800">爽约赔付已完成</p>
+                  <span className="text-[9px] px-2 py-0.5 rounded-full bg-green-200 text-green-800 font-medium">✓ 已到账</span>
                 </div>
-                <p className="text-[10px] text-red-600 mt-1">
-                  迟到{liveOrder.overtime_minutes}分钟，触发全额返现+30元券
+                <p className="text-[10px] text-red-600 mt-0.5">
+                  迟到{liveOrder.overtime_minutes}分钟，触发全额返现+30元补偿券
                 </p>
               </div>
             </div>
 
             {liveOrder.compensation && (
-              <div className="space-y-2 mb-2">
-                <div className="grid grid-cols-2 gap-1.5">
-                  <div className="bg-white/80 rounded-lg p-2 text-center">
-                    <CircleDollarSign className="w-3.5 h-3.5 text-green-500 mx-auto mb-0.5" />
-                    <p className="text-sm font-bold text-green-600">¥{liveOrder.compensation.refund_amount}</p>
-                    <p className="text-[8px] text-green-500">全额退款</p>
+              <>
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-3 text-center border border-green-200">
+                    <CircleDollarSign className="w-6 h-6 text-green-600 mx-auto mb-1" />
+                    <p className="text-2xl font-bold text-green-700">¥{liveOrder.compensation.refund_amount}</p>
+                    <p className="text-[10px] text-green-600 font-medium mt-0.5">全额退款</p>
                   </div>
-                  <div className="bg-white/80 rounded-lg p-2 text-center">
-                    <Gift className="w-3.5 h-3.5 text-orange-500 mx-auto mb-0.5" />
-                    <p className="text-sm font-bold text-orange-600">¥{liveOrder.compensation.coupon_amount}</p>
-                    <p className="text-[8px] text-orange-500">补偿券</p>
+                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-3 text-center border border-orange-200">
+                    <Gift className="w-6 h-6 text-orange-600 mx-auto mb-1" />
+                    <p className="text-2xl font-bold text-orange-700">¥{liveOrder.compensation.coupon_amount}</p>
+                    <p className="text-[10px] text-orange-600 font-medium mt-0.5">补偿券</p>
                   </div>
                 </div>
-                <div className="bg-white/70 rounded-lg p-1.5 space-y-1 text-[9px]">
+                <div className="bg-white rounded-lg p-2.5 space-y-1.5 text-[10px] mb-3 border border-gray-100">
                   <div className="flex items-center justify-between">
                     <span className="text-secondary-500">赔付原因</span>
-                    <span className="text-secondary-700 font-medium">{liveOrder.compensation.reason_category}</span>
+                    <span className="text-secondary-700 font-medium">{liveOrder.compensation.reason}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-secondary-500">补偿券码</span>
-                    <span className="text-primary-600 font-mono font-medium">{liveOrder.compensation.coupon_code}</span>
+                    <span className="text-primary-600 font-mono font-bold text-[11px]">{liveOrder.compensation.coupon_code}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-secondary-500">触发方式</span>
-                    <span className="text-secondary-700">{liveOrder.compensation.trigger_type === 'auto' ? '系统自动触发' : '人工申请'}</span>
+                    <span className="text-secondary-500">审核人</span>
+                    <span className="text-secondary-700 font-medium">{liveOrder.compensation.auditor || '系统自动审核'}</span>
                   </div>
-                  {liveOrder.compensation.paid_at && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-secondary-500">到账时间</span>
-                      <span className="text-green-600 font-medium">{liveOrder.compensation.paid_at}</span>
-                    </div>
-                  )}
+                  <div className="flex items-center justify-between">
+                    <span className="text-secondary-500">到账时间</span>
+                    <span className="text-green-600 font-bold">{liveOrder.compensation.paid_at || liveOrder.compensation.approved_at}</span>
+                  </div>
+                  <div className="flex items-center justify-between pt-1 border-t border-dashed border-gray-200">
+                    <span className="text-secondary-500 flex items-center gap-1">
+                      <Timer className="w-3 h-3" />赔付时效
+                    </span>
+                    <span className="text-orange-600 font-bold">24小时内极速到账</span>
+                  </div>
                 </div>
-              </div>
+
+                <div className="bg-white rounded-lg p-2.5 border border-gray-100">
+                  <p className="text-[10px] font-bold text-secondary-700 mb-2 flex items-center gap-1">
+                    <GitBranch className="w-3 h-3 text-primary-500" />赔付进度
+                  </p>
+                  <div className="space-y-2">
+                    {[
+                      { label: '赔付申请', desc: `超时${liveOrder.overtime_minutes}分钟自动触发`, done: true, color: 'text-red-600 bg-red-100' },
+                      { label: '系统审核', desc: `${liveOrder.compensation.auditor || '系统自动审核'}通过`, done: true, color: 'text-blue-600 bg-blue-100' },
+                      { label: '资金到账', desc: `退款¥${liveOrder.compensation.refund_amount} + 券¥${liveOrder.compensation.coupon_amount}`, done: true, color: 'text-green-600 bg-green-100' },
+                    ].map((step, si) => (
+                      <div key={si} className="flex items-center gap-2 text-[10px]">
+                        <div className={cn('w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-white text-[10px] font-bold shadow-sm', step.color)}>
+                          ✓
+                        </div>
+                        <div className="flex-1 flex items-center justify-between">
+                          <div>
+                            <span className="text-secondary-700 font-bold">{step.label}</span>
+                            <span className="text-secondary-400 ml-1">· {step.desc}</span>
+                          </div>
+                          <span className="text-green-600 font-bold">已完成</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
             )}
 
-            <div className="space-y-1.5">
-              {[
-                { label: '赔付触发', desc: `超时${liveOrder.overtime_minutes}分钟，自动检测`, done: true, color: 'text-red-600 bg-red-100' },
-                { label: '退款申请', desc: `全额退款¥${liveOrder.compensation?.refund_amount || totalFee}`, done: true, color: 'text-orange-600 bg-orange-100' },
-                { label: '补偿券发券', desc: `30元无门槛家政券`, done: true, color: 'text-yellow-600 bg-yellow-100' },
-                { label: '资金到账', desc: '预计24小时内到账户余额', done: !!liveOrder.compensation?.paid_at, color: 'text-green-600 bg-green-100' },
-              ].map((step, si) => (
-                <div key={si} className="flex items-center gap-2 text-[9px]">
-                  <div className={cn('w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0', step.done ? step.color : 'bg-gray-100 text-gray-400')}>
-                    {step.done ? '✓' : si + 1}
-                  </div>
-                  <div className="flex-1 flex items-center justify-between">
-                    <div>
-                      <span className={step.done ? 'text-secondary-700 font-medium' : 'text-secondary-400'}>{step.label}</span>
-                      <span className="text-secondary-400 ml-1">· {step.desc}</span>
-                    </div>
-                    {step.done && <span className="text-green-600">已完成</span>}
-                    {!step.done && <span className="text-secondary-400">进行中</span>}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-2 pt-2 border-t border-dashed border-red-200 flex items-center justify-between text-[10px]">
-              <span className="text-secondary-500">赔付单号: <span className="font-mono text-secondary-700">#COMP{String(liveOrder.id).padStart(6, '0')}</span></span>
-              <Link to={`/orders/${orderId}`} className="text-red-600 hover:text-red-700 font-medium flex items-center gap-0.5">
+            <div className="mt-3 pt-2 border-t border-dashed border-red-200 flex items-center justify-between text-[10px]">
+              <span className="text-secondary-500">赔付单号: <span className="font-mono text-secondary-700 font-bold">#COMP{String(liveOrder.id).padStart(6, '0')}</span></span>
+              <Link to={`/orders/${orderId}`} className="text-red-600 hover:text-red-700 font-bold flex items-center gap-0.5">
                 查看赔付详情 →
               </Link>
             </div>
