@@ -2,10 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { postApi, topicApi } from '../api';
 import { useAuthStore } from '../store/auth';
-import { Button, Tag, EmptyState } from '../components/ui';
+import { Button, Tag, EmptyState, Badge, Icon } from '../components/ui';
 import PostCard from '../components/PostCard';
 import type { Post, Topic } from '../types';
-import { getPostTypeColor, getPostTypeLabel } from '../utils/format';
+import {
+  getPostTypeColor,
+  getPostTypeLabel,
+  getRiskLevelLabel,
+  getRiskLevelColor,
+  getAuditActionLabel,
+  getAuditActionColor,
+  formatDateTime,
+} from '../utils/format';
 
 const FeedPage: React.FC = () => {
   const navigate = useNavigate();
@@ -18,7 +26,9 @@ const FeedPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [activeType, setActiveType] = useState(searchParams.get('type') || '');
   const [activeTopic, setActiveTopic] = useState(searchParams.get('topic') || '');
+  const [activeAuditStatus, setActiveAuditStatus] = useState(searchParams.get('auditStatus') || '');
   const [keyword, setKeyword] = useState(searchParams.get('q') || '');
+  const [expandedAuditPostId, setExpandedAuditPostId] = useState<string | null>(null);
 
   const types = [
     { v: '', l: '全部' },
@@ -30,6 +40,14 @@ const FeedPage: React.FC = () => {
     { v: 'INFO', l: '便民信息' },
   ];
 
+  const auditStatusOptions = [
+    { v: '', l: '全部' },
+    { v: 'PENDING', l: '待审核' },
+    { v: 'APPROVED', l: '已通过' },
+    { v: 'REJECTED', l: '已驳回' },
+    { v: 'RUMOR', l: '谣言标记' },
+  ];
+
   useEffect(() => {
     loadTopics();
   }, []);
@@ -38,7 +56,7 @@ const FeedPage: React.FC = () => {
     setPage(1);
     setPosts([]);
     loadPosts(1, true);
-  }, [activeType, activeTopic]);
+  }, [activeType, activeTopic, activeAuditStatus]);
 
   const loadTopics = async () => {
     try {
@@ -56,6 +74,7 @@ const FeedPage: React.FC = () => {
         longitude: location?.longitude,
         type: activeType || undefined,
         topic: activeTopic || undefined,
+        auditStatus: activeAuditStatus || undefined,
         keyword: keyword.trim() || undefined,
         page: p,
         limit: 10,
@@ -104,6 +123,25 @@ const FeedPage: React.FC = () => {
     setSearchParams(searchParams);
   };
 
+  const handleAuditStatusClick = (status: string) => {
+    setActiveAuditStatus(status);
+    if (status) {
+      searchParams.set('auditStatus', status);
+    } else {
+      searchParams.delete('auditStatus');
+    }
+    setSearchParams(searchParams);
+  };
+
+  const getAuditStatusLabel = (status: string) => {
+    const opt = auditStatusOptions.find(o => o.v === status);
+    return opt ? opt.l : status;
+  };
+
+  const toggleAuditTimeline = (postId: string) => {
+    setExpandedAuditPostId(expandedAuditPostId === postId ? null : postId);
+  };
+
   return (
     <div>
       {/* Filters */}
@@ -139,6 +177,25 @@ const FeedPage: React.FC = () => {
                 {t.l}
               </button>
             ))}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-500 flex-shrink-0">审核状态：</span>
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 flex-1">
+              {auditStatusOptions.map((s) => (
+                <button
+                  key={s.v}
+                  onClick={() => handleAuditStatusClick(s.v)}
+                  className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    activeAuditStatus === s.v
+                      ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30'
+                      : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  }`}
+                >
+                  {s.l}
+                </button>
+              ))}
+            </div>
           </div>
 
           {topics.length > 0 && (
@@ -189,8 +246,8 @@ const FeedPage: React.FC = () => {
       </div>
 
       {/* Active Filters */}
-      {(activeType || activeTopic || keyword.trim()) && (
-        <div className="flex items-center gap-2 mb-4">
+      {(activeType || activeTopic || activeAuditStatus || keyword.trim()) && (
+        <div className="flex items-center gap-2 mb-4 flex-wrap">
           <span className="text-sm text-gray-500">搜索结果 / 当前筛选：</span>
           {keyword.trim() && (
             <Tag onClick={() => {
@@ -211,13 +268,23 @@ const FeedPage: React.FC = () => {
               {activeTopic} ×
             </Tag>
           )}
+          {activeAuditStatus && (
+            <span
+              onClick={() => handleAuditStatusClick('')}
+              className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700 hover:bg-purple-200 cursor-pointer"
+            >
+              审核：{getAuditStatusLabel(activeAuditStatus)} ×
+            </span>
+          )}
           <button
             onClick={() => {
               setActiveType('');
               setActiveTopic('');
+              setActiveAuditStatus('');
               setKeyword('');
               searchParams.delete('type');
               searchParams.delete('topic');
+              searchParams.delete('auditStatus');
               searchParams.delete('q');
               setSearchParams(searchParams);
             }}
@@ -231,9 +298,124 @@ const FeedPage: React.FC = () => {
       {/* Post List */}
       {posts.length > 0 ? (
         <div className="space-y-4">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+          {posts.map((post) => {
+            const latestAudit = post.auditLogs?.[0];
+            const hasAuditLogs = post.auditLogs && post.auditLogs.length > 0;
+            const hasMultipleAudits = post.auditLogs && post.auditLogs.length > 1;
+            const hasApprove = post.auditLogs?.some(log => log.action === 'APPROVE');
+            const hasReject = post.auditLogs?.some(log => log.action === 'REJECT');
+            const hasRumor = post.auditLogs?.some(log => log.action === 'RUMOR');
+            const isExpanded = expandedAuditPostId === post.id;
+
+            return (
+              <div key={post.id} className="space-y-3">
+                <PostCard post={post} />
+
+                {hasAuditLogs && (
+                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-medium text-gray-500">审核信息</span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleAuditTimeline(post.id);
+                        }}
+                        className="text-xs text-purple-600 hover:text-purple-700 font-medium flex items-center gap-1"
+                      >
+                        <span className="text-sm">{isExpanded ? '▲' : '▼'}</span>
+                        {isExpanded ? '收起审核记录' : '查看审核记录'}
+                      </button>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {latestAudit?.riskLevel && (
+                        <Badge className={`${getRiskLevelColor(latestAudit.riskLevel)}`}>
+                          AI初筛：{getRiskLevelLabel(latestAudit.riskLevel)}
+                          {latestAudit.aiScore !== undefined && ` (${Math.round(latestAudit.aiScore)}分)`}
+                        </Badge>
+                      )}
+                      {hasApprove && (
+                        <Badge className="bg-blue-100 text-blue-700">
+                          ✓ 人工复审通过
+                        </Badge>
+                      )}
+                      {hasReject && (
+                        <Badge className="bg-red-100 text-red-700">
+                          ✗ 已驳回
+                        </Badge>
+                      )}
+                      {hasRumor && (
+                        <Badge className="bg-red-100 text-red-700">
+                          ⚠️ 谣言标记
+                        </Badge>
+                      )}
+                      {hasMultipleAudits && (
+                        <Badge className="bg-purple-100 text-purple-700">
+                          🔍 可溯源
+                        </Badge>
+                      )}
+                    </div>
+
+                    {isExpanded && post.auditLogs && (
+                      <div className="mt-4 pt-4 border-t border-gray-200">
+                        <div className="text-xs font-medium text-gray-600 mb-3">审核时间线</div>
+                        <div className="space-y-3">
+                          {post.auditLogs.map((log, idx) => (
+                            <div key={log.id} className="flex gap-3">
+                              <div className="flex flex-col items-center">
+                                <div className={`w-2 h-2 rounded-full ${
+                                  log.action === 'APPROVE' ? 'bg-blue-500' :
+                                  log.action === 'REJECT' || log.action === 'RUMOR' ? 'bg-red-500' :
+                                  log.action === 'CLARIFY' ? 'bg-purple-500' :
+                                  'bg-yellow-500'
+                                }`} />
+                                {idx < post.auditLogs!.length - 1 && (
+                                  <div className="w-0.5 flex-1 bg-gray-200 mt-1" />
+                                )}
+                              </div>
+                              <div className="flex-1 pb-2">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Badge className={`${getAuditActionColor(log.action)} text-xs`}>
+                                    {getAuditActionLabel(log.action)}
+                                  </Badge>
+                                  {log.riskLevel && (
+                                    <span className="text-xs text-gray-500">
+                                      风险等级：{getRiskLevelLabel(log.riskLevel)}
+                                    </span>
+                                  )}
+                                  {log.aiScore !== undefined && (
+                                    <span className="text-xs text-gray-500">
+                                      AI评分：{Math.round(log.aiScore)}
+                                    </span>
+                                  )}
+                                </div>
+                                {log.reason && (
+                                  <p className="text-xs text-gray-600 mb-1">{log.reason}</p>
+                                )}
+                                {log.matchedKeywords && log.matchedKeywords.length > 0 && (
+                                  <div className="flex flex-wrap gap-1 mb-1">
+                                    {log.matchedKeywords.map((kw, i) => (
+                                      <span key={i} className="text-xs bg-yellow-50 text-yellow-700 px-1.5 py-0.5 rounded">
+                                        {kw}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                                <div className="text-xs text-gray-400">
+                                  {formatDateTime(log.createdAt)}
+                                  {log.auditor?.nickname && ` · ${log.auditor.nickname}`}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
 
           {hasMore && (
             <div className="flex justify-center py-4">

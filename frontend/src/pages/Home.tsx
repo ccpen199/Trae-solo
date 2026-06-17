@@ -21,6 +21,21 @@ const HomePage: React.FC = () => {
   const [notifySms, setNotifySms] = useState(false);
   const [subDuration, setSubDuration] = useState<'7d' | '30d' | 'forever'>('30d');
   const [feedback, setFeedback] = useState('');
+  const [toast, setToast] = useState<{ show: boolean; message: string; type: 'success' | 'error' }>({ show: false, message: '', type: 'success' });
+
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000);
+  };
+
+  const getRangeLabel = (range: string) => {
+    const map: Record<string, string> = {
+      community: '本社区',
+      street: '街道',
+      district: '全区',
+    };
+    return map[range] || range;
+  };
 
   useEffect(() => {
     loadData();
@@ -623,11 +638,11 @@ const HomePage: React.FC = () => {
                     const currentUpdate = updates.find((u) => u.id === subModalUpdateId);
                     const type = currentUpdate?.service?.type || 'EMERGENCY';
                     await utilityApi.subscribe(type);
-                  } catch {
-                    // continue
+                    showToast(`✅ 已成功订阅${getRangeLabel(subRange)}${notifySms ? '短信+站内' : '站内'}通知`, 'success');
+                  } catch (e: any) {
+                    showToast('❌ 订阅失败，请稍后重试', 'error');
                   }
                   setSubModalOpen(false);
-                  alert('✅ 订阅成功！后续更新将第一时间推送');
                 }}
                 className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-primary-500 text-white hover:bg-primary-600 transition-all"
               >
@@ -635,6 +650,15 @@ const HomePage: React.FC = () => {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Toast */}
+      {toast.show && (
+        <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-xl shadow-2xl text-white font-medium animate-bounce ${
+          toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+        }`}>
+          {toast.message}
         </div>
       )}
     </div>

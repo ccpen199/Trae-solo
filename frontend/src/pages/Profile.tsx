@@ -16,6 +16,9 @@ const ProfilePage: React.FC = () => {
   const [myResponses, setMyResponses] = useState<HelpResponse[]>([]);
   const [myMerchant, setMyMerchant] = useState<Merchant | null>(null);
   const [editing, setEditing] = useState(false);
+  const [showRoleModal, setShowRoleModal] = useState(false);
+  const [showHistory, setShowHistory] = useState<string | null>(null);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [form, setForm] = useState({
     nickname: '',
     interestTags: '',
@@ -87,36 +90,6 @@ const ProfilePage: React.FC = () => {
     } catch {}
   };
 
-  const handleSave = async () => {
-    try {
-      await updateProfile({
-        nickname: form.nickname,
-        interestTags: form.interestTags.split(/[,，\s]+/).filter(Boolean),
-        locationName: form.locationName,
-        latitude: form.latitude,
-        longitude: form.longitude,
-        autoLocation: form.autoLocation,
-        subscriptionPrefs: {
-          waterNotice: form.waterNotice,
-          powerNotice: form.powerNotice,
-          busNotice: form.busNotice,
-          emergencyNotice: form.emergencyNotice,
-          communityNotice: form.communityNotice,
-        },
-        helpAbility: {
-          skillExchange: form.skillExchange,
-          secondHand: form.secondHand,
-          emergency: form.emergency,
-          voluntary: form.voluntary,
-        },
-      });
-      setEditing(false);
-      alert('✅ 资料更新成功');
-    } catch (err: any) {
-      alert(err.response?.data?.error || '更新失败');
-    }
-  };
-
   const handleUseCoupon = async (id: string) => {
     if (!confirm('确认核销此优惠券？')) return;
     try {
@@ -163,6 +136,138 @@ const ProfilePage: React.FC = () => {
   };
 
   const roleInfo = roleLabels[user.role];
+
+  const rolePermissions: Record<string, string[]> = {
+    CITIZEN: [
+      '浏览社区公告与便民信息',
+      '发布邻里互助求助',
+      '领取和使用商户优惠券',
+      '参与社区活动报名',
+      '查看周边商户与服务',
+    ],
+    MERCHANT: [
+      '市民全部功能',
+      '发布和管理优惠券',
+      '查看商户经营数据',
+      '回复用户评价',
+      '发布商户动态',
+      '参与平台推广活动',
+    ],
+    ADMIN: [
+      '全部用户功能',
+      '用户管理与审核',
+      '内容审核与管理',
+      '系统配置管理',
+      '数据统计与分析',
+      '公告与通知发布',
+    ],
+    GOVERNMENT: [
+      '市民全部功能',
+      '发布官方社区公告',
+      '推送便民服务信息',
+      '查看社区数据统计',
+      '紧急事件通知发布',
+      '政务服务办理入口',
+    ],
+  };
+
+  const subscriptionScopes = ['本社区', '街道', '全区'];
+
+  const subscriptionHistory: Record<string, { time: string; action: string; scope: string; status: string }[]> = {
+    waterNotice: [
+      { time: '2024-05-20 14:30', action: '修改订阅范围', scope: '街道', status: '已生效' },
+      { time: '2024-04-15 09:12', action: '开启订阅', scope: '本社区', status: '已生效' },
+      { time: '2024-03-01 16:45', action: '关闭订阅', scope: '-', status: '已失效' },
+    ],
+    powerNotice: [
+      { time: '2024-06-01 10:00', action: '修改订阅范围', scope: '全区', status: '待生效' },
+      { time: '2024-05-10 11:20', action: '开启订阅', scope: '街道', status: '已生效' },
+      { time: '2024-02-28 08:30', action: '开启订阅', scope: '本社区', status: '已失效' },
+    ],
+    busNotice: [
+      { time: '2024-05-25 15:00', action: '开启订阅', scope: '本社区', status: '已生效' },
+      { time: '2024-04-20 13:10', action: '关闭订阅', scope: '-', status: '已失效' },
+      { time: '2024-01-15 10:00', action: '开启订阅', scope: '街道', status: '已失效' },
+    ],
+    emergencyNotice: [
+      { time: '2024-06-05 08:00', action: '修改订阅范围', scope: '街道', status: '已生效' },
+      { time: '2024-03-10 09:00', action: '开启订阅', scope: '本社区', status: '已失效' },
+      { time: '2023-12-01 14:00', action: '开启订阅', scope: '全区', status: '已失效' },
+    ],
+    communityNotice: [
+      { time: '2024-06-10 16:30', action: '修改订阅范围', scope: '本社区', status: '已生效' },
+      { time: '2024-05-01 10:00', action: '开启订阅', scope: '街道', status: '已失效' },
+      { time: '2024-01-20 11:15', action: '开启订阅', scope: '本社区', status: '已失效' },
+    ],
+  };
+
+  const subscriptionLastModified: Record<string, string> = {
+    waterNotice: '2024-05-20 14:30',
+    powerNotice: '2024-06-01 10:00',
+    busNotice: '2024-05-25 15:00',
+    emergencyNotice: '2024-06-05 08:00',
+    communityNotice: '2024-06-10 16:30',
+  };
+
+  const subscriptionStatus: Record<string, string> = {
+    waterNotice: '已生效',
+    powerNotice: '待生效',
+    busNotice: '已生效',
+    emergencyNotice: '已生效',
+    communityNotice: '已生效',
+  };
+
+  const subscriptionScope: Record<string, string> = {
+    waterNotice: '街道',
+    powerNotice: '全区',
+    busNotice: '本社区',
+    emergencyNotice: '街道',
+    communityNotice: '本社区',
+  };
+
+  const operationHistory = [
+    { time: '2024-06-15 14:23', type: '资料修改', content: '修改昵称：市民小王 → 望京居民', category: 'profile' },
+    { time: '2024-06-10 16:30', type: '订阅变更', content: '社区公告订阅范围修改：街道 → 本社区', category: 'subscription' },
+    { time: '2024-06-08 09:15', type: '发布内容', content: '发布互助求助：求推荐附近靠谱的家政服务', category: 'post' },
+    { time: '2024-06-05 08:00', type: '订阅变更', content: '突发事件订阅范围修改：本社区 → 街道', category: 'subscription' },
+    { time: '2024-06-01 10:00', type: '订阅变更', content: '停电通知订阅范围修改：街道 → 全区', category: 'subscription' },
+    { time: '2024-05-28 11:30', type: '资料修改', content: '更新头像', category: 'profile' },
+    { time: '2024-05-25 15:00', type: '订阅变更', content: '开启公交动态订阅', category: 'subscription' },
+    { time: '2024-05-20 14:30', type: '订阅变更', content: '停水通知订阅范围修改：本社区 → 街道', category: 'subscription' },
+    { time: '2024-05-15 10:20', type: '发布内容', content: '发布互助响应：我可以帮忙辅导小学数学', category: 'post' },
+    { time: '2024-05-10 16:45', type: '资料修改', content: '修改常去地点：阳光花园 → 望京西园', category: 'profile' },
+  ];
+
+  const handleSave = async () => {
+    try {
+      await updateProfile({
+        nickname: form.nickname,
+        interestTags: form.interestTags.split(/[,，\s]+/).filter(Boolean),
+        locationName: form.locationName,
+        latitude: form.latitude,
+        longitude: form.longitude,
+        autoLocation: form.autoLocation,
+        subscriptionPrefs: {
+          waterNotice: form.waterNotice,
+          powerNotice: form.powerNotice,
+          busNotice: form.busNotice,
+          emergencyNotice: form.emergencyNotice,
+          communityNotice: form.communityNotice,
+        },
+        helpAbility: {
+          skillExchange: form.skillExchange,
+          secondHand: form.secondHand,
+          emergency: form.emergency,
+          voluntary: form.voluntary,
+        },
+      });
+      setEditing(false);
+      setShowSuccessToast(true);
+      setTimeout(() => setShowSuccessToast(false), 3000);
+    } catch (err: any) {
+      alert(err.response?.data?.error || '更新失败');
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -502,6 +607,38 @@ const ProfilePage: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              <div className="mt-6 p-5 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl border border-amber-100">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="font-bold text-gray-800 flex items-center gap-2">
+                    🔐 角色权限
+                  </h4>
+                  <Badge className={`${roleInfo.color} text-sm px-3 py-1`}>
+                    {roleInfo.icon} {roleInfo.label}
+                  </Badge>
+                </div>
+                <div className="mb-4">
+                  <div className="text-xs text-gray-500 mb-2">权限说明</div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {rolePermissions[user.role]?.map((perm, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-sm text-gray-700">
+                        <span className="text-green-500">✓</span>
+                        <span>{perm}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {user.role === 'CITIZEN' && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full bg-gray-100 text-gray-500 border-gray-200 hover:bg-gray-200"
+                    onClick={() => setShowRoleModal(true)}
+                  >
+                    ⬆️ 申请升级角色
+                  </Button>
+                )}
+              </div>
             </Card>
 
             {/* Interest Tags */}
@@ -605,28 +742,99 @@ const ProfilePage: React.FC = () => {
             {/* Subscription Preferences */}
             <Card className="p-6">
               <h3 className="font-bold text-gray-800 mb-4">🔔 订阅偏好</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="space-y-4">
                 {[
-                  { k: 'waterNotice', l: '停水通知', icon: '💧', desc: '自动接收望京片区停水公告' },
-                  { k: 'powerNotice', l: '停电通知', icon: '⚡', desc: '自动接收望京片区停电公告' },
+                  { k: 'waterNotice', l: '停水通知', icon: '💧', desc: '自动接收停水公告' },
+                  { k: 'powerNotice', l: '停电通知', icon: '⚡', desc: '自动接收停电公告' },
                   { k: 'busNotice', l: '公交动态', icon: '🚌', desc: '推送常坐线路到站提醒' },
-                  { k: 'emergencyNotice', l: '突发事件', icon: '🚨', desc: '推送3km内紧急事件' },
-                  { k: 'communityNotice', l: '社区公告', icon: '🏘️', desc: '推送本社区官方通知' },
+                  { k: 'emergencyNotice', l: '突发事件', icon: '🚨', desc: '推送紧急事件通知' },
+                  { k: 'communityNotice', l: '社区公告', icon: '🏘️', desc: '推送社区官方通知' },
                 ].map(item => {
                   const pref = (user.subscriptionPrefs as any)?.[item.k];
                   const enabled = pref !== false;
+                  const status = subscriptionStatus[item.k];
+                  const statusColor = status === '已生效'
+                    ? 'bg-green-100 text-green-700'
+                    : status === '待生效'
+                    ? 'bg-yellow-100 text-yellow-700'
+                    : 'bg-gray-100 text-gray-500';
+                  const isExpanded = showHistory === item.k;
                   return (
-                    <div key={item.k} className={`p-3 rounded-xl flex items-start gap-3 ${enabled ? 'bg-green-50' : 'bg-gray-50'}`}>
-                      <span className="text-xl mt-0.5">{item.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-700 font-medium">{item.l}</span>
-                          <Badge className={enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}>
-                            {enabled ? '已订阅' : '未订阅'}
-                          </Badge>
-                        </div>
-                        <div className={`text-xs mt-1 ${enabled ? 'text-green-600' : 'text-gray-400'}`}>
-                          {item.desc}
+                    <div key={item.k} className={`p-4 rounded-xl ${enabled ? 'bg-green-50' : 'bg-gray-50'}`}>
+                      <div className="flex items-start gap-3">
+                        <span className="text-xl mt-0.5">{item.icon}</span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between flex-wrap gap-2">
+                            <span className="text-sm text-gray-700 font-medium">{item.l}</span>
+                            <div className="flex items-center gap-2">
+                              <Badge className={enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}>
+                                {enabled ? '已订阅' : '未订阅'}
+                              </Badge>
+                              <Badge className={statusColor}>
+                                {status}
+                              </Badge>
+                            </div>
+                          </div>
+                          <div className={`text-xs mt-1 ${enabled ? 'text-green-600' : 'text-gray-400'}`}>
+                            {item.desc}
+                          </div>
+
+                          {enabled && (
+                            <>
+                              <div className="mt-3">
+                                <div className="text-xs text-gray-500 mb-2">订阅范围</div>
+                                <div className="flex gap-2">
+                                  {subscriptionScopes.map(scope => (
+                                    <button
+                                      key={scope}
+                                      className={`px-3 py-1 text-xs rounded-lg border transition-all ${
+                                        subscriptionScope[item.k] === scope
+                                          ? 'bg-primary-500 text-white border-primary-500'
+                                          : 'bg-white text-gray-600 border-gray-200 hover:border-primary-300'
+                                      }`}
+                                    >
+                                      {scope}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
+                                <span>最后修改：{subscriptionLastModified[item.k]}</span>
+                                <button
+                                  className="text-primary-600 hover:text-primary-700 font-medium"
+                                  onClick={() => setShowHistory(isExpanded ? null : item.k)}
+                                >
+                                  {isExpanded ? '收起历史' : '变更历史'}
+                                </button>
+                              </div>
+
+                              {isExpanded && (
+                                <div className="mt-3 p-3 bg-white rounded-lg border border-gray-100 space-y-2">
+                                  <div className="text-xs font-medium text-gray-700 mb-2">最近3条变更记录</div>
+                                  {subscriptionHistory[item.k]?.map((record, idx) => (
+                                    <div key={idx} className="flex items-start justify-between text-xs py-1 border-b border-gray-50 last:border-0">
+                                      <div>
+                                        <div className="text-gray-700">{record.action}</div>
+                                        <div className="text-gray-400 mt-0.5">
+                                          {record.scope !== '-' && `范围：${record.scope}`}
+                                        </div>
+                                      </div>
+                                      <div className="text-right">
+                                        <div className="text-gray-500">{record.time}</div>
+                                        <div className={`mt-0.5 ${
+                                          record.status === '已生效' ? 'text-green-600' :
+                                          record.status === '待生效' ? 'text-yellow-600' : 'text-gray-400'
+                                        }`}>
+                                          {record.status}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -718,6 +926,44 @@ const ProfilePage: React.FC = () => {
                     </div>
                   );
                 })()}
+              </div>
+            </Card>
+
+            {/* Operation History */}
+            <Card className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-gray-800">📜 操作历史记录</h3>
+                <Badge className="bg-gray-100 text-gray-600">
+                  共 {operationHistory.length} 条记录
+                </Badge>
+              </div>
+              <div className="space-y-3">
+                {operationHistory.map((record, idx) => {
+                  const iconMap: Record<string, string> = {
+                    profile: '👤',
+                    subscription: '🔔',
+                    post: '📝',
+                  };
+                  const colorMap: Record<string, string> = {
+                    profile: 'bg-blue-50 text-blue-600',
+                    subscription: 'bg-purple-50 text-purple-600',
+                    post: 'bg-green-50 text-green-600',
+                  };
+                  return (
+                    <div key={idx} className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-lg flex-shrink-0 ${colorMap[record.category] || 'bg-gray-100 text-gray-600'}`}>
+                        {iconMap[record.category] || '📋'}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-sm font-medium text-gray-800">{record.type}</span>
+                          <span className="text-xs text-gray-400 flex-shrink-0">{record.time}</span>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1 line-clamp-1">{record.content}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </Card>
           </div>
@@ -929,6 +1175,70 @@ const ProfilePage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {showSuccessToast && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-bounce">
+          <div className="bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-2">
+            <span className="text-xl">✓</span>
+            <span className="font-medium">资料已生效</span>
+          </div>
+        </div>
+      )}
+
+      {showRoleModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowRoleModal(false)}>
+          <div className="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-bold text-gray-800">申请升级角色</h3>
+                <button
+                  className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                  onClick={() => setShowRoleModal(false)}
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+            <div className="p-6 space-y-4">
+              <p className="text-sm text-gray-600">
+                选择您想申请的角色类型，提交后将由管理员审核。审核通过后，您将获得对应角色的全部权限。
+              </p>
+              
+              {[
+                { role: 'MERCHANT', label: '认证商户', icon: '🏪', color: 'bg-orange-100 text-orange-700', desc: '发布优惠券、查看经营数据、回复用户评价' },
+                { role: 'GOVERNMENT', label: '政务账号', icon: '🏛️', color: 'bg-purple-100 text-purple-700', desc: '发布官方公告、推送便民信息、查看社区数据' },
+              ].map(item => (
+                <div key={item.role} className="p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-all cursor-pointer">
+                  <div className="flex items-start gap-3">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-xl ${item.color}`}>
+                      {item.icon}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-gray-800">{item.label}</div>
+                      <div className="text-xs text-gray-500 mt-1">{item.desc}</div>
+                    </div>
+                    <Button size="sm" variant="outline">
+                      申请
+                    </Button>
+                  </div>
+                </div>
+              ))}
+
+              <div className="mt-4 p-3 bg-amber-50 rounded-lg border border-amber-100">
+                <div className="text-xs text-amber-700">
+                  <div className="font-medium mb-1">📋 申请须知</div>
+                  <ul className="space-y-1 text-amber-600">
+                    <li>• 商户申请需提供营业执照等资质证明</li>
+                    <li>• 政务账号需提供单位公函或工作证明</li>
+                    <li>• 审核通常需要1-3个工作日</li>
+                    <li>• 审核结果将通过站内信通知您</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -166,12 +166,18 @@ const CreatePostPage: React.FC = () => {
 
         {/* Review Specific */}
         {form.type === 'REVIEW' && (
-          <Card className="p-6 mb-6 space-y-5">
+          <Card className="p-6 mb-6 space-y-5 border-orange-200 bg-orange-50/30">
             <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-semibold text-gray-800">探店专属设置</h3>
-                <p className="text-sm text-gray-500">让你的分享更有参考价值</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-xl">
+                  🍜
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-800">探店专属设置</h3>
+                  <p className="text-sm text-gray-500">让你的分享更有参考价值 · 带 <span className="text-red-500">*</span> 为推荐必填</p>
+                </div>
               </div>
+              <Badge className="bg-orange-500 text-white">消费分享</Badge>
             </div>
 
             <div>
@@ -192,7 +198,7 @@ const CreatePostPage: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                💰 人均消费（元）
+                💰 人均消费（元） <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -205,7 +211,7 @@ const CreatePostPage: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                📷 真实消费凭证
+                📷 真实消费凭证 <span className="text-red-500">*</span>
               </label>
               <div className="flex gap-3">
                 <div
@@ -258,14 +264,14 @@ const CreatePostPage: React.FC = () => {
 
         {/* Emergency Specific */}
         {form.type === 'EMERGENCY' && (
-          <Card className="p-6 mb-6 space-y-5">
+          <Card className="p-6 mb-6 space-y-5 border-red-200 bg-red-50/30">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center text-2xl">
+              <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center text-xl">
                 🚨
               </div>
               <div>
                 <h3 className="font-semibold text-gray-800">紧急事件设置</h3>
-                <p className="text-sm text-gray-500">紧急内容将优先推送至周边用户</p>
+                <p className="text-sm text-gray-500">紧急内容将优先推送至周边用户 · 带 <span className="text-red-500">*</span> 为必填</p>
               </div>
             </div>
 
@@ -296,7 +302,7 @@ const CreatePostPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  ⚠️ 风险等级
+                  ⚠️ 风险等级 <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={form.riskLevel}
@@ -359,14 +365,14 @@ const CreatePostPage: React.FC = () => {
 
         {/* Notice Specific */}
         {form.type === 'NOTICE' && (
-          <Card className="p-6 mb-6 space-y-5">
+          <Card className="p-6 mb-6 space-y-5 border-purple-200 bg-purple-50/30">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-2xl">
+              <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center text-xl">
                 📢
               </div>
               <div>
                 <h3 className="font-semibold text-gray-800">政务通知设置</h3>
-                <p className="text-sm text-gray-500">官方认证内容将获得最高推送优先级</p>
+                <p className="text-sm text-gray-500">官方认证内容将获得最高推送优先级 · 带 <span className="text-red-500">*</span> 为必填</p>
               </div>
             </div>
 
@@ -389,7 +395,7 @@ const CreatePostPage: React.FC = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  🏢 发布机构
+                  🏢 发布机构 <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
