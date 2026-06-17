@@ -162,7 +162,15 @@ export default function Guide() {
           },
         };
 
-        setMessages(prev => [...prev, textResponse, cardResponse]);
+        const tipResponse: ChatMessage = {
+          id: generateId(),
+          role: 'assistant',
+          content: '💡 温馨提示：提交申请后，您可以通过以下方式跟踪办理进度：\n1. 「我的办件」实时查看各环节审批状态\n2. 系统将通过APP站内信、短信、邮件三渠道主动推送进度\n3. 如需补充材料，系统将自动推送补正通知和截止时间\n点击上方"立即办理"开始提交申请。',
+          timestamp: new Date(),
+          type: 'text',
+        };
+
+        setMessages(prev => [...prev, textResponse, cardResponse, tipResponse]);
       } else {
         const response: ChatMessage = {
           id: generateId(),
@@ -191,7 +199,7 @@ export default function Guide() {
   };
 
   const handleApply = (serviceId: string) => {
-    navigate(`/services/${serviceId}`);
+    navigate(`/services/${serviceId}/apply`);
   };
 
   const handleClearChat = () => {

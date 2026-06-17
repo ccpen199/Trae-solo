@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Building2,
   Baby,
@@ -14,20 +13,33 @@ import {
   Heart,
   UserPlus,
   Syringe,
+  MapPin,
+  Home,
+  AlertTriangle,
+  CheckCircle2,
+  FileText,
+  ClipboardCheck,
 } from 'lucide-react';
-import { Card, Progress, Tag, Button, Tooltip } from 'antd';
+import { Card, Progress, Tag, Button, Tooltip, Popover } from 'antd';
 
 interface Step {
   name: string;
   icon: React.ElementType;
   department: string;
   status: 'completed' | 'current' | 'pending';
+  signStatus?: 'signed' | 'pending' | 'timeout';
+  signer?: string;
+  signTime?: string;
+  expectedSignTime?: string;
 }
 
 interface MaterialItem {
   name: string;
   shared: boolean;
   departments: string[];
+  consistency?: 'consistent' | 'diff' | 'conflict';
+  diffDetails?: { dept: string; value: string }[];
+  signedBy?: { dept: string; signer: string; time: string }[];
 }
 
 interface CollaborationScene {
@@ -38,7 +50,6 @@ interface CollaborationScene {
   gradient: string;
   icon: React.ElementType;
   iconBg: string;
-  route: string;
   steps: Step[];
   materials: MaterialItem[];
   currentStep: number;
@@ -47,33 +58,63 @@ interface CollaborationScene {
 }
 
 const enterpriseSteps: Step[] = [
-  { name: '名称核准', icon: FileCheck, department: '市场监管局', status: 'completed' },
-  { name: '工商注册', icon: Building2, department: '市场监管局', status: 'completed' },
-  { name: '公章刻制', icon: ShieldCheck, department: '公安局', status: 'current' },
-  { name: '税务登记', icon: CreditCard, department: '税务局', status: 'pending' },
-  { name: '社保开户', icon: Users, department: '人社局', status: 'pending' },
-  { name: '银行开户', icon: CreditCard, department: '商业银行', status: 'pending' },
+  { name: '名称核准', icon: FileCheck, department: '市场监管局', status: 'completed', signStatus: 'signed', signer: '张明', signTime: '2026-06-15 09:30' },
+  { name: '工商注册', icon: Building2, department: '市场监管局', status: 'completed', signStatus: 'signed', signer: '李华', signTime: '2026-06-15 14:20' },
+  { name: '公章刻制', icon: ShieldCheck, department: '公安局', status: 'current', signStatus: 'signed', signer: '王刚', signTime: '2026-06-16 10:00' },
+  { name: '税务登记', icon: CreditCard, department: '税务局', status: 'pending', signStatus: 'pending', expectedSignTime: '2026-06-17 12:00' },
+  { name: '社保开户', icon: Users, department: '人社局', status: 'pending', signStatus: 'timeout', expectedSignTime: '2026-06-16 18:00' },
+  { name: '银行开户', icon: CreditCard, department: '商业银行', status: 'pending', signStatus: 'pending', expectedSignTime: '2026-06-18 10:00' },
 ];
 
 const newbornSteps: Step[] = [
-  { name: '出生证明', icon: FileCheck, department: '卫健委', status: 'completed' },
-  { name: '户口登记', icon: UserPlus, department: '公安局', status: 'current' },
-  { name: '医保参保', icon: Heart, department: '医保局', status: 'pending' },
-  { name: '预防接种', icon: Syringe, department: '卫健委', status: 'pending' },
+  { name: '出生证明', icon: FileCheck, department: '卫健委', status: 'completed', signStatus: 'signed', signer: '赵医生', signTime: '2026-06-16 08:00' },
+  { name: '户口登记', icon: UserPlus, department: '公安局', status: 'current', signStatus: 'signed', signer: '孙警官', signTime: '2026-06-16 15:30' },
+  { name: '医保参保', icon: Heart, department: '医保局', status: 'pending', signStatus: 'pending', expectedSignTime: '2026-06-17 10:00' },
+  { name: '预防接种', icon: Syringe, department: '卫健委', status: 'pending', signStatus: 'pending', expectedSignTime: '2026-06-18 09:00' },
+];
+
+const crossProvinceSteps: Step[] = [
+  { name: '迁入申请', icon: FileCheck, department: '公安厅', status: 'completed', signStatus: 'signed', signer: '刘主任', signTime: '2026-06-14 10:00' },
+  { name: '迁出地核验', icon: MapPin, department: '公安厅', status: 'completed', signStatus: 'signed', signer: '陈警官', signTime: '2026-06-14 16:00' },
+  { name: '户口核准', icon: ShieldCheck, department: '公安厅', status: 'current', signStatus: 'pending', expectedSignTime: '2026-06-17 12:00' },
+  { name: '社保转移', icon: CreditCard, department: '人社厅', status: 'pending', signStatus: 'pending', expectedSignTime: '2026-06-18 10:00' },
+  { name: '学籍转移', icon: FileText, department: '教育厅', status: 'pending', signStatus: 'pending', expectedSignTime: '2026-06-19 10:00' },
+];
+
+const housingFundSteps: Step[] = [
+  { name: '贷款申请', icon: FileCheck, department: '住建厅', status: 'completed', signStatus: 'signed', signer: '周经理', signTime: '2026-06-15 09:00' },
+  { name: '房产评估', icon: Home, department: '住建厅', status: 'completed', signStatus: 'signed', signer: '吴评估师', signTime: '2026-06-15 16:00' },
+  { name: '税务核验', icon: CreditCard, department: '税务局', status: 'current', signStatus: 'signed', signer: '郑税务', signTime: '2026-06-16 11:00' },
+  { name: '银行审批', icon: Building2, department: '银行', status: 'pending', signStatus: 'timeout', expectedSignTime: '2026-06-16 18:00' },
+  { name: '贷款发放', icon: CreditCard, department: '银行', status: 'pending', signStatus: 'pending', expectedSignTime: '2026-06-20 10:00' },
 ];
 
 const enterpriseMaterials: MaterialItem[] = [
-  { name: '身份证明', shared: true, departments: ['市场监管局', '公安局', '税务局'] },
-  { name: '企业章程', shared: true, departments: ['市场监管局', '税务局'] },
+  { name: '身份证明', shared: true, departments: ['市场监管局', '公安局', '税务局'], consistency: 'consistent' },
+  { name: '企业章程', shared: true, departments: ['市场监管局', '税务局'], consistency: 'diff', diffDetails: [{ dept: '市场监管局', value: '章程版本 v2.1 (2026年修订)' }, { dept: '税务局', value: '章程版本 v2.0 (2025年修订)' }] },
   { name: '验资报告', shared: false, departments: ['市场监管局'] },
-  { name: '住所证明', shared: true, departments: ['市场监管局', '税务局', '人社局'] },
+  { name: '住所证明', shared: true, departments: ['市场监管局', '税务局', '人社局'], consistency: 'consistent' },
 ];
 
 const newbornMaterials: MaterialItem[] = [
-  { name: '出生医学证明', shared: true, departments: ['公安局', '医保局', '卫健委'] },
-  { name: '父母身份证', shared: true, departments: ['公安局', '医保局'] },
-  { name: '结婚证', shared: true, departments: ['公安局', '医保局'] },
+  { name: '出生医学证明', shared: true, departments: ['公安局', '医保局', '卫健委'], consistency: 'diff', diffDetails: [{ dept: '公安局', value: '证明编号: SY20260616001' }, { dept: '医保局', value: '证明编号: SY20260616001 (备注栏缺失)' }] },
+  { name: '父母身份证', shared: true, departments: ['公安局', '医保局'], consistency: 'consistent' },
+  { name: '结婚证', shared: true, departments: ['公安局', '医保局'], consistency: 'consistent' },
   { name: '户口本', shared: false, departments: ['公安局'] },
+];
+
+const crossProvinceMaterials: MaterialItem[] = [
+  { name: '身份证', shared: true, departments: ['公安厅', '人社厅', '教育厅'], consistency: 'consistent' },
+  { name: '户口簿', shared: true, departments: ['公安厅', '人社厅'], consistency: 'consistent' },
+  { name: '社保缴费记录', shared: true, departments: ['人社厅'], consistency: 'consistent' },
+  { name: '学历证明', shared: true, departments: ['教育厅'], consistency: 'consistent' },
+];
+
+const housingFundMaterials: MaterialItem[] = [
+  { name: '身份证', shared: true, departments: ['住建厅', '自然资源厅', '税务局', '银行'], consistency: 'consistent' },
+  { name: '购房合同', shared: true, departments: ['住建厅', '自然资源厅', '税务局'], consistency: 'diff', diffDetails: [{ dept: '住建厅', value: '合同编号 GF2026-0089, 面积89.5㎡' }, { dept: '自然资源厅', value: '合同编号 GF2026-0089, 面积90.0㎡' }] },
+  { name: '收入证明', shared: true, departments: ['银行'], consistency: 'consistent' },
+  { name: '房产评估报告', shared: true, departments: ['住建厅', '银行'], consistency: 'conflict', diffDetails: [{ dept: '住建厅', value: '评估价格: 1,850,000元' }, { dept: '银行', value: '评估价格: 1,720,000元' }] },
 ];
 
 const scenes: CollaborationScene[] = [
@@ -85,7 +126,6 @@ const scenes: CollaborationScene[] = [
     gradient: 'from-blue-500 via-indigo-500 to-purple-600',
     icon: Building2,
     iconBg: 'bg-white/20',
-    route: '/collaboration/enterprise',
     steps: enterpriseSteps,
     materials: enterpriseMaterials,
     currentStep: 3,
@@ -100,12 +140,39 @@ const scenes: CollaborationScene[] = [
     gradient: 'from-pink-500 via-rose-500 to-red-500',
     icon: Baby,
     iconBg: 'bg-white/20',
-    route: '/collaboration/newborn',
     steps: newbornSteps,
     materials: newbornMaterials,
     currentStep: 2,
     totalDays: 2,
     elapsedDays: 0.5,
+  },
+  {
+    id: 'cross_province',
+    title: '跨省户口迁移联办',
+    subtitle: '公安厅+人社厅+教育厅 · 5个环节',
+    description: '整合公安、人社、教育等部门服务，实现跨省户口迁移、社保转移、学籍转移"一次申请、并联审批"。',
+    gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
+    icon: MapPin,
+    iconBg: 'bg-white/20',
+    steps: crossProvinceSteps,
+    materials: crossProvinceMaterials,
+    currentStep: 3,
+    totalDays: 5,
+    elapsedDays: 2,
+  },
+  {
+    id: 'housing_fund',
+    title: '公积金贷款一件事联办',
+    subtitle: '住建厅+自然资源厅+税务局+银行 · 5个环节',
+    description: '整合住建、自然资源、税务、银行等部门服务，实现公积金贷款全流程"一窗受理、并联审批"。',
+    gradient: 'from-amber-500 via-orange-500 to-red-500',
+    icon: Home,
+    iconBg: 'bg-white/20',
+    steps: housingFundSteps,
+    materials: housingFundMaterials,
+    currentStep: 3,
+    totalDays: 5,
+    elapsedDays: 2,
   },
 ];
 
@@ -191,6 +258,69 @@ const StepProgress = ({ steps, currentStep }: { steps: Step[]; currentStep: numb
   );
 };
 
+const DepartmentSignStatus = ({ steps }: { steps: Step[] }) => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const signStatusConfig: Record<string, { color: string; bg: string; label: string; icon: React.ElementType }> = {
+    signed: { color: 'text-green-300', bg: 'bg-green-500/20', label: '已签收', icon: CheckCircle2 },
+    pending: { color: 'text-yellow-300', bg: 'bg-yellow-500/20', label: '待签收', icon: Clock },
+    timeout: { color: 'text-red-300', bg: 'bg-red-500/20', label: '超时预警', icon: AlertTriangle },
+  };
+
+  return (
+    <div className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <div className="flex items-center mb-3">
+        <ClipboardCheck className="w-4 h-4 text-white/70 mr-2" />
+        <span className="text-sm text-white/70">部门签收</span>
+      </div>
+      <div className="space-y-2">
+        {steps.map((step, index) => {
+          const config = signStatusConfig[step.signStatus || 'pending'];
+          const StatusIcon = config.icon;
+          return (
+            <div
+              key={index}
+              className={`flex items-center justify-between p-2.5 rounded-lg bg-white/10 backdrop-blur-sm transition-all duration-500 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
+              style={{ transitionDelay: `${index * 80 + 400}ms` }}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-white/90">{step.name}</span>
+                <span className="text-xs text-white/50">({step.department})</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {step.signStatus === 'signed' && step.signer && step.signTime && (
+                  <span className="text-xs text-white/50">
+                    {step.signer} · {step.signTime}
+                  </span>
+                )}
+                {step.signStatus === 'pending' && step.expectedSignTime && (
+                  <span className="text-xs text-white/50">
+                    预计 {step.expectedSignTime}
+                  </span>
+                )}
+                {step.signStatus === 'timeout' && step.expectedSignTime && (
+                  <span className="text-xs text-red-300/70">
+                    超时 (应于 {step.expectedSignTime})
+                  </span>
+                )}
+                <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full ${config.bg} ${config.color}`}>
+                  <StatusIcon className="w-3 h-3" />
+                  {config.label}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 const MaterialSharing = ({ materials }: { materials: MaterialItem[] }) => {
   const [visible, setVisible] = useState(false);
 
@@ -200,6 +330,27 @@ const MaterialSharing = ({ materials }: { materials: MaterialItem[] }) => {
   }, []);
 
   const sharedCount = materials.filter((m) => m.shared).length;
+
+  const consistencyConfig: Record<string, { color: string; bg: string; label: string }> = {
+    consistent: { color: 'text-green-300', bg: 'bg-green-500/20', label: '一致' },
+    diff: { color: 'text-orange-300', bg: 'bg-orange-500/20', label: '差异' },
+    conflict: { color: 'text-red-300', bg: 'bg-red-500/20', label: '冲突' },
+  };
+
+  const renderDiffContent = (material: MaterialItem) => {
+    if (!material.diffDetails || material.diffDetails.length === 0) return null;
+    return (
+      <div className="p-3 min-w-[280px]">
+        <p className="font-medium text-gov-gray-700 mb-2 text-sm">差异详情</p>
+        {material.diffDetails.map((detail, idx) => (
+          <div key={idx} className="mb-2 last:mb-0">
+            <span className="text-xs text-gov-gray-500 font-medium">{detail.dept}：</span>
+            <span className="text-xs text-gov-gray-700">{detail.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
@@ -227,7 +378,26 @@ const MaterialSharing = ({ materials }: { materials: MaterialItem[] }) => {
               )}
               <span className="text-sm text-white/90">{material.name}</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-1">
+              {material.consistency && consistencyConfig[material.consistency] && (
+                <>
+                  {(material.consistency === 'diff' || material.consistency === 'conflict') && material.diffDetails ? (
+                    <Popover content={renderDiffContent(material)} trigger="click">
+                      <span
+                        className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full cursor-pointer ${consistencyConfig[material.consistency].bg} ${consistencyConfig[material.consistency].color} hover:opacity-80 transition-opacity`}
+                      >
+                        {consistencyConfig[material.consistency].label}
+                      </span>
+                    </Popover>
+                  ) : (
+                    <span
+                      className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full ${consistencyConfig[material.consistency].bg} ${consistencyConfig[material.consistency].color}`}
+                    >
+                      {consistencyConfig[material.consistency].label}
+                    </span>
+                  )}
+                </>
+              )}
               {material.departments.slice(0, 2).map((dept, idx) => (
                 <span
                   key={idx}
@@ -249,10 +419,72 @@ const MaterialSharing = ({ materials }: { materials: MaterialItem[] }) => {
   );
 };
 
+const generateApplyNo = () => {
+  const now = new Date();
+  const datePart = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+  const randomPart = Math.random().toString().substring(2, 10).toUpperCase();
+  return `LB${datePart}${randomPart}`;
+};
+
+const ApplyPanel = ({ scene, onClose }: { scene: CollaborationScene; onClose: () => void }) => {
+  const [applyNo] = useState(generateApplyNo);
+  const [submitted, setSubmitted] = useState(false);
+
+  return (
+    <div className="mt-4 p-4 rounded-xl bg-white/15 backdrop-blur-sm border border-white/20 animate-slide-up">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <CheckCircle2 className="w-5 h-5 text-green-300" />
+          <span className="text-sm font-medium text-white">联办申请已生成</span>
+        </div>
+        <button
+          onClick={onClose}
+          className="text-white/50 hover:text-white/80 transition-colors text-xs"
+        >
+          收起
+        </button>
+      </div>
+      <div className="space-y-2 mb-4">
+        <div className="flex items-center text-xs text-white/70">
+          <span className="mr-2">申请编号：</span>
+          <span className="text-white font-mono">{applyNo}</span>
+        </div>
+        <div className="text-xs text-white/70">联办事项：</div>
+        <div className="space-y-1 pl-2">
+          {scene.steps.map((step, idx) => (
+            <div key={idx} className="flex items-center text-xs text-white/80">
+              <span className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center mr-2 flex-shrink-0">
+                {idx + 1}
+              </span>
+              <span>{step.name}</span>
+              <span className="text-white/50 ml-2">({step.department})</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      {submitted ? (
+        <div className="flex items-center justify-center gap-2 py-2 text-green-300 text-sm">
+          <CheckCircle2 className="w-4 h-4" />
+          联办申请已提交成功
+        </div>
+      ) : (
+        <Button
+          type="primary"
+          block
+          className="bg-green-500 border-0 hover:bg-green-600 font-medium"
+          onClick={() => setSubmitted(true)}
+        >
+          确认提交联办申请
+        </Button>
+      )}
+    </div>
+  );
+};
+
 const SceneCard = ({ scene, delay }: { scene: CollaborationScene; delay: number }) => {
-  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [showApplyPanel, setShowApplyPanel] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), delay);
@@ -262,17 +494,12 @@ const SceneCard = ({ scene, delay }: { scene: CollaborationScene; delay: number 
   const Icon = scene.icon;
   const progress = Math.round((scene.elapsedDays / scene.totalDays) * 100);
 
-  const handleClick = () => {
-    navigate(scene.route);
-  };
-
   return (
     <Card
-      className={`relative overflow-hidden border-0 shadow-xl transition-all duration-500 cursor-pointer group ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${isHovered ? 'shadow-2xl scale-[1.02]' : ''}`}
+      className={`relative overflow-hidden border-0 shadow-xl transition-all duration-500 group ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${isHovered ? 'shadow-2xl scale-[1.02]' : ''}`}
       bodyStyle={{ padding: 0 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={handleClick}
     >
       <div className={`bg-gradient-to-br ${scene.gradient} p-6 text-white relative`}>
         <div
@@ -321,6 +548,10 @@ const SceneCard = ({ scene, delay }: { scene: CollaborationScene; delay: number 
           </div>
 
           <div className="mb-6">
+            <DepartmentSignStatus steps={scene.steps} />
+          </div>
+
+          <div className="mb-6">
             <MaterialSharing materials={scene.materials} />
           </div>
 
@@ -345,12 +576,16 @@ const SceneCard = ({ scene, delay }: { scene: CollaborationScene; delay: number 
               icon={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
               onClick={(e) => {
                 e.stopPropagation();
-                handleClick();
+                setShowApplyPanel(!showApplyPanel);
               }}
             >
               联合办理
             </Button>
           </div>
+
+          {showApplyPanel && (
+            <ApplyPanel scene={scene} onClose={() => setShowApplyPanel(false)} />
+          )}
         </div>
       </div>
     </Card>

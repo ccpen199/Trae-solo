@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import {
   Card, Table, Tag, Select, DatePicker, Button, Space, Statistic, Row, Col,
-  Progress, List, Avatar, Tooltip, Divider, Empty, Badge, Steps, Timeline,
+  Progress, List, Avatar, Tooltip, Divider, Empty, Badge, Steps, Timeline, Modal,
 } from 'antd';
 import {
   BarChart3, TrendingUp, Clock, XCircle, Filter, RefreshCw, ArrowUp, ArrowDown,
   Trophy, FileWarning, GitBranch, FileCheck2, ShieldAlert, FileKey, FileSearch,
   Network, AlertTriangle, CheckCircle2, Database, Zap, FileText, Users, Info,
+  Bell, Eye, Send,
 } from 'lucide-react';
 import * as echarts from 'echarts';
 import dayjs from 'dayjs';
@@ -231,6 +232,138 @@ const MATERIAL_CORRECTION_CASES = [
   },
 ];
 
+const LEDGER_SERVICES = [
+  '住房公积金提取（购房）', '居住证签注', '社保关系跨省转移',
+  '食品经营许可证核发', '户口迁移（跨省）', '医保异地就医备案',
+  '新生儿出生登记', '营业执照变更', '不动产登记',
+  '纳税申报（增值税）', '婚姻登记预约', '道路运输经营许可',
+  '建房审批', '再生育审批', '排污许可',
+];
+
+const LEDGER_NODES = ['材料审核', '信息核验', '跨区协办', '现场核查', '审批签发', '部门会签', '领导审批', '系统处理', '证照核验', '材料预审', '受理登记', '结果送达', '材料审核', '信息核验', '审批签发'];
+
+const LEDGER_PERSONS = ['张主任', '李科长', '王副主任', '赵科员', '孙所长', '周处长', '吴主管', '郑科长', '钱干事', '冯书记', '陈主任', '许组长', '韩科长', '曹主任', '魏处长'];
+
+const LEDGER_APPLICANTS = ['王某某', '李某某', '张某某', '赵某某', '刘某某', '陈某某', '杨某某', '黄某某', '周某某', '吴某某', '郑某某', '孙某某', '马某某', '朱某某', '何某某'];
+
+const LEDGER_STATUSES = ['办理中', '审核中', '补正中', '即将超期', '办理中', '审核中', '办理中', '即将超期', '补正中', '办理中', '审核中', '办理中', '审核中', '办理中', '即将超期'];
+
+const LEDGER_ELAPSED = [12, 8, 36, 72, 5, 18, 24, 96, 48, 3, 15, 6, 20, 10, 84];
+
+const LEDGER_RECORDS = Array.from({ length: 15 }, (_, index) => {
+  const dept = mockDepartments[index % mockDepartments.length];
+  return {
+    key: String(index + 1),
+    applyNo: `2026-BS-${String(index + 31).padStart(4, '0')}`,
+    serviceName: LEDGER_SERVICES[index],
+    applicant: LEDGER_APPLICANTS[index],
+    department: dept.name,
+    currentNode: LEDGER_NODES[index],
+    nodePerson: LEDGER_PERSONS[index],
+    status: LEDGER_STATUSES[index],
+    elapsed: LEDGER_ELAPSED[index],
+  };
+});
+
+const ALL_CORRECTION_CASES = [
+  ...MATERIAL_CORRECTION_CASES,
+  {
+    id: 'mc4',
+    service: '营业执照变更',
+    applicant: '某商贸有限公司',
+    department: '市场监督管理局',
+    submitTime: '2026-06-14 11:20',
+    rejectTime: '2026-06-15 09:42',
+    fixDeadline: '2026-06-22 23:59',
+    missingItems: [
+      { name: '股东会决议原件', reason: '需全体股东签字盖章', status: 'pending' as const },
+      { name: '章程修正案', reason: '修正案未加盖公章', status: 'pending' as const },
+    ],
+    pushStatus: [
+      { channel: 'APP站内信', status: 'sent' as const, time: '09:42:15' },
+      { channel: '手机短信', status: 'sent' as const, time: '09:42:18' },
+      { channel: '邮件通知', status: 'sent' as const, time: '09:42:21' },
+      { channel: '人工电话', status: 'pending' as const, time: '-' },
+    ],
+  },
+  {
+    id: 'mc5',
+    service: '不动产登记（二手房过户）',
+    applicant: '杨某某',
+    department: '自然资源厅',
+    submitTime: '2026-06-15 16:33',
+    rejectTime: '2026-06-16 08:51',
+    fixDeadline: '2026-06-23 23:59',
+    missingItems: [
+      { name: '原产权证书', reason: '原产权证信息与系统登记不一致', status: 'pending' as const },
+    ],
+    pushStatus: [
+      { channel: 'APP站内信', status: 'sent' as const, time: '08:51:03' },
+      { channel: '手机短信', status: 'sent' as const, time: '08:51:06' },
+      { channel: '邮件通知', status: 'failed' as const, time: '08:51:09' },
+      { channel: '人工电话', status: 'sent' as const, time: '09:10:22' },
+    ],
+  },
+  {
+    id: 'mc6',
+    service: '道路运输经营许可',
+    applicant: '某物流有限公司',
+    department: '交通运输厅',
+    submitTime: '2026-06-16 07:45',
+    rejectTime: '2026-06-16 10:18',
+    fixDeadline: '2026-06-23 23:59',
+    missingItems: [
+      { name: '车辆行驶证复印件', reason: '部分车辆行驶证已过期，请更新', status: 'pending' as const },
+      { name: '安全生产管理制度', reason: '未提供完整的安全生产管理制度文本', status: 'pending' as const },
+      { name: '驾驶员从业资格证', reason: '3名驾驶员从业资格证到期需换证', status: 'pending' as const },
+    ],
+    pushStatus: [
+      { channel: 'APP站内信', status: 'sent' as const, time: '10:18:30' },
+      { channel: '手机短信', status: 'sent' as const, time: '10:18:33' },
+      { channel: '邮件通知', status: 'sent' as const, time: '10:18:36' },
+      { channel: '人工电话', status: 'pending' as const, time: '-' },
+    ],
+  },
+  {
+    id: 'mc7',
+    service: '再生育审批',
+    applicant: '刘某某',
+    department: '卫生健康委员会',
+    submitTime: '2026-06-15 13:50',
+    rejectTime: '2026-06-16 09:35',
+    fixDeadline: '2026-06-30 23:59',
+    missingItems: [
+      { name: '夫妻双方婚育情况证明', reason: '需户籍地街道办出具盖章版证明', status: 'done' as const },
+      { name: '再婚相关法律文书', reason: '再婚情况需提供法院判决书或调解书', status: 'pending' as const },
+    ],
+    pushStatus: [
+      { channel: 'APP站内信', status: 'sent' as const, time: '09:35:12' },
+      { channel: '手机短信', status: 'sent' as const, time: '09:35:15' },
+      { channel: '邮件通知', status: 'sent' as const, time: '09:35:18' },
+      { channel: '人工电话', status: 'sent' as const, time: '09:42:08' },
+    ],
+  },
+  {
+    id: 'mc8',
+    service: '排污许可证核发',
+    applicant: '某化工有限公司',
+    department: '生态环境厅',
+    submitTime: '2026-06-14 09:18',
+    rejectTime: '2026-06-15 15:40',
+    fixDeadline: '2026-06-22 23:59',
+    missingItems: [
+      { name: '环境影响评价批复文件', reason: '环评批复文号与系统登记不一致', status: 'pending' as const },
+      { name: '监测报告（近3个月）', reason: '需提供具有CMA资质的第三方监测报告', status: 'pending' as const },
+    ],
+    pushStatus: [
+      { channel: 'APP站内信', status: 'sent' as const, time: '15:40:05' },
+      { channel: '手机短信', status: 'sent' as const, time: '15:40:08' },
+      { channel: '邮件通知', status: 'sent' as const, time: '15:40:11' },
+      { channel: '人工电话', status: 'sent' as const, time: '15:55:41' },
+    ],
+  },
+];
+
 const CROSS_MODULE_STATUS = [
   {
     key: 'policy',
@@ -307,6 +440,9 @@ export default function Performance() {
   const [selectedRejection, setSelectedRejection] = useState<string>('all');
   const [selectedScenario, setSelectedScenario] = useState<string>('all');
   const [departmentRanking] = useState(generateDepartmentRanking);
+  const [expandedLedger, setExpandedLedger] = useState(false);
+  const [expandedCorrection, setExpandedCorrection] = useState(false);
+  const [reminderModalVisible, setReminderModalVisible] = useState(false);
 
   const filteredData = useMemo(() => {
     let result = [...mockPerformanceData];
@@ -1178,8 +1314,8 @@ export default function Performance() {
               className="shadow-card h-full"
               size="small"
               extra={
-                <Button type="link" size="small" icon={<FileText className="w-3.5 h-3.5" />}>
-                  查看全部 {HANDLING_CHAINS.length}+
+                <Button type="link" size="small" icon={expandedLedger ? <Eye className="w-3.5 h-3.5" /> : <FileText className="w-3.5 h-3.5" />} onClick={() => setExpandedLedger(!expandedLedger)}>
+                  {expandedLedger ? '收起台账' : `查看全部 ${HANDLING_CHAINS.length}+`}
                 </Button>
               }
             >
@@ -1251,9 +1387,14 @@ export default function Performance() {
               className="shadow-card h-full"
               size="small"
               extra={
-                <Button type="link" size="small" icon={<RefreshCw className="w-3.5 h-3.5" />}>
-                  催办统计
-                </Button>
+                <Space size="small">
+                  <Button type="link" size="small" icon={expandedCorrection ? <Eye className="w-3.5 h-3.5" /> : <FileText className="w-3.5 h-3.5" />} onClick={() => setExpandedCorrection(!expandedCorrection)}>
+                    {expandedCorrection ? '收起' : '查看全部'}
+                  </Button>
+                  <Button type="link" size="small" icon={<RefreshCw className="w-3.5 h-3.5" />} onClick={() => setReminderModalVisible(true)}>
+                    催办统计
+                  </Button>
+                </Space>
               }
             >
               {MATERIAL_CORRECTION_CASES.map(c => (
@@ -1324,6 +1465,157 @@ export default function Performance() {
             </Card>
           </Col>
         </Row>
+
+        {expandedLedger && (
+          <Card
+            className="shadow-card mb-6"
+            size="small"
+            title={
+              <div className="flex items-center gap-2">
+                <Database className="w-5 h-5 text-green-600" />
+                <span className="font-semibold">办件台账（全量穿透）</span>
+                <Tag color="green" className="m-0 ml-1 text-xs">{LEDGER_RECORDS.length}条在办</Tag>
+              </div>
+            }
+            extra={
+              <Button type="link" size="small" onClick={() => setExpandedLedger(false)} icon={<Eye className="w-3.5 h-3.5" />}>
+                收起台账
+              </Button>
+            }
+          >
+            <Table
+              dataSource={LEDGER_RECORDS}
+              size="small"
+              scroll={{ x: 1200 }}
+              pagination={{ pageSize: 8, showTotal: (total) => `共 ${total} 条在办记录` }}
+              columns={[
+                { title: '申请编号', dataIndex: 'applyNo', key: 'applyNo', width: 140, render: (v: string) => <span className="text-xs font-mono text-blue-600">{v}</span> },
+                { title: '事项名称', dataIndex: 'serviceName', key: 'serviceName', width: 180, render: (v: string) => <span className="text-xs font-medium text-gov-gray-700">{v}</span> },
+                { title: '申请人', dataIndex: 'applicant', key: 'applicant', width: 100, render: (v: string) => <span className="text-xs text-gov-gray-600">{v}</span> },
+                { title: '责任部门', dataIndex: 'department', key: 'department', width: 160, render: (v: string) => <Tag color="geekblue" className="m-0 text-xs">{v}</Tag> },
+                { title: '当前节点', dataIndex: 'currentNode', key: 'currentNode', width: 100, render: (v: string) => <span className="text-xs text-gov-gray-600">{v}</span> },
+                { title: '节点责任人', dataIndex: 'nodePerson', key: 'nodePerson', width: 100, render: (v: string) => <span className="text-xs text-gov-gray-600">{v}</span> },
+                {
+                  title: '办理状态', dataIndex: 'status', key: 'status', width: 100,
+                  render: (v: string) => {
+                    const colorMap: Record<string, string> = { '办理中': 'blue', '审核中': 'purple', '补正中': 'orange', '即将超期': 'red' };
+                    return <Tag color={colorMap[v] || 'default'} className="m-0 text-xs">{v}</Tag>;
+                  },
+                },
+                {
+                  title: '已耗时', dataIndex: 'elapsed', key: 'elapsed', width: 90,
+                  render: (v: number) => (
+                    <span className={`text-xs font-medium ${v >= 72 ? 'text-red-600' : v >= 24 ? 'text-orange-600' : 'text-gov-gray-600'}`}>
+                      {v}小时
+                    </span>
+                  ),
+                },
+                {
+                  title: '操作', key: 'action', width: 140, fixed: 'right' as const,
+                  render: () => (
+                    <Space size="small">
+                      <Button type="link" size="small" className="text-xs p-0" icon={<Bell className="w-3 h-3" />} onClick={() => setReminderModalVisible(true)}>催办</Button>
+                      <Button type="link" size="small" className="text-xs p-0" icon={<GitBranch className="w-3 h-3" />}>查看链路</Button>
+                    </Space>
+                  ),
+                },
+              ]}
+            />
+          </Card>
+        )}
+
+        {expandedCorrection && (
+          <Card
+            className="shadow-card mb-6"
+            size="small"
+            title={
+              <div className="flex items-center gap-2">
+                <FileCheck2 className="w-5 h-5 text-blue-600" />
+                <span className="font-semibold">材料补正台账（全量追踪）</span>
+                <Tag color="orange" className="m-0 ml-1 text-xs">{ALL_CORRECTION_CASES.length}条补正中</Tag>
+              </div>
+            }
+            extra={
+              <Button type="link" size="small" onClick={() => setExpandedCorrection(false)} icon={<Eye className="w-3.5 h-3.5" />}>
+                收起
+              </Button>
+            }
+          >
+            <List
+              itemLayout="vertical"
+              dataSource={ALL_CORRECTION_CASES}
+              renderItem={(c) => {
+                const deadline = dayjs(c.fixDeadline);
+                const now = dayjs();
+                const daysLeft = deadline.diff(now, 'day');
+                return (
+                  <List.Item key={c.id}>
+                    <div className="flex items-start justify-between mb-3 gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <h4 className="font-semibold text-gov-gray-700 text-sm m-0">{c.service}</h4>
+                          <Tag color="purple" className="m-0 text-xs">{c.department}</Tag>
+                          <Tag color="geekblue" className="m-0 text-xs">{c.applicant}</Tag>
+                        </div>
+                        <div className="flex items-center gap-3 text-[11px] text-gov-gray-400 flex-wrap">
+                          <span>退件时间：{c.rejectTime}</span>
+                        </div>
+                      </div>
+                      <Tag color={daysLeft <= 3 ? 'red' : daysLeft <= 7 ? 'orange' : 'green'} className="m-0 text-xs flex-shrink-0">
+                        补正截止倒计时：{daysLeft}天
+                      </Tag>
+                    </div>
+                    <div className="mb-3 bg-gov-gray-50 rounded-lg p-3">
+                      <div className="text-xs font-medium text-gov-gray-600 mb-2 flex items-center gap-1.5">
+                        <FileWarning className="w-3.5 h-3.5 text-orange-600" />
+                        待补正材料（{c.missingItems.length}项）
+                      </div>
+                      <div className="space-y-1.5">
+                        {c.missingItems.map((m, i) => (
+                          <div key={i} className="flex items-start justify-between gap-2 text-[11px]">
+                            <div className="flex-1 min-w-0">
+                              <span className={`font-medium mr-1.5 ${m.status === 'done' ? 'text-green-600' : 'text-orange-600'}`}>
+                                {m.status === 'done' ? '✓' : '○'}
+                              </span>
+                              <span className="text-gov-gray-700">{m.name}</span>
+                              <span className="text-gov-gray-400 ml-2">— {m.reason}</span>
+                            </div>
+                            <Tag color={m.status === 'done' ? 'green' : 'orange'} className="m-0 text-[10px] flex-shrink-0">
+                              {m.status === 'done' ? '已补正' : '待补正'}
+                            </Tag>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-xs font-medium text-gov-gray-600 mb-2 flex items-center gap-1.5">
+                        <Zap className="w-3.5 h-3.5 text-blue-600" />
+                        推送状态
+                      </div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        {c.pushStatus.map((ps, i) => (
+                          <div key={i} className="flex items-center justify-between gap-2 px-2.5 py-1.5 bg-white border border-gov-gray-100 rounded-lg">
+                            <span className="text-[11px] text-gov-gray-600">{ps.channel}</span>
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[10px] text-gov-gray-400">{ps.time}</span>
+                              {ps.status === 'sent' ? (
+                                <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
+                              ) : ps.status === 'failed' ? (
+                                <XCircle className="w-3.5 h-3.5 text-red-500" />
+                              ) : (
+                                <Clock className="w-3.5 h-3.5 text-gov-gray-400" />
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </List.Item>
+                );
+              }}
+            />
+          </Card>
+        )}
 
         <Row gutter={[12, 12]} className="mb-6">
           <Col xs={24} lg={12}>
@@ -1540,6 +1832,84 @@ export default function Performance() {
             }}
           />
         </Card>
+
+        <Modal
+          title={<div className="flex items-center gap-2"><Bell className="w-5 h-5 text-orange-600" /><span className="font-semibold">催办记录</span></div>}
+          open={reminderModalVisible}
+          onCancel={() => setReminderModalVisible(false)}
+          footer={[
+            <Button key="close" onClick={() => setReminderModalVisible(false)}>关闭</Button>,
+            <Button key="remind" type="primary" icon={<Send className="w-4 h-4" />} onClick={() => setReminderModalVisible(false)}>发起催办</Button>,
+          ]}
+          width={600}
+        >
+          <Timeline
+            items={[
+              {
+                color: 'blue',
+                children: (
+                  <div className="flex items-start gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium text-sm text-gov-gray-700">系统自动催办</span>
+                        <Tag color="blue" className="m-0 text-xs">自动</Tag>
+                      </div>
+                      <div className="text-xs text-gov-gray-500">2026-06-16 14:30</div>
+                      <div className="text-xs text-gov-gray-600 mt-1">系统检测到住建厅窗口办理超时，自动发起催办通知</div>
+                      <Tag color="geekblue" className="m-0 text-xs mt-1">→ 住建厅窗口</Tag>
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                color: 'orange',
+                children: (
+                  <div className="flex items-start gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium text-sm text-gov-gray-700">人工电话催办</span>
+                        <Tag color="orange" className="m-0 text-xs">人工</Tag>
+                      </div>
+                      <div className="text-xs text-gov-gray-500">2026-06-16 10:15</div>
+                      <div className="text-xs text-gov-gray-600 mt-1">督办员通过电话联系经办人，督促加快办理进度</div>
+                      <Tag color="geekblue" className="m-0 text-xs mt-1">→ 经办人王主任</Tag>
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                color: 'green',
+                children: (
+                  <div className="flex items-start gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium text-sm text-gov-gray-700">短信催办通知已发送</span>
+                        <Tag color="green" className="m-0 text-xs">短信</Tag>
+                      </div>
+                      <div className="text-xs text-gov-gray-500">2026-06-15 16:00</div>
+                      <div className="text-xs text-gov-gray-600 mt-1">已通过短信平台向责任人发送催办提醒</div>
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                color: 'gray',
+                children: (
+                  <div className="flex items-start gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium text-sm text-gov-gray-700">事项首次推送</span>
+                        <Tag color="default" className="m-0 text-xs">初始</Tag>
+                      </div>
+                      <div className="text-xs text-gov-gray-500">2026-06-15 09:30</div>
+                      <div className="text-xs text-gov-gray-600 mt-1">事项已推送至责任部门，开始办理流程</div>
+                    </div>
+                  </div>
+                ),
+              },
+            ]}
+          />
+        </Modal>
       </div>
     </div>
   );

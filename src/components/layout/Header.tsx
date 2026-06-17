@@ -8,6 +8,7 @@ import {
   LogOut,
   ChevronDown,
   Shield,
+  Settings,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
@@ -15,7 +16,7 @@ import { useAppStore } from '../../store/appStore';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { user, logout, loginRole } = useAuthStore();
   const { toggleSidebar, notifications, breadcrumbs } = useAppStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -145,6 +146,12 @@ const Header = () => {
                   <Shield className="w-4 h-4" />
                   我的证照
                 </Link>
+                {(loginRole === 'admin' || loginRole === 'staff' || loginRole === 'platform' || loginRole === 'ops') && (
+                  <Link to="/admin/dashboard" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gov-gray-600 hover:bg-gov-gray-50 transition-colors">
+                    <Settings className="w-4 h-4" />
+                    后台管理
+                  </Link>
+                )}
               </div>
               <div className="border-t border-gov-gray-100 py-2">
                 <button
