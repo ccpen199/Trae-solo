@@ -57,6 +57,7 @@ export default function CampaignSection() {
   const [activeTab, setActiveTab] = useState<'all' | 'discount' | 'groupbuy' | 'timeslot'>('all')
   const [loading, setLoading] = useState(true)
   const [recentOrders, setRecentOrders] = useState<any[]>([])
+  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set([3]))
 
   useEffect(() => {
     getOrders({ userId: 'test-user-001' })
@@ -339,64 +340,206 @@ export default function CampaignSection() {
           <p className="text-sm font-semibold text-gray-800">📈 运营复盘完整流程 · 首页→筛选→活动配置→复购率/核销率</p>
         </div>
 
+        <div className="mb-3 p-2 rounded-lg bg-white/60 border border-gray-100">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[10px] font-medium text-gray-600 flex items-center gap-1">
+              <FileCheck className="w-3 h-3 text-secondary" />
+              当前进度：{completedSteps.size}/4 步已完成
+            </span>
+            <span className="text-[9px] text-gray-400">
+              {completedSteps.size === 4 ? '🎉 全部完成' : '完成全部步骤可获得完整运营复盘'}
+            </span>
+          </div>
+          <div className="flex items-center gap-0">
+            {[1, 2, 3, 4].map((step, idx) => (
+              <div key={step} className="flex items-center flex-1 last:flex-none">
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 transition-all ${
+                  completedSteps.has(step)
+                    ? 'bg-green-500 text-white shadow-sm shadow-green-200'
+                    : 'bg-gray-200 text-gray-500'
+                }`}>
+                  {completedSteps.has(step) ? (
+                    <CheckCircle className="w-3 h-3" />
+                  ) : (
+                    step
+                  )}
+                </div>
+                {idx < 3 && (
+                  <div className={`flex-1 h-1 mx-1 rounded-full transition-all ${
+                    completedSteps.has(step) && completedSteps.has(step + 1)
+                      ? 'bg-gradient-to-r from-green-400 to-green-500'
+                      : completedSteps.has(step)
+                        ? 'bg-gradient-to-r from-green-400 to-gray-200'
+                        : 'bg-gray-200'
+                  }`} />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-4 gap-2 mb-3">
-          <div className="p-2.5 rounded-lg bg-white border border-primary-100/60 shadow-sm">
+          <div className="p-2.5 rounded-lg bg-white border border-primary-100/60 shadow-sm relative">
+            <div className={`absolute top-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-medium ${
+              completedSteps.has(1)
+                ? 'bg-green-50 text-green-600'
+                : 'bg-primary/10 text-primary'
+            }`}>
+              {completedSteps.has(1) ? (
+                <><CheckCircle className="w-2.5 h-2.5" /> 已完成</>
+              ) : (
+                <><ChevronRight className="w-2.5 h-2.5" /> 去操作</>
+              )}
+            </div>
             <div className="flex items-center gap-1.5 mb-1.5">
-              <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">①</div>
-              <p className="text-[11px] font-semibold text-gray-800">街道/业态/热度筛选</p>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${
+                completedSteps.has(1) ? 'bg-green-500' : 'bg-primary'
+              }`}>①</div>
+              <p className="text-[11px] font-semibold text-gray-800 pr-14">街道/业态/热度筛选</p>
             </div>
             <p className="text-[10px] text-gray-500 mb-2 leading-relaxed">按方松/广富林/中山等街道，餐饮/娱乐等业态，近7/30天热度筛选商户</p>
-            <Link to="/admin" className="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-primary/10 text-primary text-[10px] font-medium hover:bg-primary/20 transition-colors w-full justify-center">
+            <Link
+              to="/admin"
+              onClick={() => setCompletedSteps(prev => new Set(prev).add(1))}
+              className={`inline-flex items-center gap-0.5 px-2 py-1 rounded text-[10px] font-medium transition-colors w-full justify-center ${
+                completedSteps.has(1)
+                  ? 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  : 'bg-primary/10 text-primary hover:bg-primary/20'
+              }`}
+            >
               <Filter className="w-2.5 h-2.5" />
-              进入运营后台筛选 →
+              {completedSteps.has(1) ? '✓ 已完成，再次查看 →' : '▶ 进入筛选 →'}
             </Link>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-white border border-accent-100/60 shadow-sm">
+          <div className="p-2.5 rounded-lg bg-white border border-accent-100/60 shadow-sm relative">
+            <div className={`absolute top-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-medium ${
+              completedSteps.has(2)
+                ? 'bg-green-50 text-green-600'
+                : 'bg-accent/10 text-accent'
+            }`}>
+              {completedSteps.has(2) ? (
+                <><CheckCircle className="w-2.5 h-2.5" /> 已完成</>
+              ) : (
+                <><ChevronRight className="w-2.5 h-2.5" /> 去操作</>
+              )}
+            </div>
             <div className="flex items-center gap-1.5 mb-1.5">
-              <div className="w-5 h-5 rounded-full bg-accent flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">②</div>
-              <p className="text-[11px] font-semibold text-gray-800">大学城周末狂欢周配置</p>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${
+                completedSteps.has(2) ? 'bg-green-500' : 'bg-accent'
+              }`}>②</div>
+              <p className="text-[11px] font-semibold text-gray-800 pr-14">大学城周末狂欢周配置</p>
             </div>
             <p className="text-[10px] text-gray-500 mb-2 leading-relaxed">满100减20 / 指定套餐7折 / 满50送饮品，覆盖广富林街道8家商户</p>
-            <Link to="/admin#activity-section" className="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-accent/10 text-accent text-[10px] font-medium hover:bg-accent/20 transition-colors w-full justify-center">
+            <Link
+              to="/admin#activity-section"
+              onClick={() => setCompletedSteps(prev => new Set(prev).add(2))}
+              className={`inline-flex items-center gap-0.5 px-2 py-1 rounded text-[10px] font-medium transition-colors w-full justify-center ${
+                completedSteps.has(2)
+                  ? 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  : 'bg-accent/10 text-accent hover:bg-accent/20'
+              }`}
+            >
               <Megaphone className="w-2.5 h-2.5" />
-              查看活动配置 →
+              {completedSteps.has(2) ? '✓ 已完成，再次查看 →' : '▶ 配置活动 →'}
             </Link>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-white border border-secondary-100/60 shadow-sm">
+          <div className="p-2.5 rounded-lg bg-white border border-secondary-100/60 shadow-sm relative">
+            <div className={`absolute top-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-medium ${
+              completedSteps.has(3)
+                ? 'bg-green-50 text-green-600'
+                : 'bg-secondary/10 text-secondary'
+            }`}>
+              {completedSteps.has(3) ? (
+                <><CheckCircle className="w-2.5 h-2.5" /> 已完成</>
+              ) : (
+                <><ChevronRight className="w-2.5 h-2.5" /> 去操作</>
+              )}
+            </div>
             <div className="flex items-center gap-1.5 mb-1.5">
-              <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">③</div>
-              <p className="text-[11px] font-semibold text-gray-800">套餐核销与订单回写</p>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${
+                completedSteps.has(3) ? 'bg-green-500' : 'bg-secondary'
+              }`}>③</div>
+              <p className="text-[11px] font-semibold text-gray-800 pr-14">套餐核销与订单回写</p>
             </div>
             <p className="text-[10px] text-gray-500 mb-2 leading-relaxed">用户购买后60秒动态码核销，库存扣减，订单状态回写</p>
-            <Link to="/orders" className="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-secondary/10 text-secondary text-[10px] font-medium hover:bg-secondary/20 transition-colors w-full justify-center">
+            <Link
+              to="/orders"
+              onClick={() => setCompletedSteps(prev => new Set(prev).add(3))}
+              className={`inline-flex items-center gap-0.5 px-2 py-1 rounded text-[10px] font-medium transition-colors w-full justify-center ${
+                completedSteps.has(3)
+                  ? 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  : 'bg-secondary/10 text-secondary hover:bg-secondary/20'
+              }`}
+            >
               <ShoppingCart className="w-2.5 h-2.5" />
-              查看我的订单 →
+              {completedSteps.has(3) ? '✓ 已完成，再次查看 →' : '▶ 查看订单 →'}
             </Link>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-white border border-gray-200/60 shadow-sm">
+          <div className="p-2.5 rounded-lg bg-white border border-gray-200/60 shadow-sm relative">
+            <div className={`absolute top-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-medium ${
+              completedSteps.has(4)
+                ? 'bg-green-50 text-green-600'
+                : 'bg-gray-700/10 text-gray-700'
+            }`}>
+              {completedSteps.has(4) ? (
+                <><CheckCircle className="w-2.5 h-2.5" /> 已完成</>
+              ) : (
+                <><ChevronRight className="w-2.5 h-2.5" /> 去操作</>
+              )}
+            </div>
             <div className="flex items-center gap-1.5 mb-1.5">
-              <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">④</div>
-              <p className="text-[11px] font-semibold text-gray-800">复购率与券核销率复盘</p>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${
+                completedSteps.has(4) ? 'bg-green-500' : 'bg-gray-700'
+              }`}>④</div>
+              <p className="text-[11px] font-semibold text-gray-800 pr-14">复购率与券核销率复盘</p>
             </div>
             <p className="text-[10px] text-gray-500 mb-2 leading-relaxed">TOP10品类核销率、复购率月度趋势、活动效果分析</p>
-            <Link to="/admin/report" className="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-gray-700/10 text-gray-700 text-[10px] font-medium hover:bg-gray-700/20 transition-colors w-full justify-center">
+            <Link
+              to="/admin/report"
+              onClick={() => setCompletedSteps(prev => new Set(prev).add(4))}
+              className={`inline-flex items-center gap-0.5 px-2 py-1 rounded text-[10px] font-medium transition-colors w-full justify-center ${
+                completedSteps.has(4)
+                  ? 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  : 'bg-gray-700/10 text-gray-700 hover:bg-gray-700/20'
+              }`}
+            >
               <BarChart3 className="w-2.5 h-2.5" />
-              查看消费报告 →
+              {completedSteps.has(4) ? '✓ 已完成，再次查看 →' : '▶ 查看报告 →'}
             </Link>
           </div>
         </div>
 
         <div className="flex items-center justify-center gap-1 mb-2 flex-wrap">
-          <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-medium">① 筛选</span>
-          <ArrowRight className="w-3 h-3 text-gray-300" />
-          <span className="px-2 py-0.5 rounded bg-accent/10 text-accent text-[10px] font-medium">② 活动配置</span>
-          <ArrowRight className="w-3 h-3 text-gray-300" />
-          <span className="px-2 py-0.5 rounded bg-secondary/10 text-secondary text-[10px] font-medium">③ 核销回写</span>
-          <ArrowRight className="w-3 h-3 text-gray-300" />
-          <span className="px-2 py-0.5 rounded bg-gray-100 text-gray-700 text-[10px] font-medium">④ 复盘报告</span>
+          <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
+            completedSteps.has(1) ? 'bg-green-500 text-white' : 'bg-primary/10 text-primary'
+          }`}>
+            {completedSteps.has(1) && <CheckCircle className="inline w-2.5 h-2.5 mr-0.5" />}
+            ① 筛选
+          </span>
+          <ArrowRight className={`w-3 h-3 ${completedSteps.has(1) && completedSteps.has(2) ? 'text-green-400' : 'text-gray-300'}`} />
+          <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
+            completedSteps.has(2) ? 'bg-green-500 text-white' : 'bg-accent/10 text-accent'
+          }`}>
+            {completedSteps.has(2) && <CheckCircle className="inline w-2.5 h-2.5 mr-0.5" />}
+            ② 活动配置
+          </span>
+          <ArrowRight className={`w-3 h-3 ${completedSteps.has(2) && completedSteps.has(3) ? 'text-green-400' : 'text-gray-300'}`} />
+          <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
+            completedSteps.has(3) ? 'bg-green-500 text-white' : 'bg-secondary/10 text-secondary'
+          }`}>
+            {completedSteps.has(3) && <CheckCircle className="inline w-2.5 h-2.5 mr-0.5" />}
+            ③ 核销回写
+          </span>
+          <ArrowRight className={`w-3 h-3 ${completedSteps.has(3) && completedSteps.has(4) ? 'text-green-400' : 'text-gray-300'}`} />
+          <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
+            completedSteps.has(4) ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700'
+          }`}>
+            {completedSteps.has(4) && <CheckCircle className="inline w-2.5 h-2.5 mr-0.5" />}
+            ④ 复盘报告
+          </span>
         </div>
 
         <p className="text-[9px] text-gray-400 flex items-center gap-1 justify-center">

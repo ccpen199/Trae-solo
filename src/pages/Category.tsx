@@ -58,6 +58,7 @@ export default function Category() {
   const [showChangeForm, setShowChangeForm] = useState<string | null>(null)
   const [changeSubmitted, setChangeSubmitted] = useState<Record<string, boolean>>({})
   const [expandedPkgChain, setExpandedPkgChain] = useState<string | null>('限时折扣')
+  const [expandedMerchantTab, setExpandedMerchantTab] = useState<Record<number, 'qualification' | 'package'>>({})
   const requestIdRef = useRef(0)
 
   const fetchData = useCallback(async () => {
@@ -424,7 +425,13 @@ export default function Category() {
                       </div>
                     </Link>
                     <button
-                      onClick={(e) => { e.preventDefault(); setExpandedMerchant(isExpanded ? null : m.id) }}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        if (!isExpanded) {
+                          setExpandedMerchantTab((prev) => ({ ...prev, [m.id]: 'qualification' }))
+                        }
+                        setExpandedMerchant(isExpanded ? null : m.id)
+                      }}
                       className="w-full flex items-center justify-center gap-1 py-1.5 text-xs text-primary bg-gray-50 hover:bg-gray-100 transition-colors border-t border-gray-100"
                     >
                       {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
@@ -432,6 +439,45 @@ export default function Category() {
                     </button>
                     {isExpanded && (
                       <div className="px-3 pb-3 pt-2.5 space-y-3.5 text-xs border-t border-gray-50 bg-gray-50/50">
+                        <div className="flex gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setExpandedMerchantTab((prev) => ({ ...prev, [m.id]: 'qualification' }))
+                            }}
+                            className={`flex-1 py-2 rounded-lg text-[11px] font-medium transition-colors flex items-center justify-center gap-1 ${
+                              (expandedMerchantTab[m.id] || 'qualification') === 'qualification'
+                                ? 'bg-primary text-white shadow-sm'
+                                : 'bg-white text-gray-600 border border-gray-200 hover:border-primary/40'
+                            }`}
+                          >
+                            📋 资质审核
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setExpandedMerchantTab((prev) => ({ ...prev, [m.id]: 'package' }))
+                            }}
+                            className={`flex-1 py-2 rounded-lg text-[11px] font-medium transition-colors flex items-center justify-center gap-1 ${
+                              (expandedMerchantTab[m.id] || 'qualification') === 'package'
+                                ? 'bg-primary text-white shadow-sm'
+                                : 'bg-white text-gray-600 border border-gray-200 hover:border-primary/40'
+                            }`}
+                          >
+                            🛒 套餐核销
+                          </button>
+                        </div>
+                        <p className="text-[10px] text-gray-500 -mt-2 flex items-center gap-1">
+                          <span className="inline-flex items-center gap-0.5">
+                            已展开：<span className="font-medium text-primary">
+                              {(expandedMerchantTab[m.id] || 'qualification') === 'qualification' ? '资质审核' : '套餐核销'}
+                            </span>
+                          </span>
+                          <span className="text-gray-300">·</span>
+                          <span>点击上方Tab切换查看资质审核 / 套餐核销 <ArrowRight className="w-3 h-3 inline" /></span>
+                        </p>
+                        {(expandedMerchantTab[m.id] || 'qualification') === 'qualification' && (
+                        <>
                         <div className="p-2.5 rounded-lg bg-gradient-to-r from-secondary-50/80 to-white border border-secondary-200/70">
                           <div className="flex items-center justify-between mb-2">
                             <p className="text-gray-700 font-medium flex items-center gap-1">
@@ -848,6 +894,10 @@ export default function Category() {
                           <p className="text-gray-500 font-medium mb-1">联系方式</p>
                           <p className="text-gray-600">{m.phone || '暂无'}</p>
                         </div>
+                        </>
+                        )}
+                        {(expandedMerchantTab[m.id] || 'qualification') === 'package' && (
+                        <>
                         <div className="p-2.5 rounded-lg bg-gradient-to-r from-primary-50/60 to-accent-50/40 border border-primary-100/60">
                           <div className="flex items-center justify-between mb-2">
                             <p className="text-gray-700 font-medium flex items-center gap-1">
@@ -1018,6 +1068,8 @@ export default function Category() {
                             查看我的核销订单 →
                           </button>
                         </div>
+                        </>
+                        )}
                       </div>
                     )}
                   </div>

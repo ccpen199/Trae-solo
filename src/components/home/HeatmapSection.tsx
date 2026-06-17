@@ -86,11 +86,11 @@ export default function HeatmapSection() {
         const now = new Date()
         const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`
         addInterceptRecord(timeStr, coords.lat, coords.lng, '主动越界模拟·嘉定区，触发围栏外拦截')
-        setTimeout(() => {
-          const el = document.getElementById('out-of-fence-panel')
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }, 300)
       }
+      setTimeout(() => {
+        const el = document.getElementById('fence-compare-table')
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 300)
       setTimeout(() => setLocChangeNote(null), 6000)
     }, 50)
   }
@@ -674,51 +674,62 @@ export default function HeatmapSection() {
               </div>
             </div>
 
-            <div className="mb-3">
-              <div className="flex items-center gap-2 mb-2">
-                <button
-                  onClick={() => handleLocSourceChange('default')}
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-1.5 ${
-                    locInfo.source !== 'out_of_fence'
-                      ? 'bg-secondary text-white shadow-md'
-                      : 'bg-secondary-50 text-secondary border border-secondary-200 hover:bg-secondary-100'
-                  }`}
-                >
-                  <CheckCircle className="w-4 h-4" />
-                  切换到区内·默认松江
-                </button>
-                <button
-                  onClick={() => handleLocSourceChange('out_of_fence')}
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-1.5 ${
-                    locInfo.source === 'out_of_fence'
-                      ? 'bg-danger text-white shadow-md'
-                      : 'bg-danger-50 text-danger border border-danger-200 hover:bg-danger-100'
-                  }`}
-                >
-                  <XCircle className="w-4 h-4" />
-                  切换到区外·嘉定拦截
-                </button>
-              </div>
+            <div className="mb-3 text-center text-[11px] text-gray-500 bg-white/60 py-2 rounded-lg border border-gray-100">
+              👇 请查看下方业务结果对照表，逐项对比区内/区外的差异
             </div>
 
-            <div className="p-3 rounded-lg bg-white/80 border border-gray-200 mb-3">
-              <div className="flex items-center gap-1.5 mb-2.5">
-                <BarChart3 className="w-4 h-4 text-primary" />
-                <p className="text-sm font-bold text-gray-800">📊 定位切换 · 业务结果对照表（可验收）</p>
+            <div id="fence-compare-table" className="p-3 rounded-lg bg-white/80 border border-gray-200 mb-3">
+              <div className="flex items-center justify-between mb-2.5 flex-wrap gap-2">
+                <div className="flex items-center gap-1.5">
+                  <BarChart3 className="w-4 h-4 text-primary" />
+                  <p className="text-sm font-bold text-gray-800">📊 定位切换 · 业务结果对照表（可验收）</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleLocSourceChange('default')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1 ${
+                      locInfo.source !== 'out_of_fence'
+                        ? 'bg-secondary text-white shadow-sm'
+                        : 'bg-secondary-50 text-secondary border border-secondary-200 hover:bg-secondary-100'
+                    }`}
+                  >
+                    <CheckCircle className="w-3.5 h-3.5" />
+                    区内·默认松江
+                  </button>
+                  <button
+                    onClick={() => handleLocSourceChange('out_of_fence')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1 ${
+                      locInfo.source === 'out_of_fence'
+                        ? 'bg-danger text-white shadow-sm'
+                        : 'bg-danger-50 text-danger border border-danger-200 hover:bg-danger-100'
+                    }`}
+                  >
+                    <XCircle className="w-3.5 h-3.5" />
+                    区外·嘉定拦截
+                  </button>
+                </div>
               </div>
               <table className="w-full text-xs">
                 <thead>
                   <tr className="border-b border-gray-200">
                     <th className="text-left py-2 font-semibold text-gray-600 w-24">业务场景</th>
-                    <th className="text-left py-2 font-semibold text-secondary bg-secondary-50/50 pl-2">
+                    <th className={`text-left py-2 font-semibold pl-2 ${
+                      isInSongjiang
+                        ? 'text-secondary bg-secondary-50/50'
+                        : 'text-gray-400 bg-gray-100/60'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <CheckCircle className="w-3.5 h-3.5" />
+                        <CheckCircle className={`w-3.5 h-3.5 ${isInSongjiang ? '' : 'text-gray-300'}`} />
                         松江区内（默认/GPS/基站）
                       </span>
                     </th>
-                    <th className="text-left py-2 font-semibold text-danger bg-danger-50/50 pl-2">
+                    <th className={`text-left py-2 font-semibold pl-2 ${
+                      !isInSongjiang
+                        ? 'text-danger bg-danger-50/50'
+                        : 'text-gray-400 bg-gray-100/60'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <XCircle className="w-3.5 h-3.5" />
+                        <XCircle className={`w-3.5 h-3.5 ${!isInSongjiang ? '' : 'text-gray-300'}`} />
                         区外拦截（越界模拟）
                       </span>
                     </th>
@@ -732,15 +743,19 @@ export default function HeatmapSection() {
                         商户推荐
                       </span>
                     </td>
-                    <td className="py-2.5 bg-secondary-50/30 pl-2 text-gray-700">
+                    <td className={`py-2.5 pl-2 ${
+                      isInSongjiang ? 'bg-secondary-50/30 text-gray-700' : 'bg-gray-100/40 text-gray-400'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <CheckCircle className="w-3.5 h-3.5 text-secondary flex-shrink-0" />
+                        <CheckCircle className={`w-3.5 h-3.5 flex-shrink-0 ${isInSongjiang ? 'text-secondary' : 'text-gray-300'}`} />
                         展示TOP10商户（共128家可推荐）
                       </span>
                     </td>
-                    <td className="py-2.5 bg-danger-50/30 pl-2 text-gray-600">
+                    <td className={`py-2.5 pl-2 ${
+                      !isInSongjiang ? 'bg-danger-50/30 text-gray-600' : 'bg-gray-100/40 text-gray-400'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        <XCircle className={`w-3.5 h-3.5 flex-shrink-0 ${!isInSongjiang ? 'text-danger' : 'text-gray-300'}`} />
                         全部清空，10家商户隐藏
                       </span>
                     </td>
@@ -752,15 +767,19 @@ export default function HeatmapSection() {
                         核销码状态
                       </span>
                     </td>
-                    <td className="py-2.5 bg-secondary-50/30 pl-2 text-gray-700">
+                    <td className={`py-2.5 pl-2 ${
+                      isInSongjiang ? 'bg-secondary-50/30 text-gray-700' : 'bg-gray-100/40 text-gray-400'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <CheckCircle className="w-3.5 h-3.5 text-secondary flex-shrink-0" />
+                        <CheckCircle className={`w-3.5 h-3.5 flex-shrink-0 ${isInSongjiang ? 'text-secondary' : 'text-gray-300'}`} />
                         动态码有效，60秒刷新（A3F8K2、7D9B4E）
                       </span>
                     </td>
-                    <td className="py-2.5 bg-danger-50/30 pl-2 text-gray-600">
+                    <td className={`py-2.5 pl-2 ${
+                      !isInSongjiang ? 'bg-danger-50/30 text-gray-600' : 'bg-gray-100/40 text-gray-400'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        <XCircle className={`w-3.5 h-3.5 flex-shrink-0 ${!isInSongjiang ? 'text-danger' : 'text-gray-300'}`} />
                         核销码全部失效，错误码4031
                       </span>
                     </td>
@@ -772,15 +791,19 @@ export default function HeatmapSection() {
                         下单购买
                       </span>
                     </td>
-                    <td className="py-2.5 bg-secondary-50/30 pl-2 text-gray-700">
+                    <td className={`py-2.5 pl-2 ${
+                      isInSongjiang ? 'bg-secondary-50/30 text-gray-700' : 'bg-gray-100/40 text-gray-400'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <CheckCircle className="w-3.5 h-3.5 text-secondary flex-shrink-0" />
+                        <CheckCircle className={`w-3.5 h-3.5 flex-shrink-0 ${isInSongjiang ? 'text-secondary' : 'text-gray-300'}`} />
                         正常下单购买，按钮可点击
                       </span>
                     </td>
-                    <td className="py-2.5 bg-danger-50/30 pl-2 text-gray-600">
+                    <td className={`py-2.5 pl-2 ${
+                      !isInSongjiang ? 'bg-danger-50/30 text-gray-600' : 'bg-gray-100/40 text-gray-400'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        <XCircle className={`w-3.5 h-3.5 flex-shrink-0 ${!isInSongjiang ? 'text-danger' : 'text-gray-300'}`} />
                         按钮置灰，提示仅限松江区域用户
                       </span>
                     </td>
@@ -792,15 +815,19 @@ export default function HeatmapSection() {
                         运营报表
                       </span>
                     </td>
-                    <td className="py-2.5 bg-secondary-50/30 pl-2 text-gray-700">
+                    <td className={`py-2.5 pl-2 ${
+                      isInSongjiang ? 'bg-secondary-50/30 text-gray-700' : 'bg-gray-100/40 text-gray-400'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <CheckCircle className="w-3.5 h-3.5 text-secondary flex-shrink-0" />
+                        <CheckCircle className={`w-3.5 h-3.5 flex-shrink-0 ${isInSongjiang ? 'text-secondary' : 'text-gray-300'}`} />
                         订单计入消费报告，参与核销率/复购率统计
                       </span>
                     </td>
-                    <td className="py-2.5 bg-danger-50/30 pl-2 text-gray-600">
+                    <td className={`py-2.5 pl-2 ${
+                      !isInSongjiang ? 'bg-danger-50/30 text-gray-600' : 'bg-gray-100/40 text-gray-400'
+                    }`}>
                       <span className="flex items-center gap-1">
-                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        <XCircle className={`w-3.5 h-3.5 flex-shrink-0 ${!isInSongjiang ? 'text-danger' : 'text-gray-300'}`} />
                         订单全部剔除，不计入任何报表
                       </span>
                     </td>

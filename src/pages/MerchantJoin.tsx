@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Upload, ChevronLeft, ChevronRight, Check, AlertCircle, FileText, Image, Clock, Tag, CheckCircle2, CheckCircle, XCircle, History } from 'lucide-react'
+import { Upload, ChevronLeft, ChevronRight, Check, AlertCircle, FileText, Image, Clock, Tag, CheckCircle2, CheckCircle, XCircle, History, Play } from 'lucide-react'
 import { applyMerchant } from '@/utils/api'
 
 const STEPS = ['基本信息', '资质上传', '营业时间', '优惠标签']
@@ -431,6 +431,56 @@ export default function MerchantJoin() {
     <div className="max-w-2xl mx-auto px-4 py-6 pb-20 animate-fade-in">
       <h1 className="section-title mb-6">商户入驻</h1>
 
+      <div className="p-3 rounded-xl bg-gradient-to-r from-primary-50 via-accent-50 to-secondary-50 border border-primary-100 mb-5">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-lg">🎬</span>
+          <h3 className="text-sm font-bold text-gray-800">入驻审核真实流转 · 点击按钮一键演示</h3>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex-1 flex items-center gap-2">
+            <div className="flex-1 p-2.5 rounded-lg bg-white/70 border border-primary-100 backdrop-blur-sm">
+              <div className="flex items-center gap-1.5 mb-1">
+                <div className="w-5 h-5 rounded-full bg-primary-50 flex items-center justify-center">
+                  <FileText className="w-3 h-3 text-primary" />
+                </div>
+                <span className="text-xs font-semibold text-gray-700">① 资质上传</span>
+                <span className="text-[9px] px-1 py-0.5 rounded bg-primary-50 text-primary border border-primary-200">第2步</span>
+              </div>
+              <p className="text-[10px] text-gray-500 leading-tight">营业执照+经营许可证+门头照，系统校验完整性</p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+            <div className="flex-1 p-2.5 rounded-lg bg-white/70 border border-accent-100 backdrop-blur-sm">
+              <div className="flex items-center gap-1.5 mb-1">
+                <div className="w-5 h-5 rounded-full bg-accent-50 flex items-center justify-center">
+                  <CheckCircle className="w-3 h-3 text-accent" />
+                </div>
+                <span className="text-xs font-semibold text-gray-700">② 审核回写</span>
+                <span className="text-[9px] px-1 py-0.5 rounded bg-accent-50 text-accent border border-accent-200">提交后</span>
+              </div>
+              <p className="text-[10px] text-gray-500 leading-tight">运营逐项核验，通过/驳回+原因实时回写</p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+            <div className="flex-1 p-2.5 rounded-lg bg-white/70 border border-secondary-100 backdrop-blur-sm">
+              <div className="flex items-center gap-1.5 mb-1">
+                <div className="w-5 h-5 rounded-full bg-secondary-50 flex items-center justify-center">
+                  <History className="w-3 h-3 text-secondary" />
+                </div>
+                <span className="text-xs font-semibold text-gray-700">③ 变更复查</span>
+                <span className="text-[9px] px-1 py-0.5 rounded bg-secondary-50 text-secondary border border-secondary-200">入驻后</span>
+              </div>
+              <p className="text-[10px] text-gray-500 leading-tight">营业时间/标签变更，审批通过留痕可复查</p>
+            </div>
+          </div>
+          <button
+            onClick={handleDemoAll}
+            className="flex-shrink-0 px-5 py-3 rounded-xl bg-gradient-to-r from-accent to-accent/80 text-white text-sm font-bold shadow-lg hover:shadow-xl hover:from-accent/90 hover:to-accent transition-all flex items-center gap-1.5"
+          >
+            <Play className="w-4 h-4 fill-current" />
+            一键演示全流程
+          </button>
+        </div>
+      </div>
+
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center flex-1">
           {STEPS.map((s, i) => (
@@ -445,14 +495,14 @@ export default function MerchantJoin() {
             </div>
           ))}
         </div>
-        <div className="ml-4 flex flex-col items-end gap-1 flex-shrink-0">
+        <div className="ml-4 flex-shrink-0">
           <button
             onClick={handleDemoAll}
-            className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-bold shadow-md hover:bg-accent/90 transition-colors"
+            className="px-3 py-1.5 rounded-lg bg-accent/90 text-white text-xs font-semibold shadow-sm hover:bg-accent transition-colors flex items-center gap-1"
           >
-            一键演示全流程
+            <Play className="w-3 h-3 fill-current" />
+            一键演示
           </button>
-          <span className="text-[10px] text-gray-400">点击可跳过表单，直接查看审核回写状态</span>
         </div>
       </div>
 
