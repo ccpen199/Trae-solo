@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.may89222.backend</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/chen/.nvm/versions/node/v22.22.0/bin/node</string>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89222/node_modules/tsx/dist/cli.mjs</string>
+    <string>api/server.ts</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89222</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>/Users/chen</string>
+    <key>PATH</key>
+    <string>/Users/chen/.nvm/versions/node/v22.22.0/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>NODE_ENV</key>
+    <string>development</string>
+    <key>HOST</key>
+    <string>127.0.0.1</string>
+    <key>BACKEND_HOST</key>
+    <string>127.0.0.1</string>
+    <key>BACKEND_PORT</key>
+    <string>59222</string>
+    <key>PORT</key>
+    <string>59222</string>
+    <key>FRONTEND_URL</key>
+    <string>http://127.0.0.1:49222</string>
+    <key>BACKEND_URL</key>
+    <string>http://127.0.0.1:59222</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89222/backend.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89222/backend.log</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+</dict>
+</plist>

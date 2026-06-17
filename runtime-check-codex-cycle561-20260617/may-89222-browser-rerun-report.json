@@ -1,0 +1,69 @@
+{
+  "order": "may-89222",
+  "checkedAt": "2026-06-16T22:05:13.935Z",
+  "frontendUrl": "http://127.0.0.1:49222/",
+  "frontendStatus": 200,
+  "title": "业委会数字治理平台",
+  "proxiedHealth": {
+    "ok": true,
+    "status": 200,
+    "text": "{\"success\":true,\"message\":\"ok\",\"service\":\"community-governance-platform\",\"frontendUrl\":\"http://127.0.0.1:49222\",\"backendUrl\":\"http://127.0.0.1:59222\"}"
+  },
+  "missingTexts": [],
+  "clickResults": [
+    {
+      "label": "工作台",
+      "ok": true,
+      "url": "http://127.0.0.1:49222/dashboard",
+      "bodyHasLabel": true
+    },
+    {
+      "label": "民主议事",
+      "ok": true,
+      "url": "http://127.0.0.1:49222/council/motions",
+      "bodyHasLabel": true
+    },
+    {
+      "label": "财务透明",
+      "ok": true,
+      "url": "http://127.0.0.1:49222/finance/overview",
+      "bodyHasLabel": true
+    },
+    {
+      "label": "后台管理",
+      "ok": true,
+      "url": "http://127.0.0.1:49222/admin/owners",
+      "bodyHasLabel": true
+    },
+    {
+      "label": "业主管理",
+      "ok": true,
+      "url": "http://127.0.0.1:49222/admin/owners",
+      "bodyHasLabel": true
+    },
+    {
+      "label": "票据管理",
+      "ok": true,
+      "url": "http://127.0.0.1:49222/finance/invoices",
+      "bodyHasLabel": true
+    },
+    {
+      "label": "用章申请",
+      "ok": true,
+      "url": "http://127.0.0.1:49222/seal/applications",
+      "bodyHasLabel": true
+    },
+    {
+      "label": "报修工单",
+      "ok": true,
+      "url": "http://127.0.0.1:49222/property/tickets",
+      "bodyHasLabel": true
+    }
+  ],
+  "failedClicks": [],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailures": [],
+  "badResponses": [],
+  "ok": true
+}
