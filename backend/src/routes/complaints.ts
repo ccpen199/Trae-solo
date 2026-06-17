@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import db from '../db';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest, authMiddleware } from '../middleware/auth';
 
 const router = Router();
 
 function formatDate(d: Date) { return d.toISOString().slice(0, 19).replace('T', ' '); }
 
-router.get('/', (req: AuthRequest, res) => {
+router.get('/', authMiddleware, (req: AuthRequest, res) => {
   const { page = 1, pageSize = 20, status, type, keyword } = req.query as any;
   const offset = (page - 1) * pageSize;
   let where = [];
@@ -39,7 +39,7 @@ router.get('/', (req: AuthRequest, res) => {
   res.json({ list, total, page: +page, pageSize: +pageSize, stats });
 });
 
-router.post('/', (req: AuthRequest, res) => {
+router.post('/', authMiddleware, (req: AuthRequest, res) => {
   const { order_id, type, description, images } = req.body;
   if (!order_id || !type || !description) return res.status(400).json({ code: 'BAD_REQUEST', message: '请填写完整信息' });
   const order = db.prepare('SELECT id, courier_id FROM shipment_orders WHERE id = ?').get(order_id) as any;
@@ -52,7 +52,7 @@ router.post('/', (req: AuthRequest, res) => {
   res.json({ message: '投诉已提交', id: info.lastInsertRowid });
 });
 
-router.patch('/:id/status', (req: AuthRequest, res) => {
+router.patch('/:id/status', authMiddleware, (req: AuthRequest, res) => {
   const { status, resolution } = req.body;
   if (!['processing', 'resolved', 'rejected'].includes(status)) return res.status(400).json({ code: 'BAD_REQUEST', message: '无效状态' });
   const complaint = db.prepare('SELECT * FROM complaints WHERE id = ?').get(req.params.id) as any;

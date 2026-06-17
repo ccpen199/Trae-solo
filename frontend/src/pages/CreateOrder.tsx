@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, message, Modal, Steps, Alert, Statistic, Radio, List, Progress } from 'antd';
-import { SendOutlined, SafetyOutlined, BulbOutlined, WarningOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined, ShoppingOutlined, UnorderedListOutlined, EyeOutlined } from '@ant-design/icons';
+import { Row, Col, Card, Form, Input, InputNumber, Select, Button, Space, Tag, message, Modal, Steps, Alert, Statistic, Radio, List, Progress, Divider, Descriptions, QRCode, Switch } from 'antd';
+import { SendOutlined, SafetyOutlined, BulbOutlined, WarningOutlined, EnvironmentOutlined, PhoneOutlined, UserOutlined, ShoppingOutlined, UnorderedListOutlined, EyeOutlined, QrcodeOutlined, SyncOutlined, CheckCircleOutlined, RocketOutlined } from '@ant-design/icons';
 import { api } from '../api';
 import ReactECharts from 'echarts-for-react';
 
@@ -19,6 +19,8 @@ export default function CreateOrder() {
   const [orderResult, setOrderResult] = useState<any>(null);
   const [sortBy, setSortBy] = useState('composite');
   const [alertVisible, setAlertVisible] = useState(true);
+  const [syncEcommerce, setSyncEcommerce] = useState(false);
+  const [ecommerceOrderNo, setEcommerceOrderNo] = useState('');
   const preselectedBrandId = searchParams.get('brand_id');
 
   useEffect(() => {
@@ -31,6 +33,11 @@ export default function CreateOrder() {
     }
   }, [priceResult, preselectedBrandId]);
 
+  const getSelectedBrandInfo = () => {
+    if (!priceResult || !selectedBrand) return null;
+    return priceResult.list.find((b: any) => b.brand_id === selectedBrand);
+  };
+
   const onPriceCompare = async () => {
     try {
       const vals = await form.validateFields(['sender_city', 'receiver_city', 'weight', 'length', 'width', 'height', 'priority', 'goods_type']);
@@ -41,7 +48,8 @@ export default function CreateOrder() {
       message.success('比价完成，共匹配 ' + r.summary.brand_count + ' 个品牌');
     } catch (e: any) {
       if (e.errorFields) {
-        message.error('请完善必填信息后再进行比价');
+        const fieldNames = e.errorFields.map((f: any) => f.name.join('.')).join('、');
+        message.error(`请完善必填信息：${fieldNames}`);
       } else if (e.message) {
         message.error(e.message);
       }
@@ -52,6 +60,24 @@ export default function CreateOrder() {
     const addr = form.getFieldValue('receiver_address') || '';
     const fakeKeywords = ['虚构路', '假小区', '不存在街', '测试地址', 'xxx路xxx号', '无名氏'];
     return fakeKeywords.some(k => addr.includes(k));
+  };
+
+  const goToConfirm = async () => {
+    try {
+      await form.validateFields();
+      if (!selectedBrand) {
+        message.warning('请选择快递品牌');
+        return;
+      }
+      setStep(2);
+    } catch (e: any) {
+      if (e.errorFields) {
+        const fieldNames = e.errorFields.map((f: any) => f.name.join('.')).join('、');
+        message.error(`请完善必填信息：${fieldNames}`);
+      } else if (e.message) {
+        message.error(e.message);
+      }
+    }
   };
 
   const onSubmit = async () => {
@@ -74,7 +100,8 @@ export default function CreateOrder() {
       doSubmit(vals, false);
     } catch (e: any) {
       if (e.errorFields) {
-        message.error('请完善所有必填信息后再提交');
+        const fieldNames = e.errorFields.map((f: any) => f.name.join('.')).join('、');
+        message.error(`请完善必填信息：${fieldNames}`);
       } else if (e.message) {
         message.error(e.message);
       }
@@ -84,7 +111,7 @@ export default function CreateOrder() {
   const doSubmit = async (vals: any, forced: boolean) => {
     setSubmitting(true);
     try {
-      const brand = priceResult.list.find((b: any) => b.brand_id === selectedBrand);
+      const brand = getSelectedBrandInfo();
       const r: any = await api.orders.create({
         ...vals,
         brand_id: selectedBrand,
@@ -93,8 +120,20 @@ export default function CreateOrder() {
         estimated_price: brand?.price,
         estimated_hours: brand?.estimated_hours
       });
+
+      if (syncEcommerce && ecommerceOrderNo) {
+        try {
+          await api.orders.syncEcommerce({
+            order_id: r.id,
+            ecommerce_order_no: ecommerceOrderNo
+          });
+        } catch (syncErr: any) {
+          message.warning('运单创建成功，但电商同步失败：' + (syncErr.message || '未知错误'));
+        }
+      }
+
       setOrderResult(r);
-      setStep(2);
+      setStep(3);
       message.success(r.suspicious_address ? '运单已创建，异常地址已标记并通知人工审核' : '运单创建成功');
     } catch (e: any) { message.error(e.message || '创建运单失败，请重试'); }
     finally { setSubmitting(false); }
@@ -112,15 +151,17 @@ export default function CreateOrder() {
     ]
   } : {};
 
-  if (orderResult) {
+  const renderSuccessPage = () => {
+    if (!orderResult) return null;
     return (
       <Card>
         <Steps
-          current={2}
+          current={3}
           items={[
             { title: '填写信息', icon: <UserOutlined /> },
             { title: '智能比价', icon: <BulbOutlined /> },
-            { title: '下单完成', icon: <SafetyOutlined /> }
+            { title: '确认下单', icon: <SafetyOutlined /> },
+            { title: '下单完成', icon: <CheckCircleOutlined /> }
           ]}
         />
         <div style={{ textAlign: 'center', padding: '60px 20px' }}>
@@ -162,12 +203,137 @@ export default function CreateOrder() {
             <Space>
               <Button type="primary" icon={<UnorderedListOutlined />} onClick={() => nav('/orders')}>查看运单列表</Button>
               <Button icon={<EyeOutlined />} onClick={() => nav(`/orders/${orderResult.id}`)}>查看运单详情</Button>
-              <Button onClick={() => { setOrderResult(null); setStep(0); setPriceResult(null); setSelectedBrand(null); form.resetFields(); }}>再寄一单</Button>
+              <Button onClick={() => { setOrderResult(null); setStep(0); setPriceResult(null); setSelectedBrand(null); form.resetFields(); setSyncEcommerce(false); setEcommerceOrderNo(''); }}>再寄一单</Button>
             </Space>
           </div>
         </div>
       </Card>
     );
+  };
+
+  const renderConfirmStep = () => {
+    const brand = getSelectedBrandInfo();
+    if (!brand) return null;
+    const formVals = form.getFieldsValue();
+
+    return (
+      <Card title={<><SafetyOutlined /> 确认下单信息</>}>
+        <Alert
+          type="info"
+          showIcon
+          message="请仔细核对以下信息，确认无误后提交下单"
+          style={{ marginBottom: 20 }}
+        />
+
+        <Row gutter={[24, 24]}>
+          <Col xs={24} lg={14}>
+            <Card title="寄件人信息" size="small" style={{ marginBottom: 16 }}>
+              <Descriptions column={1} size="small">
+                <Descriptions.Item label="姓名">{formVals.sender_name || '-'}</Descriptions.Item>
+                <Descriptions.Item label="手机号">{formVals.sender_phone || '-'}</Descriptions.Item>
+                <Descriptions.Item label="城市">{formVals.sender_city || '-'}</Descriptions.Item>
+                <Descriptions.Item label="详细地址">{formVals.sender_address || '-'}</Descriptions.Item>
+              </Descriptions>
+            </Card>
+
+            <Card title="收件人信息" size="small" style={{ marginBottom: 16 }}>
+              <Descriptions column={1} size="small">
+                <Descriptions.Item label="姓名">{formVals.receiver_name || '-'}</Descriptions.Item>
+                <Descriptions.Item label="手机号">{formVals.receiver_phone || '-'}</Descriptions.Item>
+                <Descriptions.Item label="城市">{formVals.receiver_city || '-'}</Descriptions.Item>
+                <Descriptions.Item label="详细地址">{formVals.receiver_address || '-'}</Descriptions.Item>
+              </Descriptions>
+            </Card>
+
+            <Card title="物品信息" size="small" style={{ marginBottom: 16 }}>
+              <Descriptions column={2} size="small">
+                <Descriptions.Item label="重量">{formVals.weight} kg</Descriptions.Item>
+                <Descriptions.Item label="尺寸">{formVals.length}×{formVals.width}×{formVals.height} cm</Descriptions.Item>
+                <Descriptions.Item label="优先级">{formVals.priority === 'urgent' ? '加急' : '标准'}</Descriptions.Item>
+                <Descriptions.Item label="物品类型">
+                  {formVals.goods_type === 'standard' ? '标准件' :
+                   formVals.goods_type === 'fragile' ? '易碎品' :
+                   formVals.goods_type === 'cold' ? '冷链' : '文件'}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+
+            <Card title={<><SyncOutlined /> 电商同步</>} size="small">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                <Switch checked={syncEcommerce} onChange={setSyncEcommerce} />
+                <span>同步电商平台订单信息</span>
+              </div>
+              {syncEcommerce && (
+                <Input
+                  placeholder="请输入电商订单号"
+                  value={ecommerceOrderNo}
+                  onChange={(e) => setEcommerceOrderNo(e.target.value)}
+                  prefix={<ShoppingOutlined />}
+                />
+              )}
+            </Card>
+          </Col>
+
+          <Col xs={24} lg={10}>
+            <Card
+              title={<><RocketOutlined style={{ color: '#1677ff' }} /> 已选快递品牌</>}
+              style={{ marginBottom: 16, border: '2px solid #1677ff', background: '#f0f7ff' }}
+            >
+              <div style={{ textAlign: 'center', padding: '16px 0' }}>
+                <div style={{ fontSize: 22, fontWeight: 700, color: '#1677ff', marginBottom: 8 }}>{brand.brand_name}</div>
+                <Tag color="blue">{brand.brand_code}</Tag>
+                <div style={{ marginTop: 12 }}>
+                  {brand.tags?.map((t: string, k: number) => (
+                    <Tag key={k} color={k === 0 ? 'purple' : k === 1 ? 'cyan' : k === 2 ? 'orange' : 'green'}>{t}</Tag>
+                  ))}
+                </div>
+              </div>
+              <Divider style={{ margin: '12px 0' }} />
+              <Row gutter={[12, 12]}>
+                <Col xs={12}>
+                  <Statistic title="运费" value={brand.price} prefix="¥" valueStyle={{ color: '#ff4d4f', fontSize: 22 }} />
+                </Col>
+                <Col xs={12}>
+                  <Statistic title="时效" value={brand.estimated_hours} suffix="h" valueStyle={{ color: '#fa8c16', fontSize: 20 }} />
+                </Col>
+              </Row>
+              <div style={{ marginTop: 12 }}>
+                <div style={{ color: '#8c8c8c', fontSize: 12, marginBottom: 4 }}>覆盖度</div>
+                <Progress percent={brand.coverage_score} size="small" />
+              </div>
+              <div style={{ marginTop: 8 }}>
+                <div style={{ color: '#8c8c8c', fontSize: 12, marginBottom: 4 }}>综合评分</div>
+                <Progress percent={brand.composite_score} size="small" strokeColor={{ '0%': '#1677ff', '100%': '#52c41a' }} />
+              </div>
+              {brand.recommendation && (
+                <Alert
+                  type="success"
+                  showIcon
+                  message="推荐理由"
+                  description={brand.recommendation}
+                  style={{ marginTop: 12 }}
+                />
+              )}
+            </Card>
+
+            <Card title={<><QrcodeOutlined /> 面单预览</>} size="small">
+              <div style={{ textAlign: 'center', padding: '16px 0' }}>
+                <div style={{ display: 'inline-block', padding: 16, background: '#fff', border: '1px solid #f0f0f0', borderRadius: 8 }}>
+                  <QRCode value={`order://preview/${brand.brand_code}_preview`} size={120} />
+                </div>
+                <div style={{ marginTop: 12, fontSize: 12, color: '#8c8c8c' }}>
+                  下单成功后可获取正式面单二维码
+                </div>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </Card>
+    );
+  };
+
+  if (orderResult) {
+    return renderSuccessPage();
   }
 
   return (
@@ -200,99 +366,101 @@ export default function CreateOrder() {
         />
       )}
 
-      <Form form={form} layout="vertical">
-      <Card title={<><UserOutlined /> 寄件人信息</>}>
-        <Row gutter={[16, 16]}>
-          <Col xs={24} md={8}>
-            <Form.Item name="sender_name" label="寄件人" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
-              <Input prefix={<UserOutlined />} placeholder="姓名" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item name="sender_phone" label="手机号" rules={[{ required: true, pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
-              <Input prefix={<PhoneOutlined />} placeholder="11位手机号" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item name="sender_city" label="寄件城市" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
-              <Select options={cities.map(c => ({ value: c, label: c }))} placeholder="选择城市" />
-            </Form.Item>
-          </Col>
-          <Col xs={24}>
-            <Form.Item name="sender_address" label="详细地址" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
-              <Input prefix={<EnvironmentOutlined />} placeholder="街道门牌号" />
-            </Form.Item>
-          </Col>
-        </Row>
-      </Card>
+      {step <= 1 && (
+        <Form form={form} layout="vertical">
+        <Card title={<><UserOutlined /> 寄件人信息</>}>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={8}>
+              <Form.Item name="sender_name" label="寄件人" rules={[{ required: true, message: '请输入寄件人姓名' }]} style={{ marginBottom: 0 }}>
+                <Input prefix={<UserOutlined />} placeholder="姓名" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={8}>
+              <Form.Item name="sender_phone" label="手机号" rules={[{ required: true, message: '请输入寄件人手机号' }, { pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
+                <Input prefix={<PhoneOutlined />} placeholder="11位手机号" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={8}>
+              <Form.Item name="sender_city" label="寄件城市" rules={[{ required: true, message: '请选择寄件城市' }]} style={{ marginBottom: 0 }}>
+                <Select options={cities.map(c => ({ value: c, label: c }))} placeholder="选择城市" />
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <Form.Item name="sender_address" label="详细地址" rules={[{ required: true, message: '请输入寄件人详细地址' }]} style={{ marginBottom: 0 }}>
+                <Input prefix={<EnvironmentOutlined />} placeholder="街道门牌号" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Card>
 
-      <Card title={<><ShoppingOutlined /> 收件人信息</>}>
-        <Row gutter={[16, 16]}>
-          <Col xs={24} md={8}>
-            <Form.Item name="receiver_name" label="收件人" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
-              <Input prefix={<UserOutlined />} placeholder="姓名" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item name="receiver_phone" label="手机号" rules={[{ required: true, pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
-              <Input prefix={<PhoneOutlined />} placeholder="11位手机号" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={8}>
-            <Form.Item name="receiver_city" label="收件城市" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
-              <Select options={cities.map(c => ({ value: c, label: c }))} placeholder="选择城市" />
-            </Form.Item>
-          </Col>
-          <Col xs={24}>
-            <Form.Item name="receiver_address" label="详细地址" rules={[{ required: true }]} style={{ marginBottom: 0 }}>
-              <Input prefix={<EnvironmentOutlined />} placeholder="街道门牌号（如含'虚构路/假小区'将触发异常拦截）" />
-            </Form.Item>
-          </Col>
-        </Row>
-      </Card>
+        <Card title={<><ShoppingOutlined /> 收件人信息</>}>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={8}>
+              <Form.Item name="receiver_name" label="收件人" rules={[{ required: true, message: '请输入收件人姓名' }]} style={{ marginBottom: 0 }}>
+                <Input prefix={<UserOutlined />} placeholder="姓名" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={8}>
+              <Form.Item name="receiver_phone" label="手机号" rules={[{ required: true, message: '请输入收件人手机号' }, { pattern: /^1\d{10}$/, message: '请输入有效的手机号' }]} style={{ marginBottom: 0 }}>
+                <Input prefix={<PhoneOutlined />} placeholder="11位手机号" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={8}>
+              <Form.Item name="receiver_city" label="收件城市" rules={[{ required: true, message: '请选择收件城市' }]} style={{ marginBottom: 0 }}>
+                <Select options={cities.map(c => ({ value: c, label: c }))} placeholder="选择城市" />
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <Form.Item name="receiver_address" label="详细地址" rules={[{ required: true, message: '请输入收件人详细地址' }]} style={{ marginBottom: 0 }}>
+                <Input prefix={<EnvironmentOutlined />} placeholder="街道门牌号（如含'虚构路/假小区'将触发异常拦截）" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Card>
 
-      <Card title={<><BulbOutlined /> 物品与偏好设置</>}>
-        <Row gutter={[16, 16]}>
-          <Col xs={12} md={6}>
-            <Form.Item name="weight" label="重量(kg)" initialValue={1} rules={[{ required: true }]} style={{ marginBottom: 0 }}>
-              <InputNumber min={0.1} max={100} step={0.1} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-          <Col xs={8} md={4}>
-            <Form.Item name="length" label="长(cm)" initialValue={30} style={{ marginBottom: 0 }}>
-              <InputNumber min={1} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-          <Col xs={8} md={4}>
-            <Form.Item name="width" label="宽(cm)" initialValue={20} style={{ marginBottom: 0 }}>
-              <InputNumber min={1} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-          <Col xs={8} md={4}>
-            <Form.Item name="height" label="高(cm)" initialValue={15} style={{ marginBottom: 0 }}>
-              <InputNumber min={1} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-          <Col xs={12} md={6}>
-            <Form.Item name="priority" label="优先级" initialValue="normal" style={{ marginBottom: 0 }}>
-              <Radio.Group options={[{ value: 'normal', label: '标准' }, { value: 'urgent', label: '加急' }]} />
-            </Form.Item>
-          </Col>
-          <Col xs={12} md={6}>
-            <Form.Item name="goods_type" label="物品类型" initialValue="standard" style={{ marginBottom: 0 }}>
-              <Select style={{ width: '100%' }} options={[
-                { value: 'standard', label: '标准件' },
-                { value: 'fragile', label: '易碎品' },
-                { value: 'cold', label: '冷链' },
-                { value: 'document', label: '文件' }
-              ]} />
-            </Form.Item>
-          </Col>
-        </Row>
-      </Card>
-      </Form>
+        <Card title={<><BulbOutlined /> 物品与偏好设置</>}>
+          <Row gutter={[16, 16]}>
+            <Col xs={12} md={6}>
+              <Form.Item name="weight" label="重量(kg)" initialValue={1} rules={[{ required: true, message: '请输入物品重量' }]} style={{ marginBottom: 0 }}>
+                <InputNumber min={0.1} max={100} step={0.1} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+            <Col xs={8} md={4}>
+              <Form.Item name="length" label="长(cm)" initialValue={30} style={{ marginBottom: 0 }}>
+                <InputNumber min={1} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+            <Col xs={8} md={4}>
+              <Form.Item name="width" label="宽(cm)" initialValue={20} style={{ marginBottom: 0 }}>
+                <InputNumber min={1} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+            <Col xs={8} md={4}>
+              <Form.Item name="height" label="高(cm)" initialValue={15} style={{ marginBottom: 0 }}>
+                <InputNumber min={1} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+            <Col xs={12} md={6}>
+              <Form.Item name="priority" label="优先级" initialValue="normal" style={{ marginBottom: 0 }}>
+                <Radio.Group options={[{ value: 'normal', label: '标准' }, { value: 'urgent', label: '加急' }]} />
+              </Form.Item>
+            </Col>
+            <Col xs={12} md={6}>
+              <Form.Item name="goods_type" label="物品类型" initialValue="standard" style={{ marginBottom: 0 }}>
+                <Select style={{ width: '100%' }} options={[
+                  { value: 'standard', label: '标准件' },
+                  { value: 'fragile', label: '易碎品' },
+                  { value: 'cold', label: '冷链' },
+                  { value: 'document', label: '文件' }
+                ]} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Card>
+        </Form>
+      )}
 
-      {step >= 1 && priceResult && (
+      {step >= 1 && priceResult && step <= 1 && (
         <>
           <Card>
             <Steps
@@ -305,6 +473,33 @@ export default function CreateOrder() {
               ]}
             />
           </Card>
+
+          {priceResult.recommendation && (
+            <Card>
+              <Alert
+                type="success"
+                showIcon
+                icon={<BulbOutlined />}
+                message={`智能推荐：${priceResult.recommendation.brand_name}`}
+                description={
+                  <div>
+                    <div style={{ marginBottom: 4 }}>{priceResult.recommendation.recommendation || '综合性价比最优'}</div>
+                    <div>
+                      <Tag color="blue">¥{priceResult.recommendation.price}</Tag>
+                      <Tag color="orange">{priceResult.recommendation.estimated_hours}h</Tag>
+                      <Tag color="green">★{priceResult.recommendation.rating}</Tag>
+                      <Tag color="purple">覆盖{priceResult.recommendation.coverage_score}%</Tag>
+                    </div>
+                  </div>
+                }
+                action={
+                  <Button size="small" type="primary" onClick={() => setSelectedBrand(priceResult.recommendation.brand_id)}>
+                    选择推荐
+                  </Button>
+                }
+              />
+            </Card>
+          )}
 
           <Card title="📊 价格与时效对比（TOP 10）">
             <ReactECharts option={priceChartOpt} style={{ height: 320 }} />
@@ -347,7 +542,8 @@ export default function CreateOrder() {
                       <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                         <span style={{ fontSize: 16, fontWeight: 600 }}>{r.brand_name}</span>
                         <Tag color="blue">{r.brand_code}</Tag>
-                        {r.tags.map((t: string, k: number) => <Tag key={k} color={k === 0 ? 'purple' : k === 1 ? 'cyan' : k === 2 ? 'orange' : 'green'}>{t}</Tag>)}
+                        {r.tags?.map((t: string, k: number) => <Tag key={k} color={k === 0 ? 'purple' : k === 1 ? 'cyan' : k === 2 ? 'orange' : 'green'}>{t}</Tag>)}
+                        {priceResult.recommendation?.brand_id === r.brand_id && <Tag color="gold">智能推荐</Tag>}
                       </div>
                     }
                     description={
@@ -372,6 +568,13 @@ export default function CreateOrder() {
                           <span style={{ color: '#8c8c8c', fontSize: 12 }}>综合评分</span>
                           <Progress percent={r.composite_score} size="small" strokeColor={{ '0%': '#1677ff', '100%': '#52c41a' }} />
                         </Col>
+                        {r.recommendation && (
+                          <Col xs={24}>
+                            <div style={{ fontSize: 12, color: '#52c41a', marginTop: 4 }}>
+                              💡 推荐理由：{r.recommendation}
+                            </div>
+                          </Col>
+                        )}
                       </Row>
                     }
                   />
@@ -385,6 +588,8 @@ export default function CreateOrder() {
         </>
       )}
 
+      {step === 2 && renderConfirmStep()}
+
       <Card>
         <Space>
           {step === 0 && (
@@ -395,10 +600,18 @@ export default function CreateOrder() {
           {step === 1 && (
             <>
               <Button onClick={() => setStep(0)} disabled={submitting}>上一步</Button>
-              <Button type="primary" onClick={onSubmit} loading={submitting} disabled={!selectedBrand} icon={<SendOutlined />}>
+              <Button type="primary" onClick={goToConfirm} disabled={!selectedBrand} icon={<SafetyOutlined />}>
+                下一步：确认下单
+              </Button>
+              {selectedBrand && <Tag color="blue">已选：{getSelectedBrandInfo()?.brand_name}</Tag>}
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <Button onClick={() => setStep(1)} disabled={submitting}>返回比价</Button>
+              <Button type="primary" onClick={onSubmit} loading={submitting} icon={<SendOutlined />}>
                 确认下单
               </Button>
-              {selectedBrand && <Tag color="blue">已选：{priceResult.list.find((b: any) => b.brand_id === selectedBrand)?.brand_name}</Tag>}
             </>
           )}
         </Space>

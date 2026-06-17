@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Card, Statistic, Table, Progress, message, Tabs, Drawer, Modal, Form, Input, Button, Space, Tag, Alert, List, Tooltip } from 'antd';
+import { Row, Col, Card, Statistic, Table, Progress, message, Tabs, Drawer, Modal, Form, Input, Button, Space, Tag, Alert, List, Tooltip, Divider } from 'antd';
 import {
   ShoppingCartOutlined, DollarOutlined, CheckCircleOutlined,
   WarningOutlined, TeamOutlined, BankOutlined, ThunderboltOutlined,
@@ -87,29 +87,94 @@ export default function Dashboard() {
     } finally { setBrandLoading(false); }
   };
 
-  const afterReviewSuccess = (orderId: number, action: string, correctedAddress?: string) => {
-    load();
-    if (brandDetail.open && brandDetail.id) {
-      const brandOrders = brandDetail.data?.recent_orders || [];
-      const hasOrder = brandOrders.some((o: any) => o.id === orderId);
-      if (hasOrder) {
-        setBrandDetail(prev => ({
+  const getCurrentUser = () => {
+    try {
+      const u = JSON.parse(localStorage.getItem('user') || '{}');
+      return u.name || u.username || u.nickname || '系统管理员';
+    } catch { return '系统管理员'; }
+  };
+
+  const getActionText = (action: string) => {
+    const map: Record<string, string> = {
+      confirm_normal: '地址正常',
+      confirm_abnormal: '确认异常',
+      correct_address: '修正地址'
+    };
+    return map[action] || action;
+  };
+
+  const getAbnormalType = (order: any) => {
+    if (order.abnormal_type) return order.abnormal_type;
+    const addr = order.receiver_address || '';
+    if (/虚构|假地址|不存在|无效|测试/.test(addr)) return '疑似虚构地址';
+    if (/小区|大厦|写字楼|园区/.test(addr) && !/\d+号|栋|单元|室/.test(addr)) return '地址不完整';
+    if (addr.length < 6) return '地址过短';
+    if (/^[a-zA-Z0-9]+$/.test(addr)) return '纯数字字母地址';
+    return '无法解析地址';
+  };
+
+  const getAbnormalTypeColor = (type: string) => {
+    if (type.includes('虚构')) return '#cf1322';
+    if (type.includes('不完整') || type.includes('过短')) return '#fa8c16';
+    return '#d4380d';
+  };
+
+  const updateRealtimeAbnormalList = (orderId: number, action: string, correctedAddress?: string) => {
+    setRealtime(prev => {
+      const list = prev.abnormal_addresses || [];
+      if (action === 'confirm_abnormal') {
+        return {
           ...prev,
-          data: {
-            ...prev.data,
-            recent_orders: prev.data.recent_orders.map((o: any) =>
-              o.id === orderId
-                ? {
-                    ...o,
-                    is_address_abnormal: action === 'confirm_abnormal' ? 1 : 0,
-                    receiver_address: correctedAddress || o.receiver_address
-                  }
-                : o
-            )
-          }
-        }));
+          abnormal_addresses: list.map((o: any) =>
+            o.id === orderId
+              ? {
+                  ...o,
+                  is_address_abnormal: 1,
+                  review_status: 'confirmed_abnormal',
+                  reviewed_at: new Date().toISOString(),
+                  reviewed_by: getCurrentUser()
+                }
+              : o
+          )
+        };
+      } else {
+        return {
+          ...prev,
+          abnormal_addresses: list.filter((o: any) => o.id !== orderId)
+        };
       }
+    });
+  };
+
+  const updateBrandDetailOrder = (orderId: number, action: string, correctedAddress?: string) => {
+    if (!brandDetail.open || !brandDetail.id) return;
+    const brandOrders = brandDetail.data?.recent_orders || [];
+    const hasOrder = brandOrders.some((o: any) => o.id === orderId);
+    if (hasOrder) {
+      setBrandDetail(prev => ({
+        ...prev,
+        data: {
+          ...prev.data,
+          recent_orders: prev.data.recent_orders.map((o: any) =>
+            o.id === orderId
+              ? {
+                  ...o,
+                  is_address_abnormal: action === 'confirm_abnormal' ? 1 : 0,
+                  receiver_address: correctedAddress || o.receiver_address,
+                  address_reviewed_at: new Date().toISOString(),
+                  address_reviewed_by: getCurrentUser()
+                }
+              : o
+          )
+        }
+      }));
     }
+  };
+
+  const afterReviewSuccess = (orderId: number, action: string, correctedAddress?: string) => {
+    updateRealtimeAbnormalList(orderId, action, correctedAddress);
+    updateBrandDetailOrder(orderId, action, correctedAddress);
+    load();
   };
 
   const handleDirectReview = (order: any, action: string) => {
@@ -141,7 +206,10 @@ export default function Dashboard() {
       onOk: async () => {
         try {
           await api.orders.reviewAddress(order.id, { action });
-          message.success('地址复核处理成功');
+          const now = dayjs().format('YYYY-MM-DD HH:mm:ss');
+          const handler = getCurrentUser();
+          const actionLabel = getActionText(action);
+          message.success(`处理成功：${actionLabel}，处理人：${handler}，于 ${now}`);
           afterReviewSuccess(order.id, action);
         } catch (e: any) { message.error(e.message); }
       }
@@ -157,7 +225,10 @@ export default function Dashboard() {
         corrected_address: vals.corrected_address,
         note: vals.note
       });
-      message.success('地址复核处理成功');
+      const now = dayjs().format('YYYY-MM-DD HH:mm:ss');
+      const handler = getCurrentUser();
+      const actionLabel = getActionText(reviewModal.action);
+      message.success(`处理成功：${actionLabel}，处理人：${handler}，于 ${now}`);
       const orderId = reviewModal.order.id;
       const action = reviewModal.action;
       const correctedAddress = vals.corrected_address;
@@ -487,29 +558,72 @@ export default function Dashboard() {
           style={{ marginBottom: 16 }}
         />
         <Row gutter={[12, 12]}>
-          {(realtime.abnormal_addresses || []).slice(0, 6).map((a: any, i: number) => (
-            <Col xs={24} md={12} lg={8} key={i}>
-              <div style={{ padding: 14, border: '1px solid #ffa39e', background: '#fff1f0', borderRadius: 8 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <code style={{ color: '#cf1322' }}>{a.tracking_no}</code>
-                  <span style={{ fontSize: 11, color: '#8c8c8c' }}>{dayjs(a.created_at).format('MM-DD HH:mm')}</span>
+          {(realtime.abnormal_addresses || []).slice(0, 6).map((a: any, i: number) => {
+            const abnormalType = getAbnormalType(a);
+            const abnormalColor = getAbnormalTypeColor(abnormalType);
+            const isReviewed = !!a.reviewed_at;
+            const reviewStatus = a.review_status;
+            return (
+              <Col xs={24} md={12} lg={8} key={a.id || i}>
+                <div style={{
+                  padding: 14,
+                  border: isReviewed ? '1px solid #faad14' : '1px solid #ffa39e',
+                  background: isReviewed ? '#fffbe6' : '#fff1f0',
+                  borderRadius: 8,
+                  position: 'relative'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
+                    <div>
+                      <div style={{ marginBottom: 4 }}>
+                        <Tag color="red" style={{ marginRight: 6 }}>运单号</Tag>
+                        <code style={{ color: '#cf1322', fontWeight: 500 }}>{a.tracking_no}</code>
+                      </div>
+                      <Tag color="error" style={{ background: abnormalColor + '15', color: abnormalColor, borderColor: abnormalColor + '40' }}>
+                        ⚠️ {abnormalType}
+                      </Tag>
+                      {isReviewed && (
+                        <Tag color="warning" style={{ marginLeft: 4 }}>
+                          已复核
+                        </Tag>
+                      )}
+                    </div>
+                    <span style={{ fontSize: 11, color: '#8c8c8c', whiteSpace: 'nowrap' }}>{dayjs(a.created_at).format('MM-DD HH:mm')}</span>
+                  </div>
+                  <Divider style={{ margin: '8px 0' }} />
+                  <div style={{ marginBottom: 8 }}>
+                    <div style={{ fontSize: 12, color: '#8c8c8c', marginBottom: 4 }}>收件地址：</div>
+                    <div style={{ color: '#cf1322', fontSize: 13, lineHeight: 1.5 }}>
+                      <b>{a.receiver_address}</b>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 11, color: '#8c8c8c', marginBottom: 12 }}>
+                    当前状态：<Tag>{a.status}</Tag>
+                    {a.reviewed_at && (
+                      <span style={{ marginLeft: 8 }}>
+                        复核时间：{dayjs(a.reviewed_at).format('MM-DD HH:mm')}
+                      </span>
+                    )}
+                    {a.reviewed_by && (
+                      <span style={{ marginLeft: 8 }}>
+                        复核人：{a.reviewed_by}
+                      </span>
+                    )}
+                  </div>
+                  <Space wrap size="small">
+                    <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => handleDirectReview(a, 'confirm_normal')}>
+                      地址正常
+                    </Button>
+                    <Button size="small" icon={<EditOutlined />} onClick={() => { setReviewModal({ open: true, order: a, action: 'correct_address' }); reviewForm.resetFields(); }}>
+                      修正地址
+                    </Button>
+                    <Button size="small" danger icon={<CloseOutlined />} onClick={() => handleDirectReview(a, 'confirm_abnormal')}>
+                      确认异常
+                    </Button>
+                  </Space>
                 </div>
-                <div style={{ fontSize: 13, marginBottom: 4 }}>⚠️ <b>无法解析地址</b>：{a.receiver_address}</div>
-                <div style={{ fontSize: 11, color: '#8c8c8c', marginBottom: 10 }}>当前状态：{a.status}</div>
-                <Space wrap size="small">
-                  <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => handleDirectReview(a, 'confirm_normal')}>
-                    地址正常
-                  </Button>
-                  <Button size="small" icon={<EditOutlined />} onClick={() => { setReviewModal({ open: true, order: a, action: 'correct_address' }); reviewForm.resetFields(); }}>
-                    修正地址
-                  </Button>
-                  <Button size="small" danger icon={<CloseOutlined />} onClick={() => handleDirectReview(a, 'confirm_abnormal')}>
-                    确认异常
-                  </Button>
-                </Space>
-              </div>
-            </Col>
-          ))}
+              </Col>
+            );
+          })}
           {(!realtime.abnormal_addresses?.length) && <Col span={24}><div style={{ padding: 30, textAlign: 'center', color: '#8c8c8c' }}>暂无异常地址拦截记录</div></Col>}
         </Row>
       </Card>
@@ -573,9 +687,40 @@ export default function Dashboard() {
                       signed: <Tag color="green">已签收</Tag>, exception: <Tag color="red">异常</Tag>
                     } as any)[v] || v
                   },
-                  { title: '地址异常', dataIndex: 'is_address_abnormal', width: 100, render: (v: number) => v ? <Tag color="red">是</Tag> : <Tag color="green">否</Tag> },
+                  {
+                    title: '地址异常',
+                    dataIndex: 'is_address_abnormal',
+                    width: 120,
+                    render: (v: number, r: any) => v ? (
+                      <Space direction="vertical" size={2}>
+                        <Tag color="red">是</Tag>
+                        {r.address_reviewed_at && (
+                          <span style={{ fontSize: 10, color: '#8c8c8c' }}>
+                            已复核：{dayjs(r.address_reviewed_at).format('MM-DD HH:mm')}
+                          </span>
+                        )}
+                      </Space>
+                    ) : <Tag color="green">否</Tag>
+                  },
                   { title: '人脸签收', dataIndex: 'face_verified', width: 100, render: (v: number) => v ? <Tag color="green">已验证</Tag> : <Tag>未验证</Tag> },
-                  { title: '创建时间', dataIndex: 'created_at', width: 150 }
+                  { title: '创建时间', dataIndex: 'created_at', width: 150 },
+                  {
+                    title: '操作',
+                    width: 180,
+                    render: (_: any, r: any) => r.is_address_abnormal ? (
+                      <Space wrap size="small">
+                        <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => handleDirectReview(r, 'confirm_normal')}>
+                          正常
+                        </Button>
+                        <Button size="small" icon={<EditOutlined />} onClick={() => { setReviewModal({ open: true, order: r, action: 'correct_address' }); reviewForm.resetFields(); }}>
+                          修正
+                        </Button>
+                        <Button size="small" danger icon={<CloseOutlined />} onClick={() => handleDirectReview(r, 'confirm_abnormal')}>
+                          异常
+                        </Button>
+                      </Space>
+                    ) : null
+                  }
                 ]}
               />
             </Card>

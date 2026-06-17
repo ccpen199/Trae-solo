@@ -2,7 +2,7 @@ import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import db from '../db';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest, authMiddleware } from '../middleware/auth';
 
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'express-open-platform-secret-key-2026';
@@ -21,11 +21,11 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.get('/me', (req: AuthRequest, res) => {
+router.get('/me', authMiddleware, (req: AuthRequest, res) => {
   res.json({ user: req.user });
 });
 
-router.post('/change-password', (req: AuthRequest, res) => {
+router.post('/change-password', authMiddleware, (req: AuthRequest, res) => {
   const { old_password, new_password } = req.body;
   const user = db.prepare('SELECT password FROM users WHERE id = ?').get(req.user.id) as any;
   if (!bcrypt.compareSync(old_password, user.password)) {

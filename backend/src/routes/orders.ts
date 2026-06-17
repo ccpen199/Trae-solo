@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import db from '../db';
 import { v4 as uuidv4 } from 'uuid';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest, authMiddleware } from '../middleware/auth';
 
 const router = Router();
 
 function formatDate(d: Date) { return d.toISOString().slice(0, 19).replace('T', ' '); }
 
-router.get('/', (req: AuthRequest, res) => {
+router.get('/', authMiddleware, (req: AuthRequest, res) => {
   const { page = 1, pageSize = 20, keyword, status, brand_id, date_from, date_to, my } = req.query as any;
   const offset = (page - 1) * pageSize;
   let where = [];
@@ -29,7 +29,7 @@ router.get('/', (req: AuthRequest, res) => {
   res.json({ list, total, page: +page, pageSize: +pageSize });
 });
 
-router.get('/stats/summary', (req: AuthRequest, res) => {
+router.get('/stats/summary', authMiddleware, (req: AuthRequest, res) => {
   const userId = req.user.id;
   const baseWhere = req.user.role === 'user' ? 'WHERE sender_id = ? OR receiver_id = ?' : '';
   const params = req.user.role === 'user' ? [userId, userId] : [];
@@ -55,7 +55,7 @@ router.get('/tracking/:trackingNo', (req, res) => {
   res.json({ ...order, events });
 });
 
-router.post('/', (req: AuthRequest, res) => {
+router.post('/', authMiddleware, (req: AuthRequest, res) => {
   const data = req.body;
   const brand = db.prepare('SELECT * FROM courier_brands WHERE id = ? AND api_status = ?').get(data.brand_id, 'active') as any;
   if (!brand) return res.status(400).json({ code: 'BAD_BRAND', message: '无效的快递品牌' });
@@ -155,7 +155,7 @@ router.post('/:id/appointment', (req, res) => {
   res.json({ message: '预约时间已确认' });
 });
 
-router.post('/:id/verify-face', (req: AuthRequest, res) => {
+router.post('/:id/verify-face', authMiddleware, (req: AuthRequest, res) => {
   const { face_data } = req.body;
   const user = db.prepare('SELECT face_data FROM users WHERE id = ?').get(req.user.id) as any;
   const order = db.prepare('SELECT receiver_id, receiver_name FROM shipment_orders WHERE id = ?').get(req.params.id) as any;
@@ -168,7 +168,7 @@ router.post('/:id/verify-face', (req: AuthRequest, res) => {
   res.json({ verified, message: verified ? '人脸识别通过，可以签收' : '人脸不匹配，请再次确认' });
 });
 
-router.post('/sync-ecommerce', (req: AuthRequest, res) => {
+router.post('/sync-ecommerce', authMiddleware, (req: AuthRequest, res) => {
   const { platform, orders } = req.body;
   if (!orders || !orders.length) return res.status(400).json({ code: 'BAD_REQUEST', message: '订单数据为空' });
   const results: any[] = [];
@@ -183,7 +183,7 @@ router.post('/sync-ecommerce', (req: AuthRequest, res) => {
   res.json({ total: orders.length, success_count: results.filter(r => r.synced).length, results });
 });
 
-router.post('/:id/review-address', (req: AuthRequest, res) => {
+router.post('/:id/review-address', authMiddleware, (req: AuthRequest, res) => {
   const { action, corrected_address, note } = req.body;
   const order = db.prepare('SELECT * FROM shipment_orders WHERE id = ?').get(req.params.id) as any;
   if (!order) return res.status(404).json({ code: 'NOT_FOUND', message: '订单不存在' });

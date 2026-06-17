@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import db from '../db';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest, authMiddleware } from '../middleware/auth';
 
 const router = Router();
 
@@ -31,7 +31,7 @@ router.get('/pool', (_req, res) => {
   res.json({ list, stats });
 });
 
-router.get('/me/workbench', (req: AuthRequest, res) => {
+router.get('/me/workbench', authMiddleware, (req: AuthRequest, res) => {
   let courier = db.prepare('SELECT * FROM couriers WHERE user_id = ?').get(req.user.id) as any;
   if (!courier && req.user.role === 'admin') {
     courier = db.prepare('SELECT * FROM couriers LIMIT 1').get() as any;

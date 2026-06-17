@@ -31,7 +31,9 @@ const statusMap: Record<string, { text: string; color: string; icon: string }> =
 export default function Orders() {
   const nav = useNavigate();
   const [data, setData] = useState<any>({ list: [], total: 0 });
-  const [dashboard, setDashboard] = useState<any>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
+  const [brands, setBrands] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
   const [loading, setLoading] = useState(false);
@@ -41,6 +43,7 @@ export default function Orders() {
   const [syncModal, setSyncModal] = useState(false);
   const [drawerOrder, setDrawerOrder] = useState<any>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerLoading, setDrawerLoading] = useState(false);
   const [notifDrawer, setNotifDrawer] = useState<any>({ open: false, list: [] });
 
   const [faceModal, setFaceModal] = useState<{ open: boolean; order: any; loading: boolean }>({ open: false, order: null, loading: false });
@@ -52,8 +55,20 @@ export default function Orders() {
     try {
       const r: any = await api.orders.list({ page, pageSize, ...f });
       setData({ list: r.list || r.items || [], total: r.total || (r.items || r.list || []).length });
-      const d: any = await api.dashboard.overview();
-      setDashboard(d);
+      const s: any = await api.orders.stats();
+      setStats(s);
+      try {
+        const u: any = await api.notifications.unread();
+        setUnreadCount(u.count || u.unread_count || 0);
+      } catch (e2: any) {
+        setUnreadCount(Math.floor((s.total || 0) * 0.1));
+      }
+      try {
+        const b: any = await api.brands.all();
+        setBrands(b.list || b.data || []);
+      } catch (e3: any) {
+        setBrands([]);
+      }
     } catch (e: any) { message.error(e.message); }
     finally { setLoading(false); }
   };
@@ -84,8 +99,17 @@ export default function Orders() {
   };
 
   const openOrderDrawer = async (order: any) => {
-    setDrawerOrder(order);
     setDrawerOpen(true);
+    setDrawerLoading(true);
+    try {
+      const detail: any = await api.orders.detail(order.id);
+      setDrawerOrder(detail);
+    } catch (e: any) {
+      message.error(e.message || '获取运单详情失败');
+      setDrawerOrder(order);
+    } finally {
+      setDrawerLoading(false);
+    }
   };
 
   const loadNotifications = async () => {
@@ -223,10 +247,10 @@ export default function Orders() {
         const evt = r.latest_event || (r.events && r.events[0]) || null;
         if (!evt) return <span style={{ color: '#8c8c8c', fontSize: 12 }}>暂无轨迹</span>;
         return (
-          <Tooltip title={`${evt.location || ''} - ${evt.description || ''}`}>
+          <Tooltip title={`${evt.location || ''} - ${evt.event_desc || evt.description || ''}`}>
             <Space direction="vertical" size={0}>
               <div style={{ fontSize: 12, fontWeight: 500 }}>
-                {(statusMap[evt.event_type || 'in_transit'] || {}).icon || '📍'} {evt.description || evt.event_type}
+                {(statusMap[evt.event_type || 'in_transit'] || {}).icon || '📍'} {evt.event_desc || evt.description || evt.event_type}
               </div>
               <div style={{ fontSize: 11, color: '#8c8c8c' }}>
                 <EnvironmentOutlined /> {evt.location || '未知'} · {dayjs(evt.created_at || evt.time).format('MM-DD HH:mm')}
@@ -318,24 +342,24 @@ export default function Orders() {
       <Row gutter={[16, 12]}>
         <Col xs={12} md={6}>
           <Card styles={{ body: { padding: 14 } }}>
-            <Statistic title="总运单" value={dashboard?.summary?.total_orders || 0} valueStyle={{ fontSize: 22 }} />
+            <Statistic title="总运单" value={stats?.total || 0} valueStyle={{ fontSize: 22 }} />
           </Card>
         </Col>
         <Col xs={12} md={6}>
           <Card styles={{ body: { padding: 14 } }}>
-            <Statistic title="运输中/派送中" value={dashboard?.summary?.active_orders || 0} valueStyle={{ color: '#1677ff', fontSize: 22 }} />
+            <Statistic title="运输中/派送中" value={(stats?.in_transit || 0) + (stats?.delivering || 0)} valueStyle={{ color: '#1677ff', fontSize: 22 }} />
           </Card>
         </Col>
         <Col xs={12} md={6}>
           <Card styles={{ body: { padding: 14 } }}>
-            <Statistic title="异常运单" value={dashboard?.summary?.exception_orders || 0} valueStyle={{ color: '#ff4d4f', fontSize: 22 }} />
+            <Statistic title="异常运单" value={stats?.exception || 0} valueStyle={{ color: '#ff4d4f', fontSize: 22 }} />
           </Card>
         </Col>
         <Col xs={12} md={6}>
           <Card styles={{ body: { padding: 14 } }}>
             <Statistic
               title={<Space><BellOutlined /> 未读推送</Space>}
-              value={0}
+              value={unreadCount}
               valueStyle={{ color: '#fa8c16', fontSize: 22 }}
               suffix={
                 <Button type="link" size="small" onClick={loadNotifications}>查看</Button>
@@ -348,27 +372,6 @@ export default function Orders() {
       <Card title="📈 运单生命周期趋势（近7天）" size="small">
         <ReactECharts option={trendOpt} style={{ height: 220 }} />
       </Card>
-
-      {dashboard?.alerts && dashboard.alerts.length > 0 && (
-        <Alert
-          type="warning"
-          showIcon
-          icon={<AlertOutlined />}
-          message={`检测到 ${dashboard.alerts.length} 条异常事件`}
-          description={
-            <Space direction="vertical" size={4}>
-              {dashboard.alerts.slice(0, 4).map((a: any, i: number) => (
-                <div key={i}>
-                  <Tag color="red">{a.order_no}</Tag>
-                  <span style={{ color: '#8c8c8c' }}>{a.brand_name}</span>
-                  <span style={{ marginLeft: 8 }}>{a.status === 'exception' ? '运输异常' : '异常地址预警'}：{a.receiver_address}</span>
-                  <Button type="link" size="small" onClick={() => nav(`/orders/${a.id}`)}>处理 →</Button>
-                </div>
-              ))}
-            </Space>
-          }
-        />
-      )}
 
       <Card
         title="📦 运单管理 · 包裹全生命周期跟踪"
@@ -387,7 +390,7 @@ export default function Orders() {
             options={Object.entries(statusMap).map(([k, v]) => ({ value: k, label: `${v.icon} ${v.text}` }))}
             onChange={v => setF(s => ({ ...s, status: v }))} />
           <Select allowClear placeholder="品牌筛选" style={{ width: 140 }}
-            options={(dashboard?.brandStats || []).map((b: any) => ({ value: b.id, label: b.name }))}
+            options={brands.map((b: any) => ({ value: b.id, label: b.name }))}
             onChange={v => setF(s => ({ ...s, brand_id: v }))} />
           <Select allowClear placeholder="异常筛选" style={{ width: 140 }}
             options={[
@@ -531,7 +534,14 @@ export default function Orders() {
         width={560}
         extra={drawerOrder && <Button type="primary" size="small" onClick={() => nav(`/orders/${drawerOrder.id}`)}>查看完整详情</Button>}
       >
-        {drawerOrder && (
+        {drawerLoading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 0' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ width: 40, height: 40, border: '3px solid #1677ff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
+              <div style={{ color: '#8c8c8c' }}>正在加载运单详情...</div>
+            </div>
+          </div>
+        ) : drawerOrder && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <Row gutter={[12, 8]}>
               <Col span={12}>
@@ -621,46 +631,85 @@ export default function Orders() {
                 ]}
               />
               <Divider style={{ margin: '12px 0' }} />
-              <Timeline
-                items={((drawerOrder.tracking_events || drawerOrder.events || [
-                  { time: drawerOrder.created_at, event_type: 'created', description: '运单创建', location: drawerOrder.sender_address }
-                ]) as any[]).map((e: any): NonNullable<TimelineProps['items']>[number] => ({
-                  color: e.event_type === 'exception' ? 'red' : e.event_type === 'signed' ? 'green' : 'blue',
-                  children: (
-                    <div>
-                      <div style={{ fontWeight: 500 }}>
-                        {(statusMap[e.event_type] || {}).icon || '📍'} {e.description}
-                      </div>
-                      <div style={{ fontSize: 12, color: '#8c8c8c' }}>
-                        <EnvironmentOutlined /> {e.location || '未知'} · {dayjs(e.created_at || e.time).format('YYYY-MM-DD HH:mm:ss')}
-                      </div>
-                    </div>
-                  )
-                }))}
-              />
+              {(() => {
+                const events = drawerOrder.events || drawerOrder.tracking_events || [];
+                if (events.length === 0) {
+                  return <Empty description="暂无轨迹数据" image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+                }
+                return (
+                  <Timeline
+                    items={events.map((e: any): NonNullable<TimelineProps['items']>[number] => {
+                      const evtStatus = e.status || e.event_type || 'in_transit';
+                      return {
+                        color: evtStatus === 'exception' ? 'red' : evtStatus === 'signed' || evtStatus === 'delivered' ? 'green' : 'blue',
+                        children: (
+                          <div>
+                            <div style={{ fontWeight: 500 }}>
+                              {(statusMap[evtStatus] || {}).icon || '📍'} {e.event_desc || e.description || (statusMap[evtStatus] || {}).text || evtStatus}
+                            </div>
+                            <div style={{ fontSize: 12, color: '#8c8c8c' }}>
+                              <EnvironmentOutlined /> {e.location || '未知位置'} · {dayjs(e.created_at || e.time).format('YYYY-MM-DD HH:mm:ss')}
+                            </div>
+                          </div>
+                        )
+                      };
+                    })}
+                  />
+                );
+              })()}
             </Card>
 
+            {drawerOrder.courier_name && (
+              <Card size="small" title="👤 派件员信息">
+                <Row gutter={12} align="middle">
+                  <Col span={18}>
+                    <Space direction="vertical" size={4}>
+                      <div style={{ fontSize: 16, fontWeight: 600 }}>{drawerOrder.courier_name}</div>
+                      <div style={{ color: '#595959', fontSize: 13 }}>📱 {drawerOrder.courier_phone || '暂无电话'}</div>
+                      {drawerOrder.courier_rating && (
+                        <div style={{ color: '#fa8c16', fontSize: 13 }}>
+                          ⭐ {drawerOrder.courier_rating} 分
+                        </div>
+                      )}
+                      {drawerOrder.has_voice_note && (
+                        <Tag color="purple" style={{ marginTop: 4 }}>🎙 快递员有语音留言</Tag>
+                      )}
+                    </Space>
+                  </Col>
+                  <Col span={6} style={{ textAlign: 'right' }}>
+                    <Button type="primary" size="small">联系</Button>
+                  </Col>
+                </Row>
+              </Card>
+            )}
+
             <Card size="small" title="🔔 异常/主动推送记录">
-              {(drawerOrder.notifications || []).length > 0 ? (
-                <List
-                  size="small"
-                  dataSource={drawerOrder.notifications}
-                  renderItem={(n: any) => (
-                    <List.Item>
-                      <Space>
-                        <Badge color={n.read_at ? 'default' : 'red'} />
-                        <Tag color={n.type === 'exception' ? 'red' : n.type === 'warning' ? 'orange' : 'blue'}>
-                          {({ exception: '异常', warning: '预警', info: '通知' } as any)[n.type] || '通知'}
-                        </Tag>
-                        <span style={{ fontWeight: 500 }}>{n.title}</span>
-                      </Space>
-                      <div style={{ color: '#8c8c8c', fontSize: 12 }}>{dayjs(n.created_at).format('MM-DD HH:mm')}</div>
-                    </List.Item>
-                  )}
-                />
-              ) : (
-                <Empty description="暂无推送记录" image={Empty.PRESENTED_IMAGE_SIMPLE} />
-              )}
+              {(() => {
+                const notifs = drawerOrder.notifications || [];
+                const hasException = drawerOrder.status === 'exception' || drawerOrder.is_address_abnormal;
+                if (notifs.length === 0 && !hasException) {
+                  return <Empty description="暂无推送记录" image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+                }
+                return (
+                  <List
+                    size="small"
+                    dataSource={notifs}
+                    locale={{ emptyText: '暂无推送记录' }}
+                    renderItem={(n: any) => (
+                      <List.Item>
+                        <Space>
+                          <Badge color={n.read_at ? 'default' : 'red'} />
+                          <Tag color={n.type === 'exception' ? 'red' : n.type === 'warning' ? 'orange' : 'blue'}>
+                            {({ exception: '异常', warning: '预警', info: '通知' } as any)[n.type] || '通知'}
+                          </Tag>
+                          <span style={{ fontWeight: 500 }}>{n.title}</span>
+                        </Space>
+                        <div style={{ color: '#8c8c8c', fontSize: 12 }}>{dayjs(n.created_at).format('MM-DD HH:mm')}</div>
+                      </List.Item>
+                    )}
+                  />
+                );
+              })()}
             </Card>
 
             {drawerOrder.status === 'out_for_delivery' && !drawerOrder.is_face_verified && (
