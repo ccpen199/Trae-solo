@@ -430,9 +430,12 @@ export default function Category() {
                     </button>
                     {isExpanded && (
                       <div className="px-3 pb-3 pt-2.5 space-y-3.5 text-xs border-t border-gray-50 bg-gray-50/50">
-                        <div>
-                          <div className="flex items-center justify-between mb-1.5">
-                            <p className="text-gray-500 font-medium flex items-center gap-1"><FileCheck className="w-3.5 h-3.5" />入驻资质核验状态</p>
+                        <div className="p-2.5 rounded-lg bg-gradient-to-r from-secondary-50/80 to-white border border-secondary-200/70">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-gray-700 font-medium flex items-center gap-1">
+                              <FileCheck className="w-3.5 h-3.5 text-secondary" />
+                              资质核验结论 · 可复查
+                            </p>
                             <button
                               onClick={(e) => {
                                 e.stopPropagation()
@@ -511,45 +514,89 @@ export default function Category() {
                               </div>
                             </div>
                           )}
-                          <div className="flex items-start gap-1.5">
-                            <StatusIcon className={`w-3.5 h-3.5 mt-0.5 ${m.status === 'approved' ? 'text-secondary' : m.status === 'pending' ? 'text-yellow-500' : 'text-danger'}`} />
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between gap-2">
-                                <p className={m.status === 'approved' ? 'text-secondary font-medium' : m.status === 'pending' ? 'text-yellow-600' : 'text-danger'}>
+                          <div className="grid grid-cols-2 gap-2 text-[10px]">
+                            <div className="flex items-start gap-1">
+                              <StatusIcon className={`w-3 h-3 mt-0.5 ${m.status === 'approved' ? 'text-secondary' : m.status === 'pending' ? 'text-yellow-500' : 'text-danger'}`} />
+                              <div>
+                                <p className="text-gray-500">核验状态</p>
+                                <p className={`font-medium mt-0.5 ${m.status === 'approved' ? 'text-secondary' : m.status === 'pending' ? 'text-yellow-600' : 'text-danger'}`}>
                                   {m.status === 'approved' ? '资质核验通过' : m.status === 'pending' ? '资质审核中' : '资质核验未通过'}
                                 </p>
-                                {m.status === 'approved' && (
-                                  <span className="flex-shrink-0 px-1.5 py-0.5 rounded bg-secondary-50 text-secondary text-[9px] font-medium border border-secondary-200">
-                                    核验专用章 · SJ{String(m.id).padStart(6, '0')}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-gray-500 mt-1 space-y-0.5">
-                                <p>入驻档案号：SJ-{String(m.id).padStart(8, '0')}-{m.street || 'songjiang'}</p>
-                                {m.audited_at && <p>审核时间：{String(m.audited_at).replace('T', ' ').slice(0, 19)}</p>}
-                                {m.audited_by && <p>审核人：{m.audited_by}</p>}
-                                {m.license_no && <p>证照编号：{m.license_no}</p>}
-                                {m.license_expire && <p>证照有效期：至 {String(m.license_expire).split('T')[0] || String(m.license_expire).slice(0, 10)}</p>}
-                                {m.reject_reason && <p className="text-danger">驳回原因：{m.reject_reason}</p>}
-                                <p className="text-[10px] text-gray-400 mt-1">数据来源：松江区生活服务围栏商户数据库 · 可追溯</p>
                               </div>
                             </div>
+                            <div>
+                              <p className="text-gray-500">核验专用章</p>
+                              {m.status === 'approved' ? (
+                                <p className="text-secondary font-mono font-medium mt-0.5 px-1.5 py-0.5 bg-secondary-50 border border-secondary-200 rounded inline-block">
+                                  SJ{String(m.id).padStart(6, '0')}
+                                </p>
+                              ) : (
+                                <p className="text-gray-400 mt-0.5">待核验后生成</p>
+                              )}
+                            </div>
+                            <div>
+                              <p className="text-gray-500">入驻档案号</p>
+                              <p className="text-gray-700 font-mono mt-0.5">SJ-{String(m.id).padStart(8, '0')}-{m.street || 'songjiang'}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-500">证照编号</p>
+                              <p className="text-gray-700 font-mono mt-0.5">{m.license_no || '--'}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-500">审核时间</p>
+                              <p className="text-gray-700 mt-0.5">{m.audited_at ? String(m.audited_at).replace('T', ' ').slice(0, 19) : '--'}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-500">审核人</p>
+                              <p className="text-gray-700 mt-0.5">{m.audited_by || '--'}</p>
+                            </div>
+                            <div className="col-span-2">
+                              <p className="text-gray-500">证照有效期</p>
+                              <p className="text-gray-700 mt-0.5">{m.license_expire ? `至 ${String(m.license_expire).split('T')[0] || String(m.license_expire).slice(0, 10)}` : '--'}</p>
+                            </div>
+                            {m.reject_reason && (
+                              <div className="col-span-2 p-1.5 rounded bg-danger-50 border border-danger-100">
+                                <p className="text-danger font-medium">驳回原因：{m.reject_reason}</p>
+                              </div>
+                            )}
                           </div>
+                          <p className="text-[9px] text-gray-400 mt-2 pt-1.5 border-t border-secondary-100/50">
+                            数据来源：松江区生活服务围栏商户数据库 · 同源可追溯
+                          </p>
                         </div>
 
                         <div>
-                          <p className="text-gray-500 font-medium mb-1.5 flex items-center gap-1"><History className="w-3.5 h-3.5" />审核驳回/复查记录</p>
+                          <p className="text-gray-700 font-medium mb-1.5 flex items-center gap-1">
+                            <History className="w-3.5 h-3.5 text-primary" />
+                            审核驳回/变更复查记录 · 可追溯
+                          </p>
                           <div className="space-y-1.5 pl-1">
+                            {changeSubmitted[m.id] && (
+                              <div className="flex items-start gap-2 relative">
+                                <div className="w-3.5 h-3.5 rounded-full bg-yellow-50 flex items-center justify-center flex-shrink-0 mt-0.5 z-10">
+                                  <Clock className="w-2.5 h-2.5 text-yellow-500" />
+                                </div>
+                                <div className="flex-1 pb-1">
+                                  <div className="flex items-center justify-between gap-2">
+                                    <span className="text-[11px] font-medium text-yellow-600">资料变更申请·审核中</span>
+                                    <span className="text-[10px] text-gray-400 flex-shrink-0">{new Date().toISOString().slice(0, 16).replace('T', ' ')}</span>
+                                  </div>
+                                  <p className="text-[10px] text-gray-500 mt-0.5">商户发起资料变更，等待运营1-3个工作日审核</p>
+                                </div>
+                                <div className="absolute left-[7px] top-4 w-px h-full bg-gray-200" />
+                              </div>
+                            )}
                             {[
-                              { time: '2026-03-12 10:30', status: 'approved', title: '第2次提交·审核通过', desc: '资质核验通过，证照有效期至2028-03-11' },
-                              { time: '2026-03-08 15:22', status: 'rejected', title: '第1次提交·审核驳回', desc: '营业执照照片模糊，请重新上传清晰版本' },
+                              { time: m.audited_at ? String(m.audited_at).slice(0, 16).replace('T', ' ') : '2026-03-12 10:30', status: 'approved', title: '第2次提交·审核通过', desc: `资质核验通过，证照有效期至 ${m.license_expire ? String(m.license_expire).split('T')[0] : '2028-03-11'}，审核人：${m.audited_by || '张审核'}` },
+                              { time: '2026-03-08 15:22', status: 'rejected', title: '第1次提交·审核驳回', desc: m.reject_reason || '营业执照照片模糊，请重新上传清晰版本' },
                               { time: '2026-03-05 09:10', status: 'pending', title: '首次提交·待审核', desc: '提交入驻申请，等待资质审核' },
                             ].map((record, i) => {
                               const isOk = record.status === 'approved'
                               const isReject = record.status === 'rejected'
+                              const isLast = i === 2 && !changeSubmitted[m.id]
                               return (
                                 <div key={i} className="flex items-start gap-2 relative">
-                                  <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${isOk ? 'bg-secondary-50' : isReject ? 'bg-danger-50' : 'bg-yellow-50'}`}>
+                                  <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 z-10 ${isOk ? 'bg-secondary-50' : isReject ? 'bg-danger-50' : 'bg-yellow-50'}`}>
                                     {isOk ? <CheckCircle className="w-2.5 h-2.5 text-secondary" /> : isReject ? <XCircle className="w-2.5 h-2.5 text-danger" /> : <Clock className="w-2.5 h-2.5 text-yellow-500" />}
                                   </div>
                                   <div className="flex-1 pb-1">
@@ -559,7 +606,7 @@ export default function Category() {
                                     </div>
                                     <p className="text-[10px] text-gray-500 mt-0.5">{record.desc}</p>
                                   </div>
-                                  {i < 2 && <div className="absolute left-[7px] top-4 w-px h-full bg-gray-200" />}
+                                  {!isLast && <div className="absolute left-[7px] top-4 w-px h-full bg-gray-200" />}
                                 </div>
                               )
                             })}
@@ -567,7 +614,10 @@ export default function Category() {
                         </div>
 
                         <div>
-                          <p className="text-gray-500 font-medium mb-1.5 flex items-center gap-1"><FileCheck className="w-3.5 h-3.5" />资质证照档案（门头照·营业执照·经营许可证）</p>
+                          <p className="text-gray-700 font-medium mb-1.5 flex items-center gap-1">
+                            <Store className="w-3.5 h-3.5 text-accent" />
+                            资质证照附件 · 门头照/营业执照/经营许可证
+                          </p>
                           <div className="grid grid-cols-3 gap-2">
                             <div className="rounded-md bg-white border border-gray-200 overflow-hidden">
                               <div className="aspect-[3/2] relative">

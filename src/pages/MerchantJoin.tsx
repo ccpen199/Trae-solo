@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Upload, ChevronLeft, ChevronRight, Check, AlertCircle, FileText, Image, Clock, Tag, CheckCircle2 } from 'lucide-react'
+import { Upload, ChevronLeft, ChevronRight, Check, AlertCircle, FileText, Image, Clock, Tag, CheckCircle2, CheckCircle, XCircle } from 'lucide-react'
 import { applyMerchant } from '@/utils/api'
 
 const STEPS = ['基本信息', '资质上传', '营业时间', '优惠标签']
@@ -11,6 +11,7 @@ export default function MerchantJoin() {
   const [step, setStep] = useState(0)
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [showRejectDemo, setShowRejectDemo] = useState(false)
   const [errors, setErrors] = useState<string[]>([])
   const [form, setForm] = useState({
     name: '', category: 'food', street: '', address: '', phone: '',
@@ -207,6 +208,90 @@ export default function MerchantJoin() {
           </div>
         )}
 
+        <div className="card p-4 text-left mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-sm font-semibold text-gray-700 flex items-center gap-1">
+              <XCircle className="w-4 h-4 text-danger" />
+              审核驳回→修改重审链路演示
+            </h4>
+            <button
+              onClick={() => setShowRejectDemo(!showRejectDemo)}
+              className={`px-2 py-0.5 rounded text-[10px] border ${
+                showRejectDemo
+                  ? 'bg-primary text-white border-primary'
+                  : 'bg-white text-primary border-primary/30 hover:bg-primary-50'
+              }`}
+            >
+              {showRejectDemo ? '收起演示' : '查看驳回→重审链路'}
+            </button>
+          </div>
+
+          {showRejectDemo && (
+            <div className="space-y-3 animate-fade-in">
+              <div className="p-3 rounded-lg bg-danger-50 border border-danger-200">
+                <p className="text-[11px] font-medium text-danger mb-1 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  审核驳回通知（示例）
+                </p>
+                <p className="text-[10px] text-gray-700">驳回原因：营业执照照片模糊，关键信息（统一社会信用代码）无法识别；门头照未显示完整招牌。</p>
+                <p className="text-[10px] text-gray-500 mt-1">驳回时间：2026-03-08 15:22 · 审核人：李审核</p>
+              </div>
+
+              <div className="p-3 rounded-lg bg-yellow-50 border border-yellow-200">
+                <p className="text-[11px] font-medium text-yellow-700 mb-1">修改动作（示例）</p>
+                <ul className="text-[10px] text-gray-700 space-y-0.5 list-disc pl-4">
+                  <li>重新上传清晰的营业执照照片</li>
+                  <li>重新拍摄包含完整招牌的门头照</li>
+                  <li>补充说明：已重新拍摄，确保证照信息清晰可辨</li>
+                </ul>
+              </div>
+
+              <div className="p-3 rounded-lg bg-secondary-50 border border-secondary-200">
+                <p className="text-[11px] font-medium text-secondary mb-1">第2次提交·审核通过（示例）</p>
+                <div className="grid grid-cols-2 gap-2 text-[10px] text-gray-700">
+                  <div>审核时间：2026-03-12 10:30</div>
+                  <div>审核人：张审核</div>
+                  <div>核验专用章：SJ{String(Math.floor(Math.random() * 1000000)).padStart(6, '0')}</div>
+                  <div>档案号：SJ-{String(Math.floor(Math.random() * 100000000)).padStart(8, '0')}-{form.street || 'songjiang'}</div>
+                </div>
+                <p className="text-[10px] text-gray-500 mt-1.5 pt-1 border-t border-secondary-200/50">
+                  审核结论：资质齐全，证照清晰，通过核验。商户正式上线。
+                </p>
+              </div>
+
+              <div className="space-y-1.5 pl-1">
+                {[
+                  { t: '首次提交', s: 'pending', d: '2026-03-05 09:10' },
+                  { t: '审核驳回', s: 'rejected', d: '2026-03-08 15:22 · 原因：证照模糊' },
+                  { t: '修改重提', s: 'pending', d: '2026-03-10 14:30' },
+                  { t: '核验通过', s: 'approved', d: '2026-03-12 10:30 · 上线营业' },
+                ].map((r, i) => (
+                  <div key={i} className="flex items-start gap-2 relative">
+                    <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 z-10 ${
+                      r.s === 'approved' ? 'bg-secondary-50' : r.s === 'rejected' ? 'bg-danger-50' : 'bg-yellow-50'
+                    }`}>
+                      {r.s === 'approved' ? <CheckCircle className="w-2.5 h-2.5 text-secondary" /> :
+                       r.s === 'rejected' ? <XCircle className="w-2.5 h-2.5 text-danger" /> :
+                       <Clock className="w-2.5 h-2.5 text-yellow-500" />}
+                    </div>
+                    <div className="flex-1 pb-1">
+                      <p className="text-[11px] font-medium text-gray-800">{r.t}</p>
+                      <p className="text-[10px] text-gray-500">{r.d}</p>
+                    </div>
+                    {i < 3 && <div className="absolute left-[7px] top-4 w-px h-full bg-gray-200" />}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!showRejectDemo && (
+            <p className="text-[10px] text-gray-500">
+              若资质材料不符合要求，运营将在1-3个工作日内发送驳回通知，您可修改后重新提交，直至审核通过。
+            </p>
+          )}
+        </div>
+
         <a href="/" className="btn-primary inline-block">返回首页</a>
       </div>
     )
@@ -240,6 +325,39 @@ export default function MerchantJoin() {
           ))}
         </div>
       )}
+
+      <div className={`mb-4 p-3 rounded-lg border ${
+        step === 0 ? 'bg-blue-50 border-blue-100' :
+        step === 1 ? 'bg-amber-50 border-amber-100' :
+        step === 2 ? 'bg-green-50 border-green-100' :
+        'bg-purple-50 border-purple-100'
+      }`}>
+        <p className={`text-xs font-medium ${
+          step === 0 ? 'text-blue-700' :
+          step === 1 ? 'text-amber-700' :
+          step === 2 ? 'text-green-700' :
+          'text-purple-700'
+        }`}>
+          第{step + 1}步 · 共4步 · {STEPS[step]}
+        </p>
+        <p className="text-[11px] text-gray-600 mt-0.5">
+          {step === 0 && '填写商户基本信息，带*为必填项。填写完成后点击"下一步"进入资质上传。'}
+          {step === 1 && '上传3项必备资质（营业执照+经营许可证+门头照），上传完成后可点击图片预览。'}
+          {step === 2 && '设置每周营业时间，休息日可勾选"休息"跳过，至少需设置1天营业。'}
+          {step === 3 && '选择最多5个优惠标签提升曝光，可从预设选择或自定义。确认后提交审核。'}
+        </p>
+        <div className="mt-2 flex gap-1.5 flex-wrap">
+          {STEPS.map((s, i) => (
+            <span key={s} className={`px-1.5 py-0.5 rounded text-[9px] ${
+              i < step ? 'bg-secondary text-white' :
+              i === step ? 'bg-primary text-white' :
+              'bg-gray-100 text-gray-400'
+            }`}>
+              {i < step ? '✓' : i + 1} {s}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {step === 0 && (
         <div className="space-y-4">

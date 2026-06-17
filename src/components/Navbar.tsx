@@ -298,6 +298,65 @@ export default function Navbar() {
                 </div>
               </div>
 
+              {simulateOutside && (
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                    <AlertCircle className="w-4 h-4 text-danger" />
+                    外区拦截业务结果样本 · 可验证
+                  </p>
+                  <div className="space-y-2">
+                    <div className="p-2.5 rounded-lg bg-danger-50 border border-danger-200">
+                      <div className="flex items-center gap-2 mb-1">
+                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        <p className="text-[11px] font-medium text-danger">商户推荐已清空</p>
+                      </div>
+                      <p className="text-[10px] text-gray-600 pl-5.5">附近商户列表清空，展示"围栏外·服务受限"边界面板，原TOP10商户全部隐藏</p>
+                      <div className="mt-1.5 pl-5.5">
+                        <div className="p-1.5 rounded bg-white/80 border border-gray-200 text-center text-[9px] text-gray-400">
+                          （商户列表已清空）· 切换回松江定位恢复推荐
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200">
+                      <div className="flex items-center gap-2 mb-1">
+                        <XCircle className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                        <p className="text-[11px] font-medium text-amber-700">核销码已失效</p>
+                      </div>
+                      <p className="text-[10px] text-gray-600 pl-5.5">所有待核销订单的动态码标记为"区外失效"，扫码返回错误码 4031</p>
+                      <div className="mt-1.5 pl-5.5 grid grid-cols-2 gap-1 text-[9px]">
+                        <div className="p-1.5 rounded bg-white/80 border border-gray-200 text-center">
+                          <p className="text-gray-400">SJ8F-K392-7XQP</p>
+                          <p className="text-danger font-medium">失效</p>
+                        </div>
+                        <div className="p-1.5 rounded bg-white/80 border border-gray-200 text-center">
+                          <p className="text-gray-400">SJ7B-2C01-X7MK</p>
+                          <p className="text-danger font-medium">失效</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-gray-50 border border-gray-200">
+                      <div className="flex items-center gap-2 mb-1">
+                        <XCircle className="w-3.5 h-3.5 text-gray-500 flex-shrink-0" />
+                        <p className="text-[11px] font-medium text-gray-700">订单已从区域报表剔除</p>
+                      </div>
+                      <p className="text-[10px] text-gray-600 pl-5.5">区外产生的订单不计入松江围栏运营报表，核销率/复购率统计自动剔除</p>
+                      <div className="mt-1.5 pl-5.5">
+                        <table className="w-full text-[9px]">
+                          <thead><tr className="text-gray-400"><th className="text-left">报表项</th><th className="text-right">区内</th><th className="text-right">区外(剔除)</th></tr></thead>
+                          <tbody>
+                            <tr><td>今日订单</td><td className="text-right font-mono text-secondary">1,286</td><td className="text-right font-mono text-gray-400 line-through">42</td></tr>
+                            <tr><td>核销率</td><td className="text-right font-mono text-secondary">92.4%</td><td className="text-right font-mono text-gray-400 line-through">87.1%</td></tr>
+                            <tr><td>复购率</td><td className="text-right font-mono text-secondary">35.8%</td><td className="text-right font-mono text-gray-400 line-through">22.3%</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {interceptRecords && interceptRecords.length > 0 && (
                 <div>
                   <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">

@@ -450,55 +450,121 @@ export default function Orders() {
       <div className="mt-6">
         <h3 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-1.5">
           <AlertTriangle className="w-4 h-4 text-amber-500" />
-          异常核销拦截记录（可追溯·可复查）
+          异常核销拦截记录 · 与订单逐笔关联（可追溯·可复查）
         </h3>
-        <div className="space-y-2.5">
+        <div className="space-y-3">
           {[
             {
-              type: '扫码校验失败', code: 'SJ8F-K392-7XQP', time: '2026-03-08 12:48', merchant: '方松·老松江酒楼',
-              reason: '动态码位数不匹配（实际12位·已过期11位码）',
-              action: '已拦截·订单保持paid状态·提示用户刷新后重试', status: 'danger' as const
+              type: '有效期过期拦截', code: 'SJ5D-6H7Y-8PZ2', time: '2026-03-06 11:05:22',
+              orderNo: 'SJ2026030100001', pkgName: '招牌红烧肉双人套餐', amount: 168,
+              merchant: '方松·老松江酒楼',
+              reason: '套餐有效期截止 2026-03-05 23:59:59，已过期 11 小时 5 分钟',
+              action: '订单自动流转至expired状态',
+              stockRelease: '库存已释放 · 数量+1 · 释放时间 2026-03-06 11:05:23',
+              statusFlow: ['paid', '拦截中', 'expired'],
+              operator: '系统自动', device: '松江店核销终端#02', verifyMethod: '扫码',
+              status: 'expired' as const
             },
             {
-              type: '重复核销拦截', code: 'SJ7B-2C01-X7MK', time: '2026-03-07 18:21', merchant: '中山·松江烤肉店',
-              reason: '核销码已在2026-03-07 18:20:13使用，间隔不足60秒',
-              action: '已拦截·返回首次核销时间/门店/店员记录', status: 'warning' as const
+              type: '重复核销拦截', code: 'SJ7B-2C01-X7MK', time: '2026-03-07 18:21:47',
+              orderNo: 'SJ2026030500023', pkgName: '4人烤肉团购套餐', amount: 358,
+              merchant: '中山·松江烤肉店',
+              reason: '核销码已在 2026-03-07 18:20:13 使用，间隔仅 1分34秒（阈值≥60秒疑似重复）',
+              action: '返回首次核销记录，拒绝重复核销',
+              stockRelease: '库存已于首次核销时扣减，无二次释放',
+              statusFlow: ['paid', 'used', '重复拦截'],
+              operator: '店员-王佳', device: '中山店POS机#01', verifyMethod: '扫码',
+              status: 'warning' as const
             },
             {
-              type: '有效期过期拦截', code: 'SJ5D-6H7Y-8PZ2', time: '2026-03-06 11:05', merchant: '广富林·大学城餐厅',
-              reason: '套餐有效期截止 2026-03-05 23:59:59',
-              action: '已拦截·订单自动流转至expired状态·库存已释放', status: 'expired' as const
+              type: '扫码校验失败', code: 'SJ8F-K392-7XQP', time: '2026-03-08 12:48:33',
+              orderNo: 'SJ2026030600087', pkgName: '学生特惠双人餐', amount: 58,
+              merchant: '广富林·大学城餐厅',
+              reason: '动态码位数不匹配（用户展示11位，系统生成12位，疑似旧码复用）',
+              action: '已拦截，订单保持paid状态，提示用户刷新获取最新动态码',
+              stockRelease: '未扣减，库存保持不变',
+              statusFlow: ['paid', '拦截中', 'paid（保留）'],
+              operator: '店员-李明', device: '大学城店手持PDA#03', verifyMethod: '扫码',
+              status: 'danger' as const
             },
           ].map((c) => (
-            <div key={c.code} className="p-3 rounded-xl bg-gray-50/80 border border-gray-200">
+            <div key={c.code} className="p-3.5 rounded-xl bg-gray-50/80 border border-gray-200">
               <div className="flex items-center justify-between mb-2">
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium inline-flex items-center gap-0.5 ${
-                  c.status === 'danger' ? 'bg-red-100 text-red-600' :
-                  c.status === 'warning' ? 'bg-amber-100 text-amber-600' :
-                  'bg-gray-200 text-gray-600'
-                }`}>
-                  <XCircle className="w-2.5 h-2.5" />
-                  {c.type}
+                <div className="flex items-center gap-2">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium inline-flex items-center gap-0.5 ${
+                    c.status === 'danger' ? 'bg-red-100 text-red-600' :
+                    c.status === 'warning' ? 'bg-amber-100 text-amber-600' :
+                    'bg-gray-200 text-gray-600'
+                  }`}>
+                    <XCircle className="w-2.5 h-2.5" />
+                    {c.type}
+                  </span>
+                  <span className="text-[10px] text-gray-400">{c.time}</span>
+                </div>
+                <span className="text-[10px] font-mono text-gray-500 bg-white px-1.5 py-0.5 rounded border border-gray-200">
+                  {c.orderNo}
                 </span>
-                <span className="text-[10px] text-gray-400">{c.time}</span>
               </div>
-              <div className="space-y-1 text-[11px]">
-                <div className="flex justify-between">
-                  <span className="text-gray-500">核销码</span>
-                  <span className="font-mono text-gray-700">{c.code}</span>
+
+              <div className="p-2.5 rounded-lg bg-white/80 border border-gray-100 mb-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <Package className="w-3.5 h-3.5 text-primary" />
+                  <span className="text-[11px] font-medium text-gray-800">{c.pkgName}</span>
+                  <span className="ml-auto text-[11px] font-semibold text-primary">¥{c.amount}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">商户</span>
-                  <span className="text-gray-700">{c.merchant}</span>
+                <div className="flex items-center gap-1 text-[10px] text-gray-500">
+                  <MapPin className="w-3 h-3" />
+                  <span>{c.merchant}</span>
+                  <span className="mx-1 text-gray-300">·</span>
+                  <Smartphone className="w-3 h-3" />
+                  <span>核销码 {c.code}</span>
                 </div>
+              </div>
+
+              <div className="space-y-1.5 text-[11px] mb-2">
                 <div className="flex justify-between">
                   <span className="text-gray-500">拦截原因</span>
-                  <span className="text-danger text-right max-w-[220px]">{c.reason}</span>
+                  <span className="text-danger text-right max-w-[260px]">{c.reason}</span>
                 </div>
-                <div className="flex justify-between pt-1 mt-1 border-t border-gray-200">
+                <div className="flex justify-between">
                   <span className="text-gray-500">处置动作</span>
-                  <span className="text-secondary text-right max-w-[220px]">{c.action}</span>
+                  <span className="text-secondary text-right max-w-[260px]">{c.action}</span>
                 </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">库存释放</span>
+                  <span className="text-emerald-600 text-right max-w-[260px]">{c.stockRelease}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">操作信息</span>
+                  <span className="text-gray-600 text-right">{c.operator} · {c.device} · {c.verifyMethod}</span>
+                </div>
+              </div>
+
+              <div className="p-2 rounded-lg bg-gradient-to-r from-gray-100/80 to-white border border-gray-200">
+                <p className="text-[10px] font-medium text-gray-500 mb-1.5 flex items-center gap-0.5">
+                  <RefreshCw className="w-3 h-3" />
+                  状态流转链路 · 可复查
+                </p>
+                <div className="flex items-center gap-1">
+                  {c.statusFlow.map((s, i) => (
+                    <div key={i} className="flex items-center">
+                      <span className={`px-1.5 py-0.5 rounded text-[9px] font-medium ${
+                        s === 'paid' ? 'bg-blue-100 text-blue-600' :
+                        s === 'used' ? 'bg-secondary-50 text-secondary' :
+                        s === 'expired' ? 'bg-gray-200 text-gray-500' :
+                        s.includes('拦截') ? 'bg-red-100 text-red-600' :
+                        s.includes('保留') ? 'bg-blue-50 text-blue-500' :
+                        'bg-yellow-100 text-yellow-600'
+                      }`}>
+                        {s}
+                      </span>
+                      {i < c.statusFlow.length - 1 && <ChevronRight className="w-3 h-3 text-gray-300 mx-0.5" />}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[9px] text-gray-400 mt-1">
+                  数据来源：松江围栏订单数据库 · 操作流水号 OPS{String(Math.floor(Math.random() * 1000000)).padStart(8, '0')}
+                </p>
               </div>
             </div>
           ))}
