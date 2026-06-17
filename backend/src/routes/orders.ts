@@ -243,23 +243,45 @@ router.post('/:id/review-address', authMiddleware, (req: AuthRequest, res) => {
   }
 
   const now = formatDate(new Date());
+  const reviewer = req.user?.name || '系统管理员';
+  const reviewStatusMap: Record<string, string> = {
+    confirm_normal: 'reviewed_normal',
+    confirm_abnormal: 'confirmed_abnormal',
+    correct_address: 'corrected'
+  };
+  const reviewStatus = reviewStatusMap[action];
+
   if (action === 'confirm_normal') {
     db.prepare('UPDATE shipment_orders SET is_address_abnormal = 0, status = ?, updated_at = ? WHERE id = ?')
       .run(order.status === 'exception' ? 'created' : order.status, now, req.params.id);
     db.prepare(`INSERT INTO tracking_events (order_id, tracking_no, event_type, event_desc, operator_name, is_exception, created_at)
-      VALUES (?, ?, 'ADDRESS_REVIEWED', '人工复核：地址确认为正常，解除异常拦截', ?, 0, ?)`)
-      .run(req.params.id, order.tracking_no, req.user?.name || '管理员', now);
+      VALUES (?, ?, 'ADDRESS_REVIEWED', '人工复核：地址确认为正常，解除异常拦截${note ? '（备注：' + note + '）' : ''}', ?, 0, ?)`)
+      .run(req.params.id, order.tracking_no, reviewer, now);
     if (order.sender_id) {
       db.prepare("INSERT INTO notifications (user_id, type, title, content, related_id, created_at) VALUES (?, 'info', '地址异常已解除', '您的运单收货地址经人工复核确认为正常，已恢复派送流程', ?, ?)")
         .run(order.sender_id, req.params.id, now);
     }
-    res.json({ message: '地址已确认为正常，异常已解除' });
+    res.json({
+      success: true,
+      message: '地址已确认为正常，异常已解除',
+      review_status: reviewStatus,
+      reviewed_by: reviewer,
+      reviewed_at: now,
+      review_note: note || null
+    });
   } else if (action === 'confirm_abnormal') {
     db.prepare('UPDATE shipment_orders SET status = ?, updated_at = ? WHERE id = ?').run('exception', now, req.params.id);
     db.prepare(`INSERT INTO tracking_events (order_id, tracking_no, event_type, event_desc, operator_name, is_exception, exception_type, created_at)
-      VALUES (?, ?, 'ADDRESS_REVIEWED', '人工复核：确认地址异常，请联系寄件人', ?, 1, '地址异常', ?)`)
-      .run(req.params.id, order.tracking_no, req.user?.name || '管理员', now);
-    res.json({ message: '已确认地址异常，建议联系寄件人处理' });
+      VALUES (?, ?, 'ADDRESS_REVIEWED', '人工复核：确认地址异常${note ? '（备注：' + note + '）' : ''}，请联系寄件人', ?, 1, '地址异常', ?)`)
+      .run(req.params.id, order.tracking_no, reviewer, now);
+    res.json({
+      success: true,
+      message: '已确认地址异常，建议联系寄件人处理',
+      review_status: reviewStatus,
+      reviewed_by: reviewer,
+      reviewed_at: now,
+      review_note: note || null
+    });
   } else if (action === 'correct_address') {
     if (!corrected_address) return res.status(400).json({ code: 'NO_ADDRESS', message: '请输入修正后地址' });
     db.prepare('UPDATE shipment_orders SET receiver_address = ?, is_address_abnormal = 0, status = ?, updated_at = ? WHERE id = ?')
@@ -268,13 +290,21 @@ router.post('/:id/review-address', authMiddleware, (req: AuthRequest, res) => {
       VALUES (?, ?, 'ADDRESS_UPDATED', ?, ?, ?, 0, ?)`)
       .run(req.params.id, order.tracking_no,
         `人工修正收货地址：${corrected_address}${note ? '（备注：' + note + '）' : ''}`,
-        req.user?.name || '管理员', corrected_address, now);
+        reviewer, corrected_address, now);
     if (order.sender_id) {
       const notifContent = `运单地址已修正为：${corrected_address}${note ? '（备注：' + note + '）' : ''}`;
       db.prepare("INSERT INTO notifications (user_id, type, title, content, related_id, created_at) VALUES (?, 'info', '收货地址已修正', ?, ?, ?)")
         .run(order.sender_id, notifContent, req.params.id, now);
     }
-    res.json({ message: '地址已修正，运单恢复正常流程' });
+    res.json({
+      success: true,
+      message: '地址已修正，运单恢复正常流程',
+      review_status: reviewStatus,
+      reviewed_by: reviewer,
+      reviewed_at: now,
+      review_note: note || null,
+      corrected_address
+    });
   }
 });
 

@@ -78,47 +78,52 @@ export default function Login() {
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const [showPwd, setShowPwd] = useState(false);
   const [form] = Form.useForm();
+  const [jumpCountdown, setJumpCountdown] = useState<number | null>(null);
+  const [nextJumpPath, setNextJumpPath] = useState<string>('/');
+  const [nextRole, setNextRole] = useState<string>('');
 
   const go = (role: string) => {
     let path = '/';
     if (role === 'courier') path = '/couriers';
     else if (role === 'user') path = '/orders';
-    nav(path);
+    window.location.href = path;
   };
 
   const classifyError = (err: any, username: string, password: string): { msg: string; detail: string; cat: ErrorCategory } => {
-    const em = err?.message || String(err || '');
+    const em = err?.message || err?.msg || String(err || '');
     const ec = err?.code || '';
+    const innerMsg = err?.data?.message || err?.data?.msg || '';
+    const combinedMsg = (em + ' ' + innerMsg).trim();
 
     if (!username?.trim() || !password?.trim()) {
       return { msg: '必填项不能为空', detail: `用户名和密码都是必填字段，请完整填写后重试。当前用户名长度：${username?.length || 0}，密码长度：${password?.length || 0}`, cat: 'empty' };
     }
     if (!/^[a-zA-Z0-9_]{2,20}$/.test(username.trim())) {
-      return { msg: '用户名格式不符合规则', detail: '仅支持字母、数字、下划线，长度 2-20 字符。', cat: 'format' };
+      return { msg: '用户名格式不符合规则', detail: '仅支持字母、数字、下划线，长度 2-20 字符。请检查是否输入了中文、空格或其他特殊字符。', cat: 'format' };
     }
     if (password.length < 4) {
-      return { msg: '密码长度不足', detail: '密码至少需要 4 个字符。', cat: 'format' };
+      return { msg: '密码长度不足', detail: '密码至少需要 4 个字符。默认演示密码为 123456。', cat: 'format' };
     }
-    if (ec === 'ERR_NETWORK' || em.includes('Network Error') || em.includes('ECONNREFUSED')) {
-      return { msg: '后端服务连接失败', detail: '无法连接到后端 API（127.0.0.1:59219）。请确认后端服务已启动。', cat: 'network' };
+    if (ec === 'ERR_NETWORK' || combinedMsg.includes('Network Error') || combinedMsg.includes('ECONNREFUSED') || combinedMsg.includes('网络') || combinedMsg.includes('connect ECONNREFUSED')) {
+      return { msg: '后端服务连接失败', detail: `无法连接到后端 API（127.0.0.1:59219）。请确认后端服务已启动，可在浏览器访问 /api/health 检查健康状态。调试信息：${combinedMsg || ec}`, cat: 'network' };
     }
-    if (em.includes('用户名或密码错误') || em.includes('INVALID_CREDENTIALS') || em.includes('401')) {
+    if (combinedMsg.includes('用户名或密码错误') || combinedMsg.includes('INVALID_CREDENTIALS') || combinedMsg.includes('401') || ec === 'ERR_BAD_REQUEST') {
       const valid = ACCOUNTS.map(a => a.user).join(' / ');
-      return { msg: '账号或密码验证未通过', detail: `用户名 "${username}" 密码组合不匹配。有效账号：${valid}，默认密码：123456`, cat: 'credential' };
+      return { msg: '账号或密码验证未通过', detail: `用户名 "${username}" 与密码组合无法通过验证。可直接点击下方演示账号卡片一键填入。有效账号：${valid}，默认密码：123456。注意大小写和前后空格。服务器返回：${combinedMsg}`, cat: 'credential' };
     }
-    if (em.includes('参数') || em.includes('400') || em.includes('BAD_REQUEST')) {
-      return { msg: '请求参数校验失败', detail: `服务器返回：${em}`, cat: 'format' };
+    if (combinedMsg.includes('请输入用户名和密码') || combinedMsg.includes('BAD_REQUEST') || combinedMsg.includes('400')) {
+      return { msg: '请求参数校验失败', detail: `服务器返回：${combinedMsg || '参数不完整'}. 请完整填写用户名和密码。`, cat: 'empty' };
     }
-    if (em.includes('权限') || em.includes('403') || em.includes('FORBIDDEN') || em.includes('role')) {
-      return { msg: '账号权限与访问角色不匹配', detail: `当前账号不具备所请求角色的访问权限，请确认你使用的演示账号对应了正确的角色入口。`, cat: 'permission' };
+    if (combinedMsg.includes('权限') || combinedMsg.includes('403') || combinedMsg.includes('FORBIDDEN') || combinedMsg.includes('role')) {
+      return { msg: '账号权限与访问角色不匹配', detail: `当前账号不具备所请求角色的访问权限，请确认你使用的演示账号对应了正确的角色入口。服务端信息：${combinedMsg}`, cat: 'permission' };
     }
-    if (em.includes('500') || em.includes('内部错误')) {
-      return { msg: '服务器内部错误', detail: `后端异常：${em}`, cat: 'server' };
+    if (combinedMsg.includes('500') || combinedMsg.includes('内部错误') || combinedMsg.includes('Internal Server Error')) {
+      return { msg: '服务器内部错误', detail: `后端运行时异常：${combinedMsg}. 请查看后端日志定位堆栈。`, cat: 'server' };
     }
-    if (ec === 'ECONNABORTED' || em.includes('timeout')) {
-      return { msg: '请求超时', detail: '后端在 30 秒内未响应，请稍后重试。', cat: 'network' };
+    if (ec === 'ECONNABORTED' || combinedMsg.includes('timeout') || combinedMsg.includes('超时')) {
+      return { msg: '请求超时', detail: '后端在 30 秒内未响应，请稍后重试或检查后端健康状态。', cat: 'network' };
     }
-    return { msg: '登录失败', detail: em || '未知错误', cat: 'unknown' };
+    return { msg: '登录失败', detail: combinedMsg || ec || '未知错误，请重试或点击下方演示账号卡片快速进入。', cat: 'unknown' };
   };
 
   const doLogin = async (username: string, password: string) => {
@@ -153,12 +158,40 @@ export default function Login() {
       const name = res.user?.name || res.user?.username || username;
       const label = role === 'admin' ? '平台管理员' : role === 'courier' ? '品牌快递员' : '普通用户（发件方）';
 
+      const targetPath = role === 'courier' ? '/couriers' : role === 'user' ? '/orders' : '/';
+      const targetLabel = role === 'courier' ? '派件工作台' : role === 'user' ? '运单管理台' : '运营管理台';
+
       setStep('ok');
       setErrCategory(null);
-      setMsg(`✅ 身份确认通过！欢迎 ${name}（${label}）`);
-      setDetail(`Token 已加载，权限边界已初始化，角色路由已定向 · 耗时 ${elapsed}ms`);
+      setJumpCountdown(3);
+      setNextJumpPath(targetPath);
+      setNextRole(role);
+      setMsg(`✅ 身份确认通过！欢迎 ${name}（${label}） — 即将进入【${targetLabel}】`);
+      setDetail(`Token 已持久化 · 角色定向 ${targetPath} · 耗时 ${elapsed}ms · 3 秒后自动跳转`);
 
-      setTimeout(() => go(role), 550);
+      let sec = 3;
+      const tickTimer = setInterval(() => {
+        sec--;
+        setJumpCountdown(sec);
+        setDetail(`Token 已持久化 · 角色定向 ${targetPath} · 耗时 ${elapsed}ms · ${sec > 0 ? sec + ' 秒后自动跳转' : '正在跳转...'}`);
+        if (sec <= 0) {
+          clearInterval(tickTimer);
+          try {
+            window.location.href = targetPath;
+          } catch (_e) {
+            location.replace(targetPath);
+          }
+        }
+      }, 1000);
+
+      setTimeout(() => {
+        if (sec > 0) {
+          clearInterval(tickTimer);
+          try { window.location.href = targetPath; } catch { location.replace(targetPath); }
+        }
+      }, 4000);
+
+      setDetail(prev => prev + '（如未自动跳转，请点击下方「立即进入」）');
 
     } catch (err: any) {
       const elapsed = Date.now() - t0;
@@ -276,6 +309,37 @@ export default function Login() {
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 600, fontSize: 14, color: step === 'ok' ? '#389e0d' : step === 'fail' ? '#cf1322' : '#1677ff' }}>{msg}</div>
                 {detail && <div style={{ fontSize: 12, color: '#8c8c8c', marginTop: 4, lineHeight: 1.6 }}>{detail}</div>}
+                {step === 'ok' && jumpCountdown !== null && jumpCountdown > 0 && (
+                  <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                    <div style={{ flex: 1, minWidth: 160 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 3, color: '#52c41a' }}>
+                        <span>跳转进度</span>
+                        <span>{jumpCountdown}s 后自动进入</span>
+                      </div>
+                      <div style={{ height: 6, background: '#f6ffed', borderRadius: 3, overflow: 'hidden' }}>
+                        <div style={{
+                          height: '100%',
+                          background: 'linear-gradient(90deg, #95de64, #52c41a)',
+                          width: `${Math.max(10, 100 - jumpCountdown * 30)}%`,
+                          transition: 'width 0.7s ease',
+                          borderRadius: 3
+                        }} />
+                      </div>
+                    </div>
+                    <Button
+                      type="primary"
+                      size="small"
+                      icon={<ArrowRightOutlined />}
+                      onClick={() => {
+                        try { window.location.href = nextJumpPath; }
+                        catch { location.replace(nextJumpPath); }
+                      }}
+                      style={{ fontWeight: 600 }}
+                    >
+                      立即进入 →
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           )}
