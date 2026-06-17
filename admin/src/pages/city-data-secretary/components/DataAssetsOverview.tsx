@@ -23,6 +23,7 @@ import {
   List,
   Steps,
   Switch,
+  Typography,
   message
 } from 'antd'
 import {
@@ -62,6 +63,7 @@ import { useUserStore } from '@/store/user'
 
 const { Option } = Select
 const { TextArea } = Input
+const { Text } = Typography
 
 interface DataAssetsOverviewProps {
   userView?: 'default' | 'auth' | 'recommend' | 'trace'
@@ -889,4 +891,202 @@ const DataAssetsOverview: React.FC<DataAssetsOverviewProps> = ({ userView }) => 
       </Card>
     </div>
   )
+
+  const tabItems: TabsProps['items'] = [
+    {
+      key: 'overview',
+      label: <Space><DatabaseOutlined />资产总览</Space>,
+      children: overviewContent
+    },
+    {
+      key: 'authorization',
+      label: <Space><KeyOutlined />授权链路</Space>,
+      children: (
+        <Card
+          title={<Space><KeyOutlined />数据授权记录</Space>}
+          extra={<Button type="primary" icon={<PlusOutlined />}>新增授权申请</Button>}
+        >
+          <Table
+            rowKey="key"
+            columns={authorizationColumns}
+            dataSource={assetAuthorizations}
+            pagination={{ pageSize: 6 }}
+            scroll={{ x: 1100 }}
+          />
+        </Card>
+      )
+    },
+    {
+      key: 'trace',
+      label: <Space><HistoryOutlined />调用足迹</Space>,
+      children: (
+        <Card title={<Space><HistoryOutlined />数据调用留痕</Space>}>
+          <Table
+            rowKey="key"
+            columns={callTraceColumns}
+            dataSource={callTraces}
+            pagination={{ pageSize: 8 }}
+            scroll={{ x: 1100 }}
+          />
+        </Card>
+      )
+    },
+    {
+      key: 'share',
+      label: <Space><ShareAltOutlined />跨部门共享</Space>,
+      children: (
+        <Card title={<Space><ShareAltOutlined />跨部门共享链路</Space>}>
+          <Table
+            rowKey="key"
+            columns={crossDeptShareColumns}
+            dataSource={crossDeptShares}
+            pagination={{ pageSize: 6 }}
+            scroll={{ x: 1100 }}
+          />
+        </Card>
+      )
+    },
+    {
+      key: 'recommend',
+      label: <Space><RiseOutlined />服务推荐</Space>,
+      children: (
+        <Card title={<Space><RiseOutlined />推荐来源与效果追溯</Space>}>
+          <Table
+            rowKey="key"
+            columns={recommendationColumns}
+            dataSource={recommendationSources}
+            pagination={{ pageSize: 6 }}
+            scroll={{ x: 1300 }}
+          />
+        </Card>
+      )
+    }
+  ]
+
+  return (
+    <div>
+      <Row gutter={16} style={{ marginBottom: 16 }}>
+        <Col xs={24} lg={12}>
+          <Card title={<Space><RiseOutlined />资产增长趋势</Space>}>
+            <ReactECharts option={growthTrendOption} style={{ height: 300 }} />
+          </Card>
+        </Col>
+        <Col xs={24} lg={12}>
+          <Card title={<Space><AppstoreOutlined />资产类型与部门排行</Space>}>
+            <ReactECharts option={pieOption} style={{ height: 300 }} />
+          </Card>
+        </Col>
+      </Row>
+
+      {!isDefaultRole && (
+        <Card title={<Space><BankOutlined />委办局数据提供量排行</Space>} style={{ marginBottom: 16 }}>
+          <ReactECharts option={deptRankingOption} style={{ height: 320 }} />
+        </Card>
+      )}
+
+      <Tabs defaultActiveKey={defaultActiveKey} items={tabItems} />
+
+      <Modal
+        title="授权详情"
+        open={authModalVisible}
+        onCancel={() => setAuthModalVisible(false)}
+        footer={<Button onClick={() => setAuthModalVisible(false)}>关闭</Button>}
+        width={760}
+      >
+        {selectedAuth && (
+          <Descriptions bordered column={1} size="small">
+            <Descriptions.Item label="资产名称">{selectedAuth.assetName}</Descriptions.Item>
+            <Descriptions.Item label="资产类型">{selectedAuth.assetType}</Descriptions.Item>
+            <Descriptions.Item label="授权部门">{selectedAuth.authorizedDept}</Descriptions.Item>
+            <Descriptions.Item label="授权用户">{selectedAuth.authorizedUser}</Descriptions.Item>
+            <Descriptions.Item label="授权用途">{selectedAuth.authPurpose}</Descriptions.Item>
+            <Descriptions.Item label="授权范围">{selectedAuth.authScope}</Descriptions.Item>
+            <Descriptions.Item label="授权状态">
+              <Tag color={getAuthStatusColor(selectedAuth.authStatus)}>{selectedAuth.authStatus}</Tag>
+            </Descriptions.Item>
+            <Descriptions.Item label="有效期">{selectedAuth.grantTime} 至 {selectedAuth.expireTime}</Descriptions.Item>
+            <Descriptions.Item label="调用次数">{selectedAuth.callCount.toLocaleString()} 次</Descriptions.Item>
+          </Descriptions>
+        )}
+      </Modal>
+
+      <Modal
+        title="推荐反馈"
+        open={feedbackModalVisible}
+        onCancel={() => setFeedbackModalVisible(false)}
+        onOk={() => {
+          message.success('推荐反馈已提交')
+          setFeedbackModalVisible(false)
+        }}
+        okText="提交反馈"
+        cancelText="取消"
+      >
+        {selectedRecommendation && (
+          <Form layout="vertical">
+            <Form.Item label="推荐服务">
+              <Input value={selectedRecommendation.serviceName} readOnly />
+            </Form.Item>
+            <Form.Item label="不满意原因">
+              <Select defaultValue="not_match">
+                <Option value="not_match">与当前需求不匹配</Option>
+                <Option value="already_done">事项已办理</Option>
+                <Option value="privacy">不希望使用该类数据推荐</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="期望处理时间">
+              <DatePicker style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item label="补充说明">
+              <TextArea rows={4} placeholder="请补充说明您的反馈意见" />
+            </Form.Item>
+          </Form>
+        )}
+      </Modal>
+
+      <Modal
+        title="关闭推荐确认"
+        open={closeRecommendModalVisible}
+        onCancel={() => setCloseRecommendModalVisible(false)}
+        onOk={() => setCloseRecommendModalVisible(false)}
+        okText="确认关闭"
+        cancelText="取消"
+      >
+        <Alert
+          type="warning"
+          showIcon
+          message="关闭后将停止接收同类推荐"
+          description="您仍可在授权管理中重新开启相关数据资产的推荐服务。"
+        />
+      </Modal>
+
+      <Card title={<Space><CheckCircleOutlined />数据治理流程</Space>} style={{ marginTop: 16 }}>
+        <Row gutter={16}>
+          <Col xs={24} lg={12}>
+            <Steps
+              direction="vertical"
+              size="small"
+              current={2}
+              items={[
+                { title: '用户授权', description: '明确授权范围、用途和有效期' },
+                { title: '跨部门共享', description: '按授权链路调用数据资产' },
+                { title: '推荐生成', description: '输出服务推荐和证照提醒' },
+                { title: '留痕审计', description: '调用、反馈、撤销全流程可追溯' }
+              ]}
+            />
+          </Col>
+          <Col xs={24} lg={12}>
+            <Timeline
+              items={[
+                { color: 'green', children: '09:20 推荐模型完成离线评估' },
+                { color: 'blue', children: '09:05 用户标签批处理成功' },
+                { color: 'orange', children: '08:39 证照提醒队列正常投递' }
+              ]}
+            />
+          </Col>
+        </Row>
+      </Card>
+    </div>
+  )
 }
+
+export default DataAssetsOverview
