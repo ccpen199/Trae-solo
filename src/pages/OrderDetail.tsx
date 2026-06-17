@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
   Sparkles, Baby, ChefHat, MapPin, Clock, Phone, User,
   ArrowLeft, AlertTriangle, MessageCircle, ShieldCheck,
-  FileText, Receipt, ChevronDown, Star, Zap, Award,
+  FileText, Receipt, ChevronDown, ChevronUp, ChevronRight, Star, Zap, Award,
   Shield, FileCheck, Users, Timer, TrendingUp,
   CheckCircle, CircleDollarSign, Gift, UserCheck,
   Mic, BarChart3, Navigation, Eye, ThumbsUp, ThumbsDown,
@@ -74,14 +74,22 @@ function WorkerCertSection({ order }: { order: Order }) {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold text-secondary-800 flex items-center gap-2">
           <Users className="w-5 h-5 text-primary-500" />
-          服务阿姨 · 三证审核
+          服务阿姨 · 三证强管控
         </h2>
         <button
           onClick={() => setShowCertDetail(!showCertDetail)}
-          className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1 font-medium"
+          className={cn(
+            'px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all',
+            showCertDetail
+              ? 'bg-secondary-100 text-secondary-600'
+              : 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+          )}
         >
-          {showCertDetail ? '收起' : '展开三证详情'}
-          <ChevronDown className={cn('w-3 h-3 transition-transform', showCertDetail && 'rotate-180')} />
+          {showCertDetail ? (
+            <><ChevronUp className="w-3 h-3" />收起详情</>
+          ) : (
+            <><ScanLine className="w-3 h-3" />查看三证详情</>
+          )}
         </button>
       </div>
 
@@ -98,6 +106,9 @@ function WorkerCertSection({ order }: { order: Order }) {
                 <span className="text-sm font-medium text-secondary-700">{order.worker_score}</span>
               </div>
             )}
+            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">
+              三证齐全
+            </span>
           </div>
           <div className="flex items-center gap-3 mt-1 text-xs">
             <span className="text-secondary-500">{order.worker_phone}</span>
@@ -124,17 +135,53 @@ function WorkerCertSection({ order }: { order: Order }) {
           const Icon = item.icon;
           const status = cert?.verify_status === 'approved' ? 'verified' : 'pending';
           return (
-            <div key={item.key} className={cn('rounded-xl p-2.5 text-center', item.bg)}>
+            <button
+              key={item.key}
+              onClick={() => setShowCertDetail(true)}
+              className={cn('rounded-xl p-2.5 text-center transition-all hover:scale-105 cursor-pointer', item.bg)}
+            >
               <Icon className={cn('w-5 h-5 mx-auto mb-1', item.color)} />
               <p className="text-xs font-bold text-secondary-800">{item.label}</p>
               {certData && <ConfidenceTag confidence={certData.confidence} />}
               <p className={cn('text-[9px] mt-0.5', status === 'verified' ? 'text-green-600' : 'text-yellow-600')}>
                 {status === 'verified' ? '✓ 已核验' : '⏳ 待复核'}
               </p>
-            </div>
+            </button>
           );
         })}
       </div>
+
+      {!showCertDetail && (
+        <div className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-xl p-3 mb-4 border border-primary-100">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ScanLine className="w-4 h-4 text-primary-600" />
+              <span className="text-xs font-medium text-primary-700">OCR自动识别 + 人工复核双校验</span>
+            </div>
+            <button
+              onClick={() => setShowCertDetail(true)}
+              className="text-[10px] text-primary-600 font-medium flex items-center gap-0.5 hover:text-primary-700"
+            >
+              查看详情
+              <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
+          <div className="grid grid-cols-3 gap-2 mt-2 text-[9px]">
+            <div className="text-center">
+              <p className="text-secondary-600 font-bold text-[11px]">21项</p>
+              <p className="text-secondary-400">识别字段</p>
+            </div>
+            <div className="text-center">
+              <p className="text-secondary-600 font-bold text-[11px]">2-4轮</p>
+              <p className="text-secondary-400">人工复核</p>
+            </div>
+            <div className="text-center">
+              <p className="text-secondary-600 font-bold text-[11px]">100%</p>
+              <p className="text-secondary-400">留痕可追溯</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {score && (
         <div className="rounded-xl bg-cream-100 p-3 mb-4">
@@ -987,6 +1034,15 @@ export default function OrderDetail() {
                   <span className={badge.className}>{badge.label}</span>
                 </div>
                 <p className="text-sm text-secondary-500 mt-1">订单号 #{order.id} · {order.address_name || '自定义地址'}</p>
+                {order.dispatch_records && order.dispatch_records.length > 0 && (
+                  <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+                    <span className="text-[9px] text-secondary-400">调度方式：</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600 font-medium">1km内优先派单</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-medium">好评50%加权</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-orange-50 text-orange-600 font-medium">准时40%加权</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-red-50 text-red-600 font-medium">投诉10%加权</span>
+                  </div>
+                )}
               </div>
             </div>
             <div className="text-right">
