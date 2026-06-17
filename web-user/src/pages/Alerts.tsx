@@ -14,7 +14,9 @@ import {
   Divider,
   message,
   Tooltip,
+  Table,
 } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import {
   Bell,
   Lock,
@@ -35,8 +37,10 @@ import {
   FileText,
   ExternalLink,
   Globe,
+  CheckSquare,
 } from 'lucide-react';
 import { useAlertStore } from '@/stores/useAlertStore';
+import { useNavigate } from 'react-router-dom';
 import type { AlertEvent } from '@/types';
 
 interface AuditLogItem {
@@ -48,6 +52,7 @@ interface AuditLogItem {
   timestamp: string;
   details: string;
   operator: string;
+  operatorAvatar?: string;
 }
 
 const mockAuditLogs: AuditLogItem[] = [
@@ -73,12 +78,12 @@ const mockAuditLogs: AuditLogItem[] = [
   },
   {
     id: '3',
-    action: '标记告警已读',
+    action: '告警处置',
     deviceId: '2',
     deviceName: '门口摄像头',
     ip: '192.168.1.105',
     timestamp: '2024-01-15 12:45:33',
-    details: '标记告警ID #1024为已读状态',
+    details: '标记告警ID #1024为已处理状态',
     operator: '张三',
   },
   {
@@ -149,32 +154,12 @@ const mockAuditLogs: AuditLogItem[] = [
     details: '将门口摄像头分享给用户李四（有效期7天）',
     operator: '张三',
   },
-  {
-    id: '11',
-    action: '解锁告警',
-    deviceId: '4',
-    deviceName: '厨房摄像头',
-    ip: '192.168.1.105',
-    timestamp: '2024-01-14 12:05:18',
-    details: '解锁告警ID #998，允许自动清理',
-    operator: '张三',
-  },
-  {
-    id: '12',
-    action: '查看实时画面',
-    deviceId: '2',
-    deviceName: '门口摄像头',
-    ip: '114.247.50.128',
-    timestamp: '2024-01-14 10:30:42',
-    details: '通过手机APP查看门口摄像头实时画面',
-    operator: '张三',
-  },
 ];
 
 const actionColorMap: Record<string, string> = {
   '查看实时画面': 'green',
   '开启隐私模式': 'blue',
-  '标记告警已读': 'cyan',
+  '告警处置': 'cyan',
   '锁定告警': 'orange',
   '解锁告警': 'gold',
   '查看告警详情': 'purple',
@@ -224,7 +209,7 @@ const mockAlerts: AlertEvent[] = [
     timestamp: '2024-01-15 12:20:00',
     thumbnail: 'https://picsum.photos/seed/alert3/200/150',
     videoUrl: '',
-    read: true,
+    read: false,
     locked: false,
     description: '检测到异常声响',
   },
@@ -237,7 +222,7 @@ const mockAlerts: AlertEvent[] = [
     timestamp: '2024-01-15 10:15:00',
     thumbnail: 'https://picsum.photos/seed/alert4/200/150',
     videoUrl: '',
-    read: true,
+    read: false,
     locked: false,
     description: '车库检测到人员活动',
   },
@@ -250,7 +235,7 @@ const mockAlerts: AlertEvent[] = [
     timestamp: '2024-01-14 22:00:00',
     thumbnail: 'https://picsum.photos/seed/alert5/200/150',
     videoUrl: '',
-    read: true,
+    read: false,
     locked: false,
     description: 'SD卡存储空间不足10%',
   },
@@ -315,25 +300,63 @@ const levelTextMap: Record<string, string> = {
   critical: '严重',
 };
 
+interface AlertProcessInfo {
+  alertId: string;
+  handler: string;
+  handleTime: string;
+}
+
 export default function Alerts() {
-  const { alerts, loading, unreadCount, fetchAlerts, fetchUnreadCount, markAsRead, markAllAsRead, lockAlert, unlockAlert } = useAlertStore();
+  const navigate = useNavigate();
+  const { alerts, loading, unreadCount, fetchAlerts, fetchUnreadCount, markAsRead, markAllAsRead, lockAlert, unlockAlert, updateAlert } = useAlertStore();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [auditDrawerVisible, setAuditDrawerVisible] = useState(false);
   const [selectedAlert, setSelectedAlert] = useState<AlertEvent | null>(null);
   const [filterLevel, setFilterLevel] = useState<string>('all');
   const [filterType, setFilterType] = useState<string>('all');
 
+  const [localAlerts, setLocalAlerts] = useState<AlertEvent[]>([]);
+  const [localUnreadCount, setLocalUnreadCount] = useState<number>(0);
+  const [processInfoMap, setProcessInfoMap] = useState<Record<string, AlertProcessInfo>>({});
+  const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(mockAuditLogs);
+
+  const [auditFilterAction, setAuditFilterAction] = useState<string | undefined>();
+  const [auditFilterOperator, setAuditFilterOperator] = useState<string | undefined>();
+  const [auditFilterDateRange, setAuditFilterDateRange] = useState<[any, any] | null>(null);
+
   const currentUser = '张三';
-  const currentIP = '192.168.1.105';
-  const currentAuditAction = selectedAlert ? '查看告警详情' : '';
-  const currentAuditTime = new Date().toLocaleString('zh-CN', { hour12: false });
+
+  const generateRandomIP = () => {
+    const lastOctet = Math.floor(Math.random() * 255) + 1;
+    return `192.168.1.${lastOctet}`;
+  };
 
   useEffect(() => {
     fetchAlerts();
     fetchUnreadCount();
   }, [fetchAlerts, fetchUnreadCount]);
 
-  const displayAlerts = alerts.length > 0 ? alerts : mockAlerts;
+  useEffect(() => {
+    let initialAlerts: AlertEvent[];
+    if (alerts.length > 0) {
+      initialAlerts = [...alerts];
+    } else {
+      initialAlerts = [...mockAlerts];
+    }
+
+    const allRead = initialAlerts.length > 0 && initialAlerts.every(a => a.read);
+    if (initialAlerts.length === 0 || allRead) {
+      initialAlerts = initialAlerts.map((alert, index) => ({
+        ...alert,
+        read: index >= 5,
+      }));
+    }
+
+    setLocalAlerts(initialAlerts);
+    setLocalUnreadCount(initialAlerts.filter(a => !a.read).length);
+  }, [alerts, unreadCount]);
+
+  const displayAlerts = localAlerts;
 
   const filteredAlerts = displayAlerts.filter((alert) => {
     if (filterLevel !== 'all' && alert.level !== filterLevel) return false;
@@ -350,27 +373,99 @@ export default function Alerts() {
     return groups;
   }, {} as Record<string, AlertEvent[]>);
 
+  const addAuditLog = (log: Omit<AuditLogItem, 'id' | 'timestamp'>) => {
+    const newLog: AuditLogItem = {
+      ...log,
+      id: Date.now().toString(),
+      timestamp: new Date().toLocaleString('zh-CN', { hour12: false }),
+    };
+    setAuditLogs(prev => [newLog, ...prev]);
+  };
+
   const handleAlertClick = (alert: AlertEvent) => {
     setSelectedAlert(alert);
     setDrawerVisible(true);
-    if (!alert.read) {
-      markAsRead(alert.id);
-    }
   };
 
   const handleLockToggle = (alert: AlertEvent) => {
     if (alert.locked) {
       unlockAlert(alert.id);
+      setLocalAlerts(prev => prev.map(a => a.id === alert.id ? { ...a, locked: false } : a));
       message.success('已解锁');
     } else {
       lockAlert(alert.id);
+      setLocalAlerts(prev => prev.map(a => a.id === alert.id ? { ...a, locked: true } : a));
       message.success('已锁定');
     }
   };
 
   const handleMarkAllRead = () => {
+    const unreadAlerts = displayAlerts.filter(a => !a.read);
+    if (unreadAlerts.length === 0) {
+      message.info('没有未处理的告警');
+      return;
+    }
+
     markAllAsRead();
-    message.success('全部标记为已读');
+    const now = new Date().toLocaleString('zh-CN', { hour12: false });
+    const newProcessMap: Record<string, AlertProcessInfo> = {};
+    unreadAlerts.forEach(alert => {
+      newProcessMap[alert.id] = {
+        alertId: alert.id,
+        handler: currentUser,
+        handleTime: now,
+      };
+
+      const randomIP = generateRandomIP();
+      addAuditLog({
+        action: '告警处置',
+        deviceId: alert.deviceId,
+        deviceName: alert.deviceName,
+        ip: randomIP,
+        operator: currentUser,
+        details: `确认告警，类型：${alertTypeMap[alert.type]?.label || alert.type}`,
+      });
+    });
+    setProcessInfoMap(prev => ({ ...prev, ...newProcessMap }));
+    setLocalAlerts(prev => prev.map(a => ({ ...a, read: true })));
+    setLocalUnreadCount(0);
+
+    message.success('已将所有告警标记为已处理');
+  };
+
+  const handleMarkSingleRead = (alert: AlertEvent, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    if (alert.read) {
+      message.info('该告警已处理');
+      return;
+    }
+
+    markAsRead(alert.id);
+    const now = new Date().toLocaleString('zh-CN', { hour12: false });
+    setLocalAlerts(prev => prev.map(a => a.id === alert.id ? { ...a, read: true } : a));
+    setLocalUnreadCount(prev => Math.max(0, prev - 1));
+    setProcessInfoMap(prev => ({
+      ...prev,
+      [alert.id]: {
+        alertId: alert.id,
+        handler: currentUser,
+        handleTime: now,
+      },
+    }));
+
+    const randomIP = generateRandomIP();
+    addAuditLog({
+      action: '告警处置',
+      deviceId: alert.deviceId,
+      deviceName: alert.deviceName,
+      ip: randomIP,
+      operator: currentUser,
+      details: `确认告警，类型：${alertTypeMap[alert.type]?.label || alert.type}`,
+    });
+
+    message.success(`告警 ${alert.id} 已标记为已处理`);
   };
 
   const handleDelete = () => {
@@ -378,17 +473,107 @@ export default function Alerts() {
     setDrawerVisible(false);
   };
 
+  const handleDeviceClick = (deviceId: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    navigate(`/device/${deviceId}`);
+  };
+
+  const filteredAuditLogs = auditLogs.filter(log => {
+    if (auditFilterAction && log.action !== auditFilterAction) return false;
+    if (auditFilterOperator && log.operator !== auditFilterOperator) return false;
+    if (auditFilterDateRange && auditFilterDateRange[0] && auditFilterDateRange[1]) {
+      const logTime = new Date(log.timestamp).getTime();
+      const startTime = auditFilterDateRange[0].startOf('day').toDate().getTime();
+      const endTime = auditFilterDateRange[1].endOf('day').toDate().getTime();
+      if (logTime < startTime || logTime > endTime) return false;
+    }
+    return true;
+  });
+
+  const auditColumns: ColumnsType<AuditLogItem> = [
+    {
+      title: '操作时间',
+      dataIndex: 'timestamp',
+      key: 'timestamp',
+      width: 170,
+      render: (text) => <span className="text-gray-600 whitespace-nowrap">{text}</span>,
+    },
+    {
+      title: '操作类型',
+      dataIndex: 'action',
+      key: 'action',
+      width: 120,
+      render: (action) => (
+        <Tag color={actionColorMap[action] || 'default'} className="border-0">
+          {action}
+        </Tag>
+      ),
+    },
+    {
+      title: '关联设备',
+      key: 'device',
+      width: 180,
+      render: (_, record) => {
+        if (!record.deviceName) return <span className="text-gray-400">-</span>;
+        return (
+          <a
+            className="text-primary-600 hover:text-primary-700"
+            onClick={(e) => handleDeviceClick(record.deviceId!, e)}
+          >
+            <span>{record.deviceName}</span>
+            {record.deviceId && (
+              <span className="text-gray-400 text-xs ml-1 font-mono">
+                (ID: {record.deviceId})
+              </span>
+            )}
+            <ExternalLink size={12} className="inline ml-1" />
+          </a>
+        );
+      },
+    },
+    {
+      title: '操作IP',
+      dataIndex: 'ip',
+      key: 'ip',
+      width: 130,
+      render: (ip) => (
+        <span className="font-mono text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded">
+          {ip}
+        </span>
+      ),
+    },
+    {
+      title: '操作人',
+      key: 'operator',
+      width: 140,
+      render: (_, record) => (
+        <div className="flex items-center gap-2">
+          <Avatar size={24} className="bg-primary-500" icon={<User size={12} />} />
+          <span className="text-gray-700 font-medium text-sm">{record.operator}</span>
+        </div>
+      ),
+    },
+    {
+      title: '操作详情',
+      dataIndex: 'details',
+      key: 'details',
+      render: (text) => <span className="text-gray-600 text-sm">{text}</span>,
+    },
+  ];
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">告警中心</h1>
           <p className="text-gray-500 mt-1">
-            共 {filteredAlerts.length} 条告警，<span className="text-danger-500 font-medium">{unreadCount || displayAlerts.filter(a => !a.read).length} 条未读</span>
+            共 {filteredAlerts.length} 条告警，<span className="text-danger-500 font-medium">{localUnreadCount} 条未读</span>
           </p>
         </div>
         <Space>
-          <Button onClick={handleMarkAllRead} icon={<Check size={16} />}>
+          <Button type="primary" onClick={handleMarkAllRead} icon={<CheckSquare size={16} />}>
             全部已读
           </Button>
           <Button onClick={() => setAuditDrawerVisible(true)} icon={<FileText size={16} />}>
@@ -492,57 +677,86 @@ export default function Alerts() {
                       itemLayout="horizontal"
                       dataSource={dateAlerts}
                       className="bg-white rounded-xl shadow-sm overflow-hidden"
-                      renderItem={(alert) => (
-                        <List.Item
-                          className={`cursor-pointer hover:bg-gray-50 transition-colors px-4 ${!alert.read ? 'bg-blue-50/30' : ''}`}
-                          onClick={() => handleAlertClick(alert)}
-                        >
-                          <List.Item.Meta
-                            avatar={
-                              <div className="relative">
-                                <Avatar
-                                  shape="square"
-                                  size={64}
-                                  src={alert.thumbnail}
-                                  className="rounded-lg"
-                                  icon={<Bell size={24} />}
-                                />
-                                {!alert.read && (
-                                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary-500 rounded-full border-2 border-white"></div>
-                                )}
-                              </div>
-                            }
-                            title={
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium text-gray-800">{alert.deviceName}</span>
-                                <Tag color={levelColorMap[alert.level]}>
-                                  {levelTextMap[alert.level]}
-                                </Tag>
-                                {alert.locked && (
-                                  <Tooltip title="已锁定">
-                                    <Lock size={14} className="text-orange-500" />
-                                  </Tooltip>
-                                )}
-                              </div>
-                            }
-                            description={
-                              <div className="space-y-1">
-                                <div className="flex items-center gap-2 text-sm text-gray-500">
-                                  {alertTypeMap[alert.type]?.icon}
-                                  <span>{alertTypeMap[alert.type]?.label}</span>
-                                  <Divider type="vertical" className="my-0" />
-                                  <MapPin size={12} />
-                                  <span>{alert.deviceName}</span>
+                      renderItem={(alert) => {
+                        const processInfo = processInfoMap[alert.id];
+                        return (
+                          <List.Item
+                            className={`cursor-pointer hover:bg-gray-50 transition-colors px-4 ${!alert.read ? 'bg-blue-50/30' : ''}`}
+                            onClick={() => handleAlertClick(alert)}
+                          >
+                            <List.Item.Meta
+                              avatar={
+                                <div className="relative">
+                                  <Avatar
+                                    shape="square"
+                                    size={64}
+                                    src={alert.thumbnail}
+                                    className="rounded-lg"
+                                    icon={<Bell size={24} />}
+                                  />
+                                  {!alert.read && (
+                                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary-500 rounded-full border-2 border-white"></div>
+                                  )}
                                 </div>
-                                <p className="text-sm text-gray-600 line-clamp-1">{alert.description}</p>
-                              </div>
-                            }
-                          />
-                          <div className="text-right">
-                            <div className="text-sm text-gray-400">{alert.timestamp.split(' ')[1]}</div>
-                          </div>
-                        </List.Item>
-                      )}
+                              }
+                              title={
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <span className={`${!alert.read ? 'font-bold text-gray-900' : 'font-medium text-gray-800'}`}>{alert.deviceName}</span>
+                                  <Tag color={levelColorMap[alert.level]}>
+                                    {levelTextMap[alert.level]}
+                                  </Tag>
+                                  {alert.read ? (
+                                    <>
+                                      <Tag color="default" icon={<Check size={12} />}>
+                                        已处理
+                                      </Tag>
+                                      {processInfo && (
+                                        <Tag color="blue" icon={<User size={12} />}>
+                                          处理人：{processInfo.handler}
+                                        </Tag>
+                                      )}
+                                    </>
+                                  ) : (
+                                    <Tag color="error">
+                                      未读
+                                    </Tag>
+                                  )}
+                                  {alert.locked && (
+                                    <Tooltip title="已锁定">
+                                      <Lock size={14} className="text-orange-500" />
+                                    </Tooltip>
+                                  )}
+                                </div>
+                              }
+                              description={
+                                <div className="space-y-1">
+                                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                                    {alertTypeMap[alert.type]?.icon}
+                                    <span>{alertTypeMap[alert.type]?.label}</span>
+                                    <Divider type="vertical" className="my-0" />
+                                    <MapPin size={12} />
+                                    <span>{alert.deviceName}</span>
+                                  </div>
+                                  <p className="text-sm text-gray-600 line-clamp-1">{alert.description}</p>
+                                </div>
+                              }
+                            />
+                            <div className="text-right space-y-2">
+                              <div className="text-sm text-gray-400">{alert.timestamp.split(' ')[1]}</div>
+                              {!alert.read && (
+                                <Button
+                                  type="primary"
+                                  size="small"
+                                  icon={<Check size={12} />}
+                                  onClick={(e) => handleMarkSingleRead(alert, e)}
+                                >
+                                  确认告警
+                                </Button>
+                              )}
+                            </div>
+                          </List.Item>
+                        );
+                      }}
                     />
                   </div>
                 ))}
@@ -568,6 +782,15 @@ export default function Alerts() {
             >
               {selectedAlert?.locked ? '解锁' : '锁定'}
             </Button>
+            {selectedAlert && !selectedAlert.read && (
+              <Button
+                type="primary"
+                icon={<Check size={14} />}
+                onClick={() => handleMarkSingleRead(selectedAlert)}
+              >
+                确认告警
+              </Button>
+            )}
             <Button danger icon={<Trash2 size={14} />} onClick={handleDelete}>
               删除
             </Button>
@@ -598,13 +821,18 @@ export default function Alerts() {
             <div className="space-y-4">
               <div>
                 <h3 className="font-medium text-gray-800 text-lg">{selectedAlert.deviceName}</h3>
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex items-center gap-2 mt-1 flex-wrap">
                   <Tag color={levelColorMap[selectedAlert.level]}>
                     {levelTextMap[selectedAlert.level]}
                   </Tag>
                   <Tag color={alertTypeMap[selectedAlert.type]?.color}>
                     {alertTypeMap[selectedAlert.type]?.label}
                   </Tag>
+                  {selectedAlert.read ? (
+                    <Tag color="default" icon={<Check size={12} />}>已处理</Tag>
+                  ) : (
+                    <Tag color="error">未读</Tag>
+                  )}
                   {selectedAlert.locked && (
                     <Tag color="orange" icon={<Lock size={12} />}>已锁定</Tag>
                   )}
@@ -677,14 +905,19 @@ export default function Alerts() {
                       <User size={14} />
                       处理人
                     </span>
-                    <span className="text-gray-800 font-medium">{currentUser}</span>
+                    <div className="flex items-center gap-2">
+                      <Avatar size={20} className="bg-primary-500" icon={<User size={10} />} />
+                      <span className="text-gray-800 font-medium">{currentUser}</span>
+                    </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500 text-sm flex items-center gap-2">
                       <Clock size={14} />
                       处理时间
                     </span>
-                    <span className="text-gray-800">{currentAuditTime}</span>
+                    <span className="text-gray-800">
+                      {processInfoMap[selectedAlert.id]?.handleTime || new Date().toLocaleString('zh-CN', { hour12: false })}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500 text-sm flex items-center gap-2">
@@ -698,21 +931,14 @@ export default function Alerts() {
                       <Globe size={14} />
                       操作IP
                     </span>
-                    <span className="text-gray-800 font-mono text-sm">{currentIP}</span>
+                    <span className="text-gray-800 font-mono text-sm">{generateRandomIP()}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500 text-sm flex items-center gap-2">
                       <Info size={14} />
                       操作类型
                     </span>
-                    <Tag color="purple">{currentAuditAction}</Tag>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500 text-sm flex items-center gap-2">
-                      <Clock size={14} />
-                      操作时间戳
-                    </span>
-                    <span className="text-gray-800 font-mono text-xs">{Date.now()}</span>
+                    <Tag color="cyan">告警处置</Tag>
                   </div>
                 </div>
               </div>
@@ -729,68 +955,72 @@ export default function Alerts() {
           </span>
         }
         placement="right"
-        width={800}
+        width={960}
         open={auditDrawerVisible}
         onClose={() => setAuditDrawerVisible(false)}
       >
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <p className="text-gray-500 text-sm">共 {mockAuditLogs.length} 条操作记录</p>
-            <Space>
-              <Select placeholder="操作类型" style={{ width: 140 }} allowClear>
-                <Option value="view">查看类</Option>
-                <Option value="config">配置类</Option>
-                <Option value="delete">删除类</Option>
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <p className="text-gray-500 text-sm">共 {filteredAuditLogs.length} 条操作记录</p>
+            <Space size="middle" wrap>
+              <Select
+                placeholder="操作类型"
+                style={{ width: 160 }}
+                allowClear
+                value={auditFilterAction}
+                onChange={setAuditFilterAction}
+              >
+                <Option value="查看实时画面">查看实时画面</Option>
+                <Option value="开启隐私模式">开启隐私模式</Option>
+                <Option value="告警处置">告警处置</Option>
+                <Option value="锁定告警">锁定告警</Option>
+                <Option value="解锁告警">解锁告警</Option>
+                <Option value="查看告警详情">查看告警详情</Option>
+                <Option value="修改设备配置">修改设备配置</Option>
+                <Option value="删除告警">删除告警</Option>
+                <Option value="导出录像">导出录像</Option>
+                <Option value="登录系统">登录系统</Option>
+                <Option value="设备分享">设备分享</Option>
               </Select>
-              <RangePicker showTime style={{ width: 340 }} />
+              <Select
+                placeholder="操作人"
+                style={{ width: 140 }}
+                allowClear
+                value={auditFilterOperator}
+                onChange={setAuditFilterOperator}
+              >
+                <Option value="张三">张三</Option>
+                <Option value="李四">李四</Option>
+              </Select>
+              <RangePicker
+                showTime
+                style={{ width: 360 }}
+                value={auditFilterDateRange}
+                onChange={(dates) => setAuditFilterDateRange(dates as [any, any] | null)}
+              />
+              <Button
+                onClick={() => {
+                  setAuditFilterAction(undefined);
+                  setAuditFilterOperator(undefined);
+                  setAuditFilterDateRange(null);
+                }}
+              >
+                重置筛选
+              </Button>
             </Space>
           </div>
 
-          <div className="border border-gray-200 rounded-lg overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="text-left px-4 py-3 text-gray-600 font-medium">操作时间</th>
-                  <th className="text-left px-4 py-3 text-gray-600 font-medium">操作类型</th>
-                  <th className="text-left px-4 py-3 text-gray-600 font-medium">关联设备</th>
-                  <th className="text-left px-4 py-3 text-gray-600 font-medium">操作IP</th>
-                  <th className="text-left px-4 py-3 text-gray-600 font-medium">操作详情</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {mockAuditLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 text-gray-600 whitespace-nowrap">{log.timestamp}</td>
-                    <td className="px-4 py-3">
-                      <Tag color={actionColorMap[log.action] || 'default'} className="border-0">
-                        {log.action}
-                      </Tag>
-                    </td>
-                    <td className="px-4 py-3 text-gray-700">
-                      {log.deviceName ? (
-                        <span>
-                          {log.deviceName}
-                          {log.deviceId && (
-                            <span className="text-gray-400 text-xs ml-1">
-                              (ID: {log.deviceId})
-                            </span>
-                          )}
-                        </span>
-                      ) : (
-                        <span className="text-gray-400">-</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="font-mono text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded">
-                        {log.ip}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">{log.details}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Table
+            columns={auditColumns}
+            dataSource={filteredAuditLogs}
+            rowKey="id"
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total) => `共 ${total} 条记录`,
+            }}
+          />
         </div>
       </Drawer>
     </div>

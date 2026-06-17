@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card, Button, Tag, Space, Switch, Dropdown, MenuProps, Empty, Spin, Modal, Form, Input, Select, message, Steps, Progress, Alert, Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -158,6 +158,13 @@ export default function DeviceList() {
   const [bindingProgress, setBindingProgress] = useState(0);
   const [bindingStatus, setBindingStatus] = useState<'connecting' | 'online' | 'bound' | 'success' | 'failed'>('connecting');
   const [boundDeviceId, setBoundDeviceId] = useState<string>('');
+  const [newDeviceName, setNewDeviceName] = useState('');
+  const [newDeviceType, setNewDeviceType] = useState<'IPC' | 'NVR' | 'doorbell'>('IPC');
+  const [newDeviceGroup, setNewDeviceGroup] = useState('public');
+  const [newDeviceLocation, setNewDeviceLocation] = useState('');
+  const [wifiTransmitting, setWifiTransmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState<{ name?: string; location?: string }>({});
+  const formAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchDevices();
@@ -180,12 +187,16 @@ export default function DeviceList() {
     setScanning(true);
     setScanSuccess(false);
     setDetectedDevice(null);
+    setFormErrors({});
     setTimeout(() => {
       setScanning(false);
       setScanSuccess(true);
       setDetectedDevice(mockDetectedDevice);
       setSerialNumber(mockDetectedDevice.serialNumber);
       message.success('检测到设备');
+      setTimeout(() => {
+        formAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }, 2000);
   };
 
@@ -194,6 +205,10 @@ export default function DeviceList() {
     if (value.length >= 10) {
       setScanSuccess(true);
       setDetectedDevice(mockDetectedDevice);
+      setFormErrors({});
+      setTimeout(() => {
+        formAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }
   };
 
@@ -202,14 +217,37 @@ export default function DeviceList() {
       message.warning('请先扫描二维码或输入序列号');
       return;
     }
+    const errors: { name?: string; location?: string } = {};
+    if (!newDeviceName.trim()) {
+      errors.name = '请填写设备名称';
+    }
+    if (!newDeviceLocation.trim()) {
+      errors.location = '请填写安装位置';
+    }
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      const firstError = Object.values(errors)[0];
+      message.warning(firstError);
+      setTimeout(() => {
+        formAreaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+      return;
+    }
+    setFormErrors({});
     setCurrentStep(1);
   };
 
   const handleStep2Next = async () => {
     try {
       await wifiForm.validateFields();
-      setCurrentStep(2);
-      startBindingProcess();
+      setWifiTransmitting(true);
+      message.loading({ content: '正在加密透传Wi-Fi密码到设备...', key: 'wifi-transmit', duration: 0 });
+      setTimeout(() => {
+        setWifiTransmitting(false);
+        message.success({ content: 'Wi-Fi密码已安全透传至设备', key: 'wifi-transmit' });
+        setCurrentStep(2);
+        startBindingProcess();
+      }, 1200);
     } catch {
       message.warning('请输入Wi-Fi密码');
     }
@@ -236,22 +274,24 @@ export default function DeviceList() {
     setTimeout(() => {
       const newId = Date.now().toString();
       setBoundDeviceId(newId);
+      const groupName = mockGroups.find(g => g.id === newDeviceGroup)?.name || '公共区域';
       addDevice({
         id: newId,
-        name: '新设备',
-        type: detectedDevice?.type || 'IPC',
+        name: newDeviceName,
+        type: newDeviceType,
         model: detectedDevice?.model || 'IPC-2000 Pro',
         firmwareVersion: 'v2.3.1',
         status: 'online',
-        groupId: 'public',
+        groupId: newDeviceGroup,
         ipAddress: '192.168.1.200',
         macAddress: detectedDevice?.macAddress || 'AA:BB:CC:DD:EE:FF',
         storage: { total: 128, used: 0, sdCard: false, sdTotal: 128, sdUsed: 0 },
         privacy: { cameraEnabled: true, audioEnabled: true, physicalLock: false },
         lastOnline: new Date().toLocaleString(),
-        location: '未设置',
+        location: newDeviceLocation,
         signalStrength: 85,
       });
+      message.success(`设备「${newDeviceName}」已成功添加到${groupName}组`);
     }, 4500);
   };
 
@@ -265,6 +305,12 @@ export default function DeviceList() {
     setBindingProgress(0);
     setBindingStatus('connecting');
     setBoundDeviceId('');
+    setNewDeviceName('');
+    setNewDeviceType('IPC');
+    setNewDeviceGroup('public');
+    setNewDeviceLocation('');
+    setWifiTransmitting(false);
+    setFormErrors({});
     form.resetFields();
     wifiForm.resetFields();
   };
@@ -545,9 +591,80 @@ export default function DeviceList() {
               />
             )}
 
+            {scanSuccess && (
+              <div ref={formAreaRef} className="bg-gray-50 rounded-xl p-5 space-y-4">
+                <h4 className="font-medium text-gray-800 flex items-center gap-2">
+                  <Settings size={16} className="text-primary-500" />
+                  设备基本信息
+                </h4>
+                <Form form={form} layout="vertical" size="middle">
+                  <Form.Item 
+                    label="设备名称" 
+                    required 
+                    className="mb-3"
+                    validateStatus={formErrors.name ? 'error' : ''}
+                    help={formErrors.name}
+                  >
+                    <Input
+                      placeholder="如：客厅摄像头"
+                      value={newDeviceName}
+                      onChange={(e) => {
+                        setNewDeviceName(e.target.value);
+                        if (formErrors.name) {
+                          setFormErrors(prev => ({ ...prev, name: undefined }));
+                        }
+                      }}
+                      prefix={<Camera size={14} className="text-gray-400" />}
+                    />
+                  </Form.Item>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Form.Item label="设备类型" className="mb-3">
+                      <Select value={newDeviceType} onChange={setNewDeviceType}>
+                        <Select.Option value="IPC">IPC</Select.Option>
+                        <Select.Option value="doorbell">智能门铃</Select.Option>
+                        <Select.Option value="NVR">NVR</Select.Option>
+                      </Select>
+                    </Form.Item>
+                    <Form.Item label="设备分组" className="mb-3">
+                      <Select value={newDeviceGroup} onChange={setNewDeviceGroup}>
+                        <Select.Option value="livingroom">客厅</Select.Option>
+                        <Select.Option value="bedroom">卧室</Select.Option>
+                        <Select.Option value="public">公共区域</Select.Option>
+                        <Select.Option value="outdoor">户外</Select.Option>
+                        <Select.Option value="private">私人区域</Select.Option>
+                      </Select>
+                    </Form.Item>
+                  </div>
+                  <Form.Item 
+                    label="安装位置" 
+                    required 
+                    className="mb-0"
+                    validateStatus={formErrors.location ? 'error' : ''}
+                    help={formErrors.location}
+                  >
+                    <Input
+                      placeholder="如：客厅电视柜上方"
+                      value={newDeviceLocation}
+                      onChange={(e) => {
+                        setNewDeviceLocation(e.target.value);
+                        if (formErrors.location) {
+                          setFormErrors(prev => ({ ...prev, location: undefined }));
+                        }
+                      }}
+                      prefix={<MapPin size={14} className="text-gray-400" />}
+                    />
+                  </Form.Item>
+                </Form>
+              </div>
+            )}
+
             <div className="flex justify-end pt-2">
-              <Button type="primary" onClick={handleStep1Next}>
-                下一步
+              <Button 
+                type="primary" 
+                onClick={handleStep1Next}
+                className={scanSuccess ? 'font-bold text-base h-11 px-6' : ''}
+              >
+                {scanSuccess ? '填写设备信息并下一步' : '下一步'}
               </Button>
             </div>
           </div>
@@ -601,8 +718,8 @@ export default function DeviceList() {
 
             <div className="flex justify-between pt-2">
               <Button onClick={() => setCurrentStep(0)}>上一步</Button>
-              <Button type="primary" onClick={handleStep2Next}>
-                开始配置
+              <Button type="primary" onClick={handleStep2Next} loading={wifiTransmitting}>
+                {wifiTransmitting ? '加密透传中...' : '开始配置'}
               </Button>
             </div>
           </div>
@@ -670,15 +787,23 @@ export default function DeviceList() {
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-500">设备名称：</span>
-                        <span className="text-gray-800 font-medium">新设备</span>
+                        <span className="text-gray-800 font-medium">{newDeviceName || '新设备'}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500">设备ID：</span>
                         <span className="text-gray-800 font-mono text-xs">{boundDeviceId}</span>
                       </div>
                       <div className="flex justify-between">
+                        <span className="text-gray-500">设备类型：</span>
+                        <span className="text-gray-800">{newDeviceType}</span>
+                      </div>
+                      <div className="flex justify-between">
                         <span className="text-gray-500">所在位置：</span>
-                        <span className="text-gray-800">未设置</span>
+                        <span className="text-gray-800">{newDeviceLocation || '未设置'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">设备分组：</span>
+                        <span className="text-gray-800">{mockGroups.find(g => g.id === newDeviceGroup)?.name || '公共区域'}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500">绑定时间：</span>
@@ -692,7 +817,7 @@ export default function DeviceList() {
                     </Button>
                     <Button onClick={() => { resetAddModal(); }}>
                       继续添加
-                    </Button>
+                    </Button>,
                   </div>,
                 ]}
               />

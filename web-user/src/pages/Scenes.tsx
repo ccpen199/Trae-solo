@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Card,
   Button,
@@ -33,10 +33,29 @@ import {
   EyeOff,
   Zap,
   Settings,
+  CheckCircle,
+  XCircle,
+  Check,
+  X,
 } from 'lucide-react';
 import type { Scene, SceneAction } from '@/types';
 
 const { Option } = Select;
+
+interface ExecutionStep {
+  id: string;
+  name: string;
+  status: 'pending' | 'running' | 'success' | 'failed';
+  detail?: string;
+  icon?: React.ReactNode;
+}
+
+interface CreatedSceneInfo {
+  scene: Scene;
+  triggerLabel: string;
+  actionLabels: string[];
+  deviceCount: number;
+}
 
 const mockScenes: Scene[] = [
   {
@@ -142,6 +161,30 @@ const actionTypeMap: Record<string, { label: string; icon: React.ReactNode; colo
   privacy_mode: { label: '隐私模式', icon: <EyeOff size={16} />, color: 'text-gray-500' },
 };
 
+const getActionResult = (action: SceneAction): { success: boolean; detail: string } => {
+  const random = Math.random();
+  switch (action.type) {
+    case 'record':
+      if (random > 0.1) {
+        return { success: true, detail: `已开始录像${action.params?.duration || 30}秒，保存至云端` };
+      }
+      return { success: false, detail: '设备离线，录像失败' };
+    case 'push_notification':
+      if (random > 0.15) {
+        return { success: true, detail: '微信消息已推送至家庭成员' };
+      }
+      return { success: false, detail: '推送服务未配置' };
+    case 'light_on':
+      return { success: true, detail: `客厅灯光已开启，亮度${action.params?.brightness || 80}%` };
+    case 'siren':
+      return { success: true, detail: `警笛已鸣响${action.params?.duration || 5}秒` };
+    case 'privacy_mode':
+      return { success: true, detail: action.params?.enabled ? '摄像头已切换至隐私模式' : '摄像头已退出隐私模式' };
+    default:
+      return { success: true, detail: '动作执行完成' };
+  }
+};
+
 export default function Scenes() {
   const [scenes, setScenes] = useState<Scene[]>(mockScenes);
   const [loading, setLoading] = useState(false);
@@ -149,9 +192,30 @@ export default function Scenes() {
   const [editingScene, setEditingScene] = useState<Scene | null>(null);
   const [form] = Form.useForm();
 
+  const [executionModalVisible, setExecutionModalVisible] = useState(false);
+  const [executionSteps, setExecutionSteps] = useState<ExecutionStep[]>([]);
+  const [executionResult, setExecutionResult] = useState<'success' | 'failed' | null>(null);
+  const [executionSceneName, setExecutionSceneName] = useState('');
+
+  const [createResultModalVisible, setCreateResultModalVisible] = useState(false);
+  const [createdSceneInfo, setCreatedSceneInfo] = useState<CreatedSceneInfo | null>(null);
+
+  const [toggleConfirmModalVisible, setToggleConfirmModalVisible] = useState(false);
+  const [toggleScene, setToggleScene] = useState<Scene | null>(null);
+  const [toggleTargetState, setToggleTargetState] = useState(false);
+
   const handleToggle = (scene: Scene, checked: boolean) => {
-    setScenes(scenes.map(s => s.id === scene.id ? { ...s, enabled: checked } : s));
-    message.success(checked ? `场景「${scene.name}」已启用` : `场景「${scene.name}」已禁用`);
+    setToggleScene(scene);
+    setToggleTargetState(checked);
+    setToggleConfirmModalVisible(true);
+  };
+
+  const confirmToggle = () => {
+    if (!toggleScene) return;
+    setScenes(scenes.map(s => s.id === toggleScene.id ? { ...s, enabled: toggleTargetState } : s));
+    setToggleConfirmModalVisible(false);
+    message.success(toggleTargetState ? `场景「${toggleScene.name}」已启用` : `场景「${toggleScene.name}」已禁用`);
+    setToggleScene(null);
   };
 
   const handleAdd = () => {
@@ -184,13 +248,69 @@ export default function Scenes() {
   };
 
   const handleTrigger = (scene: Scene) => {
-    message.success(`场景「${scene.name}」已立即执行`);
+    setExecutionSceneName(scene.name);
+    setExecutionResult(null);
+
+    const actionSteps: ExecutionStep[] = scene.actions.map((action, index) => ({
+      id: `action-${index}`,
+      name: actionTypeMap[action.type]?.label || '执行动作',
+      status: 'pending' as const,
+      icon: actionTypeMap[action.type]?.icon,
+    }));
+    const initialSteps: ExecutionStep[] = [
+      {
+        id: 'trigger',
+        name: '触发条件检测',
+        status: 'pending',
+        icon: <Zap size={16} />,
+      },
+      ...actionSteps,
+    ];
+    setExecutionSteps(initialSteps);
+    setExecutionModalVisible(true);
+
+    let currentStep = 0;
+    const runNextStep = () => {
+      if (currentStep >= initialSteps.length) {
+        const allSuccess = initialSteps.every(s => s.status === 'success');
+        setExecutionResult(allSuccess ? 'success' : 'failed');
+        return;
+      }
+
+      setExecutionSteps(prev => prev.map((s, idx) =>
+        idx === currentStep ? { ...s, status: 'running' } : s
+      ));
+
+      setTimeout(() => {
+        if (currentStep === 0) {
+          setExecutionSteps(prev => prev.map((s, idx) =>
+            idx === currentStep ? { ...s, status: 'success', detail: '触发条件满足' } : s
+          ));
+        } else {
+          const actionIndex = currentStep - 1;
+          const action = scene.actions[actionIndex];
+          const result = getActionResult(action);
+          setExecutionSteps(prev => prev.map((s, idx) =>
+            idx === currentStep ? {
+              ...s,
+              status: result.success ? 'success' : 'failed',
+              detail: result.detail,
+            } : s
+          ));
+        }
+        currentStep++;
+        setTimeout(runNextStep, 500);
+      }, 800);
+    };
+
+    setTimeout(runNextStep, 300);
   };
 
   const handleSubmit = (values: any) => {
     if (editingScene) {
       setScenes(scenes.map(s => s.id === editingScene.id ? { ...s, ...values } : s));
       message.success('场景已更新');
+      setModalVisible(false);
     } else {
       const newScene: Scene = {
         id: Date.now().toString(),
@@ -204,9 +324,37 @@ export default function Scenes() {
         actions: values.actions || [],
       };
       setScenes([...scenes, newScene]);
-      message.success('场景创建成功');
+
+      setCreatedSceneInfo({
+        scene: newScene,
+        triggerLabel: triggerTypeMap[values.triggerType]?.label || values.triggerType,
+        actionLabels: (values.actions || []).map((a: SceneAction) =>
+          actionTypeMap[a.type]?.label || a.type
+        ),
+        deviceCount: (values.deviceIds || []).length,
+      });
+      setModalVisible(false);
+      setCreateResultModalVisible(true);
     }
-    setModalVisible(false);
+  };
+
+  const enableCreatedScene = () => {
+    if (createdSceneInfo) {
+      setScenes(scenes.map(s =>
+        s.id === createdSceneInfo.scene.id ? { ...s, enabled: true } : s
+      ));
+      message.success(`场景「${createdSceneInfo.scene.name}」已启用`);
+    }
+    setCreateResultModalVisible(false);
+  };
+
+  const disableCreatedScene = () => {
+    if (createdSceneInfo) {
+      setScenes(scenes.map(s =>
+        s.id === createdSceneInfo.scene.id ? { ...s, enabled: false } : s
+      ));
+    }
+    setCreateResultModalVisible(false);
   };
 
   const getMenuItems = (scene: Scene): MenuProps['items'] => [
@@ -407,6 +555,206 @@ export default function Scenes() {
             </Button>
           </Form.Item>
         </Form>
+      </Modal>
+
+      <Modal
+        title={
+          <div className="flex items-center gap-2">
+            <Zap size={20} className="text-primary-500" />
+            <span>场景执行结果</span>
+          </div>
+        }
+        open={executionModalVisible}
+        onCancel={() => setExecutionModalVisible(false)}
+        footer={[
+          <Button key="close" onClick={() => setExecutionModalVisible(false)}>
+            关闭
+          </Button>,
+        ]}
+        width={520}
+        maskClosable={false}
+      >
+        <div className="text-center mb-6">
+          <div className="text-lg font-medium text-gray-800 mb-2">
+            场景「{executionSceneName}」
+          </div>
+          {executionResult === null ? (
+            <div className="flex items-center justify-center gap-2 text-gray-500">
+              <Spin size="small" />
+              <span>正在执行...</span>
+            </div>
+          ) : executionResult === 'success' ? (
+            <div className="flex flex-col items-center gap-2">
+              <CheckCircle size={48} className="text-green-500" />
+              <span className="text-green-600 font-medium text-lg">
+                场景执行成功，共执行{executionSteps.length - 1}个动作
+              </span>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <XCircle size={48} className="text-red-500" />
+              <span className="text-red-600 font-medium text-lg">
+                部分动作执行失败
+              </span>
+              <div className="text-sm text-gray-500 mt-2">
+                失败原因：
+                {executionSteps.filter(s => s.status === 'failed').map((s, idx) => (
+                  <div key={idx} className="text-red-500">{s.detail}</div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <Divider className="my-4" />
+
+        <div className="space-y-4">
+          {executionSteps.map((step, index) => (
+            <div key={step.id} className="flex items-start gap-3">
+              <div className="relative">
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    step.status === 'success'
+                      ? 'bg-green-100 text-green-600'
+                      : step.status === 'failed'
+                      ? 'bg-red-100 text-red-600'
+                      : step.status === 'running'
+                      ? 'bg-primary-100 text-primary-600'
+                      : 'bg-gray-100 text-gray-400'
+                  }`}
+                >
+                  {step.status === 'success' ? (
+                    <Check size={16} />
+                  ) : step.status === 'failed' ? (
+                    <X size={16} />
+                  ) : step.status === 'running' ? (
+                    <Spin size="small" />
+                  ) : (
+                    step.icon
+                  )}
+                </div>
+                {index < executionSteps.length - 1 && (
+                  <div className={`absolute left-1/2 top-8 w-px h-6 -translate-x-1/2 ${
+                    step.status === 'success' || step.status === 'failed'
+                      ? 'bg-gray-200'
+                      : 'bg-gray-100'
+                  }`}></div>
+                )}
+              </div>
+              <div className="flex-1 pt-1">
+                <div className="flex items-center gap-2">
+                  <span className={`font-medium ${
+                    step.status === 'success' || step.status === 'failed'
+                      ? 'text-gray-800'
+                      : 'text-gray-400'
+                  }`}>
+                    {step.name}
+                  </span>
+                  {step.status === 'running' && (
+                    <Tag color="processing" className="border-0">执行中</Tag>
+                  )}
+                  {step.status === 'success' && (
+                    <Tag color="success" className="border-0">成功</Tag>
+                  )}
+                  {step.status === 'failed' && (
+                    <Tag color="error" className="border-0">失败</Tag>
+                  )}
+                </div>
+                {step.detail && (
+                  <p className={`text-sm mt-1 ${
+                    step.status === 'failed' ? 'text-red-500' : 'text-gray-500'
+                  }`}>
+                    {step.detail}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Modal>
+
+      <Modal
+        title={
+          <div className="flex items-center gap-2">
+            <CheckCircle size={20} className="text-green-500" />
+            <span>场景创建成功</span>
+          </div>
+        }
+        open={createResultModalVisible}
+        onCancel={() => setCreateResultModalVisible(false)}
+        footer={[
+          <Button key="later" onClick={disableCreatedScene}>
+            稍后再说
+          </Button>,
+          <Button key="enable" type="primary" onClick={enableCreatedScene}>
+            立即启用
+          </Button>,
+        ]}
+        width={480}
+        maskClosable={false}
+      >
+        {createdSceneInfo && (
+          <div className="space-y-4">
+            <div className="text-center py-4">
+              <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center mb-3">
+                <Zap size={32} className="text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800">
+                场景「{createdSceneInfo.scene.name}」创建成功
+              </h3>
+              <p className="text-gray-500 mt-1">{createdSceneInfo.scene.description}</p>
+            </div>
+
+            <Card className="bg-gray-50 border-0">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500 flex items-center gap-2">
+                    {triggerTypeMap[createdSceneInfo.scene.trigger.type]?.icon || <Zap size={16} />}
+                    触发条件
+                  </span>
+                  <Tag color="blue">{createdSceneInfo.triggerLabel}</Tag>
+                </div>
+                <Divider className="my-2" />
+                <div className="flex items-start justify-between">
+                  <span className="text-gray-500 flex items-center gap-2 pt-1">
+                    <Settings size={16} />
+                    联动动作
+                  </span>
+                  <div className="flex-1 text-right">
+                    <Space size={[4, 4]} wrap>
+                      {createdSceneInfo.actionLabels.map((label, idx) => (
+                        <Tag key={idx} color="green">{label}</Tag>
+                      ))}
+                    </Space>
+                  </div>
+                </div>
+                <Divider className="my-2" />
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500 flex items-center gap-2">
+                    <Video size={16} />
+                    关联设备
+                  </span>
+                  <span className="text-gray-800 font-medium">{createdSceneInfo.deviceCount} 台设备</span>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
+      </Modal>
+
+      <Modal
+        title="确认操作"
+        open={toggleConfirmModalVisible}
+        onCancel={() => setToggleConfirmModalVisible(false)}
+        onOk={confirmToggle}
+        okText="确认"
+        cancelText="取消"
+      >
+        {toggleScene && (
+          <p className="text-gray-600">
+            确定要{toggleTargetState ? '启用' : '禁用'}场景「{toggleScene.name}」吗？
+          </p>
+        )}
       </Modal>
     </div>
   );

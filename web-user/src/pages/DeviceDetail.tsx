@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Tabs, Tag, Switch, Progress, Card, Statistic, Row, Col, Space, message, Alert, Modal, Divider, Radio, List, Badge, Tooltip } from 'antd';
+import { Button, Tabs, Tag, Switch, Progress, Card, Statistic, Row, Col, Space, message, Alert, Modal, Divider, Radio, List, Badge, Tooltip, Input, Form } from 'antd';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -29,11 +29,38 @@ import {
   AlertTriangle,
   CheckCircle2,
   DownloadCloud,
+  KeyRound,
 } from 'lucide-react';
 import { useDeviceStore } from '@/stores/useDeviceStore';
 import type { Device } from '@/types';
 
 const { TabPane } = Tabs;
+
+interface AuditLogItem {
+  id: string;
+  action: string;
+  deviceId?: string;
+  deviceName?: string;
+  ip: string;
+  timestamp: string;
+  details: string;
+  operator: string;
+  operatorAvatar?: string;
+}
+
+const generateRandomIP = () => {
+  return `192.168.1.${Math.floor(Math.random() * 255) + 1}`;
+};
+
+const addAuditLog = (log: Omit<AuditLogItem, 'id' | 'timestamp'>) => {
+  const newLog: AuditLogItem = {
+    ...log,
+    id: Date.now().toString(),
+    timestamp: new Date().toLocaleString('zh-CN', { hour12: false }),
+  };
+  const existingLogs = JSON.parse(localStorage.getItem('auditLogs') || '[]');
+  localStorage.setItem('auditLogs', JSON.stringify([newLog, ...existingLogs]));
+};
 
 const mockDevice: Device = {
   id: '1',
@@ -94,8 +121,25 @@ export default function DeviceDetail() {
   const [storageAlertEnabled, setStorageAlertEnabled] = useState(true);
   const [checkingUpdate, setCheckingUpdate] = useState(false);
   const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [upgrading, setUpgrading] = useState(false);
+  const [upgradeProgress, setUpgradeProgress] = useState(0);
   const [latencyTesting, setLatencyTesting] = useState(false);
   const [latency, setLatency] = useState<number | null>(42);
+
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [authPassword, setAuthPassword] = useState('');
+  const [authAction, setAuthAction] = useState<{ key: string; checked: boolean } | null>(null);
+  const [authLoading, setAuthLoading] = useState(false);
+
+  const [saveThresholdLoading, setSaveThresholdLoading] = useState(false);
+  const [thresholdSaved, setThresholdSaved] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`device-${id}-threshold`);
+    if (saved) {
+      setStorageThreshold(Number(saved));
+    }
+  }, [id]);
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -125,26 +169,78 @@ export default function DeviceDetail() {
     }
   };
 
-  const handleCameraToggle = (checked: boolean) => {
-    const newDevice = { ...device, privacy: { ...device.privacy, cameraEnabled: checked } };
-    setDevice(newDevice);
-    updateDevice(device.id, { privacy: newDevice.privacy });
-    message.success(checked ? '摄像头已开启' : '摄像头已关闭');
+  const requestAuthAndToggle = (key: string, checked: boolean) => {
+    setAuthAction({ key, checked });
+    setAuthPassword('');
+    setAuthModalVisible(true);
   };
 
-  const handleAudioToggle = (checked: boolean) => {
-    const newDevice = { ...device, privacy: { ...device.privacy, audioEnabled: checked } };
-    setDevice(newDevice);
-    updateDevice(device.id, { privacy: newDevice.privacy });
-    message.success(checked ? '音频已开启' : '音频已关闭');
+  const confirmAuth = () => {
+    if (authPassword !== '123456') {
+      message.error('身份验证失败，密码错误');
+      return;
+    }
+    setAuthLoading(true);
+    setTimeout(() => {
+      setAuthLoading(false);
+      setAuthModalVisible(false);
+      if (!authAction) return;
+
+      const { key, checked } = authAction;
+      let newPrivacy = { ...device.privacy };
+      let actionLabel = '';
+      let auditAction = '';
+      let auditDetails = '';
+      let newStatus = device.status;
+
+      switch (key) {
+        case 'camera':
+          newPrivacy.cameraEnabled = checked;
+          actionLabel = checked ? '摄像头已开启' : '摄像头已关闭';
+          auditAction = '隐私模式设置';
+          auditDetails = checked ? '关闭隐私模式，摄像头已开启' : '开启隐私模式，摄像头已关闭';
+          break;
+        case 'audio':
+          newPrivacy.audioEnabled = checked;
+          actionLabel = checked ? '音频采集已开启' : '音频采集已关闭';
+          auditAction = '音频采集设置';
+          auditDetails = checked ? '开启音频采集功能' : '关闭音频采集功能';
+          break;
+        case 'physicalLock':
+          newPrivacy.physicalLock = checked;
+          auditAction = '物理级锁定';
+          if (checked) {
+            actionLabel = '物理锁定已开启，设备已完全禁用，在线状态已更新为离线';
+            auditDetails = '开启物理级锁定，设备已完全禁用';
+            newStatus = 'offline';
+          } else {
+            actionLabel = '物理锁定已关闭，设备恢复正常，在线状态已更新为在线';
+            auditDetails = '关闭物理级锁定，设备恢复正常工作';
+            newStatus = 'online';
+          }
+          break;
+      }
+
+      const newDevice = { ...device, privacy: newPrivacy, status: newStatus };
+      setDevice(newDevice);
+      updateDevice(device.id, { privacy: newPrivacy, status: newStatus });
+
+      addAuditLog({
+        action: auditAction,
+        deviceId: device.id,
+        deviceName: device.name,
+        ip: generateRandomIP(),
+        operator: '张三',
+        details: auditDetails,
+      });
+
+      message.success(actionLabel);
+    }, 800);
   };
 
-  const handlePhysicalLockToggle = (checked: boolean) => {
-    const newDevice = { ...device, privacy: { ...device.privacy, physicalLock: checked } };
-    setDevice(newDevice);
-    updateDevice(device.id, { privacy: newDevice.privacy });
-    message.success(checked ? '物理锁定已开启' : '物理锁定已关闭');
-  };
+  const handleCameraToggle = (checked: boolean) => requestAuthAndToggle('camera', checked);
+  const handleAudioToggle = (checked: boolean) => requestAuthAndToggle('audio', checked);
+  const handlePhysicalLockToggle = (checked: boolean) => requestAuthAndToggle('physicalLock', checked);
 
   const handleControlAction = (action: string) => {
     const actionMap: Record<string, string> = {
@@ -165,9 +261,29 @@ export default function DeviceDetail() {
     setCheckingUpdate(true);
     setTimeout(() => {
       setCheckingUpdate(false);
-      setUpdateAvailable(false);
-      message.success('当前已是最新版本');
+      setUpdateAvailable(true);
+      message.info('发现新版本 v2.4.0');
     }, 2000);
+  };
+
+  const handleStartUpgrade = () => {
+    setUpgrading(true);
+    setUpgradeProgress(0);
+    message.loading({ content: '固件升级中，请勿断电...', key: 'firmware-upgrade', duration: 0 });
+    const steps = [10, 25, 40, 55, 70, 85, 95, 100];
+    steps.forEach((p, i) => {
+      setTimeout(() => {
+        setUpgradeProgress(p);
+        if (p === 100) {
+          setUpgrading(false);
+          setUpdateAvailable(false);
+          const newDevice = { ...device, firmwareVersion: 'v2.4.0' };
+          setDevice(newDevice);
+          updateDevice(device.id, { firmwareVersion: 'v2.4.0' });
+          message.success({ content: '固件升级成功，当前版本 v2.4.0', key: 'firmware-upgrade' });
+        }
+      }, (i + 1) * 800);
+    });
   };
 
   const handleTestLatency = () => {
@@ -474,20 +590,48 @@ export default function DeviceDetail() {
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-gray-800">当前版本</span>
-                        <Badge status="success" text="最新" />
+                        {updateAvailable ? (
+                          <Tag color="orange">有新版本</Tag>
+                        ) : (
+                          <Badge status="success" text="最新" />
+                        )}
                       </div>
                       <p className="text-2xl font-bold text-gray-900 mt-1">{device.firmwareVersion}</p>
                       <p className="text-sm text-gray-500 mt-1">发布日期：2024-01-10</p>
                     </div>
-                    <Button
-                      type="primary"
-                      icon={checkingUpdate ? <RefreshCw size={16} className="animate-spin" /> : <RefreshCw size={16} />}
-                      onClick={handleCheckUpdate}
-                      loading={checkingUpdate}
-                    >
-                      {checkingUpdate ? '检查中...' : '检查更新'}
-                    </Button>
+                    <Space>
+                      <Button
+                        icon={checkingUpdate ? <RefreshCw size={16} className="animate-spin" /> : <RefreshCw size={16} />}
+                        onClick={handleCheckUpdate}
+                        loading={checkingUpdate}
+                      >
+                        {checkingUpdate ? '检查中...' : '检查更新'}
+                      </Button>
+                      {updateAvailable && !upgrading && (
+                        <Button
+                          type="primary"
+                          icon={<Download size={16} />}
+                          onClick={handleStartUpgrade}
+                        >
+                          升级到 v2.4.0
+                        </Button>
+                      )}
+                    </Space>
                   </div>
+                  {upgrading && (
+                    <div className="bg-blue-50 rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-blue-700 font-medium text-sm">固件升级中，请勿断电...</span>
+                        <span className="text-blue-600 font-bold">{upgradeProgress}%</span>
+                      </div>
+                      <Progress
+                        percent={upgradeProgress}
+                        showInfo={false}
+                        strokeColor={{ '0%': '#165DFF', '100%': '#00B42A' }}
+                        size="small"
+                      />
+                    </div>
+                  )}
                   <Divider style={{ margin: '8px 0' }} />
                   <div>
                     <h4 className="font-medium text-gray-800 mb-3 flex items-center gap-2">
@@ -687,7 +831,10 @@ export default function DeviceDetail() {
                     </div>
                     <Radio.Group
                       value={storageThreshold}
-                      onChange={(e) => setStorageThreshold(e.target.value)}
+                      onChange={(e) => {
+                        setStorageThreshold(e.target.value);
+                        setThresholdSaved(false);
+                      }}
                     >
                       <Radio.Button value={80}>80%</Radio.Button>
                       <Radio.Button value={90}>90%</Radio.Button>
@@ -700,6 +847,40 @@ export default function DeviceDetail() {
                       strokeColor={storageThreshold > 90 ? '#F53F3F' : storageThreshold > 80 ? '#FF7D00' : '#165DFF'}
                       className="mt-3"
                     />
+                    <div className="mt-3 flex items-center gap-3">
+                      <Button
+                        type="primary"
+                        size="small"
+                        loading={saveThresholdLoading}
+                        onClick={() => {
+                          setSaveThresholdLoading(true);
+                          setTimeout(() => {
+                            localStorage.setItem(`device-${id}-threshold`, String(storageThreshold));
+                            setSaveThresholdLoading(false);
+                            setThresholdSaved(true);
+                            
+                            addAuditLog({
+                              action: '修改设备配置',
+                              deviceId: device.id,
+                              deviceName: device.name,
+                              ip: generateRandomIP(),
+                              operator: '张三',
+                              details: `存储空间阈值调整为${storageThreshold}%`,
+                            });
+                            
+                            message.success(`阈值已更新为 ${storageThreshold}%，告警规则已生效`);
+                          }, 600);
+                        }}
+                      >
+                        保存配置
+                      </Button>
+                      {thresholdSaved && (
+                        <span className="text-green-600 text-sm flex items-center gap-1">
+                          <CheckCircle2 size={14} />
+                          已保存生效
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   <Divider style={{ margin: '4px 0' }} />
@@ -714,7 +895,13 @@ export default function DeviceDetail() {
                         <p className="text-sm text-gray-500">自动检测SD卡坏块和读写性能</p>
                       </div>
                     </div>
-                    <Button size="small" onClick={() => message.success('SD卡健康检测已启动，预计需要1-2分钟')}>
+                    <Button size="small" onClick={() => {
+                      const hide = message.loading('SD卡健康检测已启动，预计需要1-2分钟', 0);
+                      setTimeout(() => {
+                        hide();
+                        message.success('SD卡健康检测完成：读写速度正常，未发现坏块，剩余寿命约85%');
+                      }, 2000);
+                    }}>
                       立即检测
                     </Button>
                   </div>
@@ -745,6 +932,51 @@ export default function DeviceDetail() {
           </TabPane>
         </Tabs>
       </Card>
+
+      <Modal
+        title={
+          <span className="flex items-center gap-2">
+            <KeyRound size={18} className="text-warning-500" />
+            身份验证
+          </span>
+        }
+        open={authModalVisible}
+        onCancel={() => setAuthModalVisible(false)}
+        onOk={confirmAuth}
+        confirmLoading={authLoading}
+        okText="确认"
+        cancelText="取消"
+      >
+        <div className="space-y-4 py-2">
+          <Alert
+            type="warning"
+            showIcon
+            icon={<Shield size={16} />}
+            message="安全操作确认"
+            description={
+              authAction
+                ? authAction.key === 'physicalLock'
+                  ? authAction.checked
+                    ? '即将开启物理级锁定，设备将被完全禁用，请确认操作'
+                    : '即将关闭物理级锁定，设备将恢复工作，请确认操作'
+                  : `即将${authAction.checked ? '开启' : '关闭'}${
+                      authAction.key === 'camera' ? '摄像头' : '音频采集'
+                    }，请输入密码确认`
+                : ''
+            }
+          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">请输入操作密码</label>
+            <Input.Password
+              placeholder="请输入操作密码（演示：123456）"
+              value={authPassword}
+              onChange={(e) => setAuthPassword(e.target.value)}
+              onPressEnter={confirmAuth}
+            />
+            <p className="text-xs text-gray-400 mt-1">演示密码：123456</p>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

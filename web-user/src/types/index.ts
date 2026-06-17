@@ -97,7 +97,7 @@ export interface OTATask {
   id: string;
   firmwareId: string;
   version: string;
-  status: 'pending' | 'running' | 'completed' | 'failed';
+  status: 'pending' | 'running' | 'paused' | 'completed' | 'failed';
   totalDevices: number;
   successDevices: number;
   failedDevices: number;
@@ -106,6 +106,7 @@ export interface OTATask {
   strategy: 'all' | 'region' | 'model' | 'manual';
   regions: string[];
   models: string[];
+  grayPercentage?: number;
 }
 
 export interface AuditLog {

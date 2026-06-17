@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Layout as AntLayout, Menu, Avatar, Dropdown, Breadcrumb, Input, Badge } from 'antd';
+import { useState, useEffect } from 'react';
+import { Layout as AntLayout, Menu, Avatar, Dropdown, Breadcrumb, Input, Badge, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import {
   Activity,
@@ -31,8 +31,19 @@ const breadcrumbMap: Record<string, string[]> = {
 
 const Layout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [openKeys, setOpenKeys] = useState<string[]>(['health']);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+    const keys: string[] = [];
+    if (path.startsWith('/health')) keys.push('health');
+    if (path.startsWith('/ota')) keys.push('ota');
+    if (keys.length > 0) {
+      setOpenKeys(keys);
+    }
+  }, [location.pathname]);
 
   const getSelectedKeys = (): string[] => {
     const path = location.pathname;
@@ -45,25 +56,47 @@ const Layout: React.FC = () => {
     return [];
   };
 
-  const getOpenKeys = (): string[] => {
-    const path = location.pathname;
-    const keys: string[] = [];
-    if (path.startsWith('/health')) keys.push('health');
-    if (path.startsWith('/ota')) keys.push('ota');
-    return keys;
-  };
-
   const getBreadcrumbs = (): string[] => {
     const path = location.pathname;
-    if (path.startsWith('/health/') && path !== '/health') {
+    if (path.startsWith('/health/') && path !== '/health' && path !== '/health/dev001') {
       return ['健康看板', '设备详情'];
     }
     for (const key of Object.keys(breadcrumbMap)) {
-      if (path === key || path.startsWith(key + '/')) {
+      if (path === key || (key !== '/health' && path.startsWith(key + '/'))) {
+        return breadcrumbMap[key];
+      }
+      if (key === '/health' && path === '/health') {
         return breadcrumbMap[key];
       }
     }
     return ['首页'];
+  };
+
+  const handleOpenChange: MenuProps['onOpenChange'] = (keys) => {
+    setOpenKeys(keys as string[]);
+  };
+
+  const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
+    switch (key) {
+      case 'health-overview':
+        navigate('/health');
+        break;
+      case 'health-detail':
+        navigate('/health/dev001');
+        break;
+      case 'audit':
+        navigate('/audit');
+        break;
+      case 'firmwares':
+        navigate('/ota/firmwares');
+        break;
+      case 'tasks':
+        navigate('/ota/tasks');
+        break;
+      case 'create-task':
+        navigate('/ota/tasks/create');
+        break;
+    }
   };
 
   const menuItems: MenuProps['items'] = [
@@ -76,13 +109,11 @@ const Layout: React.FC = () => {
           key: 'health-overview',
           icon: <Activity size={16} />,
           label: '健康概览',
-          onClick: () => navigate('/health'),
         },
         {
           key: 'health-detail',
           icon: <Monitor size={16} />,
           label: '设备健康详情',
-          onClick: () => navigate('/health/dev001'),
         },
       ],
     },
@@ -90,7 +121,6 @@ const Layout: React.FC = () => {
       key: 'audit',
       icon: <FileText size={18} />,
       label: '审计日志',
-      onClick: () => navigate('/audit'),
     },
     {
       key: 'ota',
@@ -101,19 +131,16 @@ const Layout: React.FC = () => {
           key: 'firmwares',
           icon: <Package size={16} />,
           label: '固件管理',
-          onClick: () => navigate('/ota/firmwares'),
         },
         {
           key: 'tasks',
           icon: <PlayCircle size={16} />,
           label: '发布任务',
-          onClick: () => navigate('/ota/tasks'),
         },
         {
           key: 'create-task',
           icon: <Plus size={16} />,
           label: '创建任务',
-          onClick: () => navigate('/ota/tasks/create'),
         },
       ],
     },
@@ -149,15 +176,17 @@ const Layout: React.FC = () => {
         onCollapse={(value) => setCollapsed(value)}
         theme="dark"
         width={240}
+        collapsedWidth={64}
+        trigger={null}
       >
         <div className="flex items-center gap-3 h-16 px-4 border-b border-gray-700/50">
           <div className="w-9 h-9 rounded-lg bg-primary-500 flex items-center justify-center flex-shrink-0">
             <Shield size={20} className="text-white" />
           </div>
           {!collapsed && (
-            <div className="flex flex-col">
-              <span className="text-white font-semibold text-base">IoT安防云平台</span>
-              <span className="text-gray-400 text-xs">管理控制台</span>
+            <div className="flex flex-col overflow-hidden">
+              <span className="text-white font-semibold text-base truncate">IoT安防云平台</span>
+              <span className="text-gray-400 text-xs truncate">管理控制台</span>
             </div>
           )}
         </div>
@@ -165,9 +194,12 @@ const Layout: React.FC = () => {
           theme="dark"
           mode="inline"
           selectedKeys={getSelectedKeys()}
-          defaultOpenKeys={getOpenKeys()}
+          openKeys={collapsed ? [] : openKeys}
+          onOpenChange={handleOpenChange}
+          onClick={handleMenuClick}
           items={menuItems}
           className="border-none mt-2"
+          inlineIndent={16}
         />
       </Sider>
       <AntLayout>

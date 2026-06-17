@@ -98,7 +98,7 @@ export interface OTATask {
   name?: string;
   firmwareId: string;
   version: string;
-  status: 'pending' | 'running' | 'completed' | 'failed';
+  status: 'pending' | 'running' | 'paused' | 'completed' | 'failed';
   totalDevices: number;
   successDevices: number;
   failedDevices: number;
