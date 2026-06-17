@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift, Receipt, ScanLine, Clock4, UserCheck, BadgeCheck } from 'lucide-react';
+import { MapPin, Calendar, Clock, Sparkles, Baby, ChefHat, ChevronDown, Zap, Shield, CircleDollarSign, CheckCircle, Navigation, Users, Star, FileCheck, Timer, Award, AlertTriangle, Phone, Flame, Gift, Receipt, ScanLine, Clock4, UserCheck, BadgeCheck, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAppStore, serviceTypeList } from '@/store';
@@ -59,6 +59,7 @@ export default function QuickOrderForm() {
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [orderId, setOrderId] = useState(0);
   const [selectedWorkerId, setSelectedWorkerId] = useState<number | null>(null);
+  const [expandedCertWorkerId, setExpandedCertWorkerId] = useState<number | null>(null);
 
   const currentService = serviceTypeList.find((s) => s.type === serviceType)!;
   const dateStr = getDateStr(dateOffset);
@@ -540,17 +541,44 @@ export default function QuickOrderForm() {
                 </div>
                 <div>
                   <h3 className="text-xs font-bold text-secondary-800">动态加权派单队列</h3>
-                  <p className="text-[9px] text-secondary-400">准时率40%+好评50%+投诉率10% 综合排序</p>
+                  <p className="text-[9px] text-secondary-400">1km优先 + 准时率40%+好评50%+投诉10% 综合排序</p>
                 </div>
               </div>
               <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-secondary-100 text-secondary-600">
                 共{dispatchQueue.length}位
               </span>
             </div>
+
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-2 mb-3 border border-blue-100">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <Flame className="w-3 h-3 text-orange-500" />
+                <span className="text-[9px] font-medium text-secondary-700">派单规则</span>
+              </div>
+              <div className="grid grid-cols-2 gap-1.5 text-[9px]">
+                <div className="bg-white/70 rounded px-1.5 py-1 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                  <span className="text-secondary-600">1km内优先派单</span>
+                </div>
+                <div className="bg-white/70 rounded px-1.5 py-1 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                  <span className="text-secondary-600">准时率40%权重</span>
+                </div>
+                <div className="bg-white/70 rounded px-1.5 py-1 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                  <span className="text-secondary-600">好评率50%权重</span>
+                </div>
+                <div className="bg-white/70 rounded px-1.5 py-1 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                  <span className="text-secondary-600">投诉率10%权重</span>
+                </div>
+              </div>
+            </div>
+
             <div className="space-y-1.5">
               {dispatchQueue.map((w, i) => {
                 const isTop = i === 0;
                 const isSelected = selectedWorkerId === w.id;
+                const isCertExpanded = expandedCertWorkerId === w.id;
                 const cert = useWorkerStore.getState().getCertByWorkerId(w.id!);
                 const score = useWorkerStore.getState().getScoreByWorkerId(w.id!);
                 const certOk = cert?.verify_status === 'approved';
@@ -558,76 +586,215 @@ export default function QuickOrderForm() {
                 const punctRate = score?.punctuality_rate ?? w.punctuality_rate ?? 95;
                 const satColor = w.satisfaction_rate && w.satisfaction_rate >= 97 ? 'text-green-600' : w.satisfaction_rate && w.satisfaction_rate >= 93 ? 'text-yellow-600' : 'text-orange-600';
                 const complColor = w.complaint_rate && w.complaint_rate <= 1 ? 'text-green-600' : w.complaint_rate && w.complaint_rate <= 2.5 ? 'text-yellow-600' : 'text-red-600';
+                const is1km = (w.distance_km || 0) <= 1.0;
+                const reasons = [];
+                if (is1km) reasons.push({ label: '1km内优先', color: 'bg-blue-100 text-blue-700' });
+                if (punctRate >= 98) reasons.push({ label: '准时率高', color: 'bg-purple-100 text-purple-700' });
+                if ((w.satisfaction_rate || 0) >= 97) reasons.push({ label: '好评率高', color: 'bg-green-100 text-green-700' });
+                if ((w.complaint_rate || 0) <= 0.5) reasons.push({ label: '零投诉', color: 'bg-red-100 text-red-700' });
                 return (
                   <div
                     key={w.id}
                     className={cn(
-                      'p-2.5 rounded-xl transition-colors',
+                      'rounded-xl transition-all overflow-hidden',
                       isSelected ? 'bg-primary-50 border-2 border-primary-300 ring-2 ring-primary-100' :
                       isTop ? 'bg-orange-50 border border-orange-100' : 'bg-cream-100 border border-transparent hover:border-gray-200'
                     )}
                   >
-                    <div className="flex items-center gap-2.5">
-                      <div className="relative flex-shrink-0">
-                        <img src={w.avatar} alt={w.real_name} className="w-9 h-9 rounded-full bg-secondary-100" />
-                        <div className={cn(
-                          'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white',
-                          isSelected ? 'bg-primary-500' :
-                          isTop ? 'bg-orange-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-secondary-300'
-                        )}>
-                          {isSelected ? '✓' : i + 1}
+                    <div className="p-2.5">
+                      <div className="flex items-center gap-2.5">
+                        <div className="relative flex-shrink-0">
+                          <img src={w.avatar} alt={w.real_name} className="w-9 h-9 rounded-full bg-secondary-100" />
+                          <div className={cn(
+                            'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white',
+                            isSelected ? 'bg-primary-500' :
+                            isTop ? 'bg-orange-500' : i === 1 ? 'bg-gray-400' : i === 2 ? 'bg-amber-600' : 'bg-secondary-300'
+                          )}>
+                            {isSelected ? '✓' : i + 1}
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-xs font-semibold text-secondary-800">{w.real_name}</span>
+                            {isTop && !isSelected && <span className="text-[8px] px-1 py-0 rounded bg-orange-200 text-orange-700 font-medium">优先派单</span>}
+                            {isSelected && <span className="text-[8px] px-1 py-0 rounded bg-primary-200 text-primary-700 font-medium">已选</span>}
+                            <span className="text-[9px] text-secondary-400">·{w.experience_years}年</span>
+                            <span className={cn(
+                              'text-[8px] px-1 py-0 rounded font-medium flex items-center gap-0.5',
+                              certOk ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                            )}>
+                              {certOk ? <><BadgeCheck className="w-2.5 h-2.5" />三证齐全</> : <><ScanLine className="w-2.5 h-2.5" />审核中</>}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1.5 mt-0.5 text-[9px] flex-wrap">
+                            <span className={cn('flex items-center gap-0.5', is1km ? 'text-blue-600 font-medium' : 'text-blue-500')}>
+                              <MapPin className="w-2.5 h-2.5" />
+                              {w.distance_km}km
+                              {is1km && <span className="text-[8px] bg-blue-100 text-blue-700 px-0.5 rounded ml-0.5">1km优先</span>}
+                            </span>
+                            <span className="text-secondary-300">|</span>
+                            <span className="text-purple-600 flex items-center gap-0.5"><Clock4 className="w-2.5 h-2.5" />准时{punctRate}%</span>
+                            <span className="text-secondary-300">|</span>
+                            <span className={satColor}>好评{w.satisfaction_rate}%</span>
+                            <span className="text-secondary-300">|</span>
+                            <span className={complColor}>投诉{w.complaint_rate}%</span>
+                          </div>
+                          {isTop && (
+                            <div className="flex items-center gap-1 mt-1 flex-wrap">
+                              {reasons.slice(0, 3).map((r, ri) => (
+                                <span key={ri} className={cn('text-[8px] px-1 py-0 rounded font-medium', r.color)}>
+                                  {r.label}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex flex-col items-end gap-1">
+                          <div className="text-right flex-shrink-0">
+                            <p className="text-xs font-bold text-orange-600">{(w.weighted_score || 90).toFixed(1)}</p>
+                            <p className="text-[8px] text-secondary-400">综合分</p>
+                          </div>
+                          <div className="flex gap-1">
+                            <button
+                              onClick={() => setExpandedCertWorkerId(isCertExpanded ? null : w.id!)}
+                              className={cn(
+                                'text-[8px] px-1.5 py-0.5 rounded font-medium transition-colors flex items-center gap-0.5',
+                                isCertExpanded ? 'bg-primary-100 text-primary-600' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
+                              )}
+                            >
+                              <ScanLine className="w-2.5 h-2.5" />
+                              {isCertExpanded ? '收起三证' : '三证详情'}
+                            </button>
+                            <button
+                              onClick={() => setSelectedWorkerId(isSelected ? null : w.id!)}
+                              className={cn(
+                                'text-[8px] px-1.5 py-0.5 rounded font-medium transition-colors',
+                                isSelected ? 'bg-primary-500 text-white' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
+                              )}
+                            >
+                              {isSelected ? '取消' : '选择'}
+                            </button>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-semibold text-secondary-800">{w.real_name}</span>
-                          {isTop && !isSelected && <span className="text-[8px] px-1 py-0 rounded bg-orange-200 text-orange-700 font-medium">优先派单</span>}
-                          {isSelected && <span className="text-[8px] px-1 py-0 rounded bg-primary-200 text-primary-700 font-medium">已选</span>}
-                          <span className="text-[9px] text-secondary-400">·{w.experience_years}年</span>
+                    </div>
+
+                    {isCertExpanded && cert && (
+                      <div className="border-t border-dashed border-gray-200 mx-2.5 mb-2 pt-2">
+                        <div className="flex items-center justify-between mb-2 px-0.5">
+                          <p className="text-[10px] font-bold text-secondary-700 flex items-center gap-1">
+                            <BadgeCheck className="w-3 h-3 text-green-500" />
+                            三证核验详情
+                          </p>
                           <span className={cn(
-                            'text-[8px] px-1 py-0 rounded font-medium flex items-center gap-0.5',
+                            'text-[9px] px-1.5 py-0.5 rounded font-medium',
                             certOk ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
                           )}>
-                            {certOk ? <><BadgeCheck className="w-2.5 h-2.5" />三证齐全</> : <><ScanLine className="w-2.5 h-2.5" />审核中</>}
+                            {certOk ? '审核通过' : '待复核'}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1.5 mt-0.5 text-[9px] flex-wrap">
-                          <span className="text-blue-600 flex items-center gap-0.5"><MapPin className="w-2.5 h-2.5" />{w.distance_km}km</span>
-                          <span className="text-secondary-300">|</span>
-                          <span className="text-purple-600 flex items-center gap-0.5"><Clock4 className="w-2.5 h-2.5" />准时{punctRate}%</span>
-                          <span className="text-secondary-300">|</span>
-                          <span className={satColor}>好评{w.satisfaction_rate}%</span>
-                          <span className="text-secondary-300">|</span>
-                          <span className={complColor}>投诉{w.complaint_rate}%</span>
+
+                        <div className="space-y-1.5">
+                          {[
+                            { key: 'id_card', label: '身份证', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50' },
+                            { key: 'health_cert', label: '健康证', icon: Receipt, color: 'text-green-600', bg: 'bg-green-50' },
+                            { key: 'no_crime', label: '无犯罪记录', icon: Award, color: 'text-purple-600', bg: 'bg-purple-50' }
+                          ].map((item) => {
+                            const ocrData = cert.ocr_detail?.[item.key as keyof typeof cert.ocr_detail];
+                            const reviewRecord = cert.review_history?.find(r => r.type === 'recheck' || r.type === 'manual');
+                            const Icon = item.icon;
+                            if (!ocrData) return null;
+                            const fields = Object.entries(ocrData.fields || {}).slice(0, 4);
+                            return (
+                              <div key={item.key} className={cn('rounded-lg p-1.5', item.bg)}>
+                                <div className="flex items-center justify-between mb-1">
+                                  <div className="flex items-center gap-1">
+                                    <Icon className={cn('w-3 h-3', item.color)} />
+                                    <span className="text-[9px] font-bold text-secondary-800">{item.label}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1.5">
+                                    <span className={cn(
+                                      'text-[8px] px-1 py-0 rounded',
+                                      ocrData.confidence >= 95 ? 'bg-green-200 text-green-800' :
+                                      ocrData.confidence >= 80 ? 'bg-yellow-200 text-yellow-800' : 'bg-red-200 text-red-800'
+                                    )}>
+                                      置信度{ocrData.confidence}%
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-x-1.5 gap-y-0.5">
+                                  {fields.map(([key, val]) => (
+                                    <div key={key} className="flex items-start gap-1 text-[8px]">
+                                      <span className="text-secondary-400 flex-shrink-0">{key}:</span>
+                                      <span className="text-secondary-700 truncate">{typeof val === 'string' ? val : String(val)}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                                {reviewRecord && (
+                                  <div className="mt-1 pt-1 border-t border-dashed border-white/60 flex items-center justify-between text-[8px]">
+                                    <span className="text-secondary-500">复核: <span className="text-secondary-700 font-medium">{reviewRecord.reviewer}</span></span>
+                                    <span className={cn(
+                                      'font-medium',
+                                      reviewRecord.result === 'pass' ? 'text-green-600' : 'text-red-600'
+                                    )}>
+                                      {reviewRecord.result === 'pass' ? '✓ 通过' : reviewRecord.result === 'reject' ? '✗ 驳回' : '⏳ 待审'}
+                                    </span>
+                                    <span className="text-secondary-400">
+                                      {new Date(reviewRecord.review_time).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
-                        {certOk && certTime && (
-                          <div className="flex items-center gap-1 mt-0.5 text-[8px] text-secondary-400">
-                            <UserCheck className="w-2 h-2" />
-                            <span>复核人：{cert.review_history?.find(r => r.type === 'recheck')?.reviewer || '初审专员'}</span>
-                            <span>· 留痕：{new Date(certTime).toLocaleDateString('zh-CN')}</span>
+
+                        {cert.review_history && cert.review_history.length > 0 && (
+                          <div className="mt-2">
+                            <p className="text-[9px] font-bold text-secondary-700 mb-1 flex items-center gap-1">
+                              <Clock4 className="w-2.5 h-2.5 text-primary-500" />
+                              复核留痕记录 ({cert.review_history.length}轮)
+                            </p>
+                            <div className="space-y-0.5">
+                              {cert.review_history.map((r, ri) => (
+                                <div key={ri} className="flex items-start gap-1.5 text-[8px]">
+                                  <div className="w-1 h-1 rounded-full bg-primary-400 mt-1.5 flex-shrink-0" />
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-1">
+                                      <span className="text-secondary-700 font-medium">{r.reviewer}</span>
+                                      <span className="text-secondary-400">·</span>
+                                      <span className={cn(
+                                        'px-1 py-0 rounded text-[8px]',
+                                        r.type === 'ocr' ? 'bg-blue-100 text-blue-700' :
+                                        r.type === 'recheck' ? 'bg-purple-100 text-purple-700' :
+                                        'bg-green-100 text-green-700'
+                                      )}>
+                                        {r.type === 'ocr' ? 'OCR识别' : r.type === 'recheck' ? '季度复查' : '人工复核'}
+                                      </span>
+                                      <span className={cn(
+                                        'px-1 py-0 rounded',
+                                        r.result === 'pass' ? 'bg-green-100 text-green-700' : r.result === 'reject' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                                      )}>
+                                        {r.result === 'pass' ? '通过' : r.result === 'reject' ? '驳回' : '待审'}
+                                      </span>
+                                    </div>
+                                    <p className="text-secondary-400 mt-0.5">
+                                      {new Date(r.review_time).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
+                                      {r.remark && ` · ${r.remark}`}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         )}
                       </div>
-                      <div className="flex items-center gap-1">
-                        <div className="text-right flex-shrink-0">
-                          <p className="text-xs font-bold text-orange-600">{(w.weighted_score || 90).toFixed(1)}</p>
-                          <p className="text-[8px] text-secondary-400">综合分</p>
-                        </div>
-                        <button
-                          onClick={() => setSelectedWorkerId(isSelected ? null : w.id!)}
-                          className={cn(
-                            'text-[9px] px-1.5 py-1 rounded-md font-medium transition-colors',
-                            isSelected ? 'bg-primary-500 text-white' : 'bg-white text-secondary-600 border border-gray-200 hover:border-primary-300 hover:text-primary-600'
-                          )}
-                        >
-                          {isSelected ? '取消' : '选择'}
-                        </button>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 );
               })}
             </div>
+
             <div className="mt-2.5 pt-2 border-t border-dashed border-gray-200 grid grid-cols-3 gap-1.5 text-[9px]">
               <div className="text-center px-1.5 py-1 rounded-md bg-purple-50">
                 <p className="text-purple-600 font-bold text-[11px]">40%</p>
@@ -873,8 +1040,8 @@ function OrderSuccessView({
         <div className="card p-3">
           <div className="flex items-center gap-1.5 mb-2">
             <FileCheck className="w-3.5 h-3.5 text-primary-500" />
-            <span className="text-xs font-bold text-secondary-800">履约单据</span>
-            <span className="text-[9px] text-secondary-400 ml-auto">{displayNodes.length}个节点已记录</span>
+            <span className="text-xs font-bold text-secondary-800">履约节点记录</span>
+            <span className="text-[9px] text-secondary-400 ml-auto">{displayNodes.length}个节点已留痕</span>
           </div>
           <div className="space-y-0">
             {displayNodes.map((node, i) => {
@@ -899,12 +1066,12 @@ function OrderSuccessView({
                       <span className={cn('text-[11px] font-medium', isDone ? 'text-secondary-800' : isCurrent ? 'text-primary-600' : 'text-gray-400')}>
                         {node.node_label}
                       </span>
-                      {isCurrent && <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-primary-100 text-primary-600 animate-pulse">当前</span>}
-                      {isDone && <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">✓</span>}
+                      {isCurrent && <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-primary-100 text-primary-600 animate-pulse">进行中</span>}
+                      {isDone && <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">✓ 已完成</span>}
                     </div>
-                    <div className="flex items-center gap-2 text-[9px] text-secondary-400">
-                      <span>{node.node_time.slice(11, 16)}</span>
-                      {node.remark && <span>· {node.remark}</span>}
+                    <div className="flex items-center gap-2 text-[9px] text-secondary-400 mt-0.5">
+                      <span className="font-mono">{node.node_time.slice(5, 16)}</span>
+                      {node.remark && <span className="truncate">· {node.remark}</span>}
                     </div>
                   </div>
                 </div>
@@ -918,36 +1085,112 @@ function OrderSuccessView({
             <div className="flex items-center gap-2 mb-2">
               <Shield className="w-4 h-4 text-green-600" />
               <span className="text-xs font-bold text-green-800">保险已自动承保</span>
-              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-200 text-green-800 ml-auto">生效中</span>
+              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-200 text-green-800 ml-auto">✓ 生效中</span>
             </div>
             <div className="grid grid-cols-3 gap-1.5 text-[10px]">
               <div className="bg-white/80 rounded-lg p-1.5">
-                <p className="text-secondary-400">保单号</p>
-                <p className="font-mono text-secondary-800 font-medium truncate">{displayInsurance.policy_no.slice(-10)}</p>
+                <p className="text-secondary-400 text-[9px]">保单号</p>
+                <p className="font-mono text-secondary-800 font-medium text-[10px]">{displayInsurance.policy_no.slice(-10)}</p>
               </div>
               <div className="bg-white/80 rounded-lg p-1.5">
-                <p className="text-secondary-400">保额</p>
-                <p className="font-bold text-green-700">{(displayInsurance.coverage_amount / 10000).toFixed(0)}万</p>
+                <p className="text-secondary-400 text-[9px]">保额</p>
+                <p className="font-bold text-green-700 text-sm">{(displayInsurance.coverage_amount / 10000).toFixed(0)}万</p>
               </div>
               <div className="bg-white/80 rounded-lg p-1.5">
-                <p className="text-secondary-400">保费</p>
-                <p className="font-bold text-secondary-700">¥{displayInsurance.premium}/单</p>
+                <p className="text-secondary-400 text-[9px]">承保时间</p>
+                <p className="font-mono text-secondary-700 text-[9px]">{new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}</p>
+              </div>
+            </div>
+            <p className="text-[9px] text-green-600 mt-2 flex items-center gap-0.5">
+              <CheckCircle className="w-2.5 h-2.5" />
+              覆盖意外伤残/意外医疗/财产损失
+            </p>
+          </div>
+        )}
+
+        {liveOrder?.is_overtime ? (
+          <div className="card p-3 bg-gradient-to-r from-red-50 to-orange-50 border-red-200">
+            <div className="flex items-start gap-2">
+              <CircleDollarSign className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <div className="flex items-center gap-1.5">
+                  <p className="text-xs font-bold text-red-800">爽约赔付已触发</p>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-red-200 text-red-800">处理中</span>
+                </div>
+                <p className="text-[10px] text-red-600 mt-1">
+                  迟到{liveOrder.overtime_minutes}分钟，触发全额返现+30元券
+                </p>
+                <div className="flex items-center gap-3 mt-2 text-[9px]">
+                  <span className="text-secondary-600">返现: <span className="font-bold text-red-700">¥{liveOrder.compensation?.refund_amount || totalFee}</span></span>
+                  <span className="text-secondary-600">补偿券: <span className="font-bold text-red-700">¥{liveOrder.compensation?.coupon_amount || 30}</span></span>
+                </div>
+                <p className="text-[9px] text-secondary-400 mt-1">预计24小时内到账</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="card p-3 bg-gradient-to-r from-orange-50 to-yellow-50 border-orange-100">
+            <div className="flex items-start gap-2">
+              <CircleDollarSign className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <div className="flex items-center gap-1.5">
+                  <p className="text-xs font-bold text-orange-800">爽约赔付保障已激活</p>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-orange-200 text-orange-800">待触发</span>
+                </div>
+                <p className="text-[10px] text-orange-600 mt-0.5">
+                  迟到&gt;30min/未上门 → 全额退款+30元券 · 24h自动到账
+                </p>
               </div>
             </div>
           </div>
         )}
 
-        <div className="card p-3 bg-gradient-to-r from-red-50 to-orange-50 border-red-100">
-          <div className="flex items-start gap-2">
-            <CircleDollarSign className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="text-xs font-bold text-red-800">爽约赔付保障已激活</p>
-              <p className="text-[10px] text-red-600 mt-0.5">
-                迟到&gt;30min/未上门 → 全额退款+30元券 · 24h自动到账
-              </p>
+        {displayStatus === 'completed' && liveOrder?.qa_record && (
+          <div className="card p-3 bg-gradient-to-br from-purple-50 to-blue-50 border-purple-100">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <BadgeCheck className="w-4 h-4 text-purple-600" />
+                <span className="text-xs font-bold text-purple-800">服务质量质检</span>
+              </div>
+              <span className={cn(
+                'text-[9px] px-1.5 py-0.5 rounded-full font-medium',
+                liveOrder.qa_record.review_conclusion === 'pass'
+                  ? 'bg-green-200 text-green-800'
+                  : 'bg-red-200 text-red-800'
+              )}>
+                {liveOrder.qa_record.review_conclusion === 'pass' ? '质检通过' : '质检不通过'}
+              </span>
             </div>
+            <div className="grid grid-cols-3 gap-1.5 text-[10px] mb-2">
+              <div className="bg-white/80 rounded-lg p-1.5 text-center">
+                <p className="text-secondary-400 text-[9px]">客户评分</p>
+                <p className="font-bold text-yellow-600 text-sm">{liveOrder.qa_record.rating}★</p>
+              </div>
+              <div className="bg-white/80 rounded-lg p-1.5 text-center">
+                <p className="text-secondary-400 text-[9px]">合规率</p>
+                <p className={cn(
+                  'font-bold text-sm',
+                  liveOrder.qa_record.compliance_rate >= 80 ? 'text-green-600' : 'text-red-600'
+                )}>{liveOrder.qa_record.compliance_rate}%</p>
+              </div>
+              <div className="bg-white/80 rounded-lg p-1.5 text-center">
+                <p className="text-secondary-400 text-[9px]">投诉率</p>
+                <p className="font-bold text-secondary-700 text-sm">{liveOrder.qa_record.complaint_count}次</p>
+              </div>
+            </div>
+            <div className="bg-white/70 rounded-lg p-1.5 mb-2">
+              <p className="text-[9px] text-secondary-500 mb-0.5">差评根因</p>
+              <p className="text-[10px] text-secondary-700 font-medium">{liveOrder.qa_record.root_cause_category} · {liveOrder.qa_record.root_cause}</p>
+            </div>
+            <button
+              onClick={() => navigate(`/orders/${orderId}#qa-record`)}
+              className="w-full text-[10px] py-1.5 rounded-lg bg-purple-100 text-purple-700 font-medium hover:bg-purple-200 transition-colors flex items-center justify-center gap-1"
+            >
+              <ScanLine className="w-3 h-3" />
+              查看完整质检报告 · 录音转写 · 复查记录
+            </button>
           </div>
-        </div>
+        )}
 
         <div className="card p-3">
           <div className="flex items-center gap-1.5 mb-2">
