@@ -22,6 +22,7 @@ import {
   User,
   Shield,
   AlertCircle,
+  Search,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { api } from '@/api/client';
@@ -119,12 +120,48 @@ export default function Home() {
   const [currentBanner, setCurrentBanner] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
   const banners = [
-    { title: '南宁市小学入学报名现已开放', subtitle: '2024年秋季学期招生工作正式启动', color: 'from-primary-500 to-primary-600' },
-    { title: '电子证照全面推广使用', subtitle: '一码通行，办事更便捷', color: 'from-eco-500 to-eco-600' },
-    { title: 'BRT快速公交扫码乘车优惠', subtitle: '扫码乘车享9折优惠', color: 'from-warm-500 to-warm-600' },
+    { title: '南宁市小学入学报名现已开放', subtitle: '2024年秋季学期招生工作正式启动', color: 'from-primary-500 to-primary-600', path: '/education/enrollment' },
+    { title: '电子证照全面推广使用', subtitle: '一码通行，办事更便捷', color: 'from-eco-500 to-eco-600', path: '/identity' },
+    { title: 'BRT快速公交扫码乘车优惠', subtitle: '扫码乘车享9折优惠', color: 'from-warm-500 to-warm-600', path: '/transportation/brt' },
   ];
+
+  const allServices = [
+    { name: 'BRT乘车码', path: '/transportation/brt', category: '交通出行', keywords: '公交,扫码,BRT,乘车' },
+    { name: '智慧停车', path: '/transportation/parking', category: '交通出行', keywords: '停车,泊位,缴费' },
+    { name: '违章查询', path: '/transportation/violation', category: '交通出行', keywords: '违章,处罚,驾驶证' },
+    { name: '预约挂号', path: '/medical/appointment', category: '医疗健康', keywords: '医院,挂号,看病' },
+    { name: '候诊热力图', path: '/medical/heatmap', category: '医疗健康', keywords: '医院,候诊,热力图' },
+    { name: '入学报名', path: '/education/enrollment', category: '教育服务', keywords: '小学,入学,报名,招生' },
+    { name: '学区查询', path: '/education', category: '教育服务', keywords: '学区,学校,教育' },
+    { name: '政策解读', path: '/government/policy', category: '政务服务', keywords: '政策,解读,通知' },
+    { name: '证件办理', path: '/government', category: '政务服务', keywords: '证件,办理,证照' },
+    { name: '12345诉求', path: '/urban/complaint', category: '城市管理', keywords: '投诉,12345,诉求,工单' },
+    { name: '电子证照', path: '/identity', category: '数字身份', keywords: '证照,身份证,电子' },
+    { name: '我的资料', path: '/profile', category: '数字身份', keywords: '个人,资料,用户' },
+  ];
+
+  const searchResults = searchQuery.trim()
+    ? allServices.filter(s =>
+      s.name.includes(searchQuery) ||
+      s.category.includes(searchQuery) ||
+      s.keywords.split(',').some(k => k.includes(searchQuery))
+    )
+    : [];
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchResults.length === 1) {
+      navigate(searchResults[0].path);
+      setShowSearchResults(false);
+      setSearchQuery('');
+    } else {
+      setShowSearchResults(true);
+    }
+  };
 
   const isValidVitalSigns = (data: any): data is CityVitalSigns => {
     return (
@@ -221,20 +258,57 @@ export default function Home() {
         </button>
       </div>
 
+      <form onSubmit={handleSearchSubmit} className="relative">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={e => { setSearchQuery(e.target.value); setShowSearchResults(true); }}
+          onFocus={() => setShowSearchResults(true)}
+          placeholder="搜索服务：入学报名、挂号、停车、违章、12345..."
+          className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white shadow-card hover:shadow-card-hover transition-shadow"
+        />
+        {showSearchResults && searchQuery.trim() && (
+          <div className="absolute z-50 top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden max-h-80 overflow-y-auto">
+            {searchResults.length > 0 ? searchResults.map(svc => (
+              <button
+                key={svc.path}
+                type="button"
+                onClick={() => { navigate(svc.path); setShowSearchResults(false); setSearchQuery(''); }}
+                className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 text-left border-b border-gray-50 last:border-0"
+              >
+                <div>
+                  <span className="text-sm font-medium text-gray-800">{svc.name}</span>
+                  <span className="text-xs text-gray-400 ml-2">{svc.category}</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-300" />
+              </button>
+            )) : (
+              <div className="px-4 py-6 text-center text-gray-400 text-sm">未找到匹配的服务，试试：入学、挂号、停车</div>
+            )}
+          </div>
+        )}
+      </form>
+
       <div className="relative h-48 rounded-2xl overflow-hidden group">
         {banners.map((banner, index) => (
           <div
             key={index}
             className={cn(
-              'absolute inset-0 bg-gradient-to-r p-8 transition-all duration-700',
+              'absolute inset-0 bg-gradient-to-r p-8 transition-all duration-700 cursor-pointer',
               banner.color,
               currentBanner === index ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
             )}
+            onClick={() => navigate(banner.path)}
           >
             <div className="max-w-xl">
               <h2 className="text-2xl font-bold text-white mb-2">{banner.title}</h2>
               <p className="text-white/80">{banner.subtitle}</p>
-              <button className="mt-4 px-6 py-2 bg-white/20 backdrop-blur-sm text-white rounded-lg font-medium hover:bg-white/30 transition-colors">
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); navigate(banner.path); }}
+                className="mt-4 px-6 py-2 bg-white/20 backdrop-blur-sm text-white rounded-lg font-medium hover:bg-white/30 transition-colors"
+              >
                 立即查看 →
               </button>
             </div>
