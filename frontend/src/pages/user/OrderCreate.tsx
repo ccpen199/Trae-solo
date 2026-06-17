@@ -28,6 +28,10 @@ import {
   Users,
   Shield,
   AlertTriangle,
+  ChevronDown,
+  MapPinHouse,
+  Activity,
+  Gauge,
 } from 'lucide-react';
 import { ORDER_CATEGORIES, CITIES } from '../../constants';
 import type { OrderCategory } from '../../types';
@@ -59,6 +63,10 @@ const CITY_PRICING: Record<string, { baseFee: number; perKm: number; minFee: num
   '深圳': { baseFee: 7, perKm: 2.0, minFee: 10 },
   '杭州': { baseFee: 6, perKm: 1.8, minFee: 9 },
   '成都': { baseFee: 6, perKm: 1.5, minFee: 8 },
+  '南京': { baseFee: 6, perKm: 1.8, minFee: 9 },
+  '武汉': { baseFee: 6, perKm: 1.8, minFee: 9 },
+  '西安': { baseFee: 6, perKm: 1.5, minFee: 8 },
+  '天津': { baseFee: 7, perKm: 2.0, minFee: 10 },
 };
 
 const CATEGORY_MULTIPLIER: Record<OrderCategory, number> = {
@@ -75,7 +83,20 @@ const CATEGORY_LABELS: Record<OrderCategory, { goods: string; pickup: string; de
   errand: { goods: '办事事项', pickup: '办事地点', delivery: '送达地址' },
 };
 
-const SERVICE_CITIES = ['北京', '上海', '广州', '深圳', '杭州', '成都'];
+const SERVICE_CITIES = ['北京', '上海', '广州', '深圳', '杭州', '成都', '南京', '武汉', '西安', '天津'];
+
+const CAPACITY_STATUS: Record<string, { status: 'sufficient' | 'tight' | 'insufficient'; label: string; dot: string }> = {
+  '北京': { status: 'sufficient', label: '运力充足', dot: 'bg-green-500' },
+  '上海': { status: 'sufficient', label: '运力充足', dot: 'bg-green-500' },
+  '广州': { status: 'sufficient', label: '运力充足', dot: 'bg-green-500' },
+  '深圳': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
+  '杭州': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
+  '成都': { status: 'insufficient', label: '运力不足', dot: 'bg-red-500' },
+  '南京': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
+  '武汉': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
+  '西安': { status: 'insufficient', label: '运力不足', dot: 'bg-red-500' },
+  '天津': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
+};
 
 interface PurchaseItem {
   name: string;
@@ -154,6 +175,16 @@ const DURATION_OPTIONS = [
   { value: 'full', label: '全天' },
 ];
 
+const getReferencePrice = (city: string, catKey: OrderCategory) => {
+  const pricing = CITY_PRICING[city] || CITY_PRICING['北京'];
+  const multiplier = CATEGORY_MULTIPLIER[catKey];
+  return Math.ceil(pricing.baseFee * multiplier);
+};
+
+const getCapacityInfo = (city: string) => {
+  return CAPACITY_STATUS[city] || { status: 'tight' as const, label: '运力紧张', dot: 'bg-yellow-500' };
+};
+
 export default function OrderCreate() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -161,6 +192,7 @@ export default function OrderCreate() {
   const [submitting, setSubmitting] = useState(false);
   const [pickupAddressesOpen, setPickupAddressesOpen] = useState(false);
   const [deliveryAddressesOpen, setDeliveryAddressesOpen] = useState(false);
+  const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
 
   const {
     control,
@@ -221,6 +253,8 @@ export default function OrderCreate() {
     return addresses.every((addr) => SERVICE_CITIES.some((c) => addr.includes(c)));
   }, [pickupAddress, deliveryAddress]);
 
+  const capacityInfo = useMemo(() => getCapacityInfo(city), [city]);
+
   const currentStepIndex = steps.findIndex((s) => s.key === currentStep);
 
   const handleNext = () => {
@@ -243,10 +277,15 @@ export default function OrderCreate() {
         ...defaultValues,
         category: catKey,
         city,
-        distance,
+        distance: 3.2,
       });
     }
     setTimeout(handleNext, 150);
+  };
+
+  const handleSelectCity = (cityName: string) => {
+    setValue('city', cityName);
+    setCityDropdownOpen(false);
   };
 
   const handleSelectPickupAddress = (addr: (typeof commonAddresses)[number]) => {
@@ -318,6 +357,36 @@ export default function OrderCreate() {
 
   const selectedCategory = ORDER_CATEGORIES.find((c) => c.key === category);
   const categoryLabels = CATEGORY_LABELS[category];
+
+  const renderCitySelector = () => (
+    <div className="relative">
+      <button
+        onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
+        className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+      >
+        <MapPinHouse className="w-3.5 h-3.5 text-gray-500" />
+        <span className="text-sm font-medium text-gray-700">{city}</span>
+        <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-transform ${cityDropdownOpen ? 'rotate-180' : ''}`} />
+      </button>
+      {cityDropdownOpen && (
+        <div className="absolute right-0 top-full mt-1 w-36 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
+          {CITIES.map((c) => (
+            <button
+              key={c.code}
+              onClick={() => handleSelectCity(c.name)}
+              className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
+                city === c.name
+                  ? 'bg-brand-50 text-brand-600 font-medium'
+                  : 'text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              {c.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
   const renderPickupCard = (
     iconBg: string,
@@ -519,6 +588,53 @@ export default function OrderCreate() {
         <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
         <span className="text-sm text-amber-700">该地址超出服务范围，可能无法接单 ⚠️</span>
       </div>
+    );
+  };
+
+  const renderValidationInfo = () => {
+    const capacityData = getCapacityInfo(city);
+    return (
+      <Card className="mb-4">
+        <div className="space-y-2.5">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+            <span className="text-sm text-gray-700">
+              服务城市：<span className="font-medium">{city}</span>（已开通）
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            {isGeoFenced === true ? (
+              <>
+                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                <span className="text-sm text-gray-700">地理围栏：地址在服务范围内</span>
+              </>
+            ) : isGeoFenced === false ? (
+              <>
+                <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
+                <span className="text-sm text-amber-600">地理围栏：该地址超出常规服务范围，可能加收远程费或无法接单</span>
+              </>
+            ) : (
+              <>
+                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                <span className="text-sm text-gray-700">地理围栏：请填写地址后校验</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+            <span className="text-sm text-gray-700">
+              品类：<span className="font-medium">{selectedCategory?.name}</span>（{CATEGORY_MULTIPLIER[category]}倍计价）
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Activity className="w-4 h-4 text-brand-500 shrink-0" />
+            <span className="text-sm text-gray-700">
+              运力：当前区域<span className="font-medium">12名</span>骑手在线，预计<span className="font-medium">3分钟</span>接单
+              <span className={`inline-block w-2 h-2 rounded-full ml-1.5 ${capacityData.dot}`} />
+            </span>
+          </div>
+        </div>
+      </Card>
     );
   };
 
@@ -979,11 +1095,15 @@ export default function OrderCreate() {
       case 'category':
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-gray-900">选择服务类型</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-gray-900">选择服务类型</h3>
+              {renderCitySelector()}
+            </div>
             <div className="grid grid-cols-2 gap-3">
               {ORDER_CATEGORIES.map((cat) => {
                 const Icon = categoryIconMap[cat.iconName];
                 const isSelected = category === cat.key;
+                const refPrice = getReferencePrice(city, cat.key);
                 return (
                   <button
                     key={cat.key}
@@ -1002,6 +1122,11 @@ export default function OrderCreate() {
                     </div>
                     <p className="text-base font-semibold text-gray-800">{cat.name}</p>
                     <p className="text-xs text-gray-500 mt-1">{cat.desc}</p>
+                    <div className="absolute bottom-3 right-3 px-2 py-1 bg-gray-100 rounded-lg">
+                      <span className="text-xs font-medium text-gray-600">
+                        ¥{refPrice}起
+                      </span>
+                    </div>
                     {isSelected && (
                       <div className="absolute top-3 right-3">
                         <CheckCircle2 className="w-5 h-5 text-brand-500" />
@@ -1017,9 +1142,12 @@ export default function OrderCreate() {
       case 'address':
         return (
           <div className="space-y-5">
-            <h3 className="text-lg font-bold text-gray-900">
-              {category === 'errand' ? '填写办事地点' : '填写取送地址'}
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-gray-900">
+                {category === 'errand' ? '填写办事地点' : '填写取送地址'}
+              </h3>
+              {renderCitySelector()}
+            </div>
 
             {category === 'buy' && renderPickupCard('bg-blue-100', 'text-blue-600', Store, categoryLabels.pickup)}
             {category === 'send' && renderPickupCard('bg-green-100', 'text-green-600', Package, categoryLabels.pickup)}
@@ -1044,7 +1172,10 @@ export default function OrderCreate() {
       case 'goods':
         return (
           <div className="space-y-5">
-            <h3 className="text-lg font-bold text-gray-900">{categoryLabels.goods}</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-gray-900">{categoryLabels.goods}</h3>
+              {renderCitySelector()}
+            </div>
             {renderGoodsForm()}
 
             <h3 className="text-lg font-bold text-gray-900 mt-2">服务选项</h3>
@@ -1156,32 +1287,17 @@ export default function OrderCreate() {
       case 'price':
         return (
           <div className="space-y-5">
-            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-              <Calculator className="w-5 h-5 text-brand-500" />
-              价格预估
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <Calculator className="w-5 h-5 text-brand-500" />
+                价格预估
+              </h3>
+              {renderCitySelector()}
+            </div>
+
+            {renderValidationInfo()}
 
             <Card>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">当前城市</label>
-                <Controller
-                  name="city"
-                  control={control}
-                  render={({ field }) => (
-                    <select
-                      {...field}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white text-gray-800"
-                    >
-                      {CITIES.map((c) => (
-                        <option key={c.code} value={c.name}>
-                          {c.name}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                />
-              </div>
-
               <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
                 {selectedCategory && (() => {
                   const Icon = categoryIconMap[selectedCategory.iconName];
@@ -1287,23 +1403,68 @@ export default function OrderCreate() {
                   <span className="text-sm text-gray-700">附近可用骑手：<span className="font-semibold text-brand-600">12人在线</span></span>
                 </div>
                 <div className="mt-3">
-                  <p className="text-xs text-gray-500 mb-2">匹配维度权重：</p>
-                  <div className="space-y-1.5">
-                    {[
-                      { label: '距离', pct: 40, color: 'bg-brand-500' },
-                      { label: '空闲', pct: 25, color: 'bg-green-500' },
-                      { label: '履约率', pct: 20, color: 'bg-yellow-500' },
-                      { label: '等级', pct: 10, color: 'bg-purple-500' },
-                      { label: '品类', pct: 5, color: 'bg-pink-500' },
-                    ].map((dim) => (
-                      <div key={dim.label} className="flex items-center gap-2">
-                        <span className="text-xs text-gray-600 w-12">{dim.label}</span>
-                        <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                          <div className={`h-full ${dim.color} rounded-full`} style={{ width: `${dim.pct}%` }} />
-                        </div>
-                        <span className="text-xs text-gray-400 w-8 text-right">{dim.pct}%</span>
+                  <p className="text-xs text-gray-500 mb-3">匹配维度详情：</p>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-gray-600 flex items-center gap-1">
+                          <Gauge className="w-3 h-3 text-brand-500" />
+                          距离匹配
+                        </span>
+                        <span className="text-xs text-gray-500">平均 0.8km 内有骑手 · 40%</span>
                       </div>
-                    ))}
+                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-brand-500 rounded-full" style={{ width: '40%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-gray-600 flex items-center gap-1">
+                          <Activity className="w-3 h-3 text-green-500" />
+                          空闲状态
+                        </span>
+                        <span className="text-xs text-gray-500">8人立即可接单 · 25%</span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-green-500 rounded-full" style={{ width: '25%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-gray-600 flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-yellow-500" />
+                          履约率
+                        </span>
+                        <span className="text-xs text-gray-500">平均 98.5% 按时送达 · 20%</span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-yellow-500 rounded-full" style={{ width: '20%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-gray-600 flex items-center gap-1">
+                          <Users className="w-3 h-3 text-purple-500" />
+                          等级匹配
+                        </span>
+                        <span className="text-xs text-gray-500">3名金牌骑手优先派单 · 10%</span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-purple-500 rounded-full" style={{ width: '10%' }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-gray-600 flex items-center gap-1">
+                          <ShoppingBag className="w-3 h-3 text-pink-500" />
+                          品类专精
+                        </span>
+                        <span className="text-xs text-gray-500">5名有代购经验的骑手 · 5%</span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-pink-500 rounded-full" style={{ width: '5%' }} />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {isGeoFenced === true && (
@@ -1472,8 +1633,19 @@ export default function OrderCreate() {
           <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white border-t border-gray-100 px-4 py-3 pb-safe-area-inset-bottom">
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1">
-                <p className="text-xs text-gray-500">预估费用</p>
-                <p className="text-xl font-bold text-brand-600">¥{priceBreakdown.total.toFixed(2)}</p>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span className="text-xs text-gray-500 flex items-center gap-1">
+                    🏙️ {city}
+                  </span>
+                  <span className="text-xs text-gray-500 flex items-center gap-1">
+                    <span className={`inline-block w-1.5 h-1.5 rounded-full ${capacityInfo.dot}`} />
+                    {capacityInfo.label}
+                  </span>
+                </div>
+                <div className="flex items-baseline gap-1">
+                  <p className="text-xs text-gray-500">预估费用</p>
+                  <p className="text-xl font-bold text-brand-600">¥{priceBreakdown.total.toFixed(2)}</p>
+                </div>
               </div>
               {currentStepIndex > 0 && (
                 <Button variant="secondary" onClick={handlePrev} size="lg">

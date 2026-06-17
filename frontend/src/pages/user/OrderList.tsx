@@ -14,6 +14,12 @@ import {
   AlertCircle,
   CheckCircle,
   X,
+  ChevronDown,
+  ChevronUp,
+  History,
+  AlertTriangle,
+  Info,
+  RefreshCw,
 } from 'lucide-react';
 import { ORDER_CATEGORIES, ORDER_STATUS } from '../../constants';
 import type { Order, OrderStatus as OrderStatusType } from '../../types';
@@ -44,6 +50,21 @@ const CANCEL_REASONS = [
   '价格不合适',
   '其他原因',
 ] as const;
+
+const CANCEL_ATTRIBUTION_MAP: Record<string, { label: string; color: string; bgColor: string }> = {
+  '不想要了': { label: '用户主观', color: '#7C3AED', bgColor: '#F5F3FF' },
+  '信息填错了': { label: '下单信息错误', color: '#2563EB', bgColor: '#EFF6FF' },
+  '骑手太慢': { label: '骑手履约问题', color: '#DC2626', bgColor: '#FEF2F2' },
+  '价格不合适': { label: '价格敏感', color: '#EA580C', bgColor: '#FFF7ED' },
+  '其他原因': { label: '其他原因', color: '#6B7280', bgColor: '#F3F4F6' },
+};
+
+const getCancelAttribution = (reason: string) => {
+  if (CANCEL_ATTRIBUTION_MAP[reason]) {
+    return CANCEL_ATTRIBUTION_MAP[reason];
+  }
+  return CANCEL_ATTRIBUTION_MAP['其他原因'];
+};
 
 const initialOrders: Order[] = [
   {
@@ -147,7 +168,7 @@ const initialOrders: Order[] = [
     deliveryFee: 20,
     totalAmount: 20,
     payStatus: 'refunded',
-    cancelReason: '用户主动取消',
+    cancelReason: '不想要了',
     cancelBy: 'user',
     cancelledAt: '2024-06-14T14:30:00Z',
     createdAt: '2024-06-14T14:15:00Z',
@@ -286,6 +307,204 @@ function Toast({ visible, message, type }: ToastProps) {
   );
 }
 
+interface RefundProgressProps {
+  order: Order;
+  cancelledAt: string;
+}
+
+function RefundProgress({ order, cancelledAt }: RefundProgressProps) {
+  const formatTime = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  };
+
+  const cancelTime = formatTime(cancelledAt);
+  const isRefunded = order.payStatus === 'refunded';
+
+  const steps = [
+    { key: 'apply', label: '申请提交', time: cancelTime, done: true },
+    { key: 'review', label: '平台审核', time: isRefunded ? cancelTime : '处理中', done: isRefunded, active: !isRefunded },
+    { key: 'refund', label: '原路退回', time: isRefunded ? cancelTime : '1-3工作日', done: isRefunded },
+  ];
+
+  const payMethodLabel = order.payMethod === 'wechat' ? '微信支付' : order.payMethod === 'alipay' ? '支付宝' : '余额';
+
+  return (
+    <div className="mt-4 pt-4 border-t border-gray-100">
+      <div className="flex items-center gap-1.5 mb-3">
+        <RefreshCw className="w-4 h-4 text-emerald-500" />
+        <span className="text-sm font-semibold text-gray-700">退款流程</span>
+        <span className="text-xs text-gray-400">（退还至{payMethodLabel}）</span>
+      </div>
+      <div className="flex items-start justify-between relative">
+        {steps.map((step, index) => (
+          <div key={step.key} className="flex flex-col items-center flex-1 relative z-10">
+            <div
+              className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                step.done
+                  ? 'bg-emerald-500'
+                  : step.active
+                  ? 'bg-amber-500 animate-pulse'
+                  : 'bg-gray-200'
+              }`}
+            >
+              {step.done ? (
+                <CheckCircle className="w-4 h-4 text-white" />
+              ) : (
+                <div className="w-2 h-2 rounded-full bg-white" />
+              )}
+            </div>
+            <span className={`text-xs font-medium mt-1.5 ${step.done || step.active ? 'text-gray-700' : 'text-gray-400'}`}>
+              {step.label}
+            </span>
+            <span className={`text-xs mt-0.5 ${step.done || step.active ? 'text-gray-500' : 'text-gray-300'}`}>
+              {step.time}
+            </span>
+            {index < steps.length - 1 && (
+              <div className="absolute top-3 left-1/2 w-full h-0.5 bg-gray-200 -z-0" />
+            )}
+            {index < steps.length - 1 && step.done && steps[index + 1].done && (
+              <div className="absolute top-3 left-1/2 w-full h-0.5 bg-emerald-500 -z-0" />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+interface OperationLogProps {
+  order: Order;
+  cancelledAt: string;
+  cancelReason: string;
+}
+
+function OperationLog({ order, cancelledAt, cancelReason }: OperationLogProps) {
+  const [expanded, setExpanded] = useState(true);
+  const attribution = getCancelAttribution(cancelReason);
+
+  const formatTime = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  };
+
+  const addMinutes = (dateStr: string, mins: number) => {
+    const d = new Date(dateStr);
+    d.setMinutes(d.getMinutes() + mins);
+    return formatTime(d.toISOString());
+  };
+
+  const isPaid = order.payStatus === 'paid' || order.payStatus === 'refunded';
+  const isRefunded = order.payStatus === 'refunded';
+  const cancelTime = formatTime(cancelledAt);
+  const reviewTime = addMinutes(cancelledAt, 1);
+  const payMethodLabel = order.payMethod === 'wechat' ? '微信支付' : order.payMethod === 'alipay' ? '支付宝' : '余额';
+
+  const logs = [
+    {
+      type: 'done' as const,
+      time: cancelTime,
+      content: (
+        <span>
+          用户取消订单 — 原因：{cancelReason}
+          <span
+            className="ml-2 px-2 py-0.5 rounded-full text-xs font-medium"
+            style={{ backgroundColor: attribution.bgColor, color: attribution.color }}
+          >
+            归因：{attribution.label}
+          </span>
+        </span>
+      ),
+    },
+    isPaid && {
+      type: 'done' as const,
+      time: cancelTime,
+      content: (
+        <span>
+          系统自动发起退款 <span className="font-semibold text-amber-600">¥{order.totalAmount.toFixed(2)}</span>
+        </span>
+      ),
+    },
+    isPaid && {
+      type: isRefunded ? ('done' as const) : ('active' as const),
+      time: reviewTime,
+      content: isRefunded ? (
+        <span>平台审核通过</span>
+      ) : (
+        <span>平台审核中（预计10分钟内完成）</span>
+      ),
+    },
+    isPaid && {
+      type: isRefunded ? ('done' as const) : ('pending' as const),
+      time: isRefunded ? addMinutes(cancelledAt, 30) : '待完成',
+      content: (
+        <span>
+          {isRefunded ? `已原路退回至${payMethodLabel}` : `待原路退回至${payMethodLabel}`}
+        </span>
+      ),
+    },
+  ].filter(Boolean) as Array<{ type: 'done' | 'active' | 'pending'; time: string; content: React.ReactNode }>;
+
+  return (
+    <div className="mt-4 pt-4 border-t border-gray-100">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex items-center justify-between w-full"
+      >
+        <div className="flex items-center gap-1.5">
+          <History className="w-4 h-4 text-gray-500" />
+          <span className="text-sm font-semibold text-gray-700">操作留痕</span>
+        </div>
+        {expanded ? (
+          <ChevronUp className="w-4 h-4 text-gray-400" />
+        ) : (
+          <ChevronDown className="w-4 h-4 text-gray-400" />
+        )}
+      </button>
+      {expanded && (
+        <div className="mt-3 space-y-3">
+          {logs.map((log, index) => (
+            <div key={index} className="flex gap-3">
+              <div className="flex flex-col items-center">
+                <div
+                  className={`w-3 h-3 rounded-full flex-shrink-0 ${
+                    log.type === 'done'
+                      ? 'bg-emerald-500'
+                      : log.type === 'active'
+                      ? 'bg-amber-500 animate-pulse'
+                      : 'bg-gray-300 border-2 border-white'
+                  }`}
+                />
+                {index < logs.length - 1 && (
+                  <div className="w-px flex-1 bg-gray-200 mt-1" />
+                )}
+              </div>
+              <div className="flex-1 pb-2">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`text-xs ${
+                      log.type === 'pending' ? 'text-gray-400' : 'text-gray-500'
+                    }`}
+                  >
+                    {log.time}
+                  </span>
+                </div>
+                <p
+                  className={`text-sm mt-0.5 ${
+                    log.type === 'pending' ? 'text-gray-400' : 'text-gray-700'
+                  }`}
+                >
+                  {log.content}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface OrderCardProps {
   order: Order;
   onClick: () => void;
@@ -296,6 +515,9 @@ function OrderCard({ order, onClick, onCancel }: OrderCardProps) {
   const category = ORDER_CATEGORIES.find((c) => c.key === order.category);
   const status = ORDER_STATUS[order.status];
   const Icon = category ? categoryIconMap[category.iconName] : ShoppingBag;
+  const isCancelled = order.status === 'cancelled';
+  const attribution = order.cancelReason ? getCancelAttribution(order.cancelReason) : null;
+  const showRefund = isCancelled && (order.payStatus === 'paid' || order.payStatus === 'refunded');
 
   const formatTime = (dateStr?: string) => {
     if (!dateStr) return '-';
@@ -314,11 +536,14 @@ function OrderCard({ order, onClick, onCancel }: OrderCardProps) {
               size="sm"
               variant="secondary"
               icon={<XCircle className="w-4 h-4" />}
-              onClick={() => onCancel(order.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onCancel(order.id);
+              }}
             >
               取消订单
             </Button>
-            {order.payStatus === 'unpaid' && (
+            {order.payStatus === 'unpaid' && order.status === 'pending' && (
               <Button size="sm" variant="primary" icon={<CreditCard className="w-4 h-4" />}>
                 去支付
               </Button>
@@ -334,7 +559,10 @@ function OrderCard({ order, onClick, onCancel }: OrderCardProps) {
               size="sm"
               variant="secondary"
               icon={<XCircle className="w-4 h-4" />}
-              onClick={() => onCancel(order.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onCancel(order.id);
+              }}
             >
               申请取消
             </Button>
@@ -372,25 +600,31 @@ function OrderCard({ order, onClick, onCancel }: OrderCardProps) {
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer"
+      className={`bg-white rounded-2xl p-4 shadow-sm border transition-all cursor-pointer ${
+        isCancelled
+          ? 'border-gray-100 opacity-70 bg-gray-50/50 hover:shadow-sm'
+          : 'border-gray-100 hover:shadow-md'
+      }`}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-400">{order.orderNo}</span>
+          <span className={`text-xs ${isCancelled ? 'text-gray-400' : 'text-gray-400'}`}>{order.orderNo}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span
-            className="text-xs font-semibold px-2.5 py-1 rounded-full"
-            style={{ backgroundColor: `${status.color}15`, color: status.color }}
+            className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
+              isCancelled ? 'bg-gray-200 text-gray-500' : ''
+            }`}
+            style={!isCancelled ? { backgroundColor: `${status.color}15`, color: status.color } : undefined}
           >
             {status.name}
           </span>
-          {order.status === 'cancelled' && order.payStatus === 'refunded' && (
+          {isCancelled && order.payStatus === 'refunded' && (
             <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-50 text-green-600">
               已退款
             </span>
           )}
-          {order.status === 'cancelled' && order.payStatus === 'paid' && (
+          {isCancelled && order.payStatus === 'paid' && (
             <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-600">
               退款处理中
             </span>
@@ -403,52 +637,81 @@ function OrderCard({ order, onClick, onCancel }: OrderCardProps) {
         </div>
       </div>
 
-      {order.status === 'cancelled' && order.cancelReason && (
-        <div className="mb-3 flex items-center gap-1.5">
-          <AlertCircle className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-          <span className="text-xs text-gray-400">取消原因：</span>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
-            {order.cancelReason}
-          </span>
+      {isCancelled && order.cancelReason && attribution && (
+        <div className="mb-3 p-3 rounded-xl bg-gray-50">
+          <div className="flex items-start gap-2 mb-2">
+            <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+            <span className="text-xs text-gray-500 font-medium">取消原因：</span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-white text-gray-600 font-medium border border-gray-200">
+              {order.cancelReason}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Info className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+            <span className="text-xs text-gray-500 font-medium">异常归因：</span>
+            <span
+              className="text-xs px-2 py-0.5 rounded-full font-semibold"
+              style={{ backgroundColor: attribution.bgColor, color: attribution.color }}
+            >
+              {attribution.label}
+            </span>
+          </div>
         </div>
       )}
 
-      <div className="flex gap-3 mb-4">
+      <div className={`flex gap-3 ${isCancelled ? 'mb-0' : 'mb-4'} ${isCancelled ? 'opacity-60' : ''}`}>
         {category && (
           <div
-            className="w-11 h-11 rounded-xl flex-shrink-0 flex items-center justify-center"
-            style={{ backgroundColor: `${category.color}15` }}
+            className={`w-11 h-11 rounded-xl flex-shrink-0 flex items-center justify-center ${
+              isCancelled ? 'bg-gray-100' : ''
+            }`}
+            style={!isCancelled ? { backgroundColor: `${category.color}15` } : undefined}
           >
-            {Icon && <Icon className="w-5 h-5" style={{ color: category.color }} />}
+            {Icon && (
+              <Icon
+                className={`w-5 h-5 ${isCancelled ? 'text-gray-400' : ''}`}
+                style={!isCancelled ? { color: category.color } : undefined}
+              />
+            )}
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-gray-800 mb-1">{order.title}</p>
+          <p className={`text-sm font-medium mb-1 ${isCancelled ? 'text-gray-500' : 'text-gray-800'}`}>{order.title}</p>
           <div className="flex items-start gap-2 text-xs text-gray-500">
             <div className="flex-shrink-0 mt-0.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              <div className={`w-1.5 h-1.5 rounded-full ${isCancelled ? 'bg-gray-300' : 'bg-green-500'}`} />
             </div>
             <p className="flex-1 truncate">{order.pickupAddress}</p>
           </div>
           <div className="flex items-center justify-center my-0.5">
-            <ArrowRight className="w-3 h-3 text-gray-300" />
+            <ArrowRight className={`w-3 h-3 ${isCancelled ? 'text-gray-300' : 'text-gray-300'}`} />
           </div>
           <div className="flex items-start gap-2 text-xs text-gray-500">
             <div className="flex-shrink-0 mt-0.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-500" />
+              <div className={`w-1.5 h-1.5 rounded-full ${isCancelled ? 'bg-gray-300' : 'bg-brand-500'}`} />
             </div>
             <p className="flex-1 truncate">{order.deliveryAddress}</p>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-3 border-t border-gray-50">
-        <div className="flex items-center gap-1 text-xs text-gray-400">
+      {showRefund && order.cancelledAt && (
+        <RefundProgress order={order} cancelledAt={order.cancelledAt} />
+      )}
+
+      {isCancelled && order.cancelledAt && order.cancelReason && (
+        <OperationLog order={order} cancelledAt={order.cancelledAt} cancelReason={order.cancelReason} />
+      )}
+
+      <div className={`flex items-center justify-between pt-3 border-t border-gray-50 ${isCancelled ? 'mt-4' : ''}`}>
+        <div className={`flex items-center gap-1 text-xs ${isCancelled ? 'text-gray-400' : 'text-gray-400'}`}>
           <Clock className="w-3.5 h-3.5" />
           <span>{formatTime(order.createdAt)}</span>
         </div>
         <div className="flex items-center gap-2" onClick={handleActionClick}>
-          <span className="text-base font-bold text-brand-600">¥{order.totalAmount.toFixed(2)}</span>
+          <span className={`text-base font-bold ${isCancelled ? 'text-gray-400' : 'text-brand-600'}`}>
+            ¥{order.totalAmount.toFixed(2)}
+          </span>
           <div className="flex items-center gap-2">
             {getActionButtons()}
           </div>
@@ -500,27 +763,29 @@ export default function OrderList() {
   };
 
   const handleCancelConfirm = (orderId: string, reason: string, customReason: string) => {
+    const targetOrder = orders.find((o) => o.id === orderId);
+    const wasPaid = targetOrder?.payStatus === 'paid';
+    const refundAmount = targetOrder?.totalAmount ?? 0;
     const finalReason = reason === '其他原因' && customReason ? customReason : reason;
 
     setOrders((prev) =>
       prev.map((order) => {
         if (order.id !== orderId) return order;
-        const wasPaid = order.payStatus === 'paid';
+        const paid = order.payStatus === 'paid';
         return {
           ...order,
           status: 'cancelled' as OrderStatusType,
           cancelReason: finalReason,
           cancelBy: 'user' as const,
           cancelledAt: new Date().toISOString(),
-          payStatus: wasPaid ? 'refunded' : order.payStatus,
+          payStatus: paid ? 'paid' : order.payStatus,
           updatedAt: new Date().toISOString(),
         };
       })
     );
 
-    const order = orders.find((o) => o.id === orderId);
-    if (order?.payStatus === 'paid') {
-      showToast('订单已取消，退款将在1-3个工作日到账', 'warning');
+    if (wasPaid) {
+      showToast(`订单已取消，退款¥${refundAmount.toFixed(2)}将在1-3个工作日原路退回`, 'warning');
     } else {
       showToast('订单已取消', 'success');
     }
