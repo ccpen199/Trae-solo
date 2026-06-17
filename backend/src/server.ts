@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import dotenv from 'dotenv';
 import { initDatabase } from './db';
 import { initSchema } from './db/schema';
 import { seedDatabase } from './data/seed';
@@ -11,9 +12,11 @@ import merchantRouter from './routes/merchant';
 import adminRouter from './routes/admin';
 import commonRouter from './routes/common';
 
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
 const app = express();
-const PORT = 58921;
-const HOST = '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59216);
+const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
 
 app.use(cors());
 app.use(express.json());

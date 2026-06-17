@@ -4,7 +4,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 
 export default function MerchantLayout() {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { logout } = useAuthStore();
 
   const handleLogout = () => {
     logout();

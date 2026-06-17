@@ -6,6 +6,8 @@ import type {
   PaginationParams,
   Rider,
   GpsTrack,
+  Medal,
+  Review,
 } from '../types';
 
 export interface RiderDashboard {
@@ -16,6 +18,9 @@ export interface RiderDashboard {
   totalOrders: number;
   rating: number;
   level: number;
+  onlineMinutes: number;
+  currentOrder?: Order;
+  weeklyStats: Array<{ date: string; orders: number; earnings: number }>;
 }
 
 export interface ApplyWithdrawParams {
@@ -24,11 +29,15 @@ export interface ApplyWithdrawParams {
   payAccount: string;
 }
 
+export type ReceiveMode = 'grab' | 'dispatch' | 'mixed';
+
 export interface RiderSettings {
   autoAccept: boolean;
   notification: boolean;
   maxDistance: number;
+  minAmount: number;
   categories: string[];
+  receiveMode: ReceiveMode;
 }
 
 export interface RiderGrowth {
@@ -36,7 +45,57 @@ export interface RiderGrowth {
   currentExp: number;
   nextLevelExp: number;
   totalOrders: number;
-  medals: unknown[];
+  medals: Medal[];
+  monthlyOrders: Array<{ month: string; orders: number }>;
+}
+
+export interface EarningRecord {
+  id: string;
+  orderNo?: string;
+  orderId?: string;
+  type: 'delivery_fee' | 'reward' | 'subsidy' | 'deduction' | 'withdrawal';
+  amount: number;
+  description: string;
+  createdAt: string;
+}
+
+export interface EarningsData {
+  todayTotal: number;
+  weekTotal: number;
+  monthTotal: number;
+  total: number;
+  weeklyTrend: Array<{ date: string; amount: number }>;
+  records: EarningRecord[];
+}
+
+export interface BankCard {
+  id: string;
+  bankName: string;
+  cardNumber: string;
+  cardHolder: string;
+  isDefault: boolean;
+}
+
+export interface VehicleInfo {
+  type: string;
+  plateNumber: string;
+  insuranceExpireDate: string;
+}
+
+export interface ServiceArea {
+  id: string;
+  name: string;
+  city: string;
+}
+
+export interface Activity {
+  id: string;
+  title: string;
+  description: string;
+  type: 'high_temp' | 'festival' | 'health_check' | 'other';
+  status: 'available' | 'registered' | 'completed' | 'expired';
+  startDate: string;
+  endDate: string;
 }
 
 export const riderApi = {
@@ -44,7 +103,14 @@ export const riderApi = {
     return http.get<RiderDashboard>('/rider/dashboard');
   },
 
-  getOrderHall(params?: PaginationParams): Promise<PaginatedResponse<Order>> {
+  getOrderHall(
+    params?: PaginationParams & {
+      category?: string;
+      maxDistance?: number;
+      sortBy?: 'price' | 'distance';
+      urgentFirst?: boolean;
+    }
+  ): Promise<PaginatedResponse<Order>> {
     return http.get<PaginatedResponse<Order>>('/rider/hall', params);
   },
 
@@ -56,7 +122,9 @@ export const riderApi = {
     return http.post<Order>(`/rider/orders/${id}/accept`);
   },
 
-  getMyTasks(params?: PaginationParams & { status?: string }): Promise<PaginatedResponse<Order>> {
+  getMyTasks(
+    params?: PaginationParams & { status?: string }
+  ): Promise<PaginatedResponse<Order>> {
     return http.get<PaginatedResponse<Order>>('/rider/tasks', params);
   },
 
@@ -68,10 +136,11 @@ export const riderApi = {
     return http.post<Order>(`/rider/orders/${id}/deliver`);
   },
 
-  getEarnings(params?: { period?: 'today' | 'week' | 'month' }): Promise<{
-    total: number;
-    details: Array<{ date: string; amount: number; orders: number }>;
-  }> {
+  getEarnings(params?: {
+    period?: 'today' | 'week' | 'month' | 'custom';
+    startDate?: string;
+    endDate?: string;
+  }): Promise<EarningsData> {
     return http.get('/rider/earnings', params);
   },
 
@@ -95,7 +164,10 @@ export const riderApi = {
     return http.put<RiderSettings>('/rider/settings', params);
   },
 
-  reportLocation(location: { lat: number; lng: number }, timestamp: string): Promise<GpsTrack> {
+  reportLocation(
+    location: { lat: number; lng: number },
+    timestamp: string
+  ): Promise<GpsTrack> {
     return http.post<GpsTrack>('/rider/location', { location, timestamp });
   },
 
@@ -105,5 +177,25 @@ export const riderApi = {
 
   getProfile(): Promise<Rider> {
     return http.get<Rider>('/rider/profile');
+  },
+
+  getBankCards(): Promise<BankCard[]> {
+    return http.get<BankCard[]>('/rider/bank-cards');
+  },
+
+  getVehicleInfo(): Promise<VehicleInfo> {
+    return http.get<VehicleInfo>('/rider/vehicle');
+  },
+
+  getServiceAreas(): Promise<ServiceArea[]> {
+    return http.get<ServiceArea[]>('/rider/service-areas');
+  },
+
+  getActivities(): Promise<Activity[]> {
+    return http.get<Activity[]>('/rider/activities');
+  },
+
+  getOrderReview(orderId: string): Promise<Review> {
+    return http.get<Review>(`/rider/orders/${orderId}/review`);
   },
 };

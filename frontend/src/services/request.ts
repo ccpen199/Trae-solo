@@ -2,12 +2,15 @@ import type { ApiResponse } from '../types';
 
 const BASE_URL = '/api';
 
+type Params = Record<string, unknown> | undefined;
+
 interface RequestOptions extends RequestInit {
-  params?: Record<string, unknown>;
+  params?: Params;
   showError?: boolean;
 }
 
-function buildQueryString(params: Record<string, unknown>): string {
+function buildQueryString(params: Params): string {
+  if (!params) return '';
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
@@ -28,7 +31,7 @@ async function request<T = unknown>(
 ): Promise<T> {
   const { params, headers, showError = true, ...restOptions } = options;
 
-  const fullUrl = `${BASE_URL}${url}${params ? buildQueryString(params) : ''}`;
+  const fullUrl = `${BASE_URL}${url}${buildQueryString(params)}`;
 
   const defaultHeaders: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -50,7 +53,7 @@ async function request<T = unknown>(
 
     const data: ApiResponse<T> = await response.json();
 
-    if (data.code === 200) {
+    if (data.code === 0) {
       return data.data;
     }
 
@@ -74,7 +77,7 @@ async function request<T = unknown>(
 }
 
 export const http = {
-  get<T = unknown>(url: string, params?: Record<string, unknown>, options?: Omit<RequestOptions, 'params' | 'method'>): Promise<T> {
+  get<T = unknown>(url: string, params?: Params, options?: Omit<RequestOptions, 'params' | 'method'>): Promise<T> {
     return request<T>(url, { ...options, params, method: 'GET' });
   },
 
@@ -94,7 +97,19 @@ export const http = {
     });
   },
 
-  delete<T = unknown>(url: string, params?: Record<string, unknown>, options?: Omit<RequestOptions, 'params' | 'method'>): Promise<T> {
+  delete<T = unknown>(url: string, params?: Params, options?: Omit<RequestOptions, 'params' | 'method'>): Promise<T> {
     return request<T>(url, { ...options, params, method: 'DELETE' });
   },
 };
+
+export function get<T = unknown>(url: string, params?: Params): Promise<T> {
+  return http.get<T>(url, params);
+}
+
+export function post<T = unknown>(url: string, body?: unknown): Promise<T> {
+  return http.post<T>(url, body);
+}
+
+export function put<T = unknown>(url: string, body?: unknown): Promise<T> {
+  return http.put<T>(url, body);
+}

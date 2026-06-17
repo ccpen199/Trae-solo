@@ -5,7 +5,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 
 export default function RiderLayout() {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { logout } = useAuthStore();
   const [isOnline, setIsOnline] = useState(true);
 
   const handleLogout = () => {
