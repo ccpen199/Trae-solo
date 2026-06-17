@@ -1,0 +1,4 @@
+(node:18461) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[backend] ready http://127.0.0.1:59207
+[frontend] ready http://127.0.0.1:49207
