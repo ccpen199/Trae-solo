@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Button, Tag, Select, Input, Modal, Form, InputNumber, Radio, Drawer, Descriptions, Timeline, message, Space, Row, Col, Progress, Alert, Steps, Divider } from 'antd'
-import { SearchOutlined, PlusOutlined, EyeOutlined, SyncOutlined, RobotOutlined, BarChartOutlined, ClockCircleOutlined, DollarOutlined, SafetyOutlined, ThunderboltOutlined, WarningOutlined, ExclamationCircleOutlined, GiftOutlined, CustomerServiceOutlined, FileTextOutlined, ShopOutlined, CheckCircleOutlined } from '@ant-design/icons'
+import { Table, Button, Tag, Select, Input, Modal, Form, InputNumber, Radio, Drawer, Descriptions, Timeline, message, Space, Row, Col, Progress, Alert, Steps, Divider, List, Badge, Statistic, Tooltip, Typography } from 'antd'
+import { SearchOutlined, PlusOutlined, EyeOutlined, SyncOutlined, RobotOutlined, BarChartOutlined, ClockCircleOutlined, DollarOutlined, SafetyOutlined, ThunderboltOutlined, WarningOutlined, ExclamationCircleOutlined, GiftOutlined, CustomerServiceOutlined, FileTextOutlined, ShopOutlined, CheckCircleOutlined, CloseCircleOutlined, UserOutlined, MoneyCollectOutlined, EditOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
-import { orderApi, platformApi, merchantApi } from '../api'
+import { orderApi, platformApi, merchantApi, compensationApi, afterSalesApi } from '../api'
 
 const { Option } = Select
 const { Step } = Steps
+const { Ellipsis } = Typography
 
 function Orders() {
   const navigate = useNavigate()
@@ -26,6 +27,8 @@ function Orders() {
   const [routeDetail, setRouteDetail] = useState(null)
   const [routeLoading, setRouteLoading] = useState(false)
   const [modal, modalContextHolder] = Modal.useModal()
+  const [orderCompensations, setOrderCompensations] = useState([])
+  const [orderAfterSales, setOrderAfterSales] = useState([])
 
   useEffect(() => {
     loadPlatforms()
@@ -116,6 +119,8 @@ function Orders() {
       const res = await orderApi.detail(order.id)
       if (res.success) {
         setCurrentOrder(res.data)
+        setOrderCompensations(res.data.compensations || [])
+        setOrderAfterSales(res.data.after_sales || [])
         setDetailDrawer(true)
       }
     } catch (e) {
@@ -126,23 +131,43 @@ function Orders() {
   const handleViewRoute = async (order) => {
     setRouteLoading(true)
     try {
-      const res = await orderApi.quote({
-        distance: order.distance,
-        weight: order.goods_weight || 0,
-        urgency: order.urgency || 'normal'
+      const detailRes = await orderApi.detail(order.id)
+      const orderDetail = detailRes.success ? detailRes.data : order
+      const routeScoreDetail = (orderDetail && typeof orderDetail.route_score_detail === 'string')
+        ? JSON.parse(orderDetail.route_score_detail)
+        : (orderDetail?.route_score_detail || {})
+
+      const allPlatforms = (platforms || []).map(p => {
+        const fee = (p.base_price || 0) + ((p.per_km_price || 0) * (orderDetail?.route_distance || order.distance || 0)) + ((p.per_kg_price || 0) * (orderDetail?.route_weight || order.goods_weight || 0))
+        return {
+          platform: { id: p.id, name: p.name, logo: p.logo },
+          fee: parseFloat(fee.toFixed(2)),
+          delivery_time: p.min_delivery_time,
+          score: 70
+        }
       })
-      if (res.success) {
-        const platformData = platforms.find(p => p.id === order.platform_id)
-        const routeData = res.data.optimal?.find(r => r.platform.id === order.platform_id) || res.data.optimal?.[0]
-        setRouteDetail({
-          order,
-          platform: platformData,
-          route: routeData,
-          allPlatforms: res.data.optimal || [],
-          recommendation: res.data.reason || ''
-        })
-        setRouteDrawer(true)
+      const optimal = allPlatforms.slice(0, 5).sort((a, b) => b.fee - a.fee).reverse()
+      const routeData = {
+        order: orderDetail,
+        platform: platforms.find(p => p.id === order.platform_id),
+        route: {
+          platform: { id: order.platform_id, name: order.platform_name, logo: order.platform_logo },
+          fee: order.total_fee || 0,
+          delivery_time: orderDetail?.expected_delivery_time || 60,
+          score: (orderDetail?.route_composite_score || 0) / 100,
+          reason: orderDetail?.route_reason || '综合最优方案',
+          price_score: (routeScoreDetail.price_score || 0) * 100,
+          time_score: (routeScoreDetail.time_score || 0) * 100,
+          quality_score: (routeScoreDetail.quality_score || 0) * 100,
+          capacity_score: (routeScoreDetail.saturation_score || 0) * 100
+        },
+        allPlatforms: optimal,
+        recommendation: orderDetail?.route_reason
+          ? `已存档的五维路由依据（${orderDetail.route_selected_by === 'manual' ? '人工选择' : '系统自动'}）：${orderDetail.route_reason}`
+          : '该订单创建于路由存档功能上线前，可前往运费比价引擎重新对比。'
       }
+      setRouteDetail(routeData)
+      setRouteDrawer(true)
     } catch (e) {
       message.error('加载路由依据失败')
     } finally {
@@ -237,17 +262,79 @@ function Orders() {
       }
     },
     {
+      title: '路由依据',
+      width: 150,
+      render: (_, record) => {
+        if (!record.route_composite_score) {
+          return (
+            <Tooltip title="该订单创建于路由存档功能上线前，可点击详情查看最新推荐">
+              <Tag color="default"><RobotOutlined /> 未存档</Tag>
+            </Tooltip>
+          )
+        }
+        const score = record.route_composite_score
+        const scoreColor = score >= 80 ? '#52c41a' : score >= 60 ? '#faad14' : '#ff4d4f'
+        return (
+          <Tooltip title={`${record.route_selected_by === 'manual' ? '人工选择' : '系统自动路由'}：${record.route_reason || ''}`}>
+            <Space direction="vertical" size={0}>
+              <Space size={4}>
+                <Tag color={scoreColor} style={{ margin: 0, fontWeight: 600 }}>
+                  <RobotOutlined /> {score.toFixed(1)}分
+                </Tag>
+                <Tag color="blue" style={{ margin: 0, fontSize: 10 }}>
+                  {record.route_distance}km / {record.route_weight}kg
+                </Tag>
+              </Space>
+              <div style={{ fontSize: 10, color: '#999', marginTop: 2, maxWidth: 140 }}>
+                <Ellipsis tooltip>{record.route_reason || ''}</Ellipsis>
+              </div>
+            </Space>
+          </Tooltip>
+        )
+      }
+    },
+    {
       title: '异常预警',
-      width: 120,
+      width: 180,
       render: (_, record) => {
         const now = dayjs()
         const eta = record.estimated_arrival_time ? dayjs(record.estimated_arrival_time) : null
         const isTimeout = eta && now.isAfter(eta) && !['delivered', 'cancelled'].includes(record.delivery_status)
         const isException = record.delivery_status === 'exception'
-        if (isException) return <Tag color="red"><ExclamationCircleOutlined /> 配送异常</Tag>
-        if (isTimeout) return <Tag color="orange"><WarningOutlined /> 已超时</Tag>
+        const hasComp = (record.compensation_count || 0) > 0
+        const hasAS = (record.after_sales_count || 0) > 0
+        if (isException) return (
+          <Space direction="vertical" size={2}>
+            <Tag color="red"><ExclamationCircleOutlined /> 配送异常</Tag>
+            {hasComp && <Tag color="orange" icon={<GiftOutlined />}>已触发赔付</Tag>}
+            {hasAS && <Tag color="purple" icon={<CustomerServiceOutlined />}>售后处理中</Tag>}
+          </Space>
+        )
+        if (isTimeout) return (
+          <Space direction="vertical" size={2}>
+            <Tag color="orange"><WarningOutlined /> 已超时 {Math.abs(now.diff(eta, 'minute'))}分</Tag>
+            <Space size={4} wrap>
+              {record.compensation_count > 0 ? (
+                <Tag color="green" icon={<GiftOutlined />}>赔付已触发</Tag>
+              ) : (
+                <Tag color="red" icon={<GiftOutlined />}>待赔付</Tag>
+              )}
+              {record.after_sales_count > 0 && (
+                <Tag color="blue" icon={<CustomerServiceOutlined />}>售后跟进</Tag>
+              )}
+            </Space>
+          </Space>
+        )
         if (eta && now.diff(eta, 'minute') > -15 && now.diff(eta, 'minute') < 0 && !['delivered', 'cancelled'].includes(record.delivery_status)) {
           return <Tag color="gold"><ClockCircleOutlined /> 即将超时</Tag>
+        }
+        if (record.compensation_count > 0 || record.after_sales_count > 0) {
+          return (
+            <Space size={4} wrap>
+              {record.compensation_count > 0 && <Tag color="orange" icon={<GiftOutlined />}>有赔付</Tag>}
+              {record.after_sales_count > 0 && <Tag color="purple" icon={<CustomerServiceOutlined />}>售后中</Tag>}
+            </Space>
+          )
         }
         return <Tag color="green">正常</Tag>
       }
@@ -274,42 +361,57 @@ function Orders() {
     },
     {
       title: '操作',
-      width: 280,
-      render: (_, record) => (
-        <Space size="small" wrap>
-          <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>
-            详情
-          </Button>
-          <Button type="link" size="small" icon={<RobotOutlined />} onClick={() => handleViewRoute(record)}>
-            路由依据
-          </Button>
-          {record.delivery_status === 'pending' && (
-            <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'assigned')}>
-              分配
+      width: 340,
+      render: (_, record) => {
+        const now = dayjs()
+        const eta = record.estimated_arrival_time ? dayjs(record.estimated_arrival_time) : null
+        const isTimeout = eta && now.isAfter(eta) && !['delivered', 'cancelled'].includes(record.delivery_status)
+        return (
+          <Space size="small" wrap>
+            <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>
+              详情
             </Button>
-          )}
-          {record.delivery_status === 'assigned' && (
-            <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'picked')}>
-              取货
+            <Button type="link" size="small" icon={<RobotOutlined />} onClick={() => handleViewRoute(record)}>
+              路由依据
             </Button>
-          )}
-          {record.delivery_status === 'picked' && (
-            <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'delivering')}>
-              开始配送
-            </Button>
-          )}
-          {record.delivery_status === 'delivering' && (
-            <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'delivered')}>
-              完成
-            </Button>
-          )}
-          {!['delivered', 'cancelled', 'delivering'].includes(record.delivery_status) && (
-            <Button type="link" size="small" danger onClick={() => handleCancelOrder(record.id)}>
-              取消订单
-            </Button>
-          )}
-        </Space>
-      )
+            {(record.compensation_count > 0 || isTimeout) && (
+              <Button type="link" size="small" icon={<GiftOutlined />} onClick={() => { handleViewDetail(record) }}>
+                赔付记录
+              </Button>
+            )}
+            {record.after_sales_count > 0 && (
+              <Button type="link" size="small" icon={<CustomerServiceOutlined />} onClick={() => { handleViewDetail(record) }}>
+                售后跟进
+              </Button>
+            )}
+            {record.delivery_status === 'pending' && (
+              <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'assigned')}>
+                分配
+              </Button>
+            )}
+            {record.delivery_status === 'assigned' && (
+              <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'picked')}>
+                取货
+              </Button>
+            )}
+            {record.delivery_status === 'picked' && (
+              <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'delivering')}>
+                开始配送
+              </Button>
+            )}
+            {record.delivery_status === 'delivering' && (
+              <Button type="link" size="small" onClick={() => handleUpdateStatus(record.id, 'delivered')}>
+                完成
+              </Button>
+            )}
+            {!['delivered', 'cancelled', 'delivering'].includes(record.delivery_status) && (
+              <Button type="link" size="small" danger onClick={() => handleCancelOrder(record.id)}>
+                取消订单
+              </Button>
+            )}
+          </Space>
+        )
+      }
     }
   ]
 
@@ -591,6 +693,170 @@ function Orders() {
                 })) || [<div style={{ color: '#999' }}>暂无配送轨迹</div>]}
               />
             </div>
+
+            {orderCompensations.length > 0 && (
+              <div style={{ marginTop: 20 }}>
+                <Divider style={{ margin: '16px 0 12px' }} />
+                <Card
+                  size="small"
+                  title={
+                    <Space>
+                      <GiftOutlined style={{ color: '#fa8c16' }} />
+                      <span>SLA赔付追溯 ({orderCompensations.length})</span>
+                    </Space>
+                  }
+                  style={{ background: '#fffbe6', border: '1px solid #ffe58f' }}
+                >
+                  <List
+                    size="small"
+                    dataSource={orderCompensations}
+                    renderItem={item => (
+                      <List.Item
+                        actions={[
+                          <Button
+                            key="settle"
+                            type="link"
+                            size="small"
+                            icon={<MoneyCollectOutlined />}
+                            onClick={() => { setDetailDrawer(false); navigate('/settlement') }}
+                          >
+                            月结对账
+                          </Button>
+                        ]}
+                      >
+                        <List.Item.Meta
+                          title={
+                            <Space>
+                              <span style={{ fontWeight: 500 }}>券 {item.coupon_code}</span>
+                              <Tag color="red" style={{ margin: 0 }}>¥{item.amount?.toFixed(2)}</Tag>
+                              {item.status === 'issued' && <Tag color="green">已发放</Tag>}
+                              {item.status === 'reviewed' && <Tag color="blue">已复核</Tag>}
+                              {item.status === 'review_pending' && <Tag color="orange">待复核</Tag>}
+                              {item.status === 'pending' && <Tag color="default">待发放</Tag>}
+                              {item.reviewed_by && (
+                                <Tag icon={<UserOutlined />} color="blue">{item.reviewed_by}</Tag>
+                              )}
+                            </Space>
+                          }
+                          description={
+                            <div style={{ fontSize: 12, lineHeight: 1.8 }}>
+                              <div style={{ color: '#666' }}>📌 {item.reason}</div>
+                              {item.review_result && (
+                                <div style={{ color: '#1677ff', marginTop: 2 }}>
+                                  ✅ 复查结论: {item.review_result}
+                                </div>
+                              )}
+                              <Space size={12} style={{ marginTop: 4 }}>
+                                <span style={{ color: '#999' }}>
+                                  触发: {item.triggered_at ? dayjs(item.triggered_at).format('MM-DD HH:mm') : '-'}
+                                </span>
+                                {item.reviewed_at && (
+                                  <span style={{ color: '#999' }}>
+                                    复查: {dayjs(item.reviewed_at).format('MM-DD HH:mm')}
+                                  </span>
+                                )}
+                                {item.coupon_sent_at && (
+                                  <span style={{ color: '#999' }}>
+                                    发券: {dayjs(item.coupon_sent_at).format('MM-DD HH:mm')}
+                                  </span>
+                                )}
+                              </Space>
+                            </div>
+                          }
+                        />
+                      </List.Item>
+                    )}
+                  />
+                </Card>
+              </div>
+            )}
+
+            {orderAfterSales.length > 0 && (
+              <div style={{ marginTop: 20 }}>
+                <Divider style={{ margin: '16px 0 12px' }} />
+                <Card
+                  size="small"
+                  title={
+                    <Space>
+                      <CustomerServiceOutlined style={{ color: '#722ed1' }} />
+                      <span>售后协同跟进 ({orderAfterSales.length})</span>
+                    </Space>
+                  }
+                  style={{ background: '#f9f0ff', border: '1px solid #d3adf7' }}
+                >
+                  <List
+                    size="small"
+                    dataSource={orderAfterSales}
+                    renderItem={item => {
+                      const typeMap = {
+                        address_change: { text: '改址', color: 'orange', icon: <EditOutlined /> },
+                        cancel: { text: '取消', color: 'red', icon: <CloseCircleOutlined /> },
+                        complaint: { text: '投诉', color: 'purple', icon: <CustomerServiceOutlined /> }
+                      }
+                      const t = typeMap[item.type] || { text: item.type, color: 'default', icon: <FileTextOutlined /> }
+                      const statusColor = {
+                        success: 'green',
+                        failed: 'red',
+                        processing: 'blue',
+                        pending: 'default'
+                      }[item.sync_status] || 'default'
+                      const statusIcon = {
+                        success: <CheckCircleOutlined />,
+                        failed: <CloseCircleOutlined />,
+                        processing: <SyncOutlined />,
+                        pending: <SyncOutlined spin />
+                      }[item.sync_status]
+                      return (
+                        <List.Item
+                          actions={[
+                            <Button
+                              key="settle"
+                              type="link"
+                              size="small"
+                              icon={<MoneyCollectOutlined />}
+                              onClick={() => { setDetailDrawer(false); navigate('/settlement') }}
+                            >
+                              月结对账
+                            </Button>
+                          ]}
+                        >
+                          <List.Item.Meta
+                            title={
+                              <Space>
+                                <Tag color={t.color}>{t.icon} {t.text}</Tag>
+                                <Tag color={statusColor}>{statusIcon} {item.sync_status_text}</Tag>
+                                {item.fee_confirmed && <Tag color="green">改址费已确认</Tag>}
+                                {item.fee_confirmed === false && item.change_fee && (
+                                  <Tag color="orange">改址费待确认 ¥{item.change_fee?.toFixed(2)}</Tag>
+                                )}
+                              </Space>
+                            }
+                            description={
+                              <div style={{ fontSize: 12, lineHeight: 1.8 }}>
+                                <div style={{ color: '#666' }}>📌 {item.reason}</div>
+                                {item.new_address && (
+                                  <div style={{ color: '#fa8c16', marginTop: 2 }}>📍 新地址: {item.new_address}</div>
+                                )}
+                                {item.result && (
+                                  <div style={{ color: '#1677ff', marginTop: 2 }}>🔔 平台反馈: {item.result}</div>
+                                )}
+                                {item.disposal_result && (
+                                  <div style={{ color: '#52c41a', marginTop: 2 }}>✅ 处置结果: {item.disposal_result}</div>
+                                )}
+                                <div style={{ color: '#999', marginTop: 4 }}>
+                                  提交时间: {item.created_at ? dayjs(item.created_at).format('MM-DD HH:mm') : '-'}
+                                  {item.disposed_at && `  · 处置: ${dayjs(item.disposed_at).format('MM-DD HH:mm')}`}
+                                </div>
+                              </div>
+                            }
+                          />
+                        </List.Item>
+                      )
+                    }}
+                  />
+                </Card>
+              </div>
+            )}
           </div>
         )}
       </Drawer>

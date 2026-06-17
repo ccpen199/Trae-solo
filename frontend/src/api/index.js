@@ -65,7 +65,8 @@ export const settlementApi = {
   detail: (id) => api.get(`/settlements/${id}`),
   monthlySummary: (params) => api.get('/settlements/summary/monthly', { params }),
   generate: (data) => api.post('/settlements/generate', data),
-  updateStatus: (id, status) => api.put(`/settlements/${id}/status`, { status })
+  updateStatus: (id, status) => api.put(`/settlements/${id}/status`, { status }),
+  reconcile: (id, data) => api.post(`/settlements/${id}/reconcile`, data)
 }
 
 export const dashboardApi = {

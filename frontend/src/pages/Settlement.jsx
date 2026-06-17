@@ -13,7 +13,8 @@ import {
   ReconciliationOutlined,
   PrinterOutlined,
   GiftOutlined,
-  ExclamationCircleOutlined
+  ExclamationCircleOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import dayjs from 'dayjs'
@@ -123,11 +124,22 @@ function Settlement() {
 
   const submitReconcile = async (values) => {
     try {
-      if (values.matched) {
-        await handleUpdateStatus(currentSettlement.id, 'processing')
-        message.success('对账完成，已进入结算流程')
-      } else {
-        message.warning('对账差异已记录，请联系平台处理')
+      const res = await settlementApi.reconcile(currentSettlement.id, {
+        matched: values.matched,
+        diff_type: values.matched ? null : values.diff_type,
+        diff_amount: values.matched ? 0 : (values.diff_amount || 0),
+        diff_remark: values.remark,
+        reconciled_by: values.reconciled_by || '运营-当前操作员'
+      })
+      if (res.success) {
+        if (values.matched) {
+          message.success('对账完成，已进入结算流程；复核人和处理时间已永久记录')
+        } else {
+          message.warning('对账差异已记录，差异类型和金额已归档，请联系平台处理')
+        }
+        setCurrentSettlement(res.data)
+        loadList()
+        loadMonthlySummary()
       }
       setReconcileModal(false)
     } catch (e) {
@@ -617,6 +629,46 @@ function Settlement() {
               />
             )}
 
+            {(currentSettlement.reconciled_by || currentSettlement.reconciled_at) && (
+              <Card
+                size="small"
+                style={{ marginBottom: 16, background: '#f0f5ff', border: '1px solid #91caff' }}
+                title={
+                  <Space>
+                    <ReconciliationOutlined style={{ color: '#1677ff' }} />
+                    <span>对账结果追溯（已归档）</span>
+                  </Space>
+                }
+              >
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Statistic title="对账结果" value={currentSettlement.is_matched ? '账实一致' : '存在差异'} valueStyle={{ fontSize: 14, color: currentSettlement.is_matched ? '#52c41a' : '#ff4d4f' }} prefix={currentSettlement.is_matched ? <CheckCircleOutlined /> : <ExclamationCircleOutlined />} />
+                  </Col>
+                  <Col span={12}>
+                    <Statistic title="复核人" value={currentSettlement.reconciled_by || '-'} valueStyle={{ fontSize: 14, color: '#1677ff' }} prefix={<UserOutlined />} />
+                  </Col>
+                </Row>
+                <Descriptions size="small" column={2} style={{ marginTop: 8 }}>
+                  <Descriptions.Item label="处理时间">
+                    {currentSettlement.reconciled_at ? dayjs(currentSettlement.reconciled_at).format('YYYY-MM-DD HH:mm:ss') : '-'}
+                  </Descriptions.Item>
+                  {currentSettlement.diff_type && (
+                    <Descriptions.Item label="差异类型">
+                      <Tag color="red">{currentSettlement.diff_type === 'amount' ? '金额差异' : currentSettlement.diff_type === 'count' ? '订单数差异' : currentSettlement.diff_type === 'compensation' ? '赔付金额差异' : '其他差异'}</Tag>
+                    </Descriptions.Item>
+                  )}
+                  {currentSettlement.diff_amount > 0 && (
+                    <Descriptions.Item label="差异金额">
+                      <span style={{ color: '#ff4d4f', fontWeight: 600 }}>¥{Number(currentSettlement.diff_amount).toFixed(2)}</span>
+                    </Descriptions.Item>
+                  )}
+                  <Descriptions.Item label="对账备注" span={2}>
+                    {currentSettlement.diff_remark || '无'}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
+            )}
+
             <div style={{ marginBottom: 8, fontWeight: 500, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>结算明细 - 按单抽佣 ({currentSettlement.items?.length || 0} 条)</span>
               <Space>
@@ -692,19 +744,36 @@ function Settlement() {
                 },
                 {
                   title: '赔付追溯',
-                  width: 70,
+                  width: 120,
                   render: (_, r) => {
                     const hasComp = settlementCompensations.find(c => c.order_id === r.order_id)
                     if (hasComp) {
+                      const statusColor = { issued: 'green', reviewed: 'blue', review_pending: 'orange', pending: 'default' }[hasComp.status] || 'default'
                       return (
-                        <Tag color="purple" style={{ margin: 0, fontSize: 10 }}
-                          onClick={() => navigate('/compensation')}
-                        >
-                          <GiftOutlined /> ¥{hasComp.amount?.toFixed(0)}
-                        </Tag>
+                        <div>
+                          <Tag
+                            color={statusColor}
+                            style={{ margin: 0, fontSize: 10, cursor: 'pointer' }}
+                            onClick={() => navigate('/compensation')}
+                          >
+                            <GiftOutlined /> ¥{hasComp.amount?.toFixed(2)}
+                          </Tag>
+                          <div style={{ fontSize: 10, color: '#666', marginTop: 2 }}>
+                            {hasComp.reviewed_by || '系统'} · {hasComp.reviewed_at ? dayjs(hasComp.reviewed_at).format('MM-DD HH:mm') : '待处理'}
+                          </div>
+                        </div>
                       )
                     }
-                    return <span style={{ color: '#bbb', fontSize: 10 }}>-</span>
+                    return <span style={{ color: '#bbb', fontSize: 10 }}>无赔付</span>
+                  }
+                },
+                {
+                  title: '送达时间',
+                  width: 110,
+                  render: (_, r) => {
+                    if (r.delivered_at) return dayjs(r.delivered_at).format('MM-DD HH:mm')
+                    if (r.created_at) return <Tag color="blue">待配送 {dayjs(r.created_at).format('MM-DD HH:mm')}</Tag>
+                    return '-'
                   }
                 }
               ]}
@@ -925,6 +994,9 @@ function Settlement() {
             <Divider style={{ margin: '16px 0' }} />
 
             <Form form={reconcileForm} layout="vertical" onFinish={submitReconcile}>
+              <Form.Item name="reconciled_by" label="复核人" rules={[{ required: true, message: '请输入复核人姓名' }]} initialValue="运营-张主管">
+                <Input placeholder="请输入复核人姓名，如：运营-张主管" />
+              </Form.Item>
               <Form.Item name="matched" label="对账结果" rules={[{ required: true }]} initialValue={true}>
                 <Radio.Group>
                   <Radio value={true}>✅ 账实一致，确认对账</Radio>
@@ -957,6 +1029,13 @@ function Settlement() {
               <Form.Item name="remark" label="备注说明">
                 <Input.TextArea rows={2} placeholder="请填写对账备注或差异原因（可选）" />
               </Form.Item>
+              <Alert
+                type="info"
+                showIcon
+                style={{ marginBottom: 12 }}
+                message="对账记录将永久存档"
+                description="复核人、对账时间、差异类型和金额将作为月结对账凭证，与结算单一起保存"
+              />
               <div style={{ textAlign: 'right' }}>
                 <Button onClick={() => setReconcileModal(false)} style={{ marginRight: 8 }}>取消</Button>
                 <Button type="primary" htmlType="submit">确认对账</Button>

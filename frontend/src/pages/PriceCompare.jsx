@@ -108,11 +108,45 @@ function PriceCompare() {
     setOrderModal(true)
   }
 
+  const handleQuickOrder = async () => {
+    try {
+      const values = await form.validateFields()
+      setOrderModal(true)
+      setCreatedOrder(null)
+      orderForm.resetFields()
+      orderForm.setFieldsValue({
+        receiver_name: values.receiver_name,
+        receiver_phone: values.receiver_phone,
+        receiver_address: values.receiver_address,
+        goods_name: values.goods_name,
+        weight: values.weight || 0,
+        distance: values.distance,
+        urgency: values.urgency,
+        expected_time: values.expected_time,
+        quick_order: true
+      })
+      setSelectedPlatform({
+        platform: { id: null, name: '系统智能路由', logo: '🤖' },
+        fee: quoteResult?.recommendation?.fee || 0,
+        delivery_time: quoteResult?.recommendation?.delivery_time || 60,
+        reason: quoteResult?.recommendation?.reason || '综合最优方案（自动路由）',
+        score_detail: quoteResult?.recommendation?.score_detail,
+        score: quoteResult?.recommendation?.score || 0.8,
+        auto_route: true
+      })
+    } catch (e) {
+      if (e?.errorFields) {
+        message.warning('请先填写完整的收件人、物品和配送距离信息')
+      }
+    }
+  }
+
   const submitOrder = async (values) => {
     try {
+      const isAuto = selectedPlatform?.auto_route || !selectedPlatform?.platform?.id
       const res = await orderApi.create({
         merchant_id: 1,
-        platform_id: selectedPlatform.platform.id,
+        platform_id: isAuto ? undefined : selectedPlatform.platform.id,
         goods_name: values.goods_name,
         goods_weight: values.weight,
         distance: values.distance,
@@ -122,11 +156,11 @@ function PriceCompare() {
         urgency: values.urgency,
         expected_delivery_time: values.expected_time,
         expected_fee: values.expected_fee,
-        auto_route: false
+        auto_route: isAuto
       })
       if (res.success) {
         setCreatedOrder(res.data)
-        message.success('订单创建成功，已通知' + selectedPlatform.platform.name + '接单')
+        message.success('订单创建成功，已通知' + (isAuto ? '最优运力' : selectedPlatform.platform.name) + '接单，路由依据已存档')
         loadPlatforms()
       }
     } catch (e) {
@@ -283,6 +317,33 @@ function PriceCompare() {
               <Button type="primary" block size="large" icon={<ThunderboltOutlined />} loading={loading} onClick={handleQuote}>
                 智能比价
               </Button>
+              {quoteResult && (
+                <>
+                  <Alert
+                    style={{ marginTop: 12 }}
+                    type="success"
+                    showIcon
+                    message={
+                      <Space>
+                        <RobotOutlined style={{ color: '#52c41a' }} />
+                        <span>已生成 {quoteResult.optimal?.length || 0} 个承运方方案，可点击下单或直接保存</span>
+                      </Space>
+                    }
+                    description="配送参数已校验，可选择最低成本/最优时效/综合评分方案，也可直接走系统智能路由生成订单"
+                  />
+                  <Button
+                    type="primary"
+                    ghost
+                    block
+                    size="large"
+                    icon={<CheckSquareOutlined />}
+                    style={{ marginTop: 12 }}
+                    onClick={handleQuickOrder}
+                  >
+                    保存新订单（系统智能路由 · 已选最低成本方案）
+                  </Button>
+                </>
+              )}
             </Form>
           </Card>
 
@@ -942,14 +1003,15 @@ function PriceCompare() {
             {createdOrder ? (
               <div>
                 <Alert
-                  message="配送订单已创建成功"
+                  message="✅ 配送订单已创建成功"
                   description={
                     <div>
-                      <p>✅ 订单已同步至 <strong>{createdOrder.platform_name}</strong> 平台，平台已确认接单</p>
-                      <p>✅ 骑手正在赶来取货，预计 <b>{createdOrder.estimated_arrival_time ? dayjs(createdOrder.estimated_arrival_time).format('HH:mm') : '-'}</b> 送达</p>
-                      <p>✅ 订单数据已回写商户看板，可实时追踪配送状态</p>
+                      <p>方案类型：<b style={{ color: '#1677ff' }}>{selectedPlatform?.auto_route ? '🤖 系统智能路由（自动选择最低成本）' : (selectedPlatform?.platform?.name === cheapest?.platform?.name ? '💰 最低成本方案' : selectedPlatform?.platform?.name === bestScore?.platform?.name ? '🥇 综合最优方案' : selectedPlatform?.platform?.name === fastest?.platform?.name ? '⚡ 最快送达方案' : '🎯 用户指定平台')}</b></p>
+                      <p>订单已同步至 <strong>{createdOrder.platform_name}</strong> 平台，平台已确认接单</p>
+                      <p>骑手正在赶来取货，预计 <b>{createdOrder.estimated_arrival_time ? dayjs(createdOrder.estimated_arrival_time).format('HH:mm') : '-'}</b> 送达</p>
+                      <p>订单数据已回写商户看板，可实时追踪配送状态</p>
                       <p style={{ color: '#1677ff', marginTop: 4 }}>
-                        📍 路由依据已存档，可在 <b>订单管理 → 路由依据</b> 追溯，与结算/赔付形成闭环
+                        📍 五维路由依据已永久存档（距离{createdOrder.distance}km · 重量{createdOrder.goods_weight}kg · {createdOrder.urgency === 'urgent' ? '加急' : createdOrder.urgency === 'economy' ? '经济' : '普通'}时效），可在 <b>订单管理 → 路由依据</b> 追溯，与结算/赔付形成闭环
                       </p>
                     </div>
                   }

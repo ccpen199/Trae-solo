@@ -191,6 +191,45 @@ function initDatabase() {
   try {
     db.prepare('ALTER TABLE settlements ADD COLUMN exception_amount REAL DEFAULT 0').run();
   } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE orders ADD COLUMN route_reason TEXT').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE orders ADD COLUMN route_score_detail TEXT').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE orders ADD COLUMN route_distance REAL').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE orders ADD COLUMN route_weight REAL').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE orders ADD COLUMN route_urgency TEXT').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE orders ADD COLUMN route_selected_by TEXT DEFAULT \'auto\'').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE orders ADD COLUMN route_composite_score REAL').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN reconciled_by TEXT').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN reconciled_at DATETIME').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN diff_type TEXT').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN diff_amount REAL DEFAULT 0').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN diff_remark TEXT').run();
+  } catch (e) {}
+  try {
+    db.prepare('ALTER TABLE settlements ADD COLUMN is_matched BOOLEAN DEFAULT 0').run();
+  } catch (e) {}
 
   const platformCount = db.prepare('SELECT COUNT(*) as count FROM platforms').get().count;
   if (platformCount === 0) {
@@ -539,6 +578,38 @@ function ensureDemoWorkflowData() {
 
   ensureTrack(5, 'sla_warning', '预计送达已超时，系统已推送SLA赔付复核', '北京市朝阳区三里屯路19号');
   ensureTrack(2, 'address_change', '客户提交改址申请，等待承运平台确认费用', '北京市西城区西单北大街120号北门');
+
+  const ensureRoute = (orderId, reason, scoreDetail, distance, weight, urgency, selectedBy, compositeScore) => {
+    const row = db.prepare(`SELECT route_reason FROM orders WHERE id = ?`).get(orderId);
+    if (row && !row.route_reason) {
+      db.prepare(`
+        UPDATE orders SET route_reason = ?, route_score_detail = ?, route_distance = ?, route_weight = ?,
+          route_urgency = ?, route_selected_by = ?, route_composite_score = ?
+        WHERE id = ?
+      `).run(reason, JSON.stringify(scoreDetail), distance, weight, urgency, selectedBy, compositeScore, orderId);
+    }
+  };
+
+  ensureRoute(1,
+    '达达快送在5km距离0.5kg场景下费用最低，运力适中，推荐性价比方案',
+    { price_score: 0.88, time_score: 0.72, quality_score: 0.89, saturation_score: 0.75 },
+    5.2, 0.5, 'normal', 'auto', 81.5);
+  ensureRoute(2,
+    '顺丰同城时效最快，1.2kg蛋糕配送优先考虑准时率，综合评分最优',
+    { price_score: 0.65, time_score: 0.95, quality_score: 0.97, saturation_score: 0.88 },
+    8.5, 1.2, 'urgent', 'auto', 86.3);
+  ensureRoute(3,
+    '美团众包在经济场景下运力充足，12km远距离配送费用占优',
+    { price_score: 0.86, time_score: 0.62, quality_score: 0.79, saturation_score: 0.82 },
+    12.3, 3, 'normal', 'auto', 77.1);
+  ensureRoute(4,
+    '闪送一对一专人专送，文件资料安全性优先，历史履约率97%',
+    { price_score: 0.70, time_score: 0.88, quality_score: 0.96, saturation_score: 0.92 },
+    18.6, 0.3, 'normal', 'auto', 84.8);
+  ensureRoute(5,
+    '闪送加急场景时效稳定，2.5kg进口水果综合评分最优',
+    { price_score: 0.72, time_score: 0.92, quality_score: 0.95, saturation_score: 0.90 },
+    10.1, 2.5, 'urgent', 'auto', 85.4);
 }
 
 initDatabase();

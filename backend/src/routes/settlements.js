@@ -267,4 +267,41 @@ router.put('/:id/status', (req, res) => {
   res.json({ success: true, data: updated });
 });
 
+router.post('/:id/reconcile', (req, res) => {
+  const { matched, diff_type, diff_amount, diff_remark, reconciled_by = '运营-当前操作员' } = req.body;
+  const settlement = db.prepare('SELECT * FROM settlements WHERE id = ?').get(req.params.id);
+  
+  if (!settlement) {
+    return res.status(404).json({ success: false, message: '结算单不存在' });
+  }
+  
+  const reconciled_at = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  const nextStatus = matched ? 'processing' : 'pending';
+  
+  db.prepare(`
+    UPDATE settlements SET status = ?, is_matched = ?, diff_type = ?, diff_amount = ?, diff_remark = ?,
+      reconciled_by = ?, reconciled_at = ?
+    WHERE id = ?
+  `).run(
+    nextStatus,
+    matched ? 1 : 0,
+    diff_type || null,
+    diff_amount || 0,
+    diff_remark || null,
+    reconciled_by,
+    reconciled_at,
+    req.params.id
+  );
+  
+  const updated = db.prepare(`
+    SELECT s.*, m.name as merchant_name, p.name as platform_name, p.logo as platform_logo
+    FROM settlements s
+    LEFT JOIN merchants m ON s.merchant_id = m.id
+    LEFT JOIN platforms p ON s.platform_id = p.id
+    WHERE s.id = ?
+  `).get(req.params.id);
+  
+  res.json({ success: true, data: updated });
+});
+
 module.exports = router;

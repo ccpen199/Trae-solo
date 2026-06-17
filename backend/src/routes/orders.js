@@ -23,7 +23,10 @@ function generatePlatformOrderNo(platformCode) {
 router.get('/', (req, res) => {
   const { merchant_id, status, delivery_status, platform_id, page = 1, pageSize = 20 } = req.query;
   
-  let query = 'SELECT o.*, p.name as platform_name, p.logo as platform_logo, m.name as merchant_name FROM orders o';
+  let query = 'SELECT o.*, p.name as platform_name, p.logo as platform_logo, m.name as merchant_name,';
+  query += ' (SELECT COUNT(*) FROM compensations c WHERE c.order_id = o.id) as compensation_count,';
+  query += ' (SELECT COUNT(*) FROM after_sales a WHERE a.order_id = o.id) as after_sales_count';
+  query += ' FROM orders o';
   query += ' LEFT JOIN platforms p ON o.platform_id = p.id';
   query += ' LEFT JOIN merchants m ON o.merchant_id = m.id';
   
@@ -104,6 +107,7 @@ router.get('/stats', (req, res) => {
 router.get('/:id', (req, res) => {
   const order = db.prepare(`
     SELECT o.*, p.name as platform_name, p.logo as platform_logo, p.code as platform_code,
+           p.capacity_saturation, p.on_time_rate as actual_on_time_rate, p.loss_rate, p.complaint_rate,
            m.name as merchant_name, m.contact_phone as merchant_phone
     FROM orders o
     LEFT JOIN platforms p ON o.platform_id = p.id
@@ -116,8 +120,46 @@ router.get('/:id', (req, res) => {
   }
   
   const tracks = db.prepare('SELECT * FROM order_tracks WHERE order_id = ? ORDER BY id').all(req.params.id);
+
+  const compensations = db.prepare(`
+    SELECT c.*, p.name as platform_name, p.logo as platform_logo
+    FROM compensations c
+    LEFT JOIN orders o ON c.order_id = o.id
+    LEFT JOIN platforms p ON o.platform_id = p.id
+    WHERE c.order_id = ?
+    ORDER BY c.triggered_at DESC
+  `).all(req.params.id);
+
+  const afterSales = db.prepare(`
+    SELECT a.*, p.name as platform_name, p.logo as platform_logo
+    FROM after_sales a
+    LEFT JOIN orders o ON a.order_id = o.id
+    LEFT JOIN platforms p ON o.platform_id = p.id
+    WHERE a.order_id = ?
+    ORDER BY a.created_at DESC
+  `).all(req.params.id);
+
+  afterSales.forEach(a => {
+    if (a.status === 'completed' || a.status === 'resolved' || a.status === 'success') {
+      a.sync_status = 'success';
+      a.sync_status_text = '处置完成';
+    } else if (a.status === 'rejected' || a.status === 'failed' || a.status === 'denied') {
+      a.sync_status = 'failed';
+      a.sync_status_text = '平台驳回';
+    } else if (a.platform_ack === 1) {
+      a.sync_status = 'processing';
+      a.sync_status_text = '承运方已回执';
+    } else {
+      a.sync_status = 'pending';
+      a.sync_status_text = '同步中';
+    }
+  });
+
+  try {
+    if (order.route_score_detail) order.route_score_detail = JSON.parse(order.route_score_detail);
+  } catch (e) {}
   
-  res.json({ success: true, data: { ...order, tracks } });
+  res.json({ success: true, data: { ...order, tracks, compensations, after_sales: afterSales } });
 });
 
 router.get('/:id/tracks', (req, res) => {
@@ -241,6 +283,25 @@ router.post('/', (req, res) => {
          selectedPlatformId ? 'assigned' : 'pending', 'pending', estimatedArrival);
   
   const orderId = result.lastInsertRowid;
+
+  const optimalAll = getOptimalPlatform(actualDistance, actualWeight, urgency || 'normal', requestedDeliveryTime);
+  const chosenRoute = optimalAll.find(r => r.platform && r.platform.id === selectedPlatformId) || optimalAll[0];
+  if (chosenRoute) {
+    db.prepare(`
+      UPDATE orders SET route_reason = ?, route_score_detail = ?, route_distance = ?, route_weight = ?,
+        route_urgency = ?, route_selected_by = ?, route_composite_score = ?
+      WHERE id = ?
+    `).run(
+      chosenRoute.reason || '综合最优方案',
+      JSON.stringify(chosenRoute.scoreDetail || {}),
+      actualDistance,
+      actualWeight,
+      urgency || 'normal',
+      shouldAutoRoute ? 'auto' : 'manual',
+      chosenRoute.score ? parseFloat((chosenRoute.score * 100).toFixed(1)) : null,
+      orderId
+    );
+  }
   
   db.prepare(`INSERT INTO order_tracks (order_id, status, description, location) VALUES (?, ?, ?, ?)`)
     .run(orderId, 'pending', '订单已创建', sender_address || merchant.address);
