@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "@/lib/api";
 import StatusBadge from "@/components/StatusBadge";
 import AnimatedNumber from "@/components/AnimatedNumber";
@@ -11,10 +11,12 @@ export default function Monitor() {
   const [policies, setPolicies] = useState<any[]>([]);
   const [slaHistory, setSlaHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     let alive = true;
     setLoading(true);
+    setError(null);
     Promise.all([
       api.monitor.sla(),
       api.monitor.policies(),
@@ -25,9 +27,14 @@ export default function Monitor() {
       setPolicies(p);
       setSlaHistory(h);
       setLoading(false);
-    }).catch((e) => { console.error(e); setLoading(false); });
+    }).catch((e) => { setError(e.message || "加载失败"); setLoading(false); });
     return () => { alive = false; };
   }, []);
+
+  useEffect(() => {
+    const cleanup = loadData();
+    return cleanup;
+  }, [loadData]);
 
   const healthyCount = slaMetrics.filter((m) => m.status === "healthy").length;
   const warningCount = slaMetrics.filter((m) => m.status === "warning").length;
@@ -42,6 +49,16 @@ export default function Monitor() {
         <h2 className="font-display text-xl font-bold text-gray-900 mb-1">运营监测中心</h2>
         <p className="text-sm text-gray-500">服务可用性监测 · 政策兑现追踪审计</p>
       </div>
+
+      {error && (
+        <div className="rounded-xl bg-red-50 border border-red-100 p-4 flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2 text-sm text-red-700">
+            <AlertTriangle className="w-4 h-4" />
+            {error}
+          </div>
+          <button onClick={loadData} className="text-xs text-red-600 hover:text-red-800 font-medium underline">重试</button>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         <div className="rounded-xl bg-white border border-gray-100 p-5">

@@ -8,12 +8,26 @@ const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
 const app = express();
 
+const allowedOrigins = [
+  FRONTEND_URL,
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "http://localhost:5174",
+  "http://127.0.0.1:5174",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [FRONTEND_URL, "http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
   })
 );
 

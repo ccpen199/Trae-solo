@@ -4,7 +4,7 @@ import { api } from "@/lib/api";
 import ServiceCard from "@/components/ServiceCard";
 import AnimatedNumber from "@/components/AnimatedNumber";
 import StatusBadge from "@/components/StatusBadge";
-import { MapPin, Clock, ArrowRight, Bus, Plane, FileText, Bell, Loader2 } from "lucide-react";
+import { MapPin, Clock, ArrowRight, Bus, Plane, FileText, Bell, Loader2, AlertTriangle } from "lucide-react";
 
 const categoryColors: Record<string, string> = {
   policy: "bg-primary-100 text-primary-700",
@@ -41,25 +41,29 @@ export default function Home() {
   const [news, setNews] = useState<any[]>([]);
   const [stats, setStats] = useState<{ totalUsers: number; totalServices: number; avgSLA: number; citiesCovered: number } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let alive = true;
+  const loadData = () => {
     setLoading(true);
+    setError(null);
     Promise.all([
       api.services.list(currentRole),
       api.news.list(),
       api.stats(),
     ]).then(([s, n, st]) => {
-      if (!alive) return;
       setServices(s);
       setNews(n);
       setStats(st);
       setLoading(false);
     }).catch((e) => {
       console.error("Failed to load home data:", e);
+      setError(e.message || "数据加载失败");
       setLoading(false);
     });
-    return () => { alive = false; };
+  };
+
+  useEffect(() => {
+    loadData();
   }, [currentRole]);
 
   const filteredServices = services;
@@ -88,6 +92,17 @@ export default function Home() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
+          {error && (
+            <div className="rounded-xl bg-red-50 border border-red-100 p-4 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm text-red-700">
+                <AlertTriangle className="w-4 h-4" />
+                {error}
+              </div>
+              <button onClick={loadData} className="text-xs text-red-600 hover:text-red-800 font-medium underline">
+                重试
+              </button>
+            </div>
+          )}
           <section className="animate-slide-up stagger-1" style={{ opacity: 0 }}>
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-display font-bold text-lg text-gray-900">智能服务推荐</h3>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "@/lib/api";
 import StatusBadge from "@/components/StatusBadge";
 import { FileText, Users, ClipboardList, Sparkles, Clock, AlertTriangle, ChevronRight, Loader2 } from "lucide-react";
@@ -13,10 +13,12 @@ export default function GovOffice() {
   const [tasks, setTasks] = useState<any[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     let alive = true;
     setLoading(true);
+    setError(null);
     Promise.all([api.gov.documents(), api.gov.meetings(), api.gov.tasks()]).then(([d, m, t]) => {
       if (!alive) return;
       setDocuments(d);
@@ -25,11 +27,16 @@ export default function GovOffice() {
       if (d.length > 0) setSelectedDoc(d[0]);
       setLoading(false);
     }).catch((e) => {
-      console.error(e);
+      setError(e.message || "加载失败");
       setLoading(false);
     });
     return () => { alive = false; };
   }, []);
+
+  useEffect(() => {
+    const cleanup = loadData();
+    return cleanup;
+  }, [loadData]);
 
   return (
     <div className="p-6 max-w-[1400px] mx-auto">
@@ -37,6 +44,16 @@ export default function GovOffice() {
         <h2 className="font-display text-xl font-bold text-gray-900 mb-1">智政办公</h2>
         <p className="text-sm text-gray-500">公文智能摘要 · 会议纪要生成 · 任务督办看板</p>
       </div>
+
+      {error && (
+        <div className="rounded-xl bg-red-50 border border-red-100 p-4 flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2 text-sm text-red-700">
+            <AlertTriangle className="w-4 h-4" />
+            {error}
+          </div>
+          <button onClick={loadData} className="text-xs text-red-600 hover:text-red-800 font-medium underline">重试</button>
+        </div>
+      )}
 
       <div className="flex gap-2 mb-6">
         {[

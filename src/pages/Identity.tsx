@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppStore, roleLabels, type UserRole } from "@/store/useAppStore";
 import { api } from "@/lib/api";
 import StatusBadge from "@/components/StatusBadge";
-import { Shield, Cloud, CreditCard, Smartphone, CheckCircle2, AlertCircle, ArrowRight, Loader2 } from "lucide-react";
+import { Shield, Cloud, CreditCard, Smartphone, CheckCircle2, AlertCircle, ArrowRight, Loader2, AlertTriangle } from "lucide-react";
 import { clsx } from "clsx";
 
 const providerIcons: Record<string, React.ReactNode> = {
@@ -37,19 +37,23 @@ export default function Identity() {
   const { currentRole, setCurrentRole } = useAppStore();
   const [providers, setProviders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let alive = true;
+  const loadData = () => {
     setLoading(true);
+    setError(null);
     api.identity.providers().then((data) => {
-      if (!alive) return;
       setProviders(data);
       setLoading(false);
     }).catch((e) => {
       console.error(e);
+      setError(e.message || "加载失败");
       setLoading(false);
     });
-    return () => { alive = false; };
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   return (
@@ -74,6 +78,12 @@ export default function Identity() {
                     <div className="h-4 bg-gray-200 rounded animate-pulse w-20 mx-auto" />
                   </div>
                 ))
+              ) : error ? (
+                <div className="col-span-full rounded-xl bg-red-50 border border-red-100 p-4 text-center">
+                  <AlertTriangle className="w-5 h-5 text-red-400 mx-auto mb-2" />
+                  <p className="text-sm text-red-700">{error}</p>
+                  <button onClick={loadData} className="text-xs text-red-600 hover:text-red-800 font-medium underline mt-1">重试</button>
+                </div>
               ) : (
                 providers.map((provider) => (
                   <div key={provider.provider} className="rounded-xl border border-gray-100 p-4 text-center hover-lift cursor-pointer">

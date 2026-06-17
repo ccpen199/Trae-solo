@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "@/lib/api";
 import StatusBadge from "@/components/StatusBadge";
-import { Mountain, Route, MessageSquareWarning, Clock, Users, MapPin, Sparkles, Send, Loader2 } from "lucide-react";
+import { Mountain, Route, MessageSquareWarning, Clock, Users, MapPin, Sparkles, Send, Loader2, ImageIcon, AlertTriangle } from "lucide-react";
 import { clsx } from "clsx";
 
 type Tab = "spots" | "routes" | "complaints";
@@ -13,6 +13,18 @@ const heatColors: Record<string, string> = {
   full: "text-red-600 bg-red-50",
 };
 
+function FallbackImage({ src, alt, className }: { src: string; alt: string; className: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div className={`${className} bg-gradient-to-br from-emerald-100 to-primary-100 flex items-center justify-center`}>
+        <ImageIcon className="w-5 h-5 text-emerald-400" />
+      </div>
+    );
+  }
+  return <img src={src} alt={alt} className={className} onError={() => setFailed(true)} />;
+}
+
 export default function SmartTour() {
   const [tab, setTab] = useState<Tab>("spots");
   const [spots, setSpots] = useState<any[]>([]);
@@ -20,13 +32,15 @@ export default function SmartTour() {
   const [complaints, setComplaints] = useState<any[]>([]);
   const [selectedSpot, setSelectedSpot] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [complaintTitle, setComplaintTitle] = useState("");
   const [complaintContent, setComplaintContent] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     let alive = true;
     setLoading(true);
+    setError(null);
     Promise.all([api.tour.spots(), api.tour.routes(), api.tour.complaints()]).then(([s, r, c]) => {
       if (!alive) return;
       setSpots(s);
@@ -34,9 +48,14 @@ export default function SmartTour() {
       setComplaints(c);
       if (s.length > 0) setSelectedSpot(s[0]);
       setLoading(false);
-    }).catch((e) => { console.error(e); setLoading(false); });
+    }).catch((e) => { setError(e.message || "加载失败"); setLoading(false); });
     return () => { alive = false; };
   }, []);
+
+  useEffect(() => {
+    const cleanup = loadData();
+    return cleanup;
+  }, [loadData]);
 
   const handleComplaintSubmit = async () => {
     if (complaintTitle && complaintContent) {
@@ -62,6 +81,16 @@ export default function SmartTour() {
         <h2 className="font-display text-xl font-bold text-gray-900 mb-1">智游八桂</h2>
         <p className="text-sm text-gray-500">景区预约限流预警 · 小众路线AI规划 · 文旅投诉直连</p>
       </div>
+
+      {error && (
+        <div className="rounded-xl bg-red-50 border border-red-100 p-4 flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2 text-sm text-red-700">
+            <AlertTriangle className="w-4 h-4" />
+            {error}
+          </div>
+          <button onClick={loadData} className="text-xs text-red-600 hover:text-red-800 font-medium underline">重试</button>
+        </div>
+      )}
 
       <div className="flex gap-2 mb-6">
         {[
@@ -110,7 +139,7 @@ export default function SmartTour() {
                     )}
                   >
                     <div className="flex items-start gap-3">
-                      <img src={spot.image} alt={spot.name} className="w-16 h-12 rounded-lg object-cover flex-shrink-0" />
+                      <FallbackImage src={spot.image} alt={spot.name} className="w-16 h-12 rounded-lg object-cover flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <h4 className="font-semibold text-sm text-gray-900 truncate">{spot.name}</h4>
@@ -141,7 +170,7 @@ export default function SmartTour() {
             ) : (
               <>
                 <div className="rounded-xl overflow-hidden border border-gray-100">
-                  <img src={selectedSpot.image} alt={selectedSpot.name} className="w-full h-48 object-cover" />
+                  <FallbackImage src={selectedSpot.image} alt={selectedSpot.name} className="w-full h-48 object-cover" />
                   <div className="bg-white p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div>

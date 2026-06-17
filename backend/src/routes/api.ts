@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 router.get("/health", (_req, res) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString(), service: "广西全域数字生活操作系统-后端" });
+  res.json({ data: { status: "ok", timestamp: new Date().toISOString(), service: "广西全域数字生活操作系统-后端" }, code: 0, message: "success" });
 });
 
 router.get("/user/profile", (_req, res) => {

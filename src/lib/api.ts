@@ -17,11 +17,14 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}: ${res.statusText}`);
   }
-  const json = (await res.json()) as ApiResponse<T>;
-  if (json.code !== 0) {
+  const json = await res.json();
+  if (json.code !== undefined && json.code !== 0) {
     throw new Error(json.message || "请求失败");
   }
-  return json.data;
+  if (json.data !== undefined) {
+    return json.data as T;
+  }
+  return json as T;
 }
 
 export const api = {

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "@/lib/api";
 import StatusBadge from "@/components/StatusBadge";
 import AnimatedNumber from "@/components/AnimatedNumber";
-import { HeartPulse, HandCoins, Baby, ShieldCheck, CheckCircle2, Clock, ArrowRight, QrCode, Loader2 } from "lucide-react";
+import { HeartPulse, HandCoins, Baby, ShieldCheck, CheckCircle2, Clock, ArrowRight, QrCode, Loader2, AlertTriangle } from "lucide-react";
 import { clsx } from "clsx";
 
 type Tab = "medical" | "elderly" | "newborn";
@@ -12,10 +12,12 @@ export default function Livelihood() {
   const [subsidies, setSubsidies] = useState<any[]>([]);
   const [insurance, setInsurance] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     let alive = true;
     setLoading(true);
+    setError(null);
     Promise.all([
       api.livelihood.subsidies(),
       api.livelihood.insurance(),
@@ -24,9 +26,14 @@ export default function Livelihood() {
       setSubsidies(s);
       setInsurance(ins);
       setLoading(false);
-    }).catch((e) => { console.error(e); setLoading(false); });
+    }).catch((e) => { setError(e.message || "加载失败"); setLoading(false); });
     return () => { alive = false; };
   }, []);
+
+  useEffect(() => {
+    const cleanup = loadData();
+    return cleanup;
+  }, [loadData]);
 
   return (
     <div className="p-6 max-w-[1400px] mx-auto">
@@ -34,6 +41,16 @@ export default function Livelihood() {
         <h2 className="font-display text-xl font-bold text-gray-900 mb-1">智惠民生</h2>
         <p className="text-sm text-gray-500">高龄补贴自动申领 · 新生儿出生免证办 · 医保社保查询</p>
       </div>
+
+      {error && (
+        <div className="rounded-xl bg-red-50 border border-red-100 p-4 flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2 text-sm text-red-700">
+            <AlertTriangle className="w-4 h-4" />
+            {error}
+          </div>
+          <button onClick={loadData} className="text-xs text-red-600 hover:text-red-800 font-medium underline">重试</button>
+        </div>
+      )}
 
       <div className="flex gap-2 mb-6">
         {[
