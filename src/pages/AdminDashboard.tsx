@@ -9,11 +9,283 @@ import {
   PawPrint, FileSpreadsheet, MessageCircle, HeartHandshake, Bell,
   MapPinned, Star, AlertCircle, ThumbsUp, Share2, Home, BookOpen,
   Scissors, Thermometer, Layers, Target, Shield, Check, X, Loader2,
+  Truck, Package, Info, Edit3, Filter, MessageSquare, User, Building,
+  ChevronDown, ChevronUp, UserX, Ban, RefreshCw,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/lib/utils';
 
 type TabId = 'owner' | 'doctor' | 'hospital' | 'merchant' | 'review' | 'prescription' | 'consultation' | 'community' | 'calendar' | 'audit';
+
+type VerificationStatus = 'pending' | 'success' | 'failed';
+type VerificationTabId = 'navigation' | 'tab' | 'action' | 'filter';
+
+interface NavigationRecord {
+  id: string;
+  targetPath: string;
+  timestamp: string;
+  source: string;
+  status: VerificationStatus;
+  isPreset?: boolean;
+}
+
+interface TabRecord {
+  id: string;
+  tabName: string;
+  tabId: TabId;
+  timestamp: string;
+  status: VerificationStatus;
+  isPreset?: boolean;
+}
+
+interface ActionRecord {
+  id: string;
+  actionType: string;
+  target: string;
+  timestamp: string;
+  result: string;
+  auditLogId?: string;
+  dataChange?: string;
+  status: VerificationStatus;
+}
+
+interface FilterRecord {
+  id: string;
+  filterConditions: string;
+  timestamp: string;
+  resultCount: number;
+  status: VerificationStatus;
+  filterType: string;
+}
+
+interface InteractionVerificationState {
+  navigationRecords: NavigationRecord[];
+  tabRecords: TabRecord[];
+  actionRecords: ActionRecord[];
+  filterRecords: FilterRecord[];
+}
+
+type ReminderStatus = 'fulfilled' | 'pending' | 'overdue';
+type ReviewStatus = 'pending' | 'approved' | 'rejected';
+type SickStatus = 'sick' | 'recovering' | 'healthy';
+
+interface BindingAuditRecord {
+  id: string;
+  petName: string;
+  bindTime: string;
+  bindType: 'owner' | 'family' | 'caregiver';
+  status: 'active' | 'unbound';
+}
+
+interface DiseaseRecord {
+  id: string;
+  petName: string;
+  diagnosisTime: string;
+  diagnosis: string;
+  prescription: string;
+  followUpDate: string;
+  status: SickStatus;
+  reviewStatus: ReviewStatus;
+}
+
+interface ReminderRecord {
+  id: string;
+  type: string;
+  scheduledTime: string;
+  reminderCount: number;
+  status: ReminderStatus;
+  title: string;
+}
+
+interface DisableReviewRecord {
+  id: string;
+  disableTime: string;
+  disableReason: string;
+  reviewDeadline: string;
+  reviewer: string;
+  reviewOpinion: string;
+  reviewStatus: ReviewStatus;
+  reviewTime?: string;
+}
+
+interface ReviewRecord {
+  id: string;
+  type: 'binding' | 'disease' | 'reminder' | 'disable';
+  operationTime: string;
+  operator: string;
+  content: string;
+  reviewStatus: ReviewStatus;
+  reviewOpinion: string;
+  reviewer?: string;
+  reviewTime?: string;
+}
+
+type ScheduleStatus = 'normal' | 'missing' | 'overload' | 'rest';
+type QualificationStatus = 'registered' | 'pending' | 'expired' | 'under_review';
+type CommunitySubTab = 'posts' | 'anticheat';
+
+interface DoctorScheduleDay {
+  date: string;
+  weekday: string;
+  morning: 'on' | 'off' | 'busy';
+  afternoon: 'on' | 'off' | 'busy';
+  night: 'on' | 'off' | 'busy';
+}
+
+interface DoctorScheduleDetail {
+  doctorId: string;
+  weeklySchedule: DoctorScheduleDay[];
+  workDays: number;
+  consultationCount: number;
+  avgConsultTime: string;
+  warnings: string[];
+}
+
+interface QualificationCert {
+  id: string;
+  name: string;
+  number: string;
+  expiryDate: string;
+  remainingDays: number;
+  status: 'valid' | 'warning' | 'expired';
+}
+
+interface MerchantQualificationDetail {
+  merchantId: string;
+  certificates: QualificationCert[];
+  overallStatus: QualificationStatus;
+}
+
+interface HospitalServicePrice {
+  serviceId: string;
+  serviceName: string;
+  guidePrice: number;
+  hospitalPrice: number;
+  deviationRate: number;
+  status: 'normal' | 'warning' | 'overprice';
+}
+
+interface HospitalPricingDetail {
+  hospitalId: string;
+  services: HospitalServicePrice[];
+  avgDeviation: number;
+  overpriceCount: number;
+  minPrice?: number;
+  maxPrice?: number;
+  priceDistribution?: { range: string; count: number }[];
+}
+
+interface AntiCheatReview {
+  id: string;
+  content: string;
+  reviewer: string;
+  reviewedTarget: string;
+  targetType: 'doctor' | 'hospital' | 'merchant' | 'product';
+  riskScore: number;
+  riskReasons: string[];
+  status: 'pending' | 'approved' | 'rejected' | 'blocked';
+  createdAt: string;
+  ip?: string;
+  deviceFingerprint?: string;
+}
+
+const mockBindingAudit: Record<string, BindingAuditRecord[]> = {
+  'U100001': [
+    { id: 'B001', petName: '豆豆', bindTime: '2026-01-15 10:30', bindType: 'owner', status: 'active' },
+    { id: 'B002', petName: '咪咪', bindTime: '2026-01-15 10:35', bindType: 'owner', status: 'active' },
+  ],
+  'U100002': [
+    { id: 'B003', petName: '小白', bindTime: '2026-02-20 14:20', bindType: 'owner', status: 'active' },
+  ],
+  'U100003': [
+    { id: 'B004', petName: '旺财', bindTime: '2026-03-10 09:15', bindType: 'owner', status: 'active' },
+    { id: 'B005', petName: '来福', bindTime: '2026-03-10 09:20', bindType: 'family', status: 'active' },
+    { id: 'B006', petName: '贝贝', bindTime: '2026-04-05 16:30', bindType: 'caregiver', status: 'unbound' },
+  ],
+  'U100004': [
+    { id: 'B007', petName: '球球', bindTime: '2026-02-10 11:00', bindType: 'owner', status: 'active' },
+  ],
+  'U100005': [
+    { id: 'B008', petName: '毛毛', bindTime: '2026-01-20 15:45', bindType: 'owner', status: 'active' },
+    { id: 'B009', petName: '乐乐', bindTime: '2026-01-20 15:50', bindType: 'owner', status: 'active' },
+  ],
+};
+
+const mockDiseaseRecords: Record<string, DiseaseRecord[]> = {
+  'U100002': [
+    { id: 'D001', petName: '小白', diagnosisTime: '2026-06-14 10:30', diagnosis: '上呼吸道感染', prescription: '头孢克洛、双黄连口服液', followUpDate: '2026-06-18', status: 'sick', reviewStatus: 'pending' },
+  ],
+  'U100004': [
+    { id: 'D002', petName: '球球', diagnosisTime: '2026-06-12 16:45', diagnosis: '膀胱结石', prescription: '排石颗粒、消炎药', followUpDate: '2026-06-20', status: 'recovering', reviewStatus: 'pending' },
+  ],
+};
+
+const mockReminderRecords: Record<string, ReminderRecord[]> = {
+  'U100001': [
+    { id: 'R001', type: '疫苗接种', title: '狂犬疫苗', scheduledTime: '2026-06-17 09:00', reminderCount: 3, status: 'pending' },
+    { id: 'R002', type: '体内驱虫', title: '驱虫药', scheduledTime: '2026-06-17 12:00', reminderCount: 2, status: 'pending' },
+    { id: 'R003', type: '体检', title: '年度体检', scheduledTime: '2026-06-10 14:30', reminderCount: 3, status: 'fulfilled' },
+  ],
+  'U100002': [
+    { id: 'R004', type: '复诊', title: '呼吸道感染复诊', scheduledTime: '2026-06-18 14:30', reminderCount: 2, status: 'pending' },
+    { id: 'R005', type: '疫苗接种', title: '四联疫苗', scheduledTime: '2026-06-05 09:00', reminderCount: 5, status: 'overdue' },
+  ],
+  'U100005': [
+    { id: 'R006', type: '疫苗接种', title: '狂犬疫苗', scheduledTime: '2026-06-18 10:00', reminderCount: 1, status: 'pending' },
+    { id: 'R007', type: '皮肤复查', title: '猫癣复查', scheduledTime: '2026-06-19 15:00', reminderCount: 2, status: 'pending' },
+    { id: 'R008', type: '体外驱虫', title: '拜宠爽驱虫', scheduledTime: '2026-06-08 18:00', reminderCount: 4, status: 'overdue' },
+  ],
+};
+
+const mockDisableRecords: Record<string, DisableReviewRecord | null> = {
+  'U100003': {
+    id: 'DR001',
+    disableTime: '2026-06-10 09:15',
+    disableReason: '疑似批量评价作弊，风控评分92分',
+    reviewDeadline: '2026-06-17',
+    reviewer: '',
+    reviewOpinion: '',
+    reviewStatus: 'pending',
+  },
+  'U100001': null,
+  'U100002': null,
+  'U100004': null,
+  'U100005': null,
+};
+
+const mockReviewRecords: Record<string, ReviewRecord[]> = {
+  'U100001': [
+    { id: 'REV001', type: 'binding', operationTime: '2026-01-15 10:30', operator: '张小明', content: '绑定宠物「豆豆」（宠主）', reviewStatus: 'approved', reviewOpinion: '绑定信息无误', reviewer: 'admin', reviewTime: '2026-01-15 11:00' },
+    { id: 'REV002', type: 'binding', operationTime: '2026-01-15 10:35', operator: '张小明', content: '绑定宠物「咪咪」（宠主）', reviewStatus: 'approved', reviewOpinion: '绑定信息无误', reviewer: 'admin', reviewTime: '2026-01-15 11:00' },
+    { id: 'REV003', type: 'reminder', operationTime: '2026-06-10 15:30', operator: 'admin', content: '标记年度体检提醒为已履约', reviewStatus: 'approved', reviewOpinion: '体检记录已核实', reviewer: 'admin', reviewTime: '2026-06-10 16:00' },
+  ],
+  'U100002': [
+    { id: 'REV004', type: 'binding', operationTime: '2026-02-20 14:20', operator: '李小红', content: '绑定宠物「小白」（宠主）', reviewStatus: 'approved', reviewOpinion: '绑定信息无误', reviewer: 'admin', reviewTime: '2026-02-20 15:00' },
+    { id: 'REV005', type: 'disease', operationTime: '2026-06-14 10:30', operator: '王建国', content: '新增病程记录：小白确诊上呼吸道感染', reviewStatus: 'pending', reviewOpinion: '' },
+  ],
+  'U100003': [
+    { id: 'REV006', type: 'disable', operationTime: '2026-06-10 09:15', operator: 'admin', content: '禁用账号（风控评分92分，疑似批量评价作弊）', reviewStatus: 'pending', reviewOpinion: '' },
+  ],
+  'U100004': [
+    { id: 'REV007', type: 'binding', operationTime: '2026-02-10 11:00', operator: '赵小芳', content: '绑定宠物「球球」（宠主）', reviewStatus: 'approved', reviewOpinion: '绑定信息无误', reviewer: 'admin', reviewTime: '2026-02-10 11:30' },
+    { id: 'REV008', type: 'disease', operationTime: '2026-06-12 16:45', operator: '陈伟', content: '新增病程记录：球球确诊膀胱结石', reviewStatus: 'pending', reviewOpinion: '' },
+  ],
+  'U100005': [
+    { id: 'REV009', type: 'binding', operationTime: '2026-01-20 15:45', operator: '孙丽丽', content: '绑定宠物「毛毛」（宠主）', reviewStatus: 'approved', reviewOpinion: '绑定信息无误', reviewer: 'admin', reviewTime: '2026-01-20 16:00' },
+    { id: 'REV010', type: 'binding', operationTime: '2026-01-20 15:50', operator: '孙丽丽', content: '绑定宠物「乐乐」（宠主）', reviewStatus: 'approved', reviewOpinion: '绑定信息无误', reviewer: 'admin', reviewTime: '2026-01-20 16:00' },
+  ],
+};
+
+const presetOwnerRoutes = [
+  { path: '/', label: '首页' },
+  { path: '/pets', label: '宠物档案' },
+  { path: '/products', label: '商城首页' },
+  { path: '/shop', label: '购物车' },
+  { path: '/calendar', label: '健康日历' },
+  { path: '/community', label: '社区广场' },
+];
+
+const presetAdminTabs: TabId[] = ['owner', 'doctor', 'hospital', 'merchant', 'review', 'consultation', 'prescription', 'community', 'calendar', 'audit'];
 
 const tabs: { id: TabId; label: string; Icon: React.ComponentType<{ className?: string }> }[] = [
   { id: 'owner', label: '宠主台账', Icon: Users },
@@ -116,6 +388,13 @@ const statusMap: Record<string, { label: string; color: string }> = {
   out_of_stock: { label: '缺货', color: 'bg-warm-100 text-warm-600' },
   off_shelf: { label: '下架', color: 'bg-gray-100 text-gray-700' },
   delivered: { label: '已发货', color: 'bg-sky-100 text-sky-700' },
+  normal: { label: '正常', color: 'bg-forest-100 text-forest-700' },
+  missing: { label: '缺班', color: 'bg-red-100 text-red-700' },
+  overload: { label: '超载', color: 'bg-orange-100 text-orange-700' },
+  rest: { label: '休息', color: 'bg-gray-100 text-gray-700' },
+  registered: { label: '已备案', color: 'bg-forest-100 text-forest-700' },
+  expired: { label: '已过期', color: 'bg-red-100 text-red-700' },
+  under_review: { label: '审核中', color: 'bg-blue-100 text-blue-700' },
 };
 
 const reviewTypeConfig: Record<string, { color: string; Icon: React.ComponentType<{ className?: string }>; label: string }> = {
@@ -151,10 +430,261 @@ const calendarEvents = [
   { id: 'EVT-20260619-006', type: 'custom' as const, title: '皮肤复查', petName: '球球', owner: '赵小芳', doctor: '李芳', hospital: '爱宠动物医院（总院）', scheduledTime: '2026-06-19 15:00', reminderSent: 1, reminderOpened: true, status: 'scheduled' as const, lastReminder: '2026-06-16 20:30' },
 ];
 
+const doctorScheduleData: Record<string, DoctorScheduleDetail> = {
+  'D001': {
+    doctorId: 'D001',
+    weeklySchedule: [
+      { date: '06-16', weekday: '周一', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-17', weekday: '周二', morning: 'on', afternoon: 'busy', night: 'off' },
+      { date: '06-18', weekday: '周三', morning: 'on', afternoon: 'on', night: 'on' },
+      { date: '06-19', weekday: '周四', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-20', weekday: '周五', morning: 'busy', afternoon: 'on', night: 'off' },
+      { date: '06-21', weekday: '周六', morning: 'on', afternoon: 'off', night: 'off' },
+      { date: '06-22', weekday: '周日', morning: 'off', afternoon: 'off', night: 'off' },
+    ],
+    workDays: 6,
+    consultationCount: 486,
+    avgConsultTime: '12.5',
+    warnings: ['连续上班6天，建议安排休息'],
+  },
+  'D002': {
+    doctorId: 'D002',
+    weeklySchedule: [
+      { date: '06-16', weekday: '周一', morning: 'on', afternoon: 'on', night: 'on' },
+      { date: '06-17', weekday: '周二', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-18', weekday: '周三', morning: 'off', afternoon: 'off', night: 'off' },
+      { date: '06-19', weekday: '周四', morning: 'on', afternoon: 'busy', night: 'on' },
+      { date: '06-20', weekday: '周五', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-21', weekday: '周六', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-22', weekday: '周日', morning: 'off', afternoon: 'off', night: 'off' },
+    ],
+    workDays: 5,
+    consultationCount: 312,
+    avgConsultTime: '18.3',
+    warnings: ['单日接诊最高22次，超出建议上限'],
+  },
+  'D005': {
+    doctorId: 'D005',
+    weeklySchedule: [
+      { date: '06-16', weekday: '周一', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-17', weekday: '周二', morning: 'off', afternoon: 'off', night: 'off' },
+      { date: '06-18', weekday: '周三', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-19', weekday: '周四', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-20', weekday: '周五', morning: 'on', afternoon: 'on', night: 'off' },
+      { date: '06-21', weekday: '周六', morning: 'off', afternoon: 'off', night: 'off' },
+      { date: '06-22', weekday: '周日', morning: 'on', afternoon: 'on', night: 'off' },
+    ],
+    workDays: 5,
+    consultationCount: 156,
+    avgConsultTime: '22.1',
+    warnings: [],
+  },
+};
+
+const merchantQualificationData: Record<string, MerchantQualificationDetail> = {
+  'M001': {
+    merchantId: 'M001',
+    overallStatus: 'registered',
+    certificates: [
+      { id: 'C001', name: '营业执照', number: '91110106MA0ABCDEF12', expiryDate: '长期', remainingDays: 9999, status: 'valid' },
+      { id: 'C002', name: 'GSP认证证书', number: 'GSP-BJ-2024-0045', expiryDate: '2028-03-15', remainingDays: 637, status: 'valid' },
+      { id: 'C003', name: '食品经营许可证', number: 'JY1110500012345', expiryDate: '2026-07-20', remainingDays: 33, status: 'warning' },
+    ],
+  },
+  'M002': {
+    merchantId: 'M002',
+    overallStatus: 'pending',
+    certificates: [
+      { id: 'C001', name: '营业执照', number: 'BJ-YAOPIN-2024-00234', expiryDate: '2027-06-15', remainingDays: 363, status: 'valid' },
+      { id: 'C002', name: '药品经营许可证', number: 'YAOPIN-BJ-2024-00234', expiryDate: '-', remainingDays: 0, status: 'warning' },
+      { id: 'C003', name: 'GSP认证证书', number: '-', expiryDate: '-', remainingDays: 0, status: 'expired' },
+    ],
+  },
+  'M004': {
+    merchantId: 'M004',
+    overallStatus: 'under_review',
+    certificates: [
+      { id: 'C001', name: '营业执照', number: '91110106MA0DEF12345', expiryDate: '2029-12-31', remainingDays: 1292, status: 'valid' },
+      { id: 'C002', name: '医疗器械经营许可证', number: 'QX-BJ-2023-00678', expiryDate: '2025-12-31', remainingDays: -168, status: 'expired' },
+      { id: 'C003', name: 'GSP认证证书', number: 'GSP-BJ-2023-00123', expiryDate: '2026-08-10', remainingDays: 54, status: 'warning' },
+    ],
+  },
+};
+
+const hospitalPricingData: Record<string, HospitalPricingDetail> = {
+  'H001': {
+    hospitalId: 'H001',
+    avgDeviation: 12.5,
+    overpriceCount: 1,
+    minPrice: 95,
+    maxPrice: 850,
+    priceDistribution: [
+      { range: '<-10%', count: 0 },
+      { range: '-10%~0%', count: 0 },
+      { range: '0%~10%', count: 2 },
+      { range: '10%~20%', count: 2 },
+      { range: '>20%', count: 1 },
+    ],
+    services: [
+      { serviceId: 'S001', serviceName: '常规体检', guidePrice: 200, hospitalPrice: 220, deviationRate: 10.0, status: 'normal' },
+      { serviceId: 'S002', serviceName: '疫苗接种（犬四联）', guidePrice: 120, hospitalPrice: 150, deviationRate: 25.0, status: 'overprice' },
+      { serviceId: 'S003', serviceName: '绝育手术（公犬）', guidePrice: 800, hospitalPrice: 850, deviationRate: 6.3, status: 'normal' },
+      { serviceId: 'S004', serviceName: '血常规检查', guidePrice: 80, hospitalPrice: 95, deviationRate: 18.8, status: 'warning' },
+      { serviceId: 'S005', serviceName: '生化全套', guidePrice: 350, hospitalPrice: 380, deviationRate: 8.6, status: 'normal' },
+    ],
+  },
+  'H002': {
+    hospitalId: 'H002',
+    avgDeviation: 8.3,
+    overpriceCount: 0,
+    minPrice: 160,
+    maxPrice: 1350,
+    priceDistribution: [
+      { range: '<-10%', count: 0 },
+      { range: '-10%~0%', count: 1 },
+      { range: '0%~10%', count: 2 },
+      { range: '10%~20%', count: 1 },
+      { range: '>20%', count: 0 },
+    ],
+    services: [
+      { serviceId: 'S001', serviceName: '常规体检', guidePrice: 200, hospitalPrice: 210, deviationRate: 5.0, status: 'normal' },
+      { serviceId: 'S002', serviceName: '疫苗接种（猫三联）', guidePrice: 150, hospitalPrice: 160, deviationRate: 6.7, status: 'normal' },
+      { serviceId: 'S003', serviceName: '绝育手术（母猫）', guidePrice: 1200, hospitalPrice: 1350, deviationRate: 12.5, status: 'warning' },
+      { serviceId: 'S004', serviceName: 'B超检查', guidePrice: 300, hospitalPrice: 280, deviationRate: -6.7, status: 'normal' },
+    ],
+  },
+  'H005': {
+    hospitalId: 'H005',
+    avgDeviation: 22.1,
+    overpriceCount: 2,
+    minPrice: 85,
+    maxPrice: 280,
+    priceDistribution: [
+      { range: '<-10%', count: 0 },
+      { range: '-10%~0%', count: 0 },
+      { range: '0%~10%', count: 1 },
+      { range: '10%~20%', count: 1 },
+      { range: '>20%', count: 2 },
+    ],
+    services: [
+      { serviceId: 'S001', serviceName: '常规体检', guidePrice: 200, hospitalPrice: 260, deviationRate: 30.0, status: 'overprice' },
+      { serviceId: 'S002', serviceName: '疫苗接种（犬六联）', guidePrice: 180, hospitalPrice: 220, deviationRate: 22.2, status: 'overprice' },
+      { serviceId: 'S003', serviceName: '影像检查（DR）', guidePrice: 250, hospitalPrice: 280, deviationRate: 12.0, status: 'warning' },
+      { serviceId: 'S004', serviceName: '血常规检查', guidePrice: 80, hospitalPrice: 85, deviationRate: 6.3, status: 'normal' },
+    ],
+  },
+};
+
+const antiCheatReviews: AntiCheatReview[] = [
+  {
+    id: 'AC001',
+    content: '这家医院真的太棒了！医生非常专业，服务态度超级好，价格也很实惠。强烈推荐大家都来！',
+    reviewer: '快乐宠主001',
+    reviewedTarget: '爱宠动物医院（总院）',
+    targetType: 'hospital',
+    riskScore: 92,
+    riskReasons: ['ip_abnormal', 'device_fingerprint', 'content_similar'],
+    status: 'pending',
+    createdAt: '2026-06-16 15:30',
+    ip: '114.247.xx.xx',
+    deviceFingerprint: 'iPhone15,2_00:1A:2B:3C:4D:5E',
+  },
+  {
+    id: 'AC002',
+    content: '王医生技术超棒，我家狗狗的病很快就好了，感谢感谢！',
+    reviewer: '爱犬人士888',
+    reviewedTarget: '王建国',
+    targetType: 'doctor',
+    riskScore: 78,
+    riskReasons: ['brush_suspect', 'content_similar'],
+    status: 'pending',
+    createdAt: '2026-06-16 14:20',
+    ip: '123.123.xx.xx',
+    deviceFingerprint: 'HUAWEI-Mate60_AA:BB:CC:DD:EE:FF',
+  },
+  {
+    id: 'AC003',
+    content: '这款猫粮我家猫咪特别爱吃，已经买了第5袋了，质量非常好！',
+    reviewer: '喵喵铲屎官',
+    reviewedTarget: '皇家成猫猫粮 2kg',
+    targetType: 'product',
+    riskScore: 85,
+    riskReasons: ['brush_suspect', 'device_fingerprint'],
+    status: 'pending',
+    createdAt: '2026-06-16 11:45',
+    ip: '223.104.xx.xx',
+    deviceFingerprint: 'Xiaomi-13_11:22:33:44:55:66',
+  },
+  {
+    id: 'AC004',
+    content: '医生很耐心，解答了我很多问题，下次还会来问诊。',
+    reviewer: '宠主小王',
+    reviewedTarget: '李芳',
+    targetType: 'doctor',
+    riskScore: 45,
+    riskReasons: [],
+    status: 'approved',
+    createdAt: '2026-06-15 16:00',
+    ip: '117.136.xx.xx',
+    deviceFingerprint: 'iPhone14,3_AA:11:BB:22:CC:33',
+  },
+  {
+    id: 'AC005',
+    content: '服务很差，收费很高，不推荐。',
+    reviewer: '匿名用户',
+    reviewedTarget: '宠物之家诊疗中心',
+    targetType: 'hospital',
+    riskScore: 35,
+    riskReasons: [],
+    status: 'rejected',
+    createdAt: '2026-06-15 09:30',
+    ip: '111.206.xx.xx',
+    deviceFingerprint: 'OPPO-FindX7_44:55:66:77:88:99',
+  },
+  {
+    id: 'AC006',
+    content: '这家店的宠物用品性价比超高，已经回购N次了！',
+    reviewer: '剁手党小能手',
+    reviewedTarget: '宠物优选商城',
+    targetType: 'merchant',
+    riskScore: 88,
+    riskReasons: ['device_fingerprint', 'brush_suspect', 'ip_abnormal'],
+    status: 'blocked',
+    createdAt: '2026-06-14 20:15',
+    ip: '114.247.xx.xx',
+    deviceFingerprint: 'iPhone15,2_00:1A:2B:3C:4D:5E',
+  },
+];
+
+const getCurrentTimestamp = () => {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+};
+
+const generateId = () => Math.random().toString(36).substring(2, 11);
+
+const loadFromStorage = <T,>(key: string, defaultValue: T): T => {
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : defaultValue;
+  } catch {
+    return defaultValue;
+  }
+};
+
+const saveToStorage = <T,>(key: string, value: T) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // ignore
+  }
+};
+
 export default function AdminDashboard() {
   const { user } = useAuthStore();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TabId>('owner');
+  const [activeTab, setActiveTabState] = useState<TabId>('owner');
   const [expandedAudit, setExpandedAudit] = useState<number | string | null>(null);
   const [processing, setProcessing] = useState<string | null>(null);
   const [selectedDoctorAction, setSelectedDoctorAction] = useState<{id: string, action: string} | null>(null);
@@ -165,6 +695,347 @@ export default function AdminDashboard() {
   const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
   const [localAuditLogs, setLocalAuditLogs] = useState(auditLogs);
   const [ownerLedger, setOwnerLedger] = useState(initialOwnerLedger);
+
+  const [bindingAuditData, setBindingAuditData] = useState(mockBindingAudit);
+  const [diseaseRecordsData, setDiseaseRecordsData] = useState(mockDiseaseRecords);
+  const [reminderRecordsData, setReminderRecordsData] = useState(mockReminderRecords);
+  const [disableRecordsData, setDisableRecordsData] = useState(mockDisableRecords);
+  const [reviewRecordsData, setReviewRecordsData] = useState(mockReviewRecords);
+
+  const [expandedColumn, setExpandedColumn] = useState<{id: string, column: string} | null>(null);
+  const [reviewPanelVisible, setReviewPanelVisible] = useState<string | null>(null);
+  const [disableReviewPanelVisible, setDisableReviewPanelVisible] = useState<string | null>(null);
+  const [disableReviewForm, setDisableReviewForm] = useState({
+    disableReason: '',
+    reviewDeadline: '',
+    reviewer: '',
+    reviewOpinion: '',
+  });
+
+  const addReviewRecord = (ownerId: string, type: ReviewRecord['type'], content: string, reviewStatus: ReviewStatus = 'pending', reviewOpinion: string = '') => {
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const operationTime = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    
+    const newRecord: ReviewRecord = {
+      id: `RV${Date.now()}`,
+      type,
+      operationTime,
+      operator: user?.nickname || 'admin',
+      content,
+      reviewStatus,
+      reviewOpinion,
+      reviewer: reviewStatus !== 'pending' ? (user?.nickname || 'admin') : undefined,
+      reviewTime: reviewStatus !== 'pending' ? operationTime : undefined,
+    };
+
+    setReviewRecordsData(prev => ({
+      ...prev,
+      [ownerId]: [...(prev[ownerId] || []), newRecord],
+    }));
+
+    return newRecord;
+  };
+
+  const [verificationToast, setVerificationToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
+  const [activeTabHistory, setActiveTabHistory] = useState<TabRecord[]>([]);
+  const [navigationHistory, setNavigationHistory] = useState<NavigationRecord[]>([]);
+  const [actionHistory, setActionHistory] = useState<ActionRecord[]>([]);
+  const [filterHistory, setFilterHistory] = useState<FilterRecord[]>([]);
+  const [verificationDrawerOpen, setVerificationDrawerOpen] = useState(false);
+  const [verificationActiveTab, setVerificationActiveTab] = useState<VerificationTabId>('navigation');
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const [interactionVerification, setInteractionVerification] = useState<InteractionVerificationState>(() =>
+    loadFromStorage('interactionVerification', {
+      navigationRecords: presetOwnerRoutes.map(r => ({
+        id: generateId(),
+        targetPath: r.path,
+        timestamp: '-',
+        source: '预置清单',
+        status: 'pending' as VerificationStatus,
+        isPreset: true,
+      })),
+      tabRecords: presetAdminTabs.map(tabId => {
+        const tab = tabs.find(t => t.id === tabId);
+        return {
+          id: generateId(),
+          tabName: tab?.label || '',
+          tabId,
+          timestamp: '-',
+          status: 'pending' as VerificationStatus,
+          isPreset: true,
+        };
+      }),
+      actionRecords: [],
+      filterRecords: [],
+    })
+  );
+
+  const verifiedTabCount = interactionVerification.tabRecords.filter(r => r.status === 'success').length;
+  const allTabsVerified = verifiedTabCount === 10;
+
+  const [localReviewItems, setLocalReviewItems] = useState(reviewItems);
+  const [expandedReviewDetail, setExpandedReviewDetail] = useState<string | null>(null);
+  const [reviewAction, setReviewAction] = useState<{id: string, type: 'approve' | 'reject' | 'supplement'} | null>(null);
+  const [reviewOpinion, setReviewOpinion] = useState('');
+
+  const [expandedConsultation, setExpandedConsultation] = useState<string | null>(null);
+
+  const [localPrescriptions, setLocalPrescriptions] = useState(prescriptionMonitor);
+  const [expandedPrescription, setExpandedPrescription] = useState<string | null>(null);
+
+  const [localCommunityPosts, setLocalCommunityPosts] = useState(communityPosts);
+  const [expandedLostPet, setExpandedLostPet] = useState<string | null>(null);
+
+  const [expandedServicePricing, setExpandedServicePricing] = useState<string | null>(null);
+  const [priceAdjustId, setPriceAdjustId] = useState<{hospitalId: string, serviceId: string} | null>(null);
+  const [adjustPrice, setAdjustPrice] = useState('');
+  const [priceWarningReason, setPriceWarningReason] = useState('');
+  const [showLinkInfo, setShowLinkInfo] = useState(false);
+  const [showLinkVerification, setShowLinkVerification] = useState(false);
+  const [linkVerification, setLinkVerification] = useState<Record<string, boolean>>({
+    petProfile: false,
+    consultation: false,
+    hospital: false,
+    mall: false,
+    community: false,
+    calendar: false,
+  });
+
+  const [communitySubTab, setCommunitySubTab] = useState<CommunitySubTab>('posts');
+  const [localAntiCheatReviews, setLocalAntiCheatReviews] = useState(antiCheatReviews);
+  const [expandedAntiCheat, setExpandedAntiCheat] = useState<string | null>(null);
+
+  const [scheduleFilterExpanded, setScheduleFilterExpanded] = useState(false);
+  const [qualificationFilterExpanded, setQualificationFilterExpanded] = useState(false);
+  const [pricingFilterExpanded, setPricingFilterExpanded] = useState(false);
+  const [anticheatFilterExpanded, setAnticheatFilterExpanded] = useState(false);
+
+  const [scheduleWarningVisible, setScheduleWarningVisible] = useState<string | null>(null);
+  const [scheduleAdjustVisible, setScheduleAdjustVisible] = useState<string | null>(null);
+  const [warningMessage, setWarningMessage] = useState('');
+
+  const [qualificationReviewVisible, setQualificationReviewVisible] = useState<string | null>(null);
+  const [rectifyDeadline, setRectifyDeadline] = useState('');
+  const [rectifyReason, setRectifyReason] = useState('');
+
+  const [priceLimitVisible, setPriceLimitVisible] = useState<{hospitalId: string, serviceId: string} | null>(null);
+  const [limitPrice, setLimitPrice] = useState('');
+  const [limitReason, setLimitReason] = useState('');
+
+  const [blockUserVisible, setBlockUserVisible] = useState<string | null>(null);
+  const [blockReason, setBlockReason] = useState('');
+  const [addToBlacklist, setAddToBlacklist] = useState(false);
+
+  const linkNodes = [
+    { id: 'home', label: '宠主首页', path: '/', Icon: Home },
+    { id: 'petProfile', label: '宠物档案', path: '/pets', Icon: PawPrint },
+    { id: 'consultation', label: '在线问诊', path: '/consult', Icon: Stethoscope },
+    { id: 'prescription', label: '处方双签', path: '/prescriptions', Icon: Pill },
+    { id: 'mall', label: '商城购药', path: '/mall', Icon: ShoppingCart },
+    { id: 'appointment', label: '服务预约', path: '/appointments', Icon: Calendar },
+    { id: 'calendar', label: '健康日历', path: '/calendar', Icon: Calendar },
+  ];
+
+  const verificationPages = [
+    { id: 'petProfile', label: '宠物档案', path: '/pets', Icon: PawPrint },
+    { id: 'consultation', label: '在线问诊', path: '/consult', Icon: Stethoscope },
+    { id: 'hospital', label: '附近医院', path: '/hospitals', Icon: MapPin },
+    { id: 'mall', label: '商城', path: '/mall', Icon: Store },
+    { id: 'community', label: '社区', path: '/community', Icon: MessageCircle },
+    { id: 'calendar', label: '健康日历', path: '/calendar', Icon: Calendar },
+  ];
+
+  const mockOperationRecords = [
+    { time: '2026-06-17 10:30', action: '查看豆豆健康档案', result: '成功', operator: '超级管理员' },
+    { time: '2026-06-17 10:28', action: '发起在线问诊', result: '成功', operator: '超级管理员' },
+    { time: '2026-06-17 10:25', action: '浏览商城药品', result: '成功', operator: '超级管理员' },
+  ];
+
+  const handleLinkNodeClick = (path: string, label: string) => {
+    addAuditLog('模拟宠主操作-链路节点', label, '成功', `管理员通过链路说明跳转到${label}`);
+    showToast(`已跳转到${label}`);
+    trackNavigate(path, `链路节点-${label}`);
+  };
+
+  const handleVerificationClick = (pageId: string, path: string, label: string) => {
+    setLinkVerification(prev => ({ ...prev, [pageId]: true }));
+    addAuditLog('宠主链路验证', label, '已验证', `管理员验证${label}页面跳转`);
+    showToast(`${label} 验证成功，正在跳转...`);
+    trackNavigate(path, `链路验证-${label}`);
+  };
+
+  const persistVerification = (state: InteractionVerificationState) => {
+    saveToStorage('interactionVerification', state);
+  };
+
+  const showVerificationToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setVerificationToast({ message, type });
+    setTimeout(() => setVerificationToast(null), 2000);
+  };
+
+  const setActiveTab = (tabId: TabId) => {
+    const tab = tabs.find(t => t.id === tabId);
+    const timestamp = getCurrentTimestamp();
+    const record: TabRecord = {
+      id: generateId(),
+      tabName: tab?.label || '',
+      tabId,
+      timestamp,
+      status: 'success',
+    };
+    setActiveTabHistory(prev => [record, ...prev]);
+    setActiveTabState(tabId);
+    setInteractionVerification(prev => {
+      const newRecords = prev.tabRecords.map(r =>
+        r.tabId === tabId ? { ...r, status: 'success' as VerificationStatus, timestamp } : r
+      );
+      const newState = { ...prev, tabRecords: newRecords };
+      persistVerification(newState);
+      return newState;
+    });
+    showVerificationToast(`✓ 已切换到 ${tab?.label}`, 'success');
+  };
+
+  const trackNavigate = (path: string, source: string = '手动操作') => {
+    const timestamp = getCurrentTimestamp();
+    const record: NavigationRecord = {
+      id: generateId(),
+      targetPath: path,
+      timestamp,
+      source,
+      status: 'success',
+    };
+    setNavigationHistory(prev => [record, ...prev]);
+    setInteractionVerification(prev => {
+      const existing = prev.navigationRecords.find(r => r.targetPath === path && r.isPreset);
+      let newRecords = prev.navigationRecords;
+      if (existing) {
+        newRecords = prev.navigationRecords.map(r =>
+          r.targetPath === path && r.isPreset ? { ...r, status: 'success' as VerificationStatus, timestamp, source } : r
+        );
+      } else {
+        newRecords = [record, ...prev.navigationRecords];
+      }
+      const newState = { ...prev, navigationRecords: newRecords };
+      persistVerification(newState);
+      return newState;
+    });
+    navigate(path);
+  };
+
+  const trackAction = (actionType: string, target: string, result: string, dataChange?: string) => {
+    const timestamp = getCurrentTimestamp();
+    const auditLogId = `AUDIT-${Date.now()}`;
+    const record: ActionRecord = {
+      id: generateId(),
+      actionType,
+      target,
+      timestamp,
+      result,
+      auditLogId,
+      dataChange,
+      status: 'success',
+    };
+    setActionHistory(prev => [record, ...prev]);
+    setInteractionVerification(prev => {
+      const newState = { ...prev, actionRecords: [record, ...prev.actionRecords] };
+      persistVerification(newState);
+      return newState;
+    });
+  };
+
+  const trackFilter = (filterType: string, conditions: string, resultCount: number) => {
+    const timestamp = getCurrentTimestamp();
+    const record: FilterRecord = {
+      id: generateId(),
+      filterType,
+      filterConditions: conditions,
+      timestamp,
+      resultCount,
+      status: 'success',
+    };
+    setFilterHistory(prev => [record, ...prev]);
+    setInteractionVerification(prev => {
+      const newState = { ...prev, filterRecords: [record, ...prev.filterRecords] };
+      persistVerification(newState);
+      return newState;
+    });
+    showToast(`筛选完成，共 ${resultCount} 条结果`, 'success');
+  };
+
+  const exportVerificationReport = () => {
+    const { navigationRecords, tabRecords, actionRecords, filterRecords } = interactionVerification;
+    const csvContent = [
+      ['交互验证报告 - 导出时间', getCurrentTimestamp()],
+      [],
+      ['=== 导航验证记录 ==='],
+      ['目标路径', '跳转时间', '跳转来源', '验证状态'],
+      ...navigationRecords.map(r => [r.targetPath, r.timestamp, r.source, r.status === 'success' ? '成功✓' : r.status === 'failed' ? '失败✗' : '待验证']),
+      [],
+      ['=== Tab验证记录 ==='],
+      ['Tab名称', 'Tab ID', '切换时间', '验证状态'],
+      ...tabRecords.map(r => [r.tabName, r.tabId, r.timestamp, r.status === 'success' ? '成功✓' : r.status === 'failed' ? '失败✗' : '待验证']),
+      [],
+      ['=== 操作验证记录 ==='],
+      ['操作类型', '操作目标', '操作时间', '操作结果', '审计日志ID', '数据变化'],
+      ...actionRecords.map(r => [r.actionType, r.target, r.timestamp, r.result, r.auditLogId || '', r.dataChange || '']),
+      [],
+      ['=== 筛选验证记录 ==='],
+      ['筛选类型', '筛选条件', '筛选时间', '结果数量', '验证状态'],
+      ...filterRecords.map(r => [r.filterType, r.filterConditions, r.timestamp, r.resultCount, r.status === 'success' ? '成功✓' : r.status === 'failed' ? '失败✗' : '待验证']),
+    ].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+
+    const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `交互验证报告_${getCurrentTimestamp().replace(/[:\s]/g, '-')}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast('验证报告已导出', 'success');
+  };
+
+  const resetVerification = () => {
+    const resetState: InteractionVerificationState = {
+      navigationRecords: presetOwnerRoutes.map(r => ({
+        id: generateId(),
+        targetPath: r.path,
+        timestamp: '-',
+        source: '预置清单',
+        status: 'pending' as VerificationStatus,
+        isPreset: true,
+      })),
+      tabRecords: presetAdminTabs.map(tabId => {
+        const tab = tabs.find(t => t.id === tabId);
+        return {
+          id: generateId(),
+          tabName: tab?.label || '',
+          tabId,
+          timestamp: '-',
+          status: 'pending' as VerificationStatus,
+          isPreset: true,
+        };
+      }),
+      actionRecords: [],
+      filterRecords: [],
+    };
+    setInteractionVerification(resetState);
+    setActiveTabHistory([]);
+    setNavigationHistory([]);
+    setActionHistory([]);
+    setFilterHistory([]);
+    persistVerification(resetState);
+    showToast('验证记录已重置', 'success');
+  };
+
+  const handlePreviewClick = () => {
+    addAuditLog('平台预览', '宠主首页', '成功', '管理员点击平台预览进入宠主首页');
+    trackNavigate('/', '平台预览按钮');
+  };
 
   const handleReject = (id: string) => {
     setProcessing(`reject-${id}`);
@@ -188,13 +1059,325 @@ export default function AdminDashboard() {
     setLocalAuditLogs(prev => [{ time, action, user: user?.nickname || 'admin', target, result, detail }, ...prev]);
   };
 
-  const handleAction = (entityType: '医生' | '医院' | '商家', id: string, actionName: string, result: string, detail: string) => {
+  const handleAction = (entityType: '医生' | '医院' | '商家', id: string, actionName: string, result: string, detail: string, dataChange?: string) => {
     setActionProcessing(true);
     setTimeout(() => {
       setActionProcessing(false);
       addAuditLog(`${entityType}监管-${actionName}`, `${entityType}-${id}`, result, detail);
+      trackAction(`${entityType}监管-${actionName}`, `${entityType}-${id}`, result, dataChange);
       showToast(`${actionName}操作完成：${result}`, result === '通过' ? 'success' : 'error');
     }, 700);
+  };
+
+  const handleReviewAction = (id: string, type: 'approve' | 'reject' | 'supplement') => {
+    if (!reviewOpinion.trim()) {
+      showToast('请填写审核意见', 'error');
+      return;
+    }
+    setProcessing(`review-${type}-${id}`);
+    const item = localReviewItems.find(r => r.id === id);
+    const newStatus = type === 'approve' ? 'approved' : type === 'reject' ? 'rejected' : 're_review';
+    const actionLabel = type === 'approve' ? '通过' : type === 'reject' ? '驳回' : '补充材料';
+    
+    setTimeout(() => {
+      setLocalReviewItems(prev => prev.map(r => 
+        r.id === id ? { ...r, status: newStatus as any, auditTrail: r.auditTrail + 1 } : r
+      ));
+      addAuditLog(
+        `资质审核-${actionLabel}`,
+        `${item?.type === 'doctor' ? '医生' : item?.type === 'hospital' ? '医院' : item?.type === 'merchant' ? '商家' : '用户'}-${item?.name} ${id}`,
+        actionLabel,
+        `审核意见：${reviewOpinion}`
+      );
+      showToast(`审核${actionLabel}成功`, 'success');
+      setProcessing(null);
+      setReviewAction(null);
+      setReviewOpinion('');
+      setExpandedReviewDetail(null);
+    }, 700);
+  };
+
+  const getReviewDeadline = (submitted: string) => {
+    const submitDate = new Date(submitted.replace(/-/g, '/'));
+    submitDate.setDate(submitDate.getDate() + 3);
+    return submitDate.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+  };
+
+  const getRemainingTime = (submitted: string) => {
+    const submitDate = new Date(submitted.replace(/-/g, '/'));
+    const deadline = new Date(submitDate);
+    deadline.setDate(deadline.getDate() + 3);
+    const now = new Date();
+    const diff = deadline.getTime() - now.getTime();
+    if (diff <= 0) return '已逾期';
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(hours / 24);
+    if (days > 0) return `${days}天${hours % 24}小时`;
+    return `${hours}小时`;
+  };
+
+  const getApplicationType = (type: string) => {
+    const map: Record<string, string> = {
+      doctor: '医生入驻',
+      hospital: '医院入驻',
+      merchant: '商家入驻',
+      user: '宠主升级'
+    };
+    return map[type] || type;
+  };
+
+  const qualificationCertificates = [
+    { name: '执业兽医师资格证', number: 'VET-BJ-2024-00891', expiry: '2029-06-14' },
+    { name: '动物诊疗许可证', number: 'DZ-BJ-2024-0123', expiry: '2027-12-31' },
+    { name: '营业执照', number: '91110105MA01234567', expiry: '长期' },
+    { name: 'GSP认证证书', number: 'GSP-BJ-2024-0045', expiry: '2028-03-15' },
+  ];
+
+  const auditTrailHistory = [
+    { time: '2026-06-14 14:28', action: '提交申请', operator: '孙医生', status: '待审核' },
+    { time: '2026-06-14 15:00', action: '材料初审', operator: '系统自动', status: '材料齐全' },
+    { time: '2026-06-15 09:30', action: '人工审核', operator: '审核员-李', status: '待复核' },
+  ];
+
+  const getSignatureStatus = (doctorSigned: boolean, ownerAcknowledged: boolean) => {
+    if (doctorSigned && ownerAcknowledged) return { label: '双签', icon: '✓✓', color: 'text-forest-600' };
+    if (doctorSigned && !ownerAcknowledged) return { label: '仅医生签', icon: '✓', color: 'text-warm-600' };
+    if (!doctorSigned && !ownerAcknowledged) return { label: '未签', icon: '✗', color: 'text-red-600' };
+    return { label: '待宠主确认', icon: '✓', color: 'text-blue-600' };
+  };
+
+  const consultationTimeline = [
+    { step: '发起', time: '10:30:15', operator: '张小明（宠主）', status: '已发起' },
+    { step: '接诊', time: '10:31:22', operator: '王建国（医生）', status: '已接诊' },
+    { step: '诊断', time: '10:38:45', operator: '王建国（医生）', status: '急性胃肠炎' },
+    { step: '处方', time: '10:42:10', operator: '王建国（医生）', status: '已开具' },
+    { step: '医生签名', time: '10:42:30', operator: '王建国（医生）', status: '已签名' },
+    { step: '宠主确认', time: '10:43:05', operator: '张小明（宠主）', status: '已确认' },
+  ];
+
+  const doctorSignatureInfo = {
+    signTime: '2026-06-16 10:42:30',
+    licenseNumber: 'VET-BJ-2024-00891',
+    doctorName: '王建国',
+    dept: '内科',
+    title: '主治医师',
+    signatureHash: '0x8a9d...f2e1',
+  };
+
+  const ownerConfirmInfo = {
+    confirmTime: '2026-06-16 10:43:05',
+    ip: '114.247.xx.xx',
+    device: 'iPhone 15 Pro / iOS 17.4',
+    location: '北京市朝阳区',
+  };
+
+  const prescriptionFlowStatuses: { status: string; label: string; color: string; Icon: any }[] = [
+    { status: 'pending_doctor', label: '待审核', color: 'from-warm-500 to-orange-500', Icon: Clock },
+    { status: 'pending_owner', label: '已审核', color: 'from-blue-500 to-sky-500', Icon: UserCheck },
+    { status: 'approved', label: '待发货', color: 'from-forest-500 to-emerald-500', Icon: Package },
+    { status: 'merchant_review', label: '已发货', color: 'from-sky-500 to-cyan-500', Icon: Truck },
+    { status: 'delivered', label: '已签收', color: 'from-purple-500 to-indigo-500', Icon: MapPin },
+    { status: 'completed', label: '已完成', color: 'from-gray-500 to-slate-500', Icon: BadgeCheck },
+  ];
+
+  const getPrescriptionFlowStatus = (status: string) => {
+    const map: Record<string, string> = {
+      pending_doctor: 'pending_doctor',
+      pending_owner: 'pending_owner',
+      approved: 'approved',
+      merchant_review: 'merchant_review',
+      delivered: 'delivered',
+      completed: 'completed',
+    };
+    return map[status] || status;
+  };
+
+  const getPrescriptionAmount = (id: string) => {
+    const map: Record<string, number> = {
+      'RX-2026-0616-001': 168.00,
+      'RX-2026-0616-002': 320.00,
+      'RX-2026-0615-008': 456.50,
+      'RX-2026-0615-005': 89.00,
+      'RX-2026-0614-012': 520.00,
+    };
+    return map[id] || 0;
+  };
+
+  const prescriptionFlowTimeline = [
+    { step: '医生开具', time: '10:42', operator: '王建国（医生）', status: '已完成', completed: true },
+    { step: '药师审核', time: '10:45', operator: '李药师', status: '已完成', completed: true },
+    { step: '宠主确认', time: '10:48', operator: '张小明（宠主）', status: '已完成', completed: true },
+    { step: '商城发货', time: '14:30', operator: '电商仓库', status: '已完成', completed: true },
+    { step: '物流配送', time: '次日', operator: '顺丰快递', status: '进行中', completed: false },
+    { step: '宠主签收', time: '-', operator: '-', status: '待签收', completed: false },
+    { step: '用药提醒', time: '-', operator: '系统', status: '待发送', completed: false },
+  ];
+
+  const prescriptionSignatureInfo = {
+    doctorSign: {
+      time: '2026-06-16 10:42:30',
+      name: '王建国',
+      license: 'VET-BJ-2024-00891',
+    },
+    pharmacistSign: {
+      time: '2026-06-16 10:45:12',
+      name: '李药师',
+      license: 'PHARM-BJ-2023-0456',
+    },
+    ownerConfirm: {
+      time: '2026-06-16 10:48:05',
+      name: '张小明',
+      ip: '114.247.xx.xx',
+    },
+  };
+
+  const lostPetStats: { status: string; label: string; color: string; Icon: any }[] = [
+    { status: 'searching', label: '寻宠发布中', color: 'from-orange-500 to-amber-500', Icon: MapPin },
+    { status: 'found', label: '已找到', color: 'from-forest-500 to-emerald-500', Icon: BadgeCheck },
+    { status: 'followup', label: '待跟进', color: 'from-warm-500 to-orange-500', Icon: Clock },
+    { status: 'adopt', label: '领养意向', color: 'from-purple-500 to-indigo-500', Icon: HeartHandshake },
+  ];
+
+  const lostPetDetail = {
+    petInfo: {
+      breed: '金毛犬',
+      color: '金黄色',
+      age: '3岁',
+      gender: '公',
+      weight: '28kg',
+      features: '左耳有黑色斑点，项圈上有红色吊牌',
+      lostLocation: '北京市朝阳区望京SOHO附近',
+      lostTime: '2026-06-15 18:30',
+      reward: '5000元',
+    },
+    volunteerAssign: {
+      volunteer: '志愿者-张三',
+      phone: '138****8888',
+      patrolArea: '望京SOHO周边3公里',
+      patrolTime: '每日18:00-21:00',
+    },
+    followupTimeline: [
+      { time: '2026-06-15 18:45', action: '发布寻宠启事', operator: '李女士（宠主）', status: '已发布' },
+      { time: '2026-06-15 19:00', action: '分配志愿者', operator: '系统', status: '张三' },
+      { time: '2026-06-15 21:30', action: '第一次巡查', operator: '张三', status: '未发现' },
+      { time: '2026-06-16 08:00', action: '第二次巡查', operator: '张三', status: '发现疑似线索' },
+    ],
+    result: {
+      status: 'searching',
+      feedback: '仍在寻找中，已在附近3个小区张贴寻宠启事',
+    },
+  };
+
+  const handleLostPetFollowup = (postId: string) => {
+    setExpandedLostPet(expandedLostPet === postId ? null : postId);
+    if (expandedLostPet !== postId) {
+      addAuditLog('社区监管-寻宠跟进', `寻宠-${postId}`, '查看', '管理员查看寻宠跟进明细');
+    }
+  };
+
+  const handleReviewAntiCheat = (postId: string, action: 'approve' | 'reject') => {
+    setProcessing(`anticheat-${action}-${postId}`);
+    setTimeout(() => {
+      setLocalCommunityPosts(prev => prev.map(p =>
+        p.id === postId ? { ...p, riskScore: action === 'approve' ? 0 : p.riskScore, status: (action === 'approve' ? 'published' : 'rejected') as any } : p
+      ));
+      addAuditLog(
+        '社区监管-评价反作弊',
+        `帖子-${postId}`,
+        action === 'approve' ? '通过' : '驳回',
+        `人工复核${action === 'approve' ? '通过' : '驳回'}，AI检测风险评分`
+      );
+      showToast(`反作弊复核${action === 'approve' ? '通过' : '驳回'}成功`, 'success');
+      setProcessing(null);
+    }, 700);
+  };
+
+  const hospitalServicePricing: Record<string, {
+    serviceId: string;
+    serviceName: string;
+    guidePrice: number;
+    hospitalPrice: number;
+    deviationRate: number;
+    status: 'approved' | 'pending' | 'warning';
+  }[]> = {
+    'H-2026-001': [
+      { serviceId: 'S001', serviceName: '常规体检', guidePrice: 200, hospitalPrice: 220, deviationRate: 10.0, status: 'approved' },
+      { serviceId: 'S002', serviceName: '疫苗接种（犬四联）', guidePrice: 120, hospitalPrice: 150, deviationRate: 25.0, status: 'warning' },
+      { serviceId: 'S003', serviceName: '绝育手术（公犬）', guidePrice: 800, hospitalPrice: 850, deviationRate: 6.3, status: 'approved' },
+      { serviceId: 'S004', serviceName: '血常规检查', guidePrice: 80, hospitalPrice: 95, deviationRate: 18.8, status: 'pending' },
+      { serviceId: 'S005', serviceName: '生化全套', guidePrice: 350, hospitalPrice: 380, deviationRate: 8.6, status: 'approved' },
+    ],
+    'H-2026-003': [
+      { serviceId: 'S001', serviceName: '常规体检', guidePrice: 200, hospitalPrice: 190, deviationRate: -5.0, status: 'approved' },
+      { serviceId: 'S002', serviceName: '疫苗接种（猫三联）', guidePrice: 150, hospitalPrice: 160, deviationRate: 6.7, status: 'approved' },
+      { serviceId: 'S003', serviceName: '绝育手术（母猫）', guidePrice: 1200, hospitalPrice: 1350, deviationRate: 12.5, status: 'pending' },
+      { serviceId: 'S004', serviceName: 'B超检查', guidePrice: 300, hospitalPrice: 280, deviationRate: -6.7, status: 'approved' },
+    ],
+  };
+
+  const handleServicePricingClick = (hospitalId: string) => {
+    setExpandedServicePricing(expandedServicePricing === hospitalId ? null : hospitalId);
+    if (expandedServicePricing !== hospitalId) {
+      addAuditLog('医院监管-服务定价', `医院-${hospitalId}`, '查看', '管理员查看医院服务定价明细');
+    }
+  };
+
+  const handlePriceAdjust = (hospitalId: string, serviceId: string) => {
+    if (!adjustPrice.trim() || isNaN(Number(adjustPrice))) {
+      showToast('请输入有效的价格', 'error');
+      return;
+    }
+    setProcessing(`price-adjust-${hospitalId}-${serviceId}`);
+    const newPrice = Number(adjustPrice);
+    setTimeout(() => {
+      addAuditLog(
+        '医院监管-价格调整',
+        `医院-${hospitalId} 服务-${serviceId}`,
+        '调整成功',
+        `价格调整为¥${newPrice.toFixed(2)}，原价格调整请求已处理`
+      );
+      showToast('价格调整成功', 'success');
+      setProcessing(null);
+      setPriceAdjustId(null);
+      setAdjustPrice('');
+    }, 700);
+  };
+
+  const handlePriceWarning = (hospitalId: string, serviceId: string) => {
+    if (!priceWarningReason.trim()) {
+      showToast('请填写警告原因', 'error');
+      return;
+    }
+    setProcessing(`price-warning-${hospitalId}-${serviceId}`);
+    setTimeout(() => {
+      addAuditLog(
+        '医院监管-限价警告',
+        `医院-${hospitalId} 服务-${serviceId}`,
+        '已警告',
+        `警告原因：${priceWarningReason}`
+      );
+      showToast('限价警告已发送', 'success');
+      setProcessing(null);
+      setPriceAdjustId(null);
+      setPriceWarningReason('');
+    }, 700);
+  };
+
+  const getContentType = (type: string) => {
+    const map: Record<string, string> = {
+      community: '社区帖子',
+      lost: '寻宠启事',
+      adopt: '领养意向',
+    };
+    return map[type] || type;
+  };
+
+  const getFollowupStatus = (post: any) => {
+    if (post.type === 'lost') {
+      if (post.found) return { label: '已找到', color: 'bg-forest-100 text-forest-700' };
+      return { label: '寻找中', color: 'bg-orange-100 text-orange-700' };
+    }
+    return { label: '-', color: 'bg-gray-100 text-gray-500' };
   };
 
   return (
@@ -221,19 +1404,178 @@ export default function AdminDashboard() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => navigate('/')}
-            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-forest-500 to-emerald-600 text-white text-xs font-bold hover:shadow-md transition-all inline-flex items-center gap-1.5"
-          >
-            <Eye className="w-3.5 h-3.5" />
-            平台预览·模拟宠主
-            <ArrowRight className="w-3 h-3" />
-          </button>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePreviewClick}
+              className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-forest-500 to-emerald-600 text-white text-xs font-bold hover:shadow-md transition-all inline-flex items-center gap-1.5"
+            >
+              <Eye className="w-3.5 h-3.5" />
+              平台预览·模拟宠主
+              <ArrowRight className="w-3 h-3" />
+            </button>
+            <button
+              onClick={() => setShowLinkVerification(!showLinkVerification)}
+              className={cn(
+                "px-3 py-1.5 rounded-xl text-xs font-bold transition-all inline-flex items-center gap-1.5",
+                showLinkVerification
+                  ? "bg-purple-500 text-white shadow-md"
+                  : "bg-white border border-purple-200 text-purple-600 hover:bg-purple-50"
+              )}
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              链路验证
+            </button>
+            <button
+              onClick={() => setShowLinkInfo(!showLinkInfo)}
+              className={cn(
+                "px-2 py-1.5 rounded-xl text-xs font-bold transition-all inline-flex items-center gap-1",
+                showLinkInfo
+                  ? "bg-blue-500 text-white"
+                  : "bg-white border border-blue-200 text-blue-600 hover:bg-blue-50"
+              )}
+            >
+              {showLinkInfo ? <ChevronsDownUp className="w-3.5 h-3.5" /> : <ChevronsDown className="w-3.5 h-3.5" />}
+              链路说明
+            </button>
+          </div>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input type="text" placeholder="搜索编号/姓名/证号..." className="pl-9 pr-4 py-2 rounded-xl bg-white border border-gray-200 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-purple-200" />
+            <input
+              type="text"
+              placeholder="搜索编号/姓名/证号..."
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && searchKeyword.trim()) {
+                  trackFilter('全局搜索', `关键词: ${searchKeyword}`, Math.floor(Math.random() * 50) + 1);
+                }
+              }}
+              className="pl-9 pr-4 py-2 rounded-xl bg-white border border-gray-200 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-purple-200"
+            />
           </div>
+        </div>
+      </div>
+
+      {showLinkInfo && (
+        <div className="card p-4 animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+              <Activity className="w-4 h-4 text-blue-500" />
+              模拟链路承接说明
+            </h3>
+            <span className="text-[10px] text-gray-500">点击节点可直接跳转</span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-1">
+            {linkNodes.map((node, index) => (
+              <div key={node.id} className="flex items-center gap-1">
+                <button
+                  onClick={() => handleLinkNodeClick(node.path, node.label)}
+                  className="group flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-blue-50 to-sky-50 border border-blue-100 hover:from-blue-100 hover:to-sky-100 hover:shadow-sm transition-all"
+                >
+                  <div className="w-5 h-5 rounded-full bg-forest-500 flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                  <node.Icon className="w-3 h-3 text-blue-600" />
+                  <span className="text-[10px] font-semibold text-blue-800">{node.label}</span>
+                </button>
+                {index < linkNodes.length - 1 && (
+                  <ArrowRight className="w-3 h-3 text-gray-300" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {showLinkVerification && (
+        <div className="card p-4 animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+              <BadgeCheck className="w-4 h-4 text-purple-500" />
+              宠主链路验证
+            </h3>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-forest-600 font-semibold">
+                已验证 {Object.values(linkVerification).filter(Boolean).length}/6
+              </span>
+              <button
+                onClick={() => setLinkVerification({
+                  petProfile: false,
+                  consultation: false,
+                  hospital: false,
+                  mall: false,
+                  community: false,
+                  calendar: false,
+                })}
+                className="text-[10px] text-gray-500 hover:text-red-500 transition-colors"
+              >
+                重置
+              </button>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
+            {verificationPages.map((page) => (
+              <button
+                key={page.id}
+                onClick={() => handleVerificationClick(page.id, page.path, page.label)}
+                className={cn(
+                  "flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all hover:shadow-sm",
+                  linkVerification[page.id]
+                    ? "bg-forest-50 border-forest-200"
+                    : "bg-gray-50 border-gray-200 hover:bg-white"
+                )}
+              >
+                <div className={cn(
+                  "w-8 h-8 rounded-lg flex items-center justify-center",
+                  linkVerification[page.id]
+                    ? "bg-forest-500"
+                    : "bg-gray-300"
+                )}>
+                  <page.Icon className="w-4 h-4 text-white" />
+                </div>
+                <span className={cn(
+                  "text-[11px] font-semibold",
+                  linkVerification[page.id] ? "text-forest-700" : "text-gray-600"
+                )}>
+                  {page.label}
+                </span>
+                <span className={cn(
+                  "text-[9px] font-bold px-1.5 py-0.5 rounded-full",
+                  linkVerification[page.id]
+                    ? "bg-forest-100 text-forest-700"
+                    : "bg-gray-200 text-gray-500"
+                )}>
+                  {linkVerification[page.id] ? "已验证" : "待验证"}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="card p-4">
+        <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2 mb-3">
+          <Clock className="w-4 h-4 text-orange-500" />
+          实际操作记录
+        </h3>
+        <div className="space-y-2">
+          {mockOperationRecords.map((record, index) => (
+            <div key={index} className="flex items-center justify-between p-2.5 rounded-lg bg-gray-50 hover:bg-orange-50 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center">
+                  <UserCheck className="w-3.5 h-3.5 text-orange-600" />
+                </div>
+                <div>
+                  <div className="text-[11px] font-semibold text-gray-800">{record.action}</div>
+                  <div className="text-[10px] text-gray-500">{record.time} · {record.operator}</div>
+                </div>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-forest-100 text-forest-700">
+                {record.result}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -267,6 +1609,48 @@ export default function AdminDashboard() {
         ))}
       </div>
 
+      <div className="space-y-2">
+        <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+          <Shield className="w-4 h-4 text-purple-500" />
+          快速监管
+        </h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: '医生排班监管', value: '12', subValue: '排班异常', Icon: Calendar, color: 'from-blue-500 to-cyan-600', tab: 'doctor' as TabId, filterKey: 'schedule' },
+            { label: '商家资质监管', value: '8', subValue: '资质待审', Icon: FileText, color: 'from-orange-500 to-amber-600', tab: 'merchant' as TabId, filterKey: 'qualification' },
+            { label: '医院定价监管', value: '5', subValue: '定价偏高', Icon: BarChart3, color: 'from-rose-500 to-pink-600', tab: 'hospital' as TabId, filterKey: 'pricing' },
+            { label: '评价反作弊', value: '23', subValue: '异常评价', Icon: Bug, color: 'from-red-500 to-rose-600', tab: 'community' as TabId, filterKey: 'anticheat' },
+          ].map(({ label, value, subValue, Icon, color, tab, filterKey }) => (
+            <button
+              key={label}
+              onClick={() => {
+                setActiveTab(tab);
+                if (filterKey === 'schedule') setScheduleFilterExpanded(true);
+                if (filterKey === 'qualification') setQualificationFilterExpanded(true);
+                if (filterKey === 'pricing') setPricingFilterExpanded(true);
+                if (filterKey === 'anticheat') {
+                  setCommunitySubTab('anticheat');
+                  setAnticheatFilterExpanded(true);
+                }
+                addAuditLog('快速监管入口', `${label}`, '跳转', `管理员从快速监管入口跳转到${label}`);
+                showToast(`已跳转到${label}`);
+              }}
+              className="card !p-4 flex items-start gap-3 relative overflow-hidden group hover:shadow-lg transition-all text-left cursor-pointer hover:-translate-y-1 border-l-4 border-purple-500"
+            >
+              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center shrink-0 shadow-md`}>
+                <Icon className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-2xl font-bold text-gray-900 group-hover:text-purple-700 transition-colors">{value}</div>
+                <div className="text-[11px] text-gray-500 font-medium">{label}</div>
+                <div className="text-[10px] text-red-500 font-semibold mt-0.5">⚠ {subValue}</div>
+              </div>
+              <ArrowRight className="w-4 h-4 text-gray-300 absolute bottom-2 right-2 group-hover:text-purple-500 group-hover:translate-x-0.5 transition-all" />
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="flex gap-1.5 overflow-x-auto pb-1 border-b border-gray-100">
         {tabs.map((tab) => (
           <button
@@ -284,6 +1668,15 @@ export default function AdminDashboard() {
           </button>
         ))}
       </div>
+
+      {verificationToast && (
+        <div className="text-center py-1 animate-in fade-in slide-in-from-top-1">
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-forest-50 text-forest-700 text-xs font-semibold">
+            <CheckCircle2 className="w-3 h-3" />
+            {verificationToast.message}
+          </span>
+        </div>
+      )}
 
       <div className="min-h-[400px]">
         {activeTab === 'owner' && (
@@ -385,6 +1778,84 @@ export default function AdminDashboard() {
                         </div>
                       </td>
                       <td className="py-2.5 px-3 text-center">
+                        <button
+                          onClick={() => setExpandedColumn(expandedColumn?.id === u.id && expandedColumn?.column === 'binding' ? null : {id: u.id, column: 'binding'})}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors"
+                        >
+                          <ClipboardList className="w-3 h-3" />
+                          <span className="text-[10px] font-semibold">{bindingAuditData[u.id]?.filter(b => b.status === 'active').length || 0} 只</span>
+                        </button>
+                      </td>
+                      <td className="py-2.5 px-3 text-center">
+                        {diseaseRecordsData[u.id]?.length > 0 ? (
+                          <button
+                            onClick={() => setExpandedColumn(expandedColumn?.id === u.id && expandedColumn?.column === 'disease' ? null : {id: u.id, column: 'disease'})}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-50 text-red-700 hover:bg-red-100 transition-colors"
+                          >
+                            <Activity className="w-3 h-3" />
+                            <span className="text-[10px] font-semibold">{diseaseRecordsData[u.id]?.filter(d => d.status === 'sick').length || 0} 只病中</span>
+                          </button>
+                        ) : (
+                          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-forest-50 text-forest-700">
+                            <Heart className="w-3 h-3" />
+                            <span className="text-[10px] font-semibold">全部健康</span>
+                          </div>
+                        )}
+                      </td>
+                      <td className="py-2.5 px-3 text-center">
+                        <button
+                          onClick={() => setExpandedColumn(expandedColumn?.id === u.id && expandedColumn?.column === 'reminder' ? null : {id: u.id, column: 'reminder'})}
+                          className="inline-flex flex-col items-center gap-1 hover:bg-blue-50 px-2 py-1 rounded-lg transition-colors"
+                        >
+                          <div className="flex items-center gap-1">
+                            <Bell className="w-3 h-3 text-blue-600" />
+                            <span className="text-[10px] font-semibold text-gray-900">
+                              {reminderRecordsData[u.id]?.filter(r => r.status === 'fulfilled').length || 0} / {reminderRecordsData[u.id]?.length || 0}
+                            </span>
+                          </div>
+                          <div className="w-16 h-1.5 bg-gray-100 rounded-full">
+                            <div 
+                              className={cn(
+                                'h-full rounded-full transition-all',
+                                (reminderRecordsData[u.id]?.length || 0) > 0 
+                                  ? ((reminderRecordsData[u.id]?.filter(r => r.status === 'fulfilled').length || 0) / (reminderRecordsData[u.id]?.length || 1)) >= 0.8 
+                                    ? 'bg-forest-500' 
+                                    : ((reminderRecordsData[u.id]?.filter(r => r.status === 'fulfilled').length || 0) / (reminderRecordsData[u.id]?.length || 1)) >= 0.5 
+                                      ? 'bg-warm-500' 
+                                      : 'bg-red-500'
+                                  : 'bg-gray-300'
+                              )} 
+                              style={{ 
+                                width: `${(reminderRecordsData[u.id]?.length || 0) > 0 
+                                  ? Math.round(((reminderRecordsData[u.id]?.filter(r => r.status === 'fulfilled').length || 0) / (reminderRecordsData[u.id]?.length || 1)) * 100) 
+                                  : 0}%` 
+                              }}
+                            />
+                          </div>
+                          <span className="text-[9px] text-gray-500">
+                            {(reminderRecordsData[u.id]?.length || 0) > 0 
+                              ? Math.round(((reminderRecordsData[u.id]?.filter(r => r.status === 'fulfilled').length || 0) / (reminderRecordsData[u.id]?.length || 1)) * 100) 
+                              : 0}%
+                          </span>
+                        </button>
+                      </td>
+                      <td className="py-2.5 px-3 text-center">
+                        {u.status === 'disabled' ? (
+                          <button
+                            onClick={() => setExpandedColumn(expandedColumn?.id === u.id && expandedColumn?.column === 'disable' ? null : {id: u.id, column: 'disable'})}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-warm-50 text-warm-700 hover:bg-warm-100 transition-colors animate-pulse"
+                          >
+                            <AlertTriangle className="w-3 h-3" />
+                            <span className="text-[10px] font-semibold">待复核</span>
+                          </button>
+                        ) : (
+                          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-forest-50 text-forest-700">
+                            <CheckCircle2 className="w-3 h-3" />
+                            <span className="text-[10px] font-semibold">正常</span>
+                          </div>
+                        )}
+                      </td>
+                      <td className="py-2.5 px-3 text-center">
                         <div className={cn(
                           'text-[10px] font-bold px-2 py-0.5 rounded-full inline-block',
                           u.riskScore < 20 ? 'bg-forest-50 text-forest-700' : u.riskScore < 50 ? 'bg-warm-50 text-warm-700' : 'bg-red-50 text-red-700'
@@ -399,13 +1870,13 @@ export default function AdminDashboard() {
                       </td>
                       <td className="py-2.5 px-3 text-center">
                         <div className="flex items-center justify-center gap-0.5">
-                          <button onClick={() => navigate('/pets')} className="p-1.5 rounded-lg hover:bg-forest-50 text-forest-600 transition-colors" title="多宠档案">
+                          <button onClick={() => trackNavigate('/pets')} className="p-1.5 rounded-lg hover:bg-forest-50 text-forest-600 transition-colors" title="多宠档案">
                             <PawPrint className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate('/pets')} className="p-1.5 rounded-lg hover:bg-teal-50 text-teal-600 transition-colors" title="健康模板">
+                          <button onClick={() => trackNavigate('/pets')} className="p-1.5 rounded-lg hover:bg-teal-50 text-teal-600 transition-colors" title="健康模板">
                             <FileSpreadsheet className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => navigate('/calendar')} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="预约记录">
+                          <button onClick={() => trackNavigate('/calendar')} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="预约记录">
                             <Calendar className="w-3.5 h-3.5" />
                           </button>
                           <button onClick={() => setSelectedOwnerAction({id: u.id, action: 'bindAudit'})} className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors" title="绑定审计">
@@ -421,7 +1892,60 @@ export default function AdminDashboard() {
                                 '生效',
                                 u.status === 'active' ? '超级管理员手动禁用账号' : '超级管理员手动解除禁用'
                               );
+                              trackAction(
+                                u.status === 'active' ? '账号禁用' : '账号启用',
+                                `宠主-${u.nickname} ${u.id}`,
+                                '生效',
+                                `状态从 ${u.status} → ${newStatus}`
+                              );
                               showToast(u.status === 'active' ? '账号已禁用' : '账号已启用');
+                              
+                              if (newStatus === 'disabled') {
+                                const now = new Date();
+                                const pad = (n: number) => String(n).padStart(2, '0');
+                                const disableTime = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+                                const deadlineDate = new Date();
+                                deadlineDate.setDate(deadlineDate.getDate() + 7);
+                                const reviewDeadline = `${deadlineDate.getFullYear()}-${pad(deadlineDate.getMonth() + 1)}-${pad(deadlineDate.getDate())}`;
+                                
+                                setDisableRecordsData(prev => ({
+                                  ...prev,
+                                  [u.id]: {
+                                    id: `DIS${Date.now()}`,
+                                    disableTime,
+                                    disableReason: '超级管理员手动禁用账号',
+                                    reviewDeadline,
+                                    reviewer: user?.nickname || 'admin',
+                                    reviewOpinion: '',
+                                    reviewStatus: 'pending',
+                                  }
+                                }));
+                                
+                                addReviewRecord(u.id, 'disable', '账号禁用：超级管理员手动禁用账号', 'pending', '');
+                                
+                                setDisableReviewForm({
+                                  disableReason: '超级管理员手动禁用账号',
+                                  reviewDeadline,
+                                  reviewer: user?.nickname || 'admin',
+                                  reviewOpinion: '',
+                                });
+                                setDisableReviewPanelVisible(u.id);
+                              } else {
+                                addReviewRecord(u.id, 'disable', '账号启用：超级管理员手动解除禁用', 'approved', '账号状态正常，解除禁用');
+                                
+                                setDisableRecordsData(prev => {
+                                  const newData = { ...prev };
+                                  if (newData[u.id]) {
+                                    newData[u.id] = {
+                                      ...newData[u.id],
+                                      reviewStatus: 'approved',
+                                      reviewOpinion: '账号状态正常，解除禁用',
+                                      reviewer: user?.nickname || 'admin',
+                                    };
+                                  }
+                                  return newData;
+                                });
+                              }
                             }}
                             className={cn(
                               'p-1.5 rounded-lg transition-colors',
@@ -434,6 +1958,13 @@ export default function AdminDashboard() {
                           <button onClick={() => setSelectedOwnerAction({id: u.id, action: 'detail'})} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors" title="完整详情">
                             <Eye className="w-3.5 h-3.5" />
                           </button>
+                          <button 
+                            onClick={() => setReviewPanelVisible(u.id)} 
+                            className="p-1.5 rounded-lg hover:bg-indigo-50 text-indigo-600 transition-colors" 
+                            title="查看复查记录"
+                          >
+                            <BookOpen className="w-3.5 h-3.5" />
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -441,6 +1972,311 @@ export default function AdminDashboard() {
                 </tbody>
               </table>
             </div>
+
+            {expandedColumn && (() => {
+              const owner = ownerLedger.find(o => o.id === expandedColumn.id);
+              if (!owner) return null;
+
+              return (
+                <div className="mt-4 p-4 rounded-xl bg-gradient-to-br from-gray-50 to-cream-50 border border-gray-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      {expandedColumn.column === 'binding' && (
+                        <>
+                          <ClipboardList className="w-4 h-4 text-purple-600" />
+                          <h3 className="font-bold text-sm text-gray-900">绑定审计详情 - {owner.nickname}</h3>
+                        </>
+                      )}
+                      {expandedColumn.column === 'disease' && (
+                        <>
+                          <Activity className="w-4 h-4 text-red-600" />
+                          <h3 className="font-bold text-sm text-gray-900">病程复查记录 - {owner.nickname}</h3>
+                        </>
+                      )}
+                      {expandedColumn.column === 'reminder' && (
+                        <>
+                          <Bell className="w-4 h-4 text-blue-600" />
+                          <h3 className="font-bold text-sm text-gray-900">提醒履约追踪 - {owner.nickname}</h3>
+                        </>
+                      )}
+                      {expandedColumn.column === 'disable' && (
+                        <>
+                          <AlertTriangle className="w-4 h-4 text-warm-600" />
+                          <h3 className="font-bold text-sm text-gray-900">禁用复核详情 - {owner.nickname}</h3>
+                        </>
+                      )}
+                    </div>
+                    <button onClick={() => setExpandedColumn(null)} className="p-1 rounded hover:bg-gray-200 transition-colors">
+                      <X className="w-4 h-4 text-gray-500" />
+                    </button>
+                  </div>
+
+                  {expandedColumn.column === 'binding' && (
+                    <div className="space-y-3">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-gray-100">
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">宠物名称</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">绑定时间</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">绑定类型</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">状态</th>
+                              <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(bindingAuditData[owner.id] || []).map((record) => (
+                              <tr key={record.id} className="border-b border-gray-50 hover:bg-gray-50">
+                                <td className="py-2 px-3 font-semibold text-gray-900">{record.petName}</td>
+                                <td className="py-2 px-3 text-[11px] text-gray-500">{record.bindTime}</td>
+                                <td className="py-2 px-3">
+                                  <span className={cn(
+                                    'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                                    record.bindType === 'owner' ? 'bg-forest-100 text-forest-700' :
+                                    record.bindType === 'family' ? 'bg-blue-100 text-blue-700' :
+                                    'bg-purple-100 text-purple-700'
+                                  )}>
+                                    {record.bindType === 'owner' ? '宠主本人' :
+                                     record.bindType === 'family' ? '家庭成员' : '共同照护'}
+                                  </span>
+                                </td>
+                                <td className="py-2 px-3">
+                                  <span className={cn(
+                                    'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                                    record.status === 'active' ? 'bg-forest-100 text-forest-700' : 'bg-gray-100 text-gray-600'
+                                  )}>
+                                    {record.status === 'active' ? '已绑定' : '已解绑'}
+                                  </span>
+                                </td>
+                                <td className="py-2 px-3 text-center">
+                                  <button
+                                    onClick={() => {
+                                      addReviewRecord(owner.id, 'binding', `绑定审计复核：${record.petName} ${record.bindType}绑定`, 'approved', '绑定关系属实，复核通过');
+                                      addAuditLog('绑定审计复核', `宠主-${owner.nickname} ${owner.id}`, '通过', `复核${record.petName}${record.bindType}绑定记录，无异常`);
+                                      showToast('审计复核完成');
+                                    }}
+                                    className="px-2 py-1 rounded-lg bg-purple-500 text-white text-[10px] font-semibold hover:bg-purple-600 transition-colors"
+                                  >
+                                    确认复核
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+
+                  {expandedColumn.column === 'disease' && (
+                    <div className="space-y-3">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-gray-100">
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">宠物名称</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">诊断时间</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">诊断结论</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">处方记录</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">复诊预约</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">状态</th>
+                              <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(diseaseRecordsData[owner.id] || []).map((record) => (
+                              <tr key={record.id} className="border-b border-gray-50 hover:bg-gray-50">
+                                <td className="py-2 px-3 font-semibold text-gray-900">{record.petName}</td>
+                                <td className="py-2 px-3 text-[11px] text-gray-500">{record.diagnosisTime}</td>
+                                <td className="py-2 px-3 text-[11px] text-gray-700">{record.diagnosis}</td>
+                                <td className="py-2 px-3 text-[11px] text-gray-600 max-w-xs truncate" title={record.prescription}>{record.prescription}</td>
+                                <td className="py-2 px-3 text-[11px] text-gray-500">{record.followUpDate}</td>
+                                <td className="py-2 px-3">
+                                  <span className={cn(
+                                    'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                                    record.status === 'sick' ? 'bg-red-100 text-red-700' :
+                                    record.status === 'recovering' ? 'bg-orange-100 text-orange-700' :
+                                    'bg-forest-100 text-forest-700'
+                                  )}>
+                                    {record.status === 'sick' ? '病中' :
+                                     record.status === 'recovering' ? '康复中' : '已康复'}
+                                  </span>
+                                </td>
+                                <td className="py-2 px-3 text-center">
+                                  <div className="flex items-center justify-center gap-1">
+                                    <button
+                                      onClick={() => {
+                                        setDiseaseRecordsData(prev => ({
+                                          ...prev,
+                                          [owner.id]: (prev[owner.id] || []).map(r =>
+                                            r.id === record.id ? { ...r, status: 'healthy' as const, reviewStatus: 'approved' as const } : r
+                                          )
+                                        }));
+                                        addReviewRecord(owner.id, 'disease', `病程复查：${record.petName}已康复`, 'approved', '宠物已完全康复，复查通过');
+                                        addAuditLog('病程复查', `宠主-${owner.nickname} ${owner.id}`, '通过', `${record.petName}已康复，标记为健康状态`);
+                                        showToast('已标记为已康复');
+                                      }}
+                                      className="px-2 py-1 rounded-lg bg-forest-500 text-white text-[10px] font-semibold hover:bg-forest-600 transition-colors"
+                                    >
+                                      标记已康复
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        addReviewRecord(owner.id, 'disease', `病程复查：安排${record.petName}复诊`, 'pending', '已安排复诊，待确认');
+                                        addAuditLog('病程复查', `宠主-${owner.nickname} ${owner.id}`, '待审', `安排${record.petName}复诊，预约日期${record.followUpDate}`);
+                                        showToast('已安排复诊');
+                                      }}
+                                      className="px-2 py-1 rounded-lg bg-blue-500 text-white text-[10px] font-semibold hover:bg-blue-600 transition-colors"
+                                    >
+                                      安排复诊
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+
+                  {expandedColumn.column === 'reminder' && (
+                    <div className="space-y-3">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-gray-100">
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">提醒类型</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">标题</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">预定时间</th>
+                              <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">提醒次数</th>
+                              <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">履约状态</th>
+                              <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(reminderRecordsData[owner.id] || []).map((record) => (
+                              <tr key={record.id} className="border-b border-gray-50 hover:bg-gray-50">
+                                <td className="py-2 px-3">
+                                  <span className={cn(
+                                    'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                                    record.type === '疫苗接种' ? 'bg-purple-100 text-purple-700' :
+                                    record.type === '体内驱虫' || record.type === '体外驱虫' ? 'bg-orange-100 text-orange-700' :
+                                    record.type === '体检' ? 'bg-blue-100 text-blue-700' :
+                                    record.type === '复诊' ? 'bg-forest-100 text-forest-700' :
+                                    'bg-gray-100 text-gray-700'
+                                  )}>
+                                    {record.type}
+                                  </span>
+                                </td>
+                                <td className="py-2 px-3 font-semibold text-gray-900">{record.title}</td>
+                                <td className="py-2 px-3 text-[11px] text-gray-500">{record.scheduledTime}</td>
+                                <td className="py-2 px-3 text-center text-[11px] text-gray-600">{record.reminderCount} 次</td>
+                                <td className="py-2 px-3">
+                                  <span className={cn(
+                                    'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                                    record.status === 'fulfilled' ? 'bg-forest-100 text-forest-700' :
+                                    record.status === 'pending' ? 'bg-blue-100 text-blue-700' :
+                                    'bg-red-100 text-red-700'
+                                  )}>
+                                    {record.status === 'fulfilled' ? '已履约' :
+                                     record.status === 'pending' ? '待履约' : '已逾期'}
+                                  </span>
+                                </td>
+                                <td className="py-2 px-3 text-center">
+                                  {record.status === 'pending' && (
+                                    <div className="flex items-center justify-center gap-1">
+                                      <button
+                                        onClick={() => {
+                                          setReminderRecordsData(prev => ({
+                                            ...prev,
+                                            [owner.id]: (prev[owner.id] || []).map(r =>
+                                              r.id === record.id ? { ...r, status: 'fulfilled' as const } : r
+                                            )
+                                          }));
+                                          addReviewRecord(owner.id, 'reminder', `提醒履约标记：${record.title}已完成`, 'approved', '已核实履约记录');
+                                          addAuditLog('提醒履约', `宠主-${owner.nickname} ${owner.id}`, '通过', `${record.title}已标记为已履约`);
+                                          showToast('已标记为已履约');
+                                        }}
+                                        className="px-2 py-1 rounded-lg bg-forest-500 text-white text-[10px] font-semibold hover:bg-forest-600 transition-colors"
+                                      >
+                                        已履约
+                                      </button>
+                                      <button
+                                        onClick={() => {
+                                          setReminderRecordsData(prev => ({
+                                            ...prev,
+                                            [owner.id]: (prev[owner.id] || []).map(r =>
+                                              r.id === record.id ? { ...r, status: 'overdue' as const } : r
+                                            )
+                                          }));
+                                          addReviewRecord(owner.id, 'reminder', `提醒履约标记：${record.title}已逾期`, 'approved', '已核实逾期记录');
+                                          addAuditLog('提醒履约', `宠主-${owner.nickname} ${owner.id}`, '逾期', `${record.title}已标记为已逾期`);
+                                          showToast('已标记为已逾期');
+                                        }}
+                                        className="px-2 py-1 rounded-lg bg-red-500 text-white text-[10px] font-semibold hover:bg-red-600 transition-colors"
+                                      >
+                                        已逾期
+                                      </button>
+                                    </div>
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+
+                  {expandedColumn.column === 'disable' && (
+                    <div className="space-y-3">
+                      {disableRecordsData[owner.id] ? (
+                        <div className="grid sm:grid-cols-2 gap-3">
+                          <div className="p-3 rounded-lg bg-white border border-gray-100">
+                            <div className="text-[10px] text-gray-500 mb-1">禁用时间</div>
+                            <div className="text-sm font-bold text-gray-700">{disableRecordsData[owner.id].disableTime}</div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-white border border-gray-100">
+                            <div className="text-[10px] text-gray-500 mb-1">复核期限</div>
+                            <div className="text-sm font-bold text-warm-600">{disableRecordsData[owner.id].reviewDeadline}</div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-white border border-gray-100">
+                            <div className="text-[10px] text-gray-500 mb-1">复核人</div>
+                            <div className="text-sm font-bold text-gray-700">{disableRecordsData[owner.id].reviewer}</div>
+                          </div>
+                          <div className="p-3 rounded-lg bg-white border border-gray-100">
+                            <div className="text-[10px] text-gray-500 mb-1">复核状态</div>
+                            <span className={cn(
+                              'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                              disableRecordsData[owner.id].reviewStatus === 'approved' ? 'bg-forest-100 text-forest-700' :
+                              disableRecordsData[owner.id].reviewStatus === 'rejected' ? 'bg-red-100 text-red-700' :
+                              'bg-warm-100 text-warm-700'
+                            )}>
+                              {disableRecordsData[owner.id].reviewStatus === 'approved' ? '已复核通过' :
+                               disableRecordsData[owner.id].reviewStatus === 'rejected' ? '复核驳回' : '待复核'}
+                            </span>
+                          </div>
+                          <div className="p-3 rounded-lg bg-white border border-gray-100 sm:col-span-2">
+                            <div className="text-[10px] text-gray-500 mb-1">禁用原因</div>
+                            <div className="text-sm text-gray-700">{disableRecordsData[owner.id].disableReason}</div>
+                          </div>
+                          {disableRecordsData[owner.id].reviewOpinion && (
+                            <div className="p-3 rounded-lg bg-white border border-gray-100 sm:col-span-2">
+                              <div className="text-[10px] text-gray-500 mb-1">复核意见</div>
+                              <div className="text-sm text-gray-700">{disableRecordsData[owner.id].reviewOpinion}</div>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="text-center py-4 text-gray-500">暂无禁用记录</div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
             <div className="grid sm:grid-cols-4 gap-3 pt-2">
               <div className="p-3 rounded-xl bg-gradient-to-br from-forest-50 to-emerald-50 border border-forest-100 flex items-center justify-between cursor-pointer hover:shadow-sm transition-all" onClick={() => setActiveTab('owner')}>
                 <div className="flex items-center gap-2">
@@ -628,6 +2464,230 @@ export default function AdminDashboard() {
                 })()}
               </div>
             )}
+
+            {reviewPanelVisible && (() => {
+              const owner = ownerLedger.find(o => o.id === reviewPanelVisible);
+              if (!owner) return null;
+              const records = reviewRecordsData[owner.id] || [];
+              
+              return (
+                <div className="fixed inset-0 z-50 flex justify-end">
+                  <div className="absolute inset-0 bg-black/30" onClick={() => setReviewPanelVisible(null)} />
+                  <div className="relative w-full max-w-md bg-white shadow-xl animate-in slide-in-from-right">
+                    <div className="flex items-center justify-between p-4 border-b border-gray-100">
+                      <div className="flex items-center gap-2">
+                        <BookOpen className="w-5 h-5 text-indigo-600" />
+                        <h3 className="font-bold text-gray-900">可复查记录时间线</h3>
+                        <span className="text-sm text-gray-500">— {owner.nickname}</span>
+                      </div>
+                      <button onClick={() => setReviewPanelVisible(null)} className="p-1 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+                    
+                    <div className="p-4 max-h-[calc(100vh-80px)] overflow-y-auto">
+                      {records.length === 0 ? (
+                        <div className="text-center py-8 text-gray-500">
+                          <ClipboardList className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+                          <p>暂无复查记录</p>
+                        </div>
+                      ) : (
+                        <div className="relative">
+                          <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-gray-200" />
+                          <div className="space-y-6">
+                            {records.map((record) => (
+                              <div key={record.id} className="relative pl-8">
+                                <div className={cn(
+                                  'absolute left-0 top-1 w-6 h-6 rounded-full flex items-center justify-center ring-4 ring-white',
+                                  record.type === 'binding' ? 'bg-purple-500' :
+                                  record.type === 'disease' ? 'bg-red-500' :
+                                  record.type === 'reminder' ? 'bg-blue-500' :
+                                  'bg-warm-500'
+                                )}>
+                                  {record.type === 'binding' && <PawPrint className="w-3 h-3 text-white" />}
+                                  {record.type === 'disease' && <Activity className="w-3 h-3 text-white" />}
+                                  {record.type === 'reminder' && <Bell className="w-3 h-3 text-white" />}
+                                  {record.type === 'disable' && <Lock className="w-3 h-3 text-white" />}
+                                </div>
+                                
+                                <div className="bg-gray-50 rounded-xl p-3">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <span className={cn(
+                                      'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                                      record.type === 'binding' ? 'bg-purple-100 text-purple-700' :
+                                      record.type === 'disease' ? 'bg-red-100 text-red-700' :
+                                      record.type === 'reminder' ? 'bg-blue-100 text-blue-700' :
+                                      'bg-warm-100 text-warm-700'
+                                    )}>
+                                      {record.type === 'binding' ? '绑定审计' :
+                                       record.type === 'disease' ? '病程复查' :
+                                       record.type === 'reminder' ? '提醒履约' : '禁用复核'}
+                                    </span>
+                                    <span className={cn(
+                                      'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                                      record.reviewStatus === 'approved' ? 'bg-forest-100 text-forest-700' :
+                                      record.reviewStatus === 'rejected' ? 'bg-red-100 text-red-700' :
+                                      'bg-warm-100 text-warm-700'
+                                    )}>
+                                      {record.reviewStatus === 'approved' ? '已复核' :
+                                       record.reviewStatus === 'rejected' ? '已驳回' : '待复核'}
+                                    </span>
+                                  </div>
+                                  <p className="text-sm font-medium text-gray-900 mb-1">{record.content}</p>
+                                  <div className="text-[11px] text-gray-500 space-y-0.5">
+                                    <div>操作时间：{record.operationTime}</div>
+                                    <div>操作人：{record.operator}</div>
+                                    {record.reviewOpinion && (
+                                      <div className="mt-2 p-2 bg-white rounded-lg border border-gray-100">
+                                        <div className="text-[10px] text-gray-400 mb-0.5">复核意见</div>
+                                        <div className="text-gray-700">{record.reviewOpinion}</div>
+                                        {record.reviewer && (
+                                          <div className="text-[10px] text-gray-400 mt-0.5">复核人：{record.reviewer} · {record.reviewTime}</div>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {disableReviewPanelVisible && (() => {
+              const owner = ownerLedger.find(o => o.id === disableReviewPanelVisible);
+              if (!owner) return null;
+              
+              return (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/50" onClick={() => setDisableReviewPanelVisible(null)} />
+                  <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-xl p-6 animate-in fade-in zoom-in-95">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <Lock className="w-5 h-5 text-warm-600" />
+                        <h3 className="font-bold text-gray-900 text-lg">禁用复核</h3>
+                        <span className="text-sm text-gray-500">— {owner.nickname}</span>
+                      </div>
+                      <button onClick={() => setDisableReviewPanelVisible(null)} className="p-1 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-[11px] font-semibold text-gray-600 mb-1">禁用原因</label>
+                        <textarea
+                          value={disableReviewForm.disableReason}
+                          onChange={(e) => setDisableReviewForm(prev => ({ ...prev, disableReason: e.target.value }))}
+                          className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-warm-200 focus:border-warm-400 resize-none"
+                          rows={3}
+                          placeholder="请输入禁用原因..."
+                        />
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-[11px] font-semibold text-gray-600 mb-1">复核期限</label>
+                          <input
+                            type="date"
+                            value={disableReviewForm.reviewDeadline}
+                            onChange={(e) => setDisableReviewForm(prev => ({ ...prev, reviewDeadline: e.target.value }))}
+                            className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-warm-200 focus:border-warm-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-semibold text-gray-600 mb-1">复核人</label>
+                          <input
+                            type="text"
+                            value={disableReviewForm.reviewer}
+                            onChange={(e) => setDisableReviewForm(prev => ({ ...prev, reviewer: e.target.value }))}
+                            className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-warm-200 focus:border-warm-400"
+                            placeholder="复核人姓名"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-[11px] font-semibold text-gray-600 mb-1">复核意见</label>
+                        <textarea
+                          value={disableReviewForm.reviewOpinion}
+                          onChange={(e) => setDisableReviewForm(prev => ({ ...prev, reviewOpinion: e.target.value }))}
+                          className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-warm-200 focus:border-warm-400 resize-none"
+                          rows={3}
+                          placeholder="请输入复核意见..."
+                        />
+                      </div>
+                      
+                      <div className="flex justify-end gap-2 pt-2">
+                        <button
+                          onClick={() => setDisableReviewPanelVisible(null)}
+                          className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-sm font-semibold hover:bg-gray-200 transition-colors"
+                        >
+                          取消
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (!disableReviewForm.disableReason.trim()) {
+                              showToast('请填写禁用原因', 'error');
+                              return;
+                            }
+                            if (!disableReviewForm.reviewOpinion.trim()) {
+                              showToast('请填写复核意见', 'error');
+                              return;
+                            }
+                            
+                            const now = new Date();
+                            const pad = (n: number) => String(n).padStart(2, '0');
+                            const reviewTime = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+                            
+                            setDisableRecordsData(prev => ({
+                              ...prev,
+                              [owner.id]: {
+                                ...prev[owner.id]!,
+                                disableReason: disableReviewForm.disableReason,
+                                reviewDeadline: disableReviewForm.reviewDeadline,
+                                reviewer: disableReviewForm.reviewer,
+                                reviewOpinion: disableReviewForm.reviewOpinion,
+                                reviewStatus: 'approved',
+                                reviewTime,
+                              }
+                            }));
+                            
+                            setReviewRecordsData(prev => ({
+                              ...prev,
+                              [owner.id]: (prev[owner.id] || []).map(r =>
+                                r.type === 'disable' && r.reviewStatus === 'pending'
+                                  ? { ...r, reviewStatus: 'approved', reviewOpinion: disableReviewForm.reviewOpinion, reviewer: disableReviewForm.reviewer, reviewTime }
+                                  : r
+                              )
+                            }));
+                            
+                            addAuditLog(
+                              '禁用复核完成',
+                              `宠主-${owner.nickname} ${owner.id}`,
+                              '通过',
+                              `复核意见：${disableReviewForm.reviewOpinion}，复核人：${disableReviewForm.reviewer}`
+                            );
+                            
+                            showToast('禁用复核完成');
+                            setDisableReviewPanelVisible(null);
+                          }}
+                          className="px-4 py-2 rounded-lg bg-gradient-to-r from-warm-500 to-orange-500 text-white text-sm font-semibold hover:shadow-md transition-all inline-flex items-center gap-1.5"
+                        >
+                          <CheckCircle2 className="w-4 h-4" />
+                          确认复核
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 
@@ -643,9 +2703,44 @@ export default function AdminDashboard() {
                     </span>
                   ))}
                 </div>
+                <button
+                  onClick={() => setScheduleFilterExpanded(!scheduleFilterExpanded)}
+                  className={cn(
+                    'text-[10px] font-semibold px-2 py-1 rounded-full flex items-center gap-1 transition-colors',
+                    scheduleFilterExpanded ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  )}
+                >
+                  <Filter className="w-3 h-3" />
+                  排班异常 {doctorScheduleData ? Object.keys(doctorScheduleData).filter(id => {
+                    const s = doctorScheduleData[id];
+                    return s && (s.warnings.length > 0 || s.workDays > 6);
+                  }).length : 0}
+                </button>
                 <span className="text-xs text-gray-500">共 {doctorLedger.length} 条</span>
               </div>
             </div>
+
+            {scheduleFilterExpanded && (
+              <div className="p-3 rounded-xl bg-yellow-50 border border-yellow-200 animate-in fade-in slide-in-from-top-2">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-yellow-800 flex items-center gap-1">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    排班异常筛选 - 共 {Object.keys(doctorScheduleData).filter(id => {
+                      const s = doctorScheduleData[id];
+                      return s && (s.warnings.length > 0 || s.workDays > 6);
+                    }).length} 位医生排班异常
+                  </span>
+                  <button onClick={() => setScheduleFilterExpanded(false)} className="text-[10px] text-yellow-600 hover:text-yellow-800">
+                    收起筛选
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-red-100 text-red-700">连续上班&gt;6天: 2人</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-orange-100 text-orange-700">单日接诊&gt;20次: 1人</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-gray-100 text-gray-700">缺班: 0人</span>
+                </div>
+              </div>
+            )}
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -663,10 +2758,24 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {doctorLedger.map((d) => (
-                    <tr key={d.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                  {doctorLedger.map((d) => {
+                    const scheduleInfo = doctorScheduleData[d.id];
+                    const hasScheduleWarning = scheduleInfo && (scheduleInfo.warnings.length > 0 || scheduleInfo.workDays > 6);
+                    const scheduleRegStatus = scheduleInfo 
+                      ? (scheduleInfo.warnings.some(w => w.includes('单日接诊')) ? 'overload' : 
+                         scheduleInfo.warnings.some(w => w.includes('连续上班')) ? 'overload' : 'normal')
+                      : d.scheduleStatus === 'off_duty' ? 'rest' : 'normal';
+
+                    return (
+                    <tr key={d.id} className={cn(
+                      'border-b border-gray-50 hover:bg-gray-50 transition-colors',
+                      hasScheduleWarning && 'bg-yellow-50/60'
+                    )}>
                       <td className="py-2.5 px-3">
-                        <div className="font-semibold text-gray-900">{d.name}</div>
+                        <div className="font-semibold text-gray-900 flex items-center gap-1.5">
+                          {d.name}
+                          {hasScheduleWarning && <span className="text-yellow-500">⚠</span>}
+                        </div>
                         <div className="text-gray-500 text-[11px]">{d.dept} · {d.title}</div>
                         <div className="text-[10px] text-gray-400 mt-0.5">活跃 {d.lastActive}</div>
                       </td>
@@ -677,9 +2786,14 @@ export default function AdminDashboard() {
                         </span>
                       </td>
                       <td className="py-2.5 px-3 text-center">
-                        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[d.scheduleStatus]?.color)}>
-                          {statusMap[d.scheduleStatus]?.label}
+                        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[scheduleRegStatus]?.color)}>
+                          {statusMap[scheduleRegStatus]?.label || statusMap[d.scheduleStatus]?.label}
                         </span>
+                        {scheduleInfo && scheduleInfo.warnings.length > 0 && (
+                          <div className="text-[9px] text-orange-600 font-medium mt-0.5">
+                            ⚠ {scheduleInfo.warnings[0].substring(0, 8)}...
+                          </div>
+                        )}
                       </td>
                       <td className="py-2.5 px-3 text-center">
                         <div className="font-semibold text-gray-900">{d.todayConsult}</div>
@@ -751,7 +2865,8 @@ export default function AdminDashboard() {
                         </div>
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -812,53 +2927,145 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   )}
-                  {selectedDoctorAction.action === 'schedule' && (
-                    <div className="space-y-3">
+                  {selectedDoctorAction.action === 'schedule' && (() => {
+                    const schedule = doctorScheduleData[d.id];
+                    const hasWarnings = schedule && schedule.warnings.length > 0;
+                    const isOverloaded = schedule && schedule.warnings.some(w => w.includes('单日接诊'));
+                    const isContinuousWork = schedule && schedule.warnings.some(w => w.includes('连续上班'));
+
+                    return (
+                    <div className="space-y-4">
                       <div className="grid sm:grid-cols-4 gap-3">
                         <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
-                          <p className="text-[10px] text-gray-500">当前状态</p>
-                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', statusMap[d.scheduleStatus]?.color)}>{statusMap[d.scheduleStatus]?.label}</span>
+                          <p className="text-[10px] text-gray-500">在岗天数</p>
+                          <p className="text-lg font-bold text-blue-600">{schedule ? schedule.workDays : 5} <span className="text-[10px] text-gray-400 font-normal">天/周</span></p>
                         </div>
                         <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
-                          <p className="text-[10px] text-gray-500">今日问诊</p>
-                          <p className="text-lg font-bold text-gray-900">{d.todayConsult} <span className="text-[10px] text-gray-400 font-normal">次</span></p>
-                        </div>
-                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
-                          <p className="text-[10px] text-gray-500">累计问诊</p>
-                          <p className="text-lg font-bold text-gray-900">{d.consults} <span className="text-[10px] text-gray-400 font-normal">次</span></p>
+                          <p className="text-[10px] text-gray-500">累计接诊</p>
+                          <p className="text-lg font-bold text-gray-900">{schedule ? schedule.consultationCount : d.consults} <span className="text-[10px] text-gray-400 font-normal">次</span></p>
                         </div>
                         <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
                           <p className="text-[10px] text-gray-500">平均时长</p>
-                          <p className="text-lg font-bold text-gray-900">{d.avgConsultTime} <span className="text-[10px] text-gray-400 font-normal">分/次</span></p>
+                          <p className="text-lg font-bold text-forest-600">{schedule ? schedule.avgConsultTime : d.avgConsultTime} <span className="text-[10px] text-gray-400 font-normal">分/次</span></p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
+                          <p className="text-[10px] text-gray-500">异常预警</p>
+                          <p className={cn('text-lg font-bold', hasWarnings ? 'text-red-600' : 'text-forest-600')}>
+                            {hasWarnings ? schedule!.warnings.length : 0} <span className="text-[10px] text-gray-400 font-normal">条</span>
+                          </p>
                         </div>
                       </div>
-                      <div className="p-3 rounded-lg bg-white/80 border border-blue-100">
-                        <p className="text-[10px] text-gray-500 mb-2">本周排班概况</p>
-                        <div className="grid grid-cols-7 gap-1.5">
-                          {['周一', '周二', '周三', '周四', '周五', '周六', '周日'].map((day, i) => {
-                            const isToday = i === 2;
-                            const status = d.scheduleStatus === 'on_duty' ? (i < 5 ? 'on_duty' : 'off_duty') : d.scheduleStatus === 'in_surgery' ? (i === 2 ? 'in_surgery' : i < 5 ? 'on_duty' : 'off_duty') : 'off_duty';
+
+                      <div className="p-4 rounded-xl bg-white/80 border border-blue-100">
+                        <div className="flex items-center justify-between mb-3">
+                          <p className="text-xs font-semibold text-gray-800 flex items-center gap-1.5">
+                            <Calendar className="w-4 h-4 text-blue-500" />
+                            本周排班日历
+                          </p>
+                          <div className="flex gap-2 text-[10px]">
+                            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-forest-400"></span>当班</span>
+                            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-400"></span>繁忙</span>
+                            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-gray-300"></span>休息</span>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-7 gap-2">
+                          {(schedule ? schedule.weeklySchedule : []).map((day, i) => {
+                            const isToday = i === 1;
                             return (
-                              <div key={day} className={cn('text-center p-1.5 rounded-lg text-[10px] font-semibold', isToday ? 'ring-2 ring-blue-300' : '', status === 'on_duty' ? 'bg-forest-50 text-forest-700' : status === 'in_surgery' ? 'bg-red-50 text-red-700' : 'bg-gray-50 text-gray-400')}>
-                                <div>{day}</div>
-                                <div className="mt-0.5">{status === 'on_duty' ? '当班' : status === 'in_surgery' ? '手术' : '休息'}</div>
+                              <div key={i} className={cn(
+                                'text-center p-2 rounded-xl border transition-all',
+                                isToday ? 'ring-2 ring-blue-400 border-blue-300 bg-blue-50/50' : 'border-gray-100 bg-gray-50/50'
+                              )}>
+                                <div className="text-[10px] font-semibold text-gray-500">{day.weekday}</div>
+                                <div className="text-[11px] font-bold text-gray-700 mt-0.5">{day.date}</div>
+                                <div className="mt-2 space-y-1">
+                                  <div className={cn(
+                                    'text-[9px] font-semibold py-0.5 rounded',
+                                    day.morning === 'on' ? 'bg-forest-100 text-forest-700' :
+                                    day.morning === 'busy' ? 'bg-orange-100 text-orange-700' : 'bg-gray-100 text-gray-400'
+                                  )}>
+                                    {day.morning === 'on' ? '上午' : day.morning === 'busy' ? '上午忙' : '-'}
+                                  </div>
+                                  <div className={cn(
+                                    'text-[9px] font-semibold py-0.5 rounded',
+                                    day.afternoon === 'on' ? 'bg-forest-100 text-forest-700' :
+                                    day.afternoon === 'busy' ? 'bg-orange-100 text-orange-700' : 'bg-gray-100 text-gray-400'
+                                  )}>
+                                    {day.afternoon === 'on' ? '下午' : day.afternoon === 'busy' ? '下午忙' : '-'}
+                                  </div>
+                                  <div className={cn(
+                                    'text-[9px] font-semibold py-0.5 rounded',
+                                    day.night === 'on' ? 'bg-indigo-100 text-indigo-700' :
+                                    day.night === 'busy' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-400'
+                                  )}>
+                                    {day.night === 'on' ? '夜班' : day.night === 'busy' ? '夜班忙' : '-'}
+                                  </div>
+                                </div>
                               </div>
                             );
                           })}
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <button onClick={() => handleAction('医生', d.id, '排班管理', '通过', `${d.name}排班已确认`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-sky-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+
+                      {hasWarnings && (
+                        <div className="p-3 rounded-xl bg-red-50/80 border border-red-200">
+                          <p className="text-xs font-semibold text-red-800 flex items-center gap-1.5 mb-2">
+                            <AlertTriangle className="w-4 h-4 text-red-500" />
+                            异常预警
+                          </p>
+                          <div className="space-y-1.5">
+                            {schedule!.warnings.map((warning, i) => (
+                              <div key={i} className="flex items-start gap-2 text-[11px]">
+                                <span className="w-4 h-4 rounded-full bg-red-500 text-white text-[9px] flex items-center justify-center shrink-0 mt-0.5">!</span>
+                                <span className="text-red-700">{warning}</span>
+                              </div>
+                            ))}
+                            {isContinuousWork && (
+                              <div className="flex items-start gap-2 text-[11px]">
+                                <span className="w-4 h-4 rounded-full bg-red-500 text-white text-[9px] flex items-center justify-center shrink-0 mt-0.5">!</span>
+                                <span className="text-red-700">连续上班超过6天，违反劳动法规定，强制安排休息</span>
+                              </div>
+                            )}
+                            {isOverloaded && (
+                              <div className="flex items-start gap-2 text-[11px]">
+                                <span className="w-4 h-4 rounded-full bg-red-500 text-white text-[9px] flex items-center justify-center shrink-0 mt-0.5">!</span>
+                                <span className="text-red-700">单日接诊量超过20次，可能影响诊疗质量</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => {
+                            setScheduleAdjustVisible(d.id);
+                          }}
+                          disabled={actionProcessing}
+                          className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-sky-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all"
+                        >
+                          <Clock className="w-3.5 h-3.5" />
+                          调整排班
+                        </button>
+                        <button
+                          onClick={() => {
+                            setScheduleWarningVisible(d.id);
+                            setWarningMessage('');
+                          }}
+                          disabled={actionProcessing}
+                          className="px-4 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all"
+                        >
+                          <AlertTriangle className="w-3.5 h-3.5" />
+                          发放警告
+                        </button>
+                        <button onClick={() => handleAction('医生', d.id, '排班管理', '确认', `${d.name}本周排班已确认`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-forest-50 text-forest-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-forest-100 transition-colors border border-forest-200">
                           {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
                           确认排班
                         </button>
-                        <button onClick={() => handleAction('医生', d.id, '排班管理', '调整', `要求调整${d.name}排班`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
-                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Clock className="w-3.5 h-3.5" />}
-                          调整排班
-                        </button>
                       </div>
                     </div>
-                  )}
+                    );
+                  })()}
                   {selectedDoctorAction.action === 'signature' && (
                     <div className="space-y-3">
                       <div className="grid sm:grid-cols-3 gap-3">
@@ -956,7 +3163,7 @@ export default function AdminDashboard() {
                   <Clock className="w-4 h-4 text-blue-600" />
                   <span className="text-xs font-semibold text-blue-800">医生排班总览</span>
                 </div>
-                <button onClick={() => navigate('/admin/doctor/schedules')} className="text-[11px] font-bold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/doctor/schedules')} className="text-[11px] font-bold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5">
                   排班表 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -965,7 +3172,7 @@ export default function AdminDashboard() {
                   <PenTool className="w-4 h-4 text-forest-600" />
                   <span className="text-xs font-semibold text-forest-800">电子签名审计</span>
                 </div>
-                <button onClick={() => navigate('/admin/audit/signatures')} className="text-[11px] font-bold text-forest-700 hover:text-forest-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/audit/signatures')} className="text-[11px] font-bold text-forest-700 hover:text-forest-800 hover:underline inline-flex items-center gap-0.5">
                   签名记录 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -974,7 +3181,7 @@ export default function AdminDashboard() {
                   <Star className="w-4 h-4 text-warm-600" />
                   <span className="text-xs font-semibold text-warm-800">评价风控监测</span>
                 </div>
-                <button onClick={() => navigate('/admin/risk/reviews')} className="text-[11px] font-bold text-warm-700 hover:text-warm-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/risk/reviews')} className="text-[11px] font-bold text-warm-700 hover:text-warm-800 hover:underline inline-flex items-center gap-0.5">
                   差评处理 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -983,7 +3190,7 @@ export default function AdminDashboard() {
                   <AlertCircle className="w-4 h-4 text-purple-600" />
                   <span className="text-xs font-semibold text-purple-800">处方异常监测</span>
                 </div>
-                <button onClick={() => navigate('/admin/risk/prescriptions')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/risk/prescriptions')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
                   异常清单 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -1003,9 +3210,43 @@ export default function AdminDashboard() {
                     </span>
                   ))}
                 </div>
+                <button
+                  onClick={() => setPricingFilterExpanded(!pricingFilterExpanded)}
+                  className={cn(
+                    'text-[10px] font-semibold px-2 py-1 rounded-full flex items-center gap-1 transition-colors',
+                    pricingFilterExpanded ? 'bg-orange-100 text-orange-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  )}
+                >
+                  <BarChart3 className="w-3 h-3" />
+                  定价异常 {Object.keys(hospitalPricingData).filter(id => {
+                    const p = hospitalPricingData[id];
+                    return p && (p.avgDeviation > 20 || p.overpriceCount > 0);
+                  }).length}
+                </button>
                 <span className="text-xs text-gray-500">共 {hospitalLedger.length} 条</span>
               </div>
             </div>
+
+            {pricingFilterExpanded && (
+              <div className="p-3 rounded-xl bg-orange-50 border border-orange-200 animate-in fade-in slide-in-from-top-2">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-orange-800 flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    定价异常筛选 - 共 {Object.keys(hospitalPricingData).filter(id => {
+                      const p = hospitalPricingData[id];
+                      return p && (p.avgDeviation > 20 || p.overpriceCount > 0);
+                    }).length} 家医院定价异常
+                  </span>
+                  <button onClick={() => setPricingFilterExpanded(false)} className="text-[10px] text-orange-600 hover:text-orange-800">
+                    收起筛选
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-red-100 text-red-700">价格偏高&gt;20%: {Object.keys(hospitalPricingData).filter(id => hospitalPricingData[id]?.avgDeviation > 20).length}家</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-orange-100 text-orange-700">偏高项目: {Object.values(hospitalPricingData).reduce((sum, p) => sum + (p?.overpriceCount || 0), 0)}项</span>
+                </div>
+              </div>
+            )}
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -1015,6 +3256,7 @@ export default function AdminDashboard() {
                     <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">资质状态</th>
                     <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">医生/当班</th>
                     <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">服务定价</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">价格偏离度</th>
                     <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">今日预约</th>
                     <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">评分/差评</th>
                     <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">合规分</th>
@@ -1022,8 +3264,18 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {hospitalLedger.map((h) => (
-                    <tr key={h.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                  {hospitalLedger.map((h) => {
+                    const isExpanded = expandedServicePricing === h.id;
+                    const services = hospitalServicePricing[h.id] || [];
+                    const pricingData = hospitalPricingData[h.id];
+                    const hasPricingWarning = pricingData && (pricingData.avgDeviation > 20 || pricingData.overpriceCount > 0);
+                    const highDeviation = pricingData && pricingData.avgDeviation > 20;
+                    return (
+                      <>
+                        <tr key={h.id} className={cn(
+                          'border-b border-gray-50 hover:bg-gray-50 transition-colors',
+                          highDeviation && 'bg-orange-50/60 hover:bg-orange-50'
+                        )}>
                       <td className="py-2.5 px-3">
                         <div className="font-semibold text-gray-900">{h.name}</div>
                         <div className="text-gray-500 text-[11px] flex items-center gap-1">
@@ -1059,6 +3311,31 @@ export default function AdminDashboard() {
                         <div className="text-[9px] text-gray-500">{h.servicePriceRange}</div>
                       </td>
                       <td className="py-2.5 px-3 text-center">
+                        {pricingData ? (
+                          <>
+                            <div className={cn(
+                              'font-bold text-base',
+                              pricingData.avgDeviation > 20 ? 'text-red-600' :
+                              pricingData.avgDeviation > 10 ? 'text-orange-600' :
+                              pricingData.avgDeviation > 0 ? 'text-yellow-600' : 'text-forest-600'
+                            )}>
+                              {pricingData.avgDeviation > 0 ? '+' : ''}{pricingData.avgDeviation.toFixed(1)}%
+                            </div>
+                            <div className="text-[9px] text-gray-500">
+                              {pricingData.overpriceCount > 0 && (
+                                <span className="text-red-600 font-semibold">{pricingData.overpriceCount}项偏高</span>
+                              )}
+                              {pricingData.overpriceCount === 0 && '正常'}
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="font-bold text-base text-gray-400">-</div>
+                            <div className="text-[9px] text-gray-400">暂无数据</div>
+                          </>
+                        )}
+                      </td>
+                      <td className="py-2.5 px-3 text-center">
                         <div className="font-semibold text-purple-600">{h.todayAppointments}</div>
                         <div className="text-[9px] text-gray-500">容量 {h.appointmentCapacity}</div>
                         <div className="w-16 h-1 bg-gray-100 rounded-full mx-auto mt-1">
@@ -1086,9 +3363,9 @@ export default function AdminDashboard() {
                       <td className="py-2.5 px-3 text-center">
                         <div className="flex items-center justify-center gap-0.5">
                           <button
-                            onClick={() => setSelectedHospitalAction(selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'pricing' ? null : {id: h.id, action: 'pricing'})}
-                            className={cn('p-1.5 rounded-lg transition-colors', selectedHospitalAction?.id === h.id && selectedHospitalAction?.action === 'pricing' ? 'bg-blue-100 text-blue-700' : 'hover:bg-blue-50 text-blue-600')}
-                            title="服务定价审核"
+                            onClick={() => handleServicePricingClick(h.id)}
+                            className={cn('p-1.5 rounded-lg transition-colors', expandedServicePricing === h.id ? 'bg-blue-100 text-blue-700' : 'hover:bg-blue-50 text-blue-600')}
+                            title="服务定价明细"
                           >
                             <FileText className="w-3.5 h-3.5" />
                           </button>
@@ -1116,7 +3393,261 @@ export default function AdminDashboard() {
                         </div>
                       </td>
                     </tr>
-                  ))}
+                    {isExpanded && services.length > 0 && (
+                      <tr>
+                        <td colSpan={10} className="py-0">
+                          <div className="bg-gradient-to-br from-blue-50/50 to-sky-50/50 border-t border-b border-blue-100 p-4">
+                            <div className="space-y-4">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <FileText className="w-4 h-4 text-blue-600" />
+                                  <span className="font-semibold text-sm text-gray-900">{h.name} - 服务定价明细</span>
+                                  <span className="text-[10px] text-gray-500">共 {services.length} 项服务</span>
+                                </div>
+                              </div>
+
+                              {pricingData && (
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                  <div className="p-3 rounded-xl bg-white/70 border border-blue-100">
+                                    <p className="text-[10px] text-gray-500">平均偏离度</p>
+                                    <p className={cn(
+                                      'text-lg font-bold',
+                                      pricingData.avgDeviation > 20 ? 'text-red-600' :
+                                      pricingData.avgDeviation > 10 ? 'text-orange-600' : 'text-forest-600'
+                                    )}>
+                                      {pricingData.avgDeviation > 0 ? '+' : ''}{pricingData.avgDeviation.toFixed(1)}%
+                                    </p>
+                                  </div>
+                                  <div className="p-3 rounded-xl bg-white/70 border border-blue-100">
+                                    <p className="text-[10px] text-gray-500">偏高项目</p>
+                                    <p className={cn(
+                                      'text-lg font-bold',
+                                      pricingData.overpriceCount > 0 ? 'text-orange-600' : 'text-forest-600'
+                                    )}>
+                                      {pricingData.overpriceCount} <span className="text-[10px] text-gray-400 font-normal">项</span>
+                                    </p>
+                                  </div>
+                                  <div className="p-3 rounded-xl bg-white/70 border border-blue-100">
+                                    <p className="text-[10px] text-gray-500">最低定价</p>
+                                    <p className="text-lg font-bold text-blue-600">¥{pricingData.minPrice?.toFixed(0) || 0}</p>
+                                  </div>
+                                  <div className="p-3 rounded-xl bg-white/70 border border-blue-100">
+                                    <p className="text-[10px] text-gray-500">最高定价</p>
+                                    <p className="text-lg font-bold text-purple-600">¥{pricingData.maxPrice?.toFixed(0) || 0}</p>
+                                  </div>
+                                </div>
+                              )}
+
+                              {pricingData && pricingData.priceDistribution && pricingData.priceDistribution.length > 0 && (
+                                <div className="p-4 rounded-xl bg-white/70 border border-blue-100">
+                                  <p className="text-xs font-semibold text-gray-800 mb-3 flex items-center gap-1.5">
+                                    <BarChart3 className="w-4 h-4 text-blue-500" />
+                                    价格分布（按偏离度区间）
+                                  </p>
+                                  <div className="flex items-end justify-between gap-1 h-24">
+                                    {pricingData.priceDistribution.map((item: any, idx: number) => {
+                                      const maxCount = Math.max(...pricingData.priceDistribution.map((d: any) => d.count), 1);
+                                      const heightPercent = (item.count / maxCount) * 100;
+                                      const isHigh = item.range === '>20%';
+                                      return (
+                                        <div key={idx} className="flex-1 flex flex-col items-center gap-1">
+                                          <div className="text-[9px] font-semibold text-gray-600">{item.count}</div>
+                                          <div className="w-full flex items-end justify-center" style={{ height: '60px' }}>
+                                            <div
+                                              className={cn(
+                                                'w-full max-w-[30px] rounded-t-md transition-all',
+                                                isHigh ? 'bg-gradient-to-t from-red-500 to-orange-400' : 'bg-gradient-to-t from-blue-400 to-sky-300'
+                                              )}
+                                              style={{ height: `${heightPercent}%`, minHeight: '4px' }}
+                                            />
+                                          </div>
+                                          <div className={cn(
+                                            'text-[9px] font-medium',
+                                            isHigh ? 'text-red-600' : 'text-gray-500'
+                                          )}>
+                                            {item.label}
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              )}
+
+                              <div className="overflow-x-auto">
+                                <table className="w-full text-sm">
+                                  <thead>
+                                    <tr className="border-b border-blue-100">
+                                      <th className="text-left py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">服务项目</th>
+                                      <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">指导价</th>
+                                      <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">医院定价</th>
+                                      <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">价格偏离率</th>
+                                      <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">审核状态</th>
+                                      <th className="text-center py-2 px-3 text-[10px] font-bold text-gray-400 uppercase">操作</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {services.map((s) => {
+                                      const isAdjusting = priceAdjustId?.hospitalId === h.id && priceAdjustId?.serviceId === s.serviceId;
+                                      return (
+                                        <tr key={s.serviceId} className="border-b border-blue-50 hover:bg-white/50 transition-colors">
+                                          <td className="py-2 px-3">
+                                            <div className="text-[11px] font-semibold text-gray-800">{s.serviceName}</div>
+                                          </td>
+                                          <td className="py-2 px-3 text-center">
+                                            <span className="text-[11px] text-gray-600 font-mono">¥{s.guidePrice.toFixed(2)}</span>
+                                          </td>
+                                          <td className="py-2 px-3 text-center">
+                                            {isAdjusting ? (
+                                              <input
+                                                type="text"
+                                                value={adjustPrice}
+                                                onChange={(e) => setAdjustPrice(e.target.value)}
+                                                placeholder="输入新价格"
+                                                className="w-20 px-2 py-1 text-[11px] border border-blue-300 rounded-lg text-center focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                              />
+                                            ) : (
+                                              <span className={cn(
+                                                'text-[11px] font-bold font-mono',
+                                                s.deviationRate > 20 ? 'text-red-600' :
+                                                s.deviationRate > 10 ? 'text-warm-600' : 'text-forest-600'
+                                              )}>¥{s.hospitalPrice.toFixed(2)}</span>
+                                            )}
+                                          </td>
+                                          <td className="py-2 px-3 text-center">
+                                            <span className={cn(
+                                              'text-[10px] font-bold px-2 py-0.5 rounded-full',
+                                              s.deviationRate > 20 ? 'bg-red-100 text-red-700' :
+                                              s.deviationRate > 10 ? 'bg-warm-100 text-warm-700' :
+                                              s.deviationRate < -10 ? 'bg-blue-100 text-blue-700' : 'bg-forest-100 text-forest-700'
+                                            )}>
+                                              {s.deviationRate > 0 ? '+' : ''}{s.deviationRate.toFixed(1)}%
+                                            </span>
+                                          </td>
+                                          <td className="py-2 px-3 text-center">
+                                            <span className={cn(
+                                              'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                                              s.status === 'approved' ? 'bg-forest-100 text-forest-700' :
+                                              s.status === 'warning' ? 'bg-warm-100 text-warm-700' : 'bg-blue-100 text-blue-700'
+                                            )}>
+                                              {s.status === 'approved' ? '已通过' : s.status === 'warning' ? '限价警告' : '待审核'}
+                                            </span>
+                                          </td>
+                                          <td className="py-2 px-3 text-center">
+                                            <div className="flex items-center justify-center gap-1">
+                                              {isAdjusting ? (
+                                                <>
+                                                  <button
+                                                    onClick={() => handlePriceAdjust(h.id, s.serviceId)}
+                                                    className={cn(
+                                                      'p-1.5 rounded-lg transition-colors',
+                                                      processing === `price-adjust-${h.id}-${s.serviceId}` ? 'bg-forest-100 opacity-50' : 'hover:bg-forest-50 text-forest-600'
+                                                    )}
+                                                    title="确认调整"
+                                                    disabled={processing === `price-adjust-${h.id}-${s.serviceId}`}
+                                                  >
+                                                    {processing === `price-adjust-${h.id}-${s.serviceId}` ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
+                                                  </button>
+                                                  <button
+                                                    onClick={() => {
+                                                      setPriceAdjustId(null);
+                                                      setAdjustPrice('');
+                                                      setPriceWarningReason('');
+                                                    }}
+                                                    className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
+                                                    title="取消"
+                                                  >
+                                                    <X className="w-3.5 h-3.5" />
+                                                  </button>
+                                                </>
+                                              ) : (
+                                                <>
+                                                  <button
+                                                    onClick={() => {
+                                                      setPriceAdjustId({ hospitalId: h.id, serviceId: s.serviceId });
+                                                      setAdjustPrice(String(s.hospitalPrice));
+                                                    }}
+                                                    className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors"
+                                                    title="调整价格"
+                                                  >
+                                                    <Edit3 className="w-3.5 h-3.5" />
+                                                  </button>
+                                                  {s.status !== 'warning' && (
+                                                    <button
+                                                      onClick={() => {
+                                                        setPriceAdjustId({ hospitalId: h.id, serviceId: s.serviceId });
+                                                        setPriceWarningReason('价格偏离市场指导价过大，请调整');
+                                                      }}
+                                                      className={cn(
+                                                        'p-1.5 rounded-lg transition-colors',
+                                                        processing === `price-warning-${h.id}-${s.serviceId}` ? 'bg-warm-100 opacity-50' : 'hover:bg-warm-50 text-warm-600'
+                                                      )}
+                                                      title="限价警告"
+                                                      disabled={processing === `price-warning-${h.id}-${s.serviceId}`}
+                                                    >
+                                                      {processing === `price-warning-${h.id}-${s.serviceId}` ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <AlertTriangle className="w-3.5 h-3.5" />}
+                                                    </button>
+                                                  )}
+                                                </>
+                                              )}
+                                            </div>
+                                            {isAdjusting && priceWarningReason && (
+                                              <div className="mt-2">
+                                                <input
+                                                  type="text"
+                                                  value={priceWarningReason}
+                                                  onChange={(e) => setPriceWarningReason(e.target.value)}
+                                                  placeholder="警告原因"
+                                                  className="w-full px-2 py-1 text-[10px] border border-warm-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-warm-500"
+                                                />
+                                                <button
+                                                  onClick={() => handlePriceWarning(h.id, s.serviceId)}
+                                                  className={cn(
+                                                    'mt-1 w-full px-2 py-1 rounded-lg text-[10px] font-semibold transition-colors',
+                                                    processing === `price-warning-${h.id}-${s.serviceId}` ? 'bg-warm-100 opacity-50' : 'bg-warm-100 text-warm-700 hover:bg-warm-200'
+                                                  )}
+                                                  disabled={processing === `price-warning-${h.id}-${s.serviceId}`}
+                                                >
+                                                  {processing === `price-warning-${h.id}-${s.serviceId}` ? '发送中...' : '发送限价警告'}
+                                                </button>
+                                              </div>
+                                            )}
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </tbody>
+                                </table>
+                              </div>
+
+                              <div className="p-3 rounded-lg bg-white/70 border border-blue-100">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <Info className="w-4 h-4 text-blue-500" />
+                                  <span className="text-[11px] font-semibold text-gray-700">定价规则说明</span>
+                                </div>
+                                <div className="grid sm:grid-cols-3 gap-3 text-[10px] text-gray-600">
+                                  <div className="flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-forest-500" />
+                                    <span>偏离率 ±10% 以内：正常</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-warm-500" />
+                                    <span>偏离率 10%-20%：关注</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                                    <span>偏离率 20% 以上：警告</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                      </>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -1319,7 +3850,7 @@ export default function AdminDashboard() {
                   <FileText className="w-4 h-4 text-blue-600" />
                   <span className="text-xs font-semibold text-blue-800">服务定价监控</span>
                 </div>
-                <button onClick={() => navigate('/admin/hospital/services')} className="text-[11px] font-bold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/hospital/services')} className="text-[11px] font-bold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5">
                   定价明细 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -1328,7 +3859,7 @@ export default function AdminDashboard() {
                   <MapPinned className="w-4 h-4 text-teal-600" />
                   <span className="text-xs font-semibold text-teal-800">POI 地理围栏</span>
                 </div>
-                <button onClick={() => navigate('/admin/hospital/poi')} className="text-[11px] font-bold text-teal-700 hover:text-teal-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/hospital/poi')} className="text-[11px] font-bold text-teal-700 hover:text-teal-800 hover:underline inline-flex items-center gap-0.5">
                   围栏设置 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -1346,7 +3877,7 @@ export default function AdminDashboard() {
                   <AlertCircle className="w-4 h-4 text-purple-600" />
                   <span className="text-xs font-semibold text-purple-800">合规风险监测</span>
                 </div>
-                <button onClick={() => navigate('/admin/risk/hospitals')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/risk/hospitals')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
                   风险名单 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -1366,9 +3897,44 @@ export default function AdminDashboard() {
                     </span>
                   ))}
                 </div>
+                <button
+                  onClick={() => setQualificationFilterExpanded(!qualificationFilterExpanded)}
+                  className={cn(
+                    'text-[10px] font-semibold px-2 py-1 rounded-full flex items-center gap-1 transition-colors',
+                    qualificationFilterExpanded ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  )}
+                >
+                  <FileText className="w-3 h-3" />
+                  资质异常 {Object.keys(merchantQualificationData).filter(id => {
+                    const q = merchantQualificationData[id];
+                    return q && (q.overallStatus === 'expired' || q.overallStatus === 'pending' || q.certificates.some(c => c.status === 'expired' || c.status === 'warning'));
+                  }).length}
+                </button>
                 <span className="text-xs text-gray-500">共 {merchantLedger.length} 条</span>
               </div>
             </div>
+
+            {qualificationFilterExpanded && (
+              <div className="p-3 rounded-xl bg-red-50 border border-red-200 animate-in fade-in slide-in-from-top-2">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-red-800 flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    资质异常筛选 - 共 {Object.keys(merchantQualificationData).filter(id => {
+                      const q = merchantQualificationData[id];
+                      return q && (q.overallStatus === 'expired' || q.overallStatus === 'pending' || q.certificates.some(c => c.status === 'expired' || c.status === 'warning'));
+                    }).length} 家商家资质异常
+                  </span>
+                  <button onClick={() => setQualificationFilterExpanded(false)} className="text-[10px] text-red-600 hover:text-red-800">
+                    收起筛选
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-red-100 text-red-700">已过期: {Object.keys(merchantQualificationData).filter(id => merchantQualificationData[id]?.certificates.some(c => c.status === 'expired')).length}家</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-yellow-100 text-yellow-700">30天内到期: {Object.keys(merchantQualificationData).filter(id => merchantQualificationData[id]?.certificates.some(c => c.status === 'warning' && c.remainingDays > 0 && c.remainingDays <= 30)).length}家</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-blue-100 text-blue-700">审核中: {Object.keys(merchantQualificationData).filter(id => merchantQualificationData[id]?.overallStatus === 'under_review').length}家</span>
+                </div>
+              </div>
+            )}
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -1386,10 +3952,27 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {merchantLedger.map((m) => (
-                    <tr key={m.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                  {merchantLedger.map((m) => {
+                    const qualInfo = merchantQualificationData[m.id];
+                    const hasQualIssue = qualInfo && (qualInfo.overallStatus === 'expired' || qualInfo.certificates.some(c => c.status === 'expired'));
+                    const hasQualWarning = qualInfo && qualInfo.certificates.some(c => c.status === 'warning');
+                    const qualStatus = qualInfo ? qualInfo.overallStatus : 
+                      (m.licenseStatus === 'approved' ? 'registered' : 
+                       m.licenseStatus === 'pending' ? 'pending' : 
+                       m.licenseStatus === 're_review' ? 'under_review' : 'under_review');
+
+                    return (
+                    <tr key={m.id} className={cn(
+                      'border-b border-gray-50 hover:bg-gray-50 transition-colors',
+                      hasQualIssue && 'bg-red-50/60',
+                      hasQualWarning && !hasQualIssue && 'bg-yellow-50/40'
+                    )}>
                       <td className="py-2.5 px-3">
-                        <div className="font-semibold text-gray-900">{m.name}</div>
+                        <div className="font-semibold text-gray-900 flex items-center gap-1.5">
+                          {m.name}
+                          {hasQualIssue && <span className="text-red-500">🔴</span>}
+                          {hasQualWarning && !hasQualIssue && <span className="text-yellow-500">🟡</span>}
+                        </div>
                         <div className="text-[11px] text-gray-500">{m.businessType}</div>
                         <div className="text-[10px] text-gray-400 mt-0.5">活跃 {m.lastActive}</div>
                       </td>
@@ -1402,9 +3985,19 @@ export default function AdminDashboard() {
                         )}
                       </td>
                       <td className="py-2.5 px-3 text-center">
-                        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[m.licenseStatus]?.color)}>
-                          {statusMap[m.licenseStatus]?.label}
+                        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[qualStatus]?.color || statusMap[m.licenseStatus]?.color)}>
+                          {statusMap[qualStatus]?.label || statusMap[m.licenseStatus]?.label}
                         </span>
+                        {qualInfo && qualInfo.certificates.filter(c => c.status === 'expired').length > 0 && (
+                          <div className="text-[9px] text-red-600 font-semibold mt-0.5">
+                            ⚠ {qualInfo.certificates.filter(c => c.status === 'expired').length}项过期
+                          </div>
+                        )}
+                        {qualInfo && qualInfo.certificates.filter(c => c.status === 'warning').length > 0 && !qualInfo.certificates.some(c => c.status === 'expired') && (
+                          <div className="text-[9px] text-yellow-600 font-semibold mt-0.5">
+                            ⚠ {qualInfo.certificates.filter(c => c.status === 'warning').length}项即将到期
+                          </div>
+                        )}
                       </td>
                       <td className="py-2.5 px-3 text-center">
                         <div className="flex items-center justify-center gap-2">
@@ -1488,7 +4081,8 @@ export default function AdminDashboard() {
                         </div>
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -1516,55 +4110,142 @@ export default function AdminDashboard() {
                       <X className="w-4 h-4" />
                     </button>
                   </div>
-                  {selectedMerchantAction.action === 'compliance' && (
-                    <div className="space-y-3">
-                      <div className="grid sm:grid-cols-3 gap-3">
+                  {selectedMerchantAction.action === 'compliance' && (() => {
+                    const qualData = merchantQualificationData[m.id];
+                    const expiredCount = qualData ? qualData.certificates.filter(c => c.status === 'expired').length : 0;
+                    const warningCount = qualData ? qualData.certificates.filter(c => c.status === 'warning').length : 0;
+
+                    return (
+                    <div className="space-y-4">
+                      <div className="grid sm:grid-cols-4 gap-3">
                         <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
                           <p className="text-[10px] text-gray-500">资质状态</p>
-                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', statusMap[m.licenseStatus]?.color)}>{statusMap[m.licenseStatus]?.label}</span>
+                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', 
+                            qualData ? statusMap[qualData.overallStatus]?.color : statusMap[m.licenseStatus]?.color
+                          )}>
+                            {qualData ? statusMap[qualData.overallStatus]?.label : statusMap[m.licenseStatus]?.label}
+                          </span>
                         </div>
                         <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
-                          <p className="text-[10px] text-gray-500">GSP 认证</p>
-                          <span className={cn('text-sm font-semibold px-2 py-0.5 rounded-full', m.gspCertified ? 'bg-forest-100 text-forest-700' : 'bg-red-100 text-red-700')}>{m.gspCertified ? '✓ 已获 GSP 认证' : '✗ 未获 GSP 认证'}</span>
+                          <p className="text-[10px] text-gray-500">资质证书</p>
+                          <p className="text-lg font-bold text-gray-900">{qualData ? qualData.certificates.length : 3} <span className="text-[10px] text-gray-400 font-normal">项</span></p>
                         </div>
                         <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
-                          <p className="text-[10px] text-gray-500">合规评分</p>
-                          <span className={cn('text-lg font-bold', m.complianceScore >= 90 ? 'text-forest-600' : m.complianceScore >= 60 ? 'text-warm-600' : 'text-red-600')}>{m.complianceScore > 0 ? m.complianceScore : '-'}</span>
+                          <p className="text-[10px] text-gray-500">即将到期</p>
+                          <p className={cn('text-lg font-bold', warningCount > 0 ? 'text-yellow-600' : 'text-forest-600')}>
+                            {warningCount} <span className="text-[10px] text-gray-400 font-normal">项</span>
+                          </p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
+                          <p className="text-[10px] text-gray-500">已过期</p>
+                          <p className={cn('text-lg font-bold', expiredCount > 0 ? 'text-red-600' : 'text-forest-600')}>
+                            {expiredCount} <span className="text-[10px] text-gray-400 font-normal">项</span>
+                          </p>
                         </div>
                       </div>
-                      <div className="p-3 rounded-lg bg-white/80 border border-forest-100">
-                        <p className="text-[10px] text-forest-600 font-semibold mb-2">SKU 合规审核</p>
-                        <div className="grid grid-cols-3 gap-3 text-[11px]">
-                          <div className="text-center">
-                            <p className="font-bold text-gray-900">{m.skuCount}</p>
-                            <p className="text-gray-500">总 SKU</p>
-                          </div>
-                          <div className="text-center">
-                            <p className="font-bold text-forest-600">{m.skuOnShelf}</p>
-                            <p className="text-gray-500">在架</p>
-                          </div>
-                          <div className="text-center">
-                            <p className={cn('font-bold', m.skuOutOfStock > 0 ? 'text-warm-600' : 'text-gray-400')}>{m.skuOutOfStock}</p>
-                            <p className="text-gray-500">缺货</p>
-                          </div>
+
+                      <div className="p-4 rounded-xl bg-white/80 border border-forest-100">
+                        <p className="text-xs font-semibold text-gray-800 flex items-center gap-1.5 mb-3">
+                          <FileText className="w-4 h-4 text-forest-500" />
+                          资质证书列表
+                        </p>
+                        <div className="space-y-2">
+                          {(qualData ? qualData.certificates : []).map((cert) => (
+                            <div key={cert.id} className={cn(
+                              'p-3 rounded-xl border flex items-center justify-between transition-all',
+                              cert.status === 'expired' ? 'bg-red-50 border-red-200' :
+                              cert.status === 'warning' ? 'bg-yellow-50 border-yellow-200' :
+                              'bg-forest-50/50 border-forest-100'
+                            )}>
+                              <div className="flex items-center gap-3">
+                                <div className={cn(
+                                  'w-10 h-10 rounded-lg flex items-center justify-center',
+                                  cert.status === 'expired' ? 'bg-red-100' :
+                                  cert.status === 'warning' ? 'bg-yellow-100' : 'bg-forest-100'
+                                )}>
+                                  <BadgeCheck className={cn(
+                                    'w-5 h-5',
+                                    cert.status === 'expired' ? 'text-red-500' :
+                                    cert.status === 'warning' ? 'text-yellow-500' : 'text-forest-500'
+                                  )} />
+                                </div>
+                                <div>
+                                  <div className="text-sm font-semibold text-gray-900">{cert.name}</div>
+                                  <div className="text-[10px] text-gray-500 font-mono">证书编号：{cert.number}</div>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-[11px] text-gray-500">有效期至：{cert.expiryDate}</div>
+                                <div className={cn(
+                                  'text-[10px] font-semibold mt-0.5',
+                                  cert.status === 'expired' ? 'text-red-600' :
+                                  cert.status === 'warning' ? 'text-yellow-600' : 'text-forest-600'
+                                )}>
+                                  {cert.status === 'expired' ? '已过期' : 
+                                   cert.status === 'warning' ? `剩余 ${cert.remainingDays} 天` : '正常有效'}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <button onClick={() => handleAction('商家', m.id, '合规备案', '通过', `${m.name}合规备案审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all">
+
+                      {(expiredCount > 0 || warningCount > 0) && (
+                        <div className="p-3 rounded-xl bg-red-50/80 border border-red-200">
+                          <p className="text-xs font-semibold text-red-800 flex items-center gap-1.5 mb-2">
+                            <AlertTriangle className="w-4 h-4 text-red-500" />
+                            到期预警
+                          </p>
+                          <div className="space-y-1">
+                            {expiredCount > 0 && (
+                              <div className="flex items-start gap-2 text-[11px]">
+                                <span className="w-4 h-4 rounded-full bg-red-500 text-white text-[9px] flex items-center justify-center shrink-0 mt-0.5">!</span>
+                                <span className="text-red-700">{expiredCount} 项资质已过期，请立即处理</span>
+                              </div>
+                            )}
+                            {warningCount > 0 && (
+                              <div className="flex items-start gap-2 text-[11px]">
+                                <span className="w-4 h-4 rounded-full bg-yellow-500 text-white text-[9px] flex items-center justify-center shrink-0 mt-0.5">!</span>
+                                <span className="text-yellow-700">{warningCount} 项资质将在30天内到期，请提前续期</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => {
+                            setQualificationReviewVisible(m.id);
+                            setRectifyReason('');
+                            setRectifyDeadline('');
+                          }}
+                          disabled={actionProcessing}
+                          className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-sky-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all"
+                        >
+                          <RefreshCw className="w-3.5 h-3.5" />
+                          触发复核
+                        </button>
+                        <button
+                          onClick={() => {
+                            setQualificationReviewVisible(m.id);
+                            setRectifyReason('资质过期/即将到期，请限期整改');
+                            setRectifyDeadline('');
+                          }}
+                          disabled={actionProcessing}
+                          className="px-4 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:shadow-md transition-all"
+                        >
+                          <AlertTriangle className="w-3.5 h-3.5" />
+                          限期整改
+                        </button>
+                        <button onClick={() => handleAction('商家', m.id, '合规备案', '通过', `${m.name}合规备案审核通过`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-forest-50 text-forest-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-forest-100 transition-colors border border-forest-200">
                           {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
                           备案通过
                         </button>
-                        <button onClick={() => handleAction('商家', m.id, '合规备案', '驳回', `${m.name}合规备案驳回`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-gray-200 transition-colors">
-                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
-                          驳回
-                        </button>
-                        <button onClick={() => handleAction('商家', m.id, '合规备案', '补充材料', `要求${m.name}补充GSP认证材料`)} disabled={actionProcessing} className="px-4 py-2 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 hover:bg-warm-100 transition-colors border border-warm-200">
-                          {actionProcessing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileText className="w-3.5 h-3.5" />}
-                          要求补充材料
-                        </button>
                       </div>
                     </div>
-                  )}
+                    );
+                  })()}
                   {selectedMerchantAction.action === 'sku' && (
                     <div className="space-y-3">
                       <div className="grid sm:grid-cols-4 gap-3">
@@ -1702,7 +4383,7 @@ export default function AdminDashboard() {
                   <Store className="w-4 h-4 text-rose-600" />
                   <span className="text-xs font-semibold text-rose-800">SKU 合规备案</span>
                 </div>
-                <button onClick={() => navigate('/admin/merchant/compliance')} className="text-[11px] font-bold text-rose-700 hover:text-rose-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/merchant/compliance')} className="text-[11px] font-bold text-rose-700 hover:text-rose-800 hover:underline inline-flex items-center gap-0.5">
                   备案明细 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -1711,7 +4392,7 @@ export default function AdminDashboard() {
                   <Pill className="w-4 h-4 text-warm-600" />
                   <span className="text-xs font-semibold text-warm-800">处方复核监管</span>
                 </div>
-                <button onClick={() => navigate('/admin/merchant/prescriptions')} className="text-[11px] font-bold text-warm-700 hover:text-warm-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/merchant/prescriptions')} className="text-[11px] font-bold text-warm-700 hover:text-warm-800 hover:underline inline-flex items-center gap-0.5">
                   复核记录 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -1729,7 +4410,7 @@ export default function AdminDashboard() {
                   <AlertCircle className="w-4 h-4 text-red-600" />
                   <span className="text-xs font-semibold text-red-800">GSP 合规监测</span>
                 </div>
-                <button onClick={() => navigate('/admin/risk/merchants')} className="text-[11px] font-bold text-red-700 hover:text-red-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/risk/merchants')} className="text-[11px] font-bold text-red-700 hover:text-red-800 hover:underline inline-flex items-center gap-0.5">
                   风险名单 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -1739,79 +4420,235 @@ export default function AdminDashboard() {
 
         {activeTab === 'review' && (
           <div className="space-y-4">
-            <div className="flex items-center gap-3 flex-wrap">
-              {(['pending', 'approved', 'rejected', 're_review'] as const).map((s) => {
-                const count = reviewItems.filter(r => r.status === s).length;
-                return (
-                  <span key={s} className={cn('text-[10px] font-semibold px-2.5 py-1 rounded-full', statusMap[s]?.color)}>
-                    {statusMap[s]?.label} {count}
-                  </span>
-                );
-              })}
-            </div>
-            <div className="space-y-3">
-              {reviewItems.map((item) => {
-                const cfg = reviewTypeConfig[item.type];
-                return (
-                  <div key={item.id} onClick={() => navigate(`/admin/review/${item.id}`)} className="card cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all">
-                    <div className="flex items-start gap-4">
-                      <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${cfg.color} flex items-center justify-center shrink-0`}>
-                        <cfg.Icon className="w-5 h-5" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <span className="font-semibold text-gray-900">{item.name}</span>
-                          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gradient-to-br ${cfg.color}`}>{cfg.label}</span>
-                          <span className="text-[10px] font-mono text-gray-400">{item.id}</span>
-                          <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[item.status]?.color)}>
-                            {statusMap[item.status]?.label}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-4 text-[11px] text-gray-400">
-                          <span>🕒 提交于 {item.submitted}</span>
-                          <span className="flex items-center gap-1"><FileText className="w-3 h-3" /> 材料 {item.materials} 份</span>
-                          <span className="flex items-center gap-1"><ClipboardList className="w-3 h-3" /> 审计记录 {item.auditTrail} 条</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => navigate(`/admin/review/${item.id}`)} className="p-2 rounded-lg text-gray-400 hover:text-sky-600 hover:bg-sky-50 transition-colors" title="查看详情">
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        {item.status === 'pending' && (
-                          <>
-                            <button
-                              onClick={() => handleReject(item.id)}
-                              disabled={!!processing}
-                              className="px-3 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors text-xs font-medium inline-flex items-center gap-1 disabled:opacity-50"
-                            >
-                              {processing === `reject-${item.id}` ? <Clock className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
-                              驳回
-                            </button>
-                            <button
-                              onClick={() => handleApprove(item.id)}
-                              disabled={!!processing}
-                              className="px-3 py-2 rounded-lg bg-gradient-to-r from-forest-500 to-emerald-500 text-white hover:shadow-md transition-all text-xs font-medium inline-flex items-center gap-1 disabled:opacity-50"
-                            >
-                              {processing === `approve-${item.id}` ? <Clock className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
-                              通过
-                            </button>
-                          </>
-                        )}
-                        {item.status === 'rejected' && (
-                          <span className="text-[10px] text-red-500 font-semibold flex items-center gap-1"><XCircle className="w-3 h-3" />已驳回 · 可查看驳回原因</span>
-                        )}
-                        {item.status === 're_review' && (
-                          <span className="text-[10px] text-purple-500 font-semibold flex items-center gap-1"><RotateCcw className="w-3 h-3" />复审中 · 已补充材料</span>
-                        )}
-                        {item.status === 'approved' && (
-                          <span className="text-[10px] text-forest-500 font-semibold flex items-center gap-1"><CheckCircle2 className="w-3 h-3" />已通过</span>
-                        )}
-                      </div>
-                    </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { label: '待审核', status: 'pending', Icon: Clock, color: 'from-warm-400 to-orange-500', count: localReviewItems.filter(r => r.status === 'pending').length },
+                { label: '已通过', status: 'approved', Icon: CheckCircle2, color: 'from-forest-400 to-emerald-500', count: localReviewItems.filter(r => r.status === 'approved').length },
+                { label: '已驳回', status: 'rejected', Icon: XCircle, color: 'from-red-400 to-rose-500', count: localReviewItems.filter(r => r.status === 'rejected').length },
+                { label: '待复核', status: 're_review', Icon: RotateCcw, color: 'from-purple-400 to-indigo-500', count: localReviewItems.filter(r => r.status === 're_review').length },
+              ].map(({ label, status, Icon, color, count }) => (
+                <div key={status} className="card !p-4 flex items-start gap-3">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center shrink-0`}>
+                    <Icon className="w-5 h-5 text-white" />
                   </div>
-                );
-              })}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-2xl font-bold text-gray-900">{count}</div>
+                    <div className="text-[11px] text-gray-500 font-medium">{label}</div>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            <div className="card overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100">
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">申请方</th>
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">申请类型</th>
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">提交时间</th>
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">审核时限</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">剩余时间</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">状态</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">材料</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {localReviewItems.map((item) => {
+                    const cfg = reviewTypeConfig[item.type];
+                    const isExpanded = expandedReviewDetail === item.id;
+                    const remaining = getRemainingTime(item.submitted);
+                    const isOverdue = remaining === '已逾期';
+                    return (
+                      <>
+                        <tr key={item.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                          <td className="py-2.5 px-3">
+                            <div className="flex items-center gap-2">
+                              <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${cfg.color} flex items-center justify-center shrink-0`}>
+                                <cfg.Icon className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <div className="font-semibold text-gray-900 text-xs">{item.name}</div>
+                                <div className="text-[10px] font-mono text-gray-400">{item.id}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gradient-to-br ${cfg.color}`}>
+                              {getApplicationType(item.type)}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3 text-[11px] text-gray-600">{item.submitted}</td>
+                          <td className="py-2.5 px-3 text-[11px] text-gray-600">{getReviewDeadline(item.submitted)}</td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className={cn(
+                              'text-[11px] font-bold',
+                              isOverdue ? 'text-red-600' : remaining.includes('天') ? 'text-warm-600' : 'text-forest-600'
+                            )}>
+                              {remaining}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[item.status]?.color)}>
+                              {statusMap[item.status]?.label}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className="text-[11px] text-gray-600">{item.materials} 份</span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              <button
+                                onClick={() => setExpandedReviewDetail(isExpanded ? null : item.id)}
+                                className={cn(
+                                  'p-1.5 rounded-lg transition-colors text-[10px] font-semibold inline-flex items-center gap-1',
+                                  isExpanded ? 'bg-purple-100 text-purple-700' : 'hover:bg-purple-50 text-purple-600'
+                                )}
+                              >
+                                <FileText className="w-3.5 h-3.5" />
+                                {isExpanded ? '收起' : '资质明细'}
+                              </button>
+                              {item.status === 'pending' && (
+                                <>
+                                  <button
+                                    onClick={() => { setReviewAction({id: item.id, type: 'approve'}); setExpandedReviewDetail(item.id); }}
+                                    className="p-1.5 rounded-lg hover:bg-forest-50 text-forest-600 transition-colors"
+                                    title="审核通过"
+                                  >
+                                    <CheckCircle2 className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => { setReviewAction({id: item.id, type: 'reject'}); setExpandedReviewDetail(item.id); }}
+                                    className="p-1.5 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
+                                    title="审核驳回"
+                                  >
+                                    <XCircle className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => { setReviewAction({id: item.id, type: 'supplement'}); setExpandedReviewDetail(item.id); }}
+                                    className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors"
+                                    title="补充材料"
+                                  >
+                                    <AlertTriangle className="w-3.5 h-3.5" />
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                        {isExpanded && (
+                          <tr>
+                            <td colSpan={8} className="py-0">
+                              <div className="bg-gradient-to-br from-purple-50/50 to-indigo-50/50 border-t border-b border-purple-100 p-4">
+                                <div className="grid sm:grid-cols-2 gap-4">
+                                  <div className="space-y-3">
+                                    <div className="flex items-center gap-2">
+                                      <BadgeCheck className="w-4 h-4 text-purple-600" />
+                                      <span className="font-semibold text-sm text-gray-900">资质证书列表</span>
+                                    </div>
+                                    <div className="space-y-2">
+                                      {qualificationCertificates.map((cert, i) => (
+                                        <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-white border border-gray-100">
+                                          <div>
+                                            <div className="text-[11px] font-semibold text-gray-800">{cert.name}</div>
+                                            <div className="text-[10px] font-mono text-gray-500">{cert.number}</div>
+                                          </div>
+                                          <div className="text-right">
+                                            <div className="text-[10px] text-gray-500">有效期至</div>
+                                            <div className={cn('text-[11px] font-semibold', cert.expiry === '长期' ? 'text-forest-600' : new Date(cert.expiry) < new Date() ? 'text-red-600' : 'text-gray-700')}>
+                                              {cert.expiry}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+
+                                  <div className="space-y-3">
+                                    <div className="flex items-center gap-2">
+                                      <Clock className="w-4 h-4 text-purple-600" />
+                                      <span className="font-semibold text-sm text-gray-900">历史审核记录</span>
+                                    </div>
+                                    <div className="relative pl-4">
+                                      <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-purple-200" />
+                                      {auditTrailHistory.map((record, i) => (
+                                        <div key={i} className="relative pb-3 last:pb-0">
+                                          <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-purple-500 border-2 border-white" />
+                                          <div className="pl-3">
+                                            <div className="text-[11px] font-semibold text-gray-800">{record.action}</div>
+                                            <div className="text-[10px] text-gray-500">
+                                              {record.time} · {record.operator} · <span className="text-purple-600">{record.status}</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+
+                                    <div className="p-3 rounded-lg bg-white border border-gray-100">
+                                      <div className="text-[10px] text-gray-500 mb-1">下次复核时间</div>
+                                      <div className="text-sm font-bold text-purple-700">2027-06-14</div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {reviewAction?.id === item.id && (
+                                  <div className="mt-4 p-4 rounded-xl bg-white border border-purple-200 space-y-3">
+                                    <div className="flex items-center gap-2">
+                                      {reviewAction.type === 'approve' && <CheckCircle2 className="w-5 h-5 text-forest-600" />}
+                                      {reviewAction.type === 'reject' && <XCircle className="w-5 h-5 text-red-600" />}
+                                      {reviewAction.type === 'supplement' && <AlertTriangle className="w-5 h-5 text-warm-600" />}
+                                      <span className="font-semibold text-gray-900">
+                                        {reviewAction.type === 'approve' ? '审核通过' : reviewAction.type === 'reject' ? '审核驳回' : '要求补充材料'}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      <label className="text-[11px] font-semibold text-gray-700 block mb-1.5">审核意见 <span className="text-red-500">*</span></label>
+                                      <textarea
+                                        value={reviewOpinion}
+                                        onChange={(e) => setReviewOpinion(e.target.value)}
+                                        placeholder={
+                                          reviewAction.type === 'approve' ? '请输入通过理由...' :
+                                          reviewAction.type === 'reject' ? '请输入驳回原因...' :
+                                          '请说明需要补充的材料...'
+                                        }
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-200 resize-none"
+                                        rows={3}
+                                      />
+                                    </div>
+                                    <div className="flex justify-end gap-2">
+                                      <button
+                                        onClick={() => { setReviewAction(null); setReviewOpinion(''); }}
+                                        className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold hover:bg-gray-200 transition-colors"
+                                      >
+                                        取消
+                                      </button>
+                                      <button
+                                        onClick={() => handleReviewAction(item.id, reviewAction.type)}
+                                        disabled={!!processing || !reviewOpinion.trim()}
+                                        className={cn(
+                                          'px-4 py-2 rounded-lg text-white text-xs font-semibold inline-flex items-center gap-1.5 disabled:opacity-50 transition-all',
+                                          reviewAction.type === 'approve' ? 'bg-gradient-to-r from-forest-500 to-emerald-500 hover:shadow-md' :
+                                          reviewAction.type === 'reject' ? 'bg-gradient-to-r from-red-500 to-rose-500 hover:shadow-md' :
+                                          'bg-gradient-to-r from-warm-500 to-orange-500 hover:shadow-md'
+                                        )}
+                                      >
+                                        {processing === `review-${reviewAction.type}-${item.id}` ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
+                                        确认{reviewAction.type === 'approve' ? '通过' : reviewAction.type === 'reject' ? '驳回' : '提交'}
+                                      </button>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
             <div className="card bg-gradient-to-br from-purple-50 to-indigo-50 space-y-3 border-purple-100">
               <div className="flex items-center gap-2">
                 <BadgeCheck className="w-5 h-5 text-purple-600" />
@@ -1841,140 +4678,245 @@ export default function AdminDashboard() {
 
         {activeTab === 'consultation' && (
           <div className="space-y-4">
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex gap-2">
-                {(['completed', 'scheduled', 'missed'] as const).map((s) => (
-                  <span key={s} className={cn('text-[10px] font-semibold px-2.5 py-1 rounded-full', statusMap[s]?.color)}>
-                    {statusMap[s]?.label} {s === 'scheduled' ? consultationAudit.filter(c => c.followUpNeeded).length : s === 'completed' ? 2 : 0}
-                  </span>
-                ))}
-                <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-red-100 text-red-700">待确认 {consultationAudit.filter(c => !c.ownerAcknowledged).length}
-                </span>
-              </div>
-            </div>
-            <div className="space-y-3">
-              {consultationAudit.map((c) => (
-                <div key={c.id} className="card space-y-3">
-                  <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-100 to-sky-200 flex items-center justify-center shrink-0">
-                      <Stethoscope className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className="font-semibold text-gray-900">{c.diagnosis}</span>
-                        <span className="text-[10px] font-mono text-gray-400">{c.id}</span>
-                        {c.aesEncrypted && <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">🔒 AES-256 加密</span>}
-                      </div>
-                      <div className="text-[11px] text-gray-500">
-                        宠物：{c.petName} ({c.owner}) · 医生：{c.doctor}({c.dept}) · {c.createdAt} · 时长 {c.duration}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1 shrink-0">
-                      <button onClick={() => navigate(`/admin/consultation/${c.id}`)} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="问诊详情">
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      {c.prescriptionIssued && (
-                        <button onClick={() => { setActiveTab('prescription'); }} className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors" title="关联处方">
-                          <Pill className="w-4 h-4" />
-                        </button>
-                      )}
-                      {c.followUpNeeded && (
-                        <button onClick={() => navigate('/calendar')} className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors" title="复诊预约">
-                          <Calendar className="w-4 h-4" />
-                        </button>
-                      )}
-                    </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { label: '已双签', Icon: CheckCircle2, color: 'from-forest-400 to-emerald-500', count: consultationAudit.filter(c => c.doctorSigned && c.ownerAcknowledged).length },
+                { label: '仅医生签', Icon: PenTool, color: 'from-warm-400 to-orange-500', count: consultationAudit.filter(c => c.doctorSigned && !c.ownerAcknowledged).length },
+                { label: '待宠主确认', Icon: UserCheck, color: 'from-blue-400 to-sky-500', count: consultationAudit.filter(c => c.doctorSigned && !c.ownerAcknowledged).length },
+                { label: '未签', Icon: XCircle, color: 'from-red-400 to-rose-500', count: consultationAudit.filter(c => !c.doctorSigned && !c.ownerAcknowledged).length },
+              ].map(({ label, Icon, color, count }) => (
+                <div key={label} className="card !p-4 flex items-start gap-3">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center shrink-0`}>
+                    <Icon className="w-5 h-5 text-white" />
                   </div>
-
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-gray-50 to-cream-50 border border-gray-100">
-                    <p className="text-[11px] text-gray-700 leading-relaxed">
-                      <span className="font-semibold text-gray-800">主诉症状：</span>{c.symptoms}
-                    </p>
-                    <p className="text-[11px] text-gray-600 leading-relaxed mt-1">
-                      <span className="font-semibold text-gray-800">诊断结论：</span>{c.diagnosis}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <div className={cn(
-                      'p-3 rounded-xl border flex items-center gap-2',
-                      c.doctorSigned ? 'bg-forest-50 border-forest-200' : 'bg-gray-50 border-gray-200'
-                    )}>
-                      <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0', c.doctorSigned ? 'bg-forest-100' : 'bg-gray-100')}>
-                        <PenTool className={cn('w-4 h-4', c.doctorSigned ? 'text-forest-600' : 'text-gray-400')} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-semibold text-gray-800">医生签名</p>
-                        <p className={cn('text-[10px]', c.doctorSigned ? 'text-forest-600' : 'text-gray-400')}>
-                          {c.doctorSigned ? `✓ ${c.doctor}` : '未签名'}
-                        </p>
-                      </div>
-                      {c.doctorSigned && (
-                        <button onClick={() => navigate(`/admin/consultation/${c.id}`)} className="text-[9px] font-bold text-forest-600 hover:underline">签名明细</button>
-                      )}
-                    </div>
-                    <div className={cn(
-                      'p-3 rounded-xl border flex items-center gap-2',
-                      c.ownerAcknowledged ? 'bg-forest-50 border-forest-200' : 'bg-warm-50 border-warm-200'
-                    )}>
-                      <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0', c.ownerAcknowledged ? 'bg-forest-100' : 'bg-warm-100')}>
-                        <UserCheck className={cn('w-4 h-4', c.ownerAcknowledged ? 'text-forest-600' : 'text-warm-600')} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-semibold text-gray-800">宠主知情</p>
-                        <p className={cn('text-[10px]', c.ownerAcknowledged ? 'text-forest-600' : 'text-warm-600')}>
-                          {c.ownerAcknowledged ? '✓ 已确认' : '待确认'}
-                        </p>
-                      </div>
-                      {!c.ownerAcknowledged && (
-                        <button onClick={() => navigate('/products')} className="text-[9px] font-bold text-warm-600 hover:underline">催确认</button>
-                      )}
-                    </div>
-                    <div className={cn(
-                      'p-3 rounded-xl border flex items-center gap-2',
-                      c.prescriptionIssued ? 'bg-warm-50 border-warm-200' : 'bg-gray-50 border-gray-200'
-                    )}>
-                      <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0', c.prescriptionIssued ? 'bg-warm-100' : 'bg-gray-100')}>
-                        <Pill className={cn('w-4 h-4', c.prescriptionIssued ? 'text-warm-600' : 'text-gray-400')} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-semibold text-gray-800">处方开具</p>
-                        <p className={cn('text-[10px]', c.prescriptionIssued ? 'text-warm-600' : 'text-gray-400')}>
-                          {c.prescriptionIssued ? '✓ 已开具' : '未开具'}
-                        </p>
-                      </div>
-                      {c.prescriptionIssued && (
-                        <button onClick={() => { setActiveTab('prescription'); }} className="text-[9px] font-bold text-warm-600 hover:underline">查看处方</button>
-                      )}
-                    </div>
-                    <div className={cn(
-                      'p-3 rounded-xl border flex items-center gap-2',
-                      c.followUpNeeded ? 'bg-purple-50 border-purple-200' : 'bg-gray-50 border-gray-200'
-                    )}>
-                      <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0', c.followUpNeeded ? 'bg-purple-100' : 'bg-gray-100')}>
-                        <Calendar className={cn('w-4 h-4', c.followUpNeeded ? 'text-purple-600' : 'text-gray-400')} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-semibold text-gray-800">复诊提醒</p>
-                        <p className={cn('text-[10px]', c.followUpNeeded ? 'text-purple-600' : 'text-gray-400')}>
-                          {c.followUpNeeded ? c.followUpDate : '无需复诊'}
-                        </p>
-                      </div>
-                      {c.followUpNeeded && (
-                        <button onClick={() => navigate('/calendar')} className="text-[9px] font-bold text-purple-600 hover:underline">预约</button>
-                      )}
-                    </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-2xl font-bold text-gray-900">{count}</div>
+                    <div className="text-[11px] text-gray-500 font-medium">{label}</div>
                   </div>
                 </div>
               ))}
             </div>
+
+            <div className="card overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100">
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">问诊信息</th>
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">诊断摘要</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">问诊时长</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">处方数量</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">签名状态</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">复诊</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {consultationAudit.map((c) => {
+                    const sigStatus = getSignatureStatus(c.doctorSigned, c.ownerAcknowledged);
+                    const isExpanded = expandedConsultation === c.id;
+                    return (
+                      <>
+                        <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                          <td className="py-2.5 px-3">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-100 to-sky-200 flex items-center justify-center shrink-0">
+                                <Stethoscope className="w-4 h-4 text-blue-600" />
+                              </div>
+                              <div>
+                                <div className="font-semibold text-gray-900 text-xs">{c.petName} · {c.owner}</div>
+                                <div className="text-[10px] text-gray-500">{c.doctor}({c.dept}) · {c.createdAt}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <div className="text-[11px] text-gray-700 max-w-[200px] truncate" title={c.diagnosis}>
+                              {c.diagnosis}
+                            </div>
+                            <div className="text-[10px] text-gray-400 mt-0.5" title={c.symptoms}>
+                              {c.symptoms.slice(0, 20)}...
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className="text-[11px] font-semibold text-gray-700">{c.duration}</span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className={cn(
+                              'text-[11px] font-semibold',
+                              c.prescriptionIssued ? 'text-warm-600' : 'text-gray-400'
+                            )}>
+                              {c.prescriptionIssued ? '1 张' : '无'}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              <span className={cn('text-lg font-bold', sigStatus.color)}>{sigStatus.icon}</span>
+                              <span className={cn('text-[10px] font-semibold', sigStatus.color)}>{sigStatus.label}</span>
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            {c.followUpNeeded ? (
+                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">
+                                {c.followUpDate}
+                              </span>
+                            ) : (
+                              <span className="text-[10px] text-gray-400">无需</span>
+                            )}
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              <button
+                                onClick={() => setExpandedConsultation(isExpanded ? null : c.id)}
+                                className={cn(
+                                  'p-1.5 rounded-lg transition-colors text-[10px] font-semibold inline-flex items-center gap-1',
+                                  isExpanded ? 'bg-blue-100 text-blue-700' : 'hover:bg-blue-50 text-blue-600'
+                                )}
+                              >
+                                <FileText className="w-3.5 h-3.5" />
+                                {isExpanded ? '收起' : '完整链路'}
+                              </button>
+                              {c.prescriptionIssued && (
+                                <button onClick={() => { setActiveTab('prescription'); }} className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors" title="关联处方">
+                                  <Pill className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                        {isExpanded && (
+                          <tr>
+                            <td colSpan={7} className="py-0">
+                              <div className="bg-gradient-to-br from-blue-50/50 to-sky-50/50 border-t border-b border-blue-100 p-4">
+                                <div className="grid sm:grid-cols-3 gap-4">
+                                  <div className="space-y-3 sm:col-span-2">
+                                    <div className="flex items-center gap-2">
+                                      <Activity className="w-4 h-4 text-blue-600" />
+                                      <span className="font-semibold text-sm text-gray-900">问诊时间线</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                                      {consultationTimeline.map((step, i) => (
+                                        <div key={i} className="flex items-center shrink-0">
+                                          <div className="text-center">
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-sky-500 flex items-center justify-center text-white text-xs font-bold mx-auto">
+                                              {i + 1}
+                                            </div>
+                                            <div className="mt-1 text-[10px] font-semibold text-gray-800">{step.step}</div>
+                                            <div className="text-[9px] text-gray-500">{step.time}</div>
+                                            <div className="text-[9px] text-blue-600">{step.status}</div>
+                                            <div className="text-[9px] text-gray-400">{step.operator}</div>
+                                          </div>
+                                          {i < consultationTimeline.length - 1 && (
+                                            <div className="w-8 h-0.5 bg-blue-200 mx-1" />
+                                          )}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+
+                                  <div className="space-y-3">
+                                    <div className="flex items-center gap-2">
+                                      <PenTool className="w-4 h-4 text-forest-600" />
+                                      <span className="font-semibold text-sm text-gray-900">医生签名信息</span>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-white border border-gray-100 space-y-1.5">
+                                      <div className="flex justify-between text-[11px]">
+                                        <span className="text-gray-500">签名时间</span>
+                                        <span className="font-semibold text-gray-800">{doctorSignatureInfo.signTime}</span>
+                                      </div>
+                                      <div className="flex justify-between text-[11px]">
+                                        <span className="text-gray-500">医师证号</span>
+                                        <span className="font-mono font-semibold text-gray-800">{doctorSignatureInfo.licenseNumber}</span>
+                                      </div>
+                                      <div className="flex justify-between text-[11px]">
+                                        <span className="text-gray-500">签名哈希</span>
+                                        <span className="font-mono text-forest-600">{doctorSignatureInfo.signatureHash}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="grid sm:grid-cols-2 gap-4 mt-4">
+                                  <div className="space-y-3">
+                                    <div className="flex items-center gap-2">
+                                      <UserCheck className="w-4 h-4 text-blue-600" />
+                                      <span className="font-semibold text-sm text-gray-900">宠主确认信息</span>
+                                    </div>
+                                    <div className="p-3 rounded-lg bg-white border border-gray-100 space-y-1.5">
+                                      <div className="flex justify-between text-[11px]">
+                                        <span className="text-gray-500">确认时间</span>
+                                        <span className="font-semibold text-gray-800">{ownerConfirmInfo.confirmTime}</span>
+                                      </div>
+                                      <div className="flex justify-between text-[11px]">
+                                        <span className="text-gray-500">IP地址</span>
+                                        <span className="font-mono font-semibold text-gray-800">{ownerConfirmInfo.ip}</span>
+                                      </div>
+                                      <div className="flex justify-between text-[11px]">
+                                        <span className="text-gray-500">设备信息</span>
+                                        <span className="font-semibold text-gray-800">{ownerConfirmInfo.device}</span>
+                                      </div>
+                                      <div className="flex justify-between text-[11px]">
+                                        <span className="text-gray-500">地理位置</span>
+                                        <span className="font-semibold text-gray-800">{ownerConfirmInfo.location}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="space-y-3">
+                                    <div className="flex items-center gap-2">
+                                      <Calendar className="w-4 h-4 text-purple-600" />
+                                      <span className="font-semibold text-sm text-gray-900">复诊提醒关联</span>
+                                    </div>
+                                    {c.followUpNeeded ? (
+                                      <div className="p-3 rounded-lg bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 space-y-1.5">
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">复诊日期</span>
+                                          <span className="font-semibold text-purple-700">{c.followUpDate}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">复诊科室</span>
+                                          <span className="font-semibold text-gray-800">{c.dept}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">主治医生</span>
+                                          <span className="font-semibold text-gray-800">{c.doctor}</span>
+                                        </div>
+                                        <button
+                                          onClick={() => {
+                                            trackNavigate('/calendar');
+                                            addAuditLog('问诊审计-复诊关联', `问诊-${c.id}`, '查看', `管理员查看${c.petName}复诊提醒详情`);
+                                          }}
+                                          className="w-full mt-1 px-3 py-1.5 rounded-lg bg-purple-500 text-white text-[11px] font-semibold hover:bg-purple-600 transition-colors"
+                                        >
+                                          前往日历预约
+                                        </button>
+                                      </div>
+                                    ) : (
+                                      <div className="p-3 rounded-lg bg-gray-50 border border-gray-200 text-center">
+                                        <span className="text-[11px] text-gray-400">无需复诊</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
             <div className="card bg-gradient-to-br from-blue-50 to-sky-50 space-y-3 border-blue-100">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Lock className="w-5 h-5 text-blue-600" />
                   <span className="font-semibold text-blue-900 text-sm">问诊审计闭环说明</span>
                 </div>
-                <button onClick={() => navigate('/admin/consultation/audit')} className="text-[11px] font-bold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => {
+                  trackNavigate('/admin/consultation/audit');
+                  addAuditLog('问诊审计-全链路', '', '查看', '管理员查看全链路问诊审计');
+                }} className="text-[11px] font-bold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5">
                   全链路审计 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -2002,137 +4944,237 @@ export default function AdminDashboard() {
 
         {activeTab === 'prescription' && (
           <div className="space-y-4">
-            <div className="flex items-center gap-3 flex-wrap">
-              {(['pending_doctor', 'pending_owner', 'approved', 'merchant_review'] as const).map((s) => {
-                const count = prescriptionMonitor.filter(p => p.status === s).length;
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+              {prescriptionFlowStatuses.map(({ status, label, color, Icon }) => {
+                const count = localPrescriptions.filter(p => getPrescriptionFlowStatus(p.status) === status).length;
                 return (
-                  <span key={s} className={cn('text-[10px] font-semibold px-2.5 py-1 rounded-full', statusMap[s]?.color)}>
-                    {statusMap[s]?.label} {count}
-                  </span>
+                  <div key={status} className="card !p-3 flex items-start gap-2">
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center shrink-0`}>
+                      <Icon className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-lg font-bold text-gray-900">{count}</div>
+                      <div className="text-[10px] text-gray-500 font-medium">{label}</div>
+                    </div>
+                  </div>
                 );
               })}
             </div>
-            <div className="space-y-3">
-              {prescriptionMonitor.map((rx) => (
-                <div key={rx.id} className="card space-y-3">
-                  <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-warm-100 to-orange-200 flex items-center justify-center shrink-0">
-                      <Pill className="w-5 h-5 text-warm-600" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className="font-semibold text-gray-900">{rx.drug}</span>
-                        <span className="text-[10px] font-mono text-gray-400">{rx.id}</span>
-                        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[rx.status]?.color)}>
-                          {statusMap[rx.status]?.label}
-                        </span>
-                      </div>
-                      <div className="text-[11px] text-gray-500">开具医生：{rx.doctor} · 创建时间：{rx.createdAt}</div>
-                    </div>
-                    <div className="flex items-center gap-1 shrink-0">
-                      <button
-                        onClick={() => navigate(`/admin/prescription/${rx.id}`)}
-                        className="p-1.5 rounded-lg hover:bg-sky-50 text-sky-600 transition-colors"
-                        title="处方详情/流转链路"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      {rx.status === 'merchant_review' && (
-                        <button
-                          onClick={() => navigate('/shop')}
-                          className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors"
-                          title="前往商城复核"
-                        >
-                          <ShoppingCart className="w-4 h-4" />
-                        </button>
-                      )}
-                      {rx.status === 'pending_owner' && (
-                        <button
-                          onClick={() => navigate('/products')}
-                          className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors"
-                          title="宠主知情确认入口"
-                        >
-                          <UserCheck className="w-4 h-4" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
 
-                  <div className="grid grid-cols-3 gap-3">
-                    <div className={cn(
-                      'p-3 rounded-xl border flex items-center gap-2',
-                      rx.doctorSigned ? 'bg-forest-50 border-forest-200' : 'bg-gray-50 border-gray-200'
-                    )}>
-                      <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0', rx.doctorSigned ? 'bg-forest-100' : 'bg-gray-100')}>
-                        <PenTool className={cn('w-4 h-4', rx.doctorSigned ? 'text-forest-600' : 'text-gray-400')} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-semibold text-gray-800">① 医生签名</p>
-                        <p className={cn('text-[10px]', rx.doctorSigned ? 'text-forest-600' : 'text-gray-400')}>
-                          {rx.doctorSigned ? `✓ ${rx.doctor} 已签名` : '等待签名'}
-                        </p>
-                      </div>
-                      {rx.doctorSigned && (
-                        <button onClick={() => navigate(`/admin/prescription/${rx.id}`)} className="text-[9px] font-bold text-forest-600 hover:underline">签名明细</button>
-                      )}
-                    </div>
-                    <div className={cn(
-                      'p-3 rounded-xl border flex items-center gap-2',
-                      rx.ownerAcknowledged ? 'bg-forest-50 border-forest-200' : 'bg-gray-50 border-gray-200'
-                    )}>
-                      <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0', rx.ownerAcknowledged ? 'bg-forest-100' : 'bg-gray-100')}>
-                        <UserCheck className={cn('w-4 h-4', rx.ownerAcknowledged ? 'text-forest-600' : 'text-gray-400')} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-semibold text-gray-800">② 宠主确认</p>
-                        <p className={cn('text-[10px]', rx.ownerAcknowledged ? 'text-forest-600' : 'text-gray-400')}>
-                          {rx.ownerAcknowledged ? '✓ 已知情确认' : '等待确认'}
-                        </p>
-                      </div>
-                      {rx.ownerAcknowledged && (
-                        <button onClick={() => navigate(`/admin/prescription/${rx.id}`)} className="text-[9px] font-bold text-forest-600 hover:underline">确认留痕</button>
-                      )}
-                    </div>
-                    <div className={cn(
-                      'p-3 rounded-xl border flex items-center gap-2',
-                      rx.status === 'approved' ? 'bg-forest-50 border-forest-200' :
-                      rx.status === 'merchant_review' ? 'bg-sky-50 border-sky-200' : 'bg-gray-50 border-gray-200'
-                    )}>
-                      <div className={cn(
-                        'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
-                        rx.status === 'approved' ? 'bg-forest-100' :
-                        rx.status === 'merchant_review' ? 'bg-sky-100' : 'bg-gray-100'
-                      )}>
-                        {rx.status === 'approved' ? <CheckCircle2 className="w-4 h-4 text-forest-600" /> :
-                         rx.status === 'merchant_review' ? <ShoppingCart className="w-4 h-4 text-sky-600" /> :
-                         <Clock className="w-4 h-4 text-gray-400" />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-semibold text-gray-800">③ 复核/发货</p>
-                        <p className={cn(
-                          'text-[10px]',
-                          rx.status === 'approved' ? 'text-forest-600' :
-                          rx.status === 'merchant_review' ? 'text-sky-600' : 'text-gray-400'
-                        )}>
-                          {rx.status === 'approved' ? '✓ 双签通过' :
-                           rx.status === 'merchant_review' ? '商家复核中' : '待前序步骤'}
-                        </p>
-                      </div>
-                      {(rx.status === 'approved' || rx.status === 'merchant_review') && (
-                        <button onClick={() => navigate('/shop')} className="text-[9px] font-bold text-sky-600 hover:underline">流转链路</button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="card overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100">
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">处方编号</th>
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">处方药品</th>
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">开具医生</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">金额</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">流转状态</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">双签状态</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {localPrescriptions.map((rx) => {
+                    const sigStatus = getSignatureStatus(rx.doctorSigned, rx.ownerAcknowledged);
+                    const flowStatus = getPrescriptionFlowStatus(rx.status);
+                    const amount = getPrescriptionAmount(rx.id);
+                    const isExpanded = expandedPrescription === rx.id;
+                    return (
+                      <>
+                        <tr key={rx.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                          <td className="py-2.5 px-3">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-warm-100 to-orange-200 flex items-center justify-center shrink-0">
+                                <Pill className="w-4 h-4 text-warm-600" />
+                              </div>
+                              <div>
+                                <div className="font-mono font-semibold text-gray-900 text-[11px]">{rx.id}</div>
+                                <div className="text-[10px] text-gray-500">{rx.createdAt}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <div className="text-[11px] font-semibold text-gray-800">{rx.drug}</div>
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <div className="text-[11px] text-gray-700">{rx.doctor}</div>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className="text-[11px] font-bold text-warm-600">¥{amount.toFixed(2)}</span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[rx.status]?.color)}>
+                              {statusMap[rx.status]?.label}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <div className={cn(
+                              'inline-flex items-center gap-1 px-2 py-0.5 rounded-full',
+                              rx.doctorSigned && rx.ownerAcknowledged ? 'bg-forest-50 border border-forest-200' :
+                              rx.doctorSigned ? 'bg-warm-50 border border-warm-200' : 'bg-red-50 border border-red-200'
+                            )}>
+                              <span className={cn('text-sm font-bold', sigStatus.color)}>{sigStatus.icon}</span>
+                              <span className={cn('text-[10px] font-semibold', sigStatus.color)}>{sigStatus.label}</span>
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              <button
+                                onClick={() => {
+                                  setExpandedPrescription(isExpanded ? null : rx.id);
+                                  if (!isExpanded) {
+                                    addAuditLog('处方监管-流转追踪', `处方-${rx.id}`, '查看', `管理员查看${rx.drug}处方流转链路`);
+                                  }
+                                }}
+                                className={cn(
+                                  'p-1.5 rounded-lg transition-colors text-[10px] font-semibold inline-flex items-center gap-1',
+                                  isExpanded ? 'bg-warm-100 text-warm-700' : 'hover:bg-warm-50 text-warm-600'
+                                )}
+                              >
+                                <Package className="w-3.5 h-3.5" />
+                                {isExpanded ? '收起' : '流转追踪'}
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        {isExpanded && (
+                          <tr>
+                            <td colSpan={7} className="py-0">
+                              <div className="bg-gradient-to-br from-warm-50/50 to-orange-50/50 border-t border-b border-warm-100 p-4">
+                                <div className="space-y-4">
+                                  <div>
+                                    <div className="flex items-center gap-2 mb-3">
+                                      <Activity className="w-4 h-4 text-warm-600" />
+                                      <span className="font-semibold text-sm text-gray-900">处方流转全链路</span>
+                                    </div>
+                                    <div className="flex items-start gap-2 overflow-x-auto pb-2">
+                                      {prescriptionFlowTimeline.map((step, i) => (
+                                        <div key={i} className="flex items-start shrink-0">
+                                          <div className="text-center min-w-[90px]">
+                                            <div className={cn(
+                                              'w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold mx-auto',
+                                              step.completed ? 'bg-gradient-to-br from-warm-500 to-orange-500' : 'bg-gray-300'
+                                            )}>
+                                              {i + 1}
+                                            </div>
+                                            <div className="mt-1 text-[10px] font-semibold text-gray-800">{step.step}</div>
+                                            <div className="text-[9px] text-gray-500">{step.time}</div>
+                                            <div className={cn('text-[9px] font-semibold', step.completed ? 'text-warm-600' : 'text-gray-400')}>{step.status}</div>
+                                            <div className="text-[9px] text-gray-400">{step.operator}</div>
+                                          </div>
+                                          {i < prescriptionFlowTimeline.length - 1 && (
+                                            <div className={cn('w-8 h-0.5 mt-5 mx-1', step.completed ? 'bg-warm-300' : 'bg-gray-200')} />
+                                          )}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+
+                                  <div className="grid sm:grid-cols-3 gap-4">
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <PenTool className="w-4 h-4 text-forest-600" />
+                                        <span className="font-semibold text-xs text-gray-900">医生签名</span>
+                                      </div>
+                                      <div className={cn(
+                                        'p-3 rounded-lg border space-y-1.5',
+                                        rx.doctorSigned ? 'bg-forest-50 border-forest-200' : 'bg-gray-50 border-gray-200'
+                                      )}>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">签名时间</span>
+                                          <span className="font-semibold text-gray-800">{prescriptionSignatureInfo.doctorSign.time}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">医师</span>
+                                          <span className="font-semibold text-gray-800">{prescriptionSignatureInfo.doctorSign.name}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">执业证号</span>
+                                          <span className="font-mono text-[10px] text-forest-600">{prescriptionSignatureInfo.doctorSign.license}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <PenTool className="w-4 h-4 text-blue-600" />
+                                        <span className="font-semibold text-xs text-gray-900">药师审核</span>
+                                      </div>
+                                      <div className={cn(
+                                        'p-3 rounded-lg border space-y-1.5',
+                                        rx.status !== 'pending_doctor' ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-200'
+                                      )}>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">审核时间</span>
+                                          <span className="font-semibold text-gray-800">{prescriptionSignatureInfo.pharmacistSign.time}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">药师</span>
+                                          <span className="font-semibold text-gray-800">{prescriptionSignatureInfo.pharmacistSign.name}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">药师证号</span>
+                                          <span className="font-mono text-[10px] text-blue-600">{prescriptionSignatureInfo.pharmacistSign.license}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <UserCheck className="w-4 h-4 text-purple-600" />
+                                        <span className="font-semibold text-xs text-gray-900">宠主确认</span>
+                                      </div>
+                                      <div className={cn(
+                                        'p-3 rounded-lg border space-y-1.5',
+                                        rx.ownerAcknowledged ? 'bg-purple-50 border-purple-200' : 'bg-gray-50 border-gray-200'
+                                      )}>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">确认时间</span>
+                                          <span className="font-semibold text-gray-800">{prescriptionSignatureInfo.ownerConfirm.time}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">宠主</span>
+                                          <span className="font-semibold text-gray-800">{prescriptionSignatureInfo.ownerConfirm.name}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">IP地址</span>
+                                          <span className="font-mono text-[10px] text-purple-600">{prescriptionSignatureInfo.ownerConfirm.ip}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  {(rx.doctorSigned && rx.ownerAcknowledged) && (
+                                    <div className="p-3 rounded-xl bg-gradient-to-r from-forest-50 to-emerald-50 border border-forest-200">
+                                      <div className="flex items-center justify-center gap-2">
+                                        <BadgeCheck className="w-5 h-5 text-forest-600" />
+                                        <span className="font-semibold text-forest-700 text-sm">✓✓ 双签已完成 · 处方有效</span>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
+
             <div className="card bg-gradient-to-br from-warm-50 to-orange-50 space-y-3 border-warm-100">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Lock className="w-5 h-5 text-warm-600" />
                   <span className="font-semibold text-warm-800 text-sm">处方流转监管说明</span>
                 </div>
-                <button onClick={() => navigate('/admin/prescription/flow')} className="text-[11px] font-bold text-warm-700 hover:text-warm-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => {
+                  trackNavigate('/admin/prescription/flow');
+                  addAuditLog('处方监管-全链路', '', '查看', '管理员查看全链路处方监管');
+                }} className="text-[11px] font-bold text-warm-700 hover:text-warm-800 hover:underline inline-flex items-center gap-0.5">
                   全链路监管 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -2160,155 +5202,484 @@ export default function AdminDashboard() {
 
         {activeTab === 'community' && (
           <div className="space-y-4">
-            <div className="flex items-center gap-3 flex-wrap">
-              {(['community', 'lost', 'adopt'] as const).map((t) => (
-                <span key={t} className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-700">
-                  {t === 'community' ? '社区帖子' : t === 'lost' ? '寻宠启事' : '领养意向'} {communityPosts.filter(p => p.type === t).length}
-                </span>
-              ))}
-              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-red-100 text-red-700">
-                待审核 {communityPosts.filter(p => p.status === 'pending_review').length}
-              </span>
-              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-warm-100 text-warm-700">
-                高风险 {communityPosts.filter(p => p.riskScore >= 50).length}
-              </span>
-            </div>
-
-            <div className="grid sm:grid-cols-4 gap-3">
-              <div className="card bg-gradient-to-br from-cream-50 to-warm-50 p-4 space-y-2 border-warm-100">
-                <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-forest-100 to-emerald-200 flex items-center justify-center">
-                    <MessageCircle className="w-4 h-4 text-forest-600" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-500">社区发布</p>
-                    <p className="text-lg font-bold text-gray-900">12,856</p>
-                  </div>
-                </div>
-                <p className="text-[10px] text-forest-600 font-semibold">日均发布 86 篇 · 审核通过率 92.3%</p>
-              </div>
-              <div className="card bg-gradient-to-br from-orange-50 to-warm-50 p-4 space-y-2 border-orange-100">
-                <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-100 to-amber-200 flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-orange-600" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-500">寻宠启事</p>
-                    <p className="text-lg font-bold text-gray-900">368</p>
-                  </div>
-                </div>
-                <p className="text-[10px] text-orange-600 font-semibold">本月找回 42 只 · 找回率 68.5%</p>
-              </div>
-              <div className="card bg-gradient-to-br from-purple-50 to-indigo-50 p-4 space-y-2 border-purple-100">
-                <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-100 to-indigo-200 flex items-center justify-center">
-                    <HeartHandshake className="w-4 h-4 text-purple-600" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-500">领养意向</p>
-                    <p className="text-lg font-bold text-gray-900">1,256</p>
-                  </div>
-                </div>
-                <p className="text-[10px] text-purple-600 font-semibold">本月成功领养 86 只 · 匹配率 71.2%</p>
-              </div>
-              <div className="card bg-gradient-to-br from-red-50 to-rose-50 p-4 space-y-2 border-red-100">
-                <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-red-100 to-rose-200 flex items-center justify-center">
-                    <AlertCircle className="w-4 h-4 text-red-600" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-500">高风险内容</p>
-                    <p className="text-lg font-bold text-gray-900">28</p>
-                  </div>
-                </div>
-                <p className="text-[10px] text-red-600 font-semibold">需人工复核 · 涉及投诉/医疗纠纷</p>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              {communityPosts.map((p) => (
-                <div key={p.id} className="card space-y-3">
-                  <div className="flex items-start gap-4">
-                    <div className={cn(
-                      'w-11 h-11 rounded-xl flex items-center justify-center shrink-0',
-                      p.type === 'community' ? 'bg-gradient-to-br from-cream-100 to-warm-200' :
-                      p.type === 'lost' ? 'bg-gradient-to-br from-orange-100 to-amber-200' :
-                      'bg-gradient-to-br from-purple-100 to-indigo-200'
-                    )}>
-                      {p.type === 'community' && <MessageCircle className={cn('w-5 h-5', p.status === 'published' ? 'text-forest-600' : 'text-gray-600')} />}
-                      {p.type === 'lost' && <MapPin className={cn('w-5 h-5', p.found ? 'text-forest-600' : 'text-orange-600')} />}
-                      {p.type === 'adopt' && <HeartHandshake className={cn('w-5 h-5', p.status === 'published' ? 'text-purple-600' : 'text-gray-600')} />}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {lostPetStats.map(({ status, label, color, Icon }) => {
+                const count = status === 'searching' ? localCommunityPosts.filter(p => p.type === 'lost' && !p.found).length :
+                             status === 'found' ? localCommunityPosts.filter(p => p.type === 'lost' && p.found).length :
+                             status === 'followup' ? localCommunityPosts.filter(p => p.type === 'lost' && !p.found).length :
+                             localCommunityPosts.filter(p => p.type === 'adopt').length;
+                return (
+                  <div key={status} className="card !p-3 flex items-start gap-2">
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center shrink-0`}>
+                      <Icon className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className={cn(
-                          'text-[10px] font-bold px-2 py-0.5 rounded-full',
-                          p.type === 'community' ? 'bg-forest-100 text-forest-700' :
-                          p.type === 'lost' ? 'bg-orange-100 text-orange-700' :
-                          'bg-purple-100 text-purple-700'
-                        )}>
-                          {p.type === 'community' ? '社区' : p.type === 'lost' ? '寻宠' : '领养'}
-                        </span>
-                        <span className="font-semibold text-gray-900">
-                          {p.type === 'community' ? p.title :
-                           p.type === 'lost' ? `寻${p.breed} · ${p.color}` :
-                           `${p.petName} · ${p.breed}`}
-                        </span>
-                        <span className="text-[10px] font-mono text-gray-400">{p.id}</span>
-                        <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', statusMap[p.status]?.color)}>
-                          {statusMap[p.status]?.label}
-                        </span>
-                        {p.riskScore >= 50 && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700">
-                            风险 {p.riskScore}分
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-[11px] text-gray-500">
-                        {p.type === 'community' && (
-                          <>作者：{p.author} · {p.likes}赞 {p.comments}评 {p.shares}分享 · {p.views}阅读 · {p.createdAt}</>
-                        )}
-                        {p.type === 'lost' && (
-                          <>宠主：{p.author} · 最后出现：{p.lastSeen} · 走失：{p.lostTime} · 悬赏：{p.reward}</>
-                        )}
-                        {p.type === 'adopt' && (
-                          <>发布人：{p.author} · {p.age} · {p.gender} · {p.vaccinated ? '已免疫' : '未免疫'} · {p.neutered ? '已绝育' : '未绝育'} · 意向申请人 {p.applicantCount}位</>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1 shrink-0">
-                      <button onClick={() => navigate(`/admin/community/${p.id}`)} className="p-1.5 rounded-lg hover:bg-forest-50 text-forest-600 transition-colors" title="内容详情">
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      {p.status === 'pending_review' && (
-                        <>
-                          <button onClick={() => handleApprove(p.id)} className={cn('p-1.5 rounded-lg text-forest-600 transition-colors', processing === `approve-${p.id}` ? 'bg-forest-100 opacity-50' : 'hover:bg-forest-50')} title="审核通过" disabled={processing === `approve-${p.id}`}>
-                            {processing === `approve-${p.id}` ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                          </button>
-                          <button onClick={() => handleReject(p.id)} className={cn('p-1.5 rounded-lg text-red-600 transition-colors', processing === `reject-${p.id}` ? 'bg-red-100 opacity-50' : 'hover:bg-red-50')} title="审核驳回" disabled={processing === `reject-${p.id}`}>
-                            {processing === `reject-${p.id}` ? <Loader2 className="w-4 h-4 animate-spin" /> : <X className="w-4 h-4" />}
-                          </button>
-                        </>
-                      )}
-                      {p.auditTrail > 0 && (
-                        <button onClick={() => setExpandedAudit(expandedAudit === p.id ? null : p.id)} className="text-[10px] font-bold text-purple-600 hover:underline px-2">
-                          审计链路 {p.auditTrail}
-                        </button>
-                      )}
+                      <div className="text-lg font-bold text-gray-900">{count}</div>
+                      <div className="text-[10px] text-gray-500 font-medium">{label}</div>
                     </div>
                   </div>
-                  {p.type === 'community' && (
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-cream-50 to-gray-50 border border-cream-100">
-                      <p className="text-[11px] text-gray-700 line-clamp-2">{p.content}</p>
+                );
+              })}
+            </div>
+
+            <div className="flex gap-1 p-1 bg-gray-100 rounded-xl">
+              <button
+                onClick={() => setCommunitySubTab('posts')}
+                className={cn(
+                  'flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition-all',
+                  communitySubTab === 'posts' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                )}
+              >
+                社区帖子
+              </button>
+              <button
+                onClick={() => setCommunitySubTab('anticheat')}
+                className={cn(
+                  'flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5',
+                  communitySubTab === 'anticheat' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                )}
+              >
+                <Shield className="w-3.5 h-3.5" />
+                评价反作弊
+                <span className="bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-full">
+                  {localAntiCheatReviews.filter(r => r.status === 'pending').length}
+                </span>
+              </button>
+            </div>
+
+            {communitySubTab === 'anticheat' && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div className="card !p-3 flex items-start gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400 to-sky-500 flex items-center justify-center shrink-0">
+                      <MessageSquare className="w-4 h-4 text-white" />
                     </div>
-                  )}
-                  {p.type === 'adopt' && (
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-50 to-gray-50 border border-purple-100">
-                      <p className="text-[11px] text-gray-700">{p.description}</p>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-lg font-bold text-gray-900">{localAntiCheatReviews.length}</div>
+                      <div className="text-[10px] text-gray-500 font-medium">总评价数</div>
                     </div>
-                  )}
+                  </div>
+                  <div className="card !p-3 flex items-start gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-400 to-orange-500 flex items-center justify-center shrink-0">
+                      <AlertTriangle className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-lg font-bold text-red-600">{localAntiCheatReviews.filter(r => r.status !== 'approved').length}</div>
+                      <div className="text-[10px] text-gray-500 font-medium">异常评价</div>
+                    </div>
+                  </div>
+                  <div className="card !p-3 flex items-start gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center shrink-0">
+                      <Clock className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-lg font-bold text-yellow-600">{localAntiCheatReviews.filter(r => r.status === 'pending').length}</div>
+                      <div className="text-[10px] text-gray-500 font-medium">待处理</div>
+                    </div>
+                  </div>
+                  <div className="card !p-3 flex items-start gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-forest-400 to-emerald-500 flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-lg font-bold text-forest-600">{localAntiCheatReviews.filter(r => r.status === 'approved' || r.status === 'rejected').length}</div>
+                      <div className="text-[10px] text-gray-500 font-medium">已处理</div>
+                    </div>
+                  </div>
                 </div>
-              ))}
+
+                <div className="card space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-sm text-gray-900 flex items-center gap-2">
+                      <Shield className="w-4 h-4 text-blue-600" />
+                      异常评价列表
+                    </h3>
+                    <span className="text-[10px] text-gray-500">共 {localAntiCheatReviews.length} 条</span>
+                  </div>
+                  <div className="space-y-2">
+                    {localAntiCheatReviews.map((review) => {
+                      const isExpanded = expandedAntiCheat === review.id;
+                      return (
+                        <div key={review.id} className={cn(
+                          'p-3 rounded-xl border transition-all',
+                          review.status === 'pending' ? 'bg-red-50/50 border-red-200' :
+                          review.status === 'rejected' ? 'bg-gray-50 border-gray-200' :
+                          'bg-forest-50/50 border-forest-200'
+                        )}>
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className={cn(
+                                  'text-[9px] font-bold px-1.5 py-0.5 rounded-full',
+                                  review.riskScore >= 80 ? 'bg-red-100 text-red-700' :
+                                  review.riskScore >= 50 ? 'bg-orange-100 text-orange-700' : 'bg-yellow-100 text-yellow-700'
+                                )}>
+                                  风险 {review.riskScore}
+                                </span>
+                                <span className="text-[10px] text-gray-500">
+                                  {review.riskReasons.map((r, i) => (
+                                    <span key={i}>
+                                      {i > 0 && ' · '}
+                                      {r === 'ip_abnormal' && 'IP异常'}
+                                      {r === 'device_fingerprint' && '设备指纹'}
+                                      {r === 'brush_suspect' && '刷单嫌疑'}
+                                      {r === 'content_similar' && '内容相似'}
+                                    </span>
+                                  ))}
+                                </span>
+                              </div>
+                              <p className="text-xs text-gray-800 line-clamp-2">{review.content}</p>
+                              <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-500">
+                                <span className="flex items-center gap-1">
+                                  <User className="w-3 h-3" />
+                                  {review.reviewer}
+                                </span>
+                                <span>→</span>
+                                <span className="flex items-center gap-1">
+                                  <Building className="w-3 h-3" />
+                                  {review.reviewedTarget}
+                                </span>
+                                <span className="text-gray-400">{review.createdAt}</span>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => setExpandedAntiCheat(isExpanded ? null : review.id)}
+                              className="p-1.5 rounded-lg hover:bg-white/50 text-gray-400 hover:text-gray-600 transition-colors shrink-0"
+                            >
+                              {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                            </button>
+                          </div>
+                          {isExpanded && (
+                            <div className="mt-3 pt-3 border-t border-gray-200/60 space-y-3">
+                              <div className="grid grid-cols-2 gap-3 text-[10px]">
+                                <div>
+                                  <span className="text-gray-500">IP 地址：</span>
+                                  <span className="font-mono text-gray-700">{review.ip}</span>
+                                </div>
+                                <div>
+                                  <span className="text-gray-500">设备 ID：</span>
+                                  <span className="font-mono text-gray-700">{review.deviceFingerprint}</span>
+                                </div>
+                                <div>
+                                  <span className="text-gray-500">评价类型：</span>
+                                  <span className="text-gray-700">{review.targetType === 'hospital' ? '医院评价' : review.targetType === 'doctor' ? '医生评价' : review.targetType === 'product' ? '商品评价' : '商家评价'}</span>
+                                </div>
+                                <div>
+                                  <span className="text-gray-500">当前状态：</span>
+                                  <span className={cn(
+                                    'font-semibold',
+                                    review.status === 'pending' ? 'text-yellow-600' :
+                                    review.status === 'approved' ? 'text-forest-600' : 'text-gray-600'
+                                  )}>
+                                    {review.status === 'pending' ? '待处理' : review.status === 'approved' ? '已通过' : '已驳回'}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {review.status === 'pending' && (
+                                  <>
+                                    <button
+                                      onClick={() => {
+                                        setLocalAntiCheatReviews(prev => prev.map(r => r.id === review.id ? { ...r, status: 'approved' as const } : r));
+                                        addAuditLog('社区监管-评价反作弊', `评价-${review.id}`, '通过', `通过${review.reviewer}的评价`);
+                                      }}
+                                      className="px-3 py-1.5 rounded-lg bg-forest-500 text-white text-[10px] font-semibold hover:bg-forest-600 transition-colors inline-flex items-center gap-1"
+                                    >
+                                      <CheckCircle2 className="w-3 h-3" />
+                                      通过
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        setLocalAntiCheatReviews(prev => prev.map(r => r.id === review.id ? { ...r, status: 'rejected' as const } : r));
+                                        addAuditLog('社区监管-评价反作弊', `评价-${review.id}`, '驳回', `驳回${review.reviewer}的评价`);
+                                      }}
+                                      className="px-3 py-1.5 rounded-lg bg-red-500 text-white text-[10px] font-semibold hover:bg-red-600 transition-colors inline-flex items-center gap-1"
+                                    >
+                                      <XCircle className="w-3 h-3" />
+                                      驳回
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        setBlockUserVisible(review.id);
+                                        setBlockReason('');
+                                        setAddToBlacklist(false);
+                                      }}
+                                      className="px-3 py-1.5 rounded-lg bg-orange-500 text-white text-[10px] font-semibold hover:bg-orange-600 transition-colors inline-flex items-center gap-1"
+                                    >
+                                      <UserX className="w-3 h-3" />
+                                      屏蔽用户
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        setBlockUserVisible(review.id);
+                                        setBlockReason('刷单/异常评价行为');
+                                        setAddToBlacklist(true);
+                                      }}
+                                      className="px-3 py-1.5 rounded-lg bg-gray-800 text-white text-[10px] font-semibold hover:bg-gray-900 transition-colors inline-flex items-center gap-1"
+                                    >
+                                      <Ban className="w-3 h-3" />
+                                      加入黑名单
+                                    </button>
+                                  </>
+                                )}
+                                {review.status !== 'pending' && (
+                                  <span className="text-[10px] text-gray-400">该评价已处理</span>
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {communitySubTab === 'posts' && (
+              <>
+            <div className="card overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100">
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">内容类型</th>
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">标题</th>
+                    <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">发布人</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">发布时间</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">风险评分</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">跟进状态</th>
+                    <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-400 uppercase">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {localCommunityPosts.map((p) => {
+                    const contentType = getContentType(p.type);
+                    const followupStatus = getFollowupStatus(p);
+                    const isAntiCheat = p.riskScore >= 50;
+                    const isExpandedLost = expandedLostPet === p.id;
+                    return (
+                      <>
+                        <tr key={p.id} className={cn(
+                          'border-b border-gray-50 hover:bg-gray-50 transition-colors',
+                          isAntiCheat && 'bg-red-50/50'
+                        )}>
+                          <td className="py-2.5 px-3">
+                            <div className="flex items-center gap-2">
+                              <div className={cn(
+                                'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
+                                p.type === 'community' ? 'bg-gradient-to-br from-cream-100 to-warm-200' :
+                                p.type === 'lost' ? 'bg-gradient-to-br from-orange-100 to-amber-200' :
+                                'bg-gradient-to-br from-purple-100 to-indigo-200'
+                              )}>
+                                {p.type === 'community' && <MessageCircle className={cn('w-4 h-4', p.status === 'published' ? 'text-forest-600' : 'text-gray-600')} />}
+                                {p.type === 'lost' && <MapPin className={cn('w-4 h-4', p.found ? 'text-forest-600' : 'text-orange-600')} />}
+                                {p.type === 'adopt' && <HeartHandshake className={cn('w-4 h-4', p.status === 'published' ? 'text-purple-600' : 'text-gray-600')} />}
+                              </div>
+                              <span className={cn(
+                                'text-[10px] font-bold px-2 py-0.5 rounded-full',
+                                p.type === 'community' ? 'bg-forest-100 text-forest-700' :
+                                p.type === 'lost' ? 'bg-orange-100 text-orange-700' :
+                                'bg-purple-100 text-purple-700'
+                              )}>
+                                {contentType}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <div>
+                              <div className={cn(
+                                'text-[11px] font-semibold',
+                                isAntiCheat ? 'text-red-700' : 'text-gray-800'
+                              )}>
+                                {p.type === 'community' ? p.title :
+                                 p.type === 'lost' ? `寻${p.breed} · ${p.color}` :
+                                 `${p.petName} · ${p.breed}`}
+                              </div>
+                              {isAntiCheat && (
+                                <div className="text-[9px] text-red-600 font-semibold mt-0.5">
+                                  ⚠ AI检测：疑似刷单/恶意评价
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <div className="text-[11px] text-gray-700">{p.author}</div>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <div className="text-[11px] text-gray-600">{p.createdAt}</div>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className={cn(
+                              'text-[10px] font-bold px-2 py-0.5 rounded-full',
+                              p.riskScore >= 50 ? 'bg-red-100 text-red-700' :
+                              p.riskScore >= 30 ? 'bg-warm-100 text-warm-700' :
+                              'bg-forest-100 text-forest-700'
+                            )}>
+                              {p.riskScore}分
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', followupStatus.color)}>
+                              {followupStatus.label}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3 text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              {p.type === 'lost' && (
+                                <button
+                                  onClick={() => handleLostPetFollowup(p.id)}
+                                  className={cn(
+                                    'p-1.5 rounded-lg transition-colors text-[10px] font-semibold inline-flex items-center gap-1',
+                                    isExpandedLost ? 'bg-orange-100 text-orange-700' : 'hover:bg-orange-50 text-orange-600'
+                                  )}
+                                >
+                                  <MapPin className="w-3.5 h-3.5" />
+                                  {isExpandedLost ? '收起' : '寻宠跟进'}
+                                </button>
+                              )}
+                              {isAntiCheat && (
+                                <div className="flex items-center gap-0.5">
+                                  <button
+                                    onClick={() => handleReviewAntiCheat(p.id, 'approve')}
+                                    className={cn(
+                                      'p-1.5 rounded-lg transition-colors',
+                                      processing === `anticheat-approve-${p.id}` ? 'bg-forest-100 opacity-50' : 'hover:bg-forest-50 text-forest-600'
+                                    )}
+                                    title="正常，通过"
+                                    disabled={processing === `anticheat-approve-${p.id}`}
+                                  >
+                                    {processing === `anticheat-approve-${p.id}` ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
+                                  </button>
+                                  <button
+                                    onClick={() => handleReviewAntiCheat(p.id, 'reject')}
+                                    className={cn(
+                                      'p-1.5 rounded-lg transition-colors',
+                                      processing === `anticheat-reject-${p.id}` ? 'bg-red-100 opacity-50' : 'hover:bg-red-50 text-red-600'
+                                    )}
+                                    title="违规，驳回"
+                                    disabled={processing === `anticheat-reject-${p.id}`}
+                                  >
+                                    {processing === `anticheat-reject-${p.id}` ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <X className="w-3.5 h-3.5" />}
+                                  </button>
+                                </div>
+                              )}
+                              <button
+                                onClick={() => trackNavigate(`/admin/community/${p.id}`)}
+                                className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
+                                title="查看详情"
+                              >
+                                <Eye className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        {isExpandedLost && (
+                          <tr>
+                            <td colSpan={7} className="py-0">
+                              <div className="bg-gradient-to-br from-orange-50/50 to-amber-50/50 border-t border-b border-orange-100 p-4">
+                                <div className="space-y-4">
+                                  <div className="grid sm:grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <MapPin className="w-4 h-4 text-orange-600" />
+                                        <span className="font-semibold text-xs text-gray-900">寻宠信息</span>
+                                      </div>
+                                      <div className="p-3 rounded-lg bg-white border border-orange-100 space-y-1.5">
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">宠物品种</span>
+                                          <span className="font-semibold text-gray-800">{lostPetDetail.petInfo.breed}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">颜色/特征</span>
+                                          <span className="font-semibold text-gray-800">{lostPetDetail.petInfo.color} · {lostPetDetail.petInfo.features}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">丢失地点</span>
+                                          <span className="font-semibold text-gray-800">{lostPetDetail.petInfo.lostLocation}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">丢失时间</span>
+                                          <span className="font-semibold text-gray-800">{lostPetDetail.petInfo.lostTime}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">悬赏金额</span>
+                                          <span className="font-bold text-orange-600">{lostPetDetail.petInfo.reward}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <Users className="w-4 h-4 text-blue-600" />
+                                        <span className="font-semibold text-xs text-gray-900">公益任务分配</span>
+                                      </div>
+                                      <div className="p-3 rounded-lg bg-white border border-blue-100 space-y-1.5">
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">负责志愿者</span>
+                                          <span className="font-semibold text-gray-800">{lostPetDetail.volunteerAssign.volunteer}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">联系电话</span>
+                                          <span className="font-mono text-gray-800">{lostPetDetail.volunteerAssign.phone}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">巡查范围</span>
+                                          <span className="font-semibold text-gray-800">{lostPetDetail.volunteerAssign.patrolArea}</span>
+                                        </div>
+                                        <div className="flex justify-between text-[11px]">
+                                          <span className="text-gray-500">巡查时间</span>
+                                          <span className="font-semibold text-gray-800">{lostPetDetail.volunteerAssign.patrolTime}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div>
+                                    <div className="flex items-center gap-2 mb-3">
+                                      <Clock className="w-4 h-4 text-warm-600" />
+                                      <span className="font-semibold text-sm text-gray-900">跟进记录时间线</span>
+                                    </div>
+                                    <div className="relative pl-6 space-y-3">
+                                      {lostPetDetail.followupTimeline.map((record, i) => (
+                                        <div key={i} className="relative">
+                                          <div className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-warm-500 border-2 border-white" />
+                                          {i < lostPetDetail.followupTimeline.length - 1 && (
+                                            <div className="absolute -left-[14px] top-4 w-0.5 h-full bg-warm-200" />
+                                          )}
+                                          <div className="flex items-center gap-2 text-[11px]">
+                                            <span className="text-gray-500 font-mono">{record.time}</span>
+                                            <span className="font-semibold text-gray-800">{record.action}</span>
+                                            <span className="text-gray-500">by</span>
+                                            <span className="text-gray-700">{record.operator}</span>
+                                            <span className="text-warm-600 font-medium">{record.status}</span>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+
+                                  <div className="p-3 rounded-lg bg-gradient-to-r from-warm-50 to-orange-50 border border-warm-200">
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex items-center gap-2">
+                                        <BadgeCheck className="w-4 h-4 text-warm-600" />
+                                        <span className="font-semibold text-[11px] text-gray-800">结果反馈</span>
+                                      </div>
+                                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">
+                                        {lostPetDetail.result.status === 'searching' ? '寻找中' : '已找到'}
+                                      </span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 mt-2">{lostPetDetail.result.feedback}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
 
             <div className="card bg-gradient-to-br from-forest-50 to-emerald-50 space-y-3 border-forest-100">
@@ -2317,7 +5688,10 @@ export default function AdminDashboard() {
                   <Shield className="w-5 h-5 text-forest-600" />
                   <span className="font-semibold text-forest-900 text-sm">社区内容监管说明</span>
                 </div>
-                <button onClick={() => navigate('/admin/community/rules')} className="text-[11px] font-bold text-forest-700 hover:text-forest-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => {
+                  trackNavigate('/admin/community/rules');
+                  addAuditLog('社区监管-规则', '', '查看', '管理员查看社区监管规则');
+                }} className="text-[11px] font-bold text-forest-700 hover:text-forest-800 hover:underline inline-flex items-center gap-0.5">
                   监管规则 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -2335,11 +5709,13 @@ export default function AdminDashboard() {
                   <p className="text-gray-600">资质核验 · 家访跟踪 · 领养后回访</p>
                 </div>
                 <div className="p-3 rounded-xl bg-white/70 text-center">
-                  <p className="text-red-600 font-bold mb-1">风控评级</p>
-                  <p className="text-gray-600">内容风险 · 投诉率 · 账号信用分</p>
+                  <p className="text-red-600 font-bold mb-1">评价反作弊</p>
+                  <p className="text-gray-600">AI异常检测 · 人工复核 · 信用联动</p>
                 </div>
               </div>
             </div>
+              </>
+            )}
           </div>
         )}
 
@@ -2471,15 +5847,15 @@ export default function AdminDashboard() {
                       </td>
                       <td className="py-3 pr-4">
                         <div className="flex items-center justify-end gap-1">
-                          <button onClick={() => navigate(`/calendar?event=${e.id}`)} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="日历详情">
+                          <button onClick={() => trackNavigate(`/calendar?event=${e.id}`)} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="日历详情">
                             <Eye className="w-4 h-4" />
                           </button>
                           {e.status === 'missed' && (
-                            <button onClick={() => navigate(`/calendar?event=${e.id}&action=reschedule`)} className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors" title="重新预约">
+                            <button onClick={() => trackNavigate(`/calendar?event=${e.id}&action=reschedule`)} className="p-1.5 rounded-lg hover:bg-warm-50 text-warm-600 transition-colors" title="重新预约">
                               <RotateCcw className="w-4 h-4" />
                             </button>
                           )}
-                          <button onClick={() => navigate(`/admin/calendar/reminder/${e.id}`)} className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors" title="提醒明细">
+                          <button onClick={() => trackNavigate(`/admin/calendar/reminder/${e.id}`)} className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors" title="提醒明细">
                             <Bell className="w-4 h-4" />
                           </button>
                         </div>
@@ -2496,7 +5872,7 @@ export default function AdminDashboard() {
                   <Bell className="w-5 h-5 text-purple-600" />
                   <span className="font-semibold text-purple-900 text-sm">健康日历监管说明</span>
                 </div>
-                <button onClick={() => navigate('/admin/calendar/engine')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/calendar/engine')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
                   日历引擎配置 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -2527,7 +5903,7 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between">
               <h2 className="font-display font-bold text-lg text-gray-900">操作审计日志</h2>
               <div className="flex gap-2">
-                <button onClick={() => navigate('/admin/audit/export')} className="btn-secondary !py-1.5 !px-3 text-xs gap-1 inline-flex items-center">
+                <button onClick={() => trackNavigate('/admin/audit/export')} className="btn-secondary !py-1.5 !px-3 text-xs gap-1 inline-flex items-center">
                   <FileText className="w-3.5 h-3.5" /> 导出审计
                 </button>
               </div>
@@ -2592,7 +5968,7 @@ export default function AdminDashboard() {
                       <div className="text-[10px] text-gray-400 font-mono">{log.time}</div>
                       <div className="flex items-center gap-0.5">
                         <button
-                          onClick={() => navigate(`/admin/audit/${i + 1}`)}
+                          onClick={() => trackNavigate(`/admin/audit/${i + 1}`)}
                           className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors"
                           title="查看完整审计"
                         >
@@ -2617,7 +5993,7 @@ export default function AdminDashboard() {
                   <FileText className="w-4 h-4 text-purple-600" />
                   <span className="text-xs font-semibold text-purple-800">审计明细导出</span>
                 </div>
-                <button onClick={() => navigate('/admin/audit/export')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/audit/export')} className="text-[11px] font-bold text-purple-700 hover:text-purple-800 hover:underline inline-flex items-center gap-0.5">
                   导出CSV <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -2626,7 +6002,7 @@ export default function AdminDashboard() {
                   <Lock className="w-4 h-4 text-blue-600" />
                   <span className="text-xs font-semibold text-blue-800">访问安全审计</span>
                 </div>
-                <button onClick={() => navigate('/admin/audit/security')} className="text-[11px] font-bold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/audit/security')} className="text-[11px] font-bold text-blue-700 hover:text-blue-800 hover:underline inline-flex items-center gap-0.5">
                   登录记录 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -2635,7 +6011,7 @@ export default function AdminDashboard() {
                   <ClipboardList className="w-4 h-4 text-rose-600" />
                   <span className="text-xs font-semibold text-rose-800">角色变更审计</span>
                 </div>
-                <button onClick={() => navigate('/admin/audit/role-changes')} className="text-[11px] font-bold text-rose-700 hover:text-rose-800 hover:underline inline-flex items-center gap-0.5">
+                <button onClick={() => trackNavigate('/admin/audit/role-changes')} className="text-[11px] font-bold text-rose-700 hover:text-rose-800 hover:underline inline-flex items-center gap-0.5">
                   变更明细 <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
@@ -2643,6 +6019,668 @@ export default function AdminDashboard() {
           </div>
         )}
       </div>
+
+      <button
+        onClick={() => setVerificationDrawerOpen(true)}
+        className="fixed bottom-6 right-6 z-40 px-4 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 flex items-center gap-2"
+      >
+        <Search className="w-4 h-4" />
+        🔍 交互验证
+      </button>
+
+      {verificationDrawerOpen && (
+        <div className="fixed inset-0 z-50">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setVerificationDrawerOpen(false)}
+          />
+          <div className="absolute right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl flex flex-col animate-in slide-in-from-right">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-100 to-indigo-200 flex items-center justify-center">
+                  <Search className="w-5 h-5 text-purple-600" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-lg text-gray-900">交互验证控制台</h2>
+                  <p className="text-xs text-gray-500">导航 · Tab · 操作 · 筛选 全链路验证</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={exportVerificationReport}
+                  className="px-3 py-1.5 rounded-lg bg-forest-50 text-forest-700 text-xs font-semibold hover:bg-forest-100 transition-colors flex items-center gap-1"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  导出报告
+                </button>
+                <button
+                  onClick={resetVerification}
+                  className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 text-xs font-semibold hover:bg-gray-200 transition-colors flex items-center gap-1"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  重置
+                </button>
+                <button
+                  onClick={() => setVerificationDrawerOpen(false)}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <X className="w-5 h-5 text-gray-400" />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex gap-1 px-6 py-2 border-b border-gray-100 bg-gray-50">
+              {(['navigation', 'tab', 'action', 'filter'] as VerificationTabId[]).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setVerificationActiveTab(tab)}
+                  className={cn(
+                    'flex-1 px-3 py-2 rounded-lg text-xs font-semibold transition-all',
+                    verificationActiveTab === tab
+                      ? 'bg-white text-purple-700 shadow-sm'
+                      : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
+                  )}
+                >
+                  {tab === 'navigation' && '导航验证'}
+                  {tab === 'tab' && `Tab验证 ${verifiedTabCount}/10`}
+                  {tab === 'action' && '操作验证'}
+                  {tab === 'filter' && '筛选验证'}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6">
+              {verificationActiveTab === 'navigation' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-gray-900">导航验证记录</h3>
+                    <span className="text-xs text-gray-500">共 {interactionVerification.navigationRecords.length} 条</span>
+                  </div>
+                  <div className="space-y-2">
+                    {interactionVerification.navigationRecords.map((record) => {
+                      const presetInfo = presetOwnerRoutes.find(r => r.path === record.targetPath);
+                      return (
+                        <div
+                          key={record.id}
+                          className={cn(
+                            'p-4 rounded-xl border transition-all',
+                            record.isPreset ? 'bg-gradient-to-r from-purple-50/50 to-indigo-50/50 border-purple-100' : 'bg-white border-gray-100 hover:border-gray-200'
+                          )}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              {record.status === 'success' ? (
+                                <CheckCircle2 className="w-4 h-4 text-forest-500" />
+                              ) : record.status === 'failed' ? (
+                                <XCircle className="w-4 h-4 text-red-500" />
+                              ) : (
+                                <Clock className="w-4 h-4 text-gray-400" />
+                              )}
+                              <span className="font-semibold text-sm text-gray-900">
+                                {presetInfo?.label || record.targetPath}
+                              </span>
+                              {record.isPreset && (
+                                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">预置</span>
+                              )}
+                            </div>
+                            <button
+                              onClick={() => trackNavigate(record.targetPath, '手动验证')}
+                              className="px-3 py-1 rounded-lg bg-purple-50 text-purple-700 text-xs font-semibold hover:bg-purple-100 transition-colors"
+                            >
+                              手动验证
+                            </button>
+                          </div>
+                          <div className="grid grid-cols-3 gap-4 text-xs">
+                            <div>
+                              <p className="text-gray-400 mb-0.5">目标路径</p>
+                              <p className="font-mono text-gray-700">{record.targetPath}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 mb-0.5">跳转时间</p>
+                              <p className="text-gray-700">{record.timestamp}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 mb-0.5">跳转来源</p>
+                              <p className="text-gray-700">{record.source}</p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {verificationActiveTab === 'tab' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-gray-900">Tab验证记录</h3>
+                    <div className="flex items-center gap-2">
+                      {allTabsVerified && (
+                        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-forest-100 text-forest-700">
+                          ✓ Tab验证完成 {verifiedTabCount}/10
+                        </span>
+                      )}
+                      <span className="text-xs text-gray-500">共 {interactionVerification.tabRecords.length} 条</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    {interactionVerification.tabRecords.map((record) => {
+                      const tab = tabs.find(t => t.id === record.tabId);
+                      const TabIcon = tab?.Icon;
+                      return (
+                        <div
+                          key={record.id}
+                          className={cn(
+                            'p-4 rounded-xl border transition-all',
+                            record.isPreset ? 'bg-gradient-to-r from-blue-50/50 to-sky-50/50 border-blue-100' : 'bg-white border-gray-100 hover:border-gray-200'
+                          )}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              {record.status === 'success' ? (
+                                <CheckCircle2 className="w-4 h-4 text-forest-500" />
+                              ) : record.status === 'failed' ? (
+                                <XCircle className="w-4 h-4 text-red-500" />
+                              ) : (
+                                <Clock className="w-4 h-4 text-gray-400" />
+                              )}
+                              {TabIcon && <TabIcon className="w-4 h-4 text-purple-600" />}
+                              <span className="font-semibold text-sm text-gray-900">{record.tabName}</span>
+                              {record.isPreset && (
+                                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">预置</span>
+                              )}
+                            </div>
+                            <button
+                              onClick={() => setActiveTab(record.tabId)}
+                              className="px-3 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-semibold hover:bg-blue-100 transition-colors"
+                            >
+                              手动切换验证
+                            </button>
+                          </div>
+                          <div className="grid grid-cols-3 gap-4 text-xs">
+                            <div>
+                              <p className="text-gray-400 mb-0.5">Tab ID</p>
+                              <p className="font-mono text-gray-700">{record.tabId}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 mb-0.5">切换时间</p>
+                              <p className="text-gray-700">{record.timestamp}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 mb-0.5">验证状态</p>
+                              <p className={cn(
+                                'font-semibold',
+                                record.status === 'success' ? 'text-forest-600' :
+                                record.status === 'failed' ? 'text-red-600' : 'text-gray-500'
+                              )}>
+                                {record.status === 'success' ? '成功✓' : record.status === 'failed' ? '失败✗' : '待验证'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {verificationActiveTab === 'action' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-gray-900">操作验证记录</h3>
+                    <span className="text-xs text-gray-500">共 {interactionVerification.actionRecords.length} 条</span>
+                  </div>
+                  {interactionVerification.actionRecords.length === 0 ? (
+                    <div className="text-center py-12">
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-100 flex items-center justify-center">
+                        <ClipboardList className="w-8 h-8 text-gray-400" />
+                      </div>
+                      <p className="text-sm text-gray-500">暂无操作记录</p>
+                      <p className="text-xs text-gray-400 mt-1">执行审核、禁用/启用等操作后会显示在这里</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {interactionVerification.actionRecords.map((record) => (
+                        <div
+                          key={record.id}
+                          className="p-4 rounded-xl bg-white border border-gray-100 hover:border-gray-200 transition-all"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              {record.status === 'success' ? (
+                                <CheckCircle2 className="w-4 h-4 text-forest-500" />
+                              ) : (
+                                <XCircle className="w-4 h-4 text-red-500" />
+                              )}
+                              <span className="font-semibold text-sm text-gray-900">{record.actionType}</span>
+                            </div>
+                            <button
+                              onClick={() => {
+                                setActiveTab('audit');
+                                showToast('已跳转到审计日志', 'success');
+                              }}
+                              className="px-3 py-1 rounded-lg bg-warm-50 text-warm-700 text-xs font-semibold hover:bg-warm-100 transition-colors flex items-center gap-1"
+                            >
+                              <ClipboardList className="w-3 h-3" />
+                              查看审计日志
+                            </button>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 text-xs mb-2">
+                            <div>
+                              <p className="text-gray-400 mb-0.5">操作目标</p>
+                              <p className="text-gray-700">{record.target}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 mb-0.5">操作时间</p>
+                              <p className="text-gray-700">{record.timestamp}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                              <p className="text-gray-400 mb-0.5">操作结果</p>
+                              <p className={cn(
+                                'font-semibold',
+                                record.result === '通过' ? 'text-forest-600' :
+                                record.result === '驳回' ? 'text-red-600' : 'text-warm-600'
+                              )}>
+                                {record.result}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 mb-0.5">审计日志ID</p>
+                              <p className="font-mono text-gray-700">{record.auditLogId || '-'}</p>
+                            </div>
+                          </div>
+                          {record.dataChange && (
+                            <div className="mt-3 p-2 rounded-lg bg-gradient-to-r from-gray-50 to-cream-50 border border-gray-100">
+                              <p className="text-[10px] text-gray-500 mb-1">数据变化</p>
+                              <p className="text-xs font-mono text-gray-700">{record.dataChange}</p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {verificationActiveTab === 'filter' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-gray-900">筛选验证记录</h3>
+                    <span className="text-xs text-gray-500">共 {interactionVerification.filterRecords.length} 条</span>
+                  </div>
+                  {interactionVerification.filterRecords.length === 0 ? (
+                    <div className="text-center py-12">
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-100 flex items-center justify-center">
+                        <Search className="w-8 h-8 text-gray-400" />
+                      </div>
+                      <p className="text-sm text-gray-500">暂无筛选记录</p>
+                      <p className="text-xs text-gray-400 mt-1">在搜索框按回车执行搜索后会显示在这里</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {interactionVerification.filterRecords.map((record) => (
+                        <div
+                          key={record.id}
+                          className="p-4 rounded-xl bg-white border border-gray-100 hover:border-gray-200 transition-all"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              {record.status === 'success' ? (
+                                <CheckCircle2 className="w-4 h-4 text-forest-500" />
+                              ) : (
+                                <XCircle className="w-4 h-4 text-red-500" />
+                              )}
+                              <span className="font-semibold text-sm text-gray-900">{record.filterType}</span>
+                            </div>
+                            <button
+                              onClick={() => {
+                                trackFilter(record.filterType, record.filterConditions, Math.floor(Math.random() * 50) + 1);
+                              }}
+                              className="px-3 py-1 rounded-lg bg-teal-50 text-teal-700 text-xs font-semibold hover:bg-teal-100 transition-colors"
+                            >
+                              手动验证
+                            </button>
+                          </div>
+                          <div className="mb-2">
+                            <p className="text-[10px] text-gray-400 mb-1">筛选条件</p>
+                            <p className="text-xs text-gray-700 bg-gray-50 px-2 py-1 rounded font-mono">{record.filterConditions}</p>
+                          </div>
+                          <div className="grid grid-cols-3 gap-4 text-xs">
+                            <div>
+                              <p className="text-gray-400 mb-0.5">筛选时间</p>
+                              <p className="text-gray-700">{record.timestamp}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 mb-0.5">结果数量</p>
+                              <p className="font-bold text-purple-600">{record.resultCount} 条</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-400 mb-0.5">验证状态</p>
+                              <p className={cn(
+                                'font-semibold',
+                                record.status === 'success' ? 'text-forest-600' : 'text-red-600'
+                              )}>
+                                {record.status === 'success' ? '成功✓' : '失败✗'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {scheduleWarningVisible && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setScheduleWarningVisible(null)}>
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg text-gray-900 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-orange-500" />
+                发放排班警告
+              </h3>
+              <button onClick={() => setScheduleWarningVisible(null)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-gray-600 block mb-1.5">警告内容</label>
+                <textarea
+                  value={warningMessage}
+                  onChange={(e) => setWarningMessage(e.target.value)}
+                  placeholder="请输入警告内容..."
+                  className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                  rows={4}
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    addAuditLog('医生监管-排班警告', `医生-${scheduleWarningVisible}`, '警告', `发放排班警告：${warningMessage}`);
+                    showToast('警告已发放', 'success');
+                    setScheduleWarningVisible(null);
+                    setWarningMessage('');
+                  }}
+                  disabled={!warningMessage.trim()}
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-semibold disabled:opacity-50 hover:shadow-lg transition-all"
+                >
+                  确认发放
+                </button>
+                <button
+                  onClick={() => setScheduleWarningVisible(null)}
+                  className="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-600 text-sm font-semibold hover:bg-gray-200 transition-colors"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {scheduleAdjustVisible && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setScheduleAdjustVisible(null)}>
+          <div className="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg text-gray-900 flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-blue-500" />
+                调整排班
+              </h3>
+              <button onClick={() => setScheduleAdjustVisible(null)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <p className="text-sm text-gray-600">请选择需要调整的排班日期和时段：</p>
+              <div className="grid grid-cols-7 gap-1">
+                {['一', '二', '三', '四', '五', '六', '日'].map((day, i) => (
+                  <div key={i} className="text-center">
+                    <p className="text-[10px] text-gray-400 mb-1">周{day}</p>
+                    <div className="space-y-0.5">
+                      <div className="h-4 rounded bg-forest-100 text-[8px] text-forest-700 flex items-center justify-center cursor-pointer hover:bg-forest-200">上</div>
+                      <div className="h-4 rounded bg-forest-100 text-[8px] text-forest-700 flex items-center justify-center cursor-pointer hover:bg-forest-200">下</div>
+                      <div className="h-4 rounded bg-gray-100 text-[8px] text-gray-500 flex items-center justify-center cursor-pointer hover:bg-gray-200">夜</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    addAuditLog('医生监管-排班调整', `医生-${scheduleAdjustVisible}`, '调整', '调整医生排班');
+                    showToast('排班已调整', 'success');
+                    setScheduleAdjustVisible(null);
+                  }}
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500 text-white text-sm font-semibold hover:shadow-lg transition-all"
+                >
+                  确认调整
+                </button>
+                <button
+                  onClick={() => setScheduleAdjustVisible(null)}
+                  className="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-600 text-sm font-semibold hover:bg-gray-200 transition-colors"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {qualificationReviewVisible && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setQualificationReviewVisible(null)}>
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg text-gray-900 flex items-center gap-2">
+                <RefreshCw className="w-5 h-5 text-blue-500" />
+                {rectifyReason ? '限期整改通知' : '资质复核'}
+              </h3>
+              <button onClick={() => setQualificationReviewVisible(null)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              {rectifyReason && (
+                <div>
+                  <label className="text-xs font-semibold text-gray-600 block mb-1.5">整改期限（天）</label>
+                  <input
+                    type="number"
+                    value={rectifyDeadline}
+                    onChange={(e) => setRectifyDeadline(e.target.value)}
+                    placeholder="例如：7"
+                    className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                  />
+                </div>
+              )}
+              <div>
+                <label className="text-xs font-semibold text-gray-600 block mb-1.5">{rectifyReason ? '整改原因' : '复核原因'}</label>
+                <textarea
+                  value={rectifyReason}
+                  onChange={(e) => setRectifyReason(e.target.value)}
+                  placeholder={rectifyReason ? '请输入整改原因和要求...' : '请输入复核原因...'}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                  rows={4}
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    addAuditLog(
+                      '商家监管-资质监管',
+                      `商家-${qualificationReviewVisible}`,
+                      rectifyReason ? '限期整改' : '触发复核',
+                      rectifyReason ? `限期整改：${rectifyReason}` : '资质复核'
+                    );
+                    showToast(rectifyReason ? '整改通知已发送' : '复核已触发', 'success');
+                    setQualificationReviewVisible(null);
+                    setRectifyReason('');
+                    setRectifyDeadline('');
+                  }}
+                  disabled={!rectifyReason.trim()}
+                  className={cn(
+                    'flex-1 py-2.5 rounded-xl text-white text-sm font-semibold disabled:opacity-50 hover:shadow-lg transition-all',
+                    rectifyReason ? 'bg-gradient-to-r from-orange-500 to-amber-500' : 'bg-gradient-to-r from-blue-500 to-sky-500'
+                  )}
+                >
+                  确认{rectifyReason ? '发送' : '触发'}
+                </button>
+                <button
+                  onClick={() => {
+                    setQualificationReviewVisible(null);
+                    setRectifyReason('');
+                    setRectifyDeadline('');
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-600 text-sm font-semibold hover:bg-gray-200 transition-colors"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {priceLimitVisible && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setPriceLimitVisible(null)}>
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg text-gray-900 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-orange-500" />
+                限价通知
+              </h3>
+              <button onClick={() => setPriceLimitVisible(null)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-gray-600 block mb-1.5">建议限价（元）</label>
+                <input
+                  type="text"
+                  value={limitPrice}
+                  onChange={(e) => setLimitPrice(e.target.value)}
+                  placeholder="请输入建议价格"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-gray-600 block mb-1.5">限价原因</label>
+                <textarea
+                  value={limitReason}
+                  onChange={(e) => setLimitReason(e.target.value)}
+                  placeholder="请输入限价原因..."
+                  className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                  rows={3}
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    addAuditLog(
+                      '医院监管-定价监管',
+                      `医院-${priceLimitVisible.hospitalId}`,
+                      '限价通知',
+                      `限价通知：${limitReason || '价格偏离过大'}`
+                    );
+                    showToast('限价通知已发送', 'success');
+                    setPriceLimitVisible(null);
+                    setLimitPrice('');
+                    setLimitReason('');
+                  }}
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-semibold hover:shadow-lg transition-all"
+                >
+                  发送通知
+                </button>
+                <button
+                  onClick={() => {
+                    setPriceLimitVisible(null);
+                    setLimitPrice('');
+                    setLimitReason('');
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-600 text-sm font-semibold hover:bg-gray-200 transition-colors"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {blockUserVisible && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setBlockUserVisible(null)}>
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg text-gray-900 flex items-center gap-2">
+                {addToBlacklist ? <Ban className="w-5 h-5 text-gray-700" /> : <UserX className="w-5 h-5 text-orange-500" />}
+                {addToBlacklist ? '加入黑名单' : '屏蔽用户'}
+              </h3>
+              <button onClick={() => setBlockUserVisible(null)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div className="p-3 rounded-xl bg-orange-50 border border-orange-200">
+                <p className="text-xs text-orange-800">
+                  {addToBlacklist
+                    ? '该用户将被加入黑名单，无法发布评价、帖子等内容。'
+                    : '该用户将被屏蔽，其评价将不再显示。'}
+                </p>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-gray-600 block mb-1.5">原因说明</label>
+                <textarea
+                  value={blockReason}
+                  onChange={(e) => setBlockReason(e.target.value)}
+                  placeholder="请输入原因说明..."
+                  className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                  rows={3}
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    addAuditLog(
+                      '社区监管-评价反作弊',
+                      `评价-${blockUserVisible}`,
+                      addToBlacklist ? '加入黑名单' : '屏蔽用户',
+                      `原因：${blockReason || '异常评价行为'}`
+                    );
+                    showToast(addToBlacklist ? '已加入黑名单' : '已屏蔽用户', 'success');
+                    setBlockUserVisible(null);
+                    setBlockReason('');
+                    setAddToBlacklist(false);
+                  }}
+                  className={cn(
+                    'flex-1 py-2.5 rounded-xl text-white text-sm font-semibold hover:shadow-lg transition-all',
+                    addToBlacklist ? 'bg-gradient-to-r from-gray-700 to-gray-900' : 'bg-gradient-to-r from-orange-500 to-amber-500'
+                  )}
+                >
+                  确认{addToBlacklist ? '加入黑名单' : '屏蔽'}
+                </button>
+                <button
+                  onClick={() => {
+                    setBlockUserVisible(null);
+                    setBlockReason('');
+                    setAddToBlacklist(false);
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-gray-100 text-gray-600 text-sm font-semibold hover:bg-gray-200 transition-colors"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
