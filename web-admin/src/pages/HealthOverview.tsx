@@ -12,6 +12,8 @@ import {
   RefreshCw,
   HardDrive,
   Package,
+  WifiOff,
+  Video,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { healthApi } from '@/services/api';
@@ -190,6 +192,109 @@ const HealthOverviewPage: React.FC = () => {
         ],
       }
     : {};
+
+  const offlineFreqOption = {
+    tooltip: {
+      trigger: 'axis',
+      formatter: '{b}<br/>掉线次数: {c}次',
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      top: '10%',
+      containLabel: true,
+    },
+    xAxis: {
+      type: 'category',
+      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      axisLine: { lineStyle: { color: '#e5e7eb' } },
+      axisLabel: { color: '#6b7280', fontSize: 12 },
+    },
+    yAxis: {
+      type: 'value',
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: { lineStyle: { color: '#f3f4f6' } },
+      axisLabel: { color: '#6b7280', fontSize: 12 },
+    },
+    series: [
+      {
+        name: '掉线次数',
+        type: 'bar',
+        barWidth: '45%',
+        itemStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: '#F53F3F' },
+              { offset: 1, color: '#FF9D9D' },
+            ],
+          },
+          borderRadius: [4, 4, 0, 0],
+        },
+        data: [3, 2, 1, 4, 2, 1, 0],
+      },
+    ],
+  };
+
+  const recordingIntegrityOption = {
+    tooltip: {
+      trigger: 'axis',
+      formatter: '{b}<br/>完整率: {c}%',
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      top: '10%',
+      containLabel: true,
+    },
+    xAxis: {
+      type: 'category',
+      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      axisLine: { lineStyle: { color: '#e5e7eb' } },
+      axisLabel: { color: '#6b7280', fontSize: 12 },
+    },
+    yAxis: {
+      type: 'value',
+      min: 85,
+      max: 100,
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: { lineStyle: { color: '#f3f4f6' } },
+      axisLabel: { color: '#6b7280', fontSize: 12, formatter: '{value}%' },
+    },
+    series: [
+      {
+        name: '完整率',
+        type: 'line',
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 6,
+        lineStyle: { color: '#00B42A', width: 2 },
+        itemStyle: { color: '#00B42A' },
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(0, 180, 42, 0.25)' },
+              { offset: 1, color: 'rgba(0, 180, 42, 0.02)' },
+            ],
+          },
+        },
+        data: [95.2, 97.8, 96.5, 98.1, 95.8, 99.2, 96.8],
+      },
+    ],
+  };
 
   const columns: ColumnsType<DeviceHealth> = [
     {
@@ -404,6 +509,24 @@ const HealthOverviewPage: React.FC = () => {
           trendValue="+8.5%"
           color="warning"
         />
+        <StatCard
+          title="掉线频次"
+          value="12"
+          subValue="近7天累计"
+          icon={WifiOff}
+          trend="down"
+          trendValue="-3.2%"
+          color="danger"
+        />
+        <StatCard
+          title="录像完整率"
+          value="96.8%"
+          subValue="近7天平均"
+          icon={Video}
+          trend="up"
+          trendValue="+1.5%"
+          color="success"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -432,6 +555,32 @@ const HealthOverviewPage: React.FC = () => {
           }
         >
           <ReactECharts option={alertTrendOption} style={{ height: 280 }} />
+        </Card>
+        <Card
+          title="7天掉线频次统计"
+          className="shadow-sm"
+          bordered={false}
+          extra={
+            <Select defaultValue="7d" size="small" className="w-24">
+              <Option value="7d">近7天</Option>
+              <Option value="30d">近30天</Option>
+            </Select>
+          }
+        >
+          <ReactECharts option={offlineFreqOption} style={{ height: 280 }} />
+        </Card>
+        <Card
+          title="7天录像完整性进度"
+          className="shadow-sm"
+          bordered={false}
+          extra={
+            <Select defaultValue="7d" size="small" className="w-24">
+              <Option value="7d">近7天</Option>
+              <Option value="30d">近30天</Option>
+            </Select>
+          }
+        >
+          <ReactECharts option={recordingIntegrityOption} style={{ height: 280 }} />
         </Card>
       </div>
 

@@ -107,6 +107,7 @@ export interface OTATask {
   strategy: 'all' | 'region' | 'model' | 'manual';
   regions: string[];
   models: string[];
+  grayPercentage: number;
   scheduleTime?: string;
 }
 

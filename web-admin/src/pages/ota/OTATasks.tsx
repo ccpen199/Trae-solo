@@ -20,6 +20,9 @@ import {
   CheckCircle,
   XCircle,
   Loader,
+  MapPin,
+  Monitor,
+  Percent,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -109,6 +112,8 @@ const OTATasks: React.FC = () => {
     const successPercent = task.totalDevices > 0
       ? Math.round((task.successDevices / task.totalDevices) * 100)
       : 0;
+    const grayPercentage = task.grayPercentage || (task.strategy === 'all' ? 100 : 30);
+    const isGrayRelease = grayPercentage < 100;
 
     return (
       <Card className="shadow-sm hover:shadow-md transition-shadow" bordered={false}>
@@ -135,9 +140,16 @@ const OTATasks: React.FC = () => {
                 <p className="text-gray-400 text-sm font-mono">{task.id}</p>
               </div>
             </div>
-            <Tag color={statusInfo.color} icon={<StatusIcon size={12} />}>
-              {statusInfo.label}
-            </Tag>
+            <div className="flex flex-col items-end gap-1">
+              <Tag color={statusInfo.color} icon={<StatusIcon size={12} />}>
+                {statusInfo.label}
+              </Tag>
+              {isGrayRelease && (
+                <Tag color="orange" icon={<Percent size={12} />}>
+                  灰度 {grayPercentage}%
+                </Tag>
+              )}
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -178,16 +190,40 @@ const OTATasks: React.FC = () => {
               </span>
             </div>
             {task.models.length > 0 && (
-              <div className="col-span-2 flex items-center gap-2 text-gray-500">
-                <Tag color="blue" className="border-0">
-                  {task.models.join('、')}
-                </Tag>
+              <div className="col-span-2 flex items-start gap-2 text-gray-500">
+                <Monitor size={14} className="mt-1 flex-shrink-0" />
+                <span className="text-gray-400 mt-0.5">目标型号：</span>
+                <div className="flex flex-wrap gap-1">
+                  {task.models.map((model) => (
+                    <Tag key={model} color="blue" className="border-0 m-0">
+                      {model}
+                    </Tag>
+                  ))}
+                </div>
               </div>
             )}
             {task.regions.length > 0 && (
-              <div className="col-span-2 flex items-center gap-2 text-gray-500">
-                <span className="text-gray-400">覆盖区域：</span>
-                <span className="text-gray-700">{task.regions.join('、')}</span>
+              <div className="col-span-2 flex items-start gap-2 text-gray-500">
+                <MapPin size={14} className="mt-1 flex-shrink-0" />
+                <span className="text-gray-400 mt-0.5">分批地域：</span>
+                <div className="flex flex-wrap gap-1">
+                  {task.regions.map((region) => (
+                    <Tag key={region} color="cyan" className="border-0 m-0">
+                      {region}
+                    </Tag>
+                  ))}
+                </div>
+              </div>
+            )}
+            {isGrayRelease && (
+              <div className="col-span-2 bg-orange-50 border border-orange-100 rounded-lg p-3">
+                <div className="flex items-center gap-2 text-orange-700">
+                  <Percent size={14} />
+                  <span className="font-medium">灰度发布策略</span>
+                </div>
+                <p className="text-sm text-orange-600 mt-1">
+                  当前批次推送 {grayPercentage}% 设备，覆盖 {task.regions.join('、') || '全部区域'}，预计影响 ~{Math.round(task.totalDevices * grayPercentage / 100)} 台
+                </p>
               </div>
             )}
           </div>

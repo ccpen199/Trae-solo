@@ -13,6 +13,8 @@ import {
   Bell,
   Search,
   ChevronRight,
+  Monitor,
+  Plus,
 } from 'lucide-react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
@@ -20,7 +22,7 @@ const { Header, Sider, Content } = AntLayout;
 
 const breadcrumbMap: Record<string, string[]> = {
   '/health': ['健康看板', '健康概览'],
-  '/health/': ['健康看板', '设备详情'],
+  '/health/dev001': ['健康看板', '设备健康详情'],
   '/audit': ['审计日志'],
   '/ota/firmwares': ['OTA管理', '固件管理'],
   '/ota/tasks': ['OTA管理', '发布任务'],
@@ -34,17 +36,21 @@ const Layout: React.FC = () => {
 
   const getSelectedKeys = (): string[] => {
     const path = location.pathname;
-    if (path.startsWith('/health')) return ['health'];
+    if (path === '/health') return ['health-overview'];
+    if (path.startsWith('/health/')) return ['health-detail'];
     if (path.startsWith('/audit')) return ['audit'];
     if (path.startsWith('/ota/firmwares')) return ['firmwares'];
-    if (path.startsWith('/ota/tasks')) return ['tasks'];
+    if (path === '/ota/tasks') return ['tasks'];
+    if (path.startsWith('/ota/tasks/create')) return ['create-task'];
     return [];
   };
 
   const getOpenKeys = (): string[] => {
     const path = location.pathname;
-    if (path.startsWith('/ota')) return ['ota'];
-    return [];
+    const keys: string[] = [];
+    if (path.startsWith('/health')) keys.push('health');
+    if (path.startsWith('/ota')) keys.push('ota');
+    return keys;
   };
 
   const getBreadcrumbs = (): string[] => {
@@ -65,7 +71,20 @@ const Layout: React.FC = () => {
       key: 'health',
       icon: <Activity size={18} />,
       label: '健康看板',
-      onClick: () => navigate('/health'),
+      children: [
+        {
+          key: 'health-overview',
+          icon: <Activity size={16} />,
+          label: '健康概览',
+          onClick: () => navigate('/health'),
+        },
+        {
+          key: 'health-detail',
+          icon: <Monitor size={16} />,
+          label: '设备健康详情',
+          onClick: () => navigate('/health/dev001'),
+        },
+      ],
     },
     {
       key: 'audit',
@@ -89,6 +108,12 @@ const Layout: React.FC = () => {
           icon: <PlayCircle size={16} />,
           label: '发布任务',
           onClick: () => navigate('/ota/tasks'),
+        },
+        {
+          key: 'create-task',
+          icon: <Plus size={16} />,
+          label: '创建任务',
+          onClick: () => navigate('/ota/tasks/create'),
         },
       ],
     },

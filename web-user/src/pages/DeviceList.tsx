@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, Button, Tag, Space, Switch, Dropdown, MenuProps, Empty, Spin, Modal, Form, Input, Select, message } from 'antd';
+import { Card, Button, Tag, Space, Switch, Dropdown, MenuProps, Empty, Spin, Modal, Form, Input, Select, message, Steps, Progress, Alert, Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
   Eye,
@@ -12,6 +12,14 @@ import {
   WifiOff,
   MapPin,
   Camera,
+  QrCode,
+  Smartphone,
+  CheckCircle2,
+  Loader2,
+  Lock,
+  Unlock,
+  Signal,
+  Activity,
 } from 'lucide-react';
 import { useDeviceStore } from '@/stores/useDeviceStore';
 import type { Device, DeviceGroup } from '@/types';
@@ -124,12 +132,32 @@ const mockDevices: Device[] = [
   },
 ];
 
+const mockDetectedDevice = {
+  model: 'IPC-2000 Pro',
+  macAddress: 'AA:BB:CC:DD:EE:FF',
+  serialNumber: 'YST2024011500123',
+  type: 'IPC' as const,
+};
+
+const mockWiFiName = 'HomeWiFi_2.4G';
+
 export default function DeviceList() {
   const navigate = useNavigate();
-  const { devices, loading, fetchDevices, updateDevice } = useDeviceStore();
+  const { devices, loading, fetchDevices, updateDevice, addDevice } = useDeviceStore();
   const [activeGroup, setActiveGroup] = useState('all');
   const [addModalVisible, setAddModalVisible] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
   const [form] = Form.useForm();
+  const [wifiForm] = Form.useForm();
+
+  const [scanning, setScanning] = useState(false);
+  const [scanSuccess, setScanSuccess] = useState(false);
+  const [detectedDevice, setDetectedDevice] = useState<typeof mockDetectedDevice | null>(null);
+  const [serialNumber, setSerialNumber] = useState('');
+  const [wifiPasswordVisible, setWifiPasswordVisible] = useState(false);
+  const [bindingProgress, setBindingProgress] = useState(0);
+  const [bindingStatus, setBindingStatus] = useState<'connecting' | 'online' | 'bound' | 'success' | 'failed'>('connecting');
+  const [boundDeviceId, setBoundDeviceId] = useState<string>('');
 
   useEffect(() => {
     fetchDevices();
@@ -148,10 +176,102 @@ export default function DeviceList() {
     message.success(checked ? '已关闭隐私模式' : '已开启隐私模式');
   };
 
-  const handleAddDevice = (values: any) => {
-    message.success('设备添加成功');
-    setAddModalVisible(false);
+  const startScanning = () => {
+    setScanning(true);
+    setScanSuccess(false);
+    setDetectedDevice(null);
+    setTimeout(() => {
+      setScanning(false);
+      setScanSuccess(true);
+      setDetectedDevice(mockDetectedDevice);
+      setSerialNumber(mockDetectedDevice.serialNumber);
+      message.success('检测到设备');
+    }, 2000);
+  };
+
+  const handleManualSerial = (value: string) => {
+    setSerialNumber(value);
+    if (value.length >= 10) {
+      setScanSuccess(true);
+      setDetectedDevice(mockDetectedDevice);
+    }
+  };
+
+  const handleStep1Next = () => {
+    if (!scanSuccess || !detectedDevice) {
+      message.warning('请先扫描二维码或输入序列号');
+      return;
+    }
+    setCurrentStep(1);
+  };
+
+  const handleStep2Next = async () => {
+    try {
+      await wifiForm.validateFields();
+      setCurrentStep(2);
+      startBindingProcess();
+    } catch {
+      message.warning('请输入Wi-Fi密码');
+    }
+  };
+
+  const startBindingProcess = () => {
+    setBindingProgress(0);
+    setBindingStatus('connecting');
+
+    const progressSteps = [
+      { progress: 33, status: 'connecting' as const, delay: 0 },
+      { progress: 66, status: 'online' as const, delay: 1500 },
+      { progress: 100, status: 'bound' as const, delay: 3000 },
+      { progress: 100, status: 'success' as const, delay: 4500 },
+    ];
+
+    progressSteps.forEach(({ progress, status, delay }) => {
+      setTimeout(() => {
+        setBindingProgress(progress);
+        setBindingStatus(status);
+      }, delay);
+    });
+
+    setTimeout(() => {
+      const newId = Date.now().toString();
+      setBoundDeviceId(newId);
+      addDevice({
+        id: newId,
+        name: '新设备',
+        type: detectedDevice?.type || 'IPC',
+        model: detectedDevice?.model || 'IPC-2000 Pro',
+        firmwareVersion: 'v2.3.1',
+        status: 'online',
+        groupId: 'public',
+        ipAddress: '192.168.1.200',
+        macAddress: detectedDevice?.macAddress || 'AA:BB:CC:DD:EE:FF',
+        storage: { total: 128, used: 0, sdCard: false, sdTotal: 128, sdUsed: 0 },
+        privacy: { cameraEnabled: true, audioEnabled: true, physicalLock: false },
+        lastOnline: new Date().toLocaleString(),
+        location: '未设置',
+        signalStrength: 85,
+      });
+    }, 4500);
+  };
+
+  const resetAddModal = () => {
+    setCurrentStep(0);
+    setScanning(false);
+    setScanSuccess(false);
+    setDetectedDevice(null);
+    setSerialNumber('');
+    setWifiPasswordVisible(false);
+    setBindingProgress(0);
+    setBindingStatus('connecting');
+    setBoundDeviceId('');
     form.resetFields();
+    wifiForm.resetFields();
+  };
+
+  const handleCloseAddModal = () => {
+    setAddModalVisible(false);
+    setTimeout(resetAddModal, 300);
   };
 
   const getDeviceMenuItems = (device: Device): MenuProps['items'] => [
@@ -165,6 +285,7 @@ export default function DeviceList() {
       key: 'settings',
       icon: <Settings size={14} />,
       label: '设备设置',
+      onClick: () => navigate(`/device/${device.id}?tab=settings`),
     },
     {
       key: 'privacy',
@@ -279,7 +400,7 @@ export default function DeviceList() {
                   <Button type="text" key="view" icon={<Eye size={16} />} onClick={(e) => { e.stopPropagation(); navigate(`/device/${device.id}`); }}>
                     查看
                   </Button>,
-                  <Button type="text" key="settings" icon={<Settings size={16} />} onClick={(e) => e.stopPropagation()}>
+                  <Button type="text" key="settings" icon={<Settings size={16} />} onClick={(e) => { e.stopPropagation(); navigate(`/device/${device.id}?tab=settings`); }}>
                     设置
                   </Button>,
                   <Dropdown key="more" menu={{ items: getDeviceMenuItems(device) }} trigger={['click']}>
@@ -309,38 +430,275 @@ export default function DeviceList() {
       </Spin>
 
       <Modal
-        title="添加设备"
+        title={
+          <div className="flex items-center gap-2">
+            <QrCode size={20} className="text-primary-500" />
+            <span>扫码绑定设备</span>
+          </div>
+        }
         open={addModalVisible}
-        onCancel={() => setAddModalVisible(false)}
+        onCancel={handleCloseAddModal}
         footer={null}
+        width={560}
+        destroyOnClose
       >
-        <Form form={form} layout="vertical" onFinish={handleAddDevice}>
-          <Form.Item name="name" label="设备名称" rules={[{ required: true, message: '请输入设备名称' }]}>
-            <Input placeholder="请输入设备名称" />
-          </Form.Item>
-          <Form.Item name="type" label="设备类型" rules={[{ required: true, message: '请选择设备类型' }]}>
-            <Select placeholder="请选择设备类型">
-              <Select.Option value="IPC">摄像头</Select.Option>
-              <Select.Option value="doorbell">门铃</Select.Option>
-              <Select.Option value="NVR">NVR录像机</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item name="groupId" label="设备分组">
-            <Select placeholder="请选择分组">
-              {mockGroups.filter(g => g.id !== 'all').map(group => (
-                <Select.Option key={group.id} value={group.id}>{group.name}</Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name="location" label="位置">
-            <Input placeholder="请输入设备位置" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              添加设备
-            </Button>
-          </Form.Item>
-        </Form>
+        <div className="mb-6">
+          <Steps
+            current={currentStep}
+            items={[
+              { title: '扫码绑定' },
+              { title: 'Wi-Fi配置' },
+              { title: '绑定结果' },
+            ]}
+          />
+        </div>
+
+        {currentStep === 0 && (
+          <div className="space-y-5">
+            <div className="relative mx-auto w-64 h-64 bg-gray-900 rounded-2xl flex items-center justify-center overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+              <div className="relative z-10 text-center">
+                <div className="w-36 h-36 mx-auto bg-white p-3 rounded-xl shadow-2xl">
+                  <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-700 to-gray-900 rounded-lg flex items-center justify-center relative overflow-hidden">
+                    <div className="grid grid-cols-7 gap-0.5 w-full h-full p-2">
+                      {Array.from({ length: 49 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className={`rounded-sm ${Math.random() > 0.45 ? 'bg-white' : 'bg-transparent'}`}
+                        />
+                      ))}
+                    </div>
+                    <div className="absolute top-1 left-1 w-5 h-5 border-2 border-white rounded-sm">
+                      <div className="absolute inset-1 bg-white rounded-sm" />
+                    </div>
+                    <div className="absolute top-1 right-1 w-5 h-5 border-2 border-white rounded-sm">
+                      <div className="absolute inset-1 bg-white rounded-sm" />
+                    </div>
+                    <div className="absolute bottom-1 left-1 w-5 h-5 border-2 border-white rounded-sm">
+                      <div className="absolute inset-1 bg-white rounded-sm" />
+                    </div>
+                  </div>
+                </div>
+                <Smartphone size={20} className="text-white/50 mx-auto mt-3" />
+              </div>
+              {scanning && (
+                <div className="absolute inset-0 z-20">
+                  <div className="absolute left-4 right-4 h-0.5 bg-green-400 shadow-[0_0_12px_rgba(74,222,128,0.8)] animate-pulse" style={{ animation: 'scan 1.5s ease-in-out infinite' }} />
+                  <style>{`
+                    @keyframes scan {
+                      0%, 100% { top: 10%; }
+                      50% { top: 85%; }
+                    }
+                  `}</style>
+                </div>
+              )}
+              {scanSuccess && (
+                <div className="absolute inset-0 z-30 bg-green-500/20 backdrop-blur-sm flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <CheckCircle2 size={48} className="mx-auto mb-2 text-green-400" />
+                    <p className="font-medium">检测到设备</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <p className="text-center text-gray-500 text-sm">
+              请使用设备底部的云视通二维码，或输入设备序列号
+            </p>
+
+            <div className="space-y-3">
+              <Input
+                placeholder="请输入设备序列号"
+                value={serialNumber}
+                onChange={(e) => handleManualSerial(e.target.value)}
+                prefix={<QrCode size={16} className="text-gray-400" />}
+              />
+              <Button
+                block
+                type={scanning ? 'default' : 'primary'}
+                icon={scanning ? <Loader2 size={16} className="animate-spin" /> : <QrCode size={16} />}
+                onClick={startScanning}
+                disabled={scanning}
+              >
+                {scanning ? '扫描中...' : '开始扫码识别'}
+              </Button>
+            </div>
+
+            {scanSuccess && detectedDevice && (
+              <Alert
+                type="success"
+                showIcon
+                icon={<CheckCircle2 size={16} />}
+                message="已识别设备信息"
+                description={
+                  <div className="mt-2 space-y-1 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">设备型号：</span>
+                      <span className="text-gray-800 font-medium">{detectedDevice.model}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">MAC地址：</span>
+                      <span className="text-gray-800 font-mono text-xs">{detectedDevice.macAddress}</span>
+                    </div>
+                  </div>
+                }
+              />
+            )}
+
+            <div className="flex justify-end pt-2">
+              <Button type="primary" onClick={handleStep1Next}>
+                下一步
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {currentStep === 1 && (
+          <div className="space-y-5">
+            <Alert
+              type="info"
+              showIcon
+              icon={<Wifi size={16} />}
+              message="自动连接设备热点"
+              description="请确保手机已连接到设备发出的热点，设备将自动接收Wi-Fi配置信息"
+            />
+
+            <div className="bg-gray-50 rounded-xl p-5 space-y-4">
+              <div>
+                <label className="block text-sm text-gray-500 mb-2">当前Wi-Fi</label>
+                <div className="flex items-center gap-3 bg-white rounded-lg px-4 py-3 border border-gray-200">
+                  <Wifi size={20} className="text-primary-500" />
+                  <div>
+                    <p className="font-medium text-gray-800">{mockWiFiName}</p>
+                    <p className="text-xs text-gray-500">2.4GHz频段 · 信号良好</p>
+                  </div>
+                  <Tag color="success" className="ml-auto">已连接</Tag>
+                </div>
+              </div>
+
+              <Form form={wifiForm} layout="vertical">
+                <Form.Item
+                  name="wifiPassword"
+                  label="Wi-Fi密码"
+                  rules={[{ required: true, message: '请输入Wi-Fi密码' }]}
+                >
+                  <Input.Password
+                    placeholder="请输入Wi-Fi密码"
+                    iconRender={(visible) => visible ? <Unlock size={16} /> : <Lock size={16} />}
+                    visibilityToggle={{ visible: wifiPasswordVisible, onVisibleChange: setWifiPasswordVisible }}
+                  />
+                </Form.Item>
+              </Form>
+            </div>
+
+            <Alert
+              type="warning"
+              showIcon
+              icon={<Shield size={16} />}
+              message="安全提示"
+              description="Wi-Fi密码将通过加密通道直接传输至设备，云端不保存任何明文密码"
+            />
+
+            <div className="flex justify-between pt-2">
+              <Button onClick={() => setCurrentStep(0)}>上一步</Button>
+              <Button type="primary" onClick={handleStep2Next}>
+                开始配置
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {currentStep === 2 && (
+          <div className="space-y-5">
+            {bindingStatus !== 'success' ? (
+              <div className="space-y-5 py-4">
+                <Progress
+                  percent={bindingProgress}
+                  status={bindingStatus === 'failed' ? 'exception' : 'active'}
+                  strokeColor={{ '0%': '#165DFF', '100%': '#00B42A' }}
+                />
+                <div className="space-y-3">
+                  {[
+                    { key: 'connecting', label: '正在连接Wi-Fi', icon: <Wifi size={16} /> },
+                    { key: 'online', label: '设备上线', icon: <Signal size={16} /> },
+                    { key: 'bound', label: '云端绑定', icon: <Activity size={16} /> },
+                  ].map((step, idx) => {
+                    const order = ['connecting', 'online', 'bound'];
+                    const currentIdx = order.indexOf(bindingStatus);
+                    const stepIdx = order.indexOf(step.key as any);
+                    const isDone = currentIdx >= stepIdx;
+                    const isActive = currentIdx === stepIdx;
+                    return (
+                      <div
+                        key={step.key}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-lg ${
+                          isDone ? 'bg-green-50' : isActive ? 'bg-blue-50' : 'bg-gray-50'
+                        }`}
+                      >
+                        <div
+                          className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                            isDone
+                              ? 'bg-green-500 text-white'
+                              : isActive
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-gray-300 text-gray-500'
+                          }`}
+                        >
+                          {isDone ? <CheckCircle2 size={16} /> : isActive ? <Loader2 size={16} className="animate-spin" /> : step.icon}
+                        </div>
+                        <span
+                          className={`font-medium ${
+                            isDone ? 'text-green-700' : isActive ? 'text-blue-700' : 'text-gray-500'
+                          }`}
+                        >
+                          {step.label}
+                        </span>
+                        {isActive && <span className="ml-auto text-xs text-blue-500">进行中...</span>}
+                        {isDone && <span className="ml-auto text-xs text-green-600">完成</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <Result
+                status="success"
+                title="设备绑定成功"
+                subTitle="设备已成功添加到您的账户"
+                extra={[
+                  <div key="info" className="bg-gray-50 rounded-xl p-5 text-left mb-4 w-full">
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">设备名称：</span>
+                        <span className="text-gray-800 font-medium">新设备</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">设备ID：</span>
+                        <span className="text-gray-800 font-mono text-xs">{boundDeviceId}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">所在位置：</span>
+                        <span className="text-gray-800">未设置</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">绑定时间：</span>
+                        <span className="text-gray-800">{new Date().toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>,
+                  <div key="buttons" className="flex gap-3 justify-center w-full">
+                    <Button type="primary" onClick={() => { handleCloseAddModal(); navigate(`/device/${boundDeviceId}?tab=settings`); }}>
+                      进入设备详情
+                    </Button>
+                    <Button onClick={() => { resetAddModal(); }}>
+                      继续添加
+                    </Button>
+                  </div>,
+                ]}
+              />
+            )}
+          </div>
+        )}
       </Modal>
     </div>
   );

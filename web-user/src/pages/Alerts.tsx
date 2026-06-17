@@ -32,9 +32,158 @@ import {
   HardDrive,
   Clock,
   MapPin,
+  FileText,
+  ExternalLink,
+  Globe,
 } from 'lucide-react';
 import { useAlertStore } from '@/stores/useAlertStore';
 import type { AlertEvent } from '@/types';
+
+interface AuditLogItem {
+  id: string;
+  action: string;
+  deviceId?: string;
+  deviceName?: string;
+  ip: string;
+  timestamp: string;
+  details: string;
+  operator: string;
+}
+
+const mockAuditLogs: AuditLogItem[] = [
+  {
+    id: '1',
+    action: '查看实时画面',
+    deviceId: '1',
+    deviceName: '客厅摄像头',
+    ip: '192.168.1.105',
+    timestamp: '2024-01-15 14:35:22',
+    details: '通过Web端查看客厅摄像头实时画面，时长3分20秒',
+    operator: '张三',
+  },
+  {
+    id: '2',
+    action: '开启隐私模式',
+    deviceId: '3',
+    deviceName: '卧室摄像头',
+    ip: '114.247.50.128',
+    timestamp: '2024-01-15 13:20:15',
+    details: '开启卧室摄像头隐私模式，持续8小时',
+    operator: '张三',
+  },
+  {
+    id: '3',
+    action: '标记告警已读',
+    deviceId: '2',
+    deviceName: '门口摄像头',
+    ip: '192.168.1.105',
+    timestamp: '2024-01-15 12:45:33',
+    details: '标记告警ID #1024为已读状态',
+    operator: '张三',
+  },
+  {
+    id: '4',
+    action: '锁定告警',
+    deviceId: '1',
+    deviceName: '客厅摄像头',
+    ip: '192.168.1.105',
+    timestamp: '2024-01-15 11:30:08',
+    details: '锁定告警ID #1021，防止自动清理',
+    operator: '张三',
+  },
+  {
+    id: '5',
+    action: '查看告警详情',
+    deviceId: '5',
+    deviceName: '车库摄像头',
+    ip: '114.247.50.128',
+    timestamp: '2024-01-15 10:18:45',
+    details: '查看车库摄像头人形识别告警详情',
+    operator: '张三',
+  },
+  {
+    id: '6',
+    action: '修改设备配置',
+    deviceId: '4',
+    deviceName: '厨房摄像头',
+    ip: '192.168.1.105',
+    timestamp: '2024-01-15 09:22:10',
+    details: '修改移动侦测灵敏度：中 → 高',
+    operator: '张三',
+  },
+  {
+    id: '7',
+    action: '删除告警',
+    deviceId: '2',
+    deviceName: '门口摄像头',
+    ip: '114.247.50.128',
+    timestamp: '2024-01-14 23:15:42',
+    details: '删除告警ID #1015，类型：移动侦测',
+    operator: '张三',
+  },
+  {
+    id: '8',
+    action: '导出录像',
+    deviceId: '1',
+    deviceName: '客厅摄像头',
+    ip: '192.168.1.105',
+    timestamp: '2024-01-14 20:45:30',
+    details: '导出2024-01-14 18:00至20:00的录像文件',
+    operator: '张三',
+  },
+  {
+    id: '9',
+    action: '登录系统',
+    ip: '114.247.50.128',
+    timestamp: '2024-01-14 19:30:00',
+    details: '通过Web端登录系统，浏览器：Chrome 120',
+    operator: '张三',
+  },
+  {
+    id: '10',
+    action: '设备分享',
+    deviceId: '2',
+    deviceName: '门口摄像头',
+    ip: '192.168.1.105',
+    timestamp: '2024-01-14 15:10:25',
+    details: '将门口摄像头分享给用户李四（有效期7天）',
+    operator: '张三',
+  },
+  {
+    id: '11',
+    action: '解锁告警',
+    deviceId: '4',
+    deviceName: '厨房摄像头',
+    ip: '192.168.1.105',
+    timestamp: '2024-01-14 12:05:18',
+    details: '解锁告警ID #998，允许自动清理',
+    operator: '张三',
+  },
+  {
+    id: '12',
+    action: '查看实时画面',
+    deviceId: '2',
+    deviceName: '门口摄像头',
+    ip: '114.247.50.128',
+    timestamp: '2024-01-14 10:30:42',
+    details: '通过手机APP查看门口摄像头实时画面',
+    operator: '张三',
+  },
+];
+
+const actionColorMap: Record<string, string> = {
+  '查看实时画面': 'green',
+  '开启隐私模式': 'blue',
+  '标记告警已读': 'cyan',
+  '锁定告警': 'orange',
+  '解锁告警': 'gold',
+  '查看告警详情': 'purple',
+  '修改设备配置': 'geekblue',
+  '删除告警': 'red',
+  '导出录像': 'magenta',
+  '登录系统': 'green',
+  '设备分享': 'cyan',
+};
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -169,9 +318,15 @@ const levelTextMap: Record<string, string> = {
 export default function Alerts() {
   const { alerts, loading, unreadCount, fetchAlerts, fetchUnreadCount, markAsRead, markAllAsRead, lockAlert, unlockAlert } = useAlertStore();
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [auditDrawerVisible, setAuditDrawerVisible] = useState(false);
   const [selectedAlert, setSelectedAlert] = useState<AlertEvent | null>(null);
   const [filterLevel, setFilterLevel] = useState<string>('all');
   const [filterType, setFilterType] = useState<string>('all');
+
+  const currentUser = '张三';
+  const currentIP = '192.168.1.105';
+  const currentAuditAction = selectedAlert ? '查看告警详情' : '';
+  const currentAuditTime = new Date().toLocaleString('zh-CN', { hour12: false });
 
   useEffect(() => {
     fetchAlerts();
@@ -235,6 +390,9 @@ export default function Alerts() {
         <Space>
           <Button onClick={handleMarkAllRead} icon={<Check size={16} />}>
             全部已读
+          </Button>
+          <Button onClick={() => setAuditDrawerVisible(true)} icon={<FileText size={16} />}>
+            审计日志
           </Button>
         </Space>
       </div>
@@ -492,9 +650,148 @@ export default function Alerts() {
                   </div>
                 </div>
               )}
+
+              <Divider className="my-2" />
+
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="font-medium text-gray-800 flex items-center gap-2">
+                    <FileText size={16} className="text-primary-500" />
+                    操作记录
+                  </h4>
+                  <Button
+                    type="link"
+                    size="small"
+                    icon={<ExternalLink size={12} />}
+                    onClick={() => {
+                      setDrawerVisible(false);
+                      setAuditDrawerVisible(true);
+                    }}
+                  >
+                    查看完整审计日志
+                  </Button>
+                </div>
+                <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 text-sm flex items-center gap-2">
+                      <User size={14} />
+                      处理人
+                    </span>
+                    <span className="text-gray-800 font-medium">{currentUser}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 text-sm flex items-center gap-2">
+                      <Clock size={14} />
+                      处理时间
+                    </span>
+                    <span className="text-gray-800">{currentAuditTime}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 text-sm flex items-center gap-2">
+                      <HardDrive size={14} />
+                      设备ID
+                    </span>
+                    <span className="text-gray-800 font-mono text-sm">{selectedAlert.deviceId}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 text-sm flex items-center gap-2">
+                      <Globe size={14} />
+                      操作IP
+                    </span>
+                    <span className="text-gray-800 font-mono text-sm">{currentIP}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 text-sm flex items-center gap-2">
+                      <Info size={14} />
+                      操作类型
+                    </span>
+                    <Tag color="purple">{currentAuditAction}</Tag>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 text-sm flex items-center gap-2">
+                      <Clock size={14} />
+                      操作时间戳
+                    </span>
+                    <span className="text-gray-800 font-mono text-xs">{Date.now()}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}
+      </Drawer>
+
+      <Drawer
+        title={
+          <span className="flex items-center gap-2">
+            <FileText size={18} className="text-primary-500" />
+            审计日志
+          </span>
+        }
+        placement="right"
+        width={800}
+        open={auditDrawerVisible}
+        onClose={() => setAuditDrawerVisible(false)}
+      >
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-gray-500 text-sm">共 {mockAuditLogs.length} 条操作记录</p>
+            <Space>
+              <Select placeholder="操作类型" style={{ width: 140 }} allowClear>
+                <Option value="view">查看类</Option>
+                <Option value="config">配置类</Option>
+                <Option value="delete">删除类</Option>
+              </Select>
+              <RangePicker showTime style={{ width: 340 }} />
+            </Space>
+          </div>
+
+          <div className="border border-gray-200 rounded-lg overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="text-left px-4 py-3 text-gray-600 font-medium">操作时间</th>
+                  <th className="text-left px-4 py-3 text-gray-600 font-medium">操作类型</th>
+                  <th className="text-left px-4 py-3 text-gray-600 font-medium">关联设备</th>
+                  <th className="text-left px-4 py-3 text-gray-600 font-medium">操作IP</th>
+                  <th className="text-left px-4 py-3 text-gray-600 font-medium">操作详情</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {mockAuditLogs.map((log) => (
+                  <tr key={log.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-3 text-gray-600 whitespace-nowrap">{log.timestamp}</td>
+                    <td className="px-4 py-3">
+                      <Tag color={actionColorMap[log.action] || 'default'} className="border-0">
+                        {log.action}
+                      </Tag>
+                    </td>
+                    <td className="px-4 py-3 text-gray-700">
+                      {log.deviceName ? (
+                        <span>
+                          {log.deviceName}
+                          {log.deviceId && (
+                            <span className="text-gray-400 text-xs ml-1">
+                              (ID: {log.deviceId})
+                            </span>
+                          )}
+                        </span>
+                      ) : (
+                        <span className="text-gray-400">-</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="font-mono text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded">
+                        {log.ip}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-gray-600">{log.details}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </Drawer>
     </div>
   );
