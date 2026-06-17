@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import {
   Card, Table, Tag, Select, DatePicker, Button, Space, Statistic, Row, Col,
-  Progress, List, Avatar, Tooltip, Divider, Empty, Badge, Steps, Timeline, Modal, Popover, Tabs,
+  Progress, List, Avatar, Tooltip, Divider, Empty, Badge, Steps, Timeline, Modal, Popover, Tabs, Dropdown, message,
 } from 'antd';
 import {
   BarChart3, TrendingUp, Clock, XCircle, Filter, RefreshCw, ArrowUp, ArrowDown, ArrowRight,
   Trophy, FileWarning, GitBranch, FileCheck2, ShieldAlert, FileKey, FileSearch,
   Network, AlertTriangle, CheckCircle2, Database, Zap, FileText, Users, Info,
-  Bell, Eye, Send, HandPlatter, Bot, CreditCard,
+  Bell, Eye, Send, HandPlatter, Bot, CreditCard, ListChecks, Settings,
 } from 'lucide-react';
 import * as echarts from 'echarts';
 import dayjs from 'dayjs';
@@ -337,6 +337,8 @@ const REJECTION_BREAKDOWN = Array.from({ length: 50 }, (_, i) => {
     serviceName: svc,
     applicant: applicants[i % applicants.length],
     department: dpt,
+    reviewer: ['张经办', '李审核', '王审批', '赵初审'][i % 4],
+    rejectedAt: `2026-06-${String(10 + (i % 6)).padStart(2, '0')} ${String(10 + (i % 10)).padStart(2, '0')}:${String(15 + (i % 40)).padStart(2, '0')}`,
     rejectReason: reason,
     reasonCategory: reason,
     totalCategory: countMap[reason] || 0,
@@ -735,6 +737,12 @@ export default function Performance() {
   const [expandedCorrection, setExpandedCorrection] = useState(false);
   const [reminderModalVisible, setReminderModalVisible] = useState(false);
   const [expandedChainKey, setExpandedChainKey] = useState<string | null>(null);
+  const [disposalModalVisible, setDisposalModalVisible] = useState(false);
+  const [currentDisposalRecord, setCurrentDisposalRecord] = useState<any>(null);
+  const [disposalList, setDisposalList] = useState<any[]>(DISPOSAL_RECORDS);
+  const [rejectModalVisible, setRejectModalVisible] = useState(false);
+  const [currentRejectRecord, setCurrentRejectRecord] = useState<any>(null);
+  const [rejectList, setRejectList] = useState<any[]>(REJECTION_BREAKDOWN);
 
   const filteredData = useMemo(() => {
     let result = [...mockPerformanceData];
@@ -1492,18 +1500,53 @@ export default function Performance() {
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-orange-500" />
               <span className="text-sm font-medium text-gov-gray-700">异常处置快速导航</span>
-              <Tag color="orange" className="m-0 text-[10px]">5模块联动</Tag>
+              <Tag color="orange" className="m-0 text-[10px]">5模块联动 · 499件退件关联</Tag>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Button type="link" size="small" className="text-xs" icon={<HandPlatter className="w-3 h-3" />} onClick={() => window.open('/services', '_blank')}>掌上办事</Button>
-              <Button type="link" size="small" className="text-xs" icon={<Bot className="w-3 h-3" />} onClick={() => window.open('/guide', '_blank')}>智能导办</Button>
-              <Button type="link" size="small" className="text-xs" icon={<CreditCard className="w-3 h-3" />} onClick={() => window.open('/certificates', '_blank')}>电子证照</Button>
-              <Button type="link" size="small" className="text-xs" icon={<FileSearch className="w-3 h-3" />} onClick={() => window.open('/admin/policy', '_blank')}>
-                <span className="flex items-center gap-1">政策引擎 <Badge count={1} size="small" color="red" /></span>
-              </Button>
-              <Button type="link" size="small" className="text-xs" icon={<ShieldAlert className="w-3 h-3" />} onClick={() => window.open('/admin/disaster-recovery', '_blank')}>
-                <span className="flex items-center gap-1">容灾中心 <Badge count={1} size="small" color="orange" /></span>
-              </Button>
+            <div className="flex items-center gap-1 flex-wrap">
+              <Tooltip title="掌上办事 - 业务办理入口">
+                <Button type="link" size="small" className="text-xs" icon={<HandPlatter className="w-3 h-3" />} onClick={() => window.open('/services', '_blank')}>掌上办事</Button>
+              </Tooltip>
+              <Tooltip title="智能导办 - 办理条件引导">
+                <Button type="link" size="small" className="text-xs" icon={<Bot className="w-3 h-3" />} onClick={() => window.open('/guide', '_blank')}>智能导办</Button>
+              </Tooltip>
+              <Tooltip title="电子证照 - 互认调用管理">
+                <Button type="link" size="small" className="text-xs" icon={<CreditCard className="w-3 h-3" />} onClick={() => window.open('/certificates', '_blank')}>
+                  <span className="flex items-center gap-1">电子证照 <Tag color="orange" className="m-0 text-[9px]" style={{marginLeft: 2}}>156件缓存</Tag></span>
+                </Button>
+              </Tooltip>
+              <Tooltip title="政策引擎 - 补贴匹配与规则校准">
+                <Dropdown menu={{
+                  items: [
+                    { key: '1', label: '补贴误退重受理（18件）', icon: <RefreshCw className="w-3 h-3" /> },
+                    { key: '2', label: '规则参数校准', icon: <Settings className="w-3 h-3" /> },
+                    { key: '3', label: '政策适配监测', icon: <BarChart3 className="w-3 h-3" /> },
+                  ],
+                  onClick: () => window.open('/admin/policy', '_blank'),
+                }}>
+                  <Button type="link" size="small" className="text-xs" icon={<FileSearch className="w-3 h-3" />}>
+                    <span className="flex items-center gap-1">政策引擎 <Badge count={1} size="small" color="red" /></span>
+                  </Button>
+                </Dropdown>
+              </Tooltip>
+              <Tooltip title="容灾中心 - 缓存切换与应急受理">
+                <Dropdown menu={{
+                  items: [
+                    { key: '1', label: '证照缓存应急受理（156件）', icon: <Database className="w-3 h-3" /> },
+                    { key: '2', label: '容灾通道状态', icon: <ShieldAlert className="w-3 h-3" /> },
+                    { key: '3', label: '系统故障记录', icon: <AlertTriangle className="w-3 h-3" /> },
+                  ],
+                  onClick: () => window.open('/admin/disaster-recovery', '_blank'),
+                }}>
+                  <Button type="link" size="small" className="text-xs" icon={<ShieldAlert className="w-3 h-3" />}>
+                    <span className="flex items-center gap-1">容灾中心 <Badge count={1} size="small" color="orange" /></span>
+                  </Button>
+                </Dropdown>
+              </Tooltip>
+              <Tooltip title="跨域协同 - 部门联合处置">
+                <Button type="link" size="small" className="text-xs" icon={<Network className="w-3 h-3" />} onClick={() => window.open('/collaboration', '_blank')}>
+                  <span className="flex items-center gap-1">协同复查 <Tag color="blue" className="m-0 text-[9px]" style={{marginLeft: 2}}>7部门</Tag></span>
+                </Button>
+              </Tooltip>
             </div>
           </div>
         </Card>
@@ -1668,11 +1711,11 @@ export default function Performance() {
           <div className="flex items-center gap-2 mb-3">
             <FileCheck2 className="w-4 h-4 text-green-600" />
             <span className="font-medium text-sm text-gov-gray-700">处置复查记录</span>
-            <Tag color="green" className="m-0 text-xs">{DISPOSAL_RECORDS.length}条已处置</Tag>
+            <Tag color="green" className="m-0 text-xs">{disposalList.length}条已处置</Tag>
             <span className="text-[11px] text-gov-gray-400 ml-2">含校准前后对比指标</span>
           </div>
           <div className="space-y-3">
-            {DISPOSAL_RECORDS.map((r, i) => (
+            {disposalList.map((r, i) => (
               <div key={i} className="bg-green-50/30 rounded-xl border border-green-100 overflow-hidden">
                 <div className="p-3 flex items-start gap-3">
                   <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -1725,8 +1768,20 @@ export default function Performance() {
                         </div>
                         {r.status !== 'verified' && (
                           <div className="mt-2 flex items-center gap-2">
-                            <Button type="primary" size="small" className="h-6 text-[10px] px-2">确认验收并回写状态</Button>
-                            <Button size="small" className="h-6 text-[10px] px-2">查看处置台账</Button>
+                            <Button type="primary" size="small" className="h-6 text-[10px] px-2" onClick={() => {
+                              const newList = disposalList.map(item => {
+                                if (item.action === r.action) {
+                                  return { ...item, status: 'verified', verificationData: { ...item.verificationData, verifier: '省大数据中心-李审计', verifyTime: '2026-06-17 11:45' } };
+                                }
+                                return item;
+                              });
+                              setDisposalList(newList);
+                              message.success('已确认验收，处置状态已回写至审计系统');
+                            }}>确认验收并回写状态</Button>
+                            <Button size="small" className="h-6 text-[10px] px-2" onClick={() => {
+                              setCurrentDisposalRecord(r);
+                              setDisposalModalVisible(true);
+                            }}>查看处置台账</Button>
                           </div>
                         )}
                       </div>
@@ -1773,6 +1828,236 @@ export default function Performance() {
           </div>
         </Card>
 
+        <Modal
+          title={
+            <div className="flex items-center gap-2">
+              <FileCheck2 className="w-5 h-5 text-green-600" />
+              <span className="font-semibold">处置台账 · 审计追溯</span>
+              <Tag color={currentDisposalRecord?.module === 'policy' ? 'purple' : currentDisposalRecord?.module === 'disaster' ? 'orange' : 'blue'} className="m-0 text-xs">
+                {currentDisposalRecord?.module === 'policy' ? '政策引擎' : currentDisposalRecord?.module === 'disaster' ? '容灾中心' : '电子证照'}
+              </Tag>
+            </div>
+          }
+          open={disposalModalVisible}
+          onCancel={() => setDisposalModalVisible(false)}
+          width={780}
+          footer={
+            <div className="flex items-center justify-between">
+              <div className="text-xs text-gov-gray-500">
+                台账编号: DZ2026-{currentDisposalRecord?.action ? String(currentDisposalRecord.action.length).padStart(5, '0') : '00001'} · 
+                处置时长: {(Math.random() * 3 + 0.5).toFixed(1)}小时
+              </div>
+              <Space>
+                <Button onClick={() => setDisposalModalVisible(false)}>关闭</Button>
+                <Button type="primary" onClick={() => {
+                  if (currentDisposalRecord && currentDisposalRecord.status !== 'verified') {
+                    const newList = disposalList.map(item => {
+                      if (item.action === currentDisposalRecord.action) {
+                        return { ...item, status: 'verified', verificationData: { ...item.verificationData, verifier: '省大数据中心-李审计', verifyTime: '2026-06-17 11:45' } };
+                      }
+                      return item;
+                    });
+                    setDisposalList(newList);
+                    message.success('已确认验收，处置状态已回写至审计系统');
+                  }
+                }} disabled={currentDisposalRecord?.status === 'verified'}>确认验收</Button>
+              </Space>
+            </div>
+          }
+        >
+          {currentDisposalRecord && (
+            <div className="space-y-5">
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <div className="text-[11px] text-gov-gray-500 mb-1">处置动作</div>
+                  <div className="text-sm font-medium text-gov-gray-700">{currentDisposalRecord.action}</div>
+                </div>
+                <div>
+                  <div className="text-[11px] text-gov-gray-500 mb-1">处置人</div>
+                  <div className="text-sm text-gov-gray-700">{currentDisposalRecord.handler}</div>
+                </div>
+                <div>
+                  <div className="text-[11px] text-gov-gray-500 mb-1">处置时间</div>
+                  <div className="text-sm text-gov-gray-700">{currentDisposalRecord.time}</div>
+                </div>
+              </div>
+
+              <Divider className="my-0" />
+
+              <div>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <GitBranch className="w-4 h-4 text-purple-500" />
+                  <span className="text-sm font-medium text-gov-gray-700">处置全链路审计轨迹</span>
+                  <Tag color={currentDisposalRecord.status === 'verified' ? 'green' : 'orange'} className="m-0 text-[10px]">
+                    {currentDisposalRecord.status === 'verified' ? '已验收' : '待验收'}
+                  </Tag>
+                </div>
+                <Timeline
+                  items={[
+                    {
+                      color: 'green',
+                      children: (
+                        <div>
+                          <div className="text-xs font-medium text-gov-gray-700">异常发现并告警</div>
+                          <div className="text-[10px] text-gov-gray-500 mt-0.5">
+                            系统监控自动发现 · 监测时间: 2026-06-{String(15 + Math.floor(Math.random()*2)).padStart(2,'0')} 0{6 + Math.floor(Math.random()*3)}:{String(Math.floor(Math.random()*60)).padStart(2,'0')}
+                          </div>
+                        </div>
+                      ),
+                    },
+                    {
+                      color: 'green',
+                      children: (
+                        <div>
+                          <div className="text-xs font-medium text-gov-gray-700">工单派发 · {currentDisposalRecord.handler}</div>
+                          <div className="text-[10px] text-gov-gray-500 mt-0.5">
+                            值班长派发处置工单 · 派发时间: {currentDisposalRecord.time}
+                          </div>
+                        </div>
+                      ),
+                    },
+                    {
+                      color: 'green',
+                      children: (
+                        <div>
+                          <div className="text-xs font-medium text-gov-gray-700">处置执行 · {currentDisposalRecord.action}</div>
+                          <div className="text-[10px] text-gov-gray-500 mt-0.5">
+                            {currentDisposalRecord.detail}
+                          </div>
+                        </div>
+                      ),
+                    },
+                    {
+                      color: currentDisposalRecord.status === 'verified' ? 'green' : 'blue',
+                      children: (
+                        <div>
+                          <div className="text-xs font-medium text-gov-gray-700">复验确认 · {currentDisposalRecord.verificationData?.verifier || '待确认'}</div>
+                          <div className="text-[10px] text-gov-gray-500 mt-0.5">
+                            处置结果复核 · {currentDisposalRecord.verificationData?.verifyTime || '待执行'}
+                          </div>
+                        </div>
+                      ),
+                    },
+                    {
+                      color: currentDisposalRecord.status === 'verified' ? 'green' : 'gray',
+                      children: (
+                        <div>
+                          <div className="text-xs font-medium text-gov-gray-700">状态回写 · 审计归档</div>
+                          <div className="text-[10px] text-gov-gray-500 mt-0.5">
+                            {currentDisposalRecord.status === 'verified' ? '已同步至省政务云审计平台 · 归档编号: SJ20260617' : '待验收后自动归档'}
+                          </div>
+                        </div>
+                      ),
+                    },
+                  ]}
+                />
+              </div>
+
+              <Divider className="my-0" />
+
+              <div>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <BarChart3 className="w-4 h-4 text-blue-500" />
+                  <span className="text-sm font-medium text-gov-gray-700">处置前后关键指标对比</span>
+                </div>
+                <div className="grid grid-cols-3 gap-2.5">
+                  <div className="bg-white rounded-lg p-3 border border-gov-gray-100 text-center">
+                    <div className="text-[10px] text-gov-gray-500 mb-1">异常件数</div>
+                    <div className="flex items-center justify-center gap-1.5">
+                      <span className="text-sm text-red-500 line-through">{currentDisposalRecord.verificationData?.affectedCountBefore}</span>
+                      <ArrowRight className="w-3 h-3 text-green-500" />
+                      <span className="text-sm font-semibold text-green-600">{currentDisposalRecord.verificationData?.affectedCountAfter}</span>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-lg p-3 border border-gov-gray-100 text-center">
+                    <div className="text-[10px] text-gov-gray-500 mb-1">通过率</div>
+                    <div className="flex items-center justify-center gap-1.5">
+                      <span className="text-sm text-red-500 line-through">{currentDisposalRecord.verificationData?.passRateBefore}%</span>
+                      <ArrowRight className="w-3 h-3 text-green-500" />
+                      <span className="text-sm font-semibold text-green-600">{currentDisposalRecord.verificationData?.passRateAfter}%</span>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-lg p-3 border border-gov-gray-100 text-center">
+                    <div className="text-[10px] text-gov-gray-500 mb-1">重受理件数</div>
+                    <div className="text-sm font-semibold text-blue-600">{currentDisposalRecord.verificationData?.reAcceptedCount}件</div>
+                  </div>
+                </div>
+              </div>
+
+              <Divider className="my-0" />
+
+              <div>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Zap className="w-4 h-4 text-orange-500" />
+                  <span className="text-sm font-medium text-gov-gray-700">关联业务场景</span>
+                </div>
+                <div className="space-y-2">
+                  {currentDisposalRecord.module === 'policy' && (
+                    <div className="p-3 bg-purple-50 rounded-lg border border-purple-100">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <FileSearch className="w-4 h-4 text-purple-600" />
+                          <span className="text-xs font-medium text-gov-gray-700">涉农补贴误退重受理</span>
+                        </div>
+                        <Tag color="green" className="m-0 text-[10px]">18件已重新受理</Tag>
+                      </div>
+                      <div className="text-[10px] text-gov-gray-500">
+                        政策规则校准后，18件因年龄阈值误退的涉农补贴申请已自动重新受理，其中12件已完成审批发放。
+                      </div>
+                      <Button type="link" size="small" className="text-[10px] p-0 mt-1 text-purple-600" onClick={() => window.open('/admin/policy', '_blank')}>前往政策引擎查看 →</Button>
+                    </div>
+                  )}
+                  {currentDisposalRecord.module === 'disaster' && (
+                    <>
+                      <div className="p-3 bg-orange-50 rounded-lg border border-orange-100">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <Database className="w-4 h-4 text-orange-600" />
+                            <span className="text-xs font-medium text-gov-gray-700">证照互认缓存应急受理</span>
+                          </div>
+                          <Tag color="green" className="m-0 text-[10px]">156件缓存受理</Tag>
+                        </div>
+                        <div className="text-[10px] text-gov-gray-500">
+                          切换至容灾缓存通道后，156件证照互认失败的办件通过缓存数据继续办理，未中断服务。
+                        </div>
+                        <Button type="link" size="small" className="text-[10px] p-0 mt-1 text-orange-600" onClick={() => window.open('/admin/disaster-recovery', '_blank')}>前往容灾中心查看 →</Button>
+                      </div>
+                      <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <Network className="w-4 h-4 text-blue-600" />
+                            <span className="text-xs font-medium text-gov-gray-700">跨部门协同复查</span>
+                          </div>
+                          <Tag color="blue" className="m-0 text-[10px]">7部门联合处置</Tag>
+                        </div>
+                        <div className="text-[10px] text-gov-gray-500">
+                          民政、公安、卫健、住建、人社、市监、税务7部门联合开展证照互认专项复查，已修复3类历史兼容性问题。
+                        </div>
+                        <Button type="link" size="small" className="text-[10px] p-0 mt-1 text-blue-600" onClick={() => window.open('/collaboration', '_blank')}>前往跨域协同查看 →</Button>
+                      </div>
+                    </>
+                  )}
+                  {currentDisposalRecord.module === 'cert' && (
+                    <div className="p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <CreditCard className="w-4 h-4 text-indigo-600" />
+                          <span className="text-xs font-medium text-gov-gray-700">电子证照接口恢复</span>
+                        </div>
+                        <Tag color="green" className="m-0 text-[10px]">43件已恢复</Tag>
+                      </div>
+                      <div className="text-[10px] text-gov-gray-500">
+                        卫健系统证照接口维护完成后，43件因接口超时而挂起的办件已自动恢复办理流程。
+                      </div>
+                      <Button type="link" size="small" className="text-[10px] p-0 mt-1 text-indigo-600" onClick={() => window.open('/certificates', '_blank')}>前往电子证照查看 →</Button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </Modal>
+
         <Card
           className="shadow-card mb-6"
           size="small"
@@ -1803,7 +2088,7 @@ export default function Performance() {
           }
         >
           <Table
-            dataSource={REJECTION_BREAKDOWN}
+            dataSource={rejectList}
             size="small"
             scroll={{ x: 1800 }}
             pagination={{ pageSize: 8, showTotal: (total: number) => `共 ${total}/499 条退件记录 · 支持业务复核` }}
@@ -1862,18 +2147,213 @@ export default function Performance() {
                 ),
               },
               {
-                title: '操作', key: 'action', width: 160, fixed: 'right' as const,
-                render: () => (
+                title: '操作', key: 'action', width: 190, fixed: 'right' as const,
+                render: (_: any, record: any) => (
                   <Space size="small">
-                    <Button type="link" size="small" className="text-[10px] p-0">查看退件单</Button>
-                    <Button type="link" size="small" className="text-[10px] p-0">重新受理</Button>
-                    <Button type="link" size="small" className="text-[10px] p-0">复核确认</Button>
+                    <Button type="link" size="small" className="text-[10px] p-0" onClick={() => {
+                      setCurrentRejectRecord(record);
+                      setRejectModalVisible(true);
+                    }}>查看退件单</Button>
+                    <Button type="link" size="small" className="text-[10px] p-0" disabled={record.reacceptStatus === '已重新受理' || record.reacceptStatus === '已办结'} onClick={() => {
+                      const newList = rejectList.map(item => {
+                        if (item.key === record.key) {
+                          return { ...item, reacceptStatus: '已重新受理', reacceptedAt: `06-17 ${String(8 + Math.floor(Math.random() * 8)).padStart(2, '0')}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}` };
+                        }
+                        return item;
+                      });
+                      setRejectList(newList);
+                    }}>重新受理</Button>
+                    <Button type="primary" size="small" className="text-[10px] h-5 px-1.5" disabled={record.reacceptStatus === '已办结' || record.reacceptStatus === '待处理'} onClick={() => {
+                      const newList = rejectList.map(item => {
+                        if (item.key === record.key) {
+                          return { ...item, reacceptStatus: '已办结', timeAfter: (0.5 + Math.random() * 1.5).toFixed(1), impactCompletion: (parseFloat(item.impactCompletion) * 0.3).toFixed(1) };
+                        }
+                        return item;
+                      });
+                      setRejectList(newList);
+                      message.success('复核确认成功，办结率已回算更新');
+                    }}>复核确认</Button>
                   </Space>
                 ),
               },
             ]}
           />
         </Card>
+
+        <Modal
+          title={
+            <div className="flex items-center gap-2">
+              <FileWarning className="w-5 h-5 text-red-500" />
+              <span className="font-semibold">退件单详情</span>
+              <Tag color="red" className="m-0 text-xs">{currentRejectRecord?.rejectNo}</Tag>
+            </div>
+          }
+          open={rejectModalVisible}
+          onCancel={() => setRejectModalVisible(false)}
+          width={820}
+          footer={
+            <div className="flex items-center justify-between">
+              <div className="text-xs text-gov-gray-500">
+                退件时间: {currentRejectRecord?.rejectedAt || '2026-06-15 14:32'} · 
+                初审人: {currentRejectRecord?.reviewer || '张经办'} · 
+                初审部门: {currentRejectRecord?.department}
+              </div>
+              <Space>
+                <Button onClick={() => setRejectModalVisible(false)}>关闭</Button>
+                <Button type="primary" onClick={() => {
+                  if (currentRejectRecord) {
+                    const newList = rejectList.map(item => {
+                      if (item.key === currentRejectRecord.key) {
+                        return { ...item, reacceptStatus: '已办结', timeAfter: (0.5 + Math.random() * 1.5).toFixed(1), impactCompletion: (parseFloat(item.impactCompletion) * 0.3).toFixed(1) };
+                      }
+                      return item;
+                    });
+                    setRejectList(newList);
+                    setRejectModalVisible(false);
+                    message.success('复核确认成功，办结率已回算更新');
+                  }
+                }} disabled={currentRejectRecord?.reacceptStatus === '已办结'}>复核确认</Button>
+              </Space>
+            </div>
+          }
+        >
+          {currentRejectRecord && (
+            <div className="space-y-5">
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <div className="text-[11px] text-gov-gray-500 mb-1">事项名称</div>
+                  <div className="text-sm font-medium text-gov-gray-700">{currentRejectRecord.serviceName}</div>
+                </div>
+                <div>
+                  <div className="text-[11px] text-gov-gray-500 mb-1">申请人</div>
+                  <div className="text-sm text-gov-gray-700">{currentRejectRecord.applicant}</div>
+                </div>
+                <div>
+                  <div className="text-[11px] text-gov-gray-500 mb-1">责任部门</div>
+                  <Tag color="geekblue" className="m-0 text-xs">{currentRejectRecord.department}</Tag>
+                </div>
+              </div>
+
+              <Divider className="my-0" />
+
+              <div>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <FileWarning className="w-4 h-4 text-red-500" />
+                  <span className="text-sm font-medium text-gov-gray-700">退件原因与依据</span>
+                  <Tag color={currentRejectRecord.reasonCategory === '材料不齐全' ? 'red' : currentRejectRecord.reasonCategory === '政策适配异常' ? 'purple' : currentRejectRecord.reasonCategory === '证照互认失败' ? 'orange' : 'blue'} className="m-0 text-[10px]">
+                    {currentRejectRecord.reasonCategory}
+                  </Tag>
+                </div>
+                <div className="bg-red-50 rounded-lg p-3 border border-red-100">
+                  <div className="text-xs text-gov-gray-700 mb-2 leading-relaxed">
+                    经初审，该申请存在以下问题，按《政务服务事项办理规范》第{currentRejectRecord.key}条第{String(parseInt(currentRejectRecord.key) + 2)}款规定做退件处理：
+                  </div>
+                  <div className="space-y-1.5">
+                    {currentRejectRecord.correctionRequired && currentRejectRecord.correctionRequired.length > 0 ? currentRejectRecord.correctionRequired.map((item: any, i: number) => (
+                      <div key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-red-500 font-bold mt-0.5">×</span>
+                        <div>
+                          <span className="text-gov-gray-700 font-medium">{item.name || item}</span>
+                          {item.detail && <span className="text-gov-gray-500 ml-1.5">— {item.detail}</span>}
+                        </div>
+                      </div>
+                    )) : (
+                      <div className="flex items-start gap-2 text-xs">
+                        <span className="text-red-500 font-bold">×</span>
+                        <span className="text-gov-gray-700">{currentRejectRecord.reasonCategory}相关问题需补充完善</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <Divider className="my-0" />
+
+              <div>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <ListChecks className="w-4 h-4 text-orange-500" />
+                  <span className="text-sm font-medium text-gov-gray-700">补正材料明细</span>
+                  <span className="text-[11px] text-gov-gray-500">（共{currentRejectRecord.correctionRequired?.length || 1}项）</span>
+                </div>
+                <div className="space-y-2">
+                  {currentRejectRecord.correctionRequired && currentRejectRecord.correctionRequired.length > 0 ? currentRejectRecord.correctionRequired.map((item: any, i: number) => (
+                    <div key={i} className="flex items-center justify-between p-2.5 bg-orange-50 rounded border border-orange-100">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-600 text-[10px] flex items-center justify-center font-bold">{i + 1}</span>
+                        <div>
+                          <div className="text-xs font-medium text-gov-gray-700">{item.name || item}</div>
+                          {item.detail && <div className="text-[10px] text-gov-gray-500">{item.detail}</div>}
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-orange-600 bg-orange-100 px-2 py-0.5 rounded">待补正</div>
+                    </div>
+                  )) : (
+                    <div className="text-xs text-gov-gray-500 p-3 bg-gov-gray-50 rounded text-center">无需材料补正，为政策/流程类退件</div>
+                  )}
+                </div>
+              </div>
+
+              <Divider className="my-0" />
+
+              <div>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <RefreshCw className="w-4 h-4 text-green-500" />
+                  <span className="text-sm font-medium text-gov-gray-700">重新受理与复核结果</span>
+                  <Tag color={currentRejectRecord.reacceptStatus === '已办结' ? 'green' : currentRejectRecord.reacceptStatus === '已重新受理' ? 'blue' : currentRejectRecord.reacceptStatus === '补正中' ? 'orange' : 'default'} className="m-0 text-[10px]">
+                    {currentRejectRecord.reacceptStatus}
+                  </Tag>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-gov-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gov-gray-500 mb-1">原办理耗时</div>
+                    <div className="text-base font-semibold text-red-500">{currentRejectRecord.timeBefore}天</div>
+                  </div>
+                  <div className="bg-gov-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gov-gray-500 mb-1">补正后耗时</div>
+                    <div className="text-base font-semibold text-green-600">{currentRejectRecord.timeAfter !== '-' ? `${currentRejectRecord.timeAfter}天` : '—'}</div>
+                  </div>
+                  <div className="bg-gov-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gov-gray-500 mb-1">重新受理时间</div>
+                    <div className="text-sm font-medium text-gov-gray-700">{currentRejectRecord.reacceptedAt || '—'}</div>
+                  </div>
+                  <div className="bg-gov-gray-50 rounded-lg p-3">
+                    <div className="text-[10px] text-gov-gray-500 mb-1">办结率影响</div>
+                    <div className="text-sm font-medium text-gov-gray-700">-{currentRejectRecord.impactCompletion}%</div>
+                  </div>
+                </div>
+                {currentRejectRecord.reacceptStatus === '已办结' && (
+                  <div className="mt-3 p-2.5 bg-green-50 rounded-lg border border-green-200">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
+                      <span className="text-[11px] font-medium text-green-700">复核意见</span>
+                    </div>
+                    <div className="text-[10px] text-green-600">
+                      经复核，申请人已按要求补正全部材料，符合办理条件，同意办结。
+                      复核人：李审核 · 复核时间：2026-06-17 10:28
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <Divider className="my-0" />
+
+              <div>
+                <div className="flex items-center gap-1.5 mb-2.5">
+                  <Bell className="w-4 h-4 text-blue-500" />
+                  <span className="text-sm font-medium text-gov-gray-700">进度推送记录</span>
+                </div>
+                <Timeline
+                  items={[
+                    { color: 'green', children: <div className="text-xs"><span className="text-gov-gray-700">APP站内信推送</span> <span className="text-gov-gray-400 ml-2">已发送 · 06-15 14:33</span></div> },
+                    { color: 'green', children: <div className="text-xs"><span className="text-gov-gray-700">手机短信推送</span> <span className="text-gov-gray-400 ml-2">已发送 · 06-15 14:33</span></div> },
+                    { color: 'green', children: <div className="text-xs"><span className="text-gov-gray-700">邮件通知推送</span> <span className="text-gov-gray-400 ml-2">已发送 · 06-15 14:34</span></div> },
+                    { color: currentRejectRecord.reacceptStatus === '已办结' ? 'green' : 'gray', children: <div className="text-xs"><span className="text-gov-gray-700">办结结果推送</span> <span className="text-gov-gray-400 ml-2">{currentRejectRecord.reacceptStatus === '已办结' ? '已发送 · 06-17 10:29' : '待触发'}</span></div> },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+        </Modal>
 
         <Row gutter={[12, 12]} className="mb-6">
           <Col xs={24} xl={12}>
