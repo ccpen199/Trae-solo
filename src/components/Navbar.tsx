@@ -4,6 +4,11 @@ import { Search, MapPin, ClipboardList, Settings, Store, CheckCircle, AlertCircl
 import useStore from '@/store/useStore'
 
 const SONGJIANG_FENCE = { minLat: 30.90, maxLat: 31.15, minLng: 121.05, maxLng: 121.35 }
+const LOC_PRESETS = {
+  default: { lat: 31.03, lng: 121.22, label: '默认松江' },
+  gps: { lat: 31.051, lng: 121.247, label: 'GPS卫星' },
+  cell: { lat: 31.042, lng: 121.228, label: '基站三角' },
+} as const
 
 export default function Navbar() {
   const [query, setQuery] = useState('')
@@ -29,10 +34,10 @@ export default function Navbar() {
     setPrevLocLabel(oldLabel)
     setLocSource(k)
     setTimeout(() => {
-      const state = window['__zustand_store']?.getState?.() || require('@/store/useStore').default.getState()
-      const newLat = state.locInfo.lat
-      const newLng = state.locInfo.lng
-      const newLabel = state.locInfo.label
+      const nextLoc = LOC_PRESETS[k]
+      const newLat = nextLoc.lat
+      const newLng = nextLoc.lng
+      const newLabel = nextLoc.label
       const dist = Math.round(Math.sqrt(Math.pow(newLat - 31.03, 2) + Math.pow(newLng - 121.22, 2)) * 111000)
       addInterceptRecord?.(new Date().toLocaleTimeString(), newLat, newLng,
         `定位切换：${oldLabel}→${newLabel}，距中心${dist}m`)

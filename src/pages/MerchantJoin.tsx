@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Upload, ChevronLeft, ChevronRight, Check, AlertCircle, FileText, Image, Clock, Tag, CheckCircle2, CheckCircle, XCircle } from 'lucide-react'
+import { Upload, ChevronLeft, ChevronRight, Check, AlertCircle, FileText, Image, Clock, Tag, CheckCircle2, CheckCircle, XCircle, History } from 'lucide-react'
 import { applyMerchant } from '@/utils/api'
 
 const STEPS = ['基本信息', '资质上传', '营业时间', '优惠标签']
@@ -214,11 +214,11 @@ export default function MerchantJoin() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs text-gray-500">门头照</span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待核验</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓审核通过（如不合格将驳回，需重新上传清晰门头照）</span>
                 </div>
                 <div className="flex items-center gap-3 text-[11px] text-gray-400">
-                  <span>审核人：—</span>
-                  <span>审核时间：—</span>
+                  <span>审核人：运营-赵经理</span>
+                  <span>审核时间：2026-06-18</span>
                 </div>
               </div>
             </div>
@@ -227,13 +227,13 @@ export default function MerchantJoin() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs text-gray-500">营业执照</span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待核验</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已核验（如过期将驳回，需更新有效期）</span>
                 </div>
                 <div className="flex items-center gap-3 text-[11px] text-gray-400 flex-wrap">
-                  <span>证照编号：{form.licenseNo || '—'}</span>
-                  <span>有效期：{form.licenseExpire || '—'}</span>
-                  <span>审核人：—</span>
-                  <span>审核时间：—</span>
+                  <span>证照编号：{form.licenseNo || '91310117MA1FL8X62D'}</span>
+                  <span>有效期：{form.licenseExpire || '2028-06-30'}</span>
+                  <span>审核人：运营-赵经理</span>
+                  <span>审核时间：2026-06-18</span>
                 </div>
               </div>
             </div>
@@ -242,11 +242,11 @@ export default function MerchantJoin() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs text-gray-500">经营许可证</span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待核验</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已核验（如经营范围不符将驳回，需补充对应许可证）</span>
                 </div>
                 <div className="flex items-center gap-3 text-[11px] text-gray-400">
-                  <span>审核人：—</span>
-                  <span>审核时间：—</span>
+                  <span>审核人：运营-赵经理</span>
+                  <span>审核时间：2026-06-18</span>
                 </div>
               </div>
             </div>
@@ -255,11 +255,11 @@ export default function MerchantJoin() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs text-gray-500">营业时间</span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待审核</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已审核（如设置不合理将驳回，需调整营业时间）</span>
                 </div>
                 <div className="flex items-center gap-3 text-[11px] text-gray-400">
-                  <span>审核人：—</span>
-                  <span>审核时间：—</span>
+                  <span>审核人：运营-赵经理</span>
+                  <span>审核时间：2026-06-18</span>
                 </div>
               </div>
             </div>
@@ -268,12 +268,45 @@ export default function MerchantJoin() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs text-gray-500">优惠标签</span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">待审核</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已审核（如标签违规将驳回，需修改或删除违规标签）</span>
                 </div>
                 <div className="flex items-center gap-3 text-[11px] text-gray-400">
-                  <span>审核人：—</span>
-                  <span>审核时间：—</span>
+                  <span>审核人：运营-赵经理</span>
+                  <span>审核时间：2026-06-18</span>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card p-4 text-left mb-6">
+          <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1.5">
+            <History className="w-4 h-4 text-primary" />
+            变更复查留痕
+          </h4>
+          <div className="space-y-3">
+            <div className="flex items-start gap-2">
+              <div className="w-5 h-5 rounded-full bg-secondary-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <CheckCircle className="w-3 h-3 text-secondary" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-medium text-gray-700">2026-06-22 营业时间变更</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓审批通过</span>
+                </div>
+                <p className="text-[11px] text-gray-500">原10:00-21:00 → 新09:30-22:30</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-5 h-5 rounded-full bg-yellow-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Clock className="w-3 h-3 text-yellow-600" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-medium text-gray-700">2026-06-25 优惠标签新增</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">⏳审核中</span>
+                </div>
+                <p className="text-[11px] text-gray-500">新增"学生特惠""下午茶"</p>
               </div>
             </div>
           </div>
@@ -444,72 +477,49 @@ export default function MerchantJoin() {
 
       <div className="card p-4 text-left mb-4">
         <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1.5">
-          <CheckCircle2 className="w-4 h-4 text-secondary" />
-          提交后审核回写 · 预览效果
+          <History className="w-4 h-4 text-primary" />
+          入驻全链路 · 资质上传→驳回/通过→变更复查
         </h4>
         <div className="space-y-3">
           <div className="flex items-start gap-2">
-            <Image className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+            <div className="w-5 h-5 rounded-full bg-yellow-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <Clock className="w-3 h-3 text-yellow-600" />
+            </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-gray-500">门头照</span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓审核通过</span>
+                <span className="text-xs font-medium text-gray-700">① 资质上传阶段</span>
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-yellow-50 text-yellow-600 border border-yellow-200">pending</span>
               </div>
-              <div className="flex items-center gap-3 text-[11px] text-gray-400">
-                <span>2026-06-18</span>
-                <span>运营-赵经理</span>
-              </div>
+              <p className="text-[11px] text-gray-500">上传门头照、营业执照、经营许可证 → 系统自动校验完整性</p>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <FileText className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+            <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <CheckCircle className="w-3 h-3 text-gray-400" />
+            </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-gray-500">营业执照</span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已核验</span>
+                <span className="text-xs font-medium text-gray-700">② 审核阶段</span>
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-gray-100 text-gray-500 border border-gray-200">approved / rejected</span>
               </div>
-              <div className="flex items-center gap-3 text-[11px] text-gray-400 flex-wrap">
-                <span>编号91310117MA1FL8X62D</span>
-                <span>2026-06-18</span>
-              </div>
+              <p className="text-[11px] text-gray-500">运营审核资质，可能通过或驳回，驳回时附带原因</p>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <FileText className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-gray-500">经营许可证</span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已核验</span>
-              </div>
-              <div className="flex items-center gap-3 text-[11px] text-gray-400">
-                <span>2026-06-18</span>
-              </div>
+            <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <CheckCircle2 className="w-3 h-3 text-gray-400" />
             </div>
-          </div>
-          <div className="flex items-start gap-2">
-            <Clock className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-gray-500">营业时间</span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已审核</span>
+                <span className="text-xs font-medium text-gray-700">③ 变更复查阶段</span>
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-gray-100 text-gray-500 border border-gray-200">change_approved</span>
               </div>
-            </div>
-          </div>
-          <div className="flex items-start gap-2">
-            <Tag className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-gray-500">优惠标签</span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] bg-secondary-50 text-secondary border border-secondary-200">✓已审核</span>
-              </div>
-              <div className="text-[11px] text-gray-400">
-                <span>（满100减20、周末狂欢）</span>
-              </div>
+              <p className="text-[11px] text-gray-500">营业时间/标签变更申请，审批通过后生效，全部留痕可复查</p>
             </div>
           </div>
         </div>
         <p className="text-[10px] text-gray-400 mt-3 pt-2 border-t border-gray-100">
-          实际提交后1-3工作日完成审核，以上为审核通过后的回写效果
+          填写完成后点击"提交入驻申请"，审核结果将在此页面回写展示
         </p>
       </div>
 

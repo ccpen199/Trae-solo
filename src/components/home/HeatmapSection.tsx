@@ -674,6 +674,145 @@ export default function HeatmapSection() {
               </div>
             </div>
 
+            <div className="mb-3">
+              <div className="flex items-center gap-2 mb-2">
+                <button
+                  onClick={() => handleLocSourceChange('default')}
+                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-1.5 ${
+                    locInfo.source !== 'out_of_fence'
+                      ? 'bg-secondary text-white shadow-md'
+                      : 'bg-secondary-50 text-secondary border border-secondary-200 hover:bg-secondary-100'
+                  }`}
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  切换到区内·默认松江
+                </button>
+                <button
+                  onClick={() => handleLocSourceChange('out_of_fence')}
+                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-1.5 ${
+                    locInfo.source === 'out_of_fence'
+                      ? 'bg-danger text-white shadow-md'
+                      : 'bg-danger-50 text-danger border border-danger-200 hover:bg-danger-100'
+                  }`}
+                >
+                  <XCircle className="w-4 h-4" />
+                  切换到区外·嘉定拦截
+                </button>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-lg bg-white/80 border border-gray-200 mb-3">
+              <div className="flex items-center gap-1.5 mb-2.5">
+                <BarChart3 className="w-4 h-4 text-primary" />
+                <p className="text-sm font-bold text-gray-800">📊 定位切换 · 业务结果对照表（可验收）</p>
+              </div>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-2 font-semibold text-gray-600 w-24">业务场景</th>
+                    <th className="text-left py-2 font-semibold text-secondary bg-secondary-50/50 pl-2">
+                      <span className="flex items-center gap-1">
+                        <CheckCircle className="w-3.5 h-3.5" />
+                        松江区内（默认/GPS/基站）
+                      </span>
+                    </th>
+                    <th className="text-left py-2 font-semibold text-danger bg-danger-50/50 pl-2">
+                      <span className="flex items-center gap-1">
+                        <XCircle className="w-3.5 h-3.5" />
+                        区外拦截（越界模拟）
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-2.5 font-medium text-gray-700">
+                      <span className="flex items-center gap-1">
+                        <Store className="w-3.5 h-3.5 text-primary" />
+                        商户推荐
+                      </span>
+                    </td>
+                    <td className="py-2.5 bg-secondary-50/30 pl-2 text-gray-700">
+                      <span className="flex items-center gap-1">
+                        <CheckCircle className="w-3.5 h-3.5 text-secondary flex-shrink-0" />
+                        展示TOP10商户（共128家可推荐）
+                      </span>
+                    </td>
+                    <td className="py-2.5 bg-danger-50/30 pl-2 text-gray-600">
+                      <span className="flex items-center gap-1">
+                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        全部清空，10家商户隐藏
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-2.5 font-medium text-gray-700">
+                      <span className="flex items-center gap-1">
+                        <QrCode className="w-3.5 h-3.5 text-primary" />
+                        核销码状态
+                      </span>
+                    </td>
+                    <td className="py-2.5 bg-secondary-50/30 pl-2 text-gray-700">
+                      <span className="flex items-center gap-1">
+                        <CheckCircle className="w-3.5 h-3.5 text-secondary flex-shrink-0" />
+                        动态码有效，60秒刷新（A3F8K2、7D9B4E）
+                      </span>
+                    </td>
+                    <td className="py-2.5 bg-danger-50/30 pl-2 text-gray-600">
+                      <span className="flex items-center gap-1">
+                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        核销码全部失效，错误码4031
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-2.5 font-medium text-gray-700">
+                      <span className="flex items-center gap-1">
+                        <ShoppingCart className="w-3.5 h-3.5 text-primary" />
+                        下单购买
+                      </span>
+                    </td>
+                    <td className="py-2.5 bg-secondary-50/30 pl-2 text-gray-700">
+                      <span className="flex items-center gap-1">
+                        <CheckCircle className="w-3.5 h-3.5 text-secondary flex-shrink-0" />
+                        正常下单购买，按钮可点击
+                      </span>
+                    </td>
+                    <td className="py-2.5 bg-danger-50/30 pl-2 text-gray-600">
+                      <span className="flex items-center gap-1">
+                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        按钮置灰，提示仅限松江区域用户
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2.5 font-medium text-gray-700">
+                      <span className="flex items-center gap-1">
+                        <BarChart3 className="w-3.5 h-3.5 text-primary" />
+                        运营报表
+                      </span>
+                    </td>
+                    <td className="py-2.5 bg-secondary-50/30 pl-2 text-gray-700">
+                      <span className="flex items-center gap-1">
+                        <CheckCircle className="w-3.5 h-3.5 text-secondary flex-shrink-0" />
+                        订单计入消费报告，参与核销率/复购率统计
+                      </span>
+                    </td>
+                    <td className="py-2.5 bg-danger-50/30 pl-2 text-gray-600">
+                      <span className="flex items-center gap-1">
+                        <XCircle className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                        订单全部剔除，不计入任何报表
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p className="text-[11px] text-gray-400 mt-2 pt-2 border-t border-gray-100 flex items-center gap-1">
+                <Shield className="w-3 h-3 text-gray-400" />
+                切换定位来源即可实时查看以上业务状态变化
+              </p>
+            </div>
+
             <div className="p-3 rounded-lg bg-gradient-to-r from-amber-50/80 to-green-50/40 border border-amber-200/60">
               <div className="flex items-center gap-1.5 mb-2">
                 <Shield className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />

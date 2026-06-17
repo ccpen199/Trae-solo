@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { Utensils, Gamepad2, Trees, ShoppingCart, Star, MapPin, Filter, ArrowUpDown, Clock, Shield, CheckCircle, AlertCircle, Radio, Wifi, Navigation, ChevronDown, ChevronUp, Target, Edit3, RefreshCw, History, FileCheck, Tag, XCircle, QrCode, Smartphone, Database, Zap, Users, Calendar, Store } from 'lucide-react'
+import { Utensils, Gamepad2, Trees, ShoppingCart, Star, MapPin, Filter, ArrowUpDown, Clock, Shield, CheckCircle, AlertCircle, Radio, Wifi, Navigation, ChevronDown, ChevronUp, Target, Edit3, RefreshCw, History, FileCheck, Tag, XCircle, QrCode, Smartphone, Database, Zap, Users, Calendar, Store, ArrowRight } from 'lucide-react'
 import { getMerchants, getPackages } from '@/utils/api'
 import useStore, { LocSource } from '@/store/useStore'
 
@@ -57,6 +57,7 @@ export default function Category() {
   const [showPkgGuide, setShowPkgGuide] = useState(true)
   const [showChangeForm, setShowChangeForm] = useState<string | null>(null)
   const [changeSubmitted, setChangeSubmitted] = useState<Record<string, boolean>>({})
+  const [expandedPkgChain, setExpandedPkgChain] = useState<string | null>('限时折扣')
   const requestIdRef = useRef(0)
 
   const fetchData = useCallback(async () => {
@@ -859,41 +860,142 @@ export default function Category() {
                           </div>
                           <div className="space-y-2">
                             {[
-                              { type: '限时折扣', typeColor: 'bg-red-500', name: '双人烤肉套餐', price: 199, originalPrice: 299, stock: 56, sold: 42, verified: 38, rate: 90 },
-                              { type: '团购券', typeColor: 'bg-primary', name: '4人火锅套餐', price: 399, originalPrice: 599, stock: 28, sold: 22, verified: 20, rate: 91 },
-                              { type: '时段特惠', typeColor: 'bg-purple-500', name: '下午茶双人套餐', price: 89, originalPrice: 149, stock: 35, sold: 18, verified: 16, rate: 89 },
+                              { type: '限时折扣', typeColor: 'bg-red-500', name: '双人烤肉套餐', price: 199, originalPrice: 299, stock: 56, sold: 42, verified: 38, rate: 90, orderNo: 'SJ20260617-00089', code: 'K3F8D2', codeTime: '2026-06-17 18:32:15', expireDate: '2026-07-17', remainDays: 30, stockFlowNo: 'STOCK-SJ-000231', staff: '松江烤肉店-收银员小王', amount: 199 },
+                              { type: '团购券', typeColor: 'bg-primary', name: '4人火锅套餐', price: 399, originalPrice: 599, stock: 28, sold: 22, verified: 20, rate: 91, orderNo: 'SJ20260617-00076', code: 'H7D2M9', codeTime: '2026-06-17 19:05:22', expireDate: '2026-07-20', remainDays: 33, stockFlowNo: 'STOCK-SJ-000228', staff: '川味火锅店-收银员小李', amount: 399 },
+                              { type: '时段特惠', typeColor: 'bg-purple-500', name: '下午茶双人套餐', price: 89, originalPrice: 149, stock: 35, sold: 18, verified: 16, rate: 89, orderNo: 'SJ20260617-00065', code: 'T5B8N3', codeTime: '2026-06-17 14:22:08', expireDate: '2026-07-10', remainDays: 23, stockFlowNo: 'STOCK-SJ-000219', staff: '甜蜜时光-收银员小张', amount: 89 },
                             ].map((pkg) => {
                               const remaining = pkg.stock - pkg.sold
                               const stockPct = Math.round((remaining / pkg.stock) * 100)
+                              const isPkgExpanded = expandedPkgChain === pkg.type
                               return (
-                                <div key={pkg.type} className="p-2 rounded-md bg-white border border-gray-100">
-                                  <div className="flex items-center gap-1.5 mb-1.5">
-                                    <span className={`${pkg.typeColor} text-white text-[9px] px-1.5 py-0.5 rounded font-medium`}>
-                                      {pkg.type}
-                                    </span>
-                                    <span className="text-[11px] text-gray-700 font-medium">{pkg.name}</span>
-                                  </div>
-                                  <div className="flex items-baseline gap-1.5 mb-1.5">
-                                    <span className="text-sm font-bold text-accent">¥{pkg.price}</span>
-                                    <span className="text-[10px] text-gray-400 line-through">¥{pkg.originalPrice}</span>
-                                    <span className="text-[9px] text-red-500 font-medium">-{Math.round((1 - pkg.price / pkg.originalPrice) * 100)}%</span>
-                                  </div>
-                                  <div className="flex items-center gap-3 text-[10px] text-gray-500 mb-1">
-                                    <span>库存{pkg.stock}</span>
-                                    <span>已售{pkg.sold}</span>
-                                    <span>核销{pkg.verified}单</span>
-                                    <span className="font-medium text-secondary">核销率{pkg.rate}%</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                      <div className="h-full bg-secondary rounded-full" style={{ width: `${stockPct}%` }} />
+                                <div key={pkg.type} className="rounded-md bg-white border border-gray-100 overflow-hidden">
+                                  <div className="p-2">
+                                    <div className="flex items-center gap-1.5 mb-1.5">
+                                      <span className={`${pkg.typeColor} text-white text-[9px] px-1.5 py-0.5 rounded font-medium`}>
+                                        {pkg.type}
+                                      </span>
+                                      <span className="text-[11px] text-gray-700 font-medium">{pkg.name}</span>
                                     </div>
-                                    <span className="text-[9px] text-gray-400">余{remaining}</span>
+                                    <div className="flex items-baseline gap-1.5 mb-1.5">
+                                      <span className="text-sm font-bold text-accent">¥{pkg.price}</span>
+                                      <span className="text-[10px] text-gray-400 line-through">¥{pkg.originalPrice}</span>
+                                      <span className="text-[9px] text-red-500 font-medium">-{Math.round((1 - pkg.price / pkg.originalPrice) * 100)}%</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-[10px] text-gray-500 mb-1">
+                                      <span>库存{pkg.stock}</span>
+                                      <span>已售{pkg.sold}</span>
+                                      <span>核销{pkg.verified}单</span>
+                                      <span className="font-medium text-secondary">核销率{pkg.rate}%</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                        <div className="h-full bg-secondary rounded-full" style={{ width: `${stockPct}%` }} />
+                                      </div>
+                                      <span className="text-[9px] text-gray-400">余{remaining}</span>
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation()
+                                          setExpandedPkgChain(isPkgExpanded ? null : pkg.type)
+                                        }}
+                                        className="ml-auto flex items-center gap-0.5 px-2 py-0.5 rounded bg-primary/5 text-primary text-[9px] font-medium hover:bg-primary/10 transition-colors"
+                                      >
+                                        查看交易链路
+                                        <ChevronDown className={`w-2.5 h-2.5 transition-transform ${isPkgExpanded ? 'rotate-180' : ''}`} />
+                                      </button>
+                                    </div>
                                   </div>
+                                  {isPkgExpanded && (
+                                    <div className="px-2 pb-2 border-t border-gray-50 bg-gray-50/50">
+                                      <div className="pt-2 space-y-1.5">
+                                        {[
+                                          { step: '①', title: '动态码生成', desc: '60秒刷新', data: `码：${pkg.code}（${pkg.codeTime}生成）`, icon: QrCode, status: 'done' },
+                                          { step: '②', title: '有效期校验', desc: '券有效期校验', data: `✓通过（有效期至${pkg.expireDate}，剩余${pkg.remainDays}天）`, icon: Clock, status: 'done' },
+                                          { step: '③', title: '库存扣减', desc: '套餐库存原子更新', data: `✓扣减：库存${pkg.stock + 1}→${pkg.stock}（扣减流水号 ${pkg.stockFlowNo}）`, icon: Database, status: 'done' },
+                                          { step: '④', title: '扫码核销', desc: 'POS扫码验证', data: `✓成功（核销员：${pkg.staff}）`, icon: Smartphone, status: 'done' },
+                                          { step: '⑤', title: '订单凭证', desc: '订单状态回写', data: `✓完成（订单号 ${pkg.orderNo}，金额¥${pkg.amount}）`, icon: FileCheck, status: 'done' },
+                                        ].map((item, idx, arr) => {
+                                          const StepIcon = item.icon
+                                          const isLast = idx === arr.length - 1
+                                          return (
+                                            <div key={idx} className="flex items-start gap-2 relative">
+                                              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-50 flex items-center justify-center z-10">
+                                                <CheckCircle className="w-3 h-3 text-emerald-500" />
+                                              </div>
+                                              <div className="flex-1 pb-1">
+                                                <div className="flex items-center gap-1.5">
+                                                  <span className="text-[10px] font-medium text-gray-700">{item.step} {item.title}</span>
+                                                  <span className="text-[9px] text-gray-400">· {item.desc}</span>
+                                                </div>
+                                                <p className="text-[9px] text-gray-500 mt-0.5">{item.data}</p>
+                                              </div>
+                                              {!isLast && <div className="absolute left-[9px] top-5 w-px h-full bg-emerald-200" />}
+                                            </div>
+                                          )
+                                        })}
+                                      </div>
+                                      <div className="mt-1.5 pt-1.5 border-t border-gray-200/60 flex items-center justify-between">
+                                        <span className="text-[9px] text-emerald-600 font-medium flex items-center gap-0.5">
+                                          <CheckCircle className="w-2.5 h-2.5" />
+                                          交易完成 · 数据已同步回写运营报表
+                                        </span>
+                                        <Link to="/admin" className="text-[9px] text-primary hover:underline flex items-center gap-0.5">
+                                          查看运营报表
+                                          <ArrowRight className="w-2.5 h-2.5" />
+                                        </Link>
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
                               )
                             })}
                           </div>
+
+                          <div className="mt-3 p-2.5 rounded-md bg-white border border-primary-200/60">
+                            <div className="flex items-center justify-between mb-2">
+                              <p className="text-[11px] font-medium text-gray-700 flex items-center gap-1">
+                                <span>🔍</span>
+                                单笔交易完整链路 · 双人烤肉套餐 SJ20260617-00089
+                              </p>
+                            </div>
+                            <div className="space-y-1.5">
+                              {[
+                                { step: '①', title: '动态码生成', desc: '60秒刷新', data: '码：K3F8D2（2026-06-17 18:32:15生成）', icon: QrCode, status: 'done' },
+                                { step: '②', title: '有效期校验', desc: '券有效期校验', data: '✓通过（有效期至2026-07-17，剩余30天）', icon: Clock, status: 'done' },
+                                { step: '③', title: '库存扣减', desc: '套餐库存原子更新', data: '✓扣减：库存56→55（扣减流水号 STOCK-SJ-000231）', icon: Database, status: 'done' },
+                                { step: '④', title: '扫码核销', desc: 'POS扫码验证', data: '✓成功（核销员：松江烤肉店-收银员小王）', icon: Smartphone, status: 'done' },
+                                { step: '⑤', title: '订单凭证', desc: '订单状态回写', data: '✓完成（订单号 SJ20260617-00089，金额¥199）', icon: FileCheck, status: 'done' },
+                              ].map((item, idx, arr) => {
+                                const StepIcon = item.icon
+                                const isLast = idx === arr.length - 1
+                                return (
+                                  <div key={idx} className="flex items-start gap-2 relative">
+                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-50 flex items-center justify-center z-10">
+                                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                                    </div>
+                                    <div className="flex-1 pb-1">
+                                      <div className="flex items-center gap-1.5">
+                                        <span className="text-[10px] font-medium text-gray-700">{item.step} {item.title}</span>
+                                        <span className="text-[9px] text-gray-400">· {item.desc}</span>
+                                      </div>
+                                      <p className="text-[9px] text-gray-500 mt-0.5">{item.data}</p>
+                                    </div>
+                                    {!isLast && <div className="absolute left-[9px] top-5 w-px h-full bg-emerald-200" />}
+                                  </div>
+                                )
+                              })}
+                            </div>
+                            <div className="mt-2 pt-1.5 border-t border-gray-100 flex items-center justify-between">
+                              <span className="text-[10px] text-emerald-600 font-medium flex items-center gap-0.5">
+                                <CheckCircle className="w-3 h-3" />
+                                交易完成 · 数据已同步回写运营报表
+                              </span>
+                              <Link to="/admin" className="text-[10px] text-primary hover:underline flex items-center gap-0.5 font-medium">
+                                查看运营报表
+                                <ArrowRight className="w-3 h-3" />
+                              </Link>
+                            </div>
+                          </div>
+
                           <div className="mt-2.5 pt-2 border-t border-primary-100/50">
                             <div className="flex items-center gap-1 flex-wrap text-[10px] text-gray-500">
                               <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">发布</span>

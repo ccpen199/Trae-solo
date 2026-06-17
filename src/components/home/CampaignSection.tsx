@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Timer, ChevronRight, Tag, Users, Clock, QrCode, Smartphone, Calendar, Shield, BarChart3, Megaphone, Store, CheckCircle, Package, MapPin, TrendingDown, FileCheck, ArrowRight, AlertTriangle, ShoppingCart } from 'lucide-react'
+import { Timer, ChevronRight, Tag, Users, Clock, QrCode, Smartphone, Calendar, Shield, BarChart3, Megaphone, Store, CheckCircle, Package, MapPin, TrendingDown, FileCheck, ArrowRight, AlertTriangle, ShoppingCart, Filter, TrendingUp } from 'lucide-react'
 import { getPackages, getOrders } from '@/utils/api'
 
 interface PackageItem {
@@ -330,6 +330,78 @@ export default function CampaignSection() {
         <p className="text-[9px] text-gray-400 flex items-center gap-1">
           <FileCheck className="w-2.5 h-2.5 text-secondary" />
           以上实例数据来源于松江围栏业务数据库，核销凭证、库存变更、订单状态逐笔可追溯
+        </p>
+      </div>
+
+      <div className="mb-4 p-3 rounded-xl bg-gradient-to-br from-primary-50/50 via-white to-secondary-50/40 border border-primary-100/50">
+        <div className="flex items-center gap-1.5 mb-3">
+          <TrendingUp className="w-4 h-4 text-primary" />
+          <p className="text-sm font-semibold text-gray-800">📈 运营复盘完整流程 · 首页→筛选→活动配置→复购率/核销率</p>
+        </div>
+
+        <div className="grid md:grid-cols-4 gap-2 mb-3">
+          <div className="p-2.5 rounded-lg bg-white border border-primary-100/60 shadow-sm">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">①</div>
+              <p className="text-[11px] font-semibold text-gray-800">街道/业态/热度筛选</p>
+            </div>
+            <p className="text-[10px] text-gray-500 mb-2 leading-relaxed">按方松/广富林/中山等街道，餐饮/娱乐等业态，近7/30天热度筛选商户</p>
+            <Link to="/admin" className="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-primary/10 text-primary text-[10px] font-medium hover:bg-primary/20 transition-colors w-full justify-center">
+              <Filter className="w-2.5 h-2.5" />
+              进入运营后台筛选 →
+            </Link>
+          </div>
+
+          <div className="p-2.5 rounded-lg bg-white border border-accent-100/60 shadow-sm">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-5 h-5 rounded-full bg-accent flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">②</div>
+              <p className="text-[11px] font-semibold text-gray-800">大学城周末狂欢周配置</p>
+            </div>
+            <p className="text-[10px] text-gray-500 mb-2 leading-relaxed">满100减20 / 指定套餐7折 / 满50送饮品，覆盖广富林街道8家商户</p>
+            <Link to="/admin#activity-section" className="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-accent/10 text-accent text-[10px] font-medium hover:bg-accent/20 transition-colors w-full justify-center">
+              <Megaphone className="w-2.5 h-2.5" />
+              查看活动配置 →
+            </Link>
+          </div>
+
+          <div className="p-2.5 rounded-lg bg-white border border-secondary-100/60 shadow-sm">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">③</div>
+              <p className="text-[11px] font-semibold text-gray-800">套餐核销与订单回写</p>
+            </div>
+            <p className="text-[10px] text-gray-500 mb-2 leading-relaxed">用户购买后60秒动态码核销，库存扣减，订单状态回写</p>
+            <Link to="/orders" className="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-secondary/10 text-secondary text-[10px] font-medium hover:bg-secondary/20 transition-colors w-full justify-center">
+              <ShoppingCart className="w-2.5 h-2.5" />
+              查看我的订单 →
+            </Link>
+          </div>
+
+          <div className="p-2.5 rounded-lg bg-white border border-gray-200/60 shadow-sm">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <div className="w-5 h-5 rounded-full bg-gray-700 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">④</div>
+              <p className="text-[11px] font-semibold text-gray-800">复购率与券核销率复盘</p>
+            </div>
+            <p className="text-[10px] text-gray-500 mb-2 leading-relaxed">TOP10品类核销率、复购率月度趋势、活动效果分析</p>
+            <Link to="/admin/report" className="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-gray-700/10 text-gray-700 text-[10px] font-medium hover:bg-gray-700/20 transition-colors w-full justify-center">
+              <BarChart3 className="w-2.5 h-2.5" />
+              查看消费报告 →
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center gap-1 mb-2 flex-wrap">
+          <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-medium">① 筛选</span>
+          <ArrowRight className="w-3 h-3 text-gray-300" />
+          <span className="px-2 py-0.5 rounded bg-accent/10 text-accent text-[10px] font-medium">② 活动配置</span>
+          <ArrowRight className="w-3 h-3 text-gray-300" />
+          <span className="px-2 py-0.5 rounded bg-secondary/10 text-secondary text-[10px] font-medium">③ 核销回写</span>
+          <ArrowRight className="w-3 h-3 text-gray-300" />
+          <span className="px-2 py-0.5 rounded bg-gray-100 text-gray-700 text-[10px] font-medium">④ 复盘报告</span>
+        </div>
+
+        <p className="text-[9px] text-gray-400 flex items-center gap-1 justify-center">
+          <FileCheck className="w-2.5 h-2.5 text-secondary" />
+          以上流程全部数据同源，支持从首页到运营报表的完整路径复查
         </p>
       </div>
 
