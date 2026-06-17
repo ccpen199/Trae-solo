@@ -729,7 +729,7 @@ export default function QuickOrderForm() {
                             )}>
                               {certOk ? <><BadgeCheck className="w-2.5 h-2.5" />审核通过</> : <><ScanLine className="w-2.5 h-2.5" />待复核</>}
                             </span>
-                            {cert.review_history?.some(r => r.result === 'reject') && (
+                            {cert?.review_history?.some(r => r.result === 'reject') && (
                               <span className="text-[8px] px-1 py-0 rounded font-medium bg-red-100 text-red-700 flex items-center gap-0.5">
                                 <AlertTriangle className="w-2.5 h-2.5" />有异常
                               </span>
