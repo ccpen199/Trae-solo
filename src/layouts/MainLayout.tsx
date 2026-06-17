@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   Home, PawPrint, MessageCircle, MapPin, ShoppingBag, Users, Calendar, Bell,
   User, LogOut, Menu, X, Stethoscope, Building2, Store, ShieldCheck, BarChart3, Cpu,
-  FileText, Heart, ClipboardList, Settings, ShieldAlert, FileCheck2, AlertTriangle, ChevronRight,
-  Globe, TrendingUp, Search,
+  Heart, ClipboardList, Settings, ShieldAlert, FileCheck2, ChevronRight,
+  Globe, Search, Clock, ListChecks, Shield, History, XCircle, CheckCircle, PlayCircle,
+  Filter, Trash2, Eye,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import type { UserRole } from '@shared/types';
+import type { ImpersonationSession, ImpersonationOperation } from '@/store/useAuthStore';
 
 const ROLE_LABEL: Record<UserRole, { name: string; accent: string }> = {
   owner: { name: '宠物主人', accent: 'from-forest-500 to-emerald-600' },
@@ -111,10 +113,133 @@ function groupNavItems(items: NavItem[]) {
 export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout, login, impersonateRole, originalCredentials, startImpersonation, exitImpersonation } = useAuthStore();
+  const {
+    user, logout, login, impersonateRole, originalCredentials,
+    impersonationSession, impersonationHistory,
+    startImpersonation, exitImpersonation, recordImpersonationOperation,
+    clearImpersonationHistory
+  } = useAuthStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [exitingPreview, setExitingPreview] = useState(false);
+  const [permissionPanelOpen, setPermissionPanelOpen] = useState(false);
+  const [operationLogPanelOpen, setOperationLogPanelOpen] = useState(false);
+  const [historyPanelOpen, setHistoryPanelOpen] = useState(false);
+  const [selectedHistorySession, setSelectedHistorySession] = useState<ImpersonationSession | null>(null);
+  const [operationFilter, setOperationFilter] = useState<string>('all');
+  const [showBlockedToast, setShowBlockedToast] = useState(false);
+  const [blockedMessage, setBlockedMessage] = useState('');
+
+  const formatDuration = (start: string, end: string | null) => {
+    const startTime = new Date(start).getTime();
+    const endTime = end ? new Date(end).getTime() : Date.now();
+    const diff = endTime - startTime;
+    const hours = Math.floor(diff / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    if (hours > 0) return `${hours}小时${minutes}分钟`;
+    if (minutes > 0) return `${minutes}分钟${seconds}秒`;
+    return `${seconds}秒`;
+  };
+
+  const formatTime = (isoString: string) => {
+    return new Date(isoString).toLocaleString('zh-CN', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+  };
+
+  const checkPermission = (action: string, target: string, session: ImpersonationSession | null): boolean => {
+    if (!session) return true;
+    const boundary = session.permissionBoundary;
+    for (const rule of boundary) {
+      const [ruleAction, ruleTarget] = rule.split(':');
+      if (ruleAction === action || ruleAction === '*') {
+        if (ruleTarget === '*' || target.startsWith(ruleTarget.replace('/*', ''))) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    if (showBlockedToast) {
+      const timer = setTimeout(() => setShowBlockedToast(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showBlockedToast]);
+
+  useEffect(() => {
+    if (impersonationSession && location.pathname) {
+      const isAllowed = checkPermission('页面访问', location.pathname, impersonationSession);
+      recordImpersonationOperation(
+        '页面访问',
+        location.pathname,
+        `访问页面: ${location.pathname}`,
+        false,
+        impersonationSession.writeAllowed,
+        isAllowed ? 'completed' : 'blocked'
+      );
+      if (!isAllowed) {
+        setBlockedMessage(`访问被权限边界拦截：${location.pathname}`);
+        setShowBlockedToast(true);
+        navigate('/');
+      }
+    }
+  }, [location.pathname, impersonationSession, navigate, recordImpersonationOperation]);
+
+  const filteredOperations = useMemo(() => {
+    const ops = selectedHistorySession
+      ? selectedHistorySession.operationLog
+      : impersonationSession?.operationLog || [];
+    if (operationFilter === 'all') return ops;
+    return ops.filter(op => op.action === operationFilter);
+  }, [impersonationSession, selectedHistorySession, operationFilter]);
+
+  const operationTypes = useMemo((): string[] => {
+    const ops = selectedHistorySession
+      ? selectedHistorySession.operationLog
+      : impersonationSession?.operationLog || [];
+    const types = new Set<string>(ops.map(op => op.action));
+    return ['all', ...Array.from(types)];
+  }, [impersonationSession, selectedHistorySession]);
+
+  const getResultBadge = (result: ImpersonationOperation['result']) => {
+    switch (result) {
+      case 'completed':
+        return <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold flex items-center gap-1"><CheckCircle className="w-3 h-3" />真实执行</span>;
+      case 'blocked':
+        return <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-bold flex items-center gap-1"><XCircle className="w-3 h-3" />被权限边界拦截</span>;
+      case 'simulated':
+        return <span className="px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 text-[10px] font-bold flex items-center gap-1"><PlayCircle className="w-3 h-3" />模拟执行</span>;
+    }
+  };
+
+  const parsePermissionItem = (item: string): { action: string; target: string; allowed: boolean; desc: string } => {
+    const [action, target] = item.split(':');
+    const allowed = !item.startsWith('!');
+    const descMap: Record<string, string> = {
+      '页面访问': '可查看',
+      '数据查询': '可查询',
+      '表单提交': '可提交',
+      '按钮点击': '可操作',
+    };
+    const targetMap: Record<string, string> = {
+      '/': '首页',
+      '/pets': '宠物档案',
+      '/consultations': '在线问诊',
+      '/hospitals': '附近医院',
+      '/shop': '宠物商城',
+      '/community': '宠物社区',
+      '/lost-pet': '寻宠公益',
+      '/calendar': '健康日历',
+      '*': '全部',
+    };
+    const desc = allowed ? descMap[action] || action : `不可${descMap[action] || action}`;
+    const targetDesc = targetMap[target] || targetMap[target.replace('/*', '')] || target;
+    return { action, target, allowed, desc: `${desc}${targetDesc}` };
+  };
 
   const handleLogout = () => {
     logout();
@@ -130,7 +255,8 @@ export default function MainLayout() {
       login(origUser, origToken);
       const homePath = `/${originalCredentials.role}/dashboard`;
       navigate(homePath, { replace: true });
-    } catch {
+    } catch (error) {
+      console.error('退出模拟失败:', error);
     } finally {
       setExitingPreview(false);
     }
@@ -140,10 +266,40 @@ export default function MainLayout() {
     if (path === '/' && user && ['admin', 'platform', 'ops'].includes(user.role) && !impersonateRole) {
       try {
         const { user: ownerUser, token: ownerToken } = await api.auth.login('13800000001', '123456');
-        startImpersonation('owner', { phone: user.phone === '13800000001' ? 'admin' : user.phone, password: '123456', role: user.role });
+        const permissionBoundary = [
+          '页面访问:/',
+          '页面访问:/pets',
+          '页面访问:/pets/*',
+          '页面访问:/consultations',
+          '页面访问:/consultations/*',
+          '页面访问:/hospitals',
+          '页面访问:/hospitals/*',
+          '页面访问:/shop',
+          '页面访问:/shop/*',
+          '页面访问:/community',
+          '页面访问:/lost-pet',
+          '页面访问:/lost-pet/*',
+          '页面访问:/calendar',
+          '页面访问:/account',
+          '页面访问:/account/*',
+          '数据查询:*',
+          '表单提交:/pets/*',
+          '表单提交:/consultations/*',
+          '表单提交:/shop/*',
+          '表单提交:/account/*',
+          '按钮点击:*',
+        ];
+        startImpersonation(
+          'owner',
+          { phone: user.phone === '13800000001' ? 'admin' : user.phone, password: '123456', role: user.role },
+          true,
+          permissionBoundary
+        );
         login(ownerUser, ownerToken);
         navigate('/', { replace: true });
-      } catch {}
+      } catch (error) {
+        console.error('启动模拟失败:', error);
+      }
       return;
     }
     navigate(path);
@@ -292,50 +448,360 @@ export default function MainLayout() {
 
       <div className="flex-1 flex flex-col min-w-0">
         {impersonateRole && originalCredentials && (
-          <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-warm-500 text-white px-4 sm:px-6 py-2.5 shadow-md z-30">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1 min-w-0 space-y-0.5">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <ShieldAlert className="w-4 h-4 shrink-0" />
-                  <span className="text-sm font-bold truncate">
-                    平台预览中 · 正在以【{ROLE_LABEL[impersonateRole]?.name || impersonateRole}】身份承接
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold whitespace-nowrap">
-                    原身份：{ROLE_LABEL[originalCredentials.role]?.name || originalCredentials.role}
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold whitespace-nowrap">
-                    🔐 已通过账号密码重新验证
+          <>
+            <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-warm-500 text-white px-4 sm:px-6 py-2.5 shadow-md z-30">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0 space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <ShieldAlert className="w-4 h-4 shrink-0" />
+                    <span className="text-sm font-bold truncate">
+                      平台预览中 · 正在以【{ROLE_LABEL[impersonateRole]?.name || impersonateRole}】身份承接
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold whitespace-nowrap">
+                      原身份：{ROLE_LABEL[originalCredentials.role]?.name || originalCredentials.role}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold whitespace-nowrap">
+                      🔐 已通过账号密码重新验证
+                    </span>
+                    {impersonationSession && (
+                      <>
+                        <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-bold whitespace-nowrap flex items-center gap-1">
+                          <ListChecks className="w-3 h-3" />
+                          已操作: {impersonationSession.operationLog.length}次
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-mono whitespace-nowrap">
+                          Session: {impersonationSession.sessionId.slice(0, 8)}...
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <p className="text-[10px] text-white/90 leading-snug">
+                    <span className="font-bold mr-1">操作生效范围：</span>
+                    当前页面所有业务操作（问诊下单/商城购买/档案修改等）均以{ROLE_LABEL[impersonateRole]?.name}身份真实写入数据库，
+                    <span className="font-bold"> 权限边界按{ROLE_LABEL[impersonateRole]?.name}角色的RBAC矩阵实时生效。</span>
+                    审计日志将保留「{ROLE_LABEL[originalCredentials.role]?.name}→{ROLE_LABEL[impersonateRole]?.name}」的切换留痕。
+                  </p>
+                  <div className="flex items-center gap-3 flex-wrap text-[11px]">
+                    <button
+                      onClick={() => { setPermissionPanelOpen(true); setOperationLogPanelOpen(false); setHistoryPanelOpen(false); }}
+                      className="font-bold underline underline-offset-2 hover:text-amber-100 transition-colors flex items-center gap-1"
+                    >
+                      <Shield className="w-3 h-3" />
+                      本次模拟权限边界
+                    </button>
+                    <button
+                      onClick={() => { setOperationLogPanelOpen(true); setPermissionPanelOpen(false); setHistoryPanelOpen(false); setSelectedHistorySession(null); }}
+                      className="font-bold underline underline-offset-2 hover:text-amber-100 transition-colors flex items-center gap-1"
+                    >
+                      <Clock className="w-3 h-3" />
+                      操作记录回看
+                    </button>
+                    <button
+                      onClick={() => { setHistoryPanelOpen(true); setPermissionPanelOpen(false); setOperationLogPanelOpen(false); }}
+                      className="font-bold underline underline-offset-2 hover:text-amber-100 transition-colors flex items-center gap-1"
+                    >
+                      <History className="w-3 h-3" />
+                      历史模拟
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2 items-end">
+                  <button
+                    onClick={handleExitImpersonation}
+                    disabled={exitingPreview}
+                    className="shrink-0 px-3.5 py-1.5 rounded-xl bg-white text-amber-600 hover:bg-amber-50 text-xs font-bold shadow-md transition-all disabled:opacity-60 inline-flex items-center gap-1"
+                  >
+                    {exitingPreview ? (
+                      <>
+                        <svg className="animate-spin w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25" />
+                          <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                        </svg>
+                        退出中
+                      </>
+                    ) : (
+                      <>
+                        <LogOut className="w-3.5 h-3.5" />
+                        退出预览
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {permissionPanelOpen && impersonationSession && (
+              <div className="bg-white border-b border-amber-200 px-4 sm:px-6 py-4 shadow-sm">
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-amber-600" />
+                    本次模拟权限边界详情
+                  </h3>
+                  <button onClick={() => setPermissionPanelOpen(false)} className="text-gray-400 hover:text-gray-600">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+                  <div className="p-3 rounded-lg bg-gray-50 border border-gray-100">
+                    <div className="text-[10px] text-gray-500 font-semibold mb-1">模拟角色</div>
+                    <div className="text-sm font-bold text-gray-900">{ROLE_LABEL[impersonationSession.targetRole]?.name}</div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-gray-50 border border-gray-100">
+                    <div className="text-[10px] text-gray-500 font-semibold mb-1">原始角色</div>
+                    <div className="text-sm font-bold text-gray-900">{ROLE_LABEL[impersonationSession.originalRole]?.name}</div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-gray-50 border border-gray-100">
+                    <div className="text-[10px] text-gray-500 font-semibold mb-1">写入权限</div>
+                    <div className={cn("text-sm font-bold flex items-center gap-1", impersonationSession.writeAllowed ? "text-green-600" : "text-orange-600")}>
+                      {impersonationSession.writeAllowed ? <CheckCircle className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
+                      {impersonationSession.writeAllowed ? "真实写入" : "模拟写入"}
+                    </div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-gray-50 border border-gray-100">
+                    <div className="text-[10px] text-gray-500 font-semibold mb-1">已持续时长</div>
+                    <div className="text-sm font-bold text-gray-900 flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      {formatDuration(impersonationSession.startTime, impersonationSession.endTime)}
+                    </div>
+                  </div>
+                </div>
+                <div className="text-[11px] text-gray-500 mb-2 font-semibold">权限规则列表（{impersonationSession.permissionBoundary.length}条）</div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-60 overflow-y-auto">
+                  {impersonationSession.permissionBoundary.map((item, idx) => {
+                    const parsed = parsePermissionItem(item);
+                    return (
+                      <div
+                        key={idx}
+                        className={cn(
+                          "flex items-center gap-2 px-3 py-2 rounded-lg text-xs",
+                          parsed.allowed
+                            ? "bg-green-50 border border-green-200 text-green-700"
+                            : "bg-red-50 border border-red-200 text-red-700"
+                        )}
+                      >
+                        {parsed.allowed ? <CheckCircle className="w-3.5 h-3.5 shrink-0" /> : <XCircle className="w-3.5 h-3.5 shrink-0" />}
+                        <span className="font-medium">{parsed.desc}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="mt-3 text-[10px] text-gray-400">
+                  开始时间：{formatTime(impersonationSession.startTime)}
+                  {impersonationSession.endTime && ` | 结束时间：${formatTime(impersonationSession.endTime)}`}
+                </div>
+              </div>
+            )}
+
+            {(operationLogPanelOpen || (historyPanelOpen && selectedHistorySession)) && (
+              <div className="bg-white border-b border-amber-200 px-4 sm:px-6 py-4 shadow-sm">
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-amber-600" />
+                    {selectedHistorySession ? `历史模拟操作记录 (${selectedHistorySession.sessionId.slice(0, 8)}...)` : '本次模拟操作记录'}
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
+                      <Filter className="w-3.5 h-3.5 text-gray-400" />
+                      <select
+                        value={operationFilter}
+                        onChange={(e) => setOperationFilter(e.target.value)}
+                        className="text-xs border border-gray-200 rounded-lg px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-amber-500"
+                      >
+                        {operationTypes.map((type) => (
+                          <option key={type} value={type}>
+                            {type === 'all' ? '全部操作' : type}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {selectedHistorySession ? (
+                      <button onClick={() => setSelectedHistorySession(null)} className="text-gray-400 hover:text-gray-600">
+                        <X className="w-4 h-4" />
+                      </button>
+                    ) : (
+                      <button onClick={() => setOperationLogPanelOpen(false)} className="text-gray-400 hover:text-gray-600">
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="bg-gray-50 border-b border-gray-200">
+                        <th className="text-left px-3 py-2 font-semibold text-gray-600">时间</th>
+                        <th className="text-left px-3 py-2 font-semibold text-gray-600">操作</th>
+                        <th className="text-left px-3 py-2 font-semibold text-gray-600">目标</th>
+                        <th className="text-left px-3 py-2 font-semibold text-gray-600">详情</th>
+                        <th className="text-center px-3 py-2 font-semibold text-gray-600">写入尝试</th>
+                        <th className="text-center px-3 py-2 font-semibold text-gray-600">是否允许</th>
+                        <th className="text-center px-3 py-2 font-semibold text-gray-600">结果</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredOperations.map((op) => (
+                        <tr
+                          key={op.id}
+                          className={cn(
+                            "border-b border-gray-100",
+                            op.result === 'blocked' && "bg-red-50",
+                            op.result === 'simulated' && "bg-orange-50",
+                            op.result === 'completed' && "bg-green-50/30"
+                          )}
+                        >
+                          <td className="px-3 py-2 text-gray-600 font-mono text-[10px]">{formatTime(op.timestamp).split(' ')[1]}</td>
+                          <td className="px-3 py-2">
+                            <span className="px-2 py-0.5 rounded bg-gray-100 text-gray-700 font-semibold">{op.action}</span>
+                          </td>
+                          <td className="px-3 py-2 text-gray-700 font-mono">{op.target}</td>
+                          <td className="px-3 py-2 text-gray-600 max-w-xs truncate">{op.detail}</td>
+                          <td className="px-3 py-2 text-center">
+                            {op.writeAttempted ? (
+                              <span className="text-red-600 font-semibold">是</span>
+                            ) : (
+                              <span className="text-gray-400">否</span>
+                            )}
+                          </td>
+                          <td className="px-3 py-2 text-center">
+                            {op.writeAllowed ? (
+                              <CheckCircle className="w-4 h-4 text-green-600 mx-auto" />
+                            ) : (
+                              <XCircle className="w-4 h-4 text-red-600 mx-auto" />
+                            )}
+                          </td>
+                          <td className="px-3 py-2">
+                            <div className="flex justify-center">
+                              {getResultBadge(op.result)}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                      {filteredOperations.length === 0 && (
+                        <tr>
+                          <td colSpan={7} className="px-3 py-8 text-center text-gray-400">
+                            暂无操作记录
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="mt-3 flex items-center justify-between text-[10px] text-gray-400">
+                  <span>共 {filteredOperations.length} 条记录</span>
+                  <span>
+                    真实执行: {filteredOperations.filter(o => o.result === 'completed').length} |
+                    模拟执行: {filteredOperations.filter(o => o.result === 'simulated').length} |
+                    被拦截: {filteredOperations.filter(o => o.result === 'blocked').length}
                   </span>
                 </div>
-                <p className="text-[10px] text-white/90 leading-snug">
-                  <span className="font-bold mr-1">操作生效范围：</span>
-                  当前页面所有业务操作（问诊下单/商城购买/档案修改等）均以{ROLE_LABEL[impersonateRole]?.name}身份真实写入数据库，
-                  <span className="font-bold"> 权限边界按{ROLE_LABEL[impersonateRole]?.name}角色的RBAC矩阵实时生效。</span>
-                  审计日志将保留「{ROLE_LABEL[originalCredentials.role]?.name}→{ROLE_LABEL[impersonateRole]?.name}」的切换留痕。
-                </p>
               </div>
-              <button
-                onClick={handleExitImpersonation}
-                disabled={exitingPreview}
-                className="shrink-0 px-3.5 py-1.5 rounded-xl bg-white text-amber-600 hover:bg-amber-50 text-xs font-bold shadow-md transition-all disabled:opacity-60 inline-flex items-center gap-1"
-              >
-                {exitingPreview ? (
-                  <>
-                    <svg className="animate-spin w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25" />
-                      <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                    </svg>
-                    退出中
-                  </>
+            )}
+
+            {historyPanelOpen && !selectedHistorySession && (
+              <div className="bg-white border-b border-amber-200 px-4 sm:px-6 py-4 shadow-sm">
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                    <History className="w-4 h-4 text-amber-600" />
+                    历史模拟记录
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    {impersonationHistory.length > 0 && (
+                      <button
+                        onClick={() => {
+                          if (confirm('确定要清空所有历史模拟记录吗？')) {
+                            clearImpersonationHistory();
+                          }
+                        }}
+                        className="text-xs text-red-600 hover:text-red-700 font-semibold flex items-center gap-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        清空历史
+                      </button>
+                    )}
+                    <button onClick={() => setHistoryPanelOpen(false)} className="text-gray-400 hover:text-gray-600">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+                {impersonationHistory.length === 0 ? (
+                  <div className="text-center py-8 text-gray-400">
+                    <History className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                    <p className="text-sm">暂无历史模拟记录</p>
+                  </div>
                 ) : (
-                  <>
-                    <LogOut className="w-3.5 h-3.5" />
-                    退出预览
-                  </>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="bg-gray-50 border-b border-gray-200">
+                          <th className="text-left px-3 py-2 font-semibold text-gray-600">模拟角色</th>
+                          <th className="text-left px-3 py-2 font-semibold text-gray-600">原始角色</th>
+                          <th className="text-left px-3 py-2 font-semibold text-gray-600">开始时间</th>
+                          <th className="text-left px-3 py-2 font-semibold text-gray-600">结束时间</th>
+                          <th className="text-center px-3 py-2 font-semibold text-gray-600">持续时长</th>
+                          <th className="text-center px-3 py-2 font-semibold text-gray-600">操作次数</th>
+                          <th className="text-center px-3 py-2 font-semibold text-gray-600">真实写入</th>
+                          <th className="text-center px-3 py-2 font-semibold text-gray-600">被拦截</th>
+                          <th className="text-center px-3 py-2 font-semibold text-gray-600">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[...impersonationHistory].reverse().map((session) => (
+                          <tr key={session.sessionId} className="border-b border-gray-100 hover:bg-gray-50">
+                            <td className="px-3 py-2">
+                              <span className="font-semibold text-gray-900">
+                                {ROLE_LABEL[session.targetRole]?.name}
+                              </span>
+                            </td>
+                            <td className="px-3 py-2 text-gray-600">
+                              {ROLE_LABEL[session.originalRole]?.name}
+                            </td>
+                            <td className="px-3 py-2 text-gray-600 font-mono text-[10px]">
+                              {formatTime(session.startTime)}
+                            </td>
+                            <td className="px-3 py-2 text-gray-600 font-mono text-[10px]">
+                              {session.endTime ? formatTime(session.endTime) : '-'}
+                            </td>
+                            <td className="px-3 py-2 text-center text-gray-700">
+                              {formatDuration(session.startTime, session.endTime)}
+                            </td>
+                            <td className="px-3 py-2 text-center font-semibold text-gray-900">
+                              {session.operationLog.length}
+                            </td>
+                            <td className="px-3 py-2 text-center">
+                              <span className="text-green-600 font-semibold">
+                                {session.operationLog.filter(o => o.result === 'completed' && o.writeAttempted).length}
+                              </span>
+                            </td>
+                            <td className="px-3 py-2 text-center">
+                              <span className="text-red-600 font-semibold">
+                                {session.operationLog.filter(o => o.result === 'blocked').length}
+                              </span>
+                            </td>
+                            <td className="px-3 py-2 text-center">
+                              <button
+                                onClick={() => setSelectedHistorySession(session)}
+                                className="text-amber-600 hover:text-amber-700 font-semibold flex items-center gap-1 mx-auto"
+                              >
+                                <Eye className="w-3.5 h-3.5" />
+                                查看
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
-              </button>
-            </div>
-          </div>
+              </div>
+            )}
+
+            {showBlockedToast && (
+              <div className="fixed top-4 right-4 z-50 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-in slide-in-from-right">
+                <XCircle className="w-5 h-5 shrink-0" />
+                <span className="text-sm font-semibold">{blockedMessage}</span>
+              </div>
+            )}
+          </>
         )}
         <header className="sticky top-0 z-30 bg-white/85 backdrop-blur-xl border-b border-forest-50">
           <div className="h-16 px-4 sm:px-6 flex items-center justify-between gap-3">

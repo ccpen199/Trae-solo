@@ -51,13 +51,108 @@ const statusConfig: Record<UserStatus, { label: string; color: string; desc: str
   pending_review: { label: '资质审核中', color: 'bg-warm-100 text-warm-600', desc: '资质材料审核中，部分功能受限' },
 };
 
+type UploadStatus = 'pending' | 'uploading' | 'success' | 'error';
+
+interface MaterialItem {
+  id: string;
+  name: string;
+  status: UploadStatus;
+  fileName?: string;
+}
+
+const initialMaterials: MaterialItem[] = [
+  { id: '1', name: '执业证书', status: 'pending' },
+  { id: '2', name: '营业执照', status: 'pending' },
+  { id: '3', name: 'GSP认证证书', status: 'pending' },
+  { id: '4', name: '医师资格证', status: 'pending' },
+];
+
+type QualificationReviewStep = 'submitted' | 'material_verify' | 'compliance_review' | 'final_approval';
+
+const qualificationReviewSteps: { key: QualificationReviewStep; label: string }[] = [
+  { key: 'submitted', label: '已提交' },
+  { key: 'material_verify', label: '材料核验' },
+  { key: 'compliance_review', label: '合规审核' },
+  { key: 'final_approval', label: '复核通过' },
+];
+
+interface QualificationReviewHistory {
+  id: string;
+  submitTime: string;
+  reviewer: string;
+  result: '通过' | '驳回' | '待审核';
+  opinion: string;
+}
+
+const initialQualificationReviewHistory: QualificationReviewHistory[] = [
+  { id: '1', submitTime: '2026-05-20 14:30', reviewer: '张管理员', result: '驳回', opinion: '营业执照副本不清晰，请重新上传' },
+  { id: '2', submitTime: '2026-05-10 09:15', reviewer: '李审核员', result: '通过', opinion: '材料齐全，资质有效' },
+];
+
+type RoleChangeApprovalStep = 'pending_first_review' | 'business_review' | 'security_verify' | 'effective';
+
+const roleChangeApprovalSteps: { key: RoleChangeApprovalStep; label: string }[] = [
+  { key: 'pending_first_review', label: '待初审' },
+  { key: 'business_review', label: '业务复核' },
+  { key: 'security_verify', label: '安全校验' },
+  { key: 'effective', label: '生效' },
+];
+
+interface RoleChangeRecord {
+  id: string;
+  changeTime: string;
+  originalRole: UserRole;
+  targetRole: UserRole;
+  reviewer: string;
+  effectiveTime: string;
+  reason: string;
+}
+
+const initialRoleChangeHistory: RoleChangeRecord[] = [
+  {
+    id: '1',
+    changeTime: '2026-04-15 10:00',
+    originalRole: 'owner',
+    targetRole: 'doctor',
+    reviewer: '王管理员',
+    effectiveTime: '2026-04-16 09:00',
+    reason: '取得执业兽医资格证，申请开通医生权限',
+  },
+];
+
+interface AuditDetail {
+  fieldChanges: { field: string; before: string; after: string }[];
+  ip: string;
+  device: string;
+  verifyMethod: string;
+}
+
 const initialAuditTrail = [
-  { time: '2026-06-17 10:32', action: '登录账号', detail: '通过手机号+密码验证', result: '成功', ip: '127.0.0.1' },
-  { time: '2026-06-16 18:45', action: '修改昵称', detail: '超级管理员 → 超级管理员-正式', result: '成功', ip: '127.0.0.1' },
-  { time: '2026-06-16 10:08', action: '资质审核', detail: '通过医生-李静怡资质申请', result: '成功', ip: '127.0.0.1' },
-  { time: '2026-06-15 15:20', action: '权限变更', detail: '新增运营角色访问处方监管', result: '成功', ip: '127.0.0.1' },
-  { time: '2026-06-14 09:30', action: '密码修改', detail: '通过验证码安全校验', result: '成功', ip: '192.168.1.100' },
-  { time: '2026-06-12 14:02', action: '登录异常', detail: '设备指纹不匹配，二次验证通过', result: '放行', ip: '10.0.0.88' },
+  { time: '2026-06-17 10:32', action: '登录账号', detail: '通过手机号+密码验证', result: '成功', ip: '127.0.0.1', type: '安全验证' as const },
+  { time: '2026-06-16 18:45', action: '修改昵称', detail: '超级管理员 → 超级管理员-正式', result: '成功', ip: '127.0.0.1', type: '资料修改' as const },
+  { time: '2026-06-16 10:08', action: '资质审核', detail: '通过医生-李静怡资质申请', result: '成功', ip: '127.0.0.1', type: '资质复查' as const },
+  { time: '2026-06-15 15:20', action: '权限变更', detail: '新增运营角色访问处方监管', result: '成功', ip: '127.0.0.1', type: '角色变更' as const },
+  { time: '2026-06-14 09:30', action: '密码修改', detail: '通过验证码安全校验', result: '成功', ip: '192.168.1.100', type: '密码修改' as const },
+  { time: '2026-06-12 14:02', action: '登录异常', detail: '设备指纹不匹配，二次验证通过', result: '放行', ip: '10.0.0.88', type: '安全验证' as const },
+  { time: '2026-06-10 11:20', action: '更换手机号', detail: '尾号0001 → 尾号0002', result: '成功', ip: '127.0.0.1', type: '手机号变更' as const },
+];
+
+const auditActionTypes = ['全部', '资料修改', '密码修改', '手机号变更', '资质复查', '角色变更', '安全验证'] as const;
+
+interface SecurityVerifyRecord {
+  id: string;
+  time: string;
+  method: '密码校验' | '短信验证码' | '邮箱验证';
+  result: '成功' | '失败';
+  ip: string;
+}
+
+const initialSecurityVerifyRecords: SecurityVerifyRecord[] = [
+  { id: '1', time: '2026-06-17 10:32', method: '密码校验', result: '成功', ip: '127.0.0.1' },
+  { id: '2', time: '2026-06-17 08:15', method: '短信验证码', result: '成功', ip: '127.0.0.1' },
+  { id: '3', time: '2026-06-16 20:05', method: '密码校验', result: '失败', ip: '192.168.1.50' },
+  { id: '4', time: '2026-06-15 14:30', method: '邮箱验证', result: '成功', ip: '127.0.0.1' },
+  { id: '5', time: '2026-06-14 09:30', method: '短信验证码', result: '成功', ip: '192.168.1.100' },
 ];
 
 export default function AccountSettings() {
@@ -110,6 +205,20 @@ export default function AccountSettings() {
   const [qualificationReviewSubmitted, setQualificationReviewSubmitted] = useState(false);
   const [qualificationMaterials, setQualificationMaterials] = useState('');
   const [changeSummary, setChangeSummary] = useState<string[]>([]);
+
+  const [materials, setMaterials] = useState<MaterialItem[]>(initialMaterials);
+  const [currentReviewStep, setCurrentReviewStep] = useState<QualificationReviewStep | null>(null);
+  const [qualificationReviewHistory, setQualificationReviewHistory] = useState<QualificationReviewHistory[]>(initialQualificationReviewHistory);
+
+  const [roleChangeCurrentStep, setRoleChangeCurrentStep] = useState<RoleChangeApprovalStep | null>(null);
+  const [roleChangeRequestTime, setRoleChangeRequestTime] = useState<string | null>(null);
+  const [roleChangeHistory, setRoleChangeHistory] = useState<RoleChangeRecord[]>(initialRoleChangeHistory);
+
+  const [auditFilter, setAuditFilter] = useState<typeof auditActionTypes[number]>('全部');
+  const [expandedAuditId, setExpandedAuditId] = useState<number | null>(null);
+  const [auditDetails, setAuditDetails] = useState<Record<number, AuditDetail>>({});
+
+  const [securityRecords, setSecurityRecords] = useState<SecurityVerifyRecord[]>(initialSecurityVerifyRecords);
 
   const roleInfo = user?.role ? roleConfig[user.role] : null;
   const RoleIcon = roleInfo?.Icon || User;
@@ -216,35 +325,39 @@ export default function AccountSettings() {
     const changes: string[] = [];
 
     if (user && nickname.trim() !== (user.nickname || '')) {
-      newEntries.push({ time: timeStr, action: '修改昵称', detail: `${user.nickname || ''} → ${nickname}`, result: '成功', ip: '127.0.0.1' });
+      newEntries.push({ time: timeStr, action: '修改昵称', detail: `${user.nickname || ''} → ${nickname}`, result: '成功', ip: '127.0.0.1', type: '资料修改' as const });
       changes.push('昵称');
     }
 
     if (editPhoneChanging && user) {
       const oldTail = user.phone?.slice(-4) || '****';
       const newTail = editNewPhone.slice(-4);
-      newEntries.push({ time: timeStr, action: '更换手机号', detail: `尾号${oldTail} → 尾号${newTail}`, result: '成功', ip: '127.0.0.1' });
+      newEntries.push({ time: timeStr, action: '更换手机号', detail: `尾号${oldTail} → 尾号${newTail}`, result: '成功', ip: '127.0.0.1', type: '手机号变更' as const });
       changes.push('手机号');
     }
 
     if (editPasswordChanging) {
-      newEntries.push({ time: timeStr, action: '修改密码', detail: '通过安全校验验证', result: '成功', ip: '127.0.0.1' });
+      newEntries.push({ time: timeStr, action: '修改密码', detail: '通过安全校验验证', result: '成功', ip: '127.0.0.1', type: '密码修改' as const });
       changes.push('密码');
     }
 
     if (editEmailChanging && editEmail.trim()) {
-      newEntries.push({ time: timeStr, action: '绑定邮箱', detail: `绑定邮箱 ${editEmail}`, result: '验证邮件已发送', ip: '127.0.0.1' });
+      newEntries.push({ time: timeStr, action: '绑定邮箱', detail: `绑定邮箱 ${editEmail}`, result: '验证邮件已发送', ip: '127.0.0.1', type: '资料修改' as const });
       changes.push('邮箱');
     }
 
     if (editRoleChanging === 'change' && editRoleReason.trim()) {
-      newEntries.push({ time: timeStr, action: '角色变更申请', detail: `申请变更为${roleConfig[editTargetRole]?.label}，原因：${editRoleReason}`, result: '已提交', ip: '127.0.0.1' });
+      newEntries.push({ time: timeStr, action: '角色变更申请', detail: `申请变更为${roleConfig[editTargetRole]?.label}，原因：${editRoleReason}`, result: '已提交', ip: '127.0.0.1', type: '角色变更' as const });
       setRoleRequestStatus('submitted');
+      setRoleChangeCurrentStep('pending_first_review');
+      setRoleChangeRequestTime(timeStr);
+      setTimeout(() => setRoleChangeCurrentStep('business_review'), 1500);
+      setTimeout(() => setRoleChangeCurrentStep('security_verify'), 3000);
       changes.push('角色申请');
     }
 
     if (user?.status === 'pending_review') {
-      newEntries.push({ time: timeStr, action: '资质复查状态更新', detail: '编辑资料后资质状态同步更新', result: '成功', ip: '127.0.0.1' });
+      newEntries.push({ time: timeStr, action: '资质复查状态更新', detail: '编辑资料后资质状态同步更新', result: '成功', ip: '127.0.0.1', type: '资质复查' as const });
     }
 
     if (user) {
@@ -268,18 +381,91 @@ export default function AccountSettings() {
     setTimeout(() => { setSaveSuccess(false); setChangeSummary([]); }, 4000);
   };
 
+  const handleMaterialUpload = (materialId: string) => {
+    setMaterials(prev => prev.map(m =>
+      m.id === materialId ? { ...m, status: 'uploading' as UploadStatus } : m
+    ));
+    setTimeout(() => {
+      const mockFileNames: Record<string, string> = {
+        '1': '执业证书_2026.pdf',
+        '2': '营业执照_2026.jpg',
+        '3': 'GSP认证证书.pdf',
+        '4': '医师资格证.png',
+      };
+      setMaterials(prev => prev.map(m =>
+        m.id === materialId
+          ? { ...m, status: 'success' as UploadStatus, fileName: mockFileNames[materialId] || `${m.name}.pdf` }
+          : m
+      ));
+    }, 800);
+  };
+
+  const handleMaterialDelete = (materialId: string) => {
+    setMaterials(prev => prev.map(m =>
+      m.id === materialId ? { ...m, status: 'pending' as UploadStatus, fileName: undefined } : m
+    ));
+  };
+
+  const getAuditDetail = (index: number): AuditDetail => {
+    if (auditDetails[index]) return auditDetails[index];
+    const log = auditTrail[index];
+    const detail: AuditDetail = {
+      fieldChanges: [
+        { field: log.action, before: log.detail.split('→')[0]?.trim() || '-', after: log.detail.split('→')[1]?.trim() || '-' },
+      ],
+      ip: log.ip,
+      device: 'MacBook Pro / Chrome 125.0',
+      verifyMethod: log.type === '安全验证' ? '密码+设备指纹' : '密码校验',
+    };
+    setAuditDetails(prev => ({ ...prev, [index]: detail }));
+    return detail;
+  };
+
+  const handleExportAudit = () => {
+    const now = new Date();
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    const header = '操作时间,操作类型,操作详情,操作结果,IP地址\n';
+    const content = auditTrail
+      .filter(log => {
+        const logDate = new Date(log.time.replace(' ', 'T'));
+        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        return logDate >= thirtyDaysAgo;
+      })
+      .map(log => `"${log.time}","${log.type}","${log.detail}","${log.result}","${log.ip}"`)
+      .join('\n');
+    const blob = new Blob([`\uFEFF${header}${content}`], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `审计日志_${timeStr}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   const handleSubmitQualificationReview = () => {
-    if (!qualificationMaterials.trim()) return;
+    const hasUploadedMaterial = materials.some(m => m.status === 'success');
+    if (!qualificationMaterials.trim() && !hasUploadedMaterial) return;
     const now = new Date();
     const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     setQualificationReviewSubmitted(true);
+    setCurrentReviewStep('submitted');
+    setQualificationReviewHistory(prev => [{
+      id: String(Date.now()),
+      submitTime: timeStr,
+      reviewer: '-',
+      result: '待审核',
+      opinion: qualificationMaterials || '已上传材料清单',
+    }, ...prev]);
     setAuditTrail(prev => [{
       time: timeStr,
       action: '申请资质复查',
       detail: '提交补充材料，申请资质复查复核',
       result: '已提交',
       ip: '127.0.0.1',
+      type: '资质复查' as const,
     }, ...prev]);
+    setTimeout(() => setCurrentReviewStep('material_verify'), 1500);
+    setTimeout(() => setCurrentReviewStep('compliance_review'), 3000);
   };
 
   return (
@@ -473,6 +659,44 @@ export default function AccountSettings() {
                         </span>
                       )}
                     </div>
+                    {currentReviewStep && (
+                      <div className="mt-3 p-3 rounded-xl bg-gradient-to-r from-blue-50 to-sky-50 border border-blue-200">
+                        <p className="text-[11px] font-semibold text-blue-700 mb-2">审批进度</p>
+                        <div className="flex items-center gap-1">
+                          {qualificationReviewSteps.map((step, idx) => {
+                            const stepIndex = qualificationReviewSteps.findIndex(s => s.key === currentReviewStep);
+                            const isActive = idx <= stepIndex;
+                            const isCurrent = step.key === currentReviewStep;
+                            return (
+                              <div key={step.key} className="flex items-center flex-1">
+                                <div className={cn(
+                                  'w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 transition-all',
+                                  isCurrent
+                                    ? 'bg-blue-500 text-white ring-2 ring-blue-200 scale-110'
+                                    : isActive
+                                      ? 'bg-blue-400 text-white'
+                                      : 'bg-gray-200 text-gray-500'
+                                )}>
+                                  {isActive && idx < stepIndex ? <CheckCircle2 className="w-3.5 h-3.5" /> : idx + 1}
+                                </div>
+                                <span className={cn(
+                                  'ml-1 text-[9px] font-semibold flex-1',
+                                  isCurrent ? 'text-blue-700' : isActive ? 'text-blue-600' : 'text-gray-400'
+                                )}>
+                                  {step.label}
+                                </span>
+                                {idx < qualificationReviewSteps.length - 1 && (
+                                  <div className={cn(
+                                    'h-0.5 flex-1 mx-1 rounded transition-all',
+                                    idx < stepIndex ? 'bg-blue-400' : 'bg-gray-200'
+                                  )} />
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                     {['doctor', 'hospital', 'merchant'].includes(user?.role || '') && !user?.licenseVerified && !qualificationReviewSubmitted && (
                       <div className="mt-2">
                         {!qualificationReviewOpen ? (
@@ -485,22 +709,61 @@ export default function AccountSettings() {
                               <p className="font-bold">当前资质状态：{statusInfo?.label}</p>
                               <p className="text-warm-600 mt-0.5">您的资质材料尚未通过核验，部分功能受限。请在下方补充材料后提交复查申请。</p>
                             </div>
+                            <div className="space-y-1.5">
+                              <p className="text-[10px] font-semibold text-warm-700">材料上传清单</p>
+                              <div className="grid grid-cols-2 gap-1.5">
+                                {materials.map(m => (
+                                  <div key={m.id} className="p-2 rounded-lg bg-white/80 border border-warm-100 flex items-center justify-between gap-1">
+                                    <div className="flex items-center gap-1 min-w-0 flex-1">
+                                      <FileText className={cn(
+                                        'w-3 h-3 shrink-0',
+                                        m.status === 'success' ? 'text-forest-500' :
+                                        m.status === 'uploading' ? 'text-blue-500' : 'text-gray-400'
+                                      )} />
+                                      <span className="text-[10px] font-medium text-gray-700 truncate">{m.name}</span>
+                                    </div>
+                                    {m.status === 'success' ? (
+                                      <button onClick={() => handleMaterialDelete(m.id)} className="p-0.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 shrink-0">
+                                        <X className="w-3 h-3" />
+                                      </button>
+                                    ) : m.status === 'uploading' ? (
+                                      <Clock className="w-3 h-3 text-blue-500 animate-spin shrink-0" />
+                                    ) : (
+                                      <button onClick={() => handleMaterialUpload(m.id)} className="text-[9px] font-semibold text-blue-600 hover:underline shrink-0">
+                                        上传
+                                      </button>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                              {materials.some(m => m.status === 'success') && (
+                                <div className="space-y-1 pt-1 border-t border-warm-100">
+                                  <p className="text-[9px] font-semibold text-warm-600">已上传文件：</p>
+                                  {materials.filter(m => m.status === 'success').map(m => (
+                                    <div key={m.id} className="text-[10px] text-forest-700 flex items-center gap-1">
+                                      <CheckCircle2 className="w-2.5 h-2.5" />
+                                      <span className="font-mono">{m.fileName}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
                             <textarea
                               value={qualificationMaterials}
                               onChange={(e) => setQualificationMaterials(e.target.value)}
-                              rows={3}
+                              rows={2}
                               className="w-full px-2.5 py-1.5 rounded-lg border border-warm-200 bg-white/60 text-[11px] resize-none focus:outline-none focus:ring-2 focus:ring-warm-200"
-                              placeholder="请补充资质材料说明（如：执业证书编号、营业执照扫描件等）..."
+                              placeholder="补充说明（可选）..."
                             />
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={handleSubmitQualificationReview}
-                                disabled={!qualificationMaterials.trim()}
+                                disabled={!qualificationMaterials.trim() && !materials.some(m => m.status === 'success')}
                                 className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-warm-500 to-orange-500 text-white text-[11px] font-semibold hover:shadow-md disabled:opacity-50 transition-all inline-flex items-center gap-1"
                               >
                                 <FileText className="w-3 h-3" /> 提交复查申请
                               </button>
-                              <button onClick={() => { setQualificationReviewOpen(false); setQualificationMaterials(''); }} className="px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-[11px] font-semibold text-gray-600 hover:bg-gray-50">
+                              <button onClick={() => { setQualificationReviewOpen(false); setQualificationMaterials(''); setMaterials(initialMaterials); }} className="px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-[11px] font-semibold text-gray-600 hover:bg-gray-50">
                                 取消
                               </button>
                             </div>
@@ -508,9 +771,39 @@ export default function AccountSettings() {
                         )}
                       </div>
                     )}
-                    {qualificationReviewSubmitted && (
+                    {qualificationReviewSubmitted && !currentReviewStep && (
                       <div className="mt-2 p-2 rounded-lg bg-gradient-to-r from-blue-50 to-sky-50 border border-blue-200 text-[11px] text-blue-700 font-semibold inline-flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5" /> 已提交复查 · 等待管理员复核
+                      </div>
+                    )}
+                    {['doctor', 'hospital', 'merchant'].includes(user?.role || '') && qualificationReviewHistory.length > 0 && (
+                      <div className="mt-3 p-3 rounded-xl bg-gray-50 border border-gray-100">
+                        <p className="text-[11px] font-semibold text-gray-700 mb-2 flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> 复查审核历史
+                        </p>
+                        <div className="space-y-2 max-h-32 overflow-y-auto">
+                          {qualificationReviewHistory.map(record => (
+                            <div key={record.id} className="p-2 rounded-lg bg-white border border-gray-100 text-[10px]">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="font-mono text-gray-500">{record.submitTime}</span>
+                                <span className={cn(
+                                  'px-1.5 py-0.5 rounded-full font-semibold',
+                                  record.result === '通过' ? 'bg-forest-100 text-forest-700' :
+                                  record.result === '驳回' ? 'bg-red-100 text-red-700' :
+                                  'bg-warm-100 text-warm-700'
+                                )}>
+                                  {record.result}
+                                </span>
+                              </div>
+                              <p className="text-gray-700">
+                                <span className="font-semibold">审核人：</span>{record.reviewer}
+                              </p>
+                              <p className="text-gray-600">
+                                <span className="font-semibold">审核意见：</span>{record.opinion}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -542,9 +835,89 @@ export default function AccountSettings() {
                             </span>
                           </div>
                           <p className="text-[11px] text-purple-600/80">{roleInfo?.desc}</p>
-                          {roleRequestStatus === 'submitted' && (
+                          {roleChangeCurrentStep && roleChangeRequestTime && (
+                            <div className="mt-2 p-2.5 rounded-lg bg-white border border-purple-200">
+                              <div className="text-[10px] text-purple-700 space-y-1.5">
+                                <div className="flex items-center gap-1">
+                                  <Clock className="w-2.5 h-2.5" />
+                                  <span className="font-semibold">申请时间：</span>{roleChangeRequestTime}
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <ShieldCheck className="w-2.5 h-2.5" />
+                                  <span className="font-semibold">变更类型：</span>
+                                  {roleConfig[user.role]?.label} → {roleConfig[editTargetRole]?.label || '目标角色'}
+                                </div>
+                                <div className="flex items-start gap-1">
+                                  <FileText className="w-2.5 h-2.5 mt-0.5" />
+                                  <span className="font-semibold">变更原因：</span>{editRoleReason || '已提交变更申请'}
+                                </div>
+                              </div>
+                              <div className="mt-2 pt-2 border-t border-purple-100">
+                                <p className="text-[10px] font-semibold text-purple-700 mb-1.5">审批进度</p>
+                                <div className="flex items-center gap-0.5">
+                                  {roleChangeApprovalSteps.map((step, idx) => {
+                                    const stepIndex = roleChangeApprovalSteps.findIndex(s => s.key === roleChangeCurrentStep);
+                                    const isActive = idx <= stepIndex;
+                                    const isCurrent = step.key === roleChangeCurrentStep;
+                                    return (
+                                      <div key={step.key} className="flex items-center flex-1">
+                                        <div className={cn(
+                                          'w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold shrink-0 transition-all',
+                                          isCurrent
+                                            ? 'bg-purple-500 text-white ring-2 ring-purple-200 scale-110'
+                                            : isActive
+                                              ? 'bg-purple-400 text-white'
+                                              : 'bg-gray-200 text-gray-500'
+                                        )}>
+                                          {isActive && idx < stepIndex ? <CheckCircle2 className="w-3 h-3" /> : idx + 1}
+                                        </div>
+                                        <span className={cn(
+                                          'ml-0.5 text-[8px] font-semibold flex-1',
+                                          isCurrent ? 'text-purple-700' : isActive ? 'text-purple-600' : 'text-gray-400'
+                                        )}>
+                                          {step.label}
+                                        </span>
+                                        {idx < roleChangeApprovalSteps.length - 1 && (
+                                          <div className={cn(
+                                            'h-0.5 flex-1 mx-0.5 rounded transition-all',
+                                            idx < stepIndex ? 'bg-purple-400' : 'bg-gray-200'
+                                          )} />
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          {roleRequestStatus === 'submitted' && !roleChangeCurrentStep && (
                             <div className="mt-2 p-2 rounded-lg bg-gradient-to-r from-blue-50 to-sky-50 border border-blue-200 text-[11px] text-blue-700 font-semibold inline-flex items-center gap-1">
                               <Clock className="w-3.5 h-3.5" /> 变更申请已提交 · 等待复核
+                            </div>
+                          )}
+                          {roleChangeHistory.length > 0 && (
+                            <div className="mt-3 pt-2 border-t border-purple-100">
+                              <p className="text-[10px] font-semibold text-purple-700 mb-1.5 flex items-center gap-1">
+                                <Activity className="w-2.5 h-2.5" /> 角色变更历史
+                              </p>
+                              <div className="space-y-1.5 max-h-32 overflow-y-auto">
+                                {roleChangeHistory.map((record, idx) => (
+                                  <div key={record.id} className="relative pl-3">
+                                    {idx < roleChangeHistory.length - 1 && (
+                                      <div className="absolute left-1.5 top-3 bottom-0 w-px bg-purple-200" />
+                                    )}
+                                    <div className="absolute left-0 top-1.5 w-2 h-2 rounded-full bg-purple-400 ring-2 ring-purple-100" />
+                                    <div className="text-[9px] text-purple-700">
+                                      <div className="font-mono text-purple-500">{record.changeTime}</div>
+                                      <div className="font-semibold mt-0.5">
+                                        {roleConfig[record.originalRole]?.label} → {roleConfig[record.targetRole]?.label}
+                                      </div>
+                                      <div className="text-purple-600">审批人：{record.reviewer} · 生效：{record.effectiveTime}</div>
+                                      <div className="text-purple-600/80">原因：{record.reason}</div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                           )}
                         </div>
@@ -852,33 +1225,154 @@ export default function AccountSettings() {
 
           {/* 审计日志 */}
           <div className="card space-y-4">
-            <h2 className="font-display font-bold text-lg text-gray-900 flex items-center gap-2">
-              <FileText className="w-5 h-5 text-slate-500" /> 账号操作审计
-            </h2>
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <h2 className="font-display font-bold text-lg text-gray-900 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-slate-500" /> 账号操作审计
+              </h2>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleExportAudit}
+                  className="px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-[10px] font-semibold hover:bg-slate-200 transition-colors inline-flex items-center gap-1"
+                >
+                  <FileText className="w-3 h-3" /> 导出最近30天
+                </button>
+              </div>
+            </div>
             <p className="text-xs text-gray-500 -mt-2">近期账号的所有敏感操作记录，用于审计复查与安全追溯</p>
+            <div className="flex flex-wrap gap-1.5">
+              {auditActionTypes.map(type => (
+                <button
+                  key={type}
+                  onClick={() => setAuditFilter(type)}
+                  className={cn(
+                    'px-2 py-1 rounded-lg text-[10px] font-semibold transition-all border',
+                    auditFilter === type
+                      ? 'bg-slate-500 text-white border-slate-500'
+                      : 'bg-white text-gray-600 border-gray-200 hover:border-slate-300'
+                  )}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
             <div className="space-y-2">
-              {auditTrail.map((log, i) => (
-                <div key={i} className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-gray-50 transition-colors border border-gray-50">
-                  <div className="w-2 h-2 rounded-full bg-purple-400 mt-1.5 shrink-0" />
+              {auditTrail
+                .filter(log => auditFilter === '全部' || log.type === auditFilter)
+                .map((log) => {
+                  const i = auditTrail.indexOf(log);
+                  const isExpanded = expandedAuditId === i;
+                  const detail = isExpanded ? getAuditDetail(i) : null;
+                  return (
+                    <div key={i} className="p-2.5 rounded-xl hover:bg-gray-50 transition-colors border border-gray-50">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 rounded-full bg-purple-400 mt-1.5 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                            <span className="text-xs font-semibold text-gray-800">{log.action}</span>
+                            <span className={cn(
+                              'text-[9px] font-semibold px-1.5 py-0.5 rounded-full',
+                              log.type === '资料修改' ? 'bg-blue-100 text-blue-700' :
+                              log.type === '密码修改' ? 'bg-red-100 text-red-700' :
+                              log.type === '手机号变更' ? 'bg-orange-100 text-orange-700' :
+                              log.type === '资质复查' ? 'bg-warm-100 text-warm-700' :
+                              log.type === '角色变更' ? 'bg-purple-100 text-purple-700' :
+                              'bg-slate-100 text-slate-700'
+                            )}>
+                              {log.type}
+                            </span>
+                            <span className={cn(
+                              'text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                              log.result === '成功' ? 'bg-forest-100 text-forest-700' :
+                              log.result === '放行' ? 'bg-blue-100 text-blue-700' :
+                              log.result === '已提交' ? 'bg-warm-100 text-warm-700' :
+                              log.result === '验证邮件已发送' ? 'bg-purple-100 text-purple-700' :
+                              'bg-gray-100 text-gray-600'
+                            )}>
+                              {log.result}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-gray-600">{log.detail}</p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <div className="text-right">
+                            <div className="text-[10px] text-gray-400 font-mono">{log.time}</div>
+                          </div>
+                          <button
+                            onClick={() => setExpandedAuditId(isExpanded ? null : i)}
+                            className={cn(
+                              'p-1 rounded transition-colors',
+                              isExpanded ? 'bg-slate-100 text-slate-700' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'
+                            )}
+                          >
+                            <Activity className={cn('w-3.5 h-3.5 transition-transform', isExpanded && 'rotate-180')} />
+                          </button>
+                        </div>
+                      </div>
+                      {isExpanded && detail && (
+                        <div className="mt-2 ml-5 pt-2 border-t border-gray-100 text-[10px] space-y-1.5">
+                          <div className="font-semibold text-gray-700 mb-1">操作详情</div>
+                          {detail.fieldChanges.length > 0 && (
+                            <div className="space-y-1">
+                              <div className="font-semibold text-gray-600">字段变更：</div>
+                              {detail.fieldChanges.map((fc, idx) => (
+                                <div key={idx} className="flex items-start gap-2 pl-2">
+                                  <span className="text-gray-500 shrink-0">{fc.field}:</span>
+                                  <span className="text-red-600 line-through">{fc.before}</span>
+                                  <span className="text-gray-400">→</span>
+                                  <span className="text-forest-600">{fc.after}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          <div className="flex flex-wrap gap-x-4 gap-y-1 pl-2">
+                            <span className="text-gray-600"><span className="font-semibold">IP地址：</span>{detail.ip}</span>
+                            <span className="text-gray-600"><span className="font-semibold">设备信息：</span>{detail.device}</span>
+                            <span className="text-gray-600"><span className="font-semibold">验证方式：</span>{detail.verifyMethod}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+
+          {/* 安全验证记录 */}
+          <div className="card space-y-4">
+            <h2 className="font-display font-bold text-lg text-gray-900 flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-slate-500" /> 安全验证记录
+            </h2>
+            <p className="text-xs text-gray-500 -mt-2">最近30天所有二次安全验证记录</p>
+            <div className="space-y-2">
+              {securityRecords.map(record => (
+                <div key={record.id} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 transition-colors border border-gray-50">
+                  <div className={cn(
+                    'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
+                    record.method === '密码校验' ? 'bg-warm-50' :
+                    record.method === '短信验证码' ? 'bg-blue-50' : 'bg-purple-50'
+                  )}>
+                    {record.method === '密码校验' ? (
+                      <Lock className={cn('w-4 h-4', record.result === '成功' ? 'text-warm-600' : 'text-red-500')} />
+                    ) : record.method === '短信验证码' ? (
+                      <Phone className={cn('w-4 h-4', record.result === '成功' ? 'text-blue-600' : 'text-red-500')} />
+                    ) : (
+                      <Mail className={cn('w-4 h-4', record.result === '成功' ? 'text-purple-600' : 'text-red-500')} />
+                    )}
+                  </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                      <span className="text-xs font-semibold text-gray-800">{log.action}</span>
+                      <span className="text-xs font-semibold text-gray-800">{record.method}</span>
                       <span className={cn(
                         'text-[10px] font-semibold px-2 py-0.5 rounded-full',
-                        log.result === '成功' ? 'bg-forest-100 text-forest-700' :
-                        log.result === '放行' ? 'bg-blue-100 text-blue-700' :
-                        log.result === '已提交' ? 'bg-warm-100 text-warm-700' :
-                        log.result === '验证邮件已发送' ? 'bg-purple-100 text-purple-700' :
-                        'bg-gray-100 text-gray-600'
+                        record.result === '成功' ? 'bg-forest-100 text-forest-700' : 'bg-red-100 text-red-700'
                       )}>
-                        {log.result}
+                        {record.result}
                       </span>
                     </div>
-                    <p className="text-[11px] text-gray-600">{log.detail}</p>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <div className="text-[10px] text-gray-400 font-mono">{log.time}</div>
-                    <div className="text-[10px] text-gray-400 font-mono">IP: {log.ip}</div>
+                    <div className="flex items-center gap-3 text-[10px] text-gray-500">
+                      <span className="font-mono">{record.time}</span>
+                      <span className="font-mono">IP: {record.ip}</span>
+                    </div>
                   </div>
                 </div>
               ))}

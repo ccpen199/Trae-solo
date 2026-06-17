@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import {
   Plus, Search, Filter, PawPrint, Link2, FileText, AlertTriangle,
   Calendar, Syringe, Bug, Heart, ChevronRight, MapPin, ShoppingCart,
-  Clock, CheckCircle2, XCircle, RotateCcw, Bell,
+  Clock, CheckCircle2, XCircle, RotateCcw, Bell, UserCheck,
+  Pill, Stethoscope, Package, Phone, ArrowRight, AlertCircle,
+  FileCheck, User, Star, Activity,
 } from 'lucide-react';
 import PetCard from '@/components/PetCard';
 import type { Pet } from '@shared/types';
@@ -64,6 +66,74 @@ const speciesFilters = [
   { value: 'other', label: '其他' },
 ];
 
+type RiskLevel = 'low' | 'medium' | 'high' | 'critical';
+type DisposalPath = 'none' | 'buying' | 'booking' | 'consultation' | 'completed';
+type BuyMedicineStep = 0 | 1 | 2 | 3 | 4;
+type BookingStep = 0 | 1 | 2 | 3 | 4;
+type ConsultationStep = 0 | 1 | 2 | 3 | 4;
+
+interface DisposalProgress {
+  remind: { done: boolean; time?: string };
+  contact: { done: boolean; time?: string };
+  confirm: { done: boolean; time?: string };
+  complete: { done: boolean; time?: string };
+}
+
+interface OverdueState {
+  expandedPath: DisposalPath;
+  buyStep: BuyMedicineStep;
+  bookingStep: BookingStep;
+  consultationStep: ConsultationStep;
+  progress: DisposalProgress;
+  ownerAcknowledge: boolean;
+  doctorConfirm: boolean;
+  selectedHospital: string;
+  selectedTime: string;
+  bookingConfirmed: boolean;
+  hospitalConfirmed: boolean;
+  reminderSet: boolean;
+}
+
+const getRiskLevel = (days: number): { level: RiskLevel; label: string; color: string; bgColor: string; borderColor: string } => {
+  if (days <= 3) return { level: 'low', label: '低风险', color: 'text-yellow-700', bgColor: 'bg-yellow-500', borderColor: 'border-yellow-200' };
+  if (days <= 7) return { level: 'medium', label: '中风险', color: 'text-orange-700', bgColor: 'bg-orange-500', borderColor: 'border-orange-200' };
+  if (days <= 30) return { level: 'high', label: '高风险', color: 'text-red-700', bgColor: 'bg-red-500', borderColor: 'border-red-200' };
+  return { level: 'critical', label: '极高风险', color: 'text-red-800', bgColor: 'bg-red-700', borderColor: 'border-red-300' };
+};
+
+const getRiskDescription = (level: RiskLevel): string => {
+  switch (level) {
+    case 'low': return '建议尽快处置';
+    case 'medium': return '建议尽快处置';
+    case 'high': return '建议立即处置';
+    case 'critical': return '建议立即处置';
+  }
+};
+
+const hospitals = [
+  { id: 'h1', name: '爱宠动物医院总院', distance: '1.2km', rating: 4.8, address: '朝阳区建国路88号' },
+];
+
+const timeSlots = [
+  { id: 't1', time: '今日14:00', available: true },
+  { id: 't2', time: '今日16:00', available: true },
+  { id: 't3', time: '明日09:30', available: true },
+];
+
+const medicineInfo = {
+  name: '拜宠清体内驱虫',
+  dosage: '28.5kg剂量',
+  spec: '2粒/盒',
+  price: '¥68',
+};
+
+const doctorInfo = {
+  name: '王建国',
+  title: '执业兽医师',
+  license: 'A012345',
+  signatureTime: '2026-06-17 10:30',
+};
+
 export default function PetList() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
@@ -71,6 +141,125 @@ export default function PetList() {
   const [filter, setFilter] = useState('all');
   const [showBindModal, setShowBindModal] = useState(false);
   const [overdueActions, setOverdueActions] = useState<Record<string, 'none' | 'buying' | 'booked' | 'purchased' | 'rescheduled'>>({});
+
+  const [overdueStates, setOverdueStates] = useState<Record<string, OverdueState>>({
+    'r2': {
+      expandedPath: 'none',
+      buyStep: 0,
+      bookingStep: 0,
+      consultationStep: 0,
+      progress: {
+        remind: { done: true, time: '2026-06-15 09:00' },
+        contact: { done: true, time: '2026-06-16 14:30' },
+        confirm: { done: false },
+        complete: { done: false },
+      },
+      ownerAcknowledge: false,
+      doctorConfirm: false,
+      selectedHospital: '',
+      selectedTime: '',
+      bookingConfirmed: false,
+      hospitalConfirmed: false,
+      reminderSet: false,
+    },
+  });
+
+  const updateOverdueState = (id: string, updates: Partial<OverdueState>) => {
+    setOverdueStates(prev => ({
+      ...prev,
+      [id]: { ...prev[id], ...updates },
+    }));
+  };
+
+  const resetPath = (id: string) => {
+    updateOverdueState(id, {
+      expandedPath: 'none',
+      buyStep: 0,
+      bookingStep: 0,
+      consultationStep: 0,
+      ownerAcknowledge: false,
+      doctorConfirm: false,
+      selectedHospital: '',
+      selectedTime: '',
+      bookingConfirmed: false,
+      hospitalConfirmed: false,
+      reminderSet: false,
+    });
+  };
+
+  const [updatedDewormingRecords, setUpdatedDewormingRecords] = useState<Record<string, { date: string; nextDate: string; completed: boolean }>>({});
+  const [petTimelineUpdates, setPetTimelineUpdates] = useState<Record<string, Array<{ id: string; date: string; type: 'deworm' | 'prescription' | 'consultation' | 'followup'; title: string; detail: string; status: 'completed' }>>>({});
+
+  const addTimelineEntry = (petId: string, entry: Omit<{ id: string; date: string; type: 'deworm' | 'prescription' | 'consultation' | 'followup'; title: string; detail: string; status: 'completed' }, 'id'>) => {
+    const newEntry = {
+      ...entry,
+      id: `tl-${petId}-${Date.now()}`,
+    };
+    setPetTimelineUpdates(prev => ({
+      ...prev,
+      [petId]: [...(prev[petId] || []), newEntry],
+    }));
+  };
+
+  const markProgress = (id: string) => {
+    const state = overdueStates[id];
+    const now = new Date().toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-');
+    const today = new Date().toISOString().split('T')[0];
+    const nextDate = new Date();
+    nextDate.setMonth(nextDate.getMonth() + 3);
+    const nextDateStr = nextDate.toISOString().split('T')[0];
+
+    updateOverdueState(id, {
+      progress: {
+        ...state.progress,
+        confirm: { done: true, time: now },
+        complete: { done: true, time: now },
+      },
+    });
+
+    setUpdatedDewormingRecords(prev => ({
+      ...prev,
+      '1': { date: today, nextDate: nextDateStr, completed: true },
+    }));
+
+    addTimelineEntry('1', {
+      date: today,
+      type: 'deworm',
+      title: '体内驱虫（逾期处置完成）',
+      detail: `拜宠清口服 · 体重28.5kg · 下次到期${nextDateStr} · 逾期381天后完成处置`,
+      status: 'completed',
+    });
+
+    if (state.expandedPath === 'buying') {
+      addTimelineEntry('1', {
+        date: today,
+        type: 'prescription',
+        title: '处方开具 · 驱虫药',
+        detail: '拜宠清体内驱虫 · 医生王建国签名 ✓ · 宠主确认 ✓ · 已购药',
+        status: 'completed',
+      });
+    }
+
+    if (state.expandedPath === 'booking') {
+      addTimelineEntry('1', {
+        date: today,
+        type: 'followup',
+        title: '预约驱虫处置',
+        detail: '爱宠动物医院总院 · 医师王建国 · 已预约',
+        status: 'completed',
+      });
+    }
+
+    if (state.expandedPath === 'consultation') {
+      addTimelineEntry('1', {
+        date: today,
+        type: 'consultation',
+        title: '在线问诊 · 逾期驱虫处置',
+        detail: '主诉：逾期未驱虫 · 诊断：需立即驱虫 · 医师王建国签名 ✓',
+        status: 'completed',
+      });
+    }
+  };
 
   const handleOverdueAction = (id: string, action: 'none' | 'buying' | 'booked' | 'purchased' | 'rescheduled') => {
     setOverdueActions(prev => ({ ...prev, [id]: action }));
@@ -180,6 +369,627 @@ export default function PetList() {
         <div className="grid sm:grid-cols-3 gap-3">
           {upcomingReminders.map(r => {
             const actionState = overdueActions[r.id] || 'none';
+            const overdueState = overdueStates[r.id];
+            const isEnhancedOverdue = r.overdue && r.overdueDays > 30;
+
+            if (isEnhancedOverdue && overdueState) {
+              const risk = getRiskLevel(r.overdueDays);
+              const progressNodes = [
+                { key: 'remind', label: '待提醒', Icon: Bell },
+                { key: 'contact', label: '已触达', Icon: Phone },
+                { key: 'confirm', label: '用户确认', Icon: UserCheck },
+                { key: 'complete', label: '处置完成', Icon: CheckCircle2 },
+              ] as const;
+
+              return (
+                <div key={r.id} className={cn('p-3 rounded-xl bg-gradient-to-br border space-y-2', r.color, risk.borderColor)}>
+                  <div className={cn('-mx-3 -mt-3 px-3 py-2 rounded-t-xl flex items-center justify-between', risk.bgColor)}>
+                    <div className="flex items-center gap-1.5">
+                      <AlertTriangle className="w-4 h-4 text-white" />
+                      <span className="text-[11px] font-bold text-white">风险等级：{risk.label} · 逾期{r.overdueDays}天 · {getRiskDescription(risk.level)}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1">
+                    <div className="flex items-center gap-1.5">
+                      <div className={cn('w-7 h-7 rounded-lg flex items-center justify-center', r.badgeColor)}>
+                        <r.Icon className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="text-xs font-bold text-gray-800">{r.petName} · {r.type}</span>
+                    </div>
+                    {!overdueState.progress.complete.done && (
+                      <span className={cn('px-1.5 py-0.5 rounded-md text-[10px] font-bold', risk.bgColor, 'text-white')}>逾期{r.overdueDays}天</span>
+                    )}
+                    {overdueState.progress.complete.done && (
+                      <span className="px-1.5 py-0.5 rounded-md bg-forest-100 text-forest-700 text-[10px] font-bold flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" />已处置</span>
+                    )}
+                  </div>
+                  <p className="text-sm font-semibold text-gray-900 leading-snug">{r.event}</p>
+                  <p className="text-[10px] text-gray-500 font-mono">到期日：{r.date}</p>
+
+                  <div className="p-2 rounded-lg bg-white/70 border border-gray-100 space-y-2">
+                    <p className="text-[10px] font-semibold text-gray-700 flex items-center gap-1">
+                      <Activity className="w-3 h-3" /> 逾期处置链路
+                    </p>
+                    <div className="flex items-center justify-between">
+                      {progressNodes.map((node, idx) => {
+                        const progress = overdueState.progress[node.key];
+                        const isDone = progress.done;
+                        return (
+                          <div key={node.key} className="flex flex-col items-center flex-1">
+                            <div className={cn('w-6 h-6 rounded-full flex items-center justify-center', isDone ? 'bg-forest-500' : 'bg-gray-200')}>
+                              <node.Icon className={cn('w-3 h-3', isDone ? 'text-white' : 'text-gray-400')} />
+                            </div>
+                            <span className={cn('text-[8px] font-semibold mt-0.5', isDone ? 'text-forest-700' : 'text-gray-500')}>{node.label}</span>
+                            {progress.time && (
+                              <span className="text-[7px] text-gray-400 font-mono">{progress.time}</span>
+                            )}
+                            {idx < progressNodes.length - 1 && (
+                              <div className={cn('w-full h-0.5 my-1', isDone ? 'bg-forest-400' : 'bg-gray-200')} />
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {!overdueState.progress.complete.done && (
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-semibold text-gray-700">请选择处置路径：</p>
+                      <div className="space-y-1.5">
+                        <button
+                          onClick={() => updateOverdueState(r.id, { expandedPath: overdueState.expandedPath === 'buying' ? 'none' : 'buying' })}
+                          className={cn(
+                            'w-full p-2 rounded-lg text-left transition-all',
+                            overdueState.expandedPath === 'buying'
+                              ? 'bg-forest-500 text-white'
+                              : 'bg-white/80 hover:bg-white text-gray-800 border border-gray-200/60'
+                          )}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            <ShoppingCart className="w-3.5 h-3.5" />
+                            <span className="text-[11px] font-bold">商城购药双签流程</span>
+                            <ChevronRight className={cn('w-3 h-3 ml-auto transition-transform', overdueState.expandedPath === 'buying' && 'rotate-90')} />
+                          </div>
+                        </button>
+
+                        {overdueState.expandedPath === 'buying' && (
+                          <div className="p-2 rounded-lg bg-forest-50 border border-forest-100 space-y-2 animate-in fade-in">
+                            {overdueState.buyStep === 0 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-forest-800 flex items-center gap-1">
+                                  <Pill className="w-3 h-3" /> 第一步：确认药品
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-1">
+                                  <p className="text-[11px] font-bold text-gray-900">{medicineInfo.name}</p>
+                                  <p className="text-[10px] text-gray-600">{medicineInfo.dosage} · {medicineInfo.spec}</p>
+                                  <p className="text-[11px] font-bold text-forest-600">{medicineInfo.price}</p>
+                                </div>
+                                <button
+                                  onClick={() => updateOverdueState(r.id, { buyStep: 1 })}
+                                  className="w-full py-1.5 rounded-lg bg-forest-500 hover:bg-forest-600 text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1"
+                                >
+                                  确认药品 <ArrowRight className="w-3 h-3" />
+                                </button>
+                              </div>
+                            )}
+
+                            {overdueState.buyStep === 1 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-forest-800 flex items-center gap-1">
+                                  <FileCheck className="w-3 h-3" /> 第二步：宠主知情确认
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-2">
+                                  <label className="flex items-start gap-1.5 cursor-pointer">
+                                    <input
+                                      type="checkbox"
+                                      checked={overdueState.ownerAcknowledge}
+                                      onChange={(e) => updateOverdueState(r.id, { ownerAcknowledge: e.target.checked })}
+                                      className="mt-0.5 text-forest-600"
+                                    />
+                                    <span className="text-[10px] text-gray-700 leading-relaxed">
+                                      我已了解药品适应症、用法用量、不良反应。拜宠清用于治疗犬猫的线虫、绦虫感染，口服给药，每3个月一次。不良反应可能包括呕吐、腹泻等胃肠道反应。
+                                    </span>
+                                  </label>
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { buyStep: 0 })}
+                                    className="py-1.5 px-3 rounded-lg bg-white text-gray-600 text-[11px] font-bold border border-gray-200 transition-colors"
+                                  >
+                                    上一步
+                                  </button>
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { buyStep: 2 })}
+                                    disabled={!overdueState.ownerAcknowledge}
+                                    className={cn(
+                                      'flex-1 py-1.5 rounded-lg text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1',
+                                      overdueState.ownerAcknowledge ? 'bg-forest-500 hover:bg-forest-600' : 'bg-gray-300 cursor-not-allowed'
+                                    )}
+                                  >
+                                    宠主已确认 <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.buyStep === 2 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-forest-800 flex items-center gap-1">
+                                  <User className="w-3 h-3" /> 第三步：执业兽医师确认
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-1.5">
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 rounded-full bg-forest-100 flex items-center justify-center">
+                                      <User className="w-4 h-4 text-forest-600" />
+                                    </div>
+                                    <div>
+                                      <p className="text-[11px] font-bold text-gray-900">{doctorInfo.name}</p>
+                                      <p className="text-[9px] text-gray-500">{doctorInfo.title} · 执照{doctorInfo.license}</p>
+                                    </div>
+                                    <CheckCircle2 className="w-4 h-4 text-forest-500 ml-auto" />
+                                  </div>
+                                  <div className="pt-1.5 border-t border-gray-100">
+                                    <p className="text-[9px] text-gray-500">医生签名确认时间</p>
+                                    <p className="text-[10px] font-mono text-gray-700">{doctorInfo.signatureTime}</p>
+                                  </div>
+                                  <div className="h-8 flex items-center justify-end">
+                                    <div className="text-[18px] font-cursive text-forest-700 opacity-80" style={{ fontFamily: 'cursive' }}>王建国</div>
+                                  </div>
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { buyStep: 1 })}
+                                    className="py-1.5 px-3 rounded-lg bg-white text-gray-600 text-[11px] font-bold border border-gray-200 transition-colors"
+                                  >
+                                    上一步
+                                  </button>
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { buyStep: 3, doctorConfirm: true })}
+                                    className="flex-1 py-1.5 rounded-lg bg-forest-500 hover:bg-forest-600 text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1"
+                                  >
+                                    处方已生效 <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.buyStep === 3 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-forest-800 flex items-center gap-1">
+                                  <Package className="w-3 h-3" /> 第四步：完成
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-1">
+                                  <div className="flex items-center gap-1">
+                                    <CheckCircle2 className="w-4 h-4 text-forest-500" />
+                                    <p className="text-[11px] font-bold text-gray-900">订单已创建</p>
+                                  </div>
+                                  <p className="text-[10px] text-gray-600">预计明日送达 · 可在商城订单查看</p>
+                                  <p className="text-[9px] text-gray-500 font-mono">订单号：DD-20260617-00123</p>
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => {
+                                      markProgress(r.id);
+                                      handleOverdueAction(r.id, 'purchased');
+                                      updateOverdueState(r.id, { buyStep: 4, expandedPath: 'completed' });
+                                    }}
+                                    className="flex-1 py-1.5 rounded-lg bg-forest-500 hover:bg-forest-600 text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1"
+                                  >
+                                    <CheckCircle2 className="w-3 h-3" /> 完成处置
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.buyStep < 3 && (
+                              <button
+                                onClick={() => resetPath(r.id)}
+                                className="w-full text-[9px] text-gray-500 hover:text-gray-700 text-center"
+                              >
+                                取消
+                              </button>
+                            )}
+                          </div>
+                        )}
+
+                        <button
+                          onClick={() => updateOverdueState(r.id, { expandedPath: overdueState.expandedPath === 'booking' ? 'none' : 'booking' })}
+                          className={cn(
+                            'w-full p-2 rounded-lg text-left transition-all',
+                            overdueState.expandedPath === 'booking'
+                              ? 'bg-blue-500 text-white'
+                              : 'bg-white/80 hover:bg-white text-gray-800 border border-gray-200/60'
+                          )}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span className="text-[11px] font-bold">预约医院驱虫处置</span>
+                            <ChevronRight className={cn('w-3 h-3 ml-auto transition-transform', overdueState.expandedPath === 'booking' && 'rotate-90')} />
+                          </div>
+                        </button>
+
+                        {overdueState.expandedPath === 'booking' && (
+                          <div className="p-2 rounded-lg bg-blue-50 border border-blue-100 space-y-2 animate-in fade-in">
+                            {overdueState.bookingStep === 0 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-blue-800 flex items-center gap-1">
+                                  <MapPin className="w-3 h-3" /> 选择医院
+                                </p>
+                                {hospitals.map(h => (
+                                  <button
+                                    key={h.id}
+                                    onClick={() => updateOverdueState(r.id, { selectedHospital: h.id, bookingStep: 1 })}
+                                    className={cn(
+                                      'w-full p-2 rounded-lg text-left transition-all',
+                                      overdueState.selectedHospital === h.id
+                                        ? 'bg-blue-500 text-white'
+                                        : 'bg-white hover:bg-gray-50 text-gray-800 border border-gray-200'
+                                    )}
+                                  >
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
+                                        <MapPin className="w-4 h-4 text-blue-600" />
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                        <p className="text-[11px] font-bold">{h.name}</p>
+                                        <div className="flex items-center gap-1.5 text-[9px] opacity-80">
+                                          <span>{h.distance}</span>
+                                          <span>·</span>
+                                          <div className="flex items-center gap-0.5">
+                                            <Star className="w-2.5 h-2.5 fill-current" />
+                                            <span>{h.rating}</span>
+                                          </div>
+                                        </div>
+                                        <p className="text-[9px] opacity-70 truncate">{h.address}</p>
+                                      </div>
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+
+                            {overdueState.bookingStep === 1 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-blue-800 flex items-center gap-1">
+                                  <Clock className="w-3 h-3" /> 选择时间
+                                </p>
+                                <div className="grid grid-cols-3 gap-1.5">
+                                  {timeSlots.map(t => (
+                                    <button
+                                      key={t.id}
+                                      onClick={() => updateOverdueState(r.id, { selectedTime: t.id })}
+                                      className={cn(
+                                        'py-2 rounded-lg text-[10px] font-bold transition-all',
+                                        overdueState.selectedTime === t.id
+                                          ? 'bg-blue-500 text-white'
+                                          : 'bg-white text-gray-800 border border-gray-200 hover:bg-blue-50'
+                                      )}
+                                    >
+                                      {t.time}
+                                    </button>
+                                  ))}
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { bookingStep: 0 })}
+                                    className="py-1.5 px-3 rounded-lg bg-white text-gray-600 text-[11px] font-bold border border-gray-200 transition-colors"
+                                  >
+                                    上一步
+                                  </button>
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { bookingStep: 2 })}
+                                    disabled={!overdueState.selectedTime}
+                                    className={cn(
+                                      'flex-1 py-1.5 rounded-lg text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1',
+                                      overdueState.selectedTime ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-300 cursor-not-allowed'
+                                    )}
+                                  >
+                                    提交预约 <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.bookingStep === 2 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-blue-800 flex items-center gap-1">
+                                  <CheckCircle2 className="w-3 h-3" /> 确认预约
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-1.5">
+                                  <label className="flex items-start gap-1.5 cursor-pointer">
+                                    <input
+                                      type="checkbox"
+                                      checked={overdueState.bookingConfirmed}
+                                      onChange={(e) => updateOverdueState(r.id, { bookingConfirmed: e.target.checked })}
+                                      className="mt-0.5 text-blue-600"
+                                    />
+                                    <span className="text-[10px] text-gray-700">宠主确认：我已确认预约时间和医院信息</span>
+                                  </label>
+                                  <label className="flex items-start gap-1.5 cursor-pointer">
+                                    <input
+                                      type="checkbox"
+                                      checked={overdueState.hospitalConfirmed}
+                                      onChange={(e) => updateOverdueState(r.id, { hospitalConfirmed: e.target.checked })}
+                                      className="mt-0.5 text-blue-600"
+                                    />
+                                    <span className="text-[10px] text-gray-700">医院确认：医院已确认该时段可接诊</span>
+                                  </label>
+                                  <label className="flex items-start gap-1.5 cursor-pointer">
+                                    <input
+                                      type="checkbox"
+                                      checked={overdueState.reminderSet}
+                                      onChange={(e) => updateOverdueState(r.id, { reminderSet: e.target.checked })}
+                                      className="mt-0.5 text-blue-600"
+                                    />
+                                    <span className="text-[10px] text-gray-700">到店提醒：服务前2小时推送提醒</span>
+                                  </label>
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { bookingStep: 1 })}
+                                    className="py-1.5 px-3 rounded-lg bg-white text-gray-600 text-[11px] font-bold border border-gray-200 transition-colors"
+                                  >
+                                    上一步
+                                  </button>
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { bookingStep: 3 })}
+                                    disabled={!overdueState.bookingConfirmed || !overdueState.hospitalConfirmed}
+                                    className={cn(
+                                      'flex-1 py-1.5 rounded-lg text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1',
+                                      overdueState.bookingConfirmed && overdueState.hospitalConfirmed ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-300 cursor-not-allowed'
+                                    )}
+                                  >
+                                    确认预约 <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.bookingStep === 3 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-blue-800 flex items-center gap-1">
+                                  <CheckCircle2 className="w-3 h-3" /> 完成
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-1">
+                                  <div className="flex items-center gap-1">
+                                    <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                                    <p className="text-[11px] font-bold text-gray-900">预约成功</p>
+                                  </div>
+                                  <p className="text-[10px] text-gray-600">服务前2小时推送提醒</p>
+                                  <p className="text-[9px] text-gray-500 font-mono">预约号：YY-20260617-00045</p>
+                                  {overdueState.reminderSet && (
+                                    <p className="text-[9px] text-blue-600 flex items-center gap-0.5">
+                                      <Bell className="w-2.5 h-2.5" /> 已开启到店提醒
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => {
+                                      markProgress(r.id);
+                                      handleOverdueAction(r.id, 'booked');
+                                      updateOverdueState(r.id, { bookingStep: 4, expandedPath: 'completed' });
+                                    }}
+                                    className="flex-1 py-1.5 rounded-lg bg-blue-500 hover:bg-blue-600 text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1"
+                                  >
+                                    <CheckCircle2 className="w-3 h-3" /> 完成处置
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.bookingStep < 3 && (
+                              <button
+                                onClick={() => resetPath(r.id)}
+                                className="w-full text-[9px] text-gray-500 hover:text-gray-700 text-center"
+                              >
+                                取消
+                              </button>
+                            )}
+                          </div>
+                        )}
+
+                        <button
+                          onClick={() => updateOverdueState(r.id, { expandedPath: overdueState.expandedPath === 'consultation' ? 'none' : 'consultation' })}
+                          className={cn(
+                            'w-full p-2 rounded-lg text-left transition-all',
+                            overdueState.expandedPath === 'consultation'
+                              ? 'bg-purple-500 text-white'
+                              : 'bg-white/80 hover:bg-white text-gray-800 border border-gray-200/60'
+                          )}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            <Stethoscope className="w-3.5 h-3.5" />
+                            <span className="text-[11px] font-bold">问诊复诊追踪</span>
+                            <ChevronRight className={cn('w-3 h-3 ml-auto transition-transform', overdueState.expandedPath === 'consultation' && 'rotate-90')} />
+                          </div>
+                        </button>
+
+                        {overdueState.expandedPath === 'consultation' && (
+                          <div className="p-2 rounded-lg bg-purple-50 border border-purple-100 space-y-2 animate-in fade-in">
+                            {overdueState.consultationStep === 0 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-purple-800 flex items-center gap-1">
+                                  <Stethoscope className="w-3 h-3" /> 第一步：在线问诊
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-1.5">
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                                      <User className="w-4 h-4 text-purple-600" />
+                                    </div>
+                                    <div>
+                                      <p className="text-[11px] font-bold text-gray-900">{doctorInfo.name}</p>
+                                      <p className="text-[9px] text-gray-500">{doctorInfo.title} · 在线</p>
+                                    </div>
+                                    <div className="w-2 h-2 rounded-full bg-forest-500 ml-auto" />
+                                  </div>
+                                  <p className="text-[10px] text-gray-600">
+                                    医生将询问宠物体征、近期健康状况，为您开具合适的驱虫处方。
+                                  </p>
+                                </div>
+                                <button
+                                  onClick={() => updateOverdueState(r.id, { consultationStep: 1 })}
+                                  className="w-full py-1.5 rounded-lg bg-purple-500 hover:bg-purple-600 text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1"
+                                >
+                                  开始在线问诊 <ArrowRight className="w-3 h-3" />
+                                </button>
+                              </div>
+                            )}
+
+                            {overdueState.consultationStep === 1 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-purple-800 flex items-center gap-1">
+                                  <FileCheck className="w-3 h-3" /> 第二步：医生开具驱虫处方
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-1.5">
+                                  <p className="text-[11px] font-bold text-gray-900">处方详情</p>
+                                  <div className="p-1.5 rounded-lg bg-purple-50 space-y-0.5">
+                                    <p className="text-[10px] font-semibold text-purple-800">{medicineInfo.name}</p>
+                                    <p className="text-[9px] text-gray-600">{medicineInfo.dosage} · {medicineInfo.spec} · {medicineInfo.price}</p>
+                                    <p className="text-[9px] text-gray-500">用法：口服，每3个月一次</p>
+                                  </div>
+                                  <p className="text-[9px] text-gray-500 font-mono">处方号：RX-20260617-00089</p>
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { consultationStep: 0 })}
+                                    className="py-1.5 px-3 rounded-lg bg-white text-gray-600 text-[11px] font-bold border border-gray-200 transition-colors"
+                                  >
+                                    上一步
+                                  </button>
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { consultationStep: 2 })}
+                                    className="flex-1 py-1.5 rounded-lg bg-purple-500 hover:bg-purple-600 text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1"
+                                  >
+                                    处方已确认 <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.consultationStep === 2 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-purple-800 flex items-center gap-1">
+                                  <UserCheck className="w-3 h-3" /> 第三步：双签确认
+                                </p>
+                                <div className="p-2 rounded-lg bg-white space-y-1.5">
+                                  <div className="flex items-center justify-between p-1.5 rounded-lg bg-gray-50">
+                                    <span className="text-[10px] text-gray-600">宠主知情确认</span>
+                                    <CheckCircle2 className="w-3.5 h-3.5 text-purple-500" />
+                                  </div>
+                                  <div className="flex items-center justify-between p-1.5 rounded-lg bg-gray-50">
+                                    <span className="text-[10px] text-gray-600">医生签名确认</span>
+                                    <CheckCircle2 className="w-3.5 h-3.5 text-purple-500" />
+                                  </div>
+                                  <div className="flex justify-end gap-4 pt-1">
+                                    <div className="text-right">
+                                      <p className="text-[8px] text-gray-500">宠主签名</p>
+                                      <div className="text-[14px] font-cursive text-gray-700" style={{ fontFamily: 'cursive' }}>用户</div>
+                                    </div>
+                                    <div className="text-right">
+                                      <p className="text-[8px] text-gray-500">医生签名</p>
+                                      <div className="text-[14px] font-cursive text-purple-700" style={{ fontFamily: 'cursive' }}>王建国</div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { consultationStep: 1 })}
+                                    className="py-1.5 px-3 rounded-lg bg-white text-gray-600 text-[11px] font-bold border border-gray-200 transition-colors"
+                                  >
+                                    上一步
+                                  </button>
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { consultationStep: 3 })}
+                                    className="flex-1 py-1.5 rounded-lg bg-purple-500 hover:bg-purple-600 text-white text-[11px] font-bold transition-colors inline-flex items-center justify-center gap-1"
+                                  >
+                                    双签已完成 <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.consultationStep === 3 && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-semibold text-purple-800 flex items-center gap-1">
+                                  <Package className="w-3 h-3" /> 第四步：后续购药/预约
+                                </p>
+                                <div className="grid grid-cols-2 gap-1.5">
+                                  <button
+                                    onClick={() => {
+                                      markProgress(r.id);
+                                      handleOverdueAction(r.id, 'purchased');
+                                      updateOverdueState(r.id, { consultationStep: 4, expandedPath: 'completed' });
+                                    }}
+                                    className="p-2 rounded-lg bg-white border border-gray-200 text-left hover:bg-forest-50 hover:border-forest-200 transition-all"
+                                  >
+                                    <ShoppingCart className="w-4 h-4 text-forest-500 mb-0.5" />
+                                    <p className="text-[10px] font-bold text-gray-800">立即购药</p>
+                                    <p className="text-[8px] text-gray-500">预计明日送达</p>
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      markProgress(r.id);
+                                      handleOverdueAction(r.id, 'booked');
+                                      updateOverdueState(r.id, { consultationStep: 4, expandedPath: 'completed' });
+                                    }}
+                                    className="p-2 rounded-lg bg-white border border-gray-200 text-left hover:bg-blue-50 hover:border-blue-200 transition-all"
+                                  >
+                                    <MapPin className="w-4 h-4 text-blue-500 mb-0.5" />
+                                    <p className="text-[10px] font-bold text-gray-800">预约到店</p>
+                                    <p className="text-[8px] text-gray-500">今日可约</p>
+                                  </button>
+                                </div>
+                                <div className="flex gap-1.5">
+                                  <button
+                                    onClick={() => updateOverdueState(r.id, { consultationStep: 2 })}
+                                    className="py-1.5 px-3 rounded-lg bg-white text-gray-600 text-[11px] font-bold border border-gray-200 transition-colors"
+                                  >
+                                    上一步
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+
+                            {overdueState.consultationStep < 3 && (
+                              <button
+                                onClick={() => resetPath(r.id)}
+                                className="w-full text-[9px] text-gray-500 hover:text-gray-700 text-center"
+                              >
+                                取消
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {overdueState.expandedPath === 'completed' && (
+                    <div className="p-2 rounded-lg bg-forest-50 border border-forest-100 text-[10px] text-forest-700 space-y-1">
+                      <p className="font-bold flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> 处置完成 · 驱虫记录已更新</p>
+                      <p>下次驱虫日期已自动推算至 2026-09-17，已写入健康日历和宠物生命周期记录</p>
+                      <div className="flex gap-1.5">
+                        <button
+                          onClick={() => navigate('/calendar')}
+                          className="text-[9px] font-bold text-forest-600 hover:underline inline-flex items-center gap-0.5"
+                        >
+                          查看日历 <ChevronRight className="w-2.5 h-2.5" />
+                        </button>
+                        <button
+                          onClick={() => navigate(`/pets/1`)}
+                          className="text-[9px] font-bold text-forest-600 hover:underline inline-flex items-center gap-0.5"
+                        >
+                          查看宠物档案 <ChevronRight className="w-2.5 h-2.5" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             return (
               <div key={r.id} className={cn('p-3 rounded-xl bg-gradient-to-br border space-y-2', r.color)}>
                 <div className="flex items-center justify-between">
@@ -375,7 +1185,12 @@ export default function PetList() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredPets.map((pet) => (
-            <PetCard key={pet.id} pet={pet} />
+            <PetCard
+              key={pet.id}
+              pet={pet}
+              updatedDewormingRecord={updatedDewormingRecords[pet.id]}
+              timelineUpdates={petTimelineUpdates[pet.id] || []}
+            />
           ))}
         </div>
       )}
