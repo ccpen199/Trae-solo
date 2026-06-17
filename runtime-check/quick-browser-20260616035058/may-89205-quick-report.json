@@ -1,0 +1,36 @@
+{
+  "order": "may-89205",
+  "frontendUrl": "http://127.0.0.1:49205/",
+  "backendUrl": "http://127.0.0.1:59205",
+  "status": 200,
+  "frontendOk": true,
+  "backendHealth": {
+    "url": "http://127.0.0.1:59205/api/health",
+    "status": 200,
+    "ok": true,
+    "ms": 13,
+    "preview": "{\"code\":200,\"message\":\"ok\",\"data\":{\"status\":\"healthy\"}}"
+  },
+  "login": {
+    "attempted": false
+  },
+  "finalUrl": "http://127.0.0.1:49205/",
+  "title": "松江城市生活服务中台",
+  "markerHits": {
+    "松江": true,
+    "餐饮": true,
+    "运营后台": true,
+    "商户": true,
+    "套餐": true
+  },
+  "markerHitCount": 5,
+  "consoleErrorCount": 0,
+  "requestFailureCount": 0,
+  "apiResponseErrorCount": 0,
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "bodyPreview": "松江生活 松江区 我的订单 运营后台 您在松江区 · 服务可用 发现松江好生活 商户入驻 入驻流程说明 餐饮 娱乐 休闲 商超 商户入驻 运营后台 我的订单 商圈热力图 松江区内 · 服务可用 定位状态可验收面板 实时同步 LBS 数据 定位来源 默认松江 (31.030, 121.220) 定位精度 ±1000m 默认中心点 围栏校验 ✅ 通过 松江区围栏内 当前定位下商圈TOP5热力排序（可追溯） 1 方松街道 +22% 2 广富林街道 +18% 3 中山街道 +15% 4 岳阳街道 +12% 5 泗泾镇 +10% 排序公式：热度40% + 评分30% + 距离衰减30%，切换定位来源后TOP5权重实时变化 定位来源： 默认松江 · (31.0300, 121.2200) · 精度±1000m 兜底切换： 默认松江 GPS卫星 基站三角 围栏校验： 通过·松江区内 排序权重：热度40%+评分30%+距离衰减30% 松江商圈热度排行 1 方松街道 · 128 · 87% 2 广富林街道 · 96 · 82% 3 中山街道 · 112 · 75% 4 岳阳街道 · 85 · 70% 5",
+  "navError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89205/runtime-check/quick-browser-20260616035058/may-89205.png"
+}

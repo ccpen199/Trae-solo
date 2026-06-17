@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #165DFF;
+    --color-primary-light: #4080FF;
+    --color-primary-dark: #0E42D2;
+    --color-secondary: #00B42A;
+    --color-secondary-light: #23C343;
+    --color-accent: #FF7D00;
+    --color-accent-light: #FF9A2E;
+    --color-danger: #F53F3F;
+    --color-text-primary: #1D2129;
+    --color-text-secondary: #4E5969;
+    --color-text-tertiary: #86909C;
+    --color-border: #E5E6EB;
+    --color-bg-primary: #FFFFFF;
+    --color-bg-secondary: #F7F8FA;
+    --color-bg-tertiary: #F2F3F5;
+    font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  }
+
+  body {
+    @apply bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] antialiased;
+    line-height: 1.6;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .font-serif-title {
+    font-family: "Noto Serif SC", serif;
+  }
+
+  .btn-primary {
+    @apply bg-[var(--color-primary)] text-white rounded-lg px-5 py-2.5 font-medium
+    transition-all duration-200 hover:bg-[var(--color-primary-light)] hover:shadow-lg
+    active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none;
+  }
+
+  .btn-secondary {
+    @apply bg-[var(--color-secondary)] text-white rounded-lg px-5 py-2.5 font-medium
+    transition-all duration-200 hover:bg-[var(--color-secondary-light)] hover:shadow-lg
+    active:scale-95;
+  }
+
+  .btn-accent {
+    @apply bg-[var(--color-accent)] text-white rounded-lg px-5 py-2.5 font-medium
+    transition-all duration-200 hover:bg-[var(--color-accent-light)] hover:shadow-lg
+    active:scale-95;
+  }
+
+  .btn-outline {
+    @apply border border-[var(--color-primary)] text-[var(--color-primary)] rounded-lg px-5 py-2.5 font-medium
+    transition-all duration-200 hover:bg-[var(--color-primary)] hover:text-white
+    active:scale-95;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-[var(--color-border)]
+    transition-all duration-200 hover:shadow-md;
+  }
+
+  .badge-discount {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+    bg-red-50 text-[var(--color-danger)];
+  }
+
+  .badge-tag {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+    bg-blue-50 text-[var(--color-primary)];
+  }
+
+  .section-title {
+    @apply font-serif-title text-xl font-semibold text-[var(--color-text-primary)];
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-[var(--color-border)] px-4 py-2.5 text-sm
+    transition-colors duration-200 focus:border-[var(--color-primary)] focus:outline-none
+    focus:ring-2 focus:ring-primary/20;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out forwards;
+  }
+
+  .animate-pulse-soft {
+    animation: pulseSoft 2s ease-in-out infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
