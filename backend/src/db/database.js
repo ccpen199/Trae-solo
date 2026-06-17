@@ -1,6 +1,7 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
+const dayjs = require('dayjs');
 
 const dataDir = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(dataDir)) {
@@ -121,8 +122,11 @@ function initDatabase() {
       reason TEXT,
       status TEXT DEFAULT 'pending',
       review_result TEXT,
+      reviewed_by TEXT,
       reviewed_at DATETIME,
       triggered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      coupon_verified INTEGER DEFAULT 0,
+      coupon_sent_at DATETIME,
       FOREIGN KEY (order_id) REFERENCES orders(id),
       FOREIGN KEY (merchant_id) REFERENCES merchants(id)
     );
@@ -227,6 +231,32 @@ function initDatabase() {
     insertMerchant.run('鲜果时光', '李老板', '13800138002', '北京市海淀区中关村大街1号', 39.9847, 116.3056, 3200);
   }
 
+  try {
+    const nullOrders = db.prepare("SELECT id FROM orders WHERE created_at IS NULL").all();
+    if (nullOrders.length > 0) {
+      const stmt = db.prepare("UPDATE orders SET created_at = ? WHERE id = ?");
+      const now = dayjs();
+      let count = 0;
+      nullOrders.forEach((r, idx) => {
+        const t = now.subtract(5 + r.id * 12, 'minute').format('YYYY-MM-DD HH:mm:ss');
+        const info = stmt.run(t, r.id);
+        count += info.changes;
+      });
+      db.pragma('wal_checkpoint(TRUNCATE)');
+      console.log(`✅ 自动填充 ${count} 条订单的 created_at 字段`);
+      const verify = db.prepare("SELECT id, created_at FROM orders WHERE created_at IS NULL").all();
+      if (verify.length > 0) {
+        console.log('⚠️  仍有 NULL 的 created_at:', verify);
+      }
+    }
+  } catch (e) {
+    console.log('created_at migration skip:', e.message)
+  }
+
+  try {
+    db.pragma('wal_checkpoint(TRUNCATE)');
+  } catch (e) {}
+
   const orderCount = db.prepare('SELECT COUNT(*) as count FROM orders').get().count;
   if (orderCount === 0) {
     const insertOrder = db.prepare(`
@@ -234,31 +264,32 @@ function initDatabase() {
         sender_lat, sender_lng, receiver_name, receiver_phone, receiver_address,
         receiver_lat, receiver_lng, goods_name, goods_weight, goods_value, distance,
         expected_delivery_time, urgency, total_fee, platform_fee, platform_id,
-        platform_order_no, status, delivery_status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        platform_order_no, status, delivery_status, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
+    const now = dayjs();
     const sampleOrders = [
       ['DD202401150001', 1, '张经理', '13800138001', '北京市朝阳区建国路88号', 39.9087, 116.4572,
         '王女士', '13900139001', '北京市东城区王府井大街138号', 39.9147, 116.4107,
         '玫瑰花束', 0.5, 299, 5.2, 45, 'normal', 28, 26.6, 1, 'DADA20240115001',
-        'assigned', 'delivering'],
+        'assigned', 'delivering', now.subtract(15, 'minute').format('YYYY-MM-DD HH:mm:ss')],
       ['DD202401150002', 1, '张经理', '13800138001', '北京市朝阳区建国路88号', 39.9087, 116.4572,
         '李先生', '13900139002', '北京市西城区西单北大街120号', 39.9128, 116.3763,
         '生日蛋糕', 1.2, 198, 8.5, 60, 'urgent', 42, 39.5, 2, 'SF20240115002',
-        'assigned', 'picked'],
+        'assigned', 'picked', now.subtract(45, 'minute').format('YYYY-MM-DD HH:mm:ss')],
       ['DD202401150003', 2, '李老板', '13800138002', '北京市海淀区中关村大街1号', 39.9847, 116.3056,
         '赵先生', '13900139003', '北京市西城区金融街7号', 39.9145, 116.3627,
         '水果礼盒', 3, 158, 12.3, 90, 'normal', 38, 36.2, 4, 'MT20240115003',
-        'pending', 'pending'],
+        'pending', 'pending', now.subtract(80, 'minute').format('YYYY-MM-DD HH:mm:ss')],
       ['DD202401150004', 1, '张经理', '13800138001', '北京市朝阳区建国路88号', 39.9087, 116.4572,
         '陈女士', '13900139004', '北京市丰台区丰台路1号', 39.8639, 116.2869,
         '文件资料', 0.3, 50, 18.6, 120, 'normal', 52, 49.4, 3, 'SS20240115004',
-        'assigned', 'delivered'],
+        'assigned', 'delivered', now.subtract(180, 'minute').format('YYYY-MM-DD HH:mm:ss')],
       ['DD202401150005', 2, '李老板', '13800138002', '北京市海淀区中关村大街1号', 39.9847, 116.3056,
         '周先生', '13900139005', '北京市朝阳区三里屯路19号', 39.9367, 116.4556,
         '进口水果', 2.5, 268, 10.1, 75, 'urgent', 45, 42.8, 3, 'SS20240115005',
-        'assigned', 'delivering'],
+        'assigned', 'delivering', now.subtract(60, 'minute').format('YYYY-MM-DD HH:mm:ss')],
     ];
 
     for (const o of sampleOrders) {
@@ -354,30 +385,34 @@ function ensureDemoWorkflowData() {
     for (const item of snapshots) {
       const hours = 8 + item.id;
       const minutes = (item.id * 17) % 60;
-      const createOffset = `start of day, +${hours} hours, +${minutes} minutes`;
+      const now = dayjs();
+      const createTime = now.startOf('day').add(hours, 'hour').add(minutes, 'minute').format('YYYY-MM-DD HH:mm:ss');
+      const etaTime = item.etaOffset ? now.add(parseInt(item.etaOffset), 'minute').format('YYYY-MM-DD HH:mm:ss') : null;
+      const pickedTime = item.pickedOffset ? now.add(parseInt(item.pickedOffset), 'minute').format('YYYY-MM-DD HH:mm:ss') : null;
+      const deliveredTime = item.deliveredOffset ? now.add(parseInt(item.deliveredOffset), 'minute').format('YYYY-MM-DD HH:mm:ss') : null;
+      const updateTime = now.format('YYYY-MM-DD HH:mm:ss');
       db.prepare(`
         UPDATE orders
         SET status = ?,
             delivery_status = ?,
-            created_at = datetime('now', ?),
-            estimated_arrival_time = datetime('now', ?),
-            picked_up_at = CASE WHEN ? IS NULL THEN picked_up_at ELSE datetime('now', ?) END,
-            delivered_at = CASE WHEN ? IS NULL THEN delivered_at ELSE datetime('now', ?) END,
+            created_at = ?,
+            estimated_arrival_time = ?,
+            picked_up_at = CASE WHEN ? IS NULL THEN picked_up_at ELSE ? END,
+            delivered_at = CASE WHEN ? IS NULL THEN delivered_at ELSE ? END,
             rider_name = ?,
             rider_phone = ?,
-            updated_at = datetime('now')
+            updated_at = ?
         WHERE id = ?
       `).run(
         item.status,
         item.deliveryStatus,
-        createOffset,
-        item.etaOffset,
-        item.pickedOffset,
-        item.pickedOffset,
-        item.deliveredOffset || null,
-        item.deliveredOffset || null,
+        createTime,
+        etaTime,
+        item.pickedOffset ? 1 : null, pickedTime,
+        item.deliveredOffset ? 1 : null, deliveredTime,
         item.riderName,
         item.riderPhone,
+        updateTime,
         item.id
       );
     }
@@ -385,22 +420,24 @@ function ensureDemoWorkflowData() {
 
   const afterSalesCount = db.prepare('SELECT COUNT(*) as count FROM after_sales').get().count;
   if (afterSalesCount === 0) {
+    const now = dayjs();
     db.prepare(`
       INSERT INTO after_sales (order_id, type, reason, status, platform_ack, result, disposal_result, disposed_at, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now', ?), datetime('now', ?))
-    `).run(5, 'complaint', '配送已超过预计送达时间，商户要求平台说明并触发SLA复核', 'accepted', 1, '平台已受理，预计30分钟内给出处置结果', '骑手已致歉并补偿，商户满意', '-5 minutes', '-10 minutes');
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(5, 'complaint', '配送已超过预计送达时间，商户要求平台说明并触发SLA复核', 'accepted', 1, '平台已受理，预计30分钟内给出处置结果', '骑手已致歉并补偿，商户满意', now.subtract(5, 'minute').format('YYYY-MM-DD HH:mm:ss'), now.subtract(10, 'minute').format('YYYY-MM-DD HH:mm:ss'));
 
     db.prepare(`
       INSERT INTO after_sales (order_id, type, reason, new_address, status, platform_ack, result, change_fee, fee_confirmed, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
-    `).run(2, 'address_change', '客户临时改到同小区北门', '北京市西城区西单北大街120号北门', 'processing', 0, '等待承运平台确认改址费用', 3.5, 0, '-4 minutes');
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(2, 'address_change', '客户临时改到同小区北门', '北京市西城区西单北大街120号北门', 'processing', 0, '等待承运平台确认改址费用', 3.5, 0, now.subtract(4, 'minute').format('YYYY-MM-DD HH:mm:ss'));
   }
 
   const compensationCount = db.prepare('SELECT COUNT(*) as count FROM compensations').get().count;
   if (compensationCount === 0) {
+    const now = dayjs();
     const insertCompensation = db.prepare(`
-      INSERT INTO compensations (order_id, merchant_id, type, amount, coupon_code, reason, status, review_result, reviewed_at, triggered_at, coupon_verified, coupon_sent_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?), ?, datetime('now', ?))
+      INSERT INTO compensations (order_id, merchant_id, type, amount, coupon_code, reason, status, review_result, reviewed_by, reviewed_at, triggered_at, coupon_verified, coupon_sent_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     insertCompensation.run(
@@ -411,11 +448,12 @@ function ensureDemoWorkflowData() {
       'CPFAST1505',
       '预计送达已超时12分钟，自动触发SLA补偿券',
       'issued',
-      null,
-      null,
-      '-8 minutes',
+      '系统自动超时赔付',
+      '系统自动',
+      now.subtract(8, 'minute').format('YYYY-MM-DD HH:mm:ss'),
+      now.subtract(10, 'minute').format('YYYY-MM-DD HH:mm:ss'),
       1,
-      '-6 minutes'
+      now.subtract(6, 'minute').format('YYYY-MM-DD HH:mm:ss')
     );
     insertCompensation.run(
       4,
@@ -426,10 +464,11 @@ function ensureDemoWorkflowData() {
       '客户投诉骑手未提前电话联系，复核后确认补偿',
       'reviewed',
       '复核通过，补偿券已发放给商户账户',
-      new Date(Date.now() - 25 * 60 * 1000).toISOString(),
-      '-40 minutes',
+      '运营-张主管',
+      now.subtract(25, 'minute').format('YYYY-MM-DD HH:mm:ss'),
+      now.subtract(40, 'minute').format('YYYY-MM-DD HH:mm:ss'),
       1,
-      '-30 minutes'
+      now.subtract(30, 'minute').format('YYYY-MM-DD HH:mm:ss')
     );
     insertCompensation.run(
       2,
@@ -441,7 +480,8 @@ function ensureDemoWorkflowData() {
       'review_pending',
       null,
       null,
-      '-3 minutes',
+      null,
+      now.subtract(3, 'minute').format('YYYY-MM-DD HH:mm:ss'),
       0,
       null
     );
@@ -449,18 +489,19 @@ function ensureDemoWorkflowData() {
 
   const settlementCount = db.prepare('SELECT COUNT(*) as count FROM settlements').get().count;
   if (settlementCount === 0) {
-    const period = new Date().toISOString().slice(0, 7);
+    const period = dayjs().format('YYYY-MM');
+    const now = dayjs();
     const insertSettlement = db.prepare(`
       INSERT INTO settlements (settlement_no, merchant_id, platform_id, period, total_orders, total_amount, commission_amount, settlement_amount, status, has_exception, exception_count, exception_amount, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', ?))
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     const platformSettlements = [
-      [1, 8, 15, 2580.5, 129.03, 2451.47, 'pending', 0, 0, 0, '-3 days'],
-      [1, 1, 12, 1856.0, 92.80, 1763.20, 'reconciled', 0, 0, 0, '-5 days'],
-      [1, 3, 23, 3850.75, 269.55, 3581.20, 'pending', 1, 3, 42.50, '-2 days'],
-      [2, 2, 18, 2940.0, 176.40, 2763.60, 'paid', 0, 0, 0, '-10 days'],
-      [2, 4, 9, 1260.5, 56.72, 1203.78, 'pending', 1, 1, 15.00, '-1 days'],
+      [1, 8, 15, 2580.5, 129.03, 2451.47, 'pending', 0, 0, 0, 3],
+      [1, 1, 12, 1856.0, 92.80, 1763.20, 'reconciled', 0, 0, 0, 5],
+      [1, 3, 23, 3850.75, 269.55, 3581.20, 'pending', 1, 3, 42.50, 2],
+      [2, 2, 18, 2940.0, 176.40, 2763.60, 'paid', 0, 0, 0, 10],
+      [2, 4, 9, 1260.5, 56.72, 1203.78, 'pending', 1, 1, 15.00, 1],
     ];
 
     platformSettlements.forEach((s, idx) => {
@@ -477,7 +518,7 @@ function ensureDemoWorkflowData() {
         s[7],
         s[8],
         s[9],
-        s[10]
+        now.subtract(s[10], 'day').format('YYYY-MM-DD HH:mm:ss')
       );
     });
   }
@@ -491,8 +532,8 @@ function ensureDemoWorkflowData() {
     if (!exists) {
       db.prepare(`
         INSERT INTO order_tracks (order_id, status, description, location, created_at)
-        VALUES (?, ?, ?, ?, datetime('now'))
-      `).run(orderId, status, description, location);
+        VALUES (?, ?, ?, ?, ?)
+      `).run(orderId, status, description, location, dayjs().format('YYYY-MM-DD HH:mm:ss'));
     }
   };
 

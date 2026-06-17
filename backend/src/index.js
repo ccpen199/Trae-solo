@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 const db = require('./db/database');
+const { calculateScore, calculatePlatformFee, calculateDeliveryTime } = require('./services/routingService');
 
 const platformsRouter = require('./routes/platforms');
 const ordersRouter = require('./routes/orders');
@@ -52,7 +53,12 @@ app.get('/api/dashboard/summary', (req, res) => {
       (SELECT COUNT(*) FROM after_sales WHERE status = 'processing') as pending_after_sales,
       (SELECT COUNT(*) FROM compensations WHERE status = 'pending') as pending_compensations,
       (SELECT COUNT(*) FROM platforms WHERE status = 'active') as active_platforms,
-      (SELECT COUNT(*) FROM merchants WHERE status = 'active') as active_merchants
+      (SELECT COUNT(*) FROM merchants WHERE status = 'active') as active_merchants,
+      (SELECT COUNT(*) FROM orders WHERE delivery_status = 'delivered') as kanban_delivered,
+      (SELECT COUNT(*) FROM orders WHERE delivery_status IN ('delivering', 'picked')) as kanban_delivering,
+      (SELECT COUNT(*) FROM orders WHERE delivery_status IN ('pending', 'assigned') 
+         OR EXISTS (SELECT 1 FROM after_sales a WHERE a.order_id = orders.id AND a.status IN ('processing', 'accepted'))
+      ) as kanban_pending
   `).get();
 
   const recentOrders = db.prepare(`
@@ -69,22 +75,50 @@ app.get('/api/dashboard/summary', (req, res) => {
 
   const afterSalesList = db.prepare(`
     SELECT a.*, o.order_no, o.platform_id, p.name as platform_name, p.logo as platform_logo, m.name as merchant_name,
-      CASE WHEN a.platform_ack = 1 THEN 1 ELSE 0 END as platform_synced
+      CASE WHEN a.platform_ack = 1 THEN 1 ELSE 0 END as platform_synced,
+      CASE 
+        WHEN a.status = 'resolved' AND a.disposal_result IS NOT NULL THEN 'success'
+        WHEN a.status = 'rejected' THEN 'failed'
+        WHEN a.platform_ack = 1 THEN 'processing'
+        ELSE 'pending'
+      END as sync_status,
+      CASE
+        WHEN a.status = 'resolved' THEN '处置完成'
+        WHEN a.status = 'rejected' THEN '平台驳回'
+        WHEN a.platform_ack = 1 THEN '承运方已回执'
+        ELSE '同步中'
+      END as sync_status_text,
+      (SELECT settlement_no FROM settlements s 
+        WHERE s.platform_id = o.platform_id 
+        AND strftime('%Y-%m', COALESCE(o.created_at, o.updated_at)) = s.period
+        LIMIT 1) as related_settlement_no,
+      (SELECT id FROM settlements s 
+        WHERE s.platform_id = o.platform_id 
+        AND strftime('%Y-%m', COALESCE(o.created_at, o.updated_at)) = s.period
+        LIMIT 1) as related_settlement_id
     FROM after_sales a
     LEFT JOIN orders o ON a.order_id = o.id
     LEFT JOIN platforms p ON o.platform_id = p.id
     LEFT JOIN merchants m ON o.merchant_id = m.id
-    WHERE a.status = 'processing' OR a.status = 'accepted'
+    WHERE a.status IN ('processing', 'accepted', 'resolved', 'rejected')
     ORDER BY a.id DESC
     LIMIT 5
   `).all();
 
   const compensationList = db.prepare(`
-    SELECT c.*, o.order_no, o.platform_id, p.name as platform_name, p.logo as platform_logo
+    SELECT c.*, o.order_no, o.platform_id, p.name as platform_name, p.logo as platform_logo,
+      (SELECT settlement_no FROM settlements s 
+        WHERE s.platform_id = o.platform_id 
+        AND strftime('%Y-%m', COALESCE(o.created_at, o.updated_at)) = s.period
+        LIMIT 1) as related_settlement_no,
+      (SELECT id FROM settlements s 
+        WHERE s.platform_id = o.platform_id 
+        AND strftime('%Y-%m', COALESCE(o.created_at, o.updated_at)) = s.period
+        LIMIT 1) as related_settlement_id
     FROM compensations c
     LEFT JOIN orders o ON c.order_id = o.id
     LEFT JOIN platforms p ON o.platform_id = p.id
-    WHERE c.status = 'pending' OR c.status = 'review_pending'
+    WHERE c.status IN ('pending', 'review_pending', 'reviewed', 'issued')
     ORDER BY c.id DESC
     LIMIT 5
   `).all();
@@ -104,8 +138,9 @@ app.get('/api/dashboard/summary', (req, res) => {
     LIMIT 5
   `).all();
 
-  const platformStats = db.prepare(`
+  const platformStatsRaw = db.prepare(`
     SELECT p.id, p.name, p.logo, p.code, p.base_price, p.per_km_price, p.per_kg_price,
+      p.min_delivery_time, p.max_delivery_time,
       p.capacity_saturation, p.on_time_rate, p.loss_rate, p.complaint_rate,
       (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND DATE(o.created_at) = DATE('now')) as today_orders,
       (SELECT COUNT(*) FROM orders o WHERE o.platform_id = p.id AND o.delivery_status = 'delivered') as total_delivered,
@@ -116,6 +151,20 @@ app.get('/api/dashboard/summary', (req, res) => {
     WHERE p.status = 'active'
     ORDER BY p.id
   `).all();
+
+  const typicalDistance = 5;
+  const typicalWeight = 1;
+  const platformStats = platformStatsRaw.map(p => {
+    const routeResult = calculateScore(p, typicalDistance, typicalWeight, 'normal', null);
+    return {
+      ...p,
+      typical_fee: routeResult.fee,
+      typical_delivery_time: routeResult.deliveryTime,
+      composite_score: Number((routeResult.score * 100).toFixed(1)),
+      score_detail: routeResult.scoreDetail,
+      route_reason: routeResult.reason
+    };
+  });
 
   const alertPlatforms = platformStats.filter(p =>
     p.capacity_saturation > 0.85 || p.complaint_rate > 0.02 || p.on_time_rate < 0.9

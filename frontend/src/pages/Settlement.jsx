@@ -36,6 +36,8 @@ function Settlement() {
   const [filters, setFilters] = useState({ platform_id: '', status: '' })
   const [detailDrawer, setDetailDrawer] = useState(false)
   const [currentSettlement, setCurrentSettlement] = useState(null)
+  const [settlementCompensations, setSettlementCompensations] = useState([])
+  const [settlementAfterSales, setSettlementAfterSales] = useState([])
   const [generateModal, setGenerateModal] = useState(false)
   const [generatePeriod, setGeneratePeriod] = useState(null)
   const [reconcileModal, setReconcileModal] = useState(false)
@@ -104,6 +106,8 @@ function Settlement() {
       const res = await settlementApi.detail(item.id)
       if (res.success) {
         setCurrentSettlement(res.data)
+        setSettlementCompensations(res.data.compensations || [])
+        setSettlementAfterSales(res.data.after_sales || [])
         setDetailDrawer(true)
       }
     } catch (e) {
@@ -296,7 +300,7 @@ function Settlement() {
       title: '创建时间',
       dataIndex: 'created_at',
       width: 160,
-      render: (val) => dayjs(val).format('YYYY-MM-DD HH:mm')
+      render: (val) => val ? dayjs(val).format('YYYY-MM-DD HH:mm') : '-'
     },
     {
       title: '操作',
@@ -499,7 +503,7 @@ function Settlement() {
       <Drawer
         title="结算单详情"
         placement="right"
-        width={560}
+        width={680}
         open={detailDrawer}
         onClose={() => setDetailDrawer(false)}
       >
@@ -544,7 +548,7 @@ function Settlement() {
                 </span>
               </Descriptions.Item>
               <Descriptions.Item label="创建时间">
-                {dayjs(currentSettlement.created_at).format('YYYY-MM-DD HH:mm:ss')}
+                {currentSettlement.created_at ? dayjs(currentSettlement.created_at).format('YYYY-MM-DD HH:mm:ss') : '-'}
               </Descriptions.Item>
             </Descriptions>
 
@@ -593,6 +597,26 @@ function Settlement() {
               />
             )}
 
+            {(currentSettlement.has_exception || currentSettlement.exception_count > 0) && (
+              <Alert
+                type="error"
+                showIcon
+                style={{ marginBottom: 16 }}
+                message="承运方账单差异"
+                description={
+                  <div>
+                    <div>
+                      本结算单存在 <b style={{ color: '#ff4d4f' }}>{currentSettlement.exception_count}</b> 笔账单差异，
+                      差异金额合计 <b style={{ color: '#ff4d4f' }}>¥{Number(currentSettlement.exception_amount || 0).toFixed(2)}</b>
+                    </div>
+                    <div style={{ marginTop: 4, color: '#999', fontSize: 12 }}>
+                      建议在付款前完成差异核查，并保留承运方回执作为对账凭证
+                    </div>
+                  </div>
+                }
+              />
+            )}
+
             <div style={{ marginBottom: 8, fontWeight: 500, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>结算明细 - 按单抽佣 ({currentSettlement.items?.length || 0} 条)</span>
               <Space>
@@ -611,39 +635,191 @@ function Settlement() {
                 {
                   title: '订单号',
                   dataIndex: 'order_no',
-                  width: 130,
-                  render: t => <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{t}</span>
+                  width: 120,
+                  render: (t, r) => (
+                    <a 
+                      style={{ fontFamily: 'monospace', fontSize: 11 }}
+                      onClick={() => navigate(`/orders`)}
+                    >{t}</a>
+                  )
                 },
                 {
                   title: '配送距离',
                   dataIndex: 'distance',
-                  width: 80,
+                  width: 70,
                   render: v => v ? `${v}km` : '-'
                 },
                 {
                   title: '订单金额',
                   dataIndex: 'order_amount',
-                  width: 100,
+                  width: 80,
                   render: v => <span style={{ color: '#1677ff' }}>¥{v?.toFixed(2)}</span>
                 },
                 {
                   title: '抽佣率',
-                  width: 70,
-                  render: (_, r) => <span style={{ color: '#722ed1' }}>{((r.commission_amount / r.order_amount) * 100).toFixed(1)}%</span>
+                  width: 60,
+                  render: (_, r) => <span style={{ color: '#722ed1' }}>{r.order_amount ? ((r.commission_amount / r.order_amount) * 100).toFixed(1) : 0}%</span>
                 },
                 {
-                  title: '平台佣金',
+                  title: '佣金',
                   dataIndex: 'commission_amount',
-                  width: 90,
+                  width: 70,
                   render: v => <span style={{ color: '#52c41a', fontWeight: 500 }}>¥{v?.toFixed(2)}</span>
                 },
                 {
-                  title: '应付平台',
-                  width: 100,
+                  title: '应付',
+                  width: 75,
                   render: (_, r) => <span style={{ color: '#fa8c16' }}>¥{(r.order_amount - r.commission_amount).toFixed(2)}</span>
+                },
+                {
+                  title: '承运方回执',
+                  width: 80,
+                  render: (_, r) => {
+                    const hasAS = settlementAfterSales.find(a => a.order_id === r.order_id)
+                    if (hasAS) {
+                      return hasAS.disposed_at ? (
+                        <Tag color="green" style={{ margin: 0, fontSize: 10 }}>
+                          <CheckCircleOutlined /> 已回执
+                        </Tag>
+                      ) : (
+                        <Tag color="orange" style={{ margin: 0, fontSize: 10 }}>
+                          <SyncOutlined spin /> 处理中
+                        </Tag>
+                      )
+                    }
+                    return <span style={{ color: '#999', fontSize: 10 }}>无售后</span>
+                  }
+                },
+                {
+                  title: '赔付追溯',
+                  width: 70,
+                  render: (_, r) => {
+                    const hasComp = settlementCompensations.find(c => c.order_id === r.order_id)
+                    if (hasComp) {
+                      return (
+                        <Tag color="purple" style={{ margin: 0, fontSize: 10 }}
+                          onClick={() => navigate('/compensation')}
+                        >
+                          <GiftOutlined /> ¥{hasComp.amount?.toFixed(0)}
+                        </Tag>
+                      )
+                    }
+                    return <span style={{ color: '#bbb', fontSize: 10 }}>-</span>
+                  }
                 }
               ]}
             />
+
+            {settlementAfterSales.length > 0 && (
+              <div style={{ marginTop: 20 }}>
+                <Divider style={{ margin: '16px 0' }} />
+                <div style={{ fontWeight: 500, marginBottom: 8 }}>
+                  <CustomerServiceOutlined style={{ color: '#faad14' }} /> 售后协同记录（承运方回执）({settlementAfterSales.length} 条)
+                </div>
+                <List
+                  size="small"
+                  dataSource={settlementAfterSales}
+                  renderItem={item => (
+                    <List.Item style={{ padding: '6px 0', borderBottom: '1px solid #f0f0f0' }}>
+                      <List.Item.Meta
+                        avatar={<CustomerServiceOutlined style={{ color: '#faad14' }} />}
+                        title={
+                          <Space size={4}>
+                            <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{item.order_no}</span>
+                            <Tag color="orange" style={{ fontSize: 10, padding: '0 4px' }}>
+                              {item.type === 'address_change' ? '改址' : item.type === 'cancel' ? '取消' : item.type === 'complaint' ? '投诉' : '退款'}
+                            </Tag>
+                            {item.platform_synced ? (
+                              <Tag color="green" style={{ fontSize: 10, padding: '0 4px' }}>
+                                <CheckCircleOutlined /> 承运方已回执
+                              </Tag>
+                            ) : (
+                              <Tag color="default" style={{ fontSize: 10, padding: '0 4px' }}>
+                                <SyncOutlined spin /> 同步中
+                              </Tag>
+                            )}
+                          </Space>
+                        }
+                        description={
+                          <div style={{ fontSize: 11 }}>
+                            {item.disposal_result && (
+                              <div style={{ color: '#722ed1' }}>承运方处置结果: {item.disposal_result}</div>
+                            )}
+                            {item.disposed_at && (
+                              <div style={{ color: '#52c41a' }}>
+                                回执时间: {dayjs(item.disposed_at).format('MM-DD HH:mm')}
+                              </div>
+                            )}
+                            {item.change_fee !== undefined && (
+                              <div>改址费: ¥{Number(item.change_fee).toFixed(2)} {item.fee_confirmed ? <Tag color="green" style={{ margin: 0 }}>✓已确认</Tag> : null}</div>
+                            )}
+                          </div>
+                        }
+                      />
+                    </List.Item>
+                  )}
+                />
+              </div>
+            )}
+
+            {settlementCompensations.length > 0 && (
+              <div style={{ marginTop: 20 }}>
+                <Divider style={{ margin: '16px 0' }} />
+                <div style={{ fontWeight: 500, marginBottom: 8 }}>
+                  <GiftOutlined style={{ color: '#722ed1' }} /> SLA赔付复查记录 ({settlementCompensations.length} 条)
+                </div>
+                <List
+                  size="small"
+                  dataSource={settlementCompensations}
+                  renderItem={item => (
+                    <List.Item style={{ padding: '6px 0', borderBottom: '1px solid #f0f0f0' }}>
+                      <List.Item.Meta
+                        avatar={<GiftOutlined style={{ color: '#722ed1' }} />}
+                        title={
+                          <Space size={4}>
+                            <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{item.order_no}</span>
+                            <Tag color="purple" style={{ fontSize: 10, padding: '0 4px' }}>
+                              {item.type === 'timeout' ? '超时' : item.type === 'loss' ? '丢件' : '投诉'}
+                            </Tag>
+                            <span style={{ color: '#f5222d', fontWeight: 600, fontSize: 11 }}>¥{item.amount?.toFixed(2)}</span>
+                            {item.coupon_code && (
+                              <Tag color="green" style={{ fontSize: 10, padding: '0 4px' }}>✓已发券</Tag>
+                            )}
+                            {item.status === 'reviewed' && (
+                              <Tag color="green" style={{ fontSize: 10, padding: '0 4px' }}>已复查</Tag>
+                            )}
+                          </Space>
+                        }
+                        description={
+                          <div style={{ fontSize: 11 }}>
+                            <div>
+                              券码: <span style={{ fontFamily: 'monospace' }}>{item.coupon_code || '待生成'}</span>
+                              {item.coupon_verified ? <Tag color="green" style={{ margin: '0 4px' }}>✓已核验</Tag> : null}
+                            </div>
+                            {item.review_result && (
+                              <div style={{ color: '#722ed1', marginTop: 2 }}>
+                                复查: {item.review_result}
+                              </div>
+                            )}
+                            {item.reviewed_at && (
+                              <div style={{ color: '#52c41a' }}>
+                                复查时间: {dayjs(item.reviewed_at).format('MM-DD HH:mm')}
+                              </div>
+                            )}
+                          </div>
+                        }
+                      />
+                    </List.Item>
+                  )}
+                />
+              </div>
+            )}
+
+            {settlementCompensations.length === 0 && settlementAfterSales.length === 0 && (
+              <div style={{ textAlign: 'center', padding: '12px 0', color: '#999', fontSize: 12 }}>
+                本结算周期无售后和赔付记录 ✅
+              </div>
+            )}
           </div>
         )}
       </Drawer>

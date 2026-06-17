@@ -68,45 +68,89 @@ router.get('/:id', (req, res) => {
   }
   
   const items = db.prepare(`
-    SELECT si.*, o.order_no, o.total_fee, o.delivered_at
-    FROM settlement_items si
-    LEFT JOIN orders o ON si.order_id = o.id
-    WHERE si.settlement_id = ?
-    ORDER BY o.delivered_at DESC
-  `).all(req.params.id);
-  
-  res.json({ success: true, data: { ...settlement, items } });
+    SELECT 
+      o.id as id,
+      o.id as order_id,
+      o.order_no as order_no,
+      o.total_fee as order_amount,
+      o.distance as distance,
+      o.goods_weight as weight,
+      o.delivery_status as delivery_status,
+      COALESCE(o.created_at, o.updated_at) as created_at,
+      o.delivered_at as delivered_at,
+      (o.total_fee - o.platform_fee) as commission_amount,
+      o.platform_fee as platform_fee,
+      (o.total_fee - (o.total_fee - o.platform_fee)) as settlement_amount
+    FROM orders o
+    WHERE o.platform_id = ?
+      AND o.delivery_status IN ('delivered', 'delivering', 'picked', 'pending', 'assigned')
+      AND (
+        (o.created_at IS NOT NULL AND strftime('%Y-%m', o.created_at) = ?)
+        OR
+        (o.created_at IS NULL AND strftime('%Y-%m', o.updated_at) = ?)
+      )
+    ORDER BY COALESCE(o.created_at, o.updated_at) DESC
+  `).all(settlement.platform_id, settlement.period, settlement.period);
+
+  const orderIds = items.map(i => i.order_id);
+  let compensations = [], afterSales = [];
+  if (orderIds.length > 0) {
+    const placeholders = orderIds.map(() => '?').join(',');
+    compensations = db.prepare(`
+      SELECT 
+        c.*, o.order_no,
+        p.name as platform_name, p.logo as platform_logo
+      FROM compensations c
+      LEFT JOIN orders o ON c.order_id = o.id
+      LEFT JOIN platforms p ON o.platform_id = p.id
+      WHERE c.order_id IN (${placeholders})
+      ORDER BY c.triggered_at DESC
+    `).all(...orderIds);
+    
+    afterSales = db.prepare(`
+      SELECT 
+        a.*, o.order_no,
+        p.name as platform_name, p.logo as platform_logo
+      FROM after_sales a
+      LEFT JOIN orders o ON a.order_id = o.id
+      LEFT JOIN platforms p ON o.platform_id = p.id
+      WHERE a.order_id IN (${placeholders})
+      ORDER BY a.created_at DESC
+    `).all(...orderIds);
+  }
+
+  res.json({ success: true, data: { ...settlement, items, compensations, after_sales: afterSales } });
 });
 
 router.get('/summary/monthly', (req, res) => {
   const { merchant_id, platform_id } = req.query;
   
-  let where = ["o.delivery_status = 'delivered'"];
+  let where = ["1=1"];
   let params = [];
   
   if (merchant_id) {
-    where.push('o.merchant_id = ?');
+    where.push('s.merchant_id = ?');
     params.push(merchant_id);
   }
   if (platform_id) {
-    where.push('o.platform_id = ?');
+    where.push('s.platform_id = ?');
     params.push(platform_id);
   }
   
   const monthly = db.prepare(`
     SELECT 
-      strftime('%Y-%m', o.delivered_at) as period,
-      COUNT(*) as total_orders,
-      SUM(o.platform_fee) as total_platform_fee,
-      SUM(o.total_fee) as total_amount,
-      SUM(o.total_fee - o.platform_fee) as total_commission,
-      o.platform_id,
+      s.period as period,
+      SUM(s.total_orders) as total_orders,
+      SUM(s.settlement_amount) as total_platform_fee,
+      SUM(s.total_amount) as total_amount,
+      SUM(s.commission_amount) as total_commission,
+      s.platform_id,
       p.name as platform_name,
       p.logo as platform_logo
-    FROM orders o
-    LEFT JOIN platforms p ON o.platform_id = p.id
+    FROM settlements s
+    LEFT JOIN platforms p ON s.platform_id = p.id
     WHERE ${where.join(' AND ')}
-    GROUP BY period, o.platform_id
+    GROUP BY period, s.platform_id
     ORDER BY period DESC
   `).all(...params);
   

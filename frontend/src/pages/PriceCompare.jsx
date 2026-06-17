@@ -14,7 +14,9 @@ import {
   InfoCircleOutlined,
   ArrowUpOutlined,
   ArrowLeftOutlined,
-  RobotOutlined
+  RobotOutlined,
+  GiftOutlined,
+  FileTextOutlined
 } from '@ant-design/icons'
 import { orderApi, platformApi } from '../api'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -389,6 +391,225 @@ function PriceCompare() {
         </Col>
 
         <Col span={16}>
+          {quoteResult && (
+            <Card 
+              title={
+                <Space>
+                  <RobotOutlined style={{ color: '#52c41a', fontSize: 18 }} />
+                  <span>智能推荐方案 · 最低成本 + TOP3候选承运方对比</span>
+                </Space>
+              }
+              style={{ marginBottom: 16, background: 'linear-gradient(135deg, #f6ffed 0%, #e6f4ff 100%)', border: '2px solid #b7eb8f' }}
+              bodyStyle={{ padding: 16 }}
+            >
+              <Row gutter={[16, 16]}>
+                <Col span={8}>
+                  <div style={{
+                    padding: 12,
+                    background: '#fff',
+                    borderRadius: 8,
+                    border: '2px solid #52c41a',
+                    position: 'relative',
+                    height: '100%'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      top: -10,
+                      left: 12,
+                      background: '#52c41a',
+                      color: '#fff',
+                      padding: '2px 8px',
+                      borderRadius: 4,
+                      fontSize: 11,
+                      fontWeight: 600
+                    }}>
+                      ⭐ 综合最优推荐
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8, marginBottom: 10 }}>
+                      <div style={{ fontSize: 28 }}>{bestScore?.platform?.logo}</div>
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 600 }}>{bestScore?.platform?.name}</div>
+                        <Tag color="green" style={{ fontSize: 10 }}>综合 {(bestScore?.score * 100).toFixed(0)}分</Tag>
+                      </div>
+                    </div>
+                    <Divider style={{ margin: '8px 0' }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>配送费</span>
+                      <span style={{ fontSize: 18, fontWeight: 700, color: '#f5222d' }}>¥{bestScore?.fee?.toFixed(2)}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>预计送达</span>
+                      <span style={{ fontSize: 13, fontWeight: 500, color: '#1677ff' }}>{bestScore?.delivery_time}分钟</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>节省成本</span>
+                      <span style={{ color: '#52c41a', fontWeight: 600 }}>
+                        比最高价省 ¥{((getSortedResults()[getSortedResults().length - 1]?.fee || 0) - (bestScore?.fee || 0)).toFixed(2)}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 11, color: '#666', lineHeight: 1.5, marginBottom: 10, minHeight: 32 }}>
+                      {bestScore?.reason}
+                    </div>
+                    {bestScore?.score_detail && (
+                      <div style={{ fontSize: 10, color: '#999', marginBottom: 10 }}>
+                        五维: 价格{(bestScore.score_detail.price_score * 100).toFixed(0)} · 
+                        时效{(bestScore.score_detail.time_score * 100).toFixed(0)} · 
+                        质量{(bestScore.score_detail.quality_score * 100).toFixed(0)} · 
+                        运力{(bestScore.score_detail.saturation_score * 100).toFixed(0)}
+                      </div>
+                    )}
+                    <Button 
+                      type="primary" 
+                      block 
+                      icon={<ShoppingCartOutlined />}
+                      onClick={() => bestScore && handleSelectPlatform(bestScore)}
+                    >
+                      一键下单
+                    </Button>
+                  </div>
+                </Col>
+                
+                <Col span={8}>
+                  <div style={{
+                    padding: 12,
+                    background: '#fff',
+                    borderRadius: 8,
+                    border: '2px solid #faad14',
+                    position: 'relative',
+                    height: '100%'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      top: -10,
+                      left: 12,
+                      background: '#faad14',
+                      color: '#fff',
+                      padding: '2px 8px',
+                      borderRadius: 4,
+                      fontSize: 11,
+                      fontWeight: 600
+                    }}>
+                      💰 最低成本方案
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8, marginBottom: 10 }}>
+                      <div style={{ fontSize: 28 }}>{cheapest?.platform?.logo}</div>
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 600 }}>{cheapest?.platform?.name}</div>
+                        <Tag color="orange" style={{ fontSize: 10 }}>最低价 ¥{cheapest?.fee?.toFixed(2)}</Tag>
+                      </div>
+                    </div>
+                    <Divider style={{ margin: '8px 0' }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>配送费</span>
+                      <span style={{ fontSize: 18, fontWeight: 700, color: '#fa8c16' }}>¥{cheapest?.fee?.toFixed(2)}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>预计送达</span>
+                      <span style={{ fontSize: 13, fontWeight: 500 }}>{cheapest?.delivery_time}分钟</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>比综合最优</span>
+                      <span style={{ 
+                        color: (bestScore?.fee || 0) >= (cheapest?.fee || 0) ? '#52c41a' : '#ff4d4f',
+                        fontWeight: 600
+                      }}>
+                        {(bestScore?.fee || 0) >= (cheapest?.fee || 0) ? '省' : '贵'} 
+                        ¥{Math.abs((bestScore?.fee || 0) - (cheapest?.fee || 0)).toFixed(2)}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 11, color: '#666', lineHeight: 1.5, marginBottom: 10, minHeight: 32 }}>
+                      {cheapest?.reason}
+                    </div>
+                    <div style={{ fontSize: 10, color: '#999', marginBottom: 10 }}>
+                      计费: 基础费¥{(cheapest?.platform?.base_price || 0).toFixed(2)} + 
+                      里程费¥{(cheapest?.platform?.per_km_price || 0).toFixed(2)}/km × {(quoteResult.params?.distance || 0)}km
+                      {cheapest?.platform?.per_kg_price > 0 && ` + 重量费¥${(cheapest?.platform?.per_kg_price || 0).toFixed(2)}/kg × ${(quoteResult.params?.weight || 0)}kg`}
+                    </div>
+                    <Button 
+                      block
+                      icon={<DollarOutlined />}
+                      onClick={() => cheapest && handleSelectPlatform(cheapest)}
+                    >
+                      选最低价下单
+                    </Button>
+                  </div>
+                </Col>
+                
+                <Col span={8}>
+                  <div style={{
+                    padding: 12,
+                    background: '#fff',
+                    borderRadius: 8,
+                    border: '2px solid #1677ff',
+                    position: 'relative',
+                    height: '100%'
+                  }}>
+                    <div style={{
+                      position: 'absolute',
+                      top: -10,
+                      left: 12,
+                      background: '#1677ff',
+                      color: '#fff',
+                      padding: '2px 8px',
+                      borderRadius: 4,
+                      fontSize: 11,
+                      fontWeight: 600
+                    }}>
+                      ⚡ 最快时效方案
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8, marginBottom: 10 }}>
+                      <div style={{ fontSize: 28 }}>{fastest?.platform?.logo}</div>
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 600 }}>{fastest?.platform?.name}</div>
+                        <Tag color="blue" style={{ fontSize: 10 }}>{fastest?.delivery_time}分钟速达</Tag>
+                      </div>
+                    </div>
+                    <Divider style={{ margin: '8px 0' }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>配送费</span>
+                      <span style={{ fontSize: 18, fontWeight: 700, color: '#1677ff' }}>¥{fastest?.fee?.toFixed(2)}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>预计送达</span>
+                      <span style={{ fontSize: 13, fontWeight: 500, color: '#1677ff' }}>{fastest?.delivery_time}分钟</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                      <span style={{ fontSize: 12, color: '#666' }}>准时率</span>
+                      <span style={{ color: (fastest?.platform?.on_time_rate || 0) >= 0.95 ? '#52c41a' : '#faad14', fontWeight: 600 }}>
+                        {((fastest?.platform?.on_time_rate || 0) * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 11, color: '#666', lineHeight: 1.5, marginBottom: 10, minHeight: 32 }}>
+                      {fastest?.reason}
+                    </div>
+                    <div style={{ fontSize: 10, color: '#999', marginBottom: 10 }}>
+                      运力饱和度: {((fastest?.platform?.capacity_saturation || 0) * 100).toFixed(0)}%
+                      {(fastest?.platform?.capacity_saturation || 0) < 0.7 ? ' ✅运力充足' : ' ⚠需留意'}
+                    </div>
+                    <Button 
+                      type="primary"
+                      block
+                      style={{ background: '#1677ff', borderColor: '#1677ff' }}
+                      icon={<ThunderboltOutlined />}
+                      onClick={() => fastest && handleSelectPlatform(fastest)}
+                    >
+                      选最快时效
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+              
+              <Divider style={{ margin: '16px 0 8px' }} />
+              <div style={{ fontSize: 12, color: '#666', textAlign: 'center' }}>
+                💡 智能提示: 根据您的配送参数（距离 {(quoteResult.params?.distance || 0)}km · 重量 {(quoteResult.params?.weight || 0)}kg · 时效 {(quoteResult.params?.urgency === 'urgent' ? '加急⚡' : quoteResult.params?.urgency === 'economy' ? '经济🐢' : '普通🚚')}），
+                系统推荐 <b style={{ color: '#52c41a' }}>{bestScore?.platform?.name}</b> 作为承运方，
+                {cheapest?.fee && bestScore?.fee && cheapest.fee < bestScore.fee ? (
+                  <span> 如需控制成本可选择 <b style={{ color: '#fa8c16' }}>{cheapest.platform?.name}</b>（节省 ¥{(bestScore.fee - cheapest.fee).toFixed(2)}）</span>
+                ) : null}
+              </div>
+            </Card>
+          )}
+
           <Card 
             title="全部平台比价" 
             extra={
@@ -724,9 +945,12 @@ function PriceCompare() {
                   message="配送订单已创建成功"
                   description={
                     <div>
-                      <p>✅ 订单已同步至 <strong>{createdOrder.platform_name}</strong> 平台</p>
-                      <p>✅ 平台已确认接单，骑手正在赶来</p>
+                      <p>✅ 订单已同步至 <strong>{createdOrder.platform_name}</strong> 平台，平台已确认接单</p>
+                      <p>✅ 骑手正在赶来取货，预计 <b>{createdOrder.estimated_arrival_time ? dayjs(createdOrder.estimated_arrival_time).format('HH:mm') : '-'}</b> 送达</p>
                       <p>✅ 订单数据已回写商户看板，可实时追踪配送状态</p>
+                      <p style={{ color: '#1677ff', marginTop: 4 }}>
+                        📍 路由依据已存档，可在 <b>订单管理 → 路由依据</b> 追溯，与结算/赔付形成闭环
+                      </p>
                     </div>
                   }
                   type="success"
@@ -740,14 +964,11 @@ function PriceCompare() {
                   <Descriptions.Item label="承运平台">
                     {createdOrder.platform_logo} {createdOrder.platform_name}
                   </Descriptions.Item>
-                  <Descriptions.Item label="平台单号">
-                    <span style={{ fontFamily: 'monospace' }}>{createdOrder.platform_order_no || '同步中...'}</span>
-                  </Descriptions.Item>
                   <Descriptions.Item label="配送状态">
                     <Tag color="processing">{createdOrder.delivery_status === 'pending' ? '待分配' : '已分配'}</Tag>
                   </Descriptions.Item>
                   <Descriptions.Item label="预计送达">
-                    {dayjs(createdOrder.estimated_arrival_time).format('YYYY-MM-DD HH:mm')}
+                    {createdOrder.estimated_arrival_time ? dayjs(createdOrder.estimated_arrival_time).format('YYYY-MM-DD HH:mm') : '-'}
                   </Descriptions.Item>
                   <Descriptions.Item label="收件人">
                     {createdOrder.receiver_name} ({createdOrder.receiver_phone})
@@ -755,37 +976,60 @@ function PriceCompare() {
                   <Descriptions.Item label="收件地址">
                     {createdOrder.receiver_address}
                   </Descriptions.Item>
-                  <Descriptions.Item label="物品">
-                    {createdOrder.goods_name || '-'} ({createdOrder.goods_weight}kg)
+                  <Descriptions.Item label="物品 / 重量">
+                    {createdOrder.goods_name || '-'} ({createdOrder.goods_weight}kg) · {createdOrder.distance}km
                   </Descriptions.Item>
-                  <Descriptions.Item label="费用">
+                  <Descriptions.Item label="配送费用">
                     <span style={{ color: '#f5222d', fontWeight: 600 }}>¥{createdOrder.total_fee?.toFixed(2)}</span>
+                    <span style={{ color: '#999', marginLeft: 8, fontSize: 11 }}>
+                      (基础费¥{(createdOrder.platform_fee || 0).toFixed(2)} + 佣金¥{(createdOrder.total_fee - createdOrder.platform_fee).toFixed(2)})
+                    </span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="抽佣率">
+                    <span style={{ color: '#52c41a', fontWeight: 500 }}>
+                      {createdOrder.total_fee ? (((createdOrder.total_fee - createdOrder.platform_fee) / createdOrder.total_fee) * 100).toFixed(1) : 0}%
+                    </span>
+                    <span style={{ color: '#999', marginLeft: 8, fontSize: 11 }}>结算时自动计算抽佣</span>
                   </Descriptions.Item>
                 </Descriptions>
                 <Alert
                   message="智能路由选择说明"
-                  description={selectedPlatform.reason}
+                  description={
+                    <div>
+                      <div><b>五维评分依据</b>：{selectedPlatform?.reason || '综合最优'}</div>
+                      {selectedPlatform?.score_detail && (
+                        <div style={{ marginTop: 4, fontSize: 12, color: '#666' }}>
+                          价格{(selectedPlatform.score_detail.price_score * 100).toFixed(1)}分 · 
+                          时效{(selectedPlatform.score_detail.time_score * 100).toFixed(1)}分 · 
+                          质量{(selectedPlatform.score_detail.quality_score * 100).toFixed(1)}分 · 
+                          运力{(selectedPlatform.score_detail.saturation_score * 100).toFixed(1)}分 · 
+                          综合 <b>{(selectedPlatform.score * 100).toFixed(1)}分</b>
+                        </div>
+                      )}
+                    </div>
+                  }
                   type="info"
                   showIcon
                   style={{ marginBottom: 16 }}
                 />
                 <Space style={{ width: '100%', justifyContent: 'flex-end' }} wrap>
-                  <Button onClick={() => { setCreatedOrder(null); orderForm.resetFields(); }}>
-                    继续下单
-                  </Button>
                   {fromMerchant && (
-                    <Button type="primary" icon={<ArrowLeftOutlined />} onClick={() => navigate('/merchant')}>
+                    <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/merchant')}>
                       返回商户看板
                     </Button>
                   )}
-                  <Button onClick={() => navigate('/orders')}>
-                    查看全部订单
+                  <Button icon={<EyeOutlined />} onClick={() => navigate('/orders')}>
+                    查看订单（路由依据）
                   </Button>
-                  {fromMerchant && (
-                    <Button type="primary" icon={<CheckCircleOutlined />} onClick={() => navigate('/merchant')}>
-                      ✔ 回写商户看板
-                    </Button>
-                  )}
+                  <Button icon={<GiftOutlined />} onClick={() => navigate('/compensation')}>
+                    SLA赔付追溯
+                  </Button>
+                  <Button icon={<FileTextOutlined />} onClick={() => navigate('/settlement')}>
+                    结算对账入口
+                  </Button>
+                  <Button type="primary" icon={<CheckCircleOutlined />} onClick={() => { setCreatedOrder(null); setOrderModal(false); }}>
+                    ✔ 完成，回写看板
+                  </Button>
                 </Space>
               </div>
             ) : (

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Button, Tag, Select, Input, Modal, Form, InputNumber, Radio, Drawer, Descriptions, Timeline, message, Space, Row, Col, Progress, Alert } from 'antd'
-import { SearchOutlined, PlusOutlined, EyeOutlined, SyncOutlined, RobotOutlined, BarChartOutlined, ClockCircleOutlined, DollarOutlined, SafetyOutlined, ThunderboltOutlined, WarningOutlined, ExclamationCircleOutlined, GiftOutlined } from '@ant-design/icons'
+import { Table, Button, Tag, Select, Input, Modal, Form, InputNumber, Radio, Drawer, Descriptions, Timeline, message, Space, Row, Col, Progress, Alert, Steps, Divider } from 'antd'
+import { SearchOutlined, PlusOutlined, EyeOutlined, SyncOutlined, RobotOutlined, BarChartOutlined, ClockCircleOutlined, DollarOutlined, SafetyOutlined, ThunderboltOutlined, WarningOutlined, ExclamationCircleOutlined, GiftOutlined, CustomerServiceOutlined, FileTextOutlined, ShopOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
 import { orderApi, platformApi, merchantApi } from '../api'
 
 const { Option } = Select
+const { Step } = Steps
 
 function Orders() {
   const navigate = useNavigate()
@@ -268,8 +269,8 @@ function Orders() {
     {
       title: '创建时间',
       dataIndex: 'created_at',
-      width: 160,
-      render: (val) => dayjs(val).format('MM-DD HH:mm')
+      width: 110,
+      render: (val) => val ? dayjs(val).format('MM-DD HH:mm') : '-'
     },
     {
       title: '操作',
@@ -777,6 +778,89 @@ function Orders() {
               <div>• 普通单：时效权重25%，价格权重35%，质量权重25%，运力权重15%</div>
               <div>• 经济单：时效权重15%，价格权重50%，质量权重25%，运力权重15%</div>
             </div>
+
+            <Divider style={{ margin: '20px 0 12px' }} />
+            <Card 
+              size="small" 
+              title={
+                <Space>
+                  <CheckCircleOutlined style={{ color: '#52c41a' }} />
+                  <span>业务闭环追溯链路 · 路由 → 售后 → 赔付 → 结算</span>
+                </Space>
+              }
+              style={{ background: '#f9f9f9', border: '1px dashed #d9d9d9' }}
+            >
+              <Steps size="small" current={1} style={{ marginBottom: 12 }}>
+                <Step title="路由决策" description="订单创建" status="finish" icon={<RobotOutlined style={{ color: '#722ed1' }} />} />
+                <Step title="当前订单" description="路由依据已存档" status="process" icon={<ShoppingCartOutlined style={{ color: '#1677ff' }} />} />
+                <Step title="售后协同" description="改址/取消/投诉" icon={<CustomerServiceOutlined />} />
+                <Step title="SLA赔付" description="超时/丢件补偿" icon={<GiftOutlined />} />
+                <Step title="月结对账" description="结算付款" icon={<FileTextOutlined />} />
+              </Steps>
+
+              <Row gutter={[8, 8]}>
+                <Col span={8}>
+                  <Button block size="small" type="primary" icon={<EyeOutlined />} onClick={() => { setRouteDrawer(false); setDetailDrawer(true); }}>
+                    查看订单详情
+                  </Button>
+                </Col>
+                <Col span={8}>
+                  <Button block size="small" icon={<CustomerServiceOutlined />} onClick={() => { 
+                    setRouteDrawer(false); 
+                    navigate('/after-sales');
+                  }}>
+                    售后协同工单
+                  </Button>
+                </Col>
+                <Col span={8}>
+                  <Button block size="small" icon={<GiftOutlined />} onClick={() => { 
+                    setRouteDrawer(false); 
+                    navigate('/compensation');
+                  }}>
+                    SLA赔付追溯
+                  </Button>
+                </Col>
+                <Col span={8}>
+                  <Button block size="small" icon={<FileTextOutlined />} onClick={() => { 
+                    setRouteDrawer(false); 
+                    navigate('/settlement');
+                  }}>
+                    月结对账入口
+                  </Button>
+                </Col>
+                <Col span={8}>
+                  <Button block size="small" icon={<RobotOutlined />} onClick={() => { 
+                    setRouteDrawer(false); 
+                    navigate('/price-compare');
+                  }}>
+                    重新比价
+                  </Button>
+                </Col>
+                <Col span={8}>
+                  <Button block size="small" icon={<ShopOutlined />} onClick={() => { 
+                    setRouteDrawer(false); 
+                    navigate('/merchant');
+                  }}>
+                    商户配送看板
+                  </Button>
+                </Col>
+              </Row>
+
+              <Alert
+                style={{ marginTop: 12 }}
+                type="info"
+                showIcon
+                message="追溯闭环说明"
+                description={
+                  <div style={{ fontSize: 12, lineHeight: 1.8 }}>
+                    <div>✅ <b>路由依据存档</b>：五维评分（价格/时效/服务质量/运力饱和度）已随订单永久存档</div>
+                    <div>✅ <b>售后状态回传</b>：改址/取消/投诉状态实时从承运方同步，回执时间和结果可追溯</div>
+                    <div>✅ <b>SLA赔付追溯</b>：超时/丢件自动触发赔付券，核验状态、复查记录、商户确认完整记录</div>
+                    <div>✅ <b>结算对账闭环</b>：按单抽佣自动计算，异常差异高亮，承运方回执作为对账凭证</div>
+                  </div>
+                }
+              />
+            </Card>
           </div>
         )}
       </Drawer>

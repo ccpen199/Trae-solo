@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Statistic, Table, Tag, Progress, List, Avatar, Button, Drawer, Descriptions, Timeline, Space, Badge, Modal, message, Alert, Empty, Tooltip, Divider } from 'antd'
+import { Row, Col, Card, Statistic, Table, Tag, Progress, List, Avatar, Button, Drawer, Descriptions, Timeline, Space, Badge, Modal, message, Alert, Empty, Tooltip, Divider, Popover } from 'antd'
 import {
   ShoppingCartOutlined,
   RocketOutlined,
@@ -24,7 +24,9 @@ import {
   ReloadOutlined,
   FileTextOutlined,
   SwapOutlined,
-  InfoCircleOutlined
+  InfoCircleOutlined,
+  UserOutlined,
+  CloseCircleOutlined
 } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
@@ -339,14 +341,58 @@ function Dashboard() {
                       }
                       description={
                         <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8, flexWrap: 'wrap' }}>
+                            <div style={{
+                              background: item.composite_score >= 80 ? '#f6ffed' : item.composite_score >= 70 ? '#fffbe6' : '#fff1f0',
+                              border: `1px solid ${item.composite_score >= 80 ? '#b7eb8f' : item.composite_score >= 70 ? '#ffe58f' : '#ffa39e'}`,
+                              borderRadius: 6,
+                              padding: '4px 10px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 6
+                            }}>
+                              <SafetyOutlined style={{ color: item.composite_score >= 80 ? '#52c41a' : item.composite_score >= 70 ? '#faad14' : '#ff4d4f' }} />
+                              <span style={{ fontWeight: 600, fontSize: 13, color: item.composite_score >= 80 ? '#389e0d' : item.composite_score >= 70 ? '#d48806' : '#cf1322' }}>
+                                综合评分 {item.composite_score?.toFixed(1)}
+                              </span>
+                            </div>
+                            <div style={{ fontSize: 12, color: '#1677ff' }}>
+                              <DollarOutlined /> 5km 典型运费 <b>¥{item.typical_fee?.toFixed(2)}</b>
+                            </div>
+                            <div style={{ fontSize: 12, color: '#722ed1' }}>
+                              <ClockCircleOutlined /> 典型时效 <b>{item.typical_delivery_time}分钟</b>
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', gap: 12, fontSize: 11, flexWrap: 'wrap', marginBottom: 6, background: '#fafafa', padding: '6px 10px', borderRadius: 4 }}>
+                            <span>
+                              💰价格分 <b style={{ color: (item.score_detail?.price_score || 0) >= 0.7 ? '#52c41a' : '#faad14' }}>{((item.score_detail?.price_score || 0) * 100).toFixed(0)}</b>
+                            </span>
+                            <span>
+                              ⚡时效分 <b style={{ color: (item.score_detail?.time_score || 0) >= 0.7 ? '#52c41a' : '#faad14' }}>{((item.score_detail?.time_score || 0) * 100).toFixed(0)}</b>
+                            </span>
+                            <span>
+                              ✅质量分 <b style={{ color: (item.score_detail?.quality_score || 0) >= 0.85 ? '#52c41a' : '#faad14' }}>{((item.score_detail?.quality_score || 0) * 100).toFixed(0)}</b>
+                            </span>
+                            <span>
+                              🚚运力分 <b style={{ color: (item.score_detail?.saturation_score || 0) >= 0.3 ? '#52c41a' : '#faad14' }}>{((item.score_detail?.saturation_score || 0) * 100).toFixed(0)}</b>
+                            </span>
+                          </div>
+                          <div style={{ fontSize: 12, color: '#1677ff', marginBottom: 8 }}>
+                            <InfoCircleOutlined /> 路由推荐：{item.route_reason}
+                          </div>
                           <Progress
                             percent={item.capacity_saturation * 100}
                             showInfo={false}
                             strokeColor={getSaturationColor(item.capacity_saturation)}
                             size="small"
-                            style={{ marginBottom: 8 }}
+                            style={{ marginBottom: 6 }}
                           />
                           <div style={{ display: 'flex', gap: 12, fontSize: 12, flexWrap: 'wrap' }}>
+                            <span>
+                              饱和度 <span style={{ color: item.capacity_saturation < 0.7 ? '#52c41a' : item.capacity_saturation < 0.85 ? '#faad14' : '#ff4d4f', fontWeight: 500 }}>
+                                {(item.capacity_saturation * 100).toFixed(0)}%
+                              </span>
+                            </span>
                             <span>
                               准时率 <span style={{ color: item.on_time_rate >= 0.95 ? '#52c41a' : item.on_time_rate >= 0.9 ? '#faad14' : '#ff4d4f', fontWeight: 500 }}>
                                 {(item.on_time_rate * 100).toFixed(1)}%
@@ -406,6 +452,128 @@ function Dashboard() {
               <Col span={12}>
                 <Card
                   size="small"
+                  style={{ cursor: 'pointer', height: '100%' }}
+                  onClick={() => navigate('/merchant')}
+                  title={
+                    <Space>
+                      <ShopOutlined style={{ color: '#eb2f96' }} />
+                      <span>商户配送看板</span>
+                      <Badge count={summary?.kanban_delivering || 0} color="#eb2f96" />
+                    </Space>
+                  }
+                  extra={
+                    <Space size={8}>
+                      <Button type="link" size="small" onClick={e => { e.stopPropagation(); navigate('/orders') }}>
+                        订单聚合
+                      </Button>
+                      <Button type="link" size="small" onClick={e => { e.stopPropagation(); navigate('/merchant') }}>
+                        完整看板 →
+                      </Button>
+                    </Space>
+                  }
+                >
+                  <div style={{ marginBottom: 12 }}>
+                    <Row gutter={8}>
+                      <Col span={8}>
+                        <div style={{ textAlign: 'center', padding: '6px 0', background: '#f6ffed', borderRadius: 4 }}>
+                          <div style={{ fontSize: 18, fontWeight: 600, color: '#52c41a' }}>
+                            {summary?.kanban_delivered || 0}
+                          </div>
+                          <div style={{ fontSize: 10, color: '#666' }}>已送达</div>
+                        </div>
+                      </Col>
+                      <Col span={8}>
+                        <div style={{ textAlign: 'center', padding: '6px 0', background: '#e6f4ff', borderRadius: 4 }}>
+                          <div style={{ fontSize: 18, fontWeight: 600, color: '#1677ff' }}>
+                            {summary?.kanban_delivering || 0}
+                          </div>
+                          <div style={{ fontSize: 10, color: '#666' }}>配送中</div>
+                        </div>
+                      </Col>
+                      <Col span={8}>
+                        <div style={{ textAlign: 'center', padding: '6px 0', background: '#fffbe6', borderRadius: 4 }}>
+                          <div style={{ fontSize: 18, fontWeight: 600, color: '#faad14' }}>
+                            {summary?.kanban_pending || 0}
+                          </div>
+                          <div style={{ fontSize: 10, color: '#666' }}>待处理</div>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                  <Divider style={{ margin: '4px 0 10px' }} />
+                  <List
+                    size="small"
+                    dataSource={recentOrders.filter(o => ['delivering', 'picked'].includes(o.delivery_status)).slice(0, 3)}
+                    locale={{ emptyText: '暂无配送中订单' }}
+                    renderItem={order => {
+                      const eta = order.estimated_arrival_time ? dayjs(order.estimated_arrival_time) : null
+                      const now = dayjs()
+                      const remainMin = eta ? eta.diff(now, 'minute') : 999
+                      const isOverdue = eta && remainMin < 0
+                      const isWarning = eta && remainMin >= 0 && remainMin < 10
+                      return (
+                        <List.Item size="small" style={{ padding: '4px 0' }}>
+                          <List.Item.Meta
+                            avatar={
+                              <div style={{ 
+                                width: 36, height: 36, borderRadius: '50%', 
+                                background: isOverdue ? '#fff1f0' : isWarning ? '#fffbe6' : '#f6ffed',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center'
+                              }}>
+                                <ClockCircleOutlined style={{ 
+                                  color: isOverdue ? '#ff4d4f' : isWarning ? '#faad14' : '#52c41a',
+                                  fontSize: 16
+                                }} />
+                              </div>
+                            }
+                            title={
+                              <Space size={4}>
+                                <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{order.order_no}</span>
+                                <span>{order.platform_logo}</span>
+                                {isOverdue && <Tag color="red" style={{ fontSize: 10, padding: '0 4px' }}>⚠已超时</Tag>}
+                                {isWarning && !isOverdue && <Tag color="orange" style={{ fontSize: 10, padding: '0 4px' }}>临近超时</Tag>}
+                              </Space>
+                            }
+                            description={
+                              <div style={{ fontSize: 11 }}>
+                                <div style={{ color: '#666' }}>
+                                  → {order.receiver_address?.substring(0, 15)}...
+                                </div>
+                                <div style={{ marginTop: 2 }}>
+                                  <span style={{ 
+                                    color: isOverdue ? '#ff4d4f' : isWarning ? '#faad14' : '#52c41a',
+                                    fontWeight: 500
+                                  }}>
+                                    {isOverdue 
+                                      ? `超时${Math.abs(remainMin)}分钟` 
+                                      : eta ? `预计 ${eta.format('HH:mm')} 送达 (剩${remainMin}分)` : '预计时间计算中...'
+                                    }
+                                  </span>
+                                  <span style={{ color: '#999', marginLeft: 8 }}>
+                                    {order.rider_name || '骑手待分配'}
+                                  </span>
+                                </div>
+                                {afterSalesList.filter(a => a.order_id === order.id).length > 0 && (
+                                  <div style={{ color: '#722ed1', marginTop: 2 }}>
+                                    <SyncOutlined spin={!afterSalesList.filter(a => a.order_id === order.id)[0].platform_synced} />
+                                    {' '}{afterSalesList.filter(a => a.order_id === order.id)[0].platform_synced ? '承运方已回执' : '同步中...'}
+                                    {' · '}
+                                    {afterSalesList.filter(a => a.order_id === order.id)[0].type === 'address_change' ? '改址' :
+                                     afterSalesList.filter(a => a.order_id === order.id)[0].type === 'cancel' ? '取消' : '投诉'}
+                                  </div>
+                                )}
+                              </div>
+                            }
+                          />
+                        </List.Item>
+                      )
+                    }}
+                  />
+                </Card>
+              </Col>
+              <Col span={12}>
+                <Card
+                  size="small"
                   className="sla-card"
                   style={{ cursor: 'pointer', height: '100%' }}
                   onClick={() => navigate('/after-sales')}
@@ -429,18 +597,40 @@ function Dashboard() {
                       size="small"
                       dataSource={afterSalesList}
                       renderItem={item => (
-                        <List.Item size="small" style={{ padding: '4px 0' }}>
+                        <List.Item 
+                          size="small" 
+                          style={{ padding: '6px 0', borderBottom: '1px dashed #f0f0f0' }}
+                          actions={item.related_settlement_id ? [
+                            <Button 
+                              key="settle" 
+                              type="link" 
+                              size="small" 
+                              icon={<MoneyCollectOutlined />}
+                              onClick={e => { e.stopPropagation(); navigate('/settlement') }}
+                            >
+                              月结对账
+                            </Button>
+                          ] : []}
+                        >
                           <List.Item.Meta
                             avatar={<CustomerServiceOutlined style={{ color: '#faad14' }} />}
                             title={
                               <Space size={4}>
-                                <span style={{ fontSize: 12 }}>{item.order_no}</span>
-                                <Tag color="orange" style={{ fontSize: 10, padding: '0 4px' }}>
+                                <span style={{ fontSize: 12, fontFamily: 'monospace' }}>{item.order_no}</span>
+                                <Tag color={item.type === 'address_change' ? 'orange' : item.type === 'cancel' ? 'red' : 'purple'} style={{ fontSize: 10, padding: '0 4px' }}>
                                   {item.type === 'address_change' ? '改址' : item.type === 'cancel' ? '取消' : item.type === 'complaint' ? '投诉' : '退款'}
                                 </Tag>
-                                {item.platform_synced ? (
+                                {item.sync_status === 'success' ? (
                                   <Tag color="green" style={{ fontSize: 10, padding: '0 4px' }}>
-                                    <CheckCircleOutlined /> 承运方已回执
+                                    <CheckCircleOutlined /> {item.sync_status_text || '处置完成'}
+                                  </Tag>
+                                ) : item.sync_status === 'failed' ? (
+                                  <Tag color="red" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    <CloseCircleOutlined /> 平台驳回
+                                  </Tag>
+                                ) : item.sync_status === 'processing' ? (
+                                  <Tag color="blue" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    <CheckCircleOutlined /> {item.sync_status_text || '承运方已回执'}
                                   </Tag>
                                 ) : (
                                   <Tag color="default" style={{ fontSize: 10, padding: '0 4px' }}>
@@ -453,39 +643,78 @@ function Dashboard() {
                               <div style={{ fontSize: 11, color: '#666' }}>
                                 <div>
                                   {item.platform_logo} {item.platform_name} · 
-                                  商户同步: <span style={{ color: item.platform_synced ? '#52c41a' : '#faad14', fontWeight: 500 }}>{item.platform_synced ? '已同步' : '同步中'}</span>
+                                  同步状态: 
+                                  <span style={{ 
+                                    color: item.sync_status === 'success' ? '#52c41a' : 
+                                           item.sync_status === 'failed' ? '#ff4d4f' : 
+                                           item.sync_status === 'processing' ? '#1677ff' : '#faad14', 
+                                    fontWeight: 500 
+                                  }}>
+                                    {item.sync_status_text || (item.platform_synced ? '承运方已回执' : '同步中')}
+                                  </span>
                                   {item.result && (
-                                    <span> · 结果: <span style={{ color: '#1677ff' }}>{item.result}</span></span>
+                                    <span> · 平台回复: <span style={{ color: '#1677ff' }}>{item.result}</span></span>
                                   )}
                                 </div>
                                 <div style={{ marginTop: 2 }}>
-                                  <Space size={8}>
-                                    {item.type === 'address_change' && item.change_fee !== undefined && (
+                                  <Space size={8} wrap>
+                                    {item.type === 'address_change' && item.change_fee !== undefined && item.change_fee !== null && (
                                       <span>
-                                        改址费: <span style={{ color: '#fa8c16', fontWeight: 500 }}>¥{item.change_fee?.toFixed(2)}</span>
+                                        改址费: <span style={{ color: '#fa8c16', fontWeight: 500 }}>¥{Number(item.change_fee).toFixed(2)}</span>
                                         {item.fee_confirmed ? (
-                                          <Tag color="green" style={{ marginLeft: 4, padding: '0 4px' }}>✓已确认</Tag>
+                                          <Tag color="green" style={{ marginLeft: 4, padding: '0 4px' }}>✓商户已确认</Tag>
                                         ) : (
-                                          <Tag color="orange" style={{ marginLeft: 4, padding: '0 4px' }}>待确认</Tag>
+                                          <Tag color="orange" style={{ marginLeft: 4, padding: '0 4px' }}>待商户确认</Tag>
                                         )}
                                       </span>
                                     )}
-                                    {item.disposal_result && (
+                                    {item.type === 'address_change' && item.new_address && (
                                       <span style={{ color: '#722ed1' }}>
-                                        承运方处置: {item.disposal_result}
+                                        新地址: {item.new_address.length > 20 ? item.new_address.substring(0, 20) + '...' : item.new_address}
+                                      </span>
+                                    )}
+                                    {item.disposal_result && (
+                                      <span style={{ color: item.sync_status === 'success' ? '#52c41a' : '#722ed1' }}>
+                                        处置结果: {item.disposal_result.length > 25 ? item.disposal_result.substring(0, 25) + '...' : item.disposal_result}
+                                      </span>
+                                    )}
+                                    {item.type === 'cancel' && (
+                                      <span>
+                                        退款: {item.refund_status === 'completed' ? (
+                                          <Tag color="green">已退款</Tag>
+                                        ) : item.refund_status === 'processing' ? (
+                                          <Tag color="orange">退款中</Tag>
+                                        ) : (
+                                          <Tag color="default">待退款</Tag>
+                                        )}
+                                      </span>
+                                    )}
+                                    {item.type === 'complaint' && item.complaint_result && (
+                                      <span style={{ color: '#52c41a' }}>
+                                        投诉处理: {item.complaint_result}
                                       </span>
                                     )}
                                   </Space>
                                 </div>
-                                <div>提交: {dayjs(item.created_at).format('MM-DD HH:mm')}</div>
-                                {item.disposed_at && (
-                                  <div style={{ color: '#52c41a' }}>
-                                    处置回传: {dayjs(item.disposed_at).format('MM-DD HH:mm')}
-                                  </div>
-                                )}
+                                <div>
+                                  提交: {item.created_at ? dayjs(item.created_at).format('MM-DD HH:mm') : '-'}
+                                  {item.disposed_at && (
+                                    <span style={{ color: item.sync_status === 'success' ? '#52c41a' : '#1677ff', marginLeft: 10 }}>
+                                      {item.sync_status === 'success' ? '处置完成' : '承运方回传'}: {dayjs(item.disposed_at).format('MM-DD HH:mm')}
+                                    </span>
+                                  )}
+                                </div>
                                 {item.reason && (
                                   <div style={{ color: '#999', marginTop: 2 }}>
-                                    原因: {item.reason.length > 25 ? item.reason.substring(0, 25) + '...' : item.reason}
+                                    原因: {item.reason.length > 30 ? item.reason.substring(0, 30) + '...' : item.reason}
+                                  </div>
+                                )}
+                                {item.related_settlement_no && (
+                                  <div style={{ color: '#13c2c2', marginTop: 2 }}>
+                                    <MoneyCollectOutlined /> 已纳入月结: 
+                                    <span style={{ fontFamily: 'monospace', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); navigate('/settlement') }}>
+                                      {item.related_settlement_no}
+                                    </span>
                                   </div>
                                 )}
                               </div>
@@ -523,12 +752,26 @@ function Dashboard() {
                       size="small"
                       dataSource={compensationList}
                       renderItem={item => (
-                        <List.Item size="small" style={{ padding: '4px 0' }}>
+                        <List.Item 
+                          size="small" 
+                          style={{ padding: '6px 0', borderBottom: '1px dashed #f0f0f0' }}
+                          actions={item.related_settlement_id ? [
+                            <Button 
+                              key="settle" 
+                              type="link" 
+                              size="small" 
+                              icon={<MoneyCollectOutlined />}
+                              onClick={e => { e.stopPropagation(); navigate(`/settlement`) }}
+                            >
+                              月结对账
+                            </Button>
+                          ] : []}
+                        >
                           <List.Item.Meta
                             avatar={<GiftOutlined style={{ color: '#722ed1' }} />}
                             title={
                               <Space size={4}>
-                                <span style={{ fontSize: 12 }}>{item.order_no}</span>
+                                <span style={{ fontSize: 12, fontFamily: 'monospace' }}>{item.order_no}</span>
                                 <Tag color="purple" style={{ fontSize: 10, padding: '0 4px' }}>
                                   {item.type === 'timeout' ? '超时' : item.type === 'loss' ? '丢件' : '投诉'}
                                 </Tag>
@@ -536,6 +779,11 @@ function Dashboard() {
                                 {item.coupon_code && (
                                   <Tag color="green" style={{ fontSize: 10, padding: '0 4px' }}>
                                     <CheckCircleOutlined /> 已发券
+                                  </Tag>
+                                )}
+                                {item.reviewed_by && (
+                                  <Tag color="blue" style={{ fontSize: 10, padding: '0 4px' }}>
+                                    <UserOutlined /> {item.reviewed_by}
                                   </Tag>
                                 )}
                               </Space>
@@ -551,9 +799,20 @@ function Dashboard() {
                                   {item.status === 'reviewed' && (
                                     <span> · <Tag color="green" style={{ margin: 0, padding: '0 4px' }}>已复查</Tag></span>
                                   )}
+                                  {item.status === 'issued' && (
+                                    <span> · <Tag color="geekblue" style={{ margin: 0, padding: '0 4px' }}>已发放</Tag></span>
+                                  )}
                                 </div>
+                                {item.reason && (
+                                  <div style={{ color: item.type === 'timeout' ? '#ff4d4f' : item.type === 'loss' ? '#ff4d4f' : '#faad14', marginTop: 2 }}>
+                                    {item.type === 'timeout' && <ClockCircleOutlined />}
+                                    {item.type === 'loss' && <WarningOutlined />}
+                                    {item.type === 'complaint' && <CustomerServiceOutlined />}
+                                    {' '}判定: {item.reason.length > 30 ? item.reason.substring(0, 30) + '...' : item.reason}
+                                  </div>
+                                )}
                                 <div style={{ marginTop: 2 }}>
-                                  <Space size={8}>
+                                  <Space size={8} wrap>
                                     <span>
                                       发放: <span style={{ color: item.coupon_code ? '#52c41a' : '#faad14', fontWeight: 500 }}>{item.coupon_code ? '已发放' : '待发放'}</span>
                                     </span>
@@ -574,21 +833,38 @@ function Dashboard() {
                                   </Space>
                                 </div>
                                 <div>
-                                  触发: {dayjs(item.triggered_at).format('MM-DD HH:mm')}
+                                  <ClockCircleOutlined /> 自动触发: {item.triggered_at ? dayjs(item.triggered_at).format('MM-DD HH:mm') : '-'}
                                   {item.reviewed_at && (
                                     <span style={{ color: '#722ed1', marginLeft: 8 }}>
-                                      复查: {dayjs(item.reviewed_at).format('MM-DD HH:mm')}
+                                      <InfoCircleOutlined /> 复查: {dayjs(item.reviewed_at).format('MM-DD HH:mm')}
                                     </span>
+                                  )}
+                                </div>
+                                <div>
+                                  <UserOutlined style={{ color: '#1677ff' }} /> 复查人:
+                                  <span style={{ color: item.reviewed_by ? '#52c41a' : '#999', fontWeight: 500, marginLeft: 4 }}>
+                                    {item.reviewed_by || '待分配'}
+                                  </span>
+                                  <span style={{ marginLeft: 12 }}>商户确认:</span>
+                                  {item.status === 'reviewed' && item.coupon_verified ? (
+                                    <span style={{ color: '#52c41a', fontWeight: 500, marginLeft: 4 }}>✓ 商户已确认到账</span>
+                                  ) : item.coupon_code ? (
+                                    <span style={{ color: '#faad14', marginLeft: 4 }}>等待商户确认</span>
+                                  ) : (
+                                    <span style={{ color: '#999', marginLeft: 4 }}>待发放</span>
                                   )}
                                 </div>
                                 {item.review_result && (
                                   <div style={{ color: '#722ed1', marginTop: 2 }}>
-                                    <InfoCircleOutlined /> 复查记录: {item.review_result.length > 20 ? item.review_result.substring(0, 20) + '...' : item.review_result}
+                                    <InfoCircleOutlined /> 复查结论: {item.review_result.length > 30 ? item.review_result.substring(0, 30) + '...' : item.review_result}
                                   </div>
                                 )}
-                                {item.reason && !item.review_result && (
-                                  <div style={{ color: '#999', marginTop: 2 }}>
-                                    原因: {item.reason.length > 25 ? item.reason.substring(0, 25) + '...' : item.reason}
+                                {item.related_settlement_no && (
+                                  <div style={{ color: '#13c2c2', marginTop: 2 }}>
+                                    <MoneyCollectOutlined /> 已纳入月结: 
+                                    <span style={{ fontFamily: 'monospace', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); navigate('/settlement') }}>
+                                      {item.related_settlement_no}
+                                    </span>
                                   </div>
                                 )}
                               </div>
@@ -674,9 +950,31 @@ function Dashboard() {
                             }
                             description={
                               <div style={{ fontSize: 11, color: '#666' }}>
-                                <div style={{ marginBottom: 4 }}>
-                                  {item.order_count || 0}单 · 总额 <span style={{ color: '#1677ff' }}>¥{Number(item.total_amount || 0).toFixed(2)}</span>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                                  <span>{item.order_count || 0}单 · 总额 <span style={{ color: '#1677ff' }}>¥{Number(item.total_amount || 0).toFixed(2)}</span></span>
+                                  <span>
+                                    {item.status === 'paid' ? (
+                                      <Tag color="blue" style={{ margin: 0, padding: '0 4px' }}>
+                                        <CheckCircleOutlined /> 结算完成
+                                      </Tag>
+                                    ) : item.status === 'reconciled' ? (
+                                      <Tag color="green" style={{ margin: 0, padding: '0 4px' }}>
+                                        待付款
+                                      </Tag>
+                                    ) : (
+                                      <Tag color="orange" style={{ margin: 0, padding: '0 4px' }}>
+                                        <SyncOutlined /> 对账中
+                                      </Tag>
+                                    )}
+                                  </span>
                                 </div>
+                                <Progress 
+                                  percent={item.status === 'paid' ? 100 : item.status === 'reconciled' ? 75 : 25} 
+                                  size="small" 
+                                  showInfo={false}
+                                  strokeColor={item.status === 'paid' ? '#1677ff' : item.status === 'reconciled' ? '#52c41a' : '#faad14'}
+                                  style={{ marginBottom: 4 }}
+                                />
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                   <span>
                                     抽佣: <span style={{ color: '#722ed1' }}>¥{Number(item.commission_amount || 0).toFixed(2)}</span>
@@ -688,9 +986,24 @@ function Dashboard() {
                                     应付: ¥{Number(item.settlement_amount || 0).toFixed(2)}
                                   </span>
                                 </div>
+                                <div style={{ marginTop: 2, color: '#999' }}>
+                                  按单抽佣 · 本月累计{item.order_count || 0}单
+                                  {item.status === 'paid' && (
+                                    <span style={{ color: '#52c41a', marginLeft: 6 }}>
+                                      <CheckCircleOutlined /> 发票已开具
+                                    </span>
+                                  )}
+                                </div>
                                 {item.exception_count > 0 && (
-                                  <div style={{ color: '#ff4d4f', marginTop: 4, fontSize: 11 }}>
-                                    <WarningOutlined /> 异常差异 {item.exception_count} 笔，差异金额 ¥{Number(item.exception_amount || 0).toFixed(2)}
+                                  <div style={{ 
+                                    marginTop: 6, 
+                                    background: '#fff1f0', 
+                                    border: '1px solid #ffa39e',
+                                    padding: '4px 8px',
+                                    borderRadius: 4,
+                                    color: '#ff4d4f'
+                                  }}>
+                                    <WarningOutlined /> 承运方账单差异 {item.exception_count} 笔：差异金额 ¥{Number(item.exception_amount || 0).toFixed(2)}
                                   </div>
                                 )}
                               </div>
@@ -974,7 +1287,7 @@ function Dashboard() {
               title: '创建时间',
               dataIndex: 'created_at',
               width: 140,
-              render: (val) => dayjs(val).format('MM-DD HH:mm:ss')
+              render: (val) => val ? dayjs(val).format('MM-DD HH:mm:ss') : '-'
             },
             {
               title: '操作',
