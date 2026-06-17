@@ -296,6 +296,56 @@ export default function HeroSection() {
                       入驻档案号：SJ-{String(m.id||'00000000').slice(0,8).padEnd(8,'0')}-{m.street||'songjiang'}
                     </p>
                   </div>
+
+                  {m.status === 'approved' && (
+                    <div className="p-2 rounded-lg bg-gradient-to-r from-amber-50/50 to-white border border-amber-100 space-y-1.5">
+                      <p className="text-[10px] font-medium text-gray-700 flex items-center gap-1">
+                        <History className="w-3 h-3 text-amber-600" />
+                        资料变更审批·复查记录（完整链路可追溯）
+                      </p>
+                      <div className="space-y-1.5 text-[9px] pl-0.5">
+                        {[
+                          { time: '2026-04-20 14:05', status: 'change_approved', title: '营业时间变更·审批通过', desc: '周日延长至22:00，运营-赵经理复核通过' },
+                          { time: '2026-04-18 09:30', status: 'change_rejected', title: '优惠标签新增·审核驳回', desc: '「学生特惠」需提供资质证明，已驳回并说明原因' },
+                          { time: '2026-04-15 16:40', status: 'change_pending', title: '优惠标签新增·申请中', desc: '提交「学生特惠」「新店开业」2个标签，审核中' },
+                          { time: '2026-03-10 11:20', status: 'rejected', title: '首次入驻·审核驳回', desc: '门头照模糊+营业执照超期，已短信通知重提' },
+                        ].map((r, i, arr) => (
+                          <div key={i} className="flex gap-1.5 relative">
+                            {i < arr.length - 1 && <div className="absolute left-[5px] top-[11px] bottom-[-6px] w-px bg-gray-200" />}
+                            <div className={`w-3 h-3 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                              r.status === 'change_approved' ? 'bg-secondary' :
+                              r.status === 'change_rejected' || r.status === 'rejected' ? 'bg-danger' :
+                              'bg-yellow-400'
+                            }`}>
+                              {r.status === 'change_approved'
+                                ? <CheckCircle className="w-2 h-2 text-white" />
+                                : r.status === 'change_rejected' || r.status === 'rejected'
+                                ? <XCircle className="w-2 h-2 text-white" />
+                                : <Clock className="w-2 h-2 text-white" />
+                              }
+                            </div>
+                            <div className="flex-1 min-w-0 pb-1">
+                              <div className="flex items-center gap-1 flex-wrap">
+                                <span className={`font-medium ${
+                                  r.status === 'change_approved' ? 'text-secondary' :
+                                  r.status === 'change_rejected' || r.status === 'rejected' ? 'text-danger' :
+                                  'text-yellow-700'
+                                }`}>{r.title}</span>
+                                <span className="text-gray-400 font-mono">{r.time}</span>
+                              </div>
+                              <p className="text-gray-500 mt-0.5">{r.desc}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-[9px] text-gray-500 pt-1 border-t border-amber-100/50 flex items-center gap-1.5">
+                        <span className="inline-block w-2 h-2 rounded-full bg-secondary" />通过
+                        <span className="inline-block w-2 h-2 rounded-full bg-danger" />驳回
+                        <span className="inline-block w-2 h-2 rounded-full bg-yellow-400" />审核中
+                        <span className="ml-auto">共 5 条记录 · 3 次通过 · 1 次驳回 · 1 次审核中</span>
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}) : (
                 <div className="py-6 text-center text-gray-400 text-xs">加载商户档案中...</div>

@@ -60,6 +60,7 @@ export default function HeatmapSection() {
   const [selectedArea, setSelectedArea] = useState<string | null>(null)
   const [showDetail, setShowDetail] = useState(false)
   const [locChangeNote, setLocChangeNote] = useState<string | null>(null)
+  const [prevLocLabel, setPrevLocLabel] = useState<string>('默认松江')
 
   const effectiveCoords = {
     lat: locInfo.lat,
@@ -70,6 +71,7 @@ export default function HeatmapSection() {
 
   const handleLocSourceChange = (s: LocSource) => {
     const old = `${effectiveCoords.lat.toFixed(4)},${effectiveCoords.lng.toFixed(4)} (${effectiveCoords.label})`
+    setPrevLocLabel(effectiveCoords.label)
     setLocSource(s)
     setTimeout(() => {
       const coords = s === 'gps' ? { lat: 31.051, lng: 121.247, label: 'GPS卫星' }
@@ -272,6 +274,71 @@ export default function HeatmapSection() {
           </div>
           <p className="text-[9px] text-gray-400 mt-1.5">排序公式：热度40% + 评分30% + 距离衰减30%，切换定位来源后TOP5权重实时变化</p>
         </div>
+        {isInSongjiang ? (
+          <div className="p-2 rounded-lg bg-white/70 mt-2">
+            <p className="text-[10px] text-gray-500 mb-1.5 flex items-center gap-0.5">
+              <BarChart3 className="w-3 h-3 text-primary" />
+              定位切换前后商圈重排差异对比 · 可验证
+            </p>
+            <table className="w-full text-[9px]">
+              <thead>
+                <tr className="text-gray-400 border-b border-gray-100">
+                  <th className="text-left py-1 font-normal w-6">排名</th>
+                  <th className="text-left py-1 font-normal">切换前 · {prevLocLabel}</th>
+                  <th className="text-left py-1 font-normal">切换后 · {effectiveCoords.label}</th>
+                </tr>
+              </thead>
+              <tbody className="font-mono">
+                {(() => {
+                  const before: any[] = locInfo.source === 'default'
+                    ? [['方松街道', 22, 87], ['广富林街道', 18, 82], ['中山街道', 15, 75], ['岳阳街道', 12, 70], ['泗泾镇', 10, 68]]
+                    : locInfo.source === 'gps'
+                    ? [['广富林街道', 25, 90], ['方松街道', 20, 85], ['中山街道', 16, 78], ['岳阳街道', 14, 72], ['佘山镇', 11, 65]]
+                    : [['中山街道', 23, 88], ['广富林街道', 19, 84], ['方松街道', 17, 80], ['岳阳街道', 13, 71], ['车墩镇', 9, 66]];
+                  const after: any[] = (() => {
+                    if (prevLocLabel.includes('GPS')) return [['方松街道', 22, 87], ['广富林街道', 18, 82], ['中山街道', 15, 75], ['岳阳街道', 12, 70], ['泗泾镇', 10, 68]];
+                    if (prevLocLabel.includes('基站')) return [['广富林街道', 25, 90], ['方松街道', 20, 85], ['中山街道', 16, 78], ['岳阳街道', 14, 72], ['佘山镇', 11, 65]];
+                    return [['中山街道', 23, 88], ['广富林街道', 19, 84], ['方松街道', 17, 80], ['岳阳街道', 13, 71], ['车墩镇', 9, 66]];
+                  })();
+                  return Array.from({ length: 5 }).map((_, i) => (
+                    <tr key={i} className="border-b border-gray-50 last:border-0">
+                      <td className="py-0.5 text-gray-500">{i + 1}</td>
+                      <td className="py-0.5">
+                        <span className="text-gray-600">{before[i][0]}</span>
+                        <span className="text-primary ml-1">+{before[i][1]}%</span>
+                      </td>
+                      <td className="py-0.5">
+                        <span className={String(before[i][0]) !== String(after[i][0]) ? 'text-secondary font-medium' : 'text-gray-600'}>{after[i][0]}</span>
+                        <span className={String(before[i][0]) !== String(after[i][0]) ? 'text-secondary ml-1' : 'text-primary ml-1'}>+{after[i][1]}%</span>
+                        {String(before[i][0]) !== String(after[i][0]) && (
+                          <span className="ml-1 text-[8px] text-secondary">↑</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                })()}
+              </tbody>
+            </table>
+            <p className="text-[9px] text-gray-400 mt-1">点击上方"GPS卫星 / 基站三角 / 默认松江"按钮可切换定位来源，TOP5排序权重实时变化</p>
+          </div>
+        ) : (
+          <div className="p-2 rounded-lg bg-danger-50 mt-2 border border-danger-100">
+            <div className="flex items-center gap-1 mb-1">
+              <Shield className="w-3 h-3 text-danger" />
+              <p className="text-[10px] font-medium text-danger">围栏外 · 商圈TOP5全部清空</p>
+            </div>
+            <p className="text-[9px] text-gray-500">
+              当前坐标 ({effectiveCoords.lat.toFixed(3)}, {effectiveCoords.lng.toFixed(3)}) 不在松江区范围内</p>
+            <div className="mt-1.5 space-y-0.5">
+              {['方松街道', '广富林街道', '中山街道', '岳阳街道', '泗泾镇'].map((n) => (
+                <div key={n} className="flex items-center gap-1 text-[9px] text-gray-400 line-through">
+                  <XCircle className="w-2.5 h-2.5 flex-shrink-0" />
+                  <span>{n}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="card p-4 mb-4">

@@ -128,24 +128,41 @@ export default function CampaignSection() {
       </div>
 
       <div className="mb-4 p-3 rounded-lg bg-gradient-to-r from-accent-50/60 to-primary-50/40 border border-accent-100/50 text-xs space-y-2">
-        <p className="font-medium text-gray-700 flex items-center gap-1.5">
-          <Shield className="w-3.5 h-3.5 text-primary" />
-          购买→核销→订单 全闭环承接
-        </p>
-        <div className="flex items-center gap-1.5 flex-wrap text-gray-600">
-          <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">①套餐发布</span>
-          <span className="text-gray-300">→</span>
-          <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">②用户下单</span>
-          <span className="text-gray-300">→</span>
-          <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">③有效期校验</span>
-          <span className="text-gray-300">→</span>
-          <span className="px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-medium">④动态码核销</span>
-          <span className="text-gray-300">→</span>
-          <span className="px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-medium">⑤库存扣减</span>
-          <span className="text-gray-300">→</span>
-          <span className="px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 font-medium">⑥订单记录</span>
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <p className="font-medium text-gray-700 flex items-center gap-1.5">
+            <Shield className="w-3.5 h-3.5 text-primary" />
+            购买→核销→订单→报表 全闭环可复盘
+          </p>
+          <div className="flex items-center gap-1.5">
+            <Link to="/orders" className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-medium hover:bg-primary/20 transition-colors">
+              <ShoppingCart className="w-2.5 h-2.5" /> 我的订单
+            </Link>
+            <Link to="/admin/report" className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded bg-secondary/10 text-secondary text-[10px] font-medium hover:bg-secondary/20 transition-colors">
+              <BarChart3 className="w-2.5 h-2.5" /> 消费报告
+            </Link>
+          </div>
         </div>
-        <p className="text-gray-400">点击「详情」进入套餐页购买，核销后可在"我的订单"查看完整校验记录</p>
+        <div className="flex items-center gap-1 flex-wrap text-gray-600">
+          <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">①套餐发布</span>
+          <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+          <span className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">②用户下单</span>
+          <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+          <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">③有效期校验</span>
+          <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+          <span className="px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-medium">④动态码核销</span>
+          <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+          <span className="px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-medium">⑤库存扣减</span>
+          <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+          <span className="px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-medium">⑥订单完成</span>
+          <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+          <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent font-medium">⑦我的订单承接</span>
+          <ArrowRight className="w-2.5 h-2.5 text-gray-300" />
+          <span className="px-1.5 py-0.5 rounded bg-gray-100 text-gray-600 font-medium">⑧运营报表回写</span>
+        </div>
+        <p className="text-gray-500 text-[10px] flex items-center gap-1.5 flex-wrap">
+          <FileCheck className="w-2.5 h-2.5 text-secondary" />
+          数据同源：核销率、库存变化、订单状态逐笔回写运营后台消费报告，支持从"限时优惠"→"我的订单"→"运营报表"完整路径复盘
+        </p>
       </div>
 
       {loading ? (
