@@ -29,11 +29,16 @@ import {
   Shield,
   AlertTriangle,
   ChevronDown,
-  MapPinHouse,
+  MapPinned,
   Activity,
   Gauge,
+  Copy,
+  Clock,
+  Search,
+  UtensilsCrossed,
 } from 'lucide-react';
-import { ORDER_CATEGORIES, CITIES } from '../../constants';
+import { ORDER_CATEGORIES, CITIES, CITY_TIER_PRICING, CITY_TIER_MAP } from '../../constants';
+import type { CityTier } from '../../constants';
 import type { OrderCategory } from '../../types';
 import { userApi } from '../../services/user.api';
 import Button from '../../components/ui/Button';
@@ -53,20 +58,17 @@ const steps: { key: StepKey; label: string }[] = [
   { key: 'address', label: '填写地址' },
   { key: 'goods', label: '商品信息' },
   { key: 'price', label: '价格预估' },
-  { key: 'submit', label: '提交订单' },
+  { key: 'submit', label: '提交与风控' },
 ];
 
-const CITY_PRICING: Record<string, { baseFee: number; perKm: number; minFee: number }> = {
-  '北京': { baseFee: 8, perKm: 2.5, minFee: 12 },
-  '上海': { baseFee: 8, perKm: 2.5, minFee: 12 },
-  '广州': { baseFee: 7, perKm: 2.0, minFee: 10 },
-  '深圳': { baseFee: 7, perKm: 2.0, minFee: 10 },
-  '杭州': { baseFee: 6, perKm: 1.8, minFee: 9 },
-  '成都': { baseFee: 6, perKm: 1.5, minFee: 8 },
-  '南京': { baseFee: 6, perKm: 1.8, minFee: 9 },
-  '武汉': { baseFee: 6, perKm: 1.8, minFee: 9 },
-  '西安': { baseFee: 6, perKm: 1.5, minFee: 8 },
-  '天津': { baseFee: 7, perKm: 2.0, minFee: 10 },
+const getPricingByCity = (cityName: string) => {
+  const tier = CITY_TIER_MAP[cityName] || 'tier2';
+  return CITY_TIER_PRICING[tier];
+};
+
+const getCityTierLabel = (cityName: string) => {
+  const tier = CITY_TIER_MAP[cityName];
+  return tier ? CITY_TIER_PRICING[tier].label : '';
 };
 
 const CATEGORY_MULTIPLIER: Record<OrderCategory, number> = {
@@ -83,20 +85,37 @@ const CATEGORY_LABELS: Record<OrderCategory, { goods: string; pickup: string; de
   errand: { goods: '办事事项', pickup: '办事地点', delivery: '送达地址' },
 };
 
-const SERVICE_CITIES = ['北京', '上海', '广州', '深圳', '杭州', '成都', '南京', '武汉', '西安', '天津'];
+const SERVICE_CITIES = CITIES.map((c) => c.name);
 
-const CAPACITY_STATUS: Record<string, { status: 'sufficient' | 'tight' | 'insufficient'; label: string; dot: string }> = {
-  '北京': { status: 'sufficient', label: '运力充足', dot: 'bg-green-500' },
-  '上海': { status: 'sufficient', label: '运力充足', dot: 'bg-green-500' },
-  '广州': { status: 'sufficient', label: '运力充足', dot: 'bg-green-500' },
-  '深圳': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
-  '杭州': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
-  '成都': { status: 'insufficient', label: '运力不足', dot: 'bg-red-500' },
-  '南京': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
-  '武汉': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
-  '西安': { status: 'insufficient', label: '运力不足', dot: 'bg-red-500' },
-  '天津': { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
+const MERCHANT_CATEGORIES = [
+  { key: 'restaurant', label: '餐饮美食', icon: '🍜', estimatedTime: '约20分钟' },
+  { key: 'retail', label: '零售便利', icon: '🏪', estimatedTime: '约15分钟' },
+  { key: 'pharmacy', label: '药店', icon: '💊', estimatedTime: '约10分钟' },
+  { key: 'fresh', label: '生鲜水果', icon: '🍎', estimatedTime: '约30分钟' },
+  { key: 'cake', label: '蛋糕甜品', icon: '🎂', estimatedTime: '约25分钟' },
+  { key: 'flower', label: '鲜花', icon: '💐', estimatedTime: '约20分钟' },
+  { key: 'other', label: '其他', icon: '📦', estimatedTime: '约20分钟' },
+] as const;
+
+const MERCHANT_CATEGORY_TIME_MAP: Record<string, string> = {
+  restaurant: '约20分钟',
+  retail: '约15分钟',
+  pharmacy: '约10分钟',
+  fresh: '约30分钟',
+  cake: '约25分钟',
+  flower: '约20分钟',
+  other: '约20分钟',
 };
+
+const ERRAND_TYPES = [
+  { key: 'queue', label: '代排队', icon: '🧍' },
+  { key: 'payment', label: '代缴费', icon: '💰' },
+  { key: 'ticket', label: '代取号', icon: '🎫' },
+  { key: 'deliver_doc', label: '代送文件', icon: '📄' },
+  { key: 'purchase', label: '代购', icon: '🛒' },
+  { key: 'procedure', label: '代办手续', icon: '📋' },
+  { key: 'other', label: '其他', icon: '📦' },
+] as const;
 
 interface PurchaseItem {
   name: string;
@@ -131,6 +150,18 @@ interface OrderFormData {
   errandDescription: string;
   errandDuration: string;
   specialRequirements: string;
+  merchantCategory: string;
+  alternateShopName: string;
+  errandType: string;
+  queueLocation: string;
+  queueWaitTime: string;
+  paymentType: string;
+  paymentAccount: string;
+  ticketType: string;
+  documentType: string;
+  isDocConfidential: boolean;
+  procedureOrg: string;
+  procedureMaterials: string;
 }
 
 const defaultValues: OrderFormData = {
@@ -160,6 +191,18 @@ const defaultValues: OrderFormData = {
   errandDescription: '',
   errandDuration: '1h',
   specialRequirements: '',
+  merchantCategory: '',
+  alternateShopName: '',
+  errandType: '',
+  queueLocation: '',
+  queueWaitTime: '',
+  paymentType: '',
+  paymentAccount: '',
+  ticketType: '',
+  documentType: '',
+  isDocConfidential: false,
+  procedureOrg: '',
+  procedureMaterials: '',
 };
 
 const commonAddresses = [
@@ -176,13 +219,20 @@ const DURATION_OPTIONS = [
 ];
 
 const getReferencePrice = (city: string, catKey: OrderCategory) => {
-  const pricing = CITY_PRICING[city] || CITY_PRICING['北京'];
+  const pricing = getPricingByCity(city);
   const multiplier = CATEGORY_MULTIPLIER[catKey];
   return Math.ceil(pricing.baseFee * multiplier);
 };
 
 const getCapacityInfo = (city: string) => {
-  return CAPACITY_STATUS[city] || { status: 'tight' as const, label: '运力紧张', dot: 'bg-yellow-500' };
+  const tier = CITY_TIER_MAP[city] || 'tier2';
+  const capacityMap: Record<CityTier, { status: 'sufficient' | 'tight' | 'insufficient'; label: string; dot: string }> = {
+    tier1: { status: 'sufficient', label: '运力充足', dot: 'bg-green-500' },
+    new_tier1: { status: 'sufficient', label: '运力充足', dot: 'bg-green-500' },
+    tier2: { status: 'tight', label: '运力紧张', dot: 'bg-yellow-500' },
+    tier3: { status: 'insufficient', label: '运力不足', dot: 'bg-red-500' },
+  };
+  return capacityMap[tier];
 };
 
 export default function OrderCreate() {
@@ -193,6 +243,11 @@ export default function OrderCreate() {
   const [pickupAddressesOpen, setPickupAddressesOpen] = useState(false);
   const [deliveryAddressesOpen, setDeliveryAddressesOpen] = useState(false);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+  const [citySearch, setCitySearch] = useState('');
+  const [dispatchExpanded, setDispatchExpanded] = useState(false);
+  const [riskControlStep, setRiskControlStep] = useState(0);
+  const [orderSubmitted, setOrderSubmitted] = useState(false);
+  const [orderId, setOrderId] = useState('');
 
   const {
     control,
@@ -214,17 +269,23 @@ export default function OrderCreate() {
   const pickupAddress = watch('pickupAddress');
   const deliveryAddress = watch('deliveryAddress');
   const purchaseItems = watch('purchaseItems');
+  const merchantCategory = watch('merchantCategory');
+  const errandType = watch('errandType');
 
   useEffect(() => {
     const urlCategory = searchParams.get('category') as OrderCategory;
+    const urlCity = searchParams.get('city');
     if (urlCategory && ORDER_CATEGORIES.some((c) => c.key === urlCategory)) {
       setValue('category', urlCategory);
       setCurrentStep('address');
     }
+    if (urlCity && CITIES.some((c) => c.name === urlCity)) {
+      setValue('city', urlCity);
+    }
   }, [searchParams, setValue]);
 
   const priceBreakdown = useMemo(() => {
-    const pricing = CITY_PRICING[city] || CITY_PRICING['北京'];
+    const pricing = getPricingByCity(city);
     const multiplier = CATEGORY_MULTIPLIER[category];
     const baseFee = Math.ceil(pricing.baseFee * multiplier);
     const distanceFee = Math.round(distance * pricing.perKm);
@@ -322,6 +383,11 @@ export default function OrderCreate() {
   const onSubmit = async (data: OrderFormData) => {
     try {
       setSubmitting(true);
+      setRiskControlStep(1);
+
+      await new Promise((r) => setTimeout(r, 800));
+      setRiskControlStep(2);
+
       let description = data.goodsDescription;
       if (data.category === 'buy') {
         const itemsStr = data.purchaseItems.map((i) => `${i.name} x${i.quantity}`).join('、');
@@ -347,7 +413,14 @@ export default function OrderCreate() {
         goodsValue: data.goodsValue,
         tip: data.tip,
       });
-      navigate(`/orders/${result.id}`);
+
+      await new Promise((r) => setTimeout(r, 800));
+      setRiskControlStep(3);
+
+      await new Promise((r) => setTimeout(r, 800));
+      setRiskControlStep(4);
+      setOrderId(result.id);
+      setOrderSubmitted(true);
     } catch (error) {
       console.error('创建订单失败:', error);
     } finally {
@@ -358,35 +431,81 @@ export default function OrderCreate() {
   const selectedCategory = ORDER_CATEGORIES.find((c) => c.key === category);
   const categoryLabels = CATEGORY_LABELS[category];
 
-  const renderCitySelector = () => (
-    <div className="relative">
-      <button
-        onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
-        className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
-      >
-        <MapPinHouse className="w-3.5 h-3.5 text-gray-500" />
-        <span className="text-sm font-medium text-gray-700">{city}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-transform ${cityDropdownOpen ? 'rotate-180' : ''}`} />
-      </button>
-      {cityDropdownOpen && (
-        <div className="absolute right-0 top-full mt-1 w-36 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
-          {CITIES.map((c) => (
-            <button
-              key={c.code}
-              onClick={() => handleSelectCity(c.name)}
-              className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
-                city === c.name
-                  ? 'bg-brand-50 text-brand-600 font-medium'
-                  : 'text-gray-700 hover:bg-gray-50'
-              }`}
-            >
-              {c.name}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  const renderCitySelector = () => {
+    const tierLabel = getCityTierLabel(city);
+    const filteredCities = citySearch
+      ? CITIES.filter((c) => c.name.includes(citySearch) || c.province.includes(citySearch))
+      : CITIES;
+    const groupedCities = filteredCities.reduce<Record<string, typeof CITIES>>((acc, c) => {
+      if (!acc[c.province]) acc[c.province] = [];
+      acc[c.province].push(c);
+      return acc;
+    }, {});
+
+    return (
+      <div className="relative">
+        <button
+          onClick={() => { setCityDropdownOpen(!cityDropdownOpen); setCitySearch(''); }}
+          className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+        >
+          <MapPinned className="w-3.5 h-3.5 text-gray-500" />
+          <span className="text-sm font-medium text-gray-700">{city}</span>
+          {tierLabel && (
+            <span className="text-xs px-1.5 py-0.5 rounded bg-brand-50 text-brand-600">{tierLabel}</span>
+          )}
+          <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-transform ${cityDropdownOpen ? 'rotate-180' : ''}`} />
+        </button>
+        {cityDropdownOpen && (
+          <div className="absolute right-0 top-full mt-1 w-56 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
+            <div className="p-2 border-b border-gray-100">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+                <input
+                  value={citySearch}
+                  onChange={(e) => setCitySearch(e.target.value)}
+                  placeholder="搜索城市..."
+                  className="w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  autoFocus
+                />
+              </div>
+            </div>
+            <div className="max-h-64 overflow-y-auto">
+              {Object.entries(groupedCities).map(([province, citiesInProvince]) => (
+                <div key={province}>
+                  <div className="px-4 py-1.5 text-xs font-semibold text-gray-400 bg-gray-50 sticky top-0">{province}</div>
+                  {citiesInProvince.map((c) => {
+                    const cTier = CITY_TIER_MAP[c.name];
+                    const cTierLabel = cTier ? CITY_TIER_PRICING[cTier].label : '';
+                    return (
+                      <button
+                        key={c.code}
+                        onClick={() => handleSelectCity(c.name)}
+                        className={`w-full px-4 py-2.5 text-left text-sm flex items-center justify-between transition-colors ${
+                          city === c.name
+                            ? 'bg-brand-50 text-brand-600 font-medium'
+                            : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                      >
+                        <span>{c.name}</span>
+                        {cTierLabel && (
+                          <span className={`text-xs px-1.5 py-0.5 rounded ${
+                            cTier === 'tier1' ? 'bg-red-50 text-red-600' :
+                            cTier === 'new_tier1' ? 'bg-orange-50 text-orange-600' :
+                            cTier === 'tier2' ? 'bg-blue-50 text-blue-600' :
+                            'bg-gray-100 text-gray-500'
+                          }`}>{cTierLabel}</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const renderPickupCard = (
     iconBg: string,
@@ -726,13 +845,42 @@ export default function OrderCreate() {
         </div>
 
         <Controller
+          name="merchantCategory"
+          control={control}
+          render={({ field }) => (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1.5">
+                <UtensilsCrossed className="w-4 h-4 text-brand-500" />
+                商户类目
+              </label>
+              <div className="flex gap-2 flex-wrap">
+                {MERCHANT_CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.key}
+                    onClick={() => field.onChange(cat.key)}
+                    className={`px-3 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-1 ${
+                      field.value === cat.key
+                        ? 'bg-brand-500 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <span>{cat.icon}</span>
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        />
+
+        <Controller
           name="shopName"
           control={control}
           render={({ field }) => (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5 flex items-center gap-1.5">
                 <Store className="w-4 h-4 text-brand-500" />
-                商家名称
+                指定商户
               </label>
               <input
                 {...field}
@@ -742,6 +890,30 @@ export default function OrderCreate() {
             </div>
           )}
         />
+
+        <Controller
+          name="alternateShopName"
+          control={control}
+          render={({ field }) => (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">备选商户</label>
+              <input
+                {...field}
+                placeholder="指定商户无货时的替代选择"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+              />
+            </div>
+          )}
+        />
+
+        {merchantCategory && (
+          <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 flex items-center gap-2">
+            <Clock className="w-4 h-4 text-blue-500" />
+            <span className="text-sm text-blue-700">
+              预估代购时间：{MERCHANT_CATEGORY_TIME_MAP[merchantCategory] || '约20分钟'}
+            </span>
+          </div>
+        )}
 
         {purchaseTotal > 0 && (
           <div className="p-3 rounded-xl bg-brand-50 border border-brand-100">
@@ -1001,8 +1173,8 @@ export default function OrderCreate() {
               </label>
               <textarea
                 {...field}
-                rows={4}
-                placeholder="请详细描述需要办理的事项，如：代排队、代缴费、代取号等"
+                rows={3}
+                placeholder="请详细描述需要办理的事项"
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent resize-none"
               />
               {errors.errandDescription && (
@@ -1011,6 +1183,225 @@ export default function OrderCreate() {
             </div>
           )}
         />
+
+        <Controller
+          name="errandType"
+          control={control}
+          render={({ field }) => (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">事项类型</label>
+              <div className="flex gap-2 flex-wrap">
+                {ERRAND_TYPES.map((t) => (
+                  <button
+                    key={t.key}
+                    onClick={() => field.onChange(t.key)}
+                    className={`px-3 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-1 ${
+                      field.value === t.key
+                        ? 'bg-brand-500 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <span>{t.icon}</span>
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        />
+
+        {errandType === 'queue' && (
+          <>
+            <Controller
+              name="queueLocation"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">排队地点</label>
+                  <input
+                    {...field}
+                    placeholder="如：湘雅医院门诊大厅"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  />
+                </div>
+              )}
+            />
+            <Controller
+              name="queueWaitTime"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">预计等待时间</label>
+                  <input
+                    {...field}
+                    placeholder="如：约2小时"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  />
+                </div>
+              )}
+            />
+          </>
+        )}
+
+        {errandType === 'payment' && (
+          <>
+            <Controller
+              name="paymentType"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">缴费类型</label>
+                  <div className="flex gap-2 flex-wrap">
+                    {['水电煤', '话费', '物业', '其他'].map((type) => (
+                      <button
+                        key={type}
+                        onClick={() => field.onChange(type)}
+                        className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                          field.value === type
+                            ? 'bg-brand-500 text-white shadow-md'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            />
+            <Controller
+              name="paymentAccount"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">缴费账号</label>
+                  <input
+                    {...field}
+                    placeholder="请输入缴费账号/户号"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  />
+                </div>
+              )}
+            />
+          </>
+        )}
+
+        {errandType === 'ticket' && (
+          <Controller
+            name="ticketType"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">取号类型</label>
+                <div className="flex gap-2 flex-wrap">
+                  {['医院', '银行', '政务', '其他'].map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => field.onChange(type)}
+                      className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                        field.value === type
+                          ? 'bg-brand-500 text-white shadow-md'
+                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          />
+        )}
+
+        {errandType === 'deliver_doc' && (
+          <>
+            <Controller
+              name="documentType"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">文件类型</label>
+                  <div className="flex gap-2 flex-wrap">
+                    {['合同', '证件', '发票', '其他'].map((type) => (
+                      <button
+                        key={type}
+                        onClick={() => field.onChange(type)}
+                        className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                          field.value === type
+                            ? 'bg-brand-500 text-white shadow-md'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            />
+            <Controller
+              name="isDocConfidential"
+              control={control}
+              render={({ field }) => (
+                <button
+                  onClick={() => field.onChange(!field.value)}
+                  className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
+                    field.value ? 'border-brand-500 bg-brand-50' : 'border-gray-100 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Shield className={`w-5 h-5 ${field.value ? 'text-brand-500' : 'text-gray-500'}`} />
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-gray-800">保密文件</p>
+                      <p className="text-xs text-gray-500">骑手将按保密协议配送</p>
+                    </div>
+                  </div>
+                  <div className={`w-12 h-7 rounded-full relative transition-colors ${
+                    field.value ? 'bg-brand-500' : 'bg-gray-300'
+                  }`}>
+                    <div className={`absolute top-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform ${
+                      field.value ? 'translate-x-5' : 'translate-x-0.5'
+                    }`} />
+                  </div>
+                </button>
+              )}
+            />
+          </>
+        )}
+
+        {errandType === 'procedure' && (
+          <>
+            <Controller
+              name="procedureOrg"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">办理机构</label>
+                  <input
+                    {...field}
+                    placeholder="如：长沙市住房公积金管理中心"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                  />
+                </div>
+              )}
+            />
+            <Controller
+              name="procedureMaterials"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">所需材料清单</label>
+                  <textarea
+                    {...field}
+                    rows={2}
+                    placeholder="如：身份证原件、户口本、申请表"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent resize-none"
+                  />
+                </div>
+              )}
+            />
+          </>
+        )}
 
         <Controller
           name="errandDuration"
@@ -1347,11 +1738,11 @@ export default function OrderCreate() {
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">基础运费 ({CITY_PRICING[city]?.baseFee || 8}元 × {CATEGORY_MULTIPLIER[category]}倍)</span>
+                  <span className="text-sm text-gray-600">基础运费 ({getPricingByCity(city).baseFee}元 × {CATEGORY_MULTIPLIER[category]}倍)</span>
                   <span className="text-sm font-medium text-gray-800">¥{priceBreakdown.baseFee.toFixed(2)}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">距离费 ({distance}km × {CITY_PRICING[city]?.perKm || 2.5}元/km)</span>
+                  <span className="text-sm text-gray-600">距离费 ({distance}km × {getPricingByCity(city).perKm}元/km)</span>
                   <span className="text-sm font-medium text-gray-800">¥{priceBreakdown.distanceFee.toFixed(2)}</span>
                 </div>
                 {priceBreakdown.weightFee > 0 && (
@@ -1383,7 +1774,7 @@ export default function OrderCreate() {
                   <span className="text-2xl font-bold text-brand-600">¥{priceBreakdown.total.toFixed(2)}</span>
                 </div>
                 <div className="text-xs text-gray-400 text-right">
-                  最低消费 ¥{(CITY_PRICING[city]?.minFee || 8).toFixed(0)}
+                  最低消费 ¥{getPricingByCity(city).minFee}
                 </div>
               </div>
             </Card>
@@ -1402,16 +1793,24 @@ export default function OrderCreate() {
                   <Users className="w-4 h-4 text-gray-400" />
                   <span className="text-sm text-gray-700">附近可用骑手：<span className="font-semibold text-brand-600">12人在线</span></span>
                 </div>
-                <div className="mt-3">
-                  <p className="text-xs text-gray-500 mb-3">匹配维度详情：</p>
-                  <div className="space-y-3">
+
+                <button
+                  onClick={() => setDispatchExpanded(!dispatchExpanded)}
+                  className="w-full flex items-center justify-between p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+                >
+                  <span className="text-sm font-medium text-gray-700">📊 智能派单依据</span>
+                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${dispatchExpanded ? 'rotate-180' : ''}`} />
+                </button>
+
+                {dispatchExpanded && (
+                  <div className="p-3 rounded-xl bg-gray-50 border border-gray-100 space-y-3">
                     <div>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs text-gray-600 flex items-center gap-1">
                           <Gauge className="w-3 h-3 text-brand-500" />
-                          距离匹配
+                          距离优先
                         </span>
-                        <span className="text-xs text-gray-500">平均 0.8km 内有骑手 · 40%</span>
+                        <span className="text-xs text-gray-500">0.8km内3名骑手可接单 · 权重40%</span>
                       </div>
                       <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                         <div className="h-full bg-brand-500 rounded-full" style={{ width: '40%' }} />
@@ -1420,22 +1819,22 @@ export default function OrderCreate() {
                     <div>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs text-gray-600 flex items-center gap-1">
-                          <Activity className="w-3 h-3 text-green-500" />
-                          空闲状态
+                          <ShoppingBag className="w-3 h-3 text-pink-500" />
+                          品类专精
                         </span>
-                        <span className="text-xs text-gray-500">8人立即可接单 · 25%</span>
+                        <span className="text-xs text-gray-500">5名有代购经验的骑手 · 权重25%</span>
                       </div>
                       <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-green-500 rounded-full" style={{ width: '25%' }} />
+                        <div className="h-full bg-pink-500 rounded-full" style={{ width: '25%' }} />
                       </div>
                     </div>
                     <div>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs text-gray-600 flex items-center gap-1">
                           <ShieldCheck className="w-3 h-3 text-yellow-500" />
-                          履约率
+                          历史履约
                         </span>
-                        <span className="text-xs text-gray-500">平均 98.5% 按时送达 · 20%</span>
+                        <span className="text-xs text-gray-500">平均98.5%按时送达率 · 权重20%</span>
                       </div>
                       <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                         <div className="h-full bg-yellow-500 rounded-full" style={{ width: '20%' }} />
@@ -1445,9 +1844,9 @@ export default function OrderCreate() {
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs text-gray-600 flex items-center gap-1">
                           <Users className="w-3 h-3 text-purple-500" />
-                          等级匹配
+                          等级优先
                         </span>
-                        <span className="text-xs text-gray-500">3名金牌骑手优先派单 · 10%</span>
+                        <span className="text-xs text-gray-500">3名金牌骑手在线 · 权重10%</span>
                       </div>
                       <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                         <div className="h-full bg-purple-500 rounded-full" style={{ width: '10%' }} />
@@ -1456,17 +1855,17 @@ export default function OrderCreate() {
                     <div>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs text-gray-600 flex items-center gap-1">
-                          <ShoppingBag className="w-3 h-3 text-pink-500" />
-                          品类专精
+                          <Activity className="w-3 h-3 text-green-500" />
+                          运力池状态
                         </span>
-                        <span className="text-xs text-gray-500">5名有代购经验的骑手 · 5%</span>
+                        <span className="text-xs text-gray-500">当前区域12人在线 · 充足 · 权重5%</span>
                       </div>
                       <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-pink-500 rounded-full" style={{ width: '5%' }} />
+                        <div className="h-full bg-green-500 rounded-full" style={{ width: '5%' }} />
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
                 {isGeoFenced === true && (
                   <div className="flex items-center gap-1.5 pt-2 border-t border-gray-100">
                     <Map className="w-4 h-4 text-green-500" />
@@ -1529,11 +1928,56 @@ export default function OrderCreate() {
         );
 
       case 'submit':
-        return (
-          <div className="space-y-5 text-center py-8">
-            <div className="w-20 h-20 mx-auto rounded-full bg-green-100 flex items-center justify-center">
-              <CheckCircle2 className="w-10 h-10 text-green-600" />
+        if (orderSubmitted) {
+          return (
+            <div className="space-y-5 text-center py-6">
+              <div className="w-20 h-20 mx-auto rounded-full bg-green-100 flex items-center justify-center">
+                <CheckCircle2 className="w-10 h-10 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900">下单成功</h3>
+                <p className="text-sm text-gray-500 mt-1">骑手正在火速赶来</p>
+              </div>
+              <Card className="text-left">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">订单编号</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-gray-800 font-mono">{orderId}</span>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(orderId);
+                        }}
+                        className="p-1 rounded hover:bg-gray-100 transition-colors"
+                      >
+                        <Copy className="w-3.5 h-3.5 text-gray-400" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">预计接单时间</span>
+                    <span className="text-sm font-medium text-gray-800">3分钟内</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">骑手匹配状态</span>
+                    <span className="text-sm font-medium text-brand-600 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse" />
+                      匹配中...
+                    </span>
+                  </div>
+                  <div className="pt-3 border-t border-gray-100">
+                    <Button variant="primary" className="w-full" onClick={() => navigate(`/orders/${orderId}`)}>
+                      查看订单详情
+                    </Button>
+                  </div>
+                </div>
+              </Card>
             </div>
+          );
+        }
+
+        return (
+          <div className="space-y-5 text-center py-6">
             <div>
               <h3 className="text-xl font-bold text-gray-900">确认下单</h3>
               <p className="text-sm text-gray-500 mt-1">请核对订单信息无误后提交</p>
@@ -1567,6 +2011,65 @@ export default function OrderCreate() {
                 </div>
               </div>
             </Card>
+
+            {riskControlStep > 0 && (
+              <Card className="text-left">
+                <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-brand-500" />
+                  结算风控流程
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
+                      riskControlStep > 1 ? 'bg-green-500 text-white' : 'bg-brand-500 text-white animate-pulse'
+                    }`}>
+                      {riskControlStep > 1 ? '✓' : '1'}
+                    </div>
+                    <div className="flex-1">
+                      <p className={`text-sm font-medium ${riskControlStep > 1 ? 'text-green-600' : 'text-gray-800'}`}>
+                        订单提交中...
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {riskControlStep > 1 ? '提交成功' : '正在提交订单信息'}
+                      </p>
+                    </div>
+                    {riskControlStep > 1 && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
+                      riskControlStep > 2 ? 'bg-green-500 text-white' : riskControlStep >= 2 ? 'bg-brand-500 text-white animate-pulse' : 'bg-gray-200 text-gray-400'
+                    }`}>
+                      {riskControlStep > 2 ? '✓' : '2'}
+                    </div>
+                    <div className="flex-1">
+                      <p className={`text-sm font-medium ${riskControlStep > 2 ? 'text-green-600' : riskControlStep >= 2 ? 'text-gray-800' : 'text-gray-400'}`}>
+                        支付风控校验
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {riskControlStep > 2 ? '校验通过' : riskControlStep >= 2 ? '检查余额/支付渠道' : '等待校验'}
+                      </p>
+                    </div>
+                    {riskControlStep > 2 && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
+                      riskControlStep > 3 ? 'bg-green-500 text-white' : riskControlStep >= 3 ? 'bg-brand-500 text-white animate-pulse' : 'bg-gray-200 text-gray-400'
+                    }`}>
+                      {riskControlStep > 3 ? '✓' : '3'}
+                    </div>
+                    <div className="flex-1">
+                      <p className={`text-sm font-medium ${riskControlStep > 3 ? 'text-green-600' : riskControlStep >= 3 ? 'text-gray-800' : 'text-gray-400'}`}>
+                        派单匹配中
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {riskControlStep > 3 ? '匹配成功' : riskControlStep >= 3 ? '匹配最优骑手' : '等待匹配'}
+                      </p>
+                    </div>
+                    {riskControlStep > 3 && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+                  </div>
+                </div>
+              </Card>
+            )}
           </div>
         );
 
@@ -1636,6 +2139,9 @@ export default function OrderCreate() {
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-xs text-gray-500 flex items-center gap-1">
                     🏙️ {city}
+                    {getCityTierLabel(city) && (
+                      <span className="text-xs text-brand-500">({getCityTierLabel(city)})</span>
+                    )}
                   </span>
                   <span className="text-xs text-gray-500 flex items-center gap-1">
                     <span className={`inline-block w-1.5 h-1.5 rounded-full ${capacityInfo.dot}`} />
@@ -1647,19 +2153,23 @@ export default function OrderCreate() {
                   <p className="text-xl font-bold text-brand-600">¥{priceBreakdown.total.toFixed(2)}</p>
                 </div>
               </div>
-              {currentStepIndex > 0 && (
-                <Button variant="secondary" onClick={handlePrev} size="lg">
-                  上一步
-                </Button>
-              )}
-              {currentStepIndex < steps.length - 1 ? (
-                <Button variant="primary" onClick={handleNext} size="lg">
-                  下一步
-                </Button>
-              ) : (
-                <Button variant="primary" type="submit" loading={submitting} size="lg">
-                  提交订单
-                </Button>
+              {!orderSubmitted && riskControlStep === 0 && (
+                <>
+                  {currentStepIndex > 0 && (
+                    <Button variant="secondary" onClick={handlePrev} size="lg">
+                      上一步
+                    </Button>
+                  )}
+                  {currentStepIndex < steps.length - 1 ? (
+                    <Button variant="primary" onClick={handleNext} size="lg">
+                      下一步
+                    </Button>
+                  ) : (
+                    <Button variant="primary" type="submit" loading={submitting} size="lg">
+                      提交订单
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           </div>

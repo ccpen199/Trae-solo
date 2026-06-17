@@ -448,7 +448,10 @@ function OperationLog({ order, cancelledAt, cancelReason }: OperationLogProps) {
   return (
     <div className="mt-4 pt-4 border-t border-gray-100">
       <button
-        onClick={() => setExpanded(!expanded)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setExpanded(!expanded);
+        }}
         className="flex items-center justify-between w-full"
       >
         <div className="flex items-center gap-1.5">
@@ -544,7 +547,14 @@ function OrderCard({ order, onClick, onCancel }: OrderCardProps) {
               取消订单
             </Button>
             {order.payStatus === 'unpaid' && order.status === 'pending' && (
-              <Button size="sm" variant="primary" icon={<CreditCard className="w-4 h-4" />}>
+              <Button
+                size="sm"
+                variant="primary"
+                icon={<CreditCard className="w-4 h-4" />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 去支付
               </Button>
             )}
@@ -778,7 +788,7 @@ export default function OrderList() {
           cancelReason: finalReason,
           cancelBy: 'user' as const,
           cancelledAt: new Date().toISOString(),
-          payStatus: paid ? 'paid' : order.payStatus,
+          payStatus: paid ? 'refunded' : order.payStatus,
           updatedAt: new Date().toISOString(),
         };
       })

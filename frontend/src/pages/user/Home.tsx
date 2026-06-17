@@ -1,28 +1,35 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ShoppingBag,
   Send,
   Package,
   ClipboardList,
-  MapPin,
-  ChevronRight,
+  ChevronDown,
   Bell,
   Search,
   Tag,
   Gift,
   Clock,
   Star,
+  MapPinned,
 } from 'lucide-react';
-import { ORDER_CATEGORIES } from '../../constants';
+import { ORDER_CATEGORIES, CITIES, CITY_TIER_PRICING, CITY_TIER_MAP } from '../../constants';
 import type { OrderCategory } from '../../types';
 import { useAuthStore } from '../../store/useAuthStore';
 
-const iconMap: Record<string, React.FC<{ className?: string }>> = {
+const iconMap: Record<string, React.FC<{ className?: string; style?: React.CSSProperties }>> = {
   ShoppingBag,
   Send,
   Package,
   ClipboardList,
+};
+
+const CATEGORY_MULTIPLIER: Record<OrderCategory, number> = {
+  buy: 1.2,
+  send: 1.0,
+  fetch: 0.8,
+  errand: 1.5,
 };
 
 interface BannerItem {
@@ -53,21 +60,30 @@ const hotCoupons: CouponItem[] = [
 ];
 
 const hotServices = [
-  { id: 1, name: '代取快递', price: '5元起', icon: Package },
-  { id: 2, name: '奶茶外卖', price: '3元起', icon: ShoppingBag },
-  { id: 3, name: '文件配送', price: '8元起', icon: Send },
-  { id: 4, name: '排队代办', price: '15元起', icon: ClipboardList },
+  { id: 1, name: '代取快递', category: 'fetch' as OrderCategory, icon: Package },
+  { id: 2, name: '奶茶外卖', category: 'buy' as OrderCategory, icon: ShoppingBag },
+  { id: 3, name: '文件配送', category: 'send' as OrderCategory, icon: Send },
+  { id: 4, name: '排队代办', category: 'errand' as OrderCategory, icon: ClipboardList },
 ];
 
 export default function UserHome() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const [currentCity] = useState('北京');
+  const [currentCity, setCurrentCity] = useState('北京');
   const [activeBanner, setActiveBanner] = useState(0);
   const [searchValue, setSearchValue] = useState('');
+  const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+  const [citySearch, setCitySearch] = useState('');
+
+  const cityTier = useMemo(() => CITY_TIER_MAP[currentCity] || 'tier2', [currentCity]);
+  const cityPricing = useMemo(() => CITY_TIER_PRICING[cityTier], [cityTier]);
+
+  const getCategoryPrice = (catKey: OrderCategory) => {
+    return Math.ceil(cityPricing.baseFee * CATEGORY_MULTIPLIER[catKey]);
+  };
 
   const handleCategoryClick = (category: OrderCategory) => {
-    navigate(`/order/create?category=${category}`);
+    navigate(`/order/create?category=${category}&city=${encodeURIComponent(currentCity)}`);
   };
 
   const handleRecentOrderClick = () => {
@@ -78,14 +94,103 @@ export default function UserHome() {
     setActiveBanner(index);
   };
 
+  const handleSelectCity = (cityName: string) => {
+    setCurrentCity(cityName);
+    setCityDropdownOpen(false);
+  };
+
+  const filteredCities = citySearch
+    ? CITIES.filter((c) => c.name.includes(citySearch) || c.province.includes(citySearch))
+    : CITIES;
+
+  const groupedCities = filteredCities.reduce<Record<string, typeof CITIES>>((acc, c) => {
+    if (!acc[c.province]) acc[c.province] = [];
+    acc[c.province].push(c);
+    return acc;
+  }, {});
+
+  const getTierBadgeStyle = (tier: string) => {
+    switch (tier) {
+      case 'tier1':
+        return 'bg-red-50 text-red-600';
+      case 'new_tier1':
+        return 'bg-orange-50 text-orange-600';
+      case 'tier2':
+        return 'bg-blue-50 text-blue-600';
+      case 'tier3':
+        return 'bg-gray-100 text-gray-500';
+      default:
+        return 'bg-gray-100 text-gray-500';
+    }
+  };
+
   return (
     <div className="pb-4">
       <div className="bg-gradient-to-br from-brand-500 to-brand-700 px-4 pt-4 pb-16 -mx-4">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-1 text-white">
-            <MapPin className="w-4 h-4" />
-            <span className="text-sm font-medium">{currentCity}</span>
-            <ChevronRight className="w-4 h-4" />
+          <div className="relative">
+            <button
+              onClick={() => {
+                setCityDropdownOpen(!cityDropdownOpen);
+                setCitySearch('');
+              }}
+              className="flex items-center gap-1 text-white"
+            >
+              <MapPinned className="w-4 h-4" />
+              <span className="text-sm font-medium">{currentCity}</span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${cityDropdownOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+            {cityDropdownOpen && (
+              <div className="absolute left-0 top-full mt-1 w-56 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
+                <div className="p-2 border-b border-gray-100">
+                  <div className="relative">
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+                    <input
+                      value={citySearch}
+                      onChange={(e) => setCitySearch(e.target.value)}
+                      placeholder="搜索城市..."
+                      className="w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                      autoFocus
+                    />
+                  </div>
+                </div>
+                <div className="overflow-y-auto" style={{ maxHeight: '280px' }}>
+                  {Object.entries(groupedCities).map(([province, citiesInProvince]) => (
+                    <div key={province}>
+                      <div className="px-4 py-1.5 text-xs font-semibold text-gray-400 bg-gray-50 sticky top-0">
+                        {province}
+                      </div>
+                      {citiesInProvince.map((c) => {
+                        const cTier = CITY_TIER_MAP[c.name];
+                        const cTierLabel = cTier ? CITY_TIER_PRICING[cTier].label : '';
+                        return (
+                          <button
+                            key={c.code}
+                            onClick={() => handleSelectCity(c.name)}
+                            className={`w-full px-4 py-2.5 text-left text-sm flex items-center justify-between transition-colors ${
+                              currentCity === c.name
+                                ? 'bg-brand-50 text-brand-600 font-medium'
+                                : 'text-gray-700 hover:bg-gray-50'
+                            }`}
+                          >
+                            <span>{c.name}</span>
+                            {cTierLabel && (
+                              <span
+                                className={`text-xs px-1.5 py-0.5 rounded ${getTierBadgeStyle(cTier)}`}
+                              >
+                                {cTierLabel}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <button className="relative p-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors">
             <Bell className="w-5 h-5" />
@@ -119,6 +224,7 @@ export default function UserHome() {
           <div className="grid grid-cols-4 gap-3">
             {ORDER_CATEGORIES.map((cat) => {
               const Icon = iconMap[cat.iconName];
+              const price = getCategoryPrice(cat.key);
               return (
                 <button
                   key={cat.key}
@@ -132,6 +238,9 @@ export default function UserHome() {
                     {Icon && <Icon className="w-7 h-7" style={{ color: cat.color }} />}
                   </div>
                   <span className="text-sm font-medium text-gray-800">{cat.name}</span>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                    {price}元起
+                  </span>
                 </button>
               );
             })}
@@ -188,7 +297,7 @@ export default function UserHome() {
           </div>
           <div className="flex items-center gap-1 text-brand-600">
             <span className="text-sm font-medium">查看</span>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronDown className="w-4 h-4 -rotate-90" />
           </div>
         </div>
       </div>
@@ -197,17 +306,18 @@ export default function UserHome() {
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-base font-bold text-gray-900">热门服务</h2>
           <button className="text-sm text-brand-600 flex items-center gap-0.5">
-            更多 <ChevronRight className="w-4 h-4" />
+            更多 <ChevronDown className="w-4 h-4 -rotate-90" />
           </button>
         </div>
         <div className="grid grid-cols-2 gap-3">
           {hotServices.map((service) => {
             const Icon = service.icon;
+            const price = getCategoryPrice(service.category);
             return (
               <div
                 key={service.id}
                 className="bg-white rounded-2xl p-4 border border-gray-100 hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => handleCategoryClick('errand')}
+                onClick={() => handleCategoryClick(service.category)}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center">
@@ -215,7 +325,7 @@ export default function UserHome() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-800">{service.name}</p>
-                    <p className="text-xs text-brand-600 font-medium mt-0.5">{service.price}</p>
+                    <p className="text-xs text-brand-600 font-medium mt-0.5">{price}元起</p>
                   </div>
                 </div>
               </div>
@@ -231,7 +341,7 @@ export default function UserHome() {
             优惠券推荐
           </h2>
           <button className="text-sm text-brand-600 flex items-center gap-0.5">
-            全部 <ChevronRight className="w-4 h-4" />
+            全部 <ChevronDown className="w-4 h-4 -rotate-90" />
           </button>
         </div>
         <div className="space-y-3">
