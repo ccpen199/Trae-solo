@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck } from 'lucide-react'
+import { Store, CheckCircle, ShoppingCart, DollarSign, Filter, RefreshCw, Shield, FileCheck, Megaphone, TrendingUp, Users, Calendar } from 'lucide-react'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell,
@@ -294,6 +294,119 @@ export default function Dashboard() {
         ) : (
           <p className="text-gray-400 text-sm text-center py-8">暂无排行数据</p>
         )}
+      </div>
+
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Megaphone className="w-4 h-4 text-accent" />
+            <h3 className="font-semibold text-gray-700">区域营销活动效果</h3>
+          </div>
+          <span className="text-[10px] text-gray-400">数据来源：松江围栏业务数据库·活动中心</span>
+        </div>
+
+        <div className="space-y-3 mb-4">
+          {[
+            {
+              name: '大学城狂欢周',
+              status: '进行中',
+              statusColor: 'bg-secondary-50 text-secondary',
+              merchants: 45,
+              orders: 3256,
+              revenue: 286500,
+              verifyRate: 94.2,
+              growth: 28.5,
+              period: '2026-03-10 ~ 2026-03-20',
+              street: '广富林街道',
+            },
+            {
+              name: '周末美食特惠',
+              status: '进行中',
+              statusColor: 'bg-secondary-50 text-secondary',
+              merchants: 78,
+              orders: 5420,
+              revenue: 612800,
+              verifyRate: 91.8,
+              growth: 15.3,
+              period: '每周六日',
+              street: '方松/中山/广富林',
+            },
+            {
+              name: '新店扶持计划',
+              status: '已结束',
+              statusColor: 'bg-gray-100 text-gray-500',
+              merchants: 23,
+              orders: 1890,
+              revenue: 156800,
+              verifyRate: 88.5,
+              growth: 42.1,
+              period: '2026-02-01 ~ 2026-02-28',
+              street: '全区覆盖',
+            },
+          ].map((c, i) => (
+            <div key={i} className="p-3 rounded-lg border border-gray-100 bg-gradient-to-r from-gray-50/50 to-white hover:border-accent/20 transition-colors">
+              <div className="flex items-center gap-2 mb-2">
+                <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${c.statusColor}`}>{c.status}</span>
+                <span className="text-sm font-medium text-gray-800">{c.name}</span>
+                <span className="ml-auto text-[10px] text-gray-400 flex items-center gap-0.5">
+                  <Calendar className="w-3 h-3" /> {c.period}
+                </span>
+              </div>
+              <div className="grid grid-cols-4 gap-2 text-[10px] mb-2">
+                <div>
+                  <p className="text-gray-400">参与商户</p>
+                  <p className="text-sm font-bold text-gray-700">{c.merchants}家</p>
+                </div>
+                <div>
+                  <p className="text-gray-400">订单量</p>
+                  <p className="text-sm font-bold text-gray-700">{c.orders.toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-gray-400">营收</p>
+                  <p className="text-sm font-bold text-accent">¥{(c.revenue / 10000).toFixed(1)}万</p>
+                </div>
+                <div>
+                  <p className="text-gray-400">核销率</p>
+                  <p className="text-sm font-bold text-secondary">{c.verifyRate}%</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between text-[10px] pt-2 border-t border-gray-100">
+                <span className="text-gray-400">覆盖范围：{c.street}</span>
+                <span className="text-emerald-600 flex items-center gap-0.5 font-medium">
+                  <TrendingUp className="w-3 h-3" />
+                  环比增长 {c.growth}%
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="p-3 rounded-lg bg-accent-50/50 border border-accent-100/50">
+          <p className="text-[11px] font-medium text-gray-700 mb-2 flex items-center gap-1">
+            <TrendingUp className="w-3.5 h-3.5 text-accent" />
+            活动效果联动消费报告 · 可验收
+          </p>
+          <div className="grid grid-cols-3 gap-2 text-[10px]">
+            <div className="p-2 rounded bg-white/80">
+              <p className="text-gray-400">活动带动订单</p>
+              <p className="text-base font-bold text-accent">10,566</p>
+              <p className="text-gray-400">占总订单 35.2%</p>
+            </div>
+            <div className="p-2 rounded bg-white/80">
+              <p className="text-gray-400">活动带动营收</p>
+              <p className="text-base font-bold text-accent">¥105.6万</p>
+              <p className="text-gray-400">占总营收 32.8%</p>
+            </div>
+            <div className="p-2 rounded bg-white/80">
+              <p className="text-gray-400">参与商户核销率</p>
+              <p className="text-base font-bold text-secondary">92.1%</p>
+              <p className="text-gray-400">高于均值 3.5%</p>
+            </div>
+          </div>
+          <p className="text-[9px] text-gray-500 mt-2">
+            💡 活动数据与消费报告同源：订单核销后自动计入对应活动和整体报表，可按街道/业态/时间维度筛选验证
+          </p>
+        </div>
       </div>
 
       <div className="p-4 rounded-xl bg-gradient-to-r from-primary-50/60 to-secondary-50/40 border border-primary-100/50 text-[11px] text-gray-600 space-y-1">

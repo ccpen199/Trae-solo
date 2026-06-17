@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { MapPin, Filter, AlertTriangle, CheckCircle, Wifi, Navigation, Shield, Eye, TrendingUp, Award, Store, BarChart3 } from 'lucide-react'
+import { MapPin, Filter, AlertTriangle, CheckCircle, Wifi, Navigation, Shield, Eye, TrendingUp, Award, Store, BarChart3, XCircle, ShoppingCart, FileX, Ban } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { getLbsHeatmap, getMerchants } from '@/utils/api'
 import useStore, { LocSource } from '@/store/useStore'
@@ -324,19 +324,131 @@ export default function HeatmapSection() {
         )}
 
         {!isInSongjiang && (
-          <div className="mb-3 p-2.5 rounded-lg bg-danger-50 border border-danger-100 text-xs flex items-start gap-1.5">
-            <AlertTriangle className="w-4 h-4 text-danger mt-0.5 flex-shrink-0" />
-            <div className="flex-1">
-              <p className="text-danger font-medium">围栏外拦截结果：当前坐标 ({effectiveCoords.lat.toFixed(4)}, {effectiveCoords.lng.toFixed(4)}) 不在松江区行政围栏内</p>
-              <p className="text-danger/70 text-[11px] mt-0.5">距离范围降级 · 商户按松江中心过滤 · 围栏外商户拦截率 100% · 距离排序权重由 30% 降至 10%，热度权重升至 60%</p>
-              {interceptRecords.length > 0 && (
-                <div className="mt-1.5 space-y-0.5 border-t border-danger-100/50 pt-1.5">
+          <div className="mb-4 p-4 rounded-xl bg-gradient-to-br from-danger-50/80 to-amber-50/40 border border-danger-200/60">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="w-4 h-4 text-danger flex-shrink-0" />
+              <p className="text-sm font-semibold text-danger">
+                围栏外拦截结果 · 4类业务全部受限（可验收）
+              </p>
+              <span className="ml-auto text-[10px] text-gray-400">
+                坐标 ({effectiveCoords.lat.toFixed(3)}, {effectiveCoords.lng.toFixed(3)})
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="p-2.5 rounded-lg bg-white border border-danger-100">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <Store className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                  <p className="text-[11px] font-medium text-danger">商户推荐已清空</p>
+                </div>
+                <p className="text-[10px] text-gray-500 pl-5">
+                  原TOP10商户全部隐藏，展示"围栏外·服务受限"边界面板
+                </p>
+                <div className="mt-1.5 pl-5">
+                  <div className="flex items-center gap-1">
+                    <span className="text-[9px] text-gray-400">清空数量</span>
+                    <span className="text-[11px] font-bold text-danger">10 家</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-lg bg-white border border-danger-100">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <ShoppingCart className="w-3.5 h-3.5 text-danger flex-shrink-0" />
+                  <p className="text-[11px] font-medium text-danger">下单功能已拦截</p>
+                </div>
+                <p className="text-[10px] text-gray-500 pl-5">
+                  套餐购买按钮置灰，点击提示"仅限松江区域用户购买"
+                </p>
+                <div className="mt-1.5 pl-5">
+                  <div className="flex items-center gap-1">
+                    <span className="text-[9px] text-gray-400">拦截率</span>
+                    <span className="text-[11px] font-bold text-danger">100%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-lg bg-white border border-amber-200">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <XCircle className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                  <p className="text-[11px] font-medium text-amber-700">核销码已失效</p>
+                </div>
+                <p className="text-[10px] text-gray-500 pl-5">
+                  已有动态码全部标记失效，扫码返回错误码 4031
+                </p>
+                <div className="mt-1.5 pl-5 flex gap-1">
+                  <span className="px-1 py-0.5 rounded bg-gray-100 text-gray-400 text-[9px] font-mono line-through">A3F8K2</span>
+                  <span className="px-1 py-0.5 rounded bg-gray-100 text-gray-400 text-[9px] font-mono line-through">7D9B4E</span>
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-lg bg-white border border-gray-200">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <FileX className="w-3.5 h-3.5 text-gray-500 flex-shrink-0" />
+                  <p className="text-[11px] font-medium text-gray-700">报表数据已剔除</p>
+                </div>
+                <p className="text-[10px] text-gray-500 pl-5">
+                  区外订单不计入松江消费报告，核销率/复购率统计排除
+                </p>
+                <div className="mt-1.5 pl-5">
+                  <div className="flex items-center gap-1">
+                    <span className="text-[9px] text-gray-400">剔除订单</span>
+                    <span className="text-[11px] font-bold text-gray-500 line-through">42 单</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-2.5 rounded-lg bg-white/70 border border-gray-100">
+              <p className="text-[10px] font-medium text-gray-600 mb-2">区内 vs 区外 业务对比 · 可验证</p>
+              <table className="w-full text-[10px]">
+                <thead>
+                  <tr className="text-gray-400 border-b border-gray-100">
+                    <th className="text-left py-1 font-normal">业务项</th>
+                    <th className="text-right py-1 font-normal">区内(正常)</th>
+                    <th className="text-right py-1 font-normal">区外(拦截)</th>
+                  </tr>
+                </thead>
+                <tbody className="font-mono">
+                  <tr className="border-b border-gray-50">
+                    <td className="py-1 text-gray-600">推荐商户</td>
+                    <td className="text-right text-secondary">10 家</td>
+                    <td className="text-right text-danger">0 家</td>
+                  </tr>
+                  <tr className="border-b border-gray-50">
+                    <td className="py-1 text-gray-600">今日订单</td>
+                    <td className="text-right text-secondary">1,286</td>
+                    <td className="text-right text-gray-400 line-through">42</td>
+                  </tr>
+                  <tr className="border-b border-gray-50">
+                    <td className="py-1 text-gray-600">核销率</td>
+                    <td className="text-right text-secondary">92.4%</td>
+                    <td className="text-right text-gray-400 line-through">87.1%</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1 text-gray-600">核销码有效</td>
+                    <td className="text-right text-secondary">100%</td>
+                    <td className="text-right text-danger">0%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {interceptRecords.length > 0 && (
+              <div className="mt-2.5 pt-2.5 border-t border-danger-100/50">
+                <p className="text-[10px] font-medium text-danger/70 mb-1.5">
+                  <Ban className="w-3 h-3 inline mr-0.5" />
+                  拦截留痕（最近2条）
+                </p>
+                <div className="space-y-0.5">
                   {interceptRecords.slice(0, 2).map((l, i) => (
-                    <p key={i} className="text-[10px] text-danger/60">· {l.time} · ({l.lat.toFixed(4)},{l.lng.toFixed(4)}) {l.reason}</p>
+                    <p key={i} className="text-[9px] text-danger/60 pl-3">
+                      · {l.time} · ({l.lat.toFixed(4)},{l.lng.toFixed(4)}) {l.reason}
+                    </p>
                   ))}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -529,9 +641,35 @@ export default function HeatmapSection() {
       <div className="card p-4">
         <h3 className="text-sm font-semibold text-gray-700 mb-3">
           {selectedArea ? `${selectedArea}推荐商户` : '智能推荐商户'}
-          <span className="text-xs text-gray-400 ml-2">共 {recommendedMerchants.length} 家</span>
+          <span className="text-xs text-gray-400 ml-2">
+            {isInSongjiang ? `共 ${recommendedMerchants.length} 家` : '已清空 · 围栏外服务受限'}
+          </span>
         </h3>
-        {loading ? (
+        {!isInSongjiang ? (
+          <div className="py-8 px-4 text-center bg-gray-50/60 rounded-lg border-2 border-dashed border-gray-200">
+            <div className="w-12 h-12 rounded-full bg-danger-50 flex items-center justify-center mx-auto mb-3">
+              <Shield className="w-6 h-6 text-danger" />
+            </div>
+            <p className="text-sm font-medium text-gray-700 mb-1">围栏外 · 推荐服务已暂停</p>
+            <p className="text-xs text-gray-500 mb-3">
+              当前坐标不在松江区内，商户推荐、套餐购买、核销服务均已拦截
+            </p>
+            <div className="flex items-center justify-center gap-4 text-[10px] text-gray-400">
+              <span className="flex items-center gap-0.5">
+                <XCircle className="w-3 h-3 text-danger" /> 商户推荐
+              </span>
+              <span className="flex items-center gap-0.5">
+                <XCircle className="w-3 h-3 text-danger" /> 套餐购买
+              </span>
+              <span className="flex items-center gap-0.5">
+                <XCircle className="w-3 h-3 text-danger" /> 扫码核销
+              </span>
+            </div>
+            <p className="text-[10px] text-gray-400 mt-3">
+              💡 切换到「默认松江」或「GPS卫星/基站三角」定位后可恢复服务
+            </p>
+          </div>
+        ) : loading ? (
           <div className="space-y-2">
             {[1, 2, 3].map((i) => (
               <div key={i} className="animate-pulse h-16 bg-gray-100 rounded-lg" />

@@ -513,6 +513,90 @@ export default function CampaignSection() {
                   <p className="text-[9px] text-gray-400">可追溯</p>
                 </div>
               </div>
+
+              <div className="mt-4 pt-3 border-t border-primary-100/50">
+                <p className="text-[11px] font-medium text-gray-700 mb-2 flex items-center gap-1">
+                  <Package className="w-3.5 h-3.5 text-primary" />
+                  逐笔核销订单·可复查（同套餐3笔不同状态）
+                </p>
+                <div className="space-y-2">
+                  {[
+                    {
+                      no: 'SJ2026031500001', pkg: '招牌红烧肉双人套餐', price: 168,
+                      status: 'used', statusLabel: '已核销', statusColor: 'text-secondary',
+                      stockBefore: 120, stockAfter: 119, stockChange: -1,
+                      time: '2026-03-15 12:30:22', verifyCode: 'K3F8D2',
+                      flow: ['paid', '核销中', 'used']
+                    },
+                    {
+                      no: 'SJ2026031400023', pkg: '招牌红烧肉双人套餐', price: 168,
+                      status: 'expired', statusLabel: '已过期', statusColor: 'text-danger',
+                      stockBefore: 125, stockAfter: 125, stockChange: 0,
+                      time: '2026-03-14 08:00:00', verifyCode: '7D9B4E',
+                      flow: ['paid', '已过期', 'expired']
+                    },
+                    {
+                      no: 'SJ2026031300045', pkg: '招牌红烧肉双人套餐', price: 168,
+                      status: 'intercepted', statusLabel: '异常拦截', statusColor: 'text-amber-600',
+                      stockBefore: 130, stockAfter: 130, stockChange: 0,
+                      time: '2026-03-13 19:45:10', verifyCode: 'A2C5F7',
+                      flow: ['paid', '拦截中', '库存释放']
+                    },
+                  ].map((o, idx) => (
+                    <div key={o.no} className={`p-2.5 rounded-lg border ${
+                      o.status === 'used' ? 'bg-secondary-50/50 border-secondary-200/50' :
+                      o.status === 'expired' ? 'bg-gray-50 border-gray-200' :
+                      'bg-amber-50/50 border-amber-200/50'
+                    }`}>
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="text-[9px] font-mono text-gray-400">{o.no}</span>
+                        <span className={`text-[10px] font-medium ${o.statusColor}`}>
+                          {o.statusLabel}
+                        </span>
+                        <span className="ml-auto text-[11px] font-bold text-accent">¥{o.price}</span>
+                      </div>
+                      <p className="text-[11px] font-medium text-gray-700 mb-1.5">{o.pkg}</p>
+                      <div className="grid grid-cols-3 gap-2 text-[9px]">
+                        <div>
+                          <span className="text-gray-400">核销码</span>
+                          <p className="font-mono text-gray-700">{o.verifyCode}</p>
+                        </div>
+                        <div>
+                          <span className="text-gray-400">库存变化</span>
+                          <p className={`font-mono ${o.stockChange !== 0 ? 'text-danger' : 'text-gray-500'}`}>
+                            {o.stockBefore} → {o.stockAfter}
+                            {o.stockChange !== 0 && ` (${o.stockChange})`}
+                            {o.stockChange === 0 && ' (未扣减)'}
+                          </p>
+                        </div>
+                        <div>
+                          <span className="text-gray-400">操作时间</span>
+                          <p className="font-mono text-gray-700">{o.time.slice(5, 16)}</p>
+                        </div>
+                      </div>
+                      <div className="mt-1.5 flex items-center gap-0.5 flex-wrap">
+                        {o.flow.map((s, i) => (
+                          <div key={i} className="flex items-center">
+                            <span className={`px-1 py-0.5 rounded text-[8px] font-medium ${
+                              s === 'used' ? 'bg-secondary text-white' :
+                              s === 'expired' ? 'bg-gray-300 text-white' :
+                              s === '库存释放' ? 'bg-amber-500 text-white' :
+                              s === '拦截中' ? 'bg-amber-400 text-white' :
+                              s === '核销中' ? 'bg-primary text-white' :
+                              'bg-gray-100 text-gray-600'
+                            }`}>{s}</span>
+                            {i < o.flow.length - 1 && <ChevronRight className="w-2.5 h-2.5 text-gray-300 mx-0.5" />}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[9px] text-gray-400 mt-2">
+                  <FileCheck className="w-2.5 h-2.5 inline mr-0.5" />
+                  以上为同套餐不同状态订单样本，完整列表见「我的订单」
+                </p>
+              </div>
             </>
           )
         })() : (

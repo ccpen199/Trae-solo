@@ -115,17 +115,21 @@ export default function HeroSection() {
         <div className="mt-5 flex flex-wrap gap-3 items-center">
           <button
             onClick={() => navigate('/merchant-join')}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur text-sm font-medium transition-colors border border-white/20"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-primary hover:bg-white/90 backdrop-blur text-sm font-semibold transition-colors shadow-lg"
           >
             <Store className="w-4 h-4" />
-            商户入驻
+            立即入驻 · 生成商户档案
           </button>
           <button
             onClick={() => setShowJoinPreview(!showJoinPreview)}
-            className="inline-flex items-center gap-1 text-xs text-white/70 hover:text-white transition-colors"
+            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium transition-all border ${
+              showJoinPreview
+                ? 'bg-white/25 text-white border-white/30'
+                : 'bg-white/10 text-white/80 hover:bg-white/15 border-white/20 hover:border-white/30'
+            }`}
           >
             <FileCheck className="w-3.5 h-3.5" />
-            入驻流程说明
+            {showJoinPreview ? '收起档案样本' : '查看商户档案样本 · 可复查'}
             <ChevronRight className={`w-3 h-3 transition-transform ${showJoinPreview ? 'rotate-90' : ''}`} />
           </button>
         </div>
@@ -135,7 +139,7 @@ export default function HeroSection() {
             <div className="p-4 rounded-xl bg-white/10 backdrop-blur border border-white/15 text-sm space-y-2.5">
               <p className="font-medium text-white/90 flex items-center gap-1.5">
                 <FileCheck className="w-4 h-4" />
-                入驻资质核验·提交与复查链路
+                入驻资质核验 · 提交→审核→档案 全链路可复查
               </p>
               <div className="space-y-1.5 text-xs text-white/75">
                 <p className="flex items-center gap-2"><span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">1</span>基本信息 · 商户名/分类/街道/地址/电话</p>
