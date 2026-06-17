@@ -1,0 +1,873 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-16T23:36:12.663Z",
+  "order": "may-89212",
+  "roundIndex": 2,
+  "captureId": "may-89212-codex-20260617-final",
+  "url": "http://127.0.0.1:50212/",
+  "initialUrl": "http://127.0.0.1:50212/",
+  "finalUrl": "http://127.0.0.1:50212/",
+  "status": 200,
+  "title": "虚拟商品聚合平台 - 管理后台",
+  "initialTitle": "虚拟商品聚合平台 - 管理后台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-02-导航-运营概览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-03-操作-详情.png"
+  ],
+  "issueTextPreview": "后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:50212/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50212/"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50212/"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:50212/",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:50212/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:50212/"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:运营概览",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "刷新数据",
+          "详情"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商品",
+              "手机号",
+              "金额",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商品 手机号 金额 状态 时间 操作 V17810930080055 京东E卡100元 ACC552222 ¥92.50 已失败 6/14 15:18 详情 V17814314080008 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/14 05:19 详情 V17813810080015 京东E卡100元 ACC154444 ¥185.00 已失败 6/11 22:00 详情 V17809994080068 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/11 21:44 详情 V17811290080050 中国移动话费50元 1370"
+          },
+          {
+            "headers": [
+              "时间",
+              "IP",
+              "风险等级",
+              "命中规则",
+              "拦截"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "时间 IP 风险等级 命中规则 拦截 6/16 14:07 192.168.67.200 中 命中规则：账户异常，触发阈值 已拦截 6/16 12:07 192.168.193.85 高 命中规则：频次过高，触发阈值 已拦截 6/16 12:04 192.168.107.4 高 命中规则：金额异常，触发阈值 已拦截 6/16 07:53 192.168.23.229 中 命中规则：账户异常，触发阈值 已拦截 6/16 06:09 192.168.25.238 高 命中规则：频次过高，触发阈值 已拦截 6/16 03:16 192.168.193.85 低 命中规则：敏感关键词，触发阈值 已放行"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📊 运营概览Aadmin退出📊 运营概览实时监控平台运营数据刷新数据今日GMV¥1236.50💰今日订单10📋累计GMV¥10033📈总用户8👥今日新增3➕总商品447📦总供应商6🏭成功率62.5%✅今日佣金¥83.04💎总佣金¥517.52🎁卡密总数340🎫已使用4📝已加密390🔐风控日志100🛡️今日拦截5🚫📈 近7天GMV趋势单位：元¥4876/103单¥6336/115单¥06/120单¥06/130单¥1186/142单¥06/150单¥12376/1610单📊 订单状态分布总计: 80总计订单80已完成50 (63%)已失败10 (13%)待充值10 (13%)待支付10 (13%)🛡️ 风险等级分布总计风险100严重13 (13%)高45 (45%)低14 (14%)中28 (28%)🏭 供应商业绩TOP5按GMV排序1. 腾讯充值中心¥6422.8056单89%2. 爱奇艺会员中心¥2593.0016单88%3. 京东E卡¥1017.508单75%📋 最近订单最近10条订单号商品手机号金额状态时间操作V17810930080055京东E卡100元ACC552222¥92.50已失败6/14 15:18详情V17814314080008腾讯视频VIP月卡13700003333¥25.00已完成6/14 05:19详情V17813810080015京东E卡100元ACC154444¥185.00已失败6/11 22:00详情V17809994080068腾讯视频VIP月卡13700003333¥25.00已完成6/11 21:44详情V17811290080050中国移动话费50元13700003333¥49.50已完成6/11 14:48详情V17813522080019腾讯视频VIP年卡13800002222¥188.00已完成6/11 06:39详情V17809490080075京东E卡100元ACC754444¥185.00已完成6/11 05:20详情V17810786080057QQ音乐绿钻年卡13600004444¥286.00已完成6/10 22:55详情V17812442080034爱奇艺黄金会员年卡13500005555¥188.00已完成6/10 22:04详情V17813018080026QQ音乐绿钻月卡13700003333¥12.50已完成6/10 05:28详情🚫 最近风控拦截最近10条时间IP风险等级命中规则拦截6/16 14:07192.168.67.200中命中规则：账户异常，触发阈值已拦截6/16 12:07192.168.193.85高命中规则：频次过高，触发阈值已拦截6/16 12:04192.168.107.4高命中规则：金额异常，触发阈值已拦截6/16 07:53192.168.23.229中命中规则：账户异常，触发阈值已拦截6/16 06:09192.168.25.238高命中规则：频次过高，触发阈值已拦截6/16 03:16192.168.193.85低命中规则：敏感关键词，触发阈值已放行6/16 01:13192.168.221.111中命中规则：地域限制，触发阈值已拦截6/15 22:09192.168.3.82严重命中规则：IP黑名单，触发阈值已拦截6/15 19:21192.168.139.9中命中规则：虚拟号段识别，触发阈值已拦截6/15 07:44192.168.51.195中命中规则：账户异常，触发阈值已拦截🎫 卡密池加密概览AES-256-CBC340总卡密数390已加密5今日解密65即将过期29已过期加密算法：AES-256-CBC密钥版本：v2.1加密率：115%",
+        "layout": {
+          "viewportWidth": 1595,
+          "viewportHeight": 1600,
+          "scrollWidth": 1595,
+          "scrollHeight": 2700,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50212/",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-01-首屏.png",
+          "elementCount": 495,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "刷新数据",
+            "详情"
+          ]
+        }
+      },
+      {
+        "label": "导航:运营概览",
+        "url": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "刷新数据",
+          "详情"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商品",
+              "手机号",
+              "金额",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商品 手机号 金额 状态 时间 操作 V17810930080055 京东E卡100元 ACC552222 ¥92.50 已失败 6/14 15:18 详情 V17814314080008 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/14 05:19 详情 V17813810080015 京东E卡100元 ACC154444 ¥185.00 已失败 6/11 22:00 详情 V17809994080068 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/11 21:44 详情 V17811290080050 中国移动话费50元 1370"
+          },
+          {
+            "headers": [
+              "时间",
+              "IP",
+              "风险等级",
+              "命中规则",
+              "拦截"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "时间 IP 风险等级 命中规则 拦截 6/16 14:07 192.168.67.200 中 命中规则：账户异常，触发阈值 已拦截 6/16 12:07 192.168.193.85 高 命中规则：频次过高，触发阈值 已拦截 6/16 12:04 192.168.107.4 高 命中规则：金额异常，触发阈值 已拦截 6/16 07:53 192.168.23.229 中 命中规则：账户异常，触发阈值 已拦截 6/16 06:09 192.168.25.238 高 命中规则：频次过高，触发阈值 已拦截 6/16 03:16 192.168.193.85 低 命中规则：敏感关键词，触发阈值 已放行"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📊 运营概览Aadmin退出📊 运营概览实时监控平台运营数据刷新数据今日GMV¥1236.50💰今日订单10📋累计GMV¥10033📈总用户8👥今日新增3➕总商品447📦总供应商6🏭成功率62.5%✅今日佣金¥83.04💎总佣金¥517.52🎁卡密总数340🎫已使用4📝已加密390🔐风控日志100🛡️今日拦截5🚫📈 近7天GMV趋势单位：元¥4876/103单¥6336/115单¥06/120单¥06/130单¥1186/142单¥06/150单¥12376/1610单📊 订单状态分布总计: 80总计订单80已完成50 (63%)已失败10 (13%)待充值10 (13%)待支付10 (13%)🛡️ 风险等级分布总计风险100严重13 (13%)高45 (45%)低14 (14%)中28 (28%)🏭 供应商业绩TOP5按GMV排序1. 腾讯充值中心¥6422.8056单89%2. 爱奇艺会员中心¥2593.0016单88%3. 京东E卡¥1017.508单75%📋 最近订单最近10条订单号商品手机号金额状态时间操作V17810930080055京东E卡100元ACC552222¥92.50已失败6/14 15:18详情V17814314080008腾讯视频VIP月卡13700003333¥25.00已完成6/14 05:19详情V17813810080015京东E卡100元ACC154444¥185.00已失败6/11 22:00详情V17809994080068腾讯视频VIP月卡13700003333¥25.00已完成6/11 21:44详情V17811290080050中国移动话费50元13700003333¥49.50已完成6/11 14:48详情V17813522080019腾讯视频VIP年卡13800002222¥188.00已完成6/11 06:39详情V17809490080075京东E卡100元ACC754444¥185.00已完成6/11 05:20详情V17810786080057QQ音乐绿钻年卡13600004444¥286.00已完成6/10 22:55详情V17812442080034爱奇艺黄金会员年卡13500005555¥188.00已完成6/10 22:04详情V17813018080026QQ音乐绿钻月卡13700003333¥12.50已完成6/10 05:28详情🚫 最近风控拦截最近10条时间IP风险等级命中规则拦截6/16 14:07192.168.67.200中命中规则：账户异常，触发阈值已拦截6/16 12:07192.168.193.85高命中规则：频次过高，触发阈值已拦截6/16 12:04192.168.107.4高命中规则：金额异常，触发阈值已拦截6/16 07:53192.168.23.229中命中规则：账户异常，触发阈值已拦截6/16 06:09192.168.25.238高命中规则：频次过高，触发阈值已拦截6/16 03:16192.168.193.85低命中规则：敏感关键词，触发阈值已放行6/16 01:13192.168.221.111中命中规则：地域限制，触发阈值已拦截6/15 22:09192.168.3.82严重命中规则：IP黑名单，触发阈值已拦截6/15 19:21192.168.139.9中命中规则：虚拟号段识别，触发阈值已拦截6/15 07:44192.168.51.195中命中规则：账户异常，触发阈值已拦截🎫 卡密池加密概览AES-256-CBC340总卡密数390已加密5今日解密65即将过期29已过期加密算法：AES-256-CBC密钥版本：v2.1加密率：115%",
+        "layout": {
+          "viewportWidth": 1627,
+          "viewportHeight": 1600,
+          "scrollWidth": 1627,
+          "scrollHeight": 2700,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-final-structure-02-导航-运营概览",
+          "label": "导航:运营概览",
+          "finalUrl": "http://127.0.0.1:50212/",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-02-导航-运营概览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-02-导航-运营概览.png",
+          "elementCount": 495,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "刷新数据",
+            "详情"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理"
+        ],
+        "buttons": [
+          "退出",
+          "刷新数据",
+          "详情"
+        ],
+        "links": [
+          "📊 运营概览",
+          "📦 商品管理",
+          "📋 订单管理",
+          "🎫 卡密池管理",
+          "🏭 供应商管理",
+          "💰 结算中心",
+          "🛡️ 风控中心",
+          "👥 用户管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "商品",
+              "手机号",
+              "金额",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 商品 手机号 金额 状态 时间 操作 V17810930080055 京东E卡100元 ACC552222 ¥92.50 已失败 6/14 15:18 详情 V17814314080008 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/14 05:19 详情 V17813810080015 京东E卡100元 ACC154444 ¥185.00 已失败 6/11 22:00 详情 V17809994080068 腾讯视频VIP月卡 13700003333 ¥25.00 已完成 6/11 21:44 详情 V17811290080050 中国移动话费50元 1370"
+          },
+          {
+            "headers": [
+              "时间",
+              "IP",
+              "风险等级",
+              "命中规则",
+              "拦截"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "时间 IP 风险等级 命中规则 拦截 6/16 14:07 192.168.67.200 中 命中规则：账户异常，触发阈值 已拦截 6/16 12:07 192.168.193.85 高 命中规则：频次过高，触发阈值 已拦截 6/16 12:04 192.168.107.4 高 命中规则：金额异常，触发阈值 已拦截 6/16 07:53 192.168.23.229 中 命中规则：账户异常，触发阈值 已拦截 6/16 06:09 192.168.25.238 高 命中规则：频次过高，触发阈值 已拦截 6/16 03:16 192.168.193.85 低 命中规则：敏感关键词，触发阈值 已放行"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "💎VGF 管理台数据中心📊运营概览业务管理📦商品管理📋订单管理🎫卡密池管理🏭供应商管理财务中心💰结算中心风控中心🛡️风控中心系统管理👥用户管理📊 运营概览Aadmin退出📊 运营概览实时监控平台运营数据刷新数据今日GMV¥1236.50💰今日订单10📋累计GMV¥10033📈总用户8👥今日新增3➕总商品447📦总供应商6🏭成功率62.5%✅今日佣金¥83.04💎总佣金¥517.52🎁卡密总数340🎫已使用4📝已加密390🔐风控日志100🛡️今日拦截5🚫📈 近7天GMV趋势单位：元¥4876/103单¥6336/115单¥06/120单¥06/130单¥1186/142单¥06/150单¥12376/1610单📊 订单状态分布总计: 80总计订单80已完成50 (63%)已失败10 (13%)待充值10 (13%)待支付10 (13%)🛡️ 风险等级分布总计风险100严重13 (13%)高45 (45%)低14 (14%)中28 (28%)🏭 供应商业绩TOP5按GMV排序1. 腾讯充值中心¥6422.8056单89%2. 爱奇艺会员中心¥2593.0016单88%3. 京东E卡¥1017.508单75%📋 最近订单最近10条订单号商品手机号金额状态时间操作V17810930080055京东E卡100元ACC552222¥92.50已失败6/14 15:18详情V17814314080008腾讯视频VIP月卡13700003333¥25.00已完成6/14 05:19详情V17813810080015京东E卡100元ACC154444¥185.00已失败6/11 22:00详情V17809994080068腾讯视频VIP月卡13700003333¥25.00已完成6/11 21:44详情V17811290080050中国移动话费50元13700003333¥49.50已完成6/11 14:48详情V17813522080019腾讯视频VIP年卡13800002222¥188.00已完成6/11 06:39详情V17809490080075京东E卡100元ACC754444¥185.00已完成6/11 05:20详情V17810786080057QQ音乐绿钻年卡13600004444¥286.00已完成6/10 22:55详情V17812442080034爱奇艺黄金会员年卡13500005555¥188.00已完成6/10 22:04详情V17813018080026QQ音乐绿钻月卡13700003333¥12.50已完成6/10 05:28详情🚫 最近风控拦截最近10条时间IP风险等级命中规则拦截6/16 14:07192.168.67.200中命中规则：账户异常，触发阈值已拦截6/16 12:07192.168.193.85高命中规则：频次过高，触发阈值已拦截6/16 12:04192.168.107.4高命中规则：金额异常，触发阈值已拦截6/16 07:53192.168.23.229中命中规则：账户异常，触发阈值已拦截6/16 06:09192.168.25.238高命中规则：频次过高，触发阈值已拦截6/16 03:16192.168.193.85低命中规则：敏感关键词，触发阈值已放行6/16 01:13192.168.221.111中命中规则：地域限制，触发阈值已拦截6/15 22:09192.168.3.82严重命中规则：IP黑名单，触发阈值已拦截6/15 19:21192.168.139.9中命中规则：虚拟号段识别，触发阈值已拦截6/15 07:44192.168.51.195中命中规则：账户异常，触发阈值已拦截🎫 卡密池加密概览AES-256-CBC340总卡密数390已加密5今日解密65即将过期29已过期加密算法：AES-256-CBC密钥版本：v2.1加密率：115%",
+        "layout": {
+          "viewportWidth": 1659,
+          "viewportHeight": 1600,
+          "scrollWidth": 1659,
+          "scrollHeight": 2700,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-final-structure-03-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:50212/",
+          "title": "虚拟商品聚合平台 - 管理后台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-03-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-03-操作-详情.png",
+          "elementCount": 495,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "运营概览",
+            "商品管理",
+            "订单管理",
+            "卡密池管理",
+            "供应商管理",
+            "结算中心",
+            "风控中心",
+            "用户管理",
+            "退出",
+            "刷新数据",
+            "详情"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "运营概览",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-01-首屏.png",
+        "elementCount": 495,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-final-structure-02-导航-运营概览",
+        "label": "导航:运营概览",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-02-导航-运营概览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-02-导航-运营概览.png",
+        "elementCount": 495,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-final-structure-03-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-03-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-03-操作-详情.png",
+        "elementCount": 495,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50212/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 3,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-01-首屏.png",
+        "elementCount": 495,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-final-structure-02-导航-运营概览",
+        "label": "导航:运营概览",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-02-导航-运营概览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-02-导航-运营概览.png",
+        "elementCount": 495,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-final-structure-03-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:50212/",
+        "title": "虚拟商品聚合平台 - 管理后台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-03-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-final/may-89212-codex-20260617-final-structure-03-操作-详情.png",
+        "elementCount": 495,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "运营概览",
+          "商品管理",
+          "订单管理",
+          "卡密池管理",
+          "供应商管理",
+          "结算中心",
+          "风控中心",
+          "用户管理",
+          "退出",
+          "刷新数据",
+          "详情"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1691,
+    "height": 1600,
+    "scrollWidth": 1659,
+    "scrollHeight": 2700
+  },
+  "initialBodyTextPreview": "💎\n虚拟商品管理后台\nVirtual Goods Platform · Admin Console\n管理员账号\n登录密码\n登 录\n🔐 默认账号：admin / admin123",
+  "bodyTextPreview": "💎\nVGF 管理台\n数据中心\n📊\n运营概览\n业务管理\n📦\n商品管理\n📋\n订单管理\n🎫\n卡密池管理\n🏭\n供应商管理\n财务中心\n💰\n结算中心\n风控中心\n🛡️\n风控中心\n系统管理\n👥\n用户管理\n📊 运营概览\nA\nadmin\n退出\n📊 运营概览\n实时监控平台运营数据\n刷新数据\n今日GMV\n¥1236.50\n💰\n今日订单\n10\n📋\n累计GMV\n¥10033\n📈\n总用户\n8\n👥\n今日新增\n3\n➕\n总商品\n447\n📦\n总供应商\n6\n🏭\n成功率\n62.5%\n✅\n今日佣金\n¥83.04\n💎\n总佣金\n¥517.52\n🎁\n卡密总数\n340\n🎫\n已使用\n4\n📝\n已加密\n390\n🔐\n风控日志\n100\n🛡️\n今日拦截\n5\n🚫\n📈 近7天GMV趋势\n单位：元\n¥487\n6/10\n3单\n¥633\n6/11\n5单\n¥0\n6/12\n0单\n¥0\n6/13\n0单\n¥118\n6/14\n2单\n¥0\n6/15\n0单\n¥1237\n6/16\n10单\n📊 订单状态分布\n总计: 80\n总计订单\n80\n已完成\n50 (63%)\n已失败\n10 (13%)\n待充值\n10 (13%)\n待支付\n10 (13%)\n🛡️ 风险等级分布\n总计风险\n100\n严重\n13 (13%)\n高\n45 (45%)\n低\n14 (14%)\n中\n28 (28%)\n🏭 供应商业绩TOP5\n按GMV排序\n1. 腾讯充值中心\n¥6422.8056单89%\n2. 爱奇艺会员中心\n¥2593.0016单88%\n3. 京东E卡\n¥1017.508单75%\n📋 最近订单\n最近10条\n订单号\t商品\t手机号\t金额\t状态\t时间\t操作\nV17810930080055\t京东E卡100元\tACC552222\t¥92.50\t已失败\t6/14 15:18\t详情\nV17814314080008\t腾讯视频VIP月卡\t13700003333\t¥25.00\t已完成\t6/14 05:19\t详情\nV17813810080015\t京东E卡100元\tACC154444\t¥185.00\t已失败\t6/11 22:00\t详情\nV17809994080068\t腾讯视频VIP月卡\t13700003333\t¥25.00\t已完成\t6/11 21:44\t详情\nV17811290080050\t中国移动话费50元\t13700003333\t¥49.50\t已完成\t6/11 14:48\t详情\nV17813522080019\t腾讯视频VIP年卡\t13800002222\t¥188.00\t已完成\t6/11 06:39\t详情\nV17809490080075\t京东E卡100元\tACC754444\t¥185.00\t已完成\t6/11 05:20\t详情\nV17810786080057\tQQ音乐绿钻年卡\t13600004444\t¥286.00\t已完成\t6/10 22:55\t详情\nV17812442080034\t爱奇艺黄金会员年卡\t13500005555\t¥188.00\t已完成\t6/10 22:04\t详情\nV17813018080026\tQQ音乐绿钻月卡\t13700003333\t¥12.50\t已完成\t6/10 05:28\t详情\n🚫 最近风控拦截\n最近10条\n时间\tIP\t风险等级\t命中规则\t拦截\n6/16 14:07\t192.168.67.200\t中\t命中规则：账户异常，触发阈值\t已拦截\n6/16 12:07\t192.168.193.85\t高\t命中规则：频次过高，触发阈值\t已拦截\n6/16 12:04\t192.168.107.4\t高\t命中规则：金额异常，触发阈值\t已拦截\n6/16 07:53\t192.168.23.229\t中\t命中规则：账户异常，触发阈值\t已拦截\n6/16 06:09\t192.168.25.238\t高\t命中规则：频次过高，触发阈值\t已拦截\n6/16 03:16\t192.168.193.85\t低\t命中规则：敏感关键词，触发阈值\t已放行\n6/16 01:13\t192.168.221.111\t中\t命中规则：地域限制，触发阈值\t已拦截\n6/15 22:09\t192.168.3.82\t严重\t命中规则：IP黑名单，触发阈值\t已拦截\n6/15 19:21\t192.168.139.9\t中\t命中规则：虚拟号段识别，触发阈值\t已拦截\n6/15 07:44\t192.168.51.195\t中\t命中规则：账户异常，触发阈值\t已拦截\n🎫 卡密池加密概览\nAES-256-CBC\n340\n总卡密数\n390\n已加密\n5\n今日解密\n65\n即将过期\n29\n已过期\n加密算法：AES-256-CBC密钥版本：v2.1\n加密率：115%",
+  "apiBase": "http://127.0.0.1:59212",
+  "businessGoalPreview": "验证虚拟商品平台管理后台、商品管理、订单详情、卡密池、登录退出以及用户端购买/购物车接口可用，接口无 404/空白。",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/auth/admin-login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/suppliers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/card-pool/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50212/api/admin/risk/logs?limit=10"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"status\":\"ok\",\"timestamp\":1781652961,\"version\":\"1.0.0\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"todayGMV\":1236.5,\"todayOrders\":10,\"totalGMV\":10033.3,\"totalOrders\":80,\"totalUsers\":8,\"todayNewUsers\":3,\"totalProducts\":447,\"totalSuppliers\":6,\"todayFailures\":2,\"todayCommission\":83.03999999999999,\"totalCommission\":517.52,\"monthCommission\":510.12,\"pendingCommission\":0,\"rechargeSuccessRate\":62.5,\"cardPoolCount\":340,\"cardUsed\":4,\"cardExpired\":29,\"cardEncrypted\":390,\"cardTodayDecrypt\":5,\"cardExpiringSoon\":65,\"riskLogCount\":100,\"blockedToday\":5,\"ipBlacklistCount\":0,\"regionLim"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/orders?page=1&pageSize=10",
+      "path": "/api/admin/orders?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":\"c3234a6f-c2c9-408a-9c0d-9317f7ea83a0\",\"user_id\":\"f2631ee4-b1bd-4870-a5f2-d4a1bb49b615\",\"product_id\":\"e48a522d-c69c-4af9-86d7-20342af298ee\",\"product_name\":\"京东E卡100元\",\"supplier_id\":\"cc0a0d0f-b382-4e31-b8cf-91b39dd4e66b\",\"order_no\":\"V17810930080055\",\"recharge_account\":\"ACC552222\",\"quantity\":1,\"face_value\":100,\"unit_price\":97.5,\"original_amount\":97.5,\"discount_amount\":5,\"final_amount\":92.5,\"commission_amount\":1.85,\"status\":\"failed\",\"supplier_order_id\":null,\"sup"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/suppliers",
+      "path": "/api/admin/suppliers",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"d21b13d1-c38f-4297-8fd9-024ac3626508\",\"name\":\"联通数科\",\"code\":\"unicom\",\"api_endpoint\":\"https://api.unicom.example.com\",\"api_key\":\"unicom_demo_key\",\"api_secret\":null,\"status\":1,\"settlement_ratio\":0.88,\"created_at\":1781558018,\"productCount\":86,\"totalOrders\":0,\"totalAmount\":0,\"failCount\":0,\"failRate\":0,\"channelCount\":237,\"cardCount\":15,\"availableCards\":15,\"encryptionStatus\":\"AES-256-CBC\"},{\"id\":\"323585a5-dfdf-45c6-a0fd-e0233ab019bb\",\"name\":\"浙江电信\",\"code\":\"zjtelecom\",\"api_"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/card-pool/stats",
+      "path": "/api/admin/card-pool/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"total\":340,\"used\":4,\"available\":307,\"expired\":29,\"expiringSoon\":65,\"expiring7Days\":18,\"todayNew\":50,\"encryptionMethod\":\"AES-256-CBC\",\"keyId\":\"key-7f9a3c2d\",\"keyVersion\":\"v2.1\",\"byProduct\":[{\"id\":\"0b57afe8-130e-497f-b0eb-4f83a394d3da\",\"name\":\"美团外卖券20元\",\"total\":50,\"available_count\":41,\"used_count\":4,\"expired_count\":5},{\"id\":\"f0dd3438-27ca-493e-b62a-47f55fcff375\",\"name\":\"美团外卖券50元\",\"total\":50,\"available_count\":47,\"used_count\":0,\"expired_count\":3},{\"id\":\"4415abbd-ad90-4191-8e"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/risk/logs?limit=10",
+      "path": "/api/admin/risk/logs?limit=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"266fa0a4-d05c-4efb-99d3-8755def23aa9\",\"user_id\":\"1\",\"ip\":\"192.168.67.200\",\"region\":\"浙江\",\"action\":\"account_abnormal\",\"risk_level\":\"medium\",\"detail\":\"命中规则：账户异常，触发阈值\",\"blocked\":1,\"created_at\":1781608030},{\"id\":\"71ad1fb2-aca8-439b-aa99-e01e95d91066\",\"user_id\":\"8\",\"ip\":\"192.168.193.85\",\"region\":\"浙江\",\"action\":\"frequency_control\",\"risk_level\":\"high\",\"detail\":\"命中规则：频次过高，触发阈值\",\"blocked\":1,\"created_at\":1781600858},{\"id\":\"431036fa-54c5-4f62-ae25-cafa41f5e725\",\"user_id\":\"8\",\"i"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":1000,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":1000,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"36010501-9d10-4779-9463-121cd04a9d6a\",\"phone\":\"13800138001\",\"nickname\":\"张三\",\"avatar\":null,\"balance\":1000,\"level\":1,\"total_commission\":267.67816792045187,\"available_commission\":135.67073531622427,\"created_at\":1781489008}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"todayGMV\":1236.5,\"todayOrders\":10,\"totalGMV\":10033.3,\"totalOrders\":80,\"totalUsers\":8,\"todayNewUsers\":3,\"totalProducts\":447,\"totalSuppliers\":6,\"todayFailures\":2,\"todayCommission\":83.03999999999999,\"totalCommission\":517.52,\"monthCommission\":510.12,\"pendingCommission\":0,\"rechargeSuccessRate\":62.5,\"cardPoolCount\":340,\"cardUsed\":4,\"cardExpired\":29,\"cardEncrypted\":390,\"cardTodayDecrypt\":5,\"cardExpiringSoon\":65,\"riskLogCount\":100,\"blockedToday\":5,\"ipBlacklistCount\":0,\"regionLim"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":\"prod_d21b13d1-c38f-4297-8fd9-024ac3626508_200\",\"name\":\"联通数科200元\",\"category_id\":\"cat_virtual\",\"supplier_id\":\"d21b13d1-c38f-4297-8fd9-024ac3626508\",\"supplier_product_id\":\"d21b13d1-c38f-4297-8fd9-024ac3626508_200\",\"sku_type\":\"card\",\"face_value\":200,\"price\":190,\"cost_price\":170,\"commission_rate\":0,\"stock\":100,\"stock_warning\":10,\"image\":null,\"description\":null,\"status\":1,\"sort\":0,\"is_hot\":0,\"recharge_type\":\"auto\",\"region_limit\":null,\"created_at\":1781625554,\"upda"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[],\"total\":0,\"hasMore\":false}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"virtual-goods-local-cart\",\"items\":[{\"id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"name\":\"中国移动话费50元\",\"price\":49.5,\"quantity\":1}],\"total\":49.5}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4e33f11f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50212/node_modules/.vite/deps/react-router-dom.js?v=4e33f11f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:50212/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

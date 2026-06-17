@@ -1,0 +1,978 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-17T00:54:11.782Z",
+  "order": "may-89212",
+  "roundIndex": 2,
+  "captureId": "may-89212-codex-20260617-r2",
+  "url": "http://127.0.0.1:49212/",
+  "initialUrl": "http://127.0.0.1:49212/",
+  "finalUrl": "http://127.0.0.1:49212/",
+  "status": 200,
+  "title": "虚拟商品聚合平台 - 极速充值",
+  "initialTitle": "虚拟商品聚合平台 - 极速充值",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-rerun/may-89212-codex-20260617-r2-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-rerun/may-89212-codex-20260617-r2-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题；人工标记第 1 轮成功，已恢复完成状态",
+  "targetReason": "后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49212/admin-portal"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49212/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "headings": [
+          "虚拟商品中心",
+          "🎉 新用户首单立减20元",
+          "🔥 热门推荐",
+          "📦 完整SKU分类"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "⚠️ 2",
+          "🔄",
+          "🏪 腾讯充值中心等11家",
+          "📊 关系链",
+          "立即充值",
+          "💰 优惠明细 -¥2.48",
+          "📊 佣金明细 三级+¥1.06",
+          "📞 充值试算 输入号码",
+          "💰 优惠明细 -¥9.70",
+          "📊 佣金明细 三级+¥2.01",
+          "💰 优惠明细 -¥9.74",
+          "📊 佣金明细 三级+¥2.02",
+          "💰 优惠明细 -¥1.28",
+          "📊 佣金明细 三级+¥0.91",
+          "🏪 爱奇艺会员中心等11家",
+          "💰 优惠明细 -¥1.25",
+          "📊 佣金明细 三级+¥1.42",
+          "💰 优惠明细 -¥19.40",
+          "📊 佣金明细 三级+¥10.72",
+          "⚠️ 1",
+          "🏪 美团外卖券等11家",
+          "💰 优惠明细 -¥2.30",
+          "📊 佣金明细 三级+¥1.31",
+          "🏪 京东E卡等11家"
+        ],
+        "links": [
+          "管理后台",
+          "🏠 首页",
+          "📂 分类",
+          "📋 订单",
+          "👤 我的"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商品名、供应商名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "虚拟商品中心管理后台🔍🎉 新用户首单立减20元200+商品极速充值 · 安全保障 · 佣金实时到账💰 满100减10全场通用 ·可叠加💰 满50减5话费专享 ·可叠加📉 会员全场95折 ·可叠加💸 满200返20元佣金 📱话费充值54款🌐流量充值76款🎬视频会员81款🎵音乐会员76款🍔外卖券73款🛒电商购物卡75款🔥 热门推荐查看全部 ›📦 完整SKU分类📱话费充值54款商品查看全部 →🌐流量充值76款商品查看全部 →🎬视频会员81款商品查看全部 →🎵音乐会员76款商品查看全部 →🍔外卖券73款商品查看全部 →🛒电商购物卡75款商品查看全部 →🛟 已切到备用通道2号 · 延迟约2分钟话费50元📍 部分地区⚠️2🔄HOT腾讯充值中心🏪 腾讯充值中心等11家4通道🛡️ 备用1个可叠加优惠价格区间:¥47.02-¥51.98中国移动话费50元库存充足1天前同步批次 BATCH2026061520¥49.5¥50实付预估 ¥47.02已优惠 ¥2.48赚 ¥1.41📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细-¥2.48📊佣金明细三级+¥1.06📞充值试算输入号码话费100元📍 部分地区🔄HOT腾讯充值中心🏪 腾讯充值中心等11家3通道🛡️ 备用1个可叠加优惠价格区间:¥94.05-¥103.95中国移动话费100元库存充足1天前同步批次 BATCH2026061520¥99¥100实付预估 ¥89.30已优惠 ¥9.70赚 ¥2.68📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细-¥9.70📊佣金明细三级+¥2.01📞充值试算输入号码电信话费100📍 部分地区🔄HOT腾讯充值中心🏪 腾讯充值中心等11家3通道🛡️ 备用1个可叠加优惠价格区间:¥94.81-¥104.79中国电信话费100元库存充足1天前同步批次 BATCH2026061520¥99.8¥100实付预估 ¥90.06已优惠 ¥9.74赚 ¥2.70📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细-¥9.74📊佣金明细三级+¥2.02📞充值试算输入号码流量5G📍 部分地区🔄HOT腾讯充值中心🏪 腾讯充值中心等11家3通道🛡️ 备用1个可叠加优惠价格区间:¥24.22-¥26.78全国通用流量5GB库存充足1天前同步批次 BATCH2026061520¥25.5¥30实付预估 ¥24.22已优惠 ¥1.28赚 ¥1.21📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细-¥1.28📊佣金明细三级+¥0.91📞充值试算输入号码爱奇艺月卡📍 部分地区🔄HOT爱奇艺会员中心🏪 爱奇艺会员中心等11家3通道🛡️ 备用1个可叠加优惠价格区间:¥23.75-¥26.25爱奇艺黄金会员月卡库存充足1天前同步批次 BATCH2026061520¥25¥30实付预估 ¥23.75已优惠 ¥1.25赚 ¥1.90📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细-¥1.25📊佣金明细三级+¥1.42📞充值试算输入号码爱奇艺年卡📍 部分地区🔄HOT爱奇艺会员中心🏪 爱奇艺会员中心等11家3通道🛡️ 备用1个可叠加优惠价格区间:¥188.10-¥207.90爱奇艺黄金会员年卡库存充足1天前同步批次 BATCH2026061520¥198¥248实付预估 ¥178.60已优惠 ¥19.40赚 ¥14.29📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细-¥19.40📊佣金明细三级+¥10.72📞充值试算输入号码🛟 已切到备用通道2号 · 延迟约2分钟美团50券📍 部分地区⚠️1🔄HOT美团外卖券🏪 美团外卖券等11家4通道🛡️ 备用1个可叠加优惠价格区间:¥43.70-¥48.30美团外卖券50元缺货1天前同步批次 BATCH2026061601¥46¥50实付预估 ¥43.70已优惠 ¥2.30赚 ¥1.75📊 关系链L1 8% / L2 4% / L3 2%立即充值💰优惠明细-¥2.30📊佣金明细三级+¥1.31📞充",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 7833,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89212-codex-20260617-r2-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49212/",
+          "title": "虚拟商品聚合平台 - 极速充值",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-rerun/may-89212-codex-20260617-r2-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-rerun/may-89212-codex-20260617-r2-structure-01-首屏.png",
+          "elementCount": 1200,
+          "interactiveCount": 151,
+          "interactiveLabels": [
+            "管理后台",
+            "搜索商品名、供应商名称...",
+            "2",
+            "腾讯充值中心等11家",
+            "关系链",
+            "立即充值",
+            "优惠明细 -¥2.48",
+            "佣金明细 三级+¥1.06",
+            "充值试算 输入号码",
+            "优惠明细 -¥9.70",
+            "佣金明细 三级+¥2.01",
+            "优惠明细 -¥9.74",
+            "佣金明细 三级+¥2.02",
+            "优惠明细 -¥1.28",
+            "佣金明细 三级+¥0.91",
+            "爱奇艺会员中心等11家",
+            "优惠明细 -¥1.25",
+            "佣金明细 三级+¥1.42",
+            "优惠明细 -¥19.40",
+            "佣金明细 三级+¥10.72",
+            "1",
+            "美团外卖券等11家",
+            "优惠明细 -¥2.30",
+            "佣金明细 三级+¥1.31",
+            "京东E卡等11家",
+            "优惠明细 -¥4.88",
+            "佣金明细 三级+¥1.39",
+            "优惠明细 -¥16.90",
+            "佣金明细 三级+¥5.90"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-r2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-rerun/may-89212-codex-20260617-r2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-rerun/may-89212-codex-20260617-r2-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 151,
+        "interactiveLabels": [
+          "管理后台",
+          "搜索商品名、供应商名称...",
+          "2",
+          "腾讯充值中心等11家",
+          "关系链",
+          "立即充值",
+          "优惠明细 -¥2.48",
+          "佣金明细 三级+¥1.06",
+          "充值试算 输入号码",
+          "优惠明细 -¥9.70",
+          "佣金明细 三级+¥2.01",
+          "优惠明细 -¥9.74",
+          "佣金明细 三级+¥2.02",
+          "优惠明细 -¥1.28",
+          "佣金明细 三级+¥0.91",
+          "爱奇艺会员中心等11家",
+          "优惠明细 -¥1.25",
+          "佣金明细 三级+¥1.42",
+          "优惠明细 -¥19.40",
+          "佣金明细 三级+¥10.72",
+          "1",
+          "美团外卖券等11家",
+          "优惠明细 -¥2.30",
+          "佣金明细 三级+¥1.31",
+          "京东E卡等11家",
+          "优惠明细 -¥4.88",
+          "佣金明细 三级+¥1.39",
+          "优惠明细 -¥16.90",
+          "佣金明细 三级+¥5.90"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49212/",
+    "representativeScreenshotLabel": "虚拟商品中心"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89212-codex-20260617-r2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49212/",
+        "title": "虚拟商品聚合平台 - 极速充值",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-rerun/may-89212-codex-20260617-r2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/codex-20260617-rerun/may-89212-codex-20260617-r2-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 151,
+        "interactiveLabels": [
+          "管理后台",
+          "搜索商品名、供应商名称...",
+          "2",
+          "腾讯充值中心等11家",
+          "关系链",
+          "立即充值",
+          "优惠明细 -¥2.48",
+          "佣金明细 三级+¥1.06",
+          "充值试算 输入号码",
+          "优惠明细 -¥9.70",
+          "佣金明细 三级+¥2.01",
+          "优惠明细 -¥9.74",
+          "佣金明细 三级+¥2.02",
+          "优惠明细 -¥1.28",
+          "佣金明细 三级+¥0.91",
+          "爱奇艺会员中心等11家",
+          "优惠明细 -¥1.25",
+          "佣金明细 三级+¥1.42",
+          "优惠明细 -¥19.40",
+          "佣金明细 三级+¥10.72",
+          "1",
+          "美团外卖券等11家",
+          "优惠明细 -¥2.30",
+          "佣金明细 三级+¥1.31",
+          "京东E卡等11家",
+          "优惠明细 -¥4.88",
+          "佣金明细 三级+¥1.39",
+          "优惠明细 -¥16.90",
+          "佣金明细 三级+¥5.90"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 7833
+  },
+  "initialBodyTextPreview": "虚拟商品中心\n管理后台\n🔍\n🎉 新用户首单立减20元\n\n200+商品极速充值 · 安全保障 · 佣金实时到账\n\n💰 满100减10全场通用 ·可叠加\n💰 满50减5话费专享 ·可叠加\n📉 会员全场95折 ·可叠加\n💸 满200返20元佣金\n📱\n话费充值\n54款\n🌐\n流量充值\n76款\n🎬\n视频会员\n81款\n🎵\n音乐会员\n76款\n🍔\n外卖券\n73款\n🛒\n电商购物卡\n75款\n🔥 热门推荐\n查看全部 ›\n📦 完整SKU分类\n📱\n话费充值\n54款商品\n查看全部 →\n🌐\n流量充值\n76款商品\n查看全部 →\n🎬\n视频会员\n81款商品\n查看全部 →\n🎵\n音乐会员\n76款商品\n查看全部 →\n🍔\n外卖券\n73款商品\n查看全部 →\n🛒\n电商购物卡\n75款商品\n查看全部 →\n🛟 已切到备用通道2号 · 延迟约2分钟\n话费50元\n📍 部分地区\n⚠️\n2\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n4通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥47.02\n-\n¥51.98\n中国移动话费50元\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥49.5\n¥50\n计算优惠中...\n赚 ¥1.48\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.11\n📞\n充值试算\n输入号码\n话费100元\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥94.05\n-\n¥103.95\n中国移动话费100元\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥99\n¥100\n计算优惠中...\n赚 ¥2.97\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥2.23\n📞\n充值试算\n输入号码\n电信话费100\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥94.81\n-\n¥104.79\n中国电信话费100元\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥99.8\n¥100\n计算优惠中...\n赚 ¥2.99\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥2.25\n📞\n充值试算\n输入号码\n流量5G\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥24.22\n-\n¥26.78\n全国通用流量5GB\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥25.5\n¥30\n计算优惠中...\n赚 ¥1.28\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥0.96\n📞\n充值试算\n输入号码\n爱奇艺月卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n🏪 爱奇艺会员中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥23.75\n-\n¥26.25\n爱奇艺黄金会员月卡\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥25\n¥30\n计算优惠中...\n赚 ¥2.00\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n📊\n佣金明细\n三级+¥1.50\n📞\n充值试算\n输入号码\n爱奇艺年卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n🏪 爱奇艺会员中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥188.10\n-\n¥207.90\n爱奇艺黄金会员年卡\n库存充足\n1天前同步",
+  "bodyTextPreview": "虚拟商品中心\n管理后台\n🔍\n🎉 新用户首单立减20元\n\n200+商品极速充值 · 安全保障 · 佣金实时到账\n\n💰 满100减10全场通用 ·可叠加\n💰 满50减5话费专享 ·可叠加\n📉 会员全场95折 ·可叠加\n💸 满200返20元佣金\n📱\n话费充值\n54款\n🌐\n流量充值\n76款\n🎬\n视频会员\n81款\n🎵\n音乐会员\n76款\n🍔\n外卖券\n73款\n🛒\n电商购物卡\n75款\n🔥 热门推荐\n查看全部 ›\n📦 完整SKU分类\n📱\n话费充值\n54款商品\n查看全部 →\n🌐\n流量充值\n76款商品\n查看全部 →\n🎬\n视频会员\n81款商品\n查看全部 →\n🎵\n音乐会员\n76款商品\n查看全部 →\n🍔\n外卖券\n73款商品\n查看全部 →\n🛒\n电商购物卡\n75款商品\n查看全部 →\n🛟 已切到备用通道2号 · 延迟约2分钟\n话费50元\n📍 部分地区\n⚠️\n2\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n4通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥47.02\n-\n¥51.98\n中国移动话费50元\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥49.5\n¥50\n实付预估 ¥47.02\n已优惠 ¥2.48\n赚 ¥1.41\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥2.48\n📊\n佣金明细\n三级+¥1.06\n📞\n充值试算\n输入号码\n话费100元\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥94.05\n-\n¥103.95\n中国移动话费100元\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥99\n¥100\n实付预估 ¥89.30\n已优惠 ¥9.70\n赚 ¥2.68\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥9.70\n📊\n佣金明细\n三级+¥2.01\n📞\n充值试算\n输入号码\n电信话费100\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥94.81\n-\n¥104.79\n中国电信话费100元\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥99.8\n¥100\n实付预估 ¥90.06\n已优惠 ¥9.74\n赚 ¥2.70\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥9.74\n📊\n佣金明细\n三级+¥2.02\n📞\n充值试算\n输入号码\n流量5G\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥24.22\n-\n¥26.78\n全国通用流量5GB\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥25.5\n¥30\n实付预估 ¥24.22\n已优惠 ¥1.28\n赚 ¥1.21\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥1.28\n📊\n佣金明细\n三级+¥0.91\n📞\n充值试算\n输入号码\n爱奇艺月卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n🏪 爱奇艺会员中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥23.75\n-\n¥26.25\n爱奇艺黄金会员月卡\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥25\n¥30\n实付预估 ¥23.75\n已优惠 ¥1.25\n赚 ¥1.90\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥1.25\n📊\n佣金明细\n三级+¥1.42\n📞\n充值试算\n输入号码\n爱奇艺年卡\n📍 部分地区\n🔄\nHOT\n爱奇艺会员中心\n🏪 爱奇艺会员中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥188.10\n-\n¥207.90\n爱奇艺黄金会员年卡\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥198\n¥248\n实付预估 ¥178.60\n已优惠 ¥19.40\n赚 ¥14.29\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥19.40\n📊\n佣金明细\n三级+¥10.72\n📞\n充值试算\n输入号码\n🛟 已切到备用通道2号 · 延迟约2分钟\n美团50券\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n美团外卖券\n🏪 美团外卖券等11家\n4通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥43.70\n-\n¥48.30\n美团外卖券50元\n缺货\n1天前同步\n批次 BATCH2026061601\n¥46\n¥50\n实付预估 ¥43.70\n已优惠 ¥2.30\n赚 ¥1.75\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥2.30\n📊\n佣金明细\n三级+¥1.31\n📞\n充值试算\n输入号码\n京东100\n📍 部分地区\n🔄\nHOT\n京东E卡\n🏪 京东E卡等11家\n4通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥92.63\n-\n¥102.38\n京东E卡100元\n库存充足\n1天前同步\n批次 BATCH2026061505\n¥97.5\n¥100\n实付预估 ¥92.62\n已优惠 ¥4.88\n赚 ¥1.85\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥4.88\n📊\n佣金明细\n三级+¥1.39\n📞\n充值试算\n输入号码\n🛟 已切到备用通道2号 · 延迟约2分钟\n绿钻年卡\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n4通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥140.60\n-\n¥155.40\nQQ音乐绿钻年卡\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥148\n¥180\n实付预估 ¥131.10\n已优惠 ¥16.90\n赚 ¥7.87\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥16.90\n📊\n佣金明细\n三级+¥5.90\n📞\n充值试算\n输入号码\n腾讯视频月卡\n📍 部分地区\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n4通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥23.75\n-\n¥26.25\n腾讯视频VIP月卡\n库存充足\n1天前同步\n批次 BATCH2026061520\n¥25\n¥30\n实付预估 ¥23.75\n已优惠 ¥1.25\n赚 ¥1.90\n📊 关系链\nL1 8% / L2 4% / L3 2%\n立即充值\n💰\n优惠明细\n-¥1.25\n📊\n佣金明细\n三级+¥1.42\n📞\n充值试算\n输入号码\n🛟 已切到备用通道1号 · 延迟约2分钟\n腾讯视频年卡\n📍 部分地区\n⚠️\n1\n🔄\nHOT\n腾讯充值中心\n🏪 腾讯充值中心等11家\n3通道\n🛡️ 备用1个\n可叠加优惠\n价格区间:\n¥188.10\n-\n¥207.90\n腾讯视频VIP年卡\n库存充足\n1天前同步\n批次 BATCH",
+  "apiBase": "http://127.0.0.1:59212",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/5e02293d-4780-4b62-bd73-a14ec2d67789/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/143da835-96f4-4051-b3b1-8149e9579663/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/8b073c4b-d700-4b8e-a4ae-875f5e1a15aa/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/5f678cab-8a35-4ad8-b4fc-f29d61948a30/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a20a4672-aef5-446d-81a4-d9aa594f24d3/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a48ab403-3d61-4971-9c29-8605c6cf4a42/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/f0dd3438-27ca-493e-b62a-47f55fcff375/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/e48a522d-c69c-4af9-86d7-20342af298ee/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/b69de214-216c-44f3-8a0f-c8cce77c0083/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/8678c1fc-12de-4c38-b625-fd2108045987/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/45e075c6-446f-45b4-b6f0-0d82331e5aa3/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/ef43cb6a-aef6-4600-960a-fbce870add77/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/9d5b1e89-1800-496c-8403-5ea3ee159519/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a02964c3-ecd6-43b6-8771-381fa7cef7f4/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/d53870c1-7e51-49b1-8b20-b8085a0cb87a/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/53cd81d7-d3c9-4351-a1fa-c66d4d04eb2b/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/3c354712-b42e-465d-b939-40ea0aba901b/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/da61c5ef-9d3c-4329-95cb-be0552899bc0/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/37215feb-b44e-4f7d-bacc-faa9b3e8a000/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/e0bc1c39-5dc2-4914-9295-7d8eb746ff71/alternatives"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/calculate-price"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/5e02293d-4780-4b62-bd73-a14ec2d67789/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/143da835-96f4-4051-b3b1-8149e9579663/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/8b073c4b-d700-4b8e-a4ae-875f5e1a15aa/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/5f678cab-8a35-4ad8-b4fc-f29d61948a30/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a20a4672-aef5-446d-81a4-d9aa594f24d3/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a48ab403-3d61-4971-9c29-8605c6cf4a42/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/f0dd3438-27ca-493e-b62a-47f55fcff375/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/e48a522d-c69c-4af9-86d7-20342af298ee/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/b69de214-216c-44f3-8a0f-c8cce77c0083/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/8678c1fc-12de-4c38-b625-fd2108045987/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/45e075c6-446f-45b4-b6f0-0d82331e5aa3/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/ef43cb6a-aef6-4600-960a-fbce870add77/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/9d5b1e89-1800-496c-8403-5ea3ee159519/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a02964c3-ecd6-43b6-8771-381fa7cef7f4/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/d53870c1-7e51-49b1-8b20-b8085a0cb87a/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/53cd81d7-d3c9-4351-a1fa-c66d4d04eb2b/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/3c354712-b42e-465d-b939-40ea0aba901b/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/da61c5ef-9d3c-4329-95cb-be0552899bc0/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/37215feb-b44e-4f7d-bacc-faa9b3e8a000/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/e0bc1c39-5dc2-4914-9295-7d8eb746ff71/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/promotions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/5e02293d-4780-4b62-bd73-a14ec2d67789/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/143da835-96f4-4051-b3b1-8149e9579663/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/8b073c4b-d700-4b8e-a4ae-875f5e1a15aa/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/5f678cab-8a35-4ad8-b4fc-f29d61948a30/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a20a4672-aef5-446d-81a4-d9aa594f24d3/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a48ab403-3d61-4971-9c29-8605c6cf4a42/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/f0dd3438-27ca-493e-b62a-47f55fcff375/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/e48a522d-c69c-4af9-86d7-20342af298ee/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/b69de214-216c-44f3-8a0f-c8cce77c0083/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/8678c1fc-12de-4c38-b625-fd2108045987/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/45e075c6-446f-45b4-b6f0-0d82331e5aa3/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/ef43cb6a-aef6-4600-960a-fbce870add77/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/9d5b1e89-1800-496c-8403-5ea3ee159519/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a02964c3-ecd6-43b6-8771-381fa7cef7f4/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/d53870c1-7e51-49b1-8b20-b8085a0cb87a/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/53cd81d7-d3c9-4351-a1fa-c66d4d04eb2b/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/3c354712-b42e-465d-b939-40ea0aba901b/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/da61c5ef-9d3c-4329-95cb-be0552899bc0/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/37215feb-b44e-4f7d-bacc-faa9b3e8a000/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/e0bc1c39-5dc2-4914-9295-7d8eb746ff71/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/5e02293d-4780-4b62-bd73-a14ec2d67789/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/143da835-96f4-4051-b3b1-8149e9579663/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/8b073c4b-d700-4b8e-a4ae-875f5e1a15aa/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/5f678cab-8a35-4ad8-b4fc-f29d61948a30/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a20a4672-aef5-446d-81a4-d9aa594f24d3/alternatives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49212/api/products/a48ab403-3d61-4971-9c29-8605c6cf4a42/alternatives"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"status\":\"ok\",\"timestamp\":1781657650,\"version\":\"1.0.0\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/categories",
+      "path": "/api/categories",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"c_phone\",\"name\":\"话费充值\",\"code\":\"phone\",\"icon\":\"📱\",\"sort\":1,\"parent_id\":null,\"created_at\":1781489008,\"product_count\":54},{\"id\":\"c_data\",\"name\":\"流量充值\",\"code\":\"data\",\"icon\":\"🌐\",\"sort\":2,\"parent_id\":null,\"created_at\":1781489008,\"product_count\":76},{\"id\":\"c_video\",\"name\":\"视频会员\",\"code\":\"video\",\"icon\":\"🎬\",\"sort\":3,\"parent_id\":null,\"created_at\":1781489008,\"product_count\":81},{\"id\":\"c_food\",\"name\":\"外卖券\",\"code\":\"food\",\"icon\":\"🍔\",\"sort\":4,\"parent_id\":null,\"created_at\":1781"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/hot",
+      "path": "/api/products/hot",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"name\":\"中国移动话费50元\",\"category_id\":\"c_phone\",\"supplier_id\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"supplier_product_id\":\"SKU000001\",\"sku_type\":\"recharge\",\"face_value\":50,\"price\":49.5,\"cost_price\":48,\"commission_rate\":0.03,\"stock\":9999,\"stock_warning\":10,\"image\":\"话费50元\",\"description\":\"中国移动话费50元，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":1,\"recharge_type\":\"auto\",\"region_limit\":null,\"created_at\":1781489008,\"updated_at\":1781543662,"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/promotions",
+      "path": "/api/promotions",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"e6440b65-4036-498a-a062-ad3b0e6f72b7\",\"name\":\"满100减10全场通用\",\"type\":\"full_reduction\",\"rules\":{\"threshold\":100,\"value\":10,\"stackable\":true},\"priority\":100,\"start_time\":null,\"end_time\":null,\"status\":1,\"created_at\":1781489008},{\"id\":\"270e9309-bf5d-4f4b-a2fc-1e39f7b9b157\",\"name\":\"满50减5话费专享\",\"type\":\"full_reduction\",\"rules\":{\"threshold\":50,\"value\":5,\"stackable\":true,\"scope\":{\"categoryIds\":[\"c_phone\"]}},\"priority\":90,\"start_time\":null,\"end_time\":null,\"status\":1,\"created_at\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/5e02293d-4780-4b62-bd73-a14ec2d67789/alternatives",
+      "path": "/api/products/5e02293d-4780-4b62-bd73-a14ec2d67789/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"alternatives\":[{\"id\":\"ae258428-1f22-487f-b81e-ef230711f4e8\",\"name\":\"中国联通话费50元\",\"category_id\":\"c_phone\",\"supplier_id\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"supplier_product_id\":\"SKU000003\",\"sku_type\":\"recharge\",\"face_value\":50,\"price\":49.8,\"cost_price\":48.3,\"commission_rate\":0.03,\"stock\":9999,\"stock_warning\":10,\"image\":\"联通话费50\",\"description\":\"中国联通话费50元，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":0,\"recharge_type\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/143da835-96f4-4051-b3b1-8149e9579663/alternatives",
+      "path": "/api/products/143da835-96f4-4051-b3b1-8149e9579663/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"alternatives\":[{\"id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"name\":\"中国移动话费50元\",\"category_id\":\"c_phone\",\"supplier_id\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"supplier_product_id\":\"SKU000001\",\"sku_type\":\"recharge\",\"face_value\":50,\"price\":49.5,\"cost_price\":48,\"commission_rate\":0.03,\"stock\":9999,\"stock_warning\":10,\"image\":\"话费50元\",\"description\":\"中国移动话费50元，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":1,\"recharge_type\":\"a"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/8b073c4b-d700-4b8e-a4ae-875f5e1a15aa/alternatives",
+      "path": "/api/products/8b073c4b-d700-4b8e-a4ae-875f5e1a15aa/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"alternatives\":[{\"id\":\"5e02293d-4780-4b62-bd73-a14ec2d67789\",\"name\":\"中国移动话费50元\",\"category_id\":\"c_phone\",\"supplier_id\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"supplier_product_id\":\"SKU000001\",\"sku_type\":\"recharge\",\"face_value\":50,\"price\":49.5,\"cost_price\":48,\"commission_rate\":0.03,\"stock\":9999,\"stock_warning\":10,\"image\":\"话费50元\",\"description\":\"中国移动话费50元，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":1,\"recharge_type\":\"a"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/5f678cab-8a35-4ad8-b4fc-f29d61948a30/alternatives",
+      "path": "/api/products/5f678cab-8a35-4ad8-b4fc-f29d61948a30/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"alternatives\":[{\"id\":\"4afca472-3a95-4561-9e28-6cfb4aa3f0e1\",\"name\":\"全国通用流量1GB\",\"category_id\":\"c_data\",\"supplier_id\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"supplier_product_id\":\"SKU000007\",\"sku_type\":\"recharge\",\"face_value\":10,\"price\":8.5,\"cost_price\":7.5,\"commission_rate\":0.05,\"stock\":9999,\"stock_warning\":10,\"image\":\"流量1G\",\"description\":\"全国通用流量1GB，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":0,\"recharge_type\":\"aut"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/a20a4672-aef5-446d-81a4-d9aa594f24d3/alternatives",
+      "path": "/api/products/a20a4672-aef5-446d-81a4-d9aa594f24d3/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"8d6d786b-89f7-45d8-89d4-6a761ec531c9\",\"alternatives\":[{\"id\":\"d9417671-f797-40c3-a9de-ade03f924e14\",\"name\":\"优酷会员月卡\",\"category_id\":\"c_video\",\"supplier_id\":\"8d6d786b-89f7-45d8-89d4-6a761ec531c9\",\"supplier_product_id\":\"SKU000029\",\"sku_type\":\"recharge\",\"face_value\":25,\"price\":20,\"cost_price\":16,\"commission_rate\":0.08,\"stock\":9999,\"stock_warning\":10,\"image\":\"优酷月卡\",\"description\":\"优酷会员月卡，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":0,\"recharge_type\":\"auto\",\"reg"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/a48ab403-3d61-4971-9c29-8605c6cf4a42/alternatives",
+      "path": "/api/products/a48ab403-3d61-4971-9c29-8605c6cf4a42/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"8d6d786b-89f7-45d8-89d4-6a761ec531c9\",\"alternatives\":[{\"id\":\"d9417671-f797-40c3-a9de-ade03f924e14\",\"name\":\"优酷会员月卡\",\"category_id\":\"c_video\",\"supplier_id\":\"8d6d786b-89f7-45d8-89d4-6a761ec531c9\",\"supplier_product_id\":\"SKU000029\",\"sku_type\":\"recharge\",\"face_value\":25,\"price\":20,\"cost_price\":16,\"commission_rate\":0.08,\"stock\":9999,\"stock_warning\":10,\"image\":\"优酷月卡\",\"description\":\"优酷会员月卡，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":0,\"recharge_type\":\"auto\",\"reg"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/f0dd3438-27ca-493e-b62a-47f55fcff375/alternatives",
+      "path": "/api/products/f0dd3438-27ca-493e-b62a-47f55fcff375/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"3dcebd99-e593-4ef8-a62c-f10047fec049\",\"alternatives\":[{\"id\":\"dd1935bf-19aa-4d32-bd6b-f96d2a44fe38\",\"name\":\"美团外卖券30元\",\"category_id\":\"c_food\",\"supplier_id\":\"3dcebd99-e593-4ef8-a62c-f10047fec049\",\"supplier_product_id\":\"FOOD-美团外卖券-30\",\"sku_type\":\"card\",\"face_value\":30,\"price\":28.75,\"cost_price\":27.02,\"commission_rate\":0.05,\"stock\":2992,\"stock_warning\":10,\"image\":\"美团外卖券30\",\"description\":\"美团外卖30元代金券，正品卡密，即买即用\",\"status\":1,\"sort\":4,\"is_hot\":0,\"recharge_type\":\"c"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/e48a522d-c69c-4af9-86d7-20342af298ee/alternatives",
+      "path": "/api/products/e48a522d-c69c-4af9-86d7-20342af298ee/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"cc0a0d0f-b382-4e31-b8cf-91b39dd4e66b\",\"alternatives\":[{\"id\":\"c5e7e2fa-9a04-4a05-8a71-97dc77f8b3a5\",\"name\":\"京东E卡200元\",\"category_id\":\"c_card\",\"supplier_id\":\"cc0a0d0f-b382-4e31-b8cf-91b39dd4e66b\",\"supplier_product_id\":\"CARD-京东E卡-200\",\"sku_type\":\"card\",\"face_value\":200,\"price\":197.18,\"cost_price\":193.24,\"commission_rate\":0.029,\"stock\":2253,\"stock_warning\":10,\"image\":\"京东E卡200\",\"description\":\"京东E卡200元电子卡，官方正品，全国通用\",\"status\":1,\"sort\":5,\"is_hot\":0,\"recharge_typ"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/b69de214-216c-44f3-8a0f-c8cce77c0083/alternatives",
+      "path": "/api/products/b69de214-216c-44f3-8a0f-c8cce77c0083/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"alternatives\":[{\"id\":\"ab4eb35d-9cbe-48d5-87b2-f6b610bde529\",\"name\":\"QQ音乐绿钻月卡\",\"category_id\":\"c_music\",\"supplier_id\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"supplier_product_id\":\"SKU000023\",\"sku_type\":\"recharge\",\"face_value\":15,\"price\":12.5,\"cost_price\":10,\"commission_rate\":0.06,\"stock\":9999,\"stock_warning\":10,\"image\":\"绿钻月卡\",\"description\":\"QQ音乐绿钻月卡，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":0,\"recharge_type\":\"auto"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59212/api/products/8678c1fc-12de-4c38-b625-fd2108045987/alternatives",
+      "path": "/api/products/8678c1fc-12de-4c38-b625-fd2108045987/alternatives",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentSupplier\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"alternatives\":[{\"id\":\"45e075c6-446f-45b4-b6f0-0d82331e5aa3\",\"name\":\"腾讯视频VIP年卡\",\"category_id\":\"c_video\",\"supplier_id\":\"4c379f18-79da-4c6f-ab42-6aee39c281d2\",\"supplier_product_id\":\"SKU000028\",\"sku_type\":\"recharge\",\"face_value\":288,\"price\":198,\"cost_price\":160,\"commission_rate\":0.08,\"stock\":9999,\"stock_warning\":10,\"image\":\"腾讯视频年卡\",\"description\":\"腾讯视频VIP年卡，官方直充/正品卡密，极速到账\",\"status\":1,\"sort\":0,\"is_hot\":1,\"recharge_type\":"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=6e305429",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49212/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/chunk-6GSFWH52.js?v=6e305429",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49212/node_modules/.vite/deps/react-router-dom.js?v=6e305429",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

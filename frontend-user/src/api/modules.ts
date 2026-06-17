@@ -69,6 +69,8 @@ export const commissionApi = {
 };
 
 export const adminApi = {
+  getDashboard: () => data(api.get('/admin/dashboard')),
+  getStats: () => data(api.get('/admin/stats')),
   getRiskLogs: (limit: number = 5) => data(api.get(`/admin/risk/logs?limit=${limit}`)),
   getSettlements: () => data(api.get('/admin/settlements')),
   getProfitConfigs: () => data(api.get('/admin/profit-configs')),

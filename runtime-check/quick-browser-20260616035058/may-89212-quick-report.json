@@ -1,0 +1,38 @@
+{
+  "order": "may-89212",
+  "frontendUrl": "http://127.0.0.1:50212/",
+  "backendUrl": "http://127.0.0.1:59212",
+  "status": 200,
+  "frontendOk": true,
+  "backendHealth": {
+    "url": "http://127.0.0.1:59212/api/health",
+    "status": 200,
+    "ok": true,
+    "ms": 2,
+    "preview": "{\"success\":true,\"data\":{\"status\":\"ok\",\"timestamp\":1781581909,\"version\":\"1.0.0\"}}"
+  },
+  "login": {
+    "attempted": true,
+    "before": "http://127.0.0.1:50212/login",
+    "after": "http://127.0.0.1:50212/"
+  },
+  "finalUrl": "http://127.0.0.1:50212/",
+  "title": "虚拟商品聚合平台 - 管理后台",
+  "markerHits": {
+    "运营概览": true,
+    "商品管理": true,
+    "订单管理": true,
+    "卡密池": true,
+    "供应商": true
+  },
+  "markerHitCount": 5,
+  "consoleErrorCount": 0,
+  "requestFailureCount": 0,
+  "apiResponseErrorCount": 0,
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "bodyPreview": "💎 VGF 管理台 数据中心 📊 运营概览 业务管理 📦 商品管理 📋 订单管理 🎫 卡密池管理 🏭 供应商管理 财务中心 💰 结算中心 风控中心 🛡️ 风控中心 系统管理 👥 用户管理 📊 运营概览 A admin 退出 📊 运营概览 实时监控平台运营数据 🔄 刷新数据 今日GMV ¥0.00 💰 今日订单 0 📋 累计GMV ¥10033 📈 总用户 8 👥 今日新增 0 ➕ 成功率 62.5% ✅ 今日佣金 ¥0.00 💎 总佣金 ¥517.52 🎁 卡密总数 290 🎫 已使用 4 📝 📈 近7天GMV趋势 单位：元 ¥487 6/10 3单 ¥633 6/11 5单 ¥0 6/12 0单 ¥0 6/13 0单 ¥118 6/14 2单 ¥0 6/15 0单 ¥0 6/16 0单 📊 订单状态分布 总计: 80 已完成 50 单 (62.5%) 已失败 10 单 (12.5%) 待充值 10 单 (12.5%) 待支付 10 单 (12.5%) 🛡️ 风险等级分布 🛡️ 暂无风控数据 🏭 供应商业绩TOP5 按GMV排序 1. ",
+  "navError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89212/runtime-check/quick-browser-20260616035058/may-89212.png"
+}

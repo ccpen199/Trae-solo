@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: resolve(__dirname, '../.env') });
 
 const host = process.env.FRONTEND_HOST || process.env.HOST || '127.0.0.1';
-const port = Number(process.env.FRONTEND_ADMIN_PORT || 49213);
+const port = Number(process.env.FRONTEND_ADMIN_PORT || 50212);
 const backendHost = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
 const backendPort = Number(process.env.BACKEND_PORT || process.env.PORT || 59212);
 

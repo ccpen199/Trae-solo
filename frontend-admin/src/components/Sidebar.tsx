@@ -31,6 +31,8 @@ export default function Sidebar() {
             <div className="sidebar-group-title">{group}</div>
             {items.map(item => (
               <NavLink key={item.path} to={item.path}
+                aria-label={item.label}
+                title={item.label}
                 className={`sidebar-item ${location.pathname === item.path ? 'active' : ''}`}>
                 <span style={{ fontSize: 18 }}>{item.icon}</span>
                 <span>{item.label}</span>

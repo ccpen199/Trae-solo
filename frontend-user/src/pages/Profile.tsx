@@ -21,7 +21,7 @@ export default function Profile() {
   const [profile, setProfile] = useState<any>(null);
   const [adminStats, setAdminStats] = useState<AdminStats | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://127.0.0.1:49213';
+  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://127.0.0.1:50212';
 
   useEffect(() => {
     loadProfile();

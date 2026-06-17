@@ -112,7 +112,7 @@ export default function Category() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const toast = useToast();
-  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://127.0.0.1:49213';
+  const adminUrl = import.meta.env.VITE_ADMIN_URL || 'http://127.0.0.1:50212';
 
   const [categories, setCategories] = useState<CategoryDef[]>(CATEGORY_DEFS.map(c => ({ ...c })));
   const [expandedCats, setExpandedCats] = useState<Set<string>>(() => {

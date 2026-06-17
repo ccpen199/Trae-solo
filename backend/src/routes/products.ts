@@ -81,6 +81,45 @@ router.get('/products', (req, res) => {
       const regionLimits: any[] = db.prepare('SELECT region_code FROM region_limits WHERE product_id = ? AND allow = 1').all(p.id);
       const regionLimited = p.region_limit ? 1 : (regionLimits.length > 0 ? 1 : 0);
       const syncBatch = p.updated_at ? formatBatchNo(p.updated_at) : null;
+
+      const supplierChannels = ch.filter(c => c.supplier_id === p.supplier_id);
+      const supplierSuccessRate = supplierChannels.length > 0
+        ? Math.round(supplierChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / supplierChannels.length * 100) / 100
+        : 0.95;
+
+      const allSuppliers = db.prepare(`
+        SELECT DISTINCT s.id, s.name, s.code, s.status as supplier_status,
+          (SELECT COUNT(*) FROM recharge_channels rc WHERE rc.supplier_id = s.id AND rc.product_id = ? AND rc.status = 1) as active_channels,
+          (SELECT COUNT(*) FROM recharge_channels rc WHERE rc.supplier_id = s.id AND rc.product_id = ?) as total_channels,
+          (SELECT p2.stock FROM products p2 WHERE p2.supplier_id = s.id AND p2.category_id = ? AND p2.status = 1 LIMIT 1) as supplier_stock
+        FROM suppliers s
+        INNER JOIN recharge_channels rc ON rc.supplier_id = s.id
+        WHERE rc.product_id = ?
+        ORDER BY s.id = ? DESC, active_channels DESC
+      `).all(p.id, p.id, p.category_id, p.id, p.supplier_id);
+
+      const syncHistory: any[] = db.prepare(`
+        SELECT before_stock as before, after_stock as after, variance, sync_time as time, sync_batch
+        FROM stock_sync_history
+        WHERE product_id = ?
+        ORDER BY sync_time DESC
+        LIMIT 3
+      `).all(p.id);
+
+      const mainChannel = ch.find(c => c.status === 1) || ch[0];
+      const backupChannels = ch.filter((c, idx) => idx > 0 && c.status === 1);
+      const fallbackSwitchTime = inactiveChannels.length > 0 ? (inactiveChannels[0].last_fail_time || p.updated_at) : undefined;
+      const backupChannelNumber = backupChannels.length > 0 ? backupChannels[0].priority : (ch.length > 1 ? 2 : 0);
+
+      const supplier_info = {
+        name: p.supplier_name,
+        code: p.supplier_code,
+        success_rate: supplierSuccessRate,
+        channel_count: supplierChannels.length,
+        stock: p.stock,
+        stock_warning: p.stock_warning || 10
+      };
+
       return {
         ...p,
         channels: ch,
@@ -95,8 +134,18 @@ router.get('/products', (req, res) => {
           total: ch.length,
           active: activeChannels.length,
           inactive: inactiveChannels.length,
-          successRate: ch.length > 0 ? Math.round(activeChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / ch.length * 100) / 100 : 0
-        }
+          successRate: ch.length > 0 ? Math.round(activeChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / ch.length * 100) / 100 : 0,
+          mainChannel: mainChannel ? { id: mainChannel.id, priority: mainChannel.priority, supplier_name: mainChannel.supplier_name, success_rate: mainChannel.success_rate } : null,
+          backupChannels: backupChannels.map(bc => ({ id: bc.id, priority: bc.priority, supplier_name: bc.supplier_name, success_rate: bc.success_rate }))
+        },
+        supplier_info,
+        suppliers: allSuppliers,
+        supplier_count: allSuppliers.length,
+        stock_sync_history: syncHistory,
+        fallback_switch_time: fallbackSwitchTime,
+        fallback_reason: inactiveChannels.length > 0 ? (inactiveChannels[0].fail_reason || '主通道超时或失败率过高') : undefined,
+        backup_channel_number: backupChannelNumber,
+        stock_status: p.stock <= 0 ? 'none' : p.stock <= (p.stock_warning || 10) ? 'warning' : 'sufficient'
       };
     });
 
@@ -140,6 +189,45 @@ router.get('/products/hot', (_req, res) => {
       const regionLimits: any[] = db.prepare('SELECT region_code FROM region_limits WHERE product_id = ? AND allow = 1').all(p.id);
       const regionLimited = p.region_limit ? 1 : (regionLimits.length > 0 ? 1 : 0);
       const syncBatch = p.updated_at ? formatBatchNo(p.updated_at) : null;
+
+      const supplierChannels = channels.filter(c => c.supplier_id === p.supplier_id);
+      const supplierSuccessRate = supplierChannels.length > 0
+        ? Math.round(supplierChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / supplierChannels.length * 100) / 100
+        : 0.95;
+
+      const allSuppliers = db.prepare(`
+        SELECT DISTINCT s.id, s.name, s.code, s.status as supplier_status,
+          (SELECT COUNT(*) FROM recharge_channels rc WHERE rc.supplier_id = s.id AND rc.product_id = ? AND rc.status = 1) as active_channels,
+          (SELECT COUNT(*) FROM recharge_channels rc WHERE rc.supplier_id = s.id AND rc.product_id = ?) as total_channels,
+          (SELECT p2.stock FROM products p2 WHERE p2.supplier_id = s.id AND p2.category_id = ? AND p2.status = 1 LIMIT 1) as supplier_stock
+        FROM suppliers s
+        INNER JOIN recharge_channels rc ON rc.supplier_id = s.id
+        WHERE rc.product_id = ?
+        ORDER BY s.id = ? DESC, active_channels DESC
+      `).all(p.id, p.id, p.category_id, p.id, p.supplier_id);
+
+      const syncHistory: any[] = db.prepare(`
+        SELECT before_stock as before, after_stock as after, variance, sync_time as time, sync_batch
+        FROM stock_sync_history
+        WHERE product_id = ?
+        ORDER BY sync_time DESC
+        LIMIT 3
+      `).all(p.id);
+
+      const mainChannel = channels.find(c => c.status === 1) || channels[0];
+      const backupChannels = channels.filter((c, idx) => idx > 0 && c.status === 1);
+      const fallbackSwitchTime = inactiveChannels.length > 0 ? (inactiveChannels[0].last_fail_time || p.updated_at) : undefined;
+      const backupChannelNumber = backupChannels.length > 0 ? backupChannels[0].priority : (channels.length > 1 ? 2 : 0);
+
+      const supplier_info = {
+        name: p.supplier_name,
+        code: p.supplier_code,
+        success_rate: supplierSuccessRate,
+        channel_count: supplierChannels.length,
+        stock: p.stock,
+        stock_warning: p.stock_warning || 10
+      };
+
       return {
         ...p,
         channels,
@@ -154,8 +242,18 @@ router.get('/products/hot', (_req, res) => {
           total: channels.length,
           active: activeChannels.length,
           inactive: inactiveChannels.length,
-          successRate: channels.length > 0 ? Math.round(activeChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / channels.length * 100) / 100 : 0
-        }
+          successRate: channels.length > 0 ? Math.round(activeChannels.reduce((sum, c) => sum + (c.success_rate || 0), 0) / channels.length * 100) / 100 : 0,
+          mainChannel: mainChannel ? { id: mainChannel.id, priority: mainChannel.priority, supplier_name: mainChannel.supplier_name, success_rate: mainChannel.success_rate } : null,
+          backupChannels: backupChannels.map(bc => ({ id: bc.id, priority: bc.priority, supplier_name: bc.supplier_name, success_rate: bc.success_rate }))
+        },
+        supplier_info,
+        suppliers: allSuppliers,
+        supplier_count: allSuppliers.length,
+        stock_sync_history: syncHistory,
+        fallback_switch_time: fallbackSwitchTime,
+        fallback_reason: inactiveChannels.length > 0 ? (inactiveChannels[0].fail_reason || '主通道超时或失败率过高') : undefined,
+        backup_channel_number: backupChannelNumber,
+        stock_status: p.stock <= 0 ? 'none' : p.stock <= (p.stock_warning || 10) ? 'warning' : 'sufficient'
       };
     });
 

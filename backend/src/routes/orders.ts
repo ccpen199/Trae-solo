@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { authMiddleware, AuthRequest, clientInfoMiddleware, adminMiddleware } from '../middleware/auth';
 import { orderService } from '../services/order';
 import { db } from '../database';
-import { now } from '../utils';
+import { now, generateId } from '../utils';
 
 const router = Router();
 
@@ -68,6 +68,15 @@ router.get('/', authMiddleware, (req: AuthRequest, res) => {
   }
 });
 
+router.get('/error-codes', authMiddleware, adminMiddleware, (_req, res) => {
+  try {
+    const rows: any[] = db.prepare('SELECT * FROM error_code_mapping ORDER BY supplier_code, error_code').all();
+    res.json({ success: true, data: rows });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
 router.get('/:id', authMiddleware, (req: AuthRequest, res) => {
   try {
     const order = orderService.getOrderDetail(req.params.id, req.userId);
@@ -90,14 +99,16 @@ router.get('/:id/cards', authMiddleware, (req: AuthRequest, res) => {
 
 router.get('/:id/diagnostic', authMiddleware, (req: AuthRequest, res) => {
   try {
-    const order: any = db.prepare('SELECT * FROM orders WHERE id = ? AND user_id = ?').get(req.params.id, req.userId);
+    const order: any = req.userRole === 'admin'
+      ? db.prepare('SELECT * FROM orders WHERE id = ?').get(req.params.id)
+      : db.prepare('SELECT * FROM orders WHERE id = ? AND user_id = ?').get(req.params.id, req.userId);
     if (!order) return res.status(404).json({ success: false, message: '订单不存在' });
 
     const { rechargeDiagnosticService } = require('../services/diagnostic');
     const diagnostic = rechargeDiagnosticService.diagnose(req.params.id);
 
     const switchHistory: any[] = db.prepare(`
-      SELECT cs.*, rc.name as channel_name, s.name as supplier_name
+      SELECT cs.*, COALESCE(rc.name, '通道' || COALESCE(rc.priority, 0)) as channel_name, s.name as supplier_name
       FROM channel_switch_logs cs
       LEFT JOIN recharge_channels rc ON cs.to_channel_id = rc.id
       LEFT JOIN suppliers s ON cs.to_supplier_id = s.id
@@ -146,6 +157,83 @@ router.get('/:id/diagnostic', authMiddleware, (req: AuthRequest, res) => {
     };
 
     res.json({ success: true, data: enriched });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.get('/admin/:id', authMiddleware, adminMiddleware, (req: AuthRequest, res) => {
+  try {
+    const order: any = db.prepare(`
+      SELECT o.*, u.phone as user_phone, u.nickname as user_name, p.name as product_name, p.sku_type, p.face_value,
+             s.name as supplier_name, s.code as supplier_code,
+             COALESCE(rc.name, '通道' || COALESCE(rc.priority, 0)) as channel_name
+      FROM orders o
+      LEFT JOIN users u ON o.user_id = u.id
+      LEFT JOIN products p ON o.product_id = p.id
+      LEFT JOIN suppliers s ON o.supplier_id = s.id
+      LEFT JOIN recharge_channels rc ON o.channel_id = rc.id
+      WHERE o.id = ?
+    `).get(req.params.id);
+    
+    if (!order) return res.status(404).json({ success: false, message: '订单不存在' });
+    
+    if (order.diagnostic_result) {
+      try { order.diagnostic_result = JSON.parse(order.diagnostic_result); } catch {}
+    }
+    
+    const statusHistory: any[] = [
+      { status: 'pending', label: '订单创建', time: order.created_at, operator: '用户', remark: '订单提交成功' }
+    ];
+    if (order.pay_time) {
+      statusHistory.push({ status: 'paid', label: '支付成功', time: order.pay_time, operator: '系统', remark: '用户支付完成' });
+    }
+    if (order.status === 'recharging' || order.status === 'completed' || order.status === 'failed') {
+      statusHistory.push({ status: 'recharging', label: '充值中', time: order.recharge_time || order.updated_at, operator: '系统', remark: '开始充值处理' });
+    }
+    if (order.status === 'completed') {
+      statusHistory.push({ status: 'completed', label: '充值成功', time: order.finish_time, operator: '系统', remark: '充值已到账' });
+    }
+    if (order.status === 'failed') {
+      statusHistory.push({ status: 'failed', label: '充值失败', time: order.finish_time || order.updated_at, operator: '系统', remark: order.fail_reason || '充值失败' });
+    }
+    if (order.status === 'refunded') {
+      statusHistory.push({ status: 'refunded', label: '已退款', time: order.finish_time || order.updated_at, operator: '管理员', remark: '订单已退款' });
+    }
+    
+    order.statusHistory = statusHistory;
+    
+    res.json({ success: true, data: order });
+  } catch (e: any) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+});
+
+router.post('/:id/refund', authMiddleware, async (req: AuthRequest, res) => {
+  try {
+    const order: any = db.prepare('SELECT * FROM orders WHERE id = ? AND user_id = ?').get(req.params.id, req.userId);
+    if (!order) return res.status(404).json({ success: false, message: '订单不存在' });
+    if (order.status !== 'failed') return res.status(400).json({ success: false, message: '只有失败订单可以退款' });
+    if (order.refund_status === 'refunded') return res.status(400).json({ success: false, message: '订单已退款' });
+    
+    const t = now();
+    const tx = db.transaction(() => {
+      db.prepare('UPDATE users SET balance = balance + ? WHERE id = ?').run(order.final_amount, order.user_id);
+      db.prepare("UPDATE orders SET status = 'refunded', refund_status = 'refunded', refund_time = ?, updated_at = ?, finish_time = ? WHERE id = ?")
+        .run(t, t, t, order.id);
+      
+      db.prepare(`
+        INSERT INTO commission_records (id, user_id, order_id, amount, type, status, created_at, remark)
+        VALUES (?, ?, ?, ?, 'refund', 'completed', ?, '订单退款')
+      `).run(generateId(), order.user_id, order.id, -order.final_amount, t);
+    });
+    
+    try {
+      tx();
+      res.json({ success: true, message: '退款成功', data: { refundedAmount: order.final_amount, newStatus: 'refunded' } });
+    } catch (e: any) {
+      res.status(500).json({ success: false, message: e.message });
+    }
   } catch (e: any) {
     res.status(500).json({ success: false, message: e.message });
   }

@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "seed": "tsx src/seed.ts"
+    "start": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH node dist/index.js",
+    "seed": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH tsx src/seed.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

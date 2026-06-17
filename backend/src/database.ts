@@ -228,6 +228,7 @@ export function initDatabase() {
 
     CREATE TABLE IF NOT EXISTS recharge_channels (
       id TEXT PRIMARY KEY,
+      name TEXT,
       product_id TEXT NOT NULL,
       supplier_id TEXT NOT NULL,
       priority INTEGER DEFAULT 0,
@@ -271,7 +272,11 @@ export function initDatabase() {
       operator_id TEXT,
       operator_role TEXT,
       encryption_method TEXT,
+      key_version TEXT,
       decrypted_preview TEXT,
+      ip_address TEXT,
+      reason TEXT,
+      success INTEGER DEFAULT 1,
       created_at INTEGER NOT NULL,
       FOREIGN KEY (card_id) REFERENCES card_pool(id)
     );
@@ -310,6 +315,16 @@ export function initDatabase() {
   `);
 
   addColumnIfMissing('orders', 'channel_id', 'INTEGER');
+  addColumnIfMissing('recharge_channels', 'name', 'TEXT');
+  db.prepare(`
+    UPDATE recharge_channels
+    SET name = '通道' || COALESCE(priority, 0)
+    WHERE name IS NULL OR TRIM(name) = ''
+  `).run();
+  addColumnIfMissing('card_crypto_logs', 'key_version', 'TEXT');
+  addColumnIfMissing('card_crypto_logs', 'ip_address', 'TEXT');
+  addColumnIfMissing('card_crypto_logs', 'reason', 'TEXT');
+  addColumnIfMissing('card_crypto_logs', 'success', 'INTEGER DEFAULT 1');
   addColumnIfMissing('card_pool', 'batch_no', 'TEXT');
   addColumnIfMissing('settlements', 'invoice_no', 'TEXT');
   addColumnIfMissing('settlements', 'invoice_amount', 'REAL');

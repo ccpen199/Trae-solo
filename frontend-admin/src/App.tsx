@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import Orders from './pages/Orders';
+import OrderDetail from './pages/OrderDetail';
 import Suppliers from './pages/Suppliers';
 import Settlements from './pages/Settlements';
 import RiskControl from './pages/RiskControl';
@@ -45,7 +46,7 @@ export default function App() {
   if (!authChecked) return null;
 
   return (
-    <AppContext.Provider value={{ admin, setAdmin, showToast, logout: () => { localStorage.removeItem('admin_token'); localStorage.removeItem('admin_info'); setAdmin(null); navigate('/login'); } }}>
+    <AppContext.Provider value={{ admin, setAdmin, showToast, logout: () => { localStorage.removeItem('admin_token'); localStorage.removeItem('token'); localStorage.removeItem('admin_info'); setAdmin(null); navigate('/login'); } }}>
       {admin ? (
         <div className="admin-layout">
           <Sidebar />
@@ -60,6 +61,7 @@ export default function App() {
                 <button className="btn btn-default btn-sm" onClick={() => {
                   if (confirm('确定要退出登录吗？')) {
                     localStorage.removeItem('admin_token');
+                    localStorage.removeItem('token');
                     localStorage.removeItem('admin_info');
                     setAdmin(null);
                     navigate('/login');
@@ -72,6 +74,7 @@ export default function App() {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/orders" element={<Orders />} />
+                <Route path="/orders/:id" element={<OrderDetail />} />
                 <Route path="/suppliers" element={<Suppliers />} />
                 <Route path="/settlements" element={<Settlements />} />
                 <Route path="/risk" element={<RiskControl />} />
@@ -104,5 +107,6 @@ function getPageTitle(path: string) {
     '/users': '👥 用户管理',
     '/card-pool': '🎫 卡密池管理'
   };
+  if (path.startsWith('/orders/')) return '📋 订单详情';
   return map[path] || '管理后台';
 }

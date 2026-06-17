@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --strictPort",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "dev": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH vite --strictPort",
+    "build": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH tsc -b && PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH vite build",
+    "preview": "PATH=/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH vite preview"
   },
   "dependencies": {
     "axios": "^1.7.2",

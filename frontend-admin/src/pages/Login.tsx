@@ -16,6 +16,7 @@ export default function Login() {
       const res: any = await api.post('/auth/admin-login', form);
       if (res.success) {
         localStorage.setItem('admin_token', res.data.token);
+        localStorage.setItem('token', res.data.token);
         localStorage.setItem('admin_info', JSON.stringify(res.data.user));
         setAdmin(res.data.user);
         showToast('登录成功', 'success');
