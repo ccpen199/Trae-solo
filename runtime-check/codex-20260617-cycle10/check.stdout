@@ -1,0 +1,557 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-17T01:33:14.002Z",
+  "order": "may-89215",
+  "roundIndex": 10,
+  "captureId": "may-89215-codex-cycle10",
+  "url": "http://127.0.0.1:49215/",
+  "initialUrl": "http://127.0.0.1:49215/",
+  "finalUrl": "http://127.0.0.1:49215/login",
+  "status": 200,
+  "title": "南宁城市服务",
+  "initialTitle": "南宁城市服务",
+  "navigationError": "",
+  "screenshotPath": "runtime-check/codex-20260617-cycle10/may-89215-codex-cycle10-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260617-cycle10/may-89215-codex-cycle10-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题；第 3 轮已完成",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49215/login"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49215/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49215/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49215/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49215/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49215/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49215/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49215/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49215/login",
+        "feedback": []
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49215/login",
+        "title": "南宁城市服务",
+        "headings": [
+          "南宁城市服务",
+          "统一数字身份",
+          "欢迎登录"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "密码登录",
+          "验证码",
+          "刷脸",
+          "立即登录",
+          "爱 爱南宁一键登录",
+          "电子证照登录",
+          "收起",
+          "张三（市民） 市民端·全功能体验",
+          "管理员 管理端·城市运营总览",
+          "办事员 办事员端·工单分拨处理"
+        ],
+        "links": [
+          "《用户服务协议》",
+          "《隐私政策》"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入11位手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入登录密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南宁城市服务智慧城市·山水南宁统一数字身份一次认证，全城通行。融合电子身份证、社保卡、驾驶证、 电动车牌照等多证合一，畅享交通、医疗、教育、政务、 城管五大领域60+便民服务。BRT乘车预约挂号入学报名违章查询智慧停车证件办理南宁市人民政府 · 南宁市大数据发展局南宁城市服务智慧城市·山水南宁欢迎登录请选择以下任意方式完成身份认证密码登录验证码刷脸手机号已识别：市民密码立即登录其他登录方式爱爱南宁一键登录电子证照登录演示账号（点击快速体验）收起张三（市民）市民端·全功能体验管理员管理端·城市运营总览办事员办事员端·工单分拨处理登录即表示同意《用户服务协议》和《隐私政策》",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89215-codex-cycle10-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49215/login",
+          "title": "南宁城市服务",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260617-cycle10/may-89215-codex-cycle10-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260617-cycle10/may-89215-codex-cycle10-structure-01-首屏.png",
+          "elementCount": 198,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "密码登录",
+            "验证码",
+            "刷脸",
+            "13800138001",
+            "123456",
+            "立即登录",
+            "爱 爱南宁一键登录",
+            "电子证照登录",
+            "收起",
+            "张三（市民） 市民端·全功能体验",
+            "管理员 管理端·城市运营总览",
+            "办事员 办事员端·工单分拨处理",
+            "用户服务协议》",
+            "隐私政策》"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-cycle10-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49215/login",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260617-cycle10/may-89215-codex-cycle10-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260617-cycle10/may-89215-codex-cycle10-structure-01-首屏.png",
+        "elementCount": 198,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "密码登录",
+          "验证码",
+          "刷脸",
+          "13800138001",
+          "123456",
+          "立即登录",
+          "爱 爱南宁一键登录",
+          "电子证照登录",
+          "收起",
+          "张三（市民） 市民端·全功能体验",
+          "管理员 管理端·城市运营总览",
+          "办事员 办事员端·工单分拨处理",
+          "用户服务协议》",
+          "隐私政策》"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49215/login",
+    "representativeScreenshotLabel": "南宁城市服务"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89215-codex-cycle10-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49215/login",
+        "title": "南宁城市服务",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260617-cycle10/may-89215-codex-cycle10-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89215/runtime-check/codex-20260617-cycle10/may-89215-codex-cycle10-structure-01-首屏.png",
+        "elementCount": 198,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "密码登录",
+          "验证码",
+          "刷脸",
+          "13800138001",
+          "123456",
+          "立即登录",
+          "爱 爱南宁一键登录",
+          "电子证照登录",
+          "收起",
+          "张三（市民） 市民端·全功能体验",
+          "管理员 管理端·城市运营总览",
+          "办事员 办事员端·工单分拨处理",
+          "用户服务协议》",
+          "隐私政策》"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "南宁城市服务\n\n智慧城市·山水南宁\n\n统一数字身份\n\n一次认证，全城通行。融合电子身份证、社保卡、驾驶证、 电动车牌照等多证合一，畅享交通、医疗、教育、政务、 城管五大领域60+便民服务。\n\nBRT乘车\n预约挂号\n入学报名\n违章查询\n智慧停车\n证件办理\n南宁市人民政府 · 南宁市大数据发展局\n欢迎登录\n\n请选择以下任意方式完成身份认证\n\n密码登录\n验证码\n刷脸\n手机号\n已识别：市民\n密码\n立即登录\n其他登录方式\n爱\n爱南宁一键登录\n电子证照登录\n演示账号（点击快速体验）\n收起\n张三（市民）\n市民端·全功能体验\n管理员\n管理端·城市运营总览\n办事员\n办事员端·工单分拨处理\n\n登录即表示同意《用户服务协议》和《隐私政策》",
+  "bodyTextPreview": "南宁城市服务\n\n智慧城市·山水南宁\n\n统一数字身份\n\n一次认证，全城通行。融合电子身份证、社保卡、驾驶证、 电动车牌照等多证合一，畅享交通、医疗、教育、政务、 城管五大领域60+便民服务。\n\nBRT乘车\n预约挂号\n入学报名\n违章查询\n智慧停车\n证件办理\n南宁市人民政府 · 南宁市大数据发展局\n欢迎登录\n\n请选择以下任意方式完成身份认证\n\n密码登录\n验证码\n刷脸\n手机号\n已识别：市民\n密码\n立即登录\n其他登录方式\n爱\n爱南宁一键登录\n电子证照登录\n演示账号（点击快速体验）\n收起\n张三（市民）\n市民端·全功能体验\n管理员\n管理端·城市运营总览\n办事员\n办事员端·工单分拨处理\n\n登录即表示同意《用户服务协议》和《隐私政策》",
+  "apiBase": "http://127.0.0.1:59215",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/courses",
+      "path": "/api/courses",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"success\":true,\"message\":\"搜索成功\",\"data\":{\"query\":\"测试\",\"total\":0,\"items\":[]},\"timestamp\":1781659991456}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"success\":true,\"message\":\"获取成功\",\"data\":{\"users\":3,\"policies\":3,\"tickets\":3,\"openTickets\":2,\"atomicServices\":7,\"activeServices\":7,\"categories\":{\"transportation\":1,\"medical\":0,\"education\":0,\"government\":0,\"urbanManagement\":2}},\"timestamp\":1781659991617}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59215/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"success\":true,\"message\":\"获取成功\",\"data\":{\"users\":3,\"policies\":3,\"tickets\":3,\"openTickets\":2,\"atomicServices\":7,\"activeServices\":7,\"categories\":{\"transportation\":1,\"medical\":0,\"education\":0,\"government\":0,\"urbanManagement\":2}},\"timestamp\":1781659991652}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49215/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ac032373",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49215/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Login.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49215/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ac032373",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49215/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49215/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49215/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ac032373",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49215/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "runtime-check/codex-20260617-cycle10/may-89215-browser-report.json"
+}

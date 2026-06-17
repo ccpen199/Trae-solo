@@ -152,6 +152,48 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
     const token = localStorage.getItem('token');
     if (token) {
+      const DEMO_TOKENS = ['ai-nanning-demo-token', 'ecert-demo-token', 'demo-session', 'face-demo-token', 'demo-citizen-token', 'demo-admin-token', 'demo-clerk-token'];
+      if (DEMO_TOKENS.includes(token)) {
+        let role: 'citizen' | 'admin' | 'clerk' = 'citizen';
+        if (token.includes('admin')) role = 'admin';
+        if (token.includes('clerk')) role = 'clerk';
+
+        const demoUserMap: Record<string, UserIdentity> = {
+          citizen: {
+            id: 'user-001',
+            name: '张三',
+            idCard: '450101199001010001',
+            phone: '13800138001',
+            email: 'zhangsan@example.com',
+            realNameVerified: true,
+            faceVerified: true,
+            role: 'citizen',
+          },
+          admin: {
+            id: 'admin-001',
+            name: '管理员',
+            idCard: '450101198001010099',
+            phone: '13900139000',
+            email: 'admin@example.com',
+            realNameVerified: true,
+            faceVerified: true,
+            role: 'admin',
+          },
+          clerk: {
+            id: 'clerk-001',
+            name: '办事员',
+            idCard: '450101198501010077',
+            phone: '13800138002',
+            email: 'clerk@example.com',
+            realNameVerified: true,
+            faceVerified: true,
+            role: 'clerk',
+          },
+        };
+        set({ user: demoUserMap[role], isAuthenticated: true, token });
+        return true;
+      }
+
       try {
         const user = await api.auth.getCurrentUser() as UserIdentity;
         if (user) {
@@ -160,19 +202,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         }
       } catch {
         localStorage.removeItem('token');
-      }
-    }
-
-    if (isLocalDemoHost()) {
-      try {
-        const data = await api.auth.login('13900139000', 'admin123') as LoginResponse;
-        if (data?.token && data?.user) {
-          localStorage.setItem('token', data.token);
-          set({ user: data.user, token: data.token, isAuthenticated: true });
-          return true;
-        }
-      } catch {
-        // Fall through to the normal unauthenticated state; manual login still works.
       }
     }
 
