@@ -22,9 +22,7 @@ export default function App() {
           <Route path="/workspace/:reportId" element={<Workspace />} />
           <Route path="/admin/lineage" element={<LineageAdmin />} />
           <Route path="/admin/sources" element={<SourceScores />} />
-          <Route path="/admin/source-scores" element={<SourceScores />} />
           <Route path="/admin/summaries" element={<SummaryReview />} />
-          <Route path="/admin/summary-review" element={<SummaryReview />} />
         </Route>
       </Routes>
     </Router>
