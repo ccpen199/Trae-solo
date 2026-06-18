@@ -5,9 +5,11 @@ import type { User } from '@/types';
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
+  _hydrated: boolean;
   login: (user: User) => void;
   logout: () => void;
   updateUser: (data: Partial<User>) => void;
+  setHydrated: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -15,15 +17,22 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       isAuthenticated: false,
-      login: (user: User) => set({ user, isAuthenticated: true }),
+      _hydrated: false,
+      login: (user: User) => set({ user, isAuthenticated: true, _hydrated: true }),
       logout: () => set({ user: null, isAuthenticated: false }),
       updateUser: (data: Partial<User>) =>
         set((state) => ({
           user: state.user ? { ...state.user, ...data } : null,
         })),
+      setHydrated: () => set({ _hydrated: true }),
     }),
     {
       name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state._hydrated = true;
+        }
+      },
     }
   )
 );

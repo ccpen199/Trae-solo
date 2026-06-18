@@ -72,7 +72,7 @@ export default function Header({ onMenuToggle }: HeaderProps) {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/login', { replace: true });
   };
 
   const notifications = [

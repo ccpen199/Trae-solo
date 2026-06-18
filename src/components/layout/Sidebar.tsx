@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   GraduationCap,
@@ -83,12 +83,18 @@ interface SidebarProps {
 
 export default function Sidebar({ open, onClose }: SidebarProps) {
   const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
   const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
 
   const isAdmin = user?.role === 'school_admin' || user?.role === 'department_admin';
 
   const toggleSection = (title: string) => {
     setCollapsedSections((prev) => ({ ...prev, [title]: !prev[title] }));
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
   };
 
   const roleLabel = user?.role ? UserRole[user.role]?.label : '';
@@ -188,7 +194,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
             )}
           </div>
           <button
-            onClick={logout}
+            onClick={handleLogout}
             className="rounded-lg p-2 text-surface-400 transition-colors hover:bg-surface-700 hover:text-white"
           >
             <LogOut className="h-4 w-4" />

@@ -9,6 +9,8 @@ import {
   BookOpen,
   Heart,
   Users,
+  AlertCircle,
+  CheckCircle,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { mockUsers } from '@/mock/users';
@@ -23,11 +25,11 @@ const roleTabs: { key: RoleTab; label: string }[] = [
   { key: 'donor', label: '捐赠方' },
 ];
 
-const roleMockMap: Record<RoleTab, string> = {
-  student: 'zhangming2023',
-  admin: 'liwei_admin',
-  base: 'huangshan_base',
-  donor: 'zhaotech_foundation',
+const roleToUserRole: Record<RoleTab, string[]> = {
+  student: ['student'],
+  admin: ['department_admin', 'school_admin'],
+  base: ['base'],
+  donor: ['donor'],
 };
 
 const demoAccounts: Record<RoleTab, { username: string; password: string; name: string }> = {
@@ -44,6 +46,11 @@ const features = [
   { icon: BookOpen, title: '学分认证', desc: '实践学分、自动核算、电子证明' },
 ];
 
+type LoginError = {
+  type: 'empty' | 'not_found' | 'role_mismatch' | 'password_wrong';
+  message: string;
+};
+
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuthStore();
@@ -51,26 +58,66 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<LoginError | null>(null);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [isLogging, setIsLogging] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const validateAndLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError(null);
+    setLoginSuccess(false);
 
-    const mockUser = mockUsers.find((u) => u.username === roleMockMap[activeTab]);
-    if (!mockUser) {
-      setError('登录失败，请重试');
+    if (!username.trim()) {
+      setError({ type: 'empty', message: '请输入用户名' });
+      return;
+    }
+    if (!password.trim()) {
+      setError({ type: 'empty', message: '请输入密码' });
       return;
     }
 
-    login(mockUser);
-    navigate('/');
+    const foundUser = mockUsers.find((u) => u.username === username.trim());
+
+    if (!foundUser) {
+      setError({ type: 'not_found', message: `账号 "${username.trim()}" 不存在，请检查用户名或点击下方演示账号快速登录` });
+      return;
+    }
+
+    const allowedRoles = roleToUserRole[activeTab];
+    if (!allowedRoles.includes(foundUser.role)) {
+      const currentRoleLabel = roleTabs.find((t) => t.key === activeTab)?.label || '';
+      setError({
+        type: 'role_mismatch',
+        message: `该账号角色为"${foundUser.role === 'department_admin' ? '院系管理员' : foundUser.role === 'school_admin' ? '校级管理员' : foundUser.role === 'student' ? '学生' : foundUser.role === 'base' ? '实践基地' : '捐赠方'}"，与当前选择的"${currentRoleLabel}"身份不匹配，请切换身份标签后重试`,
+      });
+      return;
+    }
+
+    if (password.trim() !== '123456') {
+      setError({ type: 'password_wrong', message: '密码错误，演示账号统一密码为 123456' });
+      return;
+    }
+
+    setIsLogging(true);
+
+    setTimeout(() => {
+      login(foundUser);
+      setLoginSuccess(true);
+      setIsLogging(false);
+
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 400);
+    }, 300);
   };
 
-  const fillDemo = () => {
-    const demo = demoAccounts[activeTab];
+  const fillDemo = (tab: RoleTab) => {
+    setActiveTab(tab);
+    const demo = demoAccounts[tab];
     setUsername(demo.username);
     setPassword(demo.password);
+    setError(null);
+    setLoginSuccess(false);
   };
 
   const formVariants = {
@@ -168,7 +215,8 @@ export default function Login() {
                     setActiveTab(tab.key);
                     setUsername('');
                     setPassword('');
-                    setError('');
+                    setError(null);
+                    setLoginSuccess(false);
                   }}
                   className="relative flex-1 rounded-lg py-2 text-sm font-medium transition-colors"
                 >
@@ -192,7 +240,7 @@ export default function Login() {
             </div>
           </motion.div>
 
-          <form onSubmit={handleLogin} className="mt-6 space-y-4">
+          <form onSubmit={validateAndLogin} className="mt-6 space-y-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -203,27 +251,39 @@ export default function Login() {
                 className="space-y-4"
               >
                 <motion.div variants={itemVariants}>
-                  <div className="flex items-center rounded-xl border border-surface-200 bg-surface-50 px-4 py-3 transition-colors focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100">
+                  <div className={cn(
+                    'flex items-center rounded-xl border bg-surface-50 px-4 py-3 transition-colors',
+                    error?.type === 'not_found' || error?.type === 'role_mismatch'
+                      ? 'border-danger-300 ring-2 ring-danger-100'
+                      : 'border-surface-200 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100'
+                  )}>
                     <User className="h-5 w-5 text-surface-400" />
                     <input
                       type="text"
                       placeholder="请输入用户名"
                       value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      onChange={(e) => { setUsername(e.target.value); setError(null); }}
                       className="ml-3 flex-1 bg-transparent text-sm outline-none placeholder:text-surface-400"
+                      autoComplete="username"
                     />
                   </div>
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <div className="flex items-center rounded-xl border border-surface-200 bg-surface-50 px-4 py-3 transition-colors focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100">
+                  <div className={cn(
+                    'flex items-center rounded-xl border bg-surface-50 px-4 py-3 transition-colors',
+                    error?.type === 'password_wrong'
+                      ? 'border-danger-300 ring-2 ring-danger-100'
+                      : 'border-surface-200 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100'
+                  )}>
                     <Lock className="h-5 w-5 text-surface-400" />
                     <input
                       type="password"
                       placeholder="请输入密码"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => { setPassword(e.target.value); setError(null); }}
                       className="ml-3 flex-1 bg-transparent text-sm outline-none placeholder:text-surface-400"
+                      autoComplete="current-password"
                     />
                   </div>
                 </motion.div>
@@ -242,48 +302,64 @@ export default function Login() {
               </label>
             </motion.div>
 
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="rounded-lg bg-danger-50 px-4 py-2 text-sm text-danger-600"
-              >
-                {error}
-              </motion.div>
-            )}
+            <AnimatePresence mode="wait">
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  className="flex items-start gap-2.5 rounded-lg bg-danger-50 border border-danger-200 px-4 py-3 text-sm text-danger-700"
+                >
+                  <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                  <span>{error.message}</span>
+                </motion.div>
+              )}
+
+              {loginSuccess && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  className="flex items-center gap-2.5 rounded-lg bg-success-50 border border-success-200 px-4 py-3 text-sm text-success-700"
+                >
+                  <CheckCircle className="w-4 h-4 shrink-0" />
+                  <span>登录成功，正在跳转...</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <motion.div variants={itemVariants}>
               <button
                 type="submit"
-                className="w-full rounded-xl bg-gradient-to-r from-primary-600 to-primary-800 py-3 text-sm font-semibold text-white shadow-lg shadow-primary-600/25 transition-all hover:shadow-xl hover:shadow-primary-600/30 hover:brightness-110 active:scale-[0.98]"
+                disabled={isLogging || loginSuccess}
+                className={cn(
+                  'w-full rounded-xl py-3 text-sm font-semibold text-white shadow-lg transition-all active:scale-[0.98]',
+                  loginSuccess
+                    ? 'bg-success-500 shadow-success-500/25'
+                    : 'bg-gradient-to-r from-primary-600 to-primary-800 shadow-primary-600/25 hover:shadow-xl hover:shadow-primary-600/30 hover:brightness-110',
+                  isLogging && 'opacity-80 cursor-wait'
+                )}
               >
-                登 录
+                {isLogging ? '登录中...' : loginSuccess ? '登录成功 ✓' : '登 录'}
               </button>
             </motion.div>
           </form>
 
           <motion.div variants={itemVariants} className="mt-6 rounded-xl bg-surface-50 p-4">
-            <p className="mb-2 text-xs font-medium text-surface-500">演示账号</p>
+            <p className="mb-2 text-xs font-medium text-surface-500">快捷登录 — 点击自动填充演示账号</p>
             <div className="space-y-1.5">
               {roleTabs.map((tab) => (
                 <button
                   key={tab.key}
-                  onClick={() => {
-                    setActiveTab(tab.key);
-                    const demo = demoAccounts[tab.key];
-                    setUsername(demo.username);
-                    setPassword(demo.password);
-                  }}
+                  onClick={() => fillDemo(tab)}
                   className={cn(
-                    'flex w-full items-center justify-between rounded-lg px-3 py-1.5 text-xs transition-colors',
+                    'flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs transition-colors',
                     activeTab === tab.key
-                      ? 'bg-primary-50 text-primary-700'
+                      ? 'bg-primary-50 text-primary-700 ring-1 ring-primary-200'
                       : 'text-surface-600 hover:bg-surface-100'
                   )}
                 >
-                  <span>
-                    {demoAccounts[tab.key].name}
-                  </span>
+                  <span className="font-medium">{demoAccounts[tab.key].name}</span>
                   <span className="text-surface-400">密码：{demoAccounts[tab.key].password}</span>
                 </button>
               ))}
