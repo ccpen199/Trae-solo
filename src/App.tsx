@@ -5,19 +5,22 @@ import Dashboard from '@/pages/Dashboard'
 import Member from '@/pages/Member'
 import Merchant from '@/pages/Merchant'
 import Scenarios from '@/pages/Scenarios'
+import { ToastProvider } from '@/components/Toast'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/member" element={<Member />} />
-          <Route path="/merchant" element={<Merchant />} />
-          <Route path="/scenarios" element={<Scenarios />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ToastProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/member" element={<Member />} />
+            <Route path="/merchant" element={<Merchant />} />
+            <Route path="/scenarios" element={<Scenarios />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ToastProvider>
   )
 }
