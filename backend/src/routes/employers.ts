@@ -66,7 +66,15 @@ router.get('/:id', authMiddleware(), (req: AuthRequest, res: Response) => {
   res.json({
     employer: {
       ...employer,
-      special_requirements_data: employer.special_requirements ? JSON.parse(employer.special_requirements) : [],
+      special_requirements_data: (() => {
+        if (!employer.special_requirements) return [];
+        try {
+          const parsed = JSON.parse(employer.special_requirements);
+          return Array.isArray(parsed) ? parsed : [employer.special_requirements];
+        } catch (e) {
+          return [employer.special_requirements];
+        }
+      })(),
     },
     orders,
   });

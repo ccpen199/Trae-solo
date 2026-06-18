@@ -125,8 +125,24 @@ router.get('/:id', authMiddleware(), (req: AuthRequest, res: Response) => {
   res.json({
     order: {
       ...order,
-      work_times_data: order.work_times ? JSON.parse(order.work_times) : [],
-      special_requirements_data: order.special_requirements ? JSON.parse(order.special_requirements) : [],
+      work_times_data: (() => {
+        if (!order.work_times) return [];
+        try {
+          const parsed = JSON.parse(order.work_times);
+          return Array.isArray(parsed) ? parsed : [order.work_times];
+        } catch (e) {
+          return [order.work_times];
+        }
+      })(),
+      special_requirements_data: (() => {
+        if (!order.special_requirements) return [];
+        try {
+          const parsed = JSON.parse(order.special_requirements);
+          return Array.isArray(parsed) ? parsed : [order.special_requirements];
+        } catch (e) {
+          return [order.special_requirements];
+        }
+      })(),
     },
     nodes,
     grabRecords,
@@ -142,7 +158,7 @@ router.post('/', authMiddleware(['admin', 'employer']), (req: AuthRequest, res: 
   }
 
   const orderId = uuidv4();
-  const nodes = serviceNodes[service_type] || [];
+  const nodes = serviceNodes[service_type as keyof typeof serviceNodes] || [];
 
   const tx = db.transaction(() => {
     db.prepare(`
@@ -155,7 +171,7 @@ router.post('/', authMiddleware(['admin', 'employer']), (req: AuthRequest, res: 
       longitude || 0, latitude || 0, address || '', city, district
     );
 
-    nodes.forEach((node) => {
+    nodes.forEach((node: { name: string; description: string }) => {
       db.prepare(`
         INSERT INTO service_nodes (id, order_id, node_name, node_description, status)
         VALUES (?, ?, ?, ?, 'pending')

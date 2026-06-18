@@ -73,8 +73,8 @@ router.post('/progress/:courseId', authMiddleware(['worker']), (req: AuthRequest
       .run(progress, (existing as any).id);
   } else {
     db.prepare(`
-      INSERT INTO training_progress (id, worker_id, course_id, progress, completed)
-      VALUES (?, ?, ?, ?, 0)
+      INSERT INTO training_progress (id, worker_id, course_id, progress, completed, updated_at)
+      VALUES (?, ?, ?, ?, 0, CURRENT_TIMESTAMP)
     `).run(uuidv4(), workerId, courseId, progress);
   }
 
@@ -97,7 +97,8 @@ router.post('/quiz/:courseId/submit', authMiddleware(['worker']), (req: AuthRequ
 
   let correctCount = 0;
   quizzes.forEach((quiz: any) => {
-    if (answers[quiz.id] === quiz.correct_answer) {
+    const userAnswer = answers.find((a: any) => a.quiz_id === quiz.id);
+    if (userAnswer && userAnswer.answer === quiz.correct_answer) {
       correctCount++;
     }
   });
@@ -145,11 +146,12 @@ router.get('/my-progress', authMiddleware(['worker']), (req: AuthRequest, res: R
   }
 
   const list = db.prepare(`
-    SELECT tp.*, tc.title, tc.category, tc.level, tc.duration, tc.cover_image
+    SELECT tp.*, tc.title, tc.category, tc.level, tc.duration, tc.cover_image,
+      COALESCE(tp.updated_at, tp.created_at) as updated_at
     FROM training_progress tp
     LEFT JOIN training_courses tc ON tp.course_id = tc.id
     WHERE tp.worker_id = ?
-    ORDER BY tp.updated_at DESC
+    ORDER BY updated_at DESC
   `).all(workerId);
 
   const stats = db.prepare(`

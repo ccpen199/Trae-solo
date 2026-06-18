@@ -17,23 +17,49 @@ export default function Login() {
     setLoginError('');
     try {
       const result = await authApi.login(values);
-      if (!result.token || !result.user) {
+      const token = result?.token;
+      const user = result?.user;
+      if (!token || !user) {
         setLoginError('服务器返回数据异常，请稍后重试');
         return;
       }
-      localStorage.setItem('token', result.token);
-      localStorage.setItem('user', JSON.stringify(result.user));
-      message.success('登录成功，正在跳转...');
-      navigate(from, { replace: true });
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      const roleText: Record<string, string> = {
+        admin: '管理员',
+        worker: '阿姨/服务者',
+        employer: '雇主',
+        expert: '专家',
+      };
+      message.success(`欢迎您，${user.name || user.username}（${roleText[user.role] || user.role}），正在进入工作台...`);
+
+      let redirectTo = '/dashboard';
+      try {
+        const stateFrom = (location.state as any)?.from;
+        if (stateFrom?.pathname && stateFrom.pathname !== '/login') {
+          redirectTo = stateFrom.pathname + (stateFrom.search || '');
+        }
+      } catch (_e) {}
+
+      setTimeout(() => {
+        navigate(redirectTo, { replace: true });
+      }, 200);
     } catch (error: any) {
       const status = error?.response?.status;
       const errMsg = error?.response?.data?.error || error?.message || '';
       if (status === 401) {
-        setLoginError('用户名或密码错误，请检查后重试');
+        setLoginError('用户名或密码错误，请检查后重试。测试账号：admin/admin123、worker1/worker123、employer1/employer123');
       } else if (status === 400) {
-        setLoginError(errMsg || '请求参数错误');
+        setLoginError(errMsg || '请求参数错误，请检查输入');
       } else if (!error?.response) {
-        setLoginError('无法连接到服务器，请检查网络或稍后重试');
+        setLoginError('无法连接到服务器（网络异常或后端服务未启动），请检查网络或稍后重试');
+      } else if (status === 403) {
+        setLoginError('该账号权限不足或已被禁用，请联系管理员');
+      } else if (status >= 500) {
+        setLoginError(`服务器内部错误（${status}），请稍后重试或联系技术支持`);
       } else {
         setLoginError(errMsg || `登录失败（${status}），请稍后重试`);
       }

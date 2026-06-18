@@ -29,21 +29,29 @@ router.post('/login', (req: Request, res: Response) => {
   );
 
   let profile = null;
+  let displayName = user.username;
   if (user.role === 'worker') {
     profile = db.prepare('SELECT * FROM workers WHERE user_id = ?').get(user.id);
+    if (profile && (profile as any).name) displayName = (profile as any).name;
   } else if (user.role === 'employer') {
     profile = db.prepare('SELECT * FROM employers WHERE user_id = ?').get(user.id);
+    if (profile && (profile as any).name) displayName = (profile as any).name;
   }
+
+  const userInfo = {
+    id: user.id,
+    username: user.username,
+    role: user.role,
+    phone: user.phone,
+    avatar: user.avatar,
+    name: displayName,
+  };
 
   res.json({
     token,
-    user: {
-      id: user.id,
-      username: user.username,
-      role: user.role,
-      phone: user.phone,
-      avatar: user.avatar,
-    },
+    user: userInfo,
+    role: user.role,
+    name: displayName,
     profile,
   });
 });
@@ -82,13 +90,21 @@ router.get('/me', authMiddleware(), (req: AuthRequest, res: Response) => {
   }
 
   let profile = null;
+  let displayName = (user as any).username;
   if ((user as any).role === 'worker') {
     profile = db.prepare('SELECT * FROM workers WHERE user_id = ?').get((user as any).id);
+    if (profile && (profile as any).name) displayName = (profile as any).name;
   } else if ((user as any).role === 'employer') {
     profile = db.prepare('SELECT * FROM employers WHERE user_id = ?').get((user as any).id);
+    if (profile && (profile as any).name) displayName = (profile as any).name;
   }
 
-  res.json({ user, profile });
+  const userInfo = {
+    ...(user as any),
+    name: displayName,
+  };
+
+  res.json({ user: userInfo, role: (user as any).role, name: displayName, profile });
 });
 
 export default router;

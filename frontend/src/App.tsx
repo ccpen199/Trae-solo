@@ -22,8 +22,18 @@ import PerformanceReport from './pages/admin/PerformanceReport';
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem('token');
+  const userStr = localStorage.getItem('user');
   const location = useLocation();
-  if (!token) {
+  if (!token || !userStr) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  try {
+    JSON.parse(userStr);
+  } catch (_e) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
   return children;
