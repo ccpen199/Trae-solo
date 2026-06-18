@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: #E5E7EB;
+  background-color: #0A1628;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0A1628;
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(124,58,237,0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 90%, rgba(201,169,98,0.06) 0%, transparent 45%),
+    linear-gradient(rgba(201,169,98,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,98,0.03) 1px, transparent 1px);
+  background-size: auto, auto, 40px 40px, 40px 40px;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  z-index: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10,22,40,0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(201,169,98,0.25);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201,169,98,0.45);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(30,58,95,0.55) 0%, rgba(10,22,40,0.75) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(201,169,98,0.14);
+  border-radius: 12px;
+}
+
+.glass-card-hover:hover {
+  border-color: rgba(201,169,98,0.35);
+  box-shadow: 0 10px 40px -15px rgba(201,169,98,0.25);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #F4E8C8 0%, #C9A962 50%, #95752F 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #DCBC62 0%, #C9A962 45%, #B8943F 100%);
+  color: #0A1628;
+  font-weight: 600;
+  border: 1px solid rgba(201,169,98,0.6);
+  border-radius: 8px;
+  padding: 10px 20px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-gold:hover::before {
+  transform: translateX(100%);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 0 28px -8px rgba(201,169,98,0.6);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: rgba(30,58,95,0.4);
+  color: #E5E7EB;
+  border: 1px solid rgba(201,169,98,0.2);
+  border-radius: 8px;
+  padding: 9px 18px;
+  transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(30,58,95,0.7);
+  border-color: rgba(201,169,98,0.5);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,169,98,0.3), transparent);
+}
+
+.input-field {
+  background: rgba(10,22,40,0.6);
+  border: 1px solid rgba(201,169,98,0.18);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #E5E7EB;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: rgba(201,169,98,0.6);
+  box-shadow: 0 0 0 3px rgba(201,169,98,0.12);
+}
+
+.leaflet-container {
+  background: #0A1628 !important;
+  border-radius: 8px;
+}
+
+.leaflet-tile-pane {
+  filter: brightness(0.65) invert(1) hue-rotate(180deg) sepia(0.25) saturate(1.4);
+}
