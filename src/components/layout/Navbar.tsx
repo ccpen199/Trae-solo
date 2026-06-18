@@ -83,19 +83,22 @@ export function Navbar() {
               ))}
 
               <div className="relative" onMouseLeave={() => setCategoryOpen(false)}>
-                <button
+                <Link
+                  to="/rankings"
+                  onClick={() => setCategoryOpen(!categoryOpen)}
                   onMouseEnter={() => setCategoryOpen(true)}
                   className="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-surface-light transition-colors inline-flex items-center gap-1"
                 >
                   评价领域
                   <ChevronDown className={cn('w-4 transition-transform', categoryOpen && 'rotate-180')} />
-                </button>
+                </Link>
                 {categoryOpen && (
                   <div className="absolute top-full left-0 mt-1 w-56 card py-2 animate-fade-in">
                   {categories.map((cat) => (
                     <Link
                       key={cat.code}
                       to={cat.path}
+                      onClick={() => setCategoryOpen(false)}
                       className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-surface-light hover:text-white transition-colors"
                     >
                       <cat.icon className="w-4 h-4 text-primary" />

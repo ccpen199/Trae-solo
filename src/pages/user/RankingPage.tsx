@@ -1,8 +1,9 @@
-import { useState, Fragment, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useState, Fragment, useEffect, useMemo } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
   ChevronDown, ChevronUp, MapPin, Search, Database, Clock, FileText,
-  Shield, CheckCircle2, AlertTriangle, Plus, Check, GitCompare
+  Shield, CheckCircle2, AlertTriangle, Plus, Check, GitCompare,
+  X, ArrowRight
 } from 'lucide-react';
 import { ScoreRing } from '@/components/ui/ScoreRing';
 import { TrendBadge } from '@/components/ui/TrendBadge';
@@ -92,23 +93,34 @@ interface RankingRow {
   lastUpdated: string;
 }
 
+function seededRandom(seed: number): () => number {
+  let s = seed;
+  return () => {
+    s = (s * 9301 + 49297) % 233280;
+    return s / 233280;
+  };
+}
+
 function generateRankings(category: CategoryCode, city: string): RankingRow[] {
+  const seed = category.charCodeAt(0) * 1000 + city.length * 37 + 7;
+  const rand = seededRandom(seed);
   const items = baseBrands[category];
   const offsets = cityOffsets[city] || [0, 0, 0, 0];
   const mult = cityMultiplier[city] || 1;
   const dimNames = categories.find(c => c.code === category)?.dims || [];
   return items.map((item, idx) => {
     const dimScores = dimNames.map((dim, dIdx) => {
-      const score = Math.max(60, Math.min(100, item.baseScores[dIdx] + offsets[dIdx] + Math.floor(Math.random() * 5) - 2));
-      const usedSources = sourceTypes.slice(0, 3 + Math.floor(Math.random() * 3));
+      const score = Math.max(60, Math.min(100, item.baseScores[dIdx] + offsets[dIdx] + Math.floor(rand() * 5) - 2));
+      const numSources = 3 + Math.floor(rand() * 3);
+      const usedSources = sourceTypes.slice(0, numSources);
       return {
         dimension: dim,
         score,
         dataSources: usedSources.map(st => ({
           type: st,
-          count: Math.floor((Math.floor(Math.random() * 8000) + 200) * mult),
-          collectTime: `2026-06-${String(10 + Math.floor(Math.random() * 8)).padStart(2, '0')}`,
-          verified: Math.random() > 0.2,
+          count: Math.floor((Math.floor(rand() * 8000) + 200) * mult),
+          collectTime: `2026-06-${String(10 + Math.floor(rand() * 8)).padStart(2, '0')}`,
+          verified: rand() > 0.2,
         })),
       };
     });
@@ -125,21 +137,22 @@ function generateRankings(category: CategoryCode, city: string): RankingRow[] {
       city,
       reportId: item.id,
       dimensionScores: dimScores,
-      dataSources: sourceTypes.slice(0, 4).map(st => ({ type: st, count: Math.floor((Math.floor(Math.random() * 10000) + 500) * mult) })),
-      crossValidated: Math.random() > 0.15,
-      lastUpdated: `2026-06-${String(10 + Math.floor(Math.random() * 8)).padStart(2, '0')}`,
+      dataSources: sourceTypes.slice(0, 4).map(st => ({ type: st, count: Math.floor((Math.floor(rand() * 10000) + 500) * mult) })),
+      crossValidated: rand() > 0.15,
+      lastUpdated: `2026-06-${String(10 + Math.floor(rand() * 8)).padStart(2, '0')}`,
     };
   }).sort((a, b) => b.overallScore - a.overallScore).map((r, i) => ({ ...r, rank: i + 1 }));
 }
 
 export function RankingPage() {
   const { category } = useParams<{ category?: string }>();
+  const navigate = useNavigate();
   const activeCategory: CategoryCode = (category as CategoryCode) || 'consumer';
   const [activeCity, setActiveCity] = useState('全国');
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [compareIds, setCompareIds] = useState<number[]>([]);
-  const [toastMsg, setToastMsg] = useState('');
+  const [toast, setToast] = useState<{ msg: string; action?: { label: string; onClick: () => void } } | null>(null);
 
   useEffect(() => {
     try {
@@ -152,35 +165,64 @@ export function RankingPage() {
     try { localStorage.setItem('compareIds', JSON.stringify(compareIds)); } catch {}
   }, [compareIds]);
 
-  const addToCompare = (id: number, name: string) => {
-    if (compareIds.includes(id)) {
-      setToastMsg(`${name} 已在对比列表中`);
-    } else if (compareIds.length >= 4) {
-      setToastMsg('对比最多4个对象，请先移除');
-    } else {
-      setCompareIds([...compareIds, id]);
-      setToastMsg(`已加入 ${name}，当前 ${compareIds.length + 1}/4`);
-    }
-    setTimeout(() => setToastMsg(''), 2200);
-  };
-
-  const data = generateRankings(activeCategory, activeCity);
-  const filteredData = data.filter((item) =>
-    item.targetName.toLowerCase().includes(searchQuery.toLowerCase())
+  const data = useMemo(
+    () => generateRankings(activeCategory, activeCity),
+    [activeCategory, activeCity]
   );
+
+  const filteredData = useMemo(
+    () => data.filter((item) => item.targetName.toLowerCase().includes(searchQuery.toLowerCase())),
+    [data, searchQuery]
+  );
+
   const catInfo = categories.find(c => c.code === activeCategory);
   const avgScore = filteredData.length > 0 ? Math.round(filteredData.reduce((s, d) => s + d.overallScore, 0) / filteredData.length) : 0;
   const maxScore = filteredData.length > 0 ? Math.max(...filteredData.map(d => d.overallScore)) : 0;
   const totalSources = filteredData.reduce((s, d) => s + d.dataSources.reduce((ss, ds) => ss + ds.count, 0), 0);
   const validRate = filteredData.length > 0 ? Math.round((filteredData.filter(d => d.crossValidated).length / filteredData.length) * 100) : 0;
 
+  const showToast = (msg: string, action?: { label: string; onClick: () => void }) => {
+    setToast({ msg, action });
+    setTimeout(() => setToast(null), 3500);
+  };
+
+  const addToCompare = (id: number, name: string) => {
+    if (compareIds.includes(id)) {
+      showToast(`${name} 已在对比列表中`);
+    } else if (compareIds.length >= 4) {
+      showToast('对比最多4个对象，请先移除');
+    } else {
+      const newIds = [...compareIds, id];
+      setCompareIds(newIds);
+      showToast(
+        `已加入 ${name}，当前 ${newIds.length}/4`,
+        { label: '去对比 →', onClick: () => navigate('/compare') }
+      );
+    }
+  };
+
+  const removeFromCompare = (id: number) => {
+    setCompareIds(prev => prev.filter(i => i !== id));
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      {toastMsg && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] px-4 py-2 bg-primary text-white rounded-md shadow-lg animate-fade-in text-sm">
-          {toastMsg}
+      {toast && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] px-4 py-2.5 bg-primary text-white rounded-md shadow-lg animate-fade-in text-sm flex items-center gap-3">
+          <span>{toast.msg}</span>
+          {toast.action && (
+            <button
+              onClick={toast.action.onClick}
+              className="px-2.5 py-1 bg-white/20 hover:bg-white/30 rounded text-xs font-medium transition-colors"
+            >
+              {toast.action.label}
+            </button>
+          )}
+          <button onClick={() => setToast(null)} className="ml-1 text-white/70 hover:text-white">
+            <X className="w-4 h-4" />
+          </button>
         </div>
       )}
 
@@ -214,7 +256,7 @@ export function RankingPage() {
             <div className="flex flex-wrap gap-4 items-center">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-sm text-slate-400">城市：</span>
+                <span className="text-sm text-slate-400">城市口径：</span>
                 <div className="flex flex-wrap gap-1">
                   {cities.map((city) => (
                     <button
@@ -232,9 +274,10 @@ export function RankingPage() {
                 </div>
               </div>
               <div className="relative ml-auto flex items-center gap-3">
-                <Link to="/compare" className="btn btn-outline text-sm">
+                <Link to="/compare" className="btn btn-primary text-sm">
                   <GitCompare className="w-4 h-4 mr-1" />
-                  去对比 {compareIds.length > 0 && <span className="ml-1 px-1.5 py-0.5 bg-primary/20 text-primary rounded text-xs">{compareIds.length}/4</span>}
+                  对比中心
+                  {compareIds.length > 0 && <span className="ml-1 px-1.5 py-0.5 bg-white/20 rounded text-xs">{compareIds.length}/4</span>}
                 </Link>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -249,6 +292,32 @@ export function RankingPage() {
               </div>
             </div>
           </div>
+
+          {compareIds.length > 0 && (
+            <div className="mb-4 p-3 bg-primary/10 border border-primary/30 rounded-lg flex items-center justify-between animate-fade-in">
+              <div className="flex items-center gap-3">
+                <GitCompare className="w-5 h-5 text-primary" />
+                <span className="text-sm text-white">
+                  已选 <span className="font-bold text-primary">{compareIds.length}</span> 个对象加入对比
+                  <span className="text-slate-400 ml-2">（最多4个）</span>
+                </span>
+                <div className="flex items-center gap-1.5 ml-4">
+                  {compareIds.map(id => {
+                    const item = data.find(d => d.targetId === id);
+                    return item ? (
+                      <span key={id} className="px-2 py-1 bg-primary/15 text-primary text-xs rounded flex items-center gap-1 border border-primary/30">
+                        {item.targetName}
+                        <button onClick={() => removeFromCompare(id)} className="hover:text-white ml-1"><X className="w-3 h-3" /></button>
+                      </span>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+              <Link to="/compare" className="btn btn-primary text-xs">
+                查看对比结果 <ArrowRight className="w-3 h-3 ml-1" />
+              </Link>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
             <div className="card p-4 text-center border-l-4 border-l-primary">
@@ -269,7 +338,7 @@ export function RankingPage() {
             </div>
             <div className="card p-4 text-center">
               <div className="text-2xl font-bold text-warning">{validRate}%</div>
-              <div className="text-xs text-slate-500 mt-1">验证比例</div>
+              <div className="text-xs text-slate-500 mt-1">交叉验证比例</div>
             </div>
           </div>
 
@@ -326,9 +395,9 @@ export function RankingPage() {
                         </td>
                         <td className="px-4 py-4">
                           {row.crossValidated ? (
-                            <span className="inline-flex items-center gap-1 text-xs text-primary"><CheckCircle2 className="w-3.5 h-3.5" />已验证</span>
+                            <span className="inline-flex items-center gap-1 text-xs text-primary"><CheckCircle2 className="w-3.5 h-3.5" />已交叉验证</span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-xs text-warning"><AlertTriangle className="w-3.5 h-3.5" />待验证</span>
+                            <span className="inline-flex items-center gap-1 text-xs text-warning"><AlertTriangle className="w-3.5 h-3.5" />待补充验证</span>
                           )}
                         </td>
                         <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
@@ -353,67 +422,65 @@ export function RankingPage() {
                       </tr>
                       {expandedRow === row.targetId && (
                         <tr className="bg-surface-light/30 animate-fade-in">
-                          <td colSpan={7} className="px-4 py-4">
-                            <div className="space-y-5">
+                          <td colSpan={7} className="px-4 py-5">
+                            <div className="space-y-6">
                               <div>
-                                <h4 className="text-sm font-medium text-slate-300 mb-3 flex items-center gap-2">
+                                <h4 className="text-sm font-semibold text-slate-200 mb-4 flex items-center gap-2">
                                   <FileText className="w-4 h-4 text-primary" />
-                                  维度评分（每项含数据来源·采集时间·验证状态）
+                                  多维度评分明细（每项评分含数据来源·采集时间·验证状态）
                                 </h4>
-                                <div className="space-y-3">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                   {row.dimensionScores.map((dim) => (
-                                    <div key={dim.dimension} className="bg-surface/60 rounded-lg p-4">
-                                      <div className="flex items-center gap-3 mb-3">
-                                        <span className="text-sm text-white font-medium w-24">{dim.dimension}</span>
-                                        <div className="flex-1 h-2.5 bg-surface-light rounded-full overflow-hidden">
-                                          <div
-                                            className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full"
-                                            style={{ width: `${dim.score}%` }}
-                                          />
-                                        </div>
-                                        <span className="text-lg font-bold text-white w-12 text-right">{dim.score}</span>
+                                    <div key={dim.dimension} className="bg-surface/70 rounded-lg p-4">
+                                      <div className="flex items-center justify-between mb-2">
+                                        <span className="text-sm text-white font-semibold">{dim.dimension}</span>
+                                        <span className="text-xl font-bold text-primary">{dim.score}<span className="text-xs text-slate-500 ml-0.5">/100</span></span>
                                       </div>
-                                      <div className="flex flex-wrap gap-2">
+                                      <div className="h-2 bg-surface-light rounded-full overflow-hidden mb-3">
+                                        <div
+                                          className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
+                                          style={{ width: `${dim.score}%` }}
+                                        />
+                                      </div>
+                                      <div className="flex flex-wrap gap-1.5">
                                         {dim.dataSources.map((ds, i) => (
-                                          <span key={i} className={`inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded border ${
+                                          <div key={i} className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded border ${
                                             ds.verified
                                               ? 'bg-primary/5 border-primary/20 text-primary'
                                               : 'bg-warning/5 border-warning/20 text-warning'
                                           }`}>
                                             <DataSourceTag type={ds.type as any} />
                                             <span className="text-slate-300">{ds.count.toLocaleString()}条</span>
-                                            <span className="text-slate-500">·</span>
+                                            <span className="text-slate-600">·</span>
                                             <Clock className="w-3 h-3 text-slate-400" />
                                             <span className="text-slate-400">{ds.collectTime}</span>
                                             {ds.verified ? <CheckCircle2 className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
-                                          </span>
+                                          </div>
                                         ))}
                                       </div>
                                     </div>
                                   ))}
                                 </div>
                               </div>
-                              <div className="flex items-center justify-between pt-3 border-t border-slate-700/50 flex-wrap gap-3">
-                                <div className="flex items-center gap-4 flex-wrap">
+                              <div className="pt-4 border-t border-slate-700/50 flex items-center justify-between flex-wrap gap-3">
+                                <div className="flex items-center gap-6 flex-wrap">
                                   <div className="flex items-center gap-2">
                                     <Database className="w-4 h-4 text-primary" />
-                                    <span className="text-xs text-slate-400">
-                                      数据口径: {row.city} · 共 {row.dataSources.reduce((s, d) => s + d.count, 0).toLocaleString()} 条
-                                    </span>
+                                    <span className="text-xs text-slate-400">数据口径：{row.city} · 共 {row.dataSources.reduce((s, d) => s + d.count, 0).toLocaleString()} 条原始数据</span>
                                   </div>
                                   <div className="flex items-center gap-2">
                                     <Clock className="w-4 h-4 text-slate-400" />
-                                    <span className="text-xs text-slate-400">最后更新: {row.lastUpdated}</span>
+                                    <span className="text-xs text-slate-400">数据更新时间：{row.lastUpdated}</span>
                                   </div>
                                   <div className="flex items-center gap-2">
                                     <Shield className="w-4 h-4 text-primary" />
                                     <span className="text-xs text-slate-400">
-                                      交叉验证: {row.crossValidated ? '3个数据源一致通过' : '待补充第3方数据'}
+                                      {row.crossValidated ? '交叉验证：3个独立数据源结果一致' : '交叉验证：需补充第3方数据验证'}
                                     </span>
                                   </div>
                                 </div>
-                                <Link to={`/report/${row.reportId}`} className="text-sm text-primary hover:text-primary-dark inline-flex items-center gap-1">
-                                  查看完整报告 <ChevronDown className="w-3 h-3 -rotate-90" />
+                                <Link to={`/report/${row.reportId}`} className="text-sm text-primary hover:text-primary-dark inline-flex items-center gap-1 font-medium">
+                                  查看完整报告 <ArrowRight className="w-3.5 h-3.5" />
                                 </Link>
                               </div>
                             </div>
