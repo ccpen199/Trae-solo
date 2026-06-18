@@ -41,6 +41,14 @@ router.get("/domains", (req: Request, res: Response): void => {
   res.json({ success: true, data: serviceDomains });
 });
 
+router.get("/hot/top", (req: Request, res: Response): void => {
+  const { limit = 10 } = req.query;
+  const hot = [...mockServices]
+    .sort((a, b) => b.applyCount - a.applyCount)
+    .slice(0, Number(limit));
+  res.json({ success: true, data: hot });
+});
+
 router.get("/:id", (req: Request, res: Response): void => {
   const { id } = req.params;
   const service = mockServices.find((s) => s.id === id);
@@ -49,14 +57,6 @@ router.get("/:id", (req: Request, res: Response): void => {
     return;
   }
   res.json({ success: true, data: service });
-});
-
-router.get("/hot/top", (req: Request, res: Response): void => {
-  const { limit = 10 } = req.query;
-  const hot = [...mockServices]
-    .sort((a, b) => b.applyCount - a.applyCount)
-    .slice(0, Number(limit));
-  res.json({ success: true, data: hot });
 });
 
 export default router;

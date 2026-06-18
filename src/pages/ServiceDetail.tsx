@@ -303,11 +303,41 @@ export default function ServiceDetail() {
 
           {/* 侧边栏 */}
           <aside className="space-y-6">
-            <div className="card p-5">
-              <h3 className="font-serif font-semibold text-ink mb-4 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-gov-600" /> 办件入口
+            <div className="card p-5 overflow-hidden">
+              <h3 className="font-serif font-semibold text-ink mb-3 flex items-center gap-2">
+                <FileCheck className="w-5 h-5 text-gov-600" /> 事项全生命周期
               </h3>
-              <div className="space-y-3">
+              <div className="rounded-xl border border-gov-100 bg-gov-50/50 p-3 mb-4">
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  {[
+                    { label: "预约", icon: Calendar, status: "ready" },
+                    { label: "申办", icon: FileCheck, status: "ready" },
+                    { label: "材料上传", icon: Upload, status: "ready" },
+                    { label: "进度追踪", icon: Clock, status: "ready" },
+                    { label: "结果推送", icon: CheckCircle2, status: "pending" },
+                    { label: "服务评价", icon: Star, status: "pending" },
+                  ].map((s, i) => {
+                    const Ic = s.icon;
+                    return (
+                      <div
+                        key={s.label}
+                        className={cn(
+                          "flex items-center gap-1.5 rounded-lg border p-2",
+                          s.status === "ready"
+                            ? "border-gov-200 bg-white text-gov-700"
+                            : "border-gray-200 bg-gray-50 text-gray-500"
+                        )}
+                      >
+                        <Ic className="w-3.5 h-3.5 shrink-0" />
+                        <span className="font-medium whitespace-nowrap">
+                          {i + 1}.{s.label}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="space-y-2.5">
                 <button
                   onClick={handleApply}
                   disabled={service.status !== "online"}
@@ -316,7 +346,10 @@ export default function ServiceDetail() {
                   <FileCheck className="w-4 h-4" /> 立即在线办理
                 </button>
                 {service.appointmentAvailable && (
-                  <button className="w-full btn-secondary justify-center">
+                  <button
+                    onClick={handleApply}
+                    className="w-full btn-secondary justify-center"
+                  >
                     <Calendar className="w-4 h-4" /> 预约窗口办理
                   </button>
                 )}

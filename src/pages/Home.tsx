@@ -267,20 +267,21 @@ export default function Home() {
               </h2>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { name: "办事预约", icon: Clock, color: "bg-gov-50 text-gov-600" },
-                  { name: "进度查询", icon: TrendingUp, color: "bg-success-50 text-success-600" },
-                  { name: "电子证照", icon: FileCheck, color: "bg-warning-50 text-warning-600" },
-                  { name: "办事指南", icon: GraduationCap, color: "bg-violet-50 text-violet-600" },
+                  { name: "办事预约", icon: Clock, color: "bg-gov-50 text-gov-600", path: "/services" },
+                  { name: "进度查询", icon: TrendingUp, color: "bg-success-50 text-success-600", path: "/cases" },
+                  { name: "电子证照", icon: FileCheck, color: "bg-warning-50 text-warning-600", path: "/certificates" },
+                  { name: "办事指南", icon: GraduationCap, color: "bg-violet-50 text-violet-600", path: "/services" },
                 ].map((item) => (
-                  <button
+                  <Link
                     key={item.name}
+                    to={item.path}
                     className="flex flex-col items-center gap-2 p-4 rounded-lg border border-ink-border hover:border-gov-200 hover:shadow-card-hover transition-all"
                   >
                     <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", item.color)}>
                       <item.icon className="w-5 h-5" />
                     </div>
                     <span className="text-sm font-medium text-ink">{item.name}</span>
-                  </button>
+                  </Link>
                 ))}
               </div>
 

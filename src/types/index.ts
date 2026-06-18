@@ -131,6 +131,28 @@ export interface CertUsageRecord {
   verifier: string;
   verifierDept: string;
   purpose: string;
+  authMethod?: "face" | "sms" | "password" | "sso";
+  result?: "success" | "failed" | "denied";
+  ip?: string;
+  scope?: "read" | "verify" | "download";
+}
+
+export interface CertCategory {
+  code: string;
+  name: string;
+  group: "identity" | "family" | "housing" | "social" | "education" | "medical" | "traffic" | "business" | "finance" | "other";
+  count: number;
+  description: string;
+  requiredAuthLevel: AuthLevel;
+  canDelegate: boolean;
+}
+
+export interface CertPermissionScope {
+  scope: "private" | "government" | "public";
+  description: string;
+  allowedDepts: string[];
+  requireConsent: boolean;
+  expireHours?: number;
 }
 
 export interface Certificate {
@@ -146,6 +168,13 @@ export interface Certificate {
   fields: Record<string, string>;
   usageHistory: CertUsageRecord[];
   color: string;
+  categoryCode?: string;
+  authLevel?: AuthLevel;
+  permission?: CertPermissionScope;
+  delegateCount?: number;
+  verificationCount?: number;
+  lastVerifiedAt?: string;
+  issuerCode?: string;
 }
 
 export interface AuditLog {

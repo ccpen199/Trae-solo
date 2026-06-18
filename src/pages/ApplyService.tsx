@@ -12,6 +12,11 @@ import {
   Plus,
   CreditCard,
   ChevronRight,
+  MessageSquare,
+  Smartphone,
+  Bell,
+  Send,
+  Clock,
 } from "lucide-react";
 import { useAppStore } from "@/store";
 import { cn } from "@/lib/utils";
@@ -43,6 +48,10 @@ export default function ApplyService() {
   });
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, File[]>>({});
   const [rating, setRating] = useState(0);
+  const [ratingHover, setRatingHover] = useState(0);
+  const [ratingComment, setRatingComment] = useState("");
+  const [ratingSubmitted, setRatingSubmitted] = useState(false);
+  const [currentCaseNo, setCurrentCaseNo] = useState("");
 
   if (!service) {
     return (
@@ -88,6 +97,7 @@ export default function ApplyService() {
   const handleSubmit = () => {
     const now = new Date().toISOString().replace("T", " ").slice(0, 19);
     const caseNo = `KS${new Date().toISOString().slice(0, 10).replace(/-/g, "")}${String(Math.floor(Math.random() * 10000)).padStart(5, "0")}`;
+    setCurrentCaseNo(caseNo);
 
     const newCase: ApplicationCase = {
       id: `c${Date.now()}`,
@@ -120,6 +130,11 @@ export default function ApplyService() {
 
     addCase(newCase);
     setCurrentStep(4);
+  };
+
+  const submitRating = () => {
+    if (rating === 0) return;
+    setRatingSubmitted(true);
   };
 
   return (
@@ -417,55 +432,189 @@ export default function ApplyService() {
 
             {/* 步骤4：提交完成 */}
             {currentStep === 4 && (
-              <div className="max-w-md mx-auto text-center py-8">
-                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-success-100 flex items-center justify-center animate-pulse-soft">
-                  <CheckCircle2 className="w-14 h-14 text-success-600" />
-                </div>
-                <h2 className="font-serif text-2xl font-bold text-ink mb-2">申请提交成功</h2>
-                <p className="text-ink-light mb-6">您的办件申请已成功提交，请耐心等待审核</p>
+              <div className="max-w-2xl mx-auto py-4">
+                <div className="text-center mb-6">
+                  <div className="w-24 h-24 mx-auto mb-5 rounded-full bg-success-100 flex items-center justify-center animate-pulse-soft">
+                    <CheckCircle2 className="w-14 h-14 text-success-600" />
+                  </div>
+                  <h2 className="font-serif text-2xl font-bold text-ink mb-2">申请提交成功</h2>
+                  <p className="text-ink-light mb-5">您的办件申请已成功提交，系统已同步全链路留痕审计</p>
 
-                <div className="p-4 rounded-lg bg-ink-bg text-left mb-6">
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-ink-light">办件编号：</span>
-                    <span className="font-medium text-ink">
-                      KS{new Date().toISOString().slice(0, 10).replace(/-/g, "")}00001
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-ink-light">服务事项：</span>
-                    <span className="font-medium text-ink">{service.name}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-ink-light">预计完成：</span>
-                    <span className="font-medium text-gov-600">{service.handlingTime}</span>
+                  <div className="p-4 rounded-xl bg-ink-bg text-left mb-4">
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-ink-light">办件编号：</span>
+                      <span className="font-semibold font-mono text-ink">
+                        {currentCaseNo || `KS${new Date().toISOString().slice(0, 10).replace(/-/g, "")}00001`}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-ink-light">服务事项：</span>
+                      <span className="font-medium text-ink">{service.name}</span>
+                    </div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-ink-light">办理部门：</span>
+                      <span className="font-medium text-ink">{service.department}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-ink-light">预计完成：</span>
+                      <span className="font-medium text-gov-600">{service.handlingTime}</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="mb-6">
-                  <p className="text-sm text-ink-light mb-3">请对本次服务体验进行评价（选填）</p>
-                  <div className="flex items-center justify-center gap-2">
-                    {[1, 2, 3, 4, 5].map((n) => (
-                      <button
-                        key={n}
-                        onClick={() => setRating(n)}
-                        className="p-1 transition-transform hover:scale-110"
-                      >
-                        <Star
+                {/* 结果推送通知 */}
+                <div className="rounded-xl border border-gov-100 bg-gov-50/60 p-4 mb-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-gov-600 flex items-center justify-center">
+                      <Send className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gov-900 text-sm">办理进度将自动推送</div>
+                      <p className="text-[11px] text-gov-700">受理、审核、出证各节点状态实时同步</p>
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-3 gap-2.5">
+                    <div className="rounded-lg bg-white border border-success-200 p-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="inline-flex items-center gap-1 text-xs text-gray-700">
+                          <Smartphone className="w-3.5 h-3.5 text-gov-600" /> 短信通知
+                        </span>
+                        <span className="text-success-600 text-[11px] flex items-center gap-0.5">
+                          <CheckCircle2 className="w-3 h-3" /> 已发送
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-gray-500">
+                        尾号{currentUser?.phoneMasked?.slice(-4) || "8888"} · 已送达
+                      </p>
+                    </div>
+                    <div className="rounded-lg bg-white border border-success-200 p-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="inline-flex items-center gap-1 text-xs text-gray-700">
+                          <Bell className="w-3.5 h-3.5 text-violet-600" /> 站内信
+                        </span>
+                        <span className="text-success-600 text-[11px] flex items-center gap-0.5">
+                          <CheckCircle2 className="w-3 h-3" /> 已送达
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-gray-500">
+                        工作台消息中心 · 已记录
+                      </p>
+                    </div>
+                    <div className="rounded-lg bg-white border border-gov-200 p-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="inline-flex items-center gap-1 text-xs text-gray-700">
+                          <MessageSquare className="w-3.5 h-3.5 text-emerald-600" /> 苏服办APP
+                        </span>
+                        <span className="text-gov-600 text-[11px] flex items-center gap-0.5">
+                          <Clock className="w-3 h-3" /> 同步中
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-gray-500">
+                        省政务服务统一入口 · PUSH
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 服务评价 */}
+                <div className="rounded-xl border border-gray-200 p-5 mb-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center">
+                        <Star className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-900 text-sm">服务体验评价</div>
+                        <p className="text-[11px] text-gray-500">您的反馈是政务服务持续改进的动力</p>
+                      </div>
+                    </div>
+                    {ratingSubmitted && (
+                      <span className="badge-success text-xs inline-flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3" /> 已提交·感谢
+                      </span>
+                    )}
+                  </div>
+
+                  {!ratingSubmitted ? (
+                    <>
+                      <div className="flex flex-col items-center mb-3">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          {[1, 2, 3, 4, 5].map((n) => (
+                            <button
+                              key={n}
+                              onClick={() => setRating(n)}
+                              onMouseEnter={() => setRatingHover(n)}
+                              onMouseLeave={() => setRatingHover(0)}
+                              className="p-1 transition-transform hover:scale-110"
+                              disabled={ratingSubmitted}
+                            >
+                              <Star
+                                className={cn(
+                                  "w-9 h-9 transition-colors",
+                                  n <= (ratingHover || rating)
+                                    ? "text-warning-500 fill-warning-500"
+                                    : "text-gray-300"
+                                )}
+                              />
+                            </button>
+                          ))}
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          {rating === 0 && "请点击星星为本次服务打分"}
+                          {rating === 1 && "非常不满意"}
+                          {rating === 2 && "不满意"}
+                          {rating === 3 && "一般"}
+                          {rating === 4 && "满意"}
+                          {rating === 5 && "非常满意"}
+                        </p>
+                      </div>
+                      <textarea
+                        value={ratingComment}
+                        onChange={(e) => setRatingComment(e.target.value)}
+                        className="input w-full min-h-[72px] resize-none text-sm mb-3"
+                        placeholder="请填写您的宝贵建议（选填，最多500字）..."
+                        maxLength={500}
+                      />
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] text-gray-400">
+                          {ratingComment.length}/500 · 提交后可在我的办件中追加评价
+                        </span>
+                        <button
+                          onClick={submitRating}
+                          disabled={rating === 0}
                           className={cn(
-                            "w-8 h-8 transition-colors",
-                            n <= rating
-                              ? "text-warning-500 fill-warning-500"
-                              : "text-ink-lighter"
+                            "btn-primary !py-2 !px-4 text-xs inline-flex items-center gap-1",
+                            rating === 0 && "opacity-50 cursor-not-allowed"
                           )}
-                        />
-                      </button>
-                    ))}
-                  </div>
+                        >
+                          <Send className="w-3.5 h-3.5" /> 提交评价
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="rounded-lg bg-success-50 border border-success-100 p-4 text-sm text-success-800">
+                      <div className="flex items-center gap-2 mb-1.5 font-semibold">
+                        <CheckCircle2 className="w-4 h-4" />
+                        感谢您的{rating}星评价！
+                      </div>
+                      {ratingComment && (
+                        <p className="text-[12px] text-success-700 bg-white/60 p-2 rounded border border-success-200 mt-2">
+                          「{ratingComment}」
+                        </p>
+                      )}
+                      <p className="text-[11px] text-success-600 mt-2">
+                        评价编号：EV{Date.now().toString().slice(-10)} · 已纳入市政务服务考核体系
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex gap-3">
                   <button onClick={() => navigate("/cases")} className="btn-primary flex-1 justify-center">
                     查看办件进度
+                  </button>
+                  <button onClick={() => navigate("/certificates")} className="btn-secondary flex-1 justify-center">
+                    我的证照
                   </button>
                   <button onClick={() => navigate("/")} className="btn-secondary flex-1 justify-center">
                     返回首页
