@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/useAuthStore';
 import MainLayout from '@/components/layout/MainLayout';
 import Login from '@/pages/Login';
@@ -25,38 +25,18 @@ import Settings from '@/pages/settings/Settings';
 import type { ReactNode } from 'react';
 
 function AuthGuard({ children }: { children: ReactNode }) {
-  const { isAuthenticated, _hydrated } = useAuthStore();
-  const location = useLocation();
-
-  if (!_hydrated) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-surface-50">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-3 border-primary-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-surface-500">加载中...</p>
-        </div>
-      </div>
-    );
-  }
-
+  const { isAuthenticated } = useAuthStore();
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/login" replace />;
   }
-
   return <>{children}</>;
 }
 
-function LoginGuard({ children }: { children: ReactNode }) {
-  const { isAuthenticated, _hydrated } = useAuthStore();
-
-  if (!_hydrated) {
-    return null;
-  }
-
+function RedirectIfAuth({ children }: { children: ReactNode }) {
+  const { isAuthenticated } = useAuthStore();
   if (isAuthenticated) {
     return <Navigate to="/" replace />;
   }
-
   return <>{children}</>;
 }
 
@@ -67,9 +47,9 @@ export default function AppRouter() {
         <Route
           path="/login"
           element={
-            <LoginGuard>
+            <RedirectIfAuth>
               <Login />
-            </LoginGuard>
+            </RedirectIfAuth>
           }
         />
         <Route
