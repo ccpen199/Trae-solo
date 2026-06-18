@@ -2,19 +2,24 @@ import { useEffect, useState, useRef } from 'react'
 
 export function CountUp({ end, duration = 1500, suffix = '' }: { end: number; duration?: number; suffix?: string }) {
   const [count, setCount] = useState(0)
-  const ref = useRef(false)
+  const prevEnd = useRef(0)
 
   useEffect(() => {
-    if (ref.current) return
-    ref.current = true
+    if (end === 0) {
+      setCount(0)
+      prevEnd.current = 0
+      return
+    }
+    const startVal = prevEnd.current
     const startTime = performance.now()
     const animate = (now: number) => {
       const progress = Math.min((now - startTime) / duration, 1)
       const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.floor(eased * end))
+      setCount(Math.floor(startVal + (end - startVal) * eased))
       if (progress < 1) requestAnimationFrame(animate)
     }
     requestAnimationFrame(animate)
+    prevEnd.current = end
   }, [end, duration])
 
   return <span className="font-mono">{count.toLocaleString()}{suffix}</span>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Search, MapPin, DollarSign, Briefcase, Filter } from 'lucide-react'
+import { Plus, Search, MapPin, DollarSign, Briefcase, Filter, Shield } from 'lucide-react'
 import { fetchApi } from '@/utils/api'
 import { FieldBadge, LoadingSpinner } from '@/components/Shared'
 import type { Job, Field, JobStatus } from '@/types'
@@ -79,8 +79,8 @@ export default function JobCenter() {
               <span className="flex items-center gap-1 text-xs text-amber-400"><DollarSign className="w-3 h-3" />{formatSalary(job.salaryMin, job.salaryMax)}</span>
             </div>
             <div className="flex items-center gap-4 text-xs text-steel-400">
-              <span className="flex items-center gap-1"><Briefcase className="w-3 h-3" />技能要求 {(job as any).skill_requirement_count ?? 0}</span>
-              <span className="flex items-center gap-1"><Briefcase className="w-3 h-3" />强约束 {(job as any).hard_constraint_count ?? 0}</span>
+              <span className="flex items-center gap-1"><Briefcase className="w-3 h-3" />技能要求 {(job as any).skillRequirementCount ?? 0}</span>
+              <span className="flex items-center gap-1"><Shield className="w-3 h-3" />强约束 {(job as any).hardConstraintCount ?? 0}</span>
             </div>
           </div>
         ))}

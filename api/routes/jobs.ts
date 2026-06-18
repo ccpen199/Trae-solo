@@ -139,20 +139,26 @@ router.get('/:id/candidates', (req: Request, res: Response): void => {
   }
 
   const matches = db.prepare(`
-    SELECT m.*, t.name, t.email, t.current_company, t.experience, t.field, t.location
+    SELECT m.*, t.name, t.current_company, t.field, t.location
     FROM match_results m
     JOIN talents t ON m.talent_id = t.id
     WHERE m.job_id = ?
     ORDER BY m.overall_score DESC
   `).all(req.params.id) as any[]
 
-  const result = matches.map(m => {
-    const { name, email, current_company, experience, field, location, ...matchFields } = m
-    return {
-      ...matchFields,
-      talent: { name, email, current_company, experience, field, location },
-    }
-  })
+  const result = matches.map(m => ({
+    id: m.id,
+    talentId: m.talent_id,
+    jobId: m.job_id,
+    talentName: m.name,
+    talentField: m.field,
+    talentLocation: m.location,
+    talentCompany: m.current_company,
+    overallScore: Math.round(m.overall_score * 100),
+    semanticScore: Math.round(m.semantic_score * 100),
+    networkScore: Math.round(m.network_score * 100),
+    regionScore: Math.round(m.region_score * 100),
+  }))
 
   res.json({ success: true, data: result })
 })

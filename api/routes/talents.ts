@@ -5,7 +5,7 @@ import db from '../db/database.js'
 const router = Router()
 
 router.get('/', (req: Request, res: Response): void => {
-  const { field, location, search } = req.query
+  const { field, location, search, page, pageSize } = req.query
   let sql = 'SELECT * FROM talents WHERE 1=1'
   const params: any[] = []
 
@@ -23,6 +23,12 @@ router.get('/', (req: Request, res: Response): void => {
   }
 
   sql += ' ORDER BY created_at DESC'
+
+  const pageNum = parseInt(page as string) || 1
+  const size = parseInt(pageSize as string) || 12
+  const offset = (pageNum - 1) * size
+  sql += ' LIMIT ? OFFSET ?'
+  params.push(size, offset)
 
   const talents = db.prepare(sql).all(...params) as any[]
 
