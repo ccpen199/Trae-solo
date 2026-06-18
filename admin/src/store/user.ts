@@ -159,13 +159,23 @@ export const useUserStore = defineStore('user', {
 
       await new Promise(r => setTimeout(r, 800))
 
-      if (captchaExpected && captchaInput && captchaInput.toUpperCase() !== captchaExpected.toUpperCase()) {
-        const record: AuditRecord = { ...baseRecord, success: false, failReason: 'wrong_captcha' }
-        writeAuditLog(record)
-        const err = new Error('验证码错误，请点击刷新后重新输入')
-        ;(err as any).errorCode = 'wrong_captcha'
-        ;(err as any).auditId = record.id
-        throw err
+      if (captchaExpected) {
+        if (!captchaInput) {
+          const record: AuditRecord = { ...baseRecord, success: false, failReason: 'wrong_captcha' }
+          writeAuditLog(record)
+          const err = new Error('请输入图形验证码')
+          ;(err as any).errorCode = 'wrong_captcha'
+          ;(err as any).auditId = record.id
+          throw err
+        }
+        if (captchaInput.toUpperCase() !== captchaExpected.toUpperCase()) {
+          const record: AuditRecord = { ...baseRecord, success: false, failReason: 'wrong_captcha' }
+          writeAuditLog(record)
+          const err = new Error('验证码错误，请点击刷新后重新输入')
+          ;(err as any).errorCode = 'wrong_captcha'
+          ;(err as any).auditId = record.id
+          throw err
+        }
       }
 
       const lockInfo = getLockInfo(username)

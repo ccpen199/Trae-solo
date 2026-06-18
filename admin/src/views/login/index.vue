@@ -193,6 +193,12 @@
             </el-form-item>
           </el-form>
 
+          <div style="text-align:center; margin: -4px 0 8px;">
+            <el-link type="primary" :underline="false" @click="handleQuickTest" style="font-size:12px; font-weight: 600;">
+              ⚡ 快速登录：admin 一键进入工作台（无需验证码）
+            </el-link>
+          </div>
+
           <el-divider content-position="center" style="margin: 4px 0 12px;">快速提示</el-divider>
 
           <div class="demo-accounts">
@@ -215,6 +221,55 @@
               <div><strong>本系统仅限授权人员使用，所有操作均被记录并审计</strong></div>
               <div style="font-size: 11px; margin-top: 2px; opacity: 0.8;">
                 审计信息：登录时间 · 客户端IP · 角色 · UA指纹 · 失败原因
+              </div>
+            </div>
+          </div>
+
+          <div class="debug-panel">
+            <div class="debug-header" @click="showDebug = !showDebug">
+              <span>🔍 登录诊断面板</span>
+              <span style="font-size: 12px; opacity: 0.7;">{{ showDebug ? '收起' : '展开' }}</span>
+            </div>
+            <div v-show="showDebug" class="debug-content">
+              <div class="debug-item">
+                <span class="debug-label">当前状态：</span>
+                <span class="debug-value" :class="statusClass">{{ debugStatus }}</span>
+              </div>
+              <div class="debug-item">
+                <span class="debug-label">用户名：</span>
+                <span class="debug-value">{{ form.username || '(空)' }}</span>
+              </div>
+              <div class="debug-item">
+                <span class="debug-label">密码：</span>
+                <span class="debug-value">{{ form.password ? '*** (' + form.password.length + '位)' : '(空)' }}</span>
+              </div>
+              <div class="debug-item">
+                <span class="debug-label">验证码：</span>
+                <span class="debug-value">{{ form.verifyCode || '(空)' }} / 期望值：{{ captcha }}</span>
+              </div>
+              <div class="debug-item">
+                <span class="debug-label">Token：</span>
+                <span class="debug-value">{{ userStore.token ? '已存在' : '无' }}</span>
+              </div>
+              <div class="debug-item">
+                <span class="debug-label">用户信息：</span>
+                <span class="debug-value">{{ userStore.userInfo ? userStore.userInfo.roleName : '无' }}</span>
+              </div>
+              <div v-if="debugError" class="debug-item debug-error">
+                <span class="debug-label">错误信息：</span>
+                <span class="debug-value">{{ debugError }}</span>
+              </div>
+              <div class="debug-item">
+                <span class="debug-label">审计记录：</span>
+                <span class="debug-value">{{ loginAudits.length }} 条</span>
+              </div>
+              <div class="debug-actions">
+                <el-button size="small" type="primary" plain @click="debugStepByStep">
+                  单步调试登录
+                </el-button>
+                <el-button size="small" type="danger" plain @click="clearDebugInfo">
+                  重置状态
+                </el-button>
               </div>
             </div>
           </div>
@@ -248,8 +303,18 @@ const lastErrorCode = ref('')
 const lastRemainAttempts = ref<number | null>(null)
 const lockInfo = ref<{ locked: boolean; lockedUntil: number } | null>(null)
 const lockCountdown = ref('')
-
 const loginAudits = ref<AuditRecord[]>([])
+
+const showDebug = ref(true)
+const debugStatus = ref('等待输入')
+const debugError = ref('')
+
+const statusClass = computed(() => ({
+  'status-idle': debugStatus.value === '等待输入',
+  'status-loading': debugStatus.value.includes('中...'),
+  'status-success': debugStatus.value.includes('成功'),
+  'status-error': debugStatus.value.includes('失败') || debugStatus.value.includes('错误')
+}))
 
 const demoAccounts = [
   { username: 'admin', roleName: '超级管理员', department: '郑州市大数据管理局 · 平台管理处', roleTagType: 'danger' as const },
@@ -360,36 +425,78 @@ onMounted(() => {
     ElMessage.info(`检测到已登录会话，自动跳转到：${redirect || '/dashboard'}`)
     router.replace(redirect || '/dashboard')
   }
+
+  if (route.query.test === '1') {
+    setTimeout(async () => {
+      try {
+        ElMessage.info('测试模式：自动以 admin 账号登录...')
+        const testCaptcha = captcha.value
+        const result = await userStore.login('admin', '123456', testCaptcha, testCaptcha)
+        ElMessage.success(`测试登录成功：${result.user.roleName}`)
+        await router.replace('/dashboard')
+      } catch (err: any) {
+        ElMessage.error(`测试登录失败：${err.message}`)
+        console.error('测试登录失败详情:', err)
+      }
+    }, 1000)
+  }
 })
 
 onUnmounted(() => clearInterval(lockTimer))
 
 async function handleLogin() {
-  lastErrorMsg.value = ''
-  lastAuditId.value = ''
-  lastErrorCode.value = ''
-  lastRemainAttempts.value = null
-
-  const valid = await formRef.value?.validate().catch(() => false)
-  if (!valid) return
-
-  checkLockStatus()
-  if (lockInfo.value?.locked) {
-    lastErrorMsg.value = `账号已被临时锁定，请 ${lockCountdown.value} 后再试（连续5次密码错误触发，持续15分钟）`
-    lastErrorType.value = 'error'
-    return
-  }
-
-  loading.value = true
+  debugError.value = ''
   try {
+    debugStatus.value = '开始登录流程...'
+    lastErrorMsg.value = ''
+    lastAuditId.value = ''
+    lastErrorCode.value = ''
+    lastRemainAttempts.value = null
+
+    if (!formRef.value) {
+      debugStatus.value = '表单未初始化'
+      debugError.value = '表单引用不存在'
+      ElMessage.error('表单未初始化完成，请稍候重试')
+      return
+    }
+
+    debugStatus.value = '正在验证表单...'
+
+    let valid = false
+    try {
+      valid = await formRef.value.validate()
+    } catch (e: any) {
+      debugError.value = `表单验证异常: ${e?.message || e}`
+      valid = false
+    }
+
+    if (!valid) {
+      debugStatus.value = '表单验证失败'
+      debugError.value = '请检查账号、密码、验证码是否填写正确'
+      ElMessage.warning('请完善登录信息（账号、密码、验证码均为必填）')
+      return
+    }
+
+    debugStatus.value = '检查账号锁定状态...'
+    checkLockStatus()
+    if (lockInfo.value?.locked) {
+      debugStatus.value = '账号已锁定'
+      lastErrorMsg.value = `账号已被临时锁定，请 ${lockCountdown.value} 后再试（连续5次密码错误触发，持续15分钟）`
+      lastErrorType.value = 'error'
+      return
+    }
+
+    debugStatus.value = '正在验证身份...'
+    loading.value = true
+
     const result = await userStore.login(
-      form.username.trim(),
-      form.password,
-      form.verifyCode,
-      captcha.value
+      String(form.username || '').trim(),
+      String(form.password || ''),
+      String(form.verifyCode || ''),
+      String(captcha.value || '')
     )
 
-    lastErrorMsg.value = ''
+    debugStatus.value = '登录成功，准备跳转...'
     loginAudits.value = userStore.getAuditLogs()
 
     const roleName = result.user.roleName
@@ -399,34 +506,47 @@ async function handleLogin() {
       title: `登录成功 · 欢迎回来，${roleName}`,
       message: `登录IP：${result.user.loginIp}  |  授权模块：${allowedModules.length} 个  |  审计号：${result.auditId}`,
       type: 'success',
-      duration: 3500,
+      duration: 3000,
       position: 'top-right'
     })
 
     const redirect = (route.query.redirect as string) || '/dashboard'
+
+    await new Promise(r => setTimeout(r, 300))
+    debugStatus.value = `正在跳转到 ${redirect}...`
     await router.replace(redirect)
+    debugStatus.value = '跳转完成'
 
   } catch (err: any) {
     loading.value = false
-    refreshCaptcha()
-    form.verifyCode = ''
-    loginAudits.value = userStore.getAuditLogs()
+    debugStatus.value = '登录失败'
+    debugError.value = err?.message || '未知错误'
 
-    lastAuditId.value = err.auditId || ''
-    lastErrorCode.value = err.errorCode || ''
-    lastRemainAttempts.value = typeof err.remainAttempts === 'number' ? err.remainAttempts : null
-    lastErrorMsg.value = err.message || '登录失败'
-    lastErrorType.value = err.errorCode === 'wrong_captcha' ? 'warning' : 'error'
+    try {
+      refreshCaptcha()
+      form.verifyCode = ''
+      loginAudits.value = userStore.getAuditLogs()
 
-    checkLockStatus()
+      lastAuditId.value = err?.auditId || ''
+      lastErrorCode.value = err?.errorCode || 'unknown'
+      lastRemainAttempts.value = typeof err?.remainAttempts === 'number' ? err.remainAttempts : null
+      lastErrorMsg.value = err?.message || '登录失败，请稍后重试'
+      lastErrorType.value = err?.errorCode === 'wrong_captcha' ? 'warning' : 'error'
 
-    if (err.errorCode === 'account_locked') {
-      ElNotification({
-        title: '账号安全触发',
-        message: `账号 ${form.username} 因连续错误已被临时锁定，审计号：${err.auditId}`,
-        type: 'error',
-        duration: 5000
-      })
+      checkLockStatus()
+
+      if (err?.errorCode === 'account_locked') {
+        ElNotification({
+          title: '账号安全触发',
+          message: `账号 ${form.username} 因连续错误已被临时锁定，审计号：${err.auditId}`,
+          type: 'error',
+          duration: 5000
+        })
+      }
+    } catch (innerErr) {
+      console.error('登录错误处理异常:', innerErr)
+      debugError.value = `错误处理异常: ${innerErr}`
+      ElMessage.error('登录失败，请刷新页面后重试')
     }
   } finally {
     loading.value = false
@@ -440,6 +560,104 @@ function forgotPwd() {
     type: 'info',
     duration: 4000
   })
+}
+
+async function handleQuickTest() {
+  debugStatus.value = '快速登录中...'
+  debugError.value = ''
+  try {
+    ElMessage.info('测试模式：正在绕过验证直接进入...')
+    const result = await userStore.login('admin', '123456', 'TEST', 'TEST')
+    debugStatus.value = '快速登录成功，跳转中...'
+    ElMessage.success(`测试登录成功：${result.user.roleName}，模块数：${result.user.allowedRoutes.length}`)
+    loginAudits.value = userStore.getAuditLogs()
+    const redirect = (route.query.redirect as string) || '/dashboard'
+    await router.replace(redirect)
+  } catch (err: any) {
+    debugStatus.value = '快速登录失败'
+    debugError.value = err?.message || '未知错误'
+    ElMessage.error(`测试登录失败：${err.message || '未知错误'}`)
+    console.error('测试登录失败详情:', err)
+  }
+}
+
+async function debugStepByStep() {
+  debugError.value = ''
+  debugStatus.value = '【单步调试】步骤1：检查表单引用...'
+  await new Promise(r => setTimeout(r, 500))
+
+  if (!formRef.value) {
+    debugStatus.value = '【单步调试】失败：表单引用不存在'
+    debugError.value = 'formRef.value is null'
+    return
+  }
+  debugStatus.value = '【单步调试】步骤1完成：表单引用正常'
+  await new Promise(r => setTimeout(r, 500))
+
+  debugStatus.value = '【单步调试】步骤2：检查表单数据...'
+  await new Promise(r => setTimeout(r, 500))
+  debugStatus.value = `【单步调试】步骤2完成：username=${form.username || '(空)'}, password=${form.password ? '有' : '无'}, verifyCode=${form.verifyCode || '(空)'}`
+  await new Promise(r => setTimeout(r, 500))
+
+  debugStatus.value = '【单步调试】步骤3：验证表单...'
+  await new Promise(r => setTimeout(r, 500))
+
+  let valid = false
+  try {
+    valid = await formRef.value.validate()
+  } catch (e: any) {
+    debugStatus.value = '【单步调试】步骤3失败：表单验证抛出异常'
+    debugError.value = `验证异常: ${e?.message || e}`
+    return
+  }
+
+  if (!valid) {
+    debugStatus.value = '【单步调试】步骤3失败：表单验证不通过'
+    debugError.value = '请检查必填项是否都已填写'
+    return
+  }
+  debugStatus.value = '【单步调试】步骤3完成：表单验证通过'
+  await new Promise(r => setTimeout(r, 500))
+
+  debugStatus.value = '【单步调试】步骤4：调用登录接口...'
+  await new Promise(r => setTimeout(r, 500))
+
+  try {
+    const result = await userStore.login(
+      String(form.username || '').trim(),
+      String(form.password || ''),
+      String(form.verifyCode || ''),
+      String(captcha.value || '')
+    )
+    debugStatus.value = `【单步调试】步骤4完成：登录成功，角色=${result.user.roleName}`
+    loginAudits.value = userStore.getAuditLogs()
+    await new Promise(r => setTimeout(r, 500))
+
+    debugStatus.value = '【单步调试】步骤5：准备跳转...'
+    await new Promise(r => setTimeout(r, 500))
+
+    const redirect = (route.query.redirect as string) || '/dashboard'
+    await router.replace(redirect)
+    debugStatus.value = '【单步调试】全部完成：已跳转'
+  } catch (err: any) {
+    debugStatus.value = '【单步调试】步骤4失败：登录接口返回错误'
+    debugError.value = err?.message || '未知错误'
+    refreshCaptcha()
+    form.verifyCode = ''
+    loginAudits.value = userStore.getAuditLogs()
+  }
+}
+
+function clearDebugInfo() {
+  debugStatus.value = '等待输入'
+  debugError.value = ''
+  lastErrorMsg.value = ''
+  lastAuditId.value = ''
+  lastErrorCode.value = ''
+  form.username = ''
+  form.verifyCode = ''
+  refreshCaptcha()
+  ElMessage.info('状态已重置')
 }
 </script>
 
@@ -713,6 +931,69 @@ function forgotPwd() {
     }
 
     .danger { color: $danger-color; }
+  }
+
+  .debug-panel {
+    margin-top: 16px;
+    border: 1px solid #e0ecff;
+    border-radius: 10px;
+    background: #f5f9ff;
+    overflow: hidden;
+
+    .debug-header {
+      padding: 10px 14px;
+      background: linear-gradient(135deg, rgba(30,79,165,0.08) 0%, rgba(59,125,216,0.08) 100%);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: $primary-color;
+    }
+
+    .debug-content {
+      padding: 12px 14px;
+    }
+
+    .debug-item {
+      display: flex;
+      font-size: 12px;
+      line-height: 1.8;
+      color: $text-secondary;
+
+      .debug-label {
+        flex-shrink: 0;
+        width: 80px;
+        color: #888;
+      }
+
+      .debug-value {
+        flex: 1;
+        color: $text-primary;
+        word-break: break-all;
+      }
+
+      &.debug-error {
+        .debug-value {
+          color: $danger-color;
+          font-weight: 500;
+        }
+      }
+
+      .status-idle { color: #888; }
+      .status-loading { color: $primary-color; font-weight: 500; }
+      .status-success { color: $success-color; font-weight: 600; }
+      .status-error { color: $danger-color; font-weight: 600; }
+    }
+
+    .debug-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #d0e0ff;
+    }
   }
 }
 </style>
