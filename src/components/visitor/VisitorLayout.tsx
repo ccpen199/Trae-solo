@@ -1,6 +1,7 @@
-import { Outlet, useLocation, Link } from 'react-router-dom';
+import { Outlet, useLocation, Link, Navigate } from 'react-router-dom';
 import { ChevronLeft, Home, Map, User } from 'lucide-react';
 import { useScenicStore } from '@/store/useScenicStore';
+import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/lib/utils';
 
 const tabs = [
@@ -12,10 +13,15 @@ const tabs = [
 export default function VisitorLayout() {
   const location = useLocation();
   const { scenicAreas, currentScenicId } = useScenicStore();
+  const { role, isLoggedIn } = useAuthStore();
   const currentScenic = scenicAreas.find((s) => s.id === currentScenicId);
   const scenicName = currentScenic?.name || '景区导览';
 
   const activeTab = tabs.find((t) => location.pathname.startsWith(t.pathPrefix));
+
+  if (!isLoggedIn || role !== 'visitor') {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-[var(--bg-primary)] max-w-md mx-auto relative">

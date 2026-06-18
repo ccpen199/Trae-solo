@@ -1,12 +1,10 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Building2, Landmark, QrCode, User, Lock, ArrowRight, Smartphone, Wifi, Map, Sparkles, X } from 'lucide-react';
-import { useAuthStore } from '@/store/useAuthStore';
+import { Building2, Landmark, QrCode, User, Lock, ArrowRight, Smartphone, Wifi, Map, Sparkles, X, AlertCircle, CheckCircle2, Eye, EyeOff } from 'lucide-react';
+import { useAuthStore, type UserRole } from '@/store/useAuthStore';
 
-type RoleType = 'museum' | 'operator' | 'visitor';
-
-const roleCards: { key: RoleType; title: string; subtitle: string; icon: typeof Landmark; hint: string; defaultUsername: string }[] = [
+const roleCards: { key: UserRole; title: string; subtitle: string; icon: typeof Landmark; hint: string; defaultUsername: string; desc: string }[] = [
   {
     key: 'museum',
     title: '文博单位',
@@ -14,6 +12,7 @@ const roleCards: { key: RoleType; title: string; subtitle: string; icon: typeof 
     icon: Landmark,
     hint: '负责展品内容、讲解脚本、文化史料',
     defaultUsername: 'museum_admin',
+    desc: '管理文物展品内容、编写讲解脚本、维护文化史料档案',
   },
   {
     key: 'operator',
@@ -22,6 +21,7 @@ const roleCards: { key: RoleType; title: string; subtitle: string; icon: typeof 
     icon: Building2,
     hint: '负责POI点位、动线配置、数据运营',
     defaultUsername: 'operator_admin',
+    desc: '配置景区POI点位、规划导览动线、监控运营数据',
   },
   {
     key: 'visitor',
@@ -30,8 +30,15 @@ const roleCards: { key: RoleType; title: string; subtitle: string; icon: typeof 
     icon: Smartphone,
     hint: '手机扫码即用，支持AR/图文导览',
     defaultUsername: '',
+    desc: '扫码即用AR导览，设备兼容检测，5km离线缓存',
   },
 ];
+
+const roleTargetPath: Record<UserRole, string> = {
+  museum: '/admin/dashboard',
+  operator: '/admin/dashboard',
+  visitor: '/visitor/welcome/scenic-1',
+};
 
 function QRCodeMock({ size = 180 }: { size?: number }) {
   const gridSize = 21;
@@ -160,17 +167,22 @@ function VisitorModal({ open, onClose, onEnter }: { open: boolean; onClose: () =
 }
 
 export default function Login() {
-  const [selectedRole, setSelectedRole] = useState<RoleType | null>(null);
+  const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const [showVisitorModal, setShowVisitorModal] = useState(false);
+  const [logging, setLogging] = useState(false);
   const login = useAuthStore((s) => s.login);
+  const loginAsVisitor = useAuthStore((s) => s.loginAsVisitor);
   const navigate = useNavigate();
 
-  const handleRoleSelect = (role: RoleType) => {
+  const handleRoleSelect = (role: UserRole) => {
     setSelectedRole(role);
     setError('');
+    setSuccessMsg('');
     if (role === 'visitor') {
       setShowVisitorModal(true);
     } else {
@@ -182,20 +194,42 @@ export default function Login() {
 
   const handleVisitorEnter = () => {
     setShowVisitorModal(false);
-    login('visitor', '');
+    loginAsVisitor();
     navigate('/visitor/welcome/scenic-1');
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!selectedRole || selectedRole === 'visitor') return;
-    const success = login(username, password);
-    if (success) {
-      navigate('/admin/dashboard');
-    } else {
-      setError('用户名或密码错误');
+    setSuccessMsg('');
+
+    if (!selectedRole || selectedRole === 'visitor') {
+      setError('请先选择您的身份类型');
+      return;
     }
+
+    setLogging(true);
+
+    setTimeout(() => {
+      const result = login(username, password);
+
+      if (result.success && result.role) {
+        const matchedRole = result.role === selectedRole;
+        if (!matchedRole) {
+          setError(`该账号属于「${result.role === 'museum' ? '文博单位' : '景区运营方'}」身份，与您选择的「${selectedRole === 'museum' ? '文博单位' : '景区运营方'}」不匹配`);
+          setLogging(false);
+          return;
+        }
+        setSuccessMsg(`身份验证通过 · 正在进入${selectedRole === 'museum' ? '文博内容' : '运营管理'}工作台…`);
+        setTimeout(() => {
+          navigate(roleTargetPath[selectedRole]);
+          setLogging(false);
+        }, 600);
+      } else {
+        setError(result.error || '登录失败，请检查账号密码');
+        setLogging(false);
+      }
+    }, 400);
   };
 
   return (
@@ -253,6 +287,11 @@ export default function Login() {
                   <p className={`text-[10px] leading-snug ${active ? 'text-amber-400/80' : 'text-gray-600'}`}>
                     {card.hint}
                   </p>
+                  {active && card.defaultUsername && (
+                    <p className="text-[9px] text-indigo-400/70 mt-2 font-mono">
+                      测试账号：{card.defaultUsername}
+                    </p>
+                  )}
                 </motion.button>
               );
             })}
@@ -272,25 +311,39 @@ export default function Login() {
             >
               <div className="gold-divider mb-5" />
 
-              <div className="relative">
-                <User size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500" />
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="用户名"
-                  className="w-full h-12 pl-11 pr-3 rounded-xl bg-white/5 border border-white/10 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-amber-600/50 focus:ring-2 focus:ring-amber-600/10 transition-all"
-                />
+              <div>
+                <label className="text-[10px] text-gray-500 mb-1.5 block tracking-wide">用户名</label>
+                <div className="relative">
+                  <User size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500" />
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => { setUsername(e.target.value); setError(''); }}
+                    placeholder="请输入用户名"
+                    className="w-full h-12 pl-11 pr-3 rounded-xl bg-white/5 border border-white/10 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-amber-600/50 focus:ring-2 focus:ring-amber-600/10 transition-all"
+                  />
+                </div>
               </div>
-              <div className="relative">
-                <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500" />
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="密码"
-                  className="w-full h-12 pl-11 pr-3 rounded-xl bg-white/5 border border-white/10 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-amber-600/50 focus:ring-2 focus:ring-amber-600/10 transition-all"
-                />
+
+              <div>
+                <label className="text-[10px] text-gray-500 mb-1.5 block tracking-wide">密码</label>
+                <div className="relative">
+                  <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => { setPassword(e.target.value); setError(''); }}
+                    placeholder="请输入密码"
+                    className="w-full h-12 pl-11 pr-10 rounded-xl bg-white/5 border border-white/10 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-amber-600/50 focus:ring-2 focus:ring-amber-600/10 transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center justify-between text-xs">
@@ -302,21 +355,51 @@ export default function Login() {
               </div>
 
               {error && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-xs text-red-400 text-center py-2 rounded-lg bg-red-500/5 border border-red-500/10"
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 text-xs text-red-400 py-2.5 px-3 rounded-xl bg-red-500/5 border border-red-500/10"
                 >
-                  {error}
-                </motion.p>
+                  <AlertCircle size={14} className="shrink-0" />
+                  <span>{error}</span>
+                </motion.div>
+              )}
+
+              {successMsg && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 text-xs text-emerald-400 py-2.5 px-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10"
+                >
+                  <CheckCircle2 size={14} className="shrink-0" />
+                  <span>{successMsg}</span>
+                </motion.div>
               )}
 
               <button
                 type="submit"
-                className="w-full h-12 rounded-xl bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-900 text-sm font-semibold text-white hover:from-indigo-800 hover:via-indigo-700 hover:to-indigo-800 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-indigo-950/50 flex items-center justify-center gap-2"
+                disabled={logging}
+                className={`w-full h-12 rounded-xl text-sm font-semibold text-white transition-all duration-200 active:scale-[0.98] shadow-lg shadow-indigo-950/50 flex items-center justify-center gap-2 ${
+                  logging
+                    ? 'bg-indigo-900/50 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-900 hover:from-indigo-800 hover:via-indigo-700 hover:to-indigo-800'
+                }`}
               >
-                登录运营后台
-                <ArrowRight size={15} />
+                {logging ? (
+                  <>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                      className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                    />
+                    正在验证…
+                  </>
+                ) : (
+                  <>
+                    登录运营后台
+                    <ArrowRight size={15} />
+                  </>
+                )}
               </button>
             </motion.form>
           )}
@@ -324,7 +407,7 @@ export default function Login() {
 
         <div className="mt-8 pt-6 border-t border-white/5">
           <p className="text-[10px] text-gray-600 text-center leading-relaxed">
-            测试账号：museum_admin（文博单位）· operator_admin（运营方） · visitor（游客）
+            测试账号：museum_admin（文博单位）· operator_admin（运营方） · 游客扫码免登录
             <br />
             默认密码：123456
           </p>
