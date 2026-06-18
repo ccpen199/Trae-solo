@@ -16,6 +16,12 @@ const ACCOUNTS: Record<string, { password: string; role: string; name: string; d
     name: '市级运营管理员',
     permissions: ['dashboard', 'citizens', 'transactions', 'transport', 'scenics', 'scenic-heatmap', 'enterprises', 'merchants', 'transport-top', 'fusing', 'audit'],
   },
+  ops: {
+    password: 'ops123',
+    role: 'admin',
+    name: '运营运维管理员',
+    permissions: ['dashboard', 'transactions', 'transport', 'transport-top', 'fusing', 'audit'],
+  },
   scenic_admin: {
     password: 'scenic123',
     role: 'scenic_admin',

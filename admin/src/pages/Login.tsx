@@ -14,6 +14,7 @@ const ROLE_META: Record<string, { label: string; icon: typeof Shield; color: str
 const TEST_ACCOUNTS = [
   { username: 'admin', password: 'admin123', role: 'super_admin', desc: '全部功能权限' },
   { username: 'platform', password: 'platform123', role: 'admin', desc: '市级运营全权限' },
+  { username: 'ops', password: 'ops123', role: 'admin', desc: '运营运维权限' },
   { username: 'scenic_admin', password: 'scenic123', role: 'scenic_admin', desc: '景区运营权限' },
   { username: 'merchant_admin', password: 'merchant123', role: 'merchant_admin', desc: '商户运营权限' },
 ];
@@ -51,8 +52,8 @@ export default function Login() {
     if (result.success && result.user) {
       setLoggedInUser(result.user);
       setTimeout(() => {
-        navigate('/');
-      }, 800);
+        window.location.href = '/';
+      }, 600);
     } else {
       setError(result.message || '登录失败，请检查账号密码');
       setErrorCode(result.code || 'UNKNOWN');
@@ -198,20 +199,36 @@ export default function Login() {
 
                 {error && (
                   <div className={`px-4 py-3 rounded-xl text-sm ${
-                    errorCode === 'NETWORK_ERROR' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-red-50 text-red-600 border border-red-200'
+                    errorCode === 'NETWORK_ERROR' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                    errorCode === 'ACCOUNT_LOCKED' ? 'bg-red-50 text-red-700 border border-red-200' :
+                    errorCode === 'NO_PERMISSION' ? 'bg-orange-50 text-orange-700 border border-orange-200' :
+                    errorCode === 'REDIRECT_FAILED' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' :
+                    'bg-red-50 text-red-600 border border-red-200'
                   }`}>
                     <div className="flex items-start">
                       <ShieldAlert size={16} className="mt-0.5 mr-2 flex-shrink-0" />
                       <div>
                         <div className="font-medium">{error}</div>
                         {errorCode === 'USER_NOT_FOUND' && (
-                          <div className="mt-1 text-xs text-red-500">请检查用户名是否正确，或查看下方测试账号</div>
+                          <div className="mt-1 text-xs text-red-500">请检查用户名是否正确，或点击下方测试账号一键填入</div>
                         )}
                         {errorCode === 'WRONG_PASSWORD' && (
-                          <div className="mt-1 text-xs text-red-500">请确认密码输入无误，注意区分大小写</div>
+                          <div className="mt-1 text-xs text-red-500">请确认密码输入无误，注意区分大小写；连续错误5次将锁定账号30分钟</div>
                         )}
                         {errorCode === 'NETWORK_ERROR' && (
-                          <div className="mt-1 text-xs text-amber-600">后端服务可能未启动，请确认服务已在端口59228运行</div>
+                          <div className="mt-1 text-xs text-amber-600">无法连接到认证服务（端口59228），请确认后端服务已启动</div>
+                        )}
+                        {errorCode === 'ACCOUNT_LOCKED' && (
+                          <div className="mt-1 text-xs text-red-500">账号因多次登录失败已被临时锁定，请30分钟后重试或联系管理员解锁</div>
+                        )}
+                        {errorCode === 'NO_PERMISSION' && (
+                          <div className="mt-1 text-xs text-orange-600">账号认证通过，但未分配任何工作台权限，请联系系统管理员开通</div>
+                        )}
+                        {errorCode === 'REDIRECT_FAILED' && (
+                          <div className="mt-1 text-xs text-indigo-600">角色首页跳转异常，请手动刷新或点击左上角重新进入</div>
+                        )}
+                        {errorCode === 'EMPTY_FIELDS' && (
+                          <div className="mt-1 text-xs text-red-500">请同时填写用户名与密码</div>
                         )}
                       </div>
                     </div>
