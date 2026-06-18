@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Trae Project</title>
+    <script type="module" src="/index.html?html-proxy&amp;index=0.js"></script>
+  <style type="text/css" data-vite-dev-id="/Users/chen/Documents/trae_projects/local_projects/may-89235/src/index.css">@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+
+*, ::before, ::after{
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+
+::backdrop{
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+
+/*
+! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com
+*/
+
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
+*/
+
+html,
+:host {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: "JetBrains Mono", monospace; /* 1 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  letter-spacing: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+input:where([type='button']),
+input:where([type='reset']),
+input:where([type='submit']) {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+
+[hidden]:where(:not([hidden="until-found"])) {
+  display: none;
+}
+
+body{
+  min-height: 100vh;
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 250 250 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(24 24 27 / var(--tw-text-opacity, 1));
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(24 24 27 / var(--tw-text-opacity, 1));
+}
+
+h1{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+@media (min-width: 1024px){
+
+  h1{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+h2{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+@media (min-width: 1024px){
+
+  h2{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+
+h3{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+@media (min-width: 1024px){
+
+  h3{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+h4{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+@media (min-width: 1024px){
+
+  h4{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+p{
+  --tw-text-opacity: 1;
+  color: rgb(63 63 70 / var(--tw-text-opacity, 1));
+}
+
+.container{
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px){
+
+  .container{
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px){
+
+  .container{
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px){
+
+  .container{
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px){
+
+  .container{
+    max-width: 1280px;
+  }
+}
+
+.input{
+  width: 100%;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity, 1));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  --tw-text-opacity: 1;
+  color: rgb(24 24 27 / var(--tw-text-opacity, 1));
+}
+
+.input::-moz-placeholder{
+  --tw-placeholder-opacity: 1;
+  color: rgb(161 161 170 / var(--tw-placeholder-opacity, 1));
+}
+
+.input::placeholder{
+  --tw-placeholder-opacity: 1;
+  color: rgb(161 161 170 / var(--tw-placeholder-opacity, 1));
+}
+
+.input{
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.input:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(22 93 255 / var(--tw-border-opacity, 1));
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(22 93 255 / var(--tw-ring-opacity, 1));
+}
+
+.label{
+  margin-bottom: 0.375rem;
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(63 63 70 / var(--tw-text-opacity, 1));
+}
+
+.fixed{
+  position: fixed;
+}
+
+.absolute{
+  position: absolute;
+}
+
+.relative{
+  position: relative;
+}
+
+.sticky{
+  position: sticky;
+}
+
+.inset-0{
+  inset: 0px;
+}
+
+.bottom-0{
+  bottom: 0px;
+}
+
+.left-0{
+  left: 0px;
+}
+
+.left-2{
+  left: 0.5rem;
+}
+
+.left-3{
+  left: 0.75rem;
+}
+
+.left-4{
+  left: 1rem;
+}
+
+.left-6{
+  left: 1.5rem;
+}
+
+.right-0{
+  right: 0px;
+}
+
+.right-20{
+  right: 5rem;
+}
+
+.right-3{
+  right: 0.75rem;
+}
+
+.right-6{
+  right: 1.5rem;
+}
+
+.top-0{
+  top: 0px;
+}
+
+.top-1\/2{
+  top: 50%;
+}
+
+.top-10{
+  top: 2.5rem;
+}
+
+.top-4{
+  top: 1rem;
+}
+
+.top-6{
+  top: 1.5rem;
+}
+
+.-z-0{
+  z-index: 0;
+}
+
+.-z-10{
+  z-index: -10;
+}
+
+.z-10{
+  z-index: 10;
+}
+
+.z-40{
+  z-index: 40;
+}
+
+.z-50{
+  z-index: 50;
+}
+
+.mx-2{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.-ml-1{
+  margin-left: -0.25rem;
+}
+
+.mb-1{
+  margin-bottom: 0.25rem;
+}
+
+.mb-1\.5{
+  margin-bottom: 0.375rem;
+}
+
+.mb-2{
+  margin-bottom: 0.5rem;
+}
+
+.mb-3{
+  margin-bottom: 0.75rem;
+}
+
+.mb-4{
+  margin-bottom: 1rem;
+}
+
+.mb-6{
+  margin-bottom: 1.5rem;
+}
+
+.mb-8{
+  margin-bottom: 2rem;
+}
+
+.ml-1{
+  margin-left: 0.25rem;
+}
+
+.ml-11{
+  margin-left: 2.75rem;
+}
+
+.ml-2{
+  margin-left: 0.5rem;
+}
+
+.ml-3{
+  margin-left: 0.75rem;
+}
+
+.ml-4{
+  margin-left: 1rem;
+}
+
+.ml-auto{
+  margin-left: auto;
+}
+
+.mr-1{
+  margin-right: 0.25rem;
+}
+
+.mr-1\.5{
+  margin-right: 0.375rem;
+}
+
+.mr-2{
+  margin-right: 0.5rem;
+}
+
+.mr-3{
+  margin-right: 0.75rem;
+}
+
+.mt-0\.5{
+  margin-top: 0.125rem;
+}
+
+.mt-1{
+  margin-top: 0.25rem;
+}
+
+.mt-2{
+  margin-top: 0.5rem;
+}
+
+.mt-3{
+  margin-top: 0.75rem;
+}
+
+.mt-4{
+  margin-top: 1rem;
+}
+
+.mt-6{
+  margin-top: 1.5rem;
+}
+
+.line-clamp-2{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.block{
+  display: block;
+}
+
+.inline{
+  display: inline;
+}
+
+.flex{
+  display: flex;
+}
+
+.inline-flex{
+  display: inline-flex;
+}
+
+.table{
+  display: table;
+}
+
+.grid{
+  display: grid;
+}
+
+.hidden{
+  display: none;
+}
+
+.h-0\.5{
+  height: 0.125rem;
+}
+
+.h-1\.5{
+  height: 0.375rem;
+}
+
+.h-10{
+  height: 2.5rem;
+}
+
+.h-12{
+  height: 3rem;
+}
+
+.h-14{
+  height: 3.5rem;
+}
+
+.h-16{
+  height: 4rem;
+}
+
+.h-2{
+  height: 0.5rem;
+}
+
+.h-20{
+  height: 5rem;
+}
+
+.h-24{
+  height: 6rem;
+}
+
+.h-3{
+  height: 0.75rem;
+}
+
+.h-32{
+  height: 8rem;
+}
+
+.h-4{
+  height: 1rem;
+}
+
+.h-40{
+  height: 10rem;
+}
+
+.h-5{
+  height: 1.25rem;
+}
+
+.h-6{
+  height: 1.5rem;
+}
+
+.h-64{
+  height: 16rem;
+}
+
+.h-7{
+  height: 1.75rem;
+}
+
+.h-8{
+  height: 2rem;
+}
+
+.h-80{
+  height: 20rem;
+}
+
+.h-9{
+  height: 2.25rem;
+}
+
+.h-full{
+  height: 100%;
+}
+
+.max-h-72{
+  max-height: 18rem;
+}
+
+.max-h-\[80vh\]{
+  max-height: 80vh;
+}
+
+.max-h-\[85vh\]{
+  max-height: 85vh;
+}
+
+.max-h-\[90vh\]{
+  max-height: 90vh;
+}
+
+.min-h-screen{
+  min-height: 100vh;
+}
+
+.w-0\.5{
+  width: 0.125rem;
+}
+
+.w-1\.5{
+  width: 0.375rem;
+}
+
+.w-1\/2{
+  width: 50%;
+}
+
+.w-1\/3{
+  width: 33.333333%;
+}
+
+.w-1\/4{
+  width: 25%;
+}
+
+.w-10{
+  width: 2.5rem;
+}
+
+.w-12{
+  width: 3rem;
+}
+
+.w-14{
+  width: 3.5rem;
+}
+
+.w-16{
+  width: 4rem;
+}
+
+.w-2\/3{
+  width: 66.666667%;
+}
+
+.w-20{
+  width: 5rem;
+}
+
+.w-24{
+  width: 6rem;
+}
+
+.w-3{
+  width: 0.75rem;
+}
+
+.w-3\/4{
+  width: 75%;
+}
+
+.w-32{
+  width: 8rem;
+}
+
+.w-4{
+  width: 1rem;
+}
+
+.w-40{
+  width: 10rem;
+}
+
+.w-5{
+  width: 1.25rem;
+}
+
+.w-6{
+  width: 1.5rem;
+}
+
+.w-64{
+  width: 16rem;
+}
+
+.w-7{
+  width: 1.75rem;
+}
+
+.w-8{
+  width: 2rem;
+}
+
+.w-9{
+  width: 2.25rem;
+}
+
+.w-full{
+  width: 100%;
+}
+
+.w-px{
+  width: 1px;
+}
+
+.min-w-0{
+  min-width: 0px;
+}
+
+.max-w-16{
+  max-width: 4rem;
+}
+
+.max-w-2xl{
+  max-width: 42rem;
+}
+
+.max-w-3xl{
+  max-width: 48rem;
+}
+
+.max-w-4xl{
+  max-width: 56rem;
+}
+
+.max-w-5xl{
+  max-width: 64rem;
+}
+
+.max-w-\[200px\]{
+  max-width: 200px;
+}
+
+.max-w-md{
+  max-width: 28rem;
+}
+
+.max-w-none{
+  max-width: none;
+}
+
+.flex-1{
+  flex: 1 1 0%;
+}
+
+.flex-shrink-0{
+  flex-shrink: 0;
+}
+
+.-translate-y-1\/2{
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-x-1\/2{
+  --tw-translate-x: 50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-1\/2{
+  --tw-translate-y: 50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.scale-110{
+  --tw-scale-x: 1.1;
+  --tw-scale-y: 1.1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@keyframes pulse{
+
+  50%{
+    opacity: .5;
+  }
+}
+
+.animate-pulse{
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes spin{
+
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin{
+  animation: spin 1s linear infinite;
+}
+
+.cursor-not-allowed{
+  cursor: not-allowed;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.resize-none{
+  resize: none;
+}
+
+.list-inside{
+  list-style-position: inside;
+}
+
+.list-disc{
+  list-style-type: disc;
+}
+
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.flex-col{
+  flex-direction: column;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
+.items-start{
+  align-items: flex-start;
+}
+
+.items-center{
+  align-items: center;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+.justify-between{
+  justify-content: space-between;
+}
+
+.gap-1{
+  gap: 0.25rem;
+}
+
+.gap-1\.5{
+  gap: 0.375rem;
+}
+
+.gap-2{
+  gap: 0.5rem;
+}
+
+.gap-3{
+  gap: 0.75rem;
+}
+
+.gap-4{
+  gap: 1rem;
+}
+
+.gap-6{
+  gap: 1.5rem;
+}
+
+.gap-8{
+  gap: 2rem;
+}
+
+.space-y-1 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+.space-y-3 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+
+.space-y-4 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.space-y-6 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
+.divide-y > :not([hidden]) ~ :not([hidden]){
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+}
+
+.divide-gray-100 > :not([hidden]) ~ :not([hidden]){
+  --tw-divide-opacity: 1;
+  border-color: rgb(243 244 246 / var(--tw-divide-opacity, 1));
+}
+
+.overflow-auto{
+  overflow: auto;
+}
+
+.overflow-hidden{
+  overflow: hidden;
+}
+
+.overflow-x-auto{
+  overflow-x: auto;
+}
+
+.truncate{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.whitespace-nowrap{
+  white-space: nowrap;
+}
+
+.rounded{
+  border-radius: 0.25rem;
+}
+
+.rounded-2xl{
+  border-radius: 1rem;
+}
+
+.rounded-full{
+  border-radius: 9999px;
+}
+
+.rounded-lg{
+  border-radius: 0.5rem;
+}
+
+.rounded-md{
+  border-radius: 0.375rem;
+}
+
+.rounded-xl{
+  border-radius: 0.75rem;
+}
+
+.border{
+  border-width: 1px;
+}
+
+.border-2{
+  border-width: 2px;
+}
+
+.border-b{
+  border-bottom-width: 1px;
+}
+
+.border-b-2{
+  border-bottom-width: 2px;
+}
+
+.border-r{
+  border-right-width: 1px;
+}
+
+.border-t{
+  border-top-width: 1px;
+}
+
+.border-blue-100{
+  --tw-border-opacity: 1;
+  border-color: rgb(219 234 254 / var(--tw-border-opacity, 1));
+}
+
+.border-blue-200{
+  --tw-border-opacity: 1;
+  border-color: rgb(191 219 254 / var(--tw-border-opacity, 1));
+}
+
+.border-gray-100{
+  --tw-border-opacity: 1;
+  border-color: rgb(243 244 246 / var(--tw-border-opacity, 1));
+}
+
+.border-gray-200{
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
+}
+
+.border-gray-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+}
+
+.border-gray-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity, 1));
+}
+
+.border-gray-800{
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity, 1));
+}
+
+.border-green-200{
+  --tw-border-opacity: 1;
+  border-color: rgb(187 247 208 / var(--tw-border-opacity, 1));
+}
+
+.border-green-500{
+  --tw-border-opacity: 1;
+  border-color: rgb(34 197 94 / var(--tw-border-opacity, 1));
+}
+
+.border-red-100{
+  --tw-border-opacity: 1;
+  border-color: rgb(254 226 226 / var(--tw-border-opacity, 1));
+}
+
+.border-red-200{
+  --tw-border-opacity: 1;
+  border-color: rgb(254 202 202 / var(--tw-border-opacity, 1));
+}
+
+.border-yellow-100{
+  --tw-border-opacity: 1;
+  border-color: rgb(254 249 195 / var(--tw-border-opacity, 1));
+}
+
+.bg-black\/50{
+  background-color: rgb(0 0 0 / 0.5);
+}
+
+.bg-blue-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity, 1));
+}
+
+.bg-blue-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 246 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-blue-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gray-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gray-200{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gray-400{
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gray-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+}
+
+.bg-green-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1));
+}
+
+.bg-green-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
+}
+
+.bg-green-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity, 1));
+}
+
+.bg-orange-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 237 213 / var(--tw-bg-opacity, 1));
+}
+
+.bg-orange-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 247 237 / var(--tw-bg-opacity, 1));
+}
+
+.bg-orange-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity, 1));
+}
+
+.bg-pink-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(252 231 243 / var(--tw-bg-opacity, 1));
+}
+
+.bg-purple-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 232 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-purple-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity, 1));
+}
+
+.bg-red-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
+}
+
+.bg-red-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+}
+
+.bg-red-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
+}
+
+.bg-red-600{
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
+}
+
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-white\/10{
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.bg-white\/20{
+  background-color: rgb(255 255 255 / 0.2);
+}
+
+.bg-yellow-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 249 195 / var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 252 232 / var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity, 1));
+}
+
+.bg-gradient-to-br{
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+.bg-gradient-to-r{
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-blue-500{
+  --tw-gradient-from: #3b82f6 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(59 130 246 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-green-500{
+  --tw-gradient-from: #22c55e var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(34 197 94 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-orange-500{
+  --tw-gradient-from: #f97316 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(249 115 22 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-purple-500{
+  --tw-gradient-from: #a855f7 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(168 85 247 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.via-white{
+  --tw-gradient-to: rgb(255 255 255 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #fff var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.to-blue-600{
+  --tw-gradient-to: #2563eb var(--tw-gradient-to-position);
+}
+
+.to-emerald-600{
+  --tw-gradient-to: #059669 var(--tw-gradient-to-position);
+}
+
+.to-green-600{
+  --tw-gradient-to: #16a34a var(--tw-gradient-to-position);
+}
+
+.to-orange-600{
+  --tw-gradient-to: #ea580c var(--tw-gradient-to-position);
+}
+
+.to-purple-600{
+  --tw-gradient-to: #9333ea var(--tw-gradient-to-position);
+}
+
+.bg-clip-text{
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+
+.p-0{
+  padding: 0px;
+}
+
+.p-1{
+  padding: 0.25rem;
+}
+
+.p-2{
+  padding: 0.5rem;
+}
+
+.p-3{
+  padding: 0.75rem;
+}
+
+.p-4{
+  padding: 1rem;
+}
+
+.p-5{
+  padding: 1.25rem;
+}
+
+.p-6{
+  padding: 1.5rem;
+}
+
+.p-8{
+  padding: 2rem;
+}
+
+.px-2{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.px-2\.5{
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
+.px-3{
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.px-4{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.px-6{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-0\.5{
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+
+.py-1{
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.py-1\.5{
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+.py-12{
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.py-2{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.py-2\.5{
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.py-3{
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pb-2{
+  padding-bottom: 0.5rem;
+}
+
+.pb-8{
+  padding-bottom: 2rem;
+}
+
+.pl-10{
+  padding-left: 2.5rem;
+}
+
+.pl-4{
+  padding-left: 1rem;
+}
+
+.pr-10{
+  padding-right: 2.5rem;
+}
+
+.pr-4{
+  padding-right: 1rem;
+}
+
+.pt-3{
+  padding-top: 0.75rem;
+}
+
+.pt-6{
+  padding-top: 1.5rem;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-right{
+  text-align: right;
+}
+
+.font-mono{
+  font-family: "JetBrains Mono", monospace;
+}
+
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.text-base{
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.font-bold{
+  font-weight: 700;
+}
+
+.font-medium{
+  font-weight: 500;
+}
+
+.font-normal{
+  font-weight: 400;
+}
+
+.font-semibold{
+  font-weight: 600;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
+.leading-relaxed{
+  line-height: 1.625;
+}
+
+.text-blue-600{
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity, 1));
+}
+
+.text-blue-700{
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity, 1));
+}
+
+.text-blue-800{
+  --tw-text-opacity: 1;
+  color: rgb(30 64 175 / var(--tw-text-opacity, 1));
+}
+
+.text-blue-900{
+  --tw-text-opacity: 1;
+  color: rgb(30 58 138 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-300{
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-400{
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-600{
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-700{
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-800{
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-900{
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+.text-green-500{
+  --tw-text-opacity: 1;
+  color: rgb(34 197 94 / var(--tw-text-opacity, 1));
+}
+
+.text-green-600{
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity, 1));
+}
+
+.text-green-700{
+  --tw-text-opacity: 1;
+  color: rgb(21 128 61 / var(--tw-text-opacity, 1));
+}
+
+.text-green-800{
+  --tw-text-opacity: 1;
+  color: rgb(22 101 52 / var(--tw-text-opacity, 1));
+}
+
+.text-green-900{
+  --tw-text-opacity: 1;
+  color: rgb(20 83 45 / var(--tw-text-opacity, 1));
+}
+
+.text-orange-600{
+  --tw-text-opacity: 1;
+  color: rgb(234 88 12 / var(--tw-text-opacity, 1));
+}
+
+.text-orange-700{
+  --tw-text-opacity: 1;
+  color: rgb(194 65 12 / var(--tw-text-opacity, 1));
+}
+
+.text-orange-900{
+  --tw-text-opacity: 1;
+  color: rgb(124 45 18 / var(--tw-text-opacity, 1));
+}
+
+.text-pink-600{
+  --tw-text-opacity: 1;
+  color: rgb(219 39 119 / var(--tw-text-opacity, 1));
+}
+
+.text-pink-700{
+  --tw-text-opacity: 1;
+  color: rgb(190 24 93 / var(--tw-text-opacity, 1));
+}
+
+.text-purple-600{
+  --tw-text-opacity: 1;
+  color: rgb(147 51 234 / var(--tw-text-opacity, 1));
+}
+
+.text-purple-700{
+  --tw-text-opacity: 1;
+  color: rgb(126 34 206 / var(--tw-text-opacity, 1));
+}
+
+.text-red-500{
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity, 1));
+}
+
+.text-red-600{
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+
+.text-red-700{
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity, 1));
+}
+
+.text-red-800{
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity, 1));
+}
+
+.text-transparent{
+  color: transparent;
+}
+
+.text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.text-white\/80{
+  color: rgb(255 255 255 / 0.8);
+}
+
+.text-white\/90{
+  color: rgb(255 255 255 / 0.9);
+}
+
+.text-yellow-300{
+  --tw-text-opacity: 1;
+  color: rgb(253 224 71 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-600{
+  --tw-text-opacity: 1;
+  color: rgb(202 138 4 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-700{
+  --tw-text-opacity: 1;
+  color: rgb(161 98 7 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-800{
+  --tw-text-opacity: 1;
+  color: rgb(133 77 14 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-900{
+  --tw-text-opacity: 1;
+  color: rgb(113 63 18 / var(--tw-text-opacity, 1));
+}
+
+.line-through{
+  text-decoration-line: line-through;
+}
+
+.opacity-25{
+  opacity: 0.25;
+}
+
+.opacity-50{
+  opacity: 0.5;
+}
+
+.opacity-60{
+  opacity: 0.6;
+}
+
+.opacity-75{
+  opacity: 0.75;
+}
+
+.shadow-lg{
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-sm{
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-xl{
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-gray-200\/50{
+  --tw-shadow-color: rgb(229 231 235 / 0.5);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.outline-none{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.outline{
+  outline-style: solid;
+}
+
+.ring-4{
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.ring-green-100{
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(220 252 231 / var(--tw-ring-opacity, 1));
+}
+
+.ring-green-500\/50{
+  --tw-ring-color: rgb(34 197 94 / 0.5);
+}
+
+.ring-offset-2{
+  --tw-ring-offset-width: 2px;
+}
+
+.filter{
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.backdrop-blur-sm{
+  --tw-backdrop-blur: blur(4px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+
+.transition{
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-all{
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-colors{
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-shadow{
+  transition-property: box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-200{
+  transition-duration: 200ms;
+}
+
+:root {
+  font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #1D2129;
+  background-color: #F7F8FA;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hover\:border-gray-300:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+}
+
+.hover\:bg-gray-100:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-200:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-50:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-red-50:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-red-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-white\/50:hover{
+  background-color: rgb(255 255 255 / 0.5);
+}
+
+.hover\:text-gray-600:hover{
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-gray-900:hover{
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-red-600:hover{
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+
+.hover\:underline:hover{
+  text-decoration-line: underline;
+}
+
+.hover\:opacity-80:hover{
+  opacity: 0.8;
+}
+
+.hover\:shadow-lg:hover{
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.focus\:outline-none:focus{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus\:ring-2:focus{
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-gray-500\/50:focus{
+  --tw-ring-color: rgb(107 114 128 / 0.5);
+}
+
+.focus\:ring-red-500\/50:focus{
+  --tw-ring-color: rgb(239 68 68 / 0.5);
+}
+
+.focus\:ring-offset-2:focus{
+  --tw-ring-offset-width: 2px;
+}
+
+.disabled\:cursor-not-allowed:disabled{
+  cursor: not-allowed;
+}
+
+.disabled\:opacity-50:disabled{
+  opacity: 0.5;
+}
+
+@media (min-width: 768px){
+
+  .md\:col-span-2{
+    grid-column: span 2 / span 2;
+  }
+
+  .md\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .md\:flex-row{
+    flex-direction: row;
+  }
+
+  .md\:items-center{
+    align-items: center;
+  }
+
+  .md\:pb-0{
+    padding-bottom: 0px;
+  }
+}
+
+@media (min-width: 1024px){
+
+  .lg\:col-span-2{
+    grid-column: span 2 / span 2;
+  }
+
+  .lg\:block{
+    display: block;
+  }
+
+  .lg\:hidden{
+    display: none;
+  }
+
+  .lg\:flex-1{
+    flex: 1 1 0%;
+  }
+
+  .lg\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}</style></head>
+  <body>
+    <div id="root"><div class="space-y-6" style="opacity: 1;"><div class="bg-gradient-to-r from-primary to-primary/80 rounded-2xl p-6 text-white relative overflow-hidden" style="opacity: 1; transform: none;"><div trae-inspector-start-line="86" trae-inspector-start-column="8" trae-inspector-end-line="86" trae-inspector-end-column="118" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="absolute right-0 top-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div><div trae-inspector-start-line="87" trae-inspector-start-column="8" trae-inspector-end-line="87" trae-inspector-end-column="105" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="absolute right-20 bottom-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2"></div><div trae-inspector-start-line="88" trae-inspector-start-column="8" trae-inspector-end-line="113" trae-inspector-end-column="14" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="relative z-10"><div trae-inspector-start-line="89" trae-inspector-start-column="10" trae-inspector-end-line="92" trae-inspector-end-column="16" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex items-center gap-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-5 h-5 text-yellow-300" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg><span trae-inspector-start-line="91" trae-inspector-start-column="12" trae-inspector-end-line="91" trae-inspector-end-column="75" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E6%AC%A2%E8%BF%8E%E5%9B%9E%E6%9D%A5%22%2C%22textStartLine%22%3A%2291%22%2C%22textStartColumn%22%3A%2264%22%2C%22textEndLine%22%3A%2291%22%2C%22textEndColumn%22%3A%2268%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-sm font-medium text-white/90">欢迎回来</span></div><h1 trae-inspector-start-line="93" trae-inspector-start-column="10" trae-inspector-end-line="95" trae-inspector-end-column="15" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-2xl font-bold mb-1">，您好！</h1><p trae-inspector-start-line="96" trae-inspector-start-column="10" trae-inspector-end-line="98" trae-inspector-end-column="14" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-white/80 text-sm">今天是6月18日星期四，祝您办事顺利</p><div trae-inspector-start-line="99" trae-inspector-start-column="10" trae-inspector-end-line="112" trae-inspector-end-column="16" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex gap-4 mt-6"><div trae-inspector-start-line="100" trae-inspector-start-column="12" trae-inspector-end-line="103" trae-inspector-end-column="18" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3"><p trae-inspector-start-line="101" trae-inspector-start-column="14" trae-inspector-end-line="101" trae-inspector-end-column="88" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-2xl font-bold">0</p><p trae-inspector-start-line="102" trae-inspector-start-column="14" trae-inspector-end-line="102" trae-inspector-end-column="61" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E8%BF%9B%E8%A1%8C%E4%B8%AD%E7%9A%84%E5%8A%9E%E4%BB%B6%22%2C%22textStartLine%22%3A%22102%22%2C%22textStartColumn%22%3A%2251%22%2C%22textEndLine%22%3A%22102%22%2C%22textEndColumn%22%3A%2257%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-xs text-white/80">进行中的办件</p></div><div trae-inspector-start-line="104" trae-inspector-start-column="12" trae-inspector-end-line="107" trae-inspector-end-column="18" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3"><p trae-inspector-start-line="105" trae-inspector-start-column="14" trae-inspector-end-line="105" trae-inspector-end-column="93" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-2xl font-bold">0</p><p trae-inspector-start-line="106" trae-inspector-start-column="14" trae-inspector-end-line="106" trae-inspector-end-column="62" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E4%B8%BA%E6%82%A8%E6%8E%A8%E8%8D%90%E7%9A%84%E6%94%BF%E7%AD%96%22%2C%22textStartLine%22%3A%22106%22%2C%22textStartColumn%22%3A%2251%22%2C%22textEndLine%22%3A%22106%22%2C%22textEndColumn%22%3A%2258%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-xs text-white/80">为您推荐的政策</p></div><div trae-inspector-start-line="108" trae-inspector-start-column="12" trae-inspector-end-line="111" trae-inspector-end-column="18" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3"><p trae-inspector-start-line="109" trae-inspector-start-column="14" trae-inspector-end-line="109" trae-inspector-end-column="57" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%2299.9%25%22%2C%22textStartLine%22%3A%22109%22%2C%22textStartColumn%22%3A%2248%22%2C%22textEndLine%22%3A%22109%22%2C%22textEndColumn%22%3A%2253%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-2xl font-bold">99.9%</p><p trae-inspector-start-line="110" trae-inspector-start-column="14" trae-inspector-end-line="110" trae-inspector-end-column="60" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E7%B3%BB%E7%BB%9F%E5%8F%AF%E7%94%A8%E7%8E%87%22%2C%22textStartLine%22%3A%22110%22%2C%22textStartColumn%22%3A%2251%22%2C%22textEndLine%22%3A%22110%22%2C%22textEndColumn%22%3A%2256%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-xs text-white/80">系统可用率</p></div></div></div></div><div style="opacity: 1; transform: none;"><div trae-inspector-start-line="117" trae-inspector-start-column="8" trae-inspector-end-line="119" trae-inspector-end-column="14" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex items-center justify-between mb-4"><h2 trae-inspector-start-line="118" trae-inspector-start-column="10" trae-inspector-end-line="118" trae-inspector-end-column="71" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E5%BF%AB%E6%8D%B7%E5%85%A5%E5%8F%A3%22%2C%22textStartLine%22%3A%22118%22%2C%22textStartColumn%22%3A%2262%22%2C%22textEndLine%22%3A%22118%22%2C%22textEndColumn%22%3A%2266%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-lg font-semibold text-gray-900">快捷入口</h2></div><div trae-inspector-start-line="120" trae-inspector-start-column="8" trae-inspector-end-line="134" trae-inspector-end-column="14" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="grid grid-cols-2 md:grid-cols-4 gap-4"><a href="/personal" data-discover="true"><div class="bg-white rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:shadow-lg transition-shadow h-full"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex flex-col items-center text-center p-6"><div trae-inspector-start-line="125" trae-inspector-start-column="18" trae-inspector-end-line="127" trae-inspector-end-column="24" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-6 h-6 text-white" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><p trae-inspector-start-line="128" trae-inspector-start-column="18" trae-inspector-end-line="128" trae-inspector-end-column="76" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-medium text-gray-900">个人数字空间</p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 text-gray-400 mt-2" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></div></div></a><a href="/enterprise" data-discover="true"><div class="bg-white rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:shadow-lg transition-shadow h-full"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex flex-col items-center text-center p-6"><div trae-inspector-start-line="125" trae-inspector-start-column="18" trae-inspector-end-line="127" trae-inspector-end-column="24" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 lucide-building-2 w-6 h-6 text-white" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg></div><p trae-inspector-start-line="128" trae-inspector-start-column="18" trae-inspector-end-line="128" trae-inspector-end-column="76" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-medium text-gray-900">企业服务台</p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 text-gray-400 mt-2" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></div></div></a><a href="/city" data-discover="true"><div class="bg-white rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:shadow-lg transition-shadow h-full"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex flex-col items-center text-center p-6"><div trae-inspector-start-line="125" trae-inspector-start-column="18" trae-inspector-end-line="127" trae-inspector-end-column="24" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-6 h-6 text-white" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></div><p trae-inspector-start-line="128" trae-inspector-start-column="18" trae-inspector-end-line="128" trae-inspector-end-column="76" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-medium text-gray-900">城市生活圈</p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 text-gray-400 mt-2" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></div></div></a><a href="/governance" data-discover="true"><div class="bg-white rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:shadow-lg transition-shadow h-full"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex flex-col items-center text-center p-6"><div trae-inspector-start-line="125" trae-inspector-start-column="18" trae-inspector-end-line="127" trae-inspector-end-column="24" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard w-6 h-6 text-white" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg></div><p trae-inspector-start-line="128" trae-inspector-start-column="18" trae-inspector-end-line="128" trae-inspector-end-column="76" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-medium text-gray-900">基层治理驾驶舱</p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 text-gray-400 mt-2" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></div></div></a></div></div><div style="opacity: 1; transform: none;"><div trae-inspector-start-line="138" trae-inspector-start-column="8" trae-inspector-end-line="143" trae-inspector-end-column="14" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex items-center justify-between mb-4"><h2 trae-inspector-start-line="139" trae-inspector-start-column="10" trae-inspector-end-line="139" trae-inspector-end-column="72" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E4%B8%80%E4%BB%B6%E4%BA%8B%E6%9C%8D%E5%8A%A1%22%2C%22textStartLine%22%3A%22139%22%2C%22textStartColumn%22%3A%2262%22%2C%22textEndLine%22%3A%22139%22%2C%22textEndColumn%22%3A%2267%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-lg font-semibold text-gray-900">一件事服务</h2><a class="text-sm text-primary hover:text-primary/80 flex items-center gap-1" href="/orchestration" data-discover="true">查看全部 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></a></div><div trae-inspector-start-line="144" trae-inspector-start-column="8" trae-inspector-end-line="159" trae-inspector-end-column="14" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"><div class="bg-white rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:shadow-lg transition-shadow"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="p-5"><div trae-inspector-start-line="148" trae-inspector-start-column="16" trae-inspector-end-line="150" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-10 h-10 rounded-lg bg-pink-100 text-pink-600 flex items-center justify-center mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-baby w-5 h-5" aria-hidden="true"><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"></path><path d="M15 12h.01"></path><path d="M19.38 6.813A9 9 0 0 1 20.8 10.2a2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"></path><path d="M9 12h.01"></path></svg></div><h3 trae-inspector-start-line="151" trae-inspector-start-column="16" trae-inspector-end-line="151" trae-inspector-end-column="82" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-medium text-gray-900 mb-1">新生儿出生五证联办</h3><p trae-inspector-start-line="152" trae-inspector-start-column="16" trae-inspector-end-line="152" trae-inspector-end-column="84" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-xs text-gray-500 line-clamp-2">出生证明、户口登记、社保参保等一站式办理</p><button trae-inspector-start-line="40" trae-inspector-start-column="4" trae-inspector-end-line="54" trae-inspector-end-column="13" trae-inspector-file-path="src/components/Button.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500/50 px-3 py-1.5 text-sm w-full mt-4">立即办理</button></div></div><div class="bg-white rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:shadow-lg transition-shadow"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="p-5"><div trae-inspector-start-line="148" trae-inspector-start-column="16" trae-inspector-end-line="150" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap w-5 h-5" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg></div><h3 trae-inspector-start-line="151" trae-inspector-start-column="16" trae-inspector-end-line="151" trae-inspector-end-column="82" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-medium text-gray-900 mb-1">入学一件事</h3><p trae-inspector-start-line="152" trae-inspector-start-column="16" trae-inspector-end-line="152" trae-inspector-end-column="84" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-xs text-gray-500 line-clamp-2">报名、审核、缴费一站式完成</p><button trae-inspector-start-line="40" trae-inspector-start-column="4" trae-inspector-end-line="54" trae-inspector-end-column="13" trae-inspector-file-path="src/components/Button.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500/50 px-3 py-1.5 text-sm w-full mt-4">立即办理</button></div></div><div class="bg-white rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:shadow-lg transition-shadow"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="p-5"><div trae-inspector-start-line="148" trae-inspector-start-column="16" trae-inspector-end-line="150" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-10 h-10 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-5 h-5" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></div><h3 trae-inspector-start-line="151" trae-inspector-start-column="16" trae-inspector-end-line="151" trae-inspector-end-column="82" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-medium text-gray-900 mb-1">退休一件事</h3><p trae-inspector-start-line="152" trae-inspector-start-column="16" trae-inspector-end-line="152" trae-inspector-end-column="84" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-xs text-gray-500 line-clamp-2">养老保险、医疗保险、公积金提取联办</p><button trae-inspector-start-line="40" trae-inspector-start-column="4" trae-inspector-end-line="54" trae-inspector-end-column="13" trae-inspector-file-path="src/components/Button.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500/50 px-3 py-1.5 text-sm w-full mt-4">立即办理</button></div></div><div class="bg-white rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:shadow-lg transition-shadow"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="p-5"><div trae-inspector-start-line="148" trae-inspector-start-column="16" trae-inspector-end-line="150" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-10 h-10 rounded-lg bg-yellow-100 text-yellow-600 flex items-center justify-center mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car w-5 h-5" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg></div><h3 trae-inspector-start-line="151" trae-inspector-start-column="16" trae-inspector-end-line="151" trae-inspector-end-column="82" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-medium text-gray-900 mb-1">车辆过户一件事</h3><p trae-inspector-start-line="152" trae-inspector-start-column="16" trae-inspector-end-line="152" trae-inspector-end-column="84" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-xs text-gray-500 line-clamp-2">交易、过户、保险变更一站式办理</p><button trae-inspector-start-line="40" trae-inspector-start-column="4" trae-inspector-end-line="54" trae-inspector-end-column="13" trae-inspector-file-path="src/components/Button.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500/50 px-3 py-1.5 text-sm w-full mt-4">立即办理</button></div></div></div></div><div trae-inspector-start-line="162" trae-inspector-start-column="6" trae-inspector-end-line="259" trae-inspector-end-column="12" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="grid grid-cols-1 lg:grid-cols-3 gap-6"><div class="lg:col-span-2" style="opacity: 1; transform: none;"><div class="bg-white rounded-xl border border-gray-200 shadow-sm"><div trae-inspector-start-line="35" trae-inspector-start-column="4" trae-inspector-end-line="37" trae-inspector-end-column="10" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="px-6 py-4 border-b border-gray-200"><div trae-inspector-start-line="166" trae-inspector-start-column="14" trae-inspector-end-line="174" trae-inspector-end-column="20" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex items-center justify-between"><div trae-inspector-start-line="167" trae-inspector-start-column="16" trae-inspector-end-line="170" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-5 h-5 text-primary" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><h3 trae-inspector-start-line="169" trae-inspector-start-column="18" trae-inspector-end-line="169" trae-inspector-end-column="71" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E6%9C%80%E8%BF%91%E5%8A%9E%E4%BB%B6%22%2C%22textStartLine%22%3A%22169%22%2C%22textStartColumn%22%3A%2262%22%2C%22textEndLine%22%3A%22169%22%2C%22textEndColumn%22%3A%2266%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-semibold text-gray-900">最近办件</h3></div><a class="text-sm text-primary hover:text-primary/80" href="/personal/progress" data-discover="true">查看全部</a></div></div><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="p-0"><div trae-inspector-start-line="213" trae-inspector-start-column="16" trae-inspector-end-line="216" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="py-12 text-center text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text w-12 h-12 mx-auto mb-3 text-gray-300" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg><p trae-inspector-start-line="215" trae-inspector-start-column="18" trae-inspector-end-line="215" trae-inspector-end-column="31" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E6%9A%82%E6%97%A0%E5%8A%9E%E4%BB%B6%E8%AE%B0%E5%BD%95%22%2C%22textStartLine%22%3A%22215%22%2C%22textStartColumn%22%3A%2221%22%2C%22textEndLine%22%3A%22215%22%2C%22textEndColumn%22%3A%2227%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D">暂无办件记录</p></div></div></div></div><div style="opacity: 1; transform: none;"><div class="bg-white rounded-xl border border-gray-200 shadow-sm"><div trae-inspector-start-line="35" trae-inspector-start-column="4" trae-inspector-end-line="37" trae-inspector-end-column="10" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="px-6 py-4 border-b border-gray-200"><div trae-inspector-start-line="225" trae-inspector-start-column="14" trae-inspector-end-line="228" trae-inspector-end-column="20" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-5 h-5 text-accent" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg><h3 trae-inspector-start-line="227" trae-inspector-start-column="16" trae-inspector-end-line="227" trae-inspector-end-column="69" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E6%94%BF%E7%AD%96%E6%8E%A8%E8%8D%90%22%2C%22textStartLine%22%3A%22227%22%2C%22textStartColumn%22%3A%2260%22%2C%22textEndLine%22%3A%22227%22%2C%22textEndColumn%22%3A%2264%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-semibold text-gray-900">政策推荐</h3></div></div><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="p-0"><div trae-inspector-start-line="251" trae-inspector-start-column="16" trae-inspector-end-line="254" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="py-12 text-center text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-12 h-12 mx-auto mb-3 text-gray-300" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg><p trae-inspector-start-line="253" trae-inspector-start-column="18" trae-inspector-end-line="253" trae-inspector-end-column="31" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E6%9A%82%E6%97%A0%E6%94%BF%E7%AD%96%E6%8E%A8%E8%8D%90%22%2C%22textStartLine%22%3A%22253%22%2C%22textStartColumn%22%3A%2221%22%2C%22textEndLine%22%3A%22253%22%2C%22textEndColumn%22%3A%2227%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D">暂无政策推荐</p></div></div></div></div></div><div style="opacity: 1; transform: none;"><div class="bg-white rounded-xl border border-gray-200 shadow-sm"><div trae-inspector-start-line="47" trae-inspector-start-column="9" trae-inspector-end-line="47" trae-inspector-end-column="69" trae-inspector-file-path="src/components/Card.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="px-6 py-4"><div trae-inspector-start-line="264" trae-inspector-start-column="12" trae-inspector-end-line="285" trae-inspector-end-column="18" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex items-center justify-between"><div trae-inspector-start-line="265" trae-inspector-start-column="14" trae-inspector-end-line="273" trae-inspector-end-column="20" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex items-center gap-4"><div trae-inspector-start-line="266" trae-inspector-start-column="16" trae-inspector-end-line="268" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-6 h-6 text-green-600" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg></div><div trae-inspector-start-line="269" trae-inspector-start-column="16" trae-inspector-end-line="272" trae-inspector-end-column="22" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D"><h3 trae-inspector-start-line="270" trae-inspector-start-column="18" trae-inspector-end-line="270" trae-inspector-end-column="71" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E5%AE%89%E5%85%A8%E4%BF%9D%E9%9A%9C%22%2C%22textStartLine%22%3A%22270%22%2C%22textStartColumn%22%3A%2262%22%2C%22textEndLine%22%3A%22270%22%2C%22textEndColumn%22%3A%2266%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="font-semibold text-gray-900">安全保障</h3><p trae-inspector-start-line="271" trae-inspector-start-column="18" trae-inspector-end-line="271" trae-inspector-end-column="95" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E6%9C%AC%E7%B3%BB%E7%BB%9F%E9%80%9A%E8%BF%87%E7%AD%89%E4%BF%9D%E4%B8%89%E7%BA%A7%E8%AE%A4%E8%AF%81%EF%BC%8C%E6%89%80%E6%9C%89%E6%94%BF%E5%8A%A1%E6%95%B0%E6%8D%AE%E4%B8%8D%E5%87%BA%E5%B8%82%E4%BA%91%EF%BC%8C%E9%87%87%E7%94%A8AES-256%E5%8A%A0%E5%AF%86%E5%AD%98%E5%82%A8%22%2C%22textStartLine%22%3A%22271%22%2C%22textStartColumn%22%3A%2255%22%2C%22textEndLine%22%3A%22271%22%2C%22textEndColumn%22%3A%2291%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="text-sm text-gray-500">本系统通过等保三级认证，所有政务数据不出市云，采用AES-256加密存储</p></div></div><div trae-inspector-start-line="274" trae-inspector-start-column="14" trae-inspector-end-line="284" trae-inspector-end-column="20" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="flex gap-3"><span trae-inspector-start-line="275" trae-inspector-start-column="16" trae-inspector-end-line="277" trae-inspector-end-column="23" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22%E7%AD%89%E4%BF%9D%E4%B8%89%E7%BA%A7%22%2C%22textStartLine%22%3A%22275%22%2C%22textStartColumn%22%3A%22130%22%2C%22textEndLine%22%3A%22277%22%2C%22textEndColumn%22%3A%2216%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">等保三级</span><span trae-inspector-start-line="278" trae-inspector-start-column="16" trae-inspector-end-line="280" trae-inspector-end-column="23" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22TLS%201.3%22%2C%22textStartLine%22%3A%22278%22%2C%22textStartColumn%22%3A%22128%22%2C%22textEndLine%22%3A%22280%22%2C%22textEndColumn%22%3A%2216%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">TLS 1.3</span><span trae-inspector-start-line="281" trae-inspector-start-column="16" trae-inspector-end-line="283" trae-inspector-end-column="23" trae-inspector-file-path="src/pages/Home.tsx" trae-inspector-static-props="%7B%22text%22%3A%22AES-256%22%2C%22textStartLine%22%3A%22281%22%2C%22textStartColumn%22%3A%22132%22%2C%22textEndLine%22%3A%22283%22%2C%22textEndColumn%22%3A%2216%22%2C%22cwd%22%3A%22%2FUsers%2Fchen%2FDocuments%2Ftrae_projects%2Flocal_projects%2Fmay-89235%22%7D" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">AES-256</span></div></div></div></div></div></div></div>
+    <script type="module" src="/src/main.tsx"></script>
+  
+
+</body></html>

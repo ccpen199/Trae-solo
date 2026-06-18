@@ -29,8 +29,12 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
 
       setAuth: (user: User, tokens: AuthToken) => {
+        const userWithLoginTime: User = {
+          ...user,
+          loginTime: new Date().toISOString(),
+        };
         set({
-          user,
+          user: userWithLoginTime,
           accessToken: tokens.accessToken,
           refreshToken: tokens.refreshToken,
           isAuthenticated: true,
@@ -46,10 +50,14 @@ export const useAuthStore = create<AuthState>()(
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ provider, ...credentials }),
           });
-          const data: ApiResponse<{ user: User; tokens: AuthToken }> = await response.json();
+          const data: ApiResponse<{ user: User; tokens: AuthToken; token?: AuthToken }> = await response.json();
 
           if (data.success && data.data) {
-            get().setAuth(data.data.user, data.data.tokens);
+            const payload = data.data;
+            if (payload && (payload as any).token && !(payload as any).tokens) {
+              (payload as any).tokens = (payload as any).token;
+            }
+            get().setAuth(payload.user, payload.tokens!);
             return { success: true };
           }
           return { success: false, message: data.message || data.error || '登录失败' };

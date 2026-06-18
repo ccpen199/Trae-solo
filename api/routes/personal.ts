@@ -9,6 +9,30 @@ const router = Router();
 
 router.use(authMiddleware(), authLevelMiddleware(1));
 
+function getCategoryCn(category: string): string {
+  const map: Record<string, string> = {
+    identity: '身份类',
+    social: '社保医保类',
+    property: '财产类',
+    education: '学历类',
+    professional: '职业类',
+    marriage: '婚姻类',
+    traffic: '交通类',
+    enterprise: '企业类',
+  };
+  return map[category] || category;
+}
+
+function getMatchScore(policyId: string): number {
+  let hash = 0;
+  for (let i = 0; i < policyId.length; i++) {
+    const char = policyId.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash) % 20 + 80;
+}
+
 router.get('/certificates', auditMiddleware('list_certificates', 'certificate'), (req: Request, res: Response) => {
   if (!req.user) return errorResponse(res, '未登录', 401);
 
@@ -36,6 +60,7 @@ router.get('/certificates', auditMiddleware('list_certificates', 'certificate'),
     qrCode: c.qr_code,
     verifyUrl: c.verify_url,
     category: c.category,
+    categoryCn: getCategoryCn(c.category),
   }));
 
   successResponse(res, result, '获取证照列表成功');
@@ -71,6 +96,7 @@ router.get('/certificates/:id', auditMiddleware('view_certificate', 'certificate
     qrCode: cert.qr_code,
     verifyUrl: cert.verify_url,
     category: cert.category,
+    categoryCn: getCategoryCn(cert.category),
   };
 
   successResponse(res, result, '获取证照详情成功');
@@ -216,7 +242,7 @@ router.get('/policies', auditMiddleware('list_policies', 'policy'), (req: Reques
     source: p.source,
     publishDate: p.publish_date,
     summary: p.summary,
-    matchScore: Math.floor(Math.random() * 30 + 70),
+    matchScore: getMatchScore(p.id),
     eligibility: JSON.parse(p.eligibility || '[]'),
     applyUrl: p.apply_url || undefined,
     tags: JSON.parse(p.tags || '[]'),
@@ -258,7 +284,7 @@ router.get('/policies/:id', auditMiddleware('view_policy', 'policy'), (req: Requ
     source: policy.source,
     publishDate: policy.publish_date,
     summary: policy.summary,
-    matchScore: Math.floor(Math.random() * 30 + 70),
+    matchScore: getMatchScore(policy.id),
     eligibility: JSON.parse(policy.eligibility || '[]'),
     applyUrl: policy.apply_url || undefined,
     tags: JSON.parse(policy.tags || '[]'),

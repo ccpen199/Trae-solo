@@ -12,6 +12,10 @@ export interface User {
   authLevel: number;
   verified: boolean;
   createdAt: string;
+  authProvider?: string;
+  providerKey?: string;
+  roleLabel?: string;
+  loginTime?: string;
 }
 
 export interface AuthToken {
@@ -46,6 +50,7 @@ export interface Certificate {
   qrCode: string;
   verifyUrl: string;
   category: string;
+  categoryCn?: string;
 }
 
 export interface ProgressStep {

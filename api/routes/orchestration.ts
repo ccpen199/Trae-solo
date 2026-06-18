@@ -25,7 +25,7 @@ router.get('/services', auditMiddleware('list_one_stop_services', 'one_stop_serv
     params.push(active === 'true' ? 1 : 0);
   }
 
-  query += ' ORDER BY sort_order, created_at DESC';
+  query += ' ORDER BY id';
 
   const services = db.prepare(query).all(...params) as any[];
 

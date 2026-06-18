@@ -26,6 +26,25 @@ function maskSensitiveData(user: any): Omit<User, 'idCardNo'> & { idCardNo?: str
   return result;
 }
 
+function getAuthProviderName(provider: string): string {
+  const map: Record<string, string> = {
+    minzhengtong: '闽政通',
+    wechat: '微信',
+    alipay: '支付宝',
+    password: '账号密码',
+  };
+  return map[provider] || provider;
+}
+
+function getRoleLabel(idType: string): string {
+  const map: Record<string, string> = {
+    personal: '个人用户',
+    enterprise: '企业用户',
+    government: '治理人员',
+  };
+  return map[idType] || idType;
+}
+
 router.post('/login', auditMiddleware('user_login', 'auth'), (req: Request, res: Response) => {
   const { provider, phone, code } = req.body as LoginRequest;
 
@@ -63,11 +82,16 @@ router.post('/login', auditMiddleware('user_login', 'auth'), (req: Request, res:
     tokenType: 'Bearer',
   };
 
+  const maskedUser = maskSensitiveData(user);
+  (maskedUser as any).authProvider = getAuthProviderName(provider);
+  (maskedUser as any).providerKey = provider;
+  (maskedUser as any).roleLabel = getRoleLabel(user.id_type);
+
   return successResponse(
     res,
     {
-      token: authToken,
-      user: maskSensitiveData(user),
+      tokens: authToken,
+      user: maskedUser,
     },
     '登录成功'
   );
@@ -163,7 +187,9 @@ router.get('/me', authMiddleware(), auditMiddleware('get_profile', 'user'), (req
     return errorResponse(res, '用户不存在', 404);
   }
 
-  successResponse(res, maskSensitiveData(user), '获取用户信息成功');
+  const maskedUser = maskSensitiveData(user);
+  (maskedUser as any).roleLabel = getRoleLabel(user.id_type);
+  successResponse(res, maskedUser, '获取用户信息成功');
 });
 
 router.post('/consent', authMiddleware(), auditMiddleware('give_consent', 'data_consent'), (req: Request, res: Response) => {
