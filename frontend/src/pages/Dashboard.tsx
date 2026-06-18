@@ -46,7 +46,6 @@ function Dashboard() {
   const [spotContainers, setSpotContainers] = useState<any[]>([]);
   const [vesselListings, setVesselListings] = useState<any[]>([]);
   const [heatmapData, setHeatmapData] = useState<any>(null);
-  const [globalSearch, setGlobalSearch] = useState('');
 
   // ========== 弹窗状态 ==========
   const [alertDetailVisible, setAlertDetailVisible] = useState(false);
@@ -371,19 +370,6 @@ function Dashboard() {
           </span>
         </div>
         <Space>
-          <Input.Search
-            type="search"
-            aria-label="搜索"
-            placeholder="搜索航次、货盘、订单"
-            value={globalSearch}
-            onChange={(event) => setGlobalSearch(event.target.value)}
-            onSearch={(value) => {
-              const keyword = value.trim();
-              if (keyword) navigate(`/voyages?keyword=${encodeURIComponent(keyword)}`);
-            }}
-            style={{ width: 240 }}
-            allowClear
-          />
           <Button onClick={() => navigate('/matching')}>AI智能撮合</Button>
           <Button type="primary" onClick={() => navigate('/cargo-bookings')}>
             <ShoppingOutlined /> 发布我的货盘

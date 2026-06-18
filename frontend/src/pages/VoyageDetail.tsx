@@ -6,8 +6,6 @@ import { apiService } from '../services/api';
 import { useAppStore } from '../store/appStore';
 import dayjs from 'dayjs';
 
-const { Option } = Select;
-
 function VoyageDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -720,7 +718,7 @@ function VoyageDetail() {
         footer={inviteStep < 2 ? [
           <Button key="cancel" onClick={closeInviteModal}>取消</Button>,
           inviteStep === 0 && (
-            <Button key="submit" type="primary" onClick={submitInvite}>
+            <Button key="submit" type="primary" onClick={submitInvite} loading={inviteStep === 1}>
               提交邀约询价
             </Button>
           ),

@@ -56,71 +56,58 @@ function AdminDashboard() {
     '费用异常': <RiseOutlined />,
   };
 
-  const defaultPortCapacity = [
-    { name: '上海港', vessels: 8, capacity: 980, emptyRate: 8 },
-    { name: '宁波港', vessels: 5, capacity: 680, emptyRate: 9 },
-    { name: '深圳港', vessels: 6, capacity: 820, emptyRate: 6 },
-    { name: '新加坡港', vessels: 4, capacity: 860, emptyRate: 12 },
-    { name: '釜山港', vessels: 3, capacity: 540, emptyRate: 11 },
-    { name: '鹿特丹港', vessels: 5, capacity: 720, emptyRate: 18 },
-    { name: '汉堡港', vessels: 4, capacity: 620, emptyRate: 22 },
-    { name: '洛杉矶港', vessels: 6, capacity: 750, emptyRate: 15 },
-  ];
-
-  const normalizedPortCapacity = Array.isArray((heatmapData as any)?.ports)
-    ? (heatmapData as any).ports.map((port: any) => ({
-        name: port.name,
-        vessels: port.routes || port.vessels || 0,
-        capacity: port.value || port.capacity || 0,
-        emptyRate: Math.round((port.emptyRate || 0) * 100),
-      }))
-    : Array.isArray(heatmapData) && heatmapData.length > 0
-      ? heatmapData.map((port: any) => ({
-          name: port.name,
-          vessels: port.vessels || port.value?.[2] || 0,
-          capacity: port.capacity || (port.value?.[2] || 0) * 5000,
-          emptyRate: port.emptyRate || 0,
-        }))
-      : defaultPortCapacity;
-
   const heatmapChartOption = {
     tooltip: {
-      trigger: 'axis',
-      axisPointer: { type: 'shadow' },
+      trigger: 'item',
+      formatter: (params: any) => `${params.name}<br/>船舶数量: ${params.value[2]}<br/>运力: ${params.value[2] * 5000} TEU`,
     },
-    legend: { data: ['周运力', '在线船舶', '空载率'], top: 0 },
-    grid: { left: '4%', right: '4%', bottom: '8%', top: 48, containLabel: true },
-    xAxis: {
-      type: 'category',
-      data: normalizedPortCapacity.map((port: any) => port.name),
-      axisLabel: { rotate: 24, interval: 0 },
+    visualMap: {
+      min: 0,
+      max: 10,
+      left: 'left',
+      top: 'bottom',
+      text: ['高', '低'],
+      calculable: true,
+      inRange: {
+        color: ['#e0f3ff', '#91caff', '#4096ff', '#1677ff', '#0958d9'],
+      },
     },
-    yAxis: [
-      { type: 'value', name: 'TEU/周' },
-      { type: 'value', name: '船舶/空载率', axisLabel: { formatter: '{value}' } },
-    ],
+    geo: {
+      map: 'world',
+      roam: true,
+      label: { show: false },
+      itemStyle: {
+        areaColor: '#f0f0f0',
+        borderColor: '#d9d9d9',
+      },
+      emphasis: {
+        itemStyle: { areaColor: '#e6f4ff' },
+        label: { show: true },
+      },
+    },
     series: [
       {
-        name: '周运力',
-        type: 'bar',
-        data: normalizedPortCapacity.map((port: any) => port.capacity),
-        itemStyle: { color: '#1677ff', borderRadius: [4, 4, 0, 0] },
-      },
-      {
-        name: '在线船舶',
-        type: 'line',
-        yAxisIndex: 1,
-        data: normalizedPortCapacity.map((port: any) => port.vessels),
-        smooth: true,
-        itemStyle: { color: '#52c41a' },
-      },
-      {
-        name: '空载率',
-        type: 'line',
-        yAxisIndex: 1,
-        data: normalizedPortCapacity.map((port: any) => port.emptyRate),
-        smooth: true,
-        itemStyle: { color: '#faad14' },
+        name: '运力分布',
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        symbolSize: (val: number[]) => Math.sqrt(val[2]) * 8,
+        data: [
+          { name: '上海港', value: [121.47, 31.23, 8] },
+          { name: '宁波港', value: [121.54, 29.87, 5] },
+          { name: '深圳港', value: [114.06, 22.54, 6] },
+          { name: '新加坡港', value: [103.82, 1.35, 4] },
+          { name: '釜山港', value: [129.08, 35.18, 3] },
+          { name: '鹿特丹港', value: [4.48, 51.92, 5] },
+          { name: '汉堡港', value: [9.99, 53.55, 4] },
+          { name: '洛杉矶港', value: [-118.27, 33.74, 6] },
+          { name: '纽约港', value: [-74.01, 40.71, 4] },
+          { name: '迪拜港', value: [55.27, 25.20, 3] },
+        ],
+        itemStyle: {
+          color: '#1677ff',
+          shadowBlur: 10,
+          shadowColor: 'rgba(22, 119, 255, 0.5)',
+        },
       },
     ],
   };
