@@ -183,7 +183,7 @@ export default function Login() {
   const handleVisitorEnter = () => {
     setShowVisitorModal(false);
     login('visitor', '');
-    navigate('/visitor/welcome/scenic-001');
+    navigate('/visitor/welcome/scenic-1');
   };
 
   const handleSubmit = (e: FormEvent) => {

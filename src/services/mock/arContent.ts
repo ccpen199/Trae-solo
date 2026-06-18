@@ -25,6 +25,7 @@ let arContents: ARContent[] = [
   {
     id: 'ar-1',
     poiId: 'poi-1-1',
+    name: '太和殿AR内容包',
     modelUrl: '/models/taihedian.glb',
     modelScale: 1.0,
     modelHeight: 0,
@@ -51,6 +52,7 @@ let arContents: ARContent[] = [
   {
     id: 'ar-2',
     poiId: 'poi-1-4',
+    name: '乾清宫AR内容包',
     modelUrl: '/models/qianqinggong.glb',
     modelScale: 1.0,
     modelHeight: 0,
@@ -72,6 +74,7 @@ let arContents: ARContent[] = [
   {
     id: 'ar-3',
     poiId: 'poi-2-1',
+    name: '第17窟AR内容包',
     modelUrl: '/models/cave17.glb',
     modelScale: 0.8,
     modelHeight: 0,
@@ -99,6 +102,7 @@ let arContents: ARContent[] = [
   {
     id: 'ar-4',
     poiId: 'poi-2-3',
+    name: '第328窟AR内容包',
     modelUrl: '/models/cave328.glb',
     modelScale: 0.8,
     modelHeight: 0,
@@ -120,6 +124,7 @@ let arContents: ARContent[] = [
   {
     id: 'ar-5',
     poiId: 'poi-3-1',
+    name: '兵马俑一号坑AR内容包',
     modelUrl: '/models/pit1.glb',
     modelScale: 1.2,
     modelHeight: 0,
@@ -147,6 +152,7 @@ let arContents: ARContent[] = [
   {
     id: 'ar-6',
     poiId: 'poi-3-4',
+    name: '铜车马AR内容包',
     modelUrl: '/models/chariot.glb',
     modelScale: 0.5,
     modelHeight: 0,
@@ -167,12 +173,22 @@ let arContents: ARContent[] = [
   },
 ]
 
+export function getARContents(scenicId?: string): ARContent[] {
+  if (!scenicId) return arContents
+  return arContents.filter((c) => c.poiId.startsWith(`poi-${scenicId.split('-')[1]}-`))
+}
+
 export function getARContent(id: string): ARContent | undefined {
   return arContents.find((c) => c.id === id)
 }
 
 export function getARContentByPOI(poiId: string): ARContent | undefined {
   return arContents.find((c) => c.poiId === poiId)
+}
+
+export function getARContentsByScenic(scenicId: string, poiMap: Record<string, string[]>): ARContent[] {
+  const poiIds = poiMap[scenicId] || []
+  return arContents.filter((c) => poiIds.includes(c.poiId))
 }
 
 export function updateARContent(id: string, data: Partial<ARContent>): ARContent | undefined {

@@ -17,6 +17,11 @@ export interface ScenicArea {
   ticketPrice?: number;
   rating?: number;
   images?: string[];
+  province?: string;
+  city?: string;
+  level?: string;
+  poiCount?: number;
+  routeCount?: number;
 }
 
 export interface POIPoint {
@@ -40,6 +45,7 @@ export interface ARContent {
   id: string;
   poiId: string;
   scenicId?: string;
+  name?: string;
   title?: string;
   description?: string;
   type?: 'model' | 'scene' | 'image';
@@ -106,15 +112,20 @@ export interface VisitorBehavior {
   scenicId: string;
   sessionId?: string;
   poiId?: string;
+  poiName?: string;
   eventType: string;
   timestamp: string;
   stayDuration?: number;
+  duration?: number;
+  durationSec?: number;
   location?: { lat: number; lng: number };
   deviceType?: 'ios' | 'android' | 'other';
   webArSupported?: boolean;
   visitorId?: string;
-  duration?: number;
   metadata?: Record<string, unknown>;
+  shareChannel?: 'wechat_moments' | 'wechat_friends' | 'weibo' | 'qq' | 'link';
+  interactionCompleted?: boolean;
+  interactionType?: string;
 }
 
 export interface OverviewMetrics {
@@ -133,12 +144,15 @@ export interface OverviewMetrics {
 }
 
 export interface HeatmapPoint {
+  id?: string;
   lat?: number;
   lng?: number;
   intensity?: number;
   latitude?: number;
   longitude?: number;
   count?: number;
+  poiName?: string;
+  poiId?: string;
 }
 
 export interface ABTestMetrics {
