@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -19,7 +19,7 @@ model User {
   idCard      String?
   balance     Decimal  @default(0)
   vipLevel    Int      @default(0)
-  tags        Json?
+  tags        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -62,7 +62,7 @@ model ChargingStation {
   pricePerKwh    Decimal  @default(0)
   serviceFee     Decimal  @default(0)
   openTime       String?
-  tags           Json?
+  tags           String?
   status         String   @default("active")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -143,9 +143,9 @@ model UserProfile {
   totalKwh         Decimal  @default(0)
   totalAmount      Decimal  @default(0)
   avgChargingTime  Int      @default(0)
-  favoriteStations Json?
-  chargingHabits   Json?
-  tags             Json?
+  favoriteStations String?
+  chargingHabits   String?
+  tags             String?
   v2gEnabled       Boolean  @default(false)
 
   user User @relation(fields: [userId], references: [id])
@@ -156,7 +156,7 @@ model CommunityPost {
   userId    String
   title     String
   content   String
-  images    Json?
+  images    String?
   likes     Int      @default(0)
   comments  Int      @default(0)
   status    String   @default("published")
@@ -220,10 +220,10 @@ model RoutePlan {
   userId         String
   origin         String
   destination    String
-  waypoints      Json?
+  waypoints      String?
   totalDistance  Decimal  @default(0)
   estimatedTime  Int      @default(0)
-  chargingStops  Json?
+  chargingStops  String?
   totalCost      Decimal  @default(0)
   createdAt      DateTime @default(now())
 

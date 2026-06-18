@@ -14,7 +14,11 @@ export interface CreateRoutePlanParams {
 
 export const createRoutePlan = async (params: CreateRoutePlanParams) => {
   const routePlan = await prisma.routePlan.create({
-    data: params,
+    data: {
+      ...params,
+      waypoints: params.waypoints === undefined ? undefined : JSON.stringify(params.waypoints),
+      chargingStops: params.chargingStops === undefined ? undefined : JSON.stringify(params.chargingStops),
+    },
   });
 
   return routePlan;

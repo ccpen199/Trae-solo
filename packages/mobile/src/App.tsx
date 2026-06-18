@@ -8,6 +8,7 @@ import V2G from './pages/V2G'
 import Profile from './pages/Profile'
 import Community from './pages/Community'
 import Login from './pages/Login'
+import StationDetail from './pages/StationDetail'
 
 function App() {
   const navigate = useNavigate()
@@ -42,7 +43,7 @@ function App() {
   ]
 
   const hideTabBarPages = ['/login', '/community']
-  const showTabBar = !hideTabBarPages.includes(location.pathname)
+  const showTabBar = !hideTabBarPages.includes(location.pathname) && !location.pathname.startsWith('/station')
 
   return (
     <div className="app-container">
@@ -55,6 +56,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/community" element={<Community />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/station/:id" element={<StationDetail />} />
         </Routes>
       </div>
       {showTabBar && (

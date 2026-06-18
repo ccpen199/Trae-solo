@@ -6,6 +6,7 @@ import communityRoutes from './communityRoutes';
 import v2gRoutes from './v2gRoutes';
 import faultRoutes from './faultRoutes';
 import routePlanRoutes from './routePlanRoutes';
+import adminRoutes from './adminRoutes';
 
 const router = Router();
 
@@ -20,6 +21,8 @@ router.get('/health', (_req, res) => {
   });
 });
 
+router.use('/admin', adminRoutes);
+router.use('/auth', userRoutes);
 router.use('/users', userRoutes);
 router.use('/stations', stationRoutes);
 router.use('/orders', orderRoutes);

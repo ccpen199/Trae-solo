@@ -20,10 +20,10 @@ app.use('/api', routes);
 
 app.use(errorHandler);
 
-server.listen(config.port, () => {
-  logger.info(`🚀 Server is running on port ${config.port}`);
+server.listen(config.port, config.host, () => {
+  logger.info(`🚀 Server is running on http://${config.host}:${config.port}`);
   logger.info(`📍 Environment: ${config.nodeEnv}`);
-  logger.info(`🔌 Health check: http://localhost:${config.port}/api/health`);
+  logger.info(`🔌 Health check: http://${config.host}:${config.port}/api/health`);
 });
 
 export default app;

@@ -29,7 +29,7 @@ export const createPost = async (params: CreatePostParams) => {
       userId,
       title,
       content,
-      images,
+      images: images === undefined ? undefined : JSON.stringify(images),
     },
   });
 

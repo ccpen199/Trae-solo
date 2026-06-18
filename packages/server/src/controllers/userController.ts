@@ -8,12 +8,14 @@ export const registerSchema = Joi.object({
     'string.pattern.base': '手机号格式不正确',
     'any.required': '手机号不能为空',
   }),
+  code: Joi.string().optional(),
   password: Joi.string().min(6).max(20).required().messages({
     'string.min': '密码长度不能少于6位',
     'string.max': '密码长度不能超过20位',
     'any.required': '密码不能为空',
   }),
   nickname: Joi.string().max(20).optional(),
+  inviteCode: Joi.string().optional(),
 });
 
 export const loginSchema = Joi.object({
