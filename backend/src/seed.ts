@@ -31,7 +31,9 @@ export function seedData() {
   const hashPwd = (pwd: string) => bcrypt.hashSync(pwd, salt);
 
   const users = [
-    { id: uuidv4(), username: 'admin', real_name: '系统管理员', phone: '13800000000', email: 'admin@test.com', role: 'store_manager', password: 'admin123' },
+    { id: uuidv4(), username: 'admin', real_name: '系统管理员', phone: '13800000000', email: 'admin@test.com', role: 'admin', password: 'admin123' },
+    { id: uuidv4(), username: 'platform', real_name: '平台运营', phone: '13800000010', email: 'platform@test.com', role: 'store_manager', password: 'platform123' },
+    { id: uuidv4(), username: 'ops', real_name: '运维管理', phone: '13800000020', email: 'ops@test.com', role: 'store_manager', password: 'ops123' },
     { id: uuidv4(), username: 'owner1', real_name: '张三', phone: '13800000001', email: 'owner1@test.com', role: 'owner', password: '123456' },
     { id: uuidv4(), username: 'owner2', real_name: '李四', phone: '13800000002', email: 'owner2@test.com', role: 'owner', password: '123456' },
     { id: uuidv4(), username: 'designer1', real_name: '王设计', phone: '13800000011', email: 'designer1@test.com', role: 'designer', city: '北京', password: '123456' },

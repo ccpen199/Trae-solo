@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 49242 --strictPort",
-    "build": "tsc && vite build",
-    "preview": "vite preview --host 127.0.0.1 --port 49242 --strictPort"
+    "dev": "export PATH=\"/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH\"; cd \"$(dirname \"$npm_package_json\")\" && vite --host 127.0.0.1 --port 49242 --strictPort",
+    "build": "export PATH=\"/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH\"; cd \"$(dirname \"$npm_package_json\")\" && tsc && vite build",
+    "preview": "export PATH=\"/Users/chen/.nvm/versions/node/v22.22.0/bin:$PATH\"; cd \"$(dirname \"$npm_package_json\")\" && vite preview --host 127.0.0.1 --port 49242 --strictPort"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.0",

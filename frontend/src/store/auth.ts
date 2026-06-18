@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import apiClient from '../api/client';
 
-export type UserRole = 'owner' | 'designer' | 'supervisor' | 'supplier' | 'store_manager';
+export type UserRole = 'admin' | 'owner' | 'designer' | 'supervisor' | 'supplier' | 'store_manager';
 
 export interface User {
   id: string;
@@ -69,6 +69,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 }));
 
 export const roleNames: Record<UserRole, string> = {
+  admin: '系统管理员',
   owner: '业主',
   designer: '设计师',
   supervisor: '施工监理',

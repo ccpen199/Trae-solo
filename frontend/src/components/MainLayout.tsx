@@ -96,7 +96,7 @@ const MainLayout: React.FC = () => {
       );
     }
 
-    if (user?.role === 'store_manager') {
+    if (user?.role === 'store_manager' || user?.role === 'admin') {
       items.push(
         { key: '/demands', icon: <FileTextOutlined />, label: '需求管理', onClick: () => navigate('/demands') },
         { key: '/contracts', icon: <FileProtectOutlined />, label: '合同管理', onClick: () => navigate('/contracts') },
