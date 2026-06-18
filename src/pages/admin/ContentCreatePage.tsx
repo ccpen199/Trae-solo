@@ -5,7 +5,6 @@ import RichTextEditor from '../../components/ui/Editor';
 import type { ContentType } from '../../../shared/types';
 
 type FeedbackType = 'success' | 'error' | 'info' | null;
-const defaultCoverImage = 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900&h=520&fit=crop';
 
 const ContentCreatePage: React.FC = () => {
   const navigate = useNavigate();
@@ -56,12 +55,8 @@ const ContentCreatePage: React.FC = () => {
     }
     setSaving(true);
     try {
-      const payload = {
-        ...formData,
-        coverImage: formData.coverImage.trim() || defaultCoverImage,
-      };
       const status = action === 'save' ? 'draft' : 'pending_audit';
-      const res = await contentApi.create({ ...payload, status });
+      const res = await contentApi.create({ ...formData, status });
       if (action === 'submit' && res?.data?.id) {
         await contentApi.submitAudit(res.data.id);
       }
@@ -99,15 +94,8 @@ const ContentCreatePage: React.FC = () => {
   const handleSecurityCheck = async () => {
     setCheckingSecurity(true);
     try {
-      const payload = {
-        ...formData,
-        coverImage: formData.coverImage.trim() || defaultCoverImage,
-      };
-      const tempContent = await contentApi.create({ ...payload, status: 'draft' });
-      const res = await contentApi.securityCheck(tempContent.data.id, {
-        content: payload.content,
-        type: payload.type,
-      } as any);
+      const tempContent = await contentApi.create({ ...formData, status: 'draft' });
+      const res = await contentApi.securityCheck(tempContent.data.id);
       setSecurityResult(res.data);
       await contentApi.delete(tempContent.data.id);
       showFeedback('success', '安全检测完成');

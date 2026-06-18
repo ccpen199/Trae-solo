@@ -24,16 +24,8 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    const payload = response.data;
-    if (payload?.data?.list && !payload.data.items) {
-      payload.data.items = payload.data.list;
-      payload.data.totalPages = Math.max(
-        1,
-        Math.ceil((payload.data.total || 0) / (payload.data.pageSize || 10))
-      );
-    }
-    console.log(`[API] ${response.status} ${response.config.url}`, payload);
-    return payload;
+    console.log(`[API] ${response.status} ${response.config.url}`, response.data);
+    return response.data;
   },
   (error) => {
     console.error('[API] Error:', error.message, error.response?.data);
