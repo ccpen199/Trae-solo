@@ -1,108 +1,122 @@
-import { useState } from 'react'
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import Sidebar from './Sidebar'
-import { PortalMode } from '../types'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import {
+  Home,
+  Shield,
+  Briefcase,
+  GraduationCap,
+  FileText,
+  MessageCircle,
+  BarChart3,
+  User,
+  ChevronLeft,
+  LogOut,
+} from 'lucide-react';
+import { useAppStore } from '@/store';
+import { useEffect } from 'react';
+
+const navItems = [
+  { path: '/', label: '首页', icon: Home },
+  { path: '/social-security', label: '社保服务', icon: Shield },
+  { path: '/employment', label: '就业服务', icon: Briefcase },
+  { path: '/talent', label: '人才服务', icon: GraduationCap },
+  { path: '/labor', label: '劳动关系', icon: FileText },
+  { path: '/policy', label: '政策问答', icon: MessageCircle },
+  { path: '/monitor', label: '效能监测', icon: BarChart3, adminOnly: true },
+  { path: '/profile', label: '个人中心', icon: User },
+];
 
 export default function Layout() {
-  const [mode, setMode] = useState<PortalMode>('personal')
-  const [collapsed, setCollapsed] = useState(false)
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { user, token, sidebarCollapsed, toggleSidebar, logout, mode } = useAppStore();
+  const navigate = useNavigate();
 
-  const handleModeSwitch = (newMode: PortalMode) => {
-    setMode(newMode)
-    if (newMode === 'personal') {
-      navigate('/personal')
-    } else {
-      navigate('/enterprise')
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
     }
-  }
+  }, [token, navigate]);
 
-  const handleNavigate = (path: string) => {
-    navigate(path)
-  }
+  if (!token) return null;
+
+  const filteredNav = navItems.filter(
+    (item) => !item.adminOnly || user?.role === 'admin',
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="fixed top-0 left-0 right-0 h-14 bg-white shadow-sm z-40 flex items-center justify-between px-4">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="p-1.5 rounded-md hover:bg-gray-100 text-gray-500"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          </button>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg gradient-blue flex items-center justify-center text-white text-sm font-bold">
-              渝
-            </div>
-            <div>
-              <h1 className="text-sm font-bold text-gray-800 leading-tight">重庆市人社数字服务中台</h1>
-              <p className="text-[10px] text-gray-400 leading-tight">全业务一体化平台</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="flex bg-gray-100 rounded-lg p-0.5">
-            <button
-              onClick={() => handleModeSwitch('personal')}
-              className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all ${
-                mode === 'personal'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
-            >
-              👤 个人门户
-            </button>
-            <button
-              onClick={() => handleModeSwitch('enterprise')}
-              className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all ${
-                mode === 'enterprise'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
-            >
-              🏢 企业门户
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2 pl-3 border-l border-gray-200">
-            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-sm">
-              {mode === 'personal' ? '张' : '重'}
-            </div>
-            <div className="hidden sm:block">
-              <p className="text-xs font-medium text-gray-700">
-                {mode === 'personal' ? '张三' : '重庆XX科技有限公司'}
-              </p>
-              <p className="text-[10px] text-gray-400">
-                {mode === 'personal' ? '身份证: 500***1234' : '统一信用代码: 91500***5678'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <Sidebar
-        mode={mode}
-        collapsed={collapsed}
-        currentPath={location.pathname}
-        onNavigate={handleNavigate}
-      />
-
-      <main
-        className={`pt-14 min-h-screen transition-all duration-300 ${
-          collapsed ? 'ml-16' : 'ml-60'
-        }`}
+    <div className="flex h-screen overflow-hidden bg-neutral-50">
+      <aside
+        className={`${
+          sidebarCollapsed ? 'w-16' : 'w-56'
+        } bg-primary-700 text-white flex flex-col transition-all duration-300 shrink-0`}
       >
-        <div className="p-6">
-          <Outlet />
+        <div className="h-14 flex items-center justify-center border-b border-primary-600">
+          {sidebarCollapsed ? (
+            <Shield className="w-7 h-7" />
+          ) : (
+            <span className="text-lg font-semibold tracking-wide">人社中台</span>
+          )}
         </div>
-      </main>
+        <nav className="flex-1 py-4 space-y-1 overflow-y-auto">
+          {filteredNav.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.path === '/'}
+              className={({ isActive }) =>
+                `flex items-center gap-3 mx-2 px-3 py-2.5 rounded-lg transition-colors ${
+                  isActive
+                    ? 'bg-primary-800 text-white'
+                    : 'text-primary-200 hover:bg-primary-600 hover:text-white'
+                } ${sidebarCollapsed ? 'justify-center' : ''}`
+              }
+            >
+              <item.icon className="w-5 h-5 shrink-0" />
+              {!sidebarCollapsed && <span className="text-sm">{item.label}</span>}
+            </NavLink>
+          ))}
+        </nav>
+        <button
+          onClick={toggleSidebar}
+          className="flex items-center justify-center h-10 border-t border-primary-600 text-primary-200 hover:text-white transition-colors"
+        >
+          <ChevronLeft
+            className={`w-5 h-5 transition-transform ${
+              sidebarCollapsed ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+      </aside>
+
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="h-14 bg-white border-b border-neutral-200 flex items-center justify-between px-6 shrink-0">
+          <div className="flex items-center gap-3">
+            <span
+              className={`px-3 py-1 rounded-full text-xs font-medium ${
+                mode === 'personal'
+                  ? 'bg-primary-100 text-primary-700'
+                  : 'bg-accent-100 text-accent-700'
+              }`}
+            >
+              {mode === 'personal' ? '个人模式' : '企业模式'}
+            </span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-neutral-600">{user?.name || '未登录'}</span>
+            <button
+              onClick={() => {
+                logout();
+                navigate('/login');
+              }}
+              className="flex items-center gap-1.5 text-sm text-neutral-500 hover:text-danger-500 transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              退出
+            </button>
+          </div>
+        </header>
+        <main className="flex-1 overflow-y-auto p-6">
+          <Outlet />
+        </main>
+      </div>
     </div>
-  )
+  );
 }
