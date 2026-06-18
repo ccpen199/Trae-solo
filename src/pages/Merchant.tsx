@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ScanLine, UserCheck, Wallet, ChevronRight } from 'lucide-react'
-import { mockMerchants, mockSettlementConfigs } from '@/mocks'
-import type { MerchantAuditStatus } from '@/types'
+import { api } from '@/api/client'
+import type { MerchantAuditStatus, Merchant, SettlementConfig } from '@/types'
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -35,8 +35,8 @@ function getStatusBadge(status: MerchantAuditStatus) {
   return <span className={`px-2 py-0.5 rounded text-xs ${cls}`}>{label}</span>
 }
 
-function AuditWorkflow() {
-  const inAudit = mockMerchants.filter(
+function AuditWorkflow({ merchants }: { merchants: Merchant[] }) {
+  const inAudit = merchants.filter(
     (m) => m.auditStatus !== 'active' && m.auditStatus !== 'rejected'
   )
 
@@ -115,18 +115,7 @@ function AuditWorkflow() {
   )
 }
 
-const CITY_PAIRS = [
-  { from: '成都', to: '宜宾', ratio: 1.2, enabled: true },
-  { from: '成都', to: '绵阳', ratio: 1.1, enabled: true },
-  { from: '成都', to: '乐山', ratio: 1.15, enabled: false },
-  { from: '宜宾', to: '成都', ratio: 1.0, enabled: true },
-  { from: '绵阳', to: '德阳', ratio: 1.05, enabled: true },
-  { from: '泸州', to: '宜宾', ratio: 1.1, enabled: false },
-]
-
-function CrossCityRulesEngine() {
-  const [pairs] = useState(CITY_PAIRS)
-
+function CrossCityRulesEngine({ rules }: { rules: { from: string; to: string; ratio: number; enabled: boolean }[] }) {
   return (
     <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="rounded-2xl bg-wudu-800 p-6 border border-wudu-700/50">
       <h3 className="text-lg font-serif text-white mb-5">跨城权益互认规则引擎</h3>
@@ -142,7 +131,7 @@ function CrossCityRulesEngine() {
             </tr>
           </thead>
           <tbody>
-            {pairs.map((pair, index) => (
+            {rules.map((pair, index) => (
               <motion.tr
                 key={index}
                 initial={{ opacity: 0, x: -8 }}
@@ -181,15 +170,12 @@ function CrossCityRulesEngine() {
   )
 }
 
-function SettlementConfiguration() {
-  const merchantMap = new Map(mockMerchants.map((m) => [m.id, m]))
-
+function SettlementConfiguration({ settlements }: { settlements: (SettlementConfig & { merchantName: string })[] }) {
   return (
     <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.2 }} className="rounded-2xl bg-wudu-800 p-6 border border-wudu-700/50">
       <h3 className="text-lg font-serif text-white mb-5">结算周期配置</h3>
       <div className="grid grid-cols-2 gap-3">
-        {mockSettlementConfigs.map((config, index) => {
-          const merchant = merchantMap.get(config.merchantId)
+        {settlements.map((config, index) => {
           const cycleColor =
             config.cycle === 'T+1'
               ? 'bg-jinguan-400/20 text-jinguan-400'
@@ -206,7 +192,7 @@ function SettlementConfiguration() {
               className="rounded-xl bg-wudu-900 p-4 border border-wudu-700/40"
             >
               <div className="text-sm font-medium text-white mb-2 truncate">
-                {merchant?.name ?? config.merchantId}
+                {config.merchantName ?? config.merchantId}
               </div>
               <div className="flex items-center gap-2 mb-2">
                 <span className={`px-2 py-0.5 rounded text-xs ${cycleColor}`}>{config.cycle}</span>
@@ -226,11 +212,44 @@ function SettlementConfiguration() {
 }
 
 export default function Merchant() {
+  const [merchants, setMerchants] = useState<Merchant[]>([])
+  const [rules, setRules] = useState<{ from: string; to: string; ratio: number; enabled: boolean }[]>([])
+  const [settlements, setSettlements] = useState<(SettlementConfig & { merchantName: string })[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [auditData, rulesData, settlementsData] = await Promise.all([
+          api.merchant.audit(),
+          api.merchant.rules(),
+          api.merchant.settlements(),
+        ])
+        setMerchants(auditData)
+        setRules(rulesData)
+        setSettlements(settlementsData)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        <div className="flex items-center justify-center py-16">
+          <div className="w-6 h-6 border-2 border-jinguan-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-6 space-y-5">
-      <AuditWorkflow />
-      <CrossCityRulesEngine />
-      <SettlementConfiguration />
+      <AuditWorkflow merchants={merchants} />
+      <CrossCityRulesEngine rules={rules} />
+      <SettlementConfiguration settlements={settlements} />
     </div>
   )
 }

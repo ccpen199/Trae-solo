@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MapPin, ChevronDown, Users, Store } from 'lucide-react'
-import { CITIES } from '@/mocks'
+import { api } from '@/api/client'
 import { useStore } from '@/store'
+import type { City } from '@/types'
 
 function formatCount(n: number): string {
   if (n >= 10000) {
@@ -13,9 +14,23 @@ function formatCount(n: number): string {
 
 export default function CitySwitcher() {
   const [open, setOpen] = useState(false)
+  const [cities, setCities] = useState<City[]>([])
+  const [loading, setLoading] = useState(true)
   const currentCity = useStore((s) => s.currentCity)
   const setCurrentCity = useStore((s) => s.setCurrentCity)
   const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    async function fetchCities() {
+      try {
+        const data = await api.cities.list()
+        setCities(data)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchCities()
+  }, [])
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -26,6 +41,15 @@ export default function CitySwitcher() {
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-wudu-800 text-white">
+        <div className="w-4 h-4 border-2 border-jinguan-400 border-t-transparent rounded-full animate-spin" />
+        <span className="text-sm">加载中...</span>
+      </div>
+    )
+  }
 
   return (
     <div ref={ref} className="relative">
@@ -53,7 +77,7 @@ export default function CitySwitcher() {
             className="absolute top-full left-0 mt-2 w-64 rounded-xl bg-wudu-800 border border-wudu-700 shadow-2xl overflow-hidden z-50"
           >
             <div className="max-h-80 overflow-y-auto py-1">
-              {CITIES.map((city) => {
+              {cities.map((city) => {
                 const active = city.name === currentCity
                 return (
                   <button

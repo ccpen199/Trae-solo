@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { Crown, Store, ShoppingBag, BarChart3 } from 'lucide-react'
-import { mockProducts, CITIES } from '@/mocks'
+import { api } from '@/api/client'
 import { useStore } from '@/store'
+import type { Product, City } from '@/types'
 
 const businessEntries = [
   { icon: Crown, title: '会员权益', desc: '跨城积分通兑，权益无忧享', path: '/member' },
@@ -21,19 +23,58 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
+function formatNumber(n: number): string {
+  if (n >= 10000) {
+    return (n / 10000).toFixed(1) + '万'
+  }
+  return n.toLocaleString()
+}
+
 export default function Home() {
   const navigate = useNavigate()
   const currentCity = useStore((s) => s.currentCity)
+  const [cityProducts, setCityProducts] = useState<Product[]>([])
+  const [cities, setCities] = useState<City[]>([])
+  const [totalMerchants, setTotalMerchants] = useState(0)
+  const [totalMembers, setTotalMembers] = useState(0)
+  const [crossCityTransactions, setCrossCityTransactions] = useState(0)
+  const [loading, setLoading] = useState(true)
 
-  const cityProducts = mockProducts.filter((p) => p.city === currentCity)
-  const totalMerchants = CITIES.reduce((sum, c) => sum + c.merchantCount, 0)
-  const totalMembers = CITIES.reduce((sum, c) => sum + c.memberCount, 0)
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [productsData, summaryData, citiesData] = await Promise.all([
+          api.products.list({ city: currentCity }),
+          api.dashboard.summary(),
+          api.cities.list(),
+        ])
+        setCityProducts(productsData)
+        setCities(citiesData)
+        setTotalMerchants(summaryData.totalMerchants)
+        setTotalMembers(summaryData.totalMembers)
+        setCrossCityTransactions(summaryData.crossCityTransactions)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [currentCity])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-wudu-950 overflow-x-hidden">
+        <div className="flex items-center justify-center py-16">
+          <div className="w-6 h-6 border-2 border-jinguan-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    )
+  }
 
   const stats = [
-    { value: CITIES.length, label: '联盟城市' },
-    { value: totalMerchants.toLocaleString(), label: '入驻商户' },
-    { value: totalMembers.toLocaleString(), label: '会员总数' },
-    { value: '156,000', label: '跨城交易' },
+    { value: cities.length, label: '联盟城市' },
+    { value: formatNumber(totalMerchants), label: '入驻商户' },
+    { value: formatNumber(totalMembers), label: '会员总数' },
+    { value: formatNumber(crossCityTransactions), label: '跨城交易' },
   ]
 
   return (

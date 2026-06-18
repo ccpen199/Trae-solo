@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, MapPin, ExternalLink, Clock, Check } from 'lucide-react';
-import { mockProducts } from '@/mocks';
+import { api } from '@/api/client';
+import type { Product } from '@/types';
 
 const TABS = ['电影选座', '电商好物', '本地生活', '线下核销'] as const;
 type TabType = (typeof TABS)[number];
@@ -55,8 +56,7 @@ const tabVariants = {
   exit: { opacity: 0, x: -20 },
 };
 
-function MovieSeatSelection() {
-  const movies = useMemo(() => mockProducts.filter(p => p.type === 'movie'), []);
+function MovieSeatSelection({ movies }: { movies: Product[] }) {
   const [selectedMovieId, setSelectedMovieId] = useState(movies[0]?.id ?? '');
   const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
 
@@ -168,9 +168,7 @@ function MovieSeatSelection() {
   );
 }
 
-function EcommerceGrid() {
-  const products = useMemo(() => mockProducts.filter(p => p.type === 'ecommerce'), []);
-
+function EcommerceGrid({ products }: { products: Product[] }) {
   return (
     <div className="grid grid-cols-3 gap-5">
       {products.map(product => (
@@ -227,9 +225,8 @@ function EcommerceGrid() {
   );
 }
 
-function LocalLifeGrid() {
+function LocalLifeGrid({ products }: { products: Product[] }) {
   const [category, setCategory] = useState<string>('全部');
-  const products = useMemo(() => mockProducts.filter(p => p.type === 'local_life'), []);
   const filtered = useMemo(
     () => category === '全部' ? products : products.filter(p => p.category === category),
     [category, products],
@@ -362,15 +359,43 @@ function OfflineVerification() {
   );
 }
 
-const TAB_CONTENT: Record<TabType, JSX.Element> = {
-  '电影选座': <MovieSeatSelection />,
-  '电商好物': <EcommerceGrid />,
-  '本地生活': <LocalLifeGrid />,
-  '线下核销': <OfflineVerification />,
-};
-
 export default function Scenarios() {
   const [activeTab, setActiveTab] = useState<TabType>('电影选座');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const data = await api.products.list();
+        setProducts(data);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProducts();
+  }, []);
+
+  const movies = useMemo(() => products.filter(p => p.type === 'movie'), [products]);
+  const ecommerceProducts = useMemo(() => products.filter(p => p.type === 'ecommerce'), [products]);
+  const localLifeProducts = useMemo(() => products.filter(p => p.type === 'local_life'), [products]);
+
+  const TAB_CONTENT: Record<TabType, JSX.Element> = {
+    '电影选座': <MovieSeatSelection movies={movies} />,
+    '电商好物': <EcommerceGrid products={ecommerceProducts} />,
+    '本地生活': <LocalLifeGrid products={localLifeProducts} />,
+    '线下核销': <OfflineVerification />,
+  };
+
+  if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto">
+        <div className="flex items-center justify-center py-16">
+          <div className="w-6 h-6 border-2 border-jinguan-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto">

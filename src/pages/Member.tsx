@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Crown, MapPin, Star, Gift, ArrowRightLeft, ChevronRight } from 'lucide-react'
-import { mockMember, mockPointRecords, mockProducts } from '@/mocks'
+import { Crown, MapPin, Star, Gift, ArrowRightLeft } from 'lucide-react'
+import { api } from '@/api/client'
 import { useStore } from '@/store'
+import type { Member, PointRecord, CrossCityBenefit, Product } from '@/types'
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -17,8 +18,8 @@ const LEVEL_MAP: Record<string, { label: string; color: string }> = {
   diamond: { label: '钻石会员', color: 'bg-cyan-400/20 text-cyan-300' },
 }
 
-function ProfileCard() {
-  const level = LEVEL_MAP[mockMember.level]
+function ProfileCard({ member }: { member: Member }) {
+  const level = LEVEL_MAP[member.level]
 
   return (
     <motion.div
@@ -29,7 +30,7 @@ function ProfileCard() {
         <div className="relative shrink-0">
           <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-jinguan-400 animate-pulse-gold">
             <img
-              src={mockMember.avatar}
+              src={member.avatar}
               alt="avatar"
               className="w-full h-full object-cover"
             />
@@ -37,7 +38,7 @@ function ProfileCard() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-white text-lg font-medium">{mockMember.phone}</span>
+            <span className="text-white text-lg font-medium">{member.phone}</span>
             <span className={`px-2.5 py-0.5 rounded-full text-xs ${level.color}`}>
               <Crown className="w-3 h-3 inline mr-1" />
               {level.label}
@@ -45,15 +46,15 @@ function ProfileCard() {
           </div>
           <div className="flex items-center gap-2 mb-3">
             <span className="px-2 py-0.5 rounded text-xs bg-wudu-700 text-wudu-300">
-              {mockMember.city}
+              {member.city}
             </span>
             <span className="flex items-center gap-1 text-xs text-shujin-500">
               <MapPin className="w-3 h-3" />
-              当前定位: {mockMember.lbsCity}
+              当前定位: {member.lbsCity}
             </span>
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {mockMember.tags.map((tag) => (
+            {member.tags.map((tag) => (
               <span
                 key={tag}
                 className="px-2 py-0.5 rounded text-[10px] bg-wudu-700 text-wudu-300"
@@ -68,7 +69,7 @@ function ProfileCard() {
   )
 }
 
-function PointsOverview() {
+function PointsOverview({ member }: { member: Member }) {
   return (
     <motion.div
       {...fadeUp}
@@ -77,7 +78,7 @@ function PointsOverview() {
     >
       <div className="flex items-baseline gap-2 mb-4">
         <span className="text-jinguan-400 text-4xl font-bold">
-          {mockMember.points.toLocaleString()}
+          {member.points.toLocaleString()}
         </span>
         <span className="text-wudu-400 text-sm">可用积分</span>
       </div>
@@ -96,7 +97,7 @@ function PointsOverview() {
   )
 }
 
-function PointsTimeline() {
+function PointsTimeline({ records }: { records: PointRecord[] }) {
   return (
     <motion.div
       {...fadeUp}
@@ -107,7 +108,7 @@ function PointsTimeline() {
       <div className="relative">
         <div className="absolute left-[11px] top-0 bottom-0 w-[2px] bg-wudu-600" />
         <div className="space-y-4">
-          {mockPointRecords.map((record, index) => (
+          {records.map((record, index) => (
             <motion.div
               key={record.id}
               initial={{ opacity: 0, x: -12 }}
@@ -154,9 +155,7 @@ function PointsTimeline() {
   )
 }
 
-function CrossCityBenefits() {
-  const [benefits] = useState(mockMember.crossCityBenefits)
-
+function CrossCityBenefits({ benefits }: { benefits: CrossCityBenefit[] }) {
   return (
     <motion.div
       {...fadeUp}
@@ -213,12 +212,7 @@ function CrossCityBenefits() {
   )
 }
 
-function Recommendations() {
-  const currentCity = useStore((s) => s.currentCity)
-  const recommendations = mockProducts.filter(
-    (p) => p.type === 'local_life' || p.type === 'ecommerce'
-  )
-
+function Recommendations({ recommendations, currentCity }: { recommendations: Product[]; currentCity: string }) {
   return (
     <motion.div
       {...fadeUp}
@@ -273,13 +267,54 @@ function Recommendations() {
 }
 
 export default function Member() {
+  const currentCity = useStore((s) => s.currentCity)
+  const [member, setMember] = useState<Member | null>(null)
+  const [pointRecords, setPointRecords] = useState<PointRecord[]>([])
+  const [benefits, setBenefits] = useState<CrossCityBenefit[]>([])
+  const [recommendations, setRecommendations] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [profileData, pointsData, benefitsData, recsData] = await Promise.all([
+          api.member.profile(),
+          api.member.points(),
+          api.member.benefits(),
+          api.member.recommendations(currentCity),
+        ])
+        setMember(profileData)
+        setPointRecords(pointsData.records)
+        setBenefits(benefitsData)
+        setRecommendations(recsData)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [currentCity])
+
+  if (loading) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 py-6">
+        <div className="flex items-center justify-center py-16">
+          <div className="w-6 h-6 border-2 border-jinguan-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    )
+  }
+
+  if (!member) {
+    return null
+  }
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-5">
-      <ProfileCard />
-      <PointsOverview />
-      <PointsTimeline />
-      <CrossCityBenefits />
-      <Recommendations />
+      <ProfileCard member={member} />
+      <PointsOverview member={member} />
+      <PointsTimeline records={pointRecords} />
+      <CrossCityBenefits benefits={benefits} />
+      <Recommendations recommendations={recommendations} currentCity={currentCity} />
     </div>
   )
 }

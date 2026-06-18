@@ -1,17 +1,28 @@
+import { useState, useEffect } from 'react'
 import ReactECharts from 'echarts-for-react'
-import { mockCityMetrics, mockCrossCityFlows } from '@/mocks'
+import { api } from '@/api/client'
 import { TrendingUp, Repeat, TicketCheck, ArrowLeftRight } from 'lucide-react'
+import type { CityMetrics, CrossCityFlow } from '@/types'
 
 const topCities = ['成都', '宜宾', '绵阳', '德阳']
 const months = ['1月', '2月', '3月', '4月', '5月', '6月']
-const metricsMap = Object.fromEntries(mockCityMetrics.map((m) => [m.city, m]))
 
 const baseChartTheme = {
   backgroundColor: 'transparent',
   textStyle: { color: '#9494ad', fontFamily: 'DM Sans, system-ui, sans-serif' },
 }
 
-function GmvTrendChart() {
+function formatGmv(n: number): string {
+  if (n >= 100000000) {
+    return '¥' + (n / 100000000).toFixed(2) + '亿'
+  }
+  if (n >= 10000) {
+    return '¥' + (n / 10000).toFixed(1) + '万'
+  }
+  return '¥' + n.toLocaleString()
+}
+
+function GmvTrendChart({ metricsMap }: { metricsMap: Record<string, CityMetrics> }) {
   const series = topCities.map((city, idx) => {
     const m = metricsMap[city]
     return {
@@ -51,8 +62,8 @@ function GmvTrendChart() {
   )
 }
 
-function RepurchaseRateChart() {
-  const sorted = [...mockCityMetrics].sort((a, b) => b.repurchaseRate - a.repurchaseRate)
+function RepurchaseRateChart({ metrics }: { metrics: CityMetrics[] }) {
+  const sorted = [...metrics].sort((a, b) => b.repurchaseRate - a.repurchaseRate)
 
   const option = {
     ...baseChartTheme,
@@ -98,12 +109,16 @@ function RepurchaseRateChart() {
   )
 }
 
-function CouponRedemptionChart() {
-  const avgRate = 0.512
-  const avgTrend = mockCityMetrics.reduce(
-    (acc, m) => m.couponTrend.map((v, i) => (acc[i] ?? 0) + v / mockCityMetrics.length),
-    [] as number[]
-  )
+function CouponRedemptionChart({ metrics }: { metrics: CityMetrics[] }) {
+  const avgRate = metrics.length > 0
+    ? metrics.reduce((sum, m) => sum + m.couponRedemptionRate, 0) / metrics.length
+    : 0
+  const avgTrend = metrics.length > 0
+    ? metrics.reduce(
+        (acc, m) => m.couponTrend.map((v, i) => (acc[i] ?? 0) + v / metrics.length),
+        [] as number[]
+      )
+    : []
 
   const gaugeOption = {
     ...baseChartTheme,
@@ -156,8 +171,8 @@ function CouponRedemptionChart() {
   )
 }
 
-function CrossCityFlowChart() {
-  const top6 = [...mockCrossCityFlows].sort((a, b) => b.amount - a.amount).slice(0, 6)
+function CrossCityFlowChart({ flows }: { flows: CrossCityFlow[] }) {
+  const top6 = [...flows].sort((a, b) => b.amount - a.amount).slice(0, 6)
   const maxAmount = top6[0]?.amount ?? 1
 
   return (
@@ -195,14 +210,57 @@ function CrossCityFlowChart() {
   )
 }
 
-const topStats = [
-  { label: '总GMV', value: '¥1.63亿', change: '+12.3%', up: true, icon: TrendingUp },
-  { label: '平均复购率', value: '32.6%', change: '', up: true, icon: Repeat },
-  { label: '券核销率', value: '51.2%', change: '', up: true, icon: TicketCheck },
-  { label: '跨城消费', value: '15.6万笔', change: '', up: true, icon: ArrowLeftRight },
-]
-
 export default function Dashboard() {
+  const [metrics, setMetrics] = useState<CityMetrics[]>([])
+  const [flows, setFlows] = useState<CrossCityFlow[]>([])
+  const [totalGmv, setTotalGmv] = useState(0)
+  const [crossCityTransactions, setCrossCityTransactions] = useState(0)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [metricsData, flowsData, summaryData] = await Promise.all([
+          api.dashboard.metrics(),
+          api.dashboard.crossCityFlows(),
+          api.dashboard.summary(),
+        ])
+        setMetrics(metricsData)
+        setFlows(flowsData)
+        setTotalGmv(summaryData.totalGmv)
+        setCrossCityTransactions(summaryData.crossCityTransactions)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  const metricsMap = Object.fromEntries(metrics.map((m) => [m.city, m]))
+  const avgRepurchaseRate = metrics.length > 0
+    ? (metrics.reduce((sum, m) => sum + m.repurchaseRate, 0) / metrics.length * 100).toFixed(1) + '%'
+    : '0%'
+  const avgCouponRate = metrics.length > 0
+    ? (metrics.reduce((sum, m) => sum + m.couponRedemptionRate, 0) / metrics.length * 100).toFixed(1) + '%'
+    : '0%'
+
+  const topStats = [
+    { label: '总GMV', value: formatGmv(totalGmv), change: '+12.3%', up: true, icon: TrendingUp },
+    { label: '平均复购率', value: avgRepurchaseRate, change: '', up: true, icon: Repeat },
+    { label: '券核销率', value: avgCouponRate, change: '', up: true, icon: TicketCheck },
+    { label: '跨城消费', value: (crossCityTransactions / 10000).toFixed(1) + '万笔', change: '', up: true, icon: ArrowLeftRight },
+  ]
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-wudu-950 px-4 py-8 max-w-7xl mx-auto">
+        <div className="flex items-center justify-center py-16">
+          <div className="w-6 h-6 border-2 border-jinguan-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-wudu-950 px-4 py-8 max-w-7xl mx-auto">
       <h1 className="font-serif text-3xl text-white mb-8">运营看板</h1>
@@ -225,10 +283,10 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <GmvTrendChart />
-        <RepurchaseRateChart />
-        <CouponRedemptionChart />
-        <CrossCityFlowChart />
+        <GmvTrendChart metricsMap={metricsMap} />
+        <RepurchaseRateChart metrics={metrics} />
+        <CouponRedemptionChart metrics={metrics} />
+        <CrossCityFlowChart flows={flows} />
       </div>
     </div>
   )
