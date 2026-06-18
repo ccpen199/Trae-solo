@@ -1,367 +1,354 @@
-import { useState, useMemo, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, FileText, Activity, Car, GraduationCap, Coffee, Search, Star, ChevronRight, SlidersHorizontal, X, ChevronLeft } from 'lucide-react';
-import { useServiceStore } from '@/stores/serviceStore';
-import type { ServiceItem } from '@/types';
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Search,
+  Filter,
+  ChevronRight,
+  Building,
+  Clock,
+  Star,
+  TrendingUp,
+  HeartHandshake,
+  FileCheck,
+  Stethoscope,
+  Car,
+  GraduationCap,
+  Coffee,
+  Grid3X3,
+  List,
+} from "lucide-react";
+import { useAppStore } from "@/store";
+import { serviceDomains, mockDepartments, statusTextMap } from "@/data/mockData";
+import type { ServiceDomain } from "@/types";
+import { cn } from "@/lib/utils";
 
-const iconMap: Record<string, React.ElementType> = {
-  Heart, FileText, Activity, Car, GraduationCap, Coffee,
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  HeartHandshake,
+  FileCheck,
+  Stethoscope,
+  Car,
+  GraduationCap,
+  Coffee,
 };
 
-type SortKey = 'default' | 'rating' | 'count';
-const PAGE_SIZE = 20;
-
-function ServiceCard({ service }: { service: ServiceItem }) {
-  const domain = useServiceStore((s) => s.domains.find((d) => d.id === service.domainId));
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="gov-card p-5"
-    >
-      <div className="flex items-start justify-between mb-3">
-        <h3 className="font-semibold text-gov-text">{service.name}</h3>
-        <div className="flex gap-1 shrink-0 ml-2">
-          {service.tags.includes('热门') && <span className="gov-badge gov-badge-hot">热门</span>}
-          {service.tags.includes('高频') && <span className="gov-badge gov-badge-new">高频</span>}
-          {service.tags.includes('季节性') && <span className="gov-badge bg-violet-100 text-violet-700">季节</span>}
-        </div>
-      </div>
-
-      <span className="inline-block gov-badge bg-blue-50 text-gov-blue mb-2">
-        {service.department}
-      </span>
-
-      <p className="text-sm text-gov-text-secondary line-clamp-2 mb-3">{service.description}</p>
-
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-0.5">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star
-              key={i}
-              className={`w-3.5 h-3.5 ${i < Math.round(service.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`}
-            />
-          ))}
-          <span className="text-sm text-gov-text-secondary ml-1">{service.rating}</span>
-        </div>
-        <span className="text-xs text-gov-text-secondary">
-          {service.applicationCount.toLocaleString()}次办理
-        </span>
-      </div>
-
-      <div className="mt-3 flex items-center justify-between pt-3 border-t border-gov-border">
-        {domain && (
-          <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-gradient-to-r ${domain.gradient} text-white`}>
-            {(() => { const Icon = iconMap[domain.icon] || Heart; return <Icon className="w-3 h-3" />; })()}
-            {domain.name}
-          </div>
-        )}
-        <Link
-          to={`/apply/${service.id}`}
-          className="gov-btn-primary px-4 py-1.5 text-xs flex items-center gap-1 no-underline"
-          onClick={(e) => e.stopPropagation()}
-        >
-          立即办理 <ChevronRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function Services() {
-  const { domains, services } = useServiceStore();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const {
+    services,
+    selectedDomain,
+    setSelectedDomain,
+    searchKeyword,
+    setSearchKeyword,
+    getFilteredServices,
+  } = useAppStore();
 
-  const domainParam = searchParams.get('domain');
-  const queryParam = searchParams.get('q') || '';
-
-  const [activeDomain, setActiveDomain] = useState<string | null>(domainParam);
-  const [searchQuery, setSearchQuery] = useState(queryParam);
-  const [selectedDept, setSelectedDept] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<SortKey>('default');
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    const q = searchParams.get('q') || '';
-    if (q) {
-      setSearchQuery(q);
-      setCurrentPage(1);
-    }
-  }, [searchParams]);
-
-  const departments = useMemo(
-    () => ['all', ...Array.from(new Set(services.map((s) => s.department)))],
-    [services],
-  );
+  const [selectedDept, setSelectedDept] = useState<string>("all");
+  const [onlineOnly, setOnlineOnly] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState<"apply" | "rating" | "time">("apply");
 
   const filtered = useMemo(() => {
-    let result = services;
-    if (activeDomain) {
-      result = result.filter((s) => s.domainId === activeDomain);
+    let list = getFilteredServices();
+    if (selectedDept !== "all") {
+      list = list.filter((s) => s.departmentId === selectedDept);
     }
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(
-        (s) => s.name.toLowerCase().includes(q) || s.department.toLowerCase().includes(q) || s.tags.some((t) => t.includes(q)),
-      );
+    if (onlineOnly) {
+      list = list.filter((s) => s.onlineAvailable);
     }
-    if (selectedDept !== 'all') {
-      result = result.filter((s) => s.department === selectedDept);
-    }
-    if (sortBy === 'rating') {
-      result = [...result].sort((a, b) => b.rating - a.rating);
-    } else if (sortBy === 'count') {
-      result = [...result].sort((a, b) => b.applicationCount - a.applicationCount);
-    }
-    return result;
-  }, [services, activeDomain, searchQuery, selectedDept, sortBy]);
-
-  const domainBreakdown = useMemo(() => {
-    if (!searchQuery) return [];
-    const q = searchQuery.toLowerCase();
-    const matched = services.filter(
-      (s) => s.name.toLowerCase().includes(q) || s.department.toLowerCase().includes(q) || s.tags.some((t) => t.includes(q)),
-    );
-    const map = new Map<string, number>();
-    matched.forEach((s) => {
-      map.set(s.domainId, (map.get(s.domainId) || 0) + 1);
+    list = [...list].sort((a, b) => {
+      if (sortBy === "apply") return b.applyCount - a.applyCount;
+      if (sortBy === "rating") return b.satisfactionRate - a.satisfactionRate;
+      return a.handlingTime.localeCompare(b.handlingTime);
     });
-    return domains
-      .map((d) => ({ id: d.id, name: d.name, gradient: d.gradient, count: map.get(d.id) || 0 }))
-      .filter((d) => d.count > 0);
-  }, [services, domains, searchQuery]);
+    return list;
+  }, [getFilteredServices, selectedDept, onlineOnly, sortBy]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const safeCurrentPage = Math.min(currentPage, totalPages);
-  const paged = filtered.slice((safeCurrentPage - 1) * PAGE_SIZE, safeCurrentPage * PAGE_SIZE);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeDomain, searchQuery, selectedDept, sortBy]);
-
-  const handleDomainClick = (domainId: string | null) => {
-    setActiveDomain(domainId);
-    if (domainId) {
-      setSearchParams({ domain: domainId });
-    } else {
-      setSearchParams({});
-    }
-  };
-
-  const handleClearSearch = () => {
-    setSearchQuery('');
-    setSearchParams({});
-  };
-
-  const pageNumbers = useMemo(() => {
-    const pages: number[] = [];
-    const start = Math.max(1, safeCurrentPage - 2);
-    const end = Math.min(totalPages, safeCurrentPage + 2);
-    for (let i = start; i <= end; i++) pages.push(i);
-    return pages;
-  }, [safeCurrentPage, totalPages]);
+  const stats = useMemo(() => {
+    const total = services.length;
+    const online = services.filter((s) => s.onlineAvailable).length;
+    return { total, online, depts: mockDepartments.length };
+  }, [services]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="max-w-7xl mx-auto px-4 sm:px-6 py-6"
-    >
-      <div className="flex gap-6">
-        <aside className="hidden lg:block w-52 shrink-0">
-          <div className="gov-card p-3 sticky top-24">
-            <h3 className="text-sm font-bold text-gov-text mb-3 px-2">服务分类</h3>
-            <nav className="flex flex-col gap-1">
-              <button
-                onClick={() => handleDomainClick(null)}
-                className={`gov-sidebar-item text-sm ${!activeDomain ? 'gov-sidebar-item-active' : ''}`}
-              >
-                全部服务
-              </button>
-              {domains.map((d) => {
-                const Icon = iconMap[d.icon] || Heart;
-                return (
-                  <button
-                    key={d.id}
-                    onClick={() => handleDomainClick(d.id)}
-                    className={`gov-sidebar-item text-sm ${activeDomain === d.id ? 'gov-sidebar-item-active' : ''}`}
-                  >
-                    <Icon className="w-4 h-4" style={{ color: d.color }} />
-                    {d.name}
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-        </aside>
-
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-col sm:flex-row gap-3 mb-5">
-            <div className="flex-1 flex items-center bg-white rounded-lg border border-gov-border px-3 py-2 relative">
-              <Search className="w-4 h-4 text-gov-text-secondary shrink-0" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="搜索服务名称、部门..."
-                className="flex-1 ml-2 border-none outline-none text-sm text-gov-text placeholder-gov-text-secondary pr-8"
-              />
-              <AnimatePresence>
-                {searchQuery && (
-                  <motion.button
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    onClick={handleClearSearch}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-gray-100 text-gov-text-secondary"
-                  >
-                    <X className="w-4 h-4" />
-                  </motion.button>
-                )}
-              </AnimatePresence>
+    <div className="min-h-screen py-8">
+      <div className="container">
+        {/* 顶部统计 */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          {[
+            { label: "服务事项总数", value: stats.total, icon: Grid3X3, color: "from-gov-500 to-gov-700" },
+            { label: "可在线办理", value: stats.online, icon: FileCheck, color: "from-success-500 to-success-700" },
+            { label: "进驻部门", value: stats.depts, icon: Building, color: "from-violet-500 to-violet-700" },
+            { label: "本月办件量", value: "38,472", icon: TrendingUp, color: "from-amber-500 to-amber-700" },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="card p-4 flex items-center gap-4 hover:shadow-card-hover transition-shadow"
+            >
+              <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br", s.color)}>
+                <s.icon className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-ink">{s.value}</p>
+                <p className="text-xs text-ink-light">{s.label}</p>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <div className="relative">
-                <SlidersHorizontal className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gov-text-secondary" />
+          ))}
+        </div>
+
+        <div className="grid lg:grid-cols-4 gap-6">
+          {/* 左侧分类 */}
+          <aside className="lg:col-span-1">
+            <div className="card p-5 sticky top-20">
+              <h3 className="font-serif text-lg font-semibold text-ink mb-4 flex items-center gap-2">
+                <Filter className="w-5 h-5 text-gov-600" />
+                服务分类
+              </h3>
+
+              <div className="space-y-1 mb-6">
+                <button
+                  onClick={() => setSelectedDomain("all")}
+                  className={cn(
+                    "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all",
+                    selectedDomain === "all"
+                      ? "bg-gov-50 text-gov-700 font-medium"
+                      : "text-ink hover:bg-ink-bg"
+                  )}
+                >
+                  <Grid3X3 className="w-5 h-5" />
+                  全部服务
+                  <span className="ml-auto text-xs text-ink-light">{services.length}</span>
+                </button>
+                {serviceDomains.map((domain) => {
+                  const count = services.filter((s) => s.category === domain.code).length;
+                  const IconComp = iconMap[domain.icon];
+                  return (
+                    <button
+                      key={domain.code}
+                      onClick={() => setSelectedDomain(domain.code as ServiceDomain)}
+                      className={cn(
+                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all",
+                        selectedDomain === domain.code
+                          ? "bg-gov-50 text-gov-700 font-medium"
+                          : "text-ink hover:bg-ink-bg"
+                      )}
+                    >
+                      <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", domain.bgColor)}>
+                        {IconComp && <IconComp className={cn("w-4 h-4", domain.textColor)} />}
+                      </div>
+                      {domain.name}
+                      <span className="ml-auto text-xs text-ink-light">{count}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="border-t border-ink-border pt-4">
+                <h4 className="text-sm font-medium text-ink mb-3">办理部门</h4>
                 <select
                   value={selectedDept}
                   onChange={(e) => setSelectedDept(e.target.value)}
-                  className="gov-input pl-9 pr-8 py-2 text-sm appearance-none cursor-pointer"
+                  className="input"
                 >
-                  {departments.map((d) => (
-                    <option key={d} value={d}>{d === 'all' ? '全部部门' : d}</option>
+                  <option value="all">全部部门</option>
+                  {mockDepartments.map((d) => (
+                    <option key={d.id} value={d.id}>
+                      {d.name}
+                    </option>
                   ))}
                 </select>
+
+                <label className="flex items-center gap-2 mt-4 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={onlineOnly}
+                    onChange={(e) => setOnlineOnly(e.target.checked)}
+                    className="w-4 h-4 text-gov-600 rounded border-ink-border focus:ring-gov-400"
+                  />
+                  <span className="text-sm text-ink">仅显示可在线办理</span>
+                </label>
               </div>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortKey)}
-                className="gov-input px-3 py-2 text-sm appearance-none cursor-pointer"
-              >
-                <option value="default">默认排序</option>
-                <option value="rating">评分优先</option>
-                <option value="count">办理量优先</option>
-              </select>
             </div>
-          </div>
+          </aside>
 
-          <AnimatePresence mode="wait">
-            {searchQuery ? (
-              <motion.div
-                key="search-header"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="mb-5"
-              >
-                <div className="gov-card p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-base font-bold text-gov-text">
-                      搜索 '<span className="text-gov-blue">{searchQuery}</span>' 找到 <span className="text-gov-blue">{filtered.length}</span> 项相关服务
-                    </h2>
-                  </div>
-                  <p className="text-xs text-gov-text-secondary">
-                    匹配范围: 服务名称、部门、标签
-                  </p>
-                  {domainBreakdown.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {domainBreakdown.map((d) => (
-                        <span
-                          key={d.id}
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r ${d.gradient} text-white`}
-                        >
-                          {d.name} {d.count}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+          {/* 右侧服务列表 */}
+          <main className="lg:col-span-3">
+            <div className="card p-5 mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="flex-1 relative">
+                  <Search className="w-5 h-5 text-ink-light absolute left-4 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={searchKeyword}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
+                    placeholder="输入服务名称、部门名称进行搜索..."
+                    className="input pl-11"
+                  />
                 </div>
-              </motion.div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-ink-light">排序：</span>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                    className="input !w-auto"
+                  >
+                    <option value="apply">办理量</option>
+                    <option value="rating">好评率</option>
+                    <option value="time">办理时长</option>
+                  </select>
+                  <div className="flex border border-ink-border rounded-md overflow-hidden">
+                    <button
+                      onClick={() => setViewMode("grid")}
+                      className={cn(
+                        "p-2 transition-colors",
+                        viewMode === "grid" ? "bg-gov-50 text-gov-600" : "text-ink-light hover:bg-ink-bg"
+                      )}
+                    >
+                      <Grid3X3 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode("list")}
+                      className={cn(
+                        "p-2 transition-colors",
+                        viewMode === "list" ? "bg-gov-50 text-gov-600" : "text-ink-light hover:bg-ink-bg"
+                      )}
+                    >
+                      <List className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm text-ink-light mt-3">
+                共找到 <span className="text-gov-600 font-medium">{filtered.length}</span> 项服务
+              </p>
+            </div>
+
+            {filtered.length === 0 ? (
+              <div className="card p-12 text-center">
+                <Search className="w-12 h-12 text-ink-lighter mx-auto mb-4" />
+                <p className="text-ink-light">没有找到匹配的服务，请尝试其他筛选条件</p>
+              </div>
+            ) : viewMode === "grid" ? (
+              <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                {filtered.map((svc) => {
+                  const domain = serviceDomains.find((d) => d.code === svc.category);
+                  const statusInfo = statusTextMap[svc.status === "online" ? "completed" : "draft"];
+                  return (
+                    <Link
+                      key={svc.id}
+                      to={`/services/${svc.id}`}
+                      className="card-hover p-5 flex flex-col group"
+                    >
+                      <div className="flex items-start gap-3 mb-3">
+                        <div
+                          className={cn(
+                            "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br",
+                            domain?.color || "from-gov-500 to-gov-700"
+                          )}
+                        >
+                          {domain && iconMap[domain.icon] && (
+                            (() => {
+                              const Ic = iconMap[domain.icon];
+                              return <Ic className="w-6 h-6 text-white" />;
+                            })()
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="font-semibold text-ink group-hover:text-gov-700 transition-colors line-clamp-2">
+                              {svc.name}
+                            </h3>
+                            {svc.status !== "online" && (
+                              <span className={cn("shrink-0", statusInfo.badge)}>
+                                {svc.status === "maintenance" ? "维护中" : "已下线"}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-ink-light mt-1 flex items-center gap-1">
+                            <Building className="w-3 h-3" /> {svc.department}
+                          </p>
+                        </div>
+                      </div>
+
+                      <p className="text-sm text-ink-light line-clamp-2 mb-4 flex-1">
+                        {svc.description}
+                      </p>
+
+                      <div className="flex items-center justify-between text-xs text-ink-light pt-3 border-t border-ink-border">
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {svc.handlingTime}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <TrendingUp className="w-3 h-3 text-success-500" />
+                          {svc.applyCount.toLocaleString()}
+                        </span>
+                        <span className="flex items-center gap-1 text-warning-600">
+                          <Star className="w-3 h-3 fill-current" />
+                          {svc.satisfactionRate.toFixed(1)}%
+                        </span>
+                      </div>
+
+                      <div className="flex gap-2 mt-3">
+                        {svc.onlineAvailable && (
+                          <span className="badge-success">在线办理</span>
+                        )}
+                        {svc.appointmentAvailable && (
+                          <span className="badge-primary">可预约</span>
+                        )}
+                        {svc.fee === "免费" && <span className="badge-gray">免费</span>}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
             ) : (
-              <motion.p
-                key="count-line"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-sm text-gov-text-secondary mb-4"
-              >
-                共 <span className="font-semibold text-gov-blue">{filtered.length}</span> 项服务
-              </motion.p>
+              <div className="card divide-y divide-ink-border">
+                {filtered.map((svc) => {
+                  const domain = serviceDomains.find((d) => d.code === svc.category);
+                  return (
+                    <Link
+                      key={svc.id}
+                      to={`/services/${svc.id}`}
+                      className="flex items-center gap-4 p-4 hover:bg-gov-50/50 transition-colors group"
+                    >
+                      <div
+                        className={cn(
+                          "w-11 h-11 rounded-lg flex items-center justify-center shrink-0 bg-gradient-to-br",
+                          domain?.color || "from-gov-500 to-gov-700"
+                        )}
+                      >
+                        {domain && iconMap[domain.icon] && (
+                          (() => {
+                            const Ic = iconMap[domain.icon];
+                            return <Ic className="w-5 h-5 text-white" />;
+                          })()
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-medium text-ink group-hover:text-gov-700 transition-colors">
+                            {svc.name}
+                          </h3>
+                          {svc.onlineAvailable && <span className="badge-success text-[10px]">在线办</span>}
+                        </div>
+                        <p className="text-xs text-ink-light mt-0.5">
+                          {svc.department} · {svc.subCategory} · {svc.handlingTime}
+                        </p>
+                      </div>
+                      <div className="hidden sm:flex items-center gap-6 text-sm text-ink-light">
+                        <span>{svc.applyCount.toLocaleString()}人办理</span>
+                        <span className="text-warning-600 flex items-center gap-1">
+                          <Star className="w-3 h-3 fill-current" />
+                          {svc.satisfactionRate.toFixed(1)}%
+                        </span>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-ink-lighter group-hover:text-gov-600 group-hover:translate-x-1 transition-all" />
+                    </Link>
+                  );
+                })}
+              </div>
             )}
-          </AnimatePresence>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {paged.map((service) => (
-              <ServiceCard key={service.id} service={service} />
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="text-center py-20 text-gov-text-secondary">
-              <Search className="w-12 h-12 mx-auto mb-3 opacity-30" />
-              <p className="text-lg font-medium">未找到相关服务</p>
-              <p className="text-sm mt-1">请尝试更换搜索条件</p>
-            </div>
-          )}
-
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-1 mt-8">
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={safeCurrentPage === 1}
-                className="p-2 rounded-lg border border-gov-border hover:bg-blue-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              {pageNumbers[0] > 1 && (
-                <>
-                  <button
-                    onClick={() => setCurrentPage(1)}
-                    className="w-9 h-9 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors"
-                  >
-                    1
-                  </button>
-                  {pageNumbers[0] > 2 && <span className="px-1 text-gov-text-secondary">...</span>}
-                </>
-              )}
-              {pageNumbers.map((n) => (
-                <button
-                  key={n}
-                  onClick={() => setCurrentPage(n)}
-                  className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                    n === safeCurrentPage
-                      ? 'bg-gov-blue text-white shadow-sm'
-                      : 'hover:bg-blue-50 text-gov-text'
-                  }`}
-                >
-                  {n}
-                </button>
-              ))}
-              {pageNumbers[pageNumbers.length - 1] < totalPages && (
-                <>
-                  {pageNumbers[pageNumbers.length - 1] < totalPages - 1 && (
-                    <span className="px-1 text-gov-text-secondary">...</span>
-                  )}
-                  <button
-                    onClick={() => setCurrentPage(totalPages)}
-                    className="w-9 h-9 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors"
-                  >
-                    {totalPages}
-                  </button>
-                </>
-              )}
-              <button
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={safeCurrentPage === totalPages}
-                className="p-2 rounded-lg border border-gov-border hover:bg-blue-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          )}
+          </main>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

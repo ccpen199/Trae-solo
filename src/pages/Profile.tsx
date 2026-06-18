@@ -1,347 +1,177 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import {
-  Shield, ChevronRight, Bell, Lock, Smartphone,
-  CheckCircle2, CreditCard, LogOut, Clock, Eye,
-} from 'lucide-react';
-import { useAuthStore } from '@/stores/authStore';
-import { useApplicationStore } from '@/stores/applicationStore';
-import { certificates, mockUser } from '@/mock/data';
-import ProfileWorkbench from '@/pages/ProfileWorkbench';
-
-const tabs = ['市民工作台', '我的办事', '我的证照', '消息通知', '账号安全'];
-
-const statusMap: Record<string, { label: string; color: string }> = {
-  draft: { label: '草稿', color: 'bg-gray-100 text-gray-600' },
-  submitted: { label: '已提交', color: 'bg-blue-100 text-blue-700' },
-  under_review: { label: '审核中', color: 'bg-amber-100 text-amber-700' },
-  approved: { label: '已通过', color: 'bg-emerald-100 text-emerald-700' },
-  rejected: { label: '已驳回', color: 'bg-red-100 text-red-700' },
-  completed: { label: '已完成', color: 'bg-emerald-100 text-emerald-700' },
-};
-
-const stepStatusIcons = {
-  completed: CheckCircle2,
-  active: Clock,
-  pending: null,
-  rejected: null,
-};
-
-const mockNotifications = [
-  { id: 'n1', title: '您的身份证补换领申请正在审核中', type: 'progress', read: false, time: '10分钟前', icon: Clock },
-  { id: 'n2', title: '营业执照已审批通过，请及时领取', type: 'result', read: false, time: '2小时前', icon: CheckCircle2 },
-  { id: 'n3', title: '社保系统将于6月15日升级维护', type: 'system', read: true, time: '1天前', icon: Bell },
-  { id: 'n4', title: '您的驾驶证将于8月10日到期，请及时换证', type: 'reminder', read: true, time: '3天前', icon: Eye },
-  { id: 'n5', title: '公积金提取申请已提交成功', type: 'progress', read: true, time: '5天前', icon: Clock },
-];
-
-function MyApplications() {
-  const [subTab, setSubTab] = useState<'active' | 'completed' | 'cancelled'>('active');
-  const [expandedApp, setExpandedApp] = useState<string | null>(null);
-  const applications = useApplicationStore((s) => s.applications);
-
-  const filtered = applications.filter((app) => {
-    if (subTab === 'active') return ['submitted', 'under_review', 'approved'].includes(app.status);
-    if (subTab === 'completed') return app.status === 'completed';
-    return app.status === 'rejected';
-  });
-
-  return (
-    <div>
-      <div className="flex gap-2 mb-4">
-        {(['active', 'completed', 'cancelled'] as const).map((key) => (
-          <button
-            key={key}
-            onClick={() => setSubTab(key)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              subTab === key
-                ? 'bg-gov-blue text-white'
-                : 'bg-gov-bg text-gov-text-secondary hover:bg-gray-200'
-            }`}
-          >
-            {key === 'active' ? '办理中' : key === 'completed' ? '已完成' : '已取消'}
-          </button>
-        ))}
-      </div>
-      <div className="space-y-3">
-        {filtered.map((app) => {
-          const status = statusMap[app.status];
-          const progress = Math.round((app.currentStep / app.steps.length) * 100);
-          const isExpanded = expandedApp === app.id;
-
-          return (
-            <div key={app.id}>
-              <Link to={`/services/${app.serviceId}`} className="block">
-                <div className="gov-card p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gov-text">{app.serviceName}</h4>
-                    <span className={`gov-badge ${status.color}`}>{status.label}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-gov-text-secondary mb-2">
-                    <span>当前步骤: {app.steps[app.currentStep - 1]?.name || '已完成'}</span>
-                    <span>·</span>
-                    <span>{app.updatedAt}</span>
-                  </div>
-                  <div className="w-full bg-gray-100 rounded-full h-1.5">
-                    <div
-                      className="bg-gov-blue rounded-full h-1.5 transition-all"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                </div>
-              </Link>
-              <button
-                onClick={(e) => { e.preventDefault(); setExpandedApp(isExpanded ? null : app.id); }}
-                className="w-full text-xs text-gov-blue font-medium py-1.5 hover:underline"
-              >
-                {isExpanded ? '收起详细流程' : '查看全生命周期流程'}
-              </button>
-              {isExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  className="overflow-hidden"
-                >
-                  <div className="bg-gov-bg rounded-lg p-4 mt-1 space-y-0">
-                    {app.steps.map((step, i) => {
-                      const StepIcon = stepStatusIcons[step.status];
-                      return (
-                        <div key={i} className="flex items-start gap-3 relative">
-                          {i < app.steps.length - 1 && (
-                            <div className={`absolute left-[9px] top-5 w-0.5 h-full ${
-                              step.status === 'completed' ? 'bg-emerald-300' : 'bg-gov-border'
-                            }`} />
-                          )}
-                          <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${
-                            step.status === 'completed' ? 'bg-emerald-500' :
-                            step.status === 'active' ? 'bg-gov-blue' : 'bg-gray-200'
-                          }`}>
-                            {StepIcon ? <StepIcon className="w-3 h-3 text-white" /> : (
-                              <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                            )}
-                          </div>
-                          <div className="pb-3">
-                            <p className={`text-sm ${
-                              step.status === 'active' ? 'font-semibold text-gov-blue' :
-                              step.status === 'completed' ? 'text-gov-text' : 'text-gov-text-secondary'
-                            }`}>
-                              {step.name}
-                            </p>
-                            {step.completedAt && (
-                              <p className="text-xs text-gov-text-secondary">{step.completedAt}</p>
-                            )}
-                            {step.assignee && (
-                              <p className="text-xs text-gov-text-secondary">办理: {step.assignee}</p>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              )}
-            </div>
-          );
-        })}
-        {filtered.length === 0 && (
-          <p className="text-center py-8 text-sm text-gov-text-secondary">暂无相关记录</p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function MyCertificates() {
-  const certStatusConfig = {
-    valid: { label: '有效', color: 'text-emerald-600' },
-    expiring: { label: '即将过期', color: 'text-amber-600' },
-    expired: { label: '已过期', color: 'text-red-600' },
-  };
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-sm text-gov-text-secondary">共 {certificates.length} 个证照</span>
-        <Link to="/certificates" className="text-sm text-gov-blue font-medium flex items-center gap-1">
-          查看全部 <ChevronRight className="w-4 h-4" />
-        </Link>
-      </div>
-      <div className="space-y-3">
-        {certificates.slice(0, 5).map((cert) => {
-          const status = certStatusConfig[cert.status];
-          return (
-            <div key={cert.id} className="flex items-center justify-between p-3 bg-gov-bg rounded-lg">
-              <div className="flex items-center gap-3">
-                <CreditCard className="w-5 h-5 text-gov-blue" />
-                <div>
-                  <p className="text-sm font-medium text-gov-text">{cert.typeName}</p>
-                  <p className="text-xs text-gov-text-secondary">{cert.issuingAuthority}</p>
-                </div>
-              </div>
-              <span className={`text-xs font-medium ${status.color}`}>{status.label}</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function Notifications() {
-  return (
-    <div className="space-y-3">
-      {mockNotifications.map((n) => {
-        const Icon = n.icon;
-        return (
-          <div key={n.id} className={`flex gap-3 p-4 rounded-lg ${n.read ? 'bg-gov-bg' : 'bg-blue-50'}`}>
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                n.read ? 'bg-gray-100' : 'bg-gov-blue'
-              }`}
-            >
-              <Icon className={`w-4 h-4 ${n.read ? 'text-gov-text-secondary' : 'text-white'}`} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className={`text-sm ${n.read ? 'text-gov-text-secondary' : 'text-gov-text font-medium'}`}>
-                {n.title}
-              </p>
-              <p className="text-xs text-gov-text-secondary mt-1">{n.time}</p>
-            </div>
-            {!n.read && <div className="w-2 h-2 rounded-full bg-gov-blue shrink-0 mt-1.5" />}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function AccountSecurity() {
-  return (
-    <div className="space-y-4">
-      <div className="gov-card p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Shield className="w-5 h-5 text-emerald-500" />
-            <div>
-              <p className="text-sm font-medium text-gov-text">实名认证</p>
-              <p className="text-xs text-emerald-600">已认证</p>
-            </div>
-          </div>
-          <span className="gov-badge bg-emerald-100 text-emerald-700">已认证</span>
-        </div>
-      </div>
-
-      <div className="gov-card p-4">
-        <h4 className="text-sm font-semibold text-gov-text mb-3">登录设备</h4>
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Smartphone className="w-5 h-5 text-gov-blue" />
-              <div>
-                <p className="text-sm text-gov-text">iPhone 15 Pro</p>
-                <p className="text-xs text-gov-text-secondary">当前设备 · 10.0.1.105</p>
-              </div>
-            </div>
-            <span className="text-xs text-emerald-600 font-medium">当前</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Smartphone className="w-5 h-5 text-gov-text-secondary" />
-              <div>
-                <p className="text-sm text-gov-text">iPad Air</p>
-                <p className="text-xs text-gov-text-secondary">3天前 · 10.0.2.88</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="gov-card p-4">
-        <h4 className="text-sm font-semibold text-gov-text mb-3">安全设置</h4>
-        <button className="w-full flex items-center justify-between py-2">
-          <div className="flex items-center gap-3">
-            <Lock className="w-5 h-5 text-gov-blue" />
-            <span className="text-sm text-gov-text">修改密码</span>
-          </div>
-          <ChevronRight className="w-4 h-4 text-gov-text-secondary" />
-        </button>
-      </div>
-    </div>
-  );
-}
+  User,
+  Shield,
+  CreditCard,
+  ClipboardList,
+  Settings,
+  Bell,
+  ChevronRight,
+  Phone,
+  IdCard,
+  Star,
+  LogOut,
+  FileCheck,
+  Clock,
+  Award,
+  HeartHandshake,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAppStore } from "@/store";
+import { mockUser, mockCases, mockCertificates } from "@/data/mockData";
 
 export default function Profile() {
-  const [activeTab, setActiveTab] = useState(0);
-  const user = useAuthStore((s) => s.user) || mockUser;
   const navigate = useNavigate();
-  const logout = useAuthStore((s) => s.logout);
+  const user = useAppStore((s) => s.user) || mockUser;
+  const clearUser = useAppStore((s) => s.clearUser);
+
+  const authLevelConfig = {
+    L1: { text: "L1 基础认证", color: "bg-gray-100 text-gray-600", description: "手机号验证" },
+    L2: { text: "L2 实名认证", color: "bg-warning-100 text-warning-700", description: "身份证核验" },
+    L3: { text: "L3 实人认证", color: "bg-success-100 text-success-700", description: "人脸+公安库核验" },
+  };
+
+  const menuGroups = [
+    {
+      title: "我的服务",
+      items: [
+        { icon: ClipboardList, label: "我的办件", value: `${mockCases.length}件`, path: "/cases" },
+        { icon: CreditCard, label: "电子证照", value: `${mockCertificates.length}张`, path: "/certificates" },
+        { icon: Star, label: "我的收藏", value: "12项", path: "#" },
+        { icon: FileCheck, label: "我的预约", value: "3个待办", path: "#" },
+      ],
+    },
+    {
+      title: "账户安全",
+      items: [
+        { icon: Shield, label: "认证等级", value: authLevelConfig[user.authLevel].text, path: "#" },
+        { icon: Phone, label: "绑定手机", value: user.phoneMasked, path: "#" },
+        { icon: IdCard, label: "实名认证", value: "已认证", path: "#" },
+        { icon: Bell, label: "消息通知", value: "5条未读", path: "#" },
+      ],
+    },
+    {
+      title: "系统设置",
+      items: [
+        { icon: Settings, label: "账户设置", path: "#" },
+        { icon: HeartHandshake, label: "意见反馈", path: "#" },
+        { icon: Award, label: "关于我们", path: "#" },
+      ],
+    },
+  ];
 
   const handleLogout = () => {
-    logout();
-    navigate('/');
+    clearUser();
+    navigate("/login");
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="max-w-3xl mx-auto px-4 sm:px-6 py-6"
-    >
-      {activeTab !== 0 && (
-        <div className="gov-card p-6 mb-6">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gov-blue to-gov-blue-light flex items-center justify-center text-white text-2xl font-bold">
-              {user.name[0]}
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-5xl mx-auto px-4 py-8">
+        <div className="bg-gradient-to-r from-gov-600 to-gov-800 rounded-2xl p-6 text-white mb-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-20 w-32 h-32 bg-white/5 rounded-full translate-y-1/2" />
+          <div className="relative z-10 flex items-center gap-5">
+            <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur flex items-center justify-center ring-4 ring-white/20">
+              <User className="w-10 h-10 text-white" />
             </div>
             <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold text-gov-text">{user.name}</h2>
-                {user.verified && (
-                  <span className="inline-flex items-center gap-1 gov-badge bg-emerald-100 text-emerald-700">
-                    <Shield className="w-3 h-3" />
-                    实名认证
-                  </span>
-                )}
+              <div className="flex items-center gap-3 mb-2">
+                <h2 className="text-2xl font-bold">{user.realName}</h2>
+                <span
+                  className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${authLevelConfig[user.authLevel].color}`}
+                >
+                  {authLevelConfig[user.authLevel].text}
+                </span>
               </div>
-              <p className="text-sm text-gov-text-secondary mt-0.5">{user.phone}</p>
+              <div className="text-white/70 text-sm space-y-1">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center gap-1">
+                    <IdCard className="w-3.5 h-3.5" />
+                    {user.idCardMasked}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Phone className="w-3.5 h-3.5" />
+                    {user.phoneMasked}
+                  </span>
+                </div>
+                <div className="text-xs text-white/50">{authLevelConfig[user.authLevel].description}</div>
+              </div>
             </div>
             <button
               onClick={handleLogout}
-              className="text-gov-text-secondary hover:text-red-500 transition-colors"
+              className="bg-white/10 hover:bg-white/20 backdrop-blur px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition"
             >
-              <LogOut className="w-5 h-5" />
+              <LogOut className="w-4 h-4" />
+              退出登录
             </button>
           </div>
         </div>
-      )}
 
-      <div className="flex gap-1 mb-6 bg-white rounded-xl p-1 border border-gov-border overflow-x-auto">
-        {tabs.map((tab, i) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(i)}
-            className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap px-3 ${
-              activeTab === i
-                ? 'bg-gov-blue text-white'
-                : 'text-gov-text-secondary hover:bg-gov-bg'
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-
-      {activeTab === 0 && <ProfileWorkbench />}
-
-      {activeTab !== 0 && (
-        <div className="gov-card p-6">
-          {activeTab === 1 && <MyApplications />}
-          {activeTab === 2 && <MyCertificates />}
-          {activeTab === 3 && <Notifications />}
-          {activeTab === 4 && <AccountSecurity />}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          {[
+            { label: "办件总数", value: mockCases.length, icon: ClipboardList, color: "from-gov-500 to-gov-700" },
+            {
+              label: "已完成",
+              value: mockCases.filter((c) => c.status === "completed" || c.status === "approved").length,
+              icon: FileCheck,
+              color: "from-success-500 to-emerald-600",
+            },
+            {
+              label: "办理中",
+              value: mockCases.filter((c) => c.status === "processing" || c.status === "submitted").length,
+              icon: Clock,
+              color: "from-warning-500 to-amber-600",
+            },
+            { label: "电子证照", value: mockCertificates.length, icon: CreditCard, color: "from-violet-500 to-purple-600" },
+          ].map((stat, i) => {
+            const Icon = stat.icon;
+            return (
+              <div key={i} className="card p-4 flex items-center gap-3">
+                <div
+                  className={`w-11 h-11 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}
+                >
+                  <Icon className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">{stat.value}</div>
+                  <div className="text-xs text-gray-500">{stat.label}</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      )}
-    </motion.div>
+
+        <div className="space-y-4">
+          {menuGroups.map((group) => (
+            <div key={group.title} className="card overflow-hidden">
+              <div className="px-5 py-3 bg-gray-50 border-b border-gray-100">
+                <h3 className="text-sm font-medium text-gray-700">{group.title}</h3>
+              </div>
+              <div className="divide-y divide-gray-100">
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.label}
+                      onClick={() => item.path !== "#" && navigate(item.path)}
+                      className="w-full flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition text-left"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-gov-50 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-gov-600" />
+                      </div>
+                      <span className="flex-1 font-medium text-gray-900">{item.label}</span>
+                      {"value" in item && (
+                        <span className="text-sm text-gray-500">{item.value}</span>
+                      )}
+                      <ChevronRight className="w-5 h-5 text-gray-400" />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

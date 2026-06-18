@@ -1,170 +1,356 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import {
-  ChevronRight, Star, Clock, CreditCard, Building2, CheckCircle2,
-  Circle, AlertCircle, FileText, CalendarDays,
-} from 'lucide-react';
-import { useServiceStore } from '@/stores/serviceStore';
-import { useAuthStore } from '@/stores/authStore';
+  ArrowLeft,
+  Building,
+  Clock,
+  Star,
+  TrendingUp,
+  FileCheck,
+  Calendar,
+  Heart,
+  Share2,
+  ChevronRight,
+  CheckCircle2,
+  FileText,
+  Upload,
+  User,
+} from "lucide-react";
+import { useAppStore } from "@/store";
+import { serviceDomains, statusTextMap } from "@/data/mockData";
+import { cn } from "@/lib/utils";
 
 export default function ServiceDetail() {
-  const { serviceId } = useParams<{ serviceId: string }>();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const getServiceById = useServiceStore((s) => s.getServiceById);
-  const domains = useServiceStore((s) => s.domains);
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const login = useAuthStore((s) => s.login);
-
-  const service = serviceId ? getServiceById(serviceId) : undefined;
-  const domain = service ? domains.find((d) => d.id === service.domainId) : undefined;
+  const services = useAppStore((s) => s.services);
+  const isLoggedIn = useAppStore((s) => s.isLoggedIn);
+  const service = services.find((s) => s.id === id);
+  const [activeTab, setActiveTab] = useState<"intro" | "materials" | "process" | "dept">("intro");
+  const [favorited, setFavorited] = useState(false);
 
   if (!service) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 text-center">
-        <AlertCircle className="w-16 h-16 mx-auto mb-4 text-gov-text-secondary opacity-40" />
-        <h2 className="text-xl font-semibold text-gov-text mb-2">服务未找到</h2>
-        <p className="text-gov-text-secondary mb-6">请检查服务地址是否正确</p>
-        <Link to="/services" className="gov-btn-primary inline-block">返回服务大厅</Link>
+      <div className="container py-16 text-center">
+        <p className="text-ink-light">服务不存在</p>
+        <Link to="/services" className="btn-primary mt-4">
+          返回服务列表
+        </Link>
       </div>
     );
   }
 
+  const domain = serviceDomains.find((d) => d.code === service.category);
+
   const handleApply = () => {
-    if (!isAuthenticated) {
-      login('13800138000', '123456');
+    if (!isLoggedIn) {
+      navigate("/login", { state: { redirect: `/apply/${service.id}` } });
+    } else {
+      navigate(`/apply/${service.id}`);
     }
-    navigate(`/apply/${service.id}`);
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="max-w-7xl mx-auto px-4 sm:px-6 py-6"
-    >
-      <nav className="flex items-center gap-1.5 text-sm text-gov-text-secondary mb-6">
-        <Link to="/" className="hover:text-gov-blue transition-colors">首页</Link>
-        <ChevronRight className="w-4 h-4" />
-        <Link to="/services" className="hover:text-gov-blue transition-colors">服务大厅</Link>
-        <ChevronRight className="w-4 h-4" />
-        {domain && (
-          <>
-            <Link to={`/services?domain=${domain.id}`} className="hover:text-gov-blue transition-colors">{domain.name}</Link>
-            <ChevronRight className="w-4 h-4" />
-          </>
-        )}
-        <span className="text-gov-text font-medium">{service.name}</span>
-      </nav>
+    <div className="min-h-screen py-8">
+      <div className="container">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-1 text-ink-light hover:text-gov-600 mb-6 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" /> 返回
+        </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          <div className="gov-card p-6">
-            <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gov-blue to-gov-blue-light flex items-center justify-center shrink-0">
-                <FileText className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <h1 className="text-xl font-bold text-gov-text mb-1">{service.name}</h1>
-                <div className="flex items-center gap-3 flex-wrap">
-                  <span className="gov-badge bg-blue-50 text-gov-blue">{service.department}</span>
-                  {service.tags.map((tag) => (
-                    <span key={tag} className={`gov-badge ${tag === '热门' ? 'gov-badge-hot' : tag === '高频' ? 'gov-badge-new' : 'bg-violet-100 text-violet-700'}`}>
-                      {tag}
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* 主内容 */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* 服务头部信息 */}
+            <div className="card p-6">
+              <div className="flex items-start gap-4">
+                <div
+                  className={cn(
+                    "w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 bg-gradient-to-br shadow-lg",
+                    domain?.color || "from-gov-500 to-gov-700"
+                  )}
+                >
+                  <FileCheck className="w-8 h-8 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className="badge-primary">{domain?.name}</span>
+                    <span className="badge-gray">{service.subCategory}</span>
+                    {service.status === "online" ? (
+                      <span className="badge-success">服务中</span>
+                    ) : (
+                      <span className="badge-warning">维护中</span>
+                    )}
+                  </div>
+                  <h1 className="font-serif text-2xl font-bold text-ink mb-3">
+                    {service.name}
+                  </h1>
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-light">
+                    <span className="flex items-center gap-1">
+                      <Building className="w-4 h-4" /> {service.department}
                     </span>
-                  ))}
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" /> 承诺期限：{service.handlingTime}
+                    </span>
+                    <span className="flex items-center gap-1 text-warning-600">
+                      <Star className="w-4 h-4 fill-current" /> 好评率 {service.satisfactionRate.toFixed(1)}%
+                    </span>
+                    <span className="flex items-center gap-1 text-success-600">
+                      <TrendingUp className="w-4 h-4" /> 已有 {service.applyCount.toLocaleString()} 人办理
+                    </span>
+                  </div>
                 </div>
               </div>
+
+              <div className="flex flex-wrap gap-3 mt-6 pt-6 border-t border-ink-border">
+                <button
+                  onClick={handleApply}
+                  disabled={service.status !== "online"}
+                  className="btn-primary !px-6 !py-2.5"
+                >
+                  <FileCheck className="w-4 h-4" /> 立即办理
+                </button>
+                {service.appointmentAvailable && (
+                  <button className="btn-secondary !px-6 !py-2.5">
+                    <Calendar className="w-4 h-4" /> 预约办理
+                  </button>
+                )}
+                <button
+                  onClick={() => setFavorited(!favorited)}
+                  className={cn(
+                    "btn-secondary !px-4 !py-2.5",
+                    favorited && "text-danger-600 border-danger-200 hover:bg-danger-50"
+                  )}
+                >
+                  <Heart className={cn("w-4 h-4", favorited && "fill-current")} />
+                  {favorited ? "已收藏" : "收藏"}
+                </button>
+                <button className="btn-ghost !px-4 !py-2.5">
+                  <Share2 className="w-4 h-4" /> 分享
+                </button>
+              </div>
             </div>
 
-            <p className="text-gov-text-secondary leading-relaxed mb-5">{service.description}</p>
+            {/* Tab切换 */}
+            <div className="card">
+              <div className="flex border-b border-ink-border px-6">
+                {[
+                  { k: "intro", label: "服务介绍" },
+                  { k: "materials", label: "所需材料" },
+                  { k: "process", label: "办理流程" },
+                  { k: "dept", label: "办理机构" },
+                ].map((t) => (
+                  <button
+                    key={t.k}
+                    onClick={() => setActiveTab(t.k as typeof activeTab)}
+                    className={cn(
+                      "px-5 py-4 text-sm font-medium border-b-2 -mb-px transition-colors",
+                      activeTab === t.k
+                        ? "text-gov-600 border-gov-600"
+                        : "text-ink-light border-transparent hover:text-ink"
+                    )}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-gov-bg rounded-lg p-3 text-center">
-                <Clock className="w-5 h-5 mx-auto mb-1 text-gov-blue" />
-                <p className="text-xs text-gov-text-secondary">办理时限</p>
-                <p className="text-sm font-semibold text-gov-text mt-0.5">{service.processTime}</p>
-              </div>
-              <div className="bg-gov-bg rounded-lg p-3 text-center">
-                <CreditCard className="w-5 h-5 mx-auto mb-1 text-emerald-500" />
-                <p className="text-xs text-gov-text-secondary">收费标准</p>
-                <p className="text-sm font-semibold text-gov-text mt-0.5">{service.fee}</p>
-              </div>
-              <div className="bg-gov-bg rounded-lg p-3 text-center">
-                <Building2 className="w-5 h-5 mx-auto mb-1 text-amber-500" />
-                <p className="text-xs text-gov-text-secondary">办理部门</p>
-                <p className="text-sm font-semibold text-gov-text mt-0.5">{service.department}</p>
-              </div>
-              <div className="bg-gov-bg rounded-lg p-3 text-center">
-                <Star className="w-5 h-5 mx-auto mb-1 text-amber-400" />
-                <p className="text-xs text-gov-text-secondary">服务评分</p>
-                <p className="text-sm font-semibold text-gov-text mt-0.5">{service.rating} 分</p>
+              <div className="p-6">
+                {activeTab === "intro" && (
+                  <div className="animate-fade-in">
+                    <h3 className="font-medium text-ink mb-3 flex items-center gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-gov-600" /> 服务概述
+                    </h3>
+                    <p className="text-ink leading-relaxed mb-6">{service.description}</p>
+
+                    <h3 className="font-medium text-ink mb-3 flex items-center gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-success-600" /> 办理条件
+                    </h3>
+                    <ul className="space-y-2 text-ink mb-6">
+                      {[
+                        "具有昆山市户籍或在本市居住、工作的公民",
+                        "符合相关法律法规规定的申请条件",
+                        "申请材料真实、完整、有效",
+                        "未处于法律法规限制办理的情形",
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 text-gov-600 mt-0.5 shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <h3 className="font-medium text-ink mb-3 flex items-center gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-warning-600" /> 收费标准
+                    </h3>
+                    <div className="p-4 bg-warning-50 rounded-lg border border-warning-100">
+                      <p className="text-ink">
+                        办理费用：<span className="font-semibold text-warning-700">{service.fee || "详见办理窗口"}</span>
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "materials" && (
+                  <div className="animate-fade-in">
+                    <div className="space-y-4">
+                      {service.materials.map((m) => (
+                        <div
+                          key={m.id}
+                          className="flex items-start gap-4 p-4 rounded-lg border border-ink-border hover:border-gov-200 transition-colors"
+                        >
+                          <div className="w-12 h-12 rounded-lg bg-gov-50 flex items-center justify-center shrink-0">
+                            <Upload className="w-6 h-6 text-gov-600" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className="font-medium text-ink">{m.name}</h4>
+                              {m.required ? (
+                                <span className="badge-danger">必填</span>
+                              ) : (
+                                <span className="badge-gray">选填</span>
+                              )}
+                              <span className="badge-primary">{m.format.toUpperCase()}</span>
+                            </div>
+                            <p className="text-sm text-ink-light">{m.description}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 p-4 bg-gov-50 rounded-lg border border-gov-100">
+                      <h4 className="font-medium text-gov-700 mb-2 flex items-center gap-2">
+                        <FileText className="w-4 h-4" /> 温馨提示
+                      </h4>
+                      <ul className="text-sm text-gov-700/80 space-y-1">
+                        <li>• 支持上传的电子证照可自动关联，无需重复提交</li>
+                        <li>• 所有上传材料请确保清晰可辨</li>
+                        <li>• 材料提交后可在我的办件中查看审核状态</li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "process" && (
+                  <div className="animate-fade-in">
+                    <div className="relative">
+                      {service.processSteps.map((step, idx) => (
+                        <div key={step.id} className="flex gap-4 pb-8 last:pb-0">
+                          <div className="flex flex-col items-center">
+                            <div className="w-10 h-10 rounded-full gov-gradient text-white flex items-center justify-center font-semibold shrink-0">
+                              {idx + 1}
+                            </div>
+                            {idx < service.processSteps.length - 1 && (
+                              <div className="w-0.5 flex-1 bg-gov-200 mt-2" />
+                            )}
+                          </div>
+                          <div className="flex-1 pb-2">
+                            <h4 className="font-medium text-ink mb-1">{step.name}</h4>
+                            <p className="text-sm text-ink-light mb-2">{step.description}</p>
+                            <div className="flex items-center gap-4 text-xs text-ink-light">
+                              <span className="flex items-center gap-1">
+                                <Clock className="w-3 h-3" /> 预计 {step.estimatedDays} 个工作日
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <User className="w-3 h-3" /> {step.department}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "dept" && (
+                  <div className="animate-fade-in">
+                    <div className="p-6 rounded-lg bg-ink-bg">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-14 h-14 rounded-xl bg-gov-100 flex items-center justify-center">
+                          <Building className="w-7 h-7 text-gov-600" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-ink text-lg">{service.department}</h3>
+                          <p className="text-sm text-ink-light">主办单位</p>
+                        </div>
+                      </div>
+                      <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <p className="text-ink-light mb-1">办理地点</p>
+                          <p className="text-ink">昆山市前进中路219号政务服务中心3楼</p>
+                        </div>
+                        <div>
+                          <p className="text-ink-light mb-1">联系电话</p>
+                          <p className="text-ink">0512-57300000 转 {service.departmentId.slice(-3)}</p>
+                        </div>
+                        <div>
+                          <p className="text-ink-light mb-1">办公时间</p>
+                          <p className="text-ink">周一至周五 9:00-17:00（法定节假日除外）</p>
+                        </div>
+                        <div>
+                          <p className="text-ink-light mb-1">咨询方式</p>
+                          <p className="text-ink">在线咨询 · 电话咨询 · 现场咨询</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
-          <div className="gov-card p-6">
-            <h2 className="text-base font-bold text-gov-text mb-4 flex items-center gap-2">
-              <FileText className="w-5 h-5 text-gov-blue" />
-              所需材料
-            </h2>
-            <ul className="space-y-3">
-              {service.requiredDocuments.map((doc, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                  <span className="text-sm text-gov-text">{doc}</span>
-                </li>
-              ))}
-            </ul>
-            {service.requiredDocuments.length === 0 && (
-              <p className="text-sm text-gov-text-secondary flex items-center gap-2">
-                <Circle className="w-4 h-4" />
-                本服务无需提供材料
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <div className="gov-card p-6 sticky top-24">
-            <h3 className="text-base font-bold text-gov-text mb-4">办理方式</h3>
-            <div className="space-y-3">
-              <button onClick={handleApply} className="gov-btn-primary w-full flex items-center justify-center gap-2">
-                <FileText className="w-4 h-4" />
-                立即办理
-              </button>
-              <button className="gov-btn-secondary w-full flex items-center justify-center gap-2">
-                <CalendarDays className="w-4 h-4" />
-                预约办理
-              </button>
-            </div>
-
-            {service.onlineEnabled && (
-              <div className="mt-4 flex items-center gap-2 text-sm text-emerald-600 bg-emerald-50 rounded-lg px-3 py-2">
-                <CheckCircle2 className="w-4 h-4" />
-                支持全程网办
+          {/* 侧边栏 */}
+          <aside className="space-y-6">
+            <div className="card p-5">
+              <h3 className="font-serif font-semibold text-ink mb-4 flex items-center gap-2">
+                <Clock className="w-5 h-5 text-gov-600" /> 办件入口
+              </h3>
+              <div className="space-y-3">
+                <button
+                  onClick={handleApply}
+                  disabled={service.status !== "online"}
+                  className="w-full btn-primary justify-center"
+                >
+                  <FileCheck className="w-4 h-4" /> 立即在线办理
+                </button>
+                {service.appointmentAvailable && (
+                  <button className="w-full btn-secondary justify-center">
+                    <Calendar className="w-4 h-4" /> 预约窗口办理
+                  </button>
+                )}
+                <Link to="/cases" className="w-full btn-ghost justify-center">
+                  <CheckCircle2 className="w-4 h-4" /> 查询我的办件
+                </Link>
               </div>
-            )}
-
-            <div className="mt-6 pt-4 border-t border-gov-border">
-              <h4 className="text-sm font-semibold text-gov-text mb-3">温馨提示</h4>
-              <ul className="space-y-2 text-xs text-gov-text-secondary leading-relaxed">
-                <li className="flex items-start gap-2">
-                  <AlertCircle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-500" />
-                  请确保提交材料真实有效
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertCircle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-500" />
-                  办理时限自材料齐全之日起计算
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertCircle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-500" />
-                  如有疑问请拨打12345服务热线
-                </li>
-              </ul>
             </div>
-          </div>
+
+            <div className="card p-5">
+              <h3 className="font-serif font-semibold text-ink mb-4 flex items-center gap-2">
+                <Star className="w-5 h-5 text-warning-500" /> 相关服务推荐
+              </h3>
+              <div className="space-y-2">
+                {services
+                  .filter((s) => s.category === service.category && s.id !== service.id)
+                  .slice(0, 5)
+                  .map((s) => (
+                    <Link
+                      key={s.id}
+                      to={`/services/${s.id}`}
+                      className="flex items-center justify-between p-2.5 rounded-lg hover:bg-gov-50 transition-colors group"
+                    >
+                      <span className="text-sm text-ink group-hover:text-gov-700 line-clamp-1">
+                        {s.name}
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-ink-lighter group-hover:text-gov-600 shrink-0" />
+                    </Link>
+                  ))}
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

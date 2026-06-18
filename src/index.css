@@ -1,133 +1,167 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  line-height: 1.5;
+  font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
+  color: #2c3e50;
+  background-color: #f5f7fa;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #1E293B;
-  background-color: #F0F4F8;
 }
 
-@layer base {
-  body {
-    @apply bg-gov-bg text-gov-text;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #f5f7fa;
 }
 
 @layer components {
-  .gov-gradient-hero {
-    background: linear-gradient(135deg, #1E3A8A 0%, #1A56DB 40%, #3B82F6 100%);
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  .gov-card {
-    @apply bg-white rounded-xl shadow-sm border border-gov-border hover:shadow-md transition-all duration-300;
+  .btn-primary {
+    @apply btn bg-gov-600 text-white hover:bg-gov-700 focus:ring-gov-400 shadow-sm;
   }
 
-  .gov-card-hover {
-    @apply hover:-translate-y-1 hover:shadow-lg;
+  .btn-secondary {
+    @apply btn bg-white text-gov-600 border border-gov-200 hover:bg-gov-50 focus:ring-gov-200;
   }
 
-  .gov-btn-primary {
-    @apply bg-gradient-to-r from-gov-blue to-gov-blue-light text-white px-6 py-2.5 rounded-lg font-medium
-    hover:shadow-lg hover:shadow-blue-200 active:scale-[0.98] transition-all duration-200;
+  .btn-success {
+    @apply btn bg-success-600 text-white hover:bg-success-700 focus:ring-success-400;
   }
 
-  .gov-btn-secondary {
-    @apply border-2 border-gov-blue text-gov-blue px-6 py-2.5 rounded-lg font-medium
-    hover:bg-gov-blue hover:text-white transition-all duration-200;
+  .btn-danger {
+    @apply btn bg-danger-600 text-white hover:bg-danger-700 focus:ring-danger-400;
   }
 
-  .gov-btn-orange {
-    @apply bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-2.5 rounded-lg font-medium
-    hover:shadow-lg hover:shadow-orange-200 active:scale-[0.98] transition-all duration-200;
+  .btn-ghost {
+    @apply btn text-ink hover:bg-ink-bg focus:ring-ink-lighter;
   }
 
-  .gov-input {
-    @apply w-full px-4 py-2.5 border border-gov-border rounded-lg focus:outline-none focus:ring-2
-    focus:ring-gov-blue/30 focus:border-gov-blue transition-all duration-200 bg-white;
+  .card {
+    @apply bg-white rounded-lg shadow-card border border-ink-border;
   }
 
-  .gov-sidebar-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200
-    text-gov-text-secondary hover:bg-blue-50 hover:text-gov-blue;
+  .card-hover {
+    @apply card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300 cursor-pointer;
   }
 
-  .gov-sidebar-item-active {
-    @apply bg-blue-50 text-gov-blue border-l-4 border-gov-blue font-medium;
+  .input {
+    @apply w-full px-3 py-2 border border-ink-border rounded-md text-sm text-ink placeholder:text-ink-light focus:outline-none focus:ring-2 focus:ring-gov-400 focus:border-gov-400 transition-all;
   }
 
-  .gov-badge {
-    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+  .label {
+    @apply block text-sm font-medium text-ink mb-1.5;
   }
 
-  .gov-badge-hot {
-    @apply bg-orange-100 text-orange-700;
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border;
   }
 
-  .gov-badge-new {
-    @apply bg-green-100 text-green-700;
+  .badge-primary {
+    background-color: #EAF2FB;
+    color: #1E5AA8;
+    border-color: #ABC9EF;
   }
 
-  .gov-section-title {
-    @apply text-lg font-bold text-gov-text flex items-center gap-2;
+  .badge-success {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    border-color: #A5D6A7;
   }
 
-  .gov-stat-card {
-    @apply bg-white rounded-xl p-6 shadow-sm border border-gov-border;
+  .badge-warning {
+    background-color: #FFF8E1;
+    color: #F9A825;
+    border-color: #FFE082;
   }
 
-  .gov-page-enter {
-    animation: slideUp 0.4s ease-out;
-  }
-}
-
-@layer utilities {
-  .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: #CBD5E1 transparent;
+  .badge-danger {
+    background-color: #FFEBEE;
+    color: #C62828;
+    border-color: #EF9A9A;
   }
 
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
+  .badge-gray {
+    background-color: #F5F7FA;
+    color: #7F8C8D;
+    border-color: #E5E7EB;
   }
 
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
+  .section-title {
+    @apply font-serif text-xl font-semibold text-ink mb-4 flex items-center gap-2;
   }
 
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: #CBD5E1;
-    border-radius: 3px;
+  .skeleton {
+    @apply bg-gradient-to-r from-ink-bg via-gray-200 to-ink-bg bg-[length:200%_100%] animate-shimmer rounded;
   }
 
-  .text-gradient-blue {
-    background: linear-gradient(135deg, #1A56DB, #3B82F6);
+  .gov-gradient {
+    background: linear-gradient(135deg, #1e5aa8 0%, #2d77d7 50%, #5792df 100%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #1e5aa8 0%, #2d77d7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 }
 
-.city-skyline {
-  position: relative;
-  overflow: hidden;
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #bdc3c7 transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #bdc3c7;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .animate-ripple {
+    animation: ripple 0.6s ease-out;
+  }
 }
 
-.city-skyline::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80'%3E%3Cpath fill='%23F0F4F8' d='M0,80 L0,50 L40,50 L40,30 L60,30 L60,50 L100,50 L100,20 L120,20 L120,50 L160,50 L160,35 L180,35 L180,50 L220,50 L220,15 L240,15 L240,50 L280,50 L280,40 L300,40 L300,50 L340,50 L340,25 L360,25 L360,50 L400,50 L400,45 L420,45 L420,50 L460,50 L460,10 L480,10 L480,50 L520,50 L520,30 L540,30 L540,50 L580,50 L580,20 L600,20 L600,50 L640,50 L640,40 L660,40 L660,50 L700,50 L700,35 L720,35 L720,50 L760,50 L760,25 L780,25 L780,50 L820,50 L820,15 L840,15 L840,50 L880,50 L880,45 L900,45 L900,50 L940,50 L940,30 L960,30 L960,50 L1000,50 L1000,20 L1020,20 L1020,50 L1060,50 L1060,40 L1080,40 L1080,50 L1120,50 L1120,35 L1140,35 L1140,50 L1180,50 L1180,25 L1200,25 L1200,50 L1240,50 L1240,15 L1260,15 L1260,50 L1300,50 L1300,45 L1320,45 L1320,50 L1360,50 L1360,30 L1380,30 L1380,50 L1440,50 L1440,80 Z'/%3E%3C/svg%3E") no-repeat bottom center;
-  background-size: cover;
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
 }

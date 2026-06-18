@@ -1,46 +1,64 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CitizenLayout from '@/components/Layout/CitizenLayout';
-import AdminLayout from '@/components/Layout/AdminLayout';
-import Home from '@/pages/Home';
-import Services from '@/pages/Services';
-import ServiceDetail from '@/pages/ServiceDetail';
-import Login from '@/pages/Login';
-import Apply from '@/pages/Apply';
-import Certificates from '@/pages/Certificates';
-import Profile from '@/pages/Profile';
-import Dashboard from '@/pages/admin/Dashboard';
-import ServiceManagement from '@/pages/admin/ServiceManagement';
-import Approvals from '@/pages/admin/Approvals';
-import Monitor from '@/pages/admin/Monitor';
-import Audit from '@/pages/admin/Audit';
-import Heatmap from '@/pages/admin/Heatmap';
-import PoliceBureau from '@/pages/admin/PoliceBureau';
-import DataBureau from '@/pages/admin/DataBureau';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import Header from "@/components/Header";
+import Home from "@/pages/Home";
+import Services from "@/pages/Services";
+import ServiceDetail from "@/pages/ServiceDetail";
+import ApplyService from "@/pages/ApplyService";
+import Cases from "@/pages/Cases";
+import CaseDetail from "@/pages/CaseDetail";
+import Certificates from "@/pages/Certificates";
+import Profile from "@/pages/Profile";
+import Login from "@/pages/Login";
+import AdminDashboard from "@/pages/AdminDashboard";
+import { useAppStore } from "@/store";
+
+function Layout() {
+  const user = useAppStore((s) => s.user);
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isLoginRoute = location.pathname === "/login";
+
+  if (isLoginRoute) {
+    return (
+      <Routes>
+      <Route path="/login" element={<Login />} />
+    </Routes>
+  );
+  }
+
+  if (isAdminRoute) {
+    if (!user || user.userType !== "admin") {
+      return <Navigate to="/login" />;
+    }
+    return (
+      <Routes>
+        <Route path="/admin" element={<AdminDashboard />} />
+      </Routes>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/services/:id" element={<ServiceDetail />} />
+        <Route path="/apply/:serviceId" element={<ApplyService />} />
+        <Route path="/cases" element={<Cases />} />
+        <Route path="/cases/:id" element={<CaseDetail />} />
+        <Route path="/certificates" element={<Certificates />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </div>
+  );
+}
 
 export default function App() {
   return (
     <Router>
-      <Routes>
-        <Route element={<CitizenLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/services/:serviceId" element={<ServiceDetail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/apply/:serviceId" element={<Apply />} />
-          <Route path="/certificates" element={<Certificates />} />
-          <Route path="/profile" element={<Profile />} />
-        </Route>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="services" element={<ServiceManagement />} />
-          <Route path="approvals" element={<Approvals />} />
-          <Route path="monitor" element={<Monitor />} />
-          <Route path="audit" element={<Audit />} />
-          <Route path="heatmap" element={<Heatmap />} />
-          <Route path="police" element={<PoliceBureau />} />
-          <Route path="data-bureau" element={<DataBureau />} />
-        </Route>
-      </Routes>
+      <Layout />
     </Router>
   );
 }
