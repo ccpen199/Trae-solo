@@ -16,17 +16,13 @@ import {
   Truck,
   Settings,
   FileText,
-  Compass,
-  UserCircle,
 } from 'lucide-react'
 
 const userNav = [
   { to: '/', label: '首页', icon: Home },
-  { to: '/discover', label: '发现分类', icon: Compass },
   { to: '/diagnosis', label: 'AI诊断', icon: ScanSearch },
   { to: '/compare', label: '服务比价', icon: Scale },
   { to: '/live/demo', label: '服务直播', icon: Video },
-  { to: '/profile', label: '个人中心', icon: UserCircle },
 ]
 
 const engineerNav = [

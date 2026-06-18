@@ -8,8 +8,6 @@ import Engineer from '@/pages/Engineer'
 import EngineerOrder from '@/pages/EngineerOrder'
 import Supplier from '@/pages/Supplier'
 import Admin from '@/pages/Admin'
-import Discover from '@/pages/Discover'
-import Profile from '@/pages/Profile'
 
 export default function App() {
   return (
@@ -19,8 +17,6 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/diagnosis" element={<Diagnosis />} />
           <Route path="/compare" element={<Compare />} />
-          <Route path="/discover" element={<Discover />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/live/:orderId" element={<Live />} />
           <Route path="/engineer" element={<Engineer />} />
           <Route path="/engineer/order/:id" element={<EngineerOrder />} />
