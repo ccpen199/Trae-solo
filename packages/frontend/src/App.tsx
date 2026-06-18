@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/auth';
+import { getRoleRedirectPath, getRoleLabel } from '@/mock/auth';
 
 import ResidentLayout from '@/components/layout/ResidentLayout';
 import PropertyLayout from '@/components/layout/PropertyLayout';
@@ -26,15 +27,49 @@ import CommunityHealthPage from '@/pages/admin/CommunityHealthPage';
 import TraceLogPage from '@/pages/admin/TraceLogPage';
 import RiskControlPage from '@/pages/admin/RiskControlPage';
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, loadFromStorage } = useAuthStore();
+function AuthInitializer() {
+  const { loadFromStorage } = useAuthStore();
 
   useEffect(() => {
     loadFromStorage();
   }, [loadFromStorage]);
 
+  return null;
+}
+
+function LoginRedirect() {
+  const { isAuthenticated, user } = useAuthStore();
+  const location = useLocation();
+
+  if (isAuthenticated && user) {
+    const redirectPath = getRoleRedirectPath(user.role);
+    const from = (location.state as { from?: string })?.from;
+    return <Navigate to={from || redirectPath} replace />;
+  }
+
+  return <LoginPage />;
+}
+
+function ProtectedRoute({
+  children,
+  requiredRoles,
+}: {
+  children: React.ReactNode;
+  requiredRoles?: string[];
+}) {
+  const { isAuthenticated, user } = useAuthStore();
+  const location = useLocation();
+
+  useEffect(() => {
+  }, []);
+
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+  }
+
+  if (requiredRoles && user && !requiredRoles.includes(user.role)) {
+    const redirectPath = getRoleRedirectPath(user.role);
+    return <Navigate to={redirectPath} replace />;
   }
 
   return <>{children}</>;
@@ -51,16 +86,18 @@ function PropertyPlaceholder({ title }: { title: string }) {
   );
 }
 
-export default function App() {
+function AppRoutes() {
+  const { user, isAuthenticated } = useAuthStore();
+
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<LoginPage />} />
+      <Route path="/login" element={<LoginRedirect />} />
+      <Route path="/register" element={<LoginRedirect />} />
 
       <Route
         path="/"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute requiredRoles={['resident', 'tenant_admin', 'platform_admin', 'property_admin', 'property_staff']}>
             <ResidentLayout />
           </ProtectedRoute>
         }
@@ -83,7 +120,7 @@ export default function App() {
       <Route
         path="/property"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute requiredRoles={['property_admin', 'property_staff', 'platform_admin', 'tenant_admin']}>
             <PropertyLayout />
           </ProtectedRoute>
         }
@@ -102,7 +139,7 @@ export default function App() {
       <Route
         path="/admin"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute requiredRoles={['platform_admin', 'tenant_admin']}>
             <AdminLayout />
           </ProtectedRoute>
         }
@@ -117,7 +154,25 @@ export default function App() {
         <Route path="system-settings" element={<PropertyPlaceholder title="系统设置" />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route
+        path="*"
+        element={
+          isAuthenticated && user ? (
+            <Navigate to={getRoleRedirectPath(user.role)} replace />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
     </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <AuthInitializer />
+      <AppRoutes />
+    </>
   );
 }
