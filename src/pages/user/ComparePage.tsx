@@ -1,5 +1,9 @@
-import { useState } from 'react';
-import { Search, Plus, X, TrendingUp, TrendingDown, CheckCircle2, AlertCircle, GitCompare, Database, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Search, Plus, X, TrendingUp, TrendingDown, CheckCircle2, AlertCircle,
+  GitCompare, Database, CheckCircle, Download, History, Trash2
+} from 'lucide-react';
 import { ScoreRing } from '@/components/ui/ScoreRing';
 import { TrendBadge } from '@/components/ui/TrendBadge';
 import { RadarChart } from '@/components/charts/RadarChart';
@@ -17,6 +21,12 @@ interface CompareItem {
   dimensions: { name: string; score: number }[];
   advantages: string[];
   disadvantages: string[];
+}
+
+interface CompareHistoryItem {
+  id: string;
+  time: string;
+  items: { id: number; name: string }[];
 }
 
 const searchCandidates = [
@@ -48,7 +58,23 @@ const colors = ['#10B981', '#6366F1', '#F59E0B', '#EF4444'];
 export function ComparePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
-  const [compareIds, setCompareIds] = useState<number[]>([1, 2]);
+  const [compareIds, setCompareIds] = useState<number[]>([]);
+  const [history, setHistory] = useState<CompareHistoryItem[]>([]);
+  const [toastMsg, setToastMsg] = useState('');
+  const [activeTab, setActiveTab] = useState<'matrix' | 'diff' | 'history'>('matrix');
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('compareIds');
+      if (saved) setCompareIds(JSON.parse(saved));
+      const h = localStorage.getItem('compareHistory');
+      if (h) setHistory(JSON.parse(h));
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try { localStorage.setItem('compareIds', JSON.stringify(compareIds)); } catch {}
+  }, [compareIds]);
 
   const filteredCandidates = searchCandidates.filter(
     (c) => c.name.toLowerCase().includes(searchQuery.toLowerCase()) && !compareIds.includes(c.id)
@@ -56,15 +82,64 @@ export function ComparePage() {
 
   const compareItems = compareIds.map((id) => mockCompareData[id]).filter(Boolean) as CompareItem[];
 
+  const showToast = (msg: string) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(''), 2200);
+  };
+
   const addItem = (id: number) => {
     if (compareIds.length < 4 && !compareIds.includes(id)) {
       setCompareIds((prev) => [...prev, id]);
+      showToast(`已加入 ${mockCompareData[id].name}`);
+    } else if (compareIds.length >= 4) {
+      showToast('最多4个对比对象');
     }
     setSearchQuery('');
   };
 
   const removeItem = (id: number) => {
     setCompareIds((prev) => prev.filter((i) => i !== id));
+  };
+
+  const clearAll = () => {
+    setCompareIds([]);
+    showToast('已清空对比列表');
+  };
+
+  const saveCompare = () => {
+    if (compareItems.length < 2) return;
+    const item: CompareHistoryItem = {
+      id: Date.now().toString(),
+      time: new Date().toLocaleString('zh-CN'),
+      items: compareItems.map(i => ({ id: i.id, name: i.name })),
+    };
+    const newHistory = [item, ...history].slice(0, 5);
+    setHistory(newHistory);
+    try { localStorage.setItem('compareHistory', JSON.stringify(newHistory)); } catch {}
+
+    try {
+      const blob = new Blob([JSON.stringify({
+        savedAt: item.time,
+        items: compareItems,
+      }, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `对比结果_${item.items.map(i=>i.name).join('_')}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {}
+    showToast('对比结果已保存');
+  };
+
+  const loadHistory = (ids: number[]) => {
+    setCompareIds(ids.slice(0, 4));
+    setActiveTab('matrix');
+  };
+
+  const clearHistory = () => {
+    setHistory([]);
+    try { localStorage.removeItem('compareHistory'); } catch {}
   };
 
   const allDimensionNames = [...new Set(compareItems.flatMap((item) => item.dimensions.map((d) => d.name)))];
@@ -84,27 +159,55 @@ export function ComparePage() {
     name: item.name,
   }));
 
-  const barData = compareItems.map((item) => ({
-    name: item.name,
-    综合评分: item.score,
-  }));
+  const barData = compareItems.map((item) => ({ name: item.name, 综合评分: item.score }));
+
+  const diffDims = allDimensionNames.map(dimName => {
+    const scores = compareItems.map(item => {
+      const d = item.dimensions.find(x => x.name === dimName);
+      return { name: item.name, score: d?.score || 0 };
+    }).sort((a, b) => b.score - a.score);
+    if (scores.length < 2) return null;
+    const gap = scores[0].score - scores[scores.length - 1].score;
+    return { dimName, gap, best: scores[0], worst: scores[scores.length - 1] };
+  }).filter(Boolean).sort((a, b) => (b?.gap || 0) - (a?.gap || 0)).slice(0, 3);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+
+      {toastMsg && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] px-4 py-2 bg-primary text-white rounded-md shadow-lg animate-fade-in text-sm">
+          {toastMsg}
+        </div>
+      )}
+
       <div className="container mx-auto px-4 py-8 flex-1">
-        <div className="mb-6">
-          <h1 className="text-2xl font-serif font-bold text-white mb-2 flex items-center gap-2">
-            <GitCompare className="w-6 h-6 text-primary" />
-            竞品对比分析
-          </h1>
-          <p className="text-slate-400 text-sm">选择最多4个品牌或机构进行多维度对比分析</p>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-serif font-bold text-white mb-2 flex items-center gap-2">
+              <GitCompare className="w-6 h-6 text-primary" />
+              竞品对比分析
+            </h1>
+            <p className="text-slate-400 text-sm">选择最多4个品牌或机构进行多维度对比分析，支持保存与下载对比结果</p>
+          </div>
+          {compareItems.length >= 2 && (
+            <div className="flex gap-2">
+              <button onClick={clearAll} className="btn btn-outline text-sm">
+                <Trash2 className="w-4 h-4 mr-1" />
+                清空
+              </button>
+              <button onClick={saveCompare} className="btn btn-primary text-sm">
+                <Download className="w-4 h-4 mr-1" />
+                保存对比结果
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="card p-4 mb-6">
           <div className="flex flex-wrap items-center gap-3">
             {compareItems.map((item) => (
-              <div key={item.id} className="flex items-center gap-2 px-3 py-2 bg-primary/10 rounded-md border border-primary/30">
+              <div key={item.id} className="flex items-center gap-2 px-3 py-2 bg-primary/10 rounded-md border-2 border-primary/50 ring-2 ring-primary/20">
                 <ScoreRing score={item.score} size={32} strokeWidth={3} showLabel={false} />
                 <div>
                   <div className="text-sm font-medium text-white">{item.name}</div>
@@ -119,7 +222,10 @@ export function ComparePage() {
             ))}
             {compareIds.length < 4 && (
               <div className="relative">
-                <button onClick={() => { setShowSearch(!showSearch); setSearchQuery(''); }} className="flex items-center gap-2 px-4 py-2 border border-dashed border-primary/50 rounded-md text-primary hover:bg-primary/10 transition-colors">
+                <button
+                  onClick={() => { setShowSearch(!showSearch); setSearchQuery(''); }}
+                  className="flex items-center gap-2 px-4 py-2 border border-dashed border-primary/50 rounded-md text-primary hover:bg-primary/10 transition-colors"
+                >
                   <Plus className="w-4 h-4" />
                   添加对比 ({compareIds.length}/4)
                 </button>
@@ -128,13 +234,24 @@ export function ComparePage() {
                     <div className="p-2 border-b border-slate-700/50">
                       <div className="relative">
                         <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="搜索品牌或机构..." autoFocus className="w-full pl-8 pr-3 py-2 bg-surface-light border border-border rounded-md text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary" />
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder="搜索品牌或机构..."
+                          autoFocus
+                          className="w-full pl-8 pr-3 py-2 bg-surface-light border border-border rounded-md text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary"
+                        />
                       </div>
                     </div>
                     <div className="max-h-64 overflow-y-auto py-1">
                       {filteredCandidates.length > 0 ? (
                         filteredCandidates.map((c) => (
-                          <button key={c.id} onClick={() => addItem(c.id)} className="w-full text-left px-3 py-2.5 text-sm text-slate-300 hover:bg-primary/10 hover:text-white flex items-center justify-between transition-colors">
+                          <button
+                            key={c.id}
+                            onClick={() => addItem(c.id)}
+                            className="w-full text-left px-3 py-2.5 text-sm text-slate-300 hover:bg-primary/10 hover:text-white flex items-center justify-between transition-colors"
+                          >
                             <span className="font-medium">{c.name}</span>
                             <span className="text-xs px-2 py-0.5 rounded bg-surface-light text-slate-400">{c.category}</span>
                           </button>
@@ -151,7 +268,7 @@ export function ComparePage() {
           {compareItems.length > 0 && (
             <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
               <CheckCircle className="w-3.5 h-3.5 text-primary" />
-              已选 {compareItems.length} 个对象进行对比，点击对象右侧 × 可移除
+              已选 {compareItems.length} 个对象进行对比，点击 × 移除，或继续添加（最多4个）
             </div>
           )}
         </div>
@@ -170,6 +287,7 @@ export function ComparePage() {
                 ))}
               </div>
             </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="card p-6">
                 <h3 className="font-serif font-semibold text-white mb-4">维度雷达图</h3>
@@ -180,60 +298,144 @@ export function ComparePage() {
                 <BarChart data={barData} series={[{ key: '综合评分', color: '#10B981' }]} height={320} />
               </div>
             </div>
-            <div className="card overflow-hidden">
-              <div className="p-6 border-b border-slate-700/50">
-                <h3 className="font-serif font-semibold text-white">维度评分矩阵</h3>
+
+            <div className="border-b border-slate-700/50 mb-2">
+              <div className="flex gap-6">
+                <button onClick={() => setActiveTab('matrix')} className={`pb-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'matrix' ? 'border-primary text-primary' : 'border-transparent text-slate-400 hover:text-slate-200'}`}>
+                  维度评分矩阵
+                </button>
+                <button onClick={() => setActiveTab('diff')} className={`pb-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'diff' ? 'border-primary text-primary' : 'border-transparent text-slate-400 hover:text-slate-200'}`}>
+                  差异字段分析
+                </button>
+                <button onClick={() => setActiveTab('history')} className={`pb-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'history' ? 'border-primary text-primary' : 'border-transparent text-slate-400 hover:text-slate-200'}`}>
+                  <History className="w-4 h-4 inline mr-1" />对比历史 ({history.length})
+                </button>
               </div>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-surface-light/50">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">评价维度</th>
-                      {compareItems.map((item) => (
-                        <th key={item.id} className="px-4 py-3 text-center text-xs font-medium text-slate-400 uppercase tracking-wider">{item.name}</th>
+            </div>
+
+            {activeTab === 'matrix' && (
+              <div className="card overflow-hidden animate-fade-in">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-surface-light/50">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">评价维度</th>
+                        {compareItems.map((item) => (
+                          <th key={item.id} className="px-4 py-3 text-center text-xs font-medium text-slate-400 uppercase tracking-wider">{item.name}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-700/50">
+                      {allDimensionNames.map((dimName) => (
+                        <tr key={dimName} className="hover:bg-surface-light/20">
+                          <td className="px-4 py-3 text-sm text-slate-300">{dimName}</td>
+                          {compareItems.map((item) => {
+                            const dim = item.dimensions.find((d) => d.name === dimName);
+                            const score = dim?.score || 0;
+                            const allScoresForDim = compareItems.map((c) => c.dimensions.find((d) => d.name === dimName)?.score || 0);
+                            const maxScore = Math.max(...allScoresForDim);
+                            const isBest = score === maxScore && score > 0;
+                            return (
+                              <td key={item.id} className="px-4 py-3 text-center">
+                                <span className={`text-sm font-medium ${isBest ? 'text-primary' : 'text-white'}`}>
+                                  {score > 0 ? score : '-'}
+                                  {isBest && <span className="ml-1 text-xs">★</span>}
+                                </span>
+                              </td>
+                            );
+                          })}
+                        </tr>
                       ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-700/50">
-                    {allDimensionNames.map((dimName) => (
-                      <tr key={dimName} className="hover:bg-surface-light/20">
-                        <td className="px-4 py-3 text-sm text-slate-300">{dimName}</td>
+                      <tr className="bg-surface-light/30">
+                        <td className="px-4 py-3 text-sm font-medium text-white">综合评分</td>
                         {compareItems.map((item) => {
-                          const dim = item.dimensions.find((d) => d.name === dimName);
-                          const score = dim?.score || 0;
-                          const allScoresForDim = compareItems.map((c) => c.dimensions.find((d) => d.name === dimName)?.score || 0);
-                          const maxScore = Math.max(...allScoresForDim);
-                          const isBest = score === maxScore && score > 0;
+                          const maxScore = Math.max(...compareItems.map((c) => c.score));
+                          const isBest = item.score === maxScore;
                           return (
                             <td key={item.id} className="px-4 py-3 text-center">
-                              <span className={`text-sm font-medium ${isBest ? 'text-primary' : 'text-white'}`}>
-                                {score > 0 ? score : '-'}
+                              <span className={`text-base font-bold ${isBest ? 'text-primary' : 'text-white'}`}>
+                                {item.score}
                                 {isBest && <span className="ml-1 text-xs">★</span>}
                               </span>
                             </td>
                           );
                         })}
                       </tr>
-                    ))}
-                    <tr className="bg-surface-light/30">
-                      <td className="px-4 py-3 text-sm font-medium text-white">综合评分</td>
-                      {compareItems.map((item) => {
-                        const maxScore = Math.max(...compareItems.map((c) => c.score));
-                        const isBest = item.score === maxScore;
-                        return (
-                          <td key={item.id} className="px-4 py-3 text-center">
-                            <span className={`text-base font-bold ${isBest ? 'text-primary' : 'text-white'}`}>
-                              {item.score}
-                              {isBest && <span className="ml-1 text-xs">★</span>}
-                            </span>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            )}
+
+            {activeTab === 'diff' && (
+              <div className="space-y-3 animate-fade-in">
+                <div className="card p-5">
+                  <p className="text-sm text-slate-400 mb-4">以下为对比对象之间评分差异最大的 Top {diffDims.length} 个维度（差异越大越值得关注）</p>
+                  <div className="space-y-3">
+                    {diffDims.map((d, i) => d && (
+                      <div key={i} className="p-4 bg-surface-light/30 rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-white font-semibold">{d.dimName}</span>
+                          <span className="px-2 py-0.5 rounded bg-danger/10 text-danger text-xs border border-danger/20">差距 {d.gap} 分</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-3 rounded bg-primary/5 border border-primary/20">
+                            <div className="text-xs text-primary mb-1 flex items-center gap-1"><TrendingUp className="w-3 h-3" />表现最优</div>
+                            <div className="text-white font-medium">{d.best.name} <span className="text-primary ml-2">{d.best.score}</span></div>
+                          </div>
+                          <div className="p-3 rounded bg-warning/5 border border-warning/20">
+                            <div className="text-xs text-warning mb-1 flex items-center gap-1"><TrendingDown className="w-3 h-3" />有待改进</div>
+                            <div className="text-white font-medium">{d.worst.name} <span className="text-warning ml-2">{d.worst.score}</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'history' && (
+              <div className="card p-5 animate-fade-in">
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-sm text-slate-400">最近保存的对比记录（最多5条）</p>
+                  {history.length > 0 && (
+                    <button onClick={clearHistory} className="text-xs text-danger hover:text-danger/80">清空历史</button>
+                  )}
+                </div>
+                {history.length > 0 ? (
+                  <div className="space-y-2">
+                    {history.map((h) => (
+                      <div key={h.id} className="p-3 bg-surface-light/30 rounded-md flex items-center justify-between">
+                        <div>
+                          <div className="text-sm text-white font-medium flex items-center gap-2 flex-wrap">
+                            {h.items.map((it, i) => (
+                              <span key={it.id} className="inline-flex items-center gap-1">
+                                {i > 0 && <span className="text-slate-600">vs</span>}
+                                <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-xs">{it.name}</span>
+                              </span>
+                            ))}
+                          </div>
+                          <div className="text-xs text-slate-500 mt-1">{h.time}</div>
+                        </div>
+                        <button
+                          onClick={() => loadHistory(h.items.map(i => i.id))}
+                          className="px-3 py-1 rounded text-xs bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
+                        >
+                          加载对比
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-slate-500 text-sm">
+                    <History className="w-10 h-10 mx-auto mb-2 opacity-40" />
+                    暂无对比历史记录，点击"保存对比结果"可保存当前对比
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {compareItems.map((item) => (
                 <div key={item.id} className="card p-6">
@@ -273,7 +475,8 @@ export function ComparePage() {
         ) : (
           <div className="card p-12 text-center">
             <GitCompare className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-            <p className="text-slate-400">请至少添加2个对象进行对比</p>
+            <p className="text-slate-400">请至少添加2个对象进行对比（可从首页或榜单页一键加入）</p>
+            <Link to="/" className="btn btn-primary mt-4 inline-flex">去首页选择 <GitCompare className="w-4 h-4 ml-2" /></Link>
           </div>
         )}
       </div>
