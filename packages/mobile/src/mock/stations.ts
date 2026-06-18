@@ -31,6 +31,44 @@ export const protocolColors: Record<string, string> = {
   'GB/T 27930': '#00b578',
 }
 
+export interface Inspection {
+  normal: boolean
+  lastDate: string
+  anomalies: string[]
+}
+
+export interface AlarmRecord {
+  id: string
+  time: string
+  type: '故障告警' | '离线告警' | '巡检异常'
+  content: string
+  status: '待处理' | '处理中' | '已处理'
+}
+
+export interface WorkOrder {
+  id: string
+  problemType: '巡检异常' | '桩体故障' | '通信异常' | '支付异常'
+  description: string
+  responsibleParty: '运营商运维' | '场站驻场' | '第三方维修' | '平台技术' | '自动分配中'
+  progress: 1 | 2 | 3 | 4 | 5
+  handler: string
+  phone: string
+  createTime: string
+  estimatedTime: string
+  status: '待派单' | '已派单' | '处理中' | '待复查' | '已完成'
+}
+
+export interface RecheckRecord {
+  id: string
+  workOrderId: string
+  summary: string
+  handler: string
+  finishTime: string
+  result: '通过' | '需二次处理'
+  rechecker: string
+  recheckTime: string
+}
+
 export interface Station {
   id: string
   name: string
@@ -55,6 +93,7 @@ export interface Station {
   apiStatus: '在线' | '离线'
   lastInspectionTime: string
   inspectionItems: string[]
+  inspection: Inspection
   peakHours: string
   queueCount: number
 }
@@ -69,7 +108,9 @@ export const stations: Station[] = [
     address: 'G1京哈高速白鹿服务区(双向)', longitude: 117.12, latitude: 40.23,
     businessHours: '00:00-24:00', lastSyncTime: '2026-06-18 14:30:00',
     apiStatus: '在线', lastInspectionTime: '2026-06-17 09:00:00',
-    inspectionItems: ['3号桩通信异常'], peakHours: '10:00-14:00', queueCount: 2,
+    inspectionItems: ['3号桩通信异常'],
+    inspection: { normal: false, lastDate: '2026-06-17', anomalies: ['3号桩通信异常', '显示屏黑屏需检查'] },
+    peakHours: '10:00-14:00', queueCount: 2,
   },
   {
     id: 'h2', name: 'G1京哈高速·山海关服务区充电站', operator: '特来电', protocol: '第三方API',

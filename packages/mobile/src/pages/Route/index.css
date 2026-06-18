@@ -1,14 +1,18 @@
 .route-page {
-  padding-bottom: 20px;
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 24px;
 }
 
-.route-search-card {
-  background: #fff;
-  padding: 16px;
+.route-body {
+  padding: 12px 16px;
+}
+
+.search-card {
   margin-bottom: 12px;
 }
 
-.search-input-group {
+.search-list {
   margin-bottom: 16px;
 }
 
@@ -16,7 +20,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 0;
+  padding: 6px 0;
 }
 
 .search-dot {
@@ -34,130 +38,580 @@
   background: #ff3141;
 }
 
-.search-divider {
-  padding-left: 6px;
-  height: 24px;
+.search-dot.waypoint {
+  background: #1677ff;
+  width: 10px;
+  height: 10px;
+}
+
+.waypoint-block {
+  position: relative;
+}
+
+.waypoint-connector {
+  padding-left: 5px;
+  height: 18px;
   display: flex;
   align-items: center;
 }
 
-.divider-line {
+.waypoint-connector::before {
+  content: '';
   width: 2px;
   height: 100%;
   background: #e5e5e5;
   margin-left: 4px;
 }
 
+.waypoint-item {
+  padding: 4px 0;
+}
+
+.waypoint-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.action-btn.up,
+.action-btn.down {
+  background: #f0f5ff;
+  color: #1677ff;
+  border: 1px solid #d6e4ff;
+}
+
+.action-btn.up:hover,
+.action-btn.down:hover {
+  background: #e6f4ff;
+}
+
+.action-btn.up.disabled,
+.action-btn.down.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.action-btn.delete {
+  background: #fff1f0;
+  color: #ff3141;
+  border: 1px solid #ffd6d9;
+}
+
+.action-btn.delete:hover {
+  background: #fff0ef;
+}
+
+.add-waypoint-row {
+  position: relative;
+}
+
+.add-waypoint-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0 8px 24px;
+  color: #1677ff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.add-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #e6f4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
 .plan-btn {
   margin-top: 8px;
 }
 
-.map-placeholder {
-  margin: 0 16px 20px;
-  height: 180px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 14px;
-  gap: 8px;
-}
-
-.map-icon {
-  font-size: 48px;
-}
-
-.routes-section {
-  padding: 0 16px;
-}
-
-.section-title {
-  font-size: 16px;
-  font-weight: 600;
+.vehicle-card {
   margin-bottom: 12px;
 }
 
-.route-card {
-  position: relative;
-  margin-bottom: 12px;
-}
-
-.route-card.recommended {
-  border: 2px solid #1677ff;
-}
-
-.recommend-tag {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.route-header {
+.vehicle-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  cursor: pointer;
 }
 
-.route-name {
-  font-size: 16px;
+.vehicle-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
   font-weight: 600;
-}
-
-.route-distance {
-  font-size: 14px;
-  color: #666;
-}
-
-.route-time {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.route-stops {
-  margin-bottom: 12px;
-}
-
-.stops-label {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.stop-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.stop-name {
-  font-size: 14px;
   color: #333;
 }
 
-.stop-distance {
-  font-size: 12px;
+.expand-arrow {
+  font-size: 14px;
   color: #999;
+  transition: transform 0.2s;
 }
 
-.stop-extra {
+.expand-arrow.rotated {
+  transform: rotate(90deg);
+}
+
+.vehicle-body {
+  margin-top: 16px;
+}
+
+.param-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.param-label {
+  font-size: 13px;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.param-input-wrap {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 12px;
+}
+
+.param-input {
+  width: 90px;
+  text-align: right;
+  --adm-input-font-size: 14px;
+}
+
+.param-unit {
+  font-size: 13px;
+  color: #999;
+  min-width: 48px;
+}
+
+.param-bar-wrap {
+  margin-bottom: 16px;
+  padding-left: 4px;
+}
+
+.param-bar {
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.param-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.param-bar-fill.battery {
+  background: linear-gradient(90deg, #00b578, #36cfc9);
+}
+
+.range-display {
+  background: linear-gradient(135deg, #e6f4ff 0%, #f0f5ff 100%);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.range-label {
+  font-size: 13px;
   color: #666;
 }
 
-.stop-charge-time {
+.range-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1677ff;
+}
+
+.range-value small {
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.result-section {
+  display: flex;
+}
+
+.overview-card {
+  margin-bottom: 0;
+}
+
+.overview-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 14px;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.overview-item {
+  background: #f7f8fa;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.overview-label {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.overview-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+.overview-value small {
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 2px;
+  color: #999;
+}
+
+.overview-value.cost {
+  color: #ff8f1f;
+}
+
+.segments-card {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 14px;
+}
+
+.segment-item {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.segment-item:last-child {
+  margin-bottom: 0;
+}
+
+.segment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.segment-index {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.range-tag {
+  flex-shrink: 0;
+}
+
+.segment-points {
+  margin-bottom: 14px;
+}
+
+.point-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.point-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.point-dot.start {
+  background: #00b578;
+}
+
+.point-dot.end {
+  background: #ff3141;
+}
+
+.point-name {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.point-connector {
+  position: relative;
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.connector-line {
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, #95de64 0%, #ffa39e 100%);
+  margin-left: 3px;
+}
+
+.connector-info {
+  position: absolute;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #999;
+  background: #f7f8fa;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.dot-sep {
+  color: #ccc;
+}
+
+.battery-section {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.battery-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.battery-label {
+  font-size: 12px;
+  color: #666;
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.battery-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.battery-bar {
+  flex: 1;
+  height: 8px;
+  background: #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.battery-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+
+.battery-bar-fill.consumed {
+  background: linear-gradient(90deg, #ff7a45, #ff9c6e);
+}
+
+.battery-bar-fill.remaining {
+  background: linear-gradient(90deg, #00b578, #36cfc9);
+}
+
+.battery-bar-fill.low {
+  background: linear-gradient(90deg, #ff3141, #ff7875);
+}
+
+.battery-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  width: 52px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.battery-val.low {
+  color: #ff3141;
+}
+
+.stations-section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed #e8e8e8;
+}
+
+.stations-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.station-list {
+  --adm-list-border-inner: none;
+  --adm-list-background-color: transparent;
+}
+
+.station-list .adm-list-item {
+  background: #fafafa;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  padding: 12px !important;
+}
+
+.station-list .adm-list-item:last-child {
+  margin-bottom: 0;
+}
+
+.station-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.station-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.station-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  word-break: break-all;
+}
+
+.recommend-tag {
+  flex-shrink: 0;
+}
+
+.operator-tag {
+  flex-shrink: 0;
+}
+
+.station-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.period-tag {
+  flex-shrink: 0;
+}
+
+.station-price {
+  font-size: 13px;
+  color: #ff8f1f;
+  font-weight: 600;
+}
+
+.price-detail {
+  font-size: 11px;
+  color: #999;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.station-info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.info-item {
+  color: #666;
+}
+
+.info-item.idle {
   color: #00b578;
+}
+
+.info-item.distance {
+  color: #1677ff;
+}
+
+.station-extra {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.station-charge-time {
+  font-size: 12px;
+  color: #666;
+  background: #f0f5ff;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.station-charge-cost {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ff8f1f;
 }

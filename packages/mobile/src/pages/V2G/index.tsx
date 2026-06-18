@@ -256,32 +256,38 @@ function V2G() {
                         <ClockCircleOutline /> 放电时段
                       </List.Item>
                       <List.Item extra={
-                        <Input
-                          value={String(strategy.targetSoc)}
-                          onChange={v => updateStrategy(strategy.id, 'targetSoc', Number(v) || 0)}
-                          className="num-input"
-                          suffix="%"
-                        />
+                        <Space align="center">
+                          <Input
+                            value={String(strategy.targetSoc)}
+                            onChange={v => updateStrategy(strategy.id, 'targetSoc', Number(v) || 0)}
+                            className="num-input"
+                          />
+                          <span>%</span>
+                        </Space>
                       }>
                         目标SOC
                       </List.Item>
                       <List.Item extra={
-                        <Input
-                          value={String(strategy.minSoc)}
-                          onChange={v => updateStrategy(strategy.id, 'minSoc', Number(v) || 0)}
-                          className="num-input"
-                          suffix="%"
-                        />
+                        <Space align="center">
+                          <Input
+                            value={String(strategy.minSoc)}
+                            onChange={v => updateStrategy(strategy.id, 'minSoc', Number(v) || 0)}
+                            className="num-input"
+                          />
+                          <span>%</span>
+                        </Space>
                       }>
                         最低SOC
                       </List.Item>
                       <List.Item extra={
-                        <Input
-                          value={String(strategy.maxPower)}
-                          onChange={v => updateStrategy(strategy.id, 'maxPower', Number(v) || 0)}
-                          className="num-input"
-                          suffix="kW"
-                        />
+                        <Space align="center">
+                          <Input
+                            value={String(strategy.maxPower)}
+                            onChange={v => updateStrategy(strategy.id, 'maxPower', Number(v) || 0)}
+                            className="num-input"
+                          />
+                          <span>kW</span>
+                        </Space>
                       }>
                         <SetOutline /> 最大功率
                       </List.Item>

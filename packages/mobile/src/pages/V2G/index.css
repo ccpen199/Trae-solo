@@ -1,112 +1,361 @@
 .v2g-page {
-  padding-bottom: 20px;
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 24px;
 }
 
-.v2g-header-card {
-  background: linear-gradient(135deg, #1677ff 0%, #0958d9 100%);
-  padding: 24px 20px;
-  color: #fff;
+.v2g-body {
+  padding: 12px 16px;
 }
 
-.v2g-status {
+.auth-card .auth-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.status-indicator {
+.auth-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.auth-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.auth-field label {
+  font-size: 13px;
+  color: #666;
+}
+
+.auth-tip {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  font-size: 12px;
+  color: #00b578;
+  background: #f0fff4;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.auth-btn {
+  margin-top: 4px;
+}
+
+.status-card .status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.status-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.status-strategy-name {
+  font-size: 14px;
+  color: #1677ff;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.status-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.metric-item {
+  text-align: center;
+  background: #f7f8fa;
+  border-radius: 8px;
+  padding: 10px 4px;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.metric-value {
   font-size: 18px;
   font-weight: 600;
+  color: #333;
 }
 
-.status-text.active {
-  color: #73d13d;
+.metric-value.charging {
+  color: #1677ff;
 }
 
-.income-display {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.metric-value.income {
+  color: #00b578;
 }
 
-.income-item {
+.metric-value small {
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.metric-sub {
+  font-size: 11px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.battery-status {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.battery-row {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.income-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.income-label {
+.battery-label {
   font-size: 13px;
-  opacity: 0.8;
+  color: #666;
+  width: 36px;
+  flex-shrink: 0;
 }
 
-.income-value {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.settings-section {
-  padding: 16px;
-}
-
-.setting-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.setting-label {
-  font-size: 14px;
-  color: #333;
-}
-
-.setting-desc {
-  font-size: 12px;
-  color: #999;
-}
-
-.slider-wrapper {
-  padding: 0 4px 8px;
-}
-
-.strategy-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  background: #f7f7f7;
-  border-radius: 8px;
-}
-
-.strategy-item.active {
-  background: #e6f4ff;
-  border: 1px solid #1677ff;
-}
-
-.strategy-info {
+.battery-bar-wrap {
   flex: 1;
-}
-
-.strategy-name {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 4px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+.battery-bar {
+  flex: 1;
+  height: 8px;
+  background: #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.battery-bar.temp {
+  background: #fff3e8;
+}
+
+.battery-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1677ff, #69b1ff);
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+
+.battery-bar-fill.temp {
+  background: linear-gradient(90deg, #fa8c16, #ffc53d);
+}
+
+.battery-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.strategies-card .section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.strategy-block {
+  background: #f7f8fa;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid transparent;
+  transition: all 0.2s;
+}
+
+.strategy-block.active {
+  border-color: #1677ff;
+  background: #f0f7ff;
+}
+
+.strategy-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.strategy-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.strategy-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.strategy-tag {
+  flex-shrink: 0;
+}
+
 .strategy-desc {
   font-size: 12px;
+  color: #999;
+}
+
+.strategy-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.expand-arrow {
+  font-size: 14px;
+  color: #ccc;
+  transition: transform 0.2s;
+}
+
+.expand-arrow.rotated {
+  transform: rotate(90deg);
+}
+
+.strategy-detail {
+  border-top: 1px solid #eee;
+  padding: 0 4px 4px;
+}
+
+.strategy-detail .adm-list {
+  --adm-list-border-inner: none;
+  --adm-list-font-size: 13px;
+}
+
+.time-input {
+  width: 64px;
+  text-align: center;
+  --adm-input-font-size: 13px;
+}
+
+.num-input {
+  width: 64px;
+  text-align: right;
+  --adm-input-font-size: 13px;
+}
+
+.strategy-extra {
+  padding: 8px 12px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.extra-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
   color: #666;
+}
+
+.extra-val {
+  font-weight: 500;
+  color: #333;
+}
+
+.records-card .section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.record-type {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.record-type.charge {
+  color: #1677ff;
+  background: #e6f4ff;
+}
+
+.record-type.discharge {
+  color: #00b578;
+  background: #f0fff4;
+}
+
+.record-date {
+  font-size: 13px;
+  color: #999;
+}
+
+.record-right {
+  text-align: right;
+}
+
+.record-energy {
+  font-size: 13px;
+  color: #666;
+}
+
+.record-income {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.record-income.positive {
+  color: #00b578;
+}
+
+.record-income.negative {
+  color: #ff3141;
 }
