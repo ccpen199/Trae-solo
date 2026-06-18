@@ -19,12 +19,12 @@ import workorderRoutes from './routes/workorder';
 import adminRoutes from './routes/admin';
 
 const app = express();
-const PORT = parseInt(process.env.PORT || '59241');
-const HOST = process.env.HOST || '127.0.0.1';
+const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT || '59241');
+const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://127.0.0.1:49241';
 
 app.use(cors({
-  origin: [FRONTEND_URL, 'http://127.0.0.1:49241', 'http://127.0.0.1:49242'],
+  origin: [FRONTEND_URL, 'http://127.0.0.1:49241'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -44,6 +44,7 @@ app.use('/api/contracts', contractRoutes);
 app.use('/api/supervision', supervisionRoutes);
 app.use('/api/showroom', showroomRoutes);
 app.use('/api/gis', gisRoutes);
+app.use('/api/workorder', workorderRoutes);
 app.use('/api/workorders', workorderRoutes);
 app.use('/api/admin', adminRoutes);
 

@@ -10,6 +10,8 @@ export const apiClient = axios.create({
   },
 });
 
+let isRefreshing = false;
+
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -22,9 +24,20 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+      const url = error.config?.url || '';
+      if (url.includes('/auth/login')) {
+        return Promise.reject(error);
+      }
+      if (!isRefreshing) {
+        isRefreshing = true;
+        const event = new CustomEvent('auth:unauthorized', {
+          detail: { message: error.response.data?.error || '登录状态已失效，请重新登录' }
+        });
+        window.dispatchEvent(event);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setTimeout(() => { isRefreshing = false; }, 1000);
+      }
     }
     return Promise.reject(error);
   }

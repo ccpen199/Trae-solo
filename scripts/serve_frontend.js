@@ -21,7 +21,7 @@ function loadEnv() {
 
 const env = loadEnv();
 const host = env.FRONTEND_HOST || '127.0.0.1';
-const port = Number(env.FRONTEND_PORT || 49242);
+const port = Number(env.FRONTEND_PORT || 49241);
 const backendPort = Number(env.BACKEND_PORT || 59241);
 const backendHost = env.BACKEND_HOST || '127.0.0.1';
 

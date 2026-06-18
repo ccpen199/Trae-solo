@@ -5,16 +5,32 @@ const path = require('path');
 const projectDir = path.resolve(__dirname, '..');
 const nodeBinDir = '/Users/chen/.nvm/versions/node/v22.22.0/bin';
 const target = process.argv[2] || 'all';
+const envPath = path.join(projectDir, '.env');
+
+function loadEnv() {
+  const env = {};
+  if (!fs.existsSync(envPath)) return env;
+  for (const line of fs.readFileSync(envPath, 'utf8').split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const index = trimmed.indexOf('=');
+    if (index === -1) continue;
+    env[trimmed.slice(0, index)] = trimmed.slice(index + 1);
+  }
+  return env;
+}
+
+const projectEnv = loadEnv();
 
 const services = {
   backend: {
-    port: 59241,
+    port: Number(projectEnv.BACKEND_PORT || 59241),
     script: path.join(projectDir, 'scripts', 'run_backend.sh'),
     log: path.join(projectDir, 'backend.log'),
     pid: path.join(projectDir, 'backend.pid'),
   },
   frontend: {
-    port: 49242,
+    port: Number(projectEnv.FRONTEND_PORT || 49241),
     script: path.join(projectDir, 'scripts', 'run_frontend.sh'),
     log: path.join(projectDir, 'frontend.log'),
     pid: path.join(projectDir, 'frontend.pid'),

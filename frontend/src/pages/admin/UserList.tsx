@@ -31,6 +31,7 @@ interface UserItem {
 }
 
 const roleColors: Record<UserRole, string> = {
+  admin: 'red',
   owner: 'blue',
   designer: 'purple',
   supervisor: 'cyan',
@@ -174,6 +175,7 @@ const UserList: React.FC = () => {
   ];
 
   const roleOptions: { value: UserRole; label: string; color: string }[] = [
+    { value: 'admin', label: '系统管理员', color: 'red' },
     { value: 'owner', label: '业主', color: 'blue' },
     { value: 'designer', label: '设计师', color: 'purple' },
     { value: 'supervisor', label: '施工监理', color: 'cyan' },

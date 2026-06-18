@@ -175,7 +175,7 @@ router.get('/:id/ai-solution', authMiddleware, (req, res) => {
   const { id } = req.params;
   const solution = db.prepare('SELECT * FROM ai_solutions WHERE demand_id = ?').get(id) as AISolution | undefined;
   if (!solution) {
-    return res.status(404).json({ error: 'AI方案不存在' });
+    return res.json(null);
   }
   res.json(solution);
 });

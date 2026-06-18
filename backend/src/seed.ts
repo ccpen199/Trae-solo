@@ -23,7 +23,8 @@ const citiesData = [
 export function seedData() {
   const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number };
   if (userCount.count > 0) {
-    console.log('Data already seeded, skipping');
+    console.log('Data already seeded, checking demo workflow data');
+    ensureDemoWorkflowData();
     return;
   }
 
@@ -95,4 +96,179 @@ export function seedData() {
   });
 
   console.log('Seed data inserted successfully');
+  ensureDemoWorkflowData();
+}
+
+function ensureDemoWorkflowData() {
+  const owner = db.prepare("SELECT * FROM users WHERE username = 'owner1' OR role = 'owner' ORDER BY username LIMIT 1").get() as any;
+  const designer = db.prepare("SELECT * FROM users WHERE username = 'designer1' OR role = 'designer' ORDER BY username LIMIT 1").get() as any;
+  const supervisor = db.prepare("SELECT * FROM users WHERE username = 'supervisor1' OR role = 'supervisor' ORDER BY username LIMIT 1").get() as any;
+  const supplier = db.prepare("SELECT * FROM users WHERE username = 'supplier1' OR role = 'supplier' ORDER BY username LIMIT 1").get() as any;
+  const store = db.prepare('SELECT * FROM stores ORDER BY created_at LIMIT 1').get() as any;
+
+  if (!owner || !designer || !store) {
+    console.log('Demo workflow data skipped: missing base users or store');
+    return;
+  }
+
+  let demand = db.prepare('SELECT * FROM decoration_demands ORDER BY created_at LIMIT 1').get() as any;
+  if (!demand) {
+    const demandId = uuidv4();
+    const now = new Date().toISOString();
+    db.prepare(`
+      INSERT INTO decoration_demands (
+        id, owner_id, city, district, address, house_type, area, budget_min, budget_max,
+        decoration_style, requirement_desc, contact_name, contact_phone, status, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'matched', ?, ?)
+    `).run(
+      demandId,
+      owner.id,
+      '北京',
+      '朝阳区',
+      '阳光花园1203室',
+      '三室两厅',
+      118,
+      180000,
+      260000,
+      '现代简约',
+      '需要儿童房、开放式厨房和充足收纳空间',
+      owner.real_name,
+      owner.phone,
+      now,
+      now
+    );
+    demand = db.prepare('SELECT * FROM decoration_demands WHERE id = ?').get(demandId);
+  }
+
+  const solutionCount = db.prepare('SELECT COUNT(*) as count FROM ai_solutions WHERE demand_id = ?').get(demand.id) as { count: number };
+  if (solutionCount.count === 0) {
+    db.prepare(`
+      INSERT INTO ai_solutions (
+        id, demand_id, style_plan, layout_plan, material_plan, estimated_budget, estimated_period, renderings
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      uuidv4(),
+      demand.id,
+      '现代简约风格，浅色墙面搭配原木柜体，客餐厨保持开阔通透。',
+      '三室两厅动线优化，主卧套房、儿童房和多功能书房分区明确。',
+      '木地板、环保乳胶漆、定制柜、石英石台面和品牌五金。',
+      220000,
+      90,
+      JSON.stringify(['/images/render_demo_1.jpg', '/images/render_demo_2.jpg'])
+    );
+  }
+
+  const matchCount = db.prepare('SELECT COUNT(*) as count FROM designer_matches WHERE demand_id = ?').get(demand.id) as { count: number };
+  if (matchCount.count === 0) {
+    db.prepare(`
+      INSERT INTO designer_matches (id, demand_id, designer_id, store_id, match_score, status, created_at)
+      VALUES (?, ?, ?, ?, 92, 'accepted', ?)
+    `).run(uuidv4(), demand.id, designer.id, designer.store_id || store.id, new Date().toISOString());
+  }
+
+  let contract = db.prepare('SELECT * FROM decoration_contracts ORDER BY created_at LIMIT 1').get() as any;
+  if (!contract) {
+    const contractId = uuidv4();
+    const now = new Date().toISOString();
+    const start = new Date();
+    const end = new Date();
+    end.setDate(start.getDate() + 90);
+    db.prepare(`
+      INSERT INTO decoration_contracts (
+        id, demand_id, owner_id, designer_id, store_id, contract_no, total_amount, escrow_amount,
+        start_date, end_date, warranty_years, terms, status, owner_signed_at, store_signed_at, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 10, ?, 'signed', ?, ?, ?)
+    `).run(
+      contractId,
+      demand.id,
+      demand.owner_id || owner.id,
+      designer.id,
+      designer.store_id || store.id,
+      'DEC-DEMO-89241',
+      220000,
+      44000,
+      start.toISOString().split('T')[0],
+      end.toISOString().split('T')[0],
+      '示例合同：含三方节点确认、资金托管和十年质保条款。',
+      now,
+      now,
+      now
+    );
+    db.prepare("UPDATE decoration_demands SET status = 'in_progress', updated_at = ? WHERE id = ?").run(now, demand.id);
+    contract = db.prepare('SELECT * FROM decoration_contracts WHERE id = ?').get(contractId);
+  }
+
+  const milestoneCount = db.prepare('SELECT COUNT(*) as count FROM project_milestones WHERE contract_id = ?').get(contract.id) as { count: number };
+  if (milestoneCount.count === 0) {
+    const milestones = [
+      { type: '水电隐蔽验收', days: 15, amount: 66000, status: 'confirmed', paymentStatus: 'paid' },
+      { type: '泥木完工', days: 45, amount: 77000, status: 'ready', paymentStatus: 'processing' },
+      { type: '竣工', days: 90, amount: 33000, status: 'pending', paymentStatus: 'pending' },
+    ];
+    const startDate = new Date(contract.start_date || new Date());
+    for (const item of milestones) {
+      const planned = new Date(startDate);
+      planned.setDate(startDate.getDate() + item.days);
+      db.prepare(`
+        INSERT INTO project_milestones (
+          id, contract_id, milestone_type, planned_date, status, owner_confirmed,
+          designer_confirmed, supervisor_confirmed, payment_amount, payment_status, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(
+        uuidv4(),
+        contract.id,
+        item.type,
+        planned.toISOString().split('T')[0],
+        item.status,
+        item.status === 'confirmed' ? 1 : 0,
+        item.status === 'confirmed' ? 1 : 0,
+        item.status === 'confirmed' ? 1 : 0,
+        item.amount,
+        item.paymentStatus,
+        new Date().toISOString()
+      );
+    }
+  }
+
+  const bomCount = db.prepare('SELECT COUNT(*) as count FROM material_bom WHERE contract_id = ?').get(contract.id) as { count: number };
+  if (bomCount.count === 0) {
+    const materials = [
+      ['地砖', '800x800mm 抛光砖', 95, '㎡', 150],
+      ['木地板', '15mm 多层实木', 72, '㎡', 280],
+      ['墙面涂料', '净味乳胶漆', 260, '㎡', 85],
+    ];
+    for (const [name, spec, qty, unit, price] of materials as any[]) {
+      db.prepare(`
+        INSERT INTO material_bom (
+          id, contract_id, material_name, specification, quantity, unit, unit_price, total_price, supplier_id, status, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'ordered', ?)
+      `).run(uuidv4(), contract.id, name, spec, qty, unit, price, qty * price, supplier?.id || null, new Date().toISOString());
+    }
+  }
+
+  const supervisionCount = db.prepare('SELECT COUNT(*) as count FROM ai_supervision_records WHERE contract_id = ?').get(contract.id) as { count: number };
+  if (supervisionCount.count === 0) {
+    db.prepare(`
+      INSERT INTO ai_supervision_records (
+        id, contract_id, camera_id, detection_time, risk_type, risk_level, description, status, handled_by, created_at
+      ) VALUES (?, ?, 'CAM-01', ?, '未戴安全帽', 'medium', 'AI识别到工人未佩戴安全帽，已通知现场监理。', 'processing', ?, ?)
+    `).run(uuidv4(), contract.id, new Date().toISOString(), supervisor?.id || null, new Date().toISOString());
+  }
+
+  const workOrderCount = db.prepare('SELECT COUNT(*) as count FROM work_orders WHERE contract_id = ?').get(contract.id) as { count: number };
+  if (workOrderCount.count === 0) {
+    db.prepare(`
+      INSERT INTO work_orders (
+        id, contract_id, type, title, description, submitter_id, handler_id, status, created_at
+      ) VALUES (?, ?, 'maintenance', '厨房水路复检', '业主反馈厨房水路需要复检，安排监理跟进。', ?, ?, 'processing', ?)
+    `).run(uuidv4(), contract.id, demand.owner_id || owner.id, supervisor?.id || null, new Date().toISOString());
+  }
+
+  const npsCount = db.prepare('SELECT COUNT(*) as count FROM nps_records WHERE contract_id = ?').get(contract.id) as { count: number };
+  if (npsCount.count === 0) {
+    db.prepare(`
+      INSERT INTO nps_records (id, contract_id, owner_id, score, feedback, created_at)
+      VALUES (?, ?, ?, 9, '施工响应及时，节点说明清晰。', ?)
+    `).run(uuidv4(), contract.id, demand.owner_id || owner.id, new Date().toISOString());
+  }
 }

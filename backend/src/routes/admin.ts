@@ -3,8 +3,64 @@ import { db } from '../database';
 import { authMiddleware, roleMiddleware, AuthRequest } from '../middleware';
 
 const router = Router();
+const allowAdminAccess = roleMiddleware('admin', 'store_manager');
 
-router.get('/dashboard', authMiddleware, roleMiddleware('store_manager'), (req, res) => {
+router.get('/dashboard/stats', authMiddleware, allowAdminAccess, (_req, res) => {
+  const demandCount = db.prepare('SELECT COUNT(*) as count FROM decoration_demands').get() as { count: number };
+  const contractCount = db.prepare('SELECT COUNT(*) as count FROM decoration_contracts').get() as { count: number };
+  const todoCount = db.prepare(`
+    SELECT COUNT(*) as count
+    FROM work_orders
+    WHERE status IN ('pending', 'processing')
+  `).get() as { count: number };
+  const riskCount = db.prepare(`
+    SELECT COUNT(*) as count
+    FROM ai_supervision_records
+    WHERE status IN ('detected', 'processing')
+  `).get() as { count: number };
+
+  res.json({
+    demandCount: demandCount.count,
+    contractCount: contractCount.count,
+    todoCount: todoCount.count,
+    riskCount: riskCount.count,
+  });
+});
+
+router.get('/dashboard/progress', authMiddleware, allowAdminAccess, (_req, res) => {
+  const rows = db.prepare(`
+    SELECT
+      c.id,
+      COALESCE(d.address, c.contract_no) as name,
+      c.status,
+      c.created_at as updateTime,
+      COALESCE(u.real_name, '系统') as operator,
+      COUNT(m.id) as milestone_count,
+      SUM(CASE WHEN m.status = 'confirmed' THEN 1 ELSE 0 END) as completed_count
+    FROM decoration_contracts c
+    LEFT JOIN decoration_demands d ON c.demand_id = d.id
+    LEFT JOIN users u ON c.designer_id = u.id
+    LEFT JOIN project_milestones m ON c.id = m.contract_id
+    GROUP BY c.id
+    ORDER BY c.created_at DESC
+    LIMIT 8
+  `).all() as any[];
+
+  const progress = rows.map((row) => ({
+    id: row.id,
+    name: row.name || row.id,
+    status: row.status === 'signed' ? '进行中' : row.status,
+    progress: row.milestone_count > 0
+      ? Math.round((Number(row.completed_count || 0) / Number(row.milestone_count)) * 100)
+      : 30,
+    updateTime: row.updateTime,
+    operator: row.operator,
+  }));
+
+  res.json(progress);
+});
+
+router.get('/dashboard', authMiddleware, allowAdminAccess, (req, res) => {
   const totalDemands = db.prepare('SELECT COUNT(*) as count FROM decoration_demands').get() as { count: number };
   const totalContracts = db.prepare('SELECT COUNT(*) as count FROM decoration_contracts').get() as { count: number };
   const totalRevenue = db.prepare("SELECT COALESCE(SUM(amount), 0) as total FROM payment_records WHERE status = 'completed'").get() as { total: number };
@@ -88,7 +144,7 @@ router.get('/dashboard', authMiddleware, roleMiddleware('store_manager'), (req, 
   });
 });
 
-router.get('/contracts/tracking', authMiddleware, roleMiddleware('store_manager'), (req, res) => {
+router.get('/contracts/tracking', authMiddleware, allowAdminAccess, (req, res) => {
   const { status } = req.query;
   let filter = '';
   const params: any[] = [];
@@ -128,7 +184,7 @@ router.get('/contracts/tracking', authMiddleware, roleMiddleware('store_manager'
   res.json(contracts);
 });
 
-router.get('/bom/cost-analysis', authMiddleware, roleMiddleware('store_manager'), (req, res) => {
+router.get('/bom/cost-analysis', authMiddleware, allowAdminAccess, (req, res) => {
   const { contract_id } = req.query;
   let filter = '';
   const params: any[] = [];
@@ -176,7 +232,7 @@ router.get('/bom/cost-analysis', authMiddleware, roleMiddleware('store_manager')
   });
 });
 
-router.get('/warranty/list', authMiddleware, roleMiddleware('store_manager'), (req, res) => {
+router.get('/warranty/list', authMiddleware, allowAdminAccess, (req, res) => {
   const { expiring_soon } = req.query;
   let having = '';
   const params: any[] = [];
@@ -211,7 +267,7 @@ router.get('/warranty/list', authMiddleware, roleMiddleware('store_manager'), (r
   res.json(warranties);
 });
 
-router.get('/users', authMiddleware, roleMiddleware('store_manager'), (req, res) => {
+router.get('/users', authMiddleware, allowAdminAccess, (req, res) => {
   const { role, status } = req.query;
   let query = `
     SELECT u.*, s.name as store_name

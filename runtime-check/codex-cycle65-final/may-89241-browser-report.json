@@ -1,0 +1,3116 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-18T12:22:37.550Z",
+  "order": "may-89241",
+  "roundIndex": 65,
+  "captureId": "may-89241-final",
+  "url": "http://127.0.0.1:49241/",
+  "initialUrl": "http://127.0.0.1:49241/",
+  "finalUrl": "http://127.0.0.1:49241/contracts",
+  "status": 200,
+  "title": "家装产业协同SaaS平台",
+  "initialTitle": "家装产业协同SaaS平台",
+  "navigationError": "",
+  "screenshotPath": "runtime-check/codex-cycle65-final/may-89241-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-03-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-04-操作-工单中心.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-05-导航-需求管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-06-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-07-二层操作-查看详情-返回.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-08-操作-刷-新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-09-导航-合同管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-10-操作-GIS服务.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-12-导航-AI监理.png"
+  ],
+  "issueTextPreview": "service repair final check for may-89241 frontend/backend/login",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49241/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49241/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49241/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49241/dashboard",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49241/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49241/dashboard"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:工单中心",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:需求管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷 新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:合同管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:GIS服务",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:GIS服务:搜索附近门店",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:AI监理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:GIS服务",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:GIS服务:搜索附近门店",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:云样板间",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49241/dashboard",
+        "title": "家装产业协同SaaS平台",
+        "headings": [
+          "欢迎回来，系统管理员"
+        ],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "管理后台",
+          "用户管理",
+          "合同跟踪",
+          "工单中心",
+          "查看全部"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台欢迎回来，系统管理员系统管理员 · 今天是 2026年06月18日 Thursday需求数12点击查看详情 →合同数8点击查看详情 →待办事项15点击查看详情 →风险告警3点击查看详情 →快捷操作管理后台用户管理合同跟踪工单中心项目状态分布业务趋势最近项目进展查看全部阳光花园1203室装修项目进行中2026-06-18 15:21操作人：李监理65%翡翠湾8栋502室设计方案设计中2026-06-18 14:21操作人：王设计40%金色家园3栋1501室施工进行中2026-06-18 13:21操作人：赵监理80%碧水蓝天6栋203室材料配送待配送2026-06-17 15:21操作人：孙供应商20%锦绣花园1栋802室验收待验收2026-06-16 15:21操作人：吴经理95%",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2001,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49241/dashboard",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-01-首屏.png",
+          "elementCount": 471,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "用户管理",
+            "合同跟踪",
+            "工单中心",
+            "查看全部"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49241/dashboard",
+        "title": "家装产业协同SaaS平台",
+        "headings": [
+          "欢迎回来，系统管理员"
+        ],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "管理后台",
+          "用户管理",
+          "合同跟踪",
+          "工单中心",
+          "查看全部"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台欢迎回来，系统管理员系统管理员 · 今天是 2026年06月18日 Thursday需求数12点击查看详情 →合同数8点击查看详情 →待办事项15点击查看详情 →风险告警3点击查看详情 →快捷操作管理后台用户管理合同跟踪工单中心项目状态分布业务趋势最近项目进展查看全部阳光花园1203室装修项目进行中2026-06-18 15:21操作人：李监理65%翡翠湾8栋502室设计方案设计中2026-06-18 14:21操作人：王设计40%金色家园3栋1501室施工进行中2026-06-18 13:21操作人：赵监理80%碧水蓝天6栋203室材料配送待配送2026-06-17 15:21操作人：孙供应商20%锦绣花园1栋802室验收待验收2026-06-16 15:21操作人：吴经理95%",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2001,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49241/dashboard",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-02-导航-工作台.png",
+          "elementCount": 471,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "用户管理",
+            "合同跟踪",
+            "工单中心",
+            "查看全部"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49241/contracts",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "合同编号",
+              "业主",
+              "设计师",
+              "门店",
+              "合同金额",
+              "状态",
+              "开工日期",
+              "签约时间",
+              "操作",
+              "合同编号",
+              "业主",
+              "设计师"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "合同编号 业主 设计师 门店 合同金额 状态 开工日期 签约时间 操作 合同编号 业主 设计师 门店 合同金额 状态 开工日期 签约时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台合同管理状态筛选：全部状态合同编号业主设计师门店合同金额状态开工日期签约时间操作合同编号业主设计师门店合同金额状态开工日期签约时间操作暂无数据",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-03-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49241/contracts",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-03-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-03-操作-查看全部.png",
+          "elementCount": 160,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:工单中心",
+        "url": "http://127.0.0.1:49241/workorders",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "工单号",
+              "类型",
+              "标题",
+              "提交人",
+              "处理人",
+              "状态",
+              "NPS评分",
+              "关联合同",
+              "创建时间",
+              "操作",
+              "工单号",
+              "类型"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "工单号 类型 标题 提交人 处理人 状态 NPS评分 关联合同 创建时间 操作 工单号 类型 标题 提交人 处理人 状态 NPS评分 关联合同 创建时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台工单管理状态筛选：全部状态类型筛选：全部类型工单号类型标题提交人处理人状态NPS评分关联合同创建时间操作工单号类型标题提交人处理人状态NPS评分关联合同创建时间操作暂无数据 获取工单列表失败",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-04-操作-工单中心",
+          "label": "操作:工单中心",
+          "finalUrl": "http://127.0.0.1:49241/workorders",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-04-操作-工单中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-04-操作-工单中心.png",
+          "elementCount": 207,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "创建时间"
+          ]
+        }
+      },
+      {
+        "label": "导航:需求管理",
+        "url": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "刷 新",
+          "查看详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索城市、区域、地址、业主",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "需求编号",
+              "业主",
+              "城市",
+              "区域",
+              "地址",
+              "户型",
+              "面积(㎡)",
+              "预算范围(万元)",
+              "装修风格",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "需求编号 业主 城市 区域 地址 户型 面积(㎡) 预算范围(万元) 装修风格 状态 创建时间 操作 需求编号 业主 城市 区域 地址 户型 面积(㎡) 预算范围(万元) 装修风格 状态 创建时间 操作 2195688e 张三 北京 朝阳区 建国路88号 apartment 120㎡ 15.0 - 25.0 modern 待匹配 2026/6/18 15:00:11 查看详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台需求列表按状态筛选刷 新需求编号业主城市区域地址户型面积(㎡)预算范围(万元)装修风格状态创建时间操作需求编号业主城市区域地址户型面积(㎡)预算范围(万元)装修风格状态创建时间操作2195688e张三北京朝阳区建国路88号apartment120㎡15.0 - 25.0modern待匹配2026/6/18 15:00:11查看详情共 1 条记录110 条/页",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-05-导航-需求管理",
+          "label": "导航:需求管理",
+          "finalUrl": "http://127.0.0.1:49241/demands",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-05-导航-需求管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-05-导航-需求管理.png",
+          "elementCount": 216,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "搜索城市、区域、地址、业主",
+            "刷 新",
+            "查看详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49241/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "返回"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "需求编号 2195688e 业主 张三 联系电话 13800138000 创建时间 2026/6/18 15:00:11"
+          },
+          {
+            "headers": [],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "房屋地址 北京 朝阳区 建国路88号 需求描述 暂无详细描述"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台返回需求详情待匹配需求编号2195688e业主张三联系电话13800138000创建时间2026/6/18 15:00:11建筑面积120㎡预算范围15.0-25.0万户型apartment装修风格modern房屋地址北京 朝阳区 建国路88号需求描述暂无详细描述AI装修方案暂无AI方案设计师匹配暂无匹配的设计师",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-06-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49241/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-06-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-06-操作-查看详情.png",
+          "elementCount": 234,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "返回"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详情->返回",
+        "url": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "刷 新",
+          "查看详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索城市、区域、地址、业主",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "需求编号",
+              "业主",
+              "城市",
+              "区域",
+              "地址",
+              "户型",
+              "面积(㎡)",
+              "预算范围(万元)",
+              "装修风格",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "需求编号 业主 城市 区域 地址 户型 面积(㎡) 预算范围(万元) 装修风格 状态 创建时间 操作 需求编号 业主 城市 区域 地址 户型 面积(㎡) 预算范围(万元) 装修风格 状态 创建时间 操作 2195688e 张三 北京 朝阳区 建国路88号 apartment 120㎡ 15.0 - 25.0 modern 待匹配 2026/6/18 15:00:11 查看详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台需求列表按状态筛选刷 新需求编号业主城市区域地址户型面积(㎡)预算范围(万元)装修风格状态创建时间操作需求编号业主城市区域地址户型面积(㎡)预算范围(万元)装修风格状态创建时间操作2195688e张三北京朝阳区建国路88号apartment120㎡15.0 - 25.0modern待匹配2026/6/18 15:00:11查看详情共 1 条记录110 条/页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-07-二层操作-查看详情-返回",
+          "label": "二层操作:查看详情->返回",
+          "finalUrl": "http://127.0.0.1:49241/demands",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-07-二层操作-查看详情-返回.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-07-二层操作-查看详情-返回.png",
+          "elementCount": 216,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "搜索城市、区域、地址、业主",
+            "刷 新",
+            "查看详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷 新",
+        "url": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "刷 新",
+          "查看详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索城市、区域、地址、业主",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "需求编号",
+              "业主",
+              "城市",
+              "区域",
+              "地址",
+              "户型",
+              "面积(㎡)",
+              "预算范围(万元)",
+              "装修风格",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "需求编号 业主 城市 区域 地址 户型 面积(㎡) 预算范围(万元) 装修风格 状态 创建时间 操作 需求编号 业主 城市 区域 地址 户型 面积(㎡) 预算范围(万元) 装修风格 状态 创建时间 操作 2195688e 张三 北京 朝阳区 建国路88号 apartment 120㎡ 15.0 - 25.0 modern 待匹配 2026/6/18 15:00:11 查看详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台需求列表按状态筛选刷 新需求编号业主城市区域地址户型面积(㎡)预算范围(万元)装修风格状态创建时间操作需求编号业主城市区域地址户型面积(㎡)预算范围(万元)装修风格状态创建时间操作2195688e张三北京朝阳区建国路88号apartment120㎡15.0 - 25.0modern待匹配2026/6/18 15:00:11查看详情共 1 条记录110 条/页",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-08-操作-刷-新",
+          "label": "操作:刷 新",
+          "finalUrl": "http://127.0.0.1:49241/demands",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-08-操作-刷-新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-08-操作-刷-新.png",
+          "elementCount": 218,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "搜索城市、区域、地址、业主",
+            "刷 新",
+            "查看详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "导航:合同管理",
+        "url": "http://127.0.0.1:49241/contracts",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "合同编号",
+              "业主",
+              "设计师",
+              "门店",
+              "合同金额",
+              "状态",
+              "开工日期",
+              "签约时间",
+              "操作",
+              "合同编号",
+              "业主",
+              "设计师"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "合同编号 业主 设计师 门店 合同金额 状态 开工日期 签约时间 操作 合同编号 业主 设计师 门店 合同金额 状态 开工日期 签约时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台合同管理状态筛选：全部状态合同编号业主设计师门店合同金额状态开工日期签约时间操作合同编号业主设计师门店合同金额状态开工日期签约时间操作暂无数据",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-09-导航-合同管理",
+          "label": "导航:合同管理",
+          "finalUrl": "http://127.0.0.1:49241/contracts",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-09-导航-合同管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-09-导航-合同管理.png",
+          "elementCount": 160,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:GIS服务",
+        "url": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "全国视图",
+          "搜索附近门店",
+          "1",
+          "+",
+          "−"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台GIS 门店服务地图全国视图覆盖城市数29门店总数2平均每城门店0.1家城市列表上海1家上海市上饶1家省份九江1家省份亳州1家省份佛山1家省份北京1家北京市南京1家省份南昌1家省份合肥1家省份宿州1家省份成都1家省份拉萨1家省份日照1家省份景德镇1家省份杭州1家省份泰安1家省份泰州1家省份济南1家省份深圳1家省份温州1家省份潍坊1家省份烟台1家省份绍兴1家省份蚌埠1家省份衢州1家省份贵阳1家省份赣州1家省份鹰潭1家省份黄山1家省份半径搜索搜索中心点：点击地图选择中心点搜索半径：50 公里搜索附近门店11111111111111111111111111111+− Leaflet | ©OpenStreetMap, ©CartoDB",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-10-操作-GIS服务",
+          "label": "操作:GIS服务",
+          "finalUrl": "http://127.0.0.1:49241/gis",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-10-操作-GIS服务.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-10-操作-GIS服务.png",
+          "elementCount": 754,
+          "interactiveCount": 49,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "全国视图",
+            "搜索城市...",
+            "搜索附近门店",
+            "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+            "1",
+            "Leaflet"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:GIS服务->搜索附近门店",
+        "url": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "全国视图",
+          "搜索附近门店",
+          "1",
+          "+",
+          "−"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台GIS 门店服务地图全国视图覆盖城市数29门店总数2平均每城门店0.1家城市列表上海1家上海市上饶1家省份九江1家省份亳州1家省份佛山1家省份北京1家北京市南京1家省份南昌1家省份合肥1家省份宿州1家省份成都1家省份拉萨1家省份日照1家省份景德镇1家省份杭州1家省份泰安1家省份泰州1家省份济南1家省份深圳1家省份温州1家省份潍坊1家省份烟台1家省份绍兴1家省份蚌埠1家省份衢州1家省份贵阳1家省份赣州1家省份鹰潭1家省份黄山1家省份半径搜索搜索中心点：点击地图选择中心点搜索半径：50 公里搜索附近门店11111111111111111111111111111+− Leaflet | ©OpenStreetMap, ©CartoDB 请先在地图上选择搜索中心点",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店",
+          "label": "二层操作:GIS服务->搜索附近门店",
+          "finalUrl": "http://127.0.0.1:49241/gis",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店.png",
+          "elementCount": 765,
+          "interactiveCount": 49,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "全国视图",
+            "搜索城市...",
+            "搜索附近门店",
+            "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+            "1",
+            "Leaflet"
+          ]
+        }
+      },
+      {
+        "label": "导航:AI监理",
+        "url": "http://127.0.0.1:49241/supervision",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "检测时间",
+              "项目名称",
+              "风险类型",
+              "风险等级",
+              "处理状态",
+              "描述",
+              "处理人",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "检测时间 项目名称 风险类型 风险等级 处理状态 描述 处理人 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台AI监理记录总记录数0待处理null处理中null已解决null状态筛选：全部状态风险等级：全部等级检测时间项目名称风险类型风险等级处理状态描述处理人操作暂无数据",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-12-导航-AI监理",
+          "label": "导航:AI监理",
+          "finalUrl": "http://127.0.0.1:49241/supervision",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-12-导航-AI监理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-12-导航-AI监理.png",
+          "elementCount": 204,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "检测时间"
+          ]
+        }
+      },
+      {
+        "label": "操作:GIS服务",
+        "url": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "全国视图",
+          "搜索附近门店",
+          "1",
+          "+",
+          "−"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台GIS 门店服务地图全国视图覆盖城市数33门店总数2平均每城门店0.1家城市列表上海1家上海市上饶1家省份九江1家省份亳州1家省份佛山1家省份北京1家北京市南京1家省份南昌1家省份合肥1家省份商丘1家省份宿州1家省份岳阳1家省份常德1家省份成都1家省份拉萨1家省份日照1家省份景德镇1家省份杭州1家省份泰安1家省份泰州1家省份济南1家省份深圳1家省份温州1家省份潍坊1家省份烟台1家省份绍兴1家省份蚌埠1家省份衢州1家省份贵阳1家省份赣州1家省份鹤壁1家省份鹰潭1家省份黄山1家省份半径搜索搜索中心点：点击地图选择中心点搜索半径：50 公里搜索附近门店111111111111111111111111111111111+− Leaflet | ©OpenStreetMap, ©CartoDB",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-13-操作-GIS服务",
+          "label": "操作:GIS服务",
+          "finalUrl": "http://127.0.0.1:49241/gis",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-13-操作-GIS服务.json",
+          "screenshotPath": "",
+          "elementCount": 826,
+          "interactiveCount": 53,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "全国视图",
+            "搜索城市...",
+            "搜索附近门店",
+            "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+            "1",
+            "Leaflet"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:GIS服务->搜索附近门店",
+        "url": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "全国视图",
+          "搜索附近门店",
+          "1",
+          "+",
+          "−"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台GIS 门店服务地图全国视图覆盖城市数33门店总数2平均每城门店0.1家城市列表上海1家上海市上饶1家省份九江1家省份亳州1家省份佛山1家省份北京1家北京市南京1家省份南昌1家省份合肥1家省份商丘1家省份宿州1家省份岳阳1家省份常德1家省份成都1家省份拉萨1家省份日照1家省份景德镇1家省份杭州1家省份泰安1家省份泰州1家省份济南1家省份深圳1家省份温州1家省份潍坊1家省份烟台1家省份绍兴1家省份蚌埠1家省份衢州1家省份贵阳1家省份赣州1家省份鹤壁1家省份鹰潭1家省份黄山1家省份半径搜索搜索中心点：点击地图选择中心点搜索半径：50 公里搜索附近门店111111111111111111111111111111111+− Leaflet | ©OpenStreetMap, ©CartoDB 请先在地图上选择搜索中心点",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-14-二层操作-GIS服务-搜索附近门店",
+          "label": "二层操作:GIS服务->搜索附近门店",
+          "finalUrl": "http://127.0.0.1:49241/gis",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-14-二层操作-GIS服务-搜索附近门店.json",
+          "screenshotPath": "",
+          "elementCount": 840,
+          "interactiveCount": 53,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "全国视图",
+            "搜索城市...",
+            "搜索附近门店",
+            "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+            "1",
+            "Leaflet"
+          ]
+        }
+      },
+      {
+        "label": "导航:云样板间",
+        "url": "http://127.0.0.1:49241/showroom",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "全 部",
+          "查看详情"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台云样板间风格分类：全 部现代简约三居室现代简约现代简约风格样板间，完美展示空间布局与材质搭配北京 · 北京朝阳旗舰店查看详情北欧风格三居室北欧风格北欧风格风格样板间，完美展示空间布局与材质搭配上海 · 上海浦东体验店查看详情中式古典三居室中式古典中式古典风格样板间，完美展示空间布局与材质搭配北京 · 北京朝阳旗舰店查看详情欧式奢华三居室欧式奢华欧式奢华风格样板间，完美展示空间布局与材质搭配上海 · 上海浦东体验店查看详情工业风三居室工业风工业风风格样板间，完美展示空间布局与材质搭配北京 · 北京朝阳旗舰店查看详情日式禅意三居室日式禅意日式禅意风格样板间，完美展示空间布局与材质搭配上海 · 上海浦东体验店查看详情",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1600,
+          "scrollWidth": 1952,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-15-导航-云样板间",
+          "label": "导航:云样板间",
+          "finalUrl": "http://127.0.0.1:49241/showroom",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-15-导航-云样板间.json",
+          "screenshotPath": "",
+          "elementCount": 285,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "全 部",
+            "查看详情"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49241/showroom/4da4bd1d-4d25-4c0a-b688-eee2959aa3cc",
+        "title": "家装产业协同SaaS平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "dashboard",
+          "需求管理",
+          "file-text",
+          "合同管理",
+          "file-protect",
+          "AI监理",
+          "video-camera",
+          "云样板间",
+          "shop",
+          "GIS服务",
+          "environment",
+          "工单管理",
+          "customer-service",
+          "管理后台",
+          "bar-chart"
+        ],
+        "buttons": [
+          "GIS服务",
+          "返回列表",
+          "重置视角",
+          "全屏"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "样板间名称 现代简约三居室 风格 现代简约 所属门店 北京朝阳旗舰店 所在城市 北京 门店地址 北京市朝阳区建国路88号 描述 现代简约风格样板间，完美展示空间布局与材质搭配"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台系统管理员 · 系统管理员 GIS服务系统管理员工作台需求管理合同管理AI监理云样板间GIS服务工单管理管理后台返回列表样板间详情重置视角全屏现代简约三居室现代简约鼠标拖拽旋转 · 滚轮缩放3D场景加载中...基本信息样板间名称现代简约三居室风格现代简约所属门店北京朝阳旗舰店所在城市北京门店地址北京市朝阳区建国路88号描述现代简约风格样板间，完美展示空间布局与材质搭配",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1600,
+          "scrollWidth": 1984,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-final-structure-16-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49241/showroom/4da4bd1d-4d25-4c0a-b688-eee2959aa3cc",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-16-操作-查看详情.json",
+          "screenshotPath": "",
+          "elementCount": 174,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "GIS服务",
+            "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+            "工作台",
+            "需求管理",
+            "合同管理",
+            "AI监理",
+            "云样板间",
+            "工单管理",
+            "管理后台",
+            "返回列表",
+            "重置视角",
+            "全屏"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/admin/dashboard/stats 返回 HTTP 404，对应业务模块无法完成数据读取。",
+      "接口 /api/admin/dashboard/progress 返回 HTTP 404，对应业务模块无法完成数据读取。",
+      "接口 /api/workorder 返回 HTTP 404，对应业务模块无法完成数据读取。",
+      "接口 /api/workorder/stats 返回 HTTP 404，对应业务模块无法完成数据读取。",
+      "接口 /api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/ai-solution 返回 HTTP 404，对应业务模块无法完成数据读取。",
+      "接口 /api/showroom/styles 返回 HTTP 404，对应业务模块无法完成数据读取。",
+      "合同管理、AI监理 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。",
+      "多个核心页面同时空列表且接口失败，当前系统没有形成“页面操作 - API - SQLite 数据”的闭环。"
+    ],
+    "actionHints": [
+      "补齐 /api/admin/dashboard/stats 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/admin/dashboard/progress 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/workorder 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/workorder/stats 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/ai-solution 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/showroom/styles 后端接口、SQLite 数据和前端错误处理。",
+      "为 合同管理、AI监理 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。",
+      "优先打通版本、策略、发布、监控和回滚的核心接口与 SQLite 落库链路。"
+    ],
+    "emptyPages": [
+      "合同管理",
+      "AI监理"
+    ],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/admin/dashboard/stats",
+      "/api/admin/dashboard/progress",
+      "/api/workorder",
+      "/api/workorder/stats",
+      "/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/ai-solution",
+      "/api/showroom/styles"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "工单中心",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "需求管理",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "需求管理",
+        "label": "查看详情->返回",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "需求管理",
+        "label": "刷 新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "合同管理",
+        "label": "GIS服务",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "合同管理",
+        "label": "GIS服务->搜索附近门店",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "AI监理",
+        "label": "GIS服务",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "AI监理",
+        "label": "GIS服务->搜索附近门店",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "云样板间",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 3,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49241/dashboard",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-01-首屏.png",
+        "elementCount": 471,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "用户管理",
+          "合同跟踪",
+          "工单中心",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49241/dashboard",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-02-导航-工作台.png",
+        "elementCount": 471,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "用户管理",
+          "合同跟踪",
+          "工单中心",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49241/contracts",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-03-操作-查看全部.png",
+        "elementCount": 160,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-04-操作-工单中心",
+        "label": "操作:工单中心",
+        "finalUrl": "http://127.0.0.1:49241/workorders",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-04-操作-工单中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-04-操作-工单中心.png",
+        "elementCount": 207,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "创建时间"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-05-导航-需求管理",
+        "label": "导航:需求管理",
+        "finalUrl": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-05-导航-需求管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-05-导航-需求管理.png",
+        "elementCount": 216,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "搜索城市、区域、地址、业主",
+          "刷 新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-06-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49241/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-06-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-06-操作-查看详情.png",
+        "elementCount": 234,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "返回"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-07-二层操作-查看详情-返回",
+        "label": "二层操作:查看详情->返回",
+        "finalUrl": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-07-二层操作-查看详情-返回.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-07-二层操作-查看详情-返回.png",
+        "elementCount": 216,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "搜索城市、区域、地址、业主",
+          "刷 新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-08-操作-刷-新",
+        "label": "操作:刷 新",
+        "finalUrl": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-08-操作-刷-新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-08-操作-刷-新.png",
+        "elementCount": 218,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "搜索城市、区域、地址、业主",
+          "刷 新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-09-导航-合同管理",
+        "label": "导航:合同管理",
+        "finalUrl": "http://127.0.0.1:49241/contracts",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-09-导航-合同管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-09-导航-合同管理.png",
+        "elementCount": 160,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-10-操作-GIS服务",
+        "label": "操作:GIS服务",
+        "finalUrl": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-10-操作-GIS服务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-10-操作-GIS服务.png",
+        "elementCount": 754,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全国视图",
+          "搜索城市...",
+          "搜索附近门店",
+          "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+          "1",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店",
+        "label": "二层操作:GIS服务->搜索附近门店",
+        "finalUrl": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店.png",
+        "elementCount": 765,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全国视图",
+          "搜索城市...",
+          "搜索附近门店",
+          "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+          "1",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-12-导航-AI监理",
+        "label": "导航:AI监理",
+        "finalUrl": "http://127.0.0.1:49241/supervision",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-12-导航-AI监理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-12-导航-AI监理.png",
+        "elementCount": 204,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "检测时间"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-13-操作-GIS服务",
+        "label": "操作:GIS服务",
+        "finalUrl": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-13-操作-GIS服务.json",
+        "screenshotPath": "",
+        "elementCount": 826,
+        "interactiveCount": 53,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全国视图",
+          "搜索城市...",
+          "搜索附近门店",
+          "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+          "1",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-14-二层操作-GIS服务-搜索附近门店",
+        "label": "二层操作:GIS服务->搜索附近门店",
+        "finalUrl": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-14-二层操作-GIS服务-搜索附近门店.json",
+        "screenshotPath": "",
+        "elementCount": 840,
+        "interactiveCount": 53,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全国视图",
+          "搜索城市...",
+          "搜索附近门店",
+          "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+          "1",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-15-导航-云样板间",
+        "label": "导航:云样板间",
+        "finalUrl": "http://127.0.0.1:49241/showroom",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-15-导航-云样板间.json",
+        "screenshotPath": "",
+        "elementCount": 285,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全 部",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-16-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49241/showroom/4da4bd1d-4d25-4c0a-b688-eee2959aa3cc",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-16-操作-查看详情.json",
+        "screenshotPath": "",
+        "elementCount": 174,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "返回列表",
+          "重置视角",
+          "全屏"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49241/contracts",
+    "representativeScreenshotLabel": "合同管理"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 16,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49241/dashboard",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-01-首屏.png",
+        "elementCount": 471,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "用户管理",
+          "合同跟踪",
+          "工单中心",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49241/dashboard",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-02-导航-工作台.png",
+        "elementCount": 471,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "用户管理",
+          "合同跟踪",
+          "工单中心",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49241/contracts",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-03-操作-查看全部.png",
+        "elementCount": 160,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-04-操作-工单中心",
+        "label": "操作:工单中心",
+        "finalUrl": "http://127.0.0.1:49241/workorders",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-04-操作-工单中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-04-操作-工单中心.png",
+        "elementCount": 207,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "创建时间"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-05-导航-需求管理",
+        "label": "导航:需求管理",
+        "finalUrl": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-05-导航-需求管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-05-导航-需求管理.png",
+        "elementCount": 216,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "搜索城市、区域、地址、业主",
+          "刷 新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-06-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49241/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-06-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-06-操作-查看详情.png",
+        "elementCount": 234,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "返回"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-07-二层操作-查看详情-返回",
+        "label": "二层操作:查看详情->返回",
+        "finalUrl": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-07-二层操作-查看详情-返回.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-07-二层操作-查看详情-返回.png",
+        "elementCount": 216,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "搜索城市、区域、地址、业主",
+          "刷 新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-08-操作-刷-新",
+        "label": "操作:刷 新",
+        "finalUrl": "http://127.0.0.1:49241/demands",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-08-操作-刷-新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-08-操作-刷-新.png",
+        "elementCount": 218,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "搜索城市、区域、地址、业主",
+          "刷 新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-09-导航-合同管理",
+        "label": "导航:合同管理",
+        "finalUrl": "http://127.0.0.1:49241/contracts",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-09-导航-合同管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-09-导航-合同管理.png",
+        "elementCount": 160,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-10-操作-GIS服务",
+        "label": "操作:GIS服务",
+        "finalUrl": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-10-操作-GIS服务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-10-操作-GIS服务.png",
+        "elementCount": 754,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全国视图",
+          "搜索城市...",
+          "搜索附近门店",
+          "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+          "1",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店",
+        "label": "二层操作:GIS服务->搜索附近门店",
+        "finalUrl": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-11-二层操作-GIS服务-搜索附近门店.png",
+        "elementCount": 765,
+        "interactiveCount": 49,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全国视图",
+          "搜索城市...",
+          "搜索附近门店",
+          "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+          "1",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-12-导航-AI监理",
+        "label": "导航:AI监理",
+        "finalUrl": "http://127.0.0.1:49241/supervision",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-12-导航-AI监理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-12-导航-AI监理.png",
+        "elementCount": 204,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "检测时间"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-13-操作-GIS服务",
+        "label": "操作:GIS服务",
+        "finalUrl": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-13-操作-GIS服务.json",
+        "screenshotPath": "",
+        "elementCount": 826,
+        "interactiveCount": 53,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全国视图",
+          "搜索城市...",
+          "搜索附近门店",
+          "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+          "1",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-14-二层操作-GIS服务-搜索附近门店",
+        "label": "二层操作:GIS服务->搜索附近门店",
+        "finalUrl": "http://127.0.0.1:49241/gis",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-14-二层操作-GIS服务-搜索附近门店.json",
+        "screenshotPath": "",
+        "elementCount": 840,
+        "interactiveCount": 53,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全国视图",
+          "搜索城市...",
+          "搜索附近门店",
+          "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 + − Leaflet | ©OpenStreetMap, ©CartoDB",
+          "1",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-15-导航-云样板间",
+        "label": "导航:云样板间",
+        "finalUrl": "http://127.0.0.1:49241/showroom",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-15-导航-云样板间.json",
+        "screenshotPath": "",
+        "elementCount": 285,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "全 部",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-final-structure-16-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49241/showroom/4da4bd1d-4d25-4c0a-b688-eee2959aa3cc",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65-final/may-89241-final-structure-16-操作-查看详情.json",
+        "screenshotPath": "",
+        "elementCount": 174,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "GIS服务",
+          "工作台 需求管理 合同管理 AI监理 云样板间 GIS服务 工单管理 管理后台",
+          "工作台",
+          "需求管理",
+          "合同管理",
+          "AI监理",
+          "云样板间",
+          "工单管理",
+          "管理后台",
+          "返回列表",
+          "重置视角",
+          "全屏"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2016,
+    "height": 1600,
+    "scrollWidth": 1984,
+    "scrollHeight": 1664
+  },
+  "initialBodyTextPreview": "家装产业协同SaaS平台\nHome Decoration Industry Collaboration Platform\n登 录\n测试账号快捷登录\n系统管理员系统管理员\nadmin:admin123\n门店经理平台运营\nplatform:platform123\n门店经理运维管理\nops:ops123\n业主张三\nowner1:123456\n设计师王设计\ndesigner1:123456\n施工监理赵监理\nsupervisor1:123456\n材料供应商孙供应商\nsupplier1:123456\n门店经理吴经理\nmanager1:123456",
+  "bodyTextPreview": "家装产业协同SaaS平台\n系统管理员 · 系统管理员\nGIS服务\n系统管理员\n工作台\n需求管理\n合同管理\nAI监理\n云样板间\nGIS服务\n工单管理\n管理后台\n合同管理\n状态筛选：\n全部状态\n合同编号\t业主\t设计师\t门店\t合同金额\t状态\t开工日期\t签约时间\t操作\n\n合同编号\n\t\n业主\n\t\n设计师\n\t\n门店\n\t\n合同金额\n\t\n状态\n\t\n开工日期\n\t\n签约时间\n\t\n操作\n\n\n暂无数据",
+  "apiBase": "http://127.0.0.1:59241/api",
+  "businessGoalPreview": "家装产业协同SaaS平台前后端可用，登录页和核心导航可加载",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/progress"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/progress"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/contracts"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/progress"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/workorder"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/workorder/stats"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/progress"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/demands"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/ai-solution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/matches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/demands"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/demands"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/contracts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/gis/cities?has_store=true"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/gis/coverage"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/gis/stores"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/contracts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/supervision"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/supervision/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/gis/cities?has_store=true"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/gis/coverage"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/gis/stores"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/supervision"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/supervision/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/showroom/styles"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/showroom"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/showroom/4da4bd1d-4d25-4c0a-b688-eee2959aa3cc"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/contracts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49241/api/auth/me"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"healthy\",\"timestamp\":\"2026-06-18T12:22:30.866Z\",\"service\":\"home-decoration-saas\",\"version\":\"1.0.0\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":\"d9cd66c4-7ace-4216-8616-4f18f58de3e1\",\"username\":\"admin\",\"real_name\":\"系统管理员\",\"role\":\"admin\",\"phone\":\"13800000000\",\"email\":\"admin@test.com\",\"avatar\":null,\"store_id\":null,\"city\":null,\"status\":\"active\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/admin/dashboard/stats",
+      "path": "/api/admin/dashboard/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/admin/dashboard/progress",
+      "path": "/api/admin/dashboard/progress",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/contracts",
+      "path": "/api/contracts",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/workorder",
+      "path": "/api/workorder",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/workorder/stats",
+      "path": "/api/workorder/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/demands",
+      "path": "/api/demands",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"2195688e-ad3a-424e-84a0-6aa9aa5d73ba\",\"owner_id\":\"490739f7-c58d-4258-a980-06d3bc41d7e2\",\"city\":\"北京\",\"district\":\"朝阳区\",\"address\":\"建国路88号\",\"house_type\":\"apartment\",\"area\":120,\"budget_min\":150000,\"budget_max\":250000,\"decoration_style\":\"modern\",\"requirement_desc\":null,\"contact_name\":\"张三\",\"contact_phone\":\"13800138000\",\"status\":\"pending\",\"created_at\":\"2026-06-18T12:00:11.283Z\",\"updated_at\":\"2026-06-18T12:00:11.283Z\",\"owner_name\":\"张三\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba",
+      "path": "/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":\"2195688e-ad3a-424e-84a0-6aa9aa5d73ba\",\"owner_id\":\"490739f7-c58d-4258-a980-06d3bc41d7e2\",\"city\":\"北京\",\"district\":\"朝阳区\",\"address\":\"建国路88号\",\"house_type\":\"apartment\",\"area\":120,\"budget_min\":150000,\"budget_max\":250000,\"decoration_style\":\"modern\",\"requirement_desc\":null,\"contact_name\":\"张三\",\"contact_phone\":\"13800138000\",\"status\":\"pending\",\"created_at\":\"2026-06-18T12:00:11.283Z\",\"updated_at\":\"2026-06-18T12:00:11.283Z\",\"owner_name\":\"张三\",\"owner_phone\":\"13800000001\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/ai-solution",
+      "path": "/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/ai-solution",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"AI方案不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/matches",
+      "path": "/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/matches",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/gis/cities?has_store=true",
+      "path": "/api/gis/cities?has_store=true",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"4dafc159-893b-4e8c-abd9-7d3bbdad00e9\",\"name\":\"上海\",\"province\":\"上海市\",\"longitude\":121.4737,\"latitude\":31.2304,\"store_count\":1},{\"id\":\"city-上饶\",\"name\":\"上饶\",\"province\":\"省份\",\"longitude\":122.97340696711515,\"latitude\":34.91017416505077,\"store_count\":1},{\"id\":\"city-九江\",\"name\":\"九江\",\"province\":\"省份\",\"longitude\":109.17545596739053,\"latitude\":42.282984809794556,\"store_count\":1},{\"id\":\"city-亳州\",\"name\":\"亳州\",\"province\":\"省份\",\"longitude\":112.71943536341112,\"latitude\":42.40440493248765,\"store_count\":1},{\"id"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/gis/coverage",
+      "path": "/api/gis/coverage",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"total_cities\":34,\"total_stores\":2,\"coverage\":[{\"province\":\"上海市\",\"city\":\"上海\",\"longitude\":121.4737,\"latitude\":31.2304,\"store_count\":1,\"store_names\":\"上海浦东体验店\",\"max_radius\":50},{\"province\":\"北京市\",\"city\":\"北京\",\"longitude\":116.4074,\"latitude\":39.9042,\"store_count\":1,\"store_names\":\"北京朝阳旗舰店\",\"max_radius\":50},{\"province\":\"省份\",\"city\":\"上饶\",\"longitude\":122.97340696711515,\"latitude\":34.91017416505077,\"store_count\":0,\"store_names\":null,\"max_radius\":null},{\"province\":\"省份\",\"city\":\"九江\",\"longitude\":109.1754559673"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/gis/stores",
+      "path": "/api/gis/stores",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"d8e76ea9-02a8-4273-a8a4-6f344f93a7b3\",\"name\":\"上海浦东体验店\",\"city\":\"上海\",\"address\":\"上海市浦东新区陆家嘴环路1000号\",\"longitude\":121.5049,\"latitude\":31.2397,\"service_radius\":50,\"manager_id\":\"04f7fc03-2b53-4ba4-bf84-c823fbfae7ec\",\"contact_phone\":\"400-800-0002\",\"status\":\"active\",\"created_at\":\"2026-06-18 10:25:03\",\"manager_name\":\"周供应商\",\"manager_phone\":\"13800000032\"},{\"id\":\"d40e0e62-7a41-4a3d-8dcf-8b0eac96439c\",\"name\":\"北京朝阳旗舰店\",\"city\":\"北京\",\"address\":\"北京市朝阳区建国路88号\",\"longitude\":116.4551,\"latitude\":39.9043,\"servic"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/admin/dashboard/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/admin/dashboard/progress",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/admin/dashboard/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/admin/dashboard/progress",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/admin/dashboard/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/admin/dashboard/progress",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/workorder",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/workorder/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "获取统计数据失败 AxiosError: Request failed with status code 404\n    at kae (http://127.0.0.1:49241/assets/index-DeSHFJbE.js:479:10724)\n    at XMLHttpRequest.m (http://127.0.0.1:49241/assets/index-DeSHFJbE.js:479:17212)",
+      "location": {
+        "url": "http://127.0.0.1:49241/assets/index-DeSHFJbE.js",
+        "lineNumber": 4411,
+        "columnNumber": 5919
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/admin/dashboard/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/admin/dashboard/progress",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/ai-solution",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/showroom/styles",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "获取风格列表失败 AxiosError: Request failed with status code 404\n    at kae (http://127.0.0.1:49241/assets/index-DeSHFJbE.js:479:10724)\n    at XMLHttpRequest.m (http://127.0.0.1:49241/assets/index-DeSHFJbE.js:479:17212)",
+      "location": {
+        "url": "http://127.0.0.1:49241/assets/index-DeSHFJbE.js",
+        "lineNumber": 545,
+        "columnNumber": 23576
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49241/api/showroom/styles",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49241/api/showroom",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49241/api/auth/me",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/stats"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/progress"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/stats"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/progress"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/stats"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/progress"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/workorder"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/workorder/stats"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/stats"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/admin/dashboard/progress"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/demands/2195688e-ad3a-424e-84a0-6aa9aa5d73ba/ai-solution"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49241/api/showroom/styles"
+    }
+  ]
+}

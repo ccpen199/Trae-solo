@@ -1,0 +1,401 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-18T12:19:02.927Z",
+  "order": "may-89241",
+  "roundIndex": 65,
+  "captureId": "may-89241-round-65",
+  "url": "http://127.0.0.1:49241/",
+  "initialUrl": "http://127.0.0.1:49241/",
+  "finalUrl": "http://127.0.0.1:49241/login",
+  "status": 200,
+  "title": "家装产业协同SaaS平台",
+  "initialTitle": "家装产业协同SaaS平台",
+  "navigationError": "",
+  "screenshotPath": "runtime-check/codex-cycle65/may-89241-round-65-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65/may-89241-round-65-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "service: frontend connection refused on http://127.0.0.1:49241 while backend health is 200",
+  "targetReason": "登录注册相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49241/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49241/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49241/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49241/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49241/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49241/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49241/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49241/login",
+        "feedback": []
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49241/login",
+        "title": "家装产业协同SaaS平台",
+        "headings": [
+          "家装产业协同SaaS平台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登 录",
+          "系统管理员 系统管理员",
+          "门店经理 平台运营",
+          "门店经理 运维管理",
+          "业主 张三",
+          "设计师 王设计",
+          "施工监理 赵监理",
+          "材料供应商 孙供应商",
+          "门店经理 吴经理"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装产业协同SaaS平台Home Decoration Industry Collaboration Platform登 录测试账号快捷登录系统管理员系统管理员门店经理平台运营门店经理运维管理业主张三设计师王设计施工监理赵监理材料供应商孙供应商门店经理吴经理",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89241-round-65-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49241/login",
+          "title": "家装产业协同SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65/may-89241-round-65-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65/may-89241-round-65-structure-01-首屏.png",
+          "elementCount": 81,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "用户名",
+            "密码",
+            "登 录",
+            "系统管理员 系统管理员",
+            "门店经理 平台运营",
+            "门店经理 运维管理",
+            "业主 张三",
+            "设计师 王设计",
+            "施工监理 赵监理",
+            "材料供应商 孙供应商",
+            "门店经理 吴经理"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。",
+      "接口 /api/auth/login 返回 HTTP 401，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。",
+      "补齐 /api/auth/login 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/login"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-round-65-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49241/login",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65/may-89241-round-65-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65/may-89241-round-65-structure-01-首屏.png",
+        "elementCount": 81,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "用户名",
+          "密码",
+          "登 录",
+          "系统管理员 系统管理员",
+          "门店经理 平台运营",
+          "门店经理 运维管理",
+          "业主 张三",
+          "设计师 王设计",
+          "施工监理 赵监理",
+          "材料供应商 孙供应商",
+          "门店经理 吴经理"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49241/login",
+    "representativeScreenshotLabel": "家装产业协同SaaS平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89241-round-65-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49241/login",
+        "title": "家装产业协同SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65/may-89241-round-65-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89241/runtime-check/codex-cycle65/may-89241-round-65-structure-01-首屏.png",
+        "elementCount": 81,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "用户名",
+          "密码",
+          "登 录",
+          "系统管理员 系统管理员",
+          "门店经理 平台运营",
+          "门店经理 运维管理",
+          "业主 张三",
+          "设计师 王设计",
+          "施工监理 赵监理",
+          "材料供应商 孙供应商",
+          "门店经理 吴经理"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "家装产业协同SaaS平台\nHome Decoration Industry Collaboration Platform\n登 录\n测试账号快捷登录\n系统管理员\n系统管理员\n门店经理\n平台运营\n门店经理\n运维管理\n业主\n张三\n设计师\n王设计\n施工监理\n赵监理\n材料供应商\n孙供应商\n门店经理\n吴经理",
+  "bodyTextPreview": "家装产业协同SaaS平台\nHome Decoration Industry Collaboration Platform\n登 录\n测试账号快捷登录\n系统管理员\n系统管理员\n门店经理\n平台运营\n门店经理\n运维管理\n业主\n张三\n设计师\n王设计\n施工监理\n赵监理\n材料供应商\n孙供应商\n门店经理\n吴经理",
+  "apiBase": "http://127.0.0.1:59241/api",
+  "businessGoalPreview": "家装产业协同SaaS平台前后端可用，登录页和核心导航可加载",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49241/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49241/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49241/api/auth/login"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"healthy\",\"timestamp\":\"2026-06-18T12:18:35.025Z\",\"service\":\"home-decoration-saas\",\"version\":\"1.0.0\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"API endpoint not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59241/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49241/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49241/api/auth/login"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49241/api/auth/login"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49241/api/auth/login"
+    }
+  ]
+}

@@ -28,6 +28,11 @@ router.get('/', authMiddleware, (req, res) => {
   res.json(models);
 });
 
+router.get('/styles', authMiddleware, (req, res) => {
+  const styles = db.prepare('SELECT DISTINCT style FROM showroom_models WHERE style IS NOT NULL').all() as { style: string }[];
+  res.json(styles.map(s => s.style));
+});
+
 router.get('/:id', authMiddleware, (req, res) => {
   const { id } = req.params;
   const model = db.prepare(`
@@ -42,11 +47,6 @@ router.get('/:id', authMiddleware, (req, res) => {
   }
 
   res.json(model);
-});
-
-router.get('/styles', authMiddleware, (req, res) => {
-  const styles = db.prepare('SELECT DISTINCT style FROM showroom_models WHERE style IS NOT NULL').all() as { style: string }[];
-  res.json(styles.map(s => s.style));
 });
 
 export default router;

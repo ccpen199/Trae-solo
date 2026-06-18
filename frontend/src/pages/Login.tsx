@@ -158,11 +158,19 @@ const Login: React.FC = () => {
               size="small"
               onClick={() => handleQuickLogin(acc)}
               disabled={loading}
+              style={{ height: 'auto', padding: '4px 8px', textAlign: 'left' }}
             >
-              <Tag color={roleColorMap[acc.role]} style={{ marginRight: 4, marginLeft: -4 }}>
-                {roleNames[acc.role]}
-              </Tag>
-              {acc.name}
+              <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 2, lineHeight: 1.2 }}>
+                <span>
+                  <Tag color={roleColorMap[acc.role]} style={{ marginRight: 4, marginLeft: -4 }}>
+                    {roleNames[acc.role]}
+                  </Tag>
+                  {acc.name}
+                </span>
+                <Text type="secondary" style={{ fontSize: 11 }}>
+                  {acc.username}:{acc.password}
+                </Text>
+              </span>
             </Button>
           ))}
         </div>

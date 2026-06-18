@@ -41,6 +41,12 @@ interface ProjectProgress {
 }
 
 const roleQuickActions: Record<UserRole, { icon: React.ReactNode; label: string; path: string; color: string }[]> = {
+  admin: [
+    { icon: <BarChartOutlined />, label: '管理后台', path: '/admin/dashboard', color: '#1890ff' },
+    { icon: <UserOutlined />, label: '用户管理', path: '/admin/users', color: '#722ed1' },
+    { icon: <FileProtectOutlined />, label: '合同跟踪', path: '/admin/contracts', color: '#52c41a' },
+    { icon: <BellOutlined />, label: '工单中心', path: '/workorders', color: '#eb2f96' },
+  ],
   owner: [
     { icon: <PlusOutlined />, label: '发布需求', path: '/demands/create', color: '#1890ff' },
     { icon: <EyeOutlined />, label: '查看合同', path: '/contracts', color: '#52c41a' },
