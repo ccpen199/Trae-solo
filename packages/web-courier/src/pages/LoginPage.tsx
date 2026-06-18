@@ -12,9 +12,14 @@ const LoginPage: React.FC = () => {
 
   const handle = async (v: any) => {
     setLoading(true);
-    try { await login(v.phone, v.password); navigate('/'); }
-    catch { /* handled */ }
-    finally { setLoading(false); }
+    try {
+      await login(v.phone, v.password);
+      message.success('登录成功');
+      navigate('/');
+    } catch (err: any) {
+      const msg = err?.message || err?.msg || '登录失败，请检查账号密码';
+      if (!msg.includes('过期')) message.error(msg);
+    } finally { setLoading(false); }
   };
 
   return (
@@ -26,8 +31,8 @@ const LoginPage: React.FC = () => {
       </div>
       <Card style={{ borderRadius: 14, boxShadow: '0 8px 32px rgba(22,93,255,0.12)' }}>
         <Form layout="vertical" onFinish={handle} initialValues={{ phone: '138000003011', password: 'Admin@123456' }}>
-          <Form.Item name="phone" rules={[{ required: true, pattern: /^1\d{10}$/ }]}>
-            <Input prefix={<MobileOutlined />} placeholder="工号/手机号" size="large" />
+          <Form.Item name="phone" rules={[{ required: true, message: '请输入工号/手机号' }, { pattern: /^1\d{10,14}$/, message: '格式不正确' }]}>
+            <Input prefix={<MobileOutlined />} placeholder="工号/手机号" size="large" maxLength={15} />
           </Form.Item>
           <Form.Item name="password" rules={[{ required: true, min: 8 }]}>
             <Input.Password prefix={<LockOutlined />} placeholder="登录密码" size="large" />

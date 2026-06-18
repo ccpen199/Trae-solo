@@ -22,18 +22,22 @@ api.interceptors.response.use(
       if (data.code === 401) {
         useAuthStore.getState().logout();
         message.error('登录已过期，请重新登录');
-      } else if (data.code === 4031) {
-        message.warning(data.message);
-      } else {
-        message.error(data.message || '请求失败');
       }
       return Promise.reject(data);
     }
     return data;
   },
   (err) => {
-    message.error(err.message || '网络异常');
-    return Promise.reject(err);
+    if (err.response && err.response.data) {
+      const data = err.response.data;
+      if (data.code === 401) {
+        useAuthStore.getState().logout();
+        message.error('登录已过期，请重新登录');
+      }
+      return Promise.reject(data);
+    }
+    message.error(err.message || '网络异常，请检查后端是否启动');
+    return Promise.reject({ code: -1, message: err.message || '网络异常' });
   },
 );
 

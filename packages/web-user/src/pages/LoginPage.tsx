@@ -18,8 +18,10 @@ const LoginPage: React.FC = () => {
       await login(values.phone, values.password);
       message.success('登录成功');
       navigate((loc.state as any)?.from || '/');
-    } catch { /* handled */ }
-    finally { setLoading(false); }
+    } catch (err: any) {
+      const msg = err?.message || err?.msg || '登录失败，请检查账号密码';
+      if (!msg.includes('过期')) message.error(msg);
+    } finally { setLoading(false); }
   };
   const handleRegister = async (values: any) => {
     if (values.password !== values.confirmPassword) { message.error('两次密码不一致'); return; }
@@ -28,8 +30,10 @@ const LoginPage: React.FC = () => {
       await register(values.phone, values.password);
       message.success('注册成功，请完成实名认证');
       navigate('/');
-    } catch { /* handled */ }
-    finally { setLoading(false); }
+    } catch (err: any) {
+      const msg = err?.message || err?.msg || '注册失败，请稍后重试';
+      if (!msg.includes('过期')) message.error(msg);
+    } finally { setLoading(false); }
   };
 
   return (
@@ -48,8 +52,8 @@ const LoginPage: React.FC = () => {
               label: '登录',
               children: (
                 <Form layout="vertical" onFinish={handleLogin} initialValues={{ phone: '13912345678', password: 'Admin@123456' }}>
-                  <Form.Item name="phone" rules={[{ required: true, message: '请输入手机号', pattern: /^1\d{10}$/ }]}>
-                    <Input prefix={<MobileOutlined />} placeholder="手机号" size="large" maxLength={11} />
+                  <Form.Item name="phone" rules={[{ required: true, message: '请输入手机号' }, { pattern: /^1\d{10,14}$/, message: '手机号格式不正确' }]}>
+                    <Input prefix={<MobileOutlined />} placeholder="手机号/工号" size="large" maxLength={15} />
                   </Form.Item>
                   <Form.Item name="password" rules={[{ required: true, message: '请输入密码', min: 8 }]}>
                     <Input.Password prefix={<LockOutlined />} placeholder="密码" size="large" />
@@ -63,8 +67,8 @@ const LoginPage: React.FC = () => {
               label: '注册',
               children: (
                 <Form layout="vertical" onFinish={handleRegister}>
-                  <Form.Item name="phone" rules={[{ required: true, message: '请输入手机号', pattern: /^1\d{10}$/ }]}>
-                    <Input prefix={<MobileOutlined />} placeholder="手机号" size="large" maxLength={11} />
+                  <Form.Item name="phone" rules={[{ required: true, message: '请输入手机号' }, { pattern: /^1\d{10,14}$/, message: '手机号格式不正确' }]}>
+                    <Input prefix={<MobileOutlined />} placeholder="手机号" size="large" maxLength={15} />
                   </Form.Item>
                   <Form.Item name="password" rules={[{ required: true, message: '密码长度8-32位', min: 8, max: 32 }]}>
                     <Input.Password prefix={<LockOutlined />} placeholder="设置密码" size="large" />

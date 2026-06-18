@@ -6,12 +6,13 @@ import { authMiddleware, signToken } from '../middleware/auth';
 import { ok, fail } from '../utils/response';
 import { createAuditLog, AuditActions } from '../services/audit.service';
 import { UserRole, IdentityVerifyStatus, maskPhone, maskName, maskIdCard } from '@platform/shared';
+import { dbReady, mockLogin, MOCK_USERS } from '../app';
 import { v4 as uuidv4 } from 'uuid';
 
 const router = Router();
 
 router.post('/register', [
-  body('phone').isLength({ min: 11, max: 11 }).withMessage('手机号格式不正确'),
+  body('phone').isLength({ min: 11, max: 15 }).withMessage('手机号格式不正确'),
   body('password').isLength({ min: 8, max: 32 }).withMessage('密码长度8-32位'),
   body('role').optional().isIn(Object.values(UserRole)),
 ], async (req: Request, res: Response) => {
@@ -20,6 +21,22 @@ router.post('/register', [
     return fail(res, 400, errors.array()[0].msg);
   }
   const { phone, password, role = UserRole.APPLICANT } = req.body;
+
+  if (!dbReady) {
+    const phoneHash = hashValue(phone);
+    const existing = MOCK_USERS[phoneHash];
+    if (existing) {
+      return fail(res, 409, '该手机号已注册（演示模式）');
+    }
+    const id = `mock-${phoneHash.slice(0, 12)}`;
+    MOCK_USERS[phoneHash] = {
+      id, phone, role, city: null,
+      isActive: true, realNameVerified: false,
+    };
+    const token = signToken({ userId: id, role: role as UserRole, city: undefined, realNameVerified: false });
+    return ok(res, { token, user: { id, role, phone: maskPhone(phone), mode: 'MOCK' } }, '注册成功（演示模式）');
+  }
+
   const phoneHash = hashValue(phone);
   const exists = await prisma.user.findUnique({ where: { phoneHash } });
   if (exists) {
@@ -44,12 +61,39 @@ router.post('/register', [
 });
 
 router.post('/login', [
-  body('phone').isLength({ min: 11, max: 11 }),
-  body('password').isLength({ min: 8, max: 32 }),
+  body('phone').isLength({ min: 11, max: 15 }).withMessage('账号格式不正确'),
+  body('password').isLength({ min: 8, max: 32 }).withMessage('密码长度8-32位'),
 ], async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return fail(res, 400, errors.array()[0].msg);
   const { phone, password } = req.body;
+
+  if (!dbReady) {
+    const user = mockLogin(phone, password);
+    if (!user) {
+      return fail(res, 401, '手机号或密码错误（演示模式，账号见登录页提示）');
+    }
+    const token = signToken({
+      userId: user.id,
+      role: user.role as UserRole,
+      city: (user.city as any) || undefined,
+      realNameVerified: user.realNameVerified,
+    });
+    return ok(res, {
+      token,
+      user: {
+        id: user.id,
+        role: user.role,
+        city: user.city,
+        phone: maskPhone(phone),
+        realNameVerified: user.realNameVerified,
+        realNameMasked: user.realNameMasked,
+        idCardMasked: user.idCardMasked,
+        mode: 'MOCK',
+      },
+    }, '登录成功（演示模式）');
+  }
+
   const phoneHash = hashValue(phone);
   const user = await prisma.user.findUnique({ where: { phoneHash } });
   if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
@@ -80,23 +124,28 @@ router.post('/login', [
 });
 
 router.get('/me', authMiddleware(), async (req: Request, res: Response) => {
+  if (!dbReady) {
+    const userId = req.user!.userId;
+    const mockUser = Object.values(MOCK_USERS).find(u => u.id === userId);
+    if (!mockUser) return fail(res, 404, '用户不存在');
+    return ok(res, {
+      id: mockUser.id, role: mockUser.role, city: mockUser.city,
+      phone: maskPhone(mockUser.phone), realNameMasked: mockUser.realNameMasked,
+      idCardMasked: mockUser.idCardMasked, realNameVerified: mockUser.realNameVerified,
+      mode: 'MOCK',
+    });
+  }
   const user = await prisma.user.findUnique({ where: { id: req.user!.userId } });
   const profile = await prisma.userProfile.findUnique({ where: { userId: req.user!.userId } });
   if (!user) return fail(res, 404, '用户不存在');
   let phoneDecrypted = '';
   try { phoneDecrypted = decrypt(user.phoneEncrypted); } catch {}
   return ok(res, {
-    id: user.id,
-    role: user.role,
-    city: user.city,
-    phone: maskPhone(phoneDecrypted),
-    realNameMasked: profile?.realNameMasked,
-    idCardMasked: profile?.idCardMasked,
-    addressMasked: profile?.addressMasked,
-    avatarUrl: profile?.avatarUrl,
-    realNameVerified: !!profile?.policeDbVerified,
-    lastLoginAt: user.lastLoginAt,
-    createdAt: user.createdAt,
+    id: user.id, role: user.role, city: user.city,
+    phone: maskPhone(phoneDecrypted), realNameMasked: profile?.realNameMasked,
+    idCardMasked: profile?.idCardMasked, addressMasked: profile?.addressMasked,
+    avatarUrl: profile?.avatarUrl, realNameVerified: !!profile?.policeDbVerified,
+    lastLoginAt: user.lastLoginAt, createdAt: user.createdAt,
   });
 });
 
@@ -109,20 +158,31 @@ router.post('/identity-verify', authMiddleware([UserRole.APPLICANT]), [
   if (!errors.isEmpty()) return fail(res, 400, errors.array()[0].msg);
   const { realName, idCard, faceImageUrl } = req.body;
   const userId = req.user!.userId;
-  const idCardHash = hashValue(idCard);
-  const verifyId = uuidv4();
   const faceVerifyScore = 0.92 + Math.random() * 0.07;
   const policeDbPassed = faceVerifyScore >= 0.9;
+
+  if (!dbReady) {
+    const mockUser = Object.values(MOCK_USERS).find(u => u.id === userId);
+    if (mockUser && policeDbPassed) {
+      mockUser.realNameVerified = true;
+      mockUser.realNameMasked = maskName(realName);
+      mockUser.idCardMasked = maskIdCard(idCard);
+    }
+    if (!policeDbPassed) {
+      return fail(res, 422, '实名核验失败，请检查信息后重试');
+    }
+    const token = signToken({ userId, role: req.user!.role, city: req.user!.city, realNameVerified: true });
+    return ok(res, { verified: true, newToken: token, faceScore: faceVerifyScore, mode: 'MOCK' }, '实名核验通过');
+  }
+
+  const idCardHash = hashValue(idCard);
+  const verifyId = uuidv4();
   await prisma.identityVerification.create({
     data: {
-      id: verifyId,
-      userId,
-      type: 'REAL_NAME_FACE',
+      id: verifyId, userId, type: 'REAL_NAME_FACE',
       status: policeDbPassed ? IdentityVerifyStatus.VERIFIED : IdentityVerifyStatus.FAILED,
-      realNameEncrypted: encrypt(realName),
-      idCardEncrypted: encrypt(idCard),
-      faceImageUrl,
-      faceVerifyScore,
+      realNameEncrypted: encrypt(realName), idCardEncrypted: encrypt(idCard),
+      faceImageUrl, faceVerifyScore,
       policeDbRequestId: `POLICE-${Date.now()}`,
       policeDbResponse: { matched: policeDbPassed, source: 'gd-police-db-mock', score: faceVerifyScore },
       rejectReason: policeDbPassed ? undefined : '人脸比对分数不足或公安库信息不一致',
@@ -134,23 +194,14 @@ router.post('/identity-verify', authMiddleware([UserRole.APPLICANT]), [
     await prisma.userProfile.upsert({
       where: { userId },
       create: {
-        userId,
-        realNameEncrypted: encrypt(realName),
-        realNameMasked: maskName(realName),
-        idCardEncrypted: encrypt(idCard),
-        idCardHash,
-        idCardMasked: maskIdCard(idCard),
-        policeDbVerified: true,
-        policeDbVerifyAt: new Date(),
+        userId, realNameEncrypted: encrypt(realName), realNameMasked: maskName(realName),
+        idCardEncrypted: encrypt(idCard), idCardHash, idCardMasked: maskIdCard(idCard),
+        policeDbVerified: true, policeDbVerifyAt: new Date(),
       },
       update: {
-        realNameEncrypted: encrypt(realName),
-        realNameMasked: maskName(realName),
-        idCardEncrypted: encrypt(idCard),
-        idCardHash,
-        idCardMasked: maskIdCard(idCard),
-        policeDbVerified: true,
-        policeDbVerifyAt: new Date(),
+        realNameEncrypted: encrypt(realName), realNameMasked: maskName(realName),
+        idCardEncrypted: encrypt(idCard), idCardHash, idCardMasked: maskIdCard(idCard),
+        policeDbVerified: true, policeDbVerifyAt: new Date(),
       },
     });
   }
@@ -159,12 +210,7 @@ router.post('/identity-verify', authMiddleware([UserRole.APPLICANT]), [
   if (!policeDbPassed) {
     return fail(res, 422, '实名核验失败，请检查信息后重试');
   }
-  const token = signToken({
-    userId,
-    role: req.user!.role,
-    city: req.user!.city,
-    realNameVerified: true,
-  });
+  const token = signToken({ userId, role: req.user!.role, city: req.user!.city, realNameVerified: true });
   return ok(res, { verified: true, newToken: token, faceScore: faceVerifyScore }, '实名核验通过');
 });
 
