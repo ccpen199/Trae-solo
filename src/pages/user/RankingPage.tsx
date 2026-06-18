@@ -1,26 +1,39 @@
-import { useState, Fragment, useEffect, useMemo } from 'react';
+import { useState, Fragment, useMemo } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
   ChevronDown, ChevronUp, MapPin, Search, Database, Clock, FileText,
   Shield, CheckCircle2, AlertTriangle, Plus, Check, GitCompare,
-  X, ArrowRight
+  X, ArrowRight, Users, BarChart3, ChevronRight
 } from 'lucide-react';
 import { ScoreRing } from '@/components/ui/ScoreRing';
 import { TrendBadge } from '@/components/ui/TrendBadge';
 import { DataSourceTag } from '@/components/ui/DataSourceTag';
+import { useCompareStore } from '@/store/compareStore';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 type CategoryCode = 'consumer' | 'education' | 'medical' | 'travel';
 
-const categories: { code: CategoryCode; name: string; icon: string; dims: string[] }[] = [
-  { code: 'consumer', name: '消费品牌', icon: '🛒', dims: ['产品质量', '服务体验', '品牌信誉', '价格公道'] },
-  { code: 'education', name: '教育服务', icon: '🎓', dims: ['教学质量', '师资力量', '服务水平', '性价比'] },
-  { code: 'medical', name: '医疗健康', icon: '🏥', dims: ['医疗水平', '服务态度', '设施环境', '收费合理'] },
-  { code: 'travel', name: '旅游出行', icon: '✈️', dims: ['产品丰富度', '服务质量', '价格优势', '售后保障'] },
+const categories: { code: CategoryCode; name: string; icon: string; dims: { name: string; weight: number }[] }[] = [
+  { code: 'consumer', name: '消费品牌', icon: '🛒', dims: [{ name: '产品质量', weight: 0.30 }, { name: '服务体验', weight: 0.25 }, { name: '品牌信誉', weight: 0.25 }, { name: '价格公道', weight: 0.20 }] },
+  { code: 'education', name: '教育服务', icon: '🎓', dims: [{ name: '教学质量', weight: 0.30 }, { name: '师资力量', weight: 0.30 }, { name: '服务水平', weight: 0.20 }, { name: '性价比', weight: 0.20 }] },
+  { code: 'medical', name: '医疗健康', icon: '🏥', dims: [{ name: '资质安全', weight: 0.65 }, { name: '服务效果', weight: 0.30 }, { name: '价格透明', weight: 0.05 }] },
+  { code: 'travel', name: '旅游出行', icon: '✈️', dims: [{ name: '产品丰富度', weight: 0.25 }, { name: '服务质量', weight: 0.30 }, { name: '价格优势', weight: 0.20 }, { name: '售后保障', weight: 0.25 }] },
 ];
 
 const cities = ['全国', '北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '南京'];
+
+const cityMeta: Record<string, { sampleSize: number; areaDesc: string }> = {
+  '全国': { sampleSize: 128600, areaDesc: '31个省级行政区 · 680个区县' },
+  '北京': { sampleSize: 18540, areaDesc: '北京市16区 · 重点采样朝阳/海淀/西城' },
+  '上海': { sampleSize: 16820, areaDesc: '上海市16区 · 重点采样浦东/黄浦/徐汇' },
+  '广州': { sampleSize: 12360, areaDesc: '广州市11区 · 重点采样天河/越秀/白云' },
+  '深圳': { sampleSize: 14200, areaDesc: '深圳市9区 · 重点采样南山/福田/宝安' },
+  '杭州': { sampleSize: 9870, areaDesc: '杭州市10区 · 重点采样西湖/江干/余杭' },
+  '成都': { sampleSize: 10560, areaDesc: '成都市11区 · 重点采样武侯/锦江/高新' },
+  '武汉': { sampleSize: 8720, areaDesc: '武汉市13区 · 重点采样武昌/江汉/洪山' },
+  '南京': { sampleSize: 7950, areaDesc: '南京市11区 · 重点采样鼓楼/秦淮/建邺' },
+};
 
 const cityOffsets: Record<string, number[]> = {
   '全国': [0, 0, 0, 0],
@@ -72,12 +85,16 @@ const baseBrands: Record<CategoryCode, { name: string; baseScores: number[]; id:
 };
 
 const sourceTypes: ('ecommerce' | 'government' | 'complaint' | 'review' | 'sampling')[] = ['ecommerce', 'government', 'complaint', 'review', 'sampling'];
+const sourceLabels: Record<string, string> = {
+  ecommerce: '电商评论', government: '政府抽检', complaint: '投诉数据', review: '用户点评', sampling: '专业采样'
+};
 
 interface RankingRow {
   rank: number;
   targetId: number;
   targetName: string;
   overallScore: number;
+  weightedScore: number;
   previousRank: number;
   changeTrend: 'up' | 'down' | 'stable';
   category: string;
@@ -85,7 +102,9 @@ interface RankingRow {
   reportId: number;
   dimensionScores: {
     dimension: string;
-    score: number;
+    weight: number;
+    rawScore: number;
+    weightedScore: number;
     dataSources: { type: string; count: number; collectTime: string; verified: boolean }[];
   }[];
   dataSources: { type: string; count: number }[];
@@ -95,10 +114,7 @@ interface RankingRow {
 
 function seededRandom(seed: number): () => number {
   let s = seed;
-  return () => {
-    s = (s * 9301 + 49297) % 233280;
-    return s / 233280;
-  };
+  return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
 }
 
 function generateRankings(category: CategoryCode, city: string): RankingRow[] {
@@ -107,15 +123,18 @@ function generateRankings(category: CategoryCode, city: string): RankingRow[] {
   const items = baseBrands[category];
   const offsets = cityOffsets[city] || [0, 0, 0, 0];
   const mult = cityMultiplier[city] || 1;
-  const dimNames = categories.find(c => c.code === category)?.dims || [];
+  const dimMeta = categories.find(c => c.code === category)?.dims || [];
   return items.map((item, idx) => {
-    const dimScores = dimNames.map((dim, dIdx) => {
-      const score = Math.max(60, Math.min(100, item.baseScores[dIdx] + offsets[dIdx] + Math.floor(rand() * 5) - 2));
+    const dimScores = dimMeta.map((dim, dIdx) => {
+      const rawScore = Math.max(60, Math.min(100, item.baseScores[dIdx] + offsets[dIdx] + Math.floor(rand() * 5) - 2));
+      const weightedScore = Math.round(rawScore * dim.weight);
       const numSources = 3 + Math.floor(rand() * 3);
       const usedSources = sourceTypes.slice(0, numSources);
       return {
-        dimension: dim,
-        score,
+        dimension: dim.name,
+        weight: dim.weight,
+        rawScore,
+        weightedScore,
         dataSources: usedSources.map(st => ({
           type: st,
           count: Math.floor((Math.floor(rand() * 8000) + 200) * mult),
@@ -124,13 +143,15 @@ function generateRankings(category: CategoryCode, city: string): RankingRow[] {
         })),
       };
     });
-    const overall = Math.round(dimScores.reduce((s, d) => s + d.score, 0) / dimScores.length);
+    const overall = Math.round(dimScores.reduce((s, d) => s + d.rawScore, 0) / dimScores.length);
+    const weighted = dimScores.reduce((s, d) => s + d.weightedScore, 0);
     const prevRank = Math.max(1, idx + 1 + (offsets.reduce((a, b) => a + b, 0) > 0 ? -1 : offsets.reduce((a, b) => a + b, 0) < 0 ? 1 : 0));
     return {
       rank: 0,
       targetId: item.id,
       targetName: item.name,
       overallScore: overall,
+      weightedScore: weighted,
       previousRank: prevRank,
       changeTrend: (prevRank > idx + 1 ? 'up' : prevRank < idx + 1 ? 'down' : 'stable') as 'up' | 'down' | 'stable',
       category,
@@ -141,8 +162,12 @@ function generateRankings(category: CategoryCode, city: string): RankingRow[] {
       crossValidated: rand() > 0.15,
       lastUpdated: `2026-06-${String(10 + Math.floor(rand() * 8)).padStart(2, '0')}`,
     };
-  }).sort((a, b) => b.overallScore - a.overallScore).map((r, i) => ({ ...r, rank: i + 1 }));
+  }).sort((a, b) => b.weightedScore - a.weightedScore).map((r, i) => ({ ...r, rank: i + 1 }));
 }
+
+const catColors: Record<string, string> = {
+  consumer: '#10B981', education: '#6366F1', medical: '#F43F5E', travel: '#F59E0B'
+};
 
 export function RankingPage() {
   const { category } = useParams<{ category?: string }>();
@@ -151,35 +176,29 @@ export function RankingPage() {
   const [activeCity, setActiveCity] = useState('全国');
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [compareIds, setCompareIds] = useState<number[]>([]);
   const [toast, setToast] = useState<{ msg: string; action?: { label: string; onClick: () => void } } | null>(null);
+  const { compareIds, addId, removeId } = useCompareStore();
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('compareIds');
-      if (saved) setCompareIds(JSON.parse(saved));
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    try { localStorage.setItem('compareIds', JSON.stringify(compareIds)); } catch {}
-  }, [compareIds]);
-
-  const data = useMemo(
-    () => generateRankings(activeCategory, activeCity),
-    [activeCategory, activeCity]
-  );
-
-  const filteredData = useMemo(
-    () => data.filter((item) => item.targetName.toLowerCase().includes(searchQuery.toLowerCase())),
-    [data, searchQuery]
-  );
+  const data = useMemo(() => generateRankings(activeCategory, activeCity), [activeCategory, activeCity]);
+  const filteredData = useMemo(() => data.filter(item => item.targetName.toLowerCase().includes(searchQuery.toLowerCase())), [data, searchQuery]);
 
   const catInfo = categories.find(c => c.code === activeCategory);
-  const avgScore = filteredData.length > 0 ? Math.round(filteredData.reduce((s, d) => s + d.overallScore, 0) / filteredData.length) : 0;
-  const maxScore = filteredData.length > 0 ? Math.max(...filteredData.map(d => d.overallScore)) : 0;
+  const meta = cityMeta[activeCity] || cityMeta['全国'];
+  const avgScore = filteredData.length ? Math.round(filteredData.reduce((s, d) => s + d.overallScore, 0) / filteredData.length) : 0;
+  const maxScore = filteredData.length ? Math.max(...filteredData.map(d => d.overallScore)) : 0;
+  const validRate = filteredData.length ? Math.round((filteredData.filter(d => d.crossValidated).length / filteredData.length) * 100) : 0;
   const totalSources = filteredData.reduce((s, d) => s + d.dataSources.reduce((ss, ds) => ss + ds.count, 0), 0);
-  const validRate = filteredData.length > 0 ? Math.round((filteredData.filter(d => d.crossValidated).length / filteredData.length) * 100) : 0;
+
+  // 各数据源统计（城市维度）
+  const sourceStats = useMemo(() => {
+    const stats: Record<string, number> = {};
+    sourceTypes.forEach(st => { stats[st] = 0; });
+    filteredData.forEach(row => {
+      row.dataSources.forEach(ds => { stats[ds.type] = (stats[ds.type] || 0) + ds.count; });
+    });
+    return stats;
+  }, [filteredData]);
+  const totalStatsCount = Object.values(sourceStats).reduce((a, b) => a + b, 0);
 
   const showToast = (msg: string, action?: { label: string; onClick: () => void }) => {
     setToast({ msg, action });
@@ -187,23 +206,16 @@ export function RankingPage() {
   };
 
   const addToCompare = (id: number, name: string) => {
-    if (compareIds.includes(id)) {
-      showToast(`${name} 已在对比列表中`);
-    } else if (compareIds.length >= 4) {
-      showToast('对比最多4个对象，请先移除');
+    const result = addId(id);
+    if (!result.success) {
+      showToast(result.msg);
     } else {
-      const newIds = [...compareIds, id];
-      setCompareIds(newIds);
-      showToast(
-        `已加入 ${name}，当前 ${newIds.length}/4`,
-        { label: '去对比 →', onClick: () => navigate('/compare') }
-      );
+      const newLen = compareIds.length + 1;
+      showToast(`已加入 ${name}，当前 ${newLen}/4`, { label: '去对比 →', onClick: () => navigate('/compare') });
     }
   };
 
-  const removeFromCompare = (id: number) => {
-    setCompareIds(prev => prev.filter(i => i !== id));
-  };
+  const themeColor = catColors[activeCategory] || '#10B981';
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -212,136 +224,148 @@ export function RankingPage() {
       {toast && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] px-4 py-2.5 bg-primary text-white rounded-md shadow-lg animate-fade-in text-sm flex items-center gap-3">
           <span>{toast.msg}</span>
-          {toast.action && (
-            <button
-              onClick={toast.action.onClick}
-              className="px-2.5 py-1 bg-white/20 hover:bg-white/30 rounded text-xs font-medium transition-colors"
-            >
-              {toast.action.label}
-            </button>
-          )}
-          <button onClick={() => setToast(null)} className="ml-1 text-white/70 hover:text-white">
-            <X className="w-4 h-4" />
-          </button>
+          {toast.action && <button onClick={toast.action.onClick} className="px-2.5 py-1 bg-white/20 hover:bg-white/30 rounded text-xs font-medium">{toast.action.label}</button>}
+          <button onClick={() => setToast(null)} className="ml-1 text-white/70 hover:text-white"><X className="w-4 h-4" /></button>
         </div>
       )}
 
       <div className="flex-1">
         <div className="container mx-auto px-4 py-8">
           <div className="mb-6">
-            <h1 className="text-2xl font-serif font-bold text-white mb-4">
-              {catInfo?.icon} {catInfo?.name || '评价'}排行榜
-              <span className="ml-3 text-base font-normal text-slate-400">
-                {activeCity === '全国' ? '全国维度' : `${activeCity}地区`}
-              </span>
+            <div className="flex items-center gap-2 mb-2">
+              <Link to="/" className="text-sm text-slate-500 hover:text-slate-300">首页</Link>
+              <ChevronRight className="w-3 h-3 text-slate-600 -rotate-90" />
+              <Link to="/category/consumer" className="text-sm text-slate-400 hover:text-slate-200">评价领域</Link>
+              <ChevronRight className="w-3 h-3 text-slate-600 -rotate-90" />
+              <span className="text-sm text-white font-medium">{catInfo?.name} · {activeCity}</span>
+            </div>
+            <h1 className="text-2xl font-serif font-bold text-white mb-1 flex items-center gap-2">
+              {catInfo?.icon} {catInfo?.name}排行榜
+              <span className="ml-2 text-base font-normal text-slate-400">{activeCity}口径</span>
             </h1>
-            <div className="flex flex-wrap gap-2 mb-4">
+            <p className="text-sm text-slate-500 mb-4">{meta.areaDesc}</p>
+            <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
-                <Link
-                  key={cat.code}
-                  to={`/rankings/${cat.code}`}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                    activeCategory === cat.code
-                      ? 'bg-primary text-white shadow-glow-primary'
-                      : 'bg-surface text-slate-300 hover:bg-surface-light hover:text-white'
-                  }`}
-                >
+                <Link key={cat.code} to={`/rankings/${cat.code}`} className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeCategory === cat.code ? 'bg-primary text-white shadow-glow-primary' : 'bg-surface text-slate-300 hover:bg-surface-light hover:text-white'}`}>
                   {cat.icon} {cat.name}
                 </Link>
               ))}
             </div>
           </div>
 
-          <div className="card p-4 mb-6">
-            <div className="flex flex-wrap gap-4 items-center">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-sm text-slate-400">城市口径：</span>
-                <div className="flex flex-wrap gap-1">
-                  {cities.map((city) => (
-                    <button
-                      key={city}
-                      onClick={() => { setActiveCity(city); setExpandedRow(null); }}
-                      className={`px-3 py-1 rounded text-xs transition-all ${
-                        activeCity === city
-                          ? 'bg-primary/20 text-primary border border-primary/30 font-medium'
-                          : 'text-slate-400 hover:text-white hover:bg-surface-light'
-                      }`}
-                    >
-                      {city}
-                    </button>
-                  ))}
+          {/* 城市口径概览卡片 */}
+          <div className="card p-5 mb-6 border-t-4" style={{ borderTopColor: themeColor }}>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${themeColor}15` }}>
+                  <MapPin className="w-5 h-5" style={{ color: themeColor }} />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">{activeCity}数据概览</h3>
+                  <p className="text-xs text-slate-500">数据更新于 2026-06-18 · {meta.areaDesc}</p>
                 </div>
               </div>
+              <div className="flex items-center gap-1.5">
+                {cities.map((city) => (
+                  <button key={city} onClick={() => { setActiveCity(city); setExpandedRow(null); }} className={`px-3 py-1 rounded text-xs transition-all ${activeCity === city ? 'text-white font-medium' : 'text-slate-500 hover:text-white'}`} style={activeCity === city ? { backgroundColor: `${themeColor}25`, border: `1px solid ${themeColor}50` } : {}}>
+                    {city}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="p-3 bg-surface-light/40 rounded-lg">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Users className="w-4 h-4" style={{ color: themeColor }} />
+                  <span className="text-xs text-slate-400">评测样本量</span>
+                </div>
+                <div className="text-2xl font-bold text-white">{meta.sampleSize.toLocaleString()}</div>
+                <div className="text-xs text-slate-500 mt-0.5">条有效样本</div>
+              </div>
+              <div className="p-3 bg-surface-light/40 rounded-lg">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <BarChart3 className="w-4 h-4 text-primary" />
+                  <span className="text-xs text-slate-400">综合均分</span>
+                </div>
+                <div className="text-2xl font-bold text-white">{avgScore}</div>
+                <div className="text-xs text-slate-500 mt-0.5">最高 {maxScore} 分</div>
+              </div>
+              <div className="p-3 bg-surface-light/40 rounded-lg">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Database className="w-4 h-4 text-blue-400" />
+                  <span className="text-xs text-slate-400">数据源条数</span>
+                </div>
+                <div className="text-2xl font-bold text-white">{totalSources.toLocaleString()}</div>
+                <div className="text-xs text-slate-500 mt-0.5">条原始数据记录</div>
+              </div>
+              <div className="p-3 bg-surface-light/40 rounded-lg">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Shield className="w-4 h-4 text-warning" />
+                  <span className="text-xs text-slate-400">交叉验证率</span>
+                </div>
+                <div className="text-2xl font-bold text-white">{validRate}%</div>
+                <div className="text-xs text-slate-500 mt-0.5">{filteredData.filter(d => d.crossValidated).length}/{filteredData.length} 个对象</div>
+              </div>
+            </div>
+
+            {/* 数据来源分布 */}
+            <div className="mt-4 pt-4 border-t border-slate-700/50">
+              <h4 className="text-xs font-medium text-slate-400 mb-3 flex items-center gap-2">
+                <Database className="w-3.5 h-3.5" />
+                {activeCity}数据来源分布
+              </h4>
+              <div className="space-y-2.5">
+                {sourceTypes.map(st => {
+                  const count = sourceStats[st] || 0;
+                  const pct = totalStatsCount ? Math.round((count / totalStatsCount) * 100) : 0;
+                  return (
+                    <div key={st} className="flex items-center gap-3">
+                      <DataSourceTag type={st as any} />
+                      <span className="text-xs text-slate-500 w-16 text-right">{sourceLabels[st]}</span>
+                      <div className="flex-1 h-2 bg-surface-light rounded-full overflow-hidden">
+                        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: themeColor }} />
+                      </div>
+                      <span className="text-xs text-white font-medium w-24 text-right">{count.toLocaleString()}条 ({pct}%)</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* 搜索+对比栏 */}
+          <div className="card p-4 mb-4">
+            <div className="flex flex-wrap gap-4 items-center">
+              {compareIds.length > 0 && (
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-md" style={{ backgroundColor: `${themeColor}15`, border: `1px solid ${themeColor}30` }}>
+                  <GitCompare className="w-4 h-4" style={{ color: themeColor }} />
+                  <span className="text-sm text-white">已选 <span className="font-bold" style={{ color: themeColor }}>{compareIds.length}</span>/4 对比</span>
+                  <div className="flex items-center gap-1 ml-2">
+                    {compareIds.map(id => {
+                      const item = data.find(d => d.targetId === id);
+                      return item ? (
+                        <span key={id} className="px-2 py-0.5 bg-surface text-xs text-slate-200 rounded flex items-center gap-1">
+                          {item.targetName}
+                          <button onClick={() => removeId(id)} className="hover:text-white ml-0.5 text-slate-400"><X className="w-3 h-3" /></button>
+                        </span>
+                      ) : null;
+                    })}
+                  </div>
+                  <Link to="/compare" className="ml-3 px-3 py-1 rounded text-xs text-white font-medium" style={{ backgroundColor: themeColor }}>
+                    查看对比 <ArrowRight className="w-3 h-3 inline ml-0.5" />
+                  </Link>
+                </div>
+              )}
               <div className="relative ml-auto flex items-center gap-3">
-                <Link to="/compare" className="btn btn-primary text-sm">
-                  <GitCompare className="w-4 h-4 mr-1" />
-                  对比中心
-                  {compareIds.length > 0 && <span className="ml-1 px-1.5 py-0.5 bg-white/20 rounded text-xs">{compareIds.length}/4</span>}
-                </Link>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="搜索品牌..."
-                    className="w-56 px-3 py-1.5 pl-9 bg-surface-light border border-border rounded-md text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary"
-                  />
+                  <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="搜索品牌、机构..." className="w-56 px-3 py-1.5 pl-9 bg-surface-light border border-border rounded-md text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary" />
                 </div>
               </div>
             </div>
           </div>
 
-          {compareIds.length > 0 && (
-            <div className="mb-4 p-3 bg-primary/10 border border-primary/30 rounded-lg flex items-center justify-between animate-fade-in">
-              <div className="flex items-center gap-3">
-                <GitCompare className="w-5 h-5 text-primary" />
-                <span className="text-sm text-white">
-                  已选 <span className="font-bold text-primary">{compareIds.length}</span> 个对象加入对比
-                  <span className="text-slate-400 ml-2">（最多4个）</span>
-                </span>
-                <div className="flex items-center gap-1.5 ml-4">
-                  {compareIds.map(id => {
-                    const item = data.find(d => d.targetId === id);
-                    return item ? (
-                      <span key={id} className="px-2 py-1 bg-primary/15 text-primary text-xs rounded flex items-center gap-1 border border-primary/30">
-                        {item.targetName}
-                        <button onClick={() => removeFromCompare(id)} className="hover:text-white ml-1"><X className="w-3 h-3" /></button>
-                      </span>
-                    ) : null;
-                  })}
-                </div>
-              </div>
-              <Link to="/compare" className="btn btn-primary text-xs">
-                查看对比结果 <ArrowRight className="w-3 h-3 ml-1" />
-              </Link>
-            </div>
-          )}
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
-            <div className="card p-4 text-center border-l-4 border-l-primary">
-              <div className="text-2xl font-bold text-primary">{avgScore}</div>
-              <div className="text-xs text-slate-500 mt-1">{activeCity}均分</div>
-            </div>
-            <div className="card p-4 text-center">
-              <div className="text-2xl font-bold text-accent">{maxScore}</div>
-              <div className="text-xs text-slate-500 mt-1">最高评分</div>
-            </div>
-            <div className="card p-4 text-center">
-              <div className="text-2xl font-bold text-white">{filteredData.length}</div>
-              <div className="text-xs text-slate-500 mt-1">评测对象</div>
-            </div>
-            <div className="card p-4 text-center">
-              <div className="text-2xl font-bold text-blue-400">{totalSources.toLocaleString()}</div>
-              <div className="text-xs text-slate-500 mt-1">数据条数</div>
-            </div>
-            <div className="card p-4 text-center">
-              <div className="text-2xl font-bold text-warning">{validRate}%</div>
-              <div className="text-xs text-slate-500 mt-1">交叉验证比例</div>
-            </div>
-          </div>
-
+          {/* 榜单表格 */}
           <div className="card overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -349,29 +373,19 @@ export function RankingPage() {
                   <tr>
                     <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-16">排名</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">评测对象</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-32">综合评分</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-28">加权评分</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-24">趋势</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-24">验证</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-28">交叉验证</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-28">对比</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-20">详情</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider w-20">明细</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700/50">
                   {filteredData.map((row) => (
                     <Fragment key={row.targetId}>
-                      <tr
-                        className="hover:bg-surface-light/30 transition-colors cursor-pointer"
-                        onClick={() => setExpandedRow(expandedRow === row.targetId ? null : row.targetId)}
-                      >
+                      <tr className="hover:bg-surface-light/30 transition-colors cursor-pointer" onClick={() => setExpandedRow(expandedRow === row.targetId ? null : row.targetId)}>
                         <td className="px-4 py-4">
-                          <span className={`w-8 h-8 rounded-md flex items-center justify-center text-sm font-bold ${
-                            row.rank === 1 ? 'bg-warning/20 text-warning' :
-                            row.rank === 2 ? 'bg-slate-400/20 text-slate-300' :
-                            row.rank === 3 ? 'bg-amber-700/20 text-amber-600' :
-                            'bg-surface-light text-slate-400'
-                          }`}>
-                            {row.rank}
-                          </span>
+                          <span className={`w-8 h-8 rounded-md flex items-center justify-center text-sm font-bold ${row.rank === 1 ? 'bg-warning/20 text-warning' : row.rank === 2 ? 'bg-slate-400/20 text-slate-300' : row.rank === 3 ? 'bg-amber-700/20 text-amber-600' : 'bg-surface-light text-slate-400'}`}>{row.rank}</span>
                         </td>
                         <td className="px-4 py-4">
                           <div className="flex items-center gap-3">
@@ -387,38 +401,27 @@ export function RankingPage() {
                           </div>
                         </td>
                         <td className="px-4 py-4">
-                          <span className="text-xl font-bold text-white">{row.overallScore}</span>
-                          <span className="text-sm text-slate-500 ml-1">/100</span>
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-xl font-bold text-white">{row.weightedScore}</span>
+                            <span className="text-xs text-slate-500">(加权)</span>
+                          </div>
+                          <div className="text-xs text-slate-500">原始 {row.overallScore}/100</div>
                         </td>
-                        <td className="px-4 py-4">
-                          <TrendBadge trend={row.changeTrend} value={Math.abs(row.previousRank - row.rank)} />
-                        </td>
+                        <td className="px-4 py-4"><TrendBadge trend={row.changeTrend} value={Math.abs(row.previousRank - row.rank)} /></td>
                         <td className="px-4 py-4">
                           {row.crossValidated ? (
-                            <span className="inline-flex items-center gap-1 text-xs text-primary"><CheckCircle2 className="w-3.5 h-3.5" />已交叉验证</span>
+                            <span className="inline-flex items-center gap-1 text-xs text-primary"><CheckCircle2 className="w-3.5 h-3.5" />已通过</span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-xs text-warning"><AlertTriangle className="w-3.5 h-3.5" />待补充验证</span>
+                            <span className="inline-flex items-center gap-1 text-xs text-warning"><AlertTriangle className="w-3.5 h-3.5" />待补充</span>
                           )}
                         </td>
                         <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            onClick={() => addToCompare(row.targetId, row.targetName)}
-                            disabled={compareIds.includes(row.targetId)}
-                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                              compareIds.includes(row.targetId)
-                                ? 'bg-primary/20 text-primary border border-primary/30'
-                                : 'bg-surface-light text-slate-300 hover:bg-primary/10 hover:text-primary'
-                            }`}
-                          >
+                          <button onClick={() => addToCompare(row.targetId, row.targetName)} disabled={compareIds.includes(row.targetId)} className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium transition-colors ${compareIds.includes(row.targetId) ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-surface-light text-slate-300 hover:bg-primary/10 hover:text-primary'}`}>
                             {compareIds.includes(row.targetId) ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
                             {compareIds.includes(row.targetId) ? '已加入' : '加对比'}
                           </button>
                         </td>
-                        <td className="px-4 py-4">
-                          <button className="text-slate-400 hover:text-primary transition-colors">
-                            {expandedRow === row.targetId ? <ChevronUp /> : <ChevronDown />}
-                          </button>
-                        </td>
+                        <td className="px-4 py-4"><button className="text-slate-400 hover:text-primary transition-colors">{expandedRow === row.targetId ? <ChevronUp /> : <ChevronDown />}</button></td>
                       </tr>
                       {expandedRow === row.targetId && (
                         <tr className="bg-surface-light/30 animate-fade-in">
@@ -426,29 +429,30 @@ export function RankingPage() {
                             <div className="space-y-6">
                               <div>
                                 <h4 className="text-sm font-semibold text-slate-200 mb-4 flex items-center gap-2">
-                                  <FileText className="w-4 h-4 text-primary" />
-                                  多维度评分明细（每项评分含数据来源·采集时间·验证状态）
+                                  <FileText className="w-4 h-4" style={{ color: themeColor }} />
+                                  多维度评分明细（含权重口径 · 数据来源 · 采集时间 · 验证状态）
                                 </h4>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                   {row.dimensionScores.map((dim) => (
                                     <div key={dim.dimension} className="bg-surface/70 rounded-lg p-4">
                                       <div className="flex items-center justify-between mb-2">
-                                        <span className="text-sm text-white font-semibold">{dim.dimension}</span>
-                                        <span className="text-xl font-bold text-primary">{dim.score}<span className="text-xs text-slate-500 ml-0.5">/100</span></span>
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-sm text-white font-semibold">{dim.dimension}</span>
+                                          <span className="px-1.5 py-0.5 text-xs rounded" style={{ backgroundColor: `${themeColor}15`, color: themeColor }}>权重 {(dim.weight * 100).toFixed(0)}%</span>
+                                        </div>
+                                        <div className="text-right">
+                                          <span className="text-xl font-bold text-white">{dim.rawScore}</span>
+                                          <span className="text-xs text-slate-500 ml-1">/100</span>
+                                          <span className="text-xs text-slate-500 ml-2">→ 加权 {dim.weightedScore}</span>
+                                        </div>
                                       </div>
                                       <div className="h-2 bg-surface-light rounded-full overflow-hidden mb-3">
-                                        <div
-                                          className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
-                                          style={{ width: `${dim.score}%` }}
-                                        />
+                                        <div className="h-full rounded-full transition-all" style={{ width: `${dim.weightedScore}%`, background: `linear-gradient(to right, ${themeColor}, ${themeColor}80)` }} />
                                       </div>
+                                      <div className="text-xs text-slate-400 mb-2">数据来源链路：</div>
                                       <div className="flex flex-wrap gap-1.5">
                                         {dim.dataSources.map((ds, i) => (
-                                          <div key={i} className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded border ${
-                                            ds.verified
-                                              ? 'bg-primary/5 border-primary/20 text-primary'
-                                              : 'bg-warning/5 border-warning/20 text-warning'
-                                          }`}>
+                                          <div key={i} className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded border ${ds.verified ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-warning/5 border-warning/20 text-warning'}`}>
                                             <DataSourceTag type={ds.type as any} />
                                             <span className="text-slate-300">{ds.count.toLocaleString()}条</span>
                                             <span className="text-slate-600">·</span>
@@ -463,25 +467,12 @@ export function RankingPage() {
                                 </div>
                               </div>
                               <div className="pt-4 border-t border-slate-700/50 flex items-center justify-between flex-wrap gap-3">
-                                <div className="flex items-center gap-6 flex-wrap">
-                                  <div className="flex items-center gap-2">
-                                    <Database className="w-4 h-4 text-primary" />
-                                    <span className="text-xs text-slate-400">数据口径：{row.city} · 共 {row.dataSources.reduce((s, d) => s + d.count, 0).toLocaleString()} 条原始数据</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <Clock className="w-4 h-4 text-slate-400" />
-                                    <span className="text-xs text-slate-400">数据更新时间：{row.lastUpdated}</span>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <Shield className="w-4 h-4 text-primary" />
-                                    <span className="text-xs text-slate-400">
-                                      {row.crossValidated ? '交叉验证：3个独立数据源结果一致' : '交叉验证：需补充第3方数据验证'}
-                                    </span>
-                                  </div>
+                                <div className="flex items-center gap-6 flex-wrap text-xs text-slate-400">
+                                  <span className="flex items-center gap-2"><Database className="w-4 h-4" style={{ color: themeColor }} />数据口径：{row.city} · {row.dataSources.reduce((s, d) => s + d.count, 0).toLocaleString()}条原始数据</span>
+                                  <span className="flex items-center gap-2"><Clock className="w-4 h-4" />更新：{row.lastUpdated}</span>
+                                  <span className="flex items-center gap-2"><Shield className="w-4 h-4 text-primary" />{row.crossValidated ? '3个独立数据源结果一致' : '需补充第3方数据验证'}</span>
                                 </div>
-                                <Link to={`/report/${row.reportId}`} className="text-sm text-primary hover:text-primary-dark inline-flex items-center gap-1 font-medium">
-                                  查看完整报告 <ArrowRight className="w-3.5 h-3.5" />
-                                </Link>
+                                <Link to={`/report/${row.reportId}`} className="text-sm font-medium inline-flex items-center gap-1" style={{ color: themeColor }}>查看完整报告 <ArrowRight className="w-3.5 h-3.5" /></Link>
                               </div>
                             </div>
                           </td>

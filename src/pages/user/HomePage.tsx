@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useCompareStore } from '@/store/compareStore';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ShoppingBag,
@@ -107,27 +108,14 @@ const weightItems = [
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const [compareIds, setCompareIds] = useState<number[]>([]);
+  const { compareIds, addId, removeId, clear } = useCompareStore();
   const [toastMsg, setToastMsg] = useState('');
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('compareIds');
-      if (saved) setCompareIds(JSON.parse(saved));
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    try { localStorage.setItem('compareIds', JSON.stringify(compareIds)); } catch {}
-  }, [compareIds]);
-
   const addToCompare = (id: number, name: string) => {
-    if (compareIds.includes(id)) {
-      setToastMsg(`${name} 已在对比列表中`);
-    } else if (compareIds.length >= 4) {
-      setToastMsg('对比最多4个对象，请先移除');
+    const result = addId(id);
+    if (!result.success) {
+      setToastMsg(result.msg);
     } else {
-      setCompareIds([...compareIds, id]);
       setToastMsg(`已加入 ${name}，当前 ${compareIds.length + 1}/4`);
     }
     setTimeout(() => setToastMsg(''), 2200);
