@@ -8,6 +8,7 @@ export interface User {
   merchantId?: string;
   avatar?: string;
   lastLoginAt?: Date;
+  permissions?: string[];
 }
 
 export interface Citizen {

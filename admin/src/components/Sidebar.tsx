@@ -86,7 +86,7 @@ export default function Sidebar() {
             <div className="ml-3 flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-800 truncate">{user?.name}</p>
               <p className="text-xs text-gray-500">
-                {user?.role === 'super_admin' ? '超级管理员' : '管理员'}
+                {user?.role === 'super_admin' ? '超级管理员' : user?.role === 'admin' ? '市级运营管理员' : user?.role === 'scenic_admin' ? '景区运营管理员' : '商户运营管理员'}
               </p>
             </div>
           </div>

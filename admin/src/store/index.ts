@@ -42,7 +42,7 @@ interface AppState {
   merchants: Merchant[];
   auditLogs: AuditLog[];
   fusingRules: FusingRule[];
-  login: (username: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => Promise<{ success: boolean; user?: User; message?: string; code?: string }>;
   logout: () => void;
   loadDashboardData: () => Promise<void>;
   loadCitizens: (page?: number, pageSize?: number, filters?: Record<string, unknown>) => Promise<PaginatedResponse<Citizen>>;
@@ -77,13 +77,24 @@ export const useAppStore = create<AppState>()(
 
       login: async (username: string, password: string) => {
         set({ loading: true });
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        if (username === 'admin' && password === 'admin123') {
-          set({ isAuthenticated: true, user: mockUser, loading: false });
-          return true;
+        try {
+          const resp = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+          });
+          const data = await resp.json();
+          if (data.success && data.data?.user) {
+            set({ isAuthenticated: true, user: data.data.user, loading: false });
+            return { success: true, user: data.data.user };
+          }
+          set({ loading: false });
+          return { success: false, message: data.message || '登录失败', code: data.code };
+        } catch (err: unknown) {
+          set({ loading: false });
+          const message = err instanceof Error ? err.message : '网络异常，请检查后端服务是否启动';
+          return { success: false, message, code: 'NETWORK_ERROR' };
         }
-        set({ loading: false });
-        return false;
       },
 
       logout: () => {
