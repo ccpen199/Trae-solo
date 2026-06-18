@@ -1,6 +1,7 @@
 import { db } from './database';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
 
 const citiesData = [
   { name: '北京', province: '北京市', longitude: 116.4074, latitude: 39.9042 },
@@ -228,6 +229,71 @@ function ensureDemoWorkflowData() {
         new Date().toISOString()
       );
     }
+  }
+
+  const paymentCount = db.prepare('SELECT COUNT(*) as count FROM payment_records WHERE contract_id = ?').get(contract.id) as { count: number };
+  if (paymentCount.count === 0) {
+    db.prepare(`
+      INSERT INTO payment_records (id, contract_id, amount, payment_type, payee_role, payee_id, status, transaction_no, created_at)
+      VALUES (?, ?, ?, 'deposit', 'store', ?, 'completed', ?, ?)
+    `).run(
+      uuidv4(),
+      contract.id,
+      contract.escrow_amount,
+      contract.store_id,
+      `TX${Date.now()}DEPOSIT`,
+      new Date().toISOString()
+    );
+
+    const confirmedMilestones = db.prepare("SELECT * FROM project_milestones WHERE contract_id = ? AND status = 'confirmed'").all(contract.id) as any[];
+    for (const ms of confirmedMilestones) {
+      db.prepare(`
+        INSERT INTO payment_records (id, contract_id, milestone_id, amount, payment_type, payee_role, payee_id, status, transaction_no, created_at)
+        VALUES (?, ?, ?, ?, 'milestone', 'store', ?, 'completed', ?, ?)
+      `).run(
+        uuidv4(),
+        contract.id,
+        ms.id,
+        ms.payment_amount,
+        contract.store_id,
+        `TX${Date.now()}${ms.milestone_type.substring(0, 2)}`,
+        new Date().toISOString()
+      );
+    }
+
+    const processingMilestones = db.prepare("SELECT * FROM project_milestones WHERE contract_id = ? AND payment_status = 'processing'").all(contract.id) as any[];
+    for (const ms of processingMilestones) {
+      db.prepare(`
+        INSERT INTO payment_records (id, contract_id, milestone_id, amount, payment_type, payee_role, payee_id, status, created_at)
+        VALUES (?, ?, ?, ?, 'milestone', 'store', ?, 'processing', ?)
+      `).run(
+        uuidv4(),
+        contract.id,
+        ms.id,
+        ms.payment_amount,
+        contract.store_id,
+        new Date().toISOString()
+      );
+    }
+  }
+
+  const eContractCount = db.prepare('SELECT COUNT(*) as count FROM electronic_contracts WHERE contract_id = ?').get(contract.id) as { count: number };
+  if (eContractCount.count === 0) {
+    const contractHash = crypto.createHash('sha256').update(JSON.stringify(contract)).digest('hex');
+    const expireDate = new Date();
+    expireDate.setFullYear(expireDate.getFullYear() + 10);
+    db.prepare(`
+      INSERT INTO electronic_contracts (id, contract_id, hash, blockchain_tx, storage_url, expire_date, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      uuidv4(),
+      contract.id,
+      contractHash,
+      `0x${contractHash}`,
+      `/storage/contracts/${contract.id}.pdf`,
+      expireDate.toISOString().split('T')[0],
+      new Date().toISOString()
+    );
   }
 
   const bomCount = db.prepare('SELECT COUNT(*) as count FROM material_bom WHERE contract_id = ?').get(contract.id) as { count: number };

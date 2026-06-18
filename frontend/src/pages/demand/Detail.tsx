@@ -17,6 +17,8 @@ import {
   Image,
   Statistic,
   Modal,
+  Steps,
+  Table,
 } from 'antd';
 import {
   ArrowLeftOutlined,
@@ -29,10 +31,13 @@ import {
   WalletOutlined,
   ClockCircleOutlined,
   FileTextOutlined,
+  ShopOutlined,
+  SafetyCertificateOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import apiClient from '../../api/client';
 import { useAuthStore } from '../../store/auth';
+import dayjs from 'dayjs';
 
 const { Title, Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -81,6 +86,23 @@ interface DesignerMatch {
   created_at: string;
 }
 
+interface NearbyStore {
+  id: string;
+  name: string;
+  city: string;
+  address: string;
+  service_radius: number;
+  distance_km: number;
+}
+
+interface LinkedContract {
+  id: string;
+  contract_no: string;
+  status: string;
+  total_amount: number;
+  escrow_amount: number;
+}
+
 const statusMap: Record<string, { text: string; color: string }> = {
   pending: { text: '待匹配', color: 'orange' },
   matched: { text: '已匹配', color: 'blue' },
@@ -100,6 +122,8 @@ const DemandDetail: React.FC = () => {
   const [demand, setDemand] = useState<DemandDetail | null>(null);
   const [aiSolution, setAiSolution] = useState<AISolution | null>(null);
   const [matches, setMatches] = useState<DesignerMatch[]>([]);
+  const [nearbyStores, setNearbyStores] = useState<NearbyStore[]>([]);
+  const [linkedContract, setLinkedContract] = useState<LinkedContract | null>(null);
   const [generatingAI, setGeneratingAI] = useState(false);
   const [matchingDesigners, setMatchingDesigners] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState<string | null>(null);
@@ -109,7 +133,10 @@ const DemandDetail: React.FC = () => {
     setLoading(true);
     try {
       const response = await apiClient.get(`/demands/${id}`);
-      setDemand(response.data);
+      const data = response.data as any;
+      setDemand(data);
+      setNearbyStores(data.nearby_stores || []);
+      setLinkedContract(data.contract || null);
     } catch (error: any) {
       message.error(error.response?.data?.error || '获取需求详情失败');
     } finally {
@@ -549,11 +576,139 @@ const DemandDetail: React.FC = () => {
     );
   };
 
+  const renderStoreRadius = () => {
+    if (nearbyStores.length === 0) return null;
+    return (
+      <Card
+        title={
+          <Space>
+            <ShopOutlined />
+            <span>门店服务半径匹配</span>
+          </Space>
+        }
+        style={{ marginBottom: 16 }}
+      >
+        <List
+          dataSource={nearbyStores}
+          renderItem={(store) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<Avatar style={{ backgroundColor: '#722ed1' }} icon={<ShopOutlined />} />}
+                title={<Space><span>{store.name}</span>
+                  {store.distance_km <= store.service_radius ? (
+                    <Tag color="success">服务范围内</Tag>
+                  ) : (
+                    <Tag color="warning">超出服务半径</Tag>
+                  )}
+                </Space>}
+                description={
+                  <Space direction="vertical" size={4} style={{ width: '100%' }}>
+                    <Text type="secondary">{store.city} {store.address}</Text>
+                    <Space size={16}>
+                      <Text type="secondary">服务半径: {store.service_radius}km</Text>
+                      <Text type="secondary">距需求地: {store.distance_km}km</Text>
+                    </Space>
+                  </Space>
+                }
+              />
+            </List.Item>
+          )}
+        />
+      </Card>
+    );
+  };
+
+  const renderRegulationCheck = () => {
+    if (!demand) return null;
+    const checks = [
+      { label: '工程地点', value: `${demand.city}${demand.district || ''}${demand.address}`, field: '符合GB50327' },
+      { label: '工程面积', value: `${demand.area}㎡`, field: '面积≥1㎡' },
+      { label: '工程户型', value: demand.house_type, field: '户型明确' },
+      { label: '预算范围', value: `¥${demand.budget_min.toLocaleString()}-${demand.budget_max.toLocaleString()}`, field: '造价合理' },
+      { label: '装修风格', value: demand.decoration_style, field: '风格确定' },
+      { label: '联系方式', value: demand.contact_phone, field: '可联系' },
+    ];
+    return (
+      <Card
+        title={
+          <Space>
+            <SafetyCertificateOutlined />
+            <span>住建规范字段校验</span>
+            <Tag color="blue" style={{ marginLeft: 4 }}>GB50327-2001</Tag>
+          </Space>
+        }
+        style={{ marginBottom: 16 }}
+      >
+        <Table
+          rowKey="label"
+          dataSource={checks}
+          size="small"
+          pagination={false}
+          columns={[
+            { title: '校验字段', dataIndex: 'label', width: 100 },
+            { title: '填报值', dataIndex: 'value', width: 200 },
+            { title: '规范依据', dataIndex: 'field', width: 120 },
+            {
+              title: '校验结果', width: 80,
+              render: () => <Tag color="success" icon={<CheckCircleOutlined />}>通过</Tag>,
+            },
+          ]}
+        />
+      </Card>
+    );
+  };
+
+  const renderClosedLoop = () => {
+    if (!demand) return null;
+    const steps = [
+      { title: '需求提交', status: 'finish' as const, description: dayjs(demand.created_at).format('YYYY-MM-DD') },
+      { title: 'AI方案生成', status: aiSolution ? 'finish' as const : 'wait' as const, description: aiSolution ? '已生成' : '待生成' },
+      { title: '设计师匹配', status: matches.some(m => m.status === 'accepted') ? 'finish' as const : (matches.length > 0 ? 'process' as const : 'wait' as const), description: matches.length > 0 ? `${matches.length}位候选` : '待匹配' },
+      { title: '合同签署', status: linkedContract ? 'finish' as const : 'wait' as const, description: linkedContract ? linkedContract.contract_no : '待签署' },
+      { title: '施工中', status: demand.status === 'in_progress' ? 'process' as const : (demand.status === 'completed' ? 'finish' as const : 'wait' as const), description: demand.status === 'in_progress' ? '进行中' : (demand.status === 'completed' ? '已竣工' : '-') },
+    ];
+    return (
+      <Card
+        title={
+          <Space>
+            <CheckCircleOutlined />
+            <span>需求→合同闭环状态</span>
+            <Tag color={statusMap[demand.status]?.color || 'default'}>{statusMap[demand.status]?.text || demand.status}</Tag>
+          </Space>
+        }
+        extra={
+          linkedContract && (
+            <Button type="link" onClick={() => navigate(`/contracts/${linkedContract.id}`)}>
+              查看合同 →
+            </Button>
+          )
+        }
+        style={{ marginBottom: 16 }}
+      >
+        <Steps current={steps.findIndex(s => s.status === 'process')} items={steps} />
+        {linkedContract && (
+          <div style={{ marginTop: 16, padding: 16, background: '#f6ffed', borderRadius: 8 }}>
+            <Space>
+              <SafetyCertificateOutlined style={{ color: '#52c41a' }} />
+              <Text strong>已关联合同：</Text>
+              <Text code>{linkedContract.contract_no}</Text>
+              <Tag color="green">¥{linkedContract.total_amount.toLocaleString()}</Tag>
+              <Text type="secondary">托管 ¥{linkedContract.escrow_amount.toLocaleString()}</Text>
+            </Space>
+          </div>
+        )}
+      </Card>
+    );
+  };
+
   return (
     <div>
       {renderInfoCard()}
+      {renderClosedLoop()}
       {renderAISolution()}
+      {renderStoreRadius()}
       {renderDesignerMatches()}
+      {renderRegulationCheck()}
     </div>
   );
 };

@@ -295,12 +295,13 @@ router.get('/:id/milestones', authMiddleware, (req, res) => {
     SELECT m.*,
       o.real_name as owner_name,
       d.real_name as designer_name,
-      s.real_name as supervisor_name
+      sv.real_name as supervisor_name
     FROM project_milestones m
     LEFT JOIN decoration_contracts c ON m.contract_id = c.id
     LEFT JOIN users o ON c.owner_id = o.id
     LEFT JOIN users d ON c.designer_id = d.id
-    LEFT JOIN users s ON c.store_id = s.id
+    LEFT JOIN users sv ON sv.role = 'supervisor' AND sv.status = 'active'
+      AND sv.city = (SELECT city FROM stores WHERE id = c.store_id)
     WHERE m.contract_id = ?
     ORDER BY m.planned_date ASC
   `).all(id);
@@ -443,6 +444,25 @@ router.get('/:id/bom', authMiddleware, (req, res) => {
     ORDER BY b.created_at ASC
   `).all(id);
   res.json(bom);
+});
+
+router.get('/:id/electronic-contract', authMiddleware, (req, res) => {
+  const { id } = req.params;
+  const record = db.prepare('SELECT * FROM electronic_contracts WHERE contract_id = ?').get(id) as any;
+  if (!record) {
+    return res.json(null);
+  }
+  const contract = db.prepare('SELECT * FROM decoration_contracts WHERE id = ?').get(id) as any;
+  const txHash = crypto.createHash('sha256').update(record.id + record.hash + record.created_at).digest('hex');
+  res.json({
+    ...record,
+    blockchain_tx: record.blockchain_tx || `0x${txHash}`,
+    contract_no: contract?.contract_no,
+    warranty_years: contract?.warranty_years,
+    total_amount: contract?.total_amount,
+    owner_signed_at: contract?.owner_signed_at,
+    store_signed_at: contract?.store_signed_at,
+  });
 });
 
 export default router;

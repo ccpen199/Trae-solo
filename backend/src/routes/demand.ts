@@ -97,7 +97,29 @@ router.get('/:id', authMiddleware, (req: AuthRequest, res) => {
     return res.status(403).json({ error: '无权查看此需求' });
   }
 
-  res.json(demand);
+  const result: any = { ...demand };
+
+  const contract = db.prepare('SELECT id, contract_no, status, total_amount, escrow_amount FROM decoration_contracts WHERE demand_id = ?').get(id) as any;
+  if (contract) {
+    result.contract = contract;
+  }
+
+  const storeRows = db.prepare(`
+    SELECT s.id, s.name, s.city, s.address, s.service_radius, s.longitude, s.latitude,
+      ROUND(6371 * ACOS(
+        COS(RADIANS(s.latitude)) * COS(RADIANS(39.9042)) * COS(RADIANS(s.longitude - 116.4074))
+        + SIN(RADIANS(s.latitude)) * SIN(RADIANS(39.9042))
+      ), 1) as distance_km
+    FROM stores s
+    WHERE s.city = ? AND s.status = 'active'
+    ORDER BY distance_km ASC
+    LIMIT 5
+  `).all(demand.city) as any[];
+  if (storeRows.length > 0) {
+    result.nearby_stores = storeRows;
+  }
+
+  res.json(result);
 });
 
 router.post('/:id/ai-solution', authMiddleware, roleMiddleware('owner', 'store_manager', 'designer'), (req: AuthRequest, res) => {

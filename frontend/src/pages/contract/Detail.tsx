@@ -184,6 +184,12 @@ const ContractDetail: React.FC = () => {
       setMilestones(milestonesRes.data);
       setPayments(paymentsRes.data);
       setBomList(bomRes.data);
+      if (contractRes.data?.status === 'signed') {
+        try {
+          const eRes = await apiClient.get(`/contracts/${id}/electronic-contract`);
+          setElectronicContract(eRes.data);
+        } catch {}
+      }
     } catch (error: any) {
       message.error(error.response?.data?.error || '获取合同详情失败');
     } finally {
@@ -633,7 +639,7 @@ const ContractDetail: React.FC = () => {
             <Timeline
               mode="left"
               items={milestones.map((milestone, index) => {
-                const statusInfo = milestoneStatusMap[milestone.status];
+                const statusInfo = milestoneStatusMap[milestone.status] || { text: milestone.status, color: 'default' };
                 const isLast = index === milestones.length - 1;
                 const allConfirmed = milestone.owner_confirmed && milestone.designer_confirmed && milestone.supervisor_confirmed;
 
@@ -781,7 +787,12 @@ const ContractDetail: React.FC = () => {
                 <Descriptions column={1} size="small" bordered>
                   <Descriptions.Item label="存证哈希">
                     <code style={{ fontSize: 11, wordBreak: 'break-all' }}>
-                      {electronicContract?.hash || '0x' + '0'.repeat(64)}
+                      {electronicContract?.hash || '待生成'}
+                    </code>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="区块链交易">
+                    <code style={{ fontSize: 11, wordBreak: 'break-all' }}>
+                      {electronicContract?.blockchain_tx || '待上链'}
                     </code>
                   </Descriptions.Item>
                   <Descriptions.Item label="存储路径">
@@ -798,6 +809,9 @@ const ContractDetail: React.FC = () => {
                     {electronicContract?.expire_date
                       ? dayjs(electronicContract.expire_date).format('YYYY-MM-DD')
                       : dayjs(contract.created_at).add(10, 'year').format('YYYY-MM-DD')}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="质保年限">
+                    {contract.warranty_years || 10} 年（{contract.warranty_years || 10}年电子存证）
                   </Descriptions.Item>
                 </Descriptions>
                 <Button type="link" block style={{ marginTop: 12 }}>
