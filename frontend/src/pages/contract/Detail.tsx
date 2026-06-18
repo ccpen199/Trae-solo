@@ -138,6 +138,7 @@ const milestoneStatusMap: Record<string, { text: string; color: string }> = {
 const paymentStatusMap: Record<string, { text: string; color: string }> = {
   pending: { text: '待支付', color: 'default' },
   processing: { text: '处理中', color: 'warning' },
+  paid: { text: '已支付', color: 'success' },
   completed: { text: '已完成', color: 'success' },
   failed: { text: '支付失败', color: 'error' },
 };
@@ -403,7 +404,7 @@ const ContractDetail: React.FC = () => {
       key: 'status',
       width: 100,
       render: (status: string) => {
-        const info = materialStatusMap[status];
+        const info = materialStatusMap[status] || { text: status, color: 'default' };
         return <Tag color={info.color}>{info.text}</Tag>;
       },
     },
@@ -445,7 +446,7 @@ const ContractDetail: React.FC = () => {
       key: 'status',
       width: 100,
       render: (status: string) => {
-        const info = paymentStatusMap[status];
+        const info = paymentStatusMap[status] || { text: status, color: 'default' };
         return <Tag color={info.color}>{info.text}</Tag>;
       },
     },
@@ -481,8 +482,8 @@ const ContractDetail: React.FC = () => {
             </Button>
             <Title level={4} style={{ margin: 0 }}>
               合同详情
-              <Tag color={statusMap[contract.status].color} style={{ marginLeft: 12 }}>
-                {statusMap[contract.status].text}
+              <Tag color={statusMap[contract.status]?.color || 'default'} style={{ marginLeft: 12 }}>
+                {statusMap[contract.status]?.text || contract.status}
               </Tag>
             </Title>
           </Space>
@@ -669,7 +670,7 @@ const ContractDetail: React.FC = () => {
                                    milestone.payment_status === 'processing' ? 'warning' : 'default'}
                             icon={milestone.payment_status === 'paid' ? <CheckCircleOutlined /> : <PayCircleOutlined />}
                           >
-                            {paymentStatusMap[milestone.payment_status].text}
+                            {paymentStatusMap[milestone.payment_status]?.text || milestone.payment_status}
                           </Tag>
                         </Space>
                       }
