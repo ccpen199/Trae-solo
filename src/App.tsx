@@ -1,29 +1,33 @@
-import { Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout'
-import Dashboard from './pages/Dashboard'
-import KnowledgeGraph from './pages/KnowledgeGraph'
-import ResumeParser from './pages/ResumeParser'
-import JobModeling from './pages/JobModeling'
-import MatchingEngine from './pages/MatchingEngine'
-import HRAnalytics from './pages/HRAnalytics'
-import { PositionStoreProvider } from './store/PositionStore'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Layout from '@/components/Layout'
+import Home from '@/pages/Home'
+import TalentCenter from '@/pages/TalentCenter'
+import TalentDetail from '@/pages/TalentDetail'
+import JobCenter from '@/pages/JobCenter'
+import JobCreate from '@/pages/JobCreate'
+import JobDetail from '@/pages/JobDetail'
+import MatchCenter from '@/pages/MatchCenter'
+import MatchDetail from '@/pages/MatchDetail'
+import Analytics from '@/pages/Analytics'
+import GraphPage from '@/pages/GraphPage'
 
 export default function App() {
   return (
-    <PositionStoreProvider>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/search" element={<KnowledgeGraph />} />
-          <Route path="/discover" element={<KnowledgeGraph />} />
-          <Route path="/knowledge-graph" element={<KnowledgeGraph />} />
-          <Route path="/resume-parser" element={<ResumeParser />} />
-          <Route path="/job-modeling" element={<JobModeling />} />
-          <Route path="/matching" element={<MatchingEngine />} />
-          <Route path="/analytics" element={<HRAnalytics />} />
-          <Route path="/admin" element={<HRAnalytics />} />
-        </Route>
-      </Routes>
-    </PositionStoreProvider>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/talent" element={<TalentCenter />} />
+          <Route path="/talent/:id" element={<TalentDetail />} />
+          <Route path="/jobs" element={<JobCenter />} />
+          <Route path="/jobs/create" element={<JobCreate />} />
+          <Route path="/jobs/:id" element={<JobDetail />} />
+          <Route path="/match" element={<MatchCenter />} />
+          <Route path="/match/:jobId/:talentId" element={<MatchDetail />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/graph" element={<GraphPage />} />
+        </Routes>
+      </Layout>
+    </Router>
   )
 }
