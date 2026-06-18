@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, Link } from 'react-router-dom';
+import { Shield } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
-import { getRoleRedirectPath } from '@/mock/auth';
+import { getRoleRedirectPath, getRoleLabel } from '@/mock/auth';
 
 import ResidentLayout from '@/components/layout/ResidentLayout';
 import PropertyLayout from '@/components/layout/PropertyLayout';
@@ -21,6 +22,7 @@ import TasksPage from '@/pages/resident/TasksPage';
 import PartnerPage from '@/pages/resident/PartnerPage';
 import PropertyPage from '@/pages/resident/PropertyPage';
 import OrdersPage from '@/pages/resident/OrdersPage';
+import ProfilePage from '@/pages/resident/ProfilePage';
 
 import DashboardPage from '@/pages/admin/DashboardPage';
 import CommunityHealthPage from '@/pages/admin/CommunityHealthPage';
@@ -70,9 +72,11 @@ function LoginRedirect() {
 function ProtectedRoute({
   children,
   requiredRoles,
+  redirectOnRoleMismatch = true,
 }: {
   children: React.ReactNode;
   requiredRoles?: string[];
+  redirectOnRoleMismatch?: boolean;
 }) {
   const { isAuthenticated, user, isHydrated, isLoading } = useAuthStore();
   const location = useLocation();
@@ -86,8 +90,30 @@ function ProtectedRoute({
   }
 
   if (requiredRoles && user && !requiredRoles.includes(user.role)) {
-    const redirectPath = getRoleRedirectPath(user.role);
-    return <Navigate to={redirectPath} replace />;
+    if (redirectOnRoleMismatch) {
+      const redirectPath = getRoleRedirectPath(user.role);
+      return <Navigate to={redirectPath} replace />;
+    }
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
+          <div className="w-16 h-16 mx-auto bg-amber-100 rounded-full flex items-center justify-center mb-4">
+            <Shield className="w-8 h-8 text-amber-600" />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">角色权限不足</h2>
+          <p className="text-sm text-gray-500 mb-6">
+            当前登录角色「{getRoleLabel(user?.role || '')}」无权访问该页面，
+            已为您跳转至对应工作台。
+          </p>
+          <Link
+            to={getRoleRedirectPath(user?.role || 'resident')}
+            className="btn-primary inline-flex"
+          >
+            进入我的工作台
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return <>{children}</>;
@@ -102,6 +128,19 @@ function PropertyPlaceholder({ title }: { title: string }) {
       </div>
     </div>
   );
+}
+
+function ResidentHomeDispatch() {
+  const { user, isHydrated } = useAuthStore();
+  if (!isHydrated) return <LoadingScreen text="正在加载工作台..." />;
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role === 'platform_admin' || user.role === 'tenant_admin') {
+    return <Navigate to="/admin" replace />;
+  }
+  if (user.role === 'property_admin' || user.role === 'property_staff') {
+    return <Navigate to="/property/dashboard" replace />;
+  }
+  return <HomePage />;
 }
 
 function AppRoutes() {
@@ -120,7 +159,7 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<HomePage />} />
+        <Route index element={<ResidentHomeDispatch />} />
         <Route path="topics" element={<TopicsPage />} />
         <Route path="topics/create" element={<CreateTopicPage />} />
         <Route path="topics/:id" element={<TopicDetailPage />} />
@@ -133,6 +172,7 @@ function AppRoutes() {
         <Route path="partner" element={<PartnerPage />} />
         <Route path="property" element={<PropertyPage />} />
         <Route path="orders" element={<OrdersPage />} />
+        <Route path="profile" element={<ProfilePage />} />
       </Route>
 
       <Route

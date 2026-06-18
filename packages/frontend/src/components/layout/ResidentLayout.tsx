@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, Link } from 'react-router-dom';
 import {
   Home,
   MessageSquare,
@@ -214,14 +214,22 @@ export default function ResidentLayout() {
                       {getRoleLabel(user?.role || 'resident')}
                     </span>
                   </div>
-                  <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                  <Link
+                    to="/profile"
+                    onClick={() => setUserMenuOpen(false)}
+                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                  >
                     <User className="w-4 h-4" />
                     个人资料
-                  </button>
-                  <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                  </Link>
+                  <Link
+                    to="/profile"
+                    onClick={() => setUserMenuOpen(false)}
+                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                  >
                     <Settings className="w-4 h-4" />
                     账号设置
-                  </button>
+                  </Link>
                   {isAdmin && (
                     <button
                       onClick={() => {
