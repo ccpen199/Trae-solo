@@ -1,42 +1,29 @@
 {
-  "name": "may-89127",
+  "name": "zz-government-hub",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "description": "郑州市掌上办事中枢平台 - 城市级政务服务一体化平台",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "check": "tsc -b --noEmit"
+    "dev:miniapp": "cd miniapp && npm run dev:weapp",
+    "dev:admin": "cd admin && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:all": "concurrently \"npm:dev:miniapp\" \"npm:dev:admin\" \"npm:dev:backend\"",
+    "build:miniapp": "cd miniapp && npm run build:weapp",
+    "build:admin": "cd admin && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "lint": "eslint \"**/*.{ts,tsx,js,vue}\" --fix"
   },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.511.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^7.3.0",
-    "tailwind-merge": "^3.0.2",
-    "zustand": "^5.0.3"
-  },
+  "keywords": [
+    "政务服务",
+    "郑州",
+    "小程序",
+    "数字画像",
+    "知识图谱",
+    "服务编排"
+  ],
+  "author": "Zhengzhou Government Hub Team",
+  "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.25.0",
-    "@types/node": "^22.15.30",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.4.1",
-    "autoprefixer": "^10.4.21",
-    "babel-plugin-react-dev-locator": "^1.0.0",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^3.4.17",
-    "eslint": "^9.25.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5",
-    "vite-plugin-trae-solo-badge": "^1.0.0",
-    "vite-tsconfig-paths": "^5.1.4"
+    "concurrently": "^8.2.2"
   }
 }

@@ -1,0 +1,453 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  padding: 0 $page-padding;
+  padding-top: $spacing-md;
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+}
+
+.categoryTabs {
+  display: flex;
+  flex-direction: row;
+  background: $color-bg-card;
+  border-radius: $radius-button;
+  padding: 6rpx;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.tabItem {
+  flex: 1;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  transition: all $transition-base;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.active {
+    background: $color-primary-gradient;
+    color: $color-text-white;
+    font-weight: $font-weight-medium;
+    box-shadow: 0 4rpx 12rpx rgba($color-primary, 0.3);
+  }
+
+  &:active:not(.active) {
+    background: $color-bg-hover;
+  }
+}
+
+.categoryGrid {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-md $spacing-xs;
+}
+
+.categoryItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm $spacing-xs;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+  position: relative;
+
+  &:active {
+    transform: scale(0.95);
+    background: $color-bg-hover;
+  }
+
+  &.selected {
+    background: rgba($color-primary, 0.08);
+  }
+}
+
+.categoryIcon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-bottom: $spacing-xs;
+}
+
+.categoryName {
+  font-size: 24rpx;
+  color: $color-text-primary;
+  text-align: center;
+  @include text-ellipsis;
+  max-width: 100%;
+  line-height: 1.3;
+}
+
+.categoryCount {
+  font-size: 20rpx;
+  color: $color-text-tertiary;
+  margin-top: 2rpx;
+}
+
+.recentSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.titleIcon {
+  margin-right: $spacing-xs;
+  font-size: $font-size-lg;
+}
+
+.moreLink {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-weight: $font-weight-normal;
+}
+
+.recentScroll {
+  margin: 0 #{-$spacing-lg};
+  padding: 0 $spacing-lg;
+  @include scroll-x-container;
+}
+
+.recentItem {
+  @include scroll-x-item(200rpx);
+  margin-right: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-sm;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all $transition-base;
+  border: 2rpx solid transparent;
+
+  &:active {
+    border-color: $color-primary;
+    transform: scale(0.97);
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.recentIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin-bottom: $spacing-xs;
+}
+
+.recentName {
+  font-size: 24rpx;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  @include text-ellipsis;
+  line-height: 1.3;
+  margin-bottom: 4rpx;
+}
+
+.recentDept {
+  font-size: 20rpx;
+  color: $color-text-tertiary;
+  @include text-ellipsis;
+}
+
+.hotRankSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.rankList {
+  display: flex;
+  flex-direction: column;
+}
+
+.rankItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-divider;
+  transition: background $transition-fast;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    background: $color-bg-hover;
+    margin: 0 #{-$spacing-lg};
+    padding-left: $spacing-lg;
+    padding-right: $spacing-lg;
+  }
+}
+
+.rankBadge {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+
+  &.rank1 {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #fff;
+  }
+  &.rank2 {
+    background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
+    color: #fff;
+  }
+  &.rank3 {
+    background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
+    color: #fff;
+  }
+}
+
+.rankInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rankIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.rankText {
+  flex: 1;
+  min-width: 0;
+}
+
+.rankName {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  @include text-ellipsis;
+  display: block;
+}
+
+.rankDept {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+  @include text-ellipsis;
+  display: block;
+}
+
+.hotValue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.hotNum {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-error;
+}
+
+.hotLabel {
+  font-size: 20rpx;
+  color: $color-text-tertiary;
+}
+
+.deptSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.deptScroll {
+  margin: 0 #{-$spacing-lg};
+  padding: 0 $spacing-lg;
+  @include scroll-x-container;
+}
+
+.deptChip {
+  @include scroll-x-item(auto);
+  padding: $spacing-xs $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-right: $spacing-sm;
+  white-space: nowrap;
+  border: 2rpx solid transparent;
+  transition: all $transition-base;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &.active {
+    background: $color-info-light;
+    color: $color-primary;
+    border-color: $color-primary;
+    font-weight: $font-weight-medium;
+  }
+
+  &:active:not(.active) {
+    background: $color-bg-hover;
+  }
+}
+
+.serviceListSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.listHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.listTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.listMeta {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  background: $color-bg-page;
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-button;
+}
+
+.serviceCards {
+  display: flex;
+  flex-direction: column;
+}
+
+.emptyTip {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-xl $spacing-lg;
+}
+
+.emptyIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-sm;
+}
+
+.chatFab {
+  position: fixed;
+  right: $spacing-lg;
+  bottom: calc(200rpx + env(safe-area-inset-bottom));
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: $radius-round;
+  background: linear-gradient(135deg, #722ED1 0%, #1E4FA5 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-float;
+  z-index: 999;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.chatFabIcon {
+  font-size: 40rpx;
+}
+
+.chatFabText {
+  font-size: 20rpx;
+  color: $color-text-white;
+  margin-top: 2rpx;
+}
+
+.chatFabBadge {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  min-width: 36rpx;
+  height: 36rpx;
+  padding: 0 8rpx;
+  border-radius: $radius-round;
+  background: $color-error;
+  color: $color-text-white;
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3rpx solid $color-bg-card;
+}

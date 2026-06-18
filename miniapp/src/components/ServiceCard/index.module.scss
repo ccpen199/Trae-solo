@@ -1,0 +1,256 @@
+@use '@/styles/variables.scss' as *;
+
+.horizontalCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.95;
+  }
+}
+
+.leftSection {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+}
+
+.iconBox {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.iconText {
+  font-size: 44rpx;
+}
+
+.infoSection {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nameRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: $spacing-xs;
+}
+
+.serviceName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+  flex: 1;
+}
+
+.hotBadge {
+  background: $color-error-light;
+  color: $color-error;
+  font-size: 20rpx;
+  padding: 2rpx $spacing-xs;
+  border-radius: $radius-xs;
+  margin-left: $spacing-xs;
+  flex-shrink: 0;
+}
+
+.serviceDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  @include text-ellipsis-multi(1);
+  margin-bottom: $spacing-sm;
+}
+
+.metaRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: $spacing-xs;
+}
+
+.deptText {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  margin-right: $spacing-sm;
+}
+
+.tagList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.tagItem {
+  font-size: 20rpx;
+  color: $color-primary;
+  background: $color-info-light;
+  padding: 2rpx $spacing-xs;
+  border-radius: $radius-xs;
+}
+
+.statsRow {
+  display: flex;
+  flex-direction: row;
+  gap: $spacing-md;
+}
+
+.statItem {
+  font-size: 20rpx;
+  color: $color-text-tertiary;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-left: $spacing-md;
+  flex-shrink: 0;
+}
+
+.favoriteBtn {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: $color-text-disabled;
+  border-radius: $radius-round;
+  background: $color-bg-hover;
+  @include button-reset;
+  background: $color-bg-hover;
+  border: none;
+
+  &.favoriteActive {
+    color: $color-warning;
+    background: $color-warning-light;
+  }
+}
+
+.handleBtn {
+  @include button-reset;
+  background: $color-primary-gradient;
+  color: $color-text-white;
+  font-size: $font-size-sm;
+  padding: 0 $spacing-lg;
+  height: 56rpx;
+  border-radius: $radius-button;
+  border: none;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.96);
+  }
+}
+
+.verticalCard {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.verticalIcon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: $radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  font-size: 36rpx;
+  flex-shrink: 0;
+}
+
+.verticalInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.verticalName {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  @include text-ellipsis;
+  display: block;
+}
+
+.verticalDept {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  @include text-ellipsis;
+  display: block;
+  margin-top: 4rpx;
+}
+
+.favoriteIcon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: $color-warning;
+}
+
+.compactCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm $spacing-xs;
+  border-radius: $radius-md;
+  background: $color-bg-card;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.95);
+    background: $color-bg-hover;
+  }
+}
+
+.compactIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $spacing-xs;
+  font-size: 36rpx;
+}
+
+.compactName {
+  font-size: 24rpx;
+  color: $color-text-primary;
+  text-align: center;
+  @include text-ellipsis;
+  max-width: 100%;
+}

@@ -1,0 +1,117 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.empty {
+  padding: $spacing-xl;
+  text-align: center;
+}
+
+.emptyText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.categoryGroup {
+  margin-bottom: $spacing-md;
+
+  &:last-child {
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.categoryHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-sm;
+}
+
+.categoryLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+}
+
+.categoryCount {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  background: $color-bg-hover;
+  padding: 2rpx $spacing-xs;
+  border-radius: $radius-round;
+}
+
+.tagRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.tagItem {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-round;
+  transition: all $transition-fast;
+  font-weight: $font-weight-medium;
+
+  &:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+
+  &.tag-demographic {
+    background: $color-tag-demographic;
+    color: $color-primary;
+  }
+  &.tag-behavior {
+    background: $color-tag-behavior;
+    color: $color-success;
+  }
+  &.tag-preference {
+    background: $color-tag-preference;
+    color: $color-warning;
+  }
+  &.tag-life-event {
+    background: $color-tag-life-event;
+    color: $color-error;
+  }
+}
+
+.tagHot {
+  margin-left: 4rpx;
+  font-size: 20rpx;
+}
+
+.expandBtn {
+  margin-top: $spacing-sm;
+  padding: $spacing-sm;
+  text-align: center;
+  border-radius: $radius-md;
+  background: $color-bg-hover;
+}
+
+.expandText {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.footerNote {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.footerText {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  line-height: 1.5;
+}

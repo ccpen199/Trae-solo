@@ -1,0 +1,131 @@
+@use '@/styles/compat.scss';
+@use '@/styles/variables.scss' as *;
+
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  font-size: $font-size-md;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background: $color-bg-page-gradient;
+  min-height: 100vh;
+}
+
+view, text, button, input {
+  box-sizing: border-box;
+}
+
+.page-container {
+  padding: 0 $page-padding;
+  padding-bottom: calc(120rpx + env(safe-area-inset-bottom));
+  min-height: 100vh;
+}
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.section-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .more-link {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    color: $color-primary;
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  &-demographic {
+    background: $color-tag-demographic;
+    color: $color-primary;
+  }
+  &-behavior {
+    background: $color-tag-behavior;
+    color: $color-success;
+  }
+  &-preference {
+    background: $color-tag-preference;
+    color: $color-warning;
+  }
+  &-life-event {
+    background: $color-tag-life-event;
+    color: $color-error;
+  }
+}
+
+.gradient-bg {
+  background: $color-primary-gradient;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-ellipsis {
+  @include text-ellipsis;
+}
+
+.a11y-mode {
+  &-high-contrast {
+    page {
+      background: #FFFFFF !important;
+      color: #000000 !important;
+    }
+    .card {
+      border: 4rpx solid #000000 !important;
+      box-shadow: none !important;
+    }
+  }
+
+  &-large-font {
+    page {
+      font-size: 36rpx !important;
+    }
+    .section-title {
+      font-size: 44rpx !important;
+    }
+  }
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.loading-indicator {
+  @include flex-center;
+  padding: $spacing-xl;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}

@@ -1,0 +1,71 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  padding: 0 $page-padding;
+  padding-top: $spacing-xl;
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholderCard {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xl * 2;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.placeholderIcon {
+  font-size: 120rpx;
+  margin-bottom: $spacing-xl;
+}
+
+.placeholderTitle {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.placeholderDesc {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  margin-bottom: $spacing-xl;
+}
+
+.placeholderFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  width: 100%;
+}
+
+.featureItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+}
+
+.featureIcon {
+  font-size: 36rpx;
+  margin-right: $spacing-md;
+}
+
+.featureText {
+  flex: 1;
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  text-align: left;
+}

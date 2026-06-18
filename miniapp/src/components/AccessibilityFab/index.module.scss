@@ -1,0 +1,180 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  position: fixed;
+  right: $spacing-lg;
+  bottom: calc(180rpx + env(safe-area-inset-bottom));
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.fabButton {
+  @include button-reset;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: $radius-round;
+  background: $color-primary-gradient;
+  color: $color-text-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-float;
+  border: none;
+  position: relative;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.fabExpanded {
+    background: $color-accent;
+    transform: rotate(45deg);
+  }
+
+  &.fabActive {
+    box-shadow: 0 0 0 6rpx rgba($color-accent, 0.3), $shadow-float;
+  }
+}
+
+.fabIcon {
+  font-size: 48rpx;
+}
+
+.statusDot {
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: $radius-round;
+  background: $color-success;
+  border: 3rpx solid $color-bg-card;
+}
+
+.menuPanel {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-popup;
+  width: 560rpx;
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menuHeader {
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-sm;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.menuTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+  margin-bottom: $spacing-xs;
+  transition: background $transition-fast;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+
+  &.active {
+    background: $color-info-light;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.menuIcon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: $radius-md;
+  background: $color-info-light;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: $font-weight-semibold;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.menuContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.menuItemTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  display: block;
+}
+
+.menuItemDesc {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+  display: block;
+}
+
+.switchBtn {
+  width: 80rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  background: $color-border;
+  position: relative;
+  transition: background $transition-base;
+  flex-shrink: 0;
+
+  &.switchOn {
+    background: $color-success;
+  }
+}
+
+.switchDot {
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: $radius-round;
+  background: $color-bg-card;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.15);
+  transition: all $transition-base;
+
+  .switchOn & {
+    left: 36rpx;
+  }
+}
+
+.menuArrow {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+}

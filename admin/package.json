@@ -1,0 +1,42 @@
+{
+  "name": "zz-government-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "郑州市掌上办事中枢 - 管理后台",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix"
+  },
+  "dependencies": {
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "pinia": "^2.1.7",
+    "element-plus": "^2.6.1",
+    "@element-plus/icons-vue": "^2.3.1",
+    "echarts": "^5.5.0",
+    "vue-echarts": "^6.7.3",
+    "axios": "^1.6.7",
+    "dayjs": "^1.11.10",
+    "pinia-plugin-persistedstate": "^3.2.1",
+    "nprogress": "^0.2.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@types/node": "^20.11.30",
+    "@types/nprogress": "^0.2.3",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6",
+    "vue-tsc": "^2.0.7",
+    "sass": "^1.72.0",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.23.0"
+  }
+}

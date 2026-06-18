@@ -1,0 +1,72 @@
+// ============================================
+// 郑州市掌上办事中枢 - 政务主题配色变量
+// ============================================
+
+// 品牌主题色：政务深蓝
+$color-primary: #1E4FA5;
+$color-primary-light: #3B7DD8;
+$color-primary-dark: #0F3A85;
+$color-primary-gradient: linear-gradient(135deg, #1E4FA5 0%, #3B7DD8 100%);
+
+// 强调色：党建红
+$color-accent: #C8102E;
+$color-accent-light: #E8384F;
+
+// 功能色
+$color-success: #00A870;
+$color-success-light: #E6F7EF;
+$color-warning: #FF8A00;
+$color-warning-light: #FFF4E6;
+$color-error: #F53F3F;
+$color-error-light: #FFECE8;
+$color-info: #1E4FA5;
+$color-info-light: #E8F0FC;
+
+// 背景色
+$color-bg-page: #F0F4FA;
+$color-bg-page-gradient: linear-gradient(180deg, #E3ECFA 0%, #F0F4FA 30%, #F0F4FA 100%);
+$color-bg-card: #ffffff;
+$color-bg-hover: #F5F8FC;
+$color-bg-disabled: #F2F3F5;
+
+// 文本色
+$color-text-primary: #1A1A1A;
+$color-text-secondary: #4A5568;
+$color-text-tertiary: #86909C;
+$color-text-disabled: #C9CDD4;
+$color-text-white: #ffffff;
+$color-text-primary-dark: #0D1B3D;
+
+// 边框色
+$color-border: #E2E8F0;
+$color-divider: #EDF2F7;
+$color-border-primary: #A6C4F0;
+
+// 标签色
+$color-tag-demographic: #E8F0FC;
+$color-tag-behavior: #E6F7EF;
+$color-tag-preference: #FFF4E6;
+$color-tag-life-event: #FFECE8;
+
+// 分类色
+$category-colors: (
+  housing: #1E4FA5,
+  'social-security': #00A870,
+  education: #722ED1,
+  medical: #F53F3F,
+  household: #FF8A00,
+  tax: #EB2F96,
+  traffic: #13C2C2,
+  business: #2F54EB,
+  'civil-affairs': #C8102E,
+  environment: #A0D911,
+  culture: #FAAD14,
+  other: #86909C
+);
+
+// 无障碍模式 - 高对比度
+$a11y-color-primary: #002B80;
+$a11y-color-text: #000000;
+$a11y-color-bg: #FFFFFF;
+$a11y-color-border: #000000;
+$a11y-focus-ring: 4rpx solid #0052D9;

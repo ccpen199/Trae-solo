@@ -1,0 +1,169 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.header {
+  margin-bottom: $spacing-md;
+}
+
+.titleRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.badge {
+  background: $color-error-light;
+  color: $color-error;
+  padding: 2rpx $spacing-sm;
+  border-radius: $radius-round;
+  font-size: $font-size-xs;
+  margin-left: $spacing-sm;
+}
+
+.reminderList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.reminderItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+  border-left: 6rpx solid transparent;
+  transition: all $transition-base;
+  background: $color-bg-page;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.99);
+  }
+
+  &.priority-urgent {
+    border-left-color: $color-error;
+    background: linear-gradient(90deg, #FFECE8 0%, #FFFFFF 100%);
+  }
+  &.priority-high {
+    border-left-color: $color-warning;
+    background: linear-gradient(90deg, #FFF4E6 0%, #FFFFFF 100%);
+  }
+  &.priority-normal {
+    border-left-color: $color-primary;
+    background: linear-gradient(90deg, #E8F0FC 0%, #FFFFFF 100%);
+  }
+}
+
+.reminderLeft {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  min-width: 0;
+}
+
+.priorityIndicator {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+  font-size: 28rpx;
+}
+
+.reminderContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.reminderTitleRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: $spacing-xs;
+}
+
+.reminderTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+  flex: 1;
+}
+
+.priorityLabel {
+  padding: 2rpx $spacing-xs;
+  border-radius: $radius-xs;
+  font-size: 20rpx;
+  margin-left: $spacing-xs;
+  flex-shrink: 0;
+}
+
+.reminderContentText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  @include text-ellipsis-multi(2);
+  display: block;
+  line-height: 1.4;
+  margin-bottom: $spacing-xs;
+}
+
+.deadlineText {
+  font-size: 22rpx;
+  color: $color-warning;
+}
+
+.reminderActions {
+  margin-left: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.dismissBtn {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-button;
+  background: $color-bg-hover;
+  color: $color-text-tertiary;
+  font-size: 22rpx;
+
+  &:active {
+    background: $color-border;
+  }
+}
+
+.emptyCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-xl $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emptyIcon {
+  font-size: 72rpx;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
