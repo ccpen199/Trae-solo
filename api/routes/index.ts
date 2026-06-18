@@ -1,9 +1,9 @@
 import type { Express } from 'express'
-import memberRouter from './member.js'
-import merchantRouter from './merchant.js'
-import productsRouter from './products.js'
-import dashboardRouter from './dashboard.js'
-import citiesRouter from './cities.js'
+import memberRouter from './member'
+import merchantRouter from './merchant'
+import productsRouter from './products'
+import dashboardRouter from './dashboard'
+import citiesRouter from './cities'
 
 export function registerRoutes(app: Express) {
   app.use('/api/member', memberRouter)

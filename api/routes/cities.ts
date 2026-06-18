@@ -1,10 +1,11 @@
 import { Router } from 'express'
-import { CITIES } from '../../shared/data.js'
+import db from '../db'
 
 const router = Router()
 
 router.get('/', (_req, res) => {
-  res.json(CITIES)
+  const rows = db.prepare('SELECT code, name, memberCount, merchantCount FROM cities ORDER BY memberCount DESC').all()
+  res.json(rows)
 })
 
 export default router

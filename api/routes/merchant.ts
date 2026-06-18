@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { mockMerchants, mockAuditRecords, mockSettlementConfigs } from '../../shared/data.js'
+import db, { parseMerchants } from '../db'
 
 const router = Router()
 
@@ -13,34 +13,41 @@ const rules = [
 ]
 
 router.get('/list', (_req, res) => {
-  res.json(mockMerchants)
+  const rows = db.prepare('SELECT * FROM merchants ORDER BY name').all()
+  res.json(parseMerchants(rows as any))
 })
 
 router.get('/audit', (_req, res) => {
-  const merchants = mockMerchants.filter(m => m.auditStatus !== 'active' && m.auditStatus !== 'rejected')
-  res.json(merchants)
+  const rows = db.prepare(`
+    SELECT * FROM merchants
+    WHERE auditStatus NOT IN ('active','rejected')
+    ORDER BY auditStatus, name
+  `).all()
+  res.json(parseMerchants(rows as any))
 })
 
 router.patch('/audit/:id', (req, res) => {
   const { id } = req.params
-  const { action, note } = req.body as { action: 'approve' | 'reject'; note?: string }
-  const merchant = mockMerchants.find(m => m.id === id)
-  if (!merchant) {
-    res.status(404).json({ error: 'Merchant not found' })
-    return
-  }
+  const { action } = req.body as { action: 'approve' | 'reject'; note?: string }
+  const row = db.prepare('SELECT auditStatus FROM merchants WHERE id = ?').get(id) as { auditStatus: string } | undefined
+  if (!row) { res.status(404).json({ error: 'Merchant not found' }); return }
+  let nextStatus = row.auditStatus
   if (action === 'approve') {
-    if (merchant.auditStatus === 'pending_ocr') merchant.auditStatus = 'pending_review'
-    else if (merchant.auditStatus === 'pending_review') merchant.auditStatus = 'pending_deposit'
-    else if (merchant.auditStatus === 'pending_deposit') merchant.auditStatus = 'active'
+    if (row.auditStatus === 'pending_ocr') nextStatus = 'pending_review'
+    else if (row.auditStatus === 'pending_review') nextStatus = 'pending_deposit'
+    else if (row.auditStatus === 'pending_deposit') nextStatus = 'active'
   } else if (action === 'reject') {
-    merchant.auditStatus = 'rejected'
+    nextStatus = 'rejected'
   }
+  db.prepare('UPDATE merchants SET auditStatus = ? WHERE id = ?').run(nextStatus, id)
+  const updated = db.prepare('SELECT * FROM merchants WHERE id = ?').get(id)
+  const [merchant] = parseMerchants([updated] as any)
   res.json({ success: true, merchant })
 })
 
 router.get('/audit-records', (_req, res) => {
-  res.json(mockAuditRecords)
+  const rows = db.prepare('SELECT * FROM audit_records ORDER BY datetime DESC').all()
+  res.json(rows)
 })
 
 router.get('/rules', (_req, res) => {
@@ -61,43 +68,41 @@ router.patch('/rules/:index', (req, res) => {
     }
     rules[idx].ratio = Math.round(ratio * 100) / 100
   }
-  if (enabled != null) {
-    rules[idx].enabled = Boolean(enabled)
-  }
+  if (enabled != null) rules[idx].enabled = Boolean(enabled)
   res.json({ success: true, rule: rules[idx] })
 })
 
 router.get('/settlements', (_req, res) => {
-  const settlements = mockSettlementConfigs.map(sc => {
-    const merchant = mockMerchants.find(m => m.id === sc.merchantId)
-    return {
-      ...sc,
-      merchantName: merchant?.name ?? '',
-    }
-  })
-  res.json(settlements)
+  const rows = db.prepare(`
+    SELECT sc.*, m.name AS merchantName
+    FROM settlement_configs sc
+    LEFT JOIN merchants m ON m.id = sc.merchantId
+    ORDER BY sc.id
+  `).all()
+  res.json(rows)
 })
 
 router.patch('/settlements/:id', (req, res) => {
   const { id } = req.params
   const { cycle, minAmount } = req.body as { cycle?: string; minAmount?: number }
-  const config = mockSettlementConfigs.find(s => s.id === id)
-  if (!config) {
-    res.status(404).json({ error: 'Settlement config not found' })
-    return
-  }
+  const existing = db.prepare('SELECT * FROM settlement_configs WHERE id = ?').get(id)
+  if (!existing) { res.status(404).json({ error: 'Settlement config not found' }); return }
   if (cycle && ['T+1', 'T+3', 'T+7'].includes(cycle)) {
-    config.cycle = cycle as 'T+1' | 'T+3' | 'T+7'
+    db.prepare('UPDATE settlement_configs SET cycle = ? WHERE id = ?').run(cycle, id)
   }
   if (minAmount != null) {
     if (typeof minAmount !== 'number' || minAmount < 0) {
       res.status(400).json({ error: 'minAmount must be a non-negative number' })
       return
     }
-    config.minAmount = minAmount
+    db.prepare('UPDATE settlement_configs SET minAmount = ? WHERE id = ?').run(minAmount, id)
   }
-  const merchant = mockMerchants.find(m => m.id === config.merchantId)
-  res.json({ success: true, config: { ...config, merchantName: merchant?.name ?? '' } })
+  const updated = db.prepare(`
+    SELECT sc.*, m.name AS merchantName
+    FROM settlement_configs sc LEFT JOIN merchants m ON m.id = sc.merchantId
+    WHERE sc.id = ?
+  `).get(id)
+  res.json({ success: true, config: updated })
 })
 
 export default router

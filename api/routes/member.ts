@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { mockMember, mockPointRecords, mockProducts } from '../../shared/data.js'
+import db, { parseProducts, mockMember, mockPointRecords } from '../db'
 
 const router = Router()
 
@@ -16,12 +16,13 @@ router.get('/benefits', (_req, res) => {
 })
 
 router.get('/recommendations', (req, res) => {
-  const city = req.query.city as string
-  let products = mockProducts
-  if (city) {
-    products = mockProducts.filter(p => p.city === city)
-  }
-  res.json(products)
+  const city = req.query.city as string | undefined
+  let sql = `SELECT * FROM products WHERE 1=1`
+  const params: any[] = []
+  if (city) { sql += ' AND city = ?'; params.push(city) }
+  sql += ' ORDER BY (rating IS NULL), rating DESC LIMIT 20'
+  const rows = db.prepare(sql).all(...params)
+  res.json(parseProducts(rows as any))
 })
 
 export default router
