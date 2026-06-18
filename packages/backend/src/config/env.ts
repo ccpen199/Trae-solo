@@ -3,20 +3,21 @@ dotenv.config();
 
 export const config = {
   database: {
-    url: process.env.DATABASE_URL ?? 'postgresql://postgres:postgres@localhost:5432/neighborhood_db?schema=public',
+    url: process.env.DATABASE_URL ?? 'file:./data/app.sqlite',
   },
   redis: {
-    url: process.env.REDIS_URL ?? 'redis://localhost:6379',
+    url: process.env.REDIS_URL ?? '',
   },
   jwt: {
     secret: process.env.JWT_SECRET ?? 'default-secret-change-in-production',
     expiresIn: process.env.JWT_EXPIRES_IN ?? '7d',
   },
-  port: parseInt(process.env.BACKEND_PORT ?? '3001', 10),
+  host: process.env.BACKEND_HOST ?? '127.0.0.1',
+  port: parseInt(process.env.BACKEND_PORT ?? '59242', 10),
   saml: {
     entryPoint: process.env.SAML_ENTRY_POINT ?? '',
     issuer: process.env.SAML_ISSUER ?? 'neighborhood-platform',
-    callbackUrl: process.env.SAML_CALLBACK_URL ?? 'http://localhost:3001/api/auth/saml/callback',
+    callbackUrl: process.env.SAML_CALLBACK_URL ?? 'http://127.0.0.1:59242/api/auth/saml/callback',
     cert: process.env.SAML_CERT ?? '',
     privateKey: process.env.SAML_PRIVATE_KEY,
   },

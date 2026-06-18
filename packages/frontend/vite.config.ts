@@ -10,12 +10,12 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5174,
-    host: '0.0.0.0',
+    port: Number(process.env.FRONTEND_PORT || 49242),
+    host: process.env.FRONTEND_HOST || '127.0.0.1',
     strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: `http://${process.env.BACKEND_HOST || '127.0.0.1'}:${process.env.BACKEND_PORT || 59242}`,
         changeOrigin: true,
       },
     },

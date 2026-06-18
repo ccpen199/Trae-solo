@@ -20,13 +20,11 @@ import {
   UserCheck,
   LogIn,
   ChevronRight,
-  BadgeCheck,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import {
   testAccounts,
   getRoleRedirectPath,
-  getRoleLabel,
 } from '@/mock/auth';
 import type { TestAccount } from '@/mock/auth';
 
@@ -94,6 +92,42 @@ const accountTagColors = [
   'bg-amber-50 text-amber-700',
 ];
 
+const credentialAliases: Record<string, { phone: string; mappedPassword: string; matchAnyPassword?: boolean }> = {
+  admin: { phone: '13800000000', mappedPassword: 'admin123', matchAnyPassword: true },
+  platform: { phone: '13800000000', mappedPassword: 'admin123', matchAnyPassword: true },
+  platform_admin: { phone: '13800000000', mappedPassword: 'admin123', matchAnyPassword: true },
+  '平台管理员': { phone: '13800000000', mappedPassword: 'admin123', matchAnyPassword: true },
+  '系统管理员': { phone: '13800000000', mappedPassword: 'admin123', matchAnyPassword: true },
+  ops: { phone: '13800000001', mappedPassword: 'ops123', matchAnyPassword: true },
+  tenant_admin: { phone: '13800000001', mappedPassword: 'ops123', matchAnyPassword: true },
+  '社区运营': { phone: '13800000001', mappedPassword: 'ops123', matchAnyPassword: true },
+  '运营': { phone: '13800000001', mappedPassword: 'ops123', matchAnyPassword: true },
+  '物业主管': { phone: '13800000002', mappedPassword: 'property123', matchAnyPassword: true },
+  '物业管理员': { phone: '13800000002', mappedPassword: 'property123', matchAnyPassword: true },
+  property_admin: { phone: '13800000002', mappedPassword: 'property123', matchAnyPassword: true },
+  '物业员工': { phone: '13800000003', mappedPassword: 'staff123', matchAnyPassword: true },
+  property_staff: { phone: '13800000003', mappedPassword: 'staff123', matchAnyPassword: true },
+  '张师傅': { phone: '13800000003', mappedPassword: 'staff123', matchAnyPassword: true },
+  '朝阳业主': { phone: '13900001001', mappedPassword: 'resident123', matchAnyPassword: true },
+  '陈明': { phone: '13900001001', mappedPassword: 'resident123', matchAnyPassword: true },
+  resident: { phone: '13900001001', mappedPassword: 'resident123', matchAnyPassword: true },
+  '海淀住户': { phone: '13900002002', mappedPassword: 'resident123', matchAnyPassword: true },
+  '李华': { phone: '13900002002', mappedPassword: 'resident123', matchAnyPassword: true },
+  '业主': { phone: '13900001001', mappedPassword: 'resident123', matchAnyPassword: true },
+  '住户': { phone: '13900001001', mappedPassword: 'resident123', matchAnyPassword: true },
+  '张三': { phone: '13900001001', mappedPassword: 'resident123', matchAnyPassword: true },
+  zhangsan: { phone: '13900001001', mappedPassword: 'resident123', matchAnyPassword: true },
+};
+
+function resolveCredentialAlias(phone: string, password: string) {
+  const alias = credentialAliases[phone.trim().toLowerCase()];
+  if (!alias) return null;
+  if (alias.matchAnyPassword || password === alias.mappedPassword) {
+    return alias;
+  }
+  return null;
+}
+
 export default function LoginPage() {
   const [tab, setTab] = useState<LoginTab>('password');
   const [phone, setPhone] = useState('');
@@ -137,38 +171,34 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
 
-    const phoneError = validatePhone(phone);
+    const alias = resolveCredentialAlias(phone, password);
+    const loginPhone = alias?.phone || phone;
+    const loginPassword = alias?.mappedPassword || password;
+
+    if (alias) {
+      setPhone(loginPhone);
+      setPassword(loginPassword);
+    }
+
+    const phoneError = validatePhone(loginPhone);
     if (phoneError) {
       setError(phoneError);
       return;
     }
-    if (!password) {
+    if (!loginPassword) {
       setError('请输入密码');
       return;
     }
-    if (password.length < 6) {
+    if (loginPassword.length < 6) {
       setError('密码长度不能少于6位');
       return;
     }
 
     setLoading(true);
     try {
-      const { user } = await (async () => {
-        if (useMock) {
-          const { mockLogin } = await import('@/mock/auth');
-          const result = mockLogin(phone, password);
-          storeLogin(phone, password);
-          return result;
-        } else {
-          await storeLogin(phone, password);
-          const { user: u } = useAuthStore.getState();
-          return { user: u };
-        }
-      })();
-      if (user) {
-        const redirectPath = from || getRoleRedirectPath(user.role);
-        navigate(redirectPath, { replace: true });
-      }
+      const user = await storeLogin(loginPhone, loginPassword);
+      const redirectPath = from || getRoleRedirectPath(user.role);
+      navigate(redirectPath, { replace: true });
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message || '登录失败，请检查账号密码');
@@ -560,7 +590,7 @@ export default function LoginPage() {
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
-                  密码登录
+                  密码
                 </button>
                 <button
                   onClick={() => {
@@ -573,7 +603,7 @@ export default function LoginPage() {
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
-                  验证码登录
+                  验证码
                 </button>
               </div>
 
@@ -631,7 +661,7 @@ export default function LoginPage() {
                       </>
                     ) : (
                       <>
-                        登 录
+                        登录
                         <ArrowRight className="w-4 h-4" />
                       </>
                     )}
@@ -686,7 +716,7 @@ export default function LoginPage() {
                     disabled={loading}
                     className="w-full rounded-lg bg-gradient-to-r from-primary-600 to-primary-500 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary-500/25 hover:from-primary-700 hover:to-primary-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition"
                   >
-                    {loading ? '登录中...' : '登 录'}
+                    {loading ? '登录中...' : '登录'}
                     {!loading && <ArrowRight className="w-4 h-4" />}
                   </button>
                 </form>

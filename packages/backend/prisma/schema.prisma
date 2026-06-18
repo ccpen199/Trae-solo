@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -15,15 +15,15 @@ model Tenant {
   logo           String?
   description    String?
   status         String   @default("active")
-  location       Json?
+  location       String?
   province       String?
   city           String?
   district       String?
   address        String?
   radiusKm       Float?
   propertyCompanyId String?
-  samlConfig     Json?
-  settings       Json?
+  samlConfig     String?
+  settings       String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -146,7 +146,7 @@ model UserProfile {
   gender    String?
   birthday  DateTime?
   signature String?
-  tags      Json?
+  tags      String?
 
   user      User     @relation(fields: [userId], references: [id])
 
@@ -179,7 +179,7 @@ model AccessCard {
   cardNumber  String    @unique
   cardType    String
   deviceId    String?
-  deviceInfo  Json?
+  deviceInfo  String?
   status      String    @default("active")
   validFrom   DateTime?
   validTo     DateTime?
@@ -236,11 +236,11 @@ model Topic {
   category       String
   title          String
   content        String
-  images         Json?
-  videos         Json?
-  location       Json?
+  images         String?
+  videos         String?
+  location       String?
   locationName   String?
-  tags           Json?
+  tags           String?
   isAnonymous    Boolean  @default(false)
   isTop          Boolean  @default(false)
   isEssence      Boolean  @default(false)
@@ -251,7 +251,7 @@ model Topic {
   shareCount     Int      @default(0)
   reportCount    Int      @default(0)
   sensitiveScore Int?
-  sensitiveWords Json?
+  sensitiveWords String?
   publishedAt    DateTime?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -274,7 +274,7 @@ model TopicComment {
   parentId      String?
   replyToUserId String?
   content       String
-  images        Json?
+  images        String?
   likeCount     Int      @default(0)
   isAnonymous   Boolean  @default(false)
   status        String   @default("normal")
@@ -307,7 +307,7 @@ model TopicReport {
   reporterId     String
   reason         String
   description    String?
-  evidenceImages Json?
+  evidenceImages String?
   status         String    @default("pending")
   handlerId      String?
   handleRemark   String?
@@ -328,7 +328,7 @@ model TopicTraceLog {
   beforeContent String?
   afterContent  String?
   ip            String?
-  metadata      Json?
+  metadata      String?
   createdAt     DateTime @default(now())
 
   topic         Topic    @relation(fields: [topicId], references: [id])
@@ -359,7 +359,7 @@ model Product {
   name             String
   subtitle         String?
   description      String
-  images           Json
+  images           String
   mainImage        String
   price            Float
   originalPrice    Float?
@@ -371,10 +371,10 @@ model Product {
   isFreeShipping   Boolean  @default(true)
   shippingFee      Float?
   deliveryRadiusKm Float?
-  deliveryTypes    Json
-  pickupPoints     Json?
+  deliveryTypes    String
+  pickupPoints     String?
   status           String   @default("on_sale")
-  tags             Json?
+  tags             String?
   sortOrder        Int      @default(0)
   isRecommend      Boolean  @default(false)
   createdAt        DateTime @default(now())
@@ -390,7 +390,7 @@ model ProductSku {
   id            String  @id @default(cuid())
   productId     String
   skuCode       String
-  specs         Json
+  specs         String
   price         Float
   originalPrice Float?
   costPrice     Float?
@@ -408,7 +408,7 @@ model Warehouse {
   tenantId    String
   name        String
   code        String
-  location    Json
+  location    String
   address     String
   contactName String?
   contactPhone String?
@@ -427,7 +427,7 @@ model PickupPoint {
   name         String
   buildingId   String?
   address      String
-  location     Json?
+  location     String?
   contactName  String?
   contactPhone String?
   businessHours String?
@@ -474,7 +474,7 @@ model Order {
   deliveryType     String
   pickupPointId    String?
   deliveryAddressId String?
-  deliveryAddress  Json?
+  deliveryAddress  String?
   trackingNo       String?
   trackingCompany  String?
   completedAt      DateTime?
@@ -499,7 +499,7 @@ model OrderItem {
   skuId        String?
   productName  String
   productImage String
-  specs        Json?
+  specs        String?
   quantity     Int
   unitPrice    Float
   amount       Float
@@ -519,7 +519,7 @@ model PaymentRecord {
   transactionId     String?
   thirdPartyTradeNo String?
   paidAt            DateTime?
-  metadata          Json?
+  metadata          String?
   createdAt         DateTime  @default(now())
 
   order             Order     @relation(fields: [orderId], references: [id])
@@ -534,7 +534,7 @@ model Refund {
   amount               Float
   reason               String
   description          String?
-  evidenceImages       Json?
+  evidenceImages       String?
   status               String    @default("pending")
   handlerId            String?
   handleRemark         String?
@@ -648,7 +648,7 @@ model TaskDefinition {
   startAt      DateTime?
   endAt        DateTime?
   isActive     Boolean   @default(true)
-  conditions   Json?
+  conditions   String?
 
   @@map("task_definitions")
 }
@@ -662,7 +662,7 @@ model UserTaskRecord {
   completedAt    DateTime?
   rewardGranted  Boolean   @default(false)
   rewardGrantedAt DateTime?
-  metadata       Json?
+  metadata       String?
   createdAt      DateTime  @default(now())
 
   user           User      @relation(fields: [userId], references: [id])
@@ -713,13 +713,13 @@ model SecondhandListing {
   price          Float
   originalPrice  Float?
   condition      String
-  images         Json
-  location       Json?
+  images         String
+  location       String?
   locationName   String?
   allowDelivery  Boolean  @default(false)
   allowMeetup    Boolean  @default(true)
   meetupLocation String?
-  tags           Json?
+  tags           String?
   status         String   @default("on_sale")
   viewCount      Int      @default(0)
   favoriteCount  Int      @default(0)
@@ -857,7 +857,7 @@ model PartnerStore {
   name        String
   description String?
   logo        String?
-  banners     Json?
+  banners     String?
   category    String?
   status      String   @default("active")
   createdAt   DateTime @default(now())
@@ -922,7 +922,7 @@ model PropertyApiConfig {
   accessToken   String?
   tokenExpiresAt DateTime?
   isActive      Boolean  @default(true)
-  config        Json?
+  config        String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -966,7 +966,7 @@ model PaymentBill {
   dueDate         DateTime?
   paidAt          DateTime?
   thirdPartyBillNo String?
-  detail          Json?
+  detail          String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -984,7 +984,7 @@ model RepairRequest {
   householdId     String
   title           String
   description     String
-  images          Json?
+  images          String?
   category        String
   priority        String    @default("normal")
   status          String    @default("submitted")
@@ -1011,7 +1011,7 @@ model Complaint {
   category                String
   title                   String
   description             String
-  images                  Json?
+  images                  String?
   status                  String    @default("submitted")
   handlerId               String?
   handlerName             String?
@@ -1037,7 +1037,7 @@ model PropertyNotification {
   content        String
   type           String    @default("notice")
   targetAudience String    @default("all")
-  targetIds      Json?
+  targetIds      String?
   isTop          Boolean   @default(false)
   publishedAt    DateTime?
   publisherId    String?
@@ -1057,7 +1057,7 @@ model RiskAlert {
   relatedId    String?
   title        String
   description  String
-  data         Json?
+  data         String?
   isHandled    Boolean   @default(false)
   handlerId    String?
   handledAt    DateTime?
@@ -1072,7 +1072,7 @@ model SensitiveWordHitLog {
   topicId       String?
   commentId     String?
   userId        String
-  matchedWords  Json
+  matchedWords  String
   contentSnippet String
   riskScore     Int
   isBlocked     Boolean  @default(false)

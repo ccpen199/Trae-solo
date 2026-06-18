@@ -23,6 +23,17 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+app.get('/api/health', (_req, res) => {
+  res.json({
+    ok: true,
+    service: 'neighborhood-platform',
+    storage: config.database.url.startsWith('file:') ? 'sqlite' : 'database',
+    host: config.host,
+    port: config.port,
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.use(tenantResolver);
 
 app.use('/api/auth', authRoutes);
@@ -41,8 +52,8 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
   res.status(500).json({ code: 500, message: 'Internal server error' });
 });
 
-app.listen(config.port, () => {
-  console.log(`Server running on port ${config.port}`);
+app.listen(config.port, config.host, () => {
+  console.log(`Server running on http://${config.host}:${config.port}`);
 });
 
 export default app;

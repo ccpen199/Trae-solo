@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/auth';
-import { getRoleRedirectPath, getRoleLabel } from '@/mock/auth';
+import { getRoleRedirectPath } from '@/mock/auth';
 
 import ResidentLayout from '@/components/layout/ResidentLayout';
 import PropertyLayout from '@/components/layout/PropertyLayout';
@@ -28,18 +28,35 @@ import TraceLogPage from '@/pages/admin/TraceLogPage';
 import RiskControlPage from '@/pages/admin/RiskControlPage';
 
 function AuthInitializer() {
-  const { loadFromStorage } = useAuthStore();
+  const { loadFromStorage, isHydrated } = useAuthStore();
 
   useEffect(() => {
-    loadFromStorage();
-  }, [loadFromStorage]);
+    if (!isHydrated) {
+      loadFromStorage();
+    }
+  }, [loadFromStorage, isHydrated]);
 
   return null;
 }
 
+function LoadingScreen({ text = '加载中...' }: { text?: string }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-emerald-50">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-10 h-10 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+        <p className="text-sm text-gray-500">{text}</p>
+      </div>
+    </div>
+  );
+}
+
 function LoginRedirect() {
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, isHydrated, isLoading } = useAuthStore();
   const location = useLocation();
+
+  if (!isHydrated || isLoading) {
+    return <LoadingScreen text="正在校验身份..." />;
+  }
 
   if (isAuthenticated && user) {
     const redirectPath = getRoleRedirectPath(user.role);
@@ -57,11 +74,12 @@ function ProtectedRoute({
   children: React.ReactNode;
   requiredRoles?: string[];
 }) {
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, isHydrated, isLoading } = useAuthStore();
   const location = useLocation();
 
-  useEffect(() => {
-  }, []);
+  if (!isHydrated || isLoading) {
+    return <LoadingScreen text="正在加载工作台..." />;
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
